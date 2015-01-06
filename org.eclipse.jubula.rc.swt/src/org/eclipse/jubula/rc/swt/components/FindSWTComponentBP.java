@@ -26,15 +26,15 @@ import org.eclipse.swt.widgets.Widget;
 public class FindSWTComponentBP extends FindComponentBP {
 
     /**
-     * Searchs for the component in the AUT with the given
+     * Searches for the component in the AUT with the given
      * <code>componentIdentifier</code>.
      * 
      * @param componentIdentifier
      *            the identifier created in object mapping mode
      * @param autHierarchy
-     *            the current aut hierarchy
+     *            the current AUT hierarchy
      * @throws IllegalArgumentException
-     *             if the given identifer is null or <br>
+     *             if the given identifier is null or <br>
      *             the hierarchy is not valid: empty or containing null elements
      * @return the technical component
      */
@@ -55,7 +55,7 @@ public class FindSWTComponentBP extends FindComponentBP {
     /**
      * 
      * @param componentIdentifier the identifier created in object mapping mode
-     * @param autHierarchy the current aut hierarchy
+     * @param autHierarchy the current AUT hierarchy
      * @return a FindComponentResult which contains the technical component
      * @see FindComponentBP#findComponent
      */

@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Widget;
 
 
 /**
- * This event matcher checks wether a mouse click event matches the
+ * This event matcher checks whether a mouse click event matches the
  * requested properties. The properties are defined by a
  * <code>ClickOptions</code> instance.
  *
@@ -205,7 +205,7 @@ public class ClickSwtEventMatcher extends DefaultSwtEventMatcher {
             return isOnBorder.booleanValue();
         } catch (Throwable t) {
             // Since this method is a workaround, it would be unacceptable to
-            // propogate any errors here. Instead, we'll log the problem and
+            // propagate any errors here. Instead, we'll log the problem and
             // assume that the workaround conditions were not met.
             LOG.warn("An error occurred during an event-confirmation workaround. The results of the workaround will be ignored.", t); //$NON-NLS-1$
             return false;

@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Widget;
 
 
 /**
- * This event matcher checks wether a mouse click event matches the
+ * This event matcher checks whether a mouse click event matches the
  * requested properties. The properties are defined by a
  * <code>ClickOptions</code> instance.
  *
@@ -55,7 +55,7 @@ public class SelectionSwtEventMatcher extends DefaultSwtEventMatcher {
         }
         
         try {
-            // checks if the component is visible (= in hierarchy conatiner)
+            // checks if the component is visible (= in hierarchy container)
             if (ComponentHandler.getAutHierarchy().getHierarchyContainer(
                     (Widget)graphicsComponent) == null) {
                     

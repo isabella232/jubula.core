@@ -64,8 +64,4 @@ public class MoveSwtEventMatcher extends DefaultSwtEventMatcher {
         
         return super.isFallBackEventMatching(eventObjects, comp);
     }
-
-    
-    
-    
 }

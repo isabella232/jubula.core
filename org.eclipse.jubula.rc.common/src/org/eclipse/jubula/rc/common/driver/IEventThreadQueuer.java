@@ -14,10 +14,10 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 
 /**
  * Executes an {@link org.eclipse.jubula.rc.common.driver.IRunnable} in the
- * Graphics API specific event queue. All implmentation classes which
- * access AWT/Swing components require this mechanismn, as the
- * AWT/Swing components are not thread-safe. The progamming model in an
- * implmentation class is as follows:
+ * Graphics API specific event queue. All implementation classes which
+ * access AWT/Swing components require this mechanism, as the
+ * AWT/Swing components are not thread-safe. The programming model in an
+ * implementation class is as follows:
  * 
  * <pre>
  * IRobotFactory factory = new RobotFactoryConfig().getRobotFactory();
