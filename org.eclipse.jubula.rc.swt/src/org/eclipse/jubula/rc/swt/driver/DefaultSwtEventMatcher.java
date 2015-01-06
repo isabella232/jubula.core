@@ -13,8 +13,13 @@ package org.eclipse.jubula.rc.swt.driver;
 import java.util.List;
 
 import org.eclipse.jubula.rc.common.driver.IEventMatcher;
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Widget;
 
 
 /**
@@ -59,6 +64,26 @@ public class DefaultSwtEventMatcher implements IEventMatcher {
      * {@inheritDoc}
      */
     public boolean isFallBackEventMatching(List eventObjects, Object comp) {
+        if (comp instanceof CCombo) {
+            // special handling for http://eclip.se/436663#c3
+            CCombo combo = (CCombo) comp;
+            for (Object o : eventObjects) {
+                Event e = (Event) o;
+                Widget w = e.widget;
+                if (w instanceof Control) {
+                    final Control c = (Control) w;
+                    Composite parent = (Composite) 
+                            new EventThreadQueuerSwtImpl().invokeAndWait("getParent", new IRunnable() { //$NON-NLS-1$
+                                public Object run() {
+                                    return c.getParent();
+                                }
+                            });
+                    if (parent == combo && isMatching(e)) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 }
