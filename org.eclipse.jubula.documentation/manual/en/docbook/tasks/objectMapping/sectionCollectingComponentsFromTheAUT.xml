@@ -165,7 +165,7 @@
         <para>
           If no component is collected, then you may need to write
           an extension to recognize and test the component. More
-          information on this is available in the Extension Manual.
+          information on this is available in the Developer Manual.
         </para>
       </listitem>
     </itemizedlist>

@@ -26,6 +26,6 @@
     There may, of course, be situations where exceptions are
     necessary. For this reason, there is an API via which testing
     classes can be implemented so that even changed components can
-    be tested. See the Extension Manual for more information.
+    be tested. See the Developer Manual for more information.
   </para>
 </section>

@@ -470,7 +470,7 @@
     <title>Adding your own functions</title>
     <para>
       You can also add your own functions using an extension point.
-      This is described in the Extension Manual.
+      This is described in the Developer Manual.
     </para>
   </section>
 </section>

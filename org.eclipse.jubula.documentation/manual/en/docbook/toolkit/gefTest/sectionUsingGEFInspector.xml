@@ -17,7 +17,7 @@
     of the actions on GEF figures, you will need to know the
     textpath. Using the accessibility plug-in will mean that the
     textpaths will be easier to determine without the inspector. See
-    the extension manual for further information on creating your
+    the Developer Manual for further information on creating your
     own accessibility plug-in.
   </para>
   <para>
