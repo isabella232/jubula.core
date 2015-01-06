@@ -82,7 +82,6 @@ public class MouseMovementStrategy {
             }
         }
 
-
         if (path.isEmpty() || !to.equals(path.get(path.size() - 1))) {
             path.add(new Point(to));
         }
@@ -144,9 +143,9 @@ public class MouseMovementStrategy {
         }
         // Make sure that end point is not already in optimized path
         Point end = new Point(to.x, to.y);
-        if (!optimizedPath.isEmpty()
-                && !(optimizedPath.get(optimizedPath.size() - 1)
-                .equals(end))) {
+        if (optimizedPath.isEmpty()
+                || (!(optimizedPath.get(optimizedPath.size() - 1)
+                        .equals(end)))) {
             optimizedPath.add(end);
         }
         return optimizedPath;
