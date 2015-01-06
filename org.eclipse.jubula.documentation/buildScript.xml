@@ -16,7 +16,7 @@
     
     <target name="buildDocumentation" depends="buildInstallationManual,
                                                buildUserManual,
-                                               buildExtensionManual,
+                                               buildDeveloperManual,
                                                buildReleaseNotes">
     </target>
     
@@ -35,10 +35,10 @@
         </ant>
     </target>
     
-    <target name="buildExtensionManual">
+    <target name="buildDeveloperManual">
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
-            <property name="name" value="ExtensionManual"/>
-            <property name="dir" value="extensionapi"/>
+            <property name="name" value="DeveloperManual"/>
+            <property name="dir" value="developerManual"/>
         </ant>
     </target>
     
