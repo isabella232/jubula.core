@@ -5,6 +5,7 @@
   <title>Jubula Developer Manual</title>
   
   <xi:include href="introduction/introduction.xml"/>
+  <xi:include href="clientAPI/chapter.xml"/>
   <xi:include href="toolkitExtension/toolkitExtension.xml"/>
   <xi:include href="gefToolkitExtension/gefToolkitExtension.xml"/>
   <xi:include href="functions/functions.xml"/>

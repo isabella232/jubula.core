@@ -1,43 +1,15 @@
-<chapter id="introduction" version="5.0" xmlns="http://docbook.org/ns/docbook"
-                                         xmlns:xi="http://www.w3.org/2001/XInclude"
-                                         xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="introduction"?>
-  <title>Introduction</title>
-  <para>
-    When developing graphical applications, it is often necessary or
-    convenient to alter or combine the functionality of existing toolkit
-    components, or even to write entirely new ones, as the requirements or
-    concept of the software may dictate. These new components generally
-    cannot be tested ”out of the box”, as the behavior of custom
-    components cannot be predicted, or they may deviate from established
-    standards of ”look and feel”. In order to overcome this limitation,
-    there is an extension API, which you can use to be able to test your
-    custom components.
-  </para>
-  <para>
-    The following sections describe the steps involved in writing
-    extensions.
-  </para>
-  <para>
-    AUTs are started, controlled and observed using its remote control
-    component. In order for the AUT Agent to know how to control each
-    element of a GUI, we have outfitted the AUT Agent with a pluggable
-    interface for graphic components. An adapter factory containing one
-    or more components must be implemented for and deployed with the
-    AUT. On the client side, each GUI toolkit that the ITE supports is
-    described in a toolkit plug-in.
-  </para>
-  <para>
-    We have opened up an interface to our users to allow flexible
-    customizations. You can extend existing functionality, or provide
-    support for in-house graphic components by implementing your own
-    <emphasis role="strong">Tester Classes.</emphasis>
-  </para>
-  <para>
-    This handbook shows general steps for creating ITE toolkit
-    extensions, which is described in <xref linkend="toolkitExtension"/>. In
-    this chapter you will find also a short description of the extension
-    examples. Last but not least <xref linkend="functions"/> describes how
-    to create a custom ITE function, which can be used in tests.
-  </para>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink" id="introduction" version="5.0">
+ <?dbhtml dir="introduction"?>
+ <title>Introduction</title>
+ <para>This manual aims for Java and OSGi bundle developers. It describes how 
+ to use and extend the ITE on a programmatic level.</para>
+ <para><xref linkend="clientAPI"/> is a general starting point for information 
+ on writing UI tests via the ITEs API.</para>
+ <para>This handbook also shows general steps for creating ITE toolkit 
+ extensions, which is described in <xref linkend="toolkitExtension"/>. In this 
+ chapter you will find also a short description of the extension examples. 
+ </para>
+ <para>Information how to write an extension for GEF can be found in <xref linkend="creating-gef-toolkit-extensions"/>.</para>
+ <para>Last but not least <xref linkend="functions"/> describes how to create a 
+ custom ITE function, which can be used in tests.</para>
 </chapter>
