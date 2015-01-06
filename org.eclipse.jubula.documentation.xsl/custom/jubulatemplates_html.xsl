@@ -88,7 +88,7 @@
     <br/>
 </xsl:template>
 
-<xsl:template name="footer.navigation">
+<xsl:template name="user.footer.content">
   <br/>
   <hr/>
 
