@@ -1,0 +1,34 @@
+= Release-Engineering @eclipse.org =
+== Purpose of this Document ==
+This document should provide you with the basic information that you need to understand the concept of the JavaFX RC code. Therefore this is not a documentation of the code itself, but only a collection of links to technical information about JavaFX and interesting bugs. Reading through the bugs should give you an idea about technical concepts of JavaFX which are not officially documented, e.g. how an JavaFX application is started, and what decisions where made and why, during the development of the RC code.
+
+== JavaFX basics ==
+ * Architecture:
+    http://docs.oracle.com/javase/8/javafx/get-started-tutorial/jfx-architecture.htm#CHDFDAFF
+
+ * Event-System:
+    http://docs.oracle.com/javafx/2/events/processing.htm
+
+ * Skins:
+    https://wiki.openjdk.java.net/display/OpenJFX/UI+Controls+Architecture
+
+== Interesting Bugs ==
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=423198
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=430711
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=424843
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=427351
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=440539
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=429582
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=432288
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=449155
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=428923
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=429568
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=429860
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=431221
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=432302
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=433978
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=431325
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=438826
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=445605
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=445611
+* https://bugs.eclipse.org/bugs/show_bug.cgi?id=447104
