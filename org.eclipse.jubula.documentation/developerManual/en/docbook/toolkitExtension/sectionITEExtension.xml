@@ -1,4 +1,12 @@
-<section id="iteExtension" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2015 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<section xml:id="iteExtension" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                          xmlns:xl="http://www.w3.org/1999/xlink">
   <title>ITE extension</title>
@@ -7,7 +15,7 @@
     We describe the steps to create the toolkit plug-in and how it can
     be exported.
   </para>
-  <section id="creating-the-toolkit-plug-in">
+  <section xml:id="creating-the-toolkit-plug-in">
     <title>Creating the toolkit plug-in</title>
     <para>
       The following steps have to be done to extend the ITE toolkit:
@@ -125,7 +133,7 @@
       the examples.
     </para>
   </section>
-  <section id="deploying-the-toolkit-plug-in">
+  <section xml:id="deploying-the-toolkit-plug-in">
     <title>Deploying the toolkit plug-in</title>
     <para>
       Once the toolkit feature has been created, it must be deployed
@@ -135,7 +143,7 @@
       it is important that you have write access to the ITE so that
       the installed feature can be accessed during test execution.
     </para>
-    <section id="create-an-update-site-for-the-toolkit-feature">
+    <section xml:id="create-an-update-site-for-the-toolkit-feature">
       <title>Create an update site for the toolkit feature</title>
       <orderedlist>
         <listitem>
@@ -167,7 +175,7 @@
         </listitem>
       </orderedlist>
     </section>
-    <section id="install-the-toolkit-feature-from-the-update-site">
+    <section xml:id="install-the-toolkit-feature-from-the-update-site">
       <title>Install the toolkit feature from the update site</title>
       <orderedlist>
         <listitem>

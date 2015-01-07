@@ -1,19 +1,27 @@
-<section id="gefreference" version="5.0" xmlns="http://docbook.org/ns/docbook"
-                                         xmlns:xi="http://www.w3.org/2001/XInclude"
-                                         xmlns:xl="http://www.w3.org/1999/xlink">
-  <title>Accessibility plug-in example</title>
-  <para>
-    A sample accessibility plug-in for certain elements of the Logic
-    Diagram sample plug-in project (contributed from the GEF plug-ins
-    to Eclipse’s New Project Wizard) are included in the installation.
-    A default implementation can be found in the directory
-    <emphasis role="input">examples/development/gef</emphasis>. There you will find a
-    zip-file containing a full accessibility plug-in example.
-  </para>
-    You can import the sample accessibility plug-in into an Eclipse workspace in order to examine the general structure.
-    The Java documentation of the source code, which is included in the target platform definition, contains information about
-    <emphasis role="input">IEditPartIdentifier</emphasis> from the package named
-    <para>
-      <emphasis>org.eclipse.jubula.rc.rcp.gef.identifier</emphasis>.
-    </para>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2015 BREDEX GmbH. All rights reserved. This program and 
+	the accompanying materials are made available under the terms of the Eclipse 
+	Public License v1.0 which accompanies this distribution, and is available 
+	at http://www.eclipse.org/legal/epl-v10.html -->
+<section xml:id="gefreference" version="5.0"
+	xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+	xmlns:xl="http://www.w3.org/1999/xlink">
+	<title>Accessibility plug-in example</title>
+	<para>
+		A sample accessibility plug-in for certain elements of the Logic
+		Diagram sample plug-in project (contributed from the GEF plug-ins
+		to Eclipse's New Project Wizard) are included in the installation.
+		A default implementation can be found in the directory
+		<emphasis role="input">examples/development/gef</emphasis>
+		. There you will find a
+		zip-file containing a full accessibility plug-in example.
+	</para>
+	<para>
+		You can import the sample accessibility plug-in into an Eclipse
+		workspace in order to examine the general structure.
+		The Java documentation of the source code, which is included in the
+		target platform definition, contains information about
+		<emphasis role="input">IEditPartIdentifier</emphasis>
+		from the package named <emphasis>org.eclipse.jubula.rc.rcp.gef.identifier</emphasis>.
+	</para>
 </section>

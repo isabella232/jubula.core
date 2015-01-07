@@ -115,6 +115,14 @@
             </fileset>
         </copy>
         
+        <exec executable="xmllint">
+            <arg value="--noout" />
+            <arg value="--xinclude" />
+            <arg value="--postvalid" />
+            <arg value="--noent" />
+            <arg value="${dir}/en/docbook/book.xml" />
+        </exec>
+        
         <exec executable="xsltproc" failonerror="true">
             <arg value="--xinclude"/>
             <arg value="--stringparam"/>
@@ -179,6 +187,9 @@
             <redirector output="output.log"/>
         </exec>
         
+        <loadfile property="output.log.msg" srcFile="output.log"/>
+        <echo message="${output.log.msg}"/>
+        
         <antcall target="checkForErrors"/>
         
         <delete file="${html.path}/index.xml"/>
@@ -204,6 +215,14 @@
                 <include name="*.css" />
             </fileset>
         </copy>
+        
+        <exec executable="xmllint">
+            <arg value="--noout" />
+            <arg value="--xinclude" />
+            <arg value="--postvalid" />
+            <arg value="--noent" />
+            <arg value="${dir}/en/docbook/book.xml" />
+        </exec>
         
         <exec executable="xsltproc" failonerror="true" output="output.log">
             <arg value="--xinclude"/>

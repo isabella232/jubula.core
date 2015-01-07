@@ -1,4 +1,12 @@
-<section id="remoteControlExtension" xmlns="http://docbook.org/ns/docbook"
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2015 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<section xml:id="remoteControlExtension" xmlns="http://docbook.org/ns/docbook"
                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                      xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Remote control extension</title>
@@ -12,7 +20,7 @@
     component. You need to write a fragment for your component, which
     contains the Tester Class and a corresponding adapter factory.
   </para>
-  <section id="creating-the-fragment">
+  <section xml:id="creating-the-fragment">
     <title>Creating the fragment</title>
     <para>
       The following steps have to be done to extend the remote
@@ -92,7 +100,7 @@
       in <xref linkend="extensionExamples"/>, we describe in general how
       to create an adapter and Tester Classes.
     </para>
-    <section id="creating-an-adapter">
+    <section xml:id="creating-an-adapter">
       <title>Creating an adapter</title>
       <para>
         To use an adapter you have to implement the interface
@@ -132,7 +140,7 @@
         step is to implement one or more Tester Class.
       </para>
     </section>
-    <section id="creating-a-tester-class">
+    <section xml:id="creating-a-tester-class">
       <title>Creating a Tester Class</title>
       <para>
         The functionally important aspect of a Tester Class is that it
@@ -221,7 +229,7 @@
         </listitem>
       </itemizedlist>
     </section>
-	<section id="creating-an-container-adapter">
+	<section xml:id="creating-an-container-adapter">
 		<title>Creating an container adapter</title>
 		<para>
 			This is a JavaFX exclusive way to extend the functionality of Jubula. You
@@ -248,7 +256,7 @@
 		</para>
 	</section>
   </section>
-  <section id="deploying-the-fragment">
+  <section xml:id="deploying-the-fragment">
     <title>Deploying the fragment</title>
     <para>
       Once you have written your fragment, you still need to make all
