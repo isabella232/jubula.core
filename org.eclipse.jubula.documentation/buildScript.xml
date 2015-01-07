@@ -115,14 +115,6 @@
             </fileset>
         </copy>
         
-        <exec executable="xmllint">
-            <arg value="--noout" />
-            <arg value="--xinclude" />
-            <arg value="--postvalid" />
-            <arg value="--noent" />
-            <arg value="${dir}/en/docbook/book.xml" />
-        </exec>
-        
         <exec executable="xsltproc" failonerror="true">
             <arg value="--xinclude"/>
             <arg value="--stringparam"/>
@@ -215,14 +207,6 @@
                 <include name="*.css" />
             </fileset>
         </copy>
-        
-        <exec executable="xmllint">
-            <arg value="--noout" />
-            <arg value="--xinclude" />
-            <arg value="--postvalid" />
-            <arg value="--noent" />
-            <arg value="${dir}/en/docbook/book.xml" />
-        </exec>
         
         <exec executable="xsltproc" failonerror="true" output="output.log">
             <arg value="--xinclude"/>
