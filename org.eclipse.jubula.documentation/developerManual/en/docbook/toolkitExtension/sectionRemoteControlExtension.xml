@@ -105,35 +105,36 @@
       <para>
         To use an adapter you have to implement the interface
         <emphasis role="input">IAdapterFactory</emphasis>, which is defined in the package named
-        
-        <para>
-          <emphasis>org.eclipse.jubula.rc.common.adaptable</emphasis>.
-        </para>
+        <emphasis>org.eclipse.jubula.rc.common.adaptable</emphasis>.
         
         It is necessary that the implementation of this interface resists in a package named
-        
-        <para>
-          <emphasis>org.eclipse.jubula.ext.rc.common.adapter</emphasis>.
-        </para>
-        
+        <emphasis>org.eclipse.jubula.ext.rc.common.adapter</emphasis>.
         The package naming is important for the remote control extension, because adapters can only be found if they are located in a package with the mentioned name.
       </para>
       <para>
         In order to support your own components, the targeted type must be an instance of <emphasis role="input">IComponent</emphasis>, which is defined in the package named
-        
-        <para>
-          <emphasis>org.eclipse.jubula.rc.common.tester.adapter.interfaces</emphasis>.
-        </para>
-        
+        <emphasis>org.eclipse.jubula.rc.common.tester.adapter.interfaces</emphasis>.
         This targeted type can be used for text components. If you want to support your own graphical component, you should at least use the interface <emphasis role="input">IWidgetComponent</emphasis> as the targeted type, which is a child of <emphasis role="input">IComponent</emphasis>. Both interfaces are defined in the same package.
       </para>
       <para>
         For Swing, SWT and JavaFX there are also specific implementations of different adapters in the following packages, which can be used for your own component:
-        <para>
-          <emphasis>org.eclipse.jubula.rc.swing.tester.adapter</emphasis><?linebreak?>
-          <emphasis>org.eclipse.jubula.rc.swt.tester.adapter</emphasis><?linebreak?>
-          <emphasis>org.eclipse.jubula.rc.javafx.tester.adapter</emphasis>
-        </para>
+        <itemizedlist>
+	        <listitem>
+	           <para>
+                 <emphasis>org.eclipse.jubula.rc.swing.tester.adapter</emphasis>
+	           </para>
+	        </listitem>
+            <listitem>
+               <para>
+                 <emphasis>org.eclipse.jubula.rc.swt.tester.adapter</emphasis>
+               </para>
+            </listitem>
+            <listitem>
+               <para>
+                 <emphasis>org.eclipse.jubula.rc.javafx.tester.adapter</emphasis>
+               </para>
+            </listitem>
+        </itemizedlist>
       </para>
       <para>
         Now we know how to create an own adapter in general. The next
@@ -158,17 +159,25 @@
       </para>
       <para>
         You can write your own Tester Classes, but if you only want to support a new component with existing actions, you could use one of our existing Tester Classes, which you can find in the package named
-        
-        <para>
-          <emphasis>org.eclipse.jubula.rc.common.tester</emphasis>.
-        </para> 
-        
+        <emphasis>org.eclipse.jubula.rc.common.tester</emphasis>.
         For Swing, SWT and JavaFX there are also specific implementations in the following packages:
-        <para>
-          <emphasis>org.eclipse.jubula.rc.swing.tester</emphasis><?linebreak?>
-          <emphasis>org.eclipse.jubula.rc.swt.tester</emphasis><?linebreak?>
-          <emphasis>org.eclipse.jubula.rc.javafx.tester</emphasis>
-        </para>
+        <itemizedlist>
+            <listitem>
+               <para>
+                 <emphasis>org.eclipse.jubula.rc.swing.tester</emphasis>
+               </para>
+            </listitem>
+            <listitem>
+               <para>
+                 <emphasis>org.eclipse.jubula.rc.swt.tester</emphasis>
+               </para>
+            </listitem>
+            <listitem>
+               <para>
+                 <emphasis>org.eclipse.jubula.rc.javafx.tester</emphasis>
+               </para>
+            </listitem>
+        </itemizedlist>
       </para>
       <para>
         Please take the following guidelines into consideration for
@@ -182,8 +191,7 @@
         </listitem>
         <listitem>
           <para>
-            The class must be compatible with <emphasis>Java
-            1.5</emphasis>.
+            The class must be compatible with <emphasis>Java 1.5</emphasis>.
           </para>
         </listitem>
         <listitem>
@@ -217,14 +225,8 @@
           <para>
             Each method that implements an action must throw a
             <emphasis role="input">StepExecutionException</emphasis> defined in the
-            package named
-
-            <para>
-              <emphasis>org.eclipse.jubula.rc.common.exception</emphasis>
-            </para>
-            
+            package named <emphasis>org.eclipse.jubula.rc.common.exception</emphasis>
             to notify the ITE if the execution of the action has failed.
-            
           </para>
         </listitem>
       </itemizedlist>
@@ -333,11 +335,7 @@
     </itemizedlist>
     <para>
       The configuration of the standalone AUT Agent can be done by modifying the file
-      
-      <para>
-        <emphasis role="input">server/configuration/config.ini</emphasis>
-      </para>
-      
+       <emphasis role="input">server/configuration/config.ini</emphasis>.
       There you have to append <emphasis role="input">,fragment_id</emphasis> at the end of the line starting with 
       <emphasis role="input">osgi.bundles=</emphasis>. Make sure that the bundles are comma-separated. It is also necessary
       to add the argument <emphasis role="input">-clean</emphasis> in the file <emphasis role="input">server/autagent.ini</emphasis>,

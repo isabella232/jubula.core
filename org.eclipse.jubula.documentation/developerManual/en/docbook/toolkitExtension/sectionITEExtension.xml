@@ -79,9 +79,7 @@
       <listitem>
         <para>
           Use and configure the following extension point in your toolkit project:
-          <para>
-            <emphasis>org.eclipse.jubula.toolkit.common.toolkitsupport</emphasis>.
-          </para>
+          <emphasis>org.eclipse.jubula.toolkit.common.toolkitsupport</emphasis>.
         </para>
       </listitem>
       <listitem>
@@ -121,9 +119,7 @@
     </orderedlist>
     <para>
       You will find projects in zip-files as a showcase for steps 1-8, which are located in the directory
-      <para>
-        <emphasis role="input">examples/development/extension/src</emphasis>.
-      </para>
+      <emphasis role="input">examples/development/extension/src</emphasis>.
       Each zip-file contains an example for a specific toolkit, e.g. a Swing example extends the <emphasis role="input">JSlider</emphasis> component.
     </para>
     <para>

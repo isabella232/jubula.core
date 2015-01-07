@@ -13,11 +13,7 @@
   <para>
     In the installation, there are source code examples for extending supported toolkits.
     The examples can be found in the directory
-    
-    <para>
       <emphasis role="input">examples/development/extension</emphasis>,
-    </para>
-    
     which contains the following sub-folders:
   </para>
   <variablelist>
