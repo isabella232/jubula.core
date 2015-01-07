@@ -1,8 +1,8 @@
 <chapter id="configuring-as-an-eclipse-application" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                   xmlns:xl="http://www.w3.org/1999/xlink">
-  <?dbhtml dir="configAsEclipseApp"?>
-  <title>Configuring as an Eclipse application</title>
+  <?dbhtml dir="sharedEnvironments"?>
+  <title>Configuring as an Eclipse application for shared environments</title>
   <para>
     As the ITE is an Eclipse application, it can be configured just like
     any other Eclipse application can – including setups for multi
@@ -10,7 +10,16 @@
   </para>
   <para>
     If multiple users should have access to e.g. extensions, then we
-    recommend using a shared configuration area.
+    recommend using a shared configuration area. 
+  </para>
+  <para>
+  <emphasis role="warning">
+  	If you are working with Jubula for multiple projects that use different
+  	AUTs, once you have written an extension for a specific AUT, you should 
+  	ensure that you are using your own installation of the ITE for this AUT. 
+  	This is to avoid problems with multiple extensions for different AUTs in one
+  	ITE.
+  </emphasis>
   </para>
   <para>
     Further information on different configurations for Eclipse
