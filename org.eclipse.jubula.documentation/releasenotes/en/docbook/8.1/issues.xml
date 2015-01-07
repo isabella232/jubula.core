@@ -118,26 +118,4 @@
       </para>
     </listitem>
   </itemizedlist>
-   <para>
-   Working with multiple extensions for JavaFX which require different versions of the RC code
-   </para>
-  <itemizedlist>
-  	<listitem>
-  		<para>
-  		<emphasis role="strong>If you have multiple extensions for JavaFX which require different versions of the JavaFX
-  		RC code (e.g. an extension that requires 2.4 and one that requires 3.0 of the JavaFX RC code), 
-  		using a non-Java 8 version for the ITE runtime will result in all extensions being loaded, which
-  		may lead to problems in some circumstances. 
-  		</emphasis>
-  		</para>
-  	</listitem>
-  	<listitem>
-  		<para>
-		If you use Java 8 as a runtime for the ITE, then the correct extensions will
-		be loaded, even if there are multiple extensions that require different versions of the
-		JavaFX RC code.	  	
-  		</para>
-  	</listitem>
- 
-  </itemizedlist>
 </section>
