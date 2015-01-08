@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Table" id="1" x="144" y="88" height="161" text="Tree Table, Size, Kind&#xA;[-] Main One, 1, folder&#xA;  [-] Sub One, 2, folder&#xA;        One, 4, file&#xA;  [+] Sub Two, 2, folder&#xA;[+] Main Two, 1, folder&#xA;[+] Main Three, 3, folder" measuredWidth="181" measuredHeight="161" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

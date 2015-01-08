@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Table" id="2" x="72" y="40" width="113" height="105" text="A&#xA;Alex&#xA;Anton&#xA;Arnold" measuredWidth="113" measuredHeight="105" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Table" id="4" x="72" y="128" width="113" height="105" text="B&#xA;Ben&#xA;Bernd&#xA;Bruno" measuredWidth="113" measuredHeight="105" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

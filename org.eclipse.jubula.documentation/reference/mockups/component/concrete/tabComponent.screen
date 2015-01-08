@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:TabbedPane" id="1" x="56" y="40" width="241" height="33" text="Tab One,Tab Two,Tab Three" measuredWidth="241" measuredHeight="33" selection="0">
+    <items x="10" y="0" width="70" height="27" text="Tab One"/>
+    <items x="80" y="0" width="68" height="27" text="Tab Two"/>
+    <items x="148" y="0" width="80" height="27" text="Tab Three"/>
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

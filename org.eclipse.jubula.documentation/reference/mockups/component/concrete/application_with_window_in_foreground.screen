@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="1" x="120" y="100" width="425" height="281" text="My Application Window" measuredWidth="425" measuredHeight="281" minimizeButton="true" maximizeButton="true"/>
+  <widgets xsi:type="model:Window" id="2" x="216" y="188" width="225" height="105" text="Window in foreground" measuredWidth="225" measuredHeight="105" closeButton="false"/>
+  <widgets xsi:type="model:Button" id="3" x="296" y="240" width="73" text="OK" measuredWidth="73" measuredHeight="25">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

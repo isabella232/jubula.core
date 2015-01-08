@@ -1,0 +1,31 @@
+= Pre-requisites =
+
+
+= Recipe =
+
+==creating mock-up==
+
+   * Use eclipse WireframeSketcher to create mock-ups of the necessary components
+   
+==export==
+
+   * Export the .screen files as PDF
+    * Select "Optimize for full-screen viewing"
+    
+==converting==
+
+   * Use GNU Image Manipulation Program to import the PDF
+    * Import it with 300 ppi
+   * save the image as .png
+   
+==removing whitespace==
+
+   * If the image has whitespace e.g. out of window border
+    * Open the .png files with Paint.NET
+    * select the whitespace with the "Magic Wand" 
+    * remove the selection
+   
+==saving==
+
+   * save the .png images in org.eclipse.jubula.documentation/reference/images/components/{toolkit}
+   * save the .screen file in org.eclipse.jubula.documentation/reference/mockups/components/{toolkit}
