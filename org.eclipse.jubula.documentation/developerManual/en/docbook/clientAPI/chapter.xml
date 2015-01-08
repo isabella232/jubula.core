@@ -306,11 +306,27 @@
     
     <section>
         <title>Sample setup of the API usage</title>
-        <para>An example setup for the RCP toolkit showing a basic SimpleAdder test run can be found in the 
-        git-Repository contained within every ITE installation. It's located in 
+        <figure xml:id="start-aut">
+            <title>Starting the RCP-SimpleAdder AUT via API</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/start-aut.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>A fully executable example setup for the RCP toolkit showing a basic SimpleAdder AUT start - see <xref linkend="start-aut" /> - 
+        and test run - see <xref linkend="test-execution" /> - can be found in the git-Repository contained within every ITE installation. It's located in 
         <emphasis>ITEInstallationFolder/development/git/org.eclipse.jubula.core.git</emphasis>. Simply create a clone
         of that repository and checkout the Eclipse project <emphasis>org.eclipse.jubula.qa.api.rcp</emphasis>.
         You still have to adjust the path to the local maven repository within the pom.xml of that project and point to the
         one included in the installation: <emphasis>ITEInstallationFolder/development/api/m2-repo</emphasis>.</para>
+        <figure xml:id="test-execution">
+            <title>Exectuing a first test</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/test-execution.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
     </section>
 </chapter>
