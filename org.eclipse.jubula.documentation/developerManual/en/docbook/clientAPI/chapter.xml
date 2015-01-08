@@ -6,8 +6,203 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink" xml:id="clientAPI" version="5.0">
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink" xml:id="clientAPI" version="5.0">
  <?dbhtml dir="clientAPI"?>
- <title>Writing UI tests via API</title>
- <para>...</para>
+    <title>Writing UI tests via API</title>
+    <section>
+        <title>The general idea</title>
+        <figure xml:id="api-idea">
+            <title>Idea behind the API</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/api-idea.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>
+            The main idea behind Jubula's client API is to allow the execution of
+            Test Steps (CAPs) from within arbitrary Java code e.g. JUnit test cases
+            (see <xref linkend="api-idea" />). At the same time of shifting the paradigm to target a developer
+            audience we've tried to stick to our principles:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>offer high-level test steps that are equivalent to the ones
+                    available in the ITE: all test steps that are being executed via
+                    the API behave 1:1 the same as the ones executed by the ITE.
+                </para>
+            </listitem>
+            <listitem>
+                <para>an API for all toolkits: the client API is available for all
+                    toolkits supported by the ITE like JavaFX, AWT/Swing,
+                    SWT/RCP/GEF, iOS, HTML, Win and WinApps.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    offer toolkit abstraction layer to keep your tests UI toolkit
+                    independent: the usage of the API will also allow you to specify
+                    your tests in a toolkit neutral way. Please note that for all of
+                    the concrete toolkit wrapper types abstracted super types are
+                    provided e.g. to address a
+                    <emphasis>javafx.scene.control.CheckBox</emphasis>
+                    we provide the wrapper type containing its test steps
+                    <emphasis>org.eclipse.jubula.toolkit.javafx.components.CheckBox
+                    </emphasis>
+                    but the underlying abstracted toolkit conceptual component is
+                    <emphasis>org.eclipse.jubula.toolkit.concrete.components.ButtonComponent
+                    </emphasis>
+                    .
+                </para>
+            </listitem>
+            <listitem>
+                <para>de-couple tests and real UI widgets: you still have to create
+                    an object mapping (via the ITE and export it) to keep the
+                    information that are required to determine which widget to address
+                    during runtime independent from your test specification.
+                </para>
+            </listitem>
+            <listitem>
+                <para>separation of test and AUT runtime environments: the JVM
+                    executing the tests is a separate one (and may also e.g. run on
+                    a different machine) from the one the AUT gets executed in. It's
+                    communicating with the AUT VM via a TCP/IP connection.
+                </para>
+            </listitem>
+            <listitem>
+                <para>the AUT-Agent manages the lifecycle of AUTs: starting /
+                    stopping / restarting of AUTs is still done by instructing the
+                    AUT-Agent to do so and may also be extended by the usage of
+                    autrun to launch applications externally.
+                </para>
+            </listitem>
+        </itemizedlist>
+    </section>
+    
+    <section>
+        <title>General steps to take and class overview</title>
+        <figure xml:id="api-classes">
+            <title>The most important classes and their methods</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/api-classes.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para> Taking this as a basis, a normal execution of test steps via the
+            client API requires - in general - the following steps:
+        </para>
+        <orderedlist>
+            <listitem>
+                <para>Connect to an already running instance of the AUT-Agent.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Instruct it to start an AUT or retrieve a list of all
+                    currently known AUT identifier.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Connect to the AUT by using the AUT identifier.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Execute an arbitrary amount of CAPs (<emphasis role="strong">C</emphasis>omponent
+                    <emphasis role="strong">A</emphasis>ction
+                    <emphasis role="strong">P</emphasis>arameter also known as Test steps) on this established
+                    connection to an AUT. Note: there is currently no result
+                    processing implemented.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Disconnect from the AUT.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Disconnect from the AUT-Agent.
+                </para>
+            </listitem>
+        </orderedlist>
+        <para>
+            <xref linkend="api-classes" />
+            allows to get a general overview of the toolkit neutral parts of the
+            client API.
+        </para>
+    </section>
+
+    <section>
+        <title>Exporting the Object Map in the ITE</title>
+        <figure xml:id="export-om">
+            <title>Object Mapping Editor export function</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/export-om.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>
+            In order to create an executable CAP instance (see <xref linkend="creating-cap-instances" />) you require a valid
+            <emphasis>org.eclipse.jubula.tools.ComponentIdentifier</emphasis> instance. Do get that you need to
+        </para>
+        <orderedlist>
+            <listitem>
+                <para>Start the ITE, open the project and the Object Mapping Editor for the AUT you wan't to export the Object Map for.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Choose "Export Object Mapping for use in API" from the context menu of the editor as shown in <xref linkend="export-om" />.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Decide whether you wan't to use a plain properties file or a Java class with static fields. 
+                Both formats will then contain all necessary information (one mapping for each mapped logical component name) to address the UI widget when the test gets executed. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>Place this resource on the classpath of your test project. 
+                </para>
+            </listitem>
+            <listitem>
+                <para>If you're using the properties file format you can load the mapping and its identifier by using <emphasis>MakeR.createObjectMapping(...).get("logicalComponentName")</emphasis>.
+                Otherwise you can simply access the static fields of the exported class.
+                </para>
+            </listitem>
+        </orderedlist>
+        <para role="warning">Currently the structure and information used to address a component (the mapping value itself) is not part of the API itself. Hence you still have to maintain this information within the ITE. 
+        </para>
+    </section>
+    
+    <section xml:id="creating-cap-instances">
+        <title>Creating CAP instances</title>
+        <figure xml:id="toolkit-factories">
+            <title>Toolkit component factories</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/tk-factories.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para></para>
+        <figure xml:id="cap-factory-methods">
+            <title>Creating CAP instance</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/cap-factory-methods.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    
+    <section>
+        <title>General setup information</title>
+        <para>The following section describes where to find the relevant JARs / artifacts to make use of the API.</para>
+        <para>...</para>
+    </section>
+    
+    <section>
+        <title>Sample setup of the API usage</title>
+        <para></para>
+    </section>
 </chapter>
