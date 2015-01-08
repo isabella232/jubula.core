@@ -245,6 +245,18 @@
     </listitem>
   </itemizedlist>
   <para>
+    <emphasis role="strong">API for Java-based UI test automation</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We've created a whole new layer in the ITE that allows you to write functional UI tests
+        via an official Java client API. Detailed information of the architecture and how to start
+        can be found in the Developer Manual.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
   	<emphasis role="strong">Version numbers now allow major, minor, micro numbers and qualifiers</emphasis>
   </para>
   	<itemizedlist>
