@@ -112,12 +112,16 @@
                     Execute an arbitrary amount of CAPs (<emphasis role="strong">C</emphasis>omponent
                     <emphasis role="strong">A</emphasis>ction
                     <emphasis role="strong">P</emphasis>arameter also known as Test steps) on this established
-                    connection to an AUT. Note: there is currently no result
+                    connection to an AUT. Note: there is no result
                     processing implemented.
                 </para>
             </listitem>
             <listitem>
                 <para>Disconnect from the AUT.
+                </para>
+            </listitem>
+            <listitem>
+                <para>Stop the AUT.
                 </para>
             </listitem>
             <listitem>
@@ -177,16 +181,43 @@
     <section xml:id="creating-cap-instances">
         <title>Creating CAP instances</title>
         <figure xml:id="toolkit-factories">
-            <title>Toolkit component factories</title>
+            <title>JavaFX-Toolkit component factory usage to create an instance for a CheckBox</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/tk-factories.png" />
                 </imageobject>
             </mediaobject>
         </figure>
-        <para></para>
+        <para>In order to create executable instances of a <emphasis>org.eclipse.jubula.communication.CAP</emphasis> (Test Step) you have to use the corresponding 
+        factory methods available for each toolkit and pass a valid and fitting ComponentIdentifier:</para>
+        <itemizedlist>
+            <listitem>
+                <para>org.eclipse.jubula.toolkit.javafx.JavafxComponents - see e.g. the <xref linkend="toolkit-factories" /></para>
+            </listitem>
+            <listitem>
+                <para>org.eclipse.jubula.toolkit.swing.SwingComponents</para>
+            </listitem>
+            <listitem>
+                <para>org.eclipse.jubula.toolkit.html.HtmlComponents</para>
+            </listitem>
+            <listitem>
+                <para>org.eclipse.jubula.toolkit.swt.SwtComponents</para>
+            </listitem>
+            <listitem>
+                <para>org.eclipse.jubula.toolkit.ios.IosComponents</para>
+            </listitem>
+            <listitem>
+                <para>org.eclipse.jubula.toolkit.winapps.WinappsComponents</para>
+            </listitem>
+            <listitem>
+                <para>org.eclipse.jubula.toolkit.win.WinComponents</para>
+            </listitem>
+        </itemizedlist>
+        <para>On these UI component placeholder instances you can call methods that will return 
+        an executable CAP that, when being executed on the AUT connection, 
+        performs the specified test step:</para>
         <figure xml:id="cap-factory-methods">
-            <title>Creating CAP instance</title>
+            <title>Creating a CAP instance</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/cap-factory-methods.png" />
@@ -197,12 +228,89 @@
     
     <section>
         <title>General setup information</title>
-        <para>The following section describes where to find the relevant JARs / artifacts to make use of the API.</para>
-        <para>...</para>
+        <para>The following section describes where to find the relevant JARs / artifacts to use the API.
+        The provided API has a miminum required runtime environment of <emphasis role="strong">Java 6</emphasis>.</para>
+        <para>In general the usage of the client API falls apart into three categories of JARs / maven artifacts 
+        / OSGi bundles:</para>
+        <orderedlist>
+            <listitem>
+                <para>Each project requires dependencies to <emphasis role="strong">all</emphasis> of the <emphasis role="strong">toolkit neutral parts</emphasis>
+                of the API:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>org.eclipse.jubula.client.api</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.client.api.commands</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.toolkit.api</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.tools</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.communication</para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para>Each project requires dependencies to <emphasis role="strong">indiviual</emphasis> parts of the <emphasis role="strong">toolkit specific elements</emphasis>
+                dependent from the used toolkit of the API:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>org.eclipse.jubula.toolkit.base.api</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.toolkit.concrete.api</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.toolkit.javafx.api</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.toolkit.swt.api</para>
+                    </listitem>
+                    <listitem>
+                        <para>org.eclipse.jubula.toolkit...TOOLKIT_ID...api</para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem>
+                <para>Each project also requires dependencies to <emphasis role="strong">all</emphasis> of the <emphasis role="strong">3rd party dependencies</emphasis>
+                of the API:</para>
+                <itemizedlist>
+                    <listitem>
+                        <para>Apache Commons Lang 2.4</para>
+                    </listitem>
+                    <listitem>
+                        <para>Apache Commons Codec 1.4</para>
+                    </listitem>
+                    <listitem>
+                        <para>SLF4j API</para>
+                    </listitem>
+                    <listitem>
+                        <para>XStream 1.3.1</para>
+                    </listitem>
+                    <listitem>
+                        <para>XPP3 min 1.1.4c</para>
+                    </listitem>
+                    <listitem>
+                        <para>xmlpull 1.1.3.4a</para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+        </orderedlist>
+        <para>You can find the artifacts in different shapes (plain JAR, maven artifact and OSGi bundles) within
+        the <emphasis>ITEInstallationFolder/development/api</emphasis> folder.</para>
     </section>
     
     <section>
         <title>Sample setup of the API usage</title>
-        <para></para>
+        <para>An example setup for the RCP toolkit showing a basic SimpleAdder test run can be found in the 
+        git-Repository contained within every ITE installation. It's located in 
+        <emphasis>ITEInstallationFolder/development/git/org.eclipse.jubula.core.git</emphasis>. Simply create a clone
+        of that repository and checkout the Eclipse project <emphasis>org.eclipse.jubula.qa.api.rcp</emphasis>.
+        You still have to adjust the path to the local maven repository within the pom.xml of that project and point to the
+        one included in the installation: <emphasis>ITEInstallationFolder/development/api/m2-repo</emphasis>.</para>
     </section>
 </chapter>
