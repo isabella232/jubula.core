@@ -23,7 +23,6 @@ import java.util.Set;
 
 import javax.swing.KeyStroke;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServer;
@@ -44,6 +43,7 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
+import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.tester.SwtApplicationTester;
@@ -52,7 +52,6 @@ import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -1653,21 +1652,7 @@ public class RobotSwtImpl implements IRobot {
      */
     public String getPropertyValue(Object graphicsComponent,
             String propertyName) throws RobotException {
-        String propertyValue = StringConstants.EMPTY;
-        Validate.notNull(graphicsComponent, "Tested component must not be null"); //$NON-NLS-1$
-        try {
-            final Object prop = PropertyUtils.getProperty(
-                    graphicsComponent, propertyName);
-            propertyValue = String.valueOf(prop);
-        } catch (IllegalAccessException e) {
-            throw new RobotException(e);
-        } catch (InvocationTargetException e) {
-            throw new RobotException(e);
-        } catch (NoSuchMethodException e) {
-            throw new RobotException(e);
-        }
-        
-        return propertyValue;
+        return PropertyUtil.getPropertyValue(graphicsComponent, propertyName);
     }
     
     /** {@inheritDoc} */

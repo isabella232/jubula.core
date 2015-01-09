@@ -114,19 +114,22 @@ public class AdapterFactoryRegistry {
     }
 
     /**
-     * 
      * @param targetAdapterClass
      *            Type of the adapter
      * @param objectToAdapt
-     *            object that should be adapted to
+     *            object that should be adapted
      * @return Returns an adapter for the objectToAdapt of type
      *         targetAdapterClass. The collection of all supported adapter
      *         factories is iterated. The first value that is not null will be
-     *         returned. Null will only be returned if no adapter can be found
-     *         for the targetAdapterClass or none of the given factories can
-     *         handle the objectToAdapt
+     *         returned. <code>Null</code> will only be returned if no adapter
+     *         can be found for the targetAdapterClass, none of the given
+     *         factories can handle the objectToAdapt or the objectToAdapt
+     *         itself is <code>null</code>.
      */
     public Object getAdapter(Class targetAdapterClass, Object objectToAdapt) {
+        if (objectToAdapt == null) {
+            return null;
+        }
         Collection<IAdapterFactory> registeredFactories = null;
         Class superClass = objectToAdapt.getClass();
         while (registeredFactories == null && superClass != Object.class) {

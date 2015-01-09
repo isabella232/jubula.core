@@ -18,7 +18,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.adaptable.IPropertyValue;
+import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
@@ -30,6 +33,44 @@ public class PropertyUtil {
     /** Constructor */
     private PropertyUtil() {
         //empty
+    }
+    
+    /**
+     * @param object
+     *            the object to introspect
+     * @param propertyName
+     *            the properties name to retrieve
+     * @return the property or <code>null</code> if not found
+     * @throws RobotException
+     *             in case of problems
+     */
+    public static String getPropertyValue(Object object, String propertyName)
+            throws RobotException {
+        String propertyValue = StringConstants.EMPTY;
+        Validate.notNull(object, "Tested component must not be null"); //$NON-NLS-1$
+        try {
+            final Object prop = PropertyUtils.getProperty(object,
+                    propertyName);
+            // Check if an adapter exists
+            IPropertyValue propertyValueAdapter = 
+                ((IPropertyValue) AdapterFactoryRegistry
+                    .getInstance().getAdapter(
+                            IPropertyValue.class, prop));
+            if (propertyValueAdapter != null) {
+                propertyValue = propertyValueAdapter
+                        .getStringRepresentation(prop);
+            } else {
+                propertyValue = String.valueOf(prop);
+            }
+        } catch (IllegalAccessException e) {
+            throw new RobotException(e);
+        } catch (InvocationTargetException e) {
+            throw new RobotException(e);
+        } catch (NoSuchMethodException e) {
+            throw new RobotException(e);
+        }
+
+        return propertyValue;
     }
     
     /**
@@ -46,36 +87,19 @@ public class PropertyUtil {
         Map<String, String> componentProperties = new TreeMap<String, String>();
         for (int i = 0; i < propertyDescriptors.length; i++) {
             PropertyDescriptor pd = propertyDescriptors[i];
+            String propertyName = pd.getName();
             try {
                 Method readMethod = pd.getReadMethod();
                 if (readMethod != null) {
-                    Object obj = 
-                            readMethod.invoke(currComp, new Object[]{});
-                    String value = String.valueOf(obj);
-                    if (value.length() > 200) {
-                        value = StringUtils.substring(
-                                value, 0, 200);
-                    }
-                    if (obj instanceof Character) {
-                        Character c = (Character)obj;
-                        if (c.charValue() == 0) {
-                            value = StringConstants.EMPTY;
-                        }
-                    }
-                    componentProperties.put(pd.getName(), value);
+                    componentProperties.put(propertyName, 
+                            getPropertyValue(currComp, propertyName));
                 } else {
-                    componentProperties.put(pd.getName(),
+                    componentProperties.put(propertyName,
                             "This property is not readable"); //$NON-NLS-1$
                 }
             } catch (IllegalArgumentException e) {
-                componentProperties.put(pd.getName(),
+                componentProperties.put(propertyName,
                         "Error"); //$NON-NLS-1$
-            } catch (IllegalAccessException e) {
-                componentProperties.put(pd.getName(),
-                        "Error accessing this property"); //$NON-NLS-1$
-            } catch (InvocationTargetException e) {
-                componentProperties.put(pd.getName(),
-                        "Error reading this property"); //$NON-NLS-1$
             }
         }
         return componentProperties;
