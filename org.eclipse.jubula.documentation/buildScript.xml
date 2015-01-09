@@ -31,7 +31,7 @@
     <target name="buildUserManual">
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="UserManual"/>
-            <property name="dir" value="manual"/>
+            <property name="dir" value="userManual"/>
         </ant>
     </target>
     

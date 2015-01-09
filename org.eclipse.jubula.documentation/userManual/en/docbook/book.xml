@@ -11,7 +11,7 @@
 <book id="userManual" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                     xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Functional Testing User Manual</title>
+  <title>Jubula User Manual</title>
 
   <xi:include href="introduction/chapter.xml"/>
   <xi:include href="samples/chapter.xml"/>
