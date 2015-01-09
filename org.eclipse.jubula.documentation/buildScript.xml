@@ -14,6 +14,130 @@
     <property name="manual.name" value="${name}"/>
     <property name="buildRoot" value="${basedir}" />
     
+    <macrodef name="xsltproc">
+        <attribute name="chunk.section.depth"/>
+        <sequential>
+            <exec executable="xsltproc" failonerror="true">
+                <arg value="--xinclude"/>
+                <arg value="--stringparam"/>
+                    <arg value="base.dir"/>
+                    <arg value="${html.path}"/>
+                <arg value="--stringparam"/>
+                    <arg value="html.stylesheet"/>
+                    <arg value="../css/style.css"/>
+                <arg value="--stringparam"/>
+                    <arg value="docbook.css.source"/>
+                    <arg value=""/>
+                <arg value="--stringparam"/>
+                    <arg value="section.autolabel"/>
+                    <arg value="1"/>
+                <arg value="--stringparam"/>
+                    <arg value="section.label.includes.component.label"/>
+                    <arg value="1"/>
+                <arg value="--stringparam"/>
+                    <arg value="make.clean.html"/>
+                    <arg value="1"/>
+                <arg value="--stringparam"/>
+                    <arg value="use.id.as.filename"/>
+                    <arg value="1"/>
+                <arg value="--stringparam"/>
+                    <arg value="generate.toc"/>
+                    <arg value="chapter toc
+                                section toc
+                                book    toc,title"/>
+                <arg value="--stringparam"/>
+                    <arg value="formal.title.placement"/>
+                    <arg value="figure    after
+                                example   after
+                                equation  after
+                                table     after
+                                procedure after"/>
+                <arg value="--stringparam"/>
+                    <arg value="toc.section.depth"/>
+                    <arg value="3"/>
+                <arg value="--stringparam"/>
+                    <arg value="generate.section.toc.level"/>
+                    <arg value="1"/>
+                <arg value="--stringparam"/>
+                    <arg value="collect.xref.targets"/>
+                    <arg value="yes"/>
+                <arg value="--stringparam"/>
+                    <arg value="current.docid"/>
+                    <arg value="${manual.name}"/>
+                <arg value="--stringparam"/>
+                    <arg value="target.database.document"/>
+                    <arg value="../../olinkdb.xml"/>
+                <arg value="--stringparam"/>
+                    <arg value="chunker.output.indent"/>
+                    <arg value="yes"/>
+                <arg value="--stringparam"/>
+                    <arg value="chunk.first.sections"/>
+                    <arg value="1"/>
+                <arg value="--stringparam"/>
+                    <arg value="chunk.section.depth"/>
+                    <arg value="@{chunk.section.depth}"/>
+                <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates.xsl"/>
+                <arg value="${dir}/en/docbook/book.xml"/>
+                <redirector output="output.log"/>
+            </exec>
+        </sequential>
+    </macrodef>
+    
+    <macrodef name="xsltprochtml">
+        <attribute name="section.autolabel"/>
+        <attribute name="section.label.includes.component.label"/>
+        <attribute name="generate.toc.book"/>
+        <attribute name="chapter.autolabel"/>
+        <attribute name="toc.section.depth"/>
+        <sequential>
+            <exec executable="xsltproc" failonerror="true" output="output.log">
+                <arg value="--xinclude"/>
+                <arg value="--stringparam"/>
+                    <arg value="base.dir"/>
+                    <arg value="${html.path}"/>
+                <arg value="--stringparam"/>
+                    <arg value="html.stylesheet"/>
+                    <arg value="../css/style.css"/>
+                <arg value="--stringparam"/>
+                    <arg value="docbook.css.source"/>
+                    <arg value=""/>
+                <arg value="--stringparam"/>
+                    <arg value="section.autolabel"/>
+                    <arg value="@{section.autolabel}"/>
+                <arg value="--stringparam"/>
+                    <arg value="section.label.includes.component.label"/>
+                    <arg value="@{section.label.includes.component.label}"/>
+                <arg value="--stringparam"/>
+                    <arg value="make.clean.html"/>
+                    <arg value="1"/>
+                <arg value="--stringparam"/>
+                    <arg value="generate.toc"/>
+                    <arg value="chapter nop
+                                book    @{generate.toc.book}"/>
+                <arg value="--stringparam"/>
+                    <arg value="chapter.autolabel"/>
+                    <arg value="@{chapter.autolabel}"/>
+                <arg value="--stringparam"/>
+                    <arg value="formal.title.placement"/>
+                    <arg value="figure    after
+                                example   after
+                                equation  after
+                                table     after
+                                procedure after"/>
+                <arg value="--stringparam"/>
+                    <arg value="toc.section.depth"/>
+                    <arg value="@{toc.section.depth}"/>
+                <arg value="--stringparam"/>
+                    <arg value="current.docid"/>
+                    <arg value="${manual.name}"/>
+                <arg value="-o"/>
+                    <arg value="${build.path}/index.html"/>
+                <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
+                <arg value="${dir}/en/docbook/book.xml"/>
+            </exec>
+        </sequential>
+    </macrodef>
+    
     <target name="buildDocumentation" depends="buildInstallationManual,
                                                buildUserManual,
                                                buildDeveloperManual,
@@ -51,9 +175,10 @@
     </target>
     
     <target name="buildReferenceManual">
-        <ant antfile="buildScript.xml" target="buildReferenceManualOnlineHelp" inheritall="false">
-            <property name="name" value="ReferenceNotes"/>
+        <ant antfile="buildScript.xml" target="buildReferenceManualHtml" inheritall="false">
+            <property name="name" value="ReferenceManual"/>
             <property name="dir" value="reference"/>
+            <property name="output" value="html"/>
         </ant>
     </target>
     
@@ -115,69 +240,7 @@
             </fileset>
         </copy>
         
-        <exec executable="xsltproc" failonerror="true">
-            <arg value="--xinclude"/>
-            <arg value="--stringparam"/>
-                <arg value="base.dir"/>
-                <arg value="${html.path}"/>
-            <arg value="--stringparam"/>
-                <arg value="html.stylesheet"/>
-                <arg value="../css/style.css"/>
-            <arg value="--stringparam"/>
-                <arg value="docbook.css.source"/>
-                <arg value=""/>
-            <arg value="--stringparam"/>
-                <arg value="section.autolabel"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="section.label.includes.component.label"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="make.clean.html"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="use.id.as.filename"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="generate.toc"/>
-                <arg value="chapter toc
-                            section toc
-                            book    toc,title"/>
-            <arg value="--stringparam"/>
-                <arg value="formal.title.placement"/>
-                <arg value="figure    after
-                            example   after
-                            equation  after
-                            table     after
-                            procedure after"/>
-            <arg value="--stringparam"/>
-                <arg value="toc.section.depth"/>
-                <arg value="3"/>
-            <arg value="--stringparam"/>
-                <arg value="generate.section.toc.level"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="collect.xref.targets"/>
-                <arg value="yes"/>
-            <arg value="--stringparam"/>
-                <arg value="current.docid"/>
-                <arg value="${manual.name}"/>
-            <arg value="--stringparam"/>
-                <arg value="target.database.document"/>
-                <arg value="../../olinkdb.xml"/>
-            <arg value="--stringparam"/>
-                <arg value="chunker.output.indent"/>
-                <arg value="yes"/>
-            <arg value="--stringparam"/>
-                <arg value="chunk.first.sections"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="chunk.section.depth"/>
-                <arg value="2"/>
-            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates.xsl"/>
-            <arg value="${dir}/en/docbook/book.xml"/>
-            <redirector output="output.log"/>
-        </exec>
+        <xsltproc chunk.section.depth="2"/>
         
         <loadfile property="output.log.msg" srcFile="output.log"/>
         <echo message="${output.log.msg}"/>
@@ -208,48 +271,11 @@
             </fileset>
         </copy>
         
-        <exec executable="xsltproc" failonerror="true" output="output.log">
-            <arg value="--xinclude"/>
-            <arg value="-o"/>
-                <arg value="${build.path}/index.html"/>
-            <arg value="--stringparam"/>
-                <arg value="base.dir"/>
-                <arg value="${html.path}"/>
-            <arg value="--stringparam"/>
-                <arg value="html.stylesheet"/>
-                <arg value="../css/style.css"/>
-            <arg value="--stringparam"/>
-                <arg value="docbook.css.source"/>
-                <arg value=""/>
-            <arg value="--stringparam"/>
-                <arg value="section.autolabel"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="section.label.includes.component.label"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="make.clean.html"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="generate.toc"/>
-                <arg value="chapter nop
-                            book    toc,title"/>
-            <arg value="--stringparam"/>
-                <arg value="formal.title.placement"/>
-                <arg value="figure    after
-                            example   after
-                            equation  after
-                            table     after
-                            procedure after"/>
-            <arg value="--stringparam"/>
-                <arg value="toc.section.depth"/>
-                <arg value="3"/>
-            <arg value="--stringparam"/>
-                <arg value="current.docid"/>
-                <arg value="${manual.name}"/>
-            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
-            <arg value="${dir}/en/docbook/book.xml"/>
-        </exec>
+        <xsltprochtml chapter.autolabel="1"
+                      generate.toc.book="toc,title"
+                      section.autolabel="1"
+                      section.label.includes.component.label="1"
+                      toc.section.depth="3"/>
         
         <antcall target="checkForErrors"/>
         <antcall target="checkImages"/>
@@ -271,42 +297,11 @@
             </fileset>
         </copy>
         
-        <exec executable="xsltproc" failonerror="true" output="output.log">
-            <arg value="--xinclude"/>
-            <arg value="-o"/>
-                <arg value="${build.path}/index.html"/>
-            <arg value="--stringparam"/>
-                <arg value="base.dir"/>
-                <arg value="${html.path}"/>
-            <arg value="--stringparam"/>
-                <arg value="html.stylesheet"/>
-                <arg value="../css/style.css"/>
-            <arg value="--stringparam"/>
-                <arg value="docbook.css.source"/>
-                <arg value=""/>
-            <arg value="--stringparam"/>
-                <arg value="make.clean.html"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="generate.toc"/>
-                <arg value="chapter nop
-                            book    nop"/>
-            <arg value="--stringparam"/>
-                <arg value="chapter.autolabel"/>
-                <arg value="0"/>
-            <arg value="--stringparam"/>
-                <arg value="formal.title.placement"/>
-                <arg value="figure    after
-                            example   after
-                            equation  after
-                            table     after
-                            procedure after'"/>
-            <arg value="--stringparam"/>
-                <arg value="current.docid"/>
-                <arg value="${manual.name}"/>
-            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates_html.xsl"/>
-            <arg value="${dir}/en/docbook/book.xml"/>
-        </exec>
+        <xsltprochtml chapter.autolabel="0"
+                      generate.toc.book="nop"
+                      section.autolabel="0"
+                      section.label.includes.component.label="0"
+                      toc.section.depth="0"/>
         
         <antcall target="checkForErrors"/>
         <antcall target="checkImages"/>
@@ -324,69 +319,7 @@
             </fileset>
         </copy>
         
-        <exec executable="xsltproc" failonerror="true">
-            <arg value="--xinclude"/>
-            <arg value="--stringparam"/>
-                <arg value="base.dir"/>
-                <arg value="${html.path}"/>
-            <arg value="--stringparam"/>
-                <arg value="html.stylesheet"/>
-                <arg value="../css/style.css"/>
-            <arg value="--stringparam"/>
-                <arg value="docbook.css.source"/>
-                <arg value=""/>
-            <arg value="--stringparam"/>
-                <arg value="section.autolabel"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="section.label.includes.component.label"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="make.clean.html"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="use.id.as.filename"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="generate.toc"/>
-                <arg value="chapter toc
-                            section toc
-                            book    toc,title"/>
-            <arg value="--stringparam"/>
-                <arg value="formal.title.placement"/>
-                <arg value="figure    after
-                            example   after
-                            equation  after
-                            table     after
-                            procedure after"/>
-            <arg value="--stringparam"/>
-                <arg value="toc.section.depth"/>
-                <arg value="3"/>
-            <arg value="--stringparam"/>
-                <arg value="generate.section.toc.level"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="collect.xref.targets"/>
-                <arg value="yes"/>
-            <arg value="--stringparam"/>
-                <arg value="current.docid"/>
-                <arg value="${manual.name}"/>
-            <arg value="--stringparam"/>
-                <arg value="target.database.document"/>
-                <arg value="../../olinkdb.xml"/>
-            <arg value="--stringparam"/>
-                <arg value="chunker.output.indent"/>
-                <arg value="yes"/>
-            <arg value="--stringparam"/>
-                <arg value="chunk.first.sections"/>
-                <arg value="1"/>
-            <arg value="--stringparam"/>
-                <arg value="chunk.section.depth"/>
-                <arg value="5"/>
-            <arg value="../org.eclipse.jubula.documentation.xsl/custom/jubulatemplates.xsl"/>
-            <arg value="${dir}/en/docbook/book.xml"/>
-            <redirector output="output.log"/>
-        </exec>
+        <xsltproc chunk.section.depth="5"/>
         
         <antcall target="checkForErrors"/>
         
@@ -396,6 +329,29 @@
         <delete dir="${html.path}/en"/>
         
         <antcall target="moveGeneratedFiles"/>
+    </target>
+    
+    <target name="buildReferenceManualHtml" depends="checkParam">
+        <copy todir="${build.path}/images">
+            <fileset dir="${dir}/en/docbook/images">
+                <include name="*.jpg" />
+                <include name="*.png" />
+            </fileset>
+        </copy>
+        
+        <copy todir="${build.path}/css">
+            <fileset dir="${dir}/en/docbook/css">
+                <include name="*.css" />
+            </fileset>
+        </copy>
+        
+        <xsltprochtml chapter.autolabel="1"
+                      generate.toc.book="toc,title"
+                      section.autolabel="1"
+                      section.label.includes.component.label="1"
+                      toc.section.depth="3"/>
+        
+        <antcall target="checkForErrors"/>
     </target>
     
     <target name="checkForErrors">

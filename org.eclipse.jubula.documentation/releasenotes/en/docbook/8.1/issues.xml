@@ -3,7 +3,7 @@
                                                                    xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Known issues and other information</title>
   <para>
-   <emphasis role=strong">We are "retiring" the name GUIdancer</emphasis>
+   <emphasis role="strong">We are "retiring" the name GUIdancer</emphasis>
   </para>
   <itemizedlist>
   	<listitem>
@@ -86,7 +86,7 @@
     </listitem>
   </itemizedlist>
   <para>
-  	<emphasis role="Strong">Updated JRE in the Windows and Linux installers</emphasis>
+  	<emphasis role="strong">Updated JRE in the Windows and Linux installers</emphasis>
   </para>
   <itemizedlist>
   	<listitem>
