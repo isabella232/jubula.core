@@ -11,10 +11,12 @@
 package org.eclipse.jubula.rc.common.adapter;
 
 import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.adaptable.IPropertyValue;
 import org.eclipse.jubula.rc.javafx.adapter.BackgroundPropertyValueAdapter;
+import org.eclipse.jubula.rc.javafx.adapter.BorderPropertyValueAdapter;
 
 /**
  * This is the adapter factory for all JavaFX components non-primitive property
@@ -27,7 +29,7 @@ public class JavaFXPropertyValueAdapterFactory implements IAdapterFactory {
      * the supported classes
      */
     private static final Class[] SUPPORTED_CLASSES = new Class[] { 
-        Background.class };
+        Background.class, Border.class };
 
     @Override
     public Class[] getSupportedClasses() {
@@ -40,6 +42,8 @@ public class JavaFXPropertyValueAdapterFactory implements IAdapterFactory {
         if (targetAdapterClass.isAssignableFrom(IPropertyValue.class)) {
             if (objectToAdapt instanceof Background) {
                 returnvalue = new BackgroundPropertyValueAdapter();
+            } else if (objectToAdapt instanceof Border) {
+                returnvalue = new BorderPropertyValueAdapter();
             }
         }
         return returnvalue;
