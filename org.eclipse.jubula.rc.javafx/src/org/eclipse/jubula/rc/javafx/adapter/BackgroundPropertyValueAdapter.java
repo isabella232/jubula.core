@@ -11,6 +11,8 @@
 
 package org.eclipse.jubula.rc.javafx.adapter;
 
+import java.util.Iterator;
+
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 
@@ -26,16 +28,17 @@ public class BackgroundPropertyValueAdapter
     /** {@inheritDoc} */
     public String getStringRepresentation(Background b) {
         ToStringBuilder tsb = new ToStringBuilder(b);
-
-        int i = 0;
-        for (BackgroundFill backgroundFill : b.getFills()) {
-            StringBuilder sb = new StringBuilder("fills");
-            sb.append(i++);
-            sb.append(" ");
+        
+        StringBuilder sb = new StringBuilder("Fills=");
+        Iterator<BackgroundFill> fillIterator = b.getFills().iterator();
+        while (fillIterator.hasNext()) {
+            BackgroundFill backgroundFill = fillIterator.next();
             sb.append(backgroundFill.getFill().toString());
-            sb.append(";");
-            tsb.append(sb.toString());
+            if (fillIterator.hasNext()) {
+                sb.append(",");
+            }
         }
+        tsb.append(sb.toString());
         
         return tsb.toString();
     }

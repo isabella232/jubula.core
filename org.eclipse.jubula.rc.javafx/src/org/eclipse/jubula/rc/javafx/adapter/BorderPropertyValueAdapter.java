@@ -11,7 +11,10 @@
 
 package org.eclipse.jubula.rc.javafx.adapter;
 
+import java.util.Iterator;
+
 import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.rc.common.adaptable.IPropertyValue;
@@ -25,7 +28,33 @@ public class BorderPropertyValueAdapter
     /** {@inheritDoc} */
     public String getStringRepresentation(Border b) {
         ToStringBuilder tsb = new ToStringBuilder(b);
-
+        Iterator<BorderStroke> strokeIterator = b.getStrokes().iterator();
+        while (strokeIterator.hasNext()) {
+            BorderStroke stroke = strokeIterator.next();
+            tsb.append("LeftStroke: "
+                    + "Color=" + stroke.getLeftStroke().toString()
+                    + ";"
+                    + "Style=" + stroke.getLeftStyle().toString()
+            );
+            tsb.append("RightStroke: "
+                    + "Color=" + stroke.getRightStroke().toString()
+                    + ";"
+                    + "Style=" + stroke.getRightStyle().toString()
+            );
+            tsb.append("TopStroke: "
+                    + "Color=" + stroke.getTopStroke().toString()
+                    + ";"
+                    + "Style=" + stroke.getTopStyle().toString()
+            );
+            tsb.append("BottomStroke: "
+                    + "Color=" + stroke.getBottomStroke().toString()
+                    + ";"
+                    + "Style=" + stroke.getBottomStyle().toString()
+            );
+            if (strokeIterator.hasNext()) {
+                tsb.append(" | ");
+            }
+        }
         return tsb.toString();
     }
 }
