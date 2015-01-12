@@ -563,9 +563,9 @@ public class ClientTestImpl implements IClientTest {
                 new ITestExecutionEventListener() {
                     /** {@inheritDoc} */
                     public void stateChanged(TestExecutionEvent event) {
-                        testExecutionState.set(event.getState().ordinal());
-                        if (event.getState() 
-                                == State.TEST_EXEC_FAILED) {
+                        State state = event.getState();
+                        testExecutionState.set(state.ordinal());
+                        if (state == State.TEST_EXEC_FAILED) {
                             if (event.getException() instanceof JBException) {
                                 JBException e = (JBException)
                                     event.getException();
