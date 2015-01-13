@@ -19,6 +19,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -47,7 +48,12 @@ public abstract class AbstractDeleteTreeItemHandler
     protected boolean confirmDelete(IStructuredSelection sel) {
         List<String> itemNames = new ArrayList<String>();
         for (Object obj : sel.toList()) {
-            if (obj instanceof INodePO) {
+            if (obj instanceof IRefTestSuitePO) {
+                IRefTestSuitePO refTS = (IRefTestSuitePO) obj;
+                itemNames.add(
+                        refTS.getName() != null
+                        ? refTS.getName() : refTS.getTestSuite().getName());
+            } else if (obj instanceof INodePO) {
                 itemNames.add(((INodePO)obj).getName());
             } else {
                 String name = getName(obj);
