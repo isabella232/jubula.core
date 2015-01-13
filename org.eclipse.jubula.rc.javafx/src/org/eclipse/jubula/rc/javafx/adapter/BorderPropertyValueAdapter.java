@@ -16,7 +16,6 @@ import java.util.Iterator;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.rc.common.adaptable.IPropertyValue;
 
 /**
@@ -27,34 +26,37 @@ public class BorderPropertyValueAdapter
     
     /** {@inheritDoc} */
     public String getStringRepresentation(Border b) {
-        ToStringBuilder tsb = new ToStringBuilder(b);
+        StringBuilder sb = new StringBuilder();
         Iterator<BorderStroke> strokeIterator = b.getStrokes().iterator();
         while (strokeIterator.hasNext()) {
             BorderStroke stroke = strokeIterator.next();
-            tsb.append("LeftStroke: "
+            sb.append("LeftStroke: "
                     + "Color=" + stroke.getLeftStroke().toString()
-                    + ";"
+                    + ","
                     + "Style=" + stroke.getLeftStyle().toString()
             );
-            tsb.append("RightStroke: "
+            sb.append("; ");
+            sb.append("RightStroke: "
                     + "Color=" + stroke.getRightStroke().toString()
-                    + ";"
+                    + ","
                     + "Style=" + stroke.getRightStyle().toString()
             );
-            tsb.append("TopStroke: "
+            sb.append("; ");
+            sb.append("TopStroke: "
                     + "Color=" + stroke.getTopStroke().toString()
-                    + ";"
+                    + ","
                     + "Style=" + stroke.getTopStyle().toString()
             );
-            tsb.append("BottomStroke: "
+            sb.append("; ");
+            sb.append("BottomStroke: "
                     + "Color=" + stroke.getBottomStroke().toString()
-                    + ";"
+                    + ","
                     + "Style=" + stroke.getBottomStyle().toString()
             );
             if (strokeIterator.hasNext()) {
-                tsb.append(" | ");
+                sb.append(" | ");
             }
         }
-        return tsb.toString();
+        return sb.toString();
     }
 }

@@ -16,7 +16,6 @@ import java.util.Iterator;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.rc.common.adaptable.IPropertyValue;
 
 /**
@@ -27,7 +26,6 @@ public class BackgroundPropertyValueAdapter
     
     /** {@inheritDoc} */
     public String getStringRepresentation(Background b) {
-        ToStringBuilder tsb = new ToStringBuilder(b);
         
         StringBuilder sb = new StringBuilder("Fills=");
         Iterator<BackgroundFill> fillIterator = b.getFills().iterator();
@@ -37,9 +35,7 @@ public class BackgroundPropertyValueAdapter
             if (fillIterator.hasNext()) {
                 sb.append(",");
             }
-        }
-        tsb.append(sb.toString());
-        
-        return tsb.toString();
+        }        
+        return sb.toString();
     }
 }
