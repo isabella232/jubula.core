@@ -148,11 +148,11 @@
         </figure>
         <para>
             In order to create an executable CAP instance (see <xref linkend="creating-cap-instances" />) you require a valid
-            <emphasis>org.eclipse.jubula.tools.ComponentIdentifier</emphasis> instance. Do get that you need to
+            <emphasis>org.eclipse.jubula.tools.ComponentIdentifier</emphasis> instance. To get that, you need to
         </para>
         <orderedlist>
             <listitem>
-                <para>Start the ITE, open the project and the Object Mapping Editor for the AUT you wan't to export the Object Map for.
+                <para>Start the ITE, open the project and the Object Mapping Editor for the AUT you wan't to export the Object Map for. (Or, if you are starting from scratch, firstly create a new project and do the object mapping there.)
                 </para>
             </listitem>
             <listitem>
