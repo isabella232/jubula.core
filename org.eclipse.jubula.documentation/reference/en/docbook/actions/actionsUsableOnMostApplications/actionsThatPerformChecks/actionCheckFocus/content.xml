@@ -12,5 +12,19 @@
   <?dbhtml dir="actionCheckFocus"?>
   <title>Check Focus</title>
   
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether the graphics component currently has the focus.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When a component has focus, it can receive input.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
   
 </section>

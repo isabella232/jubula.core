@@ -13,6 +13,12 @@
   
   <para><emphasis>Check Existence of Entry by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action tests whether a value you specify is contained in the list.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

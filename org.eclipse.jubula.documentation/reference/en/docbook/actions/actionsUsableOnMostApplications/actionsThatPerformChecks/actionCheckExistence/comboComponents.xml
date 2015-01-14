@@ -13,6 +13,12 @@
   
   <para><emphasis>Check Existence of Entry by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether a value you enter is contained in the combo box.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

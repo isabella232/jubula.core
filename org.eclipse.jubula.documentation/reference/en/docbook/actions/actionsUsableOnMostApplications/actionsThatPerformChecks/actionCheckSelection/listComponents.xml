@@ -13,11 +13,33 @@
   
   <para><emphasis>Check Selection of Entry by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to test whether an item in a list is currently selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item you want to test is given using its index.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Selection of Entry by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to test whether an item in a list is currently selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item you want to test is given using its value (name).
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

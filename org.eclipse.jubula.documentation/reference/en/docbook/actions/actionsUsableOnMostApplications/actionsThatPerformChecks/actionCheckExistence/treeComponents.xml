@@ -9,15 +9,47 @@
 <section id="actionCheckExistenceTreeComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Table Components</title>
+  <title>Tree Components</title>
   
   <para><emphasis>Check Existence of Node by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action checks that a node in the tree exists.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node you want to check as an indexpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For example, checking a textpath of ''1/2/3'' would check that the first node in the tree has at least 2 child nodes, and that the 2nd child node has at least 3 child nodes.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Existence of Node by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action checks that a node in the tree exists.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node you want to check as a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For example, checking a textpath of ''Dog/Bird/Cat'' would check whether an entry ''Cat'' exists beneath an entry for ''Bird'' in the tree, which furthermore lies beneath an entry ''Dog''.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

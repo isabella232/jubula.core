@@ -13,6 +13,17 @@
   
   <para><emphasis>Check Text</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether the text in a component matches a given value.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
+  
+  <para role="tip">
+    If you use this action on a table, then the currently selected cell will be checked.
+  </para>
+  
 </section>

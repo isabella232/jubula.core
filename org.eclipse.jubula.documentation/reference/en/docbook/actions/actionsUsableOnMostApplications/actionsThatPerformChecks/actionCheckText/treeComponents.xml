@@ -13,11 +13,28 @@
   
   <para><emphasis>Check Text (Mouse Position)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the text on a node in a tree based on the current position of the cursor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This can be used in conjunction with the action "select node" with a click count of 0.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Text of Selected Node</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the text in a selected node or selected nodes in the tree.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

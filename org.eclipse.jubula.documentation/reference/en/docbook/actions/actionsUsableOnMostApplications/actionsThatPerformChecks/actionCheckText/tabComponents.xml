@@ -13,6 +13,17 @@
   
   <para><emphasis>Check Text of Tab by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the text of a tab in a tabbed pane.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the index of the tab you want to check and the text you expect.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

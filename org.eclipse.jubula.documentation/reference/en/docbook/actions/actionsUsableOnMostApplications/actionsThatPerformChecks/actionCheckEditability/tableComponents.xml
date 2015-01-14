@@ -13,17 +13,52 @@
   
   <para><emphasis>Check Editability (Specify Cell)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check if a cell in a table is editable.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the cell you want to check and whether you expect it to be editable or not.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
   <para><emphasis>Check Editability of Cell (Mouse Position)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether a table cell at the current mouse position is editable or not.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
   <para><emphasis>Check Editability of Selected Cell</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether the currently selected table cell is editable or not.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
 </section>

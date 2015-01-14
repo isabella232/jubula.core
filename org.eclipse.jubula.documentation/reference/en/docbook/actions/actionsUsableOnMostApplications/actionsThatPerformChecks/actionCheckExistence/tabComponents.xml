@@ -13,6 +13,17 @@
   
   <para><emphasis>Check Existence of Tab</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether a tab in a tabbed pane exists.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The tab can be checked based on its title or its index.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

@@ -13,11 +13,43 @@
   
   <para><emphasis>Check Selection of Checkbox at Mouse Position</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action checks whether a checkbox in the first cell of a table is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To use this action, the current mouse position must be over the correct cell. You can achieve this using the select actions, either with 0 clicks or with 1 click.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is currently only supported for SWT/RCP AUT's.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Selection of Checkbox in Selected Row</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action checks whether a checkbox in the first cell of a table is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To use this action, the row must already be selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is currently only supported for SWT/RCP AUT's.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

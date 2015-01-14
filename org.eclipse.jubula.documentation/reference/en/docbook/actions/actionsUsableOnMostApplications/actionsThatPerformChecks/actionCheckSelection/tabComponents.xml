@@ -13,11 +13,33 @@
   
   <para><emphasis>Check Selection of Tab by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check if a tab you specify is currently selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the tab using its index.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Selection of Tab by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check if the tab you specify is currently selected/activated.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the tab using its title.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

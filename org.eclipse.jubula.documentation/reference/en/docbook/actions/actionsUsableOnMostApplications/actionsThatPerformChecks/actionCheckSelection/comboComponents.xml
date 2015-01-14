@@ -13,6 +13,12 @@
   
   <para><emphasis>Check Selection of Entry by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to test whether the item at the given index is currently selected in the combo box.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

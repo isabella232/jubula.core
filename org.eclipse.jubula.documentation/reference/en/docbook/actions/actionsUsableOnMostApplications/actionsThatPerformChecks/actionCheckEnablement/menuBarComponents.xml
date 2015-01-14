@@ -13,12 +13,34 @@
   
   <para><emphasis>Check Enablement of Entry by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the enablement status of an item in a menu bar.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item to check is given using the indexpath to the item.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Enablement of Entry by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an item in a menu is enabled.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item to check is given using the textpath to the item.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>

@@ -13,6 +13,12 @@
   
   <para><emphasis>Check Existence of Window</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the existence of a window based on its title. 
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

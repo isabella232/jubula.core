@@ -13,11 +13,37 @@
   
   <para><emphasis>Check Text (Mouse Position)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the text in a cell in a table based on the current position of the cursor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This can be used in conjunction with the action "select cell" with a click count of 0.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
   <para><emphasis>Check Text (Specify Cell)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether the text in a cell matches a given value.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the text you want to check and the row and column values for the cell.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

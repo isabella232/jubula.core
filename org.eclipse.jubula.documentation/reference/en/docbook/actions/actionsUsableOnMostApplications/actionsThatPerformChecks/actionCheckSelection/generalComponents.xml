@@ -13,21 +13,122 @@
   
   <para><emphasis>Check Selection of Context Menu by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an item in a context menu is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the menupath to the item, and whether you expect it to be selected or not.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The menupath is given as an indexpath.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
   <para><emphasis>Check Selection of Context Menu by Indexpath (Specify Position)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an item in a context menu is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item to check is given using the indexpath to the item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action will open the context menu at the position you specify in the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For some components (e.g. trees), opening a context menu somewhere else in the component can have a different effect than when you open the context menu on a specific node.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you want to open or check a context menu on a selected node or cell in a component, then use the action which selects the context menu without specifying the coordinate position.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
   <para><emphasis>Check Selection of Context Menu by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an item in a context menu is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the menupath to the item, and whether you expect it to be selected or not.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The menupath is given as a textpath.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
   <para><emphasis>Check Selection of Context Menu by Textpath (Specify Position)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an item in a context menu is selected. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item to check is given using the textpath to the item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action will open the context menu at the position you specify in the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For some components (e.g. trees), opening a context menu somewhere else in the component can have a different effect than when you open the context menu on a specific node.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you want to open or check a context menu on a selected node or cell in a component, then use the action which selects the context menu without specifying the coordinate position.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
+  </para>
+  
 </section>

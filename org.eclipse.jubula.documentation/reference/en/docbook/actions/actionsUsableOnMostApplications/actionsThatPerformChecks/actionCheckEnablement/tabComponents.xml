@@ -13,12 +13,34 @@
   
   <para><emphasis>Check Enablement of Tab by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check if a tab you specify is currently enabled (selectable/visible).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the tab using its index.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Enablement of Tab by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check if a tab you specify is currently enabled (selectable/visible).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the tab using its name.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>
