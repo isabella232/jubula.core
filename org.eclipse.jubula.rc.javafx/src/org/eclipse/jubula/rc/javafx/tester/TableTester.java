@@ -138,7 +138,8 @@ public class TableTester extends AbstractTableTester {
                         List<? extends TableCell> tCells = ComponentHandler
                                 .getAssignableFrom(TableCell.class);
                         for (TableCell<?, ?> cell : tCells) {
-                            if (NodeBounds.getAbsoluteBounds(cell).contains(p)
+                            if (NodeBounds.checkIfContains(
+                                    new Point2D(p.x, p.y), cell)
                                     && cell.getTableView().equals(table)) {
                                 TableColumn cellColumn = cell
                                         .getTableColumn();
