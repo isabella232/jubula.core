@@ -13,12 +13,34 @@
   
   <para><emphasis>Select Entry by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select an item from a menu bar.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item you want to select is given using the indexpath to the item.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Select Entry by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select an item from a menu bar.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item you want to select is given using the textpath to the item.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>

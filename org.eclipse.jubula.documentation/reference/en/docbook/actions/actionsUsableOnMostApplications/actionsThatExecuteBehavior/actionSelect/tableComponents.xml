@@ -13,17 +13,105 @@
   
   <para><emphasis>Select Cell</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select a cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the cell by giving the row number and column header or index.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Searching for the cell.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Placing the cursor in indicated cell, at the position you give.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Clicking as many times as you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Select Value from Column</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action lets you select a cell in a table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To select the cell, you enter the column the cell is in and the value contained in the cell you want to select.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Only the first cell which matches the criteria will be selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by clicking on the specified cell.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Select Value from Row</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action lets you select a cell in a table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To select the cell, you enter the row number the cell is in and the value contained in the cell you want to select.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Only the first cell which matches the criteria will be selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by clicking on the specified cell.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
 </section>

@@ -13,12 +13,59 @@
   
   <para><emphasis>Select Tab by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select/activate a tab.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You choose the tab to select by giving its index.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by clicking on the tab whose index you enter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In RCP AUT's , the index of the tab refers to the order in which the tabs were opened. So the first tab to be opened has an index of "1". This action selects the tab even if the tab with the given index is currently not visible (e.g. in the editor view).
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Select Tab by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select/activate a tab.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You choose the tab to select by giving its title.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by clicking on the tab whose title you enter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In RCP AUT's , this will also select tabs which are not currently visible (e.g. in the editor area).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If more than one tab name corresponds to the value, the the tab with this value which was opened first will be selected.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>

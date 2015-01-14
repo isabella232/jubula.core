@@ -13,7 +13,61 @@
   
   <para><emphasis>Move</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to move from a currently selected node to another node.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify in which direction you want to move, and how far (number of nodes).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You also specify how many clicks should be made on the new node, if any.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is useful for navigating in a tree.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                searching for the node to move to
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                placing the cursor on this node
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                clicking the amount of times you specify
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The movement is carried out relative to the currently selected node.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If no node is currently selected, the test will fail.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>

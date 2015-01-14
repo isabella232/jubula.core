@@ -13,11 +13,53 @@
     
   <para><emphasis>Drag</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the component you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is held, and the component is dragged.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must follow this action with a drop action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drop</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a dragged item onto the component you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button is let loose, and the component is dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a drag action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

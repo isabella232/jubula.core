@@ -16,6 +16,17 @@
   
   <para><emphasis role="strong">Click in active window</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to send one or more clicks with any mouse button to the currently active window.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can specify where to click, how many times, and with which mouse button.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>
