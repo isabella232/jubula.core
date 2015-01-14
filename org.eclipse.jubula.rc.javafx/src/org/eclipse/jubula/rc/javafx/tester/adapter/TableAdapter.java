@@ -290,7 +290,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                 "getRowFromString", new Callable<Integer>() { //$NON-NLS-1$
                     @Override
                     public Integer call() throws Exception {
-                        int rowInt = -2;
+                        Integer rowInt = null;
                         TableView<?> table = getRealComponent();
                         try {
                             rowInt = IndexConverter
@@ -315,7 +315,14 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                 }
                             }
                         }
-                        return new Integer(rowInt);
+                        if (rowInt == null) {
+                            throw new StepExecutionException(
+                                "Row not found", //$NON-NLS-1$
+                                EventFactory
+                                        .createActionError(TestErrorEvent.
+                                                NOT_FOUND));
+                        }
+                        return rowInt;
                     }
                 });
         return result.intValue();
