@@ -15,8 +15,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -224,34 +226,36 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
             IObjectMappingCategoryPO unmappedTechNames) {
         
         IObjectMappingCategoryPO category = null;
-        if (!(editor.getTreeViewer().getSelection() 
+        TreeViewer treeViewer = editor.getTreeViewer();
+        if (treeViewer != null && ((treeViewer.getSelection() 
                 instanceof IStructuredSelection)
-            || !(editor.getTreeViewer().getContentProvider() 
-                instanceof ITreeContentProvider)) {
-            return;
-        }
-        IStructuredSelection selection = 
-            (IStructuredSelection)editor.getTreeViewer().getSelection();
-        Object node;
-        if (selection.size() == 1) {
-            node = selection.getFirstElement();
-            if (node instanceof IObjectMappingCategoryPO
-                && OMEditorDndSupport.getSection(
-                    (IObjectMappingCategoryPO)node).equals(unmappedTechNames)) {
+                || (treeViewer.getContentProvider() 
+                        instanceof ITreeContentProvider))) {
+            IStructuredSelection selection = (IStructuredSelection) treeViewer
+                    .getSelection();
+            Object node;
+            if (selection.size() == 1) {
+                node = selection.getFirstElement();
+                if (node instanceof IObjectMappingCategoryPO
+                        && OMEditorDndSupport.getSection(
+                                (IObjectMappingCategoryPO) node).equals(
+                                unmappedTechNames)) {
 
-                category = (IObjectMappingCategoryPO)node;
-            } else if (node instanceof IObjectMappingAssoziationPO
-                && OMEditorDndSupport.getSection(
-                    (IObjectMappingAssoziationPO)node).equals(
-                            unmappedTechNames)) {
-                
-                category = ((IObjectMappingAssoziationPO)node).getCategory();
-            }
+                    category = (IObjectMappingCategoryPO) node;
+                } else if (node instanceof IObjectMappingAssoziationPO
+                        && OMEditorDndSupport.getSection(
+                                (IObjectMappingAssoziationPO) node).equals(
+                                unmappedTechNames)) {
 
-            if (category != null) {
-                editor.getOmEditorBP().setCategoryToCreateIn(category);
-            } else {
-                ObjectMappingEventDispatcher.setCategoryToCreateIn(null);
+                    category = ((IObjectMappingAssoziationPO) node)
+                            .getCategory();
+                }
+
+                if (category != null) {
+                    editor.getOmEditorBP().setCategoryToCreateIn(category);
+                } else {
+                    ObjectMappingEventDispatcher.setCategoryToCreateIn(null);
+                }
             }
         }
         if (!AutAgentRegistration.getInstance().getRegisteredAuts()
@@ -261,20 +265,20 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
                     MessageIDs.E_UNEXPECTED_EXCEPTION), null, new String[]{
                         message});
         } else {
-            int mod = Plugin.getDefault().getPreferenceStore().
-                getInt(Constants.MAPPING_MOD_KEY);
-            int key = Plugin.getDefault().getPreferenceStore().
-                getInt(Constants.MAPPING_TRIGGER_KEY);
-            int type = Plugin.getDefault().getPreferenceStore().
-                getInt(Constants.MAPPING_TRIGGER_TYPE_KEY);
+            IPreferenceStore preferenceStore = Plugin.getDefault()
+                    .getPreferenceStore();
+            int mod = preferenceStore.getInt(Constants.MAPPING_MOD_KEY);
+            int key = preferenceStore.getInt(Constants.MAPPING_TRIGGER_KEY);
+            int type = preferenceStore
+                    .getInt(Constants.MAPPING_TRIGGER_TYPE_KEY);
             final String toolkit = editor.getAut().getToolkit();
             if (toolkit.equals(CommandConstants.SWT_TOOLKIT)
                     || toolkit.equals(CommandConstants.RCP_TOOLKIT)) {
-                
+
                 mod = KeyConverter.convertSwingStateMask(mod);
                 key = KeyConverter.convertSwingToSwt(key);
             }
-            
+
             Job startObjectMappingModeJob = new StartObjectMappingModeJob(
                     editor, autId, mod, key, category, type);
             startObjectMappingModeJob.setSystem(true);
