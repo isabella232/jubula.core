@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.adaptable.IPropertyValue;
@@ -29,6 +30,8 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
  * @created 16.10.2013
  */
 public class PropertyUtil {
+    /** invalid XML character */
+    public static final char[] INVALID_XML_CHARS = { 0 };
     
     /** Constructor */
     private PropertyUtil() {
@@ -69,7 +72,13 @@ public class PropertyUtil {
         } catch (NoSuchMethodException e) {
             throw new RobotException(e);
         }
-
+        
+        if (StringUtils.containsAny(propertyValue, INVALID_XML_CHARS)) {
+            for (Character c : INVALID_XML_CHARS) {
+                propertyValue = StringUtils.remove(propertyValue, c);
+            }
+        }
+        
         return propertyValue;
     }
     
