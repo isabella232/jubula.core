@@ -2,6 +2,18 @@
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
+    <para>
+    <emphasis role="strong">API for Java-based UI test automation</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        We've created a whole new layer in the ITE that allows you to write functional UI tests
+        via an official Java client API. Detailed information of the architecture and how to start
+        can be found in the Developer Manual.
+      </para>
+    </listitem>
+  </itemizedlist>
   <para>
     <emphasis role="strong">New option for reporting to ALM systems:
     update fields</emphasis>
@@ -19,6 +31,9 @@
         This allows you to automatically change e.g. the status of
         tasks based on test results.
       </para>
+    </listitem>
+    <listitem>
+    There is a property inspector to let you see what properties a specific task has.
     </listitem>
   </itemizedlist>
   <para>
@@ -150,14 +165,18 @@
     </listitem>
   </itemizedlist>
   <para>
-    <emphasis role="strong">New actions supported in iOS</emphasis>
+    <emphasis role="strong">Description View in the ITE</emphasis>
   </para>
   <itemizedlist>
     <listitem>
       <para>
-        You can now use the following actions in iOS tests:
-        Application Input Text, Click in Component.
+        You can now enter descriptions for nodes (Test Cases, Test Suites, Test Jobs) in your tests. The
+        descriptions are entered using a markup language, that you can select in the Project Properties.
       </para>
+    </listitem>
+    <listitem>
+    Once you have entered descriptions, you can see them via the Description View when you select 
+    a node with a description.
     </listitem>
   </itemizedlist>
   <para>
@@ -252,18 +271,6 @@
         In the Search Dialog, you can now search for nodes in the
         Project based on their name, their comment and/or their Task
         ID.
-      </para>
-    </listitem>
-  </itemizedlist>
-  <para>
-    <emphasis role="strong">API for Java-based UI test automation</emphasis>
-  </para>
-  <itemizedlist>
-    <listitem>
-      <para>
-        We've created a whole new layer in the ITE that allows you to write functional UI tests
-        via an official Java client API. Detailed information of the architecture and how to start
-        can be found in the Developer Manual.
       </para>
     </listitem>
   </itemizedlist>

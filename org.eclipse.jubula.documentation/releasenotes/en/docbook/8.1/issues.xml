@@ -3,6 +3,21 @@
                                                                    xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Known issues and other information</title>
   <para>
+   <emphasis role=strong">We are "retiring" the name GUIdancer</emphasis>
+  </para>
+  <itemizedlist>
+  	<listitem>
+  	<para>
+  	To reduce confusion when working with the standalone versions, we will be retiring the
+  	name GUIdancer in the coming releases. 
+  	</para>
+  	<para>
+  	This reflects the situation that the Jubula and GUIdancer standalones have been 
+  	functionally identical for over a year and only differ in their branding.
+  	</para>
+  	</listitem>
+  </itemizedlist>
+  <para>
     <emphasis role="strong">Support for Java 8 as a runtime
     environment</emphasis>
   </para>
