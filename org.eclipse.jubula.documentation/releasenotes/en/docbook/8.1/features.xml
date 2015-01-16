@@ -91,6 +91,17 @@
     </listitem>
   </itemizedlist>
   <para>
+    <emphasis role="strong">Transformed components in JavaFX can now be tested</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now test components in JavaFX that have been transformed, e.g. via scaling, 
+        clipping, translation, rotation and shearing.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
   <emphasis role="strong">Support for menu buttons in JavaFX
   </emphasis>
   </para>
@@ -254,6 +265,22 @@
         via an official Java client API. Detailed information of the architecture and how to start
         can be found in the Developer Manual.
       </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">Mouse position now shown on screenshots on error</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Automatic screenshots that are taken when an error occurs now show the mouse position.
+      </para>
+    </listitem>
+    <listitem>
+    	<para>
+    	The mouse position is shown as a square inverted-color area, with the middle pixel being 
+    	the position of the mouse pointer.
+    	</para>
     </listitem>
   </itemizedlist>
   <para>

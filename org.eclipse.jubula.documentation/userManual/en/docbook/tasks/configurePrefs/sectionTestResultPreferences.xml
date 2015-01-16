@@ -51,10 +51,18 @@
         when a test encounters an error. Screenshots are
         automatically saved in the database and can be viewed using
         the Image View when you select the failed Test Step in the
-        Test Result View. <para role="warning">Screenshots are only taken of the
+        Test Result View.
+        </para>
+        <para>
+        You can see the position of the mouse pointer on the screenshot. 
+        The mouse position is shown as a square inverted-color area, 
+        with the middle pixel being the position of the mouse pointer.
+        To reproduce the original image, you select the area and invert 
+        the colors in an image-editing tool.
+        </para>
+         <para role="warning">Screenshots are only taken of the
         primary monitor. Multiple monitors are not supported for
         screenshots.</para>
-      </para>
     </listitem>
     <listitem>
       <para>
