@@ -160,8 +160,7 @@ public class ControlFactory {
         String markupLang = GeneralStorage.getInstance()
                 .getProject().getMarkupLanguage();
         if (StringUtils.isBlank(markupLang)) {
-            markupLang = WikiText
-                    .getMarkupLanguageNameForFilename(Constants.DEFAULT_MARKUP);
+            markupLang = Constants.DEFAULT_MARKUP;
         }
         DirectCombo<String> combo = new DirectCombo<String>(parent, SWT.NONE,
                 values, displayValues, false, true);
