@@ -13,12 +13,88 @@
   
   <para><emphasis>Input Text (Specify Cell)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to enter a text into a cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the text to enter and the cell to enter it into.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Clicking once on the cell to activate it.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the click does not activate the cell, the cell is double-clicked.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Entering the text in the cell.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Replace Text (Specify Cell)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to replace any text already in the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The text you want to enter is given as a parameter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Selecting the text in the cell.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Entering the text you specified.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This means that any previous text in the component is deleted.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit
   </para>
   
 </section>

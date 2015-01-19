@@ -12,5 +12,23 @@
   <?dbhtml dir="actionWaitForWindowActivation"?>
   <title>Wait for Window Activation</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action waits for the window you name to become active. A window is active only when it is the currently selected window.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once the window is active (or if the window is already active when this test step begins), the test continues.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the window does not become active, the action fails.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

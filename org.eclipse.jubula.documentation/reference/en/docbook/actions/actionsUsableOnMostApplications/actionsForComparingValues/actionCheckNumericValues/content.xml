@@ -12,5 +12,23 @@
   <?dbhtml dir="actionCheckNumericValues"?>
   <title>Check Numeric Values</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to compare two numeric values during your test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action can be used with the start timer and read timer actions to compare the time difference to a value you specify (i.e. to measure the performance of your application).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also compare other variables you have read from your application with this action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

@@ -13,11 +13,42 @@
   
   <para><emphasis>Store Property</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to store the value of a specific property of a component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can then use this value later in your test, or check whether two values you store are the same or different using the actions to Check Numeric Values and Check String Values on the Application component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Every component has properties (attributes). These can include the text size, the size (width/height) of the component, the color etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must first find out the name of the property you want to check, and then what value it should have. You can find out what properties and values a component has in the Object Mapping Mode (for Swing and SWT/RCP AUT's ). When you collect a component, its property information is displayed in the Properties View .
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    If the property is <emphasis>private</emphasis>, it cannot be stored, the remote control component has no access to it.
   </para>
   
   <para><emphasis>Store Value (on components that show a text)</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to read the value out of a field so that you can use it as data for other Test Steps .
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

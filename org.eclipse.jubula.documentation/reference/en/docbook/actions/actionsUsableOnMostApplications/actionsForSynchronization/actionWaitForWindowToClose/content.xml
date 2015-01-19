@@ -12,5 +12,23 @@
   <?dbhtml dir="actionWaitForWindowToClose"?>
   <title>Wait for Window to Close</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action waits for the window you name to close.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once the window is closed (or if no open window with a corresponding title can be found), the test continues.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If a window is found and does not close within the timeout period, the action fails.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

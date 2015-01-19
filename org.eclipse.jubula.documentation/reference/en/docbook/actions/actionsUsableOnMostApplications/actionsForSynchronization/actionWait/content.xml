@@ -12,5 +12,23 @@
   <?dbhtml dir="actionWait"?>
   <title>Wait</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Sometimes it is necessary to wait for a period of time before continuing.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use this action to tell the AUT Agent to wait for a given amount of time before continuing with the next Test Step.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There are also actions to wait for a window and a component. If you are waiting for a component, or a window, use the actions specific to these events.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

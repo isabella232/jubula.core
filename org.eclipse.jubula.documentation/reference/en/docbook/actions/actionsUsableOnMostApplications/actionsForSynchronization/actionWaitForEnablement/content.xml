@@ -12,5 +12,28 @@
   <?dbhtml dir="actionWaitForEnablement"?>
   <title>Wait for Enablement</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this module to wait for the enablement status of a component to be correct.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For example, you can use it to wait for a save button to become inactive.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          A check failed event is thrown if the enablement status is not what was expected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The event handler waits for a certain amount of time (in ms) and then retries the check again.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

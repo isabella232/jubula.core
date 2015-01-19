@@ -12,5 +12,58 @@
   <?dbhtml dir="actionSynchronizeTerminationAndRestartOfAUT"?>
   <title>Synchronize Termination and Restart of AUT</title>
   
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action together with the action to prepare for AUT termination and an action to close your AUT .
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Using these actions, you can close your AUT using e.g.<?linebreak?>
+          File    -->     Exit<?linebreak?>
+          and have it automatically restarted. 
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="warning">
+    Using the Restart option in Eclipse AUT's is not supported.
+  </para>
+  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action sometime after using the prepare for termination action, and directly after the action to close the AUT .
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="warning">
+    The shutdown method you choose must run through the JVM shutdown hooks to properly terminate the AUT . Do not use the restart action to shut your AUT down.
+  </para>
+  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The action works by waiting for the AUT to terminate (configurable via a parameter), then re-starting the AUT using the same configuration / autrun parameters as it was originally started with.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You may want to follow this action with a module that waits for your AUT to be started completely.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="warning">
+    This action is currently supported on the Swing and RCP toolkits. Neither toolkit supports the terminating of AUT's using the press any key actions to press e.g. »ALT+F4«. External key combinations can be used to terminate the AUT using e.g. »ALT+F4« on RCP AUT's , but not Swing AUT's .
+  </para>
   
 </section>

@@ -12,5 +12,18 @@
   <?dbhtml dir="actionWaitForComponentGeneral"?>
   <title>Wait for Component (General)</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The wait for component action lets you choose a component which you need for the next steps.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The test waits until the component is present/loaded before continuing with the next Test Step.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>
