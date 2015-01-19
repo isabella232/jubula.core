@@ -132,7 +132,7 @@ public class TestSimpleAdderRCPAUT {
     @Test
     public void testApplication() throws Exception {
         Application app = SwtComponents.createApplication();
-        m_aut.execute(app.wait(new Integer(1000)), null);
+        m_aut.execute(app.delay(1000), null);
         m_aut.execute(app.waitForWindow(".*", Operator.matches, 1000, 100), null); //$NON-NLS-1$
     }
     
