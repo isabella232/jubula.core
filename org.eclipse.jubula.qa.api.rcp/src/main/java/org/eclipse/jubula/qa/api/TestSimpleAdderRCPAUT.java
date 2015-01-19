@@ -12,7 +12,6 @@ package org.eclipse.jubula.qa.api;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,7 +24,6 @@ import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
-import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.base.components.TextComponent;
 import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
@@ -125,8 +123,8 @@ public class TestSimpleAdderRCPAUT {
     @Test
     public void testMenubar() throws Exception {
         MenuBarComponent menu = SwtComponents.createMenu();
-        exec(menu.checkEnablementOfEntryByIndexpath(
-                "1/1", true)); //$NON-NLS-1$
+        m_aut.execute(menu.checkEnablementOfEntryByIndexpath(
+                "1/1", true), null); //$NON-NLS-1$
         
     }
     
@@ -134,8 +132,8 @@ public class TestSimpleAdderRCPAUT {
     @Test
     public void testApplication() throws Exception {
         Application app = SwtComponents.createApplication();
-        exec(app.wait(new Integer(1000)));
-        exec(app.waitForWindow(".*", Operator.matches, 1000, 100)); //$NON-NLS-1$
+        m_aut.execute(app.wait(new Integer(1000)), null);
+        m_aut.execute(app.waitForWindow(".*", Operator.matches, 1000, 100), null); //$NON-NLS-1$
     }
     
     /** the actual test method */
@@ -144,43 +142,29 @@ public class TestSimpleAdderRCPAUT {
     public void testTestFirstSimpleAdderSteps() throws Exception {
         
         final int firstValue = 17;
-        List<Result> results = new ArrayList<Result>();
+        List<Result<String>> results = new ArrayList<Result<String>>();
         try {
             for (int i = 1; i < 5; i++) {
-                exec(value1.replaceText(
-                    String.valueOf(firstValue)), results);
-                exec(value2.replaceText(
-                    String.valueOf(i)), results);
-                exec(button.click(
-                    1, InteractionMode.primary), results);
-                exec(result.checkText(
-                    String.valueOf(firstValue + i),
-                        Operator.equals), results);
+                results.add(m_aut.execute(
+                        value1.replaceText(
+                            String.valueOf(firstValue)), 
+                            "Entering first value")); //$NON-NLS-1$
+                results.add(m_aut.execute(
+                        value2.replaceText(
+                            String.valueOf(i)), 
+                            "Entering second value")); //$NON-NLS-1$
+                results.add(m_aut.execute(
+                        button.click(
+                            1, InteractionMode.primary), 
+                            "Invoking addition")); //$NON-NLS-1$
+                results.add(m_aut.execute(
+                        result.checkText(
+                            String.valueOf(firstValue + i),
+                            Operator.equals), 
+                            "Checking computed result")); //$NON-NLS-1$
             }
         } finally {
             Assert.assertTrue(results.size() == 15);
         }
-    }
-
-    /**
-     * @param cap
-     *            the cap
-     * @param r
-     *            the result
-     */
-    private void exec(CAP cap, List<Result> r) {
-        Result<Date> execute = m_aut.execute(cap, new Date());
-        if (r != null) {
-            r.add(execute);
-        }
-        System.out.println("CAP executed: " + execute.getPayload()); //$NON-NLS-1$
-    }
-    
-    /**
-     * @param cap
-     *            the cap
-     */
-    private void exec(CAP cap) {
-        exec(cap, null);
     }
 }
