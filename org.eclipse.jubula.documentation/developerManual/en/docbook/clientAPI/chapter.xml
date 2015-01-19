@@ -274,6 +274,9 @@
                         <para>org.eclipse.jubula.toolkit...TOOLKIT_ID...api</para>
                     </listitem>
                 </itemizedlist>
+                <para>Please keep in mind that <emphasis role="strong">toolkits are derived</emphasis> from each other. So if you're e.g. setting up a JavaFX projects it is also 
+                necessary to include the direct dependency to the specific toolkit artifact "org.eclipse.jubula.toolkit.javafx.api" itself as well as the toolkits its based upon: 
+                "org.eclipse.jubula.toolkit.concrete.api" and its base "org.eclipse.jubula.toolkit.base.api".</para>
             </listitem>
             <listitem>
                 <para>Each project also requires dependencies to <emphasis role="strong">all</emphasis> of the <emphasis role="strong">3rd party dependencies</emphasis>
