@@ -506,10 +506,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     private static String getText(IRefTestSuitePO testSuitRef) {
         StringBuilder nameBuilder = new StringBuilder();
         
-        String refName = testSuitRef.getName();
+        String refRealName = testSuitRef.getRealName();
 
-        if (!StringUtils.isBlank(refName)) {
-            nameBuilder.append(refName);
+        if (!StringUtils.isBlank(refRealName)) {
+            nameBuilder.append(refRealName);
             if (Plugin.getDefault().getPreferenceStore().getBoolean(
                     Constants.SHOWORIGINALNAME_KEY)) {
                 ITestSuitePO testSuite = testSuitRef.getTestSuite();

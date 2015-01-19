@@ -105,7 +105,7 @@ public class RefTestSuiteGUIPropertySource
         
         if (m_namePropDesc == null) {
             m_namePropDesc = new TextPropertyDescriptor(
-                    new ElementNameController(), P_REF_TS_DISPLAY_NAME);
+                    new ExecNameController(), P_REF_TS_DISPLAY_NAME);
         }
         addPropertyDescriptor(m_namePropDesc);
         
@@ -241,6 +241,28 @@ public class RefTestSuiteGUIPropertySource
          */
         public Image getImage() {
             return READONLY_IMAGE;
+        }
+    }
+    
+    /**
+     * Class to control the name. 
+     * @author BREDEX GmbH
+     * @created 23.02.2005
+     */
+    protected class ExecNameController extends ElementNameController {
+
+        /**
+         * {@inheritDoc}
+         */
+        public Object getProperty() {
+            if (getPoNode() != null) {
+                IRefTestSuitePO refTs = (IRefTestSuitePO) getPoNode();
+                String name = refTs.getRealName();
+                if (name != null) {
+                    return name;
+                }
+            }
+            return StringConstants.EMPTY;
         }
     }
 }

@@ -665,7 +665,7 @@ class XmlExporter {
                 IRefTestSuitePO rts = (IRefTestSuitePO)child;
                 RefTestSuite xmlRts = xmlTj.addNewRefTestSuite();
                 fillNode(xmlRts, rts);
-                xmlRts.setName(rts.getName());
+                xmlRts.setName(rts.getRealName());
                 xmlRts.setGUID(rts.getGuid());
                 xmlRts.setTsGuid(rts.getTestSuiteGuid());
                 xmlRts.setAutId(rts.getTestSuiteAutID());
@@ -806,13 +806,7 @@ class XmlExporter {
      */
     private void fillNode(Node xml, INodePO po) {
         checkForCancel();
-        String name = po.getName();
-        if (po instanceof IExecTestCasePO) {
-            name = ((IExecTestCasePO)po).getRealName();
-            if (name == null) {
-                name = StringConstants.EMPTY;
-            }
-        }
+     // name will be rewritten afterwards if necessary
         xml.setName(po.getName());
         xml.setComment(po.getComment());
         xml.setDescription(po.getDescription());

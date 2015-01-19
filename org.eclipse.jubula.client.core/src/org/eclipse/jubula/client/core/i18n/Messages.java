@@ -325,6 +325,7 @@ public class Messages extends NLS {
     public static String StrayPersistenceException;
     public static String Success;
     public static String SyntaxErrorInReference;
+    public static String RefTestSuitePOMissingReference;
     public static String TechnicalName;
     public static String TestDataNotAvailable;
     public static String TestErrorEventAction;

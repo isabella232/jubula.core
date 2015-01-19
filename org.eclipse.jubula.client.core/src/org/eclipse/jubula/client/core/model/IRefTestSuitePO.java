@@ -49,4 +49,10 @@ public interface IRefTestSuitePO extends INodePO {
      * @return the referenced test suite
      */
     public ITestSuitePO getTestSuite();
+    
+    /**
+     * Gets the real name of this reference test suite, may be null
+     * @return null or the referenced name
+     */
+    public String getRealName();
 }

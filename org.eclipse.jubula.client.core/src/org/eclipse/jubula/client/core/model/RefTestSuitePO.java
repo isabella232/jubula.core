@@ -16,7 +16,9 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * class only for specification data of testcase specificaton data are infos to
@@ -146,5 +148,24 @@ class RefTestSuitePO extends NodePO implements IRefTestSuitePO {
     @Transient
     public ITestSuitePO getTestSuite() {
         return NodePM.getTestSuite(getTestSuiteGuid());
+    }
+    
+    /**{@inheritDoc} */
+    @Transient
+    public String getName() {
+        String name = super.getName();
+        if (name == null || name.equals(StringConstants.EMPTY)) {
+            if (getTestSuite() != null) {
+                return getTestSuite().getName();
+            }
+            return Messages.RefTestSuitePOMissingReference;
+        }
+        return name;
+    }
+    
+    /** {@inheritDoc} */
+    @Transient
+    public String getRealName() {
+        return super.getName();
     }
 }
