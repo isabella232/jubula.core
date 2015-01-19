@@ -21,9 +21,7 @@
     and to get started quicker, the steps can also be done manually
     as follows:
   </para>
-  <para>
     <para role="warning">Please ensure that you follow all these steps!</para>
-  </para>
   <orderedlist>
     <listitem>
       <para>
@@ -48,25 +46,36 @@
         <emphasis>,org.eclipse.jubula.rc.rcp@start</emphasis> (the
         comma is important to delimit this argument from the others)
         to the end of the <emphasis>osgi.bundles</emphasis>
-        parameter.
+        parameter. If your AUT uses the simple configurator, then 
+        you will see this in the config.ini for the osgi.bundles
+        parameter. In this case, the osgi.bundles parameter will
+        reference the place where the bundles.info for the simple configurator
+        is. Locate the bundles.info file
+        and ensure that the <emphasis>org.eclipse.jubula.rc.rcp</emphasis>
+        plugin is set to start (i.e. it is set to true).
+        If you are migrating from one version of the RCP remote control
+        to a new one, then you can also check the version number of the RCP 
+        remote control plugin.
       </para>
     </listitem>
     <listitem>
       <para>
         Start your AUT <emphasis role="strong">normally</emphasis>
-        (i.e. not as an AUT. Close it, and then start it again.
+        (i.e. not as an AUT). Close it, and then start it again.
       </para>
     </listitem>
     <listitem>
       <para>
-        In your AUT, open <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">About</emphasis>.
+        In your AUT, open <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Installation Details</emphasis>.
       </para>
     </listitem>
     <listitem>
       <para>
-        In the <emphasis>plugin details</emphasis> for your AUT, you
-        should be able to see that the following plugins are
-        started:
+        In the <emphasis>Configuration</emphasis> tab, you will find a list 
+        of started plugins, in the section <emphasis>Plug-In Registry</emphasis>.
+        You should be able to see that the following plugins are
+        started (active) and that the correct versions of them (according to your Jubula installation) 
+        are running:
       </para>
       <itemizedlist>
         <listitem>
@@ -97,14 +106,18 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
     <para role="tip">When you install a new version of the ITE, you must
-    repeat these steps with the new RCP remote control plugin. We
-    recommend starting your AUT once with <emphasis role="input">-clean</emphasis> to
-    ensure that the new remote control plugin is used. </para> If you do
+    repeat these steps with the new RCP remote control plugin. You must remove 
+    the previous RCP remote control and replace it with the new one from 
+    the new ITE installation, and update your config.ini or bundles.info file.  
+    We recommend starting your AUT once 
+    with <emphasis role="input">-clean</emphasis> to
+    ensure that the new remote control plugin is used. </para> 
+    <para>
+    If you do
     not follow these steps, the AUT Agent will not be able to
     communicate with your AUT!
-  </para>
+    </para>
   <section id="setting-up-an-rcp-aut">
     <title>Setting up an RCP AUT for testing as a part of the build
     process</title>
