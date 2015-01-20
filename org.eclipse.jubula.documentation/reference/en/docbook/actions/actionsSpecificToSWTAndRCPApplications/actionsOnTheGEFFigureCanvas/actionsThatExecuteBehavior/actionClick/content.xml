@@ -14,16 +14,16 @@
   
   <para><emphasis>Click Connection</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    Use this action to click a connection between two figures.
   </para>
   
   <para><emphasis>Click Figure</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    Use this action to click a figure you specify on the canvas.
   </para>
   
   <para><emphasis>Click in Figure</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    Use this action to click within a figure you specify. The place to click in the figure is given with X and Y units.
   </para>
 </section>

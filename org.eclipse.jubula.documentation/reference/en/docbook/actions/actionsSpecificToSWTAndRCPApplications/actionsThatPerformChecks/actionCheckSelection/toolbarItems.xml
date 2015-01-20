@@ -13,11 +13,43 @@
   
   <para><emphasis>Check Selection of Entry by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an item in a menu for a toolbar item is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the menupath to the item, and whether you expect it to be selected or not.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The menupath is given as an indexpath.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Selection of Entry by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an item in a menu for a toolbar item is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the menupath to the item, and whether you expect it to be selected or not.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The menupath is given as a textpath.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

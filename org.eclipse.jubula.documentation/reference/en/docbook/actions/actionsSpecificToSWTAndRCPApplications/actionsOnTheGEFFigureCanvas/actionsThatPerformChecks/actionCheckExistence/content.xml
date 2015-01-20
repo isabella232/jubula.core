@@ -14,11 +14,22 @@
   
   <para><emphasis>Check Figure Existence</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether a figure exists on the canvas.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You identify the figure based on its textpath.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Tool Existence</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    Use this action to check whether a tool entry exists.
   </para>
 </section>

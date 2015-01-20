@@ -14,6 +14,28 @@
   
   <para><emphasis>Check Figure Property</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check a specific property of a figure.
+        </para>
+        <para role="tip">
+          If you want the check a property of the figure canvas as a whole, use the action Check Property on the Graphics Component component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can check whether a value you enter for a given property matches the actual value for the property.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Enter the name of the property you want to check, and then what value it should have.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  <para role="tip">
+    If the property is private, it cannot be checked, as the remote control component has no access to it.
   </para>
 </section>
