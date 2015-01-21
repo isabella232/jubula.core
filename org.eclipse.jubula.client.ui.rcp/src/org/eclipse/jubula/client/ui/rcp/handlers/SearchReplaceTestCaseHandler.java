@@ -52,7 +52,7 @@ public class SearchReplaceTestCaseHandler extends
      */
     @SuppressWarnings("unchecked")
     protected Object executeImpl(ExecutionEvent event) {
-        if (!Plugin.getDefault().showSaveEditorDialog()) {
+        if (!Plugin.getDefault().showSaveEditorDialog(getActiveShell())) {
             return null;
         }
         IStructuredSelection selectedObject = getSelection();

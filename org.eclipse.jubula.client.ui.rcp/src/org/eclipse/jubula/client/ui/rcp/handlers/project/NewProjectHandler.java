@@ -140,7 +140,7 @@ public class NewProjectHandler extends AbstractProjectHandler {
         if (GeneralStorage.getInstance().getProject() != null
                 && Plugin.getDefault().anyDirtyStar()) {
 
-            if (!Plugin.getDefault().showSaveEditorDialog()) {
+            if (!Plugin.getDefault().showSaveEditorDialog(getActiveShell())) {
                 return null;
             }
         }

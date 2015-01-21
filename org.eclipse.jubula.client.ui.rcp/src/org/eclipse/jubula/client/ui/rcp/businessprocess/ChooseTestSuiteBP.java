@@ -41,7 +41,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -427,42 +426,6 @@ public class ChooseTestSuiteBP {
         ded.addOMStateListener(m_omStateListener, true);
         ded.addRecordModeStateListener(m_recordModeStateListener, true);
         ded.addDataChangedListener(m_dataChangedListener, true);
-    }
-    
-    /**
-     * convenience method to save editors and start an incomplete or complete testsuite
-     * with changing to execution perspective
-     * @param ts testsuite to run
-     * @param autId The ID of the Running AUT on which the test will take place.
-     * @param autoScreenshot
-     *            whether screenshots should be automatically taken in case of
-     *            test execution errors
-     */
-    public void runTestSuite(ITestSuitePO ts, AutIdentifier autId,
-            boolean autoScreenshot) {
-        TestSuiteState state = validateSaveState(ts);
-        if (state != TestSuiteState.incomplete) {
-            executeTestSuite(ts, autId, autoScreenshot);
-        }
-    }
-    
-    /**
-     * @param ts testsuite to validate
-     * @return executable state of testsuite
-     */
-    public TestSuiteState validateSaveState(ITestSuitePO ts) {
-        if (Plugin.getDefault().anyDirtyStar()) {
-            boolean isSaved = Plugin.getDefault().showSaveEditorDialog();
-            if (isSaved) {
-                SortedSet<ITestSuitePO> allTestSuites = 
-                    getAllTestSuites();
-                if (allTestSuites.contains(ts)) {
-                    return TestSuiteState.complete;
-                } 
-            }
-            return TestSuiteState.incomplete;
-        }
-        return TestSuiteState.unchanged;
     }
 
     /**

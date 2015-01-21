@@ -49,7 +49,7 @@ public class SearchChangeCtdsColumnUsageHandler
         if (page == null) {
             return null;
         }
-        if (!Plugin.getDefault().showSaveEditorDialog()) {
+        if (!Plugin.getDefault().showSaveEditorDialog(getActiveShell())) {
             return null;
         }
         // create list of selected Test Cases

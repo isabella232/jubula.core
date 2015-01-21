@@ -174,7 +174,7 @@ public class ExportAllHandler extends AbstractProjectHandler {
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        if (Plugin.getDefault().showSaveEditorDialog()) {
+        if (Plugin.getDefault().showSaveEditorDialog(getActiveShell())) {
             showExportDialog();
         }
         return null;

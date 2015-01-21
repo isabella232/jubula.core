@@ -12,7 +12,9 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.State;
@@ -21,6 +23,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ChooseTestSuiteBP;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ChooseTestSuiteBP.TestSuiteState;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.commands.IElementUpdater;
 import org.eclipse.ui.menus.UIElement;
@@ -68,10 +71,11 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
             // state to find out which Test Suite to start.
         }
         
-        State lastStartedTestSuiteState = 
-            event.getCommand().getState(LAST_STARTED_TEST_SUITE);
-        State lastTestedRunningAutState = 
-            event.getCommand().getState(LAST_TESTED_RUNNING_AUT);
+        Command command = event.getCommand();
+        State lastStartedTestSuiteState = command
+                .getState(LAST_STARTED_TEST_SUITE);
+        State lastTestedRunningAutState = command
+                .getState(LAST_TESTED_RUNNING_AUT);
         
         if (testSuiteToStartObj instanceof ITestSuitePO
                 && runningAutObj instanceof AutIdentifier) {
@@ -105,13 +109,12 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
         if (testSuiteToStart != null && runningAut != null
                 && initTestExecution(event)) {
             final boolean autoScreenshots = Plugin.getDefault()
-                    .getPreferenceStore().getBoolean(
-                            Constants.AUTO_SCREENSHOT_KEY);
-            ChooseTestSuiteBP.getInstance().runTestSuite(testSuiteToStart,
-                    runningAut, autoScreenshots);
+                    .getPreferenceStore()
+                    .getBoolean(Constants.AUTO_SCREENSHOT_KEY);
+            runTestSuite(testSuiteToStart, runningAut, autoScreenshots);
 
             // Update command state
-            if (lastStartedTestSuiteState != null 
+            if (lastStartedTestSuiteState != null
                     && lastTestedRunningAutState != null) {
                 lastStartedTestSuiteState.setValue(testSuiteToStart.getGuid());
                 lastTestedRunningAutState.setValue(runningAut);
@@ -120,7 +123,46 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
 
         return null;
     }
+    
+    /**
+     * convenience method to save editors and start an incomplete or complete testsuite
+     * with changing to execution perspective
+     * @param ts testsuite to run
+     * @param autId The ID of the Running AUT on which the test will take place.
+     * @param autoScreenshot
+     *            whether screenshots should be automatically taken in case of
+     *            test execution errors
+     */
+    public void runTestSuite(ITestSuitePO ts, AutIdentifier autId,
+            boolean autoScreenshot) {
+        TestSuiteState state = validateSaveState(ts);
+        if (state != TestSuiteState.incomplete) {
+            ChooseTestSuiteBP.getInstance().executeTestSuite(ts, autId,
+                    autoScreenshot);
+        }
+    }
 
+    /**
+     * @param ts
+     *            testsuite to validate
+     * @return executable state of testsuite
+     */
+    public TestSuiteState validateSaveState(ITestSuitePO ts) {
+        if (Plugin.getDefault().anyDirtyStar()) {
+            boolean isSaved = Plugin.getDefault().showSaveEditorDialog(
+                    getActiveShell());
+            if (isSaved) {
+                SortedSet<ITestSuitePO> allTestSuites = ChooseTestSuiteBP
+                        .getInstance().getAllTestSuites();
+                if (allTestSuites.contains(ts)) {
+                    return TestSuiteState.complete;
+                }
+            }
+            return TestSuiteState.incomplete;
+        }
+        return TestSuiteState.unchanged;
+    }
+    
     /**
      * {@inheritDoc}
      */
