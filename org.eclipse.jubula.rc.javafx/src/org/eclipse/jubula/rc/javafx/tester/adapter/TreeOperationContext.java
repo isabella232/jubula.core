@@ -41,7 +41,8 @@ import org.eclipse.jubula.rc.javafx.util.Rounding;
  * @author BREDEX GmbH
  * @created 19.11.2013
  */
-public class TreeOperationContext extends AbstractTreeOperationContext {
+public class TreeOperationContext 
+    extends AbstractTreeOperationContext<TreeView<?>> {
 
     /** The AUT Server logger. */
     private static AutServerLogger log = new AutServerLogger(
@@ -140,9 +141,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                         TreeItem<?> parent = item.getParent();
                         if (parent != null) {
                             return parent.isExpanded()
-                                    && ((TreeView<?>) getTree()).isVisible();
+                                    && getTree().isVisible();
                         }
-                        return ((TreeView<?>) getTree()).isVisible();
+                        return getTree().isVisible();
                     }
                 });
 
@@ -156,7 +157,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Rectangle call() throws Exception {
-                        TreeView<?> tree = ((TreeView<?>) getTree());
+                        TreeView<?> tree = getTree();
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         tree.layout();
@@ -194,10 +195,10 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     public Void call() throws Exception {
                         int index = ((TreeView) getTree())
                                 .getRow((TreeItem<?>) node);
-                        ((TreeView<?>) getTree()).scrollTo(index);
+                        getTree().scrollTo(index);
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        ((TreeView<?>) getTree()).layout();
+                        getTree().layout();
                         return null;
                     }
                 });
@@ -225,7 +226,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                             TreeItem<?> item = cell.getTreeItem();
                             if (item != null && item.equals(node)
                                     && !item.isExpanded()) {
-                                TreeView<?> tree = ((TreeView<?>) getTree());
+                                TreeView<?> tree = getTree();
                                 // Update the layout coordinates otherwise
                                 // we would get old position values
                                 tree.layout();
@@ -245,7 +246,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Void call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        if (!((TreeView<?>) getTree()).isDisabled()
+                        if (!getTree().isDisabled()
                                 && !item.isExpanded()) {
                             log.warn("Expand node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
@@ -271,7 +272,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                             TreeItem<?> item = cell.getTreeItem();
                             if (item != null && item.equals(node)
                                     && item.isExpanded()) {
-                                TreeView<?> tree = ((TreeView<?>) getTree());
+                                TreeView<?> tree = getTree();
                                 // Update the layout coordinates otherwise
                                 // we would get old position values
                                 tree.layout();
@@ -291,7 +292,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Void call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        if (!((TreeView<?>) getTree()).isDisabled()
+                        if (!getTree().isDisabled()
                                 && item.isExpanded()) {
                             log.warn("Collapse node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
@@ -311,7 +312,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Object call() throws Exception {
 
-                        return ((TreeView<?>) getTree()).getSelectionModel()
+                        return getTree().getSelectionModel()
                                 .getSelectedItem();
                     }
                 });
@@ -331,7 +332,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Object[] call() throws Exception {
 
-                        return ((TreeView<?>) getTree()).getSelectionModel()
+                        return getTree().getSelectionModel()
                                 .getSelectedItems().toArray();
                     }
                 });
@@ -346,7 +347,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Object[] call() throws Exception {
-                        TreeView<?> tree = (TreeView<?>) getTree();
+                        TreeView<?> tree = getTree();
 
                         // If the root is visible, just return that.
                         if (tree.showRootProperty().getValue()) {
@@ -447,7 +448,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                                 .getAssignableFrom(TreeCell.class);
                         for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
-                            TreeView<?> tree = (TreeView<?>) getTree();
+                            TreeView<?> tree = getTree();
                             if ((item != null && item.equals(node))) {
                                 // Update the layout coordinates otherwise
                                 // we would get old position values

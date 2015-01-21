@@ -25,10 +25,12 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
  * 
  * @author BREDEX GmbH
  * @created 09.08.2005
+ * @param <T>
+ *            the tree type
  */
-public abstract class AbstractTreeOperationContext {
-    /** The JTree. */
-    private Object m_tree;
+public abstract class AbstractTreeOperationContext<T> {
+    /** The tree. */
+    private T m_tree;
     /** The Robot. */
     private IRobot m_robot;
     /** The event thread queuer. */
@@ -42,7 +44,7 @@ public abstract class AbstractTreeOperationContext {
      * @param tree The tree
      */
     public AbstractTreeOperationContext(IEventThreadQueuer queuer, IRobot robot,
-        Object tree) {
+        T tree) {
         
         m_queuer = queuer;
         m_robot = robot;
@@ -113,7 +115,7 @@ public abstract class AbstractTreeOperationContext {
      * Getter for the tree
      * @return Returns the tree.
      */
-    protected Object getTree() {
+    protected T getTree() {
         return m_tree;
     }
     

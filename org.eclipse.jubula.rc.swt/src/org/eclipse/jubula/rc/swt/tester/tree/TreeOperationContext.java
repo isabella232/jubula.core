@@ -40,7 +40,7 @@ import org.eclipse.swt.widgets.TreeItem;
  * @author BREDEX GmbH
  * @created 09.08.2005
  */
-public class TreeOperationContext extends AbstractTreeOperationContext {
+public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
 
     /** The AUT Server logger. */
     private static AutServerLogger log = 
@@ -118,7 +118,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     new IRunnable() {
 
                     public Object run() {
-                        Tree tree = (Tree)getTree();
+                        Tree tree = getTree();
                         org.eclipse.swt.graphics.Rectangle visibleBounds = 
                             tree.getClientArea();
                         
@@ -138,7 +138,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      */
     public void collapseNode(Object node) {
         final TreeItem item = castToTreeItem(node);
-        final Tree tree = (Tree)getTree();
+        final Tree tree = getTree();
         boolean doAction = isExpanded(item);
         if (doAction) {
             if (log.isDebugEnabled()) {
@@ -173,7 +173,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
         try {
             final TreeItem item = castToTreeItem(node);
-            final Tree tree = (Tree)getTree();
+            final Tree tree = getTree();
 
             boolean doAction = !isExpanded(item);
             Thread.currentThread().setContextClassLoader(tree.getClass()
@@ -239,7 +239,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             new IRunnable() {
 
                 public Object run() {
-                    return ((Tree)getTree()).getItems();
+                    return getTree().getItems();
                 }
 
             });
@@ -301,7 +301,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         getQueuer().invokeAndWait(
                 "selectNodeCheckbox", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        Tree tree = ((Tree)getTree());
+                        Tree tree = getTree();
                         boolean toggledValue = !item.getChecked();
                         item.setChecked(toggledValue);
                         Event toggleEvent = new Event();
@@ -344,14 +344,14 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             new IRunnable() {
 
                 public Object run() {
-                    ((Tree)getTree()).showItem(castToTreeItem(node));
+                    getTree().showItem(castToTreeItem(node));
                     return null;
                 }
 
             });
 
         final Rectangle nodeBoundsRelativeToParent = getNodeBounds(node);
-        final Tree tree = (Tree)getTree();
+        final Tree tree = getTree();
         
         getQueuer().invokeAndWait("getNodeBoundsRelativeToParent", //$NON-NLS-1$
             new IRunnable() {
@@ -459,7 +459,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
 
                 public Object run() {
                     TreeItem [] selectedItems = 
-                        ((Tree)getTree()).getSelection();
+                        getTree().getSelection();
                     SelectionUtil.validateSelection(selectedItems);
                     return selectedItems;
                 }
@@ -514,7 +514,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             new IRunnable() {
 
                 public Object run() {
-                    int colCount = ((Tree)getTree()).getColumnCount();
+                    int colCount = getTree().getColumnCount();
                     
                     for (int i = 0; i < colCount; i++) {
                         String textAtColumn = CAPUtil.getWidgetText(item,
@@ -548,7 +548,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                     new IRunnable() {
 
                     public Object run() {
-                        Tree tree = (Tree)getTree();
+                        Tree tree = getTree();
                         org.eclipse.swt.graphics.Rectangle bounds =
                             SwtUtils.getRelativeWidgetBounds(
                                     (TreeItem)node, tree);

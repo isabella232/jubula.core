@@ -40,7 +40,8 @@ import org.eclipse.jubula.rc.javafx.util.Rounding;
  * @author BREDEX GmbH
  * @created 23.06.2014
  */
-public class TreeTableOperationContext extends AbstractTreeOperationContext {
+public class TreeTableOperationContext 
+    extends AbstractTreeOperationContext<TreeTableView<?>> {
     /** The AUT Server logger. */
     private static AutServerLogger log = new AutServerLogger(
             TreeTableOperationContext.class);
@@ -150,7 +151,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                         } else if (node instanceof TreeItem) {
                             TreeItem<?> item = (TreeItem<?>) node;
                             TreeTableView<?> treeTable = 
-                                    ((TreeTableView<?>) getTree());
+                                    getTree();
                             List<TreeTableCell> cells = 
                                     new NodeTraverseHelper<TreeTableCell>()
                                     .getInstancesOf(treeTable,
@@ -192,7 +193,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                     public Boolean call() throws Exception {
                         TreeItem<?>  item = (TreeItem<?>) node;
                         return item.isExpanded()
-                                && ((TreeTableView<?>) getTree()).isVisible();
+                                && getTree().isVisible();
                     }
                 });
         return result;
@@ -205,7 +206,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Rectangle call() throws Exception {
-                        TreeTableView<?> tree = ((TreeTableView<?>) getTree());
+                        TreeTableView<?> tree = getTree();
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         tree.layout();
@@ -242,12 +243,12 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                     public Void call() throws Exception {
                         int index = ((TreeTableView) getTree())
                                 .getRow((TreeItem<?>) node);
-                        ((TreeTableView<?>) getTree()).scrollTo(index);
-                        ((TreeTableView<?>) getTree())
+                        getTree().scrollTo(index);
+                        getTree()
                                 .scrollToColumnIndex(m_column);
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        ((TreeTableView<?>) getTree()).layout();
+                        getTree().layout();
                         return null;
                     }
                 });
@@ -270,8 +271,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Object call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        TreeTableView<?> treeTable = 
-                                ((TreeTableView<?>) getTree());
+                        TreeTableView<?> treeTable = getTree();
                         List<TreeTableCell> cells = 
                                 new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
@@ -309,7 +309,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Void call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        if (!((TreeTableView<?>) getTree()).isDisabled()
+                        if (!getTree().isDisabled()
                                 && !item.isExpanded()) {
                             log.warn("Expand node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
@@ -330,8 +330,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Object call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        TreeTableView<?> treeTable = 
-                                ((TreeTableView<?>) getTree());
+                        TreeTableView<?> treeTable = getTree();
                         List<TreeTableCell> cells = 
                                 new NodeTraverseHelper<TreeTableCell>()
                                 .getInstancesOf(treeTable, TreeTableCell.class);
@@ -369,7 +368,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Void call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        if (!((TreeTableView<?>) getTree()).isDisabled()
+                        if (!getTree().isDisabled()
                                 && item.isExpanded()) {
                             log.warn("Expand node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
@@ -388,9 +387,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Object call() throws Exception {
-
-                        return ((TreeTableView<?>) getTree())
-                                .getSelectionModel().getSelectedItem();
+                        return getTree().getSelectionModel().getSelectedItem();
                     }
                 });
         if (result != null) {
@@ -409,8 +406,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
                     @Override
                     public Object[] call() throws Exception {
 
-                        return ((TreeTableView<?>) getTree())
-                                .getSelectionModel().getSelectedItems()
+                        return getTree().getSelectionModel().getSelectedItems()
                                 .toArray();
                     }
                 });
@@ -425,7 +421,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Object[] call() throws Exception {
-                        TreeTableView<?> tree = (TreeTableView<?>) getTree();
+                        TreeTableView<?> tree = getTree();
 
                         // If the root is visible, just return that.
                         if (tree.showRootProperty().getValue()) {
@@ -517,8 +513,7 @@ public class TreeTableOperationContext extends AbstractTreeOperationContext {
 
                     @Override
                     public Rectangle call() throws Exception {
-                        TreeTableView<?> treeTable = 
-                                (TreeTableView<?>) getTree();
+                        TreeTableView<?> treeTable = getTree();
                         treeTable.layout();
                         TreeItem<?> item = (TreeItem<?>) node;
                         List<TreeTableCell> cells = 

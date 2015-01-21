@@ -51,7 +51,7 @@ public abstract class AbstractStringNodePath implements INodePath {
      * @param node The node
      * @param level The level
      * @param context The context
-     * @return <code>true</code> if the given node's string represenation or 
+     * @return <code>true</code> if the given node's string representation or 
      * rendered text match the String at the given level in the path.
      */
     public abstract boolean isInPath(Object node, int level, 

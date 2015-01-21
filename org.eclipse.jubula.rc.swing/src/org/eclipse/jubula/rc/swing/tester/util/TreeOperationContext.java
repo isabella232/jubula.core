@@ -42,7 +42,7 @@ import org.eclipse.jubula.rc.swing.driver.EventThreadQueuerAwtImpl;
  * @author BREDEX GmbH
  * @created 09.08.2005
  */
-public class TreeOperationContext extends AbstractTreeOperationContext {
+public class TreeOperationContext extends AbstractTreeOperationContext<JTree> {
     
     /** The AUT Server logger. */
     private static AutServerLogger log = 
@@ -128,8 +128,8 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         return (String)getQueuer().invokeAndWait(
             "convertValueToText", new IRunnable() { //$NON-NLS-1$
                 public Object run() {
-                    return ((JTree)getTree()).convertValueToText(node, 
-                        false, ((JTree)getTree()).isExpanded(row), 
+                    return getTree().convertValueToText(node, 
+                        false, getTree().isExpanded(row), 
                         m_model.isLeaf(node), row, false);
                 }
             });
@@ -143,7 +143,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                 "getRenderedText", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
                         int row = getRowForTreeNode(node);
-                        JTree tree = (JTree)getTree();
+                        JTree tree = getTree();
                         Component cellRendererComponent = tree
                                 .getCellRenderer()
                                 .getTreeCellRendererComponent(tree, node,
@@ -197,7 +197,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
             "getRowForTreeNode", new IRunnable() { //$NON-NLS-1$
                 public Object run() {
                     TreePath pathToRoot = new TreePath(getPathToRoot(node));
-                    return new Integer(((JTree)getTree()).getRowForPath(
+                    return new Integer(getTree().getRowForPath(
                         pathToRoot));
                 }
             });
@@ -233,7 +233,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         return (Rectangle)getQueuer().invokeAndWait(
             "getRowBounds", new IRunnable() { //$NON-NLS-1$
                 public Object run() {
-                    return ((JTree)getTree()).getRowBounds(row);
+                    return getTree().getRowBounds(row);
                 }
             });
     }
@@ -248,7 +248,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         return (TreePath[])getQueuer().invokeAndWait("getSelectionPath", //$NON-NLS-1$
             new IRunnable() {
                 public Object run() {
-                    return ((JTree)getTree()).getSelectionPaths();
+                    return getTree().getSelectionPaths();
                 }
             });
     }
@@ -261,7 +261,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
                 new IRunnable() {
                     public Object run() {
                         Object[] path = getPathToRoot(node);
-                        return (((JTree)getTree()).isVisible(
+                        return (getTree().isVisible(
                             new TreePath(path))) ? Boolean.TRUE : Boolean.FALSE;
                     }
                 });
@@ -289,7 +289,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * {@inheritDoc}
      */
     public void collapseNode(Object node) {
-        final JTree tree = (JTree)getTree();
+        final JTree tree = getTree();
         final ClassLoader oldCl = Thread.currentThread()
             .getContextClassLoader();
         try {
@@ -336,7 +336,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * {@inheritDoc}
      */
     public void expandNode(Object node) {
-        final JTree tree = (JTree)getTree();
+        final JTree tree = getTree();
         final ClassLoader oldCl = Thread.currentThread()
             .getContextClassLoader();
         try {
@@ -383,7 +383,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * {@inheritDoc}
      */
     public Object[] getRootNodes() {
-        JTree tree = (JTree)getTree();
+        JTree tree = getTree();
         
         // If the root is visible, just return that.
         if (tree.isRootVisible()) {
@@ -399,7 +399,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * {@inheritDoc}
      */
     public void scrollNodeToVisible(Object node) {
-        ((JTree)getTree()).scrollRowToVisible(getRowForTreeNode(node));
+        getTree().scrollRowToVisible(getRowForTreeNode(node));
     }
 
     /**
@@ -441,7 +441,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
         // then treat the child as one of the "root" nodes.
         if (parent != null 
             && parent.equals(m_model.getRoot()) 
-            && !((JTree)getTree()).isRootVisible()) {
+            && !getTree().isRootVisible()) {
             parent = null;
         }
         
@@ -482,7 +482,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
      * {@inheritDoc}
      */
     public boolean isExpanded(Object node) {
-        return ((JTree)getTree()).isExpanded(getRowForTreeNode(node));
+        return getTree().isExpanded(getRowForTreeNode(node));
     }
 
     /**
@@ -521,7 +521,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext {
     public int getIndexOfChild(Object parent, Object child) {
 
         if (parent != null) {
-            return ((JTree)getTree()).getModel().getIndexOfChild(parent, child);
+            return getTree().getModel().getIndexOfChild(parent, child);
         }
         
         Object [] rootNodes = getRootNodes();
