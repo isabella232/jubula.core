@@ -425,7 +425,7 @@ public class ImportProjectsWizardPage extends WizardPage
         m_browseButton.setText(Messages.ImportProjectDialogBrowse);
         m_browseButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                FileDialog fileDialog = new FileDialog(Plugin.getShell(), 
+                FileDialog fileDialog = new FileDialog(getShell(), 
                         SWT.OPEN | SWT.APPLICATION_MODAL | SWT.MULTI);
                 String file;
                 fileDialog.setText(Messages.ImportProjectDialogFileSelector);

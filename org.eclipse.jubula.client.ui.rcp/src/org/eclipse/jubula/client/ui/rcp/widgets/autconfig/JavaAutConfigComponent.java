@@ -31,7 +31,6 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.RemoteFileBrowserBP;
 import org.eclipse.jubula.client.ui.rcp.dialogs.ClassPathDialog;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
@@ -1561,7 +1560,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                 if (isRemoteRequest()) {
                     handleExecButtonEventForRemote();
                 } else {
-                    handleExecButtonEvent(new FileDialog(Plugin.getShell(),
+                    handleExecButtonEvent(new FileDialog(getShell(),
                             SWT.APPLICATION_MODAL | SWT.ON_TOP));
                 }
                 return;
@@ -1609,8 +1608,8 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         @SuppressWarnings("synthetic-access")
         public void widgetDefaultSelected(SelectionEvent e) {
             Object source = e.getSource();
-            DirectoryDialog directoryDialog = new DirectoryDialog(Plugin
-                    .getShell(), SWT.APPLICATION_MODAL);
+            DirectoryDialog directoryDialog = new DirectoryDialog(getShell(), 
+                    SWT.APPLICATION_MODAL);
             String directory;
             if (source.equals(m_classPathListField)) {
                 directoryDialog.setMessage(Messages.AUTConfigComponentEdit);
@@ -1880,9 +1879,8 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                     textField,
                     Messages.AUTConfigComponentSelectDir);
         } else {
-            DirectoryDialog directoryDialog = new DirectoryDialog(
-                    Plugin.getShell(), SWT.APPLICATION_MODAL
-                            | SWT.ON_TOP);
+            DirectoryDialog directoryDialog = new DirectoryDialog(getShell(),
+                    SWT.APPLICATION_MODAL | SWT.ON_TOP);
             handleBrowseDirButtonEvent(textField, directoryDialog);
 
         }

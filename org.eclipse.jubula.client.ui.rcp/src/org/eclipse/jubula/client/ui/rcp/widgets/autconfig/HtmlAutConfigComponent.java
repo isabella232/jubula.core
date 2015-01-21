@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.RemoteFileBrowserBP;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
@@ -231,9 +230,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                             m_browserTextField,
                             I18n.getString("WebAutConfigComponent.SelectBrowserPath")); //$NON-NLS-1$
                 } else {
-                    FileDialog fileDialog = new FileDialog(
-                            Plugin.getShell(), SWT.APPLICATION_MODAL
-                                    | SWT.ON_TOP);
+                    FileDialog fileDialog = new FileDialog(getShell(),
+                            SWT.APPLICATION_MODAL | SWT.ON_TOP);
                     //handleBrowserPathButtonEvent(fileDialog);
                     
                     fileDialog.setText(I18n.getString("WebAutConfigComponent.SelectBrowserPath")); //$NON-NLS-1$

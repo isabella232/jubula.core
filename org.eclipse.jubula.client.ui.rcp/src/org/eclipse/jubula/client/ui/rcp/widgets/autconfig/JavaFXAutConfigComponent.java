@@ -20,7 +20,6 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.RemoteFileBrowserBP;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
@@ -582,7 +581,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
                 if (isRemoteRequest()) {
                     handleExecButtonEventForRemote();
                 } else {
-                    handleExecButtonEvent(new FileDialog(Plugin.getShell(),
+                    handleExecButtonEvent(new FileDialog(getShell(),
                             SWT.APPLICATION_MODAL | SWT.ON_TOP));
                 }
                 return;

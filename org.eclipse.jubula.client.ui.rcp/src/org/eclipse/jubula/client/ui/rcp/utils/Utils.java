@@ -164,8 +164,8 @@ public class Utils {
             final int returnCodeNO = 257; // since Eclipse3.2 (not 1)
             final int returnCodeCANCEL = -1;
             MessageDialogWithToggle dialog = new MessageDialogWithToggle(
-                    Plugin.getShell(), Messages.UtilsTitle, null, NLS.bind(
-                            Messages.UtilsQuestion, perspectiveName),
+                    activeWindow.getShell(), Messages.UtilsTitle, null,
+                    NLS.bind(Messages.UtilsQuestion, perspectiveName),
                     MessageDialog.QUESTION, new String[] { Messages.UtilsYes,
                         Messages.UtilsNo }, 0, Messages.UtilsRemember,
                     false) {

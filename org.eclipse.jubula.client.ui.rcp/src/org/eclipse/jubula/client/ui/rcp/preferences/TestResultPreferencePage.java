@@ -369,7 +369,7 @@ public class TestResultPreferencePage extends PreferencePage
         m_browser.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 DirectoryDialog directoryDialog = 
-                    new DirectoryDialog(Plugin.getShell(), 
+                    new DirectoryDialog(getShell(), 
                             SWT.APPLICATION_MODAL);
                 String directory;
                 directoryDialog.setMessage(Messages

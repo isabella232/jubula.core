@@ -154,7 +154,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                             Messages.AUTConfigComponentSelectWorkDir);
                 } else {
                     DirectoryDialog directoryDialog = new DirectoryDialog(
-                            Plugin.getShell(), SWT.APPLICATION_MODAL
+                            getShell(), SWT.APPLICATION_MODAL
                                     | SWT.ON_TOP);
                     handleWorkDirButtonEvent(directoryDialog);
 
@@ -1393,7 +1393,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             }
         } catch (ConnectionException e) {
             //FIXME: tobi NLS not found
-            ErrorDialog.openError(Plugin.getShell(), I18n
+            ErrorDialog.openError(this.getShell(), I18n
                     .getString("AutConfigComponent.ERROR_TITLE"), null, //$NON-NLS-1$
                     new Status(IStatus.WARNING, Plugin.PLUGIN_ID, I18n
                             .getString("AutConfigComponent.ERROR_COMM"))); //$NON-NLS-1$
