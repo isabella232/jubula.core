@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestResult;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -90,13 +91,14 @@ public abstract class AbstractXMLReportGenerator {
         Element general = root.addElement("project"); //$NON-NLS-1$
         
         ITestResult testResult = getTestResult();
-        general.addElement("name").//$NON-NLS-1$
-            addText(testResult.getProjectName());
+        general.addElement("name").addText(testResult.getProjectName()); //$NON-NLS-1$
 
-        general.addElement("version").//$NON-NLS-1$
-                addText(testResult.getProjectMajorVersion()
-                        + StringConstants.DOT
-                        + testResult.getProjectMinorVersion());
+        ProjectVersion version = new ProjectVersion(
+                testResult.getProjectMajorVersion(),
+                testResult.getProjectMinorVersion(),
+                testResult.getProjectMicroVersion(),
+                testResult.getProjectVersionQualifier());
+        general.addElement("version").addText(version.toString()); //$NON-NLS-1$
 
         Date startTime = testResult.getStartTime();
         if (startTime != null) {
