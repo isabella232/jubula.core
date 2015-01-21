@@ -1373,8 +1373,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         if (editButtonWasPressed) {
             oldText = m_classPathListField.getSelection()[0];
         }
-        ClassPathDialog dialog = new ClassPathDialog(
-                Plugin.getShell(), 
+        ClassPathDialog dialog = new ClassPathDialog(getShell(), 
                 Messages.AUTConfigComponentClassPathDialogTitle,
                 oldText, Messages.AUTConfigComponentMessage, 
                 Messages.AUTConfigComponentLabel,

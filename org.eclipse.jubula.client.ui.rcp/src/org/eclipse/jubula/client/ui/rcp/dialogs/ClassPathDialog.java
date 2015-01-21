@@ -73,7 +73,7 @@ public class ClassPathDialog extends InputDialog {
      * installs all listeners to the gui components. All components visualizing
      * a property do have some sort of modification listeners which store
      * edited data in the edited instance. Some gui components have additional
-     * listeners for data validatuion or permission reevaluation.
+     * listeners for data validation or permission reevaluation.
      */
     private void installListeners() {
         m_addDirButton.addSelectionListener(m_selectionListener);
