@@ -20,7 +20,6 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -52,6 +51,7 @@ import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -181,7 +181,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public Object execute(ExecutionEvent event) {
+    public Object executeImpl(ExecutionEvent event) {
         // Gather selected nodes
         TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
         if (!(tcb.getSelection() instanceof IStructuredSelection)) {
@@ -215,7 +215,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
             if (hasRefDataCube(selectionList)) {
                 dialog = 
                         new ReusedProjectSelectionDialog(
-                            Plugin.getShell(), projectNames, 
+                            getActiveShell(), projectNames, 
                             Messages.MoveTestCaseDialogShellTitle,
                             Messages.MoveTestCaseDialogCTDHint,
                             true,
@@ -224,7 +224,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
             } else {
                 dialog = 
                         new ReusedProjectSelectionDialog(
-                            Plugin.getShell(), projectNames, 
+                            getActiveShell(), projectNames, 
                             Messages.MoveTestCaseDialogShellTitle,
                             Messages.MoveTestCaseDialogMessage,
                             IconConstants.MOVE_TC_DIALOG_STRING, 

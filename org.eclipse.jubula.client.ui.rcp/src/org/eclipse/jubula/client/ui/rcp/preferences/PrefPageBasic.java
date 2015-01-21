@@ -424,7 +424,7 @@ public class PrefPageBasic extends PreferencePage implements
      * data path field.
      */
     private void browseForDir() {
-        DirectoryDialog dialog = new DirectoryDialog(Plugin.getShell(),
+        DirectoryDialog dialog = new DirectoryDialog(getShell(),
             SWT.APPLICATION_MODAL | SWT.OPEN);
         dialog.setFilterPath(m_dataDirPathTextfield.getText());
         dialog.setText(Messages.PrefPageBasicDataDirFileDialogTitle);

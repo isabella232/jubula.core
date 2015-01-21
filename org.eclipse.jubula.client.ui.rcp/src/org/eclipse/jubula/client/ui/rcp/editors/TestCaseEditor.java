@@ -429,11 +429,12 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     }
     
     /**
-     * Shows information dialog that savin on observation mode is not allowed
+     * Shows information dialog that saving on observation mode is not allowed
      * @return returnCode of Dialog
      */
     private int showSaveInObservModeDialog() {
-        MessageDialog dialog = new MessageDialog(Plugin.getShell(), 
+        MessageDialog dialog = new MessageDialog(
+                Plugin.getActiveWorkbenchWindowShell(), 
             Messages.SaveInObservationModeDialogTitle,
                 null, Messages.SaveInObservationModeDialogQuestion,
                 MessageDialog.QUESTION, new String[] {
@@ -573,8 +574,8 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         IEventHandlerContainer eventHandlerCont, 
         final IEventExecTestCasePO eventHandler) {
         AddEventHandlerDialog dialog = 
-            new AddEventHandlerDialog(Plugin.getShell(), eventHandler
-                    .getSpecTestCase().getName(), eventHandlerCont);
+            new AddEventHandlerDialog(Plugin.getActiveWorkbenchWindowShell(), 
+                    eventHandler.getSpecTestCase().getName(), eventHandlerCont);
         dialog.addListener(new AddEventHandlerDialog.Listener() {
             public void notifySelected(String refName, String eventType,
                 String reentryType, Integer maxRetries) {
