@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.dialogs;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -226,7 +225,7 @@ public class InputDialog extends TitleAreaDialog {
      * Handles the event of the button.
      */
     void handleButtonEvent() {
-        FileDialog dialog = new FileDialog(Plugin.getShell(),
+        FileDialog dialog = new FileDialog(getShell(),
             SWT.APPLICATION_MODAL);
         dialog.setFilterPath(Utils.getLastDirPath());
         dialog.setText(Messages.InputDialogSelectJRE);

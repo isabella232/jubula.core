@@ -77,49 +77,12 @@ public final class NagDialog extends MessageDialogWithToggle {
      */
     public static void runNagDialog(Shell parentShell,
             final String msgKey, final String helpId) {        
-        Shell parent;
-        if (parentShell == null) {
-            parent = Plugin.getShell();
-        } else {
-            parent = parentShell;
-        }
         String prefKey = "InfoNagger." + msgKey; //$NON-NLS-1$
         IPreferenceStore preferenceStore = 
             Plugin.getDefault().getPreferenceStore();
         if (!preferenceStore.getString(prefKey).equals(
                 MessageDialogWithToggle.ALWAYS)) {
-            NagDialog dialog = 
-                new NagDialog(parent, msgKey, helpId);
-            dialog.setPrefStore(preferenceStore);
-            dialog.setPrefKey(prefKey);
-            dialog.open();
-        }
-    }
-
-    /**
-     * create a user info dialog
-     * 
-     * @param parentShell the shell to be used as a parent or null for the
-     * plug-ins default shell.
-     * @param msgKey key of the message, used by preference store
-     * @param msgText Text to be display, must already be internationalized
-     * @param helpId references the specific help instance
-     */
-    public static void runNagDialog(Shell parentShell,
-            final String msgKey, String msgText, final String helpId) {        
-        Shell parent;
-        if (parentShell == null) {
-            parent = Plugin.getShell();
-        } else {
-            parent = parentShell;
-        }
-        String prefKey = "InfoNagger." + msgKey; //$NON-NLS-1$
-        IPreferenceStore preferenceStore = 
-            Plugin.getDefault().getPreferenceStore();
-        if (!preferenceStore.getString(prefKey).equals(
-                MessageDialogWithToggle.ALWAYS)) {
-            NagDialog dialog = 
-                new NagDialog(msgText, helpId, parent);
+            NagDialog dialog = new NagDialog(parentShell, msgKey, helpId);
             dialog.setPrefStore(preferenceStore);
             dialog.setPrefKey(prefKey);
             dialog.open();

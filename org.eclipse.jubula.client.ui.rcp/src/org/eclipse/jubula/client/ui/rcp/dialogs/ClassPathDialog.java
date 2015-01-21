@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.dialogs;
 
 import java.io.File;
 
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -162,11 +161,11 @@ public class ClassPathDialog extends InputDialog {
         public void widgetSelected(SelectionEvent e) {
             Object o = e.getSource();
             if (o.equals(m_addDirButton)) {
-                handleAddDirButtonEvent(new DirectoryDialog(Plugin.getShell(), 
+                handleAddDirButtonEvent(new DirectoryDialog(getShell(), 
                         SWT.APPLICATION_MODAL | SWT.ON_TOP));
                 return;
             } else if (o.equals(m_addFileButton)) {
-                handleAddFileButtonEvent(new FileDialog(Plugin.getShell(), 
+                handleAddFileButtonEvent(new FileDialog(getShell(), 
                         SWT.MULTI | SWT.APPLICATION_MODAL | SWT.ON_TOP));
                 return;
             } 

@@ -572,7 +572,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     private int openAddEventHandlerDlg(
         IEventHandlerContainer eventHandlerCont, 
         final IEventExecTestCasePO eventHandler) {
-        
         AddEventHandlerDialog dialog = 
             new AddEventHandlerDialog(Plugin.getShell(), eventHandler
                     .getSpecTestCase().getName(), eventHandlerCont);
