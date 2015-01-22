@@ -50,7 +50,7 @@ public class TreeTableViewAdapter extends
     }
 
     @Override
-    public AbstractTreeOperationContext getContext() {
+    public AbstractTreeOperationContext<TreeTableView<?>, Object> getContext() {
         return new TreeTableOperationContext(getRobotFactory()
                 .getEventThreadQueuer(), getRobot(), getRealComponent());
     }

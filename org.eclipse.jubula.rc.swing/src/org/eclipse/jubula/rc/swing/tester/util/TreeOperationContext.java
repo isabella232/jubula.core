@@ -42,8 +42,8 @@ import org.eclipse.jubula.rc.swing.driver.EventThreadQueuerAwtImpl;
  * @author BREDEX GmbH
  * @created 09.08.2005
  */
-public class TreeOperationContext extends AbstractTreeOperationContext<JTree> {
-    
+public class TreeOperationContext 
+    extends AbstractTreeOperationContext<JTree, Object> {
     /** The AUT Server logger. */
     private static AutServerLogger log = 
         new AutServerLogger(TreeOperationContext.class);
@@ -62,8 +62,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext<JTree> {
         JTree tree) {
         
         super(queuer, robot, tree);
-        Validate.notNull(tree.getModel());
-        m_model = tree.getModel();
+        TreeModel model = tree.getModel();
+        Validate.notNull(model);
+        m_model = model;
     }
     /**
      * {@inheritDoc}

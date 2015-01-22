@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.swt.tester.tree;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
+import org.eclipse.swt.widgets.TreeItem;
 
 
 /**
@@ -21,9 +22,10 @@ import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
  * @author BREDEX GmbH
  * @created 16.03.2005
  */
-public class VerifyCheckboxOperation extends AbstractTreeNodeOperation {
+public class VerifyCheckboxOperation 
+    extends AbstractTreeNodeOperation<TreeItem> {
     /**
-     * selection state of node chackbox
+     * selection state of node checkbox
      */
     private boolean m_checked = true;
     
@@ -54,7 +56,7 @@ public class VerifyCheckboxOperation extends AbstractTreeNodeOperation {
      * throws a <code>StepExecutionException</code> If the node has not
      * been selected (invalid node).
      */
-    public boolean operate(final Object node) throws StepExecutionException {
+    public boolean operate(final TreeItem node) throws StepExecutionException {
         m_context.verifyCheckboxSelection(node, m_checked);
         return true;
     }

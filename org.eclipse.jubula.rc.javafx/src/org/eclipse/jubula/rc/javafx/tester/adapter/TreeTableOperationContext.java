@@ -40,8 +40,8 @@ import org.eclipse.jubula.rc.javafx.util.Rounding;
  * @author BREDEX GmbH
  * @created 23.06.2014
  */
-public class TreeTableOperationContext 
-    extends AbstractTreeOperationContext<TreeTableView<?>> {
+public class TreeTableOperationContext extends
+        AbstractTreeOperationContext<TreeTableView<?>, Object> {
     /** The AUT Server logger. */
     private static AutServerLogger log = new AutServerLogger(
             TreeTableOperationContext.class);
@@ -150,8 +150,7 @@ public class TreeTableOperationContext
                             return cell.getText();
                         } else if (node instanceof TreeItem) {
                             TreeItem<?> item = (TreeItem<?>) node;
-                            TreeTableView<?> treeTable = 
-                                    getTree();
+                            TreeTableView<?> treeTable = getTree();
                             List<TreeTableCell> cells = 
                                     new NodeTraverseHelper<TreeTableCell>()
                                     .getInstancesOf(treeTable,
@@ -192,8 +191,7 @@ public class TreeTableOperationContext
                     @Override
                     public Boolean call() throws Exception {
                         TreeItem<?>  item = (TreeItem<?>) node;
-                        return item.isExpanded()
-                                && getTree().isVisible();
+                        return item.isExpanded() && getTree().isVisible();
                     }
                 });
         return result;
@@ -244,8 +242,7 @@ public class TreeTableOperationContext
                         int index = ((TreeTableView) getTree())
                                 .getRow((TreeItem<?>) node);
                         getTree().scrollTo(index);
-                        getTree()
-                                .scrollToColumnIndex(m_column);
+                        getTree().scrollToColumnIndex(m_column);
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         getTree().layout();
@@ -309,11 +306,9 @@ public class TreeTableOperationContext
                     @Override
                     public Void call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        if (!getTree().isDisabled()
-                                && !item.isExpanded()) {
+                        if (!getTree().isDisabled() && !item.isExpanded()) {
                             log.warn("Expand node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
-
                             item.setExpanded(true);
                         }
                         return null;
@@ -368,8 +363,7 @@ public class TreeTableOperationContext
                     @Override
                     public Void call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
-                        if (!getTree().isDisabled()
-                                && item.isExpanded()) {
+                        if (!getTree().isDisabled() && item.isExpanded()) {
                             log.warn("Expand node fallback used for: " //$NON-NLS-1$
                                     + item.getValue());
 
@@ -382,11 +376,11 @@ public class TreeTableOperationContext
 
     @Override
     public Object getSelectedNode() {
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object>() { //$NON-NLS-1$
+        TreeItem<?> result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getSelectedNode", new Callable<TreeItem<?>>() { //$NON-NLS-1$
 
                     @Override
-                    public Object call() throws Exception {
+                    public TreeItem<?> call() throws Exception {
                         return getTree().getSelectionModel().getSelectedItem();
                     }
                 });
@@ -401,7 +395,7 @@ public class TreeTableOperationContext
     @Override
     public Object[] getSelectedNodes() {
         Object[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object[]>() { //$NON-NLS-1$
+                "getSelectedNodes", new Callable<Object[]>() { //$NON-NLS-1$
 
                     @Override
                     public Object[] call() throws Exception {
@@ -565,5 +559,4 @@ public class TreeTableOperationContext
                     }
                 });
     }
-
 }

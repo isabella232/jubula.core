@@ -25,12 +25,14 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
  * 
  * @author BREDEX GmbH
  * @created 09.08.2005
- * @param <T>
+ * @param <TREE_TYPE>
  *            the tree type
+ *  @param <NODE_TYPE>
+ *            the node type          
  */
-public abstract class AbstractTreeOperationContext<T> {
+public abstract class AbstractTreeOperationContext<TREE_TYPE, NODE_TYPE> {
     /** The tree. */
-    private T m_tree;
+    private TREE_TYPE m_tree;
     /** The Robot. */
     private IRobot m_robot;
     /** The event thread queuer. */
@@ -44,7 +46,7 @@ public abstract class AbstractTreeOperationContext<T> {
      * @param tree The tree
      */
     public AbstractTreeOperationContext(IEventThreadQueuer queuer, IRobot robot,
-        T tree) {
+        TREE_TYPE tree) {
         
         m_queuer = queuer;
         m_robot = robot;
@@ -71,7 +73,7 @@ public abstract class AbstractTreeOperationContext<T> {
      * @return The converted text
      * @throws StepExecutionException If the method call fails.
      */
-    protected abstract String convertValueToText(final Object node, 
+    protected abstract String convertValueToText(final NODE_TYPE node, 
         final int row) throws StepExecutionException;
     
     /**
@@ -89,7 +91,7 @@ public abstract class AbstractTreeOperationContext<T> {
     //              may already rely on this "bug". As a result, we cannot 
     //              change this method (or calls to this method) without 
     //              breaking backwards compatibility for tests.
-    public abstract Collection<String> getNodeTextList(Object node);
+    public abstract Collection<String> getNodeTextList(NODE_TYPE node);
     
     /**
      * Returns the rendered text for the given node.
@@ -101,7 +103,7 @@ public abstract class AbstractTreeOperationContext<T> {
      * @throws StepExecutionException If the method call fails (for example, 
      *                                if the given node could not be found).
      */
-    public abstract String getRenderedText(final Object node)
+    public abstract String getRenderedText(final NODE_TYPE node)
         throws StepExecutionException;
     
     /**
@@ -109,13 +111,13 @@ public abstract class AbstractTreeOperationContext<T> {
      * @param node a node
      * @return if the node is visible
      */
-    public abstract boolean isVisible(final Object node);
+    public abstract boolean isVisible(final NODE_TYPE node);
 
     /**
      * Getter for the tree
      * @return Returns the tree.
      */
-    protected T getTree() {
+    protected TREE_TYPE getTree() {
         return m_tree;
     }
     
@@ -134,14 +136,14 @@ public abstract class AbstractTreeOperationContext<T> {
      * @return  <code>true</code> if the given node is currently expanded.
      *          Otherwise, <code>false</code>.
      */
-    public abstract boolean isExpanded(Object node);
+    public abstract boolean isExpanded(NODE_TYPE node);
 
     /**
      * Scrolls the Tree's container, if necessary, in order to ensure that the
      * given node is viewable.
      * @param node  The node 
      */
-    public abstract void scrollNodeToVisible(Object node);
+    public abstract void scrollNodeToVisible(NODE_TYPE node);
 
     /**
      * Move the mouse pointer directly over the given node's onscreen location
@@ -149,44 +151,44 @@ public abstract class AbstractTreeOperationContext<T> {
      * @param node      The node
      * @param clickOps  The click options
      */
-    public abstract void clickNode(Object node, ClickOptions clickOps);
+    public abstract void clickNode(NODE_TYPE node, ClickOptions clickOps);
 
     /**
      * Expands the given node.
      * @param node  The node
      */
-    public abstract void expandNode(Object node);
+    public abstract void expandNode(NODE_TYPE node);
 
     /**
      * Collapses the given node.
      * @param node  The node
      */
-    public abstract void collapseNode(Object node);
+    public abstract void collapseNode(NODE_TYPE node);
 
     /**
      * @return  The currently selected node.
      */
     // FIXME zeb: The behavior of this method when multiple nodes are selected
     //            is undefined.
-    public abstract Object getSelectedNode();
+    public abstract NODE_TYPE getSelectedNode();
     
     /**
      * @return  The currently selected nodes.
      */
-    public abstract Object[] getSelectedNodes();
+    public abstract NODE_TYPE[] getSelectedNodes();
     
     /**
      * @return  All top-level nodes for the tree. These are the highest-level
      *          nodes that the user can see.
      */
-    public abstract Object[] getRootNodes();
+    public abstract NODE_TYPE[] getRootNodes();
     
     /**
      * @param child The child node.
      * @return  The parent node of the given node, or <code>null</code> if the
      *          node is a graphical root node.
      */
-    public abstract Object getParent(Object child);
+    public abstract NODE_TYPE getParent(NODE_TYPE child);
 
     /**
      * @param parent    The parent node. Can be <code>null</code>.
@@ -198,20 +200,20 @@ public abstract class AbstractTreeOperationContext<T> {
      *          to <code>index</code> (i.e. when <code>index == 0</code>, the 
      *          topmost root node will be returned).
      */
-    public abstract Object getChild(Object parent, int index);
+    public abstract NODE_TYPE getChild(NODE_TYPE parent, int index);
     
     /**
      * @param parent    The parent node. Can be <code>null</code>.
      * @return  the number of child nodes for <code>parent</code>, or the number
      *          of graphical root nodes if <code>parent == null</code>.
      */
-    public abstract int getNumberOfChildren(Object parent);
+    public abstract int getNumberOfChildren(NODE_TYPE parent);
  
     /**
      * @param node the node to check
      * @return true if the node is a leaf
      */
-    public abstract boolean isLeaf(Object node);
+    public abstract boolean isLeaf(NODE_TYPE node);
     
     /**
      * 
@@ -220,14 +222,14 @@ public abstract class AbstractTreeOperationContext<T> {
      *          parent</code>, or all root nodes if <code>parent</code> is
      *          <code>null</code>.
      */
-    public abstract Object[] getChildren(Object parent);
+    public abstract NODE_TYPE[] getChildren(NODE_TYPE parent);
     
     /**
      * @param node  The node for which to find the bounds.
      * @return  the graphical bounds of the node, as a 
      *          <code>java.awt.Rectangle</code>.
      */
-    public abstract Rectangle getNodeBounds(Object node);
+    public abstract Rectangle getNodeBounds(NODE_TYPE node);
     
     /**
      * @param parent    The parent node, can be <code>null</code>
@@ -239,5 +241,5 @@ public abstract class AbstractTreeOperationContext<T> {
      * and the returned index will be determined by the order in which the root
      * nodes are displayed (i.e. the topmost root node will have an index of 0).
      */
-    public abstract int getIndexOfChild(Object parent, Object child);
+    public abstract int getIndexOfChild(NODE_TYPE parent, NODE_TYPE child);
 }

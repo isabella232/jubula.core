@@ -65,9 +65,8 @@ public class TableTreeOperationContext extends TreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public void clickNode(Object node, ClickOptions clickOps) {
-        final TreeItem item = (TreeItem)node;
-        scrollNodeToVisible(item);
+    public void clickNode(final TreeItem node, ClickOptions clickOps) {
+        scrollNodeToVisible(node);
 
         org.eclipse.swt.graphics.Rectangle visibleItemBounds = 
             (org.eclipse.swt.graphics.Rectangle)getQueuer().invokeAndWait(
@@ -76,7 +75,7 @@ public class TableTreeOperationContext extends TreeOperationContext {
                     public Object run() {
                         final Rectangle nodeBounds = 
                             SwtPointUtil.toAwtRectangle(
-                                SwtUtils.getRelativeBounds(item, m_column));
+                                SwtUtils.getRelativeBounds(node, m_column));
 
                         return SwtPointUtil.toSwtRectangle(
                                 getVisibleRowBounds(nodeBounds));
@@ -92,18 +91,16 @@ public class TableTreeOperationContext extends TreeOperationContext {
      * @return The text rendered at this 
      *  <code>TableTreeOperationContext</code>'s column for the given node.
      */
-    public String getNodeTextAtColumn(Object node) {
-        final TreeItem item = (TreeItem)node;
-
+    public String getNodeTextAtColumn(final TreeItem node) {
         final int userIndex = IndexConverter.toUserIndex(m_column);
         String nodeText = (String)getQueuer().invokeAndWait(
-            "getNodeText: " + item + " at column: " + userIndex,  //$NON-NLS-1$ //$NON-NLS-2$
+            "getNodeText: " + node + " at column: " + userIndex,  //$NON-NLS-1$ //$NON-NLS-2$
             new IRunnable() {
 
                 public Object run() {
-                    return CAPUtil.getWidgetText(item,
+                    return CAPUtil.getWidgetText(node,
                             SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
-                            + m_column, item.getText(m_column));
+                            + m_column, node.getText(m_column));
 
                 }
             });
@@ -114,29 +111,28 @@ public class TableTreeOperationContext extends TreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public String getRenderedText(Object node) throws StepExecutionException {
+    public String getRenderedText(TreeItem node) throws StepExecutionException {
         return getNodeTextAtColumn(node);
     }
     
     /**
      * {@inheritDoc}
      */
-    public void scrollNodeToVisible(final Object node) {
+    public void scrollNodeToVisible(final TreeItem node) {
         super.scrollNodeToVisible(node);
 
-        getQueuer().invokeAndWait("showColumn: " + node,  //$NON-NLS-1$
+        getQueuer().invokeAndWait("showColumn: " + node, //$NON-NLS-1$
                 new IRunnable() {
 
                     public Object run() {
-                        ((Tree)getTree()).showColumn(
-                                ((Tree)getTree()).getColumn(m_column));
+                        getTree().showColumn(getTree().getColumn(m_column));
                         return null;
                     }
 
                 });
 
         final Rectangle nodeBoundsRelativeToParent = getNodeBounds(node);
-        final Tree tree = (Tree)getTree();
+        final Tree tree = getTree();
         
         getQueuer().invokeAndWait("getNodeBoundsRelativeToParent", //$NON-NLS-1$
             new IRunnable() {
@@ -155,14 +151,13 @@ public class TableTreeOperationContext extends TreeOperationContext {
                 }
             });
 
-        Control parent = (Control)getQueuer().invokeAndWait("getParent", //$NON-NLS-1$
+        Control parent = (Control) getQueuer().invokeAndWait("getParent", //$NON-NLS-1$
                 new IRunnable() {
-                public Object run() {
-                    tree.getParent();
-                    return null;
-                }
-            });
-
+                    public Object run() {
+                        tree.getParent();
+                        return null;
+                    }
+                });
         
         getRobot().scrollToVisible(parent, 
                 SwtPointUtil.toSwtRectangle(nodeBoundsRelativeToParent));
@@ -171,16 +166,16 @@ public class TableTreeOperationContext extends TreeOperationContext {
     /**
      * {@inheritDoc}
      */
-    public Rectangle getNodeBounds(final Object node) {
+    public Rectangle getNodeBounds(final TreeItem node) {
         org.eclipse.swt.graphics.Rectangle r = 
             (org.eclipse.swt.graphics.Rectangle)
             getQueuer().invokeAndWait("getNodeBounds: " + node,  //$NON-NLS-1$
                     new IRunnable() {
 
                     public Object run() {
-                        Tree tree = (Tree)getTree();
+                        Tree tree = getTree();
                         org.eclipse.swt.graphics.Rectangle bounds = 
-                            SwtUtils.getBounds((TreeItem)node, m_column);
+                            SwtUtils.getBounds(node, m_column);
                         Point relativeLocation = 
                             tree.toControl(bounds.x, bounds.y);
                         bounds.x = relativeLocation.x;

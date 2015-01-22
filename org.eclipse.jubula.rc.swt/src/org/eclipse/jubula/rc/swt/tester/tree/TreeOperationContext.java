@@ -40,7 +40,8 @@ import org.eclipse.swt.widgets.TreeItem;
  * @author BREDEX GmbH
  * @created 09.08.2005
  */
-public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
+public class TreeOperationContext 
+    extends AbstractTreeOperationContext<Tree, TreeItem> {
 
     /** The AUT Server logger. */
     private static AutServerLogger log = 
@@ -68,7 +69,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
      * @throws StepExecutionException
      *             If the method call fails.
      */
-    protected String convertValueToText(final Object node, final int row)
+    protected String convertValueToText(final TreeItem node, final int row)
         throws StepExecutionException {
         return getRenderedText(node);
     }
@@ -76,14 +77,13 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public String getRenderedText(final Object node)
+    public String getRenderedText(final TreeItem node)
         throws StepExecutionException {
         
-        final TreeItem treeNode = (TreeItem)node;
         return (String)getQueuer().invokeAndWait(
             "getText", new IRunnable() { //$NON-NLS-1$
                 public Object run() {
-                    return CAPUtil.getWidgetText(treeNode, treeNode.getText());
+                    return CAPUtil.getWidgetText(node, node.getText());
                 }
             });
     }
@@ -91,12 +91,11 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public boolean isVisible(final Object node) {
-        final TreeItem treeNode = (TreeItem)node;
+    public boolean isVisible(final TreeItem node) {
         Boolean visible = (Boolean)getQueuer().invokeAndWait("isVisible", //$NON-NLS-1$
                 new IRunnable() {
                     public Object run() {
-                        TreeItem item = treeNode;
+                        TreeItem item = node;
                         boolean vis = true;
                         while (item != null && item.getParentItem() != null) {
                             vis = item.getParentItem().getExpanded();
@@ -136,10 +135,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public void collapseNode(Object node) {
-        final TreeItem item = castToTreeItem(node);
+    public void collapseNode(final TreeItem node) {
         final Tree tree = getTree();
-        boolean doAction = isExpanded(item);
+        boolean doAction = isExpanded(node);
         if (doAction) {
             if (log.isDebugEnabled()) {
                 log.debug("Collapsing node: " //$NON-NLS-1$
@@ -151,9 +149,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
                     collapseEvent.time = (int)System.currentTimeMillis();
                     collapseEvent.type = SWT.Collapse;
                     collapseEvent.widget = tree;
-                    collapseEvent.item = item;
+                    collapseEvent.item = node;
                     tree.notifyListeners(SWT.Collapse, collapseEvent);
-                    item.setExpanded(false);
+                    node.setExpanded(false);
                     tree.update();
                     
                     // Return value not used
@@ -166,23 +164,22 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public void expandNode(Object node) {
+    public void expandNode(final TreeItem node) {
         
         final ClassLoader oldCl = Thread.currentThread()
             .getContextClassLoader();
 
         try {
-            final TreeItem item = castToTreeItem(node);
             final Tree tree = getTree();
 
-            boolean doAction = !isExpanded(item);
+            boolean doAction = !isExpanded(node);
             Thread.currentThread().setContextClassLoader(tree.getClass()
                 .getClassLoader());
 
-            getQueuer().invokeAndWait("Scroll Tree item: " + item  //$NON-NLS-1$
+            getQueuer().invokeAndWait("Scroll Tree item: " + node  //$NON-NLS-1$
                 + " to visible", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        tree.showItem(item);
+                        tree.showItem(node);
                     
                         // Return value not used
                         return null;
@@ -213,9 +210,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
                         expandEvent.time = (int)System.currentTimeMillis();
                         expandEvent.type = SWT.Expand;
                         expandEvent.widget = tree;
-                        expandEvent.item = item;
+                        expandEvent.item = node;
                         tree.notifyListeners(SWT.Expand, expandEvent);
-                        item.setExpanded(true);
+                        node.setExpanded(true);
                         tree.update();
                         
                         // Return value not used
@@ -234,32 +231,28 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public Object[] getRootNodes() {
-        return (Object[])getQueuer().invokeAndWait("getRootNode",  //$NON-NLS-1$
-            new IRunnable() {
-
-                public Object run() {
-                    return getTree().getItems();
-                }
-
-            });
-
+    public TreeItem[] getRootNodes() {
+        return (TreeItem[]) getQueuer().invokeAndWait("getRootNode", //$NON-NLS-1$
+                new IRunnable() {
+                    public Object run() {
+                        return getTree().getItems();
+                    }
+                });
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isExpanded(Object node) {
-        final TreeItem item = castToTreeItem(node);
+    public boolean isExpanded(final TreeItem node) {
         // FIXME zeb: Verify that getExpanded() works like I think it does:
         //            It should return false if any of the parent nodes are 
         //            collapsed.
         return ((Boolean)getQueuer().invokeAndWait(
-                "isExpanded: " + item,  //$NON-NLS-1$
+                "isExpanded: " + node,  //$NON-NLS-1$
                 new IRunnable() {
 
                 public Object run() {
-                    return item.getExpanded() ? Boolean.TRUE : Boolean.FALSE;
+                    return node.getExpanded() ? Boolean.TRUE : Boolean.FALSE;
                 }
 
             })).booleanValue();
@@ -268,13 +261,12 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public void clickNode(final Object node, final ClickOptions clickOps) {
-        final TreeItem item = castToTreeItem(node);
-        scrollNodeToVisible(item);
+    public void clickNode(final TreeItem node, final ClickOptions clickOps) {
+        scrollNodeToVisible(node);
 
         // Wait for all paint events resulting from the scroll to be processed
         // before calculating bounds.
-        SwtUtils.waitForDisplayIdle(item.getDisplay());
+        SwtUtils.waitForDisplayIdle(node.getDisplay());
         
         org.eclipse.swt.graphics.Rectangle visibleRowBounds = 
             (org.eclipse.swt.graphics.Rectangle)getQueuer().invokeAndWait(
@@ -294,24 +286,23 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public void toggleNodeCheckbox(final Object node) {
-        final TreeItem item = castToTreeItem(node);
-        scrollNodeToVisible(item);
+    public void toggleNodeCheckbox(final TreeItem node) {
+        scrollNodeToVisible(node);
 
         getQueuer().invokeAndWait(
                 "selectNodeCheckbox", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
                         Tree tree = getTree();
-                        boolean toggledValue = !item.getChecked();
-                        item.setChecked(toggledValue);
+                        boolean toggledValue = !node.getChecked();
+                        node.setChecked(toggledValue);
                         Event toggleEvent = new Event();
                         toggleEvent.type = SWT.Selection;
                         toggleEvent.detail = SWT.CHECK;
                         toggleEvent.widget = tree;
-                        toggleEvent.item = item;
+                        toggleEvent.item = node;
                         toggleEvent.button = SWT.BUTTON1;
                         toggleEvent.count = 1;
-                        toggleEvent.display = item.getDisplay();
+                        toggleEvent.display = node.getDisplay();
                         tree.notifyListeners(SWT.Selection, toggleEvent);
                         return null;
                     }            
@@ -321,15 +312,14 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public void verifyCheckboxSelection(final Object node,
+    public void verifyCheckboxSelection(final TreeItem node,
             final boolean checked) {
-        final TreeItem item = castToTreeItem(node);
-        scrollNodeToVisible(item);
+        scrollNodeToVisible(node);
 
         Boolean checkSelected = ((Boolean)getQueuer().invokeAndWait(
                 "verifyCheckboxSelection", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        return new Boolean(item.getChecked());
+                        return new Boolean(node.getChecked());
                     }            
                 }));       
         
@@ -339,12 +329,12 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public void scrollNodeToVisible(final Object node) {
+    public void scrollNodeToVisible(final TreeItem node) {
         getQueuer().invokeAndWait("showItem: " + node,  //$NON-NLS-1$
             new IRunnable() {
 
                 public Object run() {
-                    getTree().showItem(castToTreeItem(node));
+                    getTree().showItem(node);
                     return null;
                 }
 
@@ -387,9 +377,9 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public Object getChild(final Object parent, final int index) {
+    public TreeItem getChild(final TreeItem parent, final int index) {
         if (parent == null) {
-            Object [] rootNodes = getRootNodes();
+            TreeItem [] rootNodes = getRootNodes();
             if (index < 0 || index >= rootNodes.length) {
                 // FIXME zeb: Handle child not found
                 return null;
@@ -397,107 +387,87 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
             return rootNodes[index];
         }
 
-        return getQueuer().invokeAndWait(
-            "getChild: " + parent + "; With index: " + index,  //$NON-NLS-1$ //$NON-NLS-2$
-            new IRunnable() {
+        return (TreeItem) getQueuer().invokeAndWait(
+                "getChild: " + parent + "; With index: " + index, //$NON-NLS-1$ //$NON-NLS-2$
+                new IRunnable() {
 
-                public Object run() {
-                    TreeItem parentItem = castToTreeItem(parent);
-                    try {
-                        return parentItem.getItem(index);
-                    } catch (IllegalArgumentException iae) {
-                        // FIXME zeb: Handle child not found
-                        return null;
+                    public Object run() {
+                        try {
+                            return parent.getItem(index);
+                        } catch (IllegalArgumentException iae) {
+                            // FIXME zeb: Handle child not found
+                            return null;
+                        }
                     }
-                }
-            });
+                });
     }
 
     /**
      * {@inheritDoc}
      */
-    public Object getParent(final Object child) {
-        return getQueuer().invokeAndWait("getParent: " + child,  //$NON-NLS-1$
-            new IRunnable() {
+    public TreeItem getParent(final TreeItem child) {
+        return (TreeItem) getQueuer().invokeAndWait("getParent: " + child, //$NON-NLS-1$
+                new IRunnable() {
 
-                public Object run() {
-                    TreeItem childItem = castToTreeItem(child);
-                    return childItem.getParentItem();
-                }
+                    public Object run() {
+                        return child.getParentItem();
+                    }
 
-            });
-    }
-
-    /**
-     * Casts an Object to a TreeItem, handles ClassCastExceptions by throwing an
-     * IllegalArgumentException.
-     * @param toCast    The object to cast
-     * @return  The original object casted to a TreeItem
-     */
-    private TreeItem castToTreeItem(Object toCast) {
-        try {
-            return (TreeItem)toCast;
-        } catch (ClassCastException cce) {
-            throw new IllegalArgumentException(
-                "Object must be of type TreeItem"); //$NON-NLS-1$
-        }
+                });
     }
 
     /**
      * {@inheritDoc}
      */
-    public Object getSelectedNode() {
+    public TreeItem getSelectedNode() {
         return getSelectedNodes()[0];
     }
     
     /**
      * {@inheritDoc}
      */
-    public Object[] getSelectedNodes() {
-        return (Object[]) getQueuer().invokeAndWait("getSelectedNodes",  //$NON-NLS-1$
-            new IRunnable() {
+    public TreeItem[] getSelectedNodes() {
+        return (TreeItem[]) getQueuer().invokeAndWait("getSelectedNodes", //$NON-NLS-1$
+                new IRunnable() {
 
-                public Object run() {
-                    TreeItem [] selectedItems = 
-                        getTree().getSelection();
-                    SelectionUtil.validateSelection(selectedItems);
-                    return selectedItems;
-                }
+                    public Object run() {
+                        TreeItem[] selectedItems = getTree().getSelection();
+                        SelectionUtil.validateSelection(selectedItems);
+                        return selectedItems;
+                    }
 
-            });
+                });
     }
 
     /**
      * {@inheritDoc}
      */
-    public Object[] getChildren(Object parent) {
+    public TreeItem[] getChildren(final TreeItem parent) {
         if (parent == null) {
             return getRootNodes();
         }
-        final TreeItem item = castToTreeItem(parent);
-        return (Object[])getQueuer().invokeAndWait("getChildren: " + item,  //$NON-NLS-1$
-            new IRunnable() {
+        return (TreeItem[]) getQueuer().invokeAndWait("getChildren: " + parent, //$NON-NLS-1$
+                new IRunnable() {
 
-                public Object run() {
-                    return item.getItems();
-                }
+                    public Object run() {
+                        return parent.getItems();
+                    }
 
-            });
+                });
     }
 
     /**
      * {@inheritDoc}
      */
-    public int getNumberOfChildren(Object parent) {
+    public int getNumberOfChildren(final TreeItem parent) {
         if (parent == null) {
             return getRootNodes().length;
         }
-        final TreeItem item = castToTreeItem(parent);
-        return ((Integer)getQueuer().invokeAndWait("getChildren: " + item,  //$NON-NLS-1$
+        return ((Integer)getQueuer().invokeAndWait("getChildren: " + parent,  //$NON-NLS-1$
                 new IRunnable() {
 
                 public Object run() {
-                    return new Integer(item.getItemCount());
+                    return new Integer(parent.getItemCount());
                 }
 
             })).intValue();
@@ -506,26 +476,25 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public Collection<String> getNodeTextList(Object node) {
+    public Collection<String> getNodeTextList(final TreeItem node) {
         final Collection<String> res = new ArrayList<String>();
-        final TreeItem item = castToTreeItem(node);
         
-        getQueuer().invokeAndWait("getNodeText: " + item,  //$NON-NLS-1$
+        getQueuer().invokeAndWait("getNodeText: " + node,  //$NON-NLS-1$
             new IRunnable() {
 
                 public Object run() {
                     int colCount = getTree().getColumnCount();
                     
                     for (int i = 0; i < colCount; i++) {
-                        String textAtColumn = CAPUtil.getWidgetText(item,
+                        String textAtColumn = CAPUtil.getWidgetText(node,
                                 SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
-                                + i, item.getText(i));
+                                + i, node.getText(i));
                         if (textAtColumn != null) {
                             res.add(textAtColumn);
                         }
                     }
                     
-                    String text = CAPUtil.getWidgetText(item, item.getText());
+                    String text = CAPUtil.getWidgetText(node, node.getText());
                     if (text != null) {
                         res.add(text);
                     }
@@ -541,45 +510,41 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public Rectangle getNodeBounds(final Object node) {
+    public Rectangle getNodeBounds(final TreeItem node) {
         org.eclipse.swt.graphics.Rectangle r = 
-            (org.eclipse.swt.graphics.Rectangle)
-            getQueuer().invokeAndWait("getNodeBounds: " + node,  //$NON-NLS-1$
-                    new IRunnable() {
+                (org.eclipse.swt.graphics.Rectangle) getQueuer()
+                .invokeAndWait("getNodeBounds: " + node, //$NON-NLS-1$
+                        new IRunnable() {
 
-                    public Object run() {
-                        Tree tree = getTree();
-                        org.eclipse.swt.graphics.Rectangle bounds =
-                            SwtUtils.getRelativeWidgetBounds(
-                                    (TreeItem)node, tree);
-                        
-                        return bounds;
-                    }
-                });
-        Rectangle nodeBounds = new Rectangle(
-            r.x, r.y, r.width, r.height);
+                            public Object run() {
+                                Tree tree = getTree();
+                                org.eclipse.swt.graphics.Rectangle bounds = 
+                                    SwtUtils.getRelativeWidgetBounds(
+                                            node, tree);
 
+                                return bounds;
+                            }
+                        });
+        Rectangle nodeBounds = new Rectangle(r.x, r.y, r.width, r.height);
         return nodeBounds;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int getIndexOfChild(final Object parent, final Object child) {
+    public int getIndexOfChild(final TreeItem parent, final TreeItem child) {
         if (parent != null) {
-            return ((Integer)(getQueuer().invokeAndWait(
-                    "getIndexOfChild",  //$NON-NLS-1$
+            return ((Integer) (getQueuer().invokeAndWait("getIndexOfChild", //$NON-NLS-1$
                     new IRunnable() {
 
                         public Object run() throws StepExecutionException {
-                            return new Integer(
-                                ((TreeItem)parent).indexOf((TreeItem)child));
+                            return new Integer(parent.indexOf(child));
                         }
 
                     }))).intValue();
         }
      
-        Object [] rootNodes = getRootNodes();
+        TreeItem [] rootNodes = getRootNodes();
         for (int i = 0; i < rootNodes.length; i++) {
             if (rootNodes[i] == child) {
                 return i;
@@ -592,7 +557,7 @@ public class TreeOperationContext extends AbstractTreeOperationContext<Tree> {
     /**
      * {@inheritDoc}
      */
-    public boolean isLeaf(Object node) {
+    public boolean isLeaf(TreeItem node) {
         if (getNumberOfChildren(node) == 0) {
             return true;
         }

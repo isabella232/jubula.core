@@ -22,8 +22,6 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created Nov 30, 2006
  */
 public abstract class AbstractParentTraverser extends DistanceBasedTraverser {
-
-    
     /**
      * {@inheritDoc}
      * @param context the context

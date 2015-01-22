@@ -20,8 +20,11 @@ package org.eclipse.jubula.rc.common.implclasses.tree;
  *
  * @author BREDEX GmbH
  * @created 22.03.2005
+ * @param <NODE_TYPE>
+ *            the node type
  */
-public abstract class AbstractTreeNodeOperation implements TreeNodeOperation {
+public abstract class AbstractTreeNodeOperation<NODE_TYPE> implements
+    TreeNodeOperation<NODE_TYPE> {
     /**
      * The tree operation context.
      */

@@ -14,29 +14,39 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 
 /**
  * This tree node operation is called by the
- * {@link org.eclipse.jubula.rc.swing.implclasses.swing.tree.TreeNodeTraverser}
- * on any node the traverser passes on its top-down traversal of the JTree. Classes
- * that implement this interface may, for example, expand or collapse the passed
- * tree node.
+ * {@link org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeTraverser}
+ * on any node the traverser passes on its top-down traversal of the Tree.
+ * Classes that implement this interface may, for example, expand or collapse
+ * the passed tree node.
  * 
  * @author BREDEX GmbH
  * @created 16.03.2005
+ * @param <NODE_TYPE>
+ *            the node type
  */
-public interface TreeNodeOperation {
-    
+public interface TreeNodeOperation<NODE_TYPE> {
+
     /**
      * Sets the tree operation context.
-     * @param context The context
+     * 
+     * @param context
+     *            The context
      */
-    
+
     public void setContext(AbstractTreeOperationContext context);
+
     /**
      * Operates on the passed tree node. This method is called by the
-     * <code>TreeNodeTraverser</code> on any node that is specified in the
-     * tree node path.
-     * @param node The current tree node.
-     * @return <code>true</code> if the <code>TreeNodeTraverser</code> should proceed.
-     * @throws StepExecutionException If the operation, e.g. the node selection or expansion, fails.
+     * <code>TreeNodeTraverser</code> on any node that is specified in the tree
+     * node path.
+     * 
+     * @param node
+     *            The current tree node.
+     * @return <code>true</code> if the <code>TreeNodeTraverser</code> should
+     *         proceed.
+     * @throws StepExecutionException
+     *             If the operation, e.g. the node selection or expansion,
+     *             fails.
      */
-    public boolean operate(Object node) throws StepExecutionException;
+    public boolean operate(NODE_TYPE node) throws StepExecutionException;
 }

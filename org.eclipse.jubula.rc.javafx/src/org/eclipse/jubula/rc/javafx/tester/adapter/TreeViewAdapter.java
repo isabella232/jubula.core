@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.util.concurrent.Callable;
 
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
@@ -51,7 +52,7 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
     }
 
     @Override
-    public AbstractTreeOperationContext getContext() {
+    public AbstractTreeOperationContext<TreeView<?>, TreeItem<?>> getContext() {
         return new TreeOperationContext(getRobotFactory()
                 .getEventThreadQueuer(), getRobot(), getRealComponent());
     }

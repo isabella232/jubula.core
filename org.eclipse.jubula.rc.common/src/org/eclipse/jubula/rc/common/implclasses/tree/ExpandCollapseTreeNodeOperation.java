@@ -40,7 +40,8 @@ public class ExpandCollapseTreeNodeOperation
     public boolean operate(final Object treeNode)
         throws StepExecutionException {
         
-        final AbstractTreeOperationContext context = getContext();
+        final AbstractTreeOperationContext<Object, Object> context = 
+                getContext();
         // only try to expand/collapse the node if it's not a leaf
         // this otherwise causes issues like #399042
         if (!context.isLeaf(treeNode)) {

@@ -16,6 +16,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -42,7 +43,7 @@ import org.eclipse.jubula.rc.javafx.util.Rounding;
  * @created 19.11.2013
  */
 public class TreeOperationContext 
-    extends AbstractTreeOperationContext<TreeView<?>> {
+    extends AbstractTreeOperationContext<TreeView<?>, TreeItem<?>> {
 
     /** The AUT Server logger. */
     private static AutServerLogger log = new AutServerLogger(
@@ -71,16 +72,15 @@ public class TreeOperationContext
      *            Not used!
      */
     @Override
-    protected String convertValueToText(final Object node, final int row)
+    protected String convertValueToText(final TreeItem<?> node, final int row)
         throws StepExecutionException {
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "convertValueToText", new Callable<String>() { //$NON-NLS-1$
 
                     @Override
                     public String call() throws Exception {
-                        TreeItem<?> item = (TreeItem<?>) node;
-                        if (item != null) {
-                            Object val = item.getValue();
+                        if (node != null) {
+                            Object val = node.getValue();
                             if (val != null) {
                                 return val.toString();
                             }
@@ -92,7 +92,7 @@ public class TreeOperationContext
     }
 
     @Override
-    public Collection<String> getNodeTextList(Object node) {
+    public Collection<String> getNodeTextList(TreeItem<?> node) {
         List<String> res = new ArrayList<String>();
         int rowNotUsed = 0;
         String valText = convertValueToText(node, rowNotUsed);
@@ -107,7 +107,7 @@ public class TreeOperationContext
     }
 
     @Override
-    public String getRenderedText(final Object node)
+    public String getRenderedText(final TreeItem<?> node)
         throws StepExecutionException {
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getRenderedText", new Callable<String>() { //$NON-NLS-1$
@@ -131,23 +131,19 @@ public class TreeOperationContext
     }
 
     @Override
-    public boolean isVisible(final Object node) {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait("isVisible", //$NON-NLS-1$
+    public boolean isVisible(final TreeItem<?> node) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("isVisible", //$NON-NLS-1$
                 new Callable<Boolean>() {
 
                     @Override
                     public Boolean call() throws Exception {
-                        TreeItem<?> item = (TreeItem<?>) node;
-                        TreeItem<?> parent = item.getParent();
+                        TreeItem<?> parent = node.getParent();
                         if (parent != null) {
-                            return parent.isExpanded()
-                                    && getTree().isVisible();
+                            return parent.isExpanded() && getTree().isVisible();
                         }
                         return getTree().isVisible();
                     }
                 });
-
-        return result;
     }
 
     @Override
@@ -172,40 +168,37 @@ public class TreeOperationContext
     }
 
     @Override
-    public boolean isExpanded(final Object node) {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+    public boolean isExpanded(final TreeItem<?> node) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "isExpanded", new Callable<Boolean>() { //$NON-NLS-1$
 
                     @Override
                     public Boolean call() throws Exception {
-                        TreeItem<?> item = (TreeItem<?>) node;
-                        return item.isExpanded();
+                        return node.isExpanded();
                     }
                 });
-
-        return result;
     }
 
     @Override
-    public void scrollNodeToVisible(final Object node) {
+    public void scrollNodeToVisible(final TreeItem<?> node) {
         EventThreadQueuerJavaFXImpl.invokeAndWait("scrollNodeToVisible", //$NON-NLS-1$
                 new Callable<Void>() {
 
                     @Override
                     public Void call() throws Exception {
-                        int index = ((TreeView) getTree())
-                                .getRow((TreeItem<?>) node);
-                        getTree().scrollTo(index);
+                        TreeView<?> tree = getTree();
+                        int index = ((TreeView) tree).getRow(node);
+                        tree.scrollTo(index);
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        getTree().layout();
+                        tree.layout();
                         return null;
                     }
                 });
     }
 
     @Override
-    public void clickNode(Object node, ClickOptions clickOps) {
+    public void clickNode(TreeItem<?> node, ClickOptions clickOps) {
         scrollNodeToVisible(node);
         Rectangle rowBounds = getNodeBounds(node);
         Rectangle visibleRowBounds = getVisibleRowBounds(rowBounds);
@@ -213,7 +206,7 @@ public class TreeOperationContext
     }
 
     @Override
-    public void expandNode(final Object node) {
+    public void expandNode(final TreeItem<?> node) {
         scrollNodeToVisible(node);
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("expandNode", //$NON-NLS-1$
                 new Callable<Object>() {
@@ -245,13 +238,11 @@ public class TreeOperationContext
 
                     @Override
                     public Void call() throws Exception {
-                        TreeItem<?> item = (TreeItem<?>) node;
-                        if (!getTree().isDisabled()
-                                && !item.isExpanded()) {
+                        if (!getTree().isDisabled() && !node.isExpanded()) {
                             log.warn("Expand node fallback used for: " //$NON-NLS-1$
-                                    + item.getValue());
+                                    + node.getValue());
 
-                            item.setExpanded(true);
+                            node.setExpanded(true);
                         }
                         return null;
                     }
@@ -259,7 +250,7 @@ public class TreeOperationContext
     }
 
     @Override
-    public void collapseNode(final Object node) {
+    public void collapseNode(final TreeItem<?> node) {
         scrollNodeToVisible(node);
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "collapseNode", new Callable<Object>() { //$NON-NLS-1$
@@ -291,13 +282,12 @@ public class TreeOperationContext
 
                     @Override
                     public Void call() throws Exception {
-                        TreeItem<?> item = (TreeItem<?>) node;
                         if (!getTree().isDisabled()
-                                && item.isExpanded()) {
+                                && node.isExpanded()) {
                             log.warn("Collapse node fallback used for: " //$NON-NLS-1$
-                                    + item.getValue());
+                                    + node.getValue());
 
-                            item.setExpanded(false);
+                            node.setExpanded(false);
                         }
                         return null;
                     }
@@ -305,15 +295,14 @@ public class TreeOperationContext
     }
 
     @Override
-    public Object getSelectedNode() {
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object>() { //$NON-NLS-1$
+    public TreeItem<?> getSelectedNode() {
+        TreeItem<?> result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getSelectedNode", new Callable<TreeItem<?>>() { //$NON-NLS-1$
 
                     @Override
-                    public Object call() throws Exception {
+                    public TreeItem<?> call() throws Exception {
 
-                        return getTree().getSelectionModel()
-                                .getSelectedItem();
+                        return getTree().getSelectionModel().getSelectedItem();
                     }
                 });
         if (result != null) {
@@ -325,15 +314,16 @@ public class TreeOperationContext
     }
 
     @Override
-    public Object[] getSelectedNodes() {
-        Object[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object[]>() { //$NON-NLS-1$
+    public TreeItem<?>[] getSelectedNodes() {
+        TreeItem<?>[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getSelectedNode", new Callable<TreeItem<?>[]>() { //$NON-NLS-1$
 
                     @Override
-                    public Object[] call() throws Exception {
-
-                        return getTree().getSelectionModel()
-                                .getSelectedItems().toArray();
+                    public TreeItem<?>[] call() throws Exception {
+                        ObservableList<?> selectedItems = getTree()
+                                .getSelectionModel().getSelectedItems();
+                        return selectedItems.toArray(new TreeItem[
+                                selectedItems.size()]);
                     }
                 });
         SelectionUtil.validateSelection(result);
@@ -341,17 +331,17 @@ public class TreeOperationContext
     }
 
     @Override
-    public Object[] getRootNodes() {
-        Object[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getRootNodes", new Callable<Object[]>() { //$NON-NLS-1$
+    public TreeItem<?>[] getRootNodes() {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getRootNodes", new Callable<TreeItem<?>[]>() { //$NON-NLS-1$
 
                     @Override
-                    public Object[] call() throws Exception {
+                    public TreeItem<?>[] call() throws Exception {
                         TreeView<?> tree = getTree();
 
                         // If the root is visible, just return that.
                         if (tree.showRootProperty().getValue()) {
-                            return new Object[] { tree.getRoot() };
+                            return new TreeItem[] { tree.getRoot() };
                         }
 
                         // If the root is not visible, return all direct
@@ -360,86 +350,72 @@ public class TreeOperationContext
                         return getChildren(tree.getRoot());
                     }
                 });
-        return result;
     }
 
     @Override
-    public Object getParent(final Object child) {
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("getParent", //$NON-NLS-1$
-                new Callable<Object>() {
+    public TreeItem<?> getParent(final TreeItem<?> child) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getParent", //$NON-NLS-1$
+                new Callable<TreeItem<?>>() {
 
                     @Override
-                    public Object call() throws Exception {
-
-                        return ((TreeItem<?>) child).getParent();
+                    public TreeItem<?> call() throws Exception {
+                        return child.getParent();
                     }
                 });
-
-        return result;
     }
 
     @Override
-    public Object getChild(final Object parent, final int index) {
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("getChild", //$NON-NLS-1$
-                new Callable<Object>() {
+    public TreeItem<?> getChild(final TreeItem<?> parent, final int index) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getChild", //$NON-NLS-1$
+                new Callable<TreeItem<?>>() {
 
                     @Override
-                    public Object call() throws Exception {
+                    public TreeItem<?> call() throws Exception {
 
-                        return ((TreeItem<?>) parent).getChildren().get(index);
+                        return parent.getChildren().get(index);
                     }
                 });
-
-        return result;
     }
 
     @Override
-    public int getNumberOfChildren(final Object parent) {
-        Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+    public int getNumberOfChildren(final TreeItem<?> parent) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getNumberOfChildren", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
                     public Integer call() throws Exception {
-
-                        return ((TreeItem<?>) parent).getChildren().size();
+                        return parent.getChildren().size();
                     }
                 });
-
-        return result;
     }
 
     @Override
-    public boolean isLeaf(final Object node) {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait("isLeaf", //$NON-NLS-1$
+    public boolean isLeaf(final TreeItem<?> node) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("isLeaf", //$NON-NLS-1$
                 new Callable<Boolean>() {
 
                     @Override
                     public Boolean call() throws Exception {
-                        TreeItem<?> item = (TreeItem<?>) node;
-                        return item.isLeaf();
+                        return node.isLeaf();
                     }
                 });
-
-        return result;
     }
 
     @Override
-    public Object[] getChildren(final Object parent) {
-        Object[] result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getSelectedNode", new Callable<Object[]>() { //$NON-NLS-1$
+    public TreeItem<?>[] getChildren(final TreeItem<?> parent) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getChildren", new Callable<TreeItem<?>[]>() { //$NON-NLS-1$
 
                     @Override
-                    public Object[] call() throws Exception {
-
-                        return ((TreeItem<?>) parent).getChildren().toArray();
+                    public TreeItem<?>[] call() throws Exception {
+                        ObservableList<?> children = parent.getChildren();
+                        return children.toArray(new TreeItem[children.size()]);
                     }
                 });
-
-        return result;
     }
 
     @Override
-    public Rectangle getNodeBounds(final Object node) {
+    public Rectangle getNodeBounds(final TreeItem<?> node) {
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getNodeBounds", new Callable<Rectangle>() { //$NON-NLS-1$
                     @Override
@@ -472,8 +448,9 @@ public class TreeOperationContext
     }
 
     @Override
-    public int getIndexOfChild(final Object parent, final Object child) {
-        Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+    public int getIndexOfChild(final TreeItem<?> parent, 
+        final TreeItem<?> child) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getIndexOfChild", new Callable<Integer>() { //$NON-NLS-1$
 
                     @Override
@@ -488,14 +465,12 @@ public class TreeOperationContext
 
                             return -1;
                         }
-                        List<?> children = ((TreeItem<?>) parent).getChildren();
+                        List<?> children = parent.getChildren();
                         if (children.contains(child)) {
                             return children.indexOf(child);
                         }
                         return -1;
                     }
                 });
-        return result;
     }
-
 }
