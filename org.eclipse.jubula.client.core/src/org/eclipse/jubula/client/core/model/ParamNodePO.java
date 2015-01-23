@@ -29,6 +29,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
+import org.eclipse.jubula.client.core.utils.RefToken;
 
 
 
@@ -284,7 +285,24 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                     
                     ITestDataPO testData = TestDataBP.instance().getTestData(
                             this, testDataManager, paramDesc, i);
-                    if (testData == null || testData.getValue(locale) == null) {
+                    if (testData != null) {
+                        String value = testData.getValue(locale);
+                        if (value != null) {
+                            ModelParamValueConverter mpvc = 
+                                new ModelParamValueConverter(
+                                    value, this, locale, paramDesc);
+                            List<RefToken> referenceTokens = mpvc
+                                    .getRefTokens();
+                            String uiValue = mpvc.getGuiString();
+                            for (RefToken token : referenceTokens) {
+                                if (uiValue.contains(token.getModelString())) {
+                                    return false;
+                                }
+                            }
+                        } else {
+                            return false;
+                        }
+                    } else {
                         return false;
                     }
                 }

@@ -190,9 +190,8 @@ public class Messages extends NLS {
     public static String InDataSource;
     public static String InHierachy;
     public static String InNode;
-    public static String InReferenceNoAppropriateParameter;
+    public static String InvalidUuidInReference;
     public static String InvalidCharacter;
-    public static String InvalidGuid;
     public static String InvalidInstanceForInvokingOfThisMethod;
     public static String InvalidProjectVersionNumber;
     public static String InvocationOfListenerForReloadingSessionFailed;

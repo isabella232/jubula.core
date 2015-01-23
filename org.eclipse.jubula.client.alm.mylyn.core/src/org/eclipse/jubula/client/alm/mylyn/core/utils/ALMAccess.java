@@ -403,7 +403,7 @@ public final class ALMAccess {
      * 
      * @param value the string value which variables of it should be resolved (using our parser)
      * @param fieldUpdate the {@link FieldUpdate} of the corresponding value
-     * @return a string whith all variables resolved
+     * @return a string with all variables resolved
      * @throws CouldNotResolveException 
      */
     private static String getVariableValues(String value,
