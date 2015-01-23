@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: U40
-Bundle-SymbolicName: org.eclipse.jubula.rc.javafx.u40
+Bundle-Name: Java 8 Update 40 UI component support
+Bundle-SymbolicName: org.eclipse.jubula.rc.javafx.j8u40
 Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Fragment-Host: org.eclipse.jubula.rc.javafx

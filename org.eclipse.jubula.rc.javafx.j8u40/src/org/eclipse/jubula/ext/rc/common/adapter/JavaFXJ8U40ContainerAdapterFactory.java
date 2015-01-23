@@ -13,8 +13,8 @@ package org.eclipse.jubula.ext.rc.common.adapter;
 import javafx.scene.control.Dialog;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
+import org.eclipse.jubula.rc.javafx.j8u40.tester.adapter.DialogContainerAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
-import org.eclipse.jubula.rc.javafx.u40.tester.adapter.DialogContainerAdapter;
 
 /**
  * Adapter Factory for new adapters required for classes available in Java 8
@@ -22,7 +22,7 @@ import org.eclipse.jubula.rc.javafx.u40.tester.adapter.DialogContainerAdapter;
  * 
  * @author BREDEX GmbH
  */
-public class JavaFXU40ContainerAdapterFactory implements IAdapterFactory {
+public class JavaFXJ8U40ContainerAdapterFactory implements IAdapterFactory {
     /** {@inheritDoc} */
     public Class[] getSupportedClasses() {
         return new Class[] { Dialog.class };

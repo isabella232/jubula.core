@@ -8,4 +8,4 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.javafx.u40.tester.adapter;
+package org.eclipse.jubula.rc.javafx.j8u40.tester.adapter;

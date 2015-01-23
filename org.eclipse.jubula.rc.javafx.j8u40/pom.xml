@@ -13,7 +13,7 @@
 		<version>3.0.0-SNAPSHOT</version>
 		<relativePath>../org.eclipse.jubula.releng.client</relativePath>
 	</parent>
-	<artifactId>org.eclipse.jubula.rc.javafx.u40</artifactId>
+	<artifactId>org.eclipse.jubula.rc.javafx.j8u40</artifactId>
 
 	<packaging>eclipse-plugin</packaging>
 
