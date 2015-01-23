@@ -39,9 +39,10 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Class to convert and validate a reference token the conversion is carried out
- * between GUI and model representation and vice versa the validation refers to
- * semantical correctness of the GUI representation of reference string
+ * Class to convert and validate a reference token. The conversion is carried
+ * out between GUI and model representation and vice versa. The validation
+ * refers to semantical correctness of the GUI representation of reference
+ * string.
  * 
  * @author BREDEX GmbH
  * @created 14.08.2007
