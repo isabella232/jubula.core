@@ -33,7 +33,7 @@ public class CustomContainerAdapter<T extends ListCell<?>> extends
 
     @Override
     public ReadOnlyObjectProperty<? extends Window> getWindow() {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getWindow",
                 new Callable<ReadOnlyObjectProperty<? extends Window>>() {
 
                     @Override
