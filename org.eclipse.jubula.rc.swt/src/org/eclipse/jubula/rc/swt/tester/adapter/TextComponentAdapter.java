@@ -103,7 +103,7 @@ public class TextComponentAdapter extends ControlAdapter implements
     public void selectAll() {
         final String totalText = getText();
         
-        // fix for https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=201
+        // fix for http://bugzilla.bredex.de/201
         // The keystroke "command + a" sometimes causes an "a" to be entered
         // into the text field instead of selecting all text (or having no 
         // effect).
@@ -112,7 +112,7 @@ public class TextComponentAdapter extends ControlAdapter implements
                 getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
             } catch (StepExecutionException see) {
                 /*This might happen under certain circumstances e.g. on MacOS X see
-              bug 342691 */ 
+              bug http://eclip.se/342691 */ 
                 log.warn(see);
             }
         }

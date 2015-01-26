@@ -1032,7 +1032,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 splitViewer.setInput(viewerToInput.get(splitViewer));
                 splitViewer.setExpandedElements(expandedSplitViewerElements);
                 // Clearing the selection seems to help prevent the behavior 
-                // noted in bug 334269
+                // noted in bug http://eclip.se/334269
                 splitViewer.setSelection(StructuredSelection.EMPTY);
             }
         } catch (PartInitException e) {

@@ -787,7 +787,7 @@ public class Traverser {
      *            if this is set to <code>true</code> the retry count of the
      *            EventHandler will be reset, if the EventHandler was
      *            unsuccessful and has reached his max retry count.
-     *            This is necessary for http://bugs.eclipse.org/347275
+     *            This is necessary for http://eclip.se/347275
      * @return the next eventHandler for given eventType
      */
     @SuppressWarnings("unchecked")

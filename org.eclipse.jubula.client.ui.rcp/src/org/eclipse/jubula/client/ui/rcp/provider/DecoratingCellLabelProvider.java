@@ -39,7 +39,7 @@ import org.eclipse.swt.graphics.Point;
  * A decorating label provider is a label provider which combines a nested label
  * provider and an optional decorator. The decorator decorates the label text,
  * image, font and colors provided by the nested label provider.
- * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=182216
+ * @see http://eclip.se/182216
  */
 public class DecoratingCellLabelProvider extends CellLabelProvider implements
         ILabelProvider, IViewerLabelProvider, IColorProvider, IFontProvider,

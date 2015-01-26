@@ -161,7 +161,7 @@ public class ClickSwtEventMatcher extends DefaultSwtEventMatcher {
             return true;
         // We receive no Mouse events on Table and Tree(Table) headers.
         // This will supposedly be fixed for SWT 3.4. 
-        // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=17871
+        // See http://eclip.se/17871
         } else if (graphicsComponent instanceof Table
             && SwtUtils.isMouseCursorInWidget((Widget)graphicsComponent)) {
             // Assuming that if a Table or Tree was the target component and 

@@ -82,7 +82,7 @@ public class ListAdapter extends ControlAdapter implements IListComponent {
                         constraints.y += (numberBelowTop * constraints.height);
                         // explicitly use list relative bounds here - as e.g. on
                         // Mac OS systems list.getClientArea() is not relative
-                        // see bug 353905
+                        // see bug http://eclip.se/353905
                         Rectangle actualListBounds =
                             new Rectangle(0, 0, m_list.getClientArea().width, 
                                     m_list.getClientArea().height);

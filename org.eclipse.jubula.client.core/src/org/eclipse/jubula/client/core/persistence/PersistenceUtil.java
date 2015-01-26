@@ -93,7 +93,7 @@ public class PersistenceUtil {
      * Recursively dissociates and deletes all children of the given node.
      * 
      * Workaround for: 
-     * https://bugs.eclipse.org/bugs/show_bug.cgi?id=347010
+     * http://eclip.se/347010
      * 
      * Once the aforementioned bug is resolved, this method and all 
      * references to it should be removed. Note that this will also require a 

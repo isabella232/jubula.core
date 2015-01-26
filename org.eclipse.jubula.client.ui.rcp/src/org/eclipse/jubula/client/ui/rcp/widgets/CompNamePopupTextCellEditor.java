@@ -159,7 +159,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
                 if ((getControl() == null) || getControl().isDisposed()) {
                     return;
                 }
-                checkSelection(); // see explaination below
+                checkSelection(); // see explanation below
                 checkDeleteable();
                 checkSelectable();
             }
@@ -429,7 +429,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
             // Do not apply the editor value in response to an Enter key event
             // since this can be received from the IME when the intent is -not-
             // to apply the value.  
-            // See bug 39074 [CellEditors] [DBCS] canna input mode fires bogus event from Text Control
+            // See bug http://eclip.se/39074 [CellEditors] [DBCS] canna input mode fires bogus event from Text Control
             //
             // An exception is made for Ctrl+Enter for multi-line texts, since
             // a default selection event is not sent in this case. 
@@ -546,7 +546,8 @@ public class CompNamePopupTextCellEditor extends CellEditor {
         // focus listener
         // that cancels cell editing on focus lost, even if focus gets lost
         // due to
-        // activation of the completion proposal popup. See also bug 58777.
+        // activation of the completion proposal popup. See also bug
+        // http://eclip.se/58777.
         return false;
     }
 }

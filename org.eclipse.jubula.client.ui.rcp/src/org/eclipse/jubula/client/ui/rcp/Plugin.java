@@ -1363,7 +1363,9 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                     PlatformUI.getWorkbench().getDisplay().syncExec(
                             new Runnable() {
                                 public void run() {
-                                    // see Bugzilla 72661 and 72771
+                                    // see 
+                                    // http://eclip.se/72661 and 
+                                    // http://eclip.se/72771
                                     SearchView sv = (SearchView)Plugin
                                            .getView(NewSearchUI.SEARCH_VIEW_ID);
                                     if (sv != null) {

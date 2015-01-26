@@ -26,7 +26,7 @@ import org.eclipse.jubula.client.archive.schema.TestSuite;
  * This converter deletes the name from {@link RefTestSuite} if it is the same
  * name as from the {@link TestSuite}. The converter is necessary since we have
  * copied the name from {@link TestSuite}s before we fixed
- * http://bugs.eclipse.org/451113
+ * http://eclip.se/451113
  * 
  * @author BREDEX GmbH
  */

@@ -111,7 +111,7 @@ public class Launcher implements IApplication {
             // allowed to fix it
             doForce = true;
 
-            // 70576: don't accept empty input
+            // http://eclip.se/70576: don't accept empty input
             if (instancePath.length() <= 0) {
                 MessageDialog.openError(shell,
                     IDEWorkbenchMessages.IDEApplication_workspaceEmptyTitle,
@@ -127,7 +127,7 @@ public class Launcher implements IApplication {
 
             try {
                 // Don't use File.toURL() since it adds a leading slash that Platform does not
-                // handle properly.  See bug 54081 for more details.  
+                // handle properly.  See bug http://eclip.se/54081 for more details.  
                 String path = workspace.getAbsolutePath().replace(
                         File.separatorChar, '/');
                 url = new URL("file", null, path); //$NON-NLS-1$
@@ -227,7 +227,7 @@ public class Launcher implements IApplication {
             int returnCode = PlatformUI.createAndRunWorkbench(display,
                     getWorkbenchAdvisor());
 
-            // the workbench doesn't support relaunch yet (bug 61809) so
+            // the workbench doesn't support relaunch yet (bug http://eclip.se/61809) so
             // for now restart is used, and exit data properties are checked
             // here to substitute in the relaunch return code if needed
             if (returnCode != PlatformUI.RETURN_RESTART) {

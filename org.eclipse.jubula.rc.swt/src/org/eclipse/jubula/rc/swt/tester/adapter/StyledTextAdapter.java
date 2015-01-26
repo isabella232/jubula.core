@@ -111,7 +111,7 @@ public class StyledTextAdapter extends ControlAdapter
                 getRobot().keyStroke(getRobot().getSystemModifierSpec() + " A"); //$NON-NLS-1$
             } catch (StepExecutionException see) {
                 /*This might happen under certain circumstances e.g. on MacOS X see
-              bug 342691 */ 
+              bug http://eclip.se/342691 */ 
                 log.warn(see);
             }
         }

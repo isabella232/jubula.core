@@ -481,7 +481,7 @@ public class TestresultSummaryView extends ViewPart implements
             final Menu headerMenu) {
         /*
          * Add context menu to header. Similar to the snippets described in:
-         * https://bugs.eclipse.org/bugs/show_bug.cgi?id=23103
+         * http://eclip.se/23103
          */
         final Table table = tableViewer.getTable();
         table.addListener(SWT.MenuDetect, new Listener() {
@@ -510,7 +510,7 @@ public class TestresultSummaryView extends ViewPart implements
                 }
             }
         });
-        // Comment from snippet in https://bugs.eclipse.org/bugs/show_bug.cgi?id=23103
+        // Comment from snippet in http://eclip.se/23103
         // IMPORTANT: Dispose the menus (only the current menu, set with 
         // setMenu(), will be automatically disposed) 
         table.addListener(SWT.Dispose, new Listener() {

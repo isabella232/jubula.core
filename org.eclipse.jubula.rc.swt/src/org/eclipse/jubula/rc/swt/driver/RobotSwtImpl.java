@@ -629,7 +629,8 @@ public class RobotSwtImpl implements IRobot {
                     }
 
                 });
-        // adjust Y-location due to issue / bug 353907
+        // adjust Y-location due to issue / bug 
+        // http://eclip.se/353907
         if (EnvironmentUtils.isMacOS() 
                 && graphicsComponent instanceof org.eclipse.swt.widgets.List) {
             final org.eclipse.swt.widgets.List list = 
@@ -730,7 +731,7 @@ public class RobotSwtImpl implements IRobot {
         throws RobotException {
         Validate.notNull(graphicsComponent, "The graphic component must not be null");  //$NON-NLS-1$
 
-        // Workaround for issue 342718
+        // Workaround for issue http://eclip.se/342718
         if (EnvironmentUtils.isMacOS()
                 && Character.toLowerCase(character) == WorkaroundUtil.CHAR_B) {
             SwtApplicationTester impClass = new SwtApplicationTester();
@@ -795,7 +796,7 @@ public class RobotSwtImpl implements IRobot {
             throw new RobotException(msg, EventFactory.createActionError(
                     TestErrorEvent.INPUT_FAILED));
         }
-        // Workaround for bug 342718
+        // Workaround for bug http://eclip.se/342718
         if (!(key == WorkaroundUtil.CHAR_9 && EnvironmentUtils.isMacOS())) {
             confirmer.waitToConfirm(graphicsComponent, matcher);
         } else {

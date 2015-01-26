@@ -142,7 +142,7 @@ public class ContentAssistCellEditor extends TextCellEditor {
         // listener
         // that cancels cell editing on focus lost, even if focus gets lost due
         // to
-        // activation of the completion proposal popup. See also bug 58777.
+        // activation of the completion proposal popup. See also bug http://eclip.se/58777.
         return false;
     }
 

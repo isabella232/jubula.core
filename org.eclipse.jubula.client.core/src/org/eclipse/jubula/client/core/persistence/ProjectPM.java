@@ -817,7 +817,7 @@ public class ProjectPM extends PersistenceManager
         preloadDataForClass(s, projectIds, "ParamDescriptionPO");
 
         preloadDataForClass(s, projectIds, "TDManagerPO");
-        // Special pre-load due to #432394
+        // Special pre-load due to http://eclip.se/432394
         preloadDistinctDataForClass(s, projectIds, "TestDataCubePO");
 
         preloadDataForClass(s, projectIds, "CapPO");

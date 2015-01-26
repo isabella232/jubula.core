@@ -50,7 +50,7 @@ public class MoveSwtEventMatcher extends DefaultSwtEventMatcher {
             return true;
         // We receive no Mouse events on Table and Tree(Table) headers.
         // This will supposedly be fixed for SWT 3.4. 
-        // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=17871
+        // See http://eclip.se/17871
         } else if ((comp instanceof Table
             || comp instanceof Tree)
             && SwtUtils.invokeGetWidgetAtCursorLocation() 

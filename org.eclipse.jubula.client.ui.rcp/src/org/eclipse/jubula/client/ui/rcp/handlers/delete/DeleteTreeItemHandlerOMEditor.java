@@ -120,16 +120,18 @@ public class DeleteTreeItemHandlerOMEditor
     }
 
     /**
-     * Workaround method for an error that occurs when deleting multiple tiers 
-     * of an Object Mapping Category hierarchy (selecting parent *before* child 
-     * seems to be important). I believe that The fix for EclipseLink's 328040 
-     * makes this workaround superfluous, so try removing it when moving to 
-     * EclipseLink 2.3.0 or higher.
+     * Workaround method for an error that occurs when deleting multiple tiers
+     * of an Object Mapping Category hierarchy (selecting parent *before* child
+     * seems to be important). I believe that The fix for EclipseLink's
+     * http://eclip.se/328040 makes this workaround superfluous, so try removing
+     * it when moving to EclipseLink 2.3.0 or higher.
      * 
-     * @param category The child to check. May be <code>null</code>, in which 
-     *                 case <code>false</code> will be returned.
-     * @param toDelete Objects that are marked for deletion.
-     * @return <code>true</code> if <code>toDelete</code> contains an ancestor 
+     * @param category
+     *            The child to check. May be <code>null</code>, in which case
+     *            <code>false</code> will be returned.
+     * @param toDelete
+     *            Objects that are marked for deletion.
+     * @return <code>true</code> if <code>toDelete</code> contains an ancestor
      *         of <code>category</code>. Otherwise <code>false</code>.
      */
     public static boolean willAncestorBeDeleted(

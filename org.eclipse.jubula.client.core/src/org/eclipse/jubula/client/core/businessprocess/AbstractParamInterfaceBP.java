@@ -231,7 +231,7 @@ public abstract class AbstractParamInterfaceBP<T> {
         }
 
         // A new converter is instantiated and used here in order to cover
-        // the corner case described in bug 370718.
+        // the corner case described in bug http://eclip.se/370718.
         GuiParamValueConverter newConv = new GuiParamValueConverter(
                 conv.getGuiString(), conv.getCurrentNode(), locale, 
                 conv.getDesc(), 

@@ -626,7 +626,7 @@ public class SwtUtils {
     }
     
     /*
-     * BEGIN CODE ADAPTED FROM https://bugs.eclipse.org/bugs/show_bug.cgi?id=38436#c153
+     * BEGIN CODE ADAPTED FROM http://eclip.se/38436#c153
      */
 
     /*************************** COMMON *****************************/  
@@ -1127,7 +1127,7 @@ public class SwtUtils {
     }
 
     /*
-     * END CODE ADAPTED FROM https://bugs.eclipse.org/bugs/show_bug.cgi?id=38436#c153
+     * END CODE ADAPTED FROM http://eclip.se/38436#c153
      */
 
     /**

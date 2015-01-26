@@ -1778,7 +1778,7 @@ class XmlImporter {
         int tdRow = 0;
         for (TestDataRow rowXml : testData.getRowList()) {
             if (rowXml.getDataList().isEmpty()) {
-                // Bug 337215 may have caused Test Steps in exported Projects 
+                // Bug http://eclip.se/337215 may have caused Test Steps in exported Projects 
                 // to incorrectly contain multiple Data Sets. These erroneous 
                 // Data Sets seem to always be empty, so ignore empty Data Sets 
                 // for imported Test Steps. 

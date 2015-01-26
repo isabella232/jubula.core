@@ -401,7 +401,7 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
          * {@inheritDoc}
          */
         protected void handleAllTwoToOneButtonEvent() {
-            // Partial fix for bug 373914. Always show a dialog that the
+            // Partial fix for bug http://eclip.se/373914. Always show a dialog that the
             // operation is not allowed.
             MessageDialog.openInformation(getShell(), 
                     Messages.CannotRemoveLastProjectDialogTitle, 
@@ -414,7 +414,7 @@ public class ProjectLanguagePropertyPage extends AbstractProjectPropertyPage {
         protected void handleSelectionTwoToOneButtonEvent() {
             String[] selection = m_chooseLists.getListTwo().getSelection();
 
-            // Partial fix for bug 373914. Show a dialog that the
+            // Partial fix for bug http://eclip.se/373914. Show a dialog that the
             // operation is not allowed if operation would remove the last
             // Language in the Project.
             if (selection.length == m_chooseLists.getListTwo().getItemCount()) {

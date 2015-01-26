@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * The <i>osgi.framework.activeThreadType</i> entry can actually be 
  * anything other than "normal", but it must be present. This requirement exists
  * since changing org.eclipse.equinox.launcher from 1.1.0 to 1.2.0, and was the
- * cause of bug 375931.
+ * cause of bug http://eclip.se/375931.
  * 
  * @author BREDEX GmbH
  * @created Dec 9, 2009

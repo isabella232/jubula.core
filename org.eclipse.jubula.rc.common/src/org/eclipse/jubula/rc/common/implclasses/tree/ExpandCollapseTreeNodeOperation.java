@@ -43,7 +43,7 @@ public class ExpandCollapseTreeNodeOperation
         final AbstractTreeOperationContext<Object, Object> context = 
                 getContext();
         // only try to expand/collapse the node if it's not a leaf
-        // this otherwise causes issues like #399042
+        // this otherwise causes issues like http://eclip.se/399042
         if (!context.isLeaf(treeNode)) {
             if (isCollapse()) {
                 context.collapseNode(treeNode);

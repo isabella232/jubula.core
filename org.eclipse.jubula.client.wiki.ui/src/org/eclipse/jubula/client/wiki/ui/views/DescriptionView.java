@@ -89,7 +89,7 @@ public class DescriptionView extends ViewPart implements IDataChangedListener {
          *  taken from 
          *      org.eclipse.mylyn.internal.wikitext.ui.editor.MarkupEditor
          *      line 247 and following
-         *  bug 260479: open hyperlinks in a browser
+         *  bug http://eclip.se/260479: open hyperlinks in a browser
          */
         m_browser.addLocationListener(new LocationListener() {
             public void changed(LocationEvent event) {
@@ -100,7 +100,7 @@ public class DescriptionView extends ViewPart implements IDataChangedListener {
                 // if it looks like an absolute URL
                 if (event.location.matches("([a-zA-Z]{3,8})://?.*")) { //$NON-NLS-1$
 
-                    // workaround for browser problem (bug 262043)
+                    // workaround for browser problem (bug http://eclip.se/262043)
                     int idxOfSlashHash = event.location.indexOf("/#"); //$NON-NLS-1$
                     if (idxOfSlashHash != -1) {
                         // allow javascript-based scrolling to work

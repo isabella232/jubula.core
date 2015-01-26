@@ -30,5 +30,5 @@
     <!-- FIXME: Raimar: Filtering of e4 target should be added! @see http://wiki.eclipse.org/Tycho/Target_Platform#Filtering -->
     <!-- FIXME: Raimar: This site is needed for the e3 target. Perhaps this
         could be solved in a better way by using bundles instead of features in org.eclipse.jubula.rc.rcp.site/category.xml
-        @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=378338 -->
+        @see http://eclip.se/378338 -->
 </project>
