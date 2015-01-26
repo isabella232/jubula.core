@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -244,11 +245,11 @@ public class TestSuiteGUIPropertySource
         List<String> tmpList = new ArrayList<String>();
         List<IAUTMainPO> tmpSubList = new ArrayList<IAUTMainPO>();
         Map<String, IAUTMainPO> helpMap = new HashMap<String, IAUTMainPO>();
-        final int autListSize = m_project.getAutMainList().size();
-        if (autListSize == 0) {
+        Set<IAUTMainPO> autMainList = m_project.getAutMainList();
+        if (autMainList == null || autMainList.size() == 0) {
             return;
         }
-        for (IAUTMainPO autW : m_project.getAutMainList()) {
+        for (IAUTMainPO autW : autMainList) {
             tmpList.add(autW.getName());
             helpMap.put(autW.getName(), autW);
         }
