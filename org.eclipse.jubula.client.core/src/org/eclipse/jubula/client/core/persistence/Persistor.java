@@ -62,6 +62,7 @@ import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.jarutils.IVersion;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.exceptions.DatabaseException;
@@ -79,7 +80,7 @@ public class Persistor {
     private static final String DEFAULT_PU_NAME = "org.eclipse.jubula"; //$NON-NLS-1$
     
     /** shutdown hook to dispose the current Persistor */
-    private static final Thread SHUTDOWN_HOOK = new Thread(
+    private static final Thread SHUTDOWN_HOOK = new IsAliveThread(
             "Close Session Factory") { //$NON-NLS-1$
         public void run() {
             Persistor hib = Persistor.instance();

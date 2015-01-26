@@ -28,6 +28,7 @@ import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -396,7 +397,7 @@ class RobotEventConfirmerSwtImpl implements IRobotEventConfirmer,
             return;
         }
         // !! Never block in the GUI thread, it may cause deadlocks!
-        new Thread(new Runnable() {
+        new IsAliveThread(new Runnable() {
             public void run() {
                 try {
                     addEventToList(event);

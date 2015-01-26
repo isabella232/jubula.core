@@ -105,6 +105,7 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor;
 import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor.MonitorTask;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
@@ -999,7 +1000,7 @@ public class TestExecution {
      * @param msg The response message.
      */
     public void processServerResponse(final CAPTestResponseMessage msg) {
-        Thread t = new Thread("Execute Test Step") { //$NON-NLS-1$
+        Thread t = new IsAliveThread("Execute Test Step") { //$NON-NLS-1$
             public void run() {
                 ICapPO nextCap = null;
                 processPostExecution(msg);

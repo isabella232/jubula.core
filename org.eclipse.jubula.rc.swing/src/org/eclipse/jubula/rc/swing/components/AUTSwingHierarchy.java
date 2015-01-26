@@ -53,6 +53,7 @@ import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.MappingConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 
 
 
@@ -124,7 +125,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
 
         if (!m_syncListenerRegistration) {
             Thread registrationThread = 
-                new Thread(m_listenerRegistrationWorker, 
+                new IsAliveThread(m_listenerRegistrationWorker, 
                         "Jubula Listener Registration"); //$NON-NLS-1$
             registrationThread.setDaemon(true);
             registrationThread.start();

@@ -26,7 +26,7 @@ import org.eclipse.jubula.communication.internal.connection.ConnectionState;
 import org.eclipse.jubula.communication.internal.connection.RestartAutProtocol;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
-import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +39,7 @@ public class AutRunner {
     /**
      * @author BREDEX GmbH
      */
-    private final class AgentConnectionWatcher extends KeepAliveThread {
+    private final class AgentConnectionWatcher extends IsAliveThread {
         /** the writer */
         private final PrintWriter m_writer;
         /** the socket */
@@ -73,9 +73,9 @@ public class AutRunner {
                     if (line.equals(
                             RestartAutProtocol.REQ_PREPARE_FOR_RESTART)) {
                         
-                        // make sure that we have a system thread running so
+                        // make sure that we have a keep alive thread running so
                         // the JVM won't shut down during AUT restart
-                        Thread restartThread = new Thread() {
+                        Thread restartThread = new IsAliveThread() {
                             public void run() {
                                 m_writer.println(RESPONSE_OK);
                                 

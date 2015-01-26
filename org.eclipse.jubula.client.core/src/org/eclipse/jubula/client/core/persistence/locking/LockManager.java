@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -233,7 +234,7 @@ public final class LockManager {
      */
     public synchronized void startKeepAlive() {
         if (m_keepAliveThread == null) {
-            m_keepAliveThread = new Thread(new Runnable() {
+            m_keepAliveThread = new IsAliveThread(new Runnable() {
                 
                 public void run() {
                     while (m_keepRunning) {

@@ -44,6 +44,7 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -334,7 +335,7 @@ public abstract class AUTServer {
             addToolKitEventListenerToAUT();
             return;
         }
-        setAutThread(new Thread(new Runnable() {
+        setAutThread(new IsAliveThread(new Runnable() {
             public void run() {
                 try {
                     startTasks();

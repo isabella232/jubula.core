@@ -17,6 +17,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 
 /**
  * Factory and utility methods for 
@@ -53,8 +54,8 @@ public class JBExecutors {
             
         @Override
         public Thread newThread(Runnable r) {
-            Thread newThread = 
-                new Thread(r, m_poolName + m_threadNumber.incrementAndGet());
+            Thread newThread = new IsAliveThread(r, m_poolName
+                    + m_threadNumber.incrementAndGet());
 
             newThread.setDaemon(true);
             return newThread;

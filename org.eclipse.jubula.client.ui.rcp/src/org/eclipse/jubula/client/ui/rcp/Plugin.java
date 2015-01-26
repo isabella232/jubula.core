@@ -72,6 +72,7 @@ import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.IQueryListener;
 import org.eclipse.search.ui.ISearchQuery;
@@ -1058,7 +1059,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             }
         });
         
-        new Thread(new Runnable() {
+        new IsAliveThread(new Runnable() {
             public void run() {
                 // init (java)available languages
                 Languages.getInstance();

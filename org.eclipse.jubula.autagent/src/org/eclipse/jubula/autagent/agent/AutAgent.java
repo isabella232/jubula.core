@@ -41,6 +41,7 @@ import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
@@ -87,7 +88,7 @@ public class AutAgent {
          */
         public void initConnection(final Socket socket, 
                 final BufferedReader reader) {
-            new Thread("Register AUT") { //$NON-NLS-1$
+            new IsAliveThread("Register AUT") { //$NON-NLS-1$
                 /**
                  * {@inheritDoc}
                  */
@@ -160,7 +161,7 @@ public class AutAgent {
         public void initConnection(final Socket socket,
                 final BufferedReader reader) {
 
-            new Thread("Register autrun") { //$NON-NLS-1$
+            new IsAliveThread("Register autrun") { //$NON-NLS-1$
                 /**
                  * {@inheritDoc}
                  */

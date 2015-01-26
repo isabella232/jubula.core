@@ -16,11 +16,11 @@ package org.eclipse.jubula.tools.internal.utils;
  * @author BREDEX GmbH
  * @see http://eclip.se/457600#c8
  */
-public class KeepAliveThread extends Thread {
+public class IsAliveThread extends Thread {
     /**
      * Default
      */
-    public KeepAliveThread() {
+    public IsAliveThread() {
         super();
     }
 
@@ -30,7 +30,7 @@ public class KeepAliveThread extends Thread {
      * @param name
      *            the name
      */
-    public KeepAliveThread(Runnable target, String name) {
+    public IsAliveThread(Runnable target, String name) {
         super(target, name);
     }
 
@@ -38,7 +38,7 @@ public class KeepAliveThread extends Thread {
      * @param target
      *            the target
      */
-    public KeepAliveThread(Runnable target) {
+    public IsAliveThread(Runnable target) {
         super(target);
     }
 
@@ -46,7 +46,7 @@ public class KeepAliveThread extends Thread {
      * @param name
      *            the name
      */
-    public KeepAliveThread(String name) {
+    public IsAliveThread(String name) {
         super(name);
     }
 
@@ -60,7 +60,7 @@ public class KeepAliveThread extends Thread {
      * @param stackSize
      *            the stackSize
      */
-    public KeepAliveThread(ThreadGroup group, Runnable target, String name,
+    public IsAliveThread(ThreadGroup group, Runnable target, String name,
             long stackSize) {
         super(group, target, name, stackSize);
     }
@@ -73,7 +73,7 @@ public class KeepAliveThread extends Thread {
      * @param name
      *            the name
      */
-    public KeepAliveThread(ThreadGroup group, Runnable target, String name) {
+    public IsAliveThread(ThreadGroup group, Runnable target, String name) {
         super(group, target, name);
     }
 
@@ -83,7 +83,7 @@ public class KeepAliveThread extends Thread {
      * @param target
      *            the target
      */
-    public KeepAliveThread(ThreadGroup group, Runnable target) {
+    public IsAliveThread(ThreadGroup group, Runnable target) {
         super(group, target);
     }
 
@@ -93,7 +93,7 @@ public class KeepAliveThread extends Thread {
      * @param name
      *            the name
      */
-    public KeepAliveThread(ThreadGroup group, String name) {
+    public IsAliveThread(ThreadGroup group, String name) {
         super(group, name);
     }
 }

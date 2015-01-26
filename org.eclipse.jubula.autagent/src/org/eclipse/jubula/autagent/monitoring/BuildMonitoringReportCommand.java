@@ -22,6 +22,7 @@ import org.eclipse.jubula.communication.internal.message.BuildMonitoringReportMe
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.SendMonitoringReportMessage;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,7 @@ public class BuildMonitoringReportCommand implements ICommand {
      */
     public Message execute() {
         //create new thread for the streaming ServerSocket
-        new Thread(new Runnable() {
+        new IsAliveThread(new Runnable() {
             
             public void run() {
                 

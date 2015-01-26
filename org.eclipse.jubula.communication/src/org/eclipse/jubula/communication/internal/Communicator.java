@@ -43,7 +43,7 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.exception.SerialisationException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.slf4j.LoggerFactory;
 
 
@@ -889,7 +889,7 @@ public class Communicator {
      * @author BREDEX GmbH
      * @created 20.07.2004
      */
-    private static class AwaitingCommand extends KeepAliveThread {
+    private static class AwaitingCommand extends IsAliveThread {
         /** flag if timeout has expires */
         private boolean m_timeoutExpired;
 
@@ -994,7 +994,7 @@ public class Communicator {
      * @author BREDEX GmbH
      * @created 29.07.2004
      */
-    private class AcceptingThread extends KeepAliveThread {
+    private class AcceptingThread extends IsAliveThread {
 
         /**
          * Constructor

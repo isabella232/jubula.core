@@ -25,6 +25,7 @@ import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,7 +177,7 @@ public class PrepareForShutdownCommand implements ICommand {
         } else {
             if (shutdownHookThread == null) {
                 int addDelay = message.getAdditionalDelay();
-                shutdownHookThread = new Thread(
+                shutdownHookThread = new IsAliveThread(
                         new AUTProperTerminationShutdownHook(addDelay));
                 Runtime.getRuntime().addShutdownHook(shutdownHookThread);
             }

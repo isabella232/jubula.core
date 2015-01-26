@@ -14,7 +14,7 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
-import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.swt.SWT;
@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author BREDEX GmbH
  * @created Jul 24, 2007
  */
-public class SimulatedTooltip extends KeepAliveThread {
+public class SimulatedTooltip extends IsAliveThread {
 
     /** the logger */
     private static AutServerLogger log = 
@@ -253,7 +253,7 @@ public class SimulatedTooltip extends KeepAliveThread {
         bar.setMaximum(m_timeout);
         final int maximum = bar.getMaximum();
 
-        Thread progressBarThread = new Thread() {
+        Thread progressBarThread = new IsAliveThread() {
             public void run() {
                 int refreshIntervall = 25;
                 // Calculate how often an update has to be done

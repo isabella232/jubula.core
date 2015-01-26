@@ -62,6 +62,7 @@ import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.internal.constants.CharacterConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
@@ -1551,7 +1552,7 @@ public abstract class AbstractDataSetPage extends Page
                             mapper);
                     setIsEntrySetComplete(getParamInterfaceObj(), locale);
                     editor.getEditorHelper().setDirty(true);
-                    new Thread() {
+                    new IsAliveThread() {
                         public void run() {
                             Plugin.getDisplay().syncExec(new Runnable() {
                                 public void run() {
