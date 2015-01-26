@@ -43,6 +43,7 @@ import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.DevNull;
+import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -429,7 +430,7 @@ public class AutStarter {
      * @author BREDEX GmbH
      * @created 03.08.2004
      */
-    private static class AUTServerWatcher extends Thread {
+    private static class AUTServerWatcher extends KeepAliveThread {
 
         /** lock for synchronizing on m_autServerVM */
         private final Object m_autServerLock = new Object();

@@ -14,6 +14,7 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
+import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.swt.SWT;
@@ -34,7 +35,7 @@ import org.eclipse.swt.widgets.Shell;
  * @author BREDEX GmbH
  * @created Jul 24, 2007
  */
-public class SimulatedTooltip extends Thread {
+public class SimulatedTooltip extends KeepAliveThread {
 
     /** the logger */
     private static AutServerLogger log = 

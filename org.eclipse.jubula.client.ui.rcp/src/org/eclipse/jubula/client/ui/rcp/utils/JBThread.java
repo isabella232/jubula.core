@@ -11,12 +11,13 @@
 package org.eclipse.jubula.client.ui.rcp.utils;
 
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
 
 /**
  * @author BREDEX GmbH
  * @created Nov 9, 2005
  */
-public abstract class JBThread extends Thread {
+public abstract class JBThread extends KeepAliveThread {
 
     /**
      * Constructor

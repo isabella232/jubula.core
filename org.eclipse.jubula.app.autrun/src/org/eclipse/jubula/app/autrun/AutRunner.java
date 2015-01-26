@@ -26,6 +26,7 @@ import org.eclipse.jubula.communication.internal.connection.ConnectionState;
 import org.eclipse.jubula.communication.internal.connection.RestartAutProtocol;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,7 @@ public class AutRunner {
     /**
      * @author BREDEX GmbH
      */
-    private final class AgentConnectionWatcher extends Thread {
+    private final class AgentConnectionWatcher extends KeepAliveThread {
         /** the writer */
         private final PrintWriter m_writer;
         /** the socket */

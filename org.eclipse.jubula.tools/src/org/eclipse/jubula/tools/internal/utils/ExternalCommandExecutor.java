@@ -64,7 +64,7 @@ public class ExternalCommandExecutor {
          * The inner thread starts a new process to execute an command. It will
          * be instantiate by the MonitorTask, which can also stop this thread.
          */
-        class ExecuteTask extends Thread {
+        class ExecuteTask extends KeepAliveThread {
             /** The command to start by the Runtime. */
             private String m_cmd;
             /** the parameters for the command */

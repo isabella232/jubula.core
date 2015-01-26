@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 10.08.2004
  */
-public class DevNull extends Thread {
+public class DevNull extends KeepAliveThread {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(DevNull.class);
     

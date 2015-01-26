@@ -84,6 +84,7 @@ import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.FileUtils;
+import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
 import org.eclipse.jubula.tools.internal.utils.NetUtil;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
@@ -195,7 +196,7 @@ public class ExecutionController implements IAUTServerEventListener,
      * @author BREDEX GmbH
      * @created Oct 16, 2009
      */
-    private final class WatchdogTimer extends Thread {
+    private final class WatchdogTimer extends KeepAliveThread {
 
         /** when should the run be finished? */
         private long m_stoptime;

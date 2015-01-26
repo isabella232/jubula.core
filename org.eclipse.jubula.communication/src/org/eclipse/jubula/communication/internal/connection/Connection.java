@@ -34,6 +34,7 @@ import org.eclipse.jubula.communication.internal.parser.MessageHeaderSerializer;
 import org.eclipse.jubula.communication.internal.writer.MessageWriter;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.SerialisationException;
+import org.eclipse.jubula.tools.internal.utils.KeepAliveThread;
 import org.slf4j.LoggerFactory;
 
 
@@ -414,7 +415,7 @@ public class Connection {
      * @created 13.07.2004
      *
      */
-    private class ReaderThread extends Thread { 
+    private class ReaderThread extends KeepAliveThread { 
         
         /**
          * default constructor
