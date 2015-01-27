@@ -10,10 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.ext.rc.common.adapter;
 
-import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonBar;
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
-import org.eclipse.jubula.rc.javafx.j8u40.tester.adapter.DialogContainerAdapter;
+import org.eclipse.jubula.rc.javafx.j8u40.tester.adapter.ButtonBarContainerAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
 
 /**
@@ -25,14 +25,15 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
 public class JavaFXJ8U40ContainerAdapterFactory implements IAdapterFactory {
     /** {@inheritDoc} */
     public Class[] getSupportedClasses() {
-        return new Class[] { Dialog.class };
+        return new Class[] { ButtonBar.class };
     }
 
     /** {@inheritDoc} */
     public Object getAdapter(Class targetedClass, Object objectToAdapt) {
         if (targetedClass.isAssignableFrom(IContainerAdapter.class)) {
-            if (objectToAdapt instanceof Dialog) {
-                return new DialogContainerAdapter((Dialog<?>) objectToAdapt);
+            if (objectToAdapt instanceof ButtonBar) {
+                return new ButtonBarContainerAdapter<ButtonBar>(
+                        (ButtonBar) objectToAdapt);
             }
         }
         return null;

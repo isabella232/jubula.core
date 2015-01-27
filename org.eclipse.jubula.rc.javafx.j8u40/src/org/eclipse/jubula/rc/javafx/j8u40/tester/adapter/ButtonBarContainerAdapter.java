@@ -16,8 +16,7 @@ import java.util.concurrent.Callable;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.control.ButtonBar;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -29,14 +28,14 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
  * @param <T>
  *            a sub-type of Dialog
  */
-public class DialogContainerAdapter<T extends Dialog<?>> extends
+public class ButtonBarContainerAdapter<T extends ButtonBar> extends
         AbstractComponentAdapter<T> implements IContainerAdapter {
 
     /**
      * @param objectToAdapt
      *            the object to adapt
      */
-    public DialogContainerAdapter(T objectToAdapt) {
+    public ButtonBarContainerAdapter(T objectToAdapt) {
         super(objectToAdapt);
     }
 
@@ -47,7 +46,7 @@ public class DialogContainerAdapter<T extends Dialog<?>> extends
 
                     @Override
                     public List<Node> call() throws Exception {
-                        return getRealComponent().getDialogPane().getChildren();
+                        return getRealComponent().getButtons();
                     }
                 });
     }
@@ -60,9 +59,7 @@ public class DialogContainerAdapter<T extends Dialog<?>> extends
                     @Override
                     public ReadOnlyObjectProperty<? extends Window> call()
                             throws Exception {
-                        DialogPane dialogPane = getRealComponent()
-                                .getDialogPane();
-                        Scene scene = dialogPane.getScene();
+                        Scene scene = getRealComponent().getScene();
                         if (scene == null) {
                             return null;
                         }
