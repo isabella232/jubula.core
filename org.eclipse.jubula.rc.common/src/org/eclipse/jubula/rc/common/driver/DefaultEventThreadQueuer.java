@@ -1,7 +1,6 @@
 package org.eclipse.jubula.rc.common.driver;
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 
 /**
  * 
@@ -11,6 +10,7 @@ import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
  *  
  */
 public class DefaultEventThreadQueuer implements IEventThreadQueuer {
+
     /**
      * 
      * {@inheritDoc}
@@ -28,6 +28,7 @@ public class DefaultEventThreadQueuer implements IEventThreadQueuer {
     public void invokeLater(String name, Runnable runnable)
         throws StepExecutionException {
 
-        new IsAliveThread(runnable, name).start();
+        new Thread(runnable, name).start();
     }
+
 }
