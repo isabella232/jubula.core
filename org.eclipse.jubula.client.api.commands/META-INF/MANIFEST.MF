@@ -4,5 +4,9 @@ Bundle-Name: Jubula API - Commands
 Bundle-SymbolicName: org.eclipse.jubula.client.api.commands
 Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Fragment-Host: org.eclipse.jubula.client.api;bundle-version="[3.0.0,3.1.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-RegisterBuddy: org.eclipse.jubula.client.api
+Require-Bundle: org.eclipse.jubula.client.api;bundle-version="[3.0.0,3.1.0)",
+ org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
+ org.eclipse.jubula.tools;bundle-version="[3.0.0,3.1.0)",
+ org.eclipse.jubula.communication;bundle-version="[3.0.0,3.1.0)"
