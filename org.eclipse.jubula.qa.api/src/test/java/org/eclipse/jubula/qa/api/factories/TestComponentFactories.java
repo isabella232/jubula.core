@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api.factories;
 
-import junit.framework.Assert;
-
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.qa.api.om.OM_factories;
 import org.eclipse.jubula.toolkit.base.AbstractComponents;
@@ -34,6 +32,7 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.toolkit.enums.ValueSets.TreeDirection;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Unit;
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**

@@ -10,10 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api;
 
-import junit.framework.Assert;
-
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

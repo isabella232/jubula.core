@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.qa.api;
 
-import junit.framework.Assert;
-
 import org.eclipse.jubula.toolkit.enums.ValueSets.AUTActivationMethod;
 import org.eclipse.jubula.toolkit.enums.ValueSets.BinaryChoice;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Direction;
@@ -22,6 +20,7 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.toolkit.enums.ValueSets.TreeDirection;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Unit;
+import org.junit.Assert;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
