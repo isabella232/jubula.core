@@ -17,7 +17,10 @@ package org.eclipse.jubula.tools;
  * @created 13.10.2014
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * 
+ * @param <T>
+ *            the type of UI component this identifier represents
  */
-public interface ComponentIdentifier {
+public interface ComponentIdentifier<T> {
 
 }
