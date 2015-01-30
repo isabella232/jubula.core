@@ -78,7 +78,7 @@ public final class <%=factoryName%> {
         return new <%=implClassName%>();
     }<%} else {%>
     /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.*/
-    @NonNull public static <%=returnType%> create<%=componentName%> (@NonNull ComponentIdentifier componentIdentifier) {
+    @NonNull public static <%=returnType%> create<%=componentName%> (@NonNull ComponentIdentifier<? extends <%=returnType%>> componentIdentifier) {
         Validate.notNull(componentIdentifier);
         return new <%=implClassName%>(componentIdentifier);
     }<%}%>
