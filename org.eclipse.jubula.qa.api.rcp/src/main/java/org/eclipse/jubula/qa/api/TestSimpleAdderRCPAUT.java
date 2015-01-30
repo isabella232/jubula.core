@@ -23,14 +23,17 @@ import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
-import org.eclipse.jubula.toolkit.base.components.TextComponent;
-import org.eclipse.jubula.toolkit.base.components.TextInputComponent;
 import org.eclipse.jubula.toolkit.concrete.components.Application;
 import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
+import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
+import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponents;
+import org.eclipse.jubula.toolkit.swt.components.Button;
+import org.eclipse.jubula.toolkit.swt.components.Label;
+import org.eclipse.jubula.toolkit.swt.components.Text;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.junit.After;
@@ -68,10 +71,10 @@ public class TestSimpleAdderRCPAUT {
         ObjectMapping om = MakeR.createObjectMapping(
                 input.openStream());
         
-        ComponentIdentifier val1Id = om.get("value1"); //$NON-NLS-1$
-        ComponentIdentifier val2Id = om.get("value2"); //$NON-NLS-1$
-        ComponentIdentifier buttonId = om.get("equalsButton"); //$NON-NLS-1$
-        ComponentIdentifier sumId = om.get("sum"); //$NON-NLS-1$
+        ComponentIdentifier<Text> val1Id = om.get("value1"); //$NON-NLS-1$
+        ComponentIdentifier<Text> val2Id = om.get("value2"); //$NON-NLS-1$
+        ComponentIdentifier<Button> buttonId = om.get("equalsButton"); //$NON-NLS-1$
+        ComponentIdentifier<Label> sumId = om.get("sum"); //$NON-NLS-1$
         
         if (val1Id != null 
             && val2Id != null 
