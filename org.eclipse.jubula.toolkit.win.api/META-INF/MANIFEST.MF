@@ -12,7 +12,7 @@ Export-Package: org.eclipse.jubula.toolkit.win,
  org.eclipse.jubula.toolkit.win.config,
  org.eclipse.jubula.toolkit.win.internal.impl;x-friends:="org.eclipse.jubula.toolkit.winapps.api"
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)",
+ org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional,
  org.eclipse.jubula.toolkit.api;bundle-version="[3.0.0,3.1.0)",
  org.eclipse.jubula.client.api;bundle-version="[3.0.0,3.1.0)",
  org.eclipse.jubula.toolkit.base.api;bundle-version="[3.0.0,3.1.0)",
