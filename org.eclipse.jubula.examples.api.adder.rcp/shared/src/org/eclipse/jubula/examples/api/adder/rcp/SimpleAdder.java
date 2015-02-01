@@ -12,7 +12,6 @@ package org.eclipse.jubula.examples.api.adder.rcp;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,7 +22,6 @@ import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
-import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextComponent;
 import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
@@ -62,51 +60,44 @@ public class SimpleAdder {
     private AUT m_aut;
 
     /** global prepare */
+    @SuppressWarnings("unchecked")
     @BeforeClass
     public static void loadObjectMapping() throws Exception {
-        URL input = SimpleAdder.class
-            .getClassLoader().getResource(
+        URL input = SimpleAdder.class.getClassLoader().getResource(
                 "objectMapping_SimpleAdderRCP.properties"); //$NON-NLS-1$
-        
-        ObjectMapping om = MakeR.createObjectMapping(
-                input.openStream());
-        
+
+        ObjectMapping om = MakeR.createObjectMapping(input.openStream());
+
         ComponentIdentifier<Text> val1Id = om.get("value1"); //$NON-NLS-1$
         ComponentIdentifier<Text> val2Id = om.get("value2"); //$NON-NLS-1$
         ComponentIdentifier<Button> buttonId = om.get("equalsButton"); //$NON-NLS-1$
         ComponentIdentifier<Label> sumId = om.get("sum"); //$NON-NLS-1$
-        
-        if (val1Id != null 
-            && val2Id != null 
-            && buttonId != null
-            && sumId != null) {
+
+        if (val1Id != null && val2Id != null && buttonId != null
+                && sumId != null) {
             value1 = SwtComponents.createText(val1Id);
             value2 = SwtComponents.createText(val2Id);
             button = SwtComponents.createButton(buttonId);
-            result = SwtComponents.createTextComponent(sumId);            
+            result = SwtComponents.createTextComponent(sumId);
         }
     }
-    
+
     /** prepare */
     @Before
     public void setUp() throws Exception {
         m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
         m_agent.connect();
-        
-        final String autID = "SimpleAdder_rcp";  //$NON-NLS-1$
+
+        final String autID = "SimpleAdder_rcp"; //$NON-NLS-1$
         AUTConfiguration config = new RCPAUTConfiguration(
-            "api.aut.conf.simple.adder.rcp",  //$NON-NLS-1$
-            autID,
-            "SimpleAdder.exe", //$NON-NLS-1$
-            "..\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
-            null,
-            Locale.getDefault(), 
-            Locale.getDefault());
-        
+                "api.aut.conf.simple.adder.rcp", //$NON-NLS-1$
+                autID, "SimpleAdder.exe", //$NON-NLS-1$
+                "..\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
+                null, Locale.getDefault(), Locale.getDefault());
+
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {
-            m_aut = m_agent.getAUT(id, SwtComponents
-                    .getToolkitInformation());
+            m_aut = m_agent.getAUT(id, SwtComponents.getToolkitInformation());
             m_aut.connect();
         } else {
             Assert.fail("AUT start has failed!"); //$NON-NLS-1$
@@ -120,50 +111,30 @@ public class SimpleAdder {
         m_agent.stopAUT(m_aut.getIdentifier());
         m_agent.disconnect();
     }
-    
+
     /** the actual test method */
-    @SuppressWarnings("null")
     @Test(expected = CheckFailedException.class)
     public void testTestFirstSimpleAdderSteps() throws Exception {
-        
+
         final int firstValue = 17;
-        List<Result> results = new ArrayList<Result>();
+        List<Result<String>> results = new ArrayList<Result<String>>();
         try {
             for (int i = 1; i < 5; i++) {
-                exec(value1.replaceText(
-                    String.valueOf(firstValue)), results);
-                exec(value2.replaceText(
-                    String.valueOf(i)), results);
-                exec(button.click(
-                    1, InteractionMode.primary), results);
-                exec(result.checkText(
-                    String.valueOf(firstValue + i),
-                        Operator.equals), results);
+                results.add(m_aut.execute(
+                        value1.replaceText(String.valueOf(firstValue)),
+                        "Entering first value")); //$NON-NLS-1$
+                results.add(m_aut.execute(
+                        value2.replaceText(String.valueOf(i)),
+                        "Entering second value")); //$NON-NLS-1$
+                results.add(m_aut.execute(
+                        button.click(1, InteractionMode.primary),
+                        "Invoking calculation")); //$NON-NLS-1$
+                results.add(m_aut.execute(result.checkText(
+                        String.valueOf(firstValue + i), Operator.equals),
+                        "Checking result")); //$NON-NLS-1$
             }
         } finally {
             Assert.assertTrue(results.size() == 15);
         }
-    }
-
-    /**
-     * @param cap
-     *            the cap
-     * @param r
-     *            the result
-     */
-    private void exec(CAP cap, List<Result> r) {
-        Result<Date> execute = m_aut.execute(cap, new Date());
-        if (r != null) {
-            r.add(execute);
-        }
-        System.out.println("CAP executed: " + execute.getPayload()); //$NON-NLS-1$
-    }
-    
-    /**
-     * @param cap
-     *            the cap
-     */
-    private void exec(CAP cap) {
-        exec(cap, null);
     }
 }

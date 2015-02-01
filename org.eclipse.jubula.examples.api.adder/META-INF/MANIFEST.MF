@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Examples - API - SimpleAdder
+Bundle-SymbolicName: org.eclipse.jubula.examples.api.adder
+Bundle-Version: 3.0.0.qualifier
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.jubula.communication;bundle-version="[3.0.0,3.1.0)",
+ org.eclipse.jubula.toolkit.api;bundle-version="[3.0.0,3.1.0)",
+ org.eclipse.jubula.toolkit.base.api;bundle-version="[3.0.0,3.1.0)",
+ org.eclipse.jubula.toolkit.concrete.api;bundle-version="[3.0.0,3.1.0)"
