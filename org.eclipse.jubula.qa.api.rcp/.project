@@ -30,13 +30,7 @@
 		<link>
 			<name>.settings</name>
 			<type>2</type>
-			<locationURI>copy_PARENT/org.eclipse.jubula.project.configuration/settings/1.6</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.6</locationURI>
 		</link>
 	</linkedResources>
-	<variableList>
-		<variable>
-			<name>copy_PARENT</name>
-			<value>$%7BPARENT-3-PROJECT_LOC%7D/repos/org.eclipse.jubula.core</value>
-		</variable>
-	</variableList>
 </projectDescription>
