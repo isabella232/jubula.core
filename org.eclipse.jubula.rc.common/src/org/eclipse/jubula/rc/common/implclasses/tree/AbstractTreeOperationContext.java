@@ -132,13 +132,6 @@ public abstract class AbstractTreeOperationContext<TREE_TYPE, NODE_TYPE> {
     public abstract Rectangle getVisibleRowBounds(Rectangle rowBounds);  
     
     /**
-     * @param node  The node
-     * @return  <code>true</code> if the given node is currently expanded.
-     *          Otherwise, <code>false</code>.
-     */
-    public abstract boolean isExpanded(NODE_TYPE node);
-
-    /**
      * Scrolls the Tree's container, if necessary, in order to ensure that the
      * given node is viewable.
      * @param node  The node 

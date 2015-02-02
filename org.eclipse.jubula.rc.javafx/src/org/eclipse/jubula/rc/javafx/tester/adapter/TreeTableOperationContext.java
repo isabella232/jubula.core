@@ -218,21 +218,6 @@ public class TreeTableOperationContext extends
     }
 
     @Override
-    public boolean isExpanded(final Object node) {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "isExpanded", new Callable<Boolean>() { //$NON-NLS-1$
-
-                    @Override
-                    public Boolean call() throws Exception {
-                        TreeItem<?>  item = (TreeItem<?>) node;
-                        return item.isExpanded();
-                    }
-                });
-
-        return result;
-    }
-
-    @Override
     public void scrollNodeToVisible(final Object node) {
         EventThreadQueuerJavaFXImpl.invokeAndWait("scrollNodeToVisible", //$NON-NLS-1$
                 new Callable<Void>() {

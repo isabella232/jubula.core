@@ -33,6 +33,8 @@ import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContex
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.swing.driver.EventThreadQueuerAwtImpl;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 
 /**
@@ -223,20 +225,24 @@ public class TreeOperationContext
         return path.toArray();
     }
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public Rectangle getNodeBounds(final Object node) 
-        throws StepExecutionException {
+    /** {@inheritDoc} */
+    public Rectangle getNodeBounds(final Object node)
+            throws StepExecutionException {
 
         final int row = getRowForTreeNode(node);
-        return (Rectangle)getQueuer().invokeAndWait(
-            "getRowBounds", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
-                    return getTree().getRowBounds(row);
-                }
-            });
+        Rectangle nodeBounds = (Rectangle) getQueuer().invokeAndWait(
+                "getRowBounds", new IRunnable() { //$NON-NLS-1$
+                    public Object run() {
+                        return getTree().getRowBounds(row);
+                    }
+                });
+        if (nodeBounds == null) {
+            throw new StepExecutionException(
+                    "Could not retrieve visible node bounds.", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
+        }
+        
+        return nodeBounds;
     }
 
     /**
@@ -286,57 +292,25 @@ public class TreeOperationContext
         return visibleRowBounds;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void collapseNode(Object node) {
-        final JTree tree = getTree();
-        final ClassLoader oldCl = Thread.currentThread()
-            .getContextClassLoader();
-        try {
-            Thread.currentThread().setContextClassLoader(tree.getClass()
-                .getClassLoader());
-            final int row = getRowForTreeNode(node);
-            final Rectangle nodeBounds = getNodeBounds(node);
-            final boolean collapsed = tree.isCollapsed(row);
-            boolean doAction = isExpanded(node);
-            final IEventThreadQueuer queuer = new EventThreadQueuerAwtImpl();
-
-            queuer.invokeAndWait("scrollRowToVisible", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
-                    tree.scrollRowToVisible(row);
-                    
-                    return null;
-                }
-            });
-
-            Rectangle visibleNodeBounds = getVisibleRowBounds(nodeBounds);
-            getRobot().move(tree, visibleNodeBounds);
-            if (doAction) {
-                if (log.isDebugEnabled()) {
-                    log.debug((collapsed ? "Expanding" : "Collapsing") + " node: " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        + node);
-                    log.debug("Row           : " + row); //$NON-NLS-1$
-                    log.debug("Node bounds   : " + visibleNodeBounds); //$NON-NLS-1$
-                }
-                queuer.invokeAndWait("collapseRow", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        tree.collapseRow(row);
-
-                        return null;
-                    }
-                });
-            }
-        } finally {
-            Thread.currentThread().setContextClassLoader(oldCl);
-        }
-        
+        alterExpansionState(node, false);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void expandNode(Object node) {
+        alterExpansionState(node, true);
+    }
+    
+    /**
+     * @param node
+     *            the node
+     * @param shouldBeExpanded
+     *            whether the nodes state is supposed to be expanded or
+     *            collapsed
+     */
+    private void alterExpansionState(Object node, 
+        final boolean shouldBeExpanded) {
         final JTree tree = getTree();
         final ClassLoader oldCl = Thread.currentThread()
             .getContextClassLoader();
@@ -346,7 +320,7 @@ public class TreeOperationContext
             final int row = getRowForTreeNode(node);
             final Rectangle nodeBounds = getNodeBounds(node);
             final boolean collapsed = tree.isCollapsed(row);
-            boolean doAction = !isExpanded(node);
+            boolean doAction = collapsed == !shouldBeExpanded;
             final IEventThreadQueuer queuer = new EventThreadQueuerAwtImpl();
 
             queuer.invokeAndWait("scrollRowToVisible", new IRunnable() { //$NON-NLS-1$
@@ -366,10 +340,13 @@ public class TreeOperationContext
                     log.debug("Row           : " + row); //$NON-NLS-1$
                     log.debug("Node bounds   : " + visibleNodeBounds); //$NON-NLS-1$
                 }
-                queuer.invokeAndWait("expandRow", new IRunnable() { //$NON-NLS-1$
+                queuer.invokeAndWait("alteringExpansionState", new IRunnable() { //$NON-NLS-1$
                     public Object run() {
-                        tree.expandRow(row);
-                        
+                        if (shouldBeExpanded) {
+                            tree.expandRow(row);
+                        } else {
+                            tree.collapseRow(row);
+                        }
                         return null;
                     }
                 });
@@ -377,7 +354,6 @@ public class TreeOperationContext
         } finally {
             Thread.currentThread().setContextClassLoader(oldCl);
         }
-
     }
 
     /**
@@ -477,13 +453,6 @@ public class TreeOperationContext
         }
 
         return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isExpanded(Object node) {
-        return getTree().isExpanded(getRowForTreeNode(node));
     }
 
     /**
