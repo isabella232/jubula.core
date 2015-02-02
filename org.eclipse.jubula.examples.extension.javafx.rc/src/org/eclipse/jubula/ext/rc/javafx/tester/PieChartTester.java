@@ -38,12 +38,12 @@ public class PieChartTester extends WidgetTester {
      */
     public void rcVerifyNrItems(int expected) {
         final PieChart pieChart = getPieChart();
-        final int actual = (int) getEventThreadQueuer()
-                .invokeAndWait("verifyNrItems", new IRunnable() { //$NON-NLS-1$
-                        public Integer run() throws StepExecutionException {
-                            return pieChart.getData().size();
-                        }
-                    });
+        final int actual = getEventThreadQueuer().invokeAndWait(
+                "verifyNrItems", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() throws StepExecutionException {
+                        return pieChart.getData().size();
+                    }
+                });
         Verifier.equals(expected, actual);
     }
 }

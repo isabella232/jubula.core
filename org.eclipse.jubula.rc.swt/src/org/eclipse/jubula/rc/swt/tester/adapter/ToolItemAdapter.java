@@ -47,31 +47,27 @@ public class ToolItemAdapter extends WidgetAdapter implements
         * implemented in CAPTestCommand.getImplClass. This method only checks
         * that the item has not been disposed.
         */
-        Boolean actual = ((Boolean)getEventThreadQueuer()
-                .invokeAndWait("isShowing", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_item.isDisposed() 
-                                ? Boolean.FALSE : Boolean.TRUE; // see findBugs
+        return getEventThreadQueuer().invokeAndWait(
+                "isShowing", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_item.isDisposed();
                     }
-                }));
-        return actual.booleanValue();
+                });
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isEnabled() {
-        boolean isEnabled = ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "isEnabled", new IRunnable() { //$NON-NLS-1$
-           
-                    public Object run() {
-                        return m_item.isEnabled() 
-                            ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_item.isEnabled();
                     }
-                
-                })).booleanValue();
-        return isEnabled;
+
+                });
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -89,9 +85,9 @@ public class ToolItemAdapter extends WidgetAdapter implements
      */
     public String getPropteryValue(final String propertyname) {
         final Item bean = m_item;
-        Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() throws StepExecutionException {
+        String prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
+            new IRunnable<String>() {
+                public String run() throws StepExecutionException {
                     try {
                         return getRobot().getPropertyValue(bean, propertyname);
                     } catch (RobotException e) {
@@ -102,8 +98,7 @@ public class ToolItemAdapter extends WidgetAdapter implements
                     }
                 }
             });
-        final String propToStr = String.valueOf(prop);
-        return propToStr;
+        return String.valueOf(prop);
     }
 
     /**
@@ -117,28 +112,23 @@ public class ToolItemAdapter extends WidgetAdapter implements
      * {@inheritDoc}
      */
     public String getText() {
-        String value = (String)getEventThreadQueuer().invokeAndWait("getText", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+        return getEventThreadQueuer().invokeAndWait("getText", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() throws StepExecutionException {
                         return SwtUtils.removeMnemonics(m_item.getText());
                     }
                 });
-        return value;
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isSelected() {
-        Boolean actual = (Boolean)getEventThreadQueuer()
-                .invokeAndWait("isSelected", new IRunnable() { //$NON-NLS-1$
-
-                    public Object run() {
-                        return m_item.getSelection() 
-                            ? Boolean.TRUE : Boolean.FALSE; // see findBugs;
+        return getEventThreadQueuer().invokeAndWait(
+                "isSelected", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_item.getSelection();
                     }
                 });
-        return actual.booleanValue();
     }
-
 }

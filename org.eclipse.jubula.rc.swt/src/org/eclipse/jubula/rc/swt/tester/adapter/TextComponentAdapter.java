@@ -46,14 +46,13 @@ public class TextComponentAdapter extends ControlAdapter implements
      * {@inheritDoc}
      */
     public String getText() {
-        String actual = (String)getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return CAPUtil.getWidgetText(m_textComponent,
                                 m_textComponent.getText());
                     }
                 });
-        return actual;
     }
 
     /**
@@ -61,13 +60,12 @@ public class TextComponentAdapter extends ControlAdapter implements
      */
     public void setSelection(final int start) {
         getEventThreadQueuer().invokeAndWait("setSelection", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         m_textComponent.setSelection(start);
                         return null;
                     }
                 });
-
     }
 
     /**
@@ -75,26 +73,24 @@ public class TextComponentAdapter extends ControlAdapter implements
      */
     public void setSelection(final int start, final int end) {
         getEventThreadQueuer().invokeAndWait("setSelection", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         m_textComponent.setSelection(start, end);
                         return null;
                     }
                 });
-
     }
     
     /**
      * {@inheritDoc}
      */
     public String getSelectionText() {
-        String actual = (String)getEventThreadQueuer().invokeAndWait(
-                "getSelectionText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectionText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return m_textComponent.getSelectionText();
                     }
                 });
-        return actual;
     }
 
     /**
@@ -120,8 +116,8 @@ public class TextComponentAdapter extends ControlAdapter implements
         if (!totalText.equals(getSelectionText())) {
             // the selection failed for some reason
             getEventThreadQueuer().invokeAndWait("text.selectAll", //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() {
+                    new IRunnable<Void>() {
+                        public Void run() {
                             m_textComponent.selectAll();
                             return null;
                         }
@@ -141,15 +137,12 @@ public class TextComponentAdapter extends ControlAdapter implements
      * {@inheritDoc}
      */
     public boolean isEditable() {
-        return ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "isEditable", //$NON-NLS-1$
-                new IRunnable() {
-                public Object run() {
-                    return m_textComponent.getEditable() 
-                        && m_textComponent.getEnabled()
-                            ? Boolean.TRUE : Boolean.FALSE; // see findBugs
-                }
-            })).booleanValue();
+        return getEventThreadQueuer().invokeAndWait("isEditable", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return m_textComponent.getEditable()
+                                && m_textComponent.getEnabled();
+                    }
+                });
     }
-
 }

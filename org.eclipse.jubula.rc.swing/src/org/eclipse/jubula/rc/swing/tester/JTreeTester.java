@@ -108,7 +108,7 @@ public class JTreeTester extends AbstractTreeTester {
      *                                current mouse position.
      */
     protected Object getNodeAtMousePosition() throws StepExecutionException {
-        return getEventThreadQueuer().invokeAndWait("getNodeAtMousePosition", new IRunnable() { //$NON-NLS-1$
+        return getEventThreadQueuer().invokeAndWait("getNodeAtMousePosition", new IRunnable<Object>() { //$NON-NLS-1$
             
             public Object run() throws StepExecutionException {
                 Point mousePosition = getRobot().getCurrentMousePosition();

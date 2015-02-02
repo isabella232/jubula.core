@@ -15,6 +15,7 @@ import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContex
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.swt.tester.tree.TreeOperationContext;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 /**
  * Implements the Tree interface for adapting a <code>SWT.Tree</code>
  * 
@@ -39,9 +40,9 @@ public class TreeAdapter extends ControlAdapter implements ITreeComponent {
      * {@inheritDoc}
      */
     public Object getRootNode() {
-        return getEventThreadQueuer()
-                .invokeAndWait("getRootNode", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getRootNode", new IRunnable<TreeItem[]>() { //$NON-NLS-1$
+                    public TreeItem[] run() {
                         return getTree().getItems();
                     }
                 });

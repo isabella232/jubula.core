@@ -39,9 +39,9 @@ public class JTextComponentAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public String getText() {
-        return (String) getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return m_textComponent.getText();
                     }
                 });
@@ -52,8 +52,8 @@ public class JTextComponentAdapter extends JComponentAdapter
      */
     public void setSelection(final int position) {
         getEventThreadQueuer().invokeAndWait("setSelection", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         m_textComponent.setCaretPosition(position);
                         return null;
                     }
@@ -65,8 +65,8 @@ public class JTextComponentAdapter extends JComponentAdapter
      */
     public void setSelection(final int start, final int end) {
         getEventThreadQueuer().invokeAndWait("setSelection", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         m_textComponent.setSelectionStart(start);
                         m_textComponent.setSelectionEnd(end);
                         return null;
@@ -78,13 +78,12 @@ public class JTextComponentAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public String getSelectionText() {
-        String actual = (String)getEventThreadQueuer().invokeAndWait(
-                "getSelectionText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectionText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return m_textComponent.getSelectedText();
                     }
                 });
-        return actual;
     }
 
     /**
@@ -95,8 +94,8 @@ public class JTextComponentAdapter extends JComponentAdapter
 
         if (!getText().equals(getSelectionText())) {
             getEventThreadQueuer().invokeAndWait(
-                    "selectAll", new IRunnable() { //$NON-NLS-1$
-                        public Object run() {
+                    "selectAll", new IRunnable<Void>() { //$NON-NLS-1$
+                        public Void run() {
                             m_textComponent.selectAll();
                             return null;
                         }
@@ -110,15 +109,12 @@ public class JTextComponentAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public boolean isEditable() {
-        return ((Boolean) getEventThreadQueuer().
-                invokeAndWait("isEditable", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_textComponent.isEditable() 
-                            && m_textComponent.isEnabled()
-                                ? Boolean.TRUE : Boolean.FALSE; // see findBugs
+        return getEventThreadQueuer().invokeAndWait(
+                "isEditable", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_textComponent.isEditable()
+                                && m_textComponent.isEnabled();
                     }
-                })).booleanValue();
+                });
     }
-
-    
 }

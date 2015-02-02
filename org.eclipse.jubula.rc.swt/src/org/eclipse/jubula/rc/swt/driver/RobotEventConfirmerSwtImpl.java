@@ -286,8 +286,8 @@ class RobotEventConfirmerSwtImpl implements IRobotEventConfirmer,
         final IEventThreadQueuer evThreadQueuer = 
             new EventThreadQueuerSwtImpl();
         evThreadQueuer.invokeAndWait("add-/removeDisplayFilters", //$NON-NLS-1$
-            new IRunnable() { 
-                public Object run() {
+            new IRunnable<Void>() { 
+                public Void run() {
                     final Display autDisplay = ((SwtAUTServer)AUTServer
                         .getInstance()).getAutDisplay();
                     final int maskLength = eventMask.length;

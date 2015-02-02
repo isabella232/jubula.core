@@ -32,9 +32,9 @@ public class JLabelAdapter extends JComponentAdapter implements ITextComponent {
      * {@inheritDoc}
      */
     public String getText() {
-        return (String) getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return ((JLabel) getRealComponent()).getText();
                     }
                 });

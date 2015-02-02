@@ -78,11 +78,9 @@ public class TreeOperationContext
      * {@inheritDoc}
      */
     public String getRenderedText(final TreeItem node)
-        throws StepExecutionException {
-        
-        return (String)getQueuer().invokeAndWait(
-            "getText", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            throws StepExecutionException {
+        return getQueuer().invokeAndWait("getText", new IRunnable<String>() { //$NON-NLS-1$
+                public String run() {
                     return CAPUtil.getWidgetText(node, node.getText());
                 }
             });
@@ -92,19 +90,18 @@ public class TreeOperationContext
      * {@inheritDoc}
      */
     public boolean isVisible(final TreeItem node) {
-        Boolean visible = (Boolean)getQueuer().invokeAndWait("isVisible", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getQueuer().invokeAndWait("isVisible", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
                         TreeItem item = node;
                         boolean vis = true;
                         while (item != null && item.getParentItem() != null) {
                             vis = item.getParentItem().getExpanded();
                             item = item.getParentItem();
                         }
-                        return vis ? Boolean.TRUE : Boolean.FALSE;
+                        return vis;
                     }
                 });
-        return visible.booleanValue();
     }
     
     /**
@@ -112,17 +109,13 @@ public class TreeOperationContext
      */
     public Rectangle getVisibleRowBounds(Rectangle rowBounds) {
         org.eclipse.swt.graphics.Rectangle r = 
-            (org.eclipse.swt.graphics.Rectangle)
             getQueuer().invokeAndWait("getVisibleRowBounds: " + rowBounds,  //$NON-NLS-1$
-                    new IRunnable() {
-
-                    public Object run() {
+                    new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
+                    public org.eclipse.swt.graphics.Rectangle run() {
                         Tree tree = getTree();
                         org.eclipse.swt.graphics.Rectangle visibleBounds = 
                             tree.getClientArea();
-                        
                         return visibleBounds;
-                    
                     }
                 });
         
@@ -143,8 +136,8 @@ public class TreeOperationContext
                 log.debug("Collapsing node: " //$NON-NLS-1$
                     + node);
             }
-            getQueuer().invokeAndWait("collapse", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
+            getQueuer().invokeAndWait("collapse", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() throws StepExecutionException {
                     Event collapseEvent = new Event();
                     collapseEvent.time = (int)System.currentTimeMillis();
                     collapseEvent.type = SWT.Collapse;
@@ -177,11 +170,9 @@ public class TreeOperationContext
                 .getClassLoader());
 
             getQueuer().invokeAndWait("Scroll Tree item: " + node  //$NON-NLS-1$
-                + " to visible", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+                + " to visible", new IRunnable<Void>() { //$NON-NLS-1$
+                    public Void run() {
                         tree.showItem(node);
-                    
-                        // Return value not used
                         return null;
                     }
                 });
@@ -203,8 +194,8 @@ public class TreeOperationContext
                     log.debug("Node bounds   : " + visibleNodeBounds); //$NON-NLS-1$
                 }
 
-                getQueuer().invokeAndWait("expand", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
+                getQueuer().invokeAndWait("expand", new IRunnable<Void>() { //$NON-NLS-1$
+                    public Void run() throws StepExecutionException {
                         
                         Event expandEvent = new Event();
                         expandEvent.time = (int)System.currentTimeMillis();
@@ -215,7 +206,6 @@ public class TreeOperationContext
                         node.setExpanded(true);
                         tree.update();
                         
-                        // Return value not used
                         return null;
                     }
                 });
@@ -232,9 +222,9 @@ public class TreeOperationContext
      * {@inheritDoc}
      */
     public TreeItem[] getRootNodes() {
-        return (TreeItem[]) getQueuer().invokeAndWait("getRootNode", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getQueuer().invokeAndWait("getRootNode", //$NON-NLS-1$
+                new IRunnable<TreeItem[]>() {
+                    public TreeItem[] run() {
                         return getTree().getItems();
                     }
                 });
@@ -247,15 +237,12 @@ public class TreeOperationContext
         // FIXME zeb: Verify that getExpanded() works like I think it does:
         //            It should return false if any of the parent nodes are 
         //            collapsed.
-        return ((Boolean)getQueuer().invokeAndWait(
-                "isExpanded: " + node,  //$NON-NLS-1$
-                new IRunnable() {
-
-                public Object run() {
-                    return node.getExpanded() ? Boolean.TRUE : Boolean.FALSE;
-                }
-
-            })).booleanValue();
+        return getQueuer().invokeAndWait("isExpanded: " + node, //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return node.getExpanded();
+                    }
+                });
     }
 
     /**
@@ -269,10 +256,9 @@ public class TreeOperationContext
         SwtUtils.waitForDisplayIdle(node.getDisplay());
         
         org.eclipse.swt.graphics.Rectangle visibleRowBounds = 
-            (org.eclipse.swt.graphics.Rectangle)getQueuer().invokeAndWait(
-                "getVisibleNodeBounds " + node, new IRunnable() { //$NON-NLS-1$
-
-                    public Object run() {
+            getQueuer().invokeAndWait(
+                "getVisibleNodeBounds " + node, new IRunnable<org.eclipse.swt.graphics.Rectangle>() { //$NON-NLS-1$
+                    public org.eclipse.swt.graphics.Rectangle run() {
                         final Rectangle nodeBounds = getNodeBounds(node);
                         return SwtPointUtil.toSwtRectangle(
                                 getVisibleRowBounds(nodeBounds));
@@ -290,8 +276,8 @@ public class TreeOperationContext
         scrollNodeToVisible(node);
 
         getQueuer().invokeAndWait(
-                "selectNodeCheckbox", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+                "selectNodeCheckbox", new IRunnable<Void>() { //$NON-NLS-1$
+                    public Void run() {
                         Tree tree = getTree();
                         boolean toggledValue = !node.getChecked();
                         node.setChecked(toggledValue);
@@ -315,13 +301,12 @@ public class TreeOperationContext
     public void verifyCheckboxSelection(final TreeItem node,
             final boolean checked) {
         scrollNodeToVisible(node);
-
-        Boolean checkSelected = ((Boolean)getQueuer().invokeAndWait(
-                "verifyCheckboxSelection", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return new Boolean(node.getChecked());
-                    }            
-                }));       
+        Boolean checkSelected = getQueuer().invokeAndWait(
+                "verifyCheckboxSelection", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return node.getChecked();
+                    }
+                });  
         
         Verifier.equals(checked, checkSelected.booleanValue());
     }
@@ -331,21 +316,19 @@ public class TreeOperationContext
      */
     public void scrollNodeToVisible(final TreeItem node) {
         getQueuer().invokeAndWait("showItem: " + node,  //$NON-NLS-1$
-            new IRunnable() {
-
-                public Object run() {
+            new IRunnable<Void>() {
+                public Void run() {
                     getTree().showItem(node);
                     return null;
                 }
-
             });
 
         final Rectangle nodeBoundsRelativeToParent = getNodeBounds(node);
         final Tree tree = getTree();
         
         getQueuer().invokeAndWait("getNodeBoundsRelativeToParent", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
+            new IRunnable<Void>() {
+                public Void run() {
                     org.eclipse.swt.graphics.Point cellOriginRelativeToParent = 
                         tree.getDisplay().map(
                                 tree, tree.getParent(), 
@@ -360,18 +343,15 @@ public class TreeOperationContext
                 }
             });
 
-        Control parent = (Control)getQueuer().invokeAndWait("getParent", //$NON-NLS-1$
-                new IRunnable() {
-                public Object run() {
-                    tree.getParent();
-                    return null;
-                }
-            });
-
+        Control parent = getQueuer().invokeAndWait("getParent", //$NON-NLS-1$
+                new IRunnable<Control>() {
+                    public Control run() {
+                        return tree.getParent();
+                    }
+                });
         
         getRobot().scrollToVisible(parent, 
                 SwtPointUtil.toSwtRectangle(nodeBoundsRelativeToParent));
-
     }
 
     /**
@@ -387,11 +367,11 @@ public class TreeOperationContext
             return rootNodes[index];
         }
 
-        return (TreeItem) getQueuer().invokeAndWait(
+        return getQueuer().invokeAndWait(
                 "getChild: " + parent + "; With index: " + index, //$NON-NLS-1$ //$NON-NLS-2$
-                new IRunnable() {
+                new IRunnable<TreeItem>() {
 
-                    public Object run() {
+                    public TreeItem run() {
                         try {
                             return parent.getItem(index);
                         } catch (IllegalArgumentException iae) {
@@ -406,13 +386,11 @@ public class TreeOperationContext
      * {@inheritDoc}
      */
     public TreeItem getParent(final TreeItem child) {
-        return (TreeItem) getQueuer().invokeAndWait("getParent: " + child, //$NON-NLS-1$
-                new IRunnable() {
-
-                    public Object run() {
+        return getQueuer().invokeAndWait("getParent: " + child, //$NON-NLS-1$
+                new IRunnable<TreeItem>() {
+                    public TreeItem run() {
                         return child.getParentItem();
                     }
-
                 });
     }
 
@@ -427,15 +405,13 @@ public class TreeOperationContext
      * {@inheritDoc}
      */
     public TreeItem[] getSelectedNodes() {
-        return (TreeItem[]) getQueuer().invokeAndWait("getSelectedNodes", //$NON-NLS-1$
-                new IRunnable() {
-
-                    public Object run() {
+        return getQueuer().invokeAndWait("getSelectedNodes", //$NON-NLS-1$
+                new IRunnable<TreeItem[]>() {
+                    public TreeItem[] run() {
                         TreeItem[] selectedItems = getTree().getSelection();
                         SelectionUtil.validateSelection(selectedItems);
                         return selectedItems;
                     }
-
                 });
     }
 
@@ -446,13 +422,11 @@ public class TreeOperationContext
         if (parent == null) {
             return getRootNodes();
         }
-        return (TreeItem[]) getQueuer().invokeAndWait("getChildren: " + parent, //$NON-NLS-1$
-                new IRunnable() {
-
-                    public Object run() {
+        return getQueuer().invokeAndWait("getChildren: " + parent, //$NON-NLS-1$
+                new IRunnable<TreeItem[]>() {
+                    public TreeItem[] run() {
                         return parent.getItems();
                     }
-
                 });
     }
 
@@ -463,14 +437,12 @@ public class TreeOperationContext
         if (parent == null) {
             return getRootNodes().length;
         }
-        return ((Integer)getQueuer().invokeAndWait("getChildren: " + parent,  //$NON-NLS-1$
-                new IRunnable() {
-
-                public Object run() {
-                    return new Integer(parent.getItemCount());
-                }
-
-            })).intValue();
+        return getQueuer().invokeAndWait("getChildren: " + parent, //$NON-NLS-1$
+                new IRunnable<Integer>() {
+                    public Integer run() {
+                        return parent.getItemCount();
+                    }
+                });
     }
 
     /**
@@ -480,9 +452,9 @@ public class TreeOperationContext
         final Collection<String> res = new ArrayList<String>();
         
         getQueuer().invokeAndWait("getNodeText: " + node,  //$NON-NLS-1$
-            new IRunnable() {
+            new IRunnable<Void>() {
 
-                public Object run() {
+                public Void run() {
                     int colCount = getTree().getColumnCount();
                     
                     for (int i = 0; i < colCount; i++) {
@@ -512,11 +484,9 @@ public class TreeOperationContext
      */
     public Rectangle getNodeBounds(final TreeItem node) {
         org.eclipse.swt.graphics.Rectangle r = 
-                (org.eclipse.swt.graphics.Rectangle) getQueuer()
-                .invokeAndWait("getNodeBounds: " + node, //$NON-NLS-1$
-                        new IRunnable() {
-
-                            public Object run() {
+                getQueuer().invokeAndWait("getNodeBounds: " + node, //$NON-NLS-1$
+                        new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
+                            public org.eclipse.swt.graphics.Rectangle run() {
                                 Tree tree = getTree();
                                 org.eclipse.swt.graphics.Rectangle bounds = 
                                     SwtUtils.getRelativeWidgetBounds(
@@ -534,14 +504,12 @@ public class TreeOperationContext
      */
     public int getIndexOfChild(final TreeItem parent, final TreeItem child) {
         if (parent != null) {
-            return ((Integer) (getQueuer().invokeAndWait("getIndexOfChild", //$NON-NLS-1$
-                    new IRunnable() {
-
-                        public Object run() throws StepExecutionException {
-                            return new Integer(parent.indexOf(child));
+            return getQueuer().invokeAndWait("getIndexOfChild", //$NON-NLS-1$
+                    new IRunnable<Integer>() {
+                        public Integer run() throws StepExecutionException {
+                            return parent.indexOf(child);
                         }
-
-                    }))).intValue();
+                    });
         }
      
         TreeItem [] rootNodes = getRootNodes();

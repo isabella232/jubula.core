@@ -45,14 +45,13 @@ public class StyledTextAdapter extends ControlAdapter
      * {@inheritDoc}
      */
     public String getText() {
-        String actual = (String)getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return CAPUtil.getWidgetText(
-                                m_styledText, m_styledText.getText());
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
+                        return CAPUtil.getWidgetText(m_styledText,
+                                m_styledText.getText());
                     }
                 });
-        return actual;
     }
 
     /**
@@ -60,13 +59,12 @@ public class StyledTextAdapter extends ControlAdapter
      */
     public void setSelection(final int start) {
         getEventThreadQueuer().invokeAndWait("setSelection", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         m_styledText.setSelection(start);
                         return null;
                     }
                 });
-
     }
 
     /**
@@ -74,26 +72,24 @@ public class StyledTextAdapter extends ControlAdapter
      */
     public void setSelection(final int start, final int end) {
         getEventThreadQueuer().invokeAndWait("setSelection", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         m_styledText.setSelection(start, end);
                         return null;
                     }
                 });
-
     }
     
     /**
      * {@inheritDoc}
      */
     public String getSelectionText() {
-        String actual = (String)getEventThreadQueuer().invokeAndWait(
-                "getSelectionText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectionText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return m_styledText.getSelectionText();
                     }
                 });
-        return actual;
     }
 
     /**
@@ -119,8 +115,8 @@ public class StyledTextAdapter extends ControlAdapter
         if (!totalText.equals(getSelectionText())) {
             // the selection failed for some reason
             getEventThreadQueuer().invokeAndWait("text.selectAll", //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() {
+                    new IRunnable<Void>() {
+                        public Void run() {
                             m_styledText.selectAll();
                             return null;
                         }
@@ -140,14 +136,12 @@ public class StyledTextAdapter extends ControlAdapter
      * {@inheritDoc}
      */
     public boolean isEditable() {
-        return ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "isEditable", //$NON-NLS-1$
-                new IRunnable() {
-                public Object run() {
-                    return m_styledText.getEditable() 
-                        && m_styledText.getEnabled()
-                            ? Boolean.TRUE : Boolean.FALSE; // see findBugs
-                }
-            })).booleanValue();
+        return getEventThreadQueuer().invokeAndWait("isEditable", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return m_styledText.getEditable()
+                                && m_styledText.getEnabled();
+                    }
+                });
     }
 }

@@ -161,10 +161,10 @@ public class JTableTester extends AbstractTableTester {
      */
     private Component getTableCellEditor(final Cell cell) {
         final JTable table = (JTable) getComponent().getRealComponent();
-        return (Component) getEventThreadQueuer()
+        return getEventThreadQueuer()
             .invokeAndWait("getCellEditor", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Component>() {
+                    public Component run() {
                         Object value = table.getValueAt(
                             cell.getRow(), cell.getCol());
                         boolean selected = table.isCellSelected(
@@ -175,5 +175,4 @@ public class JTableTester extends AbstractTableTester {
                     }
                 });
     }
-
 }

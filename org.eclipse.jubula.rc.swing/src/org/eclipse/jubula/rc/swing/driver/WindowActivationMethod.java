@@ -201,8 +201,8 @@ public abstract class WindowActivationMethod {
      * @param window window
      */
     public void activate(final Window window) {
-        m_queuer.invokeAndWait("window activate", new IRunnable() { //$NON-NLS-1$
-            public Object run() throws StepExecutionException {
+        m_queuer.invokeAndWait("window activate", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() throws StepExecutionException {
                 Point pos = window.getLocationOnScreen();
                 Point cp = getClickPoint(window);
                 m_robot.mouseMove(pos.x + cp.x, pos.y + cp.y);

@@ -73,8 +73,8 @@ public class WidgetAdapter extends AbstractComponentAdapter {
         try {
             CAPUtil.pressOrReleaseModifiers(modifier, true);
 
-            getEventThreadQueuer().invokeAndWait("startDrag", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
+            getEventThreadQueuer().invokeAndWait("startDrag", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() throws StepExecutionException {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             mouseButton);
@@ -207,13 +207,12 @@ public class WidgetAdapter extends AbstractComponentAdapter {
         final Display d = component.getDisplay();
         final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        queuer.invokeAndWait("addPopupShownListeners", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
-                d.addFilter(SWT.Show, listener);
-                
-                return null;
-            }
-        });
+        queuer.invokeAndWait("addPopupShownListeners", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
+                    d.addFilter(SWT.Show, listener);
+                    return null;
+                }
+            });
         
         try {
             // showPopup must run in the current thread in order to
@@ -233,10 +232,9 @@ public class WidgetAdapter extends AbstractComponentAdapter {
         } catch (InterruptedException e) {
             // ignore
         } finally {
-            queuer.invokeAndWait("removePopupShownListeners", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            queuer.invokeAndWait("removePopupShownListeners", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     d.removeFilter(SWT.Show, listener);
-                    
                     return null;
                 }
             });
@@ -259,22 +257,18 @@ public class WidgetAdapter extends AbstractComponentAdapter {
     public void showToolTip(final String text, final int textSize, 
         final int timePerWord, final int windowWidth) {
 
-        final Rectangle bounds = (Rectangle)getEventThreadQueuer()
-            .invokeAndWait("showToolTip.getBounds", new IRunnable() { //$NON-NLS-1$
+        final Rectangle bounds = getEventThreadQueuer().invokeAndWait(
+                "showToolTip.getBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
+                    public Rectangle run() {
+                        return SwtUtils.getWidgetBounds(m_component);
+                    }
+                });
 
-                public Object run() {
-                    return SwtUtils.getWidgetBounds(m_component);
-                }
-            });
-
-        SimulatedTooltip sp = (SimulatedTooltip)getEventThreadQueuer()
-            .invokeAndWait("showToolTip.initToolTip", new IRunnable() { //$NON-NLS-1$
-
-                public Object run() throws StepExecutionException {
+        SimulatedTooltip sp = getEventThreadQueuer().invokeAndWait("showToolTip.initToolTip", new IRunnable<SimulatedTooltip>() { //$NON-NLS-1$
+                public SimulatedTooltip run() throws StepExecutionException {
                     return new SimulatedTooltip(timePerWord, text,
                         windowWidth, textSize, bounds);
                 }
-            
             });
         sp.start();
         try {

@@ -58,31 +58,29 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
 
     /** {@inheritDoc} */
     public int getColumnCount() {
-        Integer colCount = (Integer) getEventThreadQueuer().invokeAndWait(
-                "getColumnCount", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return  new Integer(m_table.getColumnCount());
+        return getEventThreadQueuer().invokeAndWait(
+                "getColumnCount", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
+                        return m_table.getColumnCount();
                     }
                 });
-        return colCount.intValue();
     }
 
     /** {@inheritDoc} */
     public int getRowCount() {
-        Integer itemCount = (Integer) getEventThreadQueuer().invokeAndWait(
-                "getRowCount", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return new Integer(m_table.getItemCount());
+        return getEventThreadQueuer().invokeAndWait(
+                "getRowCount", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
+                        return m_table.getItemCount();
                     }
                 });
-        return itemCount.intValue();
     }
 
     /** {@inheritDoc} */
     public String getCellText(final int row, final int column) {
-        String cellText = (String)getEventThreadQueuer().invokeAndWait("getCellText", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait("getCellText", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
                         final TableItem item = m_table.getItem(row);
                         String value = CAPUtil.getWidgetText(item,
                                 SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
@@ -95,19 +93,17 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                         return value;
                     }
                 });
-        return cellText;
     }
 
     /** {@inheritDoc} */
     public String getColumnHeaderText(final int colIdx) {
-        String current = (String)getEventThreadQueuer().invokeAndWait("getColumnName", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait("getColumnName", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
                         final TableColumn column = m_table.getColumn(colIdx);
                         return CAPUtil.getWidgetText(column, column.getText());
                     }
                 });
-        return current;
     }
 
     /** {@inheritDoc} */
@@ -122,32 +118,30 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                     usrIdxCol);
         } catch (NumberFormatException nfe) {
             try {
-                Boolean isVisible;
-                isVisible = (Boolean)getEventThreadQueuer().invokeAndWait(
+                Boolean isVisible = getEventThreadQueuer().invokeAndWait(
                         "getColumnFromString", //$NON-NLS-1$
-                        new IRunnable() {
-                            public Object run() {
-                                return new Boolean(m_table.getHeaderVisible());
+                        new IRunnable<Boolean>() {
+                            public Boolean run() {
+                                return m_table.getHeaderVisible();
                             }
-                        });  
+                        });
                 if (!(isVisible.booleanValue())) {
                     throw new StepExecutionException("No Header", //$NON-NLS-1$
                             EventFactory.createActionError(
                                 TestErrorEvent.NO_HEADER));
                 }
                 
-                Integer implCol;
-                implCol = (Integer)getEventThreadQueuer().invokeAndWait(
-                    "getColumnFromString", new IRunnable() { //$NON-NLS-1$
-                        public Object run() throws StepExecutionException {
+                Integer implCol = getEventThreadQueuer().invokeAndWait(
+                    "getColumnFromString", new IRunnable<Integer>() { //$NON-NLS-1$
+                        public Integer run() throws StepExecutionException {
                             for (int i = 0; i < m_table.getColumnCount(); i++) {
                                 String colHeader = getColumnHeaderText(i);
                                 if (MatchUtil.getInstance().match(
                                         colHeader, col, operator)) {
-                                    return new Integer (i);
+                                    return i;
                                 }
                             }
-                            return new Integer (-2);
+                            return -2;
                         }
                     });                
                 column = implCol.intValue();                
@@ -160,14 +154,13 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
 
     /** {@inheritDoc} */
     public String getRowText(final int rowIdx) {
-        String current = (String)getEventThreadQueuer().invokeAndWait("getRowText", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait("getRowText", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
                         final TableItem row = m_table.getItem(rowIdx);
                         return CAPUtil.getWidgetText(row, row.getText());
                     }
                 });
-        return current;
     }
 
     /** {@inheritDoc} */
@@ -177,14 +170,13 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
             rowInt = IndexConverter.toImplementationIndex(
                     Integer.parseInt(row));                       
             if (rowInt == -1) {
-                Boolean isVisible;
-                isVisible = (Boolean)getEventThreadQueuer().invokeAndWait(
+                Boolean isVisible = getEventThreadQueuer().invokeAndWait(
                         "getRowFromString", //$NON-NLS-1$
-                        new IRunnable() {
-                            public Object run() {
-                                return new Boolean(m_table.getHeaderVisible());
+                        new IRunnable<Boolean>() {
+                            public Boolean run() {
+                                return m_table.getHeaderVisible();
                             }
-                        }); 
+                        });
                 if (!(isVisible.booleanValue())) {
                     throw new StepExecutionException("Header not visible", //$NON-NLS-1$
                             EventFactory.createActionError(
@@ -192,19 +184,18 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                 }                
             }
         } catch (NumberFormatException nfe) {
-            Integer implRow;
-            implRow = (Integer)getEventThreadQueuer().invokeAndWait(
+            Integer implRow = getEventThreadQueuer().invokeAndWait(
                 "getRowFromString", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+                new IRunnable<Integer>() {
+                    public Integer run() throws StepExecutionException {
                         for (int i = 0; i < m_table.getItemCount(); i++) {
                             String cellTxt = getCellText(i, 0);
                             if (MatchUtil.getInstance().match(
                                     cellTxt, row, operator)) {
-                                return new Integer(i);
+                                return i;
                             }
                         }
-                        return new Integer(-2);
+                        return -2;
                     }
                 });
             rowInt = implRow.intValue();
@@ -214,80 +205,70 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
 
     /** {@inheritDoc} */
     public Rectangle getBounds() {
-        Rectangle bounds = (Rectangle) getEventThreadQueuer()
-                .invokeAndWait("getBounds", //$NON-NLS-1$
-                    new IRunnable() {                     
-                        public Object run() throws StepExecutionException {
-                            return m_table.getBounds();
-                        }
-                    });
-        
-        return bounds;
+        return getEventThreadQueuer().invokeAndWait("getBounds", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() throws StepExecutionException {
+                        org.eclipse.swt.graphics.Rectangle rect = m_table
+                                .getBounds();
+                        return new Rectangle(rect.x, rect.y, rect.width,
+                                rect.height);
+                    }
+                });
     }
 
     /** {@inheritDoc} */
     public Rectangle getHeaderBounds(final int col) {
-        Rectangle headerBounds = (Rectangle) getEventThreadQueuer()
-                .invokeAndWait("getHeaderBounds", //$NON-NLS-1$
-                        new IRunnable() {
-                            public Object run() throws StepExecutionException {
-                                org.eclipse.swt.graphics.Rectangle rect = 
-                                        m_table.getItem(0).getBounds(col);
-                                rect.y = m_table.getClientArea().y;
-                                return new Rectangle(rect.x, rect.y,
-                                        rect.width, rect.height);
-                            }
-                        });
-        return headerBounds;
+        return getEventThreadQueuer().invokeAndWait("getHeaderBounds", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() throws StepExecutionException {
+                        org.eclipse.swt.graphics.Rectangle rect = m_table
+                                .getItem(0).getBounds(col);
+                        rect.y = m_table.getClientArea().y;
+                        return new Rectangle(rect.x, rect.y, rect.width,
+                                rect.height);
+                    }
+                });
     }
 
     /** {@inheritDoc} */
     public Cell getSelectedCell() throws StepExecutionException {
-        Cell cell = (Cell) getEventThreadQueuer().invokeAndWait(
-                "getSelectedSell", new IRunnable() {   //$NON-NLS-1$         
-                    public Object run() throws StepExecutionException {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectedSell", new IRunnable<Cell>() { //$NON-NLS-1$         
+                    public Cell run() throws StepExecutionException {
                         return TableSelectionTracker.getInstance()
                                 .getSelectedCell(m_table);
                     }
                 });
-        return cell;
     } 
 
     /** {@inheritDoc} */
     public boolean isHeaderVisible() {
-        Boolean isVisible;
-        isVisible = (Boolean)getEventThreadQueuer().invokeAndWait(
-                "isHeaderVisible", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-                        return new Boolean(m_table.getHeaderVisible());
+        return getEventThreadQueuer().invokeAndWait("isHeaderVisible", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return m_table.getHeaderVisible();
                     }
                 });
-        return isVisible.booleanValue();
     }
 
     /** {@inheritDoc} */
     public boolean isCellEditable(final int row, final int col) {
         final Control cellEditor = (Control) 
                 activateEditor(new Cell(row, col));
-        boolean isEditable = ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "isCellEditable", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-
-                        return isEditable(cellEditor) 
-                            ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait("isCellEditable", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return isEditable(cellEditor);
                     }
-                })).booleanValue();
-        return isEditable;
+                });
     }
 
     /** {@inheritDoc} */
     public boolean hasCellSelection() {
-        TableItem[] selItems = (TableItem[])getEventThreadQueuer()
+        TableItem[] selItems = getEventThreadQueuer()
                 .invokeAndWait("hasCellSelection", //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() {
+                    new IRunnable<TableItem[]>() {
+                        public TableItem[] run() {
                             return m_table.getSelection();
                         }
                     });
@@ -301,8 +282,8 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
         throws StepExecutionException {
         final Table table = m_table;
         getEventThreadQueuer().invokeAndWait("scrollCellToVisible", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         if (table.getColumnCount() > 0 || col > 0) {
                             table.showColumn(table.getColumn(col));
                         }
@@ -316,8 +297,8 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                 getEventThreadQueuer(), m_table, row, col);
             
         getEventThreadQueuer().invokeAndWait("getCellBoundsRelativeToParent", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
+            new IRunnable<Void>() {
+                public Void run() {
                     org.eclipse.swt.graphics.Point cellOriginRelativeToParent = 
                         table.getDisplay().map(
                                 table, table.getParent(), 
@@ -332,17 +313,14 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                 }
             });
 
-        Control parent = (Control)getEventThreadQueuer().invokeAndWait("getParent", //$NON-NLS-1$
-                new IRunnable() {
-                public Object run() {
-                    table.getParent();
-                    return null;
-                }
-            });
-
+        Control parent = getEventThreadQueuer().invokeAndWait("getParent", //$NON-NLS-1$
+                new IRunnable<Control>() {
+                    public Control run() {
+                        return table.getParent();
+                    }
+                });
             
-        getRobot().scrollToVisible(
-                parent, cellBoundsRelativeToParent);
+        getRobot().scrollToVisible(parent, cellBoundsRelativeToParent);
         
         return getVisibleBounds(TableTester.getCellBounds(
                 getEventThreadQueuer(), m_table, row, col));
@@ -392,9 +370,8 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
         org.eclipse.swt.graphics.Rectangle r = 
             (org.eclipse.swt.graphics.Rectangle)
             getEventThreadQueuer().invokeAndWait("getVisibleCellBounds: " + cellBounds,  //$NON-NLS-1$
-                    new IRunnable() {
-
-                    public Object run() {
+                    new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
+                    public org.eclipse.swt.graphics.Rectangle run() {
                         return m_table.getClientArea();
                     }
                 });
@@ -427,16 +404,12 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
      *         <code>false</code>.
      */
     private boolean invokeIsEditable(final Control cellEditor) {
-
-        boolean isEditable = ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "getSelectedCell", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-                        return isEditable(cellEditor) 
-                            ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait("getSelectedCell", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return isEditable(cellEditor);
                     }
-                })).booleanValue();
-        return isEditable;
+                });
     }
     
     /**

@@ -32,6 +32,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
  *
  * @author BREDEX GmbH
  * @created 05.04.2005
+ * 
  */
 public interface IEventThreadQueuer {
     /**
@@ -42,12 +43,13 @@ public interface IEventThreadQueuer {
      *            The name of this invocation.
      * @param runnable
      *            The runnable.
+     * @param <V> the result type of method <tt>invokeAndWait</tt>
      * @return The result returned by the runnable, maybe <code>null</code>.
      * @throws StepExecutionException
      *             If the invocation fails or if the runnable throws a
      *             <code>StepExecutionException</code>.
      */
-    public Object invokeAndWait(String name, IRunnable runnable)
+    public <V> V invokeAndWait(String name, IRunnable<V> runnable)
         throws StepExecutionException;
     
     

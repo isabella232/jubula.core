@@ -64,8 +64,8 @@ public class ComponentHandler extends BaseSwtEventListener
 
         EventThreadQueuerSwtImpl etQueuer = new EventThreadQueuerSwtImpl();
         etQueuer.invokeAndWait(this.getClass().getName() 
-                + "Add active shell to AUT Hierarchy", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
+                + "Add active shell to AUT Hierarchy", new IRunnable<Void>() { //$NON-NLS-1$
+                    public Void run() throws StepExecutionException {
                         Shell activeShell = 
                             ((SwtAUTServer)AUTServer.getInstance())
                                 .getAutDisplay().getActiveShell();
@@ -148,9 +148,9 @@ public class ComponentHandler extends BaseSwtEventListener
                         // is only modified from the event thread.
                         IEventThreadQueuer queuer = 
                             new EventThreadQueuerSwtImpl();
-                        Widget component = (Widget)queuer.invokeAndWait("findComponent", new IRunnable() { //$NON-NLS-1$
+                        Widget component = queuer.invokeAndWait("findComponent", new IRunnable<Widget>() { //$NON-NLS-1$
 
-                            public Object run() throws StepExecutionException {
+                            public Widget run() throws StepExecutionException {
                                 try {
                                     return autHierarchy.
                                         findComponent(componentIdentifier); 

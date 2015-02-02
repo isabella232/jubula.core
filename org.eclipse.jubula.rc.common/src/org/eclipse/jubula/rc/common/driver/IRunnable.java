@@ -20,8 +20,10 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
  * 
  * @author BREDEX GmbH
  * @created 05.04.2005
+ * 
+ * @param <V> the result type of method <tt>run</tt>
  */
-public interface IRunnable {
+public interface IRunnable<V> {
     /**
      * This method is run in the Graphics API specific event queue. Put all
      * operations on graphics components which are not thread-safe into this
@@ -32,5 +34,5 @@ public interface IRunnable {
      * @return Any object as a return value of the <code>run()</code>
      *         implementation
      */
-    public Object run() throws StepExecutionException;
+    public V run() throws StepExecutionException;
 }

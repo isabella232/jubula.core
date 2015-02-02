@@ -54,8 +54,8 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
         // effect).
         if (EnvironmentUtils.isMacOS()) {
             getEventThreadQueuer().invokeAndWait("combo.selectAll", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Void>() {
+                    public Void run() {
                         int textLength = StringUtils.length(
                                 m_combobox.getText());
                         m_combobox.setSelection(new Point(0, textLength));
@@ -71,30 +71,27 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
      * {@inheritDoc}
      */
     public int getSelectedIndex() {
-        
-        int selectedIndex = ((Integer)getEventThreadQueuer().invokeAndWait(
+        return getEventThreadQueuer().invokeAndWait(
                 ComboAdapter.class.getName()
-                + "getSelectedIndex", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return new Integer(m_combobox.getSelectionIndex());
+                + "getSelectedIndex", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() throws StepExecutionException {
+                        return m_combobox.getSelectionIndex();
                     }
-                })).intValue();
-
-        return selectedIndex;
+                });
     }
 
     /**
      * {@inheritDoc}
      */
     public String getText() {
-        Object o = getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return CAPUtil.getWidgetText(
-                                m_combobox, m_combobox.getText());
+        String o = getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
+                        return CAPUtil.getWidgetText(m_combobox,
+                                m_combobox.getText());
                     }
                 });
-        return o != null ? o.toString() : null;        
+        return String.valueOf(o);
     }
 
     /**
@@ -102,17 +99,13 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
      * {@inheritDoc}
      */
     protected boolean isComboEnabled() {
-        
-        boolean isEnabled = ((Boolean)getEventThreadQueuer().invokeAndWait(
+        return getEventThreadQueuer().invokeAndWait(
                 ComboAdapter.class.getName()
-                + "isComboEnabled", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return m_combobox.isEnabled() 
-                                ? Boolean.TRUE : Boolean.FALSE;
+                + "isComboEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return m_combobox.isEnabled();
                     }
-                })).booleanValue();
-
-        return isEnabled;
+                });
     }
 
     /**
@@ -142,17 +135,12 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
      * @return  the number of items.
      */
     protected int getItemCount() {
-        return ((Integer)getEventThreadQueuer().invokeAndWait(
-                "getItemCount", //$NON-NLS-1$
-                new IRunnable() {
-                    
-                    public Object run() {
-                    
-                        return new Integer(m_combobox.getItemCount()); 
+        return getEventThreadQueuer().invokeAndWait("getItemCount", //$NON-NLS-1$
+                new IRunnable<Integer>() {
+                    public Integer run() {
+                        return m_combobox.getItemCount();
                     }
-                    
-                })).intValue();
-
+                });
     }
         
     /**
@@ -162,8 +150,8 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
      */
     private void selectComboIndex(final int index) {
         final Combo combo = m_combobox;
-        getEventThreadQueuer().invokeAndWait("selectComboIndex", new IRunnable() { //$NON-NLS-1$
-            public Object run() throws StepExecutionException {
+        getEventThreadQueuer().invokeAndWait("selectComboIndex", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() throws StepExecutionException {
                 combo.select(index);
                 Event selectionEvent = new Event();
                 selectionEvent.type = SWT.Selection;
@@ -179,13 +167,11 @@ public class ComboAdapter extends AbstractComboBoxAdapter {
      * {@inheritDoc}
      */
     public String[] getValues() {
-        return (String[])getEventThreadQueuer().invokeAndWait(
-                "getItem", //$NON-NLS-1$
-                new IRunnable() {                    
-                    public Object run() {                    
-                        return m_combobox.getItems(); 
-                    }                    
+        return getEventThreadQueuer().invokeAndWait("getItem", //$NON-NLS-1$
+                new IRunnable<String[]>() {
+                    public String[] run() {
+                        return m_combobox.getItems();
+                    }
                 });
     }
-    
 }

@@ -37,11 +37,11 @@ public class EventThreadQueuerSwtImpl implements IEventThreadQueuer {
         new AutServerLogger(EventThreadQueuerSwtImpl.class);
     
     /** {@inheritDoc} */
-    public Object invokeAndWait(String name, IRunnable runnable)
+    public <V> V invokeAndWait(String name, IRunnable<V> runnable)
         throws IllegalArgumentException, StepExecutionException {
 
         Validate.notNull(runnable, "runnable must not be null"); //$NON-NLS-1$
-        RunnableWrapper wrapper = new RunnableWrapper(name, runnable);
+        RunnableWrapper<V> wrapper = new RunnableWrapper<V>(name, runnable);
         try {
             Display display = getDisplay();
             if (display.isDisposed()) {

@@ -244,18 +244,15 @@ public class TreeTableViewTester extends TreeViewTester {
     private void checkColumnIndex(final int index) 
         throws StepExecutionException {
        
-        int numColumns = ((Integer)getEventThreadQueuer().invokeAndWait(
-                "checkColumnIndex",  //$NON-NLS-1$
-                new IRunnable() {
+        int numColumns = getEventThreadQueuer().invokeAndWait(
+                "checkColumnIndex", //$NON-NLS-1$
+                new IRunnable<Integer>() {
 
-                    public Object run() {
-                        return new Integer(
-                                ((TreeTableView<?>) (TreeTableView<?>)
-                                        getRealComponent())
-                                        .getColumns().size());
+                    public Integer run() {
+                        return ((TreeTableView<?>) getRealComponent())
+                                .getColumns().size();
                     }
-            
-                })).intValue();
+                });
 
         if ((index < 0 || index >= numColumns) && index != 0) {
             throw new StepExecutionException("Invalid column: " //$NON-NLS-1$

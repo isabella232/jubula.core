@@ -50,10 +50,10 @@ public class JMenuBarAdapter extends AbstractComponentAdapter
     /**
      * {@inheritDoc}
      */
-
     public IMenuItemComponent[] getItems() {
         Object[] menus = m_menuBar.getSubElements();
-        List adapters = new LinkedList();
+        List<IMenuItemComponent> adapters = 
+                new LinkedList<IMenuItemComponent>();
         for (int i = 0; i < menus.length; i++) {
             if (menus[i] instanceof JMenuItem) {
                 adapters.add(new JMenuItemAdapter(menus[i]));

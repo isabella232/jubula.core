@@ -46,13 +46,14 @@ public class ListAdapter extends ControlAdapter implements IListComponent {
      * {@inheritDoc}
      */
     public int[] getSelectedIndices() {
-        return (int[])getEventThreadQueuer().invokeAndWait(
-                "getSelectedIndices", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectedIndices", new IRunnable<int[]>() { //$NON-NLS-1$
+                    public int[] run() {
                         return m_list.getSelectionIndices();
                     }
                 });
     }
+    
     /**
      * {@inheritDoc}
      */
@@ -60,12 +61,11 @@ public class ListAdapter extends ControlAdapter implements IListComponent {
         final int iVal = i.intValue();
         scrollIndexToVisible(iVal);
         
-        final Rectangle clickConstraints = 
-            (Rectangle)getEventThreadQueuer().invokeAndWait(
+        final Rectangle clickConstraints = getEventThreadQueuer().invokeAndWait(
                 "setClickConstraints",  //$NON-NLS-1$
-                new IRunnable() {
+                new IRunnable<Rectangle>() {
 
-                    public Object run() throws StepExecutionException {
+                    public Rectangle run() throws StepExecutionException {
                         Rectangle constraints = new Rectangle(0, 0, 0, 0);
                         int displayedItemCount = getDisplayedItemCount();
                         int numberBelowTop = 0;
@@ -96,62 +96,55 @@ public class ListAdapter extends ControlAdapter implements IListComponent {
                 co.setScrollToVisible(false));
 
     }
+
     /**
      * {@inheritDoc}
      */
     public String[] getSelectedValues() {
-        return (String[])getEventThreadQueuer().invokeAndWait(
-                "getSelectedValues", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectedValues", new IRunnable<String[]>() { //$NON-NLS-1$
+                    public String[] run() {
                         return m_list.getSelection();
                     }
                 });
     }
 
     /**
-     * @return  the number of items displayed in the list.
+     * @return the number of items displayed in the list.
      */
     private int getDisplayedItemCount() {
-        return ((Integer)getEventThreadQueuer().invokeAndWait(
-                "getDisplayedItemCount",  //$NON-NLS-1$
-                new IRunnable() {
-
-                public Object run() throws StepExecutionException {
+        return getEventThreadQueuer().invokeAndWait("getDisplayedItemCount", //$NON-NLS-1$
+            new IRunnable<Integer>() {
+                public Integer run() throws StepExecutionException {
                     int listHeight = SwtUtils.getWidgetBounds(m_list).height;
                     int itemHeight = m_list.getItemHeight();
-                    
-                    return new Integer(listHeight / itemHeight);
+                    return listHeight / itemHeight;
                 }
-            
-            })).intValue();
+            });
     }
     
     /**
-     * @param index The index to make visible
+     * @param index
+     *            The index to make visible
      */
     private void scrollIndexToVisible(final int index) {
-        getEventThreadQueuer().invokeAndWait(
-            "scrollIndexToVisible",  //$NON-NLS-1$
-            new IRunnable() {
-
-                public Object run() throws StepExecutionException {
-           
-                    m_list.setTopIndex(index);
-
-                    return null;
-                }
-            
-            });
+        getEventThreadQueuer().invokeAndWait("scrollIndexToVisible", //$NON-NLS-1$
+                new IRunnable<Void>() {
+                    public Void run() throws StepExecutionException {
+                        m_list.setTopIndex(index);
+                        return null;
+                    }
+                });
     }
     
     /**
      * {@inheritDoc}
      */
-    public String[] getValues() {        
-        return  (String[]) getEventThreadQueuer().invokeAndWait("findIndices", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-                            
+    public String[] getValues() {
+        return getEventThreadQueuer().invokeAndWait("findIndices", //$NON-NLS-1$
+                new IRunnable<String[]>() {
+                    public String[] run() {
+
                         final int listItemCount = m_list.getItemCount();
                         String[] values = new String[m_list.getItemCount()];
                         for (int i = 0; i < listItemCount; i++) {

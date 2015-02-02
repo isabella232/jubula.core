@@ -50,9 +50,9 @@ public class JTextComponentExtensionTester extends AbstractTextComponentTester {
                     EventFactory.createActionError("own Action error"));
         }
         final JTextComponent textField = getTextField();
-        final String textToVerify = (String) getEventThreadQueuer()
-                .invokeAndWait("doesPaintLabels", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
+        final String textToVerify = getEventThreadQueuer().invokeAndWait(
+                "getToolTipText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() throws StepExecutionException {
                         return textField.getToolTipText();
                     }
                 });

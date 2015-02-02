@@ -97,9 +97,9 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public String getText() {
-        return (String) getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return CAPUtil.getWidgetText(m_menuItem,
                                 SwtUtils.removeMnemonics(m_menuItem.getText()));
                     }
@@ -110,15 +110,12 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public boolean isEnabled() {
-        final Boolean isEnabled = (Boolean) getEventThreadQueuer()
-                .invokeAndWait("isEnabled", new IRunnable() { //$NON-NLS-1$
-                        public Object run() throws StepExecutionException {
-                            return m_menuItem.isEnabled() ? Boolean.TRUE
-                                        : Boolean.FALSE;
-                        }
-                    });
-        return isEnabled.booleanValue();
-
+        return getEventThreadQueuer().invokeAndWait(
+                "isEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return m_menuItem.isEnabled();
+                    }
+                });
     }
     
     /**
@@ -135,14 +132,12 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public boolean isSelected() {
-        final Boolean isSelected = (Boolean)getEventThreadQueuer()
-                .invokeAndWait("isSelected", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return m_menuItem.getSelection() 
-                            ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isSelected", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return m_menuItem.getSelection();
                     }
                 });
-        return isSelected.booleanValue();
     }
 
     /**
@@ -160,15 +155,12 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public IMenuComponent getMenu() {
-        
-        Menu menu =
-                (Menu) getEventThreadQueuer().invokeAndWait(
-                        "getItems", new IRunnable() { //$NON-NLS-1$
-                            public Object run() {
-                                return m_menuItem.getMenu();
-                            }
-                        });
-        
+        Menu menu = getEventThreadQueuer().invokeAndWait(
+                "getItems", new IRunnable<Menu>() { //$NON-NLS-1$
+                    public Menu run() {
+                        return m_menuItem.getMenu();
+                    }
+                });
         
         return new MenuAdapter(menu);
     }
@@ -177,9 +169,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public boolean hasSubMenu() {
-        
-
-        
         if (getMenu() != null) {
             return true;
         }
@@ -193,15 +182,12 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      *         Otherwise <code>false</code>.
      */
     public boolean isSeparator() {
-        final Boolean isSeparator = (Boolean)getEventThreadQueuer()
-                .invokeAndWait(
-                ".isSeparator", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return (m_menuItem.getStyle() & SWT.SEPARATOR) != 0 
-                                            ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                ".isSeparator", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return (m_menuItem.getStyle() & SWT.SEPARATOR) != 0;
                     }
                 });
-        return isSeparator.booleanValue();
     }
     
     /**
@@ -230,8 +216,8 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         final Display d = menuItem.getDisplay();
         final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        queuer.invokeAndWait("addMenuShownListeners", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
+        queuer.invokeAndWait("addMenuShownListeners", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() {
                 d.addFilter(SWT.Show, listener);
                 return null;
             }
@@ -241,9 +227,9 @@ public class MenuItemAdapter extends AbstractComponentAdapter
             // Cascading menus are opened with a mouse-over and 
             // may be closed by a click.
             int clickCount = isMenuBarItem(menuItem) ? 1 : 0;
-            Menu menu = (Menu)getEventThreadQueuer().invokeAndWait(
-                    "openSubMenu", new IRunnable() { //$NON-NLS-1$
-                        public Object run() {
+            Menu menu = getEventThreadQueuer().invokeAndWait(
+                    "openSubMenu", new IRunnable<Menu>() { //$NON-NLS-1$
+                        public Menu run() {
                             return menuItem.getMenu();
                         }            
                     });
@@ -266,18 +252,17 @@ public class MenuItemAdapter extends AbstractComponentAdapter
             } 
         } catch (InterruptedException e) { // ignore
         } finally {
-            queuer.invokeAndWait("removeMenuShownListeners", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            queuer.invokeAndWait("removeMenuShownListeners", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     d.removeFilter(SWT.Show, listener);
-                    
                     return null;
                 }
             });
         }
         if (!lock.isReleased()) {
-            String itemText = (String)getEventThreadQueuer().invokeAndWait(
-                    "getItemText", new IRunnable() { //$NON-NLS-1$
-                        public Object run() throws StepExecutionException {
+            String itemText = getEventThreadQueuer().invokeAndWait(
+                    "getItemText", new IRunnable<String>() { //$NON-NLS-1$
+                        public String run() throws StepExecutionException {
                             if (menuItem != null && !menuItem.isDisposed()) {
                                 return CAPUtil.getWidgetText(menuItem,
                                     SwtUtils.removeMnemonics(
@@ -285,7 +270,6 @@ public class MenuItemAdapter extends AbstractComponentAdapter
                             }
                             return "unknown menu item"; //$NON-NLS-1$
                         }
-                
                     });
             itemText = SwtUtils.removeMnemonics(itemText);
             throw new StepExecutionException(
@@ -304,21 +288,19 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      *         bar. Otherwise, <code>false</code>.
      */
     private boolean isMenuBarItem(final MenuItem menuItem) {
-        return ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "isMenuBarItem", new IRunnable() { //$NON-NLS-1$
+        return getEventThreadQueuer().invokeAndWait(
+                "isMenuBarItem", new IRunnable<Boolean>() { //$NON-NLS-1$
 
-                    public Object run() throws StepExecutionException {
+                    public Boolean run() throws StepExecutionException {
                         if (menuItem != null && !menuItem.isDisposed()) {
                             Menu parent = menuItem.getParent();
                             if (parent != null && !parent.isDisposed()) {
-                                return (parent.getStyle() & SWT.BAR) != 0 
-                                    ? Boolean.TRUE : Boolean.FALSE;
+                                return (parent.getStyle() & SWT.BAR) != 0;
                             }
                         }
-                        return Boolean.FALSE;
+                        return false;
                     }
-            
-                })).booleanValue();
+                });
     }
     
     /**
@@ -378,10 +360,10 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      */
     private void clickMenuItem(IRobot robot, final MenuItem item, 
             int clickCount) {
-        boolean isSecondInMenu = ((Boolean) getEventThreadQueuer()
+        boolean isSecondInMenu = getEventThreadQueuer()
                 .invokeAndWait(
-                    "isMenuBar", new IRunnable() { //$NON-NLS-1$
-                        public Object run() throws StepExecutionException {
+                    "isMenuBar", new IRunnable<Boolean>() { //$NON-NLS-1$
+                        public Boolean run() throws StepExecutionException {
                             try {                            
                                 if ((item.getParent()
                                         .getParentMenu().getStyle() 
@@ -394,8 +376,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
 
                                     if (preparent != null) {
                                         return (preparent.getStyle() & SWT.BAR) 
-                                            != 0 
-                                            ? Boolean.TRUE : Boolean.FALSE;
+                                            != 0;
                                     }
                                 }
                             } catch (NullPointerException ne) {
@@ -403,7 +384,7 @@ public class MenuItemAdapter extends AbstractComponentAdapter
                             }
                             return Boolean.FALSE;
                         }    
-                    })).booleanValue();
+                    });
         if (isSecondInMenu) {
             robot.click(item, null, 
                     ClickOptions.create()
@@ -424,13 +405,12 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * @return bounds of MenuItem
      */
     public Rectangle getMenuItemBounds() {
-        Rectangle bounds = (Rectangle)getEventThreadQueuer().invokeAndWait(
-                "getMenuItemBounds", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getMenuItemBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
+                    public Rectangle run() {
                         return SwtUtils.getBounds(m_menuItem);
                     }            
                 });        
-        return bounds;
     }
     
     /**
@@ -461,13 +441,11 @@ public class MenuItemAdapter extends AbstractComponentAdapter
         event.type = SWT.Show;
         
         getEventThreadQueuer().invokeAndWait(
-                "openSubMenuProgramatically", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        
+                "openSubMenuProgramatically", new IRunnable<Void>() { //$NON-NLS-1$
+                    public Void run() {
                         menu.notifyListeners(SWT.Show, event);
-                        
                         return null;
-                    }            
+                    }
                 });
 
         try {
@@ -478,8 +456,8 @@ public class MenuItemAdapter extends AbstractComponentAdapter
             sb.append("Component: "); //$NON-NLS-1$
 
             getEventThreadQueuer().invokeAndWait(
-                    "getBounds", new IRunnable() { //$NON-NLS-1$
-                        public Object run()
+                    "getBounds", new IRunnable<Void>() { //$NON-NLS-1$
+                        public Void run()
                             throws StepExecutionException {
                             sb.append(menu);
                             // Return value not used
@@ -545,14 +523,13 @@ public class MenuItemAdapter extends AbstractComponentAdapter
             sb.append("Component: "); //$NON-NLS-1$
 
             getEventThreadQueuer().invokeAndWait(
-                "getBounds", new IRunnable() { //$NON-NLS-1$
-                    public Object run()
-                        throws StepExecutionException {
-                        sb.append(menuItem);
-                        // Return value not used
-                        return null;
-                    }
-                });
+                    "getBounds", new IRunnable<Void>() { //$NON-NLS-1$
+                        public Void run() throws StepExecutionException {
+                            sb.append(menuItem);
+                            // Return value not used
+                            return null;
+                        }
+                    });
 
             log.error(sb.toString(), re);
             throw re;
@@ -590,13 +567,12 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * @see MenuItem#isEnabled()
      */
     private boolean isMenuItemEnabled(final MenuItem menuItem) {
-        final Boolean isEnabled = (Boolean)getEventThreadQueuer().invokeAndWait(
-            MenuItemAdapter.class + ".isMenuItemEnabled", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
-                    return menuItem.isEnabled() ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+            MenuItemAdapter.class + ".isMenuItemEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                public Boolean run() throws StepExecutionException {
+                    return menuItem.isEnabled();
                 }
             });
-        return isEnabled.booleanValue();
     }
     
     /**
@@ -606,13 +582,11 @@ public class MenuItemAdapter extends AbstractComponentAdapter
      * @see MenuItem#isEnabled()
      */
     private boolean isMenuEnabled(final Menu menu) {
-        final Boolean isEnabled = (Boolean)getEventThreadQueuer().invokeAndWait(
-            MenuItemAdapter.class + ".isMenuEnabled", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
-                    return menu.isEnabled() ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+            MenuItemAdapter.class + ".isMenuEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                public Boolean run() throws StepExecutionException {
+                    return menu.isEnabled();
                 }
             });
-        return isEnabled.booleanValue();
     }
-    
 }

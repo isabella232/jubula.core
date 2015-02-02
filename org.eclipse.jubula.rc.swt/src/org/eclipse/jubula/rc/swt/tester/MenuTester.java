@@ -53,8 +53,8 @@ public class MenuTester extends AbstractMenuTester {
         } else {
             final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
             
-            queuer.invokeAndWait("setMenuBarComponent", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            queuer.invokeAndWait("setMenuBarComponent", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     Menu menu = shell.getMenuBar();
                     setComponent(menu);
                     

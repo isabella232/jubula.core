@@ -124,10 +124,10 @@ public class TableTester extends AbstractTableTester {
         
         final Table table = getTable();
         final Point awtMousePos = getRobot().getCurrentMousePosition();
-        Cell returnvalue = (Cell) getEventThreadQueuer().invokeAndWait(
+        Cell returnvalue = getEventThreadQueuer().invokeAndWait(
                 "getCellAtMousePosition",  //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+                new IRunnable<Cell>() {
+                    public Cell run() throws StepExecutionException {
                         Cell cell = null;
                         final int itemCount = table.getItemCount();
                         for (int rowCount = table.getTopIndex(); 
@@ -190,12 +190,10 @@ public class TableTester extends AbstractTableTester {
     protected boolean isMouseOnHeader() {
         final Table table = getTable();
         final ITableComponent adapter = (ITableComponent)getComponent();
-        Boolean isVisible;
-        isVisible = (Boolean)getEventThreadQueuer().invokeAndWait(
-                "isMouseOnHeader", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-                        return new Boolean(table.getHeaderVisible());
+        Boolean isVisible = getEventThreadQueuer().invokeAndWait("isMouseOnHeader", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return table.getHeaderVisible();
                     }
                 });
         
@@ -204,10 +202,10 @@ public class TableTester extends AbstractTableTester {
         }
         
         Boolean isOnHeader = new Boolean(false);
-        isOnHeader = (Boolean)getEventThreadQueuer().invokeAndWait(
+        isOnHeader = getEventThreadQueuer().invokeAndWait(
                 "isMouseOnHeader", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
                         final Point awtMousePos = getRobot()
                             .getCurrentMousePosition();
                         org.eclipse.swt.graphics.Point mousePos =
@@ -236,10 +234,10 @@ public class TableTester extends AbstractTableTester {
                             }
 
                             if (bounds.contains(mousePos)) {
-                                return new Boolean(true);
+                                return true;
                             }
                         }      
-                        return new Boolean(false);
+                        return false;
                     }
                 });                  
         
@@ -273,19 +271,20 @@ public class TableTester extends AbstractTableTester {
     }
         
     /**
-     * @param constraints Rectangle
+     * @param constraints
+     *            Rectangle
      * @return converted Location of table
      */
     private org.eclipse.swt.graphics.Point getConvertedLocation(
             final Rectangle constraints) {
-        org.eclipse.swt.graphics.Point convertedLocation =
-            (org.eclipse.swt.graphics.Point)getEventThreadQueuer()
-                .invokeAndWait("toDisplay", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return getTable().toDisplay(
-                                constraints.x, constraints.y);
-                    }
-                });
+        org.eclipse.swt.graphics.Point convertedLocation = 
+                getEventThreadQueuer().invokeAndWait("toDisplay", new IRunnable<org.eclipse.swt.graphics.Point>() { //$NON-NLS-1$
+                        public org.eclipse.swt.graphics.Point run()
+                                throws StepExecutionException {
+                            return getTable().toDisplay(constraints.x,
+                                    constraints.y);
+                        }
+                    });
         return convertedLocation;
     }
         
@@ -303,10 +302,10 @@ public class TableTester extends AbstractTableTester {
      */
     public static Rectangle getCellBounds(IEventThreadQueuer etq,
         final Table table, final int row, final int col) {
-        Rectangle cellBounds = (Rectangle)etq.invokeAndWait(
+        Rectangle cellBounds = etq.invokeAndWait(
                 "getCellBounds", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() {
                         TableItem ti = table.getItem(row); 
                         int column = (table.getColumnCount() > 0 || col > 0) 
                             ? col : 0;
@@ -378,33 +377,28 @@ public class TableTester extends AbstractTableTester {
      */
     private int correctYPos(int pos, String units) {
         int correctedPos = pos;
-        int headerHeight = ((Integer)getEventThreadQueuer().invokeAndWait(
-                "getHeaderHeight", new IRunnable() { //$NON-NLS-1$
-
-                    public Object run() throws StepExecutionException {
-                        return new Integer(
-                            ((Table)getComponent().getRealComponent())
-                            .getHeaderHeight());
+        int headerHeight = getEventThreadQueuer().invokeAndWait(
+                "getHeaderHeight", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() throws StepExecutionException {
+                        return ((Table) getComponent().getRealComponent())
+                                .getHeaderHeight();
                     }
-            
-                })).intValue();
+                });
 
         if (ValueSets.Unit.pixel.rcValue().equalsIgnoreCase(units)) {
             // Pixel units
             correctedPos += headerHeight;
         } else {
             // Percentage units
-            int totalHeight = ((Integer)getEventThreadQueuer().invokeAndWait(
-                    "getWidgetBounds", new IRunnable() { //$NON-NLS-1$
-
-                        public Object run() throws StepExecutionException {
-                            return new Integer(
-                                SwtUtils.getWidgetBounds(
+            int totalHeight = getEventThreadQueuer().invokeAndWait(
+                    "getWidgetBounds", new IRunnable<Integer>() { //$NON-NLS-1$
+                        public Integer run() throws StepExecutionException {
+                            return SwtUtils.getWidgetBounds(
                                     (Widget) getComponent().
-                                        getRealComponent()).height);
+                                        getRealComponent()).height;
                         }
             
-                    })).intValue();
+                    });
             long targetHeight = totalHeight - headerHeight;
             long targetPos = Math.round((double)targetHeight * (double)pos
                 / 100.0);
@@ -484,9 +478,9 @@ public class TableTester extends AbstractTableTester {
         
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
         try {
-            getEventThreadQueuer().invokeAndWait("rcDropCell", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropCell", new IRunnable<Void>() { //$NON-NLS-1$
 
-                public Object run() throws StepExecutionException {
+                public Void run() throws StepExecutionException {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
@@ -560,9 +554,9 @@ public class TableTester extends AbstractTableTester {
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
         
         try {
-            getEventThreadQueuer().invokeAndWait("rcDropRowByValue", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropRowByValue", new IRunnable<Void>() { //$NON-NLS-1$
 
-                public Object run() throws StepExecutionException {
+                public Void run() throws StepExecutionException {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
@@ -636,9 +630,9 @@ public class TableTester extends AbstractTableTester {
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
 
         try {
-            getEventThreadQueuer().invokeAndWait("rcDropCellByColValue", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropCellByColValue", new IRunnable<Void>() { //$NON-NLS-1$
 
-                public Object run() throws StepExecutionException {
+                public Void run() throws StepExecutionException {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
@@ -694,9 +688,9 @@ public class TableTester extends AbstractTableTester {
      * @param row the row-index of the cell in which the checkbox-state should be verified
      */
     private void verifyCheckboxInRow(boolean checked, final int row) {
-        Boolean checkIndex = ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "rcVerifyTableCheckboxIndex", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
+        Boolean checkIndex = getEventThreadQueuer().invokeAndWait(
+                "rcVerifyTableCheckboxIndex", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
                         Table table = getTable();
                         if ((table.getStyle() & SWT.CHECK) == 0) {
                             throw new StepExecutionException(
@@ -704,10 +698,9 @@ public class TableTester extends AbstractTableTester {
                                     EventFactory.createActionError(
                                             TestErrorEvent.CHECKBOX_NOT_FOUND));
                         }
-                        return new Boolean(table.getItem(row).
-                                getChecked());
+                        return table.getItem(row).getChecked();
                     }
-                }));
+                });
         Verifier.equals(checked, checkIndex.booleanValue());
     }
 
@@ -722,12 +715,12 @@ public class TableTester extends AbstractTableTester {
      * Toggles the checkbox in the selected row
      */
     public void rcToggleCheckboxInSelectedRow() {
-        int row = ((Integer) getEventThreadQueuer().invokeAndWait(
-                "get Selection index", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return new Integer(getTable().getSelectionIndex());
+        int row = getEventThreadQueuer().invokeAndWait(
+                "get Selection index", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() throws StepExecutionException {
+                        return getTable().getSelectionIndex();
                     }
-                })).intValue();
+                });
         toggleCheckboxInRow(row);
     }
 
@@ -739,8 +732,8 @@ public class TableTester extends AbstractTableTester {
 
         if (row == -1) {
             getEventThreadQueuer().invokeAndWait(
-                "No Selection", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
+                "No Selection", new IRunnable<Void>() { //$NON-NLS-1$
+                    public Void run() throws StepExecutionException {
                         throw new StepExecutionException(
                             "No Selection found ", //$NON-NLS-1$
                             EventFactory.createActionError(
@@ -753,15 +746,14 @@ public class TableTester extends AbstractTableTester {
 
         final Table table = getTable();
         
-        org.eclipse.swt.graphics.Rectangle itemBounds =
-            (org.eclipse.swt.graphics.Rectangle) getEventThreadQueuer().
-                invokeAndWait(
-                    "getTableItem",  //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() throws StepExecutionException {
-                            return table.getItem(row).getBounds();
-                        }
-                    });
+        org.eclipse.swt.graphics.Rectangle itemBounds = getEventThreadQueuer()
+                .invokeAndWait(
+                        "getTableItem", new IRunnable<org.eclipse.swt.graphics.Rectangle>() { //$NON-NLS-1$
+                            public org.eclipse.swt.graphics.Rectangle run()
+                                    throws StepExecutionException {
+                                return table.getItem(row).getBounds();
+                            }
+                        });
         
         int itemHeight = itemBounds.height;
         

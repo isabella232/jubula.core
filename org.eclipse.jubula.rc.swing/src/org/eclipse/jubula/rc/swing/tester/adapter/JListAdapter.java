@@ -57,12 +57,12 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
      * {@inheritDoc}
      */
     public int[] getSelectedIndices() {
-        return (int[])getEventThreadQueuer().invokeAndWait(
-            "getSelectedIndices", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
-                    return m_list.getSelectedIndices();
-                }
-            });
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectedIndices", new IRunnable<int[]>() { //$NON-NLS-1$
+                    public int[] run() {
+                        return m_list.getSelectedIndices();
+                    }
+                });
     }
 
     /**
@@ -84,10 +84,10 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
         }
         // Call of JList.ensureIndexIsVisible() is not required,
         // because the Robot scrolls the click rectangle to visible.
-        final Rectangle r = (Rectangle) getRobotFactory().getEventThreadQueuer()
-                .invokeAndWait("getCellBounds", new IRunnable() { //$NON-NLS-1$
+        final Rectangle r = getRobotFactory().getEventThreadQueuer()
+                .invokeAndWait("getCellBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
 
-                    public Object run() throws StepExecutionException {
+                    public Rectangle run() throws StepExecutionException {
                         return m_list.getCellBounds(index, index);
                     }
                 });        
@@ -99,8 +99,8 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
         }
         
         // if possible adjust height and width for items
-        getRobotFactory().getEventThreadQueuer().invokeAndWait("getItemSize", new IRunnable() { //$NON-NLS-1$
-            public Object run() throws StepExecutionException {
+        getRobotFactory().getEventThreadQueuer().invokeAndWait("setItemSize", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() throws StepExecutionException {
                 ListCellRenderer lcr = m_list.getCellRenderer();
                 if (lcr != null) {
                     Component listItem = lcr.getListCellRendererComponent(
@@ -129,9 +129,9 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
     public String[] getSelectedValues() {
         final int[] indices = getSelectedIndices();
 
-        return (String[])getEventThreadQueuer().invokeAndWait(
-            "getSelectedValues", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+            "getSelectedValues", new IRunnable<String[]>() { //$NON-NLS-1$
+                public String[] run() {
                     Object[] values = m_list.getSelectedValues();
                     String[] selected = new String[values.length];
                     ListCellRenderer renderer = m_list.getCellRenderer();
@@ -161,9 +161,9 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
      * {@inheritDoc}
      */
     public String[] getValues() {
-        return (String[]) getEventThreadQueuer().invokeAndWait("getValues", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait("getValues", //$NON-NLS-1$
+                new IRunnable<String[]>() {
+                    public String[] run() {
                         String[] values;
                         ListCellRenderer renderer = m_list.getCellRenderer();
                         ListModel model = m_list.getModel();

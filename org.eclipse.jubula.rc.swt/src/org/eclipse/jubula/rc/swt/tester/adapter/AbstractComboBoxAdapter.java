@@ -169,10 +169,10 @@ public abstract class AbstractComboBoxAdapter extends ControlAdapter
                 EventFactory.createActionError(TestErrorEvent.COMP_NOT_FOUND));
         }
 
-        r = (Rectangle)getEventThreadQueuer().invokeAndWait(
+        r = getEventThreadQueuer().invokeAndWait(
              AbstractComboBoxAdapter.class.getName()
-            + "findArrowIconArea", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
+            + "findArrowIconArea", new IRunnable<Rectangle>() { //$NON-NLS-1$
+                public Rectangle run() throws StepExecutionException {
                     return SwtUtils.getRelativeWidgetBounds(editor, editor);
                 }
             });
@@ -189,11 +189,11 @@ public abstract class AbstractComboBoxAdapter extends ControlAdapter
      */
     private boolean isComboEditable() {
         
-        Integer comboStyle = (Integer)getEventThreadQueuer().invokeAndWait(
+        Integer comboStyle = getEventThreadQueuer().invokeAndWait(
             AbstractComboBoxAdapter.class.getName()
-            + "isComboEditable", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
-                    return new Integer(((Widget)getRealComponent()).getStyle());
+            + "isComboEditable", new IRunnable<Integer>() { //$NON-NLS-1$
+                public Integer run() throws StepExecutionException {
+                    return ((Widget)getRealComponent()).getStyle();
                 }
             });
 

@@ -261,9 +261,9 @@ public class RobotSwtImpl implements IRobot {
          *            a component.
          */
         public void scrollRectToVisible(final Rectangle aRect) {
-            m_queuer.invokeAndWait("scrollToComponent", new IRunnable() { //$NON-NLS-1$
+            m_queuer.invokeAndWait("scrollToComponent", new IRunnable<Void>() { //$NON-NLS-1$
 
-                public Object run() throws StepExecutionException {
+                public Void run() throws StepExecutionException {
                     Point currentPoint = new Point(aRect.x, aRect.y);
                     if (m_component instanceof Scrollable) {
                         final Scrollable scrollable = (Scrollable)m_component;
@@ -415,11 +415,11 @@ public class RobotSwtImpl implements IRobot {
         RobotException re, final StringBuffer sb) {
         
         // Get mouse coordinates
-        Object mouseCoords = 
+        Point mouseCoords = 
             m_queuer.invokeAndWait("get mouse coordinates",  //$NON-NLS-1$
-                new IRunnable() {
+                new IRunnable<Point>() {
 
-                    public Object run() throws StepExecutionException {
+                    public Point run() throws StepExecutionException {
                         return m_autServer.getAutDisplay()
                             .getCursorLocation();
                     }
@@ -430,9 +430,9 @@ public class RobotSwtImpl implements IRobot {
         Rectangle compBounds = null;
         if (graphicsComponent instanceof Widget) {
             
-            compBounds = (Rectangle)m_queuer.invokeAndWait(
-                "getBounds", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
+            compBounds = m_queuer.invokeAndWait(
+                "getBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
+                    public Rectangle run() throws StepExecutionException {
                         return SwtUtils.getWidgetBounds(
                             (Widget)graphicsComponent);
                     }
@@ -446,8 +446,8 @@ public class RobotSwtImpl implements IRobot {
         // we receive a "*Wrong Thread*" message rather than actual
         // component information.
         m_queuer.invokeAndWait(
-            "getBounds", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
+            "appendGraphicsComponent", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() throws StepExecutionException {
                     sb.append(graphicsComponent);
 
                     // Return value not used
@@ -477,16 +477,15 @@ public class RobotSwtImpl implements IRobot {
     public void preMove(final Rectangle constraint) 
         throws RobotException {
         
-        boolean isAlreadyInConstraints = ((Boolean)m_queuer.invokeAndWait(
-                "isAlreadyInConstraints", new IRunnable() { //$NON-NLS-1$
+        boolean isAlreadyInConstraints = m_queuer.invokeAndWait(
+                "isAlreadyInConstraints", new IRunnable<Boolean>() { //$NON-NLS-1$
 
-                    public Object run() throws StepExecutionException {
+                    public Boolean run() throws StepExecutionException {
                         return constraint.contains(
-                            m_autServer.getAutDisplay().getCursorLocation()) 
-                            ? Boolean.TRUE : Boolean.FALSE;
+                            m_autServer.getAutDisplay().getCursorLocation());
                     }
             
-                })).booleanValue();
+                });
         if (!isAlreadyInConstraints) {
             Point p = new Point(constraint.x + (constraint.width / 2), 
                 constraint.y + (constraint.height / 2));
@@ -504,9 +503,9 @@ public class RobotSwtImpl implements IRobot {
      */
     private boolean isMouseMoveRequired(Point p) {
         boolean result = false;
-        Point point = (Point)m_queuer.invokeAndWait("isMouseMoveRequired",  //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() throws StepExecutionException {
+        Point point = m_queuer.invokeAndWait("isMouseMoveRequired",  //$NON-NLS-1$
+            new IRunnable<Point>() {
+                public Point run() throws StepExecutionException {
                     Display d = (m_autServer).getAutDisplay();
                     return d.getCursorLocation();
                 }
@@ -578,9 +577,9 @@ public class RobotSwtImpl implements IRobot {
             if (log.isDebugEnabled()) {
                 log.debug("Moving mouse to: " + pointToGo); //$NON-NLS-1$
             }
-            Point initialPoint = (Point)m_queuer.invokeAndWait("moveImpl",  //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() throws StepExecutionException {
+            Point initialPoint = m_queuer.invokeAndWait("moveImpl",  //$NON-NLS-1$
+                    new IRunnable<Point>() {
+                        public Point run() throws StepExecutionException {
                             Display d = m_autServer.getAutDisplay();
                             return d.getCursorLocation();
                         }
@@ -621,9 +620,9 @@ public class RobotSwtImpl implements IRobot {
      */
     private Point convertLocation(final Rectangle constraints,
         final Control graphicsComponent) {
-        Point convertedLocation = (Point)m_queuer.invokeAndWait(
-                "toDisplay", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
+        Point convertedLocation = m_queuer.invokeAndWait(
+                "toDisplay", new IRunnable<Point>() { //$NON-NLS-1$
+                    public Point run() throws StepExecutionException {
                         return graphicsComponent.toDisplay(constraints.x,
                                 constraints.y);
                     }
@@ -635,10 +634,10 @@ public class RobotSwtImpl implements IRobot {
                 && graphicsComponent instanceof org.eclipse.swt.widgets.List) {
             final org.eclipse.swt.widgets.List list = 
                 (org.eclipse.swt.widgets.List)graphicsComponent;
-            Integer correctedYPos = (Integer)m_queuer.invokeAndWait(
-                    "correctedYPos", new IRunnable() { //$NON-NLS-1$
-                        public Object run() throws StepExecutionException {
-                            return new Integer(list.getClientArea().y);
+            Integer correctedYPos = m_queuer.invokeAndWait(
+                    "correctedYPos", new IRunnable<Integer>() { //$NON-NLS-1$
+                        public Integer run() throws StepExecutionException {
+                            return list.getClientArea().y;
                         }
                     });
             convertedLocation.y += correctedYPos.intValue();
@@ -657,9 +656,9 @@ public class RobotSwtImpl implements IRobot {
      */
     private void logAndCorrectMousePosition(Point pointToGo) {
         String runnableName = "moveImpl.getCursorPoint"; //$NON-NLS-1$
-        Point curPoint = (Point)m_queuer.invokeAndWait(runnableName, 
-                new IRunnable() {
-                public Object run() throws StepExecutionException {
+        Point curPoint = m_queuer.invokeAndWait(runnableName, 
+                new IRunnable<Point>() {
+                public Point run() throws StepExecutionException {
                     Display d = m_autServer.getAutDisplay();
                     return d.getCursorLocation();
                 }
@@ -669,9 +668,9 @@ public class RobotSwtImpl implements IRobot {
             log.warn("Current and end points not equal after mouse move. Waiting 1 second to see if a delay fixes the problem."); //$NON-NLS-1$
             SwtRobot.delay(1000);
             m_robot.waitForIdle();
-            curPoint = (Point)m_queuer.invokeAndWait(runnableName,
-                    new IRunnable() {
-                    public Object run() throws StepExecutionException {
+            curPoint = m_queuer.invokeAndWait(runnableName,
+                    new IRunnable<Point>() {
+                    public Point run() throws StepExecutionException {
                         Display d = m_autServer.getAutDisplay();
                         return d.getCursorLocation();
                     }
@@ -682,9 +681,9 @@ public class RobotSwtImpl implements IRobot {
                 SwtRobot.delay(1000);
                 m_robot.waitForIdle();
                 SwtRobot.delay(1000);
-                curPoint = (Point)m_queuer.invokeAndWait(runnableName,
-                        new IRunnable() {
-                        public Object run() throws StepExecutionException {
+                curPoint = m_queuer.invokeAndWait(runnableName,
+                        new IRunnable<Point>() {
+                        public Point run() throws StepExecutionException {
                             Display d = m_autServer.getAutDisplay();
                             return d.getCursorLocation();
                         }
@@ -752,10 +751,10 @@ public class RobotSwtImpl implements IRobot {
         // add confirmer
         final IEventMatcher matcher = new DefaultSwtEventMatcher(SWT.KeyUp);
         final IRobotEventConfirmer confirmer = m_interceptor.intercept(options);
-        final Boolean succeeded = (Boolean)m_queuer.invokeAndWait(
+        final Boolean succeeded = m_queuer.invokeAndWait(
             this.getClass().getName() + ".type",  //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
+            new IRunnable<Boolean>() {
+                public Boolean run() {
                     Boolean success = Boolean.TRUE;
                     try {
                         // press the modifier keys
@@ -947,8 +946,8 @@ public class RobotSwtImpl implements IRobot {
                 new long[] { SWT.KeyUp });
         try {
             m_queuer.invokeAndWait(this.getClass().getName() + ".type", //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() { // SYNCH THREAD START
+                    new IRunnable<Boolean>() {
+                        public Boolean run() { // SYNCH THREAD START
                             boolean success = true;
                             while (i.hasNext()) {
                                 AbstractKeyTyper keyTyper = i
@@ -979,7 +978,7 @@ public class RobotSwtImpl implements IRobot {
                                         EventFactory.createActionError(
                                                 TestErrorEvent.INVALID_INPUT));
                             }
-                            return Boolean.valueOf(success);
+                            return success;
                         }
                     });
         } finally {
@@ -1052,14 +1051,14 @@ public class RobotSwtImpl implements IRobot {
         
         Rectangle rectangle = bounds; 
         if (rectangle == null) {
-            rectangle = (Rectangle)m_queuer.invokeAndWait(
-                    "getRelativeWidgetBounds", new IRunnable() { //$NON-NLS-1$
+            rectangle = m_queuer.invokeAndWait(
+                    "getRelativeWidgetBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
 
-                        public Object run() throws StepExecutionException {
-                            return SwtUtils.getRelativeWidgetBounds(
-                                    component, component);
+                        public Rectangle run() throws StepExecutionException {
+                            return SwtUtils.getRelativeWidgetBounds(component,
+                                    component);
                         }
-                
+
                     });
         }
         if (log.isDebugEnabled()) {
@@ -1099,10 +1098,10 @@ public class RobotSwtImpl implements IRobot {
             wam.activate(window);
             
             // Verify that window was successfully activated
-            Shell activeWindow = (Shell)m_queuer.invokeAndWait(
-                "getActiveWindow", new IRunnable() { //$NON-NLS-1$
+            Shell activeWindow = m_queuer.invokeAndWait(
+                "getActiveWindow", new IRunnable<Shell>() { //$NON-NLS-1$
 
-                    public Object run() throws StepExecutionException {
+                    public Shell run() throws StepExecutionException {
                         return window.getDisplay().getActiveShell();
                     }
                 
@@ -1127,10 +1126,10 @@ public class RobotSwtImpl implements IRobot {
      * @return the active window
      */
     public Shell getActiveWindow() {
-        return (Shell)m_queuer.invokeAndWait(
+        return m_queuer.invokeAndWait(
             "getActiveWindow", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() throws StepExecutionException {
+            new IRunnable<Shell>() {
+                public Shell run() throws StepExecutionException {
                     Display autDisplay = m_autServer.getAutDisplay();
                     Shell activeShell = autDisplay.getActiveShell();
                     if (activeShell == null) {
@@ -1173,8 +1172,8 @@ public class RobotSwtImpl implements IRobot {
         try {
             while (i.hasNext()) {
                 m_queuer.invokeAndWait(this.getClass().getName() + ".type", //$NON-NLS-1$
-                    new IRunnable() {
-                            public Object run() { // SYNCH THREAD START
+                    new IRunnable<Void>() {
+                            public Void run() { // SYNCH THREAD START
                                 AbstractKeyTyper keyTyper = 
                                     i.next();
                                 if (log.isDebugEnabled()) {
@@ -1325,10 +1324,10 @@ public class RobotSwtImpl implements IRobot {
      * {@inheritDoc}
      */
     public java.awt.Point getCurrentMousePosition() {
-        java.awt.Point currentPos = (java.awt.Point)m_queuer.invokeAndWait(
-            "getCursorPosition", new IRunnable() { //$NON-NLS-1$
+        java.awt.Point currentPos = m_queuer.invokeAndWait(
+            "getCursorPosition", new IRunnable<java.awt.Point>() { //$NON-NLS-1$
 
-                public Object run() throws StepExecutionException {
+                public java.awt.Point run() throws StepExecutionException {
                     Display d = (m_autServer).getAutDisplay();
                     final Point cursorLocation = d.getCursorLocation();
                     return new java.awt.Point(cursorLocation.x, 
@@ -1349,9 +1348,9 @@ public class RobotSwtImpl implements IRobot {
         final java.awt.Point currentMousePosition = getCurrentMousePosition();
         final Point currMousePos = new Point(currentMousePosition.x,
                 currentMousePosition.y);
-        final Rectangle bounds = (Rectangle)m_queuer.invokeAndWait(
-            "getBounds", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
+        final Rectangle bounds = m_queuer.invokeAndWait(
+            "getBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
+                public Rectangle run() throws StepExecutionException {
                     return SwtUtils.getWidgetBounds(comp);
                 }
 
@@ -1383,8 +1382,8 @@ public class RobotSwtImpl implements IRobot {
                 IRobotEventConfirmer confirmer = m_interceptor
                     .intercept(options);
                 m_queuer.invokeAndWait(this.getClass().getName() + ".type", //$NON-NLS-1$
-                    new IRunnable() {
-                            public Object run() { // SYNCH THREAD START
+                    new IRunnable<Void>() {
+                            public Void run() { // SYNCH THREAD START
                                 AbstractKeyTyper keyTyper = 
                                     i.previous();
                                 if (log.isDebugEnabled()) {
@@ -1436,8 +1435,8 @@ public class RobotSwtImpl implements IRobot {
      * @see SwtUtils#getBounds(Control)  
      */
     private Rectangle getBounds(final Widget component) {
-        return (Rectangle)m_queuer.invokeAndWait("getBounds", new IRunnable() { //$NON-NLS-1$
-            public Object run() throws StepExecutionException {
+        return m_queuer.invokeAndWait("getBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
+            public Rectangle run() throws StepExecutionException {
                 return SwtUtils.getWidgetBounds(component);
             }
         });

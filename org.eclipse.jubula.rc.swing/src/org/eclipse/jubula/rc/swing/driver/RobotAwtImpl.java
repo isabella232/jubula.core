@@ -214,8 +214,8 @@ public class RobotAwtImpl implements IRobot {
 
         Validate.notNull(component, "component must not be null"); //$NON-NLS-1$ 
         final Component comp = component; 
-        IRunnable runnable = new IRunnable() {
-            public Object run() {
+        IRunnable<Point> runnable = new IRunnable<Point>() {
+            public Point run() {
                 Point pos = comp.getLocationOnScreen();
                 if (offset == null) {
                     pos.x += comp.getBounds().width / 2;
@@ -232,7 +232,7 @@ public class RobotAwtImpl implements IRobot {
         int retries = 0; 
         do {
             try {
-                point = (Point)m_queuer.invokeAndWait("getLocation", runnable); //$NON-NLS-1$
+                point = m_queuer.invokeAndWait("getLocation", runnable); //$NON-NLS-1$
             } catch (StepExecutionException e) {
                 
                 exc = e;
@@ -242,7 +242,7 @@ public class RobotAwtImpl implements IRobot {
                     Thread.sleep(TimingConstantsServer
                             .GET_LOCATION_RETRY_DELAY);
                 } catch (InterruptedException e1) {
-                    e1.printStackTrace();
+                    log.error(e1.getLocalizedMessage());
                 }
             } 
         } while (point == null && retries < MAX_RETRIES);
@@ -716,8 +716,8 @@ public class RobotAwtImpl implements IRobot {
      */
     private void ensureComponentVisible(final Component component,
         final Rectangle bounds) throws RobotException {
-        m_queuer.invokeAndWait("ensureVisible", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+        m_queuer.invokeAndWait("ensureVisible", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     Rectangle rectangle = bounds != null ? new Rectangle(bounds)
                         : SwingUtilities.getLocalBounds(component);
                     if (log.isDebugEnabled()) {
@@ -755,10 +755,10 @@ public class RobotAwtImpl implements IRobot {
             wam.activate(window);
             
             // Verify that window was successfully activated
-            Window activeWindow = (Window)m_queuer.invokeAndWait(
+            Window activeWindow = m_queuer.invokeAndWait(
                 "getActiveWindow", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+                new IRunnable<Window>() {
+                    public Window run() throws StepExecutionException {
                         if (Frame.getFrames().length == 0) {
                             return null;
                         }
@@ -802,10 +802,10 @@ public class RobotAwtImpl implements IRobot {
      * @return the active window
      */
     private Window getActiveWindow() {
-        return (Window)m_queuer.invokeAndWait(
+        return m_queuer.invokeAndWait(
             "getActiveWindow", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() throws StepExecutionException {
+            new IRunnable<Window>() {
+                public Window run() throws StepExecutionException {
                     if (Frame.getFrames().length == 0) {
                         return null;
                     }

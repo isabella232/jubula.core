@@ -89,9 +89,9 @@ public class ControlAdapter extends WidgetAdapter
      * {@inheritDoc}
      */
     public String getPropteryValue(final String propertyname) {
-        Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+        String prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() throws StepExecutionException {
                         try {
                             return getRobot().getPropertyValue(
                                     getRealComponent(), propertyname);
@@ -110,44 +110,35 @@ public class ControlAdapter extends WidgetAdapter
      * {@inheritDoc}
      */
     public boolean isShowing() {
-        Boolean actual = (Boolean)getEventThreadQueuer()
-                .invokeAndWait("isShowing", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_component.isVisible() 
-                            ? Boolean.TRUE : Boolean.FALSE; // see findBugs;
+        return getEventThreadQueuer().invokeAndWait(
+                "isShowing", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_component.isVisible();
                     }
                 });
-        return actual.booleanValue();
     }
     
     /**
      * {@inheritDoc}
      */
     public boolean isEnabled() {
-
-        Boolean actual = (Boolean)getEventThreadQueuer()
-                .invokeAndWait("isEnabled", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_component.isEnabled() 
-                            ? Boolean.TRUE : Boolean.FALSE; // see findBugs;
+        return getEventThreadQueuer().invokeAndWait(
+                "isEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_component.isEnabled();
                     }
                 });
-        return actual.booleanValue();
     }
     
     /**
      * {@inheritDoc}
      */
     public boolean hasFocus() {
-        Boolean actual = (Boolean)getEventThreadQueuer()
-                .invokeAndWait("hasFocus", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_component.isFocusControl() 
-                            ? Boolean.TRUE : Boolean.FALSE; // see findBugs;
+        return getEventThreadQueuer().invokeAndWait(
+                "hasFocus", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_component.isFocusControl();
                     }
                 });
-        return actual.booleanValue();
     }
-    
-    
 }

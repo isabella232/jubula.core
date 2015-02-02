@@ -72,12 +72,11 @@ public class DefaultSwtEventMatcher implements IEventMatcher {
                 Widget w = e.widget;
                 if (w instanceof Control) {
                     final Control c = (Control) w;
-                    Composite parent = (Composite) 
-                            new EventThreadQueuerSwtImpl().invokeAndWait("getParent", new IRunnable() { //$NON-NLS-1$
-                                public Object run() {
-                                    return c.getParent();
-                                }
-                            });
+                    Composite parent = new EventThreadQueuerSwtImpl().invokeAndWait("getParent", new IRunnable<Composite>() { //$NON-NLS-1$
+                            public Composite run() {
+                                return c.getParent();
+                            }
+                        });
                     if (parent == combo && isMatching(e)) {
                         return true;
                     }

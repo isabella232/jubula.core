@@ -38,10 +38,9 @@ public class ButtonAdapter extends ControlAdapter implements IButtonComponent {
      * {@inheritDoc}
      */
     public String getText() {
-        
-        return (String)getEventThreadQueuer()
-                .invokeAndWait("getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return CAPUtil.getWidgetText(m_button,
                                 SwtUtils.removeMnemonics(m_button.getText()));
                     }
@@ -52,14 +51,12 @@ public class ButtonAdapter extends ControlAdapter implements IButtonComponent {
      * {@inheritDoc}
      */
     public boolean isSelected() {
-        Boolean actual = (Boolean)getEventThreadQueuer()
-                .invokeAndWait("isSelected", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_button.getSelection() 
-                            ? Boolean.TRUE : Boolean.FALSE; // see findBugs;
+        return getEventThreadQueuer().invokeAndWait(
+                "isSelected", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_button.getSelection();
                     }
                 });
-        return actual.booleanValue();
     }
     
     /** {@inheritDoc} */

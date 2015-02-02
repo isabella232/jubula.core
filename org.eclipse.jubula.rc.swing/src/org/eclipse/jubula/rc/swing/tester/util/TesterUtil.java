@@ -190,12 +190,12 @@ public class TesterUtil {
         boolean queueInEventThread) throws StepExecutionException {
 
         if (queueInEventThread) {
-            return (String)getEventThreadQueuer().invokeAndWait(
-                "getRenderedText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return getRenderedText(renderer);
-                    }
-                });
+            return getEventThreadQueuer().invokeAndWait(
+                    "getRenderedText", new IRunnable<String>() { //$NON-NLS-1$
+                        public String run() {
+                            return getRenderedText(renderer);
+                        }
+                    });
         }
 
         return getRenderedText(renderer);

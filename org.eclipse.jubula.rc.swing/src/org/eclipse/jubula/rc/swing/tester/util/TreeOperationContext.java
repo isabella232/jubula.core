@@ -126,25 +126,25 @@ public class TreeOperationContext
      *             If the method call fails.
      */
     protected String convertValueToText(final Object node, final int row)
-        throws StepExecutionException {
-        
-        return (String)getQueuer().invokeAndWait(
-            "convertValueToText", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
-                    return getTree().convertValueToText(node, 
-                        false, getTree().isExpanded(row), 
-                        m_model.isLeaf(node), row, false);
-                }
-            });
+            throws StepExecutionException {
+
+        return getQueuer().invokeAndWait(
+                "convertValueToText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
+                        return getTree().convertValueToText(node, false,
+                                getTree().isExpanded(row),
+                                m_model.isLeaf(node), row, false);
+                    }
+                });
     }
 
     /**
      * {@inheritDoc}
      */
     public String getRenderedText(final Object node) {
-        return (String)getQueuer().invokeAndWait(
-                "getRenderedText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getQueuer().invokeAndWait(
+                "getRenderedText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         int row = getRowForTreeNode(node);
                         JTree tree = getTree();
                         Component cellRendererComponent = tree
@@ -196,9 +196,9 @@ public class TreeOperationContext
     protected int getRowForTreeNode(final Object node)
         throws StepExecutionException {
         
-        Integer row = (Integer)getQueuer().invokeAndWait(
-            "getRowForTreeNode", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+        Integer row = getQueuer().invokeAndWait(
+            "getRowForTreeNode", new IRunnable<Integer>() { //$NON-NLS-1$
+                public Integer run() {
                     TreePath pathToRoot = new TreePath(getPathToRoot(node));
                     return new Integer(getTree().getRowForPath(
                         pathToRoot));
@@ -230,9 +230,9 @@ public class TreeOperationContext
             throws StepExecutionException {
 
         final int row = getRowForTreeNode(node);
-        Rectangle nodeBounds = (Rectangle) getQueuer().invokeAndWait(
-                "getRowBounds", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        Rectangle nodeBounds = getQueuer().invokeAndWait(
+                "getRowBounds", new IRunnable<Rectangle>() { //$NON-NLS-1$
+                    public Rectangle run() {
                         return getTree().getRowBounds(row);
                     }
                 });
@@ -252,24 +252,23 @@ public class TreeOperationContext
      *      if nothing is currently selected.
      */
     protected Object[] getSelectionPaths() {
-        return (TreePath[])getQueuer().invokeAndWait("getSelectionPath", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
-                    return getTree().getSelectionPaths();
-                }
-            });
+        return getQueuer().invokeAndWait("getSelectionPath", //$NON-NLS-1$
+                new IRunnable<TreePath[]>() {
+                    public TreePath[] run() {
+                        return getTree().getSelectionPaths();
+                    }
+                });
     }
     
     /**
      * {@inheritDoc}
      */
     public boolean isVisible(final Object node) {
-        Boolean visible = (Boolean)getQueuer().invokeAndWait("isVisible", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        Boolean visible = getQueuer().invokeAndWait("isVisible", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
                         Object[] path = getPathToRoot(node);
-                        return (getTree().isVisible(
-                            new TreePath(path))) ? Boolean.TRUE : Boolean.FALSE;
+                        return getTree().isVisible(new TreePath(path));
                     }
                 });
         return visible.booleanValue();
@@ -323,10 +322,9 @@ public class TreeOperationContext
             boolean doAction = collapsed == !shouldBeExpanded;
             final IEventThreadQueuer queuer = new EventThreadQueuerAwtImpl();
 
-            queuer.invokeAndWait("scrollRowToVisible", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            queuer.invokeAndWait("scrollRowToVisible", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     tree.scrollRowToVisible(row);
-                    
                     return null;
                 }
             });
@@ -340,8 +338,8 @@ public class TreeOperationContext
                     log.debug("Row           : " + row); //$NON-NLS-1$
                     log.debug("Node bounds   : " + visibleNodeBounds); //$NON-NLS-1$
                 }
-                queuer.invokeAndWait("alteringExpansionState", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+                queuer.invokeAndWait("alteringExpansionState", new IRunnable<Void>() { //$NON-NLS-1$
+                    public Void run() {
                         if (shouldBeExpanded) {
                             tree.expandRow(row);
                         } else {
@@ -462,8 +460,7 @@ public class TreeOperationContext
         scrollNodeToVisible(node);
         Rectangle rowBounds = getNodeBounds(node);
         Rectangle visibleRowBounds = getVisibleRowBounds(rowBounds);
-        getRobot().click(getTree(), visibleRowBounds, 
-                clickOps);
+        getRobot().click(getTree(), visibleRowBounds, clickOps);
     }
 
     /**

@@ -194,9 +194,9 @@ public class TreeTester extends AbstractTreeTester {
 
         try {
             pressOrReleaseModifiers(dndHelper.getModifier(), true);
-            getEventThreadQueuer().invokeAndWait("rcDropByTextPath - perform drag", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropByTextPath - perform drag", new IRunnable<Void>() { //$NON-NLS-1$
 
-                public Object run() throws StepExecutionException {
+                public Void run() throws StepExecutionException {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());                    
@@ -265,9 +265,9 @@ public class TreeTester extends AbstractTreeTester {
         final IRobot robot = getRobot();
         try {
             pressOrReleaseModifiers(dndHelper.getModifier(), true);
-            getEventThreadQueuer().invokeAndWait("rcDropByIndexPath - perform drag", new IRunnable() { //$NON-NLS-1$
+            getEventThreadQueuer().invokeAndWait("rcDropByIndexPath - perform drag", new IRunnable<Void>() { //$NON-NLS-1$
 
-                public Object run() throws StepExecutionException {
+                public Void run() throws StepExecutionException {
                     // drag
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
@@ -307,9 +307,9 @@ public class TreeTester extends AbstractTreeTester {
      * {@inheritDoc}
      */
     protected Object getNodeAtMousePosition() throws StepExecutionException {
-        return (TreeItem)getEventThreadQueuer().invokeAndWait("getItemAtMousePosition", new IRunnable() { //$NON-NLS-1$
+        return getEventThreadQueuer().invokeAndWait("getItemAtMousePosition", new IRunnable<TreeItem>() { //$NON-NLS-1$
             
-            public Object run() throws StepExecutionException {
+            public TreeItem run() throws StepExecutionException {
                 Point mousePos = SwtUtils.convertToSwtPoint(
                         getRobot().getCurrentMousePosition());
                 ItemAtPointTreeNodeOperation op = 
@@ -349,10 +349,10 @@ public class TreeTester extends AbstractTreeTester {
      */
     private int getMouseColumn() {
         final Tree treeTable = getTree();
-        int column = ((Integer)getEventThreadQueuer().invokeAndWait(
-                "getMouseColumn", new IRunnable() { //$NON-NLS-1$
+        int column = getEventThreadQueuer().invokeAndWait(
+                "getMouseColumn", new IRunnable<Integer>() { //$NON-NLS-1$
 
-                    public Object run() throws StepExecutionException {
+                    public Integer run() throws StepExecutionException {
                         Rectangle treeTableBounds = 
                             SwtUtils.getWidgetBounds(getTree());
                         Point cursorPosition = 
@@ -378,15 +378,14 @@ public class TreeTester extends AbstractTreeTester {
                                 columnBounds.width = 
                                     treeTable.getColumn(i).getWidth();
                                 if (columnBounds.contains(cursorPosition)) {
-                                    return new Integer(i);
+                                    return i;
                                 }
                             }
                         }
 
-                        return new Integer(-1);
+                        return -1;
                     }
-
-                })).intValue();
+                });
         
         return column;
     }
@@ -474,14 +473,12 @@ public class TreeTester extends AbstractTreeTester {
      * @return the number of columns in the receivers component.
      */
     private int getColumnCount() {
-        return ((Integer)getEventThreadQueuer().invokeAndWait(
-                    "getColumnCount", new IRunnable() { //$NON-NLS-1$
-
-                        public Object run() throws StepExecutionException {
-                            return new Integer(getTree().getColumnCount());
-                        }
-                
-                    })).intValue();
+        return getEventThreadQueuer().invokeAndWait(
+                "getColumnCount", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() throws StepExecutionException {
+                        return getTree().getColumnCount();
+                    }
+                });
     }
     
     /**
@@ -597,15 +594,14 @@ public class TreeTester extends AbstractTreeTester {
     private void checkColumnIndex(final int index) 
         throws StepExecutionException {
        
-        int numColumns = ((Integer)getEventThreadQueuer().invokeAndWait(
-                "checkColumnIndex",  //$NON-NLS-1$
-                new IRunnable() {
+        int numColumns = getEventThreadQueuer().invokeAndWait(
+                "checkColumnIndex", //$NON-NLS-1$
+                new IRunnable<Integer>() {
 
-                    public Object run() {
-                        return new Integer(getTree().getColumnCount());
+                    public Integer run() {
+                        return getTree().getColumnCount();
                     }
-            
-                })).intValue();
+                });
 
         if ((index < 0 || index >= numColumns) && index != 0) {
             throw new StepExecutionException("Invalid column: " //$NON-NLS-1$
@@ -784,15 +780,15 @@ public class TreeTester extends AbstractTreeTester {
      */
     public void rcVerifySelectedCheckbox(boolean checked)
         throws StepExecutionException {        
-        Boolean checkSelected = ((Boolean)getEventThreadQueuer().invokeAndWait(
-                "rcVerifyTreeCheckbox", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        Boolean checkSelected = getEventThreadQueuer().invokeAndWait(
+                "rcVerifyTreeCheckbox", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
                         AbstractTreeOperationContext context = 
                                 ((ITreeComponent)getComponent()).getContext();
                         TreeItem node = (TreeItem) getSelectedNode(context);
-                        return new Boolean(node.getChecked());
+                        return node.getChecked();
                     }            
-                }));       
+                });       
         
         Verifier.equals(checked, checkSelected.booleanValue());
     }

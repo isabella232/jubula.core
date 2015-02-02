@@ -152,8 +152,8 @@ public class SwtApplicationTester extends AbstractApplicationTester {
             ((SwtAUTServer)AUTServer.getInstance()).getAutDisplay();
         final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        queuer.invokeAndWait("addWindowOpenedListeners", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
+        queuer.invokeAndWait("addWindowOpenedListeners", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() {
                 display.addFilter(SWT.Activate, listener);
                 display.addFilter(SWT.Show, listener);
                 if (isWindowOpen(title, operator)) {
@@ -180,8 +180,8 @@ public class SwtApplicationTester extends AbstractApplicationTester {
                 }                    
             }
         } finally {
-            queuer.invokeAndWait("removeWindowOpenedListeners", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            queuer.invokeAndWait("removeWindowOpenedListeners", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     display.removeFilter(SWT.Activate, listener);
                     display.removeFilter(SWT.Show, listener);
                     
@@ -217,8 +217,8 @@ public class SwtApplicationTester extends AbstractApplicationTester {
             ((SwtAUTServer)AUTServer.getInstance()).getAutDisplay();
         final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        queuer.invokeAndWait("addWindowActiveListeners", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
+        queuer.invokeAndWait("addWindowActiveListeners", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() {
                 display.addFilter(SWT.Activate, listener);
                 if (isWindowActive(title, operator)) {
                     lock.release();
@@ -244,8 +244,8 @@ public class SwtApplicationTester extends AbstractApplicationTester {
                 }                    
             }
         } finally {
-            queuer.invokeAndWait("removeWindowActiveListeners", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            queuer.invokeAndWait("removeWindowActiveListeners", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     display.removeFilter(SWT.Activate, listener);
                     
                     return null;
@@ -281,8 +281,8 @@ public class SwtApplicationTester extends AbstractApplicationTester {
             ((SwtAUTServer)AUTServer.getInstance()).getAutDisplay();
         final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        queuer.invokeAndWait("addWindowClosedListeners", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
+        queuer.invokeAndWait("addWindowClosedListeners", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() {
                 display.addFilter(SWT.Close, listener);
                 display.addFilter(SWT.Hide, listener);
                 display.addFilter(SWT.Dispose, listener);
@@ -310,8 +310,8 @@ public class SwtApplicationTester extends AbstractApplicationTester {
                 }                    
             }
         } finally {
-            queuer.invokeAndWait("removeWindowClosedListeners", new IRunnable() { //$NON-NLS-1$
-                public Object run() {
+            queuer.invokeAndWait("removeWindowClosedListeners", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() {
                     display.removeFilter(SWT.Close, listener);
                     display.removeFilter(SWT.Hide, listener);
                     display.removeFilter(SWT.Dispose, listener);
@@ -385,10 +385,10 @@ public class SwtApplicationTester extends AbstractApplicationTester {
     public void rcCheckExistenceOfWindow(final String title,
             final String operator, final boolean exists) {
         IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
-        Boolean windowExists = (Boolean)queuer.invokeAndWait(
-                "isWindowOpen", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return new Boolean(isWindowOpen(title, operator));
+        Boolean windowExists = queuer.invokeAndWait(
+                "isWindowOpen", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return isWindowOpen(title, operator);
                     }
                 });
         Verifier.equals(exists, windowExists.booleanValue());
@@ -399,11 +399,11 @@ public class SwtApplicationTester extends AbstractApplicationTester {
      */
     public Rectangle getActiveWindowBounds() {
         org.eclipse.swt.graphics.Rectangle activeWindowSize = 
-            (org.eclipse.swt.graphics.Rectangle)getRobotFactory()
+            getRobotFactory()
                 .getEventThreadQueuer().invokeAndWait(
                     this.getClass().getName() + ".getActiveWindowBounds", //$NON-NLS-1$
-                        new IRunnable() {
-                            public Object run() { // SYNCH THREAD START
+                        new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
+                            public org.eclipse.swt.graphics.Rectangle run() { //$NON-NLS-1$ // SYNCH THREAD START
                                 Display d = ((SwtAUTServer)AUTServer
                                         .getInstance()).getAutDisplay();
                                 if (d != null && d.getActiveShell() != null) {
@@ -485,21 +485,16 @@ public class SwtApplicationTester extends AbstractApplicationTester {
      * {@inheritDoc}
      */
     protected Object getActiveWindow() {
-        Shell activeWindow = (Shell)getRobotFactory().getEventThreadQueuer()
+        return getRobotFactory().getEventThreadQueuer()
                 .invokeAndWait(this.getClass().getName() + ".getActiveWindow", //$NON-NLS-1$
-            
-            new IRunnable() {
-                            public Object run() { // SYNCH THREAD START
+                        new IRunnable<Shell>() {
+                            public Shell run() { // SYNCH THREAD START
                                 Display d = ((SwtAUTServer) AUTServer
                                         .getInstance()).getAutDisplay();
                                 return d.getActiveShell();
-
                             }
                         }
-                    
-        );
-        
-        return activeWindow;
+                );
     }
     
     /**

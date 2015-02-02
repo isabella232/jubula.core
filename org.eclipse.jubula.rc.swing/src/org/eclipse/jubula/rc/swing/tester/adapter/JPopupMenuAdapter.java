@@ -48,7 +48,7 @@ public class JPopupMenuAdapter extends AbstractComponentAdapter
     /** {@inheritDoc} */
     public IMenuItemComponent[] getItems() {
         Object[] menuItems = m_contextMenu.getSubElements();
-        List adapters = new LinkedList();
+        List<JMenuItemAdapter> adapters = new LinkedList<JMenuItemAdapter>();
         for (int i = 0; i < menuItems.length; i++) {
             if (menuItems[i] instanceof JMenuItem) {
                 adapters.add(new JMenuItemAdapter(menuItems[i]));

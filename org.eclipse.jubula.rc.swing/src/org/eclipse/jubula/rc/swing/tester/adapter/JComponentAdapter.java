@@ -87,9 +87,9 @@ public class JComponentAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public String getPropteryValue(final String propertyname) {
-        Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+        String prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() throws StepExecutionException {
                         try {
                             return getRobot().getPropertyValue(
                                     getRealComponent(), propertyname);
@@ -108,42 +108,36 @@ public class JComponentAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public boolean isShowing() {
-        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isShowing", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_component.isShowing()
-                                ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isShowing", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_component.isShowing();
                     }
                 });
-        return returnvalue.booleanValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean hasFocus() {
-        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "hasFocus", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_component.hasFocus()
-                                ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "hasFocus", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_component.hasFocus();
                     }
                 });
-        return returnvalue.booleanValue();
     }
     
     /**
      * {@inheritDoc}
      */
     public boolean isEnabled() {
-        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isEnabled", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return m_component.isEnabled()
-                                ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_component.isEnabled();
                     }
                 });
-        return returnvalue.booleanValue();
     }
     
     /**

@@ -44,13 +44,12 @@ public class JSliderTester extends WidgetTester {
      */
     public void rcVerifyLabelsExists(boolean shown) {
         final JSlider slider = getSlider();
-        final Boolean labelsShown = (Boolean) getEventThreadQueuer()
-                .invokeAndWait("doesPaintLabels", new IRunnable() { //$NON-NLS-1$
-                        public Object run() throws StepExecutionException {
-                            return slider.getPaintLabels() ? Boolean.TRUE
-                                    : Boolean.FALSE;
-                        }
-                    });
+        final Boolean labelsShown = getEventThreadQueuer().invokeAndWait(
+                "doesPaintLabels", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return slider.getPaintLabels();
+                    }
+                });
         Verifier.equals(shown, labelsShown.booleanValue());
     }
 }

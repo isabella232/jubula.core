@@ -72,19 +72,19 @@ public class JComboBoxAdapter extends JComponentAdapter implements
         } else {
             final int selIndex = getSelectedIndex();
             if (selIndex == -1) {
-                comboBoxText = (String) getEventThreadQueuer().invokeAndWait(
+                comboBoxText = getEventThreadQueuer().invokeAndWait(
                         "getSelectedItemText", //$NON-NLS-1$
-                        new IRunnable() {
-                            public Object run() {
+                        new IRunnable<String>() {
+                            public String run() {
                                 return String.valueOf(m_comboBox
                                         .getSelectedItem());
                             }
                         });
             } else {
                 final JList jlist = new JList(m_comboBox.getModel());
-                Object o = getEventThreadQueuer().invokeAndWait(
-                        "getText", new IRunnable() { //$NON-NLS-1$
-                            public Object run() {
+                String o = getEventThreadQueuer().invokeAndWait(
+                        "getText", new IRunnable<String>() { //$NON-NLS-1$
+                            public String run() {
                                 Component disp = m_comboBox.getRenderer()
                                     .getListCellRendererComponent(jlist,
                                         jlist.getModel().getElementAt(selIndex),
@@ -103,15 +103,12 @@ public class JComboBoxAdapter extends JComponentAdapter implements
      * {@inheritDoc}
      */
     public boolean isEditable() {
-        Boolean editable = (Boolean)getEventThreadQueuer().invokeAndWait("isEditable", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
-                    // see findBugs
-                    return m_comboBox.isEditable() 
-                            ? Boolean.TRUE : Boolean.FALSE;
-                }
-            });
-        return editable.booleanValue();
+        return getEventThreadQueuer().invokeAndWait("isEditable", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
+                        return m_comboBox.isEditable();
+                    }
+                });
     }
     
     /**
@@ -126,14 +123,13 @@ public class JComboBoxAdapter extends JComponentAdapter implements
      * {@inheritDoc}
      */
     public int getSelectedIndex() {
-        Integer actual = (Integer)getEventThreadQueuer()
-                .invokeAndWait(
-                    JComboBoxAdapter.class.getName() + ".getSelectedIndex", //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() {
-                            return new Integer(m_comboBox.getSelectedIndex());
-                        }
-                    });
+        Integer actual = getEventThreadQueuer().invokeAndWait(
+                JComboBoxAdapter.class.getName() + ".getSelectedIndex", //$NON-NLS-1$
+                new IRunnable<Integer>() {
+                    public Integer run() {
+                        return new Integer(m_comboBox.getSelectedIndex());
+                    }
+                });
         return actual.intValue();
     }
 
@@ -188,7 +184,7 @@ public class JComboBoxAdapter extends JComponentAdapter implements
      * @return the editor used to render and edit the selected item in the
      *         JComboBox field.
      * @throws StepExecutionException
-     *             if the editor comonent could not be found
+     *             if the editor component could not be found
      */
     private Component getComboBoxEditorComponent(JComboBox component)
         throws StepExecutionException {
@@ -297,15 +293,13 @@ public class JComboBoxAdapter extends JComponentAdapter implements
      * @return true, if the popup of the combobox is visible
      */
     private boolean isPopupVisible() {
-        Boolean visible = (Boolean)getEventThreadQueuer().invokeAndWait(
-            JComboBoxAdapter.class.getName()
-            + "isPopupVisible", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
-                    return m_comboBox.isPopupVisible()
-                        ? Boolean.TRUE : Boolean.FALSE;
-                }
-            });
-        return visible.booleanValue();
+        return getEventThreadQueuer().invokeAndWait(
+                JComboBoxAdapter.class.getName()
+                + "isPopupVisible", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return m_comboBox.isPopupVisible();
+                    }
+                });
     }
 
     /**
@@ -363,22 +357,19 @@ public class JComboBoxAdapter extends JComponentAdapter implements
      * {@inheritDoc}
      */
     public boolean hasFocus() {
-        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "hasFocus", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "hasFocus", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
                         if (m_comboBox.isEditable()) {
-                            boolean editorFocus  = m_comboBox.getEditor()
-                                .getEditorComponent().hasFocus();
+                            boolean editorFocus = m_comboBox.getEditor()
+                                    .getEditorComponent().hasFocus();
                             if (editorFocus) {
                                 return Boolean.TRUE;
                             }
-                        }                
-                        // see findBugs
-                        return m_comboBox.hasFocus() 
-                                ? Boolean.TRUE : Boolean.FALSE;
+                        }
+                        return m_comboBox.hasFocus();
                     }
                 });
-        return returnvalue.booleanValue();
     }
 
     /**

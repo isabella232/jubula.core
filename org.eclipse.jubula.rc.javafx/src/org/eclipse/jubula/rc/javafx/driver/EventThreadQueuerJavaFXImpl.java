@@ -139,12 +139,12 @@ public class EventThreadQueuerJavaFXImpl implements IEventThreadQueuer {
     }
     
     @Override
-    public Object invokeAndWait(String name, final IRunnable runnable) {
+    public <V> V invokeAndWait(String name, final IRunnable<V> runnable) {
 
-        return invokeAndWait(name, new Callable<Object>() {
+        return invokeAndWait(name, new Callable<V>() {
 
             @Override
-            public Object call() throws Exception {
+            public V call() throws Exception {
                 return runnable.run();
             }
         });

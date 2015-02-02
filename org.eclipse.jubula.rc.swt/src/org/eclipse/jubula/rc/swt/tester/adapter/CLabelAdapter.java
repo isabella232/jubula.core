@@ -32,10 +32,10 @@ public class CLabelAdapter extends ControlAdapter implements ITextComponent {
      */
     public String getText() {
         final CLabel label = (CLabel) getRealComponent();
-        return (String)getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return CAPUtil.getWidgetText(label, 
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
+                        return CAPUtil.getWidgetText(label,
                                 SwtUtils.removeMnemonics(label.getText()));
                     }
                 });

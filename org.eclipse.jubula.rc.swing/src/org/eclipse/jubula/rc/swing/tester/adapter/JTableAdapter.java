@@ -14,6 +14,7 @@ import java.awt.Component;
 import java.awt.Rectangle;
 
 import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -61,35 +62,33 @@ public class JTableAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public int getColumnCount() {
-        Integer returnvalue = (Integer) getEventThreadQueuer().invokeAndWait(
-                "getColumnCount", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return new Integer(m_table.getColumnCount());
+        return getEventThreadQueuer().invokeAndWait(
+                "getColumnCount", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
+                        return m_table.getColumnCount();
                     }
                 });
-        return returnvalue.intValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public int getRowCount() {
-        Integer returnvalue = (Integer) getEventThreadQueuer().invokeAndWait(
-                "getRowCount", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return new Integer(m_table.getRowCount());
+        return getEventThreadQueuer().invokeAndWait(
+                "getRowCount", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
+                        return m_table.getRowCount();
                     }
                 });
-        return returnvalue.intValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public String getCellText(final int row, final int column) {
-        Object o = getEventThreadQueuer().invokeAndWait("getCellText", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        String o = getEventThreadQueuer().invokeAndWait("getCellText", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
                         Object value = m_table.getValueAt(row, column);
                         boolean selected = m_table.isCellSelected(row,
                                 column);
@@ -107,32 +106,29 @@ public class JTableAdapter extends JComponentAdapter
                         return TesterUtil.getRenderedText(c);
                     }
                 });
-
-        String current = String.valueOf(o);
-        return current;
+        
+        return String.valueOf(o);
     }
     
     /**
      * {@inheritDoc}
      */
     public String getColumnHeaderText(final int column) {
-        String returnvalue = (String)getEventThreadQueuer().invokeAndWait(
-                "getColumnName", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait("getColumnName", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
                         return m_table.getColumnName(column);
                     }
                 });
-        return returnvalue;
     }
 
     /**
      * {@inheritDoc}
      */
     public int getColumnFromString(final String col, final String operator) {
-        Integer returnvalue = (Integer) getEventThreadQueuer().invokeAndWait(
-                "getColumnFromString", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getColumnFromString", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
                         int column = -2;
                         try {
                             int usrIdxCol = Integer.parseInt(col);
@@ -163,10 +159,9 @@ public class JTableAdapter extends JComponentAdapter
                             }
                         }
                         
-                        return new Integer(column);
+                        return column;
                     }
                 });
-        return returnvalue.intValue();
     }
 
     /**
@@ -181,9 +176,9 @@ public class JTableAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public int getRowFromString(final String row, final String operator) {
-        Integer returnvalue = (Integer) getEventThreadQueuer().invokeAndWait(
-                "getRowFromString", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getRowFromString", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
                         int rowInt = -2;        
                         try {
                             rowInt = IndexConverter.toImplementationIndex(
@@ -206,40 +201,33 @@ public class JTableAdapter extends JComponentAdapter
                                 }
                             }
                         }        
-                        return new Integer(rowInt);
+                        return rowInt;
                     }
                 });
-        return returnvalue.intValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public Rectangle getBounds() {
-        Rectangle returnvalue = (Rectangle) getEventThreadQueuer()
-                .invokeAndWait("getBounds", //$NON-NLS-1$
-                    new IRunnable() {                     
-                        public Object run() throws StepExecutionException {
-                            return m_table.getBounds();
-                        }
-                    });
-        
-        return returnvalue;
+        return getEventThreadQueuer().invokeAndWait("getBounds", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() throws StepExecutionException {
+                        return m_table.getBounds();
+                    }
+                });
     }
 
     /**
      * {@inheritDoc}
      */
     public Rectangle getHeaderBounds(final int col) {
-        Rectangle returnvalue = (Rectangle) getEventThreadQueuer()
-                .invokeAndWait("getHeaderBounds", //$NON-NLS-1$
-                    new IRunnable() {                     
-                        public Object run() throws StepExecutionException {
-                            return m_table.getTableHeader().getHeaderRect(col);
-                        }
-                    });
-        
-        return returnvalue;
+        return getEventThreadQueuer().invokeAndWait("getHeaderBounds", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() throws StepExecutionException {
+                        return m_table.getTableHeader().getHeaderRect(col);
+                    }
+                });
     }
 
     /**
@@ -247,9 +235,9 @@ public class JTableAdapter extends JComponentAdapter
      */
     public Cell getSelectedCell() throws StepExecutionException {
         
-        Cell returnvalue = (Cell) getEventThreadQueuer().invokeAndWait(
-                "getSelectedCell", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectedCell", new IRunnable<Cell>() { //$NON-NLS-1$
+                    public Cell run() {
                 
                         int row = m_table.getSelectedRow();
                         int col = m_table.getSelectedColumn();
@@ -265,7 +253,7 @@ public class JTableAdapter extends JComponentAdapter
                                             .getProps().get(TestErrorEvent
                                                     .Property
                                                     .DESCRIPTION_KEY)))) {
-                // set "invalid index" to "no selection" -> better description!
+                                // set "invalid index" to "no selection" -> better description!
                                 throw new StepExecutionException("No selection found", //$NON-NLS-1$
                                         EventFactory.createActionError(
                                                 TestErrorEvent.NO_SELECTION));
@@ -275,41 +263,35 @@ public class JTableAdapter extends JComponentAdapter
                         return new Cell(row, col);
                     }
                 });
-        return returnvalue;
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isHeaderVisible() {
-        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isHeaderVisible", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "isHeaderVisible", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
                         if (m_table.getTableHeader() != null) {
-                            return m_table.getTableHeader().isVisible()
-                                    ? Boolean.TRUE : Boolean.FALSE;
+                            return m_table.getTableHeader().isVisible();
                         }
                         return Boolean.FALSE;
                     }
                 });
-        return returnvalue.booleanValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isCellEditable(int row, int col) {
-        Boolean editable = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isCellEditable", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait("isCellEditable", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() {
                         Cell cell = getSelectedCell();
-                        // see findBugs
-                        return (m_table.isCellEditable(cell.getRow(),
-                                cell.getCol())) ? Boolean.TRUE : Boolean.FALSE;
+                        return m_table.isCellEditable(cell.getRow(),
+                                cell.getCol());
                     }
                 });
-        return editable.booleanValue();
     }
 
     /**
@@ -360,13 +342,11 @@ public class JTableAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public Rectangle scrollCellToVisible(final int row, final int col)
-        throws StepExecutionException {
-        Rectangle bounds = (Rectangle) getEventThreadQueuer().invokeAndWait(
-                "getCellRect", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() {
-                        return m_table
-                                .getCellRect(row, col, true);
+            throws StepExecutionException {
+        Rectangle bounds = getEventThreadQueuer().invokeAndWait("getCellRect", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() {
+                        return m_table.getCellRect(row, col, true);
                     }
                 });
 
@@ -386,13 +366,12 @@ public class JTableAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public Object getTableHeader() {
-        return getEventThreadQueuer()
-                .invokeAndWait("getHeaderBounds", //$NON-NLS-1$
-                    new IRunnable() {                     
-                        public Object run() throws StepExecutionException {
-                            return m_table.getTableHeader();
-                        }
-                    });
-        
+        return getEventThreadQueuer().invokeAndWait("getHeaderBounds", //$NON-NLS-1$
+                new IRunnable<JTableHeader>() {
+                    public JTableHeader run() throws StepExecutionException {
+                        return m_table.getTableHeader();
+                    }
+                });
+
     }
 }

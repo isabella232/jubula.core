@@ -106,15 +106,14 @@ public class ToolItemTester extends ButtonTester {
         EventLock lock = new EventLock();
         Condition cond = new MenuShownCondition();
         final Listener menuOpenListener = new EventListener(lock, cond);
-        int style = ((Integer) getEventThreadQueuer().invokeAndWait(
-                "getStyle", //$NON-NLS-1$
-                new IRunnable() {
+        int style = getEventThreadQueuer().invokeAndWait("getStyle", //$NON-NLS-1$
+                new IRunnable<Integer>() {
 
-                    public Object run() throws StepExecutionException {
-                        return new Integer(item.getStyle());
+                    public Integer run() throws StepExecutionException {
+                        return item.getStyle();
                     }
 
-                })).intValue();
+                });
 
         if ((style & SWT.DROP_DOWN) == 0) {
             // ToolItem is not DropDown style
@@ -126,11 +125,10 @@ public class ToolItemTester extends ButtonTester {
 
         // Add menuOpenListener
         getEventThreadQueuer().invokeAndWait("addMenuOpenListener", //$NON-NLS-1$
-                new IRunnable() {
+                new IRunnable<Void>() {
 
-                    public Object run() throws StepExecutionException {
-                        item.getDisplay()
-                                .addFilter(SWT.Show, menuOpenListener);
+                    public Void run() throws StepExecutionException {
+                        item.getDisplay().addFilter(SWT.Show, menuOpenListener);
                         return null;
                     }
 
@@ -163,17 +161,14 @@ public class ToolItemTester extends ButtonTester {
         } finally {
             // remove menuOpenListener
             getEventThreadQueuer().invokeAndWait("removeMenuOpenListener", //$NON-NLS-1$
-                    new IRunnable() {
+                    new IRunnable<Void>() {
 
-                        public Object run() throws StepExecutionException {
+                        public Void run() throws StepExecutionException {
                             item.getDisplay().removeFilter(SWT.Show,
                                     menuOpenListener);
-
                             return null;
                         }
-
                     });
-
         }
     }
     

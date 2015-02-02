@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.tester.adapter;
 
+import java.awt.Rectangle;
+
 import javax.swing.JTabbedPane;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -40,35 +42,46 @@ public class JTabbedPaneAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public int getTabCount() {
-        return ((Integer) getEventThreadQueuer().invokeAndWait(
-                "getTabCount", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return new Integer(m_pane.getTabCount());
+        return getEventThreadQueuer().invokeAndWait(
+                "getTabCount", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
+                        return m_pane.getTabCount();
                     }
-                })).intValue(); 
+                });
     }
     
     /**
      * {@inheritDoc}
      */
     public String getTitleofTab(final int index) {
-        return (String) getEventThreadQueuer().invokeAndWait(
-                "getTitleOfTab", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getTitleOfTab", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return m_pane.getTitleAt(index);
                     }
-                });        
+                });
     }
 
     /**
      * {@inheritDoc}
      */
     public Object getBoundsAt(final int index) {
-        
         return getEventThreadQueuer().invokeAndWait(
-                "getBoundsAt", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+                "getBoundsAt", new IRunnable<Rectangle>() { //$NON-NLS-1$
+                    public Rectangle run() {
                         return m_pane.getBoundsAt(index);
+                    }
+                });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isEnabledAt(final int index) {
+        return getEventThreadQueuer().invokeAndWait(
+                "isEnabledAt", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return m_pane.isEnabledAt(index);
                     }
                 }); 
     }
@@ -76,25 +89,12 @@ public class JTabbedPaneAdapter extends JComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public boolean isEnabledAt(final int index) {
-        return ((Boolean) getEventThreadQueuer().invokeAndWait(
-                "isEnabledAt", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return Boolean.valueOf(m_pane.isEnabledAt(index));
+    public int getSelectedIndex() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getSelectedIndex", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
+                        return m_pane.getSelectedIndex();
                     }
-                })).booleanValue(); 
+                });
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public int getSelectedIndex() {        
-        return ((Integer) getEventThreadQueuer().invokeAndWait(
-                "getSelectedIndex", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return new Integer(m_pane.getSelectedIndex());
-                    }
-                })).intValue();
-    }
-
 }

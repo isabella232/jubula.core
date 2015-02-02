@@ -246,18 +246,18 @@ public abstract class WindowActivationMethod {
      *            window
      */
     public void activate(final Window window) {
-        m_queuer.invokeAndWait("window activate", new IRunnable() { //$NON-NLS-1$
-            public Object run() throws StepExecutionException {
-                Point pos = new Point(Rounding.round(window.getX()),
-                        Rounding.round(window.getY()));
-                Point cp = getClickPoint(window);
-                m_robot.mouseMove(pos.x + cp.x, pos.y + cp.y);
-                m_robot.mousePress(ACTIVATE_BTN);
-                m_robot.mouseRelease(ACTIVATE_BTN);
-                RobotTiming.sleepPostWindowActivationDelay();
-                return null;
-            }
-        });
+        m_queuer.invokeAndWait("window activate", new IRunnable<Void>() { //$NON-NLS-1$
+                public Void run() throws StepExecutionException {
+                    Point pos = new Point(Rounding.round(window.getX()),
+                            Rounding.round(window.getY()));
+                    Point cp = getClickPoint(window);
+                    m_robot.mouseMove(pos.x + cp.x, pos.y + cp.y);
+                    m_robot.mousePress(ACTIVATE_BTN);
+                    m_robot.mouseRelease(ACTIVATE_BTN);
+                    RobotTiming.sleepPostWindowActivationDelay();
+                    return null;
+                }
+            });
     }
 
     /**

@@ -43,11 +43,11 @@ public class FindSWTComponentBP extends FindComponentBP {
         throws IllegalArgumentException {
         
         EventThreadQueuerSwtImpl etQueuer = new EventThreadQueuerSwtImpl();
-        return etQueuer.invokeAndWait(
-                this.getClass().getName() + ".findComponent", new IRunnable() { //$NON-NLS-1$
+        return etQueuer.invokeAndWait(this.getClass().getName()
+                + ".findComponent", new IRunnable<Object>() { //$NON-NLS-1$
                     public Object run() throws StepExecutionException {
-                        return findComponentImpl(componentIdentifier, 
-                            autHierarchy);
+                        return findComponentImpl(componentIdentifier,
+                                autHierarchy);
                     }
                 });
     }

@@ -64,14 +64,12 @@ public class MenuAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public IMenuItemComponent[] getItems() {
-        
-        MenuItem[] items =
-                (MenuItem[]) getEventThreadQueuer().invokeAndWait(
-                        "getItems", new IRunnable() { //$NON-NLS-1$
-                            public Object run() {
-                                return m_menu.getItems();
-                            }
-                        });
+        MenuItem[] items = getEventThreadQueuer().invokeAndWait(
+                "getItems", new IRunnable<MenuItem[]>() { //$NON-NLS-1$
+                    public MenuItem[] run() {
+                        return m_menu.getItems();
+                    }
+                });
         IMenuItemComponent[] adapters = new IMenuItemComponent[items.length];
         for (int i = 0; i < items.length; i++) {
             IMenuItemComponent menuItem = new MenuItemAdapter(items[i]);
@@ -79,16 +77,16 @@ public class MenuAdapter extends AbstractComponentAdapter
         }
         return adapters;
     }
+
     /**
      * {@inheritDoc}
      */
     public int getItemCount() {
-        Integer itemCount = (Integer) getEventThreadQueuer().invokeAndWait(
-                "getItemCount", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return new Integer(m_menu.getItemCount());
+        return getEventThreadQueuer().invokeAndWait(
+                "getItemCount", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() {
+                        return m_menu.getItemCount();
                     }
                 });
-        return itemCount.intValue();
     }
 }

@@ -181,8 +181,8 @@ public class ClickSwtEventMatcher extends DefaultSwtEventMatcher {
      */
     private boolean isOnBorder(final Widget graphicsComponent) {
         try {
-            Boolean isOnBorder = (Boolean)new EventThreadQueuerSwtImpl().invokeAndWait("CheckBorderFallbackMatching", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
+            return new EventThreadQueuerSwtImpl().invokeAndWait("CheckBorderFallbackMatching", new IRunnable<Boolean>() { //$NON-NLS-1$
+                public Boolean run() throws StepExecutionException {
                     int fuzz = 3;
                     Display d = graphicsComponent.getDisplay();
                     Rectangle widgetBounds = 
@@ -202,7 +202,6 @@ public class ClickSwtEventMatcher extends DefaultSwtEventMatcher {
                     return Boolean.FALSE;
                 }
             });
-            return isOnBorder.booleanValue();
         } catch (Throwable t) {
             // Since this method is a workaround, it would be unacceptable to
             // propagate any errors here. Instead, we'll log the problem and

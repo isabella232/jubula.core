@@ -35,12 +35,12 @@ public class EventThreadQueuerAwtImpl implements IEventThreadQueuer {
         new AutServerLogger(EventThreadQueuerAwtImpl.class);
 
     /** {@inheritDoc} */
-    public Object invokeAndWait(String name, IRunnable runnable)
+    public <V> V invokeAndWait(String name, IRunnable<V> runnable)
         throws StepExecutionException {
 
         Validate.notNull(runnable, "runnable must not be null"); //$NON-NLS-1$
         
-        RunnableWrapper wrapper = new RunnableWrapper(name, runnable);
+        RunnableWrapper<V> wrapper = new RunnableWrapper<V>(name, runnable);
         try {
             if (SwingUtilities.isEventDispatchThread()) {
                 wrapper.run();

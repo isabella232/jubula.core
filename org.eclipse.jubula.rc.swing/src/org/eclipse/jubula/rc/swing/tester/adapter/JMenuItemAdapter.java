@@ -84,44 +84,36 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public boolean isEnabled() {
-        Boolean actual = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isEnabled", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        // see findBugs
-                        return ((m_menuItem != null)
-                                && m_menuItem.isEnabled()) 
-                                ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return ((m_menuItem != null) && m_menuItem.isEnabled());
                     }
                 });
-
-        return actual.booleanValue();
     }
+    
     /**
      * {@inheritDoc}
      */
     public String getText() {
-        return (String) getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return m_menuItem.getText();
                     }
                 });
     }
+    
     /**
      * {@inheritDoc}
      */
     public boolean isShowing() {
-        Boolean actual = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isShowing", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        // see findBugs
-                        return ((m_menuItem != null)
-                                && m_menuItem.isShowing()) 
-                                ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isShowing", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return ((m_menuItem != null) && m_menuItem.isShowing());
                     }
                 });
-
-        return actual.booleanValue();
     }
     
     /**
@@ -133,20 +125,17 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
         }
         return false;
     }
+
     /**
      * {@inheritDoc}
      */
     public boolean isSelected() {
-        Boolean actual = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isSelected", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return ((m_menuItem != null)
-                                && m_menuItem.isSelected()) 
-                                ? Boolean.TRUE : Boolean.FALSE;
-                    }
-                });
-
-        return actual.booleanValue();
+        return getEventThreadQueuer().invokeAndWait(
+            "isSelected", new IRunnable<Boolean>() { //$NON-NLS-1$
+                public Boolean run() {
+                    return ((m_menuItem != null) && m_menuItem.isSelected());
+                }
+            });
     }
     
     /**

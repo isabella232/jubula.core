@@ -124,26 +124,24 @@ public class SimulatedTooltip extends Thread {
                 + ": managing started"); //$NON-NLS-1$
         final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
         
-        queuer.invokeAndWait("openSimulatedTooltipShell", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
+        queuer.invokeAndWait("openSimulatedTooltipShell", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() {
                 log.debug(Thread.currentThread().toString()
                         + ": popup started"); //$NON-NLS-1$
                 openShell();
-                
                 return null;
             }
         });
 
         TimeUtil.delay(m_timeout);
 
-        queuer.invokeAndWait("disposeSimulatedTooltipShell", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
+        queuer.invokeAndWait("disposeSimulatedTooltipShell", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() {
                 if (m_dialog != null && !m_dialog.isDisposed()) {
                     m_dialog.dispose();
                     log.debug(Thread.currentThread().toString()
                             + ": popup stopped"); //$NON-NLS-1$
                 }
-                
                 return null;
             }
         });

@@ -21,17 +21,19 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
  * 
  * @author BREDEX GmbH
  * @created 07.04.2005
+ * 
+ * @param <V> the result type of embedded runnable method <tt>run</tt>
  */
-public class RunnableWrapper implements Runnable {
+public class RunnableWrapper<V> implements Runnable {
     /** a name describing this instance, for logging purpose */
     private String m_name;
     /**
      * The runnable.
      */
-    private IRunnable m_target;
+    private IRunnable<V> m_target;
 
     /** the returned object from run() */
-    private Object m_result;
+    private V m_result;
 
     /** the exception thrown by run() */
     private StepExecutionException m_exception;
@@ -43,7 +45,7 @@ public class RunnableWrapper implements Runnable {
      * @param target
      *            The runnable which will be executed by this wrapper.
      */
-    public RunnableWrapper(String name, IRunnable target) {
+    public RunnableWrapper(String name, IRunnable<V> target) {
         m_name = name;
         m_target = target;
     }
@@ -56,7 +58,7 @@ public class RunnableWrapper implements Runnable {
     /**
      * @return Returns the result from run(), may be <code>null</code>.
      */
-    public Object getResult() {
+    public V getResult() {
         return m_result;
     }
     /**

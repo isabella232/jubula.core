@@ -52,7 +52,8 @@ public class JMenuAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public IMenuItemComponent[] getItems() {
-        List adapters = new LinkedList();
+        List<IMenuItemComponent> adapters = 
+                new LinkedList<IMenuItemComponent>();
         
         for (int i = 0; i < m_menu.getItemCount(); i++) {
             JMenuItem getted = m_menu.getItem(i);

@@ -114,9 +114,9 @@ public class SwtUtils {
      */
     public static Widget invokeGetWidgetAtCursorLocation() {
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        Widget widget = (Widget)evThreadQueuer.invokeAndWait("getWidgetAtCursorLocation", //$NON-NLS-1$
-            new IRunnable() { 
-                public Object run() throws StepExecutionException {
+        Widget widget = evThreadQueuer.invokeAndWait("getWidgetAtCursorLocation", //$NON-NLS-1$
+            new IRunnable<Widget>() { 
+                public Widget run() throws StepExecutionException {
                     return getWidgetAtCursorLocation();
                 }
             });
@@ -128,17 +128,17 @@ public class SwtUtils {
      */
     public static  Control getCursorControl() {
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        return (Control) evThreadQueuer.invokeAndWait("getCursorControl", //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() {
-                    Display disp = Display.getCurrent();
-                    if (disp == null || disp.isDisposed()) {
-                        return null;
+        return evThreadQueuer.invokeAndWait("getCursorControl", //$NON-NLS-1$
+                new IRunnable<Control>() {
+                    public Control run() {
+                        Display disp = Display.getCurrent();
+                        if (disp == null || disp.isDisposed()) {
+                            return null;
+                        }
+
+                        return disp.getCursorControl();
                     }
-                    
-                    return disp.getCursorControl();
-                }
-            });
+                });
     }
 
     /**
@@ -245,10 +245,10 @@ public class SwtUtils {
      */
     public static Control checkControlParent(final Control control) {
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        return (Control)evThreadQueuer.invokeAndWait("checkControlParent",  //$NON-NLS-1$
-            new IRunnable() {
+        return evThreadQueuer.invokeAndWait("checkControlParent",  //$NON-NLS-1$
+            new IRunnable<Control>() {
 
-                public Object run() throws StepExecutionException {
+                public Control run() throws StepExecutionException {
                     if (control != null && !control.isDisposed()) {
                         Control parent = control.getParent();
                         if (parent instanceof CCombo 
@@ -271,9 +271,9 @@ public class SwtUtils {
      */
     public static Widget getWidgetParent(final Widget widget) {
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        Widget parent = (Widget)evThreadQueuer.invokeAndWait("getWidgetParent", //$NON-NLS-1$
-            new IRunnable() { 
-                public Object run() throws StepExecutionException {
+        Widget parent = evThreadQueuer.invokeAndWait("getWidgetParent", //$NON-NLS-1$
+            new IRunnable<Widget>() { 
+                public Widget run() throws StepExecutionException {
                     if (widget == null || widget.isDisposed()) {
                         return null;
                     }
@@ -431,17 +431,16 @@ public class SwtUtils {
         final boolean recurse) { 
         
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        Widget [] widgets = (Widget[])evThreadQueuer.invokeAndWait("getWidgetChildren", //$NON-NLS-1$
-            new IRunnable() { 
-                public Object run() throws StepExecutionException {
-                    if (widget == null || widget.isDisposed()) {
-                        return new Widget [] {};
-                    }
+        Widget[] widgets = evThreadQueuer.invokeAndWait("getWidgetChildren", //$NON-NLS-1$
+                new IRunnable<Widget[]>() {
+                    public Widget[] run() throws StepExecutionException {
+                        if (widget == null || widget.isDisposed()) {
+                            return new Widget[] {};
+                        }
 
-                    return getWidgetChildrenImpl(widget, 
-                        recurse);
-                }
-            });
+                        return getWidgetChildrenImpl(widget, recurse);
+                    }
+                });
         return widgets;
     }
 
@@ -1160,13 +1159,12 @@ public class SwtUtils {
      */
     public static String toString(final Widget widget) {
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        String widgetToStr = (String)evThreadQueuer.invokeAndWait("toString",  //$NON-NLS-1$
-            new IRunnable() {
-                public Object run() throws StepExecutionException {
-                    return String.valueOf(widget);
-                }
-            });
-        return widgetToStr;
+        return evThreadQueuer.invokeAndWait("toString", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() throws StepExecutionException {
+                        return String.valueOf(widget);
+                    }
+                });
     }
 
     /**
@@ -1184,21 +1182,17 @@ public class SwtUtils {
      * given widget
      * 
      * @param widget the widget to check the mouse position for
-     * @return true if mouse curser is inside the bounds, false otherwise.
+     * @return true if mouse cursor is inside the bounds, false otherwise.
      */
     public static boolean isMouseCursorInWidget(final Widget widget) {
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        boolean isInComponent = ((Boolean)evThreadQueuer.invokeAndWait(
-                "isInComponent", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+        return evThreadQueuer.invokeAndWait("isInComponent", //$NON-NLS-1$
+                new IRunnable<Boolean>() {
+                    public Boolean run() throws StepExecutionException {
                         return SwtUtils.getWidgetBounds(widget).contains(
-                                widget.getDisplay().getCursorLocation()) 
-                                ? Boolean.TRUE : Boolean.FALSE;
+                                widget.getDisplay().getCursorLocation());
                     }
-
-                })).booleanValue();
-        return isInComponent; 
+                });
     }
     
     /**
@@ -1215,21 +1209,20 @@ public class SwtUtils {
         final Widget eventWidget) {
         
         IEventThreadQueuer evThreadQueuer = new EventThreadQueuerSwtImpl();
-        return ((Boolean)evThreadQueuer.invokeAndWait("getWidgetChildren", //$NON-NLS-1$
-                new IRunnable() { 
+        return evThreadQueuer.invokeAndWait("getWidgetChildren", //$NON-NLS-1$
+                new IRunnable<Boolean>() { 
             
-                public Object run() throws StepExecutionException {
+                public Boolean run() throws StepExecutionException {
                     if (boundsWidget == null || boundsWidget.isDisposed()
                         || eventWidget == null || eventWidget.isDisposed()) {
-
                         return Boolean.FALSE;
                     }
                     Rectangle widgetBounds = getWidgetBounds(boundsWidget);
                     boolean isInBounds =  widgetBounds.equals(
                         widgetBounds.union(getWidgetBounds(eventWidget)));
-                    return isInBounds ? Boolean.TRUE : Boolean.FALSE;
+                    return isInBounds;
                 }
-            })).booleanValue();
+            });
     }
     
     /**

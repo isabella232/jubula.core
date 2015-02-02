@@ -907,8 +907,8 @@ public class RobotJavaFXImpl implements IRobot {
      */
     private void ensureComponentVisible(final Node component)
         throws RobotException {
-        m_queuer.invokeAndWait("ensureVisible", new IRunnable() { //$NON-NLS-1$
-            public Object run() {
+        m_queuer.invokeAndWait("ensureVisible", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() {
                 Scroller scroller = new Scroller(component);
                 scroller.scrollToVisible();
                 return null;
@@ -939,10 +939,9 @@ public class RobotJavaFXImpl implements IRobot {
             wam.activate(window);
 
             // Verify that window was successfully activated
-            Window activeWindow = (Window) m_queuer.invokeAndWait(
-                    "getActiveWindow", //$NON-NLS-1$
-                    new IRunnable() {
-                        public Object run() throws StepExecutionException {
+            Window activeWindow = m_queuer.invokeAndWait("getActiveWindow", //$NON-NLS-1$
+                    new IRunnable<Window>() {
+                        public Window run() throws StepExecutionException {
 
                             if (window.isFocused()) {
                                 return window;
@@ -978,9 +977,9 @@ public class RobotJavaFXImpl implements IRobot {
      * @return the active window
      */
     private Window getActiveWindow() {
-        return (Window) m_queuer.invokeAndWait("getActiveWindow", //$NON-NLS-1$
-                new IRunnable() {
-                    public Object run() throws StepExecutionException {
+        return m_queuer.invokeAndWait("getActiveWindow", //$NON-NLS-1$
+                new IRunnable<Window>() {
+                    public Window run() throws StepExecutionException {
                         Window w = CurrentStages.getfocusStage();
                         if (w == null) {
                             w = CurrentStages.getfirstStage();

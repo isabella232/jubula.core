@@ -66,16 +66,14 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
         //            is that if there is any white space, only part of the
         //            text is selected.
         getEventThreadQueuer().invokeAndWait("selectAll",  //$NON-NLS-1$
-            new IRunnable() {
+            new IRunnable<Void>() {
 
-                public Object run() throws StepExecutionException {
+                public Void run() throws StepExecutionException {
                     m_combobox.setSelection(
                             new Point(0, m_combobox.getText().length()));
-                    
                     // return value is not used
                     return null;
                 }
-            
             });
     }
 
@@ -83,45 +81,40 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
      * {@inheritDoc}
      */
     public int getSelectedIndex() {    
-        int selectedIndex = ((Integer)getEventThreadQueuer().invokeAndWait(
+        return getEventThreadQueuer().invokeAndWait(
                 CComboAdapter.class.getName()
-                + "getSelectedIndex", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return new Integer(m_combobox.getSelectionIndex());
+                + "getSelectedIndex", new IRunnable<Integer>() { //$NON-NLS-1$
+                    public Integer run() throws StepExecutionException {
+                        return m_combobox.getSelectionIndex();
                     }
-                })).intValue();
-
-        return selectedIndex;
+                });
     }
 
     /**
      * {@inheritDoc}
      */
     public String getText() {
-        Object o = getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return CAPUtil.getWidgetText(
-                                m_combobox, m_combobox.getText());
+        String o = getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
+                        return CAPUtil.getWidgetText(m_combobox,
+                                m_combobox.getText());
                     }
                 });
-        return o != null ? o.toString() : null;
+        return String.valueOf(o);
     }
 
     /**
      * {@inheritDoc}
      */
     protected boolean isComboEnabled() {        
-        boolean isEnabled = ((Boolean)getEventThreadQueuer().invokeAndWait(
+        return getEventThreadQueuer().invokeAndWait(
                 CComboAdapter.class.getName()
-                + "isComboEnabled", new IRunnable() { //$NON-NLS-1$
-                    public Object run() throws StepExecutionException {
-                        return m_combobox.isEnabled() 
-                                ? Boolean.TRUE : Boolean.FALSE;
+                + "isComboEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() throws StepExecutionException {
+                        return m_combobox.isEnabled();
                     }
-                })).booleanValue();
-
-        return isEnabled;
+                });
     }
 
     /**
@@ -131,11 +124,11 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
         scrollIndexToVisible(index);
         
         Rectangle clickConstraints = 
-            (Rectangle)getEventThreadQueuer().invokeAndWait(
+            getEventThreadQueuer().invokeAndWait(
                 "setClickConstraints",  //$NON-NLS-1$
-                new IRunnable() {
+                new IRunnable<Rectangle>() {
 
-                    public Object run() throws StepExecutionException {
+                    public Rectangle run() throws StepExecutionException {
                         Rectangle constraints = 
                             SwtUtils.getRelativeWidgetBounds(
                                     getDropdownList(), getDropdownList());
@@ -195,17 +188,12 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
      * @return  the number of items.
      */
     protected int getItemCount() {
-        return ((Integer)getEventThreadQueuer().invokeAndWait(
-                "getItemCount", //$NON-NLS-1$
-                new IRunnable() {
-                    
-                    public Object run() {
-                    
-                        return new Integer(m_combobox.getItemCount()); 
+        return getEventThreadQueuer().invokeAndWait("getItemCount", //$NON-NLS-1$
+                new IRunnable<Integer>() {
+                    public Integer run() {
+                        return m_combobox.getItemCount();
                     }
-                    
-                })).intValue();
-
+                });
     }
     
     /**
@@ -216,11 +204,11 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
     protected List getDropdownList()
         throws StepExecutionException {
         
-        return (List)getEventThreadQueuer().invokeAndWait(
+        return getEventThreadQueuer().invokeAndWait(
             "getDropdownList",  //$NON-NLS-1$
-            new IRunnable() {
+            new IRunnable<List>() {
 
-                public Object run() throws StepExecutionException {
+                public List run() throws StepExecutionException {
             
                     Shell mainShell = SwtUtils.getShell(m_combobox);
                     Display d = Display.getCurrent();
@@ -278,18 +266,13 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
      * @param index The index to make visible
      */
     private void scrollIndexToVisible(final int index) {
-        getEventThreadQueuer().invokeAndWait(
-            "scrollIndexToVisible",  //$NON-NLS-1$
-            new IRunnable() {
-
-                public Object run() throws StepExecutionException {
-           
-                    getDropdownList().setTopIndex(index);
-
-                    return null;
-                }
-            
-            });
+        getEventThreadQueuer().invokeAndWait("scrollIndexToVisible", //$NON-NLS-1$
+                new IRunnable<Void>() {
+                    public Void run() throws StepExecutionException {
+                        getDropdownList().setTopIndex(index);
+                        return null;
+                    }
+                });
     }
     
     /**
@@ -298,11 +281,11 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
      *          the list is not showing.
      */
     private int getDisplayedItemCount() {
-        return ((Integer)getEventThreadQueuer().invokeAndWait(
+        return getEventThreadQueuer().invokeAndWait(
                 "getDisplayedItemCount",  //$NON-NLS-1$
-                new IRunnable() {
+                new IRunnable<Integer>() {
 
-                public Object run() throws StepExecutionException {
+                public Integer run() throws StepExecutionException {
                     List dropdown = getDropdownList();
                     if (dropdown == null) {
                         return new Integer(0);
@@ -310,38 +293,34 @@ public class CComboAdapter extends AbstractComboBoxAdapter {
                     int listHeight = SwtUtils.getWidgetBounds(dropdown).height;
                     int itemHeight = dropdown.getItemHeight();
                     
-                    return new Integer(listHeight / itemHeight);
+                    return listHeight / itemHeight;
                 }
             
-            })).intValue();
+            });
     }
     
     /**
      * @return true, if the dropdown of the combobox is visible
      */
     protected boolean isDropdownVisible() {
-        Boolean visible = (Boolean)getEventThreadQueuer().invokeAndWait(
+        return getEventThreadQueuer().invokeAndWait(
             CComboAdapter.class.getName()
-            + "isDropdownVisible", new IRunnable() { //$NON-NLS-1$
-                public Object run() throws StepExecutionException {
-                    List dropdownList = getDropdownList();
-                    return dropdownList != null
-                        ? Boolean.TRUE : Boolean.FALSE;
+            + "isDropdownVisible", new IRunnable<Boolean>() { //$NON-NLS-1$
+                public Boolean run() throws StepExecutionException {
+                    return getDropdownList() != null;
                 }
             });
-        return visible.booleanValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public String[] getValues() {
-        return (String[])getEventThreadQueuer().invokeAndWait(
-                "getItems", //$NON-NLS-1$
-                new IRunnable() {                        
-                    public Object run() {                        
-                        return m_combobox.getItems(); 
-                    }                        
+        return getEventThreadQueuer().invokeAndWait("getItems", //$NON-NLS-1$
+                new IRunnable<String[]>() {
+                    public String[] run() {
+                        return m_combobox.getItems();
+                    }
                 });
     }
 }

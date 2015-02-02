@@ -43,9 +43,9 @@ public class AbstractButtonAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public String getText() {
-        return (String) getEventThreadQueuer().invokeAndWait(
-                "getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        return getEventThreadQueuer().invokeAndWait(
+                "getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return getAbstractButton().getText();
                     }
                 });
@@ -55,27 +55,23 @@ public class AbstractButtonAdapter extends JComponentAdapter
      * {@inheritDoc}
      */
     public boolean isEnabled() {
-        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isEnabled", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return getAbstractButton().getModel().isEnabled()
-                                ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isEnabled", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return getAbstractButton().getModel().isEnabled();
                     }
                 });
-        return returnvalue.booleanValue();
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isSelected() {
-        Boolean returnvalue = (Boolean) getEventThreadQueuer().invokeAndWait(
-                "isSelected", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
-                        return getAbstractButton().getModel().isSelected()
-                                ? Boolean.TRUE : Boolean.FALSE;
+        return getEventThreadQueuer().invokeAndWait(
+                "isSelected", new IRunnable<Boolean>() { //$NON-NLS-1$
+                    public Boolean run() {
+                        return getAbstractButton().getModel().isSelected();
                     }
                 });
-        return returnvalue.booleanValue();
     }
 }
