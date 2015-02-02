@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.ui.rcp.search.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.search.query.Operation;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -67,6 +69,9 @@ public class SearchOptions {
     /** True, if searching in reused project is allowed, otherwise false. */
     private boolean m_isSearchingInReusedProjects;
 
+    /** the project scope to search in */
+    private IProjectPO m_project;
+
     /**
      * Constructor. Default search operation is MATCH_CASE.
      * @param searchNameNLS A human readable search name for NLS.
@@ -93,6 +98,7 @@ public class SearchOptions {
      * @param searchData The search data copying from.
      */
     public SearchOptions(SearchOptions searchData) {
+        setProject(GeneralStorage.getInstance().getProject());
         m_searchNameNLS = searchData.m_searchNameNLS;
         m_searchableTypes = searchData.m_searchableTypes;
         m_searchableFieldNames = searchData.getSearchableFieldNames();
@@ -262,5 +268,19 @@ public class SearchOptions {
      */
     public FieldName[] getSearchableFieldNames() {
         return m_searchableFieldNames;
+    }
+
+    /**
+     * @return the project
+     */
+    public IProjectPO getProject() {
+        return m_project;
+    }
+
+    /**
+     * @param project the project to set
+     */
+    private void setProject(IProjectPO project) {
+        m_project = project;
     }
 }

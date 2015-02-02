@@ -57,7 +57,9 @@ public abstract class AbstractTraverserQuery
      * is called on every visited node.
      */
     protected void traverse() {
-        if (getSearchOptions().hasNodesToBeSelected()) {
+        boolean searchInCurrentSelection = getSearchOptions()
+                .hasNodesToBeSelected();
+        if (searchInCurrentSelection) {
             // search in Test Suite Browser
             if (getSearchOptions().isSearchingInTestSuiteBrowser()) {
                 traverseStructuredSelection(
@@ -71,8 +73,9 @@ public abstract class AbstractTraverserQuery
         } else {
             IProjectPO activeProject = GeneralStorage.getInstance()
                     .getProject();
-            traversePersistentObject(activeProject.getExecObjCont()); // TSB
-            traversePersistentObject(activeProject.getSpecObjCont()); // TCB
+            TreeTraverser tt = new TreeTraverser(
+                    activeProject, this, true, true);
+            tt.traverse(true);
         }
     }
 
@@ -143,11 +146,11 @@ public abstract class AbstractTraverserQuery
     }
 
     /**
-     * @param node The node starting the {@link TreeTraverser}.
+     * @param node
+     *            The node starting the {@link TreeTraverser}.
      */
     private void traverseNodePO(INodePO node) {
-        TreeTraverser tt = new TreeTraverser(
-                node, this);
+        TreeTraverser tt = new TreeTraverser(node, this);
         tt.traverse(true);
     }
 
@@ -176,8 +179,8 @@ public abstract class AbstractTraverserQuery
                 // parent == null, if node is root of search
                 || parent == null
                 // parent and node have to be in the same project
-                || parent.getParentProjectId()
-                        .equals(node.getParentProjectId())
+                || node.getParentProjectId()
+                        .equals(getSearchOptions().getProject().getId())
             ) {
             IProgressMonitor monitor = getMonitor();
             monitor.worked(1);
