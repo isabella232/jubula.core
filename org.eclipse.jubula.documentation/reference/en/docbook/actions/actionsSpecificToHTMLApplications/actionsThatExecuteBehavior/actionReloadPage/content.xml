@@ -12,5 +12,22 @@
   <?dbhtml dir="actionReloadPage"?>
   <title>Reload page</title>
   
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to go reload the current page in the browser.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use this action instead of actually clicking the refresh button in the AUT .
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
   
+  <para>
+    This action has no parameters.
+  </para>
 </section>

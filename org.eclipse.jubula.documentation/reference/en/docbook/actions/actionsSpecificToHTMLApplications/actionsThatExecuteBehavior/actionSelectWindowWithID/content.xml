@@ -12,5 +12,11 @@
   <?dbhtml dir="actionSelectWindowWithID"?>
   <title>Select Window with Identifier</title>
   
+  <para>
+    Use this action to switch to a new window that your HTML AUT has opened during the test, or to switch back to the main window once you have performed steps in a second window. In order to allow this, you must have specified the AUT as supporting multi-window mode in the AUT configuration.
+  </para>
   
+  <para>
+    This action allows you to use the window title or other identifiers to select the window.
+  </para>
 </section>

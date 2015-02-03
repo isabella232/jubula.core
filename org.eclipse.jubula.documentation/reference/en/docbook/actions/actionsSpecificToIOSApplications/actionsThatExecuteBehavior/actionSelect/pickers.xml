@@ -13,11 +13,38 @@
   
   <para><emphasis>Select Entry from Column by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select an item from the picker using its index as a parameter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Items that are grey in the picker cannot be selected. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Some pickers do not have a finite amount of items – they scroll infinitely. We strongly advise against using index-based selection on such pickers.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Select Entry from Column by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select an item from the picker using its value as a parameter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Items that are grey in the picker cannot be selected. 
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

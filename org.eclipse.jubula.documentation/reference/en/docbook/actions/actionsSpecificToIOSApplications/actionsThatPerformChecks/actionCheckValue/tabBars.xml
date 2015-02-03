@@ -13,6 +13,18 @@
   
   <para><emphasis>Check Badge Value by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the text on a badge based on the index of that badge within a tab bar. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the index of the badge within the tab bar that you want to check and
+          the text you expect the badge to have.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

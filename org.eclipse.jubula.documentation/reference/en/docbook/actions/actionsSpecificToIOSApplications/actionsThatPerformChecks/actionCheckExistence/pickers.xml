@@ -13,6 +13,17 @@
   
   <para><emphasis>Check Existence of Entry in Column by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether a value you enter is contained in the picker in the specified column.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Items that are grey in the picker cannot be checked.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

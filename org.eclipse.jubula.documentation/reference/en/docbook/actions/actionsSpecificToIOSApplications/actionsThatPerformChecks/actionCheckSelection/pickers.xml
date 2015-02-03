@@ -13,6 +13,17 @@
   
   <para><emphasis>Check Selection of Entry in Column by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to test whether the item at the given index is currently selected in the picker.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Some pickers do not have a finite amount of items – they scroll infinitely. We strongly advise against using index-based checking on such pickers.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

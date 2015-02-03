@@ -11,6 +11,26 @@
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="actionGoBack"?>
   <title>Go Back</title>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to go back one page in the browser. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Use this action instead of actually clicking the back button in the AUT . 
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
   
+  <para role="warning">
+    This action does not work in Internet Explorer.
+  </para>
   
+  <para>
+    This action has no parameters.
+  </para>
 </section>

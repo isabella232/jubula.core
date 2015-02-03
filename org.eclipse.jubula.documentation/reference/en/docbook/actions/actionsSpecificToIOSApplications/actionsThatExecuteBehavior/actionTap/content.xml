@@ -14,6 +14,17 @@
   
   <para><emphasis>Tap View with Accessibility Label</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+  <itemizedlist>
+    <listitem>
+      <para>
+        Use this action to tap a component based on its accessibility label instead of mapping the component.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can use this to tap components that you cannot map, for example.
+      </para>
+    </listitem>
+  </itemizedlist>  
   </para>
 </section>
