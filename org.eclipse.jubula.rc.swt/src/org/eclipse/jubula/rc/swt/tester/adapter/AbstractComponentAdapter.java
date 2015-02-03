@@ -8,6 +8,7 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
+import org.eclipse.swt.graphics.Rectangle;
 /**
  * @author BREDEX GmBH
  */
@@ -39,7 +40,7 @@ public abstract class AbstractComponentAdapter implements IComponent {
      * @return The Robot
      * @throws RobotException If the Robot cannot be created.
      */
-    protected IRobot getRobot() throws RobotException {
+    protected IRobot<Rectangle> getRobot() throws RobotException {
         return AUTServer.getInstance().getRobot();
     }
     

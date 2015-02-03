@@ -13,7 +13,7 @@ package org.eclipse.jubula.rc.common.tester;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 
 /**
- * This class represents the general implmentation for components,
+ * This class represents the general implementation for components,
  *  which have text input support.
  * 
  * @author BREDEX GmbH

@@ -85,15 +85,13 @@ import org.eclipse.swt.widgets.Widget;
  * 
  * <p>
  * The <code>click()</code> and <code>move()</code> implementations expect
- * that the graphics component is of type {@link java.awt.Component}and the
- * constraints object is <code>null</code> or of type
- * {@link java.awt.Rectangle}.
+ * that the graphics component is of type {@link java.awt.Component}.
  * </p>
  * 
  * @author BREDEX GmbH
  * @created 17.03.2005
  */
-public class RobotSwtImpl implements IRobot {
+public class RobotSwtImpl implements IRobot<Rectangle> {
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
         RobotSwtImpl.class);
@@ -698,7 +696,7 @@ public class RobotSwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void click(Object graphicsComponent, Object constraints)
+    public void click(Object graphicsComponent, Rectangle constraints)
         throws RobotException {
         
         click(graphicsComponent, constraints, ClickOptions.create());
@@ -708,7 +706,7 @@ public class RobotSwtImpl implements IRobot {
      * {@inheritDoc}
      *      java.lang.Object, org.eclipse.jubula.rc.swt.robot.ClickOptions)
      */
-    public void click(Object graphicsComponent, Object constraints,
+    public void click(Object graphicsComponent, Rectangle constraints,
         ClickOptions clickOptions) throws RobotException {
         
         clickImpl(graphicsComponent, constraints, clickOptions);
@@ -717,8 +715,9 @@ public class RobotSwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void move(final Object graphicsComponent, final Object constraints)
-        throws RobotException {
+    public void move(final Object graphicsComponent, 
+            final Rectangle constraints)
+            throws RobotException {
 
         moveToCenter(graphicsComponent);
     }
@@ -1071,7 +1070,7 @@ public class RobotSwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void scrollToVisible(Object graphicsComponent, Object constraints)
+    public void scrollToVisible(Object graphicsComponent, Rectangle constraints)
         throws RobotException {
         
         if (graphicsComponent instanceof Control) {
@@ -1517,8 +1516,8 @@ public class RobotSwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void mousePress(final Object graphicsComponent, Object constraints,
-            final int button) throws RobotException {
+    public void mousePress(final Object graphicsComponent, 
+            Rectangle constraints, final int button) throws RobotException {
         if (graphicsComponent != null) {
             move(graphicsComponent, constraints);
         }
@@ -1533,8 +1532,8 @@ public class RobotSwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void mouseRelease(final Object graphicsComponent, Object constraints,
-            final int button) throws RobotException {
+    public void mouseRelease(final Object graphicsComponent,
+            Rectangle constraints, final int button) throws RobotException {
 
         if (graphicsComponent != null) {
             move(graphicsComponent, constraints);
@@ -1639,7 +1638,7 @@ public class RobotSwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void click(Object graphicsComponent, Object constraints,
+    public void click(Object graphicsComponent, Rectangle constraints,
             ClickOptions clickOptions, int xPos, boolean xAbsolute,
             int yPos, boolean yAbsolute) throws RobotException {
 

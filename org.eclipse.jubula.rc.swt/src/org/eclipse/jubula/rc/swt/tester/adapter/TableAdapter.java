@@ -23,6 +23,7 @@ import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.TableTester;
+import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -293,25 +294,24 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                 });
         
         checkRowColBounds(row, col);
-        final Rectangle cellBoundsRelativeToParent = TableTester.getCellBounds(
-                getEventThreadQueuer(), m_table, row, col);
-            
+        final org.eclipse.swt.graphics.Rectangle cBoundsRelToParent = 
+                SwtPointUtil.toSwtRectangle(TableTester.getCellBounds(
+                        getEventThreadQueuer(), m_table, row, col));
+
         getEventThreadQueuer().invokeAndWait("getCellBoundsRelativeToParent", //$NON-NLS-1$
-            new IRunnable<Void>() {
-                public Void run() {
-                    org.eclipse.swt.graphics.Point cellOriginRelativeToParent = 
-                        table.getDisplay().map(
-                                table, table.getParent(), 
-                                new org.eclipse.swt.graphics.Point(
-                                        cellBoundsRelativeToParent.x, 
-                                        cellBoundsRelativeToParent.y));
-                    cellBoundsRelativeToParent.x = 
-                        cellOriginRelativeToParent.x;
-                    cellBoundsRelativeToParent.y = 
-                        cellOriginRelativeToParent.y;
-                    return null;
-                }
-            });
+                new IRunnable<Void>() {
+                    public Void run() {
+                        org.eclipse.swt.graphics.Point cOriginRelToParent = 
+                                table.getDisplay().map(table,
+                                        table.getParent(),
+                                        new org.eclipse.swt.graphics.Point(
+                                                cBoundsRelToParent.x,
+                                                cBoundsRelToParent.y));
+                        cBoundsRelToParent.x = cOriginRelToParent.x;
+                        cBoundsRelToParent.y = cOriginRelToParent.y;
+                        return null;
+                    }
+                });
 
         Control parent = getEventThreadQueuer().invokeAndWait("getParent", //$NON-NLS-1$
                 new IRunnable<Control>() {
@@ -320,7 +320,7 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
                     }
                 });
             
-        getRobot().scrollToVisible(parent, cellBoundsRelativeToParent);
+        getRobot().scrollToVisible(parent, cBoundsRelToParent);
         
         return getVisibleBounds(TableTester.getCellBounds(
                 getEventThreadQueuer(), m_table, row, col));
@@ -446,9 +446,8 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
         org.eclipse.swt.graphics.Rectangle swtRect = 
                 new org.eclipse.swt.graphics.Rectangle(rect.x, rect.y, 
                         rect.width, rect.height);
-        getRobot().click(m_table, 
-            swtRect,
-            ClickOptions.create().setClickCount(1));
+        getRobot().click(m_table, swtRect,
+                ClickOptions.create().setClickCount(1));
 
         
         return SwtUtils.getCursorControl();

@@ -21,19 +21,22 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
  * This interface represents a Robot which performs mouse clicks, mouse moves
  * and keyboard inputs. <br>
  * The interface might be implemented by using Graphics-API specific Robot
- * implementations. When <code>IRobot</code> is used to control a
- * AWT/Swing application, the implementing Robot class delegates to
- * {@link java.awt.Robot}.<br>
+ * implementations. When <code>IRobot</code> is used to control a AWT/Swing
+ * application, the implementing Robot class delegates to {@link java.awt.Robot}
+ * .<br>
  * It is important to know that the Robot intercepts the mouse clicks and moves
  * by examining the Graphics API specific event queue. The robot stops the
  * current thread until the expected event has been posted into the event queue
  * or until a timeout occurs. <br>
- * See {@link org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig}to learn more
- * about the robot programming model.
+ * See {@link org.eclipse.jubula.rc.swing.driver.RobotFactoryConfig} to learn
+ * more about the robot programming model.
+ * 
  * @author BREDEX GmbH
  * @created 17.03.2005
+ * @param <CONSTRAINT_TYPE>
+ *            the type of constraints
  */
-public interface IRobot {
+public interface IRobot <CONSTRAINT_TYPE> {
 
     /**
      * Clicks with the given click count and the given button at the current 
@@ -62,7 +65,7 @@ public interface IRobot {
      *                    coordinate system. May be <code>null</code>.
      * @throws RobotException If the mouse click fails
      */
-    public void click(Object graphicsComponent, Object constraints)
+    public void click(Object graphicsComponent, CONSTRAINT_TYPE constraints)
         throws RobotException;
 
     /**
@@ -80,7 +83,7 @@ public interface IRobot {
      * @param yAbsolute absolute true if position should be absolute   
      * @throws RobotException If the mouse click fails
      */
-    public void click(Object graphicsComponent, Object constraints,
+    public void click(Object graphicsComponent, CONSTRAINT_TYPE constraints,
         ClickOptions clickOptions, 
         int xPos, boolean xAbsolute, int yPos, boolean yAbsolute) 
         throws RobotException;
@@ -99,7 +102,7 @@ public interface IRobot {
      * @param clickOptions The click options
      * @throws RobotException If the mouse click fails
      */
-    public void click(Object graphicsComponent, Object constraints,
+    public void click(Object graphicsComponent, CONSTRAINT_TYPE constraints,
         ClickOptions clickOptions) throws RobotException;
 
     /**
@@ -112,7 +115,7 @@ public interface IRobot {
      *                    coordinate system. May be <code>null</code>.
      * @throws RobotException If the mouse move fails
      */
-    public void move(Object graphicsComponent, Object constraints)
+    public void move(Object graphicsComponent, CONSTRAINT_TYPE constraints)
         throws RobotException;
 
     /**
@@ -191,8 +194,8 @@ public interface IRobot {
      * @param constraints A constraints object used by the Robot implementation, may be <code>null</code>.
      * @throws RobotException If the scrolling fails.
      */   
-    public void scrollToVisible(Object graphicsComponent, Object constraints)
-        throws RobotException;
+    public void scrollToVisible(Object graphicsComponent,
+            CONSTRAINT_TYPE constraints) throws RobotException;
     
     /**
      * a method to turn the toggle keys caps-lock, num-lock and scroll-lock on and off.
@@ -227,8 +230,8 @@ public interface IRobot {
      * @param button the mouse button.
      * @throws RobotException If the mouse press fails.
      */
-    public void mousePress(Object graphicsComponent, Object constraints, 
-            int button) throws RobotException;
+    public void mousePress(Object graphicsComponent,
+            CONSTRAINT_TYPE constraints, int button) throws RobotException;
     
     
     /**
@@ -242,8 +245,8 @@ public interface IRobot {
      * @param button the mouse button.
      * @throws RobotException If the mouse release fails.
      */
-    public void mouseRelease(Object graphicsComponent, Object constraints, 
-            int button) throws RobotException;
+    public void mouseRelease(Object graphicsComponent,
+            CONSTRAINT_TYPE constraints, int button) throws RobotException;
     
     /**
      * 

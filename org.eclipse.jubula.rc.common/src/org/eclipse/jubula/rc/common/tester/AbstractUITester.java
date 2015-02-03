@@ -14,7 +14,6 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.common.driver.IRobotFactory;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
@@ -47,18 +46,10 @@ public abstract class AbstractUITester implements ITester {
     }
     
     /**
-     * Gets the Robot factory. The factory is created once per instance.
-     * @return The Robot factory.
-     */
-    protected IRobotFactory getRobotFactory() {
-        return m_adapter.getRobotFactory();
-    }
-    
-    /**
      * @return The event thread queuer.
      */
     protected IEventThreadQueuer getEventThreadQueuer() {
-        return getRobotFactory().getEventThreadQueuer();
+        return getComponent().getRobotFactory().getEventThreadQueuer();
     }
     
     /**
@@ -72,7 +63,7 @@ public abstract class AbstractUITester implements ITester {
     
     /**
      * This methods is only for special cases. If you only have one tester class
-     * which reuses one of our adapters. Otherwise write an adapterfactory if
+     * which reuses one of our adapters. Otherwise write an adapter factory if
      * you have more tester classes and adapter.
      * 
      * @param adapter

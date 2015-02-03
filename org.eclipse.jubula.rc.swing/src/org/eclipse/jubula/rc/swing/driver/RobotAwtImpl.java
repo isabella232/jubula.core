@@ -83,7 +83,7 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  * @created 17.03.2005
  */
-public class RobotAwtImpl implements IRobot {
+public class RobotAwtImpl implements IRobot<Rectangle> {
     /** the timeout to flush native events (only relevant for Java 7) */
     private static final int FLUSH_TIMEOUT = 10000;
     
@@ -267,11 +267,11 @@ public class RobotAwtImpl implements IRobot {
      * @param xAbsolute true if x-position should be absolute
      * @throws RobotException If the click delay is interrupted or the event confirmation receives a timeout.
      */
-    private void clickImpl(Object graphicsComponent, Object constraints,
+    private void clickImpl(Object graphicsComponent, Rectangle constraints,
             ClickOptions clickOptions, int xPos,
             boolean xAbsolute, int yPos, boolean yAbsolute)
         throws RobotException {
-        moveImpl(graphicsComponent, (Rectangle)constraints, xPos, xAbsolute,
+        moveImpl(graphicsComponent, constraints, xPos, xAbsolute,
                 yPos, yAbsolute, clickOptions);
         clickImpl(graphicsComponent, clickOptions);
     }
@@ -417,8 +417,8 @@ public class RobotAwtImpl implements IRobot {
         
         Component component = (Component)graphicsComponent;
 
-        Rectangle bounds = null;
-        bounds = new Rectangle(getLocation(component, new Point(0, 0)));
+        Rectangle bounds = new Rectangle(
+                getLocation(component, new Point(0, 0)));
         bounds.width = component.getWidth();
         bounds.height = component.getHeight();
         if (component instanceof Window) {
@@ -494,7 +494,7 @@ public class RobotAwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void click(Object graphicsComponent, Object constraints)
+    public void click(Object graphicsComponent, Rectangle constraints)
         throws RobotException {
         click(graphicsComponent, constraints, ClickOptions.create());
     }
@@ -502,7 +502,7 @@ public class RobotAwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void click(Object graphicsComponent, Object constraints,
+    public void click(Object graphicsComponent, Rectangle constraints,
         ClickOptions clickOptions) throws RobotException {
         
         clickImpl(graphicsComponent, constraints, clickOptions,
@@ -542,10 +542,10 @@ public class RobotAwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void move(Object graphicsComponent, Object constraints)
+    public void move(Object graphicsComponent, Rectangle constraints)
         throws RobotException {
 
-        moveImpl(graphicsComponent, (Rectangle)constraints, 50, false, 50,
+        moveImpl(graphicsComponent, constraints, 50, false, 50,
                 false, ClickOptions.create());
     }
 
@@ -733,11 +733,11 @@ public class RobotAwtImpl implements IRobot {
     /**
      * {@inheritDoc} 
      */
-    public void scrollToVisible(Object graphicsComponent, Object constraints)
+    public void scrollToVisible(Object graphicsComponent, Rectangle constraints)
         throws RobotException {
         
         ensureComponentVisible((Component)graphicsComponent,
-            (Rectangle)constraints);
+            constraints);
     }
 
     /**
@@ -858,7 +858,7 @@ public class RobotAwtImpl implements IRobot {
      * @param constraints A constraints object used by the Robot implementation, may be <code>null</code>.
      * @param button the mouse button which is to be pressed. 
      */
-    public void mousePress(Object graphicsComponent, Object constraints, 
+    public void mousePress(Object graphicsComponent, Rectangle constraints, 
             int button) {
         DragAndDropHelper.getInstance().setDragMode(true);
         if (graphicsComponent != null) {
@@ -881,7 +881,7 @@ public class RobotAwtImpl implements IRobot {
      * @param constraints A constraints object used by the Robot implementation, may be <code>null</code>.
      * @param button the mouse button.
      */
-    public void mouseRelease(Object graphicsComponent, Object constraints,
+    public void mouseRelease(Object graphicsComponent, Rectangle constraints,
             int button) throws RobotException {
         if (graphicsComponent != null) {
             move(graphicsComponent, constraints);
@@ -897,7 +897,7 @@ public class RobotAwtImpl implements IRobot {
     /**
      * {@inheritDoc}
      */
-    public void click(Object graphicsComponent, Object constraints,
+    public void click(Object graphicsComponent, Rectangle constraints,
             ClickOptions clickOptions, int xPos, boolean xAbsolute,
             int yPos, boolean yAbsolute) throws RobotException {
 
