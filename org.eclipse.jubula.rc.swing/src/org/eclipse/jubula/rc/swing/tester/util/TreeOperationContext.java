@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
@@ -286,7 +285,7 @@ public class TreeOperationContext
      * {@inheritDoc}
      */
     public Rectangle getVisibleRowBounds(Rectangle rowBounds) {
-        Rectangle visibleTreeBounds = ((JComponent)getTree()).getVisibleRect();
+        Rectangle visibleTreeBounds = getTree().getVisibleRect();
         Rectangle visibleRowBounds = visibleTreeBounds.intersection(rowBounds);
         return visibleRowBounds;
     }
@@ -318,8 +317,8 @@ public class TreeOperationContext
                 .getClassLoader());
             final int row = getRowForTreeNode(node);
             final Rectangle nodeBounds = getNodeBounds(node);
-            final boolean collapsed = tree.isCollapsed(row);
-            boolean doAction = collapsed == !shouldBeExpanded;
+            final boolean expanded = tree.isExpanded(row);
+            boolean doAction = expanded != shouldBeExpanded;
             final IEventThreadQueuer queuer = new EventThreadQueuerAwtImpl();
 
             queuer.invokeAndWait("scrollRowToVisible", new IRunnable<Void>() { //$NON-NLS-1$
@@ -333,8 +332,8 @@ public class TreeOperationContext
             getRobot().move(tree, visibleNodeBounds);
             if (doAction) {
                 if (log.isDebugEnabled()) {
-                    log.debug((collapsed ? "Expanding" : "Collapsing") + " node: " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                        + node);
+                    log.debug(doAction ? "Expanding" : "Collapsing" //$NON-NLS-1$ //$NON-NLS-2$  
+                            + " node: " + node); //$NON-NLS-1$
                     log.debug("Row           : " + row); //$NON-NLS-1$
                     log.debug("Node bounds   : " + visibleNodeBounds); //$NON-NLS-1$
                 }
