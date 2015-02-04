@@ -13,11 +13,43 @@
   
   <para><emphasis>Toggle Checkbox on Node by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select or deselect a checkbox on a node you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node as an indexpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the checkbox is currently selected, this action will deselect it and vice-versa.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Toggle Checkbox on Node by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select or deselect a checkbox on a node you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node as a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the checkbox is currently selected, this action will deselect it and vice-versa.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

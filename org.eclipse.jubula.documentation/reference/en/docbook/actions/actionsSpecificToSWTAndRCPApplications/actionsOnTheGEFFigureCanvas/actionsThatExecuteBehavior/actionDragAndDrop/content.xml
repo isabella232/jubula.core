@@ -14,11 +14,53 @@
   
   <para><emphasis>Drag Figure</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the figure you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the figure.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is held, and the figure is dragged.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drop on Figure</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a dragged figure onto the figure you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the figure.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button is let loose, and the figure is dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a drag action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

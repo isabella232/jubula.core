@@ -13,16 +13,44 @@
   
   <para><emphasis>Check Selection of Checkbox by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action checks whether a checkbox on a node in the tree is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node whose checkbox you want to check as an indexpath.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Selection of Checkbox by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action checks whether a checkbox on a node in the tree is selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node whose checkbox you want to check as a textpath.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Check Selection of Checkbox on Selected Node</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether the checkbox on the currently selected node is selected or not.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

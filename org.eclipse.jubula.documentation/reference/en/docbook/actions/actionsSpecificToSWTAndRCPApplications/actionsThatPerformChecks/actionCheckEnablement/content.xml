@@ -12,7 +12,35 @@
   <?dbhtml dir="actionCheckEnablement"?>
   <title>Check Enablement</title>
   
-  <xi:include href="toolbarItems.xml"/>
-  <xi:include href="trees.xml"/>
+  <para><emphasis>Check Enablement of Entry by Indexpath</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the enablement status of an item in the menu belonging to the toolbar item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item to check is given using the indexpath to the item.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
   
+  <para><emphasis>Check Enablement of Entry by Textpath</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the enablement status of an item in the menu belonging to the toolbar item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item to check is given using the textpath to the item.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>  
 </section>
