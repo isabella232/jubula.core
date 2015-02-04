@@ -23,8 +23,14 @@ import org.eclipse.jubula.tools.internal.utils.NetUtil;
  * @author BREDEX GmbH
  */
 public class AUTAgent {
+    /** the embedded AUT Agent instance */
     private static AutStarter embedded = null;
 
+    /** Constructor */
+    private AUTAgent() {
+        // hide
+    }
+    
     /**
      * @return a new and already connected (to an implicitly started embedded)
      *         AUTAgent instance
