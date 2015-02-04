@@ -5,29 +5,6 @@
 		point="org.eclipse.ui.menus">
  <menuContribution
        allPopups="false"
-       locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-    <toolbar
-          id="org.eclipse.jubula.client.analyze.ui.analyzeToolbar">
-       <command
-             commandId="org.eclipse.jubula.client.analyze.ui.menuCommand"
-             icon="icons/analyzeToolbarA.png"
-             style="pulldown">
-          <visibleWhen checkEnabled="false">
-            <reference
-              definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
-          </visibleWhen>
-       </command>
-    </toolbar>
- </menuContribution>
- <menuContribution
-       locationURI="menu:org.eclipse.jubula.client.analyze.ui.menuCommand">
-    <dynamic
-          class="org.eclipse.jubula.client.analyze.ui.contributionitems.ToolbarMenuContributionItem"
-          id="org.eclipse.jubula.client.analyze.ui.dynamicMenu">
-    </dynamic>
- </menuContribution>
- <menuContribution
-       allPopups="false"
        locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser?after=additions">
     <menu
           label="%analyze">
@@ -107,17 +84,6 @@
 </extension>
  <extension
        point="org.eclipse.ui.commands">
-
-     <command
-          defaultHandler="org.eclipse.jubula.client.analyze.ui.handlers.ToolbarButtonDefaultHandler"
-          id="org.eclipse.jubula.client.analyze.ui.RunProfile"
-          name="RunProfile">
-        <commandParameter
-              id="org.eclipse.jubula.client.analyze.ui.commandParameter3"
-              name="name"
-              optional="true">
-        </commandParameter>
-    </command>
         <command
               defaultHandler="org.eclipse.jubula.client.analyze.ui.handlers.RunSelectionHandler"
               id="org.eclipse.jubula.client.analyze.ui.RunSelection"
@@ -126,12 +92,6 @@
                  id="org.eclipse.jubula.client.analyze.ui.RunSelection.IDParam"
                  name="IDParam">
            </commandParameter> 
-          
-        </command>
-        <command
-              defaultHandler="org.eclipse.jubula.client.analyze.ui.handlers.ToolbarButtonDefaultHandler"
-              id="org.eclipse.jubula.client.analyze.ui.menuCommand"
-              name="%analyze">
         </command>
  </extension>
  <extension
