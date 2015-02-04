@@ -12,5 +12,19 @@
   <?dbhtml dir="actionShowText"?>
   <title>Show text</title>
   
+    <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to produce an area with text you define.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is mostly useful for demonstration purposes.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
   
 </section>

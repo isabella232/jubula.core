@@ -12,5 +12,7 @@
   <?dbhtml dir="actionCopyTextToClipboard"?>
   <title>Copy text to clipboard</title>
   
-  
+  <para>
+    This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination »CTRL+V« to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT .
+  </para>
 </section>

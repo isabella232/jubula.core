@@ -13,21 +13,125 @@
   
   <para><emphasis>Drag Entry by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the list item you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item is specified by its index in the list.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is held, and the item is dragged.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drag Entry by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the list item you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item is specified by its value in the list.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is held, and the item is dragged.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drop on Entry by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a list item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item on which to drop the dragged item is specified by its index in the list.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button is let loose, and the item is dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drop on Entry by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a list item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The item on which to drop the dragged item is specified by its value in the list.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button is let loose, and the item is dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

@@ -13,11 +13,79 @@
   
   <para><emphasis>Select Node by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this item to select a node from a tree.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node using an indexpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Searching for the node you specify.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Clicking on the node, the amount of times you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Select Node by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this item to select a node from a tree.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node using a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Searching for the node you specify.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Clicking on the node, the amount of times you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

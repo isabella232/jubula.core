@@ -14,22 +14,86 @@
   
   <para><emphasis>Collapse Node by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to collapse a tree or part of a tree along an indicated path.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the path as an indexpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by activating the command in the tree to collapse it.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Collapse Node by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to collapse a tree or part of a tree along an indicated path.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the path as a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by activating the command in the tree to collapse it.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Expand Node by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to expand a tree or part of a tree along an indicated path.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the path as an indexpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by activating the command in the tree to expand it.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Expand Node by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to expand a tree or part of a tree along an indicated path.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the path as a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by activating the command in the tree to expand it.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>

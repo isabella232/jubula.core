@@ -14,11 +14,58 @@
   
   <para><emphasis>Start Timer</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to start a timer (stopwatch).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You name the timer and enter a variable which saves the current time (in milliseconds since the January 1st 1970).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can read timers and compare values between starting and reading timers using other actions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is useful for measuring how long your AUT takes to execute certain actions.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Read Timer</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to read a timer (stopwatch).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You enter the name of the timer you want to read and enter a variable which saves the difference (in milliseconds) between the current time and the time at which the timer was started.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can start timers and compare values between starting and reading timers using other actions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is useful for measuring how long your AUT takes to execute certain actions.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
+  
+  <para role="tip">
+    You must have used the actionStart timer at least once in your test to use this action.
+  </para>
+  
 </section>

@@ -13,12 +13,51 @@
   
   <para><emphasis>Select All</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action selects the entire text within the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by clicking three times within the text field.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
+  </para>
+  
+  <para>
+    This action has no parameters.
   </para>
   
   <para><emphasis>Select Pattern</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select a given pattern within the text. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the pattern is not found, no text is selected. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved without performing any clicks. 
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
 </section>

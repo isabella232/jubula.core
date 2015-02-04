@@ -13,32 +13,224 @@
   
   <para><emphasis>Drag Cell</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the table cell you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cell is specified by its row and column values.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is held, and the cell is dragged.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para>
+    If you want to drag multiple items, use an action to select the items you want to drag before using the drag action.
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Drag Cell from Column</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the table cell you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cell is specified by its column and the value in the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is held, and the cell is dragged.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para>
+    If you want to drag multiple items, use an action to select the items you want to drag before using the drag action.
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Drag Cell from Row</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the table cell you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cell is specified by its row and the value in the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is held, and the cell is dragged.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para>
+    If you want to drag multiple items, use an action to select the items you want to drag before using the drag action.
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Drop on Cell</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a dragged item onto a cell you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cell where the drop should occur is specified by its row and column values.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is let loose, and the cell is dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Drop on Cell from Column</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a dragged item onto a cell you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cell where the drop should occur is specified by its column and the value in the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is let loose, and the cell is dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Drop on Cell from Row</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a dragged item onto a cell you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cell where the drop should occur is specified by its row and the value in the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The cursor is moved over the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The mouse button you specify is let loose, and the cell is dropped.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="tip">
+    This action is unsupported for the HTML toolkit.
   </para>
   
 </section>

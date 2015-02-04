@@ -13,11 +13,46 @@
   
   <para><emphasis>Click</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action sends a ''click'' to the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can click once or multiple times.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can also specify which mouse button (left, middle, right) you want to click with.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Click in Component</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This item sends one or more mouse clicks to the component.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is realized by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Clicking the specified mouse button the given number of times at the location indicated.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

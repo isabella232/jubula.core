@@ -13,12 +13,60 @@
   
   <para><emphasis>Select Entry by Index</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select an item from the combo box using its index as a parameter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Clicking once on the combo box to open the list.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Selecting the item specified by clicking it once.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Select Entry by Value</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select an item from the combo box using the name of the item as a parameter.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Clicking once on the combo box to open the list.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Selecting the item specified by clicking it once.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>

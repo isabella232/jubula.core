@@ -12,5 +12,23 @@
   <?dbhtml dir="actionPauseTestExecution"?>
   <title>Pause test execution</title>
   
+    <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action pauses the test execution.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To continue a paused test, press the pause button in the ITE.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para>
+    This action has no parameters.
+  </para>
   
 </section>

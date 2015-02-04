@@ -13,11 +13,61 @@
   
   <para><emphasis>Toggle Checkbox at Mouse Position</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select or deselect a checkbox that is in the first column of a table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To use this action, the current mouse position must be over the correct cell. You can achieve this using the select actions, either with 0 clicks or with 1 click.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the checkbox is currently selected, this action will deselect it and vice-versa.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is currently only supported for SWT/RCP AUT's.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para>
+    This action has no parameters.
   </para>
   
   <para><emphasis>Toggle Checkbox in Selected Row</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to select or deselect a checkbox that is in the first column of a table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To use this action, the row must already be selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the checkbox is currently selected, this action will deselect it and vice-versa.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is currently only supported for SWT/RCP AUT's.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para>
+    This action has no parameters.
   </para>
 </section>

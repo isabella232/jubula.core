@@ -13,22 +13,178 @@
   
   <para><emphasis>Drag Node by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the node you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node to be dragged using an indexpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Moving the cursor over the component.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Holding the mouse button you specify, and the item is dragged.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drag Node by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drags the node you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node to be dragged using a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Moving the cursor over the component.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Holding the mouse button you specify, and the item is dragged.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drop on Node by Indexpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a dragged item onto the node you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node you want to drop the item onto using an indexpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Moving the cursor over the node.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Letting loose the mouse button you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Drop on Node by Textpath</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action drops a dragged item onto the node you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node you want to drop the item onto using a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Moving the cursor over the node.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Letting loose the mouse button you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
 </section>

@@ -12,5 +12,23 @@
   <?dbhtml dir="actionManualTestStep"?>
   <title>Manual test step</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to specify a manual Test Step.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Manual Test Steps can be specified and must be executed by a manual tester.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          There is a special test execution mode for manual testing, in which the manual Test Steps are presented to the user to be executed.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>
