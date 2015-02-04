@@ -50,7 +50,7 @@ public class ToolItemAdapter extends WidgetAdapter implements
         return getEventThreadQueuer().invokeAndWait(
                 "isShowing", new IRunnable<Boolean>() { //$NON-NLS-1$
                     public Boolean run() {
-                        return m_item.isDisposed();
+                        return !m_item.isDisposed();
                     }
                 });
     }
