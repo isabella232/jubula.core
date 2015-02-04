@@ -12,5 +12,28 @@
   <?dbhtml dir="actionWaitForWindow"?>
   <title>Wait for Window</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action waits for the window you name to open.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action does not check whether the window is active.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once the window is open (or if the window is already open), the test continues.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the window does not open, the action fails.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

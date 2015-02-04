@@ -12,5 +12,13 @@
   <?dbhtml dir="actionWaitForComponentMenuBar"?>
   <title>Wait for Component (Menu Bar)</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The wait for menu action lets you wait until the menu is present/loaded before continuing with the next Test Step.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>
