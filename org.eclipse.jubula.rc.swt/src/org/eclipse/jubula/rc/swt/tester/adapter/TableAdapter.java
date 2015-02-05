@@ -367,14 +367,13 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
      * @return the visible cell bounds, relative to the table's location.
      */
     private Rectangle getVisibleBounds(Rectangle cellBounds) {
-        org.eclipse.swt.graphics.Rectangle r = 
-            (org.eclipse.swt.graphics.Rectangle)
-            getEventThreadQueuer().invokeAndWait("getVisibleCellBounds: " + cellBounds,  //$NON-NLS-1$
-                    new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
-                    public org.eclipse.swt.graphics.Rectangle run() {
-                        return m_table.getClientArea();
-                    }
-                });
+        org.eclipse.swt.graphics.Rectangle r = getEventThreadQueuer()
+                .invokeAndWait("getVisibleCellBounds: " + cellBounds, //$NON-NLS-1$
+                        new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
+                            public org.eclipse.swt.graphics.Rectangle run() {
+                                return m_table.getClientArea();
+                            }
+                        });
         
         Rectangle visibleTableBounds = new Rectangle(
             r.x, r.y, r.width, r.height);

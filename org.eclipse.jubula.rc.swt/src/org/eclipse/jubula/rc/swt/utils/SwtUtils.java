@@ -517,7 +517,7 @@ public class SwtUtils {
         if (recurse && objT.size() > 0) {
             List<Widget> extendedFamily = new LinkedList<Widget>();
             for (int i = 0; i < objT.size(); i++) {
-                Widget w = (Widget)objT.get(i);
+                Widget w = objT.get(i);
                 extendedFamily.addAll(Arrays.asList(getWidgetChildrenImpl(
                     w, recurse)));  
             }

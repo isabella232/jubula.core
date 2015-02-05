@@ -194,13 +194,13 @@ public class KeyboardHelper {
          * @return the modifier
          */
         public Integer[] getModifiers() {
-            return (Integer[])m_modifiers.toArray(
+            return m_modifiers.toArray(
                 new Integer[m_modifiers.size()]);
         }
         
         /**
-         * Adds the given modofier to the KeyStroke.
-         * @param modifier the modoifier.
+         * Adds the given modifier to the KeyStroke.
+         * @param modifier the modifier.
          */
         public void addModifier(int modifier) {
             m_modifiers.add(new Integer(modifier));

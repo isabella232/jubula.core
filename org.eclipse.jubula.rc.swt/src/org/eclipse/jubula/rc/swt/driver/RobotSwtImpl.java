@@ -1075,7 +1075,7 @@ public class RobotSwtImpl implements IRobot<Rectangle> {
         
         if (graphicsComponent instanceof Control) {
             ensureComponentVisible((Control)graphicsComponent,
-                    (Rectangle)constraints);
+                    constraints);
         }
     }
 
