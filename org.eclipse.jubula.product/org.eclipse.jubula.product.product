@@ -22,6 +22,7 @@
 
    <launcherArgs>
       <programArgs>-clean
+-cssTheme org.eclipse.e4.ui.css.theme.e4_classic
 -name Jubula</programArgs>
       <programArgsLin>-vm
 ../jre/bin/java</programArgsLin>
