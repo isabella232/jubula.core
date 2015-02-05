@@ -27,6 +27,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>.settings</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.6</locationURI>
+		</link>
+		<link>
 			<name>shared</name>
 			<type>2</type>
 			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.examples.api.adder.rcp/shared</locationURI>
