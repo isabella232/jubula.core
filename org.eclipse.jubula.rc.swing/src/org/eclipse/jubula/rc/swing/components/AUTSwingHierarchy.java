@@ -884,7 +884,7 @@ public class AUTSwingHierarchy extends AUTHierarchy<Component>
     }
     
     /**
-     * A window listener listening to window closed, registerd to any opened window. <br>
+     * A window listener listening to window closed, registered to any opened window. <br>
      * @author BREDEX GmbH
      * @created 05.10.2004
      *
@@ -972,10 +972,11 @@ public class AUTSwingHierarchy extends AUTHierarchy<Component>
      */
     public void componentHidden(ComponentEvent e) {
         checkDispatchThread();
-        if (e.getComponent() instanceof Window) {
-            remove((Window)e.getComponent());
+        Component component = e.getComponent();
+        if (component instanceof Window) {
+            remove((Window) component);
         } else {
-            removeComponent(e.getComponent(), e.getComponent().getParent());
+            removeComponent(component, component.getParent());
         }
     }
 
@@ -998,10 +999,11 @@ public class AUTSwingHierarchy extends AUTHierarchy<Component>
      */
     public void componentShown(ComponentEvent e) {
         checkDispatchThread();
-        if (e.getComponent() instanceof Window) {
-            add((Window)e.getComponent());
+        Component component = e.getComponent();
+        if (component instanceof Window) {
+            add((Window) component);
         } else {
-            addComponent(e.getComponent());
+            addComponent(component);
         }
     }
 

@@ -53,7 +53,7 @@ public abstract class FindComponentBP {
      *             the hierarchy is not valid: empty or containing null elements
      * @return the instance of the component of the AUT 
      */
-    protected Object findComponent(
+    public Object findComponent(
             final IComponentIdentifier componentIdentifier, 
             final AUTHierarchy hierarchy)
         throws IllegalArgumentException {

@@ -18,35 +18,13 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
  * @author BREDEX GmbH
  * @created 10.10.2013
  */
 public class FindJavaFXComponentBP extends FindComponentBP {
-
-    /**
-     * Searches for the component in the AUT with the given
-     * <code>componentIdentifier</code>.
-     *
-     * @param componentIdentifier
-     *            the identifier created in object mapping mode
-     * @param autHierarchy
-     *            the current AUT hierarchy
-     * @throws IllegalArgumentException
-     *             if the given identifier is null or <br>
-     *             the hierarchy is not valid: empty or containing null elements
-     * @return the instance of the component of the AUT
-     */
-    public Object findComponent(IComponentIdentifier componentIdentifier,
-            AUTJavaFXHierarchy autHierarchy) throws IllegalArgumentException {
-        return super.findComponent(componentIdentifier, autHierarchy);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public String getCompName(Object currComp) {
         if (currComp instanceof Scene) {
             return null;
@@ -59,9 +37,7 @@ public class FindJavaFXComponentBP extends FindComponentBP {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public boolean isAvailable(Object currComp) {
         if (currComp instanceof Scene) {
             // null check, because it can happen that
