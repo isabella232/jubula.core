@@ -26,7 +26,7 @@ public class ReflectionBP {
         ReflectionBP.class);
 
     /**
-     * hidden utility Contructor
+     * hidden utility Constructor
      */
     private ReflectionBP() {
         // nothing
@@ -34,9 +34,9 @@ public class ReflectionBP {
     
     /**
      * Invokes the method with the given name with the given parameter
-     * @param name tne name of the mothod to invoke
+     * @param name the name of the method to invoke
      * @param object the Object of the method
-     * @param paramTypes the parameter types od the methods arguments
+     * @param paramTypes the parameter types of the methods arguments
      * @param args the arguments of the method
      */
     public static void invokeMethod(String name, Object object, 
@@ -62,10 +62,9 @@ public class ReflectionBP {
     
     /**
      * Invokes the method with the given name with the given parameter
-     * @param name name tne name of the mothod to invoke
+     * @param name name the name of the method to invoke
      * @param object object the Object of the method
-     * @param args args the arguments of the method
-     * {@inheritDoc}
+     * @param args the arguments of the method
      */
     public static void invokeMethod(String name, Object object, Object[] args) {
         Object[] arguments = args;

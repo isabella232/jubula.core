@@ -32,7 +32,7 @@ public class JBUrlClassLoader extends URLClassLoader {
 
     /**
      * Tries to load the given class first.<br>
-     * <b>This method is the first of the ClassLoader hiearchy to load the class.
+     * <b>This method is the first of the ClassLoader hierarchy to load the class.
      * It overrides the parent-delegation!</b><br>
      * If this method fails to load the class, it calls super.loadClass(...).
      * {@inheritDoc}

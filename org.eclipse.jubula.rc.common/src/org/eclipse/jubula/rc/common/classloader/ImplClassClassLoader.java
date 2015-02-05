@@ -16,7 +16,6 @@ import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
  * This Classloader tries to load the classes with the given ClassLoaders.
- * {@inheritDoc}
  *
  * @author BREDEX GmbH
  * @created 04.05.2006
@@ -73,7 +72,7 @@ public class ImplClassClassLoader extends JBUrlClassLoader {
     
     /**
      * Tries to load the classes with this ClassLoader and then, if not
-     * successfull, with the alternative ClassLoader.
+     * successful, with the alternative ClassLoader.
      * @param name name
      * @param resolve resolve
      * @return Class

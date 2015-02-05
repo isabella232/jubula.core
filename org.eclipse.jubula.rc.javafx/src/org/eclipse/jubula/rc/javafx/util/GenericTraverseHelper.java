@@ -68,6 +68,4 @@ public class GenericTraverseHelper<Type extends Object,
         findInstancesOf(traverser, type);
         return m_result;
     }
-    
-    
 }

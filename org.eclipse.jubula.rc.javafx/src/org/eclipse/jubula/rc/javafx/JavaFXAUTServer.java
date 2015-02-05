@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx;
 
+import java.awt.Rectangle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -19,13 +20,13 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
+import org.eclipse.jubula.rc.common.listener.DisabledCheckListener;
+import org.eclipse.jubula.rc.common.listener.DisabledRecordListener;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.driver.RobotFactoryJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.AbstractFXAUTEventHandler;
-import org.eclipse.jubula.rc.javafx.listener.CheckListener;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.listener.MappingListener;
-import org.eclipse.jubula.rc.javafx.listener.RecordListener;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
@@ -56,7 +57,9 @@ public class JavaFXAUTServer extends AUTServer {
      * constructor instantiates the listeners
      */
     public JavaFXAUTServer() {
-        super(new MappingListener(), new RecordListener(), new CheckListener());
+        super(new MappingListener(), 
+                new DisabledRecordListener(),
+                new DisabledCheckListener());
     }
 
     @Override
@@ -64,7 +67,6 @@ public class JavaFXAUTServer extends AUTServer {
         if (listener instanceof AbstractFXAUTEventHandler) {
             addToolkitEventListener((AbstractFXAUTEventHandler) listener);
         }
-
     }
 
     /**
@@ -119,7 +121,7 @@ public class JavaFXAUTServer extends AUTServer {
     }
 
     @Override
-    public IRobot getRobot() {
+    public IRobot<Rectangle> getRobot() {
         return RobotFactoryJavaFXImpl.INSTANCE.getRobot();
     }
     

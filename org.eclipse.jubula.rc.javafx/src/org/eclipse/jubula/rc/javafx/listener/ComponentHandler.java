@@ -506,7 +506,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     }
 
     /**
-     * Searchs the component in the AUT, which belongs to the given
+     * Searches the component in the AUT, which belongs to the given
      * <code>componentIdentifier</code>.
      *
      * @param componentIdentifier

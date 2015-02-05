@@ -17,7 +17,6 @@ import java.net.URL;
  * which do not change the given URL.
  */
 public class DefaultUrlLocator implements IUrlLocator {
-
     /**
      * @return The same as the given URL.
      * {@inheritDoc}
@@ -25,5 +24,4 @@ public class DefaultUrlLocator implements IUrlLocator {
     public URL convertUrl(URL url) {
         return url;
     }
-
 }
