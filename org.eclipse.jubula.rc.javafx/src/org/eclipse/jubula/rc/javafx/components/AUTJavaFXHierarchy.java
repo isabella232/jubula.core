@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
+import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
@@ -47,7 +48,7 @@ import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
  * @created 10.10.2013
  *
  */
-public class AUTJavaFXHierarchy extends AUTHierarchy {
+public class AUTJavaFXHierarchy extends AUTHierarchy<EventTarget> {
 
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
@@ -68,16 +69,16 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     /**
      * Creates the Hierarchy from a given Object
      *
-     * @param o
+     * @param eventTarget
      *            the Object
      */
-    public void createHierarchyFrom(Object o) {
+    public void createHierarchyFrom(EventTarget eventTarget) {
         lock.lock();
         try {
-            Map<Object, AUTComponent> realMap = getRealMap();
-            Object parent = ParentGetter.get(o);
+            Map<EventTarget, AUTComponent<EventTarget>> realMap = getRealMap();
+            EventTarget parent = ParentGetter.get(eventTarget);
 
-            Object lastParent = parent;
+            EventTarget lastParent = parent;
             while (parent != null) {
                 if (realMap.containsKey(parent)) {
                     lastParent = parent;
@@ -86,7 +87,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
                 lastParent = parent;
                 parent = ParentGetter.get(parent);
             }
-            createHierarchy(lastParent == null ? o : lastParent);
+            createHierarchy(lastParent == null ? eventTarget : lastParent);
         } finally {
             lock.unlock();
         }
@@ -101,7 +102,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *            <code>null</code>, in which case this method returns without
      *            modifying the hierarchy.
      */
-    private void createHierarchy(Object parent) {
+    private void createHierarchy(EventTarget parent) {
         if (parent == null) {
             return;
         }
@@ -115,8 +116,8 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
             name(parentCont);
             addToHierachyMap(parentCont);
         }
-        List<Object> children = ChildrenGetter.getAsList(parent);
-        for (Object child : children) {
+        List<EventTarget> children = ChildrenGetter.getAsList(parent);
+        for (EventTarget child : children) {
             createHierarchy(child);
             JavaFXHierarchyContainer childCont = getHierarchyContainer(child);
             if (!(parentCont.contains(childCont))) {
@@ -132,12 +133,12 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     /**
      * Convenience Method for creating Container.
      *
-     * @param o
+     * @param node
      *            the Object to create the Container for.
      * @return the Container
      */
-    private JavaFXHierarchyContainer initContainer(Object o) {
-        JavaFXComponent comp = new JavaFXComponent(o);
+    private JavaFXHierarchyContainer initContainer(EventTarget node) {
+        AUTComponent<EventTarget> comp = new JavaFXComponent(node);
         JavaFXHierarchyContainer cont = new JavaFXHierarchyContainer(comp);
         return cont;
     }
@@ -154,7 +155,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      * @param component
      *            the component that will be deleted
      */
-    public void removeComponentFromHierarchy(Object component) {
+    public void removeComponentFromHierarchy(EventTarget component) {
         if (component != null) {
             JavaFXHierarchyContainer cont = getHierarchyContainer(component);
             if (cont != null) {
@@ -171,30 +172,30 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      * -The reference from the parent container to the given container <br>
      * -The actions mentioned above for all children of this container
      *
-     * @param ctner
+     * @param container
      *            the container that will be deleted
      */
-    public void removeContainer(JavaFXHierarchyContainer ctner) {
+    public void removeContainer(HierarchyContainer<EventTarget> container) {
         lock.lock();
         try {
-            Map<? extends AUTComponent, HierarchyContainer> contMap =
-                    getHierarchyMap();
+            Map<? extends AUTComponent<EventTarget>, 
+                    HierarchyContainer<EventTarget>> 
+                        contMap = getHierarchyMap();
 
-            Map<Object, AUTComponent> realMap = getRealMap();
-            JavaFXComponent fxComp = ctner.getComponent();
+            Map<EventTarget, AUTComponent<EventTarget>> realMap = getRealMap();
+            JavaFXComponent fxComp = (JavaFXComponent)container.getCompID();
 
             fxComp.removeChangeListener();
-            contMap.remove(ctner.getComponent());
-            realMap.remove(fxComp.getRealComponent());
-            JavaFXHierarchyContainer parent = (JavaFXHierarchyContainer) ctner
-                    .getPrnt();
+            contMap.remove(container.getCompID());
+            realMap.remove(fxComp.getComponent());
+            HierarchyContainer<EventTarget> parent = container.getPrnt();
             if (parent != null) {
-                parent.remove(ctner);
+                parent.remove(container);
             }
-            List<JavaFXHierarchyContainer> children =
-                    new ArrayList<>(ctner.getContainerList());
-
-            for (JavaFXHierarchyContainer child : children) {
+            
+            HierarchyContainer<EventTarget>[] children = container.getComps();
+            
+            for (HierarchyContainer<EventTarget> child : children) {
                 removeContainer(child);
             }
         } finally {
@@ -205,11 +206,12 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     @Override
     public IComponentIdentifier[] getAllComponentId() {
         List<IComponentIdentifier> result = new Vector<IComponentIdentifier>();
-        Set<? extends AUTComponent> keys = getHierarchyMap().keySet();
-        for (Iterator<? extends AUTComponent> itr = keys.iterator();
-                itr.hasNext();) {
-            JavaFXComponent wrapComp = (JavaFXComponent) itr.next();
-            Object comp = wrapComp.getRealComponent();
+        Set<? extends AUTComponent<EventTarget>> keys = 
+                getHierarchyMap().keySet();
+        for (Iterator<? extends AUTComponent<EventTarget>> itr = keys
+                .iterator(); itr.hasNext();) {
+            AUTComponent<EventTarget> wrapComp = itr.next();
+            EventTarget comp = wrapComp.getComponent();
             try {
                 if (AUTServerConfiguration.getInstance().isSupported(comp)) {
 
@@ -221,8 +223,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
                 // and continue
             } catch (ComponentNotManagedException e) {
                 // from isSupported -> log
-                log.error(
-                        "component '" + wrapComp.getRealComponentType().getName() + "' not found!", e); //$NON-NLS-1$ //$NON-NLS-2$
+                log.error("component '" + comp.getClass().getName() + "' not found!", e); //$NON-NLS-1$ //$NON-NLS-2$
                 // and continue
             }
         }
@@ -241,7 +242,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *             (one of the) component(s) in the hierarchy is not managed
      * @return the identifier for <code>component</code>
      */
-    public IComponentIdentifier getComponentIdentifier(Object component)
+    public IComponentIdentifier getComponentIdentifier(EventTarget component)
         throws ComponentNotManagedException {
 
         IComponentIdentifier result = new ComponentIdentifier();
@@ -311,11 +312,11 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      * @throws IllegalArgumentException
      *             if component is null
      * @throws ComponentNotManagedException
-     *             if no hierarchy conatiner exists for the component
+     *             if no hierarchy container exists for the component
      * @return the path to root, the first elements contains the root, the last
      *         element contains the component itself.
      */
-    public List<String> getPathToRoot(Object component)
+    public List<String> getPathToRoot(EventTarget component)
         throws IllegalArgumentException, ComponentNotManagedException {
 
         if (log.isInfoEnabled()) {
@@ -337,7 +338,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     }
 
     @Override
-    protected List<String> getComponentContext(Object component) {
+    protected List<String> getComponentContext(EventTarget component) {
         JavaFXHierarchyContainer parent;
         JavaFXHierarchyContainer comp;
         List<String> context = new ArrayList<String>();
@@ -350,8 +351,8 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
         parent = (JavaFXHierarchyContainer) comp.getPrnt();
 
         if (parent != null) {
-            List<JavaFXHierarchyContainer> comps = parent.getContainerList();
-            for (JavaFXHierarchyContainer child : comps) {
+            HierarchyContainer<EventTarget>[] comps = parent.getComps();
+            for (HierarchyContainer<EventTarget> child : comps) {
                 if (!child.equals(comp)) {
                     String toAdd = child.getName();
                     context.add(toAdd);
@@ -368,17 +369,16 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *            the component from the AUT, must no be null
      * @throws IllegalArgumentException
      *             if component is null
-     * @return the hierachy container or null if the component is not yet
+     * @return the hierarchy container or null if the component is not yet
      *         managed
      */
-    public JavaFXHierarchyContainer getHierarchyContainer(Object component)
+    public JavaFXHierarchyContainer getHierarchyContainer(EventTarget component)
         throws IllegalArgumentException {
 
         Validate.notNull(component, "The component must not be null"); //$NON-NLS-1$
         JavaFXHierarchyContainer result = null;
         try {
-            JavaFXComponent compID = (JavaFXComponent) getRealMap().get(
-                    component);
+            AUTComponent<EventTarget> compID = getRealMap().get(component);
 
             if (compID != null) {
                 result = (JavaFXHierarchyContainer) getHierarchyMap().get(
@@ -395,7 +395,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
     /**
      * Names the given hierarchy container. <br>
      * If the managed component has a unique name, this name is used. Otherwise
-     * a name (unique for the hierachy level) is created.
+     * a name (unique for the hierarchy level) is created.
      *
      * @param hierarchyContainer
      *            the SwingHierarchyContainer to name, if
@@ -403,9 +403,9 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *            exception is thrown.
      */
     protected void name(JavaFXHierarchyContainer hierarchyContainer) {
-        final JavaFXComponent comp = hierarchyContainer.getComponent();
+        final AUTComponent<EventTarget> comp = hierarchyContainer.getCompID();
         String compName;
-        Object realComponent = comp.getRealComponent();
+        EventTarget realComponent = comp.getComponent();
         if (realComponent instanceof Node) {
             compName = ((Node) realComponent).getId();
         } else if (realComponent instanceof MenuItem) {
@@ -435,7 +435,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
             hierarchyContainer.setName(name, true);
             return;
         }
-        JavaFXHierarchyContainer hierParent = (JavaFXHierarchyContainer) 
+        HierarchyContainer<EventTarget> hierParent = 
                 hierarchyContainer.getPrnt();
         if (hierarchyContainer.getName() != null
                 && hierarchyContainer.getName().length() != 0
@@ -487,17 +487,18 @@ public class AUTJavaFXHierarchy extends AUTHierarchy {
      *            The component for which the name is being checked.
      * @return true if the name is treated as unique, false otherwise.
      */
-    protected boolean isUniqueName(JavaFXHierarchyContainer parent,
-            String name, JavaFXHierarchyContainer container) {
+    protected boolean isUniqueName(HierarchyContainer<EventTarget> parent,
+            String name, HierarchyContainer<EventTarget> container) {
         if (name == null) {
             return false;
         }
         if (parent == null) {
             return true;
         }
-        List<JavaFXHierarchyContainer> compIDs = parent.getContainerList();
+        
+        HierarchyContainer<EventTarget>[] compIDs = parent.getComps();
 
-        for (JavaFXHierarchyContainer childContainer: compIDs) {
+        for (HierarchyContainer<EventTarget> childContainer: compIDs) {
             String childName = childContainer.getName();
 
             if (name.equals(childName) && childContainer != container) {

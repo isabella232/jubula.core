@@ -12,6 +12,8 @@ package org.eclipse.jubula.rc.javafx.components;
 
 import java.util.List;
 
+import javafx.event.EventTarget;
+
 import org.eclipse.jubula.rc.common.components.AUTComponent;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
@@ -21,7 +23,7 @@ import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
  * @author BREDEX GmbH
  * @created 10.10.2013
  */
-public class JavaFXHierarchyContainer extends HierarchyContainer {
+public class JavaFXHierarchyContainer extends HierarchyContainer<EventTarget> {
 
     /**
      * Constructor
@@ -29,7 +31,7 @@ public class JavaFXHierarchyContainer extends HierarchyContainer {
      * @param component
      *            the JavaFXComponentWrapper
      */
-    public JavaFXHierarchyContainer(JavaFXComponent component) {
+    public JavaFXHierarchyContainer(AUTComponent<EventTarget> component) {
         super(component);
     }
 
@@ -41,16 +43,9 @@ public class JavaFXHierarchyContainer extends HierarchyContainer {
      * @param container
      *            the JavaFHierarchyContainer
      */
-    public JavaFXHierarchyContainer(AUTComponent component,
+    public JavaFXHierarchyContainer(AUTComponent<EventTarget> component,
             JavaFXHierarchyContainer container) {
         super(component, container);
-    }
-
-    /**
-     * @return JavaFXComponent
-     */
-    public JavaFXComponent getComponent() {
-        return (JavaFXComponent) super.getCompID();
     }
 
     /**
@@ -60,19 +55,14 @@ public class JavaFXHierarchyContainer extends HierarchyContainer {
      *            the child container
      * @return true if this container has the given container, false if not.
      */
-    public boolean contains(JavaFXHierarchyContainer child) {
-        List<JavaFXHierarchyContainer> children = getContainerList();
-        for (JavaFXHierarchyContainer cont : children) {
+    public boolean contains(HierarchyContainer<EventTarget> child) {
+        List<HierarchyContainer<EventTarget>> children = getContainerList();
+        for (HierarchyContainer<EventTarget> cont : children) {
             if (cont.equals(child)) {
                 return true;
             }
         }
         return false;
-    }
-    
-    @Override
-    protected List<JavaFXHierarchyContainer> getContainerList() {
-        return super.getContainerList();
     }
     
     /**
@@ -83,9 +73,9 @@ public class JavaFXHierarchyContainer extends HierarchyContainer {
      *            The component to add.
      */
     public void add(JavaFXHierarchyContainer component) {
-        if (!(ComponentHandler.getAutHierarchy().isUniqueName(this,
-                component.getName(), component))) {
-            ComponentHandler.getAutHierarchy().name(component);
+        AUTJavaFXHierarchy hierarchy = ComponentHandler.getAutHierarchy();
+        if (!(hierarchy.isUniqueName(this, component.getName(), component))) {
+            hierarchy.name(component);
         }
         getContainerList().add(component);
     }

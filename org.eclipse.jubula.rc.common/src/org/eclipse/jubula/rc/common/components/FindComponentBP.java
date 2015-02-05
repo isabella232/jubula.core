@@ -79,7 +79,7 @@ public abstract class FindComponentBP {
         int numberOfOtherMatchingComponents = 0;
         while (allComponents.hasNext()) {
             HierarchyContainer current = allComponents.next();
-            Object currComp = current.getCompID().getComp();
+            Object currComp = current.getCompID().getComponent();
             // check class compatibility first
             if (isAvailable(currComp) 
                 && isSupportedComponent(currComp) && ((suppClassName != null
@@ -100,7 +100,7 @@ public abstract class FindComponentBP {
         Object technicalComponent = null;
         if (bestMatch != null 
                 && meetsThreshold(bestMatchPercentage)) {
-            technicalComponent = bestMatch.getCompID().getComp();
+            technicalComponent = bestMatch.getCompID().getComponent();
         }
         componentIdentifier.setMatchPercentage(
                 bestMatchPercentage);
@@ -354,7 +354,7 @@ public abstract class FindComponentBP {
         
         List<String> compNeighbours = comp.getNeighbours();
         List<String> compContext = m_hierarchy.getComponentContext(
-                hierarchyContainer.getCompID().getComp());
+                hierarchyContainer.getCompID().getComponent());
         Collections.sort(compNeighbours);
         Collections.sort(compContext);
         double contextEquivalence = 0;

@@ -40,6 +40,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.Constants;
+import org.eclipse.jubula.rc.common.components.AUTComponent;
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
@@ -59,7 +60,7 @@ import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 /**
  * This class holds a hierarchy of the components of the AUT. <br>
  * 
- * The hierarchy is composed with <code>SwingHierarchyContainer</code>s. For every
+ * The hierarchy is composed with <code>HierarchyContainer</code>s. For every
  * component from the AUT a hierarchy container is created. The names for the
  * components are stored in the appropriate hierarchy containers, instead of the
  * components itself. Thus the AUTServer does not affect the instances from the
@@ -81,7 +82,7 @@ import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
  * @created 30.08.2004
  *
  */
-public class AUTSwingHierarchy extends AUTHierarchy
+public class AUTSwingHierarchy extends AUTHierarchy<Component>
     implements ContainerListener, ComponentListener {
 
     /** 
@@ -151,8 +152,8 @@ public class AUTSwingHierarchy extends AUTHierarchy
             }
                         
             // create a new SwingHierarchyContainer for window 
-            SwingComponent componentID = new SwingComponent(window);
-            SwingHierarchyContainer hierarchyWindow = 
+            AUTComponent<Component> componentID = new SwingComponent(window);
+            HierarchyContainer<Component> hierarchyWindow = 
                 new SwingHierarchyContainer(componentID);
             // update the hash table
             addToHierachyMap(hierarchyWindow);
@@ -161,7 +162,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
             // get the parent of window, if any
             Container parent = window.getParent();
             if (parent != null) {
-                SwingHierarchyContainer hierarchyParent = 
+                HierarchyContainer<Component> hierarchyParent = 
                     getHierarchyContainer(parent);
                 if (hierarchyParent == null) {
                     // a new container, see comment at top of the method
@@ -171,7 +172,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
                 name(hierarchyParent);
                 // add the new container for the window to hierarchyParent
                 hierarchyParent.add(hierarchyWindow);
-                hierarchyWindow.setParent(hierarchyParent);
+                hierarchyWindow.setPrnt(hierarchyParent);
                 name(hierarchyWindow);
                 // update m_hierarchyMap
                 addToHierachyMap(hierarchyParent);
@@ -191,12 +192,12 @@ public class AUTSwingHierarchy extends AUTHierarchy
         // remove the container from hierarchyMap
         // deregistering the listener from the window happens in window listener itself
         if (getRealMap().get(window) != null) {
-            SwingHierarchyContainer windowContainer = (SwingHierarchyContainer)
-                getHierarchyMap().get(getRealMap().get(window));
+            HierarchyContainer<Component> windowContainer = getHierarchyMap()
+                    .get(getRealMap().get(window));
             if (windowContainer != null) {
                 // remove the windowContainer from its parent in the hierarchy, if any
-                SwingHierarchyContainer parentContainer = 
-                    windowContainer.getParent();
+                HierarchyContainer<Component> parentContainer = 
+                    windowContainer.getPrnt();
                 if (parentContainer != null) {
                     parentContainer.remove(windowContainer);
                 }
@@ -234,7 +235,8 @@ public class AUTSwingHierarchy extends AUTHierarchy
             List<String> hierarchy = getPathToRoot(component);
             result.setHierarchyNames(hierarchy);
             result.setNeighbours(getComponentContext(component));
-            HierarchyContainer container = getHierarchyContainer(component);
+            HierarchyContainer<Component> container = 
+                    getHierarchyContainer(component);
             setAlternativeDisplayName(container, component, result);
             if (component.equals(findBP.findComponent(result,
                     ComponentHandler.getAutHierarchy()))) {
@@ -254,17 +256,16 @@ public class AUTSwingHierarchy extends AUTHierarchy
     /**
      * {@inheritDoc}
      */
-    protected List<String> getComponentContext(Object component) {
-        Component comp = (Component)component;
+    protected List<String> getComponentContext(Component comp) {
         List<String> context = new ArrayList<String>();
         if (comp.getParent() != null) {
-            SwingHierarchyContainer parent = getHierarchyContainer(
+            HierarchyContainer<Component> parent = getHierarchyContainer(
                     comp.getParent());
             if (parent != null) {
-                SwingHierarchyContainer[] comps = parent.getComponents();
+                HierarchyContainer<Component>[] comps = parent.getComps();
                 for (int i = 0; i < comps.length; i++) {
-                    Component child = comps[i].getComponentID()
-                        .getRealComponent();
+                    Component child = comps[i].getCompID()
+                        .getComponent();
                     if (!child.equals(comp)) {
                         String toAdd = child.getClass().getName() 
                             + Constants.CLASS_NUMBER_SEPERATOR + 1; 
@@ -291,10 +292,12 @@ public class AUTSwingHierarchy extends AUTHierarchy
     public IComponentIdentifier[] getAllComponentId() {
         checkDispatchThread();
         List<IComponentIdentifier> result = new Vector<IComponentIdentifier>();
-        Set<?> keys = getHierarchyMap().keySet();
-        for (Iterator<?> iter = keys.iterator(); iter.hasNext();) {
-            Component component = ((SwingComponent)iter.next())
-                .getRealComponent();
+        Set<? extends AUTComponent<Component>> keys = 
+                getHierarchyMap().keySet();
+        for (Iterator<? extends AUTComponent<Component>> 
+            iter = keys.iterator(); iter.hasNext();) {
+            
+            Component component = iter.next().getComponent();
             try {
                 if (AUTServerConfiguration.getInstance().isSupported(
                         component)) {
@@ -359,8 +362,9 @@ public class AUTSwingHierarchy extends AUTHierarchy
         }
         Validate.notNull(component, "The component must not be null"); //$NON-NLS-1$ 
         List<String> hierarchy = new ArrayList<String>();
-        SwingHierarchyContainer parent;
-        SwingHierarchyContainer autContainer = getHierarchyContainer(component);
+        HierarchyContainer<Component> parent;
+        HierarchyContainer<Component> autContainer = 
+                getHierarchyContainer(component);
         if (autContainer != null) {
             // add the name of the container itself
             hierarchy.add(autContainer.getName());
@@ -373,17 +377,18 @@ public class AUTSwingHierarchy extends AUTHierarchy
                 return hierarchy;
             }
             parent = getHierarchyContainer(component.getParent());
-            autContainer.setParent(parent);
+            autContainer.setPrnt(parent);
             // prepend the name of the container up to the root container
             while (parent != null) {
                 ((ArrayList<String>)hierarchy).add(0, parent.getName());
-                Component compo = parent.getComponentID().getRealComponent();
-                parent = parent.getParent();
+                Component compo = parent.getCompID().getComponent();
+                parent = parent.getPrnt();
                 if (parent == null && compo != null 
                         && compo.getParent() != null) {
                     
-                    SwingComponent comp = new SwingComponent(compo.getParent());
-                    SwingHierarchyContainer container = 
+                    AUTComponent<Component> comp = 
+                            new SwingComponent(compo.getParent());
+                    HierarchyContainer<Component> container = 
                         new SwingHierarchyContainer(comp);
                     name(container);
                     parent = container;
@@ -429,7 +434,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
                     + "' added to '" + container + "'"); //$NON-NLS-1$ //$NON-NLS-2$                  
             }
             // get the hierarchy container for container, must be there!
-            SwingHierarchyContainer hierarchyContainer = null;
+            HierarchyContainer<Component> hierarchyContainer = null;
             if (toAdd instanceof Window) {
                 hierarchyContainer = getHierarchyContainer(toAdd);
             } else {
@@ -448,10 +453,10 @@ public class AUTSwingHierarchy extends AUTHierarchy
             }
             // create new hierarchy container for child, name, update hashtable, put
             // them together,
-            SwingHierarchyContainer hierarchyChild = 
+            HierarchyContainer<Component> hierarchyChild = 
                 new SwingHierarchyContainer(new SwingComponent(toAdd));
             hierarchyContainer.add(hierarchyChild);
-            hierarchyChild.setParent(hierarchyContainer);
+            hierarchyChild.setPrnt(hierarchyContainer);
             name(hierarchyChild);
             addToHierachyMap(hierarchyChild);
             if (toAdd instanceof Container) {
@@ -492,12 +497,12 @@ public class AUTSwingHierarchy extends AUTHierarchy
             if (toRemove instanceof Container) {
                 deregisterAsContainerListener((Container)toRemove);
             }
-            SwingHierarchyContainer hierarchyChild = getHierarchyContainer(
-                    toRemove);
+            HierarchyContainer<Component> hierarchyChild = 
+                    getHierarchyContainer(toRemove);
             // update the hierarchy
             if (hierarchyChild != null) {
-                SwingHierarchyContainer hierarchyParent = hierarchyChild
-                    .getParent();
+                HierarchyContainer<Component> hierarchyParent = hierarchyChild
+                    .getPrnt();
                 if (hierarchyParent != null) {
                     hierarchyParent.remove(hierarchyChild);
                 } else {
@@ -606,12 +611,17 @@ public class AUTSwingHierarchy extends AUTHierarchy
     
     /**
      * Adds the parent(s) of the given container to the hierarchy recursively. <br>
-     * Recursion stops if the top level container is reached or a parent container is already known.
-     * @param hierarchyContainer the responding SwingHierarchyContainer of container
-     * @param container the container from the AUT
+     * Recursion stops if the top level container is reached or a parent
+     * container is already known.
+     * 
+     * @param hierarchyContainer
+     *            the responding SwingHierarchyContainer of container
+     * @param container
+     *            the container from the AUT
      */
     private void addToHierarchyUp(
-            SwingHierarchyContainer hierarchyContainer, Container container) {
+            HierarchyContainer<Component> hierarchyContainer,
+            Container container) {
         
         checkDispatchThread();
         if (log.isInfoEnabled()) {
@@ -621,7 +631,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
         registerAsContainerListener(container);
         Container parent = container.getParent();
         if (parent != null) { // root not reached
-            SwingHierarchyContainer hierarchyParent = 
+            HierarchyContainer<Component> hierarchyParent = 
                 getHierarchyContainer(container);            
             if (hierarchyParent == null) {
                 // unknown SwingHierarchyContainer for parent:
@@ -633,7 +643,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
                 hierarchyParent = new SwingHierarchyContainer(
                         new SwingComponent(parent));
                 hierarchyParent.add(hierarchyContainer);
-                hierarchyContainer.setParent(hierarchyParent);
+                hierarchyContainer.setPrnt(hierarchyParent);
                 name(hierarchyParent);
                 addToHierachyMap(hierarchyParent);
                 addToHierarchyUp(hierarchyParent, parent);
@@ -647,7 +657,8 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * @param container the container from the AUT, which children are to be added
      */
     private void addToHierarchyDown(
-            SwingHierarchyContainer hierarchyContainer, Container container) {
+            HierarchyContainer<Component> hierarchyContainer,
+            Container container) {
 
         checkDispatchThread();
         if (log.isInfoEnabled()) {
@@ -667,11 +678,11 @@ public class AUTSwingHierarchy extends AUTHierarchy
                 add((Window)component);
             } else {
                 // add the container
-                SwingHierarchyContainer newHierarchyContainer = 
+                HierarchyContainer<Component> newHierarchyContainer = 
                     new SwingHierarchyContainer(new SwingComponent(component));
                 name(newHierarchyContainer);
                 // update the hash table
-                newHierarchyContainer.setParent(hierarchyContainer);
+                newHierarchyContainer.setPrnt(hierarchyContainer);
                 hierarchyContainer.add(newHierarchyContainer);
                 addToHierachyMap(newHierarchyContainer);
                 if (component instanceof Container) {
@@ -689,12 +700,12 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * <p> deregisters this from the container from AUT. <br> updates also the internal hierarchy map.
      * @param container the container to start
      */
-    private void removeFromHierarchy(SwingHierarchyContainer container) {
+    private void removeFromHierarchy(HierarchyContainer<Component> container) {
         if (container == null) {
             return;
         }
-        SwingComponent autCompID = container.getComponentID();
-        Component autComp = autCompID.getRealComponent();
+        AUTComponent<Component> autCompID = container.getCompID();
+        Component autComp = autCompID.getComponent();
         
         if (autComp == null) {
             log.error("invalid component for removal:"  //$NON-NLS-1$
@@ -716,15 +727,18 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * @throws IllegalArgumentException if component is null
      * @return the hierarchy container or null if the component is not yet managed
      */
-    public SwingHierarchyContainer getHierarchyContainer(Component component) 
+    public HierarchyContainer<Component> getHierarchyContainer(
+            Component component) 
         throws IllegalArgumentException {
         
         Validate.notNull(component, "The component must not be null"); //$NON-NLS-1$
-        SwingHierarchyContainer result = null;
+        HierarchyContainer<Component> result = null;
         try {
-            SwingComponent compID = (SwingComponent)getRealMap().get(component);
+            AUTComponent<Component> compID = (AUTComponent<Component>) 
+                    getRealMap().get(component);
             if (compID != null) {
-                result = (SwingHierarchyContainer)getHierarchyMap().get(compID);
+                result = (HierarchyContainer<Component>) 
+                        getHierarchyMap().get(compID);
             }
         } catch (ClassCastException cce) {
             log.error(cce);
@@ -737,15 +751,15 @@ public class AUTSwingHierarchy extends AUTHierarchy
     /**
      * Names the given hierarchy container. <br>
      * If the managed component has a unique name, this name is used. Otherwise
-     * a name (unique for the hierachy level) is created.
+     * a name (unique for the hierarchy level) is created.
      * @param hierarchyContainer the SwingHierarchyContainer to name, if SwingHierarchyContainer is null,
      *            no action is performed and no exception is thrown.
      */
-    private void name(SwingHierarchyContainer hierarchyContainer) {
+    private void name(HierarchyContainer<Component> hierarchyContainer) {
         checkDispatchThread();
         if (hierarchyContainer != null) {
-            final Component component = hierarchyContainer.getComponentID()
-                .getRealComponent(); 
+            final Component component = hierarchyContainer.getCompID()
+                .getComponent(); 
             String compName = component.getName();
             // SPECIAL HANDLING !!! -----------------------------------
             if (component instanceof Dialog && compName != null 
@@ -758,7 +772,7 @@ public class AUTSwingHierarchy extends AUTHierarchy
                 compName = null;
             }
             // --------------------------------------------------------
-            SwingHierarchyContainer hierarchyParent = null;
+            HierarchyContainer<Component> hierarchyParent = null;
             final Container parent = component.getParent();
             if (parent != null) {
                 hierarchyParent = getHierarchyContainer(parent);
@@ -802,8 +816,8 @@ public class AUTSwingHierarchy extends AUTHierarchy
      * @param swingComponent The component for which the name is being checked.
      * @return true if the name is treated as unique, false otherwise.
      */
-    private boolean isUniqueName(SwingHierarchyContainer parent, String name, 
-            Component swingComponent) {
+    private boolean isUniqueName(HierarchyContainer<Component> parent, 
+            String name, Component swingComponent) {
         
         if (name == null) {
             return false;
@@ -811,12 +825,12 @@ public class AUTSwingHierarchy extends AUTHierarchy
         if (parent == null) {
             return true;
         }
-        SwingHierarchyContainer[] compIDs = parent.getComponents();
+        HierarchyContainer<Component>[] compIDs = parent.getComps();
         final int length = compIDs.length;
         
         for (int index = 0; index < length; index++) {
             Component childComponent = 
-                compIDs[index].getComponentID().getRealComponent();
+                compIDs[index].getCompID().getComponent();
             Object childName = childComponent.getName();
             
             if (name.equals(childName) && childComponent != swingComponent) {
@@ -834,9 +848,9 @@ public class AUTSwingHierarchy extends AUTHierarchy
     }
     
     /**
-     * Returns all descendents of the given <code>component</code>
+     * Returns all descendants of the given <code>component</code>
      * @param c a <code>component</code> value
-     * @return a <code>collection</code> of the component's descendents or an
+     * @return a <code>collection</code> of the component's descendants or an
      * empty <code>collection</code> if nothing was found or <code>c</code> is null.
      */
     private Collection<Component> getComponents(Component c) {

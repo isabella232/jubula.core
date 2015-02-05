@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.components;
 
+import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
@@ -40,8 +41,8 @@ public class ParentGetter {
      *            the object
      * @return the Parent as Object.
      */
-    public static Object get(Object o) {
-        Object result = null;
+    public static EventTarget get(EventTarget o) {
+        EventTarget result = null;
 
         if (o instanceof Menu) {
             result = getFrom((Menu) o);
@@ -81,8 +82,8 @@ public class ParentGetter {
      * @return the Parent of the Node or the Scene if the given Node is the Root
      *         node.
      */
-    private static Object getFrom(Node node) {
-        Object parent = node.getParent();
+    private static EventTarget getFrom(Node node) {
+        EventTarget parent = node.getParent();
         if (parent == null) {
             parent = node.getScene();
         }
@@ -96,12 +97,11 @@ public class ParentGetter {
      * @return Returns the parent Menu if the given Menu is a sub Menu or the
      *         owner Node
      */
-    private static Object getFrom(Menu menu) {
-        Object parent = menu.getParentMenu();
+    private static EventTarget getFrom(Menu menu) {
+        EventTarget parent = menu.getParentMenu();
         if (parent == null) {
             parent = menu.getParentPopup().getOwnerNode();
         }
         return parent;
     }
-
 }

@@ -22,20 +22,24 @@ import java.util.List;
  * for the widgets are also stored in instances of this class.<br>
  * @author BREDEX GmbH
  * @created 02.05.2006
+ * 
+ * @param <COMPONENT_TYPE>
+ *            the type of the component
  */
-public abstract class HierarchyContainer {
+public abstract class HierarchyContainer<COMPONENT_TYPE> {
 
     /** boolean that indicates whether component name is generated */
     private boolean m_nameGenerated;
     
     /** parent of this component */
-    private HierarchyContainer m_parent;
+    private HierarchyContainer<COMPONENT_TYPE> m_parent;
     
     /** a reference to the component/container in the AUT this instance represents */
-    private AUTComponent m_component;
+    private AUTComponent<COMPONENT_TYPE> m_component;
     
     /** list of HierarchyContainers */
-    private List m_containerList = new ArrayList();
+    private List<HierarchyContainer<COMPONENT_TYPE>> m_containerList = 
+            new ArrayList<HierarchyContainer<COMPONENT_TYPE>>();
     
     /** list of HierarchyContainers */
     private List<EventListener> m_listenerList = new ArrayList<EventListener>();
@@ -48,8 +52,8 @@ public abstract class HierarchyContainer {
      * @param component the reference to the container in the AUT
      * @param parent parent of the container
      */
-    public HierarchyContainer(AUTComponent component, 
-            HierarchyContainer parent) {
+    public HierarchyContainer(AUTComponent<COMPONENT_TYPE> component, 
+            HierarchyContainer<COMPONENT_TYPE> parent) {
         
         m_component = component;
         m_parent = parent;
@@ -59,10 +63,9 @@ public abstract class HierarchyContainer {
      * constructor
      * @param component the reference to the container in the AUT
      */
-    public HierarchyContainer(AUTComponent component) {
+    public HierarchyContainer(AUTComponent<COMPONENT_TYPE> component) {
         
         this(component, null);
-        m_parent = null;
     }
     
     /**
@@ -89,7 +92,7 @@ public abstract class HierarchyContainer {
     /**
      * @return Returns the component.
      */
-    protected AUTComponent getCompID() {
+    public AUTComponent<COMPONENT_TYPE> getCompID() {
         return m_component;
     }
     
@@ -97,7 +100,7 @@ public abstract class HierarchyContainer {
      * Adds a component to the container.
      * @param component The component to add.
      */
-    public void add(HierarchyContainer component) {
+    public void add(HierarchyContainer<COMPONENT_TYPE> component) {
         getContainerList().add(component);
     }
     
@@ -105,19 +108,19 @@ public abstract class HierarchyContainer {
      * Removes a component from the container.
      * @param component The container to add.
      */
-    public void remove(HierarchyContainer component) {
+    public void remove(HierarchyContainer<COMPONENT_TYPE> component) {
         getContainerList().remove(component);
     }
 
     /**
      * @return Returns the components of the container.
      */
-    protected HierarchyContainer[] getComps() {
+    public HierarchyContainer<COMPONENT_TYPE>[] getComps() {
         if (getContainerList().isEmpty()) {
             return new HierarchyContainer[0];
         }
         Object[] objectArray = getContainerList().toArray();
-        HierarchyContainer[] containerArray = 
+        HierarchyContainer<COMPONENT_TYPE>[] containerArray = 
             new HierarchyContainer[objectArray.length];
         for (int i = 0; i < objectArray.length; i++) {
             containerArray[i] = (HierarchyContainer)objectArray[i]; 
@@ -182,21 +185,21 @@ public abstract class HierarchyContainer {
     /**
      * @return Returns the parent.
      */
-    public HierarchyContainer getPrnt() {
+    public HierarchyContainer<COMPONENT_TYPE> getPrnt() {
         return m_parent;
     }
     
     /**
      * @param parent the parent
      */
-    public void setPrnt(HierarchyContainer parent) {
+    public void setPrnt(HierarchyContainer<COMPONENT_TYPE> parent) {
         m_parent = parent; 
     }
 
     /**
      * @return the containerList
      */
-    protected List getContainerList() {
+    protected List<HierarchyContainer<COMPONENT_TYPE>> getContainerList() {
         return m_containerList;
     }
 }

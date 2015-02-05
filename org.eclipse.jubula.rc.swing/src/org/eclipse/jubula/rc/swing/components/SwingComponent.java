@@ -14,27 +14,20 @@ import java.awt.Component;
 
 import org.eclipse.jubula.rc.common.components.AUTComponent;
 
-
 /**
  * @author BREDEX GmbH
  * @created 26.04.2006
  */
-public final class SwingComponent extends AUTComponent {
-    
+public final class SwingComponent extends AUTComponent<Component> {
     /**
      * create an instance from a Swing component. This constructor is used when
      * working with real instances instead of mere class descriptions.
-     * @param component Base for identification
+     * 
+     * @param component
+     *            Base for identification
      * 
      */
     public SwingComponent(Component component) {
         super(component);
-    }
-
-    /**
-     * @return Returns the real component.
-     */
-    public Component getRealComponent() {
-        return (Component)getComp();
     }
 }

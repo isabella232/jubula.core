@@ -27,48 +27,55 @@ import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 /**
  * @author BREDEX GmbH
  * @created 31.08.2006
+ * 
+ * @param <COMPONENT_TYPE>
+ *            the type of the component
  */
-public abstract class AUTHierarchy {
+public abstract class AUTHierarchy<COMPONENT_TYPE> {
     
     /** the logger */
     private static final AutServerLogger LOG = 
         new AutServerLogger(AUTHierarchy.class);
     
-    
     /**
      * a hashtable to find the HierarchyContainer for a component from
      * the AUT: key=componentID, value=HierarchyContainer
      */
-    private volatile Map<AUTComponent, HierarchyContainer> m_hierarchyMap; 
+    private volatile Map<AUTComponent<COMPONENT_TYPE>, 
+        HierarchyContainer<COMPONENT_TYPE>> m_hierarchyMap; 
     
     /**
      * a hashtable to find the HierarchyContainer for a component from
      * the AUT: key=component.getRealComponent, value=AUTComponent
      */
-    private volatile Map<Object, AUTComponent> m_realHierarchyMap; 
+    private volatile Map<COMPONENT_TYPE, 
+        AUTComponent<COMPONENT_TYPE>> m_realHierarchyMap; 
     
     /**
      * default constructor <br>
      * initializes the HashTables m_hierarchyMap and m_topLevelContainerMap;
      */
     public AUTHierarchy() {
-        m_hierarchyMap = new Hashtable<AUTComponent, HierarchyContainer>(
-            Constants.INITIAL_CAPACITY_HIERARCHY);
-        m_realHierarchyMap = new Hashtable<Object, AUTComponent>(
-            Constants.INITIAL_CAPACITY_HIERARCHY);
+        m_hierarchyMap = new Hashtable<AUTComponent<COMPONENT_TYPE>, 
+                HierarchyContainer<COMPONENT_TYPE>>(
+                Constants.INITIAL_CAPACITY_HIERARCHY);
+        m_realHierarchyMap = new Hashtable<COMPONENT_TYPE, 
+                AUTComponent<COMPONENT_TYPE>>(
+                Constants.INITIAL_CAPACITY_HIERARCHY);
     }
     
     /**
      * @return all hierarchyContainer
      */
-    public Map<? extends AUTComponent, HierarchyContainer> getHierarchyMap() {
+    public Map<? extends AUTComponent<COMPONENT_TYPE>, 
+            HierarchyContainer<COMPONENT_TYPE>> getHierarchyMap() {
         return m_hierarchyMap;
     }
     
     /**
      * @return all AUTcomponent
      */
-    protected Map<Object, AUTComponent> getRealMap() {
+    protected Map<COMPONENT_TYPE, AUTComponent<COMPONENT_TYPE>> getRealMap() {
         return m_realHierarchyMap;
     }
 
@@ -76,9 +83,11 @@ public abstract class AUTHierarchy {
      * Adds a HiearchyContainer to the HierarchyMap
      * @param hierarchyContainer the hierarchyContainer to add
      */
-    protected void addToHierachyMap(HierarchyContainer hierarchyContainer) {
-        final AUTComponent autComponent = hierarchyContainer.getCompID();
-        final Object realComponent = autComponent.getComp();
+    protected void addToHierachyMap(
+            HierarchyContainer<COMPONENT_TYPE> hierarchyContainer) {
+        final AUTComponent<COMPONENT_TYPE> autComponent = 
+                hierarchyContainer.getCompID();
+        final COMPONENT_TYPE realComponent = autComponent.getComponent();
         m_hierarchyMap.put(autComponent, hierarchyContainer);
         m_realHierarchyMap.put(realComponent, autComponent);
         if (LOG.isDebugEnabled()) {
@@ -94,9 +103,10 @@ public abstract class AUTHierarchy {
      * @param hierarchyContainer the hierarchContainer to remove
      */
     protected void removeFromHierachyMap(
-            HierarchyContainer hierarchyContainer) {
-        AUTComponent autComponent = hierarchyContainer.getCompID();
-        Object realComponent = autComponent.getComp();
+            HierarchyContainer<COMPONENT_TYPE> hierarchyContainer) {
+        AUTComponent<COMPONENT_TYPE> autComponent = 
+                hierarchyContainer.getCompID();
+        Object realComponent = autComponent.getComponent();
         m_hierarchyMap.remove(autComponent);
         m_realHierarchyMap.remove(realComponent);
     }
@@ -118,7 +128,7 @@ public abstract class AUTHierarchy {
      * @param postFix a string to append
      * @return the new name
      */
-    protected String createName (Object component, int postFix) {
+    protected String createName (COMPONENT_TYPE component, int postFix) {
         return component.getClass().getName()
             + Constants.CLASS_NUMBER_SEPERATOR + postFix;
     }
@@ -138,7 +148,8 @@ public abstract class AUTHierarchy {
     /**
      * @return all hierarchyContainer of the hierarchyMap
      */
-    protected Collection<HierarchyContainer> getHierarchyValues() {
+    protected Collection<HierarchyContainer<COMPONENT_TYPE>> 
+        getHierarchyValues() {
         return m_hierarchyMap.values();
     }
     
@@ -148,15 +159,17 @@ public abstract class AUTHierarchy {
      * @param component component
      * @return List
      */
-    protected abstract List<String> getComponentContext(Object component);
+    protected abstract List<String> getComponentContext(
+            COMPONENT_TYPE component);
     
     /**
      * @param container the hierarchy container that corresponds to component
      * @param component the UI component that corresponds to the identifier
      * @param identifier the identifier to set alternative display name on it
      */
-    protected final void setAlternativeDisplayName(HierarchyContainer container,
-            Object component, IComponentIdentifier identifier) {
+    protected final void setAlternativeDisplayName(
+            HierarchyContainer<COMPONENT_TYPE> container,
+            COMPONENT_TYPE component, IComponentIdentifier identifier) {
         if (container != null) {
             String displayName = buildDisplayName(container, component);
             if ((displayName != null) 
@@ -172,8 +185,9 @@ public abstract class AUTHierarchy {
      * @param component the UI component to build a display name for
      * @return display name to be used for the UI component
      */
-    private final String buildDisplayName(HierarchyContainer container,
-            Object component) {
+    private final String buildDisplayName(
+            HierarchyContainer<COMPONENT_TYPE> container,
+            COMPONENT_TYPE component) {
         String containerName = container.getName();
         boolean containerNameGenerated = container.isNameGenerated();        
         String[] componentTextArray = getTextArrayFromComponent(component);
@@ -191,7 +205,7 @@ public abstract class AUTHierarchy {
      * @param component the UI component to get the string array from
      * @return string array from the given UI component
      */
-    private String[] getTextArrayFromComponent(Object component) {
+    private String[] getTextArrayFromComponent(COMPONENT_TYPE component) {
         String[] componentTextArray = null;
         if (component != null) {
             try {

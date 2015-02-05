@@ -34,7 +34,6 @@ import org.eclipse.jubula.rc.common.tester.AbstractApplicationTester;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
-import org.eclipse.jubula.rc.swing.components.SwingComponent;
 import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swing.listener.FocusTracker;
 import org.eclipse.jubula.rc.swing.tester.util.EventListener;
@@ -473,8 +472,8 @@ public class SwingApplicationTester extends AbstractApplicationTester {
                 Set<? extends AUTComponent> components = ComponentHandler
                     .getAutHierarchy().getHierarchyMap().keySet();
                 for (AUTComponent component : components) {
-                    Component c = ((SwingComponent) component)
-                        .getRealComponent();
+                    Component c = ((AUTComponent<Component>) component)
+                        .getComponent();
                     if (c.isShowing()) {
                         if (c instanceof Frame) {
                             Frame frame = (Frame) c;

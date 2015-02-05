@@ -11,93 +11,29 @@
 package org.eclipse.jubula.rc.swt.components;
 
 import org.eclipse.jubula.rc.common.components.HierarchyContainer;
-import org.eclipse.swt.internal.SWTEventListener;
-
+import org.eclipse.swt.widgets.Widget;
 
 /**
  * @author BREDEX GmbH
  * @created 04.05.2006
  */
-public class SwtHierarchyContainer extends HierarchyContainer {
-
+public class SwtHierarchyContainer extends HierarchyContainer<Widget> {
     /**
-     * @param component the SwtComponentIdentifier
-     * @param parent the SwtHierarchyContainer
+     * @param component
+     *            the SwtComponentIdentifier
+     * @param parent
+     *            the SwtHierarchyContainer
      */
-    public SwtHierarchyContainer(SwtComponent component, 
-            SwtHierarchyContainer parent) {
+    public SwtHierarchyContainer(SwtComponent component,
+            HierarchyContainer<Widget> parent) {
         super(component, parent);
     }
-    
+
     /**
-     * @param component the SwtComponentIdentifier
+     * @param component
+     *            the SwtComponentIdentifier
      */
     public SwtHierarchyContainer(SwtComponent component) {
         this(component, null);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void add(SwtHierarchyContainer component) {
-        super.add(component);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public SwtComponent getComponentID() {
-        return (SwtComponent)super.getCompID();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public SwtHierarchyContainer[] getComponents() {
-        if (super.getComps().length == 0) {
-            return new SwtHierarchyContainer[0];
-        }
-        HierarchyContainer[] containerArray = super.getComps();
-        SwtHierarchyContainer[] swtContainerArray = 
-            new SwtHierarchyContainer[containerArray.length];
-        for (int i = 0; i < containerArray.length; i++) {
-            swtContainerArray[i] = (SwtHierarchyContainer)containerArray[i]; 
-        }
-        return swtContainerArray;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public SWTEventListener[] getListeners() {
-        return (SWTEventListener[])super.getListnrs();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public SwtHierarchyContainer getParent() {
-        return (SwtHierarchyContainer)super.getPrnt();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void setParent(SwtHierarchyContainer parent) {
-        super.setPrnt(parent);
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void addContainerListener(SWTEventListener listener) {
-        super.addContainerListnr(listener);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeContainerListener(SWTEventListener listener) {
-        super.removeContainerListener(listener);
-    } 
 }

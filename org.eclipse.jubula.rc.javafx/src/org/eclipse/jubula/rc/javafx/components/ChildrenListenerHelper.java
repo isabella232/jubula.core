@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.javafx.components;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.event.EventTarget;
 
 /**
  * Helper-Class for adding listeners to children of components, this is relevant
@@ -44,7 +45,8 @@ public class ChildrenListenerHelper {
      * @param list
      *            the list to listen to for changes
      */
-    public static void addListener(ObservableList<?> list) {
+    public static void addListener(
+            ObservableList<? extends EventTarget> list) {
         list.addListener(listhandler);
     }
 
@@ -54,7 +56,8 @@ public class ChildrenListenerHelper {
      * @param prop
      *            the property to listen to for changes
      */
-    public static void addListener(ReadOnlyObjectProperty<?> prop) {
+    public static void addListener(
+            ReadOnlyObjectProperty<? extends EventTarget> prop) {
         prop.addListener(prophandler);
     }
 
@@ -64,7 +67,8 @@ public class ChildrenListenerHelper {
      * @param list
      *            the list to remove the listener from
      */
-    public static void removeListener(ObservableList<?> list) {
+    public static void removeListener(
+            ObservableList<? extends EventTarget> list) {
         list.removeListener(listhandler);
     }
 
@@ -74,7 +78,8 @@ public class ChildrenListenerHelper {
      * @param prop
      *            the prop to remove the listener from
      */
-    public static void removeListener(ObjectProperty<?> prop) {
+    public static void removeListener(
+            ObjectProperty<? extends EventTarget> prop) {
         prop.removeListener(prophandler);
     }
 }

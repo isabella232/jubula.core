@@ -18,11 +18,13 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
@@ -49,8 +51,8 @@ public class ChildrenGetter {
      *            the object
      * @return the children in a List of Objects.
      */
-    public static List<Object> getAsList(Object o) {
-        List<Object> result = new ArrayList<Object>();
+    public static List<EventTarget> getAsList(EventTarget o) {
+        List<EventTarget> result = new ArrayList<EventTarget>();
         if (o instanceof Menu) {
             result.addAll(getFrom((Menu) o));
         } else if (o instanceof Parent) {
@@ -92,7 +94,8 @@ public class ChildrenGetter {
      * @return <code>true</code> if <code>collection</code> changed as a result
      *         of this call.
      */
-    private static boolean add(Collection<Object> collection, Object toAdd) {
+    private static boolean add(Collection<EventTarget> collection, 
+            EventTarget toAdd) {
         if (toAdd != null) {
             return collection.add(toAdd);
         }
@@ -171,7 +174,8 @@ public class ChildrenGetter {
      *            the ScrollPane
      * @return List with one Node, the content from the ScrollPane
      */
-    public static ObjectProperty<Node> getFrom(ScrollPane scPane) {
+    public static ObjectProperty<? extends EventTarget> 
+        getFrom(ScrollPane scPane) {
         return scPane.contentProperty();
     }
 
@@ -183,10 +187,9 @@ public class ChildrenGetter {
      *            the Menu
      * @return List with MenuItems
      */
-    public static ObservableList<Object> getFrom(Menu menu) {
-        ObservableList<Object> result = FXCollections.observableArrayList();
+    public static ObservableList<MenuItem> getFrom(Menu menu) {
+        ObservableList<MenuItem> result = FXCollections.observableArrayList();
         result.addAll(menu.getItems());
         return result;
     }
-
 }

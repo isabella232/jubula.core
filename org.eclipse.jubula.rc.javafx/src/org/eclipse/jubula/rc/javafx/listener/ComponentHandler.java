@@ -20,6 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -32,6 +33,7 @@ import javafx.stage.WindowEvent;
 
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.components.AUTComponent;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
@@ -139,11 +141,10 @@ public class ComponentHandler implements ListChangeListener<Stage>,
                         Set<JavaFXComponent> keys = (Set<JavaFXComponent>) 
                                 hierarchy.getHierarchyMap().keySet();
                         List<T> result = new ArrayList<T>();
-                        for (JavaFXComponent object : keys) {
-                            if (type.isAssignableFrom(object
-                                    .getRealComponentType())) {
-                                result.add(type.cast(object.
-                                        getRealComponent()));
+                        for (AUTComponent<EventTarget> object : keys) {
+                            EventTarget component = object.getComponent();
+                            if (type.isAssignableFrom(component.getClass())) {
+                                result.add(type.cast(component));
                             }
                         }
                         return result;

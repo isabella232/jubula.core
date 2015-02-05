@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.javafx.components;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventTarget;
 
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
@@ -21,16 +22,14 @@ import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
  * @author BREDEX GmbH
  * @created 24.10.2013
  */
-public class AUTPropertyChangeHandler implements ChangeListener<Object> {
-
+public class AUTPropertyChangeHandler implements ChangeListener<EventTarget> {
     /** Hierarchy **/
     private AUTJavaFXHierarchy m_hierarchy = ComponentHandler.getAutHierarchy();
 
     @Override
-    public void changed(ObservableValue<? extends Object> observable,
-            Object oldValue, Object newValue) {
+    public void changed(ObservableValue<? extends EventTarget> observable,
+            EventTarget oldValue, EventTarget newValue) {
         m_hierarchy.removeComponentFromHierarchy(oldValue);
         m_hierarchy.createHierarchyFrom(newValue);
     }
-
 }

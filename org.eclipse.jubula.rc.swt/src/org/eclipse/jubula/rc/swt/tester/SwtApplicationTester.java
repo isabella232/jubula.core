@@ -347,7 +347,7 @@ public class SwtApplicationTester extends AbstractApplicationTester {
                         .keySet();
                 for (Iterator it = components.iterator(); it.hasNext();) {
                 
-                    Widget comp = ((SwtComponent)it.next()).getRealComponent();
+                    Widget comp = ((SwtComponent)it.next()).getComponent();
                     if (comp instanceof Shell 
                             && !comp.isDisposed()
                             && ((Shell)comp).isVisible()) {

@@ -18,22 +18,16 @@ import org.eclipse.swt.widgets.Widget;
  * @author BREDEX GmbH
  * @created 26.04.2006
  */
-public final class SwtComponent extends AUTComponent {
-    
+public final class SwtComponent extends AUTComponent<Widget> {
     /**
      * create an instance from a SWT component. This constructor is used when
      * working with real instances instead of mere class descriptions.
-     * @param component Base for identification
+     * 
+     * @param component
+     *            Base for identification
      * 
      */
     public SwtComponent(Widget component) {
         super(component);
-    }
-
-    /**
-     * @return Returns the real component (control).
-     */
-    public Widget getRealComponent() {
-        return (Widget)getComp();
     }
 }

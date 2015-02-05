@@ -127,7 +127,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
                 do {
                     Event e = m_eventList.poll(timeout, TimeUnit.MILLISECONDS);
                     history.add(e);
-                    if (isEventMatch(e, matcher, eventTarget)) {
+                    if (isEventMatch(e, matcher, (EventTarget)eventTarget)) {
                         return;
                     }
                     now = System.currentTimeMillis();
@@ -174,7 +174,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
      *         </code>expectedTarget</code>.
      */
     private boolean isEventMatch(
-            Event e, IEventMatcher matcher, Object expectedTarget) {
+            Event e, IEventMatcher matcher, EventTarget expectedTarget) {
 
         return e != null 
                 && isComponentMatch(expectedTarget, e.getTarget()) 
@@ -194,13 +194,13 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
      *         <code>expectedTarget</code>. 
      */
     private boolean isComponentMatch(
-            Object expectedTarget, EventTarget actualTarget) {
+            EventTarget expectedTarget, EventTarget actualTarget) {
 
         if (expectedTarget == null) {
             return true;
         }
 
-        Object currentExpectedTarget = expectedTarget;
+        EventTarget currentExpectedTarget = expectedTarget;
         while (currentExpectedTarget != null) {
             if (currentExpectedTarget == actualTarget) {
                 return true;
@@ -209,7 +209,7 @@ class RobotEventConfirmerJavaFXImpl implements IRobotEventConfirmer,
             currentExpectedTarget = ParentGetter.get(currentExpectedTarget);
         }
 
-        Object currentActualTarget = actualTarget;
+        EventTarget currentActualTarget = actualTarget;
         while (currentActualTarget != null) {
             if (currentActualTarget == expectedTarget) {
                 return true;

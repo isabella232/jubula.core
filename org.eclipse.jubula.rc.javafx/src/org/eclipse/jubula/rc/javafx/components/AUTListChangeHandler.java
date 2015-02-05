@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.javafx.components;
 import java.util.List;
 
 import javafx.collections.ListChangeListener;
+import javafx.event.EventTarget;
 
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
@@ -22,20 +23,20 @@ import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
  * @author BREDEX GmbH
  * @created 24.10.2013
  */
-public class AUTListChangeHandler implements ListChangeListener<Object> {
+public class AUTListChangeHandler implements ListChangeListener<EventTarget> {
 
     /** Hierarchy **/
     private AUTJavaFXHierarchy m_hierarchy = ComponentHandler.getAutHierarchy();
 
     @Override
-    public void onChanged(Change<? extends Object> c) {
+    public void onChanged(Change<? extends EventTarget> c) {
         c.next();
-        List<? extends Object> changedObjects = c.getRemoved();
-        for (Object o : changedObjects) {
+        List<? extends EventTarget> changedObjects = c.getRemoved();
+        for (EventTarget o : changedObjects) {
             m_hierarchy.removeComponentFromHierarchy(o);
         }
         changedObjects = c.getAddedSubList();
-        for (Object o : changedObjects) {
+        for (EventTarget o : changedObjects) {
             m_hierarchy.createHierarchyFrom(o);
         }
     }

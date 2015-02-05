@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.components;
 
+import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -26,15 +27,15 @@ import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 public class FindJavaFXComponentBP extends FindComponentBP {
 
     /**
-     * Searchs for the component in the AUT with the given
+     * Searches for the component in the AUT with the given
      * <code>componentIdentifier</code>.
      *
      * @param componentIdentifier
      *            the identifier created in object mapping mode
      * @param autHierarchy
-     *            the current aut hierarchy
+     *            the current AUT hierarchy
      * @throws IllegalArgumentException
-     *             if the given identifer is null or <br>
+     *             if the given identifier is null or <br>
      *             the hierarchy is not valid: empty or containing null elements
      * @return the instance of the component of the AUT
      */
@@ -72,9 +73,9 @@ public class FindJavaFXComponentBP extends FindComponentBP {
         } else if (currComp instanceof Stage) {
             return ((Stage) currComp).isShowing();
         } else if (currComp instanceof Node) {
-            Object parent = ParentGetter.get(currComp);
-            return ((Node) currComp).isVisible()
-                    && parent != null
+            Node currNode = (Node) currComp;
+            EventTarget parent = ParentGetter.get(currNode);
+            return currNode.isVisible() && parent != null
                     && isAvailable(parent);
         } else {
             return ((MenuItem) currComp).isVisible();

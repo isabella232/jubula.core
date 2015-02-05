@@ -16,38 +16,30 @@ import org.apache.commons.lang.Validate;
 /**
  * @author BREDEX GmbH
  * @created 11.05.2006
+ * 
+ * @param <COMPONENT_TYPE>
+ *            the type of the component
  */
-public abstract class AUTComponent {
-    /** Component from the AUT. This may be null if no actual component
+public abstract class AUTComponent<COMPONENT_TYPE> {
+    /** 
+     * Component from the AUT. This may be null if no actual component
      * was used, i.e. the ID was generated for inheritance checking.
      */
-    private Object m_component = null;
+    private COMPONENT_TYPE m_component = null;
 
     /** the name of the compID */
     private String m_name;
     
     /**
-     * create an instance from a Swing component. This constructor is used when
-     * working with real instances instead of mere class descriptions.
-     * <p>
-     * Swing: use Component as parameter
-     * <p>
-     * SWT: use Widget as parameter
-     * @param component Base for identification
+     * Create a wrapper instance from a UI component. This constructor is used
+     * when working with real instances instead of mere class descriptions.
+     * 
+     * @param component
+     *            the real UI toolkit component
      */
-    public AUTComponent(Object component) {
+    public AUTComponent(COMPONENT_TYPE component) {
         Validate.notNull(component, "The component must not be null"); //$NON-NLS-1$
-        m_component = component;
-    }
-
-    /**
-     * @return Returns the component.
-     * you have to implement:
-     * <p>Swing: Component getComponent()
-     * <p>SWT  : Widget getComponent()
-     */
-    protected Object getComp() {
-        return m_component;
+        setComponent(component);
     }
 
     /**
@@ -61,14 +53,14 @@ public abstract class AUTComponent {
             return true; // a case of identity
         }
         AUTComponent o = (AUTComponent)obj;
-        return m_component.equals(o.m_component);
+        return getComponent().equals(o.getComponent());
     }
 
     /**
      * {@inheritDoc}
      */
     public int hashCode() {
-        return m_component.hashCode();
+        return getComponent().hashCode();
     }
 
     /**
@@ -76,10 +68,11 @@ public abstract class AUTComponent {
      */
     public String toString() {
         StringBuffer sb = new StringBuffer("ComponentID: "); //$NON-NLS-1$
-        sb.append(m_component.getClass().getName());
+        Class<? extends Object> componentClass = getComponent().getClass();
+        sb.append(componentClass.getName());
         sb.append(", CL: "); //$NON-NLS-1$
-        sb.append(m_component.getClass().getClassLoader());
-        return  sb.toString();
+        sb.append(componentClass.getClassLoader());
+        return sb.toString();
     }
 
     /**
@@ -96,10 +89,17 @@ public abstract class AUTComponent {
         m_name = name;
     }
     
-    /** set the AUT component 
-     * @param comp the component to set
+    /**
+     * @return the component
      */
-    protected void setComp(Object comp) { 
-        m_component = comp;
+    public COMPONENT_TYPE getComponent() {
+        return m_component;
+    }
+
+    /**
+     * @param component the component to set
+     */
+    protected void setComponent(COMPONENT_TYPE component) {
+        m_component = component;
     }
 }
