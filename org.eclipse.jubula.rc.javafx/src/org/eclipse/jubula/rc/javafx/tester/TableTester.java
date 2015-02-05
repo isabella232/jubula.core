@@ -283,6 +283,12 @@ public class TableTester extends AbstractTableTester {
 
                     @Override
                     public Boolean call() throws StepExecutionException {
+                        if (box == null) {
+                            throw new StepExecutionException(
+                                    "No checkbox found", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                            TestErrorEvent.CHECKBOX_NOT_FOUND));
+                        }
                         return box.isSelected();
                     }
                 });
