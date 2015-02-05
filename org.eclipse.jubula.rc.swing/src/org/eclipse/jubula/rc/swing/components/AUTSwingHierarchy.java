@@ -734,11 +734,9 @@ public class AUTSwingHierarchy extends AUTHierarchy<Component>
         Validate.notNull(component, "The component must not be null"); //$NON-NLS-1$
         HierarchyContainer<Component> result = null;
         try {
-            AUTComponent<Component> compID = (AUTComponent<Component>) 
-                    getRealMap().get(component);
+            AUTComponent<Component> compID = getRealMap().get(component);
             if (compID != null) {
-                result = (HierarchyContainer<Component>) 
-                        getHierarchyMap().get(compID);
+                result = getHierarchyMap().get(compID);
             }
         } catch (ClassCastException cce) {
             log.error(cce);

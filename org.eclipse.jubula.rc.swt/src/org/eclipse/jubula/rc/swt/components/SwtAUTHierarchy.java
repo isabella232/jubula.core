@@ -160,8 +160,8 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
         // (i.e. don't try to remove it twice)
         if (getRealMap().get(window) != null) {
             HierarchyContainer<Widget> windowContainer = 
-                (HierarchyContainer<Widget>) getHierarchyMap()
-                    .get(getRealMap().get(window));
+                getHierarchyMap()
+                .get(getRealMap().get(window));
             
             if (windowContainer != null) {
                 // remove the windowContainer from its parent in the hierarchy, if
@@ -584,8 +584,7 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
             final Object componentToRemove = getRealMap().get(toRemove);
             if (componentToRemove != null) {
                 HierarchyContainer<Widget> hierarchyContainer = 
-                        (HierarchyContainer<Widget>) getHierarchyMap()
-                        .remove(componentToRemove);
+                        getHierarchyMap().remove(componentToRemove);
                 // update the hierarchy and deletes the container and component from maps
                 removeFromHierarchy(hierarchyContainer);
             } else {
@@ -751,8 +750,7 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
         try {
             SwtComponent compID = (SwtComponent)getRealMap().get(component);
             if (compID != null) {
-                result = (HierarchyContainer<Widget>)
-                            getHierarchyMap().get(compID);
+                result = getHierarchyMap().get(compID);
             }
         } catch (ClassCastException cce) {
             log.error(cce);
