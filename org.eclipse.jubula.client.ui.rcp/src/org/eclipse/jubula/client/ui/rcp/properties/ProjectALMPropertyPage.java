@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.properties;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +25,10 @@ import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.EditingSupport;
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
+import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
+import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -33,6 +38,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
+import org.eclipse.jubula.client.core.model.ALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
@@ -56,6 +62,8 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -181,6 +189,10 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
      * the original / unmodified project properties
      */
     private IProjectPropertiesPO m_origProjectProps;
+    
+    /** the label provider for the reporting rules table */
+    private ReportingRulesTableLabelProvider m_reportingRulesLabelProvider =
+            new ReportingRulesTableLabelProvider();
     
     /**
      * @param es
@@ -353,8 +365,9 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                 .getALMReportingRules();
         createTableContent(tableViewer);
         tableViewer.setInput(m_reportingRules);
-        
         final Table table = tableViewer.getTable();
+        tableViewer.setLabelProvider(m_reportingRulesLabelProvider);
+        
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
         GridData layoutData = new GridData(600, 150, true, false);
@@ -503,6 +516,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
                     m_onSuccessTableViewer.getTable().setEnabled(true);
                     m_onFailureTableViewer.getTable().setEnabled(true);
                 }
+                m_reportingRulesLabelProvider.refresh();
                 setErrorMessage(null);
                 updateALMData();
             }
@@ -831,5 +845,123 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
             ((IALMReportingRulePO)element).setValue(hostNameValue);
             getViewer().update(element, null);
         }
+    }
+    
+    /**
+     * Label provider for ALM reporting rules table
+     */
+    private class ReportingRulesTableLabelProvider
+                implements ITableLabelProvider, IColorProvider {
+
+        /** whether the table is enabled */
+        private boolean m_enabled = true;
+        
+        /** the listeners */
+        private List<ILabelProviderListener> m_listeners;
+        
+        /**
+         * The label provider for the table containing ALM reporting rules
+         */
+        public ReportingRulesTableLabelProvider() {
+            super();
+            m_listeners = new ArrayList<ILabelProviderListener>();
+        }
+        
+        /**
+         * refreshes the enabled-state and notifies listeners
+         */
+        public void refresh() {
+            boolean newState = m_onSuccessTableViewer.getTable().getEnabled();
+            if (newState != m_enabled) {
+                m_enabled =  newState;
+                for (ILabelProviderListener listener : m_listeners) {
+                    listener.labelProviderChanged(
+                            new LabelProviderChangedEvent(this));
+                }
+            }
+        }
+        
+        @Override
+        public void addListener(ILabelProviderListener listener) {
+            m_listeners.add(listener);
+        }
+
+        @Override
+        public void dispose() {
+            // nothing
+        }
+
+        @Override
+        public boolean isLabelProperty(Object element, String property) {
+            return false;
+        }
+
+        @Override
+        public void removeListener(ILabelProviderListener listener) {
+            m_listeners.remove(listener);
+        }
+
+        @Override
+        public Color getForeground(Object element) {
+            int greyTone = m_enabled ? 0 : 128;
+            return new Color(getControl().getDisplay(), 
+                    greyTone, greyTone, greyTone);
+        }
+
+        @Override
+        public Color getBackground(Object element) {
+            int greyTone = 250;
+            if (element instanceof ALMReportingRulePO) {
+                ALMReportingRulePO currentRule = (ALMReportingRulePO)element;
+                int i = 0;
+                for (IALMReportingRulePO rule : m_reportingRules) {
+                    if (rule.equals(currentRule)) {
+                        break;
+                    }
+                    if (rule.getType().equals(currentRule.getType())) {
+                        i++;                        
+                    }
+                }
+                switch (i % 2) {
+                    case 0:
+                        greyTone = 235;
+                        break;
+                    case 1:
+                        greyTone = 240;
+                        break;
+                    default:
+                        break;
+                }
+                if (!m_enabled) {
+                    greyTone += 5;
+                }
+            }
+            return new Color(getControl().getDisplay(),
+                    greyTone, greyTone, greyTone);
+        }
+
+        @Override
+        public Image getColumnImage(Object element, int columnIndex) {
+            return null;
+        }
+
+        @Override
+        public String getColumnText(Object element, int columnIndex) {
+            if (element instanceof ALMReportingRulePO) {
+                ALMReportingRulePO rule = (ALMReportingRulePO)element;
+                switch (columnIndex) {
+                    case 0:
+                        return rule.getName();
+                    case 1:
+                        return rule.getAttributeID();
+                    case 2:
+                        return rule.getValue();
+                    default:
+                        break;
+                }
+            }
+            return null;
+        }
+        
     }
 }
