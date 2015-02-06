@@ -10,4 +10,27 @@
   </parent>
   <artifactId>org.eclipse.jubula.app</artifactId>
   <packaging>eclipse-plugin</packaging>
+  
+  <build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>gen-splash</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<target>
+								<copy file="tSplash.bmp" tofile="splash.bmp" overwrite="false" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
