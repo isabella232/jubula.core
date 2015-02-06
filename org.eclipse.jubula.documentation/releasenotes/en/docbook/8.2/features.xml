@@ -1,0 +1,26 @@
+<section id="new-features-and-developments-8.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+    <para>
+    <emphasis role="strong">Background and border properties set by CSS are checkable in JavaFX AUTs</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	In JavaFX AUTs, you can use the action "check property" to check properties set via CSS.
+      </para>
+    </listitem>
+    <listitem>
+    	<para>
+    	We have implemented the ability to check complex properties for background and border.
+    	</para>
+    </listitem>
+    <listitem>
+    	<para>
+    	You can add support for other complex properties using an adapter. 
+    	</para>
+    </listitem>
+  </itemizedlist>
+ 
+</section>

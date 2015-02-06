@@ -27,6 +27,7 @@
       </para>
     </section>
   
+    <xi:include href="8.2/notes.xml"/>
     <xi:include href="8.1/notes.xml"/>
     <xi:include href="8.0/notes.xml"/>
     <xi:include href="7.2/notes.xml"/>
