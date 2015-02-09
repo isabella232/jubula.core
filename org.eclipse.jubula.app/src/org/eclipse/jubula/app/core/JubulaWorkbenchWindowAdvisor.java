@@ -170,14 +170,14 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      * {@inheritDoc}
      */
     public void preWindowOpen() {
-        getWindowConfigurer().setTitle(Messages
-                .JubulaWorkbenchWindowAdvisorWindowTitle);
-        getWindowConfigurer().setShowMenuBar(true);
-        getWindowConfigurer().setShowPerspectiveBar(true);
-        getWindowConfigurer().setShowCoolBar(true);
-        getWindowConfigurer().setShowStatusLine(true);
-        getWindowConfigurer().setShowProgressIndicator(true);
-        getWindowConfigurer().setShowFastViewBars(false);
+        IWorkbenchWindowConfigurer config = getWindowConfigurer();
+        config.setTitle(Messages.JubulaWorkbenchWindowAdvisorWindowTitle);
+        config.setShowMenuBar(true);
+        config.setShowPerspectiveBar(true);
+        config.setShowCoolBar(true);
+        config.setShowStatusLine(true);
+        config.setShowProgressIndicator(true);
+        config.setShowFastViewBars(false);
     }
     
     /**
