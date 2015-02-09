@@ -16,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
@@ -42,6 +43,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.ContextMenuAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.LabeledAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.LabeledGraphicContainerAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ListViewAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuButtonAdapter;
@@ -74,12 +76,13 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
      * the supported classes
      */
     private static final Class[] SUPPORTEDCLASSES = new Class[] {
-        ButtonBase.class, MenuItem.class, MenuBar.class, Label.class,
+        MenuItem.class, MenuBar.class,
         TextInputControl.class, TreeView.class, TableView.class,
         ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
         ListView.class, ComboBox.class, TabPane.class, ChoiceBox.class,
         Accordion.class, ScrollPane.class, TitledPane.class,
-        SplitPane.class, ToolBar.class, TreeTableView.class, MenuButton.class};
+        SplitPane.class, ToolBar.class, TreeTableView.class, MenuButton.class,
+        Labeled.class};
 
     @Override
     public Class[] getSupportedClasses() {
@@ -146,6 +149,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                 returnvalue = new SplitPaneAdapter((SplitPane) objectToAdapt);
             } else if (objectToAdapt instanceof ToolBar) {
                 returnvalue = new ToolBarAdapter((ToolBar) objectToAdapt);
+            } else if (objectToAdapt instanceof Labeled) {
+                returnvalue = new LabeledGraphicContainerAdapter<Labeled>(
+                        (Labeled) objectToAdapt);
             }
         }
         return returnvalue;

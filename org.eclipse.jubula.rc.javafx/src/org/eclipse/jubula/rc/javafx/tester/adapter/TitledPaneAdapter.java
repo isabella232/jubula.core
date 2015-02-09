@@ -46,6 +46,7 @@ public class TitledPaneAdapter extends JavaFXComponentAdapter<TitledPane>
                     public List<Node> call() throws Exception {
                         ArrayList<Node> list = new ArrayList<>();
                         list.add(getRealComponent().getContent());
+                        list.add(getRealComponent().getGraphic());
                         return list;
                     }
                 });
