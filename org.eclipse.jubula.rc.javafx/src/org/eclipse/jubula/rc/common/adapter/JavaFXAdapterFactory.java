@@ -76,13 +76,13 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
      * the supported classes
      */
     private static final Class[] SUPPORTEDCLASSES = new Class[] {
-        MenuItem.class, MenuBar.class,
-        TextInputControl.class, TreeView.class, TableView.class,
-        ContextMenu.class, ImageView.class, Text.class, TitledPane.class,
-        ListView.class, ComboBox.class, TabPane.class, ChoiceBox.class,
-        Accordion.class, ScrollPane.class, TitledPane.class,
-        SplitPane.class, ToolBar.class, TreeTableView.class, MenuButton.class,
-        Labeled.class};
+        MenuItem.class, MenuBar.class, TextInputControl.class,
+        TreeView.class, TableView.class, ContextMenu.class,
+        ImageView.class, Text.class, TitledPane.class, ListView.class,
+        ComboBox.class, TabPane.class, ChoiceBox.class, Accordion.class,
+        ScrollPane.class, SplitPane.class, ToolBar.class,
+        TreeTableView.class, MenuButton.class, Labeled.class
+        };
 
     @Override
     public Class[] getSupportedClasses() {

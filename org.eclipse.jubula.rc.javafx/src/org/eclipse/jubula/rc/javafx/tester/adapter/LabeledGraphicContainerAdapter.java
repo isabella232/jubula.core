@@ -43,7 +43,7 @@ public class LabeledGraphicContainerAdapter<T extends Labeled> extends
     }
 
     @Override
-    public List<? extends Node> getContent() {
+    public List<Node> getContent() {
         return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
                 new Callable<List<Node>>() {
 

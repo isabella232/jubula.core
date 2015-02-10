@@ -25,8 +25,8 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
  * @author BREDEX GmbH
  * @created 30.05.2014
  */
-public class TitledPaneAdapter extends JavaFXComponentAdapter<TitledPane>
-        implements IContainerAdapter {
+public class TitledPaneAdapter extends
+        LabeledGraphicContainerAdapter<TitledPane> {
 
     /**
      * 
@@ -39,17 +39,18 @@ public class TitledPaneAdapter extends JavaFXComponentAdapter<TitledPane>
 
     @Override
     public List<Node> getContent() {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
+        List<Node> l = super.getContent();
+        l.addAll(EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
                 new Callable<List<Node>>() {
 
                     @Override
                     public List<Node> call() throws Exception {
                         ArrayList<Node> list = new ArrayList<>();
                         list.add(getRealComponent().getContent());
-                        list.add(getRealComponent().getGraphic());
                         return list;
                     }
-                });
+                }));
+        return l;
     }
 
 }
