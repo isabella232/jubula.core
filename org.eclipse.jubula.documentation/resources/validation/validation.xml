@@ -1,0 +1,52 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<project name="validateHelp" basedir="../../.">
+  <macrodef name="validate">
+    <attribute name="dir"/>
+    <sequential>
+      <mkdir dir="@{dir}/en/validate"/>
+      
+      <exec executable="xmllint" dir="@{dir}/en/docbook" output="@{dir}/en/validate/resolved.xml" errorproperty="xmllint.error">
+        <arg value="--xinclude"/>
+          <arg value="book.xml"/>
+      </exec>
+      
+      <java jar="resources/validation/jing.jar" output="@{dir}/en/validate/validation.txt" fork="true">
+        <arg value="resources/validation/docbook.rng"/>
+        <arg value="@{dir}/en/validate/resolved.xml"/>
+      </java>
+      
+      <local name="validation.text"/>
+      <loadfile property="validation.text" srcfile="@{dir}/en/validate/validation.txt"/>
+      <property name="validation.text" value=""/>
+      
+      <echo>${validation.text}</echo>
+    </sequential>
+  </macrodef>
+  
+  <target name="validateUserManual">
+    <validate dir="userManual"/>
+  </target>
+  
+  <target name="validateDeveloperManual">
+    <validate dir="developerManual"/>
+  </target>
+  
+  <target name="validateInstallationManual">
+    <validate dir="install"/>
+  </target>
+  
+  <target name="validateReleaseNotes">
+    <validate dir="releasenotes"/>
+  </target>
+  
+  <target name="validateReferenceManual">
+    <validate dir="reference"/>
+  </target>
+</project>

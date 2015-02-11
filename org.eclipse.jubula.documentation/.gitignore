@@ -1,3 +1,10 @@
 /build
 /buildlog
 *.jar
+/resources/validation/docbook.rng
+/resources/validation/jing.jar
+/developerManual/en/validate
+/install/en/validate
+/releasenotes/en/validate
+/reference/en/validate
+/userManual/en/validate
