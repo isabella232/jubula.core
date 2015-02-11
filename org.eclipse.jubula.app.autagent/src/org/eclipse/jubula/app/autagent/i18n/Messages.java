@@ -22,6 +22,7 @@ public class Messages extends NLS {
 
     public static String AUTAgentNotFound;
     public static String CommandlineOptionHelp;
+    public static String CommandlineOptionVersion;
     public static String CommandlineOptionLenient;
     public static String CommandlineOptionPort;
     public static String CommandlineOptionQuiet;

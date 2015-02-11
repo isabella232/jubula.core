@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
+import org.eclipse.jubula.version.Vn;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -75,7 +76,11 @@ public class Activator extends AbstractUIPlugin {
      */
     public static final String IMAGE_GIF_JB_16_16_ID = "IMAGE_PNG_JB_16_16_ID"; //$NON-NLS-1$
 
-    
+    /** 
+     * Key for retrieving this bundle's version number from 
+     * the JVM's Properties. The property is set during bundle activation. 
+     */
+    public static final String VERSION_PROPERTY_KEY = "org.eclipse.jubula.ite.version"; //$NON-NLS-1$
     
     /** The shared instance */
     private static Activator plugin;
@@ -93,6 +98,8 @@ public class Activator extends AbstractUIPlugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
+        System.setProperty(VERSION_PROPERTY_KEY, 
+                Vn.getDefault().getVersion().toString());
     }
 
     /**

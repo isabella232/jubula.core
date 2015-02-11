@@ -33,6 +33,7 @@ import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.version.Vn;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,6 +98,9 @@ public class AutRunApplication implements IApplication {
     
     /** help option */
     private static final String OPT_HELP = "h"; //$NON-NLS-1$
+    
+    /** version option */
+    private static final String OPT_VERSION = "v"; //$NON-NLS-1$
     
     /** hostname for the Aut Agent with which to register */
     private static final String OPT_HELP_LONG = "help"; //$NON-NLS-1$
@@ -284,6 +288,10 @@ public class AutRunApplication implements IApplication {
         helpOption.setLongOpt(OPT_HELP_LONG);
         options.addOption(helpOption);
         
+        Option versionOption = new Option(OPT_VERSION, false, 
+                Messages.infoVersion);
+        options.addOption(versionOption);
+        
         OptionBuilder.hasArgs();
         Option autExecutableFileOption = OptionBuilder.create(OPT_EXECUTABLE);
         autExecutableFileOption.setDescription(Messages.infoExecutableFile);
@@ -335,7 +343,19 @@ public class AutRunApplication implements IApplication {
             printHelp(pe);
         }
         
-        if (cmdLine != null && !cmdLine.hasOption(OPT_HELP)) {
+        if (cmdLine.hasOption(OPT_HELP)) {
+            printHelp(null);
+            
+            return IApplication.EXIT_OK;
+        }
+        
+        if (cmdLine.hasOption(OPT_VERSION)) {
+            printVersion();
+            
+            return IApplication.EXIT_OK;
+        }
+        
+        if (cmdLine != null) {
             String toolkit = StringConstants.EMPTY;
             if (cmdLine.hasOption(TK_SWING)) {
                 toolkit = SWING_AUT_TOOLKIT_CLASS_PREFIX;
@@ -374,11 +394,16 @@ public class AutRunApplication implements IApplication {
                 LOG.info(Messages.infoConnectionToAutAgentFailed, ce);
                 System.err.println(Messages.infoNonAutAgentConnectionInfo);
             }
-        } else {
-            printHelp(null);
         }
 
         return IApplication.EXIT_OK;
+    }
+
+    /**
+     * print version information
+     */
+    private void printVersion() {
+        System.out.println(Vn.getDefault().getVersion());
     }
 
     /**

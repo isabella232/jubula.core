@@ -55,6 +55,7 @@ import org.eclipse.jubula.tools.internal.messagehandling.Message;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.eclipse.jubula.version.Vn;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -189,12 +190,14 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                     }
                 }
             }
-
             if (m_cmd.hasOption(ClientStrings.HELP)) {
                 printUsage();
                 return false;
             }
-            
+            if (m_cmd.hasOption(ClientStrings.VERSION)) {
+                printVersion();
+                return false;
+            }
             // The first thing to check is, if there is a config file
             // if there is a config file we read this first,
             if (m_cmd.hasOption(ClientStrings.CONFIG)) {
@@ -243,6 +246,13 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     }
 
     /**
+     * print version information on command line
+     */
+    private void printVersion() {
+        printConsole(Vn.getDefault().getVersion().toString());
+    }
+
+    /**
      * method to create an options object, filled with all options
      * @param req
      *      boolean flag must be true for an required option
@@ -254,6 +264,9 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         options.addOption(createOption(ClientStrings.HELP, false, 
                 StringConstants.EMPTY, 
                 Messages.ClientHelpOpt, false));
+        options.addOption(createOption(ClientStrings.VERSION, false, 
+                StringConstants.EMPTY, 
+                Messages.ClientVersionOpt, false));
         options.addOption(createOption(ClientStrings.QUIET, false, 
                 StringConstants.EMPTY, 
                 Messages.ClientQuietOpt, false));

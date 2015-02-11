@@ -26,6 +26,7 @@ public class Messages extends NLS {
     public static String infoKbLayout;
     public static String infoAutWorkingDirectory;
     public static String infoHelp;
+    public static String infoVersion;
     public static String infoExecutableFile;
     public static String infoConnectionToAutAgentFailed;
     public static String infoNonAutAgentConnectionInfo;

@@ -547,6 +547,12 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+         
+   <plugin
+         id="org.eclipse.jubula.version"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
    <plugin
          id="org.eclipse.jdt.annotation"

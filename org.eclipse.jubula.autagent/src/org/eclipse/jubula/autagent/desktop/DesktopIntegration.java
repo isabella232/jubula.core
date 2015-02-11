@@ -31,6 +31,7 @@ import java.util.List;
 import org.eclipse.jubula.autagent.agent.AutAgent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.version.Vn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,10 +39,8 @@ import org.slf4j.LoggerFactory;
 /**
  * @author BREDEX GmbH
  * @created 11.06.2010
- *
  */
 public class DesktopIntegration implements PropertyChangeListener {
-    
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(DesktopIntegration.class);
@@ -149,7 +148,8 @@ public class DesktopIntegration implements PropertyChangeListener {
      * @return info according to status fields
      */
     private String buildToolTip() {
-        StringBuilder tt = new StringBuilder("AUT Agent\n"); //$NON-NLS-1$
+        StringBuilder tt = new StringBuilder(
+                "AUT Agent " + Vn.getDefault().getVersion() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
         tt.append(" Port used: "); //$NON-NLS-1$
         tt.append(m_port);
         if (!m_auts.isEmpty()) {

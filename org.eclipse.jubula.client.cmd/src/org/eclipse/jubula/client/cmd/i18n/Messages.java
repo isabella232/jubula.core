@@ -66,6 +66,7 @@ public class Messages extends NLS {
     public static String ClientTestJobOpt;
     public static String ClientTestSuiteOpt;
     public static String ClientTimeout;
+    public static String ClientVersionOpt;
     public static String ClientWorkspaceOpt;
     public static String ClientWritingReport;
     public static String ClientWritingReportToDB;

@@ -37,6 +37,9 @@ public final class ClientStrings {
     public static final String HELP = "h"; //$NON-NLS-1$
 
     /** object attribute */
+    public static final String VERSION = "v"; //$NON-NLS-1$
+    
+    /** object attribute */
     public static final String CONFIGFILE = "configfile"; //$NON-NLS-1$
     
     /** object attribute */

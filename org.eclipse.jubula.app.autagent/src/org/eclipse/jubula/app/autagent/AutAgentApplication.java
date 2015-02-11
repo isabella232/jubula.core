@@ -42,6 +42,7 @@ import org.eclipse.jubula.communication.internal.connection.ConnectionState;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.version.Vn;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,6 +99,11 @@ public class AutAgentApplication implements IApplication {
      * command line argument: verbose output
      */
     private static final String COMMANDLINE_OPTION_VERBOSE = "v"; //$NON-NLS-1$
+    
+    /**
+     * command line argument: version output
+     */
+    private static final String COMMANDLINE_OPTION_VERSION = "version"; //$NON-NLS-1$
 
     /**
      * command line argument: quiet output
@@ -145,9 +151,12 @@ public class AutAgentApplication implements IApplication {
                 printHelp();
                 return EXIT_HELP_OPTION;
             }
+            if (cmd.hasOption(COMMANDLINE_OPTION_VERSION)) {
+                printVersion();
+                return EXIT_HELP_OPTION;
+            }
 
             int port = getPortNumber(cmd);
-            
             if (cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
                 String hostname = EnvConstants.LOCALHOST_ALIAS;
                 if (cmd.getOptionValue(COMMANDLINE_OPTION_STOP) != null) {
@@ -201,6 +210,13 @@ public class AutAgentApplication implements IApplication {
     }
 
     /**
+     * print version information
+     */
+    private void printVersion() {
+        System.out.println(Vn.getDefault().getVersion());
+    }
+
+    /**
      * @see http://eclip.se/392323
      * 
      * @param args
@@ -246,6 +262,8 @@ public class AutAgentApplication implements IApplication {
                 Messages.CommandlineOptionLenient);
         options.addOption(COMMANDLINE_OPTION_HELP, false,
                 Messages.CommandlineOptionHelp);
+        options.addOption(COMMANDLINE_OPTION_VERSION, false,
+                Messages.CommandlineOptionVersion);
 
         OptionGroup verbosityOptions = new OptionGroup();
         verbosityOptions.addOption(new Option(COMMANDLINE_OPTION_QUIET, false,
