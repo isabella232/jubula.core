@@ -245,6 +245,9 @@ public class TestSuiteGUIPropertySource
         List<String> tmpList = new ArrayList<String>();
         List<IAUTMainPO> tmpSubList = new ArrayList<IAUTMainPO>();
         Map<String, IAUTMainPO> helpMap = new HashMap<String, IAUTMainPO>();
+        if (m_project == null) {
+            return;
+        }
         Set<IAUTMainPO> autMainList = m_project.getAutMainList();
         if (autMainList == null || autMainList.size() == 0) {
             return;
