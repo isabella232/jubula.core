@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,20 +7,20 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="projectversion" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="projectversion" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Versioning Projects</title>
-  <anchor role="helpid" id="openProjectDialogContextId">Opening Projects</anchor>
-  <anchor role="helpid" id="dialogProjectCreateNewVersionContextId">Versioning Projects</anchor>
+  <anchor role="helpid" xml:id="openProjectDialogContextId">Opening Projects</anchor>
+  <anchor role="helpid" xml:id="dialogProjectCreateNewVersionContextId">Versioning Projects</anchor>
   <orderedlist>
     <listitem>
       <para>
         To create a different version of a Project, select:
-        
-        <para>
-          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Create new version</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Create new version</emphasis>.
       </para>
     </listitem>
     <listitem>
@@ -49,15 +50,17 @@
     <listitem>
       <para>
         The new version of the Project becomes active in the client.
-        <para role="tip">Any test result summaries for the Project are not
+      </para>
+      <para role="tip">
+        Any test result summaries for the Project are not
         duplicated in the new version. Tests that ran for previous
         versions of the Project are, however, still in the database
-        to be used for long term analysis.</para>
+        to be used for long term analysis.
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">You can also create a new version using the dbtool
-    (<xref linkend="creating-new-versions"/>)</para>
+  <para role="tip">
+    You can also create a new version using the dbtool
+    (<xref linkend="creating-new-versions"/>)
   </para>
 </section>

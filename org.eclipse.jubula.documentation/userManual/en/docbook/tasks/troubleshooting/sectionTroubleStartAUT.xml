@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="troublestartaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="troublestartaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>I can’t start the AUT</title>
@@ -38,10 +39,10 @@
     </listitem>
   </itemizedlist>
   <para>
-    <para>
-      <emphasis role="strong">Errors starting the AUT</emphasis>
-    </para>
-    
+    <emphasis role="strong">Errors starting the AUT</emphasis>
+  </para>
+  
+  <para>
     If there is an error starting the AUT, this could be because:
   </para>
   <variablelist>

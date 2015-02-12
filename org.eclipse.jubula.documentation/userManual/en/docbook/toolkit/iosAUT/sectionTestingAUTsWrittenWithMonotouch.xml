@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="testing-auts-written-with-monotouch" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="testing-auts-written-with-monotouch" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Testing AUTs written with Monotouch</title>
-  <section id="create-a-binding-project">
+  <section xml:id="create-a-binding-project">
     <title>Create a binding project</title>
     <para>
       First you have to create a MonoTouch Binding Project. The
@@ -21,7 +22,7 @@
       <emphasis>StructsAndEnums.cs</emphasis>.
     </para>
   </section>
-  <section id="add-the-library-to-the-binding-project">
+  <section xml:id="add-the-library-to-the-binding-project">
     <title>Add the library to the binding project</title>
     <para>
       Add the library file librc.mobile.ios.nativ.a to the new
@@ -37,7 +38,7 @@
       to the library file.
     </para>
   </section>
-  <section id="setting-up-linker-options">
+  <section xml:id="setting-up-linker-options">
     <title>Setting up linker options</title>
     <para>
       The file <emphasis>librc.mobile.ios.nativ.linkwith.cs</emphasis> specifies the linker options. It contains a single annotation named <emphasis>LinkWith</emphasis>. Change the annotation to:
@@ -57,7 +58,7 @@ Frameworks=&quot;CFNetwork&quot;)
       the ITE.
     </para>
   </section>
-  <section id="defining-the-api-contract">
+  <section xml:id="defining-the-api-contract">
     <title>Defining the API contract</title>
     <para>
       An Objective-C header file is provided. To use the library
@@ -149,7 +150,7 @@ Frameworks=&quot;CFNetwork&quot;)
       </informaltable>
     </para>
   </section>
-  <section id="building-a-.net-library">
+  <section xml:id="building-a-.net-library">
     <title>Building a .NET library</title>
     <para>
       When linking is done, build the binding project in Release
@@ -165,7 +166,7 @@ Frameworks=&quot;CFNetwork&quot;)
       reference and repeat the entire process.
     </para>
   </section>
-  <section id="add-hook-into-aut">
+  <section xml:id="add-hook-into-aut">
     <title>Add hook into AUT</title>
     <para>
       When the binding DLL is referenced by your project, you can

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,16 +7,16 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="entering-and-reassigning-component-names-in-the-component-names-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="entering-and-reassigning-component-names-in-the-component-names-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Entering and reassigning component names in the Component Names View</title>
-  <anchor role="helpid" id="compNameViewContextId">Component Names View</anchor>
-  <para>
-    <para role="tip">The following section deals with entering component names
+  <anchor role="helpid" xml:id="compNameViewContextId">Component Names View</anchor>
+  <para role="tip">
+    The following section deals with entering component names
     in the Component Names View when you have added Test Cases from
     the library. For information on component names in Test Steps,
-    see the Test Steps section (<xref linkend="specsteps"/>).</para>
+    see the Test Steps section (<xref linkend="specsteps"/>).
   </para>
   <orderedlist>
     <listitem>
@@ -33,7 +34,7 @@
         is just a placeholder and should be
         <emphasis>reassigned</emphasis> (<xref linkend="compnamesview"/>).
       </para>
-      <figure id="compnamesview">
+      <figure xml:id="compnamesview">
         <title>The Component Names View</title>
         <mediaobject>
           <imageobject>
@@ -43,8 +44,8 @@
           View</phrase></textobject>
         </mediaobject>
       </figure>
-      <para>
-        <para role="tip">When you enter a component name in the Component
+      <para role="tip">
+        When you enter a component name in the Component
         Names View, you create a new reference to a component in the
         AUT. This component name appears in the Object Mapping
         Editor to be mapped to a component in your AUT. A Test Case
@@ -52,7 +53,7 @@
         used at a variety of different places to test different
         actual components. If you want to rename a component name,
         you can do so in the Component Names Browser
-        (<xref linkend="renaming-component-names"/>).</para>
+        (<xref linkend="renaming-component-names"/>).
       </para>
     </listitem>
     <listitem>
@@ -95,9 +96,9 @@
           </listitem>
         </varlistentry>
       </variablelist>
-      <para>
-        <para role="tip">You can configure how frequently the content assist
-        in the Component Names View should open in the preferences.</para>
+      <para role="tip">
+        You can configure how frequently the content assist
+        in the Component Names View should open in the preferences.
       </para>
     </listitem>
     <listitem>
@@ -114,9 +115,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">See the section on the component hierarchy for some tips
+  <para role="tip">
+    See the section on the component hierarchy for some tips
     on using component names in your tests
-    (<xref linkend="understanding-the-component-hierarchy"/>).</para>
+    (<xref linkend="understanding-the-component-hierarchy"/>).
   </para>
 </section>

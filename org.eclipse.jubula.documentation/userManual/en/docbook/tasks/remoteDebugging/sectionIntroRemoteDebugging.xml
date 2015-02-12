@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="intro-remote-debugging" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="intro-remote-debugging" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Introduction to Remote Debugging</title>
@@ -36,7 +37,7 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para>
-    <para role="tip">Not all JREs support the arguments listed above. If you are not using a Java Standard Edition JRE to start your AUT, you will likely not be able to use this method to remotely debug your AUT.</para>
+  <para role="tip">
+    Not all JREs support the arguments listed above. If you are not using a Java Standard Edition JRE to start your AUT, you will likely not be able to use this method to remotely debug your AUT.
   </para>
 </section>

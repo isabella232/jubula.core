@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="entering-concrete-values-as-data-in-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="entering-concrete-values-as-data-in-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Entering concrete values as data in Test Cases</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
   <itemizedlist>
     <listitem>
       <para>
@@ -31,9 +32,11 @@
         same, like your choice of <emphasis>operator</emphasis>
         (i.e. matches, equals) or the click count. Deciding which
         data not to parametrize is an important decision is test
-        creation. <para role="tip">Press
-        <emphasis role="input">»CTRL+SPACE«</emphasis> to get content
-        assist in the Properties View for certain parameters. </para>
+        creation.
+      </para>
+      <para role="tip">
+        Press <emphasis role="input">»CTRL+SPACE«</emphasis> to get content
+        assist in the Properties View for certain parameters.
       </para>
     </listitem>
     <listitem>
@@ -44,11 +47,14 @@
         Category</emphasis>” dialog from a menu, you will probably
         want to write the menupath as a concrete value. After all,
         this Test Case is designed to open this specific dialog, so
-        the menupath is fixed. <para role="tip">Any concrete values you enter
+        the menupath is fixed.
+      </para>
+      <para role="tip">
+        Any concrete values you enter
         into a Test Case are valid whenever you reuse this Test
         Case. If you change the concrete values in the original Test
         Case, all of the places you have reused it will change as
-        well. </para>
+        well.
       </para>
     </listitem>
   </itemizedlist>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,16 +7,16 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="closing-the-ite-and-stopping-the-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="closing-the-ite-and-stopping-the-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Closing the ITE and stopping the AUT Agent</title>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
   <para>
     Once the Test Suite, AUT and AUT Agent have been stopped or disconnected, make sure any changes are saved and select:
-    
-    <para>
-      <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Exit</emphasis>.
-    </para>
+  </para>
+  
+  <para>
+    <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Exit</emphasis>.
   </para>
 </section>

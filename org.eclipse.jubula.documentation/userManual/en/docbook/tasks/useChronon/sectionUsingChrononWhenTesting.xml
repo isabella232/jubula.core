@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-chronon-when-testing-your-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-chronon-when-testing-your-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using Chronon when testing your AUT</title>
@@ -17,13 +18,13 @@
     analysing the reports for information on the tooling required to
     do this.
   </para>
-  <para>
-    <para role="tip">Jubula Feature users: The support for Chronon recording
-    in AUTs is currently only available in the standalone software.</para>
+  <para role="tip">
+    Jubula Feature users: The support for Chronon recording
+    in AUTs is currently only available in the standalone software.
   </para>
-  <section id="adding-chronon-information-in-the-aut-configuration">
+  <section xml:id="adding-chronon-information-in-the-aut-configuration">
     <title>Adding Chronon information in the AUT configuration</title>
-    <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
     <para>
       You can select Chronon as a monitoring agent and configure it
       in the Expert Settings in the AUT configuration.
@@ -55,9 +56,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="configuring-the-separate-chronon-installation-for-use-with-your-aut">
+  <section xml:id="configuring-the-separate-chronon-installation-for-use-with-your-aut">
     <title>Configuring the separate Chronon installation for use with your AUT</title>
-    <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
     <para>
       Enter the following configuration details:
     </para>
@@ -91,114 +92,114 @@
         <listitem>
           <para>
             Enter the absolute path to the configuration file for the recorder. The configuration file has the same setup as a Java properties file. It must contain the following properties:
+          </para>
+          
+          <para>
+            <emphasis role="input">servermode</emphasis> (set to true)
+          </para>
             
-            <para>
-              <emphasis role="input">servermode</emphasis> (set to true)
-            </para>
+          <para>
+            <emphasis role="input">name</emphasis> (the AUT name as it will be displayed in the Chronon Recording Server UI)
+          </para>
             
-            <para>
-              <emphasis role="input">name</emphasis> (the AUT name as it will be displayed in the Chronon Recording Server UI)
-            </para>
+          <para>
+            <emphasis role="input">autostartwithconfig</emphasis> (if you want the recording to start automatically (recommended) then the recording parameters need to be set in the Chronon application.)
+          </para>
             
-            <para>
-              <emphasis role="input">autostartwithconfig</emphasis> (if you want the recording to start automatically (recommended) then the recording parameters need to be set in the Chronon application.)
-            </para>
+          <para>
+            <emphasis role="input">port</emphasis> (optional – if none is entered, 8042 is used.).
+          </para>
             
-            <para>
-              <emphasis role="input">port</emphasis> (optional – if none is entered, 8042 is used.).
-            </para>
-            
+          <para>
             The documentation for the configuration file is available on the Chronon site:
-            
-            <para>
-              <link xl:href="http://chronon.onconfluence.com/\&#10;display/DOC/Recorder+Configuration+File">http://chronon.onconfluence.com/<?linebreak?>
+          </para>
+          
+          <para>
+            <link xl:href="http://chronon.onconfluence.com/\&#10;display/DOC/Recorder+Configuration+File">http://chronon.onconfluence.com/<?linebreak?>
 display/DOC/Recorder+Configuration+File</link>
-              </para>
-            </para>
-          </listitem>
-        </varlistentry>
-      </variablelist>
-      <para role="tip">You can also refer to the Chronon documentation for information on the required parameters to run your tests with the Recording Server. :
+          </para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+    <para role="tip">
+      You can also refer to the Chronon documentation for information on the required parameters to run your tests with the Recording Server. :
       
-        <para>
-          <link xl:href="http://chronon.onconfluence.com/display/\&#10;DOC/Recording+outside+Eclipse">http://chronon.onconfluence.com<?linebreak?>
+      <link xl:href="http://chronon.onconfluence.com/display/\&#10;DOC/Recording+outside+Eclipse">http://chronon.onconfluence.com<?linebreak?>
 /display/DOC/Recording+outside+Eclipse</link>
-        </para>
-        
-      </para>
-    </section>
-    <section id="adapting-tests-to-improve-data-collection">
-      <title>Adapting tests to improve data collection</title>
-      <para>
-        You should bear the following in mind when using Chronon for recording information in automated tests.
-      </para>
-      <para>
-        <emphasis role="strong">Performance in the AUT may be
-        affected</emphasis>
-      </para>
-      <itemizedlist>
-        <listitem>
-          <para>
-            The recordings that Chronon performs are very
-            memory-intensive. For this reason, you may notice
-            performance differences in your AUT. It may also be
-            necessary to increase the step delay for your tests, and /
-            or add extra synchronization to compensate for the
-            performance differences when Chronon is running.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            For these reasons, we do not recommend having Chronon
-            configured as a part of your standard AUT configuration.
-            Instead, we suggest running tests with Chronon monitoring
-            when needed.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            We also strongly suggest ensuring that your AUT and the
-            machine it is running on have sufficient memory to cope
-            with the increased monitoring activity.
-          </para>
-        </listitem>
-      </itemizedlist>
-      <para>
-        <emphasis role="strong">Stopping or restarting the AUT will
-        cause the previously recorded information to be
-        lost</emphasis>
-      </para>
-      <itemizedlist>
-        <listitem>
-          <para>
-            The recording files are written when the AUT is stopped.
-            This means either stopping the AUT by hand, using the
-            ”<emphasis>Stop AUT</emphasis>” button in on the toolbar
-            in the ITE or when you use the
-            <emphasis>restart</emphasis> action.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Because of this, we recommend executing individual Test
-            Cases (use cases) in Test Suites that you want to analyze
-            with Chronon. You should ensure that any Event Handlers in
-            the Test Suite will not cause the AUT to restart.
-          </para>
-        </listitem>
-      </itemizedlist>
-    </section>
-    <section id="analyzing-the-generated-reports">
-      <title>Analyzing the generated reports</title>
-      <para>
-        To analyze the reports generated, you will require the Chronon
-        Time Travelling Debugger from Chronon Systems. You can
-        download a trial version of this tool. The link to the trial
-        version is provided in the expert AUT configuration.
-      </para>
-      <para>
-        Open source projects may contact Chronon Systems for free
-        licenses.
-      </para>
-    </section>
+    </para>
   </section>
+  <section xml:id="adapting-tests-to-improve-data-collection">
+    <title>Adapting tests to improve data collection</title>
+    <para>
+      You should bear the following in mind when using Chronon for recording information in automated tests.
+    </para>
+    <para>
+      <emphasis role="strong">Performance in the AUT may be
+      affected</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The recordings that Chronon performs are very
+          memory-intensive. For this reason, you may notice
+          performance differences in your AUT. It may also be
+          necessary to increase the step delay for your tests, and /
+          or add extra synchronization to compensate for the
+          performance differences when Chronon is running.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For these reasons, we do not recommend having Chronon
+          configured as a part of your standard AUT configuration.
+          Instead, we suggest running tests with Chronon monitoring
+          when needed.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          We also strongly suggest ensuring that your AUT and the
+          machine it is running on have sufficient memory to cope
+          with the increased monitoring activity.
+        </para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      <emphasis role="strong">Stopping or restarting the AUT will
+      cause the previously recorded information to be
+      lost</emphasis>
+    </para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          The recording files are written when the AUT is stopped.
+          This means either stopping the AUT by hand, using the
+          ”<emphasis>Stop AUT</emphasis>” button in on the toolbar
+          in the ITE or when you use the
+          <emphasis>restart</emphasis> action.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Because of this, we recommend executing individual Test
+          Cases (use cases) in Test Suites that you want to analyze
+          with Chronon. You should ensure that any Event Handlers in
+          the Test Suite will not cause the AUT to restart.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </section>
+  <section xml:id="analyzing-the-generated-reports">
+    <title>Analyzing the generated reports</title>
+    <para>
+      To analyze the reports generated, you will require the Chronon
+      Time Travelling Debugger from Chronon Systems. You can
+      download a trial version of this tool. The link to the trial
+      version is provided in the expert AUT configuration.
+    </para>
+    <para>
+      Open source projects may contact Chronon Systems for free
+      licenses.
+    </para>
+  </section>
+</section>

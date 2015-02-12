@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="searching-for-places-where-a-component-name-has-been-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="searching-for-places-where-a-component-name-has-been-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for places where a component name has been used</title>
-  <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
-  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
   <para>
     You can find the places where you have used a component name
     from within the Object Mapping Editor and the Component Names
@@ -26,11 +27,13 @@
     <listitem>
       <para>
         Select the component name you want to search for and select:
-        
-        <para>
-          <emphasis role="menuPath">Show where used</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Show where used</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the name has been used.
       </para>
     </listitem>
@@ -51,11 +54,13 @@
     <listitem>
       <para>
         Select the component name you want to search for and select:
-        
-        <para>
-          <emphasis role="menuPath">Show where used</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Show where used</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu. You can also press <emphasis role="input">»F7«</emphasis> to show the places where the name has been used.
       </para>
     </listitem>
@@ -75,11 +80,13 @@
     <listitem>
       <para>
         Select the component name you want to search for and select:
-        
-        <para>
-          <emphasis role="menuPath">Show corresponding specification</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Show corresponding specification</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu.
       </para>
     </listitem>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,20 +7,22 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="aut-agent-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="aut-agent-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>AUT Agent preferences</title>
-  <anchor role="helpid" id="prefPageServerContextId">AUT Agent Preferences</anchor>
-  <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" xml:id="prefPageServerContextId">AUT Agent Preferences</anchor>
+  <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <para>
     You can find the AUT Agent preference page under:
-    
-    <para>
-      <emphasis>Test-AUT Agent</emphasis>
-    </para>
-    
+  </para>
+  
+  <para>
+    <emphasis>Test-AUT Agent</emphasis>
+  </para>
+  
+  <para>
     in the preferences dialog.
   </para>
   <orderedlist>
@@ -36,9 +39,12 @@
         Agent</emphasis>” button on the toolbar. You will be able to
         connect to these hostnames on these port numbers when you
         have started an AUT Agent on them
-        (<xref linkend="start-aut-agent"/>). <para role="tip">The AUT Agent preference
+        (<xref linkend="start-aut-agent"/>).
+      </para>
+      <para role="tip">
+        The AUT Agent preference
         page can also be accessed from the AUT configuration dialog
-        which you can open from the Project properties.</para>
+        which you can open from the Project properties.
       </para>
     </listitem>
   </orderedlist>

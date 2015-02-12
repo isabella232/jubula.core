@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,18 +7,18 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="working-with-ids-for-test-cases-and-test-suites" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="working-with-ids-for-test-cases-and-test-suites" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with IDs for Test Cases and Test Suites</title>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
   <para>
     Each Test Case and Test Suite in a Project has a unique ID which
     can be used to refer to this Test Case or Test Suite within the
     Project and from external systems.
   </para>
-  <section id="copying-the-id-of-a-test-case-or-test-suite-to-the-clipboard">
+  <section xml:id="copying-the-id-of-a-test-case-or-test-suite-to-the-clipboard">
     <title>Copying the ID of a Test Case or Test Suite to the
     clipboard</title>
     <orderedlist>
@@ -25,20 +26,24 @@
         <para>
           Select the Test Case or Test Suite whose ID you want to
           use from the Test Case Browser or Test Suite Browser.
-          <para role="tip">Make sure you select the original specification of
+        </para>
+        <para role="tip">
+          Make sure you select the original specification of
           the element, not a place where it has been reused. Press
           <emphasis role="input">»F6«</emphasis> to find the original
-          specification of a selected element.</para>
+          specification of a selected element.
         </para>
       </listitem>
       <listitem>
         <para>
           Select:
-          
-          <para>
-            <emphasis role="menuPath">Copy ID to clipboard</emphasis>
-          </para>
-          
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Copy ID to clipboard</emphasis>
+        </para>
+        
+        <para>
           from the context-sensitive menu.
         </para>
       </listitem>
@@ -49,7 +54,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="opening-an-element-based-on-an-id-in-the-clipboard">
+  <section xml:id="opening-an-element-based-on-an-id-in-the-clipboard">
     <title>Opening an element based on an ID in the
     clipboard</title>
     <orderedlist>

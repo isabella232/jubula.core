@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="searching-for-items-in-editors-and-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="searching-for-items-in-editors-and-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for items in editors and browsers</title>
-  <anchor role="helpid" id="findDialogContextId">Find Dialog</anchor>
+  <anchor role="helpid" xml:id="findDialogContextId">Find Dialog</anchor>
   <para>
     The ITE offers a search function in most editors and views.
   </para>
@@ -18,11 +19,13 @@
     <listitem>
       <para>
         Start the search function either via:
-        
-        <para>
-          <emphasis role="menupath">Edit</emphasis>--&gt;<emphasis role="menupath">Find</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menupath">Edit</emphasis>--&gt;<emphasis role="menupath">Find</emphasis>
+      </para>
+      
+      <para>
         or using the context-sensitive menu in the editors and browsers.
       </para>
     </listitem>
@@ -50,7 +53,9 @@
           <para>
             Whether you are using regular expressions
             (<xref linkend="using-matching-and-regex"/>).
-            <para role="tip">Regular expression searches are case-sensitive.  </para>
+          </para>
+          <para role="tip">
+            Regular expression searches are case-sensitive.
           </para>
         </listitem>
         <listitem>

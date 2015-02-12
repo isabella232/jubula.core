@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="setting-up-ios-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="setting-up-ios-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Setting up an iOS AUT for testing</title>
@@ -14,14 +15,14 @@
     If you want to test an <emphasis>iOS</emphasis> application, you
     have to prepare the AUT in order to make it testable.
   </para>
-  <para>
-    <para role="tip">This preparation is designed to be undertaken by a
+  <para role="tip">
+    This preparation is designed to be undertaken by a
     developer who has access to the AUT’s source code as well as
     knowledge of developing for iOS using Objective-C and Xcode.
     These instructions assume you are using Xcode 5. For other Xcode versions
-    please adapt the instructions accordingly.</para>
+    please adapt the instructions accordingly.
   </para>
-  <section id="create-a-testing-target">
+  <section xml:id="create-a-testing-target">
     <title>Create a Testing Target</title>
     <para>
       We strongly recommend that you create a
@@ -92,7 +93,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="configure-the-testing-target-without-cocoapods">
+  <section xml:id="configure-the-testing-target-without-cocoapods">
     <title>Configure the Testing Target without CocoaPods</title>
     <para>
       Now that you have a target for your tests, add the tests to
@@ -196,7 +197,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="configure-the-testing-target-with-cocoapods">
+  <section xml:id="configure-the-testing-target-with-cocoapods">
     <title>Configure the Testing Target</title>
     <para role="warning">
       You need to have CocoaPods installed on your machine
@@ -228,10 +229,10 @@
         <para>
           In a directory of your AUT XCode project location create a
           <emphasis>Podﬁle</emphasis> by running this command in a terminal:
-          
-          <para>
-            <emphasis role="input">$ pod init</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="input">$ pod init</emphasis>
         </para>
       </listitem>
       <listitem>
@@ -269,10 +270,10 @@ end
         <para>
           Install the <emphasis>Podﬁle</emphasis> to add the library to the AUT by running
           this command in the terminal:
-          
-          <para>
-            <emphasis role="input">$ pod install</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="input">$ pod install</emphasis>
         </para>
         <para role="warning">
           You must use the <emphasis role="input">»’«</emphasis> (apostrophe) symbol
@@ -297,7 +298,7 @@ end
       </listitem>
     </orderedlist>
   </section>
-  <section id="add-hook-into-the-aut">
+  <section xml:id="add-hook-into-the-aut">
     <title>Add hook into the AUT</title>
     <para>
       Finally, the app needs a hook so that it actually allows the
@@ -346,9 +347,9 @@ end
       remotely attach (on the port specified, or on 11022 if none is
       entered) and execute tests.
     </para>
-    <para>
-      <para role="warning">If you do not follow the above steps, the AUT Agent
-      will not be able to communicate with your AUT!</para>
+    <para role="warning">
+      If you do not follow the above steps, the AUT Agent
+      will not be able to communicate with your AUT!
     </para>
     <para>
       This documentation is derived from the KIF installation

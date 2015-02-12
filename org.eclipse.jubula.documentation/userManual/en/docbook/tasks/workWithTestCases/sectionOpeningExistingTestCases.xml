@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="opening-existing-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="opening-existing-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening existing Test Cases</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testCaseOpenExistingContextId">Open Existing Test Case</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testCaseOpenExistingContextId">Open Existing Test Case</anchor>
   <para>
     You can open an existing Test Case without having to select it
     from the Test Case Browser using the <emphasis>Open Test
@@ -21,10 +22,10 @@
     <listitem>
       <para>
         This dialog can be opened using the shortcut <emphasis role="input">»CTRL+SHIFT+T«</emphasis> or from the menu:
-        
-        <para>
-          <emphasis role="menuPath">Edit</emphasis>--&gt;<emphasis role="menuPath">Open Test Case</emphasis>
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Edit</emphasis>--&gt;<emphasis role="menuPath">Open Test Case</emphasis>
       </para>
     </listitem>
     <listitem>
@@ -46,8 +47,8 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">You can use this option to open a Test Case even if a
-    filter is active in the Test Case Browser.</para>
+  <para role="tip">
+    You can use this option to open a Test Case even if a
+    filter is active in the Test Case Browser.
   </para>
 </section>

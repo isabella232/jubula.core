@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="parameters-for-the-test-executor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="parameters-for-the-test-executor" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Parameters for the test executor</title>
@@ -26,7 +27,7 @@
     </listitem>
   </itemizedlist>
   <para>
-    <table id="cmdlineparams">
+    <table xml:id="cmdlineparams">
       <title>testexec parameters</title>
       <tgroup cols="2">
         <colspec align="left" colwidth="40%"/>
@@ -252,7 +253,7 @@
       </tgroup>
     </table>
   </para>
-  <section id="using-seperate-or-embedded-agent">
+  <section xml:id="using-seperate-or-embedded-agent">
     <title>Using a separate AUT Agent or the embedded
     AUT Agent</title>
     <itemizedlist>
@@ -270,7 +271,9 @@
           the AUT Agent must be started on the machine you are
           testing on. Enter the parameters for the server and port
           number to connect to this AUT Agent.
-          <para role="warning">If you are working with Test Jobs, you must use a separately started AUT Agent, because you will require the AUT Agent to start the AUT via <emphasis>autrun</emphasis>.</para>
+        </para>
+        <para role="warning">
+          If you are working with Test Jobs, you must use a separately started AUT Agent, because you will require the AUT Agent to start the AUT via <emphasis>autrun</emphasis>.
         </para>
       </listitem>
       <listitem>
@@ -298,7 +301,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="test-exec-suite-or-job">
+  <section xml:id="test-exec-suite-or-job">
     <title>Test Suites and Test Jobs</title>
     <itemizedlist>
       <listitem>
@@ -334,7 +337,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="using-the-dburl">
+  <section xml:id="using-the-dburl">
     <title>Using the dburl instead of workspace and dbscheme</title>
     <para>
       You can use the <emphasis>dburl</emphasis> parameter to specify which
@@ -344,7 +347,7 @@
       configured for the correct database.
     </para>
   </section>
-  <section id="starting-the-test-execution-via-testexec">
+  <section xml:id="starting-the-test-execution-via-testexec">
     <title>Starting the test execution via testexec</title>
     <orderedlist>
       <listitem>
@@ -382,13 +385,13 @@
             </para>
           </listitem>
         </itemizedlist>
-        <para>
-          <para role="tip">To stop the test execution, use <emphasis role="input">»CTRL+C«</emphasis></para>
+        <para role="tip">
+          To stop the test execution, use <emphasis role="input">»CTRL+C«</emphasis>
         </para>
       </listitem>
     </orderedlist>
   </section>
-  <section id="passing-on-arguments-to-the-jvm">
+  <section xml:id="passing-on-arguments-to-the-jvm">
     <title>Passing on arguments to the JVM</title>
     <para>
       The test executor also accepts arguments to pass on to the Java Virtual Machine. This means

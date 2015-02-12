@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="prerequisites-for-test-execution" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="prerequisites-for-test-execution" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Prerequisites for test execution</title>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="runningAutsViewContextId">Running AUTs View</anchor>
   <para>
     To be able to start a test you must:
   </para>
@@ -72,9 +73,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">It is a good idea to set your preferences for test
+  <para role="tip">
+    It is a good idea to set your preferences for test
     results in the preferences dialog (<xref linkend="gdprefs"/>) before
-    test execution.</para>
+    test execution.
   </para>
 </section>

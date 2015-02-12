@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="technical-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="technical-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Technical names</title>
@@ -17,11 +18,11 @@
     collected. If the developers have not named the component, a
     name is generated.
   </para>
-  <para>
-    <para role="tip">In the mapping mode, high-level components are usually
+  <para role="tip">
+    In the mapping mode, high-level components are usually
     addressed. You will not be able to map individual menu entries
     or tree nodes on desktop applications, for example. Instead, you
     map the tree component, and specify which entry/node to
-    select/check as a parameter for the action. </para>
+    select/check as a parameter for the action.
   </para>
 </section>

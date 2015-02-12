@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="adding-and-inserting-new-test-cases-to-a-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="adding-and-inserting-new-test-cases-to-a-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding and inserting new Test Cases to a Test Case</title>
-  <anchor role="helpid" id="dialogTestcaseAddNewContextId">Add New Test Case Dialog</anchor>
-  <anchor role="helpid" id="dialogTestcaseInsertNewContextId">Insert New Test Case Dialog</anchor>
+  <anchor role="helpid" xml:id="dialogTestcaseAddNewContextId">Add New Test Case Dialog</anchor>
+  <anchor role="helpid" xml:id="dialogTestcaseInsertNewContextId">Insert New Test Case Dialog</anchor>
   <orderedlist>
     <listitem>
       <para>
@@ -22,17 +23,21 @@
     <listitem>
       <para>
         From the context-sensitive menu, select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Add</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>
-        </para>
+      <para>
+        <emphasis role="menuPath">Add</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>
+      </para>
         
+      <para>
         (This places the Test Case after any other items in the Test Case Editor.) or
-        
-        <para>
-          <emphasis role="menuPath">Insert</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Insert</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>
+      </para>
+      
+      <para>
         (This places the Test Case above the currently selected item in the Test Case Editor.)
       </para>
     </listitem>

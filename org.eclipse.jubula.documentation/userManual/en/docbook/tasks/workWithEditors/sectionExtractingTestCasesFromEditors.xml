@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="extracting-test-cases-from-editors-refactoring" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="extracting-test-cases-from-editors-refactoring" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Extracting Test Cases from editors: Refactoring</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
   <para>
     You can <emphasis>extract</emphasis> Test Cases from other Test
     Cases and from Test Suites. This lets you create keywords even
@@ -35,10 +36,10 @@
     <listitem>
       <para>
         Right-click in the editor and select:
-        
-        <para>
-          <emphasis role="menuPath">Refactor</emphasis>--&gt;<emphasis role="menuPath">Extract Test Case</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Refactor</emphasis>--&gt;<emphasis role="menuPath">Extract Test Case</emphasis>.
       </para>
     </listitem>
     <listitem>
@@ -68,10 +69,10 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">Use this feature when you realize that you are planning
+  <para role="tip">
+    Use this feature when you realize that you are planning
     on reusing one or more Test Cases for the same or a similar
     action again. You will save yourself time in test creation and
-    maintenance.</para>
+    maintenance.
   </para>
 </section>

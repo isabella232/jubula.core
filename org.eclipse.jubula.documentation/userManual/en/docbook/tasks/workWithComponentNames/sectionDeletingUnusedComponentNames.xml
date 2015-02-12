@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="deleting-unused-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="deleting-unused-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Deleting unused component names</title>
-  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
   <para>
     When you reassign component names in the Component Names View,
     you automatically create new component names if the name you
@@ -26,7 +27,7 @@
     not been mapped to any technical names from the AUT in the
     Object Mapping Editor.
   </para>
-  <figure id="compnamebrowser">
+  <figure xml:id="compnamebrowser">
     <title>The Component Names Browser</title>
     <mediaobject>
       <imageobject>
@@ -38,17 +39,19 @@
   </figure>
   <para>
     To delete unused component names, select the name you want to delete and select:
-    
-    <para>
-      <emphasis role="menuPath">Delete</emphasis>
-    </para>
-    
+  </para>
+  
+  <para>
+    <emphasis role="menuPath">Delete</emphasis>
+  </para>
+  
+  <para>
     from the context-menu.
   </para>
-  <para>
-    <para role="tip">To cleanup component names that are only used in
+  <para role="tip">
+    To cleanup component names that are only used in
     mappings, or that are no longer used for a specific AUT, use the
     function <emphasis>Cleanup unused component names</emphasis> in
-    the Object Mapping Editor (<xref linkend="removing-unused-component-names-from-the-object-mapping-editor"/>).</para>
+    the Object Mapping Editor (<xref linkend="removing-unused-component-names-from-the-object-mapping-editor"/>).
   </para>
 </section>

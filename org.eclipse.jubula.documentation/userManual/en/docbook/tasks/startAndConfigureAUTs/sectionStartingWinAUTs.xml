@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-win-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-win-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting Win AUTs (.NET, WPF)</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <section id="aut-configuration-for-windows-desktop-auts">
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <section xml:id="aut-configuration-for-windows-desktop-auts">
     <title>AUT configuration for Windows desktop AUTs</title>
     <para>
       To be able to start a Windows desktop AUT, you should select

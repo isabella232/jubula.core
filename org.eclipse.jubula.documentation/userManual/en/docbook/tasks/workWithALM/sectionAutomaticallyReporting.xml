@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="automatically-reporting-to-external-repositories-after-test-runs" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="automatically-reporting-to-external-repositories-after-test-runs" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Automatically reporting to external repositories after test runs</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
   <para>
     You can automatically update tasks in an external repository when a test has run. 
     You can report the test results by writing a comment on a task in the external repository 
@@ -18,7 +19,7 @@
     You can also update fields / attributes on tasks based on information 
     you specify in your Project.
   </para>
-  <section id="configuring-a-task-repository">
+  <section xml:id="configuring-a-task-repository">
     <title>Configuring a task repository for your Project</title>
     <para>
       Once you have configured one or more repositories for your
@@ -81,7 +82,7 @@
         </para>
       </listitem>
     </orderedlist>
-    <figure id="TasksALMProjectProperties">
+    <figure xml:id="TasksALMProjectProperties">
       <title>ALM Settings</title>
       <mediaobject>
         <imageobject>
@@ -91,7 +92,7 @@
       </mediaobject>
     </figure>
   </section>
-  <section id="configuring-reporting-to-tasks-via-properties">
+  <section xml:id="configuring-reporting-to-tasks-via-properties">
   <title>Configuring reporting to tasks</title>
   	<para>
   	When a test has run, you can update relevant tasks in your repository with information:
@@ -106,9 +107,9 @@
   	<para>
   	You can update fields / attributes for a task based on whether the test succeeded or failed.
   	</para>
-  	</listitem>
   	<para role="tip">Tests that have a status other than <emphasis>passed</emphasis> (e.g. failed, 
   	stopped, still testing) are considered as failed</para>
+  	</listitem>
   	</itemizedlist>
   	<para>
   	For each item (Test Case, Test Suite) in your test run that 
@@ -131,6 +132,8 @@
 	You have the same options for what to do on success and on failure.
 	</para>
 	</listitem>
+	<listitem>
+		<para>
 		<itemizedlist>
 			<listitem>
 			<para>
@@ -148,6 +151,7 @@
 			update and the value that the attribute should be updated with. 
 			As values for the update, you can enter:
 			</para>
+			<para>
 				<itemizedlist>
 					<listitem>
 					<para>
@@ -186,8 +190,11 @@
 					</para>
 					</listitem>
 				</itemizedlist>
+			</para>
 			</listitem>
 			</itemizedlist>
+		</para>
+	</listitem>
 	<listitem>
 	<para>
 	To see which attributes are available in your ALM repository, you can view the information for 
@@ -195,7 +202,7 @@
 	</para>
 	</listitem>	
 </orderedlist>
-	<section id="viewing-task-attributes">
+	<section xml:id="viewing-task-attributes">
 	<title>Viewing task attributes</title>
 	<para>
 	In order to define rules for reporting to ALM systems, you will need to enter the ID 
@@ -241,7 +248,7 @@
 	
 	</section>
   </section>
-  <section id="adding-task-id-alm">
+  <section xml:id="adding-task-id-alm">
     <title>Adding task IDs to Test Suites and Test Cases</title>
     <para>
       You can add a task ID to Test Cases and Test Suites in your
@@ -281,21 +288,21 @@
       <listitem>
         <para>
           When you have added a task ID to a node, you can open the task for this node from the browser by selecting:
+        </para>
           
-          <para>
-            <emphasis role="menuPath">Open with</emphasis>--&gt;<emphasis role="menuPath">Mylyn Task Editor</emphasis>
-          </para>
+        <para>
+          <emphasis role="menuPath">Open with</emphasis>--&gt;<emphasis role="menuPath">Mylyn Task Editor</emphasis>
         </para>
       </listitem>
     </orderedlist>
-    <para>
-      <para role="tip">You should ensure that you add task IDs to the right
+    <para role="tip">
+      You should ensure that you add task IDs to the right
       node-level to provide you with the relevant amount of
       information for the tasks in your repository. This will
-      usually be at the level of Use Cases within a Test Suite. </para>
+      usually be at the level of Use Cases within a Test Suite.
     </para>
   </section>
-  <section id="test-execution-with-reporting-to-external-repositories">
+  <section xml:id="test-execution-with-reporting-to-external-repositories">
     <title>Test execution with reporting to external
     repositories</title>
     <para>
@@ -307,15 +314,15 @@
       run. The test run can be either via the ITE or via the command
       line <emphasis>testexec</emphasis>.
     </para>
-    <para>
-      <para role="tip">If you run a "relevant" test via the ITE which should report to
+    <para role="tip">
+      If you run a "relevant" test via the ITE which should report to
       ALM systems, the reporting is triggered automatically once the
       test has run. If the reporting for the test run encounters an
       error, then you will be able to manually trigger the reporting
       later <xref linkend="test-execution-with-reporting-to-external-repositories"/>. To report to ALM
       systems after running a test via testexec, you must also
       manually trigger the recording
-      (<xref linkend="test-execution-with-reporting-to-external-repositories"/>).</para>
+      (<xref linkend="test-execution-with-reporting-to-external-repositories"/>).
     </para>
     <para>
       When reporting is triggered, the following happens:
@@ -335,19 +342,21 @@
       </listitem>
       <listitem>
         <para>
-           If there is reporting to be done, the ITE
-           reports to each necessary task as a batch job. The batch job contains 
-           any field updates and any comments. 
-           If multiple items in one test run reference the 
-           same task ID, or if an item with a task ID is executed multiple times in the 
-           same test run, then only one comment will be written. 
-           However, field updates will occur for each item linked to the task ID. 
-           In this case, you will see a warning in the console that you have multiple items
-           in one test that are joined to one single task ID.
-          <para role="tip">Tests that have
+          If there is reporting to be done, the ITE
+          reports to each necessary task as a batch job. The batch job contains 
+          any field updates and any comments. 
+          If multiple items in one test run reference the 
+          same task ID, or if an item with a task ID is executed multiple times in the 
+          same test run, then only one comment will be written. 
+          However, field updates will occur for each item linked to the task ID. 
+          In this case, you will see a warning in the console that you have multiple items
+          in one test that are joined to one single task ID.
+        </para>
+        <para role="tip">
+          Tests that have
           a status other than <emphasis>passed</emphasis> (e.g.
           failed, stopped, still testing) are considered as
-          <emphasis>failed</emphasis>.</para>
+          <emphasis>failed</emphasis>.
         </para>
       </listitem>
       <listitem>
@@ -375,11 +384,13 @@
       <listitem>
         <para>
           You can see the status of the reporting in the Test Result
-          Summary View (<xref linkend="test-execution-with-reporting-to-external-repositories"/>). <para role="tip">The
-          integration for writing to external repositories can be
+          Summary View (<xref linkend="test-execution-with-reporting-to-external-repositories"/>).
+        </para>
+        <para role="tip">
+          The integration for writing to external repositories can be
           used with Bugzilla 3.6+, JIRA 5.0+ and HP ALM 11+. Other
           repositories for which there are Mylyn connectors may also
-          work, but these have not been tested.</para>
+          work, but these have not been tested.
         </para>
       </listitem>
     </itemizedlist>
@@ -527,7 +538,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="specific-information-for-hp-alm-users">
+  <section xml:id="specific-information-for-hp-alm-users">
     <title>Specific information for HP ALM users</title>
     <itemizedlist>
       <listitem>
@@ -541,10 +552,10 @@
       <listitem>
         <para>
           If you have changed the attribute IDs in your HP ALM installation for defects and / or requirements from their relative defaults (<emphasis>BG_DEV_COMMENTS</emphasis> and <emphasis>REQ_DEV_COMMENTS</emphasis>), or if you have changed the ID for the connector, then you must modify these properties in the <emphasis role="input">almAccess.properties</emphasis> file contained in the jar:
-          
-          <para>
-            <emphasis>org.eclipse.jubula.client.alm.mylyn.core</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis>org.eclipse.jubula.client.alm.mylyn.core</emphasis>
         </para>
       </listitem>
       <listitem>

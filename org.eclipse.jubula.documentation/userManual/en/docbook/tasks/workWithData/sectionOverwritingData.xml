@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="overwriting-data-for-test-cases-and-test-suites" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="overwriting-data-for-test-cases-and-test-suites" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Overwriting data for Test Cases and Test Suites</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="guidancerExecTestCaseEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerExecTestCaseEditorContextId">Test Suite Editor</anchor>
   <para>
     When you reuse Test Cases, you reuse them with any concrete
     values they contain, and with any default values that you have
@@ -56,10 +57,10 @@
         Case</emphasis> to denote that the data have not been
         changed after reusing the Test Case.
       </para>
-      <para>
-        <para role="tip">A grey diamond next to the <emphasis>parameter
+      <para role="tip">
+        A grey diamond next to the <emphasis>parameter
         value</emphasis> field means that the values in it were
-        entered in the original specification of the Test Case.</para>
+        entered in the original specification of the Test Case.
       </para>
     </listitem>
     <listitem>
@@ -68,25 +69,25 @@
         parameters again. They would then become parameters of the
         <emphasis>parent</emphasis> Test Case.
       </para>
-      <para>
-        <para role="tip">If you enter values here, you can see a yellow
+      <para role="tip">
+        If you enter values here, you can see a yellow
         diamond next to the <emphasis>parameter value</emphasis>
         field. This means that the original data have been
         overwritten. The data source changes to <emphasis>local Test
-        Case</emphasis></para>
+        Case</emphasis>
       </para>
       <para>
         If you add references here, you will be able to enter or
         overwrite data when you reuse the parent Test Case.
       </para>
-      <para>
-        <para role="tip">Once you change the parameter values of a reused Test
+      <para role="tip">
+        Once you change the parameter values of a reused Test
         Case, any changes to the parameters in the original
         specification of that Test Case will not affect your new
         values. You can reset any local changes to the data of the
         Test Case by removing all Excel files or Central Test Data
         Sets and then selecting <emphasis>Referenced Test
-        Case</emphasis> from the data source combo box.</para>
+        Case</emphasis> from the data source combo box.
       </para>
     </listitem>
   </orderedlist>

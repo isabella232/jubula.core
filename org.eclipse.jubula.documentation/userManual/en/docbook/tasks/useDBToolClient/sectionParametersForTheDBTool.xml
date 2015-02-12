@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="parameters-for-the-dbtool" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="parameters-for-the-dbtool" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Parameters for the dbtool</title>
@@ -26,7 +27,7 @@
     </listitem>
   </orderedlist>
   <para>
-    <table id="dbtoolparams">
+    <table xml:id="dbtoolparams">
       <title>dbtool parameters</title>
       <tgroup cols="2">
         <colspec align="left" colwidth="40%"/>
@@ -165,7 +166,7 @@
        </tgroup>
      </table>
    </para>
-   <section id="keeping-test-result-summaries">
+   <section xml:id="keeping-test-result-summaries">
      <title>Deleting Projects but keeping test result
      summaries</title>
      <para>
@@ -179,7 +180,7 @@
        be deleted with the Projects.
      </para>
    </section>
-   <section id="creating-new-versions">
+   <section xml:id="creating-new-versions">
      <title>Creating new versions of Projects</title>
      <para>
        You can use the dbtool to create a new version of a Project
@@ -193,35 +194,30 @@
        will fail. We recommend using this when you are sure that
        no-one is working on the Project.
      </para>
-     <para>
-       <para role="tip">If you are using the embedded database, see the section
+     <para role="tip">
+       If you are using the embedded database, see the section
        on using the embedded database with the Test Executor for
        information on which username and password to use
-       (<xref linkend="using-test-exec-with-embedded-db"/>).</para>
-       
+       (<xref linkend="using-test-exec-with-embedded-db"/>).
+     </para>
+     
+     <para>
        Once you have entered all the necessary parameters, press
        <emphasis role="input">»ENTER«</emphasis>.
      </para>
    </section>
-<!-- 
-  Copyright (c) 2014 BREDEX GmbH.
-  All rights reserved. This program and the accompanying materials
-  are made available under the terms of the Eclipse Public License v1.0
-  which accompanies this distribution, and is available at
-  http://www.eclipse.org/legal/epl-v10.html
--->
 
-<section id="dbtool-working-with-versions">
-	<title>Entering version numbers in the DB Tool</title>
-	<para>
-	 You can enter version numbers such as <emphasis>"1.0.0_release"</emphasis> or 
-           <emphasis>"1.0"</emphasis>. 
-       </para> 
-       <para>
-       	If your version only uses a qualifier, you can enter it as e.g.
-       	<emphasis>"release"</emphasis>. If you are using 
-           a qualifier-only version that begins with a number, then you must use a preceding 
-           underscore (e.g. <emphasis>"_3"</emphasis>).
-	</para>
-</section>  
- </section>
+   <section xml:id="dbtool-working-with-versions">
+     <title>Entering version numbers in the DB Tool</title>
+     <para>
+       You can enter version numbers such as <emphasis>"1.0.0_release"</emphasis> or 
+       <emphasis>"1.0"</emphasis>. 
+     </para> 
+     <para>
+        If your version only uses a qualifier, you can enter it as e.g.
+        <emphasis>"release"</emphasis>. If you are using 
+        a qualifier-only version that begins with a number, then you must use a preceding 
+        underscore (e.g. <emphasis>"_3"</emphasis>).
+     </para>
+   </section>  
+</section>

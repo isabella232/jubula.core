@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-ios-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-ios-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting iOS AUTs</title>
-  <section id="connecting-to-the-aut-agent">
+  <section xml:id="connecting-to-the-aut-agent">
     <title>Connecting to the AUT Agent</title>
     <para>
       The AUT Agent does not need to be started on the simulator or
@@ -21,12 +22,12 @@
       (<xref linkend="setting-up-ios-aut"/>) and configured in the AUT
       configuration (<xref linkend="configuring-ios-aut"/>).
     </para>
-    <para>
-      <para role="tip">Since the place where the AUT Agent is started is not
-      important, we recommend starting it on localhost.</para>
+    <para role="tip">
+      Since the place where the AUT Agent is started is not
+      important, we recommend starting it on localhost.
     </para>
   </section>
-  <section id="configuring-ios-aut">
+  <section xml:id="configuring-ios-aut">
     <title>Configuring an iOS AUT</title>
     <itemizedlist>
       <listitem>
@@ -57,12 +58,12 @@
         </para>
       </listitem>
     </itemizedlist>
-    <para>
-      <para role="warning">Starting iOS AUTs with <emphasis>autrun</emphasis> is
-      not supported.</para>
+    <para role="warning">
+      Starting iOS AUTs with <emphasis>autrun</emphasis> is
+      not supported.
     </para>
   </section>
-  <section id="starting-and-connecting-to-ios-auts">
+  <section xml:id="starting-and-connecting-to-ios-auts">
     <title>Starting and connecting to iOS AUTs</title>
     <para>
       Unlike other AUTs, iOS AUTs are not

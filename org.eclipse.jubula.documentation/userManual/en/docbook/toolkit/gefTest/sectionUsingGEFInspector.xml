@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-the-gef-inspector" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-the-gef-inspector" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the GEF inspector</title>
-  <anchor role="helpid" id="inspectorViewContextId">GEF Inspector View</anchor>
+  <anchor role="helpid" xml:id="inspectorViewContextId">GEF Inspector View</anchor>
   <para>
     The GEF Inspector View in the ITE allows you to collect information
     about the textpath to an item from within your RCP AUT. For many
@@ -28,10 +29,10 @@
     <listitem>
       <para>
         Open the GEF Inspector View if it is not already open via:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
-        </para>
+      <para>
+        <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
       </para>
     </listitem>
     <listitem>
@@ -43,9 +44,13 @@
     </listitem>
     <listitem>
       <para>
-        Click on an item to inspect it. <para role="tip">Make sure that the
+        Click on an item to inspect it. 
+      </para>
+      
+      <para role="tip">
+        Make sure that the
         AUT is in focus before inspecting the figure. You may need
-        to click in the title bar once to do this.</para>
+        to click in the title bar once to do this.
       </para>
     </listitem>
     <listitem>
@@ -59,8 +64,10 @@
       <para>
         You can copy the textpath from the Inspector View via the
         context-menu and paste it as a parameter in your Test Cases.
-        <para role="tip">You will need to activate the inspector for each item
-        you want to inspect</para>
+      </para>
+      <para role="tip">
+        You will need to activate the inspector for each item
+        you want to inspect
       </para>
     </listitem>
   </orderedlist>

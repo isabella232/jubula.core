@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,14 +7,14 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="renaming-items-in-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="renaming-items-in-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Renaming items in browsers</title>
-  <anchor role="helpid" id="dialogRenameContextId">Renaming</anchor>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" xml:id="dialogRenameContextId">Renaming</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
   <para>
     To rename an item in the Test Case Browser, Test Suite Browser
     or Component Names Browser:
@@ -27,11 +28,13 @@
     <listitem>
       <para>
         Select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Rename</emphasis>
-        </para>
-        
+      <para>
+        <emphasis role="menuPath">Rename</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu.
       </para>
     </listitem>
@@ -42,9 +45,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">You can also press <emphasis role="input">»F2«</emphasis> to
-    rename an item.</para>
+  <para role="tip">
+    You can also press <emphasis role="input">»F2«</emphasis> to
+    rename an item.
   </para>
   <para>
     When you rename a Test Case or Test Suite, you change its

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="deleting-from-the-object-mapping-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="deleting-from-the-object-mapping-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Deleting from the Object Mapping Editor</title>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
   <orderedlist>
     <listitem>
       <para>
@@ -34,14 +35,14 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">If you want to remove all unused mappings from the Object
+  <para role="tip">
+    If you want to remove all unused mappings from the Object
     Mapping Editor, then use the <emphasis>Cleanup</emphasis> option
-    (<xref linkend="removing-unused-component-names-from-the-object-mapping-editor"/>).</para>
+    (<xref linkend="removing-unused-component-names-from-the-object-mapping-editor"/>).
   </para>
-  <section id="removing-unused-component-names-from-the-object-mapping-editor">
+  <section xml:id="removing-unused-component-names-from-the-object-mapping-editor">
     <title>Removing unused component names from the Object Mapping Editor</title>
-    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
     <para>
       Over time, your Project will change, and these changes may
       mean that component names you had previously used in Test
@@ -68,11 +69,13 @@
       <listitem>
         <para>
           In the Object Mapping Editor, select:
-          
-          <para>
-            <emphasis role="menuPath">Cleanup</emphasis>--&gt;<emphasis role="menuPath">unused component names</emphasis>
-          </para>
-
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Cleanup</emphasis>--&gt;<emphasis role="menuPath">unused component names</emphasis>
+        </para>
+        
+        <para>
           from the context-sensitive menu.
         </para>
       </listitem>
@@ -91,8 +94,10 @@
           (either component names that are already mapped, or are
           still unassigned), then they are shown in a
           <emphasis>Delete unused component names</emphasis> dialog.
-          <para role="tip">If no component names are found, then you will see
-          a message informing you of this.</para>
+        </para>
+        <para role="tip">
+          If no component names are found, then you will see
+          a message informing you of this.
         </para>
       </listitem>
       <listitem>
@@ -109,14 +114,17 @@
         <para>
           The component names you specify will be deleted from the
           Object Mapping Editor. Save the editor to save the
-          changes. <para role="warning">Removing component names from the Object
+          changes.
+        </para>
+        <para role="warning">
+          Removing component names from the Object
           Mapping Editor does not mean that the component names are
           deleted from the Project. However, if the deletion from
           the object map means that the component name is now used
           nowhere in the Project, then it will appear under the
           <emphasis>Unused Component Names</emphasis> category in
           the Component Names Browser and can be deleted from the
-          whole Project (<xref linkend="deleting-unused-component-names"/>).</para>
+          whole Project (<xref linkend="deleting-unused-component-names"/>).
         </para>
       </listitem>
     </orderedlist>

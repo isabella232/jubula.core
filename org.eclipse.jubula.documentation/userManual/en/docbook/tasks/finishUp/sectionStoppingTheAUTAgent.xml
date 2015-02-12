@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,30 +7,36 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="stopping-the-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="stopping-the-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Stopping the AUT Agent</title>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
   <itemizedlist>
     <listitem>
       <para>
         Stop the AUT Agent by selecting:
-        
-        <para>
-          <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath">Programs</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath">Programs</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>
+      </para>
+      
+      <para>
         and then ”<emphasis>Stop AUT Agent</emphasis>” from the Windows Menu.
       </para>
     </listitem>
     <listitem>
       <para>
         Under Linux, use the script:
-        
-        <para>
-          <emphasis role="input">stopautagent</emphasis>. <para role="tip">You can also stop the AUT Agent from the system tray.</para>
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="input">stopautagent</emphasis>.
+      </para>
+      
+      <para role="tip">
+        You can also stop the AUT Agent from the system tray.
       </para>
     </listitem>
     <listitem>
@@ -43,8 +50,10 @@
       <para>
         You can also enter the hostname directly after the
         <emphasis role="input">stopautagent</emphasis> command to specify which
-        hostname should be stopped. <para role="tip">Stopping the AUT Agent
-        will stop any AUTs that are connected to this AUT Agent.</para>
+        hostname should be stopped.
+      </para>
+      <para role="tip">
+        Stopping the AUT Agent will stop any AUTs that are connected to this AUT Agent.
       </para>
     </listitem>
   </itemizedlist>

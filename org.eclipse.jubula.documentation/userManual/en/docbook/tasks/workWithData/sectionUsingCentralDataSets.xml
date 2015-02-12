@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,20 +7,20 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-central-data-sets" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-central-data-sets" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using central data sets</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <para>
     You can create and manage central test data sets for a
     Project which can be reused in Test Cases.
   </para>
-  <section id="creating-and-editing-central-test-data-sets">
+  <section xml:id="creating-and-editing-central-test-data-sets">
     <title>Creating and editing central test data sets</title>
-    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" id="newTestDataCubeNameContextId">New Central Data Set</anchor>
+    <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" xml:id="newTestDataCubeNameContextId">New Central Data Set</anchor>
     <para>
       To create a central test data set:
     </para>
@@ -27,22 +28,26 @@
       <listitem>
         <para>
           Open the Central Test Data Editor by clicking the ”<emphasis>Central Test Data Editor</emphasis>” button on the toolbar or selecting:
-          
-          <para>
-            <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
-          </para>
-          
+        </para>
+        
+        <para>
+          <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
+        </para>
+        
+        <para>
           from the Test Suite Browser.
         </para>
       </listitem>
       <listitem>
         <para>
           In the Central Test Data Editor, select:
+        </para>
           
-          <para>
-            <emphasis role="menupath">Add new Data Set</emphasis>
-          </para>
-            
+        <para>
+          <emphasis role="menupath">Add new Data Set</emphasis>
+        </para>
+        
+        <para>
           from the context-sensitive menu or press <emphasis role="input">»Insert«</emphasis>.
         </para>
       </listitem>
@@ -62,11 +67,13 @@
       <listitem>
         <para>
           You can rename the data set by pressing<emphasis role="input">»F2«</emphasis> or selecting:
-          
-          <para>
-            <emphasis role="menupath">Rename</emphasis>
-          </para>
-          
+        </para>
+        
+        <para>
+          <emphasis role="menupath">Rename</emphasis>
+        </para>
+        
+        <para>
           from the context sensitive menu.
         </para>
       </listitem>
@@ -79,9 +86,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="deleting-central-test-data-sets">
+  <section xml:id="deleting-central-test-data-sets">
     <title>Deleting central test data sets</title>
-    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
     <para>
       You can delete a central test data set if the data set has not
       yet been reused (referenced) in a Test Case
@@ -91,11 +98,13 @@
       <listitem>
         <para>
           Select:
+        </para>
           
-          <para>
-            <emphasis role="menupath">Delete</emphasis>
-          </para>
-          
+        <para>
+          <emphasis role="menupath">Delete</emphasis>
+        </para>
+        
+        <para>
           from the context-sensitive menu or press <emphasis role="input">»DELETE«</emphasis>.
         </para>
       </listitem>
@@ -113,9 +122,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="adding-and-modifying-parameters-for-central-test-data-sets">
+  <section xml:id="adding-and-modifying-parameters-for-central-test-data-sets">
     <title>Adding and modifying parameters for central test data sets</title>
-    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
     <para>
       Once you have created a central test data set
       (<xref linkend="creating-and-editing-central-test-data-sets"/>), you can add parameters to the
@@ -151,7 +160,9 @@
           actions are using it. A list of actions and their
           parameters (and types) is available in the reference
           manual.
-          <para role="tip">Names for referenced parameters may only consist of letters, numbers and underscores. You cannot use spaces.</para>
+        </para>
+        <para role="tip">
+          Names for referenced parameters may only consist of letters, numbers and underscores. You cannot use spaces.
         </para>
       </listitem>
       <listitem>
@@ -163,9 +174,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="entering-data-for-central-test-data-sets">
+  <section xml:id="entering-data-for-central-test-data-sets">
     <title>Entering data for central test data sets</title>
-    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
     <para>
       Once you have created a central test data set
       (<xref linkend="creating-and-editing-central-test-data-sets"/>) and have added parameters to
@@ -180,11 +191,13 @@
       <listitem>
         <para>
           Open the Central Test Data Editor by clicking the ”<emphasis>Central Test Data Editor</emphasis>” on the toolbar or selecting:
+        </para>
           
-          <para>
-            <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
-          </para>
-          
+        <para>
+          <emphasis role="menupath">Open with</emphasis>--&gt;<emphasis role="menupath">Central Test Data Editor</emphasis>
+        </para>
+        
+        <para>
           from the Test Suite Browser.
         </para>
       </listitem>
@@ -209,7 +222,10 @@
       <listitem>
         <para>
           Enter the values for the parameters in the row.
-          <para role="tip">You cannot add referenced parameters (i.e. reference names preceded by the equals sign) in the Data Sets View for a central test data set.</para>
+        </para>
+          
+        <para role="tip">
+          You cannot add referenced parameters (i.e. reference names preceded by the equals sign) in the Data Sets View for a central test data set.
         </para>
       </listitem>
       <listitem>
@@ -221,10 +237,10 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="reusing-central-test-data-sets-in-test-cases">
+  <section xml:id="reusing-central-test-data-sets-in-test-cases">
     <title>Reusing central test data sets in Test Cases</title>
-    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
     <para>
       You can reuse a central test data set in a Test Case to
       provide the concrete data for the parameters required by the
@@ -236,7 +252,9 @@
           In the Properties View for the Test Case, enter the name of
           the central test data set you want to use in the
           <emphasis>Central Test Data Set</emphasis> field.
-          <para role="tip">Press <emphasis role="input">»CTRL+SPACE«</emphasis> to see a list of possible data sets for this Test Case. You will only be shown data sets that contain the correct parameters with the correct types.</para>
+        </para>
+        <para role="tip">
+          Press <emphasis role="input">»CTRL+SPACE«</emphasis> to see a list of possible data sets for this Test Case. You will only be shown data sets that contain the correct parameters with the correct types.
         </para>
       </listitem>
       <listitem>
@@ -245,7 +263,9 @@
           Properties View shows <emphasis>central test data set</emphasis> as the
           data type. You will see the data from the central test
           data set in read-only form in the Data Sets View.
-          <para role="tip">If data is missing from the central test data set, you will receive the error that test data is incomplete for any  Test Suites this Test Case is used in.</para>
+        </para>
+        <para role="tip">
+          If data is missing from the central test data set, you will receive the error that test data is incomplete for any  Test Suites this Test Case is used in.
         </para>
       </listitem>
       <listitem>
@@ -255,15 +275,17 @@
           type reverts to <emphasis>local data</emphasis>. For more information
           on the data sources, see the earlier section
           (<xref linkend="viewing-and-changing-data-sources-for-test-cases"/>).
-          <para role="tip">You can use central test data sets that contain more parameters than your Test Case. For example, if your Test Case requires the parameters <emphasis role="input">NAME, ADDRESS</emphasis> and your central test data set contains <emphasis role="input">NAME, ADDRESS, POSTCODE</emphasis>, you can still use the central test data set.</para>
+        </para>
+        <para role="tip">
+          You can use central test data sets that contain more parameters than your Test Case. For example, if your Test Case requires the parameters <emphasis role="input">NAME, ADDRESS</emphasis> and your central test data set contains <emphasis role="input">NAME, ADDRESS, POSTCODE</emphasis>, you can still use the central test data set.
         </para>
       </listitem>
     </orderedlist>
   </section>
-  <section id="importing-excel-files-as-central-test-data">
+  <section xml:id="importing-excel-files-as-central-test-data">
     <title>Importing Excel files as central test data</title>
-    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
     <para>
       If you have existing Excel files that you want to convert into
       central test data, then you can import them via the
@@ -292,16 +314,18 @@
       <listitem>
         <para>
           Click ”<emphasis>Finish</emphasis>” to start the import.
-          <para role="warning">Your Excel files must contain the correct amount and type of Project languages.</para>
+        </para>
+        <para role="warning">
+          Your Excel files must contain the correct amount and type of Project languages.
         </para>
       </listitem>
     </orderedlist>
   </section>
-  <section id="changing-the-column-used-in-a-central-test-data-set-for-multiple">
+  <section xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple">
     <title>Changing the column used in a central test data set for multiple Test Cases</title>
-    <anchor role="helpid" id="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId">Changing Central Test Data Columns</anchor>
-    <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
+    <anchor role="helpid" xml:id="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId">Changing Central Test Data Columns</anchor>
+    <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" xml:id="searchResultViewContextId">Search Result View</anchor>
     <para>
       If you have used a central test data set in multiple Test Cases and later realize that you
       have two columns in the central test data set that contain the
@@ -310,8 +334,8 @@
       have done this, you can remove the unnecessary column from the
       central test data set.
     </para>
-    <para>
-      <para role="warning">In order to perform this action, all Test Cases to be changed must not be in use by anyone else using the Project -- you should ensure that this is the case before performing the action, otherwise the action cannot be carried out.</para>
+    <para role="warning">
+      In order to perform this action, all Test Cases to be changed must not be in use by anyone else using the Project -- you should ensure that this is the case before performing the action, otherwise the action cannot be carried out.
     </para>
     <orderedlist>
       <listitem>
@@ -394,10 +418,10 @@
       <listitem>
         <para>
           From the context menu, select:
-          
-          <para>
-            <emphasis role="menupath">Change central test data set column usage</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menupath">Change central test data set column usage</emphasis>
         </para>
       </listitem>
       <listitem>

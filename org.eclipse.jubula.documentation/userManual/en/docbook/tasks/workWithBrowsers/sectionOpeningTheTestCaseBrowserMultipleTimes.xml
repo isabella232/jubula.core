@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="opening-the-test-case-browser-multiple-times" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="opening-the-test-case-browser-multiple-times" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening the Test Case Browser multiple times</title>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
   <para>
     To make navigation in larger Projects easier, you can open
     multiple instances of the Test Case Browser. You can filter each

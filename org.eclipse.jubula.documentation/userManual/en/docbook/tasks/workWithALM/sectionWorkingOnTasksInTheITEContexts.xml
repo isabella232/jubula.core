@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="working-on-tasks-in-the-ite-contexts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="working-on-tasks-in-the-ite-contexts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working on tasks in the ITE: contexts</title>
@@ -15,17 +16,19 @@
     (<xref linkend="configuring-task-repositories"/>), you can work on tasks from
     that repository.
   </para>
-  <section id="opening-and-editing-tasks-in-the-ite">
+  <section xml:id="opening-and-editing-tasks-in-the-ite">
     <title>Opening and editing tasks in the ITE</title>
     <itemizedlist>
       <listitem>
         <para>
           To be able to see tasks in a repository, select:
+        </para>
           
-          <para>
-            <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
-          </para>
-          
+        <para>
+          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
+        </para>
+        
+        <para>
           from the menu.
         </para>
       </listitem>
@@ -51,7 +54,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="activate-task">
+  <section xml:id="activate-task">
     <title>Working on tasks in the ITE</title>
     <para>
       Mylyn supports context- or task-based working. When you work
@@ -69,11 +72,13 @@
       <listitem>
         <para>
           To work on a task, you must <emphasis>activate</emphasis> it. To activate a task, select the task in the <emphasis>Task List</emphasis> and select:
-          
-          <para>
-            <emphasis role="menuPath">Activate</emphasis>
-          </para>
-          
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Activate</emphasis>
+        </para>
+        
+        <para>
           from the context-sensitive menu.
         </para>
       </listitem>

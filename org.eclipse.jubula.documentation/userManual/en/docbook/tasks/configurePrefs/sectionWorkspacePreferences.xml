@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,17 +7,19 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="workspace-prefs" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="workspace-prefs" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Workspace preferences</title>
   <para>
     You can find the workspace preferences under:
-    
-    <para>
-      <emphasis>General/Startup and Shutdown/Workspaces</emphasis>
-    </para>
-    
+  </para>
+  
+  <para>
+    <emphasis>General/Startup and Shutdown/Workspaces</emphasis>
+  </para>
+  
+  <para>
     in the preferences dialog (<xref linkend="WorkspacePrefs"/>).
   </para>
   <para>
@@ -27,7 +30,7 @@
     You can also configure how many workspaces to see in your recent
     workspaces list, and remove any you no longer wish to see.
   </para>
-  <figure id="WorkspacePrefs">
+  <figure xml:id="WorkspacePrefs">
     <title>Workspace Preferences</title>
     <mediaobject>
       <imageobject>

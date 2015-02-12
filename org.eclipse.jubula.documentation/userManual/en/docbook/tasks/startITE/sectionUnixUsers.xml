@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,15 +7,15 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="unix-users" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="unix-users" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Unix Users</title>
   <para>
     Enter the program name into the shell.
   </para>
-  <para>
-    <para role="tip">The ITE uses the current directory as its working
-    directory on Linux systems.</para>
+  <para role="tip">
+    The ITE uses the current directory as its working
+    directory on Linux systems.
   </para>
 </section>

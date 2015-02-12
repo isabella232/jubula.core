@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="writing-your-own-birt-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="writing-your-own-birt-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Writing your own BIRT reports</title>
-  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" xml:id="testResultSummaryViewContextId">Test Result Summary View</anchor>
   <para>
     The BIRT reports are examples of how you could document your
     quality over time. You can also create other reports to generate
@@ -78,7 +79,7 @@
       </listitem>
     </varlistentry>
   </variablelist>
-  <section id="creating-a-birt-report">
+  <section xml:id="creating-a-birt-report">
     <title>Creating a BIRT report</title>
     <para>
       Using the BIRT report designer, you can create your own
@@ -157,9 +158,9 @@
         </listitem>
       </varlistentry>
     </variablelist>
-    <para>
-      <para role="warning">Be careful when working with the reports and themes
-      that you do not break the existing reports!</para>
+    <para role="warning">
+      Be careful when working with the reports and themes
+      that you do not break the existing reports!
     </para>
   </section>
 </section>

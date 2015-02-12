@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="test-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="test-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Test preferences</title>
-  <anchor role="helpid" id="prefPageBasicContextId">Test Preferences</anchor>
-  <figure id="gdprefs">
+  <anchor role="helpid" xml:id="prefPageBasicContextId">Test Preferences</anchor>
+  <figure xml:id="gdprefs">
     <title>Preference Dialog</title>
     <mediaobject>
       <imageobject>
@@ -155,11 +156,14 @@
         <para>
           You can specify a location where external data files (e.g.
           Excel files) are held, or use the workspace directory as
-          the base location. <para role="tip">The advantage of using the
+          the base location.
+        </para>
+        <para role="tip">
+          The advantage of using the
           workspace as a location for your data files is that you
           can view these in the navigator view directly in the ITE.
           Windows users can even open Excel files from the ITE using
-          the In-Place editor.</para>
+          the In-Place editor.
         </para>
       </listitem>
     </varlistentry>

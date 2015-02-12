@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,21 +7,21 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="generating-birt-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="generating-birt-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Generating BIRT reports</title>
-  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" xml:id="testResultSummaryViewContextId">Test Result Summary View</anchor>
   <para>
     From the Test Result Summary View (<xref linkend="working-with-the-test-result-summary-view"/>), you
     can generate reports of your test runs over time using the BIRT
     reporting engine.
   </para>
-  <para>
-    <para role="tip">Only test runs that have been marked as relevant are
+  <para role="tip">
+    Only test runs that have been marked as relevant are
     included in the generated BIRT reports. You can change the
     relevance from the Test Result Summary View
-    (<xref linkend="changing-the-relevance-of-a-test-run"/>).</para>
+    (<xref linkend="changing-the-relevance-of-a-test-run"/>).
   </para>
   <itemizedlist>
     <listitem>
@@ -157,10 +158,10 @@
         ”<emphasis>Create Report</emphasis>” button <mediaobject role="icon" file="images/createBirtReport.png"/>
         and select the report you want to generate.
       </para>
-      <para>
-        <para role="tip">If you are not already connected to the database,
+      <para role="tip">
+        If you are not already connected to the database,
         then a dialog will appear to create the connection
-        (<xref linkend="tasksdblogin"/>). </para>
+        (<xref linkend="tasksdblogin"/>).
       </para>
     </listitem>
     <listitem>
@@ -245,13 +246,15 @@
     <listitem>
       <para>
         You can click through the report’s pages in the viewer and
-        also export the report as a PDF. <para role="warning">The option
-        <emphasis>Auto</emphasis> when exporting a report leads to
-        the right-hand side of the report being cut off.</para>
+        also export the report as a PDF.
       </para>
-      <para>
-        <para role="tip">You can also create your own reports to execute
-        (<xref linkend="writing-your-own-birt-reports"/>).</para>
+      <para role="warning">The option
+        <emphasis>Auto</emphasis> when exporting a report leads to
+        the right-hand side of the report being cut off.
+      </para>
+      <para role="tip">
+        You can also create your own reports to execute
+        (<xref linkend="writing-your-own-birt-reports"/>).
       </para>
     </listitem>
   </itemizedlist>

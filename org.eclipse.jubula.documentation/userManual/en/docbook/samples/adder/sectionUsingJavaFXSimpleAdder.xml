@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="sample-4-using-the-javafx-simple-adder" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="sample-4-using-the-javafx-simple-adder" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Sample 4: using the JavaFX Simple Adder</title>
@@ -19,7 +20,7 @@
     Executable File Name field of the AUT configuration dialog
     (<xref linkend="configuringaut"/>), in place of the placeholder.
   </para>
-  <section id="sample-4-simple-adder-javafx-test-using-library">
+  <section xml:id="sample-4-simple-adder-javafx-test-using-library">
     <title>Sample 4: Simple Adder JavaFX test using library</title>
     <para>
       The test for the Simple Adder JavaFX reuses the test that uses

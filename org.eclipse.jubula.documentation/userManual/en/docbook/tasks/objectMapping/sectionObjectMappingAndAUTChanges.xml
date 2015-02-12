@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,19 +7,19 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="object-mapping-and-aut-changes" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="object-mapping-and-aut-changes" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                            xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Object mapping and AUT changes</title>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
   <para>
     If your AUT has changed from one version to the next, your tests may still run,
     depending on the nature and extent of the changes.
   </para>
-  <para>
-    <para role="tip">Please bear in mind that changing the look and feel of
+  <para role="tip">
+    Please bear in mind that changing the look and feel of
     your AUT may lead to different technical names for the
-    components in your AUT if you have not named the components.</para>
+    components in your AUT if you have not named the components.
   </para>
   <para>
     If your test does not run, a few simple steps will update it.
@@ -31,7 +32,7 @@
   <para>
     This updates this component for the whole test.
   </para>
-  <figure id="greenborders">
+  <figure xml:id="greenborders">
     <title>Green Border around Supported Component</title>
     <mediaobject>
       <imageobject>

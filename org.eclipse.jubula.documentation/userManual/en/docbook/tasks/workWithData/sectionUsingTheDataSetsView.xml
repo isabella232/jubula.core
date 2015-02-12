@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-the-data-sets-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-the-data-sets-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the Data Sets View to enter data loops and to translate data</title>
-  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
-  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" xml:id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <para>
     The Data Sets View lets you do three things:
   </para>
@@ -35,11 +36,11 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para>
-    <para role="tip">You can also create central test data sets for your
-    Project to reuse in Test Cases (<xref linkend="using-central-data-sets"/>).</para>
+  <para role="tip">
+    You can also create central test data sets for your
+    Project to reuse in Test Cases (<xref linkend="using-central-data-sets"/>).
   </para>
-  <section id="adding-multiple-data-sets">
+  <section xml:id="adding-multiple-data-sets">
     <title>Data Sets View: adding multiple data sets to a Test
     Case</title>
     <para>
@@ -81,10 +82,12 @@
       </listitem>
       <listitem>
         <para>
-          Enter the values for the parameters in the row. <para role="tip">You
-          can also add references in the Data Sets View if you want
+          Enter the values for the parameters in the row.
+        </para>
+        <para role="tip">
+          You can also add references in the Data Sets View if you want
           to specify the concrete values for your data sets when you
-          reuse this Test Case. </para>
+          reuse this Test Case.
         </para>
       </listitem>
       <listitem>
@@ -96,15 +99,15 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="translating-test-data">
+  <section xml:id="translating-test-data">
     <title>Data Sets View: translating test data</title>
     <para>
       You can add data for other languages supported by your AUT by
       changing the language in the combo box in the Data Sets View.
     </para>
-    <para>
-      <para role="tip">You can add supported languages in the Project
-      properties dialog (<xref linkend="projectproperties"/>).</para>
+    <para role="tip">
+      You can add supported languages in the Project
+      properties dialog (<xref linkend="projectproperties"/>).
     </para>
     <para>
       The other combo boxes are there to help you see the Data Sets

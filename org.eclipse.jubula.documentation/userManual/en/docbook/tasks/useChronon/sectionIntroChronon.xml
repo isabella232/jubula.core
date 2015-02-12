@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="intro-chronon" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="intro-chronon" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Introduction to Chronon</title>
@@ -18,8 +19,8 @@
     The information gathered by Chronon can be used to help analyze
     any errors found in the program.
   </para>
-  <para>
-    <para role="warning">Jubula Feature users: the Chronon plugins are only
-    available in the standalone version.</para>
+  <para role="warning">
+    Jubula Feature users: the Chronon plugins are only
+    available in the standalone version.
   </para>
 </section>

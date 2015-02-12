@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="tasksdblogin" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="tasksdblogin" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Logging in to the database</title>
@@ -23,7 +24,7 @@
         appears automatically the first time you need it (e.g. when
         you try to open or create a Project).
       </para>
-      <figure id="dblogin">
+      <figure xml:id="dblogin">
         <title>Database login</title>
         <mediaobject>
           <imageobject>
@@ -32,14 +33,14 @@
           <textobject><phrase>Database login</phrase></textobject>
         </mediaobject>
       </figure>
-      <para>
-        <para role="tip">If you are using the default demo (embedded)
+      <para role="tip">
+        If you are using the default demo (embedded)
         database, you will automatically be logged into the
-        database. </para>
+        database.
       </para>
-      <para>
-        <para role="warning">We do not recommend using the embedded database for
-        productive use.</para>
+      <para role="warning">
+        We do not recommend using the embedded database for
+        productive use.
       </para>
     </listitem>
     <listitem>
@@ -47,42 +48,46 @@
         Select the database you want to use and enter your username
         and password.
       </para>
-      <para>
-        <para role="tip">If you previously had another ITE version installed,
+      <para role="tip">
+        If you previously had another ITE version installed,
         you may see the information that your current database
         version is not compatible with the latest version. If this
         is the case, please follow the migration instructions in the
-        Installation Manual.</para>
+        Installation Manual.
       </para>
     </listitem>
     <listitem>
       <para>
         If you want to save your database password, select the checkbox to store it in the secure store. You can edit your password settings in the preferences via:
-        
-        <para>
-          <emphasis>General/Security/Secure Store</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis>General/Security/Secure Store</emphasis>.
       </para>
     </listitem>
     <listitem>
       <para>
         Once you have opted to save your password, you can also choose whether you want to perform an automatic login to this database when you use this workspace. If you select this option, then the next time you open the ITE and e.g. select:
-        
-        <para>
-          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
-        </para>
-        
-        you will be automatically connected to this database with the username and password you entered. 
-        <para role="tip">You cannot perform auto-login for an embedded database unless it is the only database configured.</para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
+      </para>
+      
+      <para>
+        you will be automatically connected to this database with the username and password you entered.
+      </para>
+      <para role="tip">
+        You cannot perform auto-login for an embedded database unless it is the only database configured.
       </para>
     </listitem>
     <listitem>
       <para>
         You can change your auto-login details or select another database at any time by selecting:
-        
-        <para>
-          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Select database...</emphasis>
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Select database...</emphasis>
       </para>
     </listitem>
   </orderedlist>

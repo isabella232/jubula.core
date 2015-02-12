@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="special-parameters-empty-strings-and-the-escape-character" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="special-parameters-empty-strings-and-the-escape-character" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Special parameters: empty strings and the escape character</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <para>
     <emphasis role="strong">Entering empty strings as parameters</emphasis><?linebreak?>
     If you want the parameter you enter to be an <emphasis>empty string</emphasis> (i.e. nothing), use two single quote marks: ”
@@ -29,8 +30,8 @@
     You can also use ’<literal>^$</literal>’ with the operator
     <emphasis>matches</emphasis> to check that a text area is empty.
   </para>
-  <para>
-    <para role="tip">If a component looks empty, but entering an empty string doesn't work, it may be worth asking a developer what is actually in the component.</para>
+  <para role="tip">
+    If a component looks empty, but entering an empty string doesn't work, it may be worth asking a developer what is actually in the component.
   </para>
   <para>
     <emphasis role="strong">The escape character</emphasis><?linebreak?>
@@ -40,7 +41,7 @@
     See the section later <xref linkend="special-characters"/> for more
     details on special symbols and escaping them.
   </para>
-  <para>
-    <para role="tip">When you are using regular expressions, you will also need to think about which symbols need neutralising. Sometimes more than one backslash is necessary.</para>
+  <para role="tip">
+    When you are using regular expressions, you will also need to think about which symbols need neutralising. Sometimes more than one backslash is necessary.
   </para>
 </section>

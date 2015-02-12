@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="regex" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="regex" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the ’matches’ operator</title>
@@ -111,8 +112,8 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para>
-    <para role="tip">The regular expression is applied to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.</para>
+  <para role="tip">
+    The regular expression is applied to your entire string. To search for a match within a string, wildcards need to be placed on either side. See the examples below for more information.
   </para>
   <para>
     <emphasis role="strong">Ranges</emphasis>
@@ -137,8 +138,8 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para>
-    <para role="tip">Note that there are no spaces between the ranges. </para>
+  <para role="tip">
+    Note that there are no spaces between the ranges.
   </para>
   <para>
     <emphasis role="strong">Alternatives</emphasis>
@@ -176,10 +177,12 @@
     <listitem>
       <para>
         The characters are:
-        <para>
-          <literal> [ ] \ . | ? * + ( ) { } ^ $  </literal>
-        </para>
       </para>
+      
+      <para>
+        <literal> [ ] \ . | ? * + ( ) { } ^ $  </literal>
+      </para>
+      
     </listitem>
     <listitem>
       <para>
@@ -191,19 +194,21 @@
     <listitem>
       <para>
         For example, to check for a tree node:
-        
-        <para>
-          <emphasis role="input">x/y/z/***</emphasis>
-        </para>
-        
-        where the slashes are a part of the node, your regular expression in the ITE would look like this: 
-        
-        <para>
-          <literal> x\/y\/z\/\\*\\*\\* </literal>
-        </para>
-        
-        The backslashes before the ordinary slashes are an escape symbol to specify that the following sign is not a path separator. The extra backslash before the stars means that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.
       </para>
+      
+      <para>
+        <emphasis role="input">x/y/z/***</emphasis>
+      </para>
+      
+      <para>
+        where the slashes are a part of the node, your regular expression in the ITE would look like this: 
+      </para>
+      
+      <para>
+        <literal> x\/y\/z\/\\*\\*\\* </literal>
+      </para>
+      
+      The backslashes before the ordinary slashes are an escape symbol to specify that the following sign is not a path separator. The extra backslash before the stars means that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.
     </listitem>
     <listitem>
       <para>
@@ -225,10 +230,10 @@
     <listitem>
       <para>
         The example above for a tree node could be entered thus:
+      </para>
         
-        <para>
-          <emphasis role="input">'x/y/z/***'</emphasis>
-        </para>
+      <para>
+        <emphasis role="input">'x/y/z/***'</emphasis>
       </para>
     </listitem>
   </itemizedlist>
@@ -284,10 +289,10 @@
     <listitem>
       <para>
         You can check that a string corresponds to a minimum and maximum length using:
+      </para>
         
-        <para>
-          <literal>'^.{'={MIN_COUNT}','={MAX_COUNT}'}$'</literal>
-        </para>
+      <para>
+        <literal>'^.{'={MIN_COUNT}','={MAX_COUNT}'}$'</literal>
       </para>
     </listitem>
     <listitem>
@@ -299,10 +304,10 @@
     <listitem>
       <para>
         To check that a specific string is <emphasis>not</emphasis> in a text, use:
+      </para>
         
-        <para>
-          <literal>^((?!STRING)[\s\S])*$</literal>
-        </para>
+      <para>
+        <literal>^((?!STRING)[\s\S])*$</literal>
       </para>
     </listitem>
   </itemizedlist>

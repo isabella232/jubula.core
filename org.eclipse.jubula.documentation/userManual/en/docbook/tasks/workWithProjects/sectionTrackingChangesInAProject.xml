@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="tracking-changes-in-a-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="tracking-changes-in-a-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Tracking changes in a Project</title>
-  <anchor role="helpid" id="projectSettingsPageContextId">Project Properties</anchor>
+  <anchor role="helpid" xml:id="projectSettingsPageContextId">Project Properties</anchor>
   <para>
     In order to see when changes were made to a Test Case, Test
     Suite or Test Job in a Project, you can activate the change
@@ -44,16 +45,16 @@
     search result view, and any renaming in browsers, are not shown
     in the change information.
   </para>
-  <section id="activating-change-tracking">
+  <section xml:id="activating-change-tracking">
     <title>Activating change tracking</title>
     <orderedlist>
       <listitem>
         <para>
           Open the Project properties:
-          
-          <para>
-            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
         </para>
       </listitem>
       <listitem>
@@ -73,9 +74,11 @@
           Choose whether you want to track a certain number of
           changes per node, or whether you want to keep changes for
           a specific time span. Enter the amount of changes or days.
-          <para role="tip">The display for each node is updated on saving. If
+        </para>
+        <para role="tip">
+          The display for each node is updated on saving. If
           there are too many changes, or some changes are outside of
-          the specified time span, they will be removed on saving.</para>
+          the specified time span, they will be removed on saving.
         </para>
       </listitem>
       <listitem>
@@ -93,7 +96,7 @@
       Test Suites and Test Jobs displays information on the changes
       made (<xref linkend="TasksTrackChangesPropView"/>).
     </para>
-    <figure id="TasksTrackChangesPropView">
+    <figure xml:id="TasksTrackChangesPropView">
       <title>Tracking Changes</title>
       <mediaobject>
         <imageobject>
@@ -109,17 +112,17 @@
       (<xref linkend="removing-change-tracking-information"/>).
     </para>
   </section>
-  <section id="removing-change-tracking-information">
+  <section xml:id="removing-change-tracking-information">
     <title>Removing change tracking information from a
     Project</title>
     <orderedlist>
       <listitem>
         <para>
           To remove all information on all nodes about changes made, open the Project properties:
-          
-          <para>
-            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
         </para>
       </listitem>
       <listitem>
@@ -137,11 +140,13 @@
       <listitem>
         <para>
           All data will be removed from the Project that were
-          collected for the change tracking. <para role="warning">If a node is
-          currently locked, then the data for this node will not be
+          collected for the change tracking.
+        </para>
+        <para role="warning">
+          If a node is currently locked, then the data for this node will not be
           removed. You will see which nodes are affected in a
           dialog. We recommend deleting change tracking data when
-          you are sure that no one else is using the Project.</para>
+          you are sure that no one else is using the Project.
         </para>
       </listitem>
     </orderedlist>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="supported-windows-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="supported-windows-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Supported Windows AUTs</title>
@@ -25,9 +26,12 @@
         We have performed our WinForms and WPF tests with an AUT in
         .NET version 4.0. Although tests may be also be executable
         with .NET 3.5 (or even lower), the minimum supported version
-        is .NET 4.0. <para role="warning">The support for WPF AUTs is currently
+        is .NET 4.0.
+      </para>
+      <para role="warning">
+        The support for WPF AUTs is currently
         experimental. We encourage you to test the support with your
-        own AUTs and welcome feedback about the current support.</para>
+        own AUTs and welcome feedback about the current support.
       </para>
     </listitem>
     <listitem>

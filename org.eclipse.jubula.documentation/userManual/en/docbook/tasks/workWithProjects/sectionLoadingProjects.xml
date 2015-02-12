@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,20 +7,20 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="loadproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="loadproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening Projects</title>
-  <anchor role="helpid" id="openProjectDialogContextId">Opening Projects</anchor>
-  <anchor role="helpid" id="problemViewNoProjectContextId">Project Options Dialog</anchor>
+  <anchor role="helpid" xml:id="openProjectDialogContextId">Opening Projects</anchor>
+  <anchor role="helpid" xml:id="problemViewNoProjectContextId">Project Options Dialog</anchor>
   <orderedlist>
     <listitem>
       <para>
         To open a Project from the database, select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>.
-        </para>
+      <para>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>.
       </para>
     </listitem>
     <listitem>
@@ -34,7 +35,7 @@
         Choose the Project you want to open from the combo box in
         the dialog which appears (<xref linkend="loadfromdb"/>).
       </para>
-      <figure id="loadfromdb">
+      <figure xml:id="loadfromdb">
         <title>Open Project from database</title>
         <mediaobject>
           <imageobject>
@@ -58,17 +59,19 @@
       </para>
     </listitem>
   </orderedlist>
-  <section id="auto-loading-default-project">
+  <section xml:id="auto-loading-default-project">
     <title>Auto loading a default Project</title>
     <orderedlist>
       <listitem>
         <para>
           Use the checkbox in the <emphasis>Open Project</emphasis> Dialog to specify that you want to open this Project in this version automatically when you select:
-          
-          <para>
-            <emphasis role="menuPath">Project</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
-          </para>
-          
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Project</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
+        </para>
+        
+        <para>
           This is useful if you only have one Project that you work with.
         </para>
       </listitem>
@@ -84,10 +87,10 @@
       <listitem>
         <para>
           In the Test preferences (<xref linkend="gdprefs"/>), you can disable the auto load of the Project. Doing this will mean that you see the normal <emphasis>Open Project Dialog</emphasis> when you select
-          
-          <para>
-            <emphasis role="menuPath">Project</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Project</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
         </para>
       </listitem>
     </orderedlist>

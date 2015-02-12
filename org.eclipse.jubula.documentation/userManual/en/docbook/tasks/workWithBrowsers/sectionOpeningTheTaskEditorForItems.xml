@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="opening-the-task-editor-for-items-in-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="opening-the-task-editor-for-items-in-browsers" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening the task editor for items in browsers</title>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
   <para>
     Each Test Case, Test Suite and Test Job in a Project can be
     joined to a task in an external repository via a task ID
@@ -27,10 +28,10 @@
     <listitem>
       <para>
         Right click and select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Open with</emphasis>--&gt;<emphasis role="menuPath">Mylyn Task Editor</emphasis>
-        </para>
+      <para>
+        <emphasis role="menuPath">Open with</emphasis>--&gt;<emphasis role="menuPath">Mylyn Task Editor</emphasis>
       </para>
     </listitem>
     <listitem>
@@ -39,9 +40,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="warning">If no repository has been defined for the Project, or the
+  <para role="warning">
+    If no repository has been defined for the Project, or the
     task ID does not exist, or the repository is not configured in
-    the workspace, then the task will not open.</para>
+    the workspace, then the task will not open.
   </para>
 </section>

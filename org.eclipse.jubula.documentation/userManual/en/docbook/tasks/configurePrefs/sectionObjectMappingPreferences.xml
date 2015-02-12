@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="object-mapping-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="object-mapping-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Object mapping preferences</title>
-  <anchor role="helpid" id="prefPageObjectMapContextId">Object Mapping Preferences</anchor>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="prefPageObjectMapContextId">Object Mapping Preferences</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
   <figure>
     <title>Object Mapping Preference Dialog</title>
     <mediaobject>
@@ -41,9 +42,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">If your AUT does not accept keystrokes, set the object
+  <para role="tip">
+    If your AUT does not accept keystrokes, set the object
     collection preference to a mouse button combined with a modifier
-    key.</para>
+    key.
   </para>
 </section>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="configuring-task-repositories" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="configuring-task-repositories" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring task repositories in your workspace</title>
@@ -18,11 +19,13 @@
     <listitem>
       <para>
         Select:
-        
-        <para>
-          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
+      </para>
+      
+      <para>
         from the menu.
       </para>
     </listitem>
@@ -75,11 +78,13 @@
     <listitem>
       <para>
         To be able to see tasks in this repository, select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
-        </para>
-        
+      <para>
+        <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis>
+      </para>
+      
+      <para>  
         from the menu.
       </para>
     </listitem>
@@ -99,7 +104,7 @@
     repository in the Project properties as the repository for your
     Project (<xref linkend="configuring-a-task-repository"/>).
   </para>
-  <section id="adding-hp-alm-repository">
+  <section xml:id="adding-hp-alm-repository">
     <title>Adding a HP ALM repository to your workspace</title>
     <orderedlist>
       <listitem>

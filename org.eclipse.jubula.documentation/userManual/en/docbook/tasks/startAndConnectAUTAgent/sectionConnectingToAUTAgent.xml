@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,20 +7,20 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="connect-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="connect-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Connecting to the AUT Agent</title>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
   <para>
     You can connect to an AUT Agent you have started
     (<xref linkend="start-aut-agent"/>) on a local or remote machine, or you
     can connect an embedded AUT Agent on your local machine.
   </para>
-  <para>
-    <para role="tip">When using a separate AUT Agent, you must wait for the
-    AUT Agent to be running before you can connect to it.</para>
+  <para role="tip">
+    When using a separate AUT Agent, you must wait for the
+    AUT Agent to be running before you can connect to it.
   </para>
   <orderedlist>
     <listitem>
@@ -39,10 +40,13 @@
           <para>
             Select the embedded AUT Agent option to connect to an
             AUT Agent that is automatically started for you on your
-            machine. <para role="tip">The embedded AUT Agent uses port 60001
+            machine.
+          </para>
+          <para role="tip">
+            The embedded AUT Agent uses port 60001
             by default in the ITE. You can change the port that
             should be used for the embedded AUT Agent in the
-            preferences (<xref linkend="embedded-aut-agent-preferences"/>).</para>
+            preferences (<xref linkend="embedded-aut-agent-preferences"/>).
           </para>
         </listitem>
         <listitem>
@@ -53,20 +57,22 @@
             (<xref linkend="aut-agent-preferences"/>). If you have set the environment
             variable <emphasis>TEST_AUT_AGENT_PORT</emphasis>, then
             you will also see the port number you set for that
-            variable in the drop-down list. <para role="warning">If you are not
-            working with the embedded AUT Agent, you must have
+            variable in the drop-down list.
+          </para>
+          <para role="warning">
+            If you are not working with the embedded AUT Agent, you must have
             started an AUT Agent on a machine in the network
-            (<xref linkend="start-aut-agent"/>) to be able to connect to it.</para>
+            (<xref linkend="start-aut-agent"/>) to be able to connect to it.
           </para>
         </listitem>
       </itemizedlist>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">To work with the embedded AUT Agent, you do not need to
+  <para role="tip">
+    To work with the embedded AUT Agent, you do not need to
     start an AUT Agent on your machine. However, you can only work
     with the embedded AUT Agent for local testing (i.e. on the same
     machine as the ITE). The embedded agent is started in
-    <emphasis>lenient</emphasis> mode (<xref linkend="testing-aut-launched-by-other"/>).</para>
+    <emphasis>lenient</emphasis> mode (<xref linkend="testing-aut-launched-by-other"/>).
   </para>
 </section>

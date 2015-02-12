@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="logging-into-and-switching-databases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="logging-into-and-switching-databases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="logInAndSwitchDB"?>
   <title>Logging into and switching databases</title>
-  <anchor role="helpid" id="dbLoginContextId">Database Login</anchor>
+  <anchor role="helpid" xml:id="dbLoginContextId">Database Login</anchor>
   
   <xi:include href="sectionLoggingInToTheDB.xml"/>
   <xi:include href="sectionSelectingAndChangingTheDBConnection.xml"/>

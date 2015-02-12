@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,20 +7,20 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-functions-as-data-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-functions-as-data-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using functions as data for Test Cases</title>
-  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" xml:id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <para>
     You can calculate specific values without entering the results
     yourself using <emphasis>functions</emphasis>. There are
     specific functions that work out-of-the-box, and additional
     functions can be added as well.
   </para>
-  <section id="syntax-for-functions">
+  <section xml:id="syntax-for-functions">
     <title>Syntax for functions</title>
     <para>
       The sign used to introduce a function is the question mark: <emphasis role="input">?</emphasis>
@@ -37,7 +38,7 @@
       round brackets.
     </para>
   </section>
-  <section id="pre-defined-functions">
+  <section xml:id="pre-defined-functions">
     <title>Pre-defined functions</title>
     <para>
       The following functions are available directly in the ITE:
@@ -123,8 +124,11 @@
             <emphasis role="input">2.6</emphasis>. If the final number after rounding
             is 4 or less, there is no incrementation, eg.
             <emphasis role="input">?round(2.43,1)</emphasis> gives
-            <emphasis role="input">2.4</emphasis>. <para role="warning">It is currently only
-            possible to use numbers formatted with the decimal mark
+            <emphasis role="input">2.4</emphasis>.
+          </para>
+          
+          <para role="warning">
+            It is currently only possible to use numbers formatted with the decimal mark
             <emphasis>period</emphasis> or
             <emphasis>fullstop</emphasis> (<emphasis role="input">.</emphasis>).
             Thousands separators may not be used. For example,
@@ -132,14 +136,14 @@
             is not. <emphasis role="input">1000</emphasis> can be entered but
             <emphasis role="input">1,000</emphasis> cannot. Entering
             <emphasis role="input">1.000</emphasis> is equivalent to entering
-            <emphasis role="input">1</emphasis>.</para>
+            <emphasis role="input">1</emphasis>.
           </para>
         </listitem>
       </varlistentry>
     </variablelist>
-    <para>
-      <para role="tip">Use single quotes around negative numbers, e.g.
-      ’-0.5’.</para>
+    <para role="tip">
+      Use single quotes around negative numbers, e.g.
+      ’-0.5’.
     </para>
     <para>
       <emphasis role="strong">Date functions</emphasis>
@@ -208,11 +212,11 @@
         </listitem>
       </varlistentry>
     </variablelist>
-    <para>
-      <para role="tip">If you want to use the result of a date function as a
+    <para role="tip">
+      If you want to use the result of a date function as a
       part of your test data (i.e. to enter or check), then you will
       most likely need to use formatDate on any date modifications
-      you have performed.</para>
+      you have performed.
     </para>
     <para>
       <emphasis role="strong">Test functions</emphasis>
@@ -385,18 +389,21 @@
       </varlistentry>
     </variablelist>
   </section>
-  <section id="embedding-functions-in-other-functions">
+  <section xml:id="embedding-functions-in-other-functions">
     <title>Embedding functions in other functions</title>
-    <para>Functions can be added as arguments to other functions. If, for example, you want to use the result of a subtraction as the first argument of your addition, you could write it like this:
+    <para>
+      Functions can be added as arguments to other functions. If, for example, you want to use the result of a subtraction as the first argument of your addition, you could write it like this:
+    </para>
     
-      <para>
-        <emphasis role="input">?add(?sub(2,1),1)</emphasis>
-      </para>
+    <para>
+      <emphasis role="input">?add(?sub(2,1),1)</emphasis>
+    </para>
     
-    Results in <emphasis role="input">1.0 + 1</emphasis>, i.e. <emphasis role="input">1.0</emphasis>
+    <para>
+      Results in <emphasis role="input">1.0 + 1</emphasis>, i.e. <emphasis role="input">1.0</emphasis>
     </para>
   </section>
-  <section id="useful-examples-for-functions">
+  <section xml:id="useful-examples-for-functions">
     <title>Useful examples for functions</title>
     <para>
       Especially when it comes to the date functions, it is often
@@ -466,7 +473,7 @@
       </para>
     </blockquote>
   </section>
-  <section id="adding-your-own-functions">
+  <section xml:id="adding-your-own-functions">
     <title>Adding your own functions</title>
     <para>
       You can also add your own functions using an extension point.

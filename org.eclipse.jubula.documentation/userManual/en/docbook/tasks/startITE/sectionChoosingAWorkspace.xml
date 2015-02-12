@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="choosing-a-workspace" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="choosing-a-workspace" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Choosing a workspace</title>
@@ -16,7 +17,7 @@
         When you start the ITE, a dialog appears asking you to
         choose a workspace (<xref linkend="WorkspaceChooser"/>).
       </para>
-      <figure id="WorkspaceChooser">
+      <figure xml:id="WorkspaceChooser">
         <title>Workspace chooser</title>
         <mediaobject>
           <imageobject>
@@ -26,8 +27,8 @@
           chooser</phrase></textobject>
         </mediaobject>
       </figure>
-      <para>
-        <para role="tip">The workspace is where your preferences are saved.</para>
+      <para role="tip">
+        The workspace is where your preferences are saved.
       </para>
     </listitem>
     <listitem>
@@ -38,9 +39,12 @@
     <listitem>
       <para>
         You can choose to always select this workspace using the
-        checkbox. <para role="tip">You can see and change your workspace
+        checkbox.
+      </para>
+      <para role="tip">
+        You can see and change your workspace
         options in the preferences
-        (<xref linkend="workspace-prefs"/>).</para>
+        (<xref linkend="workspace-prefs"/>).
       </para>
     </listitem>
     <listitem>

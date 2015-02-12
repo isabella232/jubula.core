@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="specsteps" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="specsteps" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Specifying Test Steps</title>
-  <para>
-    <para role="tip">You must have created a Test Case (<xref linkend="creating-test-cases"/>) in order to create Test Steps.</para>
+  <para role="tip">
+    You must have created a Test Case (<xref linkend="creating-test-cases"/>) in order to create Test Steps.
   </para>
   <orderedlist>
     <listitem>
@@ -23,11 +24,13 @@
     <listitem>
       <para>
         Create a Test Step from the context-sensitive menu in the Test Case Editor:
-        
-        <para>
-          <emphasis role="menupath">Add</emphasis>--&gt;<emphasis role="menupath">New Test Step</emphasis>.
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menupath">Add</emphasis>--&gt;<emphasis role="menupath">New Test Step</emphasis>.
+      </para>
+      
+      <para>
         (This adds the Test Step after any other items in the Test Case Editor.)
       </para>
     </listitem>
@@ -45,7 +48,7 @@
       </para>
     </listitem>
   </orderedlist>
-  <figure id="newstep">
+  <figure xml:id="newstep">
     <title>New Test Step Dialog</title>
     <mediaobject>
       <imageobject>
@@ -73,8 +76,8 @@
       <para>
         Select the component you want to test from the combo box.
       </para>
-      <para>
-        <para role="tip">A component is an element of the user interface you can execute an action on, e.g. a button, a text field.</para>
+      <para role="tip">
+        A component is an element of the user interface you can execute an action on, e.g. a button, a text field.
       </para>
       <para>
         <emphasis role="strong">Component name</emphasis>
@@ -114,8 +117,10 @@
       <para>
         From the combo box, choose the action you want to execute on
         this component.
-        <para role="tip">Refer to the chapter on Components, Actions, and Parameters for information on components, the
-        actions they support, and their parameters.</para>
+      </para>
+      <para role="tip">
+        Refer to the chapter on Components, Actions, and Parameters for information on components, the
+        actions they support, and their parameters.
       </para>
     </listitem>
     <listitem>
@@ -126,7 +131,9 @@
     <listitem>
       <para>
         The Test Step will appear as nested in the Test Case.
-        <para role="tip">You can change the position of Test Steps using drag-and-drop.</para>
+      </para>
+      <para role="tip">
+        You can change the position of Test Steps using drag-and-drop.
       </para>
       <para>
         You can see and edit the details of any selected Test Step

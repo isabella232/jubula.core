@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-observing" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-observing" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting observing</title>
@@ -16,8 +17,10 @@
   <itemizedlist>
     <listitem>
       <para>
-        define an AUT (<xref linkend="define-aut"/>) <para role="tip">Only Java AUTs can
-        use the observation mode. </para>
+        define an AUT (<xref linkend="define-aut"/>)
+      </para>
+      <para role="tip">
+        Only Java AUTs can use the observation mode.
       </para>
     </listitem>
     <listitem>
@@ -71,9 +74,12 @@
     </listitem>
     <listitem>
       <para>
-        You can now observe Test Steps. <para role="tip">If you have a Test
+        You can now observe Test Steps.
+      </para>
+      <para role="tip">
+        If you have a Test
         Case open in the Test Case Editor, the Test Steps will be
-        observed into this open Test Case. </para>
+        observed into this open Test Case.
       </para>
     </listitem>
   </orderedlist>

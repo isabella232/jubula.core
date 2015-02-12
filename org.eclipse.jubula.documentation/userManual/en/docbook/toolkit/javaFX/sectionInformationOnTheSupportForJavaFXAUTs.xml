@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="information-on-the-support-for-javafx-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="information-on-the-support-for-javafx-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Information on the support for JavaFX AUTs</title>
@@ -17,10 +18,10 @@
   <para>
     <emphasis role="strong">Supported components</emphasis><?linebreak?>
     Below is an overview of the supported components. You can also see individual tickets for component support via the Eclipse bugzilla:
-    
-    <para>
-      <link xl:href="http://eclip.se/421595">http://eclip.se/421595</link>
-    </para>
+  </para>
+  
+  <para>
+    <link xl:href="http://eclip.se/421595">http://eclip.se/421595</link>
   </para>
   <variablelist>
     <varlistentry>

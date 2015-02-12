@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="creating-tests-from-the-library-of-pre-defined-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="creating-tests-from-the-library-of-pre-defined-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating tests from the library of pre-defined Test Cases</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testCaseAddExistingContextId">Existing Test Case Dialog</anchor>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testCaseAddExistingContextId">Existing Test Case Dialog</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
   <para>
     Everything you need to create tests is already available for you
     in each Project. The library of Test Cases which appears
@@ -23,7 +24,7 @@
     use the library to create tests, read the next 
     <xref linkend="using-the-library"/>.
   </para>
-  <section id="using-the-library">
+  <section xml:id="using-the-library">
     <title>Using the library to create tests</title>
     <para>
       Creating tests with the ITE is really just a matter of:
@@ -64,18 +65,20 @@
       <listitem>
         <para>
           You can add the Test Case by dragging and dropping from the Test Case Browser to the Test Case Editor or you can right click on the Test Case in the Test Case Editor and select:
+        </para>
           
-          <para>
-            <emphasis role="menuPath">Reference Existing Test Case</emphasis>
-          </para>
-          
+        <para>
+          <emphasis role="menuPath">Reference Existing Test Case</emphasis>
+        </para>
+        
+        <para>
           to see a list of all Test Cases that you can add to this Test Case.
         </para>
-        <para>
-          <para role="tip">You can filter in this dialog using the field at the top. Use star <emphasis role="input">*</emphasis> as a wild card.</para>
+        <para role="tip">
+          You can filter in this dialog using the field at the top. Use star <emphasis role="input">*</emphasis> as a wild card.
         </para>
-        <para>
-          <para role="tip">You can open the dialog to reference an existing Test Case by pressing <emphasis role="input">»ENTER«</emphasis> on a Test Case in the Test Case Editor.</para>
+        <para role="tip">
+          You can open the dialog to reference an existing Test Case by pressing <emphasis role="input">»ENTER«</emphasis> on a Test Case in the Test Case Editor.
         </para>
       </listitem>
       <listitem>
@@ -89,7 +92,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="library-information">
+  <section xml:id="library-information">
     <title>Information about the library</title>
     <orderedlist>
       <listitem>
@@ -101,10 +104,10 @@
       <listitem>
         <para>
           The Projects containing the Test Case libraries are located under:
-          
-          <para>
-            <emphasis>examples/testcaseLibrary</emphasis>.
-          </para>
+        </para>
+        
+        <para>
+          <emphasis>examples/testcaseLibrary</emphasis>.
         </para>
       </listitem>
       <listitem>
@@ -139,8 +142,10 @@
           These Projects contain reusable Test Cases which have
           been created in advance so you do not have to specify them
           yourself.
-          <para role="tip">Refer to the chapter on Components, Actions, and Parameters for information on components, the
-          actions they support, and their parameters.</para>
+        </para>
+        <para role="tip">
+          Refer to the chapter on Components, Actions, and Parameters for information on components, the
+          actions they support, and their parameters.
         </para>
       </listitem>
       <listitem>
@@ -151,8 +156,8 @@
           for the type of component you want to select something
           from.
         </para>
-        <para>
-          <para role="tip">The names for these Test Cases all begin with ”<emphasis>ub</emphasis>”. This means that they are <emphasis>unbound</emphasis> -- they are not in any way dependent on an AUT. </para>
+        <para role="tip">
+          The names for these Test Cases all begin with ”<emphasis>ub</emphasis>”. This means that they are <emphasis>unbound</emphasis> -- they are not in any way dependent on an AUT.
         </para>
       </listitem>
       <listitem>
@@ -162,16 +167,16 @@
           component name is a placeholder, and the parameters have
           been referenced so that you can enter your own data.
         </para>
-        <para>
-          <para role="tip">The unbound modules Projects which correspond to your chosen Project toolkit are automatically imported into the database and reused in your Project.</para>
+        <para role="tip">
+          The unbound modules Projects which correspond to your chosen Project toolkit are automatically imported into the database and reused in your Project.
         </para>
-        <para>
-          <para role="warning">We do not recommend making changes to the installed unbound module Projects, for compatibility reasons. If you have Test Cases you want to reuse in other Projects, we advise creating your own library Project.</para>
+        <para role="warning">
+          We do not recommend making changes to the installed unbound module Projects, for compatibility reasons. If you have Test Cases you want to reuse in other Projects, we advise creating your own library Project.
         </para>
       </listitem>
     </orderedlist>
   </section>
-  <section id="tips-and-tricks-library">
+  <section xml:id="tips-and-tricks-library">
     <title>Tips and tricks for using the Test Case library</title>
     <para>
       The Test Cases in the library are organised into actions. In
@@ -188,17 +193,21 @@
     <para>
       <emphasis role="strong">High-Level Actions</emphasis><?linebreak?>
       During a test, <emphasis>high-level</emphasis> actions are executed. This means that if you want to select something from a menu using the menupath, for example, you need to look in the category:
-      
-      <para>
-        <emphasis>Actions (basic)/Select/Menu Bar</emphasis>
-      </para>
-      
+    </para>
+    
+    <para>
+      <emphasis>Actions (basic)/Select/Menu Bar</emphasis>
+    </para>
+    
+    <para>
       and select the Test Case:
-      
-      <para>
-        <emphasis>ub_mbr_selectEntry_byTextpath</emphasis>
-      </para>
-      
+    </para>
+    
+    <para>
+      <emphasis>ub_mbr_selectEntry_byTextpath</emphasis>
+    </para>
+    
+    <para>
       The Test Case finds the menu, opens it, and clicks the item you specify.
     </para>
     <para>

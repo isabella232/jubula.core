@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="intro-gef-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="intro-gef-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Introduction to writing tests for GEF AUTs</title>
@@ -26,8 +27,8 @@
     developers use our accessibility plug-in in the AUT to make the
     testing of GEF components more robust.
   </para>
-  <para>
-    <para role="tip">GEF testing is supported from GEF version 3.0 up to but not
-    including 4.0. We test our GEF support on GEF version 3.7.2.</para>
+  <para role="tip">
+    GEF testing is supported from GEF version 3.0 up to but not
+    including 4.0. We test our GEF support on GEF version 3.7.2.
   </para>
 </section>

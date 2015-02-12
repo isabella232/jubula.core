@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="working-with-the-problems-view-to-view-and-fix-teststyle-problems" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="working-with-the-problems-view-to-view-and-fix-teststyle-problems" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with the Problems View to view and fix Teststyle problems</title>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
-  <anchor role="helpid" id="testStylePropertyPageContextId">Teststyle</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="testStylePropertyPageContextId">Teststyle</anchor>
   <para>
     Once you have activated (<xref linkend="activating-teststyle-for-a-project"/>) and configured
     (<xref linkend="configuring-teststyle-for-a-project"/>) Teststyle for a Project, you will be
@@ -26,7 +27,7 @@
     that has been flouted and also to fix the problem using the
     Quick Fix option.
   </para>
-  <section id="viewing-the-broken-teststyle-rule-from-the-problems-view">
+  <section xml:id="viewing-the-broken-teststyle-rule-from-the-problems-view">
     <title>Viewing the broken Teststyle rule from the Problems
     View</title>
     <orderedlist>
@@ -39,11 +40,13 @@
       <listitem>
         <para>
           Right-click in the Problems View and select:
+        </para>
           
-          <para>
-            <emphasis role="menuPath">Show Teststyle Rule</emphasis>
-          </para>
-          
+        <para>
+          <emphasis role="menuPath">Show Teststyle Rule</emphasis>
+        </para>
+        
+        <para>
           from the context-sensitive menu.
         </para>
       </listitem>
@@ -62,7 +65,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="using-quick-fix-to-fix-the-problem">
+  <section xml:id="using-quick-fix-to-fix-the-problem">
     <title>Using Quick Fix to fix the problem</title>
     <orderedlist>
       <listitem>
@@ -74,13 +77,15 @@
       <listitem>
         <para>
           Right-click in the Problems View and select:
+        </para>
           
-          <para>
-            <emphasis role="menuPath">Quick Fix</emphasis>
-          </para>
-          
+        <para>
+          <emphasis role="menuPath">Quick Fix</emphasis>
+        </para>
+        
+        <para>
           from the context-sensitive menu.
-         </para>
+        </para>
       </listitem>
       <listitem>
         <para>
@@ -102,7 +107,7 @@
         </para>
       </listitem>
     </orderedlist>
-    <figure id="quickfix">
+    <figure xml:id="quickfix">
       <title>Quick Fix</title>
       <mediaobject>
         <imageobject>

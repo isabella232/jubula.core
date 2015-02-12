@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="reverting-changes-in-an-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="reverting-changes-in-an-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Reverting changes in an editor</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
   <para>
     You can revert an editor you are working in to the state of the last save.
   </para>
@@ -20,11 +21,13 @@
     <listitem>
       <para>
         In the editor you are in, right-click and select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Revert changes</emphasis>
-        </para>
-        
+      <para>
+        <emphasis role="menuPath">Revert changes</emphasis>
+      </para>
+      
+      <para>
         from the context sensitive menu.
       </para>
     </listitem>

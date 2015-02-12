@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="adding-comments-to-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="adding-comments-to-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding comments to items in editors</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
   <para>
     You can add comments to items via the editor for an item. You
     can add comments to the item itself, or to other items used in
@@ -38,13 +39,15 @@
     <listitem>
       <para>
         Comments can be overwritten when an item is reused.
-        <para role="tip">You can see the comment for a Test Case when you
+      </para>
+      <para role="tip">
+        You can see the comment for a Test Case when you
         hover over it in the Test Case Browser or the Test Suite
-        Browser or in the search results view.</para>
+        Browser or in the search results view.
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">You can also add comments to categories using the context-menu in the browser (<xref linkend="adding-comments-to-categories"/>) and to the Project itself via the Project properties (<xref linkend="editing-general-project-properties"/>).</para>
+  <para role="tip">
+    You can also add comments to categories using the context-menu in the browser (<xref linkend="adding-comments-to-categories"/>) and to the Project itself via the Project properties (<xref linkend="editing-general-project-properties"/>).
   </para>
 </section>

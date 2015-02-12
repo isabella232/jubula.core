@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="design-for-testability-in-rcp" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="design-for-testability-in-rcp" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Design for testability in RCP</title>
-  <section id="naming-components-1">
+  <section xml:id="naming-components-1">
     <title>Naming components</title>
     <para>
       Although components can be located in the AUT even when they
@@ -30,7 +31,7 @@
       AUT dialog (<xref linkend="define-aut"/>).
     </para>
   </section>
-  <section id="adding-support-for-text-retrieval-1">
+  <section xml:id="adding-support-for-text-retrieval-1">
     <title>Adding support for text retrieval</title>
     <para>
       You can add support for renderers for SWT components or items
@@ -46,10 +47,10 @@
     </para>
     <para>
       For example, to access an otherwise unreachable text on a label:
-      
-      <para>
-        <emphasis role="input">myLabel.setData(&quot;TEST_TESTABLE_TEXT&quot;, label);</emphasis>
-      </para>
+    </para>
+    
+    <para>
+      <emphasis role="input">myLabel.setData(&quot;TEST_TESTABLE_TEXT&quot;, label);</emphasis>
     </para>
     <para>
       If you are making text in e.g. a table accessible, then you will need to add a dynamic part for the column, e.g.:

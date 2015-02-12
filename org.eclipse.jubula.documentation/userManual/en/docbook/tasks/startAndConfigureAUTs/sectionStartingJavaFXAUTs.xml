@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,16 +7,16 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-javafx-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-javafx-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting JavaFX AUTs</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <para>
     You can start JavaFX AUTs via a configuration, but not via
     <emphasis>autrun</emphasis>.
   </para>
-  <section id="configuring-a-java-aut-to-be-started-from-the-ite">
+  <section xml:id="configuring-a-java-aut-to-be-started-from-the-ite">
     <title>Configuring a Java AUT to be started from the ITE</title>
     <para>
       The AUT configuration dialog for Java FX has three different
@@ -26,7 +27,7 @@
       levels.
     </para>
   </section>
-  <section id="basic-javafx-aut-configuration">
+  <section xml:id="basic-javafx-aut-configuration">
     <title>Basic JavaFX AUT configuration</title>
     <para>
       You can use the basic setting to configure your AUT if it can
@@ -37,9 +38,9 @@
       Arguments field in the advanced configuration
       (<xref linkend="advanced-javafx-aut-config"/>).
     </para>
-    <para>
-      <para role="tip">You must be using a Java 8 JRE to be able to start
-      JavaFX AUTs.</para>
+    <para role="tip">
+      You must be using a Java 8 JRE to be able to start
+      JavaFX AUTs.
     </para>
     <orderedlist>
       <listitem>
@@ -61,7 +62,7 @@
       configuration, see the next <xref linkend="advanced-javafx-aut-config"/>.
     </para>
   </section>
-  <section id="advanced-javafx-aut-config">
+  <section xml:id="advanced-javafx-aut-config">
     <title>Advanced JavaFX AUT configuration</title>
     <para>
       The advanced configuration dialog lets you create a working
@@ -71,7 +72,7 @@
       enter <emphasis role="input">-jar &lt;JARFILE&gt;</emphasis> in the AUT
       Arguments field (<xref linkend="autconfigjavafxwithjar"/>).
     </para>
-    <figure id="autconfigjavafxwithjar">
+    <figure xml:id="autconfigjavafxwithjar">
       <title>Example JavaFX AUT configuration</title>
       <mediaobject>
         <imageobject>
@@ -86,7 +87,7 @@
       configuration, see the next <xref linkend="expert-javafx-aut-config"/>.
     </para>
   </section>
-  <section id="expert-javafx-aut-config">
+  <section xml:id="expert-javafx-aut-config">
     <title>Expert JavaFX AUT configuration</title>
     <para>
       You can use the expert dialog to configure more detailed
@@ -102,8 +103,8 @@
           with a new line by pressing
           <emphasis role="input">»ENTER«</emphasis>.
         </para>
-        <para>
-          <para role="warning">Please be advised that ”embedding” the
+        <para role="warning">
+          Please be advised that ”embedding” the
           contents of one variable into another is not supported at
           this time. That is, if you have a variable named
           <literal>FOO</literal> whose value is
@@ -112,7 +113,7 @@
           ”<emphasis>%FOO%def</emphasis>”, the second variable will
           <emphasis>not</emphasis> contain
           ”<emphasis>abcdef</emphasis>”, but rather the exact text
-          ”<emphasis>%FOO%def</emphasis>”, without evaluating it.</para>
+          ”<emphasis>%FOO%def</emphasis>”, without evaluating it.
         </para>
       </listitem>
       <listitem>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,19 +7,19 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="deleteproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="deleteproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Deleting Projects</title>
-  <anchor role="helpid" id="deleteProjectDialogContextId">Deleting Projects</anchor>
+  <anchor role="helpid" xml:id="deleteProjectDialogContextId">Deleting Projects</anchor>
   <orderedlist>
     <listitem>
       <para>
         To delete a Project from the database, select:
-        
-        <para>
-          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Delete</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Delete</emphasis>.
       </para>
     </listitem>
     <listitem>
@@ -33,7 +34,7 @@
         Choose the Project you want to delete from the combo box in
         the dialog (<xref linkend="deleteprojectdialog"/>).
       </para>
-      <figure id="deleteprojectdialog">
+      <figure xml:id="deleteprojectdialog">
         <title>Delete Project dialog</title>
         <mediaobject>
           <imageobject>
@@ -53,10 +54,13 @@
     <listitem>
       <para>
         Select whether you want to keep the test result summaries
-        associated with this Project or not. <para role="tip">In productive
+        associated with this Project or not.
+      </para>
+      <para role="tip">
+        In productive
         databases where you wish to evaluate test results over
         longer periods of time, we recommend selecting the option to
-        keep the summaries.</para>
+        keep the summaries.
       </para>
     </listitem>
     <listitem>
@@ -68,8 +72,10 @@
     <listitem>
       <para>
         Confirm the deletion in the dialog which appears.
-        <para role="warning">Deleting a Project from the database cannot be
-        undone!</para>
+      </para>
+      <para role="warning">
+        Deleting a Project from the database cannot be
+        undone!
       </para>
     </listitem>
   </orderedlist>

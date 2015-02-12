@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="collecting-components-technical-names-from-the-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="collecting-components-technical-names-from-the-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Collecting components (technical names) from the AUT</title>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
   <para>
     Once your test specification is ready, you can
     <emphasis>collect</emphasis> components (technical names) from
@@ -78,11 +79,11 @@
         on the toolbar and selecting which AUT (based on the AUT ID) you
         want to map. 
       </para>
-      <para>
-        <para role="tip">If you have the same AUT running more than once, you
+      <para role="tip">
+        If you have the same AUT running more than once, you
         will only be able to collect components from the AUT whose
         ID you chose. The object map for AUTs that are the same is,
-        however, identical.</para>
+        however, identical.
       </para>
       <para>
         The status bar will show that the Object Mapping Mode is
@@ -104,9 +105,12 @@
       <para>
         In the Object Mapping Editor, the technical name for this
         component will appear in the <emphasis>unassigned technical
-        names</emphasis> area. <para role="tip">If you have already mapped
+        names</emphasis> area.
+      </para>
+      <para role="tip">
+        If you have already mapped
         this component, it will be highlighted in the Object Mapping
-        Editor.</para>
+        Editor.
       </para>
     </listitem>
     <listitem>
@@ -134,7 +138,7 @@
       </para>
     </listitem>
   </orderedlist>
-  <section id="for-java-and-win-.net-auts">
+  <section xml:id="for-java-and-win-.net-auts">
     <title>For Java and Win (.NET) AUTs:</title>
     <itemizedlist>
       <listitem>
@@ -153,12 +157,14 @@
       <listitem>
         <para>
           Press <emphasis role="input">»CTRL+SHIFT+Q«</emphasis>.
-          <para role="tip">You can change the key combination for the object
+        </para>
+        <para role="tip">
+          You can change the key combination for the object
           mapping in the object mapping preferences
           (<xref linkend="object-mapping-preferences"/>). This is a good idea if the
           current key combination has a specific meaning in your
           AUT. You can also set the object mapping combination to a
-          mouse click if your AUT does not accept key combinations.</para>
+          mouse click if your AUT does not accept key combinations.
         </para>
       </listitem>
       <listitem>
@@ -170,7 +176,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="for-html-auts">
+  <section xml:id="for-html-auts">
     <title>For HTML AUTs:</title>
     <itemizedlist>
       <listitem>
@@ -207,7 +213,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="object-mapping-ios">
+  <section xml:id="object-mapping-ios">
     <title>For iOS AUTs:</title>
     <para>
       Object mapping for iOS AUTs is done by tapping the component
@@ -265,17 +271,17 @@
         </listitem>
       </varlistentry>
     </variablelist>
-    <para>
-      <para role="tip">The AUT functionality is deactivated during object
+    <para role="tip">
+      The AUT functionality is deactivated during object
       mapping – clicks on buttons won’t close popovers, for example.
       To move to another screen, you must stop the Object Mapping
       Mode, switch, and then restart the Object Mapping Mode to
-      continue mapping.</para>
+      continue mapping.
     </para>
   </section>
-  <section id="understanding-the-colored-dots-when-collecting-component-names-in-the-object-mapping-editor">
+  <section xml:id="understanding-the-colored-dots-when-collecting-component-names-in-the-object-mapping-editor">
     <title>Understanding the colored dots when collecting component names in the Object Mapping Editor</title>
-    <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
     <para>
       When technical names are collected from the AUT, they appear
       in the Object Mapping Editor with a colored dot. The color of
@@ -328,13 +334,13 @@
       not be recognized in the current state of the AUT before
       running the test.
     </para>
-    <para>
-      <para role="tip">The colored dot disappears after saving. It is not a
+    <para role="tip">
+      The colored dot disappears after saving. It is not a
       measurement of the component state over time, but only at the
       moment when the component was collected. You can see how well
       each component was actually located during a test by looking
       in the test result reports. Each Test Step provides
-      information on the match heuristic for each component.</para>
+      information on the match heuristic for each component.
     </para>
   </section>
 </section>

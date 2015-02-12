@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="conventions-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="conventions-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Conventions Used</title>
@@ -15,43 +16,43 @@
     particular conventions are used to improve readability and
     clarity:
   </para>
-  <section id="typesetting-conventions">
+  <section xml:id="typesetting-conventions">
     <title>Typesetting Conventions</title>
     <itemizedlist>
       <listitem>
         <para>
           Menu paths are shown with a grey background:
-          
-          <para>
-            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Open</emphasis>
         </para>
       </listitem>
       <listitem>
         <para>
           Buttons and menu options are italicized and in inverted commas:
-          
-          <para>
-            ”<emphasis>OK</emphasis>”
-          </para>
+        </para>
+        
+        <para>
+          ”<emphasis>OK</emphasis>”
         </para>
       </listitem>
       <listitem>
         <para>
           Input statements are shown in typewriter format:
+        </para>
           
-          <para>
-            <emphasis role="input">Hello</emphasis>
-          </para>
+        <para>
+          <emphasis role="input">Hello</emphasis>
         </para>
       </listitem>
       <listitem>
         <para>
           Keyboard shortcuts and commands are in French brackets:
+        </para>
           
-          <para>
-            <emphasis role="input">»ENTER«</emphasis>
-          </para>
+        <para>
+          <emphasis role="input">»ENTER«</emphasis>
         </para>
       </listitem>
     </itemizedlist>
@@ -59,9 +60,7 @@
       In addition, important warnings and informative tips are
       marked as follows:
     </para>
-    <para>
-      <para role="warning">This is a warning.</para> 
-      <para role="tip">This is a tip.</para>
-    </para>
+    <para role="warning">This is a warning.</para> 
+    <para role="tip">This is a tip.</para>
   </section>
 </section>

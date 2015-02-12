@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="supported-html-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="supported-html-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Supported HTML AUTs</title>
@@ -110,19 +111,19 @@
     <listitem>
       <para>
         If your AUT may sometimes be unreachable for longer than the default 5 seconds, you can change this time by using a process or system property:
-        
-        <para>
-          <emphasis role="input">TEST_MAX_AUT_RESPONSE_TIME=&lt;timeInMs&gt;</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="input">TEST_MAX_AUT_RESPONSE_TIME=&lt;timeInMs&gt;</emphasis>.
       </para>
     </listitem>
     <listitem>
       <para>
         Further information on this is available in this issue:
-        
-        <para>
-          <link xl:href="http://bugzilla.bredex.de/1391">http://bugzilla.bredex.de/1391</link>.
-        </para>
+      </para>
+      
+      <para>
+        <link xl:href="http://bugzilla.bredex.de/1391">http://bugzilla.bredex.de/1391</link>.
       </para>
     </listitem>
   </itemizedlist>

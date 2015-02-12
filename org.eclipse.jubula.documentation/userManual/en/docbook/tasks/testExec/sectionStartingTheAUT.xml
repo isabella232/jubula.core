@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-the-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-the-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting the AUT</title>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
-  <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="runningAutsViewContextId">Running AUTs View</anchor>
   <para>
     To start the AUT, you must:
   </para>
@@ -35,11 +36,11 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para>
-    <para role="tip">You can only start AUTs from the ITE which support the
+  <para role="tip">
+    You can only start AUTs from the ITE which support the
     current working language. Change the working language if
     necessary by selecting a language from the list next to the
-    language button on the toolbar.</para>
+    language button on the toolbar.
   </para>
   <orderedlist>
     <listitem>
@@ -70,8 +71,11 @@
   </orderedlist>
   <para>
     Once the AUT has been started, it will appear in the running
-    AUTs view. <para role="tip">Further information on starting specific types
+    AUTs view.
+  </para>
+  <para role="tip">
+    Further information on starting specific types
     of AUT is available in the toolkit-specific details
-    (<xref linkend="toolkit"/>).</para>
+    (<xref linkend="toolkit"/>).
   </para>
 </section>

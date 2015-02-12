@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="setting-up-an-rcp-aut-for-testing" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="setting-up-an-rcp-aut-for-testing" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Setting up an RCP AUT for testing</title>
@@ -118,7 +119,7 @@
     not follow these steps, the AUT Agent will not be able to
     communicate with your AUT!
     </para>
-  <section id="setting-up-an-rcp-aut">
+  <section xml:id="setting-up-an-rcp-aut">
     <title>Setting up an RCP AUT for testing as a part of the build
     process</title>
     <para>

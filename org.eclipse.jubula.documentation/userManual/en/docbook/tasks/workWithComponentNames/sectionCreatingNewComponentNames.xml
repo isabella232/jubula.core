@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="creating-new-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="creating-new-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating new component names</title>
-  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
-  <anchor role="helpid" id="newComponentNameContextId">New Component Name Dialog</anchor>
+  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="newComponentNameContextId">New Component Name Dialog</anchor>
   <para>
     For information on creating new component names by
     <emphasis>reassigning</emphasis> old component names (in the
@@ -21,14 +22,13 @@
   </para>
   <para>
     You can create new component names in the Component Names Browser and in the Object Mapping Editor (tree view) via the context menu:
-    
-    <para>
-      <emphasis role="menuPath">New Component Name</emphasis>
-    </para>
   </para>
   <para>
-    <para role="tip">You can also use the toolbar button to create a new
-    component name when you are in the Object Mapping Editor.</para>
+    <emphasis role="menuPath">New Component Name</emphasis>
+  </para>
+  <para role="tip">
+    You can also use the toolbar button to create a new
+    component name when you are in the Object Mapping Editor.
   </para>
   <para>
     A dialog will appear to allow you to enter a component name. We
@@ -41,11 +41,11 @@
     the Object Mapping Editor and in the <emphasis>unused component
     names</emphasis> category in the Component Names Browser.
   </para>
-  <para>
-    <para role="tip">Newly created component names have the type
+  <para role="tip">
+    Newly created component names have the type
     <emphasis>graphics component</emphasis> until they are made more
     specific, either by mapping them to a technical name or by
     entering this new name in the Component Names View for a more
-    concrete component type. </para>
+    concrete component type. 
   </para>
 </section>

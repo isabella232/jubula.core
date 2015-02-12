@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="saving-test-cases-from-an-editor-as-a-new-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="saving-test-cases-from-an-editor-as-a-new-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Saving Test Cases from an editor as a new Test Case</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
   <para>
     You can save selected Test Cases from other Test Cases and from
     Test Suites. This lets you create a new keyword that contains
@@ -37,10 +38,10 @@
     <listitem>
       <para>
         Right-click in the editor and select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Refactor</emphasis>--&gt;<emphasis role="menuPath">Save as new...</emphasis>.
-        </para>
+      <para>
+        <emphasis role="menuPath">Refactor</emphasis>--&gt;<emphasis role="menuPath">Save as new...</emphasis>.
       </para>
     </listitem>
     <listitem>
@@ -62,8 +63,8 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="warning">Use this feature if you have created reusable Test Cases
+  <para role="warning">
+    Use this feature if you have created reusable Test Cases
     that are correctly modularized, but you require them again (e.g.
     prerequisites for another Test Case). If the sequence of actions
     you require is a recurring logical sequence (e.g. enter
@@ -72,6 +73,6 @@
     <emphasis>Extract</emphasis> function
     (<xref linkend="extracting-test-cases-from-editors-refactoring"/>) instead. This will give you one
     reusable module, and therefore one central place to make any
-    changes should this sequence change.</para>
+    changes should this sequence change.
   </para>
 </section>

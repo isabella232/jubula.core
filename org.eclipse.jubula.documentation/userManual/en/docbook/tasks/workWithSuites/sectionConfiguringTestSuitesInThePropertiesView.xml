@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,22 +7,22 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="configuring-test-suites-in-the-properties-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="configuring-test-suites-in-the-properties-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring Test Suites in the Properties View</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
   <para>
     To configure a Test Suite, you must first create one
     (<xref linkend="creating-a-test-suite"/>).
   </para>
-  <para>
-    <para role="tip">If you are editing the Test Suite, the working language
+  <para role="tip">
+    If you are editing the Test Suite, the working language
     (which is specified via the globe button on the toolbar) must be
     set to a language supported by the chosen AUT for the Test
-    Suite. Otherwise the Test Suite will be uneditable. </para>
+    Suite. Otherwise the Test Suite will be uneditable.
   </para>
   <orderedlist>
     <listitem>
@@ -77,10 +78,10 @@
             have added at least one AUT to the Project
             (<xref linkend="define-aut"/>).
           </para>
-          <para>
-            <para role="tip">You don’t have to choose an AUT for a Test Suite
+          <para role="tip">
+            You don’t have to choose an AUT for a Test Suite
             as soon as you have created it, but you will have to
-            choose one before object mapping, for example.</para>
+            choose one before object mapping, for example.
           </para>
         </listitem>
         <listitem>

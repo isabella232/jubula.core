@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,15 +7,15 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="searching-for-places-where-a-test-case-or-test-suite-has-been-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for places where a Test Case or Test Suite has been used</title>
-  <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
   <para>
     To find the places where you have reused a Test Case or a Test
     Suite:
@@ -60,10 +61,10 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">If you select this option on a nested Test Case, you will
+  <para role="tip">
+    If you select this option on a nested Test Case, you will
     be shown the other places where the Test Case is nested. To see
     where its parent Test Case is used, you must then carry out the
-    same steps on the parent.</para>
+    same steps on the parent.
   </para>
 </section>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="intro-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="intro-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Introduction to the AUT agent</title>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
   <para>
     The AUT Agent is the server component. It runs on the same machine
     as the AUT and allows the ITE to communicate with the AUT and

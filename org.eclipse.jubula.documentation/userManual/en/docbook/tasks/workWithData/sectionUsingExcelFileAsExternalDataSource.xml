@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,16 +7,18 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-an-excel-file-as-an-external-data-source" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-an-excel-file-as-an-external-data-source" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using an Excel file as an external data source</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
   <para>
     In the Properties View, you can add Excel files as a data source to
     Test Cases which contain parameters referenced from the
     Test Cases or Test Steps they contain.
-    <para role="warning">The addition of data via Excel is discouraged, because any problems with the data can only be found once the test is running. We recommend using the central test data sets in the ITE to manage data within the Project (<xref linkend="using-central-data-sets"/>).</para>
+  </para>
+  <para role="warning">
+    The addition of data via Excel is discouraged, because any problems with the data can only be found once the test is running. We recommend using the central test data sets in the ITE to manage data within the Project (<xref linkend="using-central-data-sets"/>).
   </para>
   <orderedlist>
     <listitem>
@@ -33,8 +36,8 @@
         The path to the Excel file can be absolute or relative (if
         you have specified a data files path (<xref linkend="gdprefs"/>)).
       </para>
-      <para>
-        <para role="tip">The Excel file must be configured in a specific way in order it to be read (<xref linkend="configuring-the-excel-file"/>)</para>.
+      <para role="tip">
+        The Excel file must be configured in a specific way in order it to be read (<xref linkend="configuring-the-excel-file"/>).
       </para>
     </listitem>
     <listitem>
@@ -43,7 +46,9 @@
         be reused along with the Test Case. When you reuse the
         Test Case, you can choose whether you leave this file or
         change it for another one.
-        <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+      </para>
+      <para role="tip">
+        If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor.
       </para>
     </listitem>
     <listitem>
@@ -51,11 +56,13 @@
         A Test Case with an Excel file as data is marked with a
         small Excel icon in the browsers to help you find it more
         easily later.
-        <para role="warning">Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <xref linkend="using-the-today-function-in-excel"/>.</para>
+      </para>
+      <para role="warning">
+        Please note that the Excel file is read at the start of the test execution. Any changes to the file after this will not affect the test data. For information on using the date function in Excel, see the section later <xref linkend="using-the-today-function-in-excel"/>.
       </para>
     </listitem>
   </orderedlist>
-  <section id="configuring-the-excel-file">
+  <section xml:id="configuring-the-excel-file">
     <title>Configuring the Excel file</title>
     <itemizedlist>
       <listitem>
@@ -68,7 +75,7 @@
           French, then name the first sheet: <emphasis role="input">fr_FR</emphasis>
           (<xref linkend="excel"/>).
         </para>
-        <figure id="excel">
+        <figure xml:id="excel">
           <title>Example Excel Table</title>
           <mediaobject>
             <imageobject>
@@ -94,7 +101,10 @@
           For example, if you entered the reference
           ”<emphasis>=VALUE1</emphasis>”, then you must enter <emphasis role="input">VALUE1</emphasis>
           in the top cell of the column which will contain data for
-          that parameter. <para role="tip">Values are case sensitive.</para>
+          that parameter.
+        </para>
+        <para role="tip">
+          Values are case sensitive.
         </para>
       </listitem>
       <listitem>
@@ -119,7 +129,9 @@
           You can then fill in the values or formulae you want to
           use for these parameters. Each row in the table represents
           one set of data for the parameters used.
-          <para role="tip">We recommend that you format cells as text <emphasis>before</emphasis> adding the test data. This ensures that Excel's number formatting won't modify the test data in unexpected and undesirable ways. Especially for the boolean values <emphasis>true</emphasis> and <emphasis>false</emphasis>, make sure you format the column as text.</para>
+        </para>
+        <para role="tip">
+          We recommend that you format cells as text <emphasis>before</emphasis> adding the test data. This ensures that Excel's number formatting won't modify the test data in unexpected and undesirable ways. Especially for the boolean values <emphasis>true</emphasis> and <emphasis>false</emphasis>, make sure you format the column as text.
         </para>
       </listitem>
       <listitem>
@@ -128,7 +140,9 @@
           day-to-day, then make sure you open the file before
           starting your test. Otherwise, the data from the
           last-opened state will be used.
-          <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+        </para>
+        <para role="tip">
+          If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor.
         </para>
       </listitem>
       <listitem>
@@ -146,7 +160,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="using-the-today-function-in-excel">
+  <section xml:id="using-the-today-function-in-excel">
     <title>Using the =TODAY() function in Excel</title>
     <orderedlist>
       <listitem>
@@ -191,8 +205,12 @@
         <para>
           This will mean that the date will be treated as it appears
           with Excel.
-          <para role="tip">If you are using the =today() function, don't forget to open the Excel file before  starting your test. Otherwise, the data from the last-opened state will be used.</para>
-          <para role="tip">If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor. </para>
+        </para>
+        <para role="tip">
+          If you are using the =today() function, don't forget to open the Excel file before  starting your test. Otherwise, the data from the last-opened state will be used.
+        </para>
+        <para role="tip">
+          If you store your Excel files in your workspace, you will be able to open these directly in the ITE from the navigator view using the in-place editor.
         </para>
       </listitem>
     </orderedlist>

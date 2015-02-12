@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="renaming-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="renaming-component-names" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Renaming component names</title>
-  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" id="renameComponentNameContextId">Rename Component Name Dialog</anchor>
+  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" xml:id="renameComponentNameContextId">Rename Component Name Dialog</anchor>
   <para>
     Use the rename function to change the name of a component name
     in your test specification. Whereas
@@ -30,11 +31,12 @@
       </para>
     </listitem>
     <listitem>
-      <para>In the context-menu, select:
+      <para>
+        In the context-menu, select:
+      </para>
       
-        <para>
-          <emphasis role="menuPath">Rename</emphasis>
-        </para>
+      <para>
+        <emphasis role="menuPath">Rename</emphasis>
       </para>
     </listitem>
     <listitem>
@@ -51,10 +53,10 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">You cannot rename a component name with a name that
+  <para role="tip">
+    You cannot rename a component name with a name that
     already exists. To merge two or more component names to the same
     name, see the section on merging
-    (<xref linkend="merging-component-names"/>).</para>
+    (<xref linkend="merging-component-names"/>).
   </para>
 </section>
