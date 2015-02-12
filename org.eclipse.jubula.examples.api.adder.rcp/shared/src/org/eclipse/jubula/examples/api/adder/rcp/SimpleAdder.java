@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 BREDEX GmbH.
+ * Copyright (c) 2015 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -85,7 +85,7 @@ public class SimpleAdder {
     /** prepare */
     @Before
     public void setUp() throws Exception {
-        m_agent = MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
+        m_agent = getAUTAgentInstance();
         m_agent.connect();
 
         final String autID = "SimpleAdder_rcp"; //$NON-NLS-1$
@@ -102,6 +102,13 @@ public class SimpleAdder {
         } else {
             Assert.fail("AUT start has failed!"); //$NON-NLS-1$
         }
+    }
+
+    /**
+     * @return an AUT-Agent instance
+     */
+    protected AUTAgent getAUTAgentInstance() {
+        return MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
     }
 
     /** cleanup */

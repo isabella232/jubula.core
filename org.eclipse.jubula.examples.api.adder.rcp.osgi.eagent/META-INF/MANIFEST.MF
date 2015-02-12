@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.eclipse.jubula.examples.api.adder.rcp.osgi.eagent
+Bundle-Version: 3.0.0.qualifier
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.jubula.client.api;bundle-version="[3.0.0,3.1.0)",
+ org.eclipse.jubula.autagent.api;bundle-version="[3.0.0,3.1.0)",
+ org.eclipse.jubula.examples.api.adder.rcp.osgi;bundle-version="[3.0.0,3.1.0)"
+Bundle-ClassPath: .
+Bundle-Name: Examples - API - SimpleAdder - RCP - OSGi - embedded AUT-Agent
