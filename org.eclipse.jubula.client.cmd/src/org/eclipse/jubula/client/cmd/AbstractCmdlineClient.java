@@ -415,7 +415,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         });
         try {
             if (!parseCommandLine(args)) {
-                return EXIT_CODE_ERROR;
+                return EXIT_CODE_OK;
             }
         } catch (ParseException e) {
             log.error(e.getLocalizedMessage(), e);
