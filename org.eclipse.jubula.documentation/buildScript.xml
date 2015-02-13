@@ -167,7 +167,7 @@
     </target>
     
     <target name="buildReleaseNotes">
-        <ant antfile="buildScript.xml" target="buildReleaseNotesHtml" inheritall="false">
+        <ant antfile="buildScript.xml" target="buildReleaseNotesHTML" inheritall="false">
             <property name="name" value="ReleaseNotes"/>
             <property name="dir" value="releasenotes"/>
             <property name="output" value="html"/>
@@ -175,10 +175,9 @@
     </target>
     
     <target name="buildReferenceManual">
-        <ant antfile="buildScript.xml" target="buildReferenceManualHtml" inheritall="false">
+        <ant antfile="buildScript.xml" target="buildReferenceManualChunkedHTML" inheritall="false">
             <property name="name" value="ReferenceManual"/>
             <property name="dir" value="reference"/>
-            <property name="output" value="html"/>
         </ant>
     </target>
     
@@ -283,7 +282,7 @@
         <antcall target="moveGeneratedFilesStandalone"/>
     </target>
     
-    <target name="buildReleaseNotesHtml" if="releaseNotes" depends="checkParam, buildHtmlImageLister">
+    <target name="buildReleaseNotesHTML" if="releaseNotes" depends="checkParam, buildHtmlImageLister">
         <copy todir="${build.path}/images">
             <fileset dir="${dir}/en/docbook/images">
                 <include name="*.jpg" />
@@ -309,7 +308,7 @@
         <antcall target="moveGeneratedFilesStandalone"/>
     </target>
     
-    <target name="buildReferenceManualOnlineHelp" unless="standalone" depends="checkParam, buildHtmlImageLister">
+    <target name="buildReferenceManualChunkedHTML" unless="standalone" depends="checkParam">
         <antcall target="makeDir"/>
         
         <copy todir="${html.path}/images">
@@ -326,12 +325,16 @@
         <delete file="${html.path}/index.xml"/>
         <delete file="plugin.xml"/>
         <delete file="target.db"/>
+        <delete file="contexts.xml"/>
+        <delete file="toc.xml"/>
         <delete dir="${html.path}/en"/>
         
-        <antcall target="moveGeneratedFiles"/>
+        <move todir="${build.path}/html" >
+            <fileset dir="html"/>
+        </move>
     </target>
     
-    <target name="buildReferenceManualHtml" depends="checkParam">
+    <target name="buildReferenceManualHTML" depends="checkParam">
         <copy todir="${build.path}/images">
             <fileset dir="${dir}/en/docbook/images">
                 <include name="*.jpg" />
