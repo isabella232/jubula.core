@@ -69,6 +69,8 @@ import org.eclipse.jubula.client.ui.provider.labelprovider.TestresultSummaryView
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -419,7 +421,7 @@ public class TestresultSummaryView extends ViewPart implements
         addStatusDecoratorColumn(m_tableViewer);
         addTestsuiteColumn(m_tableViewer);
         addCommentTitleColumn(m_tableViewer);
-        addTestrunIdColumn(m_tableViewer);
+        addSummaryIdColumn(m_tableViewer);
         addTestRelevantColumn(m_tableViewer);
         addTestJobStartTimeColumn(m_tableViewer);
         addTestJobColumn(m_tableViewer);
@@ -1451,8 +1453,15 @@ public class TestresultSummaryView extends ViewPart implements
         column.getColumn().setMoveable(true);
         column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
             public String getText(Object element) {
-                return StringUtils.defaultString(
-                        ((ITestResultSummaryPO)element).getAutToolkit());
+                String name = null;
+                try {
+                    name = ToolkitSupportBP.getToolkitDescriptor((
+                                (ITestResultSummaryPO) element).getAutToolkit())
+                                    .getName();
+                } catch (ToolkitPluginException e) {
+                    // ignore
+                }
+                return StringUtils.defaultString(name);
             }
         });
 
@@ -1460,9 +1469,23 @@ public class TestresultSummaryView extends ViewPart implements
         new ColumnViewerSorter(tableViewer, column) {
             @Override
             protected int doCompare(Viewer viewer, Object e1, Object e2) {
-                return getCommonsComparator().compare(
-                        ((ITestResultSummaryPO)e1).getAutToolkit(), 
-                        ((ITestResultSummaryPO)e2).getAutToolkit());
+                String name1 = null;
+                try {
+                    name1 = ToolkitSupportBP.getToolkitDescriptor((
+                                (ITestResultSummaryPO) e1).getAutToolkit())
+                                    .getName();
+                } catch (ToolkitPluginException e) {
+                    // ignore
+                }
+                String name2 = null;
+                try {
+                    name2 = ToolkitSupportBP.getToolkitDescriptor((
+                                (ITestResultSummaryPO) e2).getAutToolkit())
+                                    .getName();
+                } catch (ToolkitPluginException e) {
+                    // ignore
+                }
+                return getCommonsComparator().compare(name1, name2);
             }
         };
     }
@@ -1717,7 +1740,7 @@ public class TestresultSummaryView extends ViewPart implements
      * Adds a "testrun id" column for birt reporting (test details) to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
      */
-    private void addTestrunIdColumn(TableViewer tableViewer) {
+    private void addSummaryIdColumn(TableViewer tableViewer) {
         TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
         column.getColumn().setWidth(0);
         column.getColumn().setText(TESTRESULT_SUMMARY_TESTRUN_ID);
