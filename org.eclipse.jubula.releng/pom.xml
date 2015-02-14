@@ -126,6 +126,7 @@
     <module>../org.eclipse.jubula.ui.compatibility</module>
     <module>../org.eclipse.jubula.releng.server</module>
     <module>../org.eclipse.jubula.releng.client</module>
+    <module>../org.eclipse.jubula.releng.examples</module>
     
     <module>../org.eclipse.jubula.qa.api</module>
     <module>../org.eclipse.jubula.qa.api.rcp</module>
