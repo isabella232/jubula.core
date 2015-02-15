@@ -14,7 +14,6 @@
 
     <modules>
         <module>../org.eclipse.jubula.examples.aut.adder.swing</module>
-        <module>../org.eclipse.jubula.examples.aut.adder.javafx</module>
     </modules>
 
 </project>
