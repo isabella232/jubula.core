@@ -321,4 +321,101 @@
             <property name="selector" value="ul" />
         </componentClass>
     </toolkitComponent>
+    
+	<toolkitComponent type="html.generic.Locator" visible="true" hasDefaultMapping="true">
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.LocatorImplClass</testerClass>
+		<componentClass name="html.generic.Locator" />
+        <action name="html.checkXpathCount" changed="1.0">
+            <method>rcCheckXPathCount</method>
+            <param name="html.locator.xpath"
+                   descriptionKey="html.locator.xpath.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ComparisonMethod"
+                   descriptionKey="CompSystem.ComparisonMethod.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equal to</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Less" value="less than"/>
+                    <element name="CompSystem.LessOrEqual" value="less or equal than"/>
+                    <element name="CompSystem.Equals" value="equal to"/>
+                    <element name="CompSystem.GreaterOrEqual" value="greater or equal than"/>
+                    <element name="CompSystem.Greater" value="greater than"/>
+                </valueSet>
+            </param>
+            <param name="html.count"
+                   descriptionKey="html.count.descr" >
+                <type>java.lang.Integer</type>
+            </param>        
+        </action>
+        <action name="html.checkCssPathCount" changed="1.0">
+            <method>rcCheckCSSPathCount</method>
+            <param name="html.locator.css"
+                   descriptionKey="html.locator.css.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ComparisonMethod"
+                   descriptionKey="CompSystem.ComparisonMethod.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equal to</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Less" value="less than"/>
+                    <element name="CompSystem.LessOrEqual" value="less or equal than"/>
+                    <element name="CompSystem.Equals" value="equal to"/>
+                    <element name="CompSystem.GreaterOrEqual" value="greater or equal than"/>
+                    <element name="CompSystem.Greater" value="greater than"/>
+                </valueSet>
+            </param>
+            <param name="html.count"
+                   descriptionKey="html.count.descr" >
+                <type>java.lang.Integer</type>
+            </param>        
+        </action>
+		<action name="CompSystem.VerifyText" changed="1.11">
+			<method>rcCheckText</method>
+            <param name="html.locator"
+                   descriptionKey="html.locator.descr" >
+                <type>java.lang.String</type>
+            </param>
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+				<type>java.lang.String</type>
+			</param>
+		</action>
+		<action name="CompSystem.Click" changed="1.26">
+			<method>rcClick</method>
+            <param name="html.locator"
+                   descriptionKey="html.locator.descr" >
+                <type>java.lang.String</type>
+            </param>
+		</action>
+		<action name="CompSystem.WaitForComponent" changed="1.18">
+			<method>rcWaitForComponent</method>
+            <param name="html.locator"
+                   descriptionKey="html.locator.descr" >
+                <type>java.lang.String</type>
+            </param>
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1000</defaultValue>
+			</param>
+			<param name="CompSystem.DelayAfterVisibility"
+                   descriptionKey="CompSystem.DelayAfterVisibility.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>200</defaultValue>
+			</param>
+		</action>
+	</toolkitComponent>
 </compSystem>
