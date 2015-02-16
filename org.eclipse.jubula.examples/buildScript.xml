@@ -25,7 +25,7 @@
 	<property name="DvdTool"			value="org.eclipse.jubula.examples.aut.dvdtool"/>
 
 	<property name="ExampleExtensionReleng"       value="org.eclipse.jubula.examples.extension.releng"/>
-	<property name="ExampleExtensionUpdateSite"       value="org.eclipse.jubula.examples.extension.updateSite"/>
+	<property name="ExampleExtensionUpdateSite"       value="org.eclipse.jubula.examples.extension.site"/>
 
 	<property name="ExampleSwingExtensionAUT"       value="org.eclipse.jubula.examples.extension.swing.aut"/>
 	<property name="ExampleSwingExtensionClient"    value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
