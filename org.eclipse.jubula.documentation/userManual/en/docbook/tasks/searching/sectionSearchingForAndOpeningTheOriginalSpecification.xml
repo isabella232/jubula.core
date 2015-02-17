@@ -11,10 +11,10 @@
                                                                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for and opening the original specification of a Test Case or Test Suite</title>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-and-opening-the-original-specification-of-a-test-case-or-test-suite.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="searching-for-and-opening-the-original-specification-of-a-test-case-or-test-suite.testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-and-opening-the-original-specification-of-a-test-case-or-test-suite.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="searching-for-and-opening-the-original-specification-of-a-test-case-or-test-suite.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
   <para>
     To find the the original specification of any reused Test Case
     or Test Suite:

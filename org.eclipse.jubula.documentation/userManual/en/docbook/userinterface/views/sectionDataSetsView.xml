@@ -11,7 +11,7 @@
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Data Sets View</title>
-  <anchor role="helpid" xml:id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="the-data-sets-view.guidancerDataSetViewContextId">Data Sets View</anchor>
   <para>
     The Data Sets View is in the lower right-hand corner of the
     Functional Test Specification Perspective by default. It lets you add, modify,

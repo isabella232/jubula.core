@@ -12,9 +12,9 @@
                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="webAUT"?>
   <title>Testing HTML AUTs</title>
-  <anchor role="helpid" xml:id="projectWizardContextId">Creating a Project</anchor>
-  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" condition="projectWizardContextId" xml:id="webaut.projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="webaut.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="webaut.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
   <para>
     HTML AUTs are supported for testing. To be able to test HTML
     applications, select the <emphasis>HTML</emphasis> toolkit in the Project

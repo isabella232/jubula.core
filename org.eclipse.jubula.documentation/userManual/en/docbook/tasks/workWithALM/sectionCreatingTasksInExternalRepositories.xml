@@ -11,7 +11,7 @@
                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating tasks in external repositories from test result reports</title>
-  <anchor role="helpid" xml:id="testResultViewContextId">Test Results View</anchor>
+  <anchor role="helpid" condition="testResultViewContextId" xml:id="creating-tasks-in-external-repositories-from-test-result-reports.testResultViewContextId">Test Results View</anchor>
   <para>
     You can create a new task with pre-filled information directly
     from an open test result report in the Test Result View. This is

@@ -12,11 +12,11 @@
                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="rcpAUT"?>
   <title>Testing RCP AUTs</title>
-  <anchor role="helpid" xml:id="projectWizardContextId">Creating a Project</anchor>
-  <anchor role="helpid" xml:id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
-  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" xml:id="supportRCPAUTStartDelayContextId">Starting RCP AUTs</anchor>
-  <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" condition="projectWizardContextId" xml:id="rcpaut.projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" condition="autSettingWizardPagePageContextId" xml:id="rcpaut.autSettingWizardPagePageContextId">Defining an AUT</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="rcpaut.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="supportRCPAUTStartDelayContextId" xml:id="rcpaut.supportRCPAUTStartDelayContextId">Starting RCP AUTs</anchor>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="rcpaut.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
   
   <xi:include href="sectionIntroRCPAUT.xml"/>
   <xi:include href="sectionSupportedRCPAUTs.xml"/>

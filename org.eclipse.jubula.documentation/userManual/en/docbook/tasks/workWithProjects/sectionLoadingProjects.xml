@@ -11,8 +11,8 @@
                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening Projects</title>
-  <anchor role="helpid" xml:id="openProjectDialogContextId">Opening Projects</anchor>
-  <anchor role="helpid" xml:id="problemViewNoProjectContextId">Project Options Dialog</anchor>
+  <anchor role="helpid" condition="openProjectDialogContextId" xml:id="loadproject.openProjectDialogContextId">Opening Projects</anchor>
+  <anchor role="helpid" condition="problemViewNoProjectContextId" xml:id="loadproject.problemViewNoProjectContextId">Project Options Dialog</anchor>
   <orderedlist>
     <listitem>
       <para>

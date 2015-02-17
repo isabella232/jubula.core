@@ -12,7 +12,7 @@
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="infoTestSteps"?>
   <title>Information on Test Steps</title>
-  <anchor role="helpid" xml:id="capContextId">Test Steps</anchor>
+  <anchor role="helpid" condition="capContextId" xml:id="information-on-test-steps.capContextId">Test Steps</anchor>
   
   <xi:include href="sectionIntroTestSteps.xml"/>
   <xi:include href="sectionSpecifyingTestSteps.xml"/>

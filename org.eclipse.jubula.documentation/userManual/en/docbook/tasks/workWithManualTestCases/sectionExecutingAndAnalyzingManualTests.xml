@@ -11,7 +11,7 @@
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Executing and analyzing manual tests</title>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="executing-and-analyzing-manual-tests.testExecViewContextId">Test Suite Browser</anchor>
   <para>
     Once you have created a manual Test Case
     (<xref linkend="creating-manual-tests"/>), you can execute it.

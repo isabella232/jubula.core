@@ -11,7 +11,7 @@
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Test preferences</title>
-  <anchor role="helpid" xml:id="prefPageBasicContextId">Test Preferences</anchor>
+  <anchor role="helpid" condition="prefPageBasicContextId" xml:id="test-preferences.prefPageBasicContextId">Test Preferences</anchor>
   <figure xml:id="gdprefs">
     <title>Preference Dialog</title>
     <mediaobject>

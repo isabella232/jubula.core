@@ -58,9 +58,9 @@
   </itemizedlist>
   <section xml:id="searching-for-keywords">
     <title>Searching for keywords throughout the Project</title>
-    <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-    <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+    <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-keywords.testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-keywords.testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" condition="com.bredexsw.guidancer.doc.keywordSearchPageContextId" xml:id="searching-for-keywords.com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
     <para>
       On the first tab of the search dialog, you can search for the
       following based on their name, a comment, a description, or a task ID.:
@@ -115,9 +115,9 @@
   </section>
   <section xml:id="searching-for-test-data">
     <title>Searching for test data</title>
-    <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-    <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+    <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-test-data.testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-test-data.testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" condition="com.bredexsw.guidancer.doc.testDataSearchPageContextId" xml:id="searching-for-test-data.com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
     <para>
       On the second tab of the search dialog, you can search for
       test data in the following:
@@ -163,8 +163,8 @@
   </section>
   <section xml:id="searching-for-files">
     <title>Searching for files in the workspace</title>
-    <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-    <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-files.testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-files.testExecViewContextId">Test Suite Browser</anchor>
     <para>
       On the third tab of the search dialog, you can search for and
       in files contained in your workspace.
@@ -178,8 +178,8 @@
   </section>
   <section xml:id="limiting-the-search-to-the-selected-node">
     <title>Limiting the search to the selected node</title>
-    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
-    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+    <anchor role="helpid" condition="com.bredexsw.guidancer.doc.keywordSearchPageContextId" xml:id="limiting-the-search-to-the-selected-node.com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+    <anchor role="helpid" condition="com.bredexsw.guidancer.doc.testDataSearchPageContextId" xml:id="limiting-the-search-to-the-selected-node.com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
     <para>
       In the search dialog, you can specify whether the search you
       define should be performed on the whole Project, or just on

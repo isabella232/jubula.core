@@ -171,22 +171,6 @@ http://www.sagehill.net/docbookxsl/HTMLHeaders.html#BreadCrumbs
   </p>
 </xsl:template>
 
-<xsl:template match="d:mediaobject[@role='icon']">
-  <xsl:variable name="href">
-    <xsl:call-template name="relative.path.link">
-      <xsl:with-param name="target.pathname" select="@file"/>
-    </xsl:call-template>
-  </xsl:variable>
-  
-  <span class="inlinemediaobject">
-    <img>
-      <xsl:attribute name="src">
-        <xsl:value-of select="$href"/>
-      </xsl:attribute>
-    </img>
-  </span>
-</xsl:template>
-
 <xsl:template match="d:imagedata">
   <xsl:variable name="href">
     <xsl:call-template name="relative.path.link">

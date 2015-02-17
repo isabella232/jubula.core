@@ -11,8 +11,8 @@
                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Concatenating (combining) parameters</title>
-  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" xml:id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="concatenating-combining-parameters.guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="concatenating-combining-parameters.guidancerDataSetViewContextId">Data Sets View</anchor>
   <para>
     The ITE lets you use various different types of parameter:
   </para>

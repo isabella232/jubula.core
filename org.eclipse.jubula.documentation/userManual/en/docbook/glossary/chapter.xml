@@ -195,9 +195,21 @@
           etc. A parameter consists of:
           
           <itemizedlist>
-            <listitem>a name</listitem>
-            <listitem>a type</listitem>
-            <listitem>a value</listitem>
+            <listitem>
+              <para>
+                a name
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                a type
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                a value
+              </para>
+            </listitem>
           </itemizedlist>
           
           Most actions require one or more parameters.
@@ -220,9 +232,21 @@
           types are supported:
           
           <itemizedlist>
-            <listitem>String</listitem>
-            <listitem>Integer</listitem>
-            <listitem>Boolean</listitem>
+            <listitem>
+              <para>
+                String
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Integer
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Boolean
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>
@@ -393,9 +417,21 @@
           The smallest test object. A Test Step belongs to a Test Case. A Test Step consists of
 
           <itemizedlist>
-            <listitem>a <emphasis role="strong">C</emphasis>omponent</listitem>
-            <listitem>an <emphasis role="strong">A</emphasis>ction</listitem>
-            <listitem>a <emphasis role="strong">P</emphasis>arameter</listitem>
+            <listitem>
+              <para>
+                a <emphasis role="strong">C</emphasis>omponent
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                an <emphasis role="strong">A</emphasis>ction
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                a <emphasis role="strong">P</emphasis>arameter
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>

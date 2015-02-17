@@ -11,7 +11,7 @@
                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Deleting Projects</title>
-  <anchor role="helpid" xml:id="deleteProjectDialogContextId">Deleting Projects</anchor>
+  <anchor role="helpid" condition="deleteProjectDialogContextId" xml:id="deleteproject.deleteProjectDialogContextId">Deleting Projects</anchor>
   <orderedlist>
     <listitem>
       <para>

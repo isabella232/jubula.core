@@ -13,7 +13,7 @@
   <title>Working with the Object Mapping Editor</title>
   <section xml:id="opening-the-object-mapping-editor">
     <title>Opening the Object Mapping Editor</title>
-    <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" condition="testExecViewContextId" xml:id="object-mapping-editor.testExecViewContextId">Test Suite Browser</anchor>
     <orderedlist>
       <listitem>
         <para>
@@ -38,7 +38,7 @@
   </section>
   <section xml:id="the-object-mapping-editor">
     <title>The Object Mapping Editor</title>
-    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="the-object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
     <para>
       The Object Mapping pane in the Object Mapping Editor is where you perform your object mapping. 
       It contains three areas for the three main categories. IHere, you can:
@@ -71,8 +71,8 @@
   </section>
   <section xml:id="working-with-categories-in-the-object-mapping-editor">
     <title>Working with categories in the Object Mapping Editor</title>
-    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
-    <anchor role="helpid" xml:id="dialogOMCategoryNewContextId">New Object Mapping Category Dialog</anchor>
+    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="working-with-categories-in-the-object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" condition="dialogOMCategoryNewContextId" xml:id="working-with-categories-in-the-object-mapping-editor.dialogOMCategoryNewContextId">New Object Mapping Category Dialog</anchor>
 	<para>
 	There are three areas in the Object Mapping Editor, corresponding to the three types of names.
 	</para>
@@ -185,7 +185,7 @@
   </section>
   <section xml:id="the-configuration-view-in-the-object-mapping-editor">
     <title>The configuration view in the Object Mapping Editor</title>
-    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="the-configuration-view-in-the-object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
     <para>
       In the configuration view in the Object Mapping Editor you can
       alter the object recognition for the test execution.
@@ -329,7 +329,7 @@
   </section>
   <section xml:id="refreshing-the-object-mapping-editor">
     <title>Refreshing the Object Mapping Editor</title>
-    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="refreshing-the-object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
     <orderedlist>
       <listitem>
         <para>
@@ -353,7 +353,7 @@
   </section>
   <section xml:id="finding-components-in-the-aut-via-the-object-mapping-editor-highlight-in-aut">
     <title>Finding components in the AUT via the Object Mapping Editor: highlight in AUT</title>
-    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="finding-components-in-the-aut-via-the-object-mapping-editor-highlight-in-aut.objectMapEditorContextId">Object Mapping</anchor>
     <para>
       In the Object Mapping Editor, you can search for:
     </para>

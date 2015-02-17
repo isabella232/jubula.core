@@ -11,7 +11,7 @@
                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Test Result View</title>
-  <anchor role="helpid" xml:id="testResultViewContextId">Test Results View</anchor>
+  <anchor role="helpid" condition="testResultViewContextId" xml:id="the-test-result-view.testResultViewContextId">Test Results View</anchor>
   <para>
     The Test Result View (<xref linkend="testresultview"/>) tracks the test progress for each Test
     Suite, marking each Test Step as successful or unsuccessful.

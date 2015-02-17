@@ -12,9 +12,9 @@
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="javaFX"?>
   <title>Testing JavaFX AUTs</title>
-  <anchor role="helpid" xml:id="projectWizardContextId">Creating a Project</anchor>
-  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" condition="projectWizardContextId" xml:id="toolkit-javafx.projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="toolkit-javafx.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="toolkit-javafx.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
   
   <xi:include href="sectionIntroJavaFXAUT.xml"/>
   <xi:include href="sectionDesignForTestabilityInJavaFX.xml"/>

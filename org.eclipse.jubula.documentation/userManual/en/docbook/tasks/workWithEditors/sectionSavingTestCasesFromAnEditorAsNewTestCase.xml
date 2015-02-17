@@ -11,8 +11,8 @@
                                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Saving Test Cases from an editor as a new Test Case</title>
-  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="saving-test-cases-from-an-editor-as-a-new-test-case.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="saving-test-cases-from-an-editor-as-a-new-test-case.testSuiteEditorContextId">Test Suite Editor</anchor>
   <para>
     You can save selected Test Cases from other Test Cases and from
     Test Suites. This lets you create a new keyword that contains

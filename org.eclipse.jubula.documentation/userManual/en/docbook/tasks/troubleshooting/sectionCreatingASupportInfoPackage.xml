@@ -11,8 +11,8 @@
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating a support information package</title>
-  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
-  <anchor role="helpid" xml:id="supportRequestDialogContextId">Support Information Package</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="creating-a-support-information-package.problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="supportRequestDialogContextId" xml:id="creating-a-support-information-package.supportRequestDialogContextId">Support Information Package</anchor>
   <para>
     If you have found a problem with the ITE itself, you can create
     a support information package from within the ITE. You can

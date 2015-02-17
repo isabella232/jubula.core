@@ -11,8 +11,8 @@
                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding and inserting new Test Cases to a Test Case</title>
-  <anchor role="helpid" xml:id="dialogTestcaseAddNewContextId">Add New Test Case Dialog</anchor>
-  <anchor role="helpid" xml:id="dialogTestcaseInsertNewContextId">Insert New Test Case Dialog</anchor>
+  <anchor role="helpid" condition="dialogTestcaseAddNewContextId" xml:id="adding-and-inserting-new-test-cases-to-a-test-case.dialogTestcaseAddNewContextId">Add New Test Case Dialog</anchor>
+  <anchor role="helpid" condition="dialogTestcaseInsertNewContextId" xml:id="adding-and-inserting-new-test-cases-to-a-test-case.dialogTestcaseInsertNewContextId">Insert New Test Case Dialog</anchor>
   <orderedlist>
     <listitem>
       <para>

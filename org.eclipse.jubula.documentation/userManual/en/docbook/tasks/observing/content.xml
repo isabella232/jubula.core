@@ -12,8 +12,8 @@
                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="observing"?>
   <title>Observing Test Cases</title>
-  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="observing.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="observing.testSpecificationViewContextId">Test Case Browser</anchor>
   
   <xi:include href="sectionIntroObservationMode.xml"/>
   <xi:include href="sectionTipsAndTricksObservationMode.xml"/>

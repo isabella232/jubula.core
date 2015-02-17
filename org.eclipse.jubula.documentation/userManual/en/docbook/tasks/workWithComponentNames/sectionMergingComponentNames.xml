@@ -11,9 +11,9 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Merging component names</title>
-  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
-  <anchor role="helpid" xml:id="mergeComponentNameContextId">Merge Component Name Dialog</anchor>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="merging-component-names.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="merging-component-names.objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="mergeComponentNameContextId" xml:id="merging-component-names.mergeComponentNameContextId">Merge Component Name Dialog</anchor>
   <para>
     You can merge two or more component names to one unifying name
     in the Component Names Browser. This makes sense if you have

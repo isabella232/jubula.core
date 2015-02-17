@@ -11,11 +11,11 @@
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting Java AUTs (Swing, SWT/RCP/GEF)</title>
-  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="starting-java-auts.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <section xml:id="two-options-to-start-java">
     <title>Two options to start Java AUTs</title>
-    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-    <anchor role="helpid" xml:id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
+    <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="two-options-to-start-java.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" condition="autSettingWizardPagePageContextId" xml:id="two-options-to-start-java.autSettingWizardPagePageContextId">Defining an AUT</anchor>
     <para>
       There are two options to start your Java AUT for testing:
     </para>
@@ -247,7 +247,7 @@
   </section>
   <section xml:id="starting-java-with-the-command">
     <title>Starting Java AUTs with the <emphasis>autrun</emphasis> command</title>
-    <anchor role="helpid" xml:id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
+    <anchor role="helpid" condition="autSettingWizardPagePageContextId" xml:id="starting-java-with-the-command.autSettingWizardPagePageContextId">Defining an AUT</anchor>
     <para>
       The <emphasis>autrun</emphasis> command can be used as an
       alternative to starting your AUT from the ITE. (i.e. with an

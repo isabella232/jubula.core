@@ -7,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="object-mapping-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="object-mapping-editor-ui" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Object Mapping Editor</title>
-  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
   <para>
     Each AUT in a Project has an Object Mapping Editor. You can open
     the Object Mapping Editor by right-clicking on a Test Suite in

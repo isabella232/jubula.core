@@ -24,7 +24,7 @@
   </para>
   <section xml:id="adding-chronon-information-in-the-aut-configuration">
     <title>Adding Chronon information in the AUT configuration</title>
-    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="adding-chronon-information-in-the-aut-configuration.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
     <para>
       You can select Chronon as a monitoring agent and configure it
       in the Expert Settings in the AUT configuration.
@@ -58,7 +58,7 @@
   </section>
   <section xml:id="configuring-the-separate-chronon-installation-for-use-with-your-aut">
     <title>Configuring the separate Chronon installation for use with your AUT</title>
-    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="configuring-the-separate-chronon-installation-for-use-with-your-aut.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
     <para>
       Enter the following configuration details:
     </para>

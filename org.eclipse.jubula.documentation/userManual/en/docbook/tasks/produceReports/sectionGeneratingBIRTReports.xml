@@ -11,7 +11,7 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Generating BIRT reports</title>
-  <anchor role="helpid" xml:id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="generating-birt-reports.testResultSummaryViewContextId">Test Result Summary View</anchor>
   <para>
     From the Test Result Summary View (<xref linkend="working-with-the-test-result-summary-view"/>), you
     can generate reports of your test runs over time using the BIRT
@@ -155,7 +155,12 @@
     <listitem>
       <para>
         To start a report, click the arrow next to the
-        ”<emphasis>Create Report</emphasis>” button <mediaobject role="icon" file="images/createBirtReport.png"/>
+        ”<emphasis>Create Report</emphasis>” button
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/createBirtReport.png"/>
+          </imageobject>
+        </inlinemediaobject>
         and select the report you want to generate.
       </para>
       <para role="tip">

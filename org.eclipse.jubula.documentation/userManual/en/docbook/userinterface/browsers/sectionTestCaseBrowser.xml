@@ -11,7 +11,7 @@
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Test Case Browser</title>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="the-test-case-browser.testSpecificationViewContextId">Test Case Browser</anchor>
   <para>
     The Test Case Browser is by default in the lower left-hand
     corner of the Specification Perspective. In this browser, you

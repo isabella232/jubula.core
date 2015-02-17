@@ -11,7 +11,7 @@
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Problems View</title>
-  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="the-problems-view.problemViewContextId">Problem View</anchor>
   <para>
     The Problems View (<xref linkend="probview"/>) is in the middle of the specification perspective,
     at the bottom, by default.
@@ -22,17 +22,30 @@
   <itemizedlist>
     <listitem>
       <para>
-        <mediaobject role="icon" file="images/info.png"/> Information
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/info.png"/>
+          </imageobject>
+        </inlinemediaobject>
+        Information
       </para>
     </listitem>
     <listitem>
       <para>
-        <mediaobject role="icon" file="images/error.png"/> Errors
+        <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="images/error.png"/>
+      </imageobject>
+    </inlinemediaobject> Errors
       </para>
     </listitem>
     <listitem>
       <para>
-        <mediaobject role="icon" file="images/warning.png"/> Warnings
+        <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="images/warning.png"/>
+      </imageobject>
+    </inlinemediaobject> Warnings
       </para>
     </listitem>
   </itemizedlist>

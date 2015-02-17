@@ -11,9 +11,9 @@
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Deleting items from browsers</title>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="deleting-items-from-browsers.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="deleting-items-from-browsers.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="deleting-items-from-browsers.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
   <orderedlist>
     <listitem>
       <para>

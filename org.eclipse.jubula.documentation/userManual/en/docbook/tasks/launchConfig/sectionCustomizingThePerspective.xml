@@ -52,7 +52,12 @@
   </orderedlist>
   <para>
     Once you have completed the steps listed above, the
-    <emphasis>Start AUT</emphasis> button <mediaobject role="icon" file="images/startAUT.png"/> 
+    <emphasis>Start AUT</emphasis> button
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="images/startAUT.png"/>
+      </imageobject>
+    </inlinemediaobject> 
     should be visible in the main toolbar of the active Perspective.
   </para>
 </section>

@@ -11,8 +11,8 @@
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Stopping the AUT</title>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="runningAUTsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="stopping-the-aut.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="runningAUTsViewContextId" xml:id="stopping-the-aut.runningAUTsViewContextId">Running AUTs View</anchor>
   <orderedlist>
     <listitem>
       <para>
@@ -31,7 +31,12 @@
       <para>
         To stop the AUT manually, select the AUT you want to stop
         from the Running AUTs View and then click the Stop AUT
-        button <mediaobject role="icon" file="images/stopAUT.png"/>.
+        button
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/stopAUT.png"/>
+          </imageobject>
+        </inlinemediaobject>.
       </para>
     </listitem>
     <listitem>

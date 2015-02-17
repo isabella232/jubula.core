@@ -11,10 +11,10 @@
                                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Data types and entering data for Test Cases</title>
-  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" xml:id="guidancerDataSetViewContextId">Data Sets View</anchor>
-  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="data-types-and-entering-data-for-test-cases.guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="data-types-and-entering-data-for-test-cases.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="data-types-and-entering-data-for-test-cases.guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="data-types-and-entering-data-for-test-cases.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <para>
     Most actions in the library require one or more
     <emphasis>parameters</emphasis> (e.g. how often to click, what

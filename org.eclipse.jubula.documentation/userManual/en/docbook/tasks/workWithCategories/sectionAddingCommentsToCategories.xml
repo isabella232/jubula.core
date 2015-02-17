@@ -11,8 +11,8 @@
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding comments to categories</title>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="adding-comments-to-categories.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="adding-comments-to-categories.testExecViewContextId">Test Suite Browser</anchor>
   <para>
     You can add comments to categories in the Test Suite Browser and
     Test Case Browser to add information on the purpose of the

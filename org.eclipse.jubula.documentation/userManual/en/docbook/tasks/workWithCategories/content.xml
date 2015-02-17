@@ -12,9 +12,9 @@
                                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="workWithCategories"?>
   <title>Working with categories in the browsers and editors</title>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="dialogNewCategoryContextId">New Category Dialog</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="working-with-categories-in-the-browsers-and-editors.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="working-with-categories-in-the-browsers-and-editors.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="dialogNewCategoryContextId" xml:id="working-with-categories-in-the-browsers-and-editors.dialogNewCategoryContextId">New Category Dialog</anchor>
   
   <xi:include href="sectionIntroCategories.xml"/>
   <xi:include href="sectionCreatingACategory.xml"/>

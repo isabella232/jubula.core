@@ -64,7 +64,7 @@
   </orderedlist>
   <section xml:id="editing-general-project-properties">
     <title>Editing general Project properties</title>
-    <anchor role="helpid" xml:id="projectSettingsPageContextId">Project Properties</anchor>
+    <anchor role="helpid" condition="projectSettingsPageContextId" xml:id="editing-general-project-properties.projectSettingsPageContextId">Project Properties</anchor>
     <para>
       Select ”<emphasis>General</emphasis>” from the tree on the left-hand
       side of the Project properties dialog. In the screen that appears, you can:
@@ -164,7 +164,7 @@
   </section>
   <section xml:id="editing-the-languages-for-a-project">
     <title>Editing the languages for a Project</title>
-    <anchor role="helpid" xml:id="projectSettingsPageContextId">Project Properties</anchor>
+    <anchor role="helpid" condition="projectSettingsPageContextId" xml:id="editing-the-languages-for-a-project.projectSettingsPageContextId">Project Properties</anchor>
     <para>
       To see and edit the Project languages, select ”<emphasis>Project languages</emphasis>”
       from the tree on the left-hand side of the Project properties
@@ -181,7 +181,7 @@
   </section>
   <section xml:id="editing-the-auts-in-a-project">
     <title>Editing the AUTs in a Project</title>
-    <anchor role="helpid" xml:id="autSettingsPageContextId">Adding/editing AUT's</anchor>
+    <anchor role="helpid" condition="autSettingsPageContextId" xml:id="editing-the-auts-in-a-project.autSettingsPageContextId">Adding/editing AUT's</anchor>
     <para>
       To see and edit your AUTs for a Project, select
       ”<emphasis>AUTs</emphasis>” from the tree on the left-hand
@@ -209,8 +209,8 @@
   </section>
   <section xml:id="duplicating-aut-configurations">
     <title>Duplicating AUT configurations</title>
-    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-    <anchor role="helpid" xml:id="autSettingsPageContextId">Adding/editing AUT's</anchor>
+    <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="duplicating-aut-configurations.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" condition="autSettingsPageContextId" xml:id="duplicating-aut-configurations.autSettingsPageContextId">Adding/editing AUT's</anchor>
     <para>
       You can duplicate an existing AUT configuration from the
       Project properties dialog:
@@ -245,7 +245,7 @@
   </section>
   <section xml:id="editing-aut-configurations">
     <title>Editing the AUT configurations in a Project</title>
-    <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+    <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="editing-aut-configurations.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
     <para>
       Select ”<emphasis>AUTs</emphasis>” from the tree on the
       left-hand side of the Project properties dialog.

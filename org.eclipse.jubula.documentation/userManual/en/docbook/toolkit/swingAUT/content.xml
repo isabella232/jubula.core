@@ -12,9 +12,9 @@
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="swingAUT"?>
   <title>Testing Swing AUTs</title>
-  <anchor role="helpid" xml:id="projectWizardContextId">Creating a Project</anchor>
-  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" condition="projectWizardContextId" xml:id="testing-swing-auts.projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="testing-swing-auts.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="testing-swing-auts.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
   
   <xi:include href="sectionIntroSwingAUT.xml"/>
   <xi:include href="sectionSupportedSwingAUTs.xml"/>

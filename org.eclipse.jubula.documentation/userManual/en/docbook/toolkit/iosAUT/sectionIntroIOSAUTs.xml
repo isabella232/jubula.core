@@ -7,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="iOSaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="intro-iOSaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Introduction to writing tests for iOS AUTs</title>

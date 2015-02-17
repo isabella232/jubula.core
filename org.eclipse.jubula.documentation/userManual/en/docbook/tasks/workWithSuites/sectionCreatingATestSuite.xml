@@ -11,8 +11,8 @@
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating a Test Suite</title>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="dialogTestsuiteNewContextId">New Test Suite Dialog</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="creating-a-test-suite.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="dialogTestsuiteNewContextId" xml:id="creating-a-test-suite.dialogTestsuiteNewContextId">New Test Suite Dialog</anchor>
   <para>
     Test Suites are used to organize and prepare Test Cases to be executed.
   </para>

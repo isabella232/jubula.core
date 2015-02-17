@@ -11,11 +11,15 @@
                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Disconnecting from the AUT Agent</title>
-  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="disconnecting-from-the-aut-agent.problemViewContextId">Problem View</anchor>
   <para>
     To disconnect from the AUT Agent, select the
     ”<emphasis>Disconnect from AUT Agent</emphasis>” button
-    <mediaobject role="icon" file="images/stopServer.png"/> on the
-    toolbar.
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="images/stopServer.png"/>
+      </imageobject>
+    </inlinemediaobject>
+    on the toolbar.
   </para>
 </section>

@@ -12,8 +12,8 @@
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="workWithTestCases"?>
   <title>Working with Test Cases</title>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="working-with-test-cases.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="working-with-test-cases.problemViewContextId">Problem View</anchor>
   
   <xi:include href="sectionIntroTestCases.xml"/>
   <xi:include href="sectionCreatingTestCases.xml"/>

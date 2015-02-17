@@ -7,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="event-handlers" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="event-handlers-concept" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Event Handlers</title>
@@ -16,7 +16,12 @@
     execution and to continue the test in a way you define.
   </para>
   <para>
-    An Event Handler <mediaobject role="icon" file="images/EventHandler.png"/>
+    An Event Handler 
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="images/EventHandler.png"/>
+      </imageobject>
+    </inlinemediaobject>
     is a Test Case used with a special function. It is only
     executed when a certain type of error occurs. There are four
     different types of error, and each Test Case can have an Event

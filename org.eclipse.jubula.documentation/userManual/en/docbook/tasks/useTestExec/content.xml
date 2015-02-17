@@ -12,7 +12,7 @@
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="useTestExec"?>
   <title>Using the test executor for testing from the command line</title>
-  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="using-the-test-executor-for-testing-from-the-command-line.problemViewContextId">Problem View</anchor>
   
   <xi:include href="sectionIntroUsageTestExec.xml"/>
   <xi:include href="sectionStartingTestExec.xml"/>

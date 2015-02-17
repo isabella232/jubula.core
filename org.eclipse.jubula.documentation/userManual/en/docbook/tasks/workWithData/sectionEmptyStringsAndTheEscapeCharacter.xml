@@ -11,8 +11,8 @@
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Special parameters: empty strings and the escape character</title>
-  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="special-parameters-empty-strings-and-the-escape-character.guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="special-parameters-empty-strings-and-the-escape-character.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <para>
     <emphasis role="strong">Entering empty strings as parameters</emphasis><?linebreak?>
     If you want the parameter you enter to be an <emphasis>empty string</emphasis> (i.e. nothing), use two single quote marks: ”

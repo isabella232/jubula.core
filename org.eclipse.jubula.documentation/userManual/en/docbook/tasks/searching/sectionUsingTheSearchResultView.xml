@@ -11,7 +11,7 @@
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the search result view</title>
-  <anchor role="helpid" xml:id="searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" condition="searchResultViewContextId" xml:id="using-the-search-result-view.searchResultViewContextId">Search Result View</anchor>
   <para>
     The Search Result View shows any items found during a search –
     either via the search dialog or the ”<emphasis>Show where

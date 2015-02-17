@@ -11,7 +11,7 @@
                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Collecting components (technical names) from the AUT</title>
-  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="collecting-components-technical-names-from-the-aut.objectMapEditorContextId">Object Mapping</anchor>
   <para>
     Once your test specification is ready, you can
     <emphasis>collect</emphasis> components (technical names) from
@@ -75,7 +75,12 @@
     <listitem>
       <para>
         Start the Object Mapping Mode by clicking the arrow next to
-        the <emphasis>Start Object Mapping Mode</emphasis> <mediaobject role="icon" file="images/startOM.png"/>
+        the <emphasis>Start Object Mapping Mode</emphasis>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/startOM.png"/>
+          </imageobject>
+        </inlinemediaobject>
         on the toolbar and selecting which AUT (based on the AUT ID) you
         want to map. 
       </para>
@@ -126,8 +131,12 @@
       <para>
         Collect all the names you need from the AUT and then click
         the <emphasis>Stop Object Mapping Mode</emphasis> button
-        <mediaobject role="icon" file="images/stopOM.png"/> on
-        the toolbar.
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/stopOM.png"/>
+          </imageobject>
+        </inlinemediaobject>
+        on the toolbar.
       </para>
     </listitem>
     <listitem>
@@ -281,7 +290,7 @@
   </section>
   <section xml:id="understanding-the-colored-dots-when-collecting-component-names-in-the-object-mapping-editor">
     <title>Understanding the colored dots when collecting component names in the Object Mapping Editor</title>
-    <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="understanding-the-colored-dots-when-collecting-component-names-in-the-object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
     <para>
       When technical names are collected from the AUT, they appear
       in the Object Mapping Editor with a colored dot. The color of

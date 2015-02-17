@@ -46,8 +46,12 @@
   <para>
     Once you have completed these steps, you can select the
     ”<emphasis>observe Test Case</emphasis>” button
-    <mediaobject role="icon" file="images/cam.png"/> on the main
-    toolbar.
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="images/cam.png"/>
+      </imageobject>
+    </inlinemediaobject>
+    on the main toolbar.
   </para>
   <orderedlist>
     <listitem>

@@ -11,7 +11,7 @@
                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Reusing (referencing) whole Projects in a Project</title>
-  <anchor role="helpid" xml:id="projectUsedPropertyPageContextId">Used Projects Properties</anchor>
+  <anchor role="helpid" condition="projectUsedPropertyPageContextId" xml:id="reuseproject.projectUsedPropertyPageContextId">Used Projects Properties</anchor>
   <para>
     You can reuse (reference) Projects as libraries of Test Cases in
     other Projects.
@@ -100,8 +100,8 @@
   </orderedlist>
   <section xml:id="changing-the-version-of-a-reused-project">
     <title>Changing the version of a reused Project</title>
-    <anchor role="helpid" xml:id="databaseMigrationAssistantContextId">Database Migration</anchor>
-    <anchor role="helpid" xml:id="projectUsedPropertyPageContextId">Used Projects Properties</anchor>
+    <anchor role="helpid" condition="databaseMigrationAssistantContextId" xml:id="changing-the-version-of-a-reused-project.databaseMigrationAssistantContextId">Database Migration</anchor>
+    <anchor role="helpid" condition="projectUsedPropertyPageContextId" xml:id="changing-the-version-of-a-reused-project.projectUsedPropertyPageContextId">Used Projects Properties</anchor>
     <para>
       You can change the version of the reused Project you are using
       in your tests. This is useful to update to a new version of

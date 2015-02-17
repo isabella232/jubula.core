@@ -38,7 +38,7 @@
         match="d:anchor[@role='helpid']"
         mode="contexts.xml">
         
-        <xsl:if test="(@id)">
+        <xsl:if test="(@condition)">
             
             <!-- Get the title of the current element -->
             <xsl:variable name="title">
@@ -56,7 +56,7 @@
             
             <!-- Create ToC entry for the current node and process its 
                  container-type children further -->
-            <context id="{@id}">
+            <context id="{@condition}">
                 <description><xsl:value-of select="."/></description>
                 <topic label="{$title}" href="{$base.dir}/{$dir}{$filename}"/>
             </context>

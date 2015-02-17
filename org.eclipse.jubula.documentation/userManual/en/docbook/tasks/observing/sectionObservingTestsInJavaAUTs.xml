@@ -67,8 +67,12 @@
         Once you have recorded the actions you need, stop the
         observation mode by clicking on the ”<emphasis>stop
         observing Test Case</emphasis>” button
-        <mediaobject role="icon" file="images/stopcam.png"/> on the
-        main toolbar.
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/stopcam.png"/>
+          </imageobject>
+        </inlinemediaobject>
+        on the main toolbar.
       </para>
     </listitem>
     <listitem>

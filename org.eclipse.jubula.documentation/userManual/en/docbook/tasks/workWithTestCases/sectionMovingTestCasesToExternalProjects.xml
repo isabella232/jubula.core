@@ -11,8 +11,8 @@
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Moving Test Cases to external Projects</title>
-  <anchor role="helpid" xml:id="testCaseMoveExternalContextId">Move Test Cases to an External Project</anchor>
-  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testCaseMoveExternalContextId" xml:id="moving-test-cases-to-external-projects.testCaseMoveExternalContextId">Move Test Cases to an External Project</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="moving-test-cases-to-external-projects.testSpecificationViewContextId">Test Case Browser</anchor>
   <para>
     If you are reusing a Project or Projects in your currently
     opened Project (<xref linkend="reuseproject"/>), you can move Test Cases you

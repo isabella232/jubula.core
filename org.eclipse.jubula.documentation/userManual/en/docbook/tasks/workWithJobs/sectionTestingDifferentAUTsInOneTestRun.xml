@@ -11,9 +11,9 @@
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Testing different AUTs in one test run</title>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="runningAutsViewContextId">Running AUTs View</anchor>
-  <anchor role="helpid" xml:id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="testing-different-auts-in-one-test-run.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="testing-different-auts-in-one-test-run.runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" condition="guidancerTestJobEditorContextId" xml:id="testing-different-auts-in-one-test-run.guidancerTestJobEditorContextId">Test Job Editor</anchor>
   <para>
     You can test multiple AUTs in one test run.
   </para>

@@ -11,7 +11,7 @@
                                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Closing the ITE and stopping the AUT Agent</title>
-  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="closing-the-ite-and-stopping-the-aut-agent.problemViewContextId">Problem View</anchor>
   <para>
     Once the Test Suite, AUT and AUT Agent have been stopped or disconnected, make sure any changes are saved and select:
   </para>

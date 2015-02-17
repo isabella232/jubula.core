@@ -11,7 +11,7 @@
                                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>No component type exists message in Component Names View</title>
-  <anchor role="helpid" xml:id="compNameViewContextId">Component Names View</anchor>
+  <anchor role="helpid" condition="compNameViewContextId" xml:id="no-component-type-exists-message-in-component-names-view.compNameViewContextId">Component Names View</anchor>
   <para>
     This situation occurs when a component name that has been
     propagated and then renamed at the place of reuse is no longer

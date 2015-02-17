@@ -11,9 +11,9 @@
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting the AUT</title>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
-  <anchor role="helpid" xml:id="runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="starting-the-aut.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="starting-the-aut.problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="starting-the-aut.runningAutsViewContextId">Running AUTs View</anchor>
   <para>
     To start the AUT, you must:
   </para>
@@ -47,7 +47,11 @@
       <para>
         On the toolbar, click on the arrow next to the
         ”<emphasis>Start AUT</emphasis>” button
-        <mediaobject role="icon" file="images/startAUT.png"/>.
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/startAUT.png"/>
+          </imageobject>
+        </inlinemediaobject>.
       </para>
     </listitem>
     <listitem>

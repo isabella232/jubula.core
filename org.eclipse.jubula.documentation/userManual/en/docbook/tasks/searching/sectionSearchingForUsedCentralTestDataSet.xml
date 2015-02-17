@@ -11,8 +11,8 @@
                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for places where a central test data set has been used</title>
-  <anchor role="helpid" xml:id="searchResultViewContextId">Search Result View</anchor>
-  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="searchResultViewContextId" xml:id="searching-for-places-where-a-central-test-data-set-has-been-used.searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="searching-for-places-where-a-central-test-data-set-has-been-used.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
   <para>
     You can find the places where you have used a central test data
     set from within the Central Test Data Editor:

@@ -11,8 +11,8 @@
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Versioning Projects</title>
-  <anchor role="helpid" xml:id="openProjectDialogContextId">Opening Projects</anchor>
-  <anchor role="helpid" xml:id="dialogProjectCreateNewVersionContextId">Versioning Projects</anchor>
+  <anchor role="helpid" condition="openProjectDialogContextId" xml:id="projectversion.openProjectDialogContextId">Opening Projects</anchor>
+  <anchor role="helpid" condition="dialogProjectCreateNewVersionContextId" xml:id="projectversion.dialogProjectCreateNewVersionContextId">Versioning Projects</anchor>
   <orderedlist>
     <listitem>
       <para>

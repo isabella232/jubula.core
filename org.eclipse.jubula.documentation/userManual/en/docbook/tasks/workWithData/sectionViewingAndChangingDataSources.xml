@@ -11,7 +11,7 @@
                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Viewing and changing data sources for Test Cases</title>
-  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="viewing-and-changing-data-sources-for-test-cases.guidancerPropertiesViewContextId">Properties View</anchor>
   <para>
     The Properties View shows the currently used <emphasis>data
     source</emphasis> for each Test Case. The following data sources
@@ -40,7 +40,7 @@
   </para>
   <section xml:id="changing-the-data-source-for-a-test-case">
     <title>Changing the data source for a Test Case</title>
-    <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="changing-the-data-source-for-a-test-case.guidancerPropertiesViewContextId">Properties View</anchor>
     <itemizedlist>
       <listitem>
         <para>

@@ -11,7 +11,7 @@
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Deleting unused component names</title>
-  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="deleting-unused-component-names.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
   <para>
     When you reassign component names in the Component Names View,
     you automatically create new component names if the name you

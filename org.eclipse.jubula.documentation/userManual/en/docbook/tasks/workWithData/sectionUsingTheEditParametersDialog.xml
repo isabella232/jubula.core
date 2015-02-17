@@ -11,9 +11,9 @@
                                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the edit parameters dialog to add, edit and delete references</title>
-  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" xml:id="editParametersDialogContextId">Editing Parameters</anchor>
-  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-the-edit-parameters-dialog-to-add-edit-and-delete-references.guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="editParametersDialogContextId" xml:id="using-the-edit-parameters-dialog-to-add-edit-and-delete-references.editParametersDialogContextId">Editing Parameters</anchor>
+  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-the-edit-parameters-dialog-to-add-edit-and-delete-references.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <para>
     You can use the edit parameters dialog to add, edit and delete
     parameters for a Test Case or a central test data set. This

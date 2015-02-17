@@ -12,7 +12,12 @@
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting the AUT</title>
   <para>
-    The <emphasis>Start AUT</emphasis> button <mediaobject role="icon" file="images/startAUT.png"/>
+    The <emphasis>Start AUT</emphasis> button
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata fileref="images/startAUT.png"/>
+      </imageobject>
+    </inlinemediaobject>
      can be used, just like the <emphasis>Run</emphasis> or <emphasis>Debug</emphasis>
     buttons, to launch an application or configure application
     launches. Applications started in this way are always started in

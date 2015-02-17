@@ -11,8 +11,8 @@
                                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting, stopping and pausing Test Suites and Test Jobs</title>
-  <anchor role="helpid" xml:id="runningAutsViewContextId">Running AUTs View</anchor>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="starting-stopping-and-pausing-test-suites-and-test-jobs.runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="starting-stopping-and-pausing-test-suites-and-test-jobs.testExecViewContextId">Test Suite Browser</anchor>
   <section xml:id="starting-a-test-suite-or-a-test-job">
     <title>Starting a Test Suite or a Test Job</title>
     <para>
@@ -64,7 +64,12 @@
           <para>
             You can start a Test Job from the Test Suite Browser.
             Click on the arrow next to the ”<emphasis>start test
-            execution</emphasis>” button <mediaobject role="icon" file="images/startSuite.png"/>
+            execution</emphasis>” button
+            <inlinemediaobject>
+              <imageobject>
+                <imagedata fileref="images/startSuite.png"/>
+              </imageobject>
+            </inlinemediaobject>
             and select a Test Job to start from the list.
           </para>
         </listitem>
@@ -90,7 +95,12 @@
     <title>Stopping a Test Suite or Test Job</title>
     <para>
       To stop the test at any point, click on the ”<emphasis>stop
-      test execution</emphasis>” button <mediaobject role="icon" file="images/stop.png"/> 
+      test execution</emphasis>” button
+      <inlinemediaobject>
+        <imageobject>
+          <imagedata fileref="images/stop.png"/>
+        </imageobject>
+      </inlinemediaobject> 
       on the toolbar. The test stops automatically when it finishes or
       when an error occurs whose Event Handler has <emphasis>exit</emphasis>
       as a reentry type.
@@ -102,7 +112,12 @@
       <listitem>
         <para>
           To pause a test, click on the ”<emphasis>pause test
-          execution</emphasis>” button <mediaobject role="icon" file="images/pause.png"/>
+          execution</emphasis>” button
+          <inlinemediaobject>
+            <imageobject>
+              <imagedata fileref="images/pause.png"/>
+            </imageobject>
+          </inlinemediaobject>
           on the main toolbar.
         </para>
       </listitem>

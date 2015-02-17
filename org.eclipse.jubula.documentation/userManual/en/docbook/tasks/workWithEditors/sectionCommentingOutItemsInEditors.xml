@@ -11,8 +11,8 @@
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Commenting out items in editors</title>
-  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="commenting-out-items-in-editors.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="commenting-out-items-in-editors.testSuiteEditorContextId">Test Suite Editor</anchor>
   <para>
     In the Test Case Editor and the Test Suite Editor, you can
     deactivate and reactivate Test Cases and Test Steps.

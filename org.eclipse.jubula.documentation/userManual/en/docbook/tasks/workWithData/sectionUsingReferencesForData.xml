@@ -11,8 +11,8 @@
                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using references for data in Test Cases</title>
-  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" xml:id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-references-for-data-in-test-cases.guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-references-for-data-in-test-cases.guidancerDataSetViewContextId">Data Sets View</anchor>
   <itemizedlist>
     <listitem>
       <para>
@@ -40,7 +40,11 @@
     <listitem>
       <para>
         Press <emphasis role="input">»ENTER«</emphasis>. A yellow arrow
-        <mediaobject role="icon" file="images/refArrow.png"/>
+        <inlinemediaobject>
+          <imageobject>
+            <imagedata fileref="images/refArrow.png"/>
+          </imageobject>
+        </inlinemediaobject>
         will appear next to the <emphasis>parameter</emphasis> field
         in the Properties View.
       </para>

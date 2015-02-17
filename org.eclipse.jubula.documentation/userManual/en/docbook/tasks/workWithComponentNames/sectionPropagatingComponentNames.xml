@@ -11,7 +11,7 @@
                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Propagating component names</title>
-  <anchor role="helpid" xml:id="compNameViewContextId">Component Names View</anchor>
+  <anchor role="helpid" condition="compNameViewContextId" xml:id="propagating-component-names.compNameViewContextId">Component Names View</anchor>
   <para>
     Select the checkbox on the left of the Component Names View to
     <emphasis>propagate</emphasis> this component name. This means

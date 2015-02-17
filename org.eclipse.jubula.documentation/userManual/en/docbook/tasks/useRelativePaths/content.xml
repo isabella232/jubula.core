@@ -12,9 +12,9 @@
                                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="useRelativePaths"?>
   <title>Using relative paths in AUT configurations and as test data</title>
-  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" xml:id="autConfigPropDialogContextId">AUT Configuration Settings</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-relative-paths-in-aut-configurations-and-as-test-data.guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="using-relative-paths-in-aut-configurations-and-as-test-data.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="using-relative-paths-in-aut-configurations-and-as-test-data.autConfigPropDialogContextId">AUT Configuration Settings</anchor>
   <itemizedlist>
     <listitem>
       <para>

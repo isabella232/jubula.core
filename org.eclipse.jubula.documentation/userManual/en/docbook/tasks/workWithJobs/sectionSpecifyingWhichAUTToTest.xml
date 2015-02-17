@@ -11,8 +11,8 @@
                                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Specifying which AUT to test in a Test Job</title>
-  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" xml:id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="specifying-which-aut-to-test-in-a-test-job.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="guidancerTestJobEditorContextId" xml:id="specifying-which-aut-to-test-in-a-test-job.guidancerTestJobEditorContextId">Test Job Editor</anchor>
   <para>
     Once you have added a Test Suite to a Test Job
     (<xref linkend="adding-items-to-editors"/>), you must select the AUT ID that you wish

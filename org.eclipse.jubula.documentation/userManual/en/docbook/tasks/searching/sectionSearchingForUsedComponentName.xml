@@ -11,9 +11,9 @@
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for places where a component name has been used</title>
-  <anchor role="helpid" xml:id="searchResultViewContextId">Search Result View</anchor>
-  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="searchResultViewContextId" xml:id="searching-for-places-where-a-component-name-has-been-used.searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="searching-for-places-where-a-component-name-has-been-used.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="searching-for-places-where-a-component-name-has-been-used.objectMapEditorContextId">Object Mapping</anchor>
   <para>
     You can find the places where you have used a component name
     from within the Object Mapping Editor and the Component Names

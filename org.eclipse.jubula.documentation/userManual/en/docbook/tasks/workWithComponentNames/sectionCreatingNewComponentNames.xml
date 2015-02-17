@@ -11,9 +11,9 @@
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating new component names</title>
-  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
-  <anchor role="helpid" xml:id="newComponentNameContextId">New Component Name Dialog</anchor>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="creating-new-component-names.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="creating-new-component-names.objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="newComponentNameContextId" xml:id="creating-new-component-names.newComponentNameContextId">New Component Name Dialog</anchor>
   <para>
     For information on creating new component names by
     <emphasis>reassigning</emphasis> old component names (in the

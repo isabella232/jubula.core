@@ -11,7 +11,7 @@
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring code coverage for an AUT</title>
-  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="configuring-code-coverage-for-an-aut.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <para>
     You can activate code coverage for an AUT configuration with the
     following steps:
