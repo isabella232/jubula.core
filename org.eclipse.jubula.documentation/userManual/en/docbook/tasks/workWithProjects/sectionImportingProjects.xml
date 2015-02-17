@@ -11,10 +11,10 @@
                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Importing Projects</title>
-  <anchor role="helpid" condition="problemViewNoProjectContextId" xml:id="importproject.problemViewNoProjectContextId">Project Options Dialog</anchor>
-  <anchor role="helpid" condition="dialogProjectImportRenameContextId" xml:id="importproject.dialogProjectImportRenameContextId">Project Import Rename Dialog</anchor>
-  <anchor role="helpid" condition="importProjectDialogContextId" xml:id="importproject.importProjectDialogContextId">Importing Projects</anchor>
-  <anchor role="helpid" condition="openProjectImportAllRequiredProjectsContextId" xml:id="importproject.openProjectImportAllRequiredProjectsContextId">Importing Dependent Projects</anchor>
+  <anchor role="helpid" condition="problemViewNoProjectContextId" xml:id="importproject.problemViewNoProjectContextId" xreflabel="Project Options Dialog"/>
+  <anchor role="helpid" condition="dialogProjectImportRenameContextId" xml:id="importproject.dialogProjectImportRenameContextId" xreflabel="Project Import Rename Dialog"/>
+  <anchor role="helpid" condition="importProjectDialogContextId" xml:id="importproject.importProjectDialogContextId" xreflabel="Importing Projects"/>
+  <anchor role="helpid" condition="openProjectImportAllRequiredProjectsContextId" xml:id="importproject.openProjectImportAllRequiredProjectsContextId" xreflabel="Importing Dependent Projects"/>
   <orderedlist>
     <listitem>
       <para>

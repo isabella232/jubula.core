@@ -57,7 +57,7 @@
             <!-- Create ToC entry for the current node and process its 
                  container-type children further -->
             <context id="{@condition}">
-                <description><xsl:value-of select="."/></description>
+                <description><xsl:value-of select="@xreflabel"/></description>
                 <topic label="{$title}" href="{$base.dir}/{$dir}{$filename}"/>
             </context>
         </xsl:if>

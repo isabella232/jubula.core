@@ -11,9 +11,9 @@
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting the AUT</title>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="starting-the-aut.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="starting-the-aut.problemViewContextId">Problem View</anchor>
-  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="starting-the-aut.runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="starting-the-aut.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="starting-the-aut.problemViewContextId" xreflabel="Problem View"/>
+  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="starting-the-aut.runningAutsViewContextId" xreflabel="Running AUTs View"/>
   <para>
     To start the AUT, you must:
   </para>

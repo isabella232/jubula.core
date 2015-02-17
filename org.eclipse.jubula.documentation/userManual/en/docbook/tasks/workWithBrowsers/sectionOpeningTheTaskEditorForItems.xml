@@ -11,8 +11,8 @@
                                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening the task editor for items in browsers</title>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="opening-the-task-editor-for-items-in-browsers.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="opening-the-task-editor-for-items-in-browsers.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="opening-the-task-editor-for-items-in-browsers.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="opening-the-task-editor-for-items-in-browsers.testExecViewContextId" xreflabel="Test Suite Browser"/>
   <para>
     Each Test Case, Test Suite and Test Job in a Project can be
     joined to a task in an external repository via a task ID

@@ -11,9 +11,9 @@
                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Understanding the component hierarchy</title>
-  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="understanding-the-component-hierarchy.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" condition="compNameViewContextId" xml:id="understanding-the-component-hierarchy.compNameViewContextId">Component Names View</anchor>
-  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="understanding-the-component-hierarchy.objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="understanding-the-component-hierarchy.guidancerComponentNameBrowserContextId" xreflabel="Component Name Browser"/>
+  <anchor role="helpid" condition="compNameViewContextId" xml:id="understanding-the-component-hierarchy.compNameViewContextId" xreflabel="Component Names View"/>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="understanding-the-component-hierarchy.objectMapEditorContextId" xreflabel="Object Mapping"/>
   <para>
     The component hierarchy is designed to allow flexible test
     specification and robust tests.

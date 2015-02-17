@@ -11,8 +11,8 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the Data Sets View to enter data loops and to translate data</title>
-  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-the-data-sets-view.guidancerDataSetViewContextId">Data Sets View</anchor>
-  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-the-data-sets-view.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-the-data-sets-view.guidancerDataSetViewContextId" xreflabel="Data Sets View"/>
+  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-the-data-sets-view.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
   <para>
     The Data Sets View lets you do three things:
   </para>

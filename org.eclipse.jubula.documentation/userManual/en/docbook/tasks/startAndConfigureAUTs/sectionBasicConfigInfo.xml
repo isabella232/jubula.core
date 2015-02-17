@@ -11,7 +11,7 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Basic information required for every AUT configuration</title>
-  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="basic-configuration-info.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="basic-configuration-info.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>
   <para>
     Regardless of the type of AUT you want to start, you will always
     need to enter the following information in the AUT configuration

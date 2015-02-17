@@ -11,9 +11,9 @@
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating tests from the library of pre-defined Test Cases</title>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="creating-tests-from-the-library-of-pre-defined-test-cases.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="testCaseAddExistingContextId" xml:id="creating-tests-from-the-library-of-pre-defined-test-cases.testCaseAddExistingContextId">Existing Test Case Dialog</anchor>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="creating-tests-from-the-library-of-pre-defined-test-cases.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="creating-tests-from-the-library-of-pre-defined-test-cases.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="testCaseAddExistingContextId" xml:id="creating-tests-from-the-library-of-pre-defined-test-cases.testCaseAddExistingContextId" xreflabel="Existing Test Case Dialog"/>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="creating-tests-from-the-library-of-pre-defined-test-cases.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
   <para>
     Everything you need to create tests is already available for you
     in each Project. The library of Test Cases which appears

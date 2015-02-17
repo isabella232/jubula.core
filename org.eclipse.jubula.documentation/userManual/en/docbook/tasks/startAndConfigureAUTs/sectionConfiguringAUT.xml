@@ -11,7 +11,7 @@
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring AUTs to be started from the ITE</title>
-  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="configuringaut.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="configuringaut.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>
   <para>
     Once you have created a Project (<xref linkend="newproject"/>) and
     defined an AUT (<xref linkend="define-aut"/>), you can add and edit

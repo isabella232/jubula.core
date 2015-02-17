@@ -11,7 +11,7 @@
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Observation mode preferences</title>
-  <anchor role="helpid" condition="prefPageObserveJavaContextId" xml:id="observation-mode-preferences.prefPageObserveJavaContextId">Observation Mode Preferences</anchor>
+  <anchor role="helpid" condition="prefPageObserveJavaContextId" xml:id="observation-mode-preferences.prefPageObserveJavaContextId" xreflabel="Observation Mode Preferences"/>
   <para role="tip">
     The observation mode can only be used for Java AUTs.
   </para>

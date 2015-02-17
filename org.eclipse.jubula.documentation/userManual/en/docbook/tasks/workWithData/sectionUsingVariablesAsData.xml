@@ -11,9 +11,9 @@
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using variables as data for Test Cases</title>
-  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-variables-as-data-for-test-cases.guidancerDataSetViewContextId">Data Sets View</anchor>
-  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-variables-as-data-for-test-cases.guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-variables-as-data-for-test-cases.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-variables-as-data-for-test-cases.guidancerDataSetViewContextId" xreflabel="Data Sets View"/>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-variables-as-data-for-test-cases.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
+  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-variables-as-data-for-test-cases.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
   <itemizedlist>
     <listitem>
       <para>

@@ -11,7 +11,7 @@
                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Testing GEF components</title>
-  <anchor role="helpid" condition="inspectorViewContextId" xml:id="testing-gef-components.inspectorViewContextId">GEF Inspector View</anchor>
+  <anchor role="helpid" condition="inspectorViewContextId" xml:id="testing-gef-components.inspectorViewContextId" xreflabel="GEF Inspector View"/>
   <para>
     Like other tests, tests for GEF components are based on the component, action, parameter
     principle. However, it is important to note that individual figures are not addressed

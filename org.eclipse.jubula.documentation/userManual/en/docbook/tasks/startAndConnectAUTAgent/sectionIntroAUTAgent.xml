@@ -11,7 +11,7 @@
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Introduction to the AUT agent</title>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="intro-aut-agent.problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="intro-aut-agent.problemViewContextId" xreflabel="Problem View"/>
   <para>
     The AUT Agent is the server component. It runs on the same machine
     as the AUT and allows the ITE to communicate with the AUT and

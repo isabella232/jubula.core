@@ -11,8 +11,8 @@
                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for tasks in ALM repositories</title>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-tasks.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-tasks.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-tasks.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-tasks.testExecViewContextId" xreflabel="Test Suite Browser"/>
   <para>
     On the fourth tab of the search dialog, you can search for tasks in any 
     repositories you have referenced in the Project.

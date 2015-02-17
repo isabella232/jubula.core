@@ -11,9 +11,9 @@
                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with the Test Result Summary View</title>
-  <anchor role="helpid" condition="testResultViewContextId" xml:id="working-with-the-test-result-summary-view.testResultViewContextId">Test Results View</anchor>
-  <anchor role="helpid" condition="prefPageTestResultContextId" xml:id="working-with-the-test-result-summary-view.prefPageTestResultContextId">Test Result Preferences</anchor>
-  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="working-with-the-test-result-summary-view.testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" condition="testResultViewContextId" xml:id="working-with-the-test-result-summary-view.testResultViewContextId" xreflabel="Test Results View"/>
+  <anchor role="helpid" condition="prefPageTestResultContextId" xml:id="working-with-the-test-result-summary-view.prefPageTestResultContextId" xreflabel="Test Result Preferences"/>
+  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="working-with-the-test-result-summary-view.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
   <para>
     A test result summary and full details about the whole test are
     stored for each test run. Individual Test Suites within a Test
@@ -25,7 +25,7 @@
   </para>
   <section xml:id="re-opening-the-test-result-view-for-a-test-run">
     <title>Re-opening the test result view for a test run</title>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="re-opening-the-test-result-view-for-a-test-run.testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="re-opening-the-test-result-view-for-a-test-run.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
     <orderedlist>
       <listitem>
         <para>
@@ -63,7 +63,7 @@
   </section>
   <section xml:id="filtering-and-sorting-in-the-test-result-summary-view">
     <title>Filtering and sorting in the Test Result Summary View</title>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="filtering-and-sorting-in-the-test-result-summary-view.testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="filtering-and-sorting-in-the-test-result-summary-view.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
     <para>
       The Test Result Summary View shows a summary of each Test
       Suite that has run.
@@ -95,7 +95,7 @@
   </section>
   <section xml:id="changing-the-amount-of-result-summaries-shown-in-the-test-result-summary-view">
     <title>Changing the amount of result summaries shown in the Test Result Summary View</title>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="changing-the-amount-of-result-summaries-shown-in-the-test-result-summary-view.testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="changing-the-amount-of-result-summaries-shown-in-the-test-result-summary-view.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
     <para>
       In the test result preferences (<xref linkend="test-result-preferences"/>) you can
       alter the amount of days that a test result summary is shown.
@@ -107,7 +107,7 @@
   </section>
   <section xml:id="changing-the-relevance-of-a-test-run">
     <title>Changing the relevance of a test run</title>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="changing-the-relevance-of-a-test-run.testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="changing-the-relevance-of-a-test-run.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
     <para>
       You can change the relevance of a test run (i.e. whether it is exported with the Project
       or not) in the Test Result Summary View.
@@ -135,7 +135,7 @@
   </section>
   <section xml:id="refreshing-the-test-result-summary-view">
     <title>Refreshing the Test Result Summary View</title>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="refreshing-the-test-result-summary-view.testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="refreshing-the-test-result-summary-view.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
     <para>
       Use the ”<emphasis>Refresh</emphasis>” button
       <inlinemediaobject>
@@ -149,7 +149,7 @@
   </section>
   <section xml:id="deleting-test-runs-from-the-test-result-summary-view">
     <title>Deleting test runs from the Test Result Summary View</title>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="deleting-test-runs-from-the-test-result-summary-view.testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="deleting-test-runs-from-the-test-result-summary-view.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
     <para>
       Select one or more rows in the Test Result Summary View and use the
       ”<emphasis>Delete</emphasis>” button
@@ -172,8 +172,8 @@
   </section>
   <section xml:id="exporting-test-results-from-the-test-result-summary-view-as-html-and-xml-reports">
     <title>Exporting test results from the Test Result Summary View as HTML and XML reports</title>
-    <anchor role="helpid" condition="testResultViewContextId" xml:id="exporting-test-results-from-the-test-result-summary-view-as-html-and-xml-reports.testResultViewContextId">Test Results View</anchor>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="exporting-test-results-from-the-test-result-summary-view-as-html-and-xml-reports.testResultSummaryViewContextId">Test Result Summary View</anchor>
+    <anchor role="helpid" condition="testResultViewContextId" xml:id="exporting-test-results-from-the-test-result-summary-view-as-html-and-xml-reports.testResultViewContextId" xreflabel="Test Results View"/>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="exporting-test-results-from-the-test-result-summary-view-as-html-and-xml-reports.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
     <itemizedlist>
       <listitem>
         <para>
@@ -212,9 +212,9 @@
   </section>
   <section xml:id="entering-comments-for-test-runs-in-the-test-result-summary-view">
     <title>Entering comments for test runs in the Test Result Summary View</title>
-    <anchor role="helpid" condition="testResultViewContextId" xml:id="entering-comments-for-test-runs-in-the-test-result-summary-view.testResultViewContextId">Test Results View</anchor>
-    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="entering-comments-for-test-runs-in-the-test-result-summary-view.testResultSummaryViewContextId">Test Result Summary View</anchor>
-    <anchor role="helpid" condition="testResultSummaryAddCommentContextId" xml:id="entering-comments-for-test-runs-in-the-test-result-summary-view.testResultSummaryAddCommentContextId">Add Comment Dialog</anchor>
+    <anchor role="helpid" condition="testResultViewContextId" xml:id="entering-comments-for-test-runs-in-the-test-result-summary-view.testResultViewContextId" xreflabel="Test Results View"/>
+    <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="entering-comments-for-test-runs-in-the-test-result-summary-view.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
+    <anchor role="helpid" condition="testResultSummaryAddCommentContextId" xml:id="entering-comments-for-test-runs-in-the-test-result-summary-view.testResultSummaryAddCommentContextId" xreflabel="Add Comment Dialog"/>
     <para>
       You can add a comment to a test run in the Test Result Summary View by:
     </para>

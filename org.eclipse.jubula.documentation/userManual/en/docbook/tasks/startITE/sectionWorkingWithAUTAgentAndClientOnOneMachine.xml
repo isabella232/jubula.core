@@ -11,7 +11,7 @@
                                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with the AUT Agent and client on one machine</title>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="working-with-the-aut-agent-and-client-on-one-machine.problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="working-with-the-aut-agent-and-client-on-one-machine.problemViewContextId" xreflabel="Problem View"/>
   <para>
     If the ITE and AUT Agent are installed on one machine, there are a few things
     to be aware of:

@@ -11,8 +11,8 @@
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Editing Test Cases</title>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="editing-test-cases.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="editing-test-cases.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="editing-test-cases.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="editing-test-cases.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
   <para>
     From the Test Case Editor, you can edit a Test Case. You can:
   </para>

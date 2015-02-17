@@ -11,9 +11,9 @@
                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating Test Cases</title>
-  <anchor role="helpid" condition="testcaseNewContextId" xml:id="creating-test-cases.testcaseNewContextId">New Test Case Dialog</anchor>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="creating-test-cases.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="creating-test-cases.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testcaseNewContextId" xml:id="creating-test-cases.testcaseNewContextId" xreflabel="New Test Case Dialog"/>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="creating-test-cases.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="creating-test-cases.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
   <para>
     Most of the time spent writing tests will involve creating and
     editing Test Cases.

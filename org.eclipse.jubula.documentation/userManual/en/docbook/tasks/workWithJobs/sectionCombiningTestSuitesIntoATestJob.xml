@@ -11,7 +11,7 @@
                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Combining Test Suites into a Test Job</title>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="combining-test-suites-into-a-test-job.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="combining-test-suites-into-a-test-job.testExecViewContextId" xreflabel="Test Suite Browser"/>
   <para>
     You can create a Test Job when you want to execute a collection
     of Test Suites after each other.

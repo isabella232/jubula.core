@@ -11,7 +11,7 @@
                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Automatically reporting to external repositories after test runs</title>
-  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="automatically-reporting-to-external-repositories-after-test-runs.guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="automatically-reporting-to-external-repositories-after-test-runs.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
   <para>
     You can automatically update tasks in an external repository when a test has run. 
     You can report the test results by writing a comment on a task in the external repository 

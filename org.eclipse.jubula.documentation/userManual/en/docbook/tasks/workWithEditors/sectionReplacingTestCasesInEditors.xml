@@ -11,8 +11,8 @@
                                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Replacing Test Cases in editors: Refactoring</title>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="replacing-test-cases-in-editors-refactoring.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="replacing-test-cases-in-editors-refactoring.testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="replacing-test-cases-in-editors-refactoring.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="replacing-test-cases-in-editors-refactoring.testSuiteEditorContextId" xreflabel="Test Suite Editor"/>
   <para>
     You can <emphasis>replace</emphasis> one or more Test Cases in
     an editor with another Test Case from your library of Test

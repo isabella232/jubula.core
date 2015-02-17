@@ -11,7 +11,7 @@
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring Teststyle for a Project</title>
-  <anchor role="helpid" condition="testStylePropertyPageContextId" xml:id="configuring-teststyle-for-a-project.testStylePropertyPageContextId">Teststyle</anchor>
+  <anchor role="helpid" condition="testStylePropertyPageContextId" xml:id="configuring-teststyle-for-a-project.testStylePropertyPageContextId" xreflabel="Teststyle"/>
   <para>
     When Teststyle has been activated for a Project
     (<xref linkend="activating-teststyle-for-a-project"/>), you can configure:
@@ -175,7 +175,7 @@
   </section>
   <section xml:id="configuring-the-attributes-for-guidelines">
     <title>Configuring the attributes for guidelines</title>
-    <anchor role="helpid" condition="testStylePropertyPageEditAttributeContextId" xml:id="configuring-the-attributes-for-guidelines.testStylePropertyPageEditAttributeContextId">Teststyle</anchor>
+    <anchor role="helpid" condition="testStylePropertyPageEditAttributeContextId" xml:id="configuring-the-attributes-for-guidelines.testStylePropertyPageEditAttributeContextId" xreflabel="Teststyle"/>
     <para>
       For many of the guidelines in the Project properties, you can
       define the values or quantities for the aspects it checks. For
@@ -235,7 +235,7 @@
   </section>
   <section xml:id="configuring-the-contexts-for-guidelines">
     <title>Configuring the contexts for guidelines</title>
-    <anchor role="helpid" condition="testStylePropertyPageEditContextContextId" xml:id="configuring-the-contexts-for-guidelines.testStylePropertyPageEditContextContextId">Teststyle</anchor>
+    <anchor role="helpid" condition="testStylePropertyPageEditContextContextId" xml:id="configuring-the-contexts-for-guidelines.testStylePropertyPageEditContextContextId" xreflabel="Teststyle"/>
     <para>
       For many of the guidelines in the Project properties, you can
       set the contexts they should be valid for. Some of the

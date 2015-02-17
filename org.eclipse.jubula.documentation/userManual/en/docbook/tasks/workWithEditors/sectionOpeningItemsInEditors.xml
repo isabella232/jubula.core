@@ -11,9 +11,9 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening items in editors</title>
-  <anchor role="helpid" condition="testCaseOpenExistingContextId" xml:id="opening-items-in-editors.testCaseOpenExistingContextId">Open Existing Test Case</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="opening-items-in-editors.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="opening-items-in-editors.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testCaseOpenExistingContextId" xml:id="opening-items-in-editors.testCaseOpenExistingContextId" xreflabel="Open Existing Test Case"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="opening-items-in-editors.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="opening-items-in-editors.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
   <para>
     To open an existing Test Case, Test Suite or Test Job in an editor, you can either double-click the item you want to open in its browser or you can select:
   </para>

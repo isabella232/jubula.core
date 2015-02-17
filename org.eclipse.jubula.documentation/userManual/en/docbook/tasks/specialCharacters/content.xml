@@ -12,8 +12,8 @@
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="specialCharacters"?>
   <title>Special characters</title>
-  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="special-characters.guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="special-characters.guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="special-characters.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="special-characters.guidancerDataSetViewContextId" xreflabel="Data Sets View"/>
   <para>
     There are a few symbols with a special function
     (<xref linkend="specialchars"/>). If you want to use these symbols as a

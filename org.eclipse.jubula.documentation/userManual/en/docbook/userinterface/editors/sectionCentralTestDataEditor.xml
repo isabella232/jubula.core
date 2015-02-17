@@ -11,7 +11,7 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Central Test Data Editor</title>
-  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="central-test-data-editor.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="central-test-data-editor.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
   <para>
     You can open the Central Test Data Editor via the button on the
     toolbar.

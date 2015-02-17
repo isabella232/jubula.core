@@ -11,7 +11,7 @@
                                                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                           xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Viewing properties for a component in the Object Mapping Mode</title>
-  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="viewing-properties-for-a-component-in-the-object-mapping-mode.objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="viewing-properties-for-a-component-in-the-object-mapping-mode.objectMapEditorContextId" xreflabel="Object Mapping"/>
   <para>
     When you collect a component from a Swing, SWT/RCP or JavaFX AUT
     in the Object Mapping Mode (<xref linkend="collecting-components-technical-names-from-the-aut"/>), you can see

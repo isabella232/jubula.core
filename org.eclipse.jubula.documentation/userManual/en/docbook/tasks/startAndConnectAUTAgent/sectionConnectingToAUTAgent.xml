@@ -11,8 +11,8 @@
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Connecting to the AUT Agent</title>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="connect-aut-agent.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="connect-aut-agent.problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="connect-aut-agent.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="connect-aut-agent.problemViewContextId" xreflabel="Problem View"/>
   <para>
     You can connect to an AUT Agent you have started
     (<xref linkend="start-aut-agent"/>) on a local or remote machine, or you

@@ -12,7 +12,7 @@
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="adaptUI"?>
   <title>Adapting the user interface</title>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="adapting-the-user-interface.problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="adapting-the-user-interface.problemViewContextId" xreflabel="Problem View"/>
   
   <xi:include href="sectionIntroUI.xml"/>
   <xi:include href="sectionMovingBrowsersViewsAndEditors.xml"/>

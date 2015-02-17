@@ -11,7 +11,7 @@
                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Resetting and accumulating code coverage</title>
-  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="resetting-and-accumulating-code-coverage.testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="resetting-and-accumulating-code-coverage.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
   <para>
     To make sure you get the correct results for your code coverage,
     it is important to be aware of which actions will accumulate the

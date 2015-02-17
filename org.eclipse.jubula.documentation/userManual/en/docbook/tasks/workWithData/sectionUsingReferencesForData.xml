@@ -11,8 +11,8 @@
                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using references for data in Test Cases</title>
-  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-references-for-data-in-test-cases.guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-references-for-data-in-test-cases.guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-references-for-data-in-test-cases.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
+  <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-references-for-data-in-test-cases.guidancerDataSetViewContextId" xreflabel="Data Sets View"/>
   <itemizedlist>
     <listitem>
       <para>

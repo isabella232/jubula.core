@@ -11,8 +11,8 @@
                                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with IDs for Test Cases and Test Suites</title>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="working-with-ids-for-test-cases-and-test-suites.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="working-with-ids-for-test-cases-and-test-suites.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="working-with-ids-for-test-cases-and-test-suites.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="working-with-ids-for-test-cases-and-test-suites.testExecViewContextId" xreflabel="Test Suite Browser"/>
   <para>
     Each Test Case and Test Suite in a Project has a unique ID which
     can be used to refer to this Test Case or Test Suite within the

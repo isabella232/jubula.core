@@ -11,10 +11,10 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using filters in the ITE</title>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="using-filters-in-the-ite.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="using-filters-in-the-ite.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="using-filters-in-the-ite.objectMapEditorContextId">Object Mapping</anchor>
-  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="using-filters-in-the-ite.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="using-filters-in-the-ite.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="using-filters-in-the-ite.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="using-filters-in-the-ite.objectMapEditorContextId" xreflabel="Object Mapping"/>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="using-filters-in-the-ite.guidancerComponentNameBrowserContextId" xreflabel="Component Name Browser"/>
   <section xml:id="text-filters">
     <title>Text filters</title>
     <para>

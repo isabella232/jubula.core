@@ -11,7 +11,7 @@
                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>database preferences</title>
-  <anchor role="helpid" condition="databaseConnectionConfigurationDialogContextId" xml:id="database-preferences.databaseConnectionConfigurationDialogContextId">Database connection preferences</anchor>
+  <anchor role="helpid" condition="databaseConnectionConfigurationDialogContextId" xml:id="database-preferences.databaseConnectionConfigurationDialogContextId" xreflabel="Database connection preferences"/>
   <para>
     You can find the database connection preference page under:
   </para>

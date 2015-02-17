@@ -11,8 +11,8 @@
                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Object mapping preferences</title>
-  <anchor role="helpid" condition="prefPageObjectMapContextId" xml:id="object-mapping-preferences.prefPageObjectMapContextId">Object Mapping Preferences</anchor>
-  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="object-mapping-preferences.objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="prefPageObjectMapContextId" xml:id="object-mapping-preferences.prefPageObjectMapContextId" xreflabel="Object Mapping Preferences"/>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="object-mapping-preferences.objectMapEditorContextId" xreflabel="Object Mapping"/>
   <figure>
     <title>Object Mapping Preference Dialog</title>
     <mediaobject>

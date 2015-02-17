@@ -11,12 +11,12 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding items to editors</title>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="adding-items-to-editors.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="adding-items-to-editors.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="testCaseAddExistingContextId" xml:id="adding-items-to-editors.testCaseAddExistingContextId">Existing Test Case Dialog</anchor>
-  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="adding-items-to-editors.testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="adding-items-to-editors.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="guidancerTestJobEditorContextId" xml:id="adding-items-to-editors.guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="adding-items-to-editors.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="adding-items-to-editors.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="testCaseAddExistingContextId" xml:id="adding-items-to-editors.testCaseAddExistingContextId" xreflabel="Existing Test Case Dialog"/>
+  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="adding-items-to-editors.testSuiteEditorContextId" xreflabel="Test Suite Editor"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="adding-items-to-editors.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="guidancerTestJobEditorContextId" xml:id="adding-items-to-editors.guidancerTestJobEditorContextId" xreflabel="Test Job Editor"/>
   <para>
     You can add (reference) Test Cases in other Test Cases and in
     Test Suites. You can also add (reference) Test Suites in Test

@@ -11,7 +11,7 @@
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Object mapping</title>
-  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="object-mapping-1.objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="object-mapping-1.objectMapEditorContextId" xreflabel="Object Mapping"/>
   <para>
     Object mapping is the joining of the component names you have
     specified in your tests to the real components in the AUT. Each

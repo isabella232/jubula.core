@@ -11,10 +11,10 @@
                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Renaming items in browsers</title>
-  <anchor role="helpid" condition="dialogRenameContextId" xml:id="renaming-items-in-browsers.dialogRenameContextId">Renaming</anchor>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="renaming-items-in-browsers.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="renaming-items-in-browsers.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="renaming-items-in-browsers.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" condition="dialogRenameContextId" xml:id="renaming-items-in-browsers.dialogRenameContextId" xreflabel="Renaming"/>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="renaming-items-in-browsers.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="renaming-items-in-browsers.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="renaming-items-in-browsers.guidancerComponentNameBrowserContextId" xreflabel="Component Name Browser"/>
   <para>
     To rename an item in the Test Case Browser, Test Suite Browser
     or Component Names Browser:

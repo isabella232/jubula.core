@@ -12,9 +12,9 @@
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="dealWithErrors"?>
   <title>Dealing with errors in tests: Event Handlers</title>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="dealing-with-errors-in-tests.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="eventHandlerAddContextId" xml:id="dealing-with-errors-in-tests.eventHandlerAddContextId">Event Handlers</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="dealing-with-errors-in-tests.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="dealing-with-errors-in-tests.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="eventHandlerAddContextId" xml:id="dealing-with-errors-in-tests.eventHandlerAddContextId" xreflabel="Event Handlers"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="dealing-with-errors-in-tests.testExecViewContextId" xreflabel="Test Suite Browser"/>
   
   <xi:include href="sectionIntroEventHandlers.xml"/>
   <xi:include href="sectionAddingEventHandlersToTestCase.xml"/>

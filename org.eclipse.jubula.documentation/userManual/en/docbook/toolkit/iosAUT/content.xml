@@ -12,8 +12,8 @@
                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="iosAUT"?>
   <title>Testing iOS AUTs</title>
-  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="iOSaut.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="iOSaut.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="iOSaut.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="iOSaut.autConfigPropDialogContextId" xreflabel="Adding/editing AUT configurations"/>
   
   <xi:include href="sectionIntroIOSAUTs.xml"/>
   <xi:include href="sectionSupportedIOSAUTs.xml"/>

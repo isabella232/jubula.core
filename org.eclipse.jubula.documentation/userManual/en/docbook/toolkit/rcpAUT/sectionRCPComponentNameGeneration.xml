@@ -11,9 +11,9 @@
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Component name generation in RCP</title>
-  <anchor role="helpid" condition="autSettingWizardPagePageContextId" xml:id="rcp-component-name-generation.autSettingWizardPagePageContextId">Defining an AUT</anchor>
-  <anchor role="helpid" condition="autWizardPageGenerateNamesPageContextId" xml:id="rcp-component-name-generation.autWizardPageGenerateNamesPageContextId">Name Generation in RCP</anchor>
-  <anchor role="helpid" condition="autSettingsPageContextId" xml:id="rcp-component-name-generation.autSettingsPageContextId">Adding/editing AUT's</anchor>
+  <anchor role="helpid" condition="autSettingWizardPagePageContextId" xml:id="rcp-component-name-generation.autSettingWizardPagePageContextId" xreflabel="Defining an AUT"/>
+  <anchor role="helpid" condition="autWizardPageGenerateNamesPageContextId" xml:id="rcp-component-name-generation.autWizardPageGenerateNamesPageContextId" xreflabel="Name Generation in RCP"/>
+  <anchor role="helpid" condition="autSettingsPageContextId" xml:id="rcp-component-name-generation.autSettingsPageContextId" xreflabel="Adding/editing AUT's"/>
   <para>
     RCP AUTs often use wizards and standard dialogs. The components
     in these dialogs are not often named by developers, and are in

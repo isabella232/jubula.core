@@ -11,7 +11,7 @@
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting Win AUTs (.NET, WPF)</title>
-  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="starting-win-auts.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="starting-win-auts.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>
   <section xml:id="aut-configuration-for-windows-desktop-auts">
     <title>AUT configuration for Windows desktop AUTs</title>
     <para>

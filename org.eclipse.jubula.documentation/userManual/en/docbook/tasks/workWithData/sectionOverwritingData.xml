@@ -11,9 +11,9 @@
                                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Overwriting data for Test Cases and Test Suites</title>
-  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="overwriting-data-for-test-cases-and-test-suites.guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="overwriting-data-for-test-cases-and-test-suites.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="guidancerExecTestCaseEditorContextId" xml:id="overwriting-data-for-test-cases-and-test-suites.guidancerExecTestCaseEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="overwriting-data-for-test-cases-and-test-suites.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="overwriting-data-for-test-cases-and-test-suites.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="guidancerExecTestCaseEditorContextId" xml:id="overwriting-data-for-test-cases-and-test-suites.guidancerExecTestCaseEditorContextId" xreflabel="Test Suite Editor"/>
   <para>
     When you reuse Test Cases, you reuse them with any concrete
     values they contain, and with any default values that you have

@@ -11,7 +11,7 @@
                                                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Entering and reassigning component names in the Component Names View</title>
-  <anchor role="helpid" condition="compNameViewContextId" xml:id="entering-and-reassigning-component-names-in-the-component-names-view.compNameViewContextId">Component Names View</anchor>
+  <anchor role="helpid" condition="compNameViewContextId" xml:id="entering-and-reassigning-component-names-in-the-component-names-view.compNameViewContextId" xreflabel="Component Names View"/>
   <para role="tip">
     The following section deals with entering component names
     in the Component Names View when you have added Test Cases from

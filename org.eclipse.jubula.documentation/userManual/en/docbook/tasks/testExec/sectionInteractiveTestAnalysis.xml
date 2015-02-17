@@ -11,9 +11,9 @@
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Interactive test analysis</title>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="interactive-test-analysis.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="interactive-test-analysis.runningAutsViewContextId">Running AUTs View</anchor>
-  <anchor role="helpid" condition="testResultViewContextId" xml:id="interactive-test-analysis.testResultViewContextId">Test Results View</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="interactive-test-analysis.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="interactive-test-analysis.runningAutsViewContextId" xreflabel="Running AUTs View"/>
+  <anchor role="helpid" condition="testResultViewContextId" xml:id="interactive-test-analysis.testResultViewContextId" xreflabel="Test Results View"/>
   <para>
     If you are executing tests interactively, you can use the ITE to
     help you analyze any errors that occur.

@@ -11,11 +11,11 @@
                                                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Searching for places where a Test Case or Test Suite has been used</title>
-  <anchor role="helpid" condition="searchResultViewContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.searchResultViewContextId">Search Result View</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="searchResultViewContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.searchResultViewContextId" xreflabel="Search Result View"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.testSuiteEditorContextId" xreflabel="Test Suite Editor"/>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="searching-for-places-where-a-test-case-or-test-suite-has-been-used.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
   <para>
     To find the places where you have reused a Test Case or a Test
     Suite:

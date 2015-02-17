@@ -11,7 +11,7 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Component Names View</title>
-  <anchor role="helpid" condition="compNameViewContextId" xml:id="the-component-names-view.compNameViewContextId">Component Names</anchor>
+  <anchor role="helpid" condition="compNameViewContextId" xml:id="the-component-names-view.compNameViewContextId" xreflabel="Component Names"/>
   <para>
     The Component Names View is in the lower right-hand corner of the
     Functional Test Specification Perspective by default, just behind the Data Sets

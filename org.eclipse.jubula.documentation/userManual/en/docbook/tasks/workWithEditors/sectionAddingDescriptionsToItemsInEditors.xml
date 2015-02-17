@@ -11,10 +11,10 @@
                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding descriptions to items in editors</title>
-  <anchor role="helpid" condition="editDescriptionDialogContextId" xml:id="adding-descriptions-to-items-in-editors.editDescriptionDialogContextId">Description Dialog</anchor>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="adding-descriptions-to-items-in-editors.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="adding-descriptions-to-items-in-editors.testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" condition="guidancerTestJobEditorContextId" xml:id="adding-descriptions-to-items-in-editors.guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" condition="editDescriptionDialogContextId" xml:id="adding-descriptions-to-items-in-editors.editDescriptionDialogContextId" xreflabel="Description Dialog"/>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="adding-descriptions-to-items-in-editors.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="adding-descriptions-to-items-in-editors.testSuiteEditorContextId" xreflabel="Test Suite Editor"/>
+  <anchor role="helpid" condition="guidancerTestJobEditorContextId" xml:id="adding-descriptions-to-items-in-editors.guidancerTestJobEditorContextId" xreflabel="Test Job Editor"/>
   <para>
     Descriptions are longer pieces of text that provide information about nodes in your tests. 
     You can add descriptions in the ITE to Test Cases, Test Suites and Test Jobs 

@@ -11,7 +11,7 @@
                                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening the Test Case Browser multiple times</title>
-  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="opening-the-test-case-browser-multiple-times.testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="opening-the-test-case-browser-multiple-times.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
   <para>
     To make navigation in larger Projects easier, you can open
     multiple instances of the Test Case Browser. You can filter each

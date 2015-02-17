@@ -11,8 +11,8 @@
                                                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Replacing a specific Test Case at places where it has been reused</title>
-  <anchor role="helpid" condition="searchResultViewContextId" xml:id="replacing-a-specific-test-case-at-places-where-it-has-been-reused.searchResultViewContextId">Search Result View</anchor>
-  <anchor role="helpid" condition="searchRefactorReplaceExecutionTestCaseWizardContextId" xml:id="replacing-a-specific-test-case-at-places-where-it-has-been-reused.searchRefactorReplaceExecutionTestCaseWizardContextId">Replace Test Case</anchor>
+  <anchor role="helpid" condition="searchResultViewContextId" xml:id="replacing-a-specific-test-case-at-places-where-it-has-been-reused.searchResultViewContextId" xreflabel="Search Result View"/>
+  <anchor role="helpid" condition="searchRefactorReplaceExecutionTestCaseWizardContextId" xml:id="replacing-a-specific-test-case-at-places-where-it-has-been-reused.searchRefactorReplaceExecutionTestCaseWizardContextId" xreflabel="Replace Test Case"/>
   <para>
     If you have reused a Test Case at multiple places in your
     Project, and later create a new Test Case that should replace

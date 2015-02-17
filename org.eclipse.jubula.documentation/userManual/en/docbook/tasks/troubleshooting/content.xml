@@ -12,10 +12,10 @@
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="troubleshooting"?>
   <title>Troubleshooting</title>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="troubleshooting.problemViewContextId">Problem View</anchor>
-  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="troubleshooting.objectMapEditorContextId">Object Mapping</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="troubleshooting.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="troubleshooting.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="troubleshooting.problemViewContextId" xreflabel="Problem View"/>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="troubleshooting.objectMapEditorContextId" xreflabel="Object Mapping"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="troubleshooting.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="troubleshooting.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
   
   <xi:include href="sectionGeneralHelp.xml"/>
   <xi:include href="sectionTroubleStartServer.xml"/>

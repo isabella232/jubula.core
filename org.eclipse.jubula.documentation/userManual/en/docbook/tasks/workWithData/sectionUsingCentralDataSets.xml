@@ -11,16 +11,16 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using central data sets</title>
-  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-central-data-sets.guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-central-data-sets.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-central-data-sets.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
+  <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-central-data-sets.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
   <para>
     You can create and manage central test data sets for a
     Project which can be reused in Test Cases.
   </para>
   <section xml:id="creating-and-editing-central-test-data-sets">
     <title>Creating and editing central test data sets</title>
-    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="creating-and-editing-central-test-data-sets.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" condition="newTestDataCubeNameContextId" xml:id="creating-and-editing-central-test-data-sets.newTestDataCubeNameContextId">New Central Data Set</anchor>
+    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="creating-and-editing-central-test-data-sets.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
+    <anchor role="helpid" condition="newTestDataCubeNameContextId" xml:id="creating-and-editing-central-test-data-sets.newTestDataCubeNameContextId" xreflabel="New Central Data Set"/>
     <para>
       To create a central test data set:
     </para>
@@ -88,7 +88,7 @@
   </section>
   <section xml:id="deleting-central-test-data-sets">
     <title>Deleting central test data sets</title>
-    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="deleting-central-test-data-sets.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="deleting-central-test-data-sets.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
     <para>
       You can delete a central test data set if the data set has not
       yet been reused (referenced) in a Test Case
@@ -124,7 +124,7 @@
   </section>
   <section xml:id="adding-and-modifying-parameters-for-central-test-data-sets">
     <title>Adding and modifying parameters for central test data sets</title>
-    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="adding-and-modifying-parameters-for-central-test-data-sets.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="adding-and-modifying-parameters-for-central-test-data-sets.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
     <para>
       Once you have created a central test data set
       (<xref linkend="creating-and-editing-central-test-data-sets"/>), you can add parameters to the
@@ -176,7 +176,7 @@
   </section>
   <section xml:id="entering-data-for-central-test-data-sets">
     <title>Entering data for central test data sets</title>
-    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="entering-data-for-central-test-data-sets.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="entering-data-for-central-test-data-sets.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
     <para>
       Once you have created a central test data set
       (<xref linkend="creating-and-editing-central-test-data-sets"/>) and have added parameters to
@@ -239,8 +239,8 @@
   </section>
   <section xml:id="reusing-central-test-data-sets-in-test-cases">
     <title>Reusing central test data sets in Test Cases</title>
-    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="reusing-central-test-data-sets-in-test-cases.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="reusing-central-test-data-sets-in-test-cases.guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="reusing-central-test-data-sets-in-test-cases.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
+    <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="reusing-central-test-data-sets-in-test-cases.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
     <para>
       You can reuse a central test data set in a Test Case to
       provide the concrete data for the parameters required by the
@@ -284,8 +284,8 @@
   </section>
   <section xml:id="importing-excel-files-as-central-test-data">
     <title>Importing Excel files as central test data</title>
-    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="importing-excel-files-as-central-test-data.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="importing-excel-files-as-central-test-data.guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="importing-excel-files-as-central-test-data.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
+    <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="importing-excel-files-as-central-test-data.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
     <para>
       If you have existing Excel files that you want to convert into
       central test data, then you can import them via the
@@ -323,9 +323,9 @@
   </section>
   <section xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple">
     <title>Changing the column used in a central test data set for multiple Test Cases</title>
-    <anchor role="helpid" condition="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId" xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple.searchRefactorChangeCtdsColumnUsageWizardPagePageContextId">Changing Central Test Data Columns</anchor>
-    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple.guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
-    <anchor role="helpid" condition="searchResultViewContextId" xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple.searchResultViewContextId">Search Result View</anchor>
+    <anchor role="helpid" condition="searchRefactorChangeCtdsColumnUsageWizardPagePageContextId" xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple.searchRefactorChangeCtdsColumnUsageWizardPagePageContextId" xreflabel="Changing Central Test Data Columns"/>
+    <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
+    <anchor role="helpid" condition="searchResultViewContextId" xml:id="changing-the-column-used-in-a-central-test-data-set-for-multiple.searchResultViewContextId" xreflabel="Search Result View"/>
     <para>
       If you have used a central test data set in multiple Test Cases and later realize that you
       have two columns in the central test data set that contain the

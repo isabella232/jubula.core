@@ -11,7 +11,7 @@
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Troubleshooting code coverage</title>
-  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="troubleshooting-code-coverage.testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="troubleshooting-code-coverage.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
   <para>
     When using code coverage, please bear the following in mind:
   </para>

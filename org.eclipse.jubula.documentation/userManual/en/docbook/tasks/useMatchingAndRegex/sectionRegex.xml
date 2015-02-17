@@ -208,7 +208,9 @@
         <literal> x\/y\/z\/\\*\\*\\* </literal>
       </para>
       
-      The backslashes before the ordinary slashes are an escape symbol to specify that the following sign is not a path separator. The extra backslash before the stars means that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.
+      <para>
+        The backslashes before the ordinary slashes are an escape symbol to specify that the following sign is not a path separator. The extra backslash before the stars means that the second backslash is to be interpreted as a backslash in the regular expression, i.e. as an escape symbol.
+      </para>
     </listitem>
     <listitem>
       <para>

@@ -12,7 +12,7 @@
                                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="useDBToolClient"?>
   <title>Using the dbtool client to import, delete and export from the command line</title>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="using-the-dbtool-client-to-import-delete-and-export-from-the-command-line.problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="using-the-dbtool-client-to-import-delete-and-export-from-the-command-line.problemViewContextId" xreflabel="Problem View"/>
   
   <xi:include href="sectionIntroDBTool.xml"/>
   <xi:include href="sectionStartingTheDBToolClient.xml"/>

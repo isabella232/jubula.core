@@ -11,9 +11,9 @@
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>AUT Agent preferences</title>
-  <anchor role="helpid" condition="prefPageServerContextId" xml:id="aut-agent-preferences.prefPageServerContextId">AUT Agent Preferences</anchor>
-  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="aut-agent-preferences.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
-  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="aut-agent-preferences.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" condition="prefPageServerContextId" xml:id="aut-agent-preferences.prefPageServerContextId" xreflabel="AUT Agent Preferences"/>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="aut-agent-preferences.autConfigPropDialogContextId" xreflabel="Adding/editing AUT configurations"/>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="aut-agent-preferences.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>
   <para>
     You can find the AUT Agent preference page under:
   </para>

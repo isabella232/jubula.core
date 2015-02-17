@@ -11,8 +11,8 @@
                                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting, stopping and pausing Test Suites and Test Jobs</title>
-  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="starting-stopping-and-pausing-test-suites-and-test-jobs.runningAutsViewContextId">Running AUTs View</anchor>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="starting-stopping-and-pausing-test-suites-and-test-jobs.testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" condition="runningAutsViewContextId" xml:id="starting-stopping-and-pausing-test-suites-and-test-jobs.runningAutsViewContextId" xreflabel="Running AUTs View"/>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="starting-stopping-and-pausing-test-suites-and-test-jobs.testExecViewContextId" xreflabel="Test Suite Browser"/>
   <section xml:id="starting-a-test-suite-or-a-test-job">
     <title>Starting a Test Suite or a Test Job</title>
     <para>

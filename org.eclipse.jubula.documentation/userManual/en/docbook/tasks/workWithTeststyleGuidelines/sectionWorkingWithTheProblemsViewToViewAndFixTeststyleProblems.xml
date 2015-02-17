@@ -11,8 +11,8 @@
                                                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with the Problems View to view and fix Teststyle problems</title>
-  <anchor role="helpid" condition="problemViewContextId" xml:id="working-with-the-problems-view-to-view-and-fix-teststyle-problems.problemViewContextId">Problem View</anchor>
-  <anchor role="helpid" condition="testStylePropertyPageContextId" xml:id="working-with-the-problems-view-to-view-and-fix-teststyle-problems.testStylePropertyPageContextId">Teststyle</anchor>
+  <anchor role="helpid" condition="problemViewContextId" xml:id="working-with-the-problems-view-to-view-and-fix-teststyle-problems.problemViewContextId" xreflabel="Problem View"/>
+  <anchor role="helpid" condition="testStylePropertyPageContextId" xml:id="working-with-the-problems-view-to-view-and-fix-teststyle-problems.testStylePropertyPageContextId" xreflabel="Teststyle"/>
   <para>
     Once you have activated (<xref linkend="activating-teststyle-for-a-project"/>) and configured
     (<xref linkend="configuring-teststyle-for-a-project"/>) Teststyle for a Project, you will be

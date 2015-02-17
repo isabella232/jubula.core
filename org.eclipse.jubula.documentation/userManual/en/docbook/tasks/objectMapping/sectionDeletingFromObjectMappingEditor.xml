@@ -11,7 +11,7 @@
                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Deleting from the Object Mapping Editor</title>
-  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="deleting-from-the-object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" condition="objectMapEditorContextId" xml:id="deleting-from-the-object-mapping-editor.objectMapEditorContextId" xreflabel="Object Mapping"/>
   <orderedlist>
     <listitem>
       <para>
@@ -42,7 +42,7 @@
   </para>
   <section xml:id="removing-unused-component-names-from-the-object-mapping-editor">
     <title>Removing unused component names from the Object Mapping Editor</title>
-    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="removing-unused-component-names-from-the-object-mapping-editor.objectMapEditorContextId">Object Mapping</anchor>
+    <anchor role="helpid" condition="objectMapEditorContextId" xml:id="removing-unused-component-names-from-the-object-mapping-editor.objectMapEditorContextId" xreflabel="Object Mapping"/>
     <para>
       Over time, your Project will change, and these changes may
       mean that component names you had previously used in Test

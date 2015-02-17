@@ -11,8 +11,8 @@
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Stopping the AUT</title>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="stopping-the-aut.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="runningAUTsViewContextId" xml:id="stopping-the-aut.runningAUTsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="stopping-the-aut.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="runningAUTsViewContextId" xml:id="stopping-the-aut.runningAUTsViewContextId" xreflabel="Running AUTs View"/>
   <orderedlist>
     <listitem>
       <para>

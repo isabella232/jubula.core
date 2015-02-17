@@ -11,7 +11,7 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the GEF inspector</title>
-  <anchor role="helpid" condition="inspectorViewContextId" xml:id="using-the-gef-inspector.inspectorViewContextId">GEF Inspector View</anchor>
+  <anchor role="helpid" condition="inspectorViewContextId" xml:id="using-the-gef-inspector.inspectorViewContextId" xreflabel="GEF Inspector View"/>
   <para>
     The GEF Inspector View in the ITE allows you to collect information
     about the textpath to an item from within your RCP AUT. For many

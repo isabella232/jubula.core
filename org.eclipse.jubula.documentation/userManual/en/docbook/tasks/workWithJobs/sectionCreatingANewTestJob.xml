@@ -11,8 +11,8 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating a new Test Job</title>
-  <anchor role="helpid" condition="testExecViewContextId" xml:id="creating-a-new-test-job.testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" condition="dialogTestJobNewContextId" xml:id="creating-a-new-test-job.dialogTestJobNewContextId">New Test Job</anchor>
+  <anchor role="helpid" condition="testExecViewContextId" xml:id="creating-a-new-test-job.testExecViewContextId" xreflabel="Test Suite Browser"/>
+  <anchor role="helpid" condition="dialogTestJobNewContextId" xml:id="creating-a-new-test-job.dialogTestJobNewContextId" xreflabel="New Test Job"/>
   <para>
     To create a Test Job, the Test Suite Browser must be visible. If it is not visible, change to the Specification Perspective and select:
   </para>

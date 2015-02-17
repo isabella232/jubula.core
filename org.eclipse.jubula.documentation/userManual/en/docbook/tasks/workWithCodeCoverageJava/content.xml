@@ -12,9 +12,9 @@
                                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="workWithCodeCoverageJava"?>
   <title>Working with code coverage with Java tests</title>
-  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="working-with-code-coverage-with-java-tests.testResultSummaryViewContextId">Test Result Summary View</anchor>
-  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="working-with-code-coverage-with-java-tests.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" condition="org.eclipse.ui.resource_view_context" xml:id="working-with-code-coverage-with-java-tests.org.eclipse.ui.resource_view_context">Navigator View</anchor>
+  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="working-with-code-coverage-with-java-tests.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="working-with-code-coverage-with-java-tests.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>
+  <anchor role="helpid" condition="org.eclipse.ui.resource_view_context" xml:id="working-with-code-coverage-with-java-tests.org.eclipse.ui.resource_view_context" xreflabel="Navigator View"/>
   
   <xi:include href="sectionIntroCodeCoverage.xml"/>
   <xi:include href="sectionConfiguringCodeCoverage.xml"/>

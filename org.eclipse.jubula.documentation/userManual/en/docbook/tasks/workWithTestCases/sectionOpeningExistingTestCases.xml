@@ -11,8 +11,8 @@
                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Opening existing Test Cases</title>
-  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="opening-existing-test-cases.guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" condition="testCaseOpenExistingContextId" xml:id="opening-existing-test-cases.testCaseOpenExistingContextId">Open Existing Test Case</anchor>
+  <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="opening-existing-test-cases.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
+  <anchor role="helpid" condition="testCaseOpenExistingContextId" xml:id="opening-existing-test-cases.testCaseOpenExistingContextId" xreflabel="Open Existing Test Case"/>
   <para>
     You can open an existing Test Case without having to select it
     from the Test Case Browser using the <emphasis>Open Test

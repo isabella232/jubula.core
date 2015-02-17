@@ -11,7 +11,7 @@
                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Navigator View</title>
-  <anchor role="helpid" condition="org.eclipse.ui.resource_view_context" xml:id="the-navigation-view.org.eclipse.ui.resource_view_context">Navigator View</anchor>
+  <anchor role="helpid" condition="org.eclipse.ui.resource_view_context" xml:id="the-navigation-view.org.eclipse.ui.resource_view_context" xreflabel="Navigator View"/>
   <para>
     The Navigator View is at the top right-hand corner of the
     workspace perspective by default. The Navigator View gives you

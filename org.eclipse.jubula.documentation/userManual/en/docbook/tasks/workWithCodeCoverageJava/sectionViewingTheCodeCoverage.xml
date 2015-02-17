@@ -11,7 +11,7 @@
                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Viewing the code coverage for a test run</title>
-  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="viewing-the-code-coverage-for-a-test-run.testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="viewing-the-code-coverage-for-a-test-run.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
   <para>
     Once a test with code coverage has run, the code coverage
     information must first be processed in order to show it in the

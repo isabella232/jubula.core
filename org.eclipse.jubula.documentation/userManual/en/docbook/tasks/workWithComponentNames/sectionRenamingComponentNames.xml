@@ -11,8 +11,8 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Renaming component names</title>
-  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="renaming-component-names.guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
-  <anchor role="helpid" condition="renameComponentNameContextId" xml:id="renaming-component-names.renameComponentNameContextId">Rename Component Name Dialog</anchor>
+  <anchor role="helpid" condition="guidancerComponentNameBrowserContextId" xml:id="renaming-component-names.guidancerComponentNameBrowserContextId" xreflabel="Component Name Browser"/>
+  <anchor role="helpid" condition="renameComponentNameContextId" xml:id="renaming-component-names.renameComponentNameContextId" xreflabel="Rename Component Name Dialog"/>
   <para>
     Use the rename function to change the name of a component name
     in your test specification. Whereas

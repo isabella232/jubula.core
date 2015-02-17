@@ -12,9 +12,9 @@
                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="gefTest"?>
   <title>Testing GEF AUTs</title>
-  <anchor role="helpid" condition="projectWizardContextId" xml:id="geftest.projectWizardContextId">Creating a Project</anchor>
-  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="geftest.autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="geftest.autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" condition="projectWizardContextId" xml:id="geftest.projectWizardContextId" xreflabel="Creating a Project"/>
+  <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="geftest.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>
+  <anchor role="helpid" condition="autConfigPropDialogContextId" xml:id="geftest.autConfigPropDialogContextId" xreflabel="Adding/editing AUT configurations"/>
   
   <xi:include href="sectionIntroGEFAUT.xml"/>
   <xi:include href="sectionTestingGEFComponents.xml"/>
