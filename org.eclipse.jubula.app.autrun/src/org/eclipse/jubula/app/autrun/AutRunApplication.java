@@ -15,6 +15,7 @@ import java.net.InetSocketAddress;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -26,6 +27,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.Parser;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.adaptor.EclipseStarter;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.app.autrun.i18n.Messages;
@@ -33,6 +35,8 @@ import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.version.Vn;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
@@ -45,17 +49,10 @@ import org.slf4j.LoggerFactory;
  * that the following JVM parameters (or equivalent) are used:<ul>
  * <li>osgi.noShutdown=true</li> 
  * <li>eclipse.jobs.daemon=true</li> 
- * <li>eclipse.enableStateSaver=false</li> 
- * <li>osgi.framework.activeThreadType=false</li> 
  * </ul>
  * These parameters are required because the original application was designed 
  * to run outside of an OSGi context, i.e. the application should end only 
  * when no non-daemon threads are active.
- * 
- * The <i>osgi.framework.activeThreadType</i> entry can actually be 
- * anything other than "normal", but it must be present. This requirement exists
- * since changing org.eclipse.equinox.launcher from 1.1.0 to 1.2.0, and was the
- * cause of bug http://eclip.se/375931.
  * 
  * @author BREDEX GmbH
  * @created Dec 9, 2009
@@ -168,7 +165,7 @@ public class AutRunApplication implements IApplication {
 
     /**
      * prints help options
-     * @param pe a parse Execption - may also be null
+     * @param pe a parse Exception - may also be null
      */
     private static void printHelp(ParseException pe) {
         HelpFormatter formatter = new HelpFormatter();
@@ -304,6 +301,43 @@ public class AutRunApplication implements IApplication {
     }
     
     /**
+     * @author BREDEX GmbH
+     */
+    private static final class WatchDog extends Thread {
+        /**
+         * Constructor
+         * 
+         * @param name
+         *            the name
+         */
+        private WatchDog(String name) {
+            super(name);
+        }
+        
+        /** {@inheritDoc} */
+        public void run() {
+            boolean shouldShutdown;
+            do {
+                TimeUtil.delay(2500);
+                shouldShutdown = true;
+                Set<Thread> allThreads = Thread.getAllStackTraces().keySet();
+                for (Thread t : allThreads) {
+                    if (t instanceof IsAliveThread) {
+                        shouldShutdown = false;
+                        break;
+                    }
+                }
+            } while (!shouldShutdown);
+
+            try {
+                EclipseStarter.shutdown();
+            } catch (Exception e) {
+                LOG.error(e.getLocalizedMessage(), e);
+            }
+        }
+    }
+
+    /**
      * This class implements the <code>Comparator</code> interface for comparing
      * Options.
      */
@@ -327,7 +361,11 @@ public class AutRunApplication implements IApplication {
      * 
      * {@inheritDoc}
      */
-    public Object start(IApplicationContext context) throws Exception {
+    public Object start(final IApplicationContext context) throws Exception {
+        Thread watchDog = new WatchDog("http://eclip.se/457600#c8"); //$NON-NLS-1$
+        watchDog.setDaemon(true);
+        watchDog.start();
+        
         String[] args = (String[])context.getArguments().get(
                 IApplicationContext.APPLICATION_ARGS);
         if (args == null) {
@@ -343,19 +381,16 @@ public class AutRunApplication implements IApplication {
             printHelp(pe);
         }
         
-        if (cmdLine.hasOption(OPT_HELP)) {
-            printHelp(null);
-            
-            return IApplication.EXIT_OK;
-        }
-        
-        if (cmdLine.hasOption(OPT_VERSION)) {
-            printVersion();
-            
-            return IApplication.EXIT_OK;
-        }
-        
         if (cmdLine != null) {
+            if (cmdLine.hasOption(OPT_HELP)) {
+                printHelp(null);
+                return IApplication.EXIT_OK;
+            }
+            
+            if (cmdLine.hasOption(OPT_VERSION)) {
+                printVersion();
+                return IApplication.EXIT_OK;
+            }
             String toolkit = StringConstants.EMPTY;
             if (cmdLine.hasOption(TK_SWING)) {
                 toolkit = SWING_AUT_TOOLKIT_CLASS_PREFIX;
@@ -395,7 +430,6 @@ public class AutRunApplication implements IApplication {
                 System.err.println(Messages.infoNonAutAgentConnectionInfo);
             }
         }
-
         return IApplication.EXIT_OK;
     }
 

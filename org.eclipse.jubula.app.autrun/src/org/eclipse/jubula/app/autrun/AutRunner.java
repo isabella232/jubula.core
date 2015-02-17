@@ -39,7 +39,7 @@ public class AutRunner {
     /**
      * @author BREDEX GmbH
      */
-    private final class AgentConnectionWatcher extends IsAliveThread {
+    private final class AgentConnectionWatcher extends Thread {
         /** the writer */
         private final PrintWriter m_writer;
         /** the socket */
