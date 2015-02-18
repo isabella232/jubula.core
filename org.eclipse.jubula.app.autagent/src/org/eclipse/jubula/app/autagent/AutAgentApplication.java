@@ -101,11 +101,6 @@ public class AutAgentApplication implements IApplication {
     private static final String COMMANDLINE_OPTION_VERBOSE = "v"; //$NON-NLS-1$
     
     /**
-     * command line argument: version output
-     */
-    private static final String COMMANDLINE_OPTION_VERSION = "version"; //$NON-NLS-1$
-
-    /**
      * command line argument: quiet output
      */
     private static final String COMMANDLINE_OPTION_QUIET = "q"; //$NON-NLS-1$
@@ -149,10 +144,6 @@ public class AutAgentApplication implements IApplication {
             CommandLine cmd = parser.parse(createOptions(), args);
             if (cmd.hasOption(COMMANDLINE_OPTION_HELP)) {
                 printHelp();
-                return EXIT_HELP_OPTION;
-            }
-            if (cmd.hasOption(COMMANDLINE_OPTION_VERSION)) {
-                printVersion();
                 return EXIT_HELP_OPTION;
             }
 
@@ -210,13 +201,6 @@ public class AutAgentApplication implements IApplication {
     }
 
     /**
-     * print version information
-     */
-    private void printVersion() {
-        System.out.println(Vn.getDefault().getVersion());
-    }
-
-    /**
      * @see http://eclip.se/392323
      * 
      * @param args
@@ -262,8 +246,6 @@ public class AutAgentApplication implements IApplication {
                 Messages.CommandlineOptionLenient);
         options.addOption(COMMANDLINE_OPTION_HELP, false,
                 Messages.CommandlineOptionHelp);
-        options.addOption(COMMANDLINE_OPTION_VERSION, false,
-                Messages.CommandlineOptionVersion);
 
         OptionGroup verbosityOptions = new OptionGroup();
         verbosityOptions.addOption(new Option(COMMANDLINE_OPTION_QUIET, false,
@@ -291,6 +273,7 @@ public class AutAgentApplication implements IApplication {
      * prints a formatted help text
      */
     private void printHelp() {
+        System.out.println(Vn.getDefault().getVersion());
         HelpFormatter formatter = new HelpFormatter();
         formatter.printHelp(AUTAGENT_LAUNCHER, createOptions(), true);
     }

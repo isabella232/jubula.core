@@ -96,9 +96,6 @@ public class AutRunApplication implements IApplication {
     /** help option */
     private static final String OPT_HELP = "h"; //$NON-NLS-1$
     
-    /** version option */
-    private static final String OPT_VERSION = "v"; //$NON-NLS-1$
-    
     /** hostname for the Aut Agent with which to register */
     private static final String OPT_HELP_LONG = "help"; //$NON-NLS-1$
     
@@ -168,6 +165,7 @@ public class AutRunApplication implements IApplication {
      * @param pe a parse Exception - may also be null
      */
     private static void printHelp(ParseException pe) {
+        System.out.println(Vn.getDefault().getVersion());
         HelpFormatter formatter = new HelpFormatter();
         formatter.setOptionComparator(new OptionComparator());
         if (pe != null) {
@@ -285,10 +283,6 @@ public class AutRunApplication implements IApplication {
         helpOption.setLongOpt(OPT_HELP_LONG);
         options.addOption(helpOption);
         
-        Option versionOption = new Option(OPT_VERSION, false, 
-                Messages.infoVersion);
-        options.addOption(versionOption);
-        
         OptionBuilder.hasArgs();
         Option autExecutableFileOption = OptionBuilder.create(OPT_EXECUTABLE);
         autExecutableFileOption.setDescription(Messages.infoExecutableFile);
@@ -387,10 +381,6 @@ public class AutRunApplication implements IApplication {
                 return IApplication.EXIT_OK;
             }
             
-            if (cmdLine.hasOption(OPT_VERSION)) {
-                printVersion();
-                return IApplication.EXIT_OK;
-            }
             String toolkit = StringConstants.EMPTY;
             if (cmdLine.hasOption(TK_SWING)) {
                 toolkit = SWING_AUT_TOOLKIT_CLASS_PREFIX;
@@ -431,13 +421,6 @@ public class AutRunApplication implements IApplication {
             }
         }
         return IApplication.EXIT_OK;
-    }
-
-    /**
-     * print version information
-     */
-    private void printVersion() {
-        System.out.println(Vn.getDefault().getVersion());
     }
 
     /**
