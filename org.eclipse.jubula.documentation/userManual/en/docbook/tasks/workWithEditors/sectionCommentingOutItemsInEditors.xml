@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="commenting-out-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="commenting-out-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Commenting out items in editors</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
   <para>
     In the Test Case Editor and the Test Suite Editor, you can
     deactivate and reactivate Test Cases and Test Steps.
@@ -20,12 +21,18 @@
     <listitem>
       <para>
         Select the Test Steps or Test Cases you want to deactivate and select:
-        
-        <para>
-          <emphasis role="menuPath">Set as active / inactive</emphasis>
-        </para>
-
-        from the context menu. <para role="tip">You can also use <emphasis role="input">»CTRL+7«</emphasis> to toggle the items as active or inactive.</para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Set as active / inactive</emphasis>
+      </para>
+      
+      <para>
+        from the context menu.
+      </para>
+      
+      <para role="tip">
+        You can also use <emphasis role="input">»CTRL+7«</emphasis> to toggle the items as active or inactive.
       </para>
     </listitem>
     <listitem>
@@ -44,11 +51,13 @@
     <listitem>
       <para>
         You can reactivate the items by selecting:
-        
-        <para>
-          <emphasis role="menuPath">Set as active / inactive</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Set as active / inactive</emphasis>
+      </para>
+      
+      <para>
         from the context menu.
       </para>
     </listitem>

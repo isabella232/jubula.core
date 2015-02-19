@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="viewing-and-changing-data-sources-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="viewing-and-changing-data-sources-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Viewing and changing data sources for Test Cases</title>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
   <para>
     The Properties View shows the currently used <emphasis>data
     source</emphasis> for each Test Case. The following data sources
@@ -37,9 +38,9 @@
     <emphasis role="strong">Excel data file</emphasis><?linebreak?>
     An Excel file has been entered as the data source (<xref linkend="using-an-excel-file-as-an-external-data-source"/>)
   </para>
-  <section id="changing-the-data-source-for-a-test-case">
+  <section xml:id="changing-the-data-source-for-a-test-case">
     <title>Changing the data source for a Test Case</title>
-    <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
+    <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
     <itemizedlist>
       <listitem>
         <para>

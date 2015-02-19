@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="creating-manual-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="creating-manual-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating manual tests</title>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
   <para>
     You can create manual tests to be executed and analyzed.
   </para>
@@ -91,11 +92,11 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">We recommend keeping manual Test Cases in a separate
+  <para role="tip">
+    We recommend keeping manual Test Cases in a separate
     category to automated Test Cases. Although it is possible to
     combine manual and automated Test Cases in one test, make sure
     you know which Test Suites can be run completely automatically
-    for your unattended tests!</para>
+    for your unattended tests!
   </para>
 </section>

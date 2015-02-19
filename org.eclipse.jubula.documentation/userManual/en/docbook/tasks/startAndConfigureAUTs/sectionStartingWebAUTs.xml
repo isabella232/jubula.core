@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-web-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-web-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting Web AUTs (HTML)</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <para>
     The AUT configuration dialog for HTML has three different levels
     of detail: basic, advanced and expert.
@@ -18,7 +19,7 @@
   <para>
     See the sections below for information on the different levels.
   </para>
-  <section id="basic-html-aut-configuration">
+  <section xml:id="basic-html-aut-configuration">
     <title>Basic HTML AUT configuration</title>
     <para>
       Use the basic setting to specify the URL and Browser you wish
@@ -39,8 +40,11 @@
       </listitem>
       <listitem>
         <para>
-          Enter the URL of your AUT. <para role="warning">Relative paths to the
-          URL cannot be used!</para>
+          Enter the URL of your AUT.
+        </para>
+        <para role="warning">
+          Relative paths to the
+          URL cannot be used!
         </para>
       </listitem>
       <listitem>
@@ -55,7 +59,7 @@
       <xref linkend="advanced-html-aut-config"/>.
     </para>
   </section>
-  <section id="advanced-html-aut-config">
+  <section xml:id="advanced-html-aut-config">
     <title>Advanced HTML AUT configuration</title>
     <para>
       You can use the advanced dialog to enter the browser path for
@@ -80,7 +84,7 @@
       <xref linkend="expert-html-aut-config"/>.
     </para>
   </section>
-  <section id="expert-html-aut-config">
+  <section xml:id="expert-html-aut-config">
     <title>Expert HTML AUT configuration</title>
     <para>
       You can use the expert dialog to enter an <emphasis>ID

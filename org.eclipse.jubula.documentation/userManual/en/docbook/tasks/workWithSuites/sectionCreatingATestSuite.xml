@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,31 +7,33 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="creating-a-test-suite" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="creating-a-test-suite" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating a Test Suite</title>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <anchor role="helpid" id="dialogTestsuiteNewContextId">New Test Suite Dialog</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="dialogTestsuiteNewContextId">New Test Suite Dialog</anchor>
   <para>
     Test Suites are used to organize and prepare Test Cases to be executed.
   </para>
   <para>
     To create a Test Suite, the Test Suite Browser must be visible. If it is not visible, change to the Specification Perspective and select:
-    
-    <para>
-      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Test Suite Browser</emphasis>.
-    </para>
+  </para>
+  
+  <para>
+    <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Test Suite Browser</emphasis>.
   </para>
   <orderedlist>
     <listitem>
       <para>
         Select:
-        
-        <para>
-          <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">New Test Suite</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">New Test Suite</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu in the Test Suite Browser.
       </para>
     </listitem>
@@ -86,16 +89,16 @@
           </para>
         </listitem>
       </itemizedlist>
-      <para>
-        <para role="tip">You can filter in the Test Suite Browser using the
+      <para role="tip">
+        You can filter in the Test Suite Browser using the
         field at the top. Use star <emphasis role="input">*</emphasis> as a wild
-        card.</para>
+        card.
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">You can combine multiple Test Suites to create a Test Job
+  <para role="tip">
+    You can combine multiple Test Suites to create a Test Job
     (<xref linkend="working-with-jobs"/>). This is useful for testing
-    multiple AUTs (or instances of the same AUT in one test.)</para>
+    multiple AUTs (or instances of the same AUT in one test.)
   </para>
 </section>

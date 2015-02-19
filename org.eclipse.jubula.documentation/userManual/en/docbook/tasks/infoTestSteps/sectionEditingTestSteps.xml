@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="editingsteps" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="editingsteps" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Editing Test Steps</title>
@@ -60,19 +61,21 @@
     <listitem>
       <para>
         To delete the Test Step, select:
-        
-        <para>
-          <emphasis role="menuPath">Delete</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Delete</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu.
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">Select the component or action in the Properties View and
-    press <emphasis role="input">»F1«</emphasis> to see
-    context-sensitive help about this component or action from the
-    reference manual.</para>
+    <para role="tip">
+      Select the component or action in the Properties View and
+      press <emphasis role="input">»F1«</emphasis> to see
+      context-sensitive help about this component or action from the
+      reference manual.
   </para>
 </section>

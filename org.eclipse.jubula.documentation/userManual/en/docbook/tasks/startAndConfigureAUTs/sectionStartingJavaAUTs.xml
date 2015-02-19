@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,15 +7,15 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-java-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-java-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting Java AUTs (Swing, SWT/RCP/GEF)</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <section id="two-options-to-start-java">
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <section xml:id="two-options-to-start-java">
     <title>Two options to start Java AUTs</title>
-    <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-    <anchor role="helpid" id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
+    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" xml:id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
     <para>
       There are two options to start your Java AUT for testing:
     </para>
@@ -46,7 +47,7 @@
       </varlistentry>
     </variablelist>
   </section>
-  <section id="configuring-a-java-aut-ite-start">
+  <section xml:id="configuring-a-java-aut-ite-start">
     <title>Configuring a Java AUT to be started from the
     ITE</title>
     <para>
@@ -58,7 +59,7 @@
       levels.
     </para>
   </section>
-  <section id="basic-java-configuration">
+  <section xml:id="basic-java-configuration">
     <title>Basic Java AUT configuration</title>
     <para>
       You can use the basic setting (<xref linkend="autconfigbasic"/>) to
@@ -66,9 +67,11 @@
       file (e.g. .bat, .exe, .cmd, .sh etc.) and if it is written in
       Java 1.5 or above, and you are using a Java Standard Edition
       JRE.
-      <para role="warning">If you are testing RCP or GEF AUTs, there are certain specific steps you need to take to configure them. See the sections on RCP testing (<xref linkend="rcpaut"/>), GEF testing (<xref linkend="geftest"/>) for details. </para>
     </para>
-    <figure id="autconfigbasic">
+    <para role="warning">
+      If you are testing RCP or GEF AUTs, there are certain specific steps you need to take to configure them. See the sections on RCP testing (<xref linkend="rcpaut"/>), GEF testing (<xref linkend="geftest"/>) for details.
+    </para>
+    <figure xml:id="autconfigbasic">
       <title>AUTconfiguration window: basic</title>
       <mediaobject>
         <imageobject>
@@ -100,7 +103,7 @@
       (<xref linkend="advanced-aut-config"/>).
     </para>
   </section>
-  <section id="advanced-aut-config">
+  <section xml:id="advanced-aut-config">
     <title>Advanced AUT configuration</title>
     <para>
       You can use the advanced dialog (<xref linkend="autconfigadvanced"/>)
@@ -112,7 +115,7 @@
       start the AUT. You can select a JRE executable and, for
       SWT/RCP AUTs, a keyboard layout.
     </para>
-    <figure id="autconfigadvanced">
+    <figure xml:id="autconfigadvanced">
       <title>AUTconfiguration window: advanced</title>
       <mediaobject>
         <imageobject>
@@ -141,7 +144,9 @@
           the main class name and the classpaths into their relative
           fields. The paths can be relative (if you have defined a
           working directory), or absolute.
-          <para role="tip">Add all the necessary files and directories to start the AUT. </para>
+        </para>
+        <para role="tip">
+          Add all the necessary files and directories to start the AUT.
         </para>
       </listitem>
       <listitem>
@@ -159,16 +164,16 @@
         <para>
           Java is installed with the ITE. You can find the Java file in:
           
-          <para>
-            <emphasis role="menupath">Guidancer or Jubula</emphasis>--&gt;<emphasis role="menupath">jre</emphasis>--&gt;<emphasis role="menupath">bin</emphasis>. Use java.exe if you want to use a console, use javaw.exe if you do not want a console.
-          </para>
+          <emphasis role="menupath">Guidancer or Jubula</emphasis>--&gt;<emphasis role="menupath">jre</emphasis>--&gt;<emphasis role="menupath">bin</emphasis>. Use java.exe if you want to use a console, use javaw.exe if you do not want a console.
         </para>
       </listitem>
       <listitem>
         <para>
           For SWT and RCP AUTs, select which keyboard layout is
           used on the machine on which the AUT will run.
-          <para role="tip">The keyboard layout is not the actual keyboard attached to the computer, but is based on the regional language settings for the operating system.</para>
+        </para>
+        <para role="tip">
+          The keyboard layout is not the actual keyboard attached to the computer, but is based on the regional language settings for the operating system.
         </para>
         <para>
           English (US) and German (DE) keyboard layouts are
@@ -183,14 +188,14 @@
       configuration, see the next <xref linkend="expert-aut-config"/>.
     </para>
   </section>
-  <section id="expert-aut-config">
+  <section xml:id="expert-aut-config">
     <title>Expert AUT configuration</title>
     <para>
       You can use the expert dialog (<xref linkend="autconfigexpert"/>) to
       configure more detailed information about how the AUT
       should be started.
     </para>
-    <figure id="autconfigexpert">
+    <figure xml:id="autconfigexpert">
       <title>AUTconfiguration window: expert</title>
       <mediaobject>
         <imageobject>
@@ -213,14 +218,14 @@
           i.e. ”<emphasis>PATH=C:\</emphasis>”. Separate each
           variable with a new line by pressing <emphasis role="input">»ENTER«</emphasis>.
         </para>
-        <para>
-          <para role="warning">Please be advised that ''embedding'' the contents of one
+        <para role="warning">
+          Please be advised that ''embedding'' the contents of one
           variable into another is not supported at this time. That is,
           if you have a variable named <emphasis role="input">FOO</emphasis> whose value is
           ”<emphasis>abc</emphasis>”, and set the value of a second
           variable <emphasis role="input">BAR</emphasis> to ”<emphasis>%FOO%def</emphasis>”, the second variable will
           <emphasis>not</emphasis> contain ”<emphasis>abcdef</emphasis>”, but rather the exact text
-          ”<emphasis>%FOO%def</emphasis>”, without evaluating it.</para>
+          ”<emphasis>%FOO%def</emphasis>”, without evaluating it.
         </para>
       </listitem>
       <listitem>
@@ -240,9 +245,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="starting-java-with-the-command">
+  <section xml:id="starting-java-with-the-command">
     <title>Starting Java AUTs with the <emphasis>autrun</emphasis> command</title>
-    <anchor role="helpid" id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
+    <anchor role="helpid" xml:id="autSettingWizardPagePageContextId">Defining an AUT</anchor>
     <para>
       The <emphasis>autrun</emphasis> command can be used as an
       alternative to starting your AUT from the ITE. (i.e. with an
@@ -250,9 +255,9 @@
       if your AUT is written in Java 1.5 or above, and you are using
       a Java Standard Edition JRE.
     </para>
-    <para>
-      <para role="warning">The <emphasis>autrun</emphasis> command cannot be used
-      for HTML, iOS or pure SWT AUTs.</para>
+    <para role="warning">
+      The <emphasis>autrun</emphasis> command cannot be used
+      for HTML, iOS or pure SWT AUTs.
     </para>
     <para>
       The command allows you to start your AUT independently, on a
@@ -404,13 +409,13 @@
         </table>
       </listitem>
     </orderedlist>
-    <para>
-      <para role="tip">If your AUT is an RCP AUT, use
+    <para role="tip">
+      If your AUT is an RCP AUT, use
       <emphasis role="input">-data'&lt;WORKSPACE&gt;'</emphasis> after the executable
-      file to specify the workspace the AUT should use.</para>
+      file to specify the workspace the AUT should use.
     </para>
   </section>
-  <section id="create-aut-def">
+  <section xml:id="create-aut-def">
     <title>Creating an AUT definition from a running AUT</title>
     <para>
       Once you have started an AUT using the
@@ -427,11 +432,13 @@
       <listitem>
         <para>
           Select:
-          
-          <para>
-            <emphasis role="menuPath">Create AUT Definition</emphasis>
-          </para>
-          
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Create AUT Definition</emphasis>
+        </para>
+        
+        <para>
           from the context menu.
         </para>
       </listitem>

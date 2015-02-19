@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="viewing-the-code-coverage-for-a-test-run" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="viewing-the-code-coverage-for-a-test-run" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Viewing the code coverage for a test run</title>
-  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" xml:id="testResultSummaryViewContextId">Test Result Summary View</anchor>
   <para>
     Once a test with code coverage has run, the code coverage
     information must first be processed in order to show it in the
@@ -20,10 +21,10 @@
     The following columns are available in the Test Result Summary
     View to show you code coverage information:
   </para>
-  <para>
-    <para role="tip"> If a column is not visible, you can show it by selecting
+  <para role="tip">
+    If a column is not visible, you can show it by selecting
     it from the context-sensitive menu on the header row for the
-    Test Result Summary View.</para>
+    Test Result Summary View.
   </para>
   <itemizedlist>
     <listitem>
@@ -35,12 +36,14 @@
     <listitem>
       <para>
         The <emphasis>Measured Value</emphasis> column shows the Instruction Coverage for the test run. You can see the values for other types of coverage in the Properties View when you select the test run. An overview of the meanings of the coverage types is available on the JaCoCo website:
+      </para>
+      
+      <para>
+        <emphasis>http://www.eclemma.org/jacoco/trunk/doc/counters.html</emphasis>.
+      </para>
         
-        <para>
-          <emphasis>http://www.eclemma.org/jacoco/trunk/doc/counters.html</emphasis>.
-        </para>
-        
-        <para role="tip">The measured value will become visible once the code coverage information has been processed. You may need to refresh the Test Result Summary View. </para>
+      <para role="tip">
+        The measured value will become visible once the code coverage information has been processed. You may need to refresh the Test Result Summary View.
       </para>
     </listitem>
     <listitem>
@@ -64,11 +67,13 @@
         In the Test Result Summary View, select the test run whose
         code coverage you want to see and click the ”<emphasis>Open
         Profiling Report</emphasis>” button at the top of the view.
-        <para role="warning">The details about code coverage are available in the
+      </para>
+      <para role="warning">
+        The details about code coverage are available in the
         database for the same amount of time as the test result
         details (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>). After this time,
         the code coverage details are deleted along with the test
-        run details.</para>
+        run details.
       </para>
     </listitem>
     <listitem>
@@ -90,8 +95,11 @@
       <para>
         Once you have opened a code coverage report, it is saved
         into your workspace. You can reopen it from the Navigation
-        View. <para role="tip">You should regularly remove old code coverage
-        reports from your workspace to avoid overfilling it.</para>
+        View.
+      </para>
+      <para role="tip">
+        You should regularly remove old code coverage
+        reports from your workspace to avoid overfilling it.
       </para>
     </listitem>
   </orderedlist>

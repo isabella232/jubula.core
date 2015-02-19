@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,20 +7,20 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="newproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="newproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating a new Project</title>
-  <anchor role="helpid" id="projectWizardContextId">Creating a Project</anchor>
-  <anchor role="helpid" id="problemViewNoProjectContextId">Project Options Dialog</anchor>
+  <anchor role="helpid" xml:id="projectWizardContextId">Creating a Project</anchor>
+  <anchor role="helpid" xml:id="problemViewNoProjectContextId">Project Options Dialog</anchor>
   <orderedlist>
     <listitem>
       <para>
         From the ITE, select:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">New</emphasis>.
-        </para>
+      <para>
+        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">New</emphasis>.
       </para>
     </listitem>
     <listitem>
@@ -33,7 +34,7 @@
         A wizard to create a new Project will appear
         (<xref linkend="projsettings"/>).
       </para>
-      <figure id="projsettings">
+      <figure xml:id="projsettings">
         <title>New Project Dialog</title>
         <mediaobject>
           <imageobject>

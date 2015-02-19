@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="resetting-and-accumulating-code-coverage" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="resetting-and-accumulating-code-coverage" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Resetting and accumulating code coverage</title>
-  <anchor role="helpid" id="testResultSummaryViewContextId">Test Result Summary View</anchor>
+  <anchor role="helpid" xml:id="testResultSummaryViewContextId">Test Result Summary View</anchor>
   <para>
     To make sure you get the correct results for your code coverage,
     it is important to be aware of which actions will accumulate the
@@ -33,9 +34,9 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para>
-    <para role="warning">If you stop the AUT while code coverage is being
-    calculated, then the value will also be set to zero!</para>
+  <para role="warning">
+    If you stop the AUT while code coverage is being
+    calculated, then the value will also be set to zero!
   </para>
   <para>
     <emphasis role="strong">Code coverage accumulation</emphasis><?linebreak?>
@@ -54,9 +55,11 @@
         Code coverage is accumulated across Test Suites by default.
         If you want to reset the code coverage at the beginning of
         each Test Suite, then select this option in the AUT
-        configuration (<xref linkend="configuring-code-coverage-for-an-aut"/>). <para role="tip">If you are working
-        with Test Jobs, then do not opt to reset the code coverage
-        at the beginning of a Test Suite.</para>
+        configuration (<xref linkend="configuring-code-coverage-for-an-aut"/>).
+      </para>
+      <para role="tip">
+        If you are working with Test Jobs, then do not opt to reset the code coverage
+        at the beginning of a Test Suite.
       </para>
     </listitem>
     <listitem>

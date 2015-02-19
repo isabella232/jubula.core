@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,18 +7,18 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="projectproperties" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="projectproperties" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Editing the Project and AUT properties</title>
   <para>
     You can open the Project properties dialog (<xref linkend="projectsettingsdialog"/>) via:
-    
-    <para>
-      <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
-    </para>
   </para>
-  <figure id="projectsettingsdialog">
+    
+  <para>
+    <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>
+  </para>
+  <figure xml:id="projectsettingsdialog">
     <title>Project Properties Dialog</title>
     <mediaobject>
       <imageobject>
@@ -61,9 +62,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <section id="editing-general-project-properties">
+  <section xml:id="editing-general-project-properties">
     <title>Editing general Project properties</title>
-    <anchor role="helpid" id="projectSettingsPageContextId">Project Properties</anchor>
+    <anchor role="helpid" xml:id="projectSettingsPageContextId">Project Properties</anchor>
     <para>
       Select ”<emphasis>General</emphasis>” from the tree on the left-hand
       side of the Project properties dialog. In the screen that appears, you can:
@@ -137,7 +138,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="changing-toolkit-settings">
+  <section xml:id="changing-toolkit-settings">
     <title>Changing the toolkit settings for a Project</title>
     <para>
       If you want to change the toolkit of a Project in the Project
@@ -161,9 +162,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="editing-the-languages-for-a-project">
+  <section xml:id="editing-the-languages-for-a-project">
     <title>Editing the languages for a Project</title>
-    <anchor role="helpid" id="projectSettingsPageContextId">Project Properties</anchor>
+    <anchor role="helpid" xml:id="projectSettingsPageContextId">Project Properties</anchor>
     <para>
       To see and edit the Project languages, select ”<emphasis>Project languages</emphasis>”
       from the tree on the left-hand side of the Project properties
@@ -173,14 +174,14 @@
       You can add and remove Project languages and change the
       default language in this screen.
     </para>
-    <para>
-      <para role="tip">You can’t delete a language which is being used as an
-      AUT language.</para>
+    <para role="tip">
+      You can’t delete a language which is being used as an
+      AUT language.
     </para>
   </section>
-  <section id="editing-the-auts-in-a-project">
+  <section xml:id="editing-the-auts-in-a-project">
     <title>Editing the AUTs in a Project</title>
-    <anchor role="helpid" id="autSettingsPageContextId">Adding/editing AUT's</anchor>
+    <anchor role="helpid" xml:id="autSettingsPageContextId">Adding/editing AUT's</anchor>
     <para>
       To see and edit your AUTs for a Project, select
       ”<emphasis>AUTs</emphasis>” from the tree on the left-hand
@@ -191,7 +192,7 @@
       already added to the Project (<xref linkend="autsettingsdialog"/>).
       You can choose to edit them, delete them or add a new AUT.
     </para>
-    <figure id="autsettingsdialog">
+    <figure xml:id="autsettingsdialog">
       <title>AUT Properties Dialog</title>
       <mediaobject>
         <imageobject>
@@ -206,10 +207,10 @@
       defining an AUT in the Project wizard (<xref linkend="define-aut"/>).
     </para>
   </section>
-  <section id="duplicating-aut-configurations">
+  <section xml:id="duplicating-aut-configurations">
     <title>Duplicating AUT configurations</title>
-    <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-    <anchor role="helpid" id="autSettingsPageContextId">Adding/editing AUT's</anchor>
+    <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+    <anchor role="helpid" xml:id="autSettingsPageContextId">Adding/editing AUT's</anchor>
     <para>
       You can duplicate an existing AUT configuration from the
       Project properties dialog:
@@ -242,9 +243,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="editing-aut-configurations">
+  <section xml:id="editing-aut-configurations">
     <title>Editing the AUT configurations in a Project</title>
-    <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+    <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
     <para>
       Select ”<emphasis>AUTs</emphasis>” from the tree on the
       left-hand side of the Project properties dialog.

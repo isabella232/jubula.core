@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="renaming-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="renaming-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Renaming items in editors</title>
-  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
   <para>
     You can rename items referenced in Test Cases, Test Suites and
     Test Jobs.

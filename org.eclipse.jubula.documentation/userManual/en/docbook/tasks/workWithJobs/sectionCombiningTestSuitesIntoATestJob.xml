@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="combining-test-suites-into-a-test-job" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="combining-test-suites-into-a-test-job" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Combining Test Suites into a Test Job</title>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
   <para>
     You can create a Test Job when you want to execute a collection
     of Test Suites after each other.

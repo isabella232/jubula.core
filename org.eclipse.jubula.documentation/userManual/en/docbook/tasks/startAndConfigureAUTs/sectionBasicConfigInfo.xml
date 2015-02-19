@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="basic-configuration-info" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="basic-configuration-info" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Basic information required for every AUT configuration</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <para>
     Regardless of the type of AUT you want to start, you will always
     need to enter the following information in the AUT configuration

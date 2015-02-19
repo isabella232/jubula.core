@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-variables-as-data-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-variables-as-data-for-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using variables as data for Test Cases</title>
-  <anchor role="helpid" id="guidancerDataSetViewContextId">Data Sets View</anchor>
-  <anchor role="helpid" id="guidancerPropertiesViewContextId">Properties View</anchor>
-  <anchor role="helpid" id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
+  <anchor role="helpid" xml:id="guidancerDataSetViewContextId">Data Sets View</anchor>
+  <anchor role="helpid" xml:id="guidancerPropertiesViewContextId">Properties View</anchor>
+  <anchor role="helpid" xml:id="guidancerCentralTestDataEditorContextId">Central Test Data</anchor>
   <itemizedlist>
     <listitem>
       <para>
@@ -57,7 +58,7 @@
       </para>
     </listitem>
   </itemizedlist>
-  <section id="reading-and-using-values-variables-from-the-aut">
+  <section xml:id="reading-and-using-values-variables-from-the-aut">
     <title>Reading and using values (variables) from the
     AUT</title>
     <para>
@@ -70,7 +71,9 @@
           Use one of the <emphasis>store value</emphasis> actions on the various
           components to reads a value from a component in the
           AUT.
-          <para role="tip">You can also use the <emphasis>store value</emphasis> action on the <emphasis>application</emphasis> component to store a value you enter.</para>
+        </para>
+        <para role="tip">
+          You can also use the <emphasis>store value</emphasis> action on the <emphasis>application</emphasis> component to store a value you enter.
         </para>
       </listitem>
       <listitem>
@@ -78,8 +81,8 @@
           In the parameter field, enter a name for this variable
           (e.g. USERNAME).
         </para>
-        <para>
-          <para role="tip">Variable names may only contain letters, numbers and underscores</para>
+        <para role="tip">
+          Variable names may only contain letters, numbers and underscores
         </para>
       </listitem>
       <listitem>
@@ -112,7 +115,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="using-environment-variables-in-tests">
+  <section xml:id="using-environment-variables-in-tests">
     <title>Using environment variables in tests</title>
     <para>
       You can add variables to your operating system, which can be
@@ -120,18 +123,19 @@
     </para>
     <para>
       You will need to set environment variables which have the form:
-      
-      <para>
-        <emphasis role="input">TEST_UDV_&lt;variablename&gt;</emphasis>
-      </para>
     </para>
+    
+    <para>
+      <emphasis role="input">TEST_UDV_&lt;variablename&gt;</emphasis>
+    </para>
+    
     <para>
       To use the variable in your tests, enter the variable name
       (everything after the underscore) preceded by a dollar sign.
       Do not enter the ”<emphasis>TEST_UDV_</emphasis>” part.
     </para>
-    <para>
-      <para role="warning">After entering or changing an environment variable, you will need to restart the ITE. Environment variables for the ITE (i.e. for the test) are only read from the machine on which the ITE is running, not from the machine where the AUT Agent is running.</para>
+    <para role="warning">
+      After entering or changing an environment variable, you will need to restart the ITE. Environment variables for the ITE (i.e. for the test) are only read from the machine on which the ITE is running, not from the machine where the AUT Agent is running.
     </para>
     <para>
       Your system administrator will be able to help you with
@@ -177,7 +181,7 @@
       </varlistentry>
     </variablelist>
   </section>
-  <section id="using-the-pre-defined-test-execution-variables">
+  <section xml:id="using-the-pre-defined-test-execution-variables">
     <title>Using the pre-defined test execution variables</title>
     <orderedlist>
       <listitem>
@@ -291,11 +295,13 @@
       <listitem>
         <para>
           To use the value of one of these variables in your test, enter:
-          
-          <para>
-            <literal>${VARIABLE_NAME}</literal>
-          </para>
-          
+        </para>
+        
+        <para>
+          <literal>${VARIABLE_NAME}</literal>
+        </para>
+        
+        <para>
           as the parameter value.
         </para>
       </listitem>

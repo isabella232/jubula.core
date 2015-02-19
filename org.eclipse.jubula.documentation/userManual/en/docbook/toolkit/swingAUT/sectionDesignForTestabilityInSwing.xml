@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="design-for-testability-in-swing" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="design-for-testability-in-swing" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Design for testability in Swing</title>
-  <section id="naming-components">
+  <section xml:id="naming-components">
     <title>Naming components</title>
     <para>
       Although components in the AUT can be recognized even when
@@ -21,7 +22,7 @@
       still be found based on this unique name.
     </para>
   </section>
-  <section id="adding-support-for-text-retrieval">
+  <section xml:id="adding-support-for-text-retrieval">
     <title>Adding support for text retrieval</title>
     <para>
       You can add support for renderers for Swing components without
@@ -32,11 +33,11 @@
       <listitem>
         <para>
           An example of the adapter mechanism can be found here:
+        </para>
           
-          <para>
-            <emphasis>http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/</emphasis><?linebreak?>
-            <emphasis>tree/org.eclipse.jubula.examples.extension.swing.rc.renderer</emphasis>
-          </para>
+        <para>
+          <emphasis>http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/</emphasis><?linebreak?>
+          <emphasis>tree/org.eclipse.jubula.examples.extension.swing.rc.renderer</emphasis>
         </para>
       </listitem>
       <listitem>

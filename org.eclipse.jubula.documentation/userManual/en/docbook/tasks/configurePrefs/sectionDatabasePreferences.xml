@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,18 +7,20 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="database-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="database-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>database preferences</title>
-  <anchor role="helpid" id="databaseConnectionConfigurationDialogContextId">Database connection preferences</anchor>
+  <anchor role="helpid" xml:id="databaseConnectionConfigurationDialogContextId">Database connection preferences</anchor>
   <para>
     You can find the database connection preference page under:
-    
-    <para>
-      <emphasis>Test-database Connections</emphasis>
-    </para>
-    
+  </para>
+  
+  <para>
+    <emphasis>Test-database Connections</emphasis>
+  </para>
+  
+  <para>
     in the preferences dialog.
   </para>
   <para>
@@ -30,11 +33,11 @@
     In this preference page, you can configure other database
     connections for your productive database.
   </para>
-  <para>
-    <para role="warning">We do not recommend using the embedded database for
-    productive use.</para>
+  <para role="warning">
+    We do not recommend using the embedded database for
+    productive use.
   </para>
-  <section id="adding-editing-and-removing-database-configurations">
+  <section xml:id="adding-editing-and-removing-database-configurations">
     <title>Adding, editing and removing database
     configurations</title>
     <para>
@@ -56,10 +59,13 @@
       <listitem>
         <para>
           Select the type of database that this configuration is
-          for. <para role="tip">The ITE is thoroughly tested with Oracle.
+          for.
+        </para>
+        <para role="tip">
+          The ITE is thoroughly tested with Oracle.
           PostGreSQL and MySQL have been successfully tried out, but
           we cannot guarantee their usage in productive
-          environments.</para>
+          environments.
         </para>
       </listitem>
       <listitem>

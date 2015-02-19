@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="observation-mode-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="observation-mode-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Observation mode preferences</title>
-  <anchor role="helpid" id="prefPageObserveJavaContextId">Observation Mode Preferences</anchor>
-  <para>
-    <para role="tip">The observation mode can only be used for Java AUTs.</para>
+  <anchor role="helpid" xml:id="prefPageObserveJavaContextId">Observation Mode Preferences</anchor>
+  <para role="tip">
+    The observation mode can only be used for Java AUTs.
   </para>
   <variablelist>
     <varlistentry>

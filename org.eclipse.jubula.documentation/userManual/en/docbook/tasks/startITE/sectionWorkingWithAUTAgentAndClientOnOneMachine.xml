@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="working-with-the-aut-agent-and-client-on-one-machine" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="working-with-the-aut-agent-and-client-on-one-machine" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with the AUT Agent and client on one machine</title>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
   <para>
     If the ITE and AUT Agent are installed on one machine, there are a few things
     to be aware of:
@@ -38,11 +39,13 @@
         <listitem>
           <para>
             You can change the preference to minimize the ITE via:
-            
-            <para>
-              <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Preferences</emphasis>
-            </para>
-            
+          </para>
+          
+          <para>
+            <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Preferences</emphasis>
+          </para>
+          
+          <para>
             If you do this, make sure that the AUT can also be seen on the screen when test execution begins.
           </para>
         </listitem>

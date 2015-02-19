@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="adding-event-handlers-to-a-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="adding-event-handlers-to-a-test-case" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding Event Handlers to a Test Case</title>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
   <para>
     This section deals with adding Event Handlers to Test Cases.
   </para>
@@ -24,22 +25,29 @@
     <listitem>
       <para>
         Select
-        
-        <para>
-          <emphasis role="menuPath">Add</emphasis>--&gt;<emphasis role="menuPath">Test Case as Event Handler</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Add</emphasis>--&gt;<emphasis role="menuPath">Test Case as Event Handler</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu in the editor or use <emphasis role="input">»CTRL+ENTER«</emphasis>.
       </para>
     </listitem>
     <listitem>
       <para>
         Choose a Test Case to add from the dialog that appears.
-        <para role="tip">You can also drag the Test Case you want to use
+      </para>
+      <para role="tip">
+        You can also drag the Test Case you want to use
         straight into the Event Handlers area of at the bottom of th
-        the Test Case Editor. </para> <para role="tip">You can’t add a Test Case to
+        the Test Case Editor.
+      </para>
+      <para role="tip">
+        You can’t add a Test Case to
         itself as an Event Handler, because this would create an
-        infinite loop. </para>
+        infinite loop.
       </para>
     </listitem>
     <listitem>
@@ -56,8 +64,11 @@
     <listitem>
       <para>
         Select a reentry type from the combo box
-        (<xref linkend="reentry-types"/>). <para role="tip">For each Test Case you can only
-        add one Event Handler for each event type.</para>
+        (<xref linkend="reentry-types"/>).
+      </para>
+      <para role="tip">
+        For each Test Case you can only
+        add one Event Handler for each event type.
       </para>
     </listitem>
     <listitem>

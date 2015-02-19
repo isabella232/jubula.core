@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,22 +7,22 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="restarting-the-ite" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="restarting-the-ite" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Restarting the ITE</title>
   <para>
     You can restart the ITE with the current workspace using:
-    
-    <para>
-      <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Restart</emphasis>
-    </para>
+  </para>
+  
+  <para>
+    <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Restart</emphasis>
   </para>
   <para>
     You can also restart the ITE with a new workspace by selecting:
-    
-    <para>
-      <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Switch Workspace</emphasis>
-    </para>
+  </para>
+  
+  <para>
+    <emphasis role="menuPath">File</emphasis>--&gt;<emphasis role="menuPath">Switch Workspace</emphasis>
   </para>
 </section>

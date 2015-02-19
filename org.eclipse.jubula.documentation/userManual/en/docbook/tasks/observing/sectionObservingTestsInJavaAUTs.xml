@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,14 +7,14 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="observing-tests-in-java-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="observing-tests-in-java-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Observing tests in Java AUTs</title>
-  <para>
-    <para role="tip">If you have not already done so, we recommend reading the
+  <para role="tip">
+    If you have not already done so, we recommend reading the
     tips section for the observation mode before beginning observing
-    (<xref linkend="tips-and-tricks-observation-mode"/>). </para>
+    (<xref linkend="tips-and-tricks-observation-mode"/>).
   </para>
   <orderedlist>
     <listitem>
@@ -24,9 +25,9 @@
         Test Step in the Test Case Editor for this observed Test
         Case.
       </para>
-      <para>
-        <para role="tip">See the section later on performing check actions in
-        the observation mode (<xref linkend="performing-checks-in-observation-mode"/>).</para>
+      <para role="tip">
+        See the section later on performing check actions in
+        the observation mode (<xref linkend="performing-checks-in-observation-mode"/>).
       </para>
     </listitem>
     <listitem>
@@ -34,7 +35,7 @@
         You can also see which actions have been recorded in the
         console (<xref linkend="obsconsole"/>).
       </para>
-      <figure id="obsconsole">
+      <figure xml:id="obsconsole">
         <title>The observation console</title>
         <mediaobject>
           <imageobject>
@@ -44,12 +45,12 @@
           console</phrase></textobject>
         </mediaobject>
       </figure>
-      <para>
-        <para role="tip">If you are creating tests for SWT and RCP AUTs, check
+      <para role="tip">
+        If you are creating tests for SWT and RCP AUTs, check
         that you have set the keyboard layout correctly in the
         Project properties (<xref linkend="advanced-aut-config"/>) and that
         you have defined the right toolkit for the Project
-        (<xref linkend="changing-toolkit-settings"/>).</para>
+        (<xref linkend="changing-toolkit-settings"/>).
       </para>
     </listitem>
     <listitem>
@@ -82,15 +83,18 @@
         been recorded. You will notice that any text that contains
         non-alphanumeric characters is enclosed in single quotes.
         Single quotes are used to cancel any meaning of the
-        characters within the quotes. <para role="tip">Run the test that you
+        characters within the quotes.
+      </para>
+      <para role="tip">
+        Run the test that you
         have just recorded to see if it works as you intended. If
         not, you may need to make some changes to the parameter
         values, or you may have to supplement the Test Case with
-        Test Cases from the library (<xref linkend="using-the-library"/>). </para>
+        Test Cases from the library (<xref linkend="using-the-library"/>).
       </para>
     </listitem>
   </orderedlist>
-  <section id="actions-that-cannot-be-recorded">
+  <section xml:id="actions-that-cannot-be-recorded">
     <title>Actions that cannot be recorded</title>
     <para>
       A few actions cannot be recorded in the current version. These
@@ -128,7 +132,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="performing-checks-in-observation-mode">
+  <section xml:id="performing-checks-in-observation-mode">
     <title>Performing checks in the Java observation mode</title>
     <para>
       You can perform checks in the observation mode by taking the
@@ -154,7 +158,7 @@
           In the AUT, components will be highlighted with a red
           border (<xref linkend="redborders"/>).
         </para>
-        <figure id="redborders">
+        <figure xml:id="redborders">
           <title>Red borders in the check mode</title>
           <mediaobject>
             <imageobject>
@@ -164,9 +168,9 @@
             mode</phrase></textobject>
           </mediaobject>
         </figure>
-        <para>
-          <para role="tip">While the check mode is active, no other actions
-          will be recorded.</para>
+        <para role="tip">
+          While the check mode is active, no other actions
+          will be recorded.
         </para>
       </listitem>
       <listitem>
@@ -197,11 +201,13 @@
           you want to close the dialog and continue in the check
           mode (<emphasis>check on</emphasis>) or whether you want
           to stop the check mode when the dialog closes
-          (<emphasis>stop checking</emphasis>). <para role="tip">You can
-          manually stop the check mode using the same key
+          (<emphasis>stop checking</emphasis>).
+        </para>
+        <para role="tip">
+          You can manually stop the check mode using the same key
           combination as you used to start the check mode
           (<emphasis role="input">»CTRL+SHIFT+F11«</emphasis> by
-          default).</para>
+          default).
         </para>
       </listitem>
       <listitem>

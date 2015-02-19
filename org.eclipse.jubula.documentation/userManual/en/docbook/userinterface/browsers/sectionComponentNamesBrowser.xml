@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="the-component-names-browser" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="the-component-names-browser" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Component Names Browser</title>
-  <anchor role="helpid" id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
+  <anchor role="helpid" xml:id="guidancerComponentNameBrowserContextId">Component Name Browser</anchor>
   <para>
     The Component Names Browser (<xref linkend="compnamesbrowser"/>) is by
     default in the lower left-hand corner of the Specification
@@ -20,11 +21,11 @@
     and can also find where you have used component names in your
     test.
   </para>
-  <para>
-    <para role="tip">You can filter in the Component Names Browser using the
-    field at the top. Use star <emphasis role="input">*</emphasis> as a wild card.</para>
+  <para role="tip">
+    You can filter in the Component Names Browser using the
+    field at the top. Use star <emphasis role="input">*</emphasis> as a wild card.
   </para>
-  <figure id="compnamesbrowser">
+  <figure xml:id="compnamesbrowser">
     <title>Component Name Browser</title>
     <mediaobject>
       <imageobject>

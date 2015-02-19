@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="information-on-the-support-for-windows-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="information-on-the-support-for-windows-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Information on the support for Windows AUTs</title>
-  <section id="the-ui-automation-framework-and-clicking">
+  <section xml:id="the-ui-automation-framework-and-clicking">
     <title>The UI Automation Framework and clicking</title>
     <para>
       The Windows support is realized using the Microsoft UI
@@ -30,7 +31,7 @@
       and check at mouse position).
     </para>
   </section>
-  <section id="supported-auts">
+  <section xml:id="supported-auts">
     <title>Supported AUTs</title>
     <para>
       We currently only support WinForms and WPF AUTs. It may be

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="general-help" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="general-help" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>General help</title>
@@ -26,9 +27,10 @@
   <para>
     Looking in the log files may help to resolve some problems. Logs for the client (ITE) and AUT Agent can be found via:
     
-    <para>
-      <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Show Client/AUT Agent Log</emphasis> <para role="tip">The ITE can only access an AUT Agent log file if it is currently connected to a AUT Agent.</para>
-    </para>
+    <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Show Client/AUT Agent Log</emphasis>
+  </para>
+  <para role="tip">
+    The ITE can only access an AUT Agent log file if it is currently connected to a AUT Agent.
   </para>
   <para>
     This section contains information on some of the more common

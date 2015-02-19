@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="viewing-properties-for-a-component-in-the-object-mapping-mode" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="viewing-properties-for-a-component-in-the-object-mapping-mode" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                           xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Viewing properties for a component in the Object Mapping Mode</title>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
   <para>
     When you collect a component from a Swing, SWT/RCP or JavaFX AUT
     in the Object Mapping Mode (<xref linkend="collecting-components-technical-names-from-the-aut"/>), you can see
@@ -32,13 +33,13 @@
     Editor is saved: to view property information again, you must
     collect the component in the Object Mapping Mode again.
   </para>
-  <para>
-    <para role="tip">Property information can be transient, i.e. it can change
+  <para role="tip">
+    Property information can be transient, i.e. it can change
     as the component or AUT changes. To make sure that you collect
     the right property, collect the component when it is in the
     state that you want it to have. A simple example is the color of
     a component: if you have a component can be green or red and you
     want to check that it is red, then you should collect it while
-    it is red to see the correct property. </para>
+    it is red to see the correct property.
   </para>
 </section>

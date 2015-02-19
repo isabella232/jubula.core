@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="help-system" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="help-system" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Help system</title>
-  <anchor role="helpid" id="problemViewContextId">Problem View</anchor>
+  <anchor role="helpid" xml:id="problemViewContextId">Problem View</anchor>
   <orderedlist>
     <listitem>
       <para>
@@ -33,9 +34,7 @@
           <para>
             Select:
             
-            <para>
-              <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Help Content</emphasis> to search the handbook.
-            </para>
+            <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Help Content</emphasis> to search the handbook.
           </para>
         </listitem>
       </itemizedlist>
@@ -43,10 +42,10 @@
     <listitem>
       <para>
         The help preferences can be altered via:
-        
-        <para>
-          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Preferences</emphasis>--&gt;<emphasis role="menuPath">Help</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Preferences</emphasis>--&gt;<emphasis role="menuPath">Help</emphasis>.
       </para>
     </listitem>
     <listitem>

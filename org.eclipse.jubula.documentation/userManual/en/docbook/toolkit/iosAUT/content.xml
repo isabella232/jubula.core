@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="iOSaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="iOSaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="iosAUT"?>
   <title>Testing iOS AUTs</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
-  <anchor role="helpid" id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" xml:id="autConfigPropDialogContextId">Adding/editing AUT configurations</anchor>
   
   <xi:include href="sectionIntroIOSAUTs.xml"/>
   <xi:include href="sectionSupportedIOSAUTs.xml"/>

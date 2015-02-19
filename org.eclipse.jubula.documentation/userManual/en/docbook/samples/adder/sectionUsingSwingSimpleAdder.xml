@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="sample-1-using-the-swing-simple-adder" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="sample-1-using-the-swing-simple-adder" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Sample 1: using the Swing Simple Adder</title>
@@ -18,7 +19,7 @@
     configuration to start the SimpleAdder with their default Java
     version.
   </para>
-  <section id="samplesteststeps">
+  <section xml:id="samplesteststeps">
     <title>Sample 1.1: creating a Test Case from Test Steps</title>
     <para>
       This category contains one Test Case. The Test Case contains
@@ -32,16 +33,18 @@
       as shown in the next examples.
     </para>
   </section>
-  <section id="sampleslibrary">
+  <section xml:id="sampleslibrary">
     <title>Sample 1.2: creating a Test Case using the
     library</title>
     <para>
       This category contains one Test Case. The Test Case has
       referenced another Test Case, with four reused Test Cases,
       which have been reused from the Project
-      <emphasis>unbound_modules_concrete</emphasis>. <para role="tip">Press
-      <emphasis role="input">»F6«</emphasis> to find where a particular
-      Test Case was originally specified. </para>
+      <emphasis>unbound_modules_concrete</emphasis>.
+    </para>
+    <para role="tip">
+      Press <emphasis role="input">»F6«</emphasis> to find where a particular
+      Test Case was originally specified.
     </para>
     <para>
       The Test Cases carry out the same steps as in the previous example (<xref linkend="samplesteststeps"/>). The differences here are:
@@ -70,7 +73,7 @@
       the Test Suite of the same name.
     </para>
   </section>
-  <section id="sample-1.3-using-event-handlers">
+  <section xml:id="sample-1.3-using-event-handlers">
     <title>Sample 1.3: using Event Handlers</title>
     <para>
       This category has four subcategories. Each subcategory

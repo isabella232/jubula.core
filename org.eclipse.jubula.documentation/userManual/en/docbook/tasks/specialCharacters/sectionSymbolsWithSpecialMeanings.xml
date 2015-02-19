@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="symbols-with-special-meanings-for-certain-parameters" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="symbols-with-special-meanings-for-certain-parameters" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Symbols with special meanings for certain
@@ -19,7 +20,7 @@
     <emphasis>for these components only</emphasis>. Masking these symbols must
     be done with a double backslash.
   </para>
-  <table id="specialcompsymbols">
+  <table xml:id="specialcompsymbols">
     <title>Symbols for components</title>
     <tgroup cols="4">
       <colspec align="left" />

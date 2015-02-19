@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="changing-perspectives" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="changing-perspectives" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Changing perspectives</title>
@@ -14,10 +15,10 @@
     <listitem>
       <para>
         To change between perspectives, select:
-        
-        <para>
-          <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Open Perspective</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Open Perspective</emphasis>.
       </para>
     </listitem>
     <listitem>
@@ -33,15 +34,17 @@
       </para>
     </listitem>
   </orderedlist>
-  <section id="automatically-changing-perspective">
+  <section xml:id="automatically-changing-perspective">
     <title>Automatically changing perspective</title>
     <para>
       By selecting:
-      
-      <para>
-        <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Preferences</emphasis>,
-      </para>
-      
+    </para>
+    
+    <para>
+      <emphasis role="menupath">Window</emphasis>--&gt;<emphasis role="menupath">Preferences</emphasis>,
+    </para>
+    
+    <para>
       you can choose to automatically change to the Execution Perspective when test execution starts, or to be asked each time a Test Suite is started.
     </para>
   </section>

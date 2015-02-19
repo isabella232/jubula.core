@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="our-approach" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="our-approach" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Our approach</title>
@@ -19,7 +20,7 @@
   <para>
     This gives the following advantages:
   </para>
-  <section id="early-test-creation">
+  <section xml:id="early-test-creation">
     <title>Early test creation</title>
     <para>
       Tests are created before the AUT is available. This is a radical advantage over capture-replay tools, which force testers to wait until an application is ready to begin with testing. The specification of modular, flexible GUI tests begins early (even as early as at the requirements stage) and continues alongside software development.
@@ -28,7 +29,7 @@
       The benefit of this is that every version of an AUT can be tested as soon as it becomes available. Testing keeps up with development, so you waste no time in your test process. Earlier testing lets you find issues when they are cheaper and easier to fix and encourages collaboration and communication within the team.
     </para>
   </section>
-  <section id="code-free-automation">
+  <section xml:id="code-free-automation">
     <title>Code-free automation</title>
     <para>
       Tests are automated completely from the user perspective and require no programming effort.
@@ -44,7 +45,7 @@
       also by users or customers.
     </para>
   </section>
-  <section id="manual-tester-intelligence">
+  <section xml:id="manual-tester-intelligence">
     <title>Manual tester intelligence</title>
     <para>
       The wide range of keywords available include high-level actions

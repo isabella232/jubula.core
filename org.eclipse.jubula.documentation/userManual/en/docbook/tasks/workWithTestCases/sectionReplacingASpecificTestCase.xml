@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="replacing-a-specific-test-case-at-places-where-it-has-been-reused" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="replacing-a-specific-test-case-at-places-where-it-has-been-reused" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Replacing a specific Test Case at places where it has been reused</title>
-  <anchor role="helpid" id="searchResultViewContextId">Search Result View</anchor>
-  <anchor role="helpid" id="searchRefactorReplaceExecutionTestCaseWizardContextId">Replace Test Case</anchor>
+  <anchor role="helpid" xml:id="searchResultViewContextId">Search Result View</anchor>
+  <anchor role="helpid" xml:id="searchRefactorReplaceExecutionTestCaseWizardContextId">Replace Test Case</anchor>
   <para>
     If you have reused a Test Case at multiple places in your
     Project, and later create a new Test Case that should replace
@@ -21,13 +22,13 @@
     in the Search Result View or use the in-editor replace
     (<xref linkend="replacing-test-cases-in-editors-refactoring"/>).
   </para>
-  <para>
-    <para role="warning">In order to perform a mass replace, all Test Cases to be
+  <para role="warning">
+    In order to perform a mass replace, all Test Cases to be
     changed must not be in use by anyone else using the Project –
     you should ensure that this is the case before performing the
     replace, otherwise the replace cannot be carried out. You should
     also be aware before performing this action that it cannot be
-    undone.</para>
+    undone.
   </para>
   <orderedlist>
     <listitem>
@@ -44,20 +45,23 @@
         other Test Cases, in Test Suites and anywhere you have used
         the Test Case as an Event Handler. Select all entries, or
         just the Test Case references you want to replace with a new
-        Test Case reference. <para role="warning">You will only be able to perform
+        Test Case reference.
+      </para>
+      <para role="warning">
+        You will only be able to perform
         the replace if all selected Test Case references use the
         same original Test Case. The context-menu entry will be
         disabled if the Project is protected, or any of the selected
-        Test Cases are missing (e.g. from reused Projects)</para>.
+        Test Cases are missing (e.g. from reused Projects).
       </para>
     </listitem>
     <listitem>
       <para>
         From the context menu, select:
-        
-        <para>
-          <emphasis role="menuPath">Replace with another Test Case</emphasis>
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Replace with another Test Case</emphasis>
       </para>
     </listitem>
     <listitem>
@@ -117,11 +121,11 @@
           </para>
         </listitem>
       </itemizedlist>
-      <para>
-        <para role="warning">For any non-matched (or non-matchable) component
+      <para role="warning">
+        For any non-matched (or non-matchable) component
         names, the new names from the new Test Case will be used.
         This may result in incomplete object mapping for your
-        tests.</para>
+        tests.
       </para>
     </listitem>
     <listitem>
@@ -172,10 +176,10 @@
           </para>
         </listitem>
       </itemizedlist>
-      <para>
-        <para role="warning">For any non-matched (or non-matchable) parameters,
+      <para role="warning">
+        For any non-matched (or non-matchable) parameters,
         the new parameters from the new Test Case will be used. This
-        may result in incomplete test data for your tests.</para>
+        may result in incomplete test data for your tests.
       </para>
     </listitem>
     <listitem>
@@ -185,13 +189,13 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">The Test Case reference names and any comments that were
+  <para role="tip">
+    The Test Case reference names and any comments that were
     used for the original Test Case references, will be transferred
     to each new Test Case reference. If the original Test Case
     reference was commented out, the replacement Test Case reference
     will be as well. If you had used the original Test Case as an
     Event Handler, the Event Handler details will also be
-    transferred.</para>
+    transferred.
   </para>
 </section>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="intro-test-steps" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="intro-test-steps" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Information on Test Steps</title>
@@ -14,11 +15,11 @@
     Test Steps are the smallest unit in a test. They correspond to one
     action on one component.
   </para>
-  <para>
-    <para role="tip">Instead of creating Test Steps, we recommend using the
+  <para role="tip">
+    Instead of creating Test Steps, we recommend using the
     library of Test Cases (<xref linkend="creating-tests-from-the-library-of-pre-defined-test-cases"/>). Each Test Case
     in the library contains one Test Step, with all the parameters
     already referenced. Using the library makes test creation much
-    easier!</para>
+    easier!
   </para>
 </section>

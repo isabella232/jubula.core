@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="the-dashboard-application" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="the-dashboard-application" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>The Dashboard application</title>
@@ -19,7 +20,7 @@
     and a Dashboard in the correct version remain installed so that
     older test results can be read.
   </para>
-  <section id="the-dashboard-server">
+  <section xml:id="the-dashboard-server">
     <title>The Dashboard server</title>
     <para>
       In the installation directory, in the folder
@@ -43,10 +44,10 @@
     </para>
     <para>
       The workspace directory for the Dashboard is in your home directory under:
+    </para>
       
-      <para>
-        <emphasis>.jubula/dashboardWorkspace</emphasis>
-      </para>
+    <para>
+      <emphasis>.jubula/dashboardWorkspace</emphasis>
     </para>
   </section>
 </section>

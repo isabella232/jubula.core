@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,18 +7,18 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="using-the-search-dialog" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-the-search-dialog" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the search dialog</title>
   <para>
     You can open the search dialog (<xref linkend="SearchDialog"/>) from the toolbar, by pressing <emphasis role="input">»CTRL+H«</emphasis> or via the menu:
-    
-    <para>
-      <emphasis role="menuPath">Search</emphasis>--&gt;<emphasis role="menuPath">Search</emphasis>
-    </para>
   </para>
-  <figure id="SearchDialog">
+    
+  <para>
+    <emphasis role="menuPath">Search</emphasis>--&gt;<emphasis role="menuPath">Search</emphasis>
+  </para>
+  <figure xml:id="SearchDialog">
     <title>Search Dialog</title>
     <mediaobject>
       <imageobject>
@@ -55,11 +56,11 @@
     </para>
     </listitem>
   </itemizedlist>
-  <section id="searching-for-keywords">
+  <section xml:id="searching-for-keywords">
     <title>Searching for keywords throughout the Project</title>
-    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-    <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+    <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
     <para>
       On the first tab of the search dialog, you can search for the
       following based on their name, a comment, a description, or a task ID.:
@@ -107,16 +108,16 @@
       results are shown in the Search Result View
       (<xref linkend="using-the-search-result-view"/>).
     </para>
-    <para>
-      <para role="tip">Only results from the
-      current working language are displayed.</para>
+    <para role="tip">
+      Only results from the
+      current working language are displayed.
     </para>
   </section>
-  <section id="searching-for-test-data">
+  <section xml:id="searching-for-test-data">
     <title>Searching for test data</title>
-    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-    <anchor role="helpid" id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+    <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
     <para>
       On the second tab of the search dialog, you can search for
       test data in the following:
@@ -139,10 +140,10 @@
         </para>
       </listitem>
     </itemizedlist>
-    <para>
-      <para role="tip">The search does not consider the
+    <para role="tip">
+      The search does not consider the
       <emphasis>name</emphasis> of the central test data set, for
-      example, only the data contained in it.</para>
+      example, only the data contained in it.
     </para>
     <para>
       Enter the term you wish to search for and select whether you
@@ -156,15 +157,14 @@
       results are shown in the Search Result View
       (<xref linkend="using-the-search-result-view"/>).
     </para>
-    <para>
-      <para role="tip">Only test data from the current working language is displayed. 
-     </para>
+    <para role="tip">
+      Only test data from the current working language is displayed. 
     </para>
   </section>
-  <section id="searching-for-files">
+  <section xml:id="searching-for-files">
     <title>Searching for files in the workspace</title>
-    <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-    <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+    <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+    <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
     <para>
       On the third tab of the search dialog, you can search for and
       in files contained in your workspace.
@@ -176,10 +176,10 @@
       (<xref linkend="using-the-search-result-view"/>).
     </para>
   </section>
-  <section id="limiting-the-search-to-the-selected-node">
+  <section xml:id="limiting-the-search-to-the-selected-node">
     <title>Limiting the search to the selected node</title>
-    <anchor role="helpid" id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
-    <anchor role="helpid" id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
+    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.keywordSearchPageContextId">Keyword Search</anchor>
+    <anchor role="helpid" xml:id="com.bredexsw.guidancer.doc.testDataSearchPageContextId">Test Data Search</anchor>
     <para>
       In the search dialog, you can specify whether the search you
       define should be performed on the whole Project, or just on

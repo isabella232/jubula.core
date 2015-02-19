@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="creating-test-cases-test-suites-and-test-jobs-in-an-existing-category" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="creating-test-cases-test-suites-and-test-jobs-in-an-existing-category" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating Test Cases, Test Suites and Test Jobs in an existing category</title>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
   <para>
     <emphasis role="strong">Creating Test Cases within an already
     existing category:</emphasis>

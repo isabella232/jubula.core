@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="object-mapping-1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="object-mapping-1" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Object mapping</title>
-  <anchor role="helpid" id="objectMapEditorContextId">Object Mapping</anchor>
+  <anchor role="helpid" xml:id="objectMapEditorContextId">Object Mapping</anchor>
   <para>
     Object mapping is the joining of the component names you have
     specified in your tests to the real components in the AUT. Each
@@ -18,10 +19,10 @@
     a Test Suite will be shown in the Object Mapping Editor to be
     mapped.
   </para>
-  <para>
-    <para role="tip">New component names you have created in the Object
+  <para role="tip">
+    New component names you have created in the Object
     Mapping Editor but have not yet used in Test Cases will also be
-    shown in the Object Mapping Editor. </para>
+    shown in the Object Mapping Editor.
   </para>
   <para>
     To be able to carry out object mapping, you must have:

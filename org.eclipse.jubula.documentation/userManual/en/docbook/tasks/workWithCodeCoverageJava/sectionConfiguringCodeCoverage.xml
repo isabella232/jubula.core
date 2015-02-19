@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="configuring-code-coverage-for-an-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="configuring-code-coverage-for-an-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring code coverage for an AUT</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <para>
     You can activate code coverage for an AUT configuration with the
     following steps:
@@ -67,10 +68,13 @@
               source files in their Java package structure. The
               class files must have been compiled with debug
               information to make the lines of code executed visible
-              in the code coverage report. <para role="tip">You can enter
+              in the code coverage report.
+            </para>
+            <para role="tip">
+              You can enter
               relative paths for the AUT installation and AUT source
               directories. The paths are relative to the working
-              directory.</para>
+              directory.
             </para>
           </listitem>
         </varlistentry>
@@ -82,10 +86,12 @@
         pattern to specify which packages should be monitored. The
         pattern must be a valid regular expression. If you do not
         enter a package pattern, all classes in the virtual machine
-        will be considered for the code coverage value. <para role="warning">Not
-        entering a package pattern can result in extremely large
+        will be considered for the code coverage value.
+      </para>
+      <para role="warning">
+        Not entering a package pattern can result in extremely large
         messages being sent from the AUT Agent, which may cause
-        memory problems (<xref linkend="increasing-the-java-heap"/>).</para>
+        memory problems (<xref linkend="increasing-the-java-heap"/>).
       </para>
     </listitem>
     <listitem>
@@ -95,7 +101,7 @@
       </para>
     </listitem>
   </orderedlist>
-  <section id="increasing-the-java-heap">
+  <section xml:id="increasing-the-java-heap">
     <title>Increasing the Java Heap Space for code coverage</title>
     <para>
       Running a test with a code coverage profiler leads to an
@@ -104,10 +110,10 @@
       (<xref linkend="configuring-code-coverage-for-an-aut"/>) to reduce the amount of files considered
       for code coverage.
     </para>
-    <para>
-      <para role="tip">Users working with a MySQL database should also follow
+    <para role="tip">
+      Users working with a MySQL database should also follow
       the steps from the Installation Manual to increase the maximum
-      allowed packet for the database. </para>
+      allowed packet for the database.
     </para>
   </section>
 </section>

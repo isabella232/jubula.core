@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="information-on-winforms-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="information-on-winforms-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Information on WinForms AUTs</title>
-  <section id="supported-and-unsupported-components">
+  <section xml:id="supported-and-unsupported-components">
     <title>Supported and unsupported components</title>
     <para>
       Our regression tests are performed on a variety of components,
@@ -39,7 +40,7 @@
       </varlistentry>
     </variablelist>
   </section>
-  <section id="supported-and-unsupported-actions">
+  <section xml:id="supported-and-unsupported-actions">
     <title>Supported and unsupported actions</title>
     <para>
       Most of the actions that are available in the

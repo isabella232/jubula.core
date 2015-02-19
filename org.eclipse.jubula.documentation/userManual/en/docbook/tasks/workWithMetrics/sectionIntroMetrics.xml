@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="intro-metrics" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="intro-metrics" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Introduction to metrics</title>
@@ -25,11 +26,13 @@
   </para>
   <para>
     To run a metric or analysis for a specific context, select the context you require (e.g. the top node in the Test Case Browser to perform the metric or analysis just for items within this browser) and then select:
-    
-    <para>
-      <emphasis role="menuPath">Analyze</emphasis>
-    </para>
-      
+  </para>
+  
+  <para>
+    <emphasis role="menuPath">Analyze</emphasis>
+  </para>
+  
+  <para>
     from the context menu, selecting the required option to run.
   </para>
   <para>

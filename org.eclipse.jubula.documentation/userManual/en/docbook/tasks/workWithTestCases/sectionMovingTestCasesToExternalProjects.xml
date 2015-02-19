@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="moving-test-cases-to-external-projects" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="moving-test-cases-to-external-projects" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Moving Test Cases to external Projects</title>
-  <anchor role="helpid" id="testCaseMoveExternalContextId">Move Test Cases to an External Project</anchor>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testCaseMoveExternalContextId">Move Test Cases to an External Project</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
   <para>
     If you are reusing a Project or Projects in your currently
     opened Project (<xref linkend="reuseproject"/>), you can move Test Cases you
@@ -33,11 +34,13 @@
     <listitem>
       <para>
         Right click on the selected items and select:
-        
-        <para>
-          <emphasis role="menuPath">Move to external Project</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Move to external Project</emphasis>
+      </para>
+      
+      <para>
         from the context-sensitive menu.
       </para>
     </listitem>
@@ -62,9 +65,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="warning">If you move Test Cases containing referenced Test Cases
+  <para role="warning">
+    If you move Test Cases containing referenced Test Cases
     from other Projects, make sure that the Project the Test Cases
-    are dependent on is also reused in your external Project.</para>
+    are dependent on is also reused in your external Project.
   </para>
 </section>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="configuringaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="configuringaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring AUTs to be started from the ITE</title>
-  <anchor role="helpid" id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
+  <anchor role="helpid" xml:id="autConfigSettingWizardPagePageContextId">Configuring an AUT</anchor>
   <para>
     Once you have created a Project (<xref linkend="newproject"/>) and
     defined an AUT (<xref linkend="define-aut"/>), you can add and edit
@@ -28,10 +29,10 @@
     working directories, AUT arguments, Java versions, browser
     choices and activation methods.
   </para>
-  <para>
-    <para role="tip">If you want to start your Java AUT yourself, and have the ITE connect to it, then use the <emphasis>autrun</emphasis> command to start the AUT (<xref linkend="starting-java-with-the-command"/>). In this case, you do not need to create an AUT configuration.</para>
+  <para role="tip">
+    If you want to start your Java AUT yourself, and have the ITE connect to it, then use the <emphasis>autrun</emphasis> command to start the AUT (<xref linkend="starting-java-with-the-command"/>). In this case, you do not need to create an AUT configuration.
   </para>
-  <section id="aut-activation">
+  <section xml:id="aut-activation">
     <title>AUT activation</title>
     <para>
       Activation makes sure that the AUT is in focus at the

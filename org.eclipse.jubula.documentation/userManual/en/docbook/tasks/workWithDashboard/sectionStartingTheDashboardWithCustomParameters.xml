@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-dashboard-with-custom-parameters" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-dashboard-with-custom-parameters" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Using the Dashboard over the network: Starting the
@@ -31,11 +32,13 @@
     <listitem>
       <para>
         If you start the server without any arguments, it will use the properties file <emphasis>dashboardserver.properties</emphasis> from its current working directory. You can see this properties file in the same folder as the <emphasis>dashboardserver</emphasis> on Windows and Linux, and in the folder:
-        
-        <para>
-          <emphasis>dashboard/dashboardserver.app/Contents/MacOS</emphasis>
-        </para>
-
+      </para>
+      
+      <para>
+        <emphasis>dashboard/dashboardserver.app/Contents/MacOS</emphasis>
+      </para>
+      
+      <para>
         on Mac systems.
       </para>
     </listitem>

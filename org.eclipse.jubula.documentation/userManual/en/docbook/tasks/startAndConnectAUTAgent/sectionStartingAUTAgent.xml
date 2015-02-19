@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="start-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="start-aut-agent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting the AUT Agent</title>
@@ -14,23 +15,23 @@
     You can start the AUT Agent on your local machine (the same
     machine as the ITE) or on a remote machine in the network.
   </para>
-  <para>
-    <para role="tip">The AUT Agent is started by default without a console. If
+  <para role="tip">
+    The AUT Agent is started by default without a console. If
     you want to see the console, you must adapt the
     <emphasis>autagent.ini</emphasis> file. In the -vm parameter,
     use <emphasis>java</emphasis> instead of
-    <emphasis>javaw</emphasis> to see the console.</para>
+    <emphasis>javaw</emphasis> to see the console.
   </para>
-  <section id="windows-users">
+  <section xml:id="windows-users">
     <title>Windows users</title>
     <orderedlist>
       <listitem>
         <para>
           Start the AUT Agent via the start menu:
-          
-          <para>
-            <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>--&gt;<emphasis role="menuPath">Start AUT Agent</emphasis>.
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>--&gt;<emphasis role="menuPath">Start AUT Agent</emphasis>.
         </para>
       </listitem>
       <listitem>
@@ -47,37 +48,40 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="linux-users">
+  <section xml:id="linux-users">
     <title>Linux users</title>
     <para>
       Use the script:
-      
-      <para>
-        <emphasis role="input">./autagent (-p &lt;port number&gt;)</emphasis>.
-      </para>
+    </para>
+    
+    <para>
+      <emphasis role="input">./autagent (-p &lt;port number&gt;)</emphasis>.
     </para>
     <para>
       You can see and stop the AUT Agent in the system tray. Once
       the AUT Agent is started, you can connect to it from the ITE
-      (<xref linkend="connect-aut-agent"/>). <para role="tip">You must wait for the AUT
-      Agent to be running before you can connect to it.</para>
+      (<xref linkend="connect-aut-agent"/>).
     </para>
-    <para>
-      <para role="tip">The AUT Agent uses the current directory as its working
-      directory on Linux systems.</para>
+    <para role="tip">
+      You must wait for the AUT
+      Agent to be running before you can connect to it.
+    </para>
+    <para role="tip">
+      The AUT Agent uses the current directory as its working
+      directory on Linux systems.
     </para>
   </section>
-  <section id="starting-the-aut-agent-from-the-command-line">
+  <section xml:id="starting-the-aut-agent-from-the-command-line">
     <title>Starting the AUT Agent from the command line: options and
     parameters</title>
     <orderedlist>
       <listitem>
         <para>
           Start the AUT Agent from the Windows command line with this command:
-          
-          <para>
-            <emphasis role="input">autagent.exe (-p &lt;port number&gt;)</emphasis>
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="input">autagent.exe (-p &lt;port number&gt;)</emphasis>
         </para>
       </listitem>
       <listitem>
@@ -99,11 +103,14 @@
             <listitem>
               <para>
                 Port number. Enter the port number you wish to start
-                the AUT Agent on. <para role="tip">You can also use the
+                the AUT Agent on.
+              </para>
+              <para role="tip">
+                You can also use the
                 environment variable
                 ”<emphasis>TEST_AUT_AGENT_PORT</emphasis>” to set
                 the port number that should be used as a default
-                when you start the AUT Agent.</para>
+                when you start the AUT Agent.
               </para>
             </listitem>
           </varlistentry>
@@ -119,9 +126,11 @@
                 mode of the currently running AUT Agent via the
                 system tray. Right-click the AUT Agent icon and
                 (de)select <emphasis>Strict AUT
-                Management</emphasis> from the menu. <para role="tip">The
-                default mode for the AUT Agent is
-                <emphasis>strict</emphasis>.</para>
+                Management</emphasis> from the menu.
+              </para>
+              <para role="tip">
+                The default mode for the AUT Agent is
+                <emphasis>strict</emphasis>.
               </para>
             </listitem>
           </varlistentry>

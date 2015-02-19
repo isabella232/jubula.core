@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="customizing-the-perspective" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="customizing-the-perspective" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Customizing the Perspective</title>
@@ -19,11 +20,13 @@
     <listitem>
       <para>
         Select:
-        
-        <para>
-          <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Customize Perspective...</emphasis>
-        </para>
-        
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Customize Perspective...</emphasis>
+      </para>
+      
+      <para>
         from the main menu.
       </para>
     </listitem>

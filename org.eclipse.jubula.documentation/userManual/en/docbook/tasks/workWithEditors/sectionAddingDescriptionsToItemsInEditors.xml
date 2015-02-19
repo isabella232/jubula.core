@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,14 +7,14 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="adding-descriptions-to-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="adding-descriptions-to-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding descriptions to items in editors</title>
-  <anchor role="helpid" id="editDescriptionDialogContextId">Description Dialog</anchor>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
-  <anchor role="helpid" id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
+  <anchor role="helpid" xml:id="editDescriptionDialogContextId">Description Dialog</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="guidancerTestJobEditorContextId">Test Job Editor</anchor>
   <para>
     Descriptions are longer pieces of text that provide information about nodes in your tests. 
     You can add descriptions in the ITE to Test Cases, Test Suites and Test Jobs 

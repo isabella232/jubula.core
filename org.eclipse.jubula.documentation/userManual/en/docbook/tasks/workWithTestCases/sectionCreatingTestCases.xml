@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="creating-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="creating-test-cases" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Creating Test Cases</title>
-  <anchor role="helpid" id="testcaseNewContextId">New Test Case Dialog</anchor>
-  <anchor role="helpid" id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testcaseNewContextId">New Test Case Dialog</anchor>
+  <anchor role="helpid" xml:id="guidancerSpecTestCaseEditorContextId">Test Case Editor</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
   <para>
     Most of the time spent writing tests will involve creating and
     editing Test Cases.
@@ -23,23 +24,27 @@
   </para>
   <para>
     The Test Case Browser must also be visible. If it is not visible, change to the Specification Perspective perspective and select:
-    
-    <para>
-      <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Test Case Browser</emphasis>.
-    </para>
   </para>
+  
   <para>
-    <para role="tip">You can also have multiple instances of the Test Case
-    Browser open (<xref linkend="opening-the-test-case-browser-multiple-times"/>).</para>
+    <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Test Case Browser</emphasis>.
+  </para>
+  <para role="tip">
+    You can also have multiple instances of the Test Case
+    Browser open (<xref linkend="opening-the-test-case-browser-multiple-times"/>).
   </para>
   <orderedlist>
     <listitem>
       <para>
         Create a Test Case by using the context-sensitive menu in the Test Case Browser:
+      </para>
         
-        <para>
-          <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>. <para role="tip">You can also create Test Cases with a double-click on the ”<emphasis>Test Cases:</emphasis>” root entry or on a category in the Test Case Browser.</para>
-        </para>
+      <para>
+        <emphasis role="menuPath">New</emphasis>--&gt;<emphasis role="menuPath">New Test Case</emphasis>.
+      </para>
+      
+      <para role="tip">
+        You can also create Test Cases with a double-click on the ”<emphasis>Test Cases:</emphasis>” root entry or on a category in the Test Case Browser.
       </para>
     </listitem>
     <listitem>
@@ -50,7 +55,7 @@
         meaningfully – you will be able to read your tests easily
         and quickly choose which Test Case you need.
       </para>
-      <figure id="newtestcasedialog">
+      <figure xml:id="newtestcasedialog">
         <title>New Test Case Dialog</title>
         <mediaobject>
           <imageobject>
@@ -71,7 +76,7 @@
         This creates a new Test Case with that name in the Test Case
         Browser (<xref linkend="newtestcaseinbrowser"/>).
       </para>
-      <figure id="newtestcaseinbrowser">
+      <figure xml:id="newtestcaseinbrowser">
         <title>Test Case in Test Case Browser</title>
         <mediaobject>
           <imageobject>

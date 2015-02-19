@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,12 +7,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="adding-comments-to-categories" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="adding-comments-to-categories" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Adding comments to categories</title>
-  <anchor role="helpid" id="testSpecificationViewContextId">Test Case Browser</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="testSpecificationViewContextId">Test Case Browser</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
   <para>
     You can add comments to categories in the Test Suite Browser and
     Test Case Browser to add information on the purpose of the
@@ -27,10 +28,9 @@
     <listitem>
       <para>
         From the context-menu, select:
-        
-        <para>
-          <emphasis role="menuPath">Edit comment</emphasis>
-        </para>
+      </para>
+      <para>
+        <emphasis role="menuPath">Edit comment</emphasis>
       </para>
     </listitem>
     <listitem>
@@ -47,9 +47,9 @@
       </para>
     </listitem>
   </orderedlist>
-  <para>
-    <para role="tip">You can also add comments to Test Cases, and Test Suites
+  <para role="tip">
+    You can also add comments to Test Cases, and Test Suites
     (<xref linkend="adding-comments-to-items-in-editors"/>) as well as to the Project as
-    a whole (<xref linkend="projectproperties"/>).</para>
+    a whole (<xref linkend="projectproperties"/>).
   </para>
 </section>

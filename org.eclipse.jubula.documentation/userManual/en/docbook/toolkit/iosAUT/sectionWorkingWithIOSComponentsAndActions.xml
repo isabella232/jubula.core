@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="working-with-ios-components-and-actions" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="working-with-ios-components-and-actions" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Working with iOS components and actions</title>
@@ -42,7 +43,7 @@
     The following sections deal with how to use actions to address
     specific components in iOS.
   </para>
-  <section id="working-with-ios-switches">
+  <section xml:id="working-with-ios-switches">
     <title>Working with iOS switches</title>
     <para>
       Switches in iOS AUTs (<xref linkend="Switch"/>) can be addressed using
@@ -75,7 +76,7 @@
         </para>
       </listitem>
     </itemizedlist>
-    <figure id="Switch">
+    <figure xml:id="Switch">
       <title>Switch</title>
       <mediaobject>
         <imageobject>
@@ -85,7 +86,7 @@
       </mediaobject>
     </figure>
   </section>
-  <section id="working-with-ios-table-views-lists">
+  <section xml:id="working-with-ios-table-views-lists">
     <title>Working with iOS Table Views (lists)</title>
     <itemizedlist>
       <listitem>
@@ -134,14 +135,16 @@
           <emphasis>list</emphasis> component to make the correct
           portion of the screen visible. You can also use 0 clicks
           to simply hover over the item instead of tapping it.
-          <para role="tip">Bear in mind that many apps remember where you were
+        </para>
+        <para role="tip">
+          Bear in mind that many apps remember where you were
           on a screen. You may need to add explicit scrolling (via
           selection) to your tests in order to ensure that the
-          components you require are on screen.</para>
+          components you require are on screen.
         </para>
       </listitem>
     </itemizedlist>
-    <figure id="TableViewSimple">
+    <figure xml:id="TableViewSimple">
       <title>Simple Table View (list component)</title>
       <mediaobject>
         <imageobject>
@@ -151,7 +154,7 @@
         component)</phrase></textobject>
       </mediaobject>
     </figure>
-    <figure id="TableViewGrouped">
+    <figure xml:id="TableViewGrouped">
       <title>Grouped Table View (list component)</title>
       <mediaobject>
         <imageobject>
@@ -162,7 +165,7 @@
       </mediaobject>
     </figure>
   </section>
-  <section id="working-with-ios-tabbed-controls">
+  <section xml:id="working-with-ios-tabbed-controls">
     <title>Working with iOS tabbed controls</title>
     <itemizedlist>
       <listitem>
@@ -193,7 +196,7 @@
         </para>
       </listitem>
     </itemizedlist>
-    <figure id="SegmentedControls">
+    <figure xml:id="SegmentedControls">
       <title>Segmented controls (tabbed controls)</title>
       <mediaobject>
         <imageobject>
@@ -204,7 +207,7 @@
       </mediaobject>
     </figure>
   </section>
-  <section id="working-with-ios-pickers">
+  <section xml:id="working-with-ios-pickers">
     <title>Working with iOS pickers</title>
     <itemizedlist>
       <listitem>
@@ -231,7 +234,7 @@
         </para>
       </listitem>
     </itemizedlist>
-    <figure id="SinglePicker">
+    <figure xml:id="SinglePicker">
       <title>Single picker (combo component)</title>
       <mediaobject>
         <imageobject>
@@ -292,7 +295,7 @@
       </varlistentry>
     </variablelist>
   </section>
-  <section id="working-with-gestures">
+  <section xml:id="working-with-gestures">
     <title>Working with gestures</title>
     <itemizedlist>
       <listitem>
@@ -304,7 +307,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="ToolkitiOSKeyboard">
+  <section xml:id="ToolkitiOSKeyboard">
     <title>Working with the keyboard</title>
     <itemizedlist>
       <listitem>
@@ -364,14 +367,14 @@
         </itemizedlist>
       </listitem>
     </itemizedlist>
-    <para>
-      <para role="tip">Many iOS devices have a setting activated to start each
+    <para role="tip">
+      Many iOS devices have a setting activated to start each
       text with a capital letter. We recommend deactivating this
       setting for your tests, as attempts to enter lowercase text at
-      the beginning of a textfield will otherwise fail.</para>
+      the beginning of a textfield will otherwise fail.
     </para>
   </section>
-  <section id="working-with-unmappable-unsupported-components">
+  <section xml:id="working-with-unmappable-unsupported-components">
     <title>Working with unmappable (unsupported) components</title>
     <para>
       If there is a component that is unsupported, then you may be
@@ -382,7 +385,7 @@
       (<xref linkend="ToolkitiOSKeyboard"/>).
     </para>
   </section>
-  <section id="other-important-information-for-testing-ios-auts">
+  <section xml:id="other-important-information-for-testing-ios-auts">
     <title>Other important information for testing iOS AUTs</title>
     <para>
       <emphasis role="strong">Non-supported components</emphasis><?linebreak?>

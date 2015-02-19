@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="configuring-teststyle-for-a-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="configuring-teststyle-for-a-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Configuring Teststyle for a Project</title>
-  <anchor role="helpid" id="testStylePropertyPageContextId">Teststyle</anchor>
+  <anchor role="helpid" xml:id="testStylePropertyPageContextId">Teststyle</anchor>
   <para>
     When Teststyle has been activated for a Project
     (<xref linkend="activating-teststyle-for-a-project"/>), you can configure:
@@ -41,7 +42,7 @@
       </para>
     </listitem>
   </itemizedlist>
-  <section id="activating-and-deactivating-guidelines">
+  <section xml:id="activating-and-deactivating-guidelines">
     <title>Activating and deactivating individual guidelines</title>
     <para>
       In the Project properties, under the
@@ -59,8 +60,10 @@
       <listitem>
         <para>
           Deselect a checkbox to deactivate the guideline.
-          <para role="tip">When you select a guideline, the description text
-          gives you more information on what the guideline is for.</para>
+        </para>
+        <para role="tip">
+          When you select a guideline, the description text
+          gives you more information on what the guideline is for.
         </para>
       </listitem>
       <listitem>
@@ -95,7 +98,7 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="setting-message-level-for-guidelines">
+  <section xml:id="setting-message-level-for-guidelines">
     <title>Setting the message level for guidelines</title>
     <para>
       For each guideline in the Project properties, you can decide
@@ -170,9 +173,9 @@
       </listitem>
     </orderedlist>
   </section>
-  <section id="configuring-the-attributes-for-guidelines">
+  <section xml:id="configuring-the-attributes-for-guidelines">
     <title>Configuring the attributes for guidelines</title>
-    <anchor role="helpid" id="testStylePropertyPageEditAttributeContextId">Teststyle</anchor>
+    <anchor role="helpid" xml:id="testStylePropertyPageEditAttributeContextId">Teststyle</anchor>
     <para>
       For many of the guidelines in the Project properties, you can
       define the values or quantities for the aspects it checks. For
@@ -216,11 +219,11 @@
         </para>
       </listitem>
     </orderedlist>
-    <para>
-      <para role="warning">If you enter an invalid value, the default value will
-      be used in its place.</para>
+    <para role="warning">
+      If you enter an invalid value, the default value will
+      be used in its place.
     </para>
-    <figure id="attributes">
+    <figure xml:id="attributes">
       <title>Edit Attributes</title>
       <mediaobject>
         <imageobject>
@@ -230,9 +233,9 @@
       </mediaobject>
     </figure>
   </section>
-  <section id="configuring-the-contexts-for-guidelines">
+  <section xml:id="configuring-the-contexts-for-guidelines">
     <title>Configuring the contexts for guidelines</title>
-    <anchor role="helpid" id="testStylePropertyPageEditContextContextId">Teststyle</anchor>
+    <anchor role="helpid" xml:id="testStylePropertyPageEditContextContextId">Teststyle</anchor>
     <para>
       For many of the guidelines in the Project properties, you can
       set the contexts they should be valid for. Some of the
@@ -281,11 +284,11 @@
         </para>
       </listitem>
     </orderedlist>
-    <para>
-      <para role="warning">If you enter an invalid value, the default value will
-      be used in its place.</para>
+    <para role="warning">
+      If you enter an invalid value, the default value will
+      be used in its place.
     </para>
-    <figure id="contexts">
+    <figure xml:id="contexts">
       <title>Edit Contexts</title>
       <mediaobject>
         <imageobject>

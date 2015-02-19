@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="test-suite-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="test-suite-editor" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Test Suite Editor</title>
-  <anchor role="helpid" id="testSuiteEditorContextId">Test Suite Editor</anchor>
+  <anchor role="helpid" xml:id="testSuiteEditorContextId">Test Suite Editor</anchor>
   <para>
     You can open the Test Suite Editor by double-clicking a Test
     Suite in the Test Suite Browser.
@@ -36,9 +37,9 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para>
-    <para role="tip">In the Test Suite Editor, you can only alter details for
-    the top-level Test Cases for each subtree.</para>
+  <para role="tip">
+    In the Test Suite Editor, you can only alter details for
+    the top-level Test Cases for each subtree.
   </para>
   <para>
     When you single-click Test Cases in the Test Suite Editor, the

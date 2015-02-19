@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,13 +7,13 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="starting-stopping-and-pausing-test-suites-and-test-jobs" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="starting-stopping-and-pausing-test-suites-and-test-jobs" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Starting, stopping and pausing Test Suites and Test Jobs</title>
-  <anchor role="helpid" id="runningAutsViewContextId">Running AUTs View</anchor>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
-  <section id="starting-a-test-suite-or-a-test-job">
+  <anchor role="helpid" xml:id="runningAutsViewContextId">Running AUTs View</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
+  <section xml:id="starting-a-test-suite-or-a-test-job">
     <title>Starting a Test Suite or a Test Job</title>
     <para>
       To start a Test Suite or a Test Job, you must:
@@ -36,10 +37,10 @@
         </para>
       </listitem>
     </itemizedlist>
-    <para>
-      <para role="tip">Before starting a Test Suite or a Test Job, it is a
+    <para role="tip">
+      Before starting a Test Suite or a Test Job, it is a
       good idea to review your preferences for the test results
-      (<xref linkend="test-result-preferences"/>).</para>
+      (<xref linkend="test-result-preferences"/>).
     </para>
     <variablelist>
       <varlistentry>
@@ -69,13 +70,13 @@
         </listitem>
       </varlistentry>
     </variablelist>
-    <para>
-      <para role="tip">The amount of Test Suites or Test Jobs in the list for
+    <para role="tip">
+      The amount of Test Suites or Test Jobs in the list for
       the ”<emphasis>start test</emphasis>” button depends on your
       selection. In the Running AUTs View, only Test Suites for the
       currently selected AUT will be shown. In the Test Suite
       Browser, if you have selected a Test Suite or a Test Job, only
-      the selected item will be startable. </para>
+      the selected item will be startable.
     </para>
     <para>
       When a test is running, you can view the progress of the test
@@ -85,7 +86,7 @@
       without having to switch to the machine the AUT is running on.
     </para>
   </section>
-  <section id="stopping-a-test-suite-or-test-job">
+  <section xml:id="stopping-a-test-suite-or-test-job">
     <title>Stopping a Test Suite or Test Job</title>
     <para>
       To stop the test at any point, click on the ”<emphasis>stop
@@ -95,7 +96,7 @@
       as a reentry type.
     </para>
   </section>
-  <section id="pausing-exec">
+  <section xml:id="pausing-exec">
     <title>Pausing a Test Suite or Test Job</title>
     <orderedlist>
       <listitem>
@@ -108,11 +109,16 @@
       <listitem>
         <para>
           To continue with the test, press the ”<emphasis>Pause test
-          execution</emphasis>” button again. <para role="tip">You can opt to
+          execution</emphasis>” button again.
+        </para>
+        <para role="tip">
+          You can opt to
           automatically pause the test execution when an error
-          occurs via the toolbar (<xref linkend="interactive-test-analysis"/>).</para>
-          <para role="warning">If the client and AUT Agent are installed on the
-          same machine, moving the mouse will disrupt the test. </para>
+          occurs via the toolbar (<xref linkend="interactive-test-analysis"/>).
+        </para>
+        <para role="warning">
+          If the client and AUT Agent are installed on the
+          same machine, moving the mouse will disrupt the test.
         </para>
       </listitem>
     </orderedlist>

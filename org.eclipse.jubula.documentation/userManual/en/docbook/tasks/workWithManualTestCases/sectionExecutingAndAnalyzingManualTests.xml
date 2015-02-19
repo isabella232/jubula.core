@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,11 +7,11 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="executing-and-analyzing-manual-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="executing-and-analyzing-manual-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Executing and analyzing manual tests</title>
-  <anchor role="helpid" id="testExecViewContextId">Test Suite Browser</anchor>
+  <anchor role="helpid" xml:id="testExecViewContextId">Test Suite Browser</anchor>
   <para>
     Once you have created a manual Test Case
     (<xref linkend="creating-manual-tests"/>), you can execute it.
@@ -40,11 +41,14 @@
         Execute the Test Step as described, enter a comment if
         necessary, then click either ”<emphasis>passed</emphasis>”
         or ”<emphasis>failed</emphasis>” in the dialog to move to
-        the next Test Step. <para role="tip">If the Test Step fails, then an
+        the next Test Step.
+      </para>
+      <para role="tip">
+        If the Test Step fails, then an
         automatic screenshot will be taken
         (<xref linkend="test-result-preferences"/>), and any Event Handlers
         (<xref linkend="dealing-with-errors-in-tests"/>) for this Test Case will be
-        activated.</para>
+        activated.
       </para>
     </listitem>
     <listitem>

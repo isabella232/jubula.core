@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="windows-users-1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="windows-users-1" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Windows Users</title>
@@ -14,10 +15,10 @@
     <listitem>
       <para>
         Start the ITE from the start menu:
-        
-        <para>
-          <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>.
-        </para>
+      </para>
+      
+      <para>
+        <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>.
       </para>
     </listitem>
     <listitem>

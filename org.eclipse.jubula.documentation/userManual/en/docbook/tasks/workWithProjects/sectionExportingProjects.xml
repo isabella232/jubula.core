@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- 
   Copyright (c) 2014 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
@@ -6,7 +7,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section id="exportproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="exportproject" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                           xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Exporting Projects</title>
@@ -16,11 +17,11 @@
     (<xref linkend="exportall"/>). Projects are exported in .xml format so that
     they can be added to e.g. version control systems.
   </para>
-  <para>
-    <para role="tip">Projects are exported along with all their test result
-    summaries.</para>
+  <para role="tip">
+    Projects are exported along with all their test result
+    summaries.
   </para>
-  <section id="exportsingle">
+  <section xml:id="exportsingle">
     <title>Exporting the currently opened Project</title>
     <orderedlist>
       <listitem>
@@ -32,10 +33,10 @@
       <listitem>
         <para>
           Select:
-          
-          <para>
-            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Export</emphasis>.
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Export</emphasis>.
         </para>
       </listitem>
       <listitem>
@@ -55,23 +56,23 @@
           (<xref linkend="working-with-the-test-result-summary-view"/>)) will first be refreshed and then
           exported. It is saved as an .xml file.
         </para>
-        <para>
-          <para role="tip">When you export a single Project, only the
-          currently opened version is exported.</para>
+        <para role="tip">
+          When you export a single Project, only the
+          currently opened version is exported.
         </para>
       </listitem>
     </orderedlist>
   </section>
-  <section id="exportall">
+  <section xml:id="exportall">
     <title>Exporting all of the Projects from the database</title>
     <orderedlist>
       <listitem>
         <para>
           Select:
-          
-          <para>
-            <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Export all</emphasis>.
-          </para>
+        </para>
+        
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Export all</emphasis>.
         </para>
       </listitem>
       <listitem>
@@ -89,8 +90,10 @@
         <para>
           The Projects (including the test result summaries
           (<xref linkend="working-with-the-test-result-summary-view"/>)) will be saved as .xml files.
-          <para role="tip">When you export all Projects, all versions of each
-          Project are exported.</para>
+        </para>
+        <para role="tip">
+          When you export all Projects, all versions of each
+          Project are exported.
         </para>
       </listitem>
     </orderedlist>
