@@ -589,7 +589,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      * prints the command line syntax
      */
     private void printUsage() {
-        printConsole(Vn.getDefault().getVersion().toString());
+        writeLine(Vn.getDefault().getVersion().toString());
         Options options = createOptions(true);
         
         // The "-data" argument is parsed and handled by the Eclipse RCP
