@@ -47,6 +47,8 @@ import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
+
 /**
  * Toolkit specific commands for the <code>TableView</code>
  *
@@ -188,7 +190,8 @@ public class TableTester extends AbstractTableTester {
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
-                        Parent header = (Parent) table.lookup("TableHeaderRow"); //$NON-NLS-1$
+                        Parent header = (Parent) table.lookup(
+                                TableHeaderRow.class.getSimpleName());
                         return NodeBounds.checkIfContains(pos, header);
                     }
                 });
@@ -319,7 +322,8 @@ public class TableTester extends AbstractTableTester {
                         for (CheckBoxTableCell<?, ?> cell : checkboxCells) {
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
-                                return cell.lookup("CheckBox"); //$NON-NLS-1$
+                                return cell.lookup(CheckBox.class
+                                        .getSimpleName());
                             }
                         }
                         // No CheckBoxCell found. Now we have to check all
@@ -329,7 +333,8 @@ public class TableTester extends AbstractTableTester {
                         for (TableCell<?, ?> cell : cells) {
                             if (cell.getTableColumn().equals(col)
                                     && cell.getIndex() == row) {
-                                return cell.lookup("CheckBox"); //$NON-NLS-1$
+                                return cell.lookup(CheckBox.class
+                                        .getSimpleName());
                             }
                         }
                         return null;
