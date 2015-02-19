@@ -6,7 +6,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<project name="validateHelp" basedir="../../.">
+<project name="validateHelp" basedir="../../." default="validateManuals">
   <macrodef name="validate">
     <attribute name="dir"/>
     <sequential>
@@ -14,10 +14,10 @@
       
       <exec executable="xmllint" dir="@{dir}/en/docbook" output="@{dir}/en/validate/resolved.xml" errorproperty="xmllint.error">
         <arg value="--xinclude"/>
-          <arg value="book.xml"/>
+        <arg value="book.xml"/>
       </exec>
       
-      <java jar="resources/validation/jing.jar" output="@{dir}/en/validate/validation.txt" fork="true">
+      <java jar="resources/validation/lib/jing.jar" output="@{dir}/en/validate/validation.txt" fork="true">
         <arg value="resources/validation/docbook.rng"/>
         <arg value="@{dir}/en/validate/resolved.xml"/>
       </java>
@@ -29,6 +29,26 @@
       <echo>${validation.text}</echo>
     </sequential>
   </macrodef>
+  
+  <target name="setProxyAndGetRNG">
+    <setproxy proxyhost="gatekeeper.dev.bredex.local" proxyport="3128"/>
+    <get src="http://docbook.org/xml/5.0/rng/docbook.rng" dest="resources/validation/docbook.rng"/>
+  </target>
+  
+  <target name="getJing">
+    <exec executable="mvn" dir="./resources/validation" failonerror="true">
+      <env key="MAVEN_OPTS" value="-Xmx512m" />
+      <arg value="verify"/>
+      <arg value="clean"/>
+    </exec>
+  </target>
+  
+  <target name="validateManuals" depends="setProxyAndGetRNG, getJing">
+    <antcall target="validateUserManual"/>
+    <antcall target="validateDeveloperManual"/>
+    <antcall target="validateInstallationManual"/>
+    <antcall target="validateReleaseNotes"/>
+  </target>
   
   <target name="validateUserManual">
     <validate dir="userManual"/>

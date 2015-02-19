@@ -144,6 +144,7 @@
                                                buildUserManual,
                                                buildDeveloperManual,
                                                buildReleaseNotes">
+        <ant antfile="resources/validation/validation.xml" target="validateManuals"/>
     </target>
     
     <target name="echoEnvInfo" if="${notSuited}">
@@ -397,7 +398,7 @@
         </java>
         
         <filelist id="files" dir="./${dir}/en/docbook" files="${imageList}" />
-               
+        
         <restrict id="missing.files">
             <filelist refid="files"/>
             <not>
