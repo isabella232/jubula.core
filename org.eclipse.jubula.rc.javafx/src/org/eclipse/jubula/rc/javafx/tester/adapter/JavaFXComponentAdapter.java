@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.concurrent.Callable;
 
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
@@ -37,6 +39,8 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.MenuTester;
+import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -313,6 +317,31 @@ public class JavaFXComponentAdapter<T extends Node> extends
 
     @Override
     public AbstractMenuTester showPopup(int button) {
+        Point currentMousePosition = getRobot().getCurrentMousePosition();
+        Point2D mousePos = new Point2D(currentMousePosition.x,
+                currentMousePosition.y);
+        boolean widgetContainsCurrentPos = 
+                EventThreadQueuerJavaFXImpl.invokeAndWait("showPopup",
+                        new Callable<Boolean>() {
+                            @Override
+                            public Boolean call() throws Exception {
+                                return NodeBounds.checkIfContains(mousePos,
+                                        getRealComponent());
+                            }
+                        });
+        if (widgetContainsCurrentPos) {
+            Point2D local = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "showPopup", new Callable<Point2D>() {
+                    @Override
+                    public Point2D call() throws Exception {
+                        return getRealComponent().screenToLocal(mousePos);
+                    }
+                });
+            return showPopup(Rounding.round(local.getX()),
+                    ValueSets.Unit.pixel.rcValue(),
+                    Rounding.round(local.getY()),
+                    ValueSets.Unit.pixel.rcValue(), button);
+        }
         return showPopup(50, ValueSets.Unit.percent.rcValue(), 50,
                 ValueSets.Unit.percent.rcValue(), button);
     }
