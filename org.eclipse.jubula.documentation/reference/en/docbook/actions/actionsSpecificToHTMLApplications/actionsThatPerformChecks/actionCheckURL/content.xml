@@ -12,5 +12,13 @@
   <?dbhtml dir="actionCheckURL"?>
   <title>Check URL</title>
   
-  
+    <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the URL of a link.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

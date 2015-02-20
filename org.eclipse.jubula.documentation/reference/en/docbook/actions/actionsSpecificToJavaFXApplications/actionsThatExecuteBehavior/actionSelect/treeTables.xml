@@ -13,11 +13,79 @@
   
   <para><emphasis>Select Entry by Indexpath - specify Column</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this item to select a node from a tree table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node using an indexpath and by specifying which column to use.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Searching for the node and column you specify.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Clicking on the node, the amount of times you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
   
   <para><emphasis>Select Entry by Textpath - specify Column</emphasis></para>
   <para>
-    Lorem ipsum dolor sit amed
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this item to select a node from a tree table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You give the path to the node using an textpath and by specifying which column to use.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                Searching for the node and column you specify.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                If the tree is not expanded, it is expanded.
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Clicking on the node, the amount of times you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
   </para>
 </section>

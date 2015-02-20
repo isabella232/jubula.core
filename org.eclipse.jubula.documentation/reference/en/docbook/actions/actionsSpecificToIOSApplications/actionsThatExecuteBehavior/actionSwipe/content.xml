@@ -12,5 +12,51 @@
   <?dbhtml dir="actionSwipe"?>
   <title>Swipe</title>
   
-  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can use these actions to perform swipes in a specific direction.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          It can be used on:
+        
+          <itemizedlist>
+            <listitem>
+              <para>
+                Button components
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Components with text
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Components with text input
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Lists
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Pickers
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Tabbed components
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>  
+  </para>
 </section>
