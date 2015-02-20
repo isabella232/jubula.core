@@ -22,5 +22,61 @@
     	</para>
     </listitem>
   </itemizedlist>
- 
+  <para>
+    <emphasis role="strong">New actions for the HTML toolkit</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	There are new actions in the HTML toolkit to interact with an AUT based on a locator.
+      </para>
+    </listitem>
+    <listitem>
+    	<para>
+    	There are five new actions that use locators instead of a component name for object mapping:
+    	</para>
+    		<itemizedlist>
+    			<listitem>
+		    		<para>
+		    		Click: this action clicks once with the left mouse button on the 
+		    		item specified in the locator.
+		    		</para>
+    			</listitem>
+    			<listitem>
+		    		<para>
+		    		Wait: this action waits for the item specified in the locator. 
+		    		</para>
+    			</listitem>
+    			<listitem>
+		    		<para>
+		    		Check text: this action checks the text of the item specified 
+		    		in the locator.
+		    		</para>
+    			</listitem>
+    			<listitem>
+		    		<para>
+		    		Check CSS Path Count: this action checks whether the amount 
+		    		of items matching a CSS locator is a value you specify.
+		    		</para>
+    			</listitem>
+    			<listitem>
+		    		<para>
+		    		Check XPath Path Count: this action checks whether the amount 
+		    		of items matching an XPath locator is a value you specify.
+		    		</para>
+    			</listitem>
+    		</itemizedlist>
+    </listitem>
+  </itemizedlist>
+ <para>
+    <emphasis role="strong">Version information more clearly presented</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	You can now see version information in the splash screen, in the AUT Agent tray icon and
+     	using the -h parameter for the command line tools. 
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>
