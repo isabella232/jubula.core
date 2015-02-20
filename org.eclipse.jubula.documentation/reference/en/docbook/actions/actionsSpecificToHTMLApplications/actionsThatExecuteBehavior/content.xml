@@ -12,6 +12,7 @@
   <?dbhtml dir="actionsThatExecuteBehavior"?>
   <title>Actions that execute behavior</title>
   
+  <xi:include href="clickLocator/content.xml"/>
   <xi:include href="actionGoBack/content.xml"/>
   <xi:include href="actionOpenURL/content.xml"/>
   <xi:include href="actionReloadPage/content.xml"/>

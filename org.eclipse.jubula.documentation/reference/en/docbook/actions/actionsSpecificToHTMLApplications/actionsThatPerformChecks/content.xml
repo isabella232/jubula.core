@@ -12,6 +12,9 @@
   <?dbhtml dir="actionsThatPerformChecks"?>
   <title>Actions that perform checks</title>
   
+  <xi:include href="checkCSSPathCount/content.xml"/>
+  <xi:include href="checkText/content.xml"/>
   <xi:include href="actionCheckURL/content.xml"/>
+  <xi:include href="checkXPathCount/content.xml"/>
   
 </section>

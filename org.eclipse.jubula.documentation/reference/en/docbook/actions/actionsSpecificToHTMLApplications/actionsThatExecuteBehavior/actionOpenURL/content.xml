@@ -12,7 +12,6 @@
   <?dbhtml dir="actionOpenURL"?>
   <title>Open URL</title>
   
-  <para>
     <itemizedlist>
       <listitem>
         <para>
@@ -20,5 +19,5 @@
         </para>
       </listitem>
     </itemizedlist>
-  </para>
+
 </section>

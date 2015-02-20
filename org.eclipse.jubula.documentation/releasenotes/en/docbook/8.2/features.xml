@@ -61,7 +61,7 @@
     			</listitem>
     			<listitem>
 		    		<para>
-		    		Check XPath Path Count: this action checks whether the amount 
+		    		Check XPath Count: this action checks whether the amount 
 		    		of items matching an XPath locator is a value you specify.
 		    		</para>
     			</listitem>

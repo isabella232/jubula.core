@@ -14,5 +14,6 @@
   
   <xi:include href="actionsThatExecuteBehavior/content.xml"/>
   <xi:include href="actionsThatPerformChecks/content.xml"/>
+  <xi:include href="actionsForSynchronization/content.xml"/>
   
 </section>
