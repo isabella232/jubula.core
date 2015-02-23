@@ -8,14 +8,12 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<book id="exampleManual" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<book xml:id="exampleManual" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Example Manual</title>
 
   <xi:include href="example/chapter1.xml"/>
   <xi:include href="example2/chapter2.xml"/>
-  <xi:include href="structure/structure.xml"/>
-  <xi:include href="howto/howto.xml"/>
 
 </book>

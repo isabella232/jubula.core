@@ -6,16 +6,15 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<chapter id="example-chapter2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="example-chapter2" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="example2"?>
   <title>The title of the chapter 2</title>
   <para>
     This is an example chapter with sections.
-    
-    <xi:include href="section1.xml"/>
-    <xi:include href="section2.xml"/>
-    
   </para>
+  
+  <xi:include href="section1.xml"/>
+  <xi:include href="section2.xml"/>
 </chapter>

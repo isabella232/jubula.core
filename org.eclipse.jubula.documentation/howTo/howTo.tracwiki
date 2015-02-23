@@ -10,20 +10,21 @@ The files needed to build the documentation are structured like this:
 
 * org.eclipse.jubula.core
   * org.eclipse.jubula.documentation
-    * manual
+    * userManual
       * en
         * build
         * docbook
           * book.xml
-    * extensionapi
+    * developerManual
+    * reference
     * install
-    * buildManual.xml
+    * buildScript.xml
     * ...
   * org.eclipse.jubula.documentation.xsl
     * custom
     * docbook-xsl_reduced
 
-In the folder '''org.eclipse.jubula.core''' are the two subfolders '''org.eclipse.jubula.documentation''' and '''org.eclipse.jubula.documentation.xsl'''. The directory '''org.eclipse.jubula.documentation''' includes the source files for the different manuals in separate folders(e.g. '''manual''') and the ANT script ''buildManual.xml'', which builds the documentation.
+In the folder '''org.eclipse.jubula.core''' are the two subfolders '''org.eclipse.jubula.documentation''' and '''org.eclipse.jubula.documentation.xsl'''. The directory '''org.eclipse.jubula.documentation''' includes the source files for the different manuals in separate folders(e.g. '''manual''') and the ANT script ''buildScript.xml'', which builds the documentation.
 
 Inside the directories containing the source files is a folder '''build''', where the generated html files are moved, and a folder '''docbook''', where the Docbook xml files are saved. More information about the structure of the source files is written in [#source section 2.2].
 
@@ -35,18 +36,7 @@ The '''docbook''' folder consists of a ''book.xml'' file, where the chapters are
 
 = 3. How To Build =
 
-The manuals are built with an ANT-script. It is executed inside '''org.eclipse.jubula.documentation''' with the line:
-
-{{{ant -f buildManual.xml -Dname="<name>" -Ddir="<dir>" (-Doutput="[html|onlinehelp]")}}}
-
-The parameters name and dir are required for this script to determine which manual will be build. Here is a list of possible values for name and dir: 
-
-|| '''name'''          || '''dir'''    ||
-|| !UserManual         || manual       ||
-|| !InstallationManual || install      ||
-|| !ExtensionManual    || extensionapi ||
-
-The parameter output sets the format of the generated html files. With the value ''onlinehelp'' set Docbook will generate files suitable for the Eclipse online help. If ''html'' is set Docbook will generate a single html file. The default value is ''onlinehelp''.
+To build the whole documentation you need to execute the script '''com.bredexsw.guidancer.releng/build.xml''' with the target ''buildDocumentation''. The target will download the required files for the build and will start the build of the documentation.
 
 = 4. Docbook =
 
@@ -57,8 +47,8 @@ The parameter output sets the format of the generated html files. With the value
 To determine chapters and sections in the document use ''<chapter>'' or ''<section>''. A title has to be provided, which will be included in the document as a name for this chapter/section. The attribute id will be used as the filename for the generated html file.
 
 {{{
-<chapter|section id="test">
-  <title>Testchapter</title
+<chapter|section xml:id="test">
+  <title>Testchapter</title>
   ...
 </chapter|section>
 }}}
@@ -86,7 +76,7 @@ To create a paragraph use ''<para>''. It is similar to the p-element in html.
 ''<figure>'' inserts an image with a title into the document. The title will be included in the document below the figure.
 
 {{{
-<figure id="test">
+<figure xml:id="test">
   <title>Testfigure</title>
   <mediaobject>
     <imageobject>
@@ -136,10 +126,10 @@ In Docbook the following would provide a list like that:
   <listitem>
     <para>
       ...
+      <orderedlist|itemizedlist>
+        ...
+      </orderedlist|itemizedlist>
     </para>
-    <orderedlist|itemizedlist>
-      ...
-    </orderedlist|itemizedlist>
   </listitem>
 </orderedlist|itemizedlist>
 }}}
@@ -245,6 +235,18 @@ The syntax for external links is:
 <link xl:href="www.bredex.de">Link Text</link>
 }}}
 
+=== 4.1.8. Icons ===
+
+To show icons inline in the document use the ''<inlinemediaobject>''-element. It contains an ''<imagedata>''-element with a fileref-attribute, which points to an image file.
+
+{{{
+<inlinemediaobject>
+  <imageobject>
+    <imagedata fileref="test.png"/>
+  </imageobject>
+</inlinemediaobject>
+}}}
+
 == 4.2. Custom elements == #customxsl
 
 === 4.2.1. Help IDs ===
@@ -252,32 +254,24 @@ The syntax for external links is:
 Help IDs are ''<anchor>''-elements with a role '''helpid'''. They are used as an anchor for the context-sensitive help.
 
 {{{
-<anchor role="helpid" id="test">Text</anchor>
+<anchor role="helpid" condition="contextId" xml:id="test" xreflabel="Text"/>
 }}}
 
-The attribute id sets the context id used in the document. The text inside the element sets the description, which is shown if the help is called.
+The attribute condition sets the context ID used in the document. The text inside the xreflabel-attribute sets the description, which is shown if the help is called. The attribute id is required and has to be unique inside the document.
 
 Help IDs are placed between the title of a chapter or section and the text. Here is an example:
 
 {{{
-<section id="test">
+<section xml:id="test">
   <title>Test Section</title>
-  <anchor role="helpid" id="test">Text</anchor>
+  <anchor role="helpid" condition="contextId" xml:id="test" xreflabel="Text"/>
   <para>
     ...
   </para>
 </section>
 }}}
 
-=== 4.2.2. Icons ===
-
-To show icons inline in the document use the ''<mediaobject>''-element with the role '''icon''' and a file-attribute, which points to an image file.
-
-{{{
-<mediaobject role="icon" file="test.png"/>
-}}}
-
-=== 4.2.3. Tips and Warnings ===
+=== 4.2.2. Tips and Warnings ===
 
 Tips and warnings are created by inserting text into a ''<para>''-element with a role '''tip''' or '''warning'''. The result looks like this:
 
@@ -291,7 +285,7 @@ The syntax for it is:
 </para>
 }}}
 
-=== 4.2.4. Linebreaks ===
+=== 4.2.3. Linebreaks ===
 
 To manually do a linebreak inside a text use:
 
