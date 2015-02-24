@@ -21,13 +21,15 @@
       </listitem>
       <listitem>
         <para>
-        The action requires no component name and no object mapping.
+        The action requires no component name and no object mapping. You enter the 
+        CSS locator (without the css prefix) as the locator. 
         </para>
       </listitem>
       <listitem>
         <para>
         You can use different types of locators, and can find out the locator for 
-        your component using website inspection tools.
+        your component using website inspection tools. For example, the Firefox developer
+        options allow you to copy the unique selector (CSS Locator) for an item. 
         </para>
       </listitem>
     </itemizedlist>

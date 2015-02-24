@@ -25,6 +25,26 @@
         </para>
       </listitem>
       <listitem>
+      	<para>
+      	For example, you can enter an xpath locator like this:
+      	</para> 
+      	<para><emphasis role="input">xpath\=...</emphasis></para>
+      	<para>
+      	Or like this:
+      	</para>
+      	<para><emphasis role="input">'xpath=...'</emphasis></para>
+      </listitem>
+      <listitem>
+      	<para>
+      	You can enter a CSS locator like this:
+      	</para> 
+      	<para><emphasis role="input">css\=...</emphasis></para>
+      	<para>
+      	Or like this:
+      	</para>
+      	<para><emphasis role="input">'css=...'</emphasis></para>
+      </listitem>
+      <listitem>
         <para>
         You can use different types of locators, and can find out the locator for 
         your component using website inspection tools.

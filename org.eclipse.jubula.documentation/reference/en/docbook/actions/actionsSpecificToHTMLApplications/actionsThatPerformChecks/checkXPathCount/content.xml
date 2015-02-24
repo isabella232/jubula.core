@@ -21,7 +21,8 @@
       </listitem>
       <listitem>
         <para>
-        The action requires no component name and no object mapping.
+        The action requires no component name and no object mapping. You enter the 
+        Xpath locator (without the xpath prefix) as the locator. 
         </para>
       </listitem>
       <listitem>
