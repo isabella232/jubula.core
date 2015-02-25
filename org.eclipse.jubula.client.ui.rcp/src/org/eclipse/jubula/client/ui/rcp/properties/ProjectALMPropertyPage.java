@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.properties;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -50,6 +51,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.properties.ProjectGeneralPropertyPage.IOkListener;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedURLText;
@@ -81,7 +83,8 @@ import org.eclipse.swt.widgets.Table;
  * @author BREDEX GmbH
  * @created 08.02.2005
  */
-public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
+public class ProjectALMPropertyPage extends AbstractProjectPropertyPage 
+    implements IOkListener {
     /**
      * @author BREDEX GmbH
      */
@@ -963,5 +966,23 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage {
             return null;
         }
         
+    }    
+    
+    /** {@inheritDoc} */
+    public void okPressed() {
+        IProjectPropertiesPO props = getProject().getProjectProperties();
+        List<IALMReportingRulePO> invalidRules = 
+                new LinkedList<IALMReportingRulePO>();
+
+        List<IALMReportingRulePO> almReportingRules = props
+                .getALMReportingRules();
+        for (IALMReportingRulePO rule : almReportingRules) {
+            if (StringUtils.isEmpty(rule.getAttributeID())
+                    || StringUtils.isEmpty(rule.getValue())) {
+                invalidRules.add(rule);
+            }
+        }
+
+        almReportingRules.removeAll(invalidRules);
     }
 }

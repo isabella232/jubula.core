@@ -161,6 +161,7 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         mgr.addToRoot(almNode);
         
         generalPage.addOkListener(usedPage);
+        generalPage.addOkListener(almPage);
         
         return generalPage;
     }
