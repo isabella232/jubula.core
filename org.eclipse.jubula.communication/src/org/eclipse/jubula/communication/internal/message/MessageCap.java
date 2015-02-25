@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 
@@ -212,5 +213,10 @@ public class MessageCap implements CAP {
                     .getClass().getCanonicalName());
         }
         return builder.toString();
+    }
+    
+    /** {@inheritDoc} */
+    public ComponentIdentifier getComponentIdentifier() {
+        return getCi();
     }
 }

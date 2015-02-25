@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication;
 
+import org.eclipse.jubula.tools.ComponentIdentifier;
+
 /**
  * CAPs are executed remotely on the {@link org.eclipse.jubula.client.AUT AUT}<br>
  * <b>C</b>: {@link org.eclipse.jubula.tools.ComponentIdentifier Component} to address <br>
@@ -22,5 +24,10 @@ package org.eclipse.jubula.communication;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CAP {
-
+    /**
+     * @return the component identifier used for this CAP; might be
+     *         <code>null</code> e.g. for CAPs without a component identifier
+     *         mapping
+     */
+    ComponentIdentifier getComponentIdentifier();
 }
