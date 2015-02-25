@@ -391,7 +391,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         Bundle result = null;
         Version currVersion = Version.emptyVersion;
         for (Bundle bundle : bundles) {
-            if (bundle.getSymbolicName().contains(bundleId) 
+            if (bundle.getSymbolicName().equals(bundleId) 
                     && bundle.getVersion().compareTo(currVersion) > 0) {
                 result = bundle;
                 currVersion = bundle.getVersion();
