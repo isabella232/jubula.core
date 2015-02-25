@@ -418,4 +418,58 @@
 			</param>
 		</action>
 	</toolkitComponent>
+	
+	<toolkitComponent type="html.alert" visible="true" hasDefaultMapping="true">
+		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.AlertImplClass</testerClass>
+		<componentClass name="html.alert" />
+		<action name="CompSystem.VerifyText" changed="1.11">
+			<method>rcCheckText</method>
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifyExists" changed="1.23">
+			<method>rcVerifyExists</method>
+			<param name="CompSystem.IsExisting"
+                   descriptionKey="CompSystem.IsExisting.descr" >
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.InputTextDirect" changed="1.3">
+			<method>rcInputText</method>
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+				<type>java.lang.String</type>
+			</param>
+		</action>
+		<action name="CompSystem.alert.interact" changed="1.23">
+			<method>rcInteract</method>
+			<param name="CompSystem.alert.interact.type"
+                   descriptionKey="CompSystem.alert.interact.type.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>ACCEPT</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Accept" value="ACCEPT"/>
+					<element name="CompSystem.Dismiss" value="DISMISS"/>
+				</valueSet>
+			</param>
+		</action>
+	</toolkitComponent>
 </compSystem>
