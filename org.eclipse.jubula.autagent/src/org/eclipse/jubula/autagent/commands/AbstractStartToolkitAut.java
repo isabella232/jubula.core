@@ -36,6 +36,7 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.internal.utils.ZipUtil;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.Version;
 import org.slf4j.Logger;
@@ -380,22 +381,29 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
     }
 
     /**
-     * Looks for the bundle with the given ID and the highest Version. This search 
-     * also includes non active bundles.
-     * @param bundleId the bundle ID to look for
+     * Looks for the bundle with the given ID and the highest Version. This
+     * search also includes non active bundles.
+     * 
+     * @param bundleId
+     *            the bundle ID to look for
      * @return the bundle
      */
     private static Bundle bundleLookupWithInactive(String bundleId) {
-        Bundle[] bundles = EclipseStarter.getSystemBundleContext().
-                getBundles();
+        BundleContext systemBundleContext = EclipseStarter
+                .getSystemBundleContext();
         Bundle result = null;
-        Version currVersion = Version.emptyVersion;
-        for (Bundle bundle : bundles) {
-            if (bundle.getSymbolicName().equals(bundleId) 
-                    && bundle.getVersion().compareTo(currVersion) > 0) {
-                result = bundle;
-                currVersion = bundle.getVersion();
+        if (systemBundleContext != null) {
+            Bundle[] bundles = systemBundleContext.getBundles();
+            Version currVersion = Version.emptyVersion;
+            for (Bundle bundle : bundles) {
+                if (bundle.getSymbolicName().equals(bundleId)
+                        && bundle.getVersion().compareTo(currVersion) > 0) {
+                    result = bundle;
+                    currVersion = bundle.getVersion();
+                }
             }
+        } else {
+            log.warn("systemBundleContext is null - skipping bundleLookupWithInactive()"); //$NON-NLS-1$
         }
         return result;
     }
