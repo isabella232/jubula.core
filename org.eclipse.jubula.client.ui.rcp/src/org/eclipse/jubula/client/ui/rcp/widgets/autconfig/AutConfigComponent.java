@@ -16,12 +16,14 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.ErrorDialog;
@@ -29,36 +31,48 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ConnectAutAgentBP;
+import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
 import org.eclipse.jubula.client.ui.rcp.dialogs.RemoteFileBrowserDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
-import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
-import org.eclipse.jubula.client.ui.rcp.utils.RemoteFileStore;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager;
 import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
+import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
+import org.eclipse.jubula.client.ui.rcp.utils.RemoteFileStore;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
+import org.eclipse.jubula.toolkit.common.monitoring.MonitoringAttribute;
+import org.eclipse.jubula.toolkit.common.monitoring.MonitoringRegistry;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -67,12 +81,17 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
+import org.eclipse.ui.internal.about.AboutUtils;
 
 /**
  * @author BREDEX GmbH
@@ -512,12 +531,13 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     }
     /**
      * Create this dialog's monitoring area component  
-     * @param monitoringComposite Compostie representing the ccArea
+     * @param monitoringComposite Composite representing the ccArea
      * 
      */
     protected void createMonitoringArea(Composite monitoringComposite) {
         setCompositeVisible(monitoringComposite, true);
     }
+    
     /**
      * Inits the AUT-Configuration and AutAgent area.
      * 
@@ -648,7 +668,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @param composite The composite for which to set the visibility.
      * @param visible Whether the composite should be made visible or invisible.
      */
-    private void setCompositeVisible(Composite composite, boolean visible) {
+    protected void setCompositeVisible(Composite composite, boolean visible) {
         composite.setVisible(visible);
         ((GridData)composite.getLayoutData()).exclude = !visible;
     }
@@ -1434,5 +1454,288 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         m_autIdValidator = validator;
     }
 
+    /**
+     * Creates the label for the monitoring widget
+     * @param composite The monitoringComposite
+     * @param attribute The MonitoringAttribute to get the information from
+     */
+    private void createMonitoringWidgetLabel(Composite composite, 
+            MonitoringAttribute attribute) {
+        
+        Label widgetLabel = UIComponentHelper.createLabel(composite, 
+                attribute.getDescription());
+        if (!StringUtils.isEmpty(attribute.getInfoBobbleText())) {
+            ControlDecorator.decorateInfo(widgetLabel, 
+                    attribute.getInfoBobbleText(), false);
+        }
+    }  
+    
+    /**
+     * Dynamically creates GUI components for monitoring composite
+     * @param monitoringComposite The composite to add the components to
+     * @param monitoringAttributeList This list contains attributes from the extension point
+     * 
+     */
+    protected void createMonitoringUIComponents(Composite monitoringComposite, 
+            java.util.List<MonitoringAttribute> monitoringAttributeList) {
+        
+        for (int i = 0; i < monitoringAttributeList.size(); i++) {
+            final MonitoringAttribute attribute = 
+                monitoringAttributeList.get(i);
+            if (attribute.isRender()) { 
+                if (attribute.getType().equalsIgnoreCase(
+                        MonitoringConstants.RENDER_AS_TEXTFIELD)) { 
+                    createMonitoringWidgetLabel(monitoringComposite, attribute);
+                    createMonitoringTextFieldWidget(
+                            monitoringComposite, attribute);
+                }                
+                if (attribute.getType().equalsIgnoreCase(
+                        MonitoringConstants.RENDER_AS_FILEBROWSE)) {
+                    createMonitoringWidgetLabel(monitoringComposite, attribute);
+                    createMonitoringFilebrowse(monitoringComposite, attribute);
+                }
+                if (attribute.getType().equalsIgnoreCase(
+                        MonitoringConstants.RENDER_AS_CHECKBOX)) { 
+                    createMonitoringWidgetLabel(monitoringComposite, attribute);
+                    createMonitoringCheckBoxWidget(
+                            monitoringComposite, attribute);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Creates a text field and a browse button
+     * for the given monitoring composite 
+     * @param composite The composite to add the widget on
+     * @param att The current attribute to render   
+     */
+    private void createMonitoringFilebrowse(Composite composite, 
+            MonitoringAttribute att) {
+        
+        Composite c = UIComponentHelper.createLayoutComposite(composite, 2);
+        final Text textField = createMonitoringTextFieldWidget(c, att);
+        final Button browseButton = new Button(c, SWT.PUSH);
+        browseButton.setText(Messages.AUTConfigComponentBrowse);
+        browseButton.setLayoutData(BUTTON_LAYOUT);
+        browseButton.setData(
+                MonitoringConstants.MONITORING_KEY, att.getId());
+        browseButton.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) { 
+                monitoringBrowseButtonSelected(textField);
+            }
+        });    
+        
+    }
+    
+
+    /**
+     * Creates a Checkbox for the given monitoring composite, 
+     * which was specified in the extension point.     * 
+     * @param composite The composite to add the widget on
+     * @param att The current attribute
+     * 
+     */
+    private void createMonitoringCheckBoxWidget(Composite composite, 
+            final MonitoringAttribute att) {
+        
+        final String autId = getConfigValue(AutConfigConstants.AUT_ID);  
+        final Button b = 
+            UIComponentHelper.createToggleButton(composite, 1);
+        b.setData(MonitoringConstants.MONITORING_KEY, att.getId());
+        b.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent event) {
+                showMonitoringInfoDialog(autId); 
+                putConfigValue(att.getId(), 
+                        String.valueOf(b.getSelection()));     
+            }
+        });
+        
+    }
+    /**
+     * creates a Textfield for a given monitoring composite,
+     * which was specified in the extension point.
+     * @param composite The monitoring composite
+     * @param att the MonitoringAttribute
+     * @return A monitoring textfield
+     * 
+     */
+    private Text createMonitoringTextFieldWidget(Composite composite, 
+            final MonitoringAttribute att) {
+        
+        final Text textField = UIComponentHelper.createTextField(
+                composite, 1);
+        textField.setData(MonitoringConstants.MONITORING_KEY, 
+                att.getId());
+        textField.setText(getConfigValue(att.getId()));
+        final IValidator validator = att.getValidator();
+        textField.addModifyListener(new ModifyListener() {              
+            public void modifyText(ModifyEvent e) {                  
+                if (validator != null) {                      
+                    IStatus status = 
+                        validator.validate(textField.getText());      
+                    if (!status.isOK()) {
+                        DialogStatusParameter error = 
+                            createErrorStatus(status.getMessage());
+                        addError(error);                                     
+                    } 
+                    checkAll();                   
+                }
+                putConfigValue(att.getId(), textField.getText());     
+            }
+        });  
+        final String autId = getConfigValue(AutConfigConstants.AUT_ID);
+        textField.addFocusListener(new FocusListener() {            
+            private String m_oldText = StringConstants.EMPTY;
+            public void focusLost(FocusEvent e) {
+                String currentText = textField.getText();
+                if (!currentText.equals(m_oldText)) {
+                    showMonitoringInfoDialog(autId);       
+                } 
+                putConfigValue(att.getId(), textField.getText()); 
+            }                            
+            public void focusGained(FocusEvent e) {
+                m_oldText = textField.getText();
+            }
+        });            
+        return textField;
+        
+    }    
+        
+    /**
+     * if monitoring parameters changed, the AUT must be restarted, only than
+     * the changes will be active. This must be done, because at start up the
+     * autConfigMap will be stored in the MonitoringDataStore.
+     * 
+     * @param autId
+     *            The autId
+     */
+    protected void showMonitoringInfoDialog(String autId) {
+        LinkedList<AutIdentifier> l = (LinkedList<AutIdentifier>) 
+                AutAgentRegistration.getInstance().getRegisteredAuts();
+        String message = NLS.bind(Messages.ClientMonitoringInfoDialog, autId);
+        for (AutIdentifier a : l) {
+            if (a.getExecutableName().equals(autId)) {
+                NagDialog.runNagDialog(null, message,
+                        ContextHelpIds.AUT_CONFIG_PROP_DIALOG);
+            }
+        }
+    }
+    
+    /**
+     * deletes all GUI elements form the given composite.
+     * @param compostie A Composite from which all gui elements should be deleted
+     */    
+    protected void cleanComposite(Composite compostie) { 
+        
+        Control[] ca = compostie.getChildren();
+        for (int i = 0; i < ca.length; i++) {
+            ca[i].dispose();
+        }        
+        resize();
+        getShell().pack();
+    }   
+    
+    /**
+     * Handles a selection of the "Browse" button,
+     * corresponding to the text field in the monitoring area.
+     * @param textField The text field to set the path to.
+     */
+    private void monitoringBrowseButtonSelected(Text textField) {
+        if (isRemoteRequest()) {
+            remoteBrowse(true, 
+                    String.valueOf(textField.getData(
+                            MonitoringConstants.MONITORING_KEY)),
+                    textField,
+                    Messages.AUTConfigComponentSelectDir);
+        } else {
+            DirectoryDialog directoryDialog = new DirectoryDialog(getShell(),
+                    SWT.APPLICATION_MODAL | SWT.ON_TOP);
+            handleBrowseDirButtonEvent(textField, directoryDialog);
+        }
+    }
+    
+    /**
+     * handles the button event, which was thrown by the browse button for
+     * the m_autInstallDirectoryTextField       
+     * @param directoryDialog The DirectoryDialog
+     * @param textField The textField
+     */
+    private void handleBrowseDirButtonEvent(Text textField,
+            DirectoryDialog directoryDialog) {
+        String directory = null;
+        directoryDialog.setMessage(Messages.AUTConfigComponentSelectDir);
+        File path = new File(textField.getText());
+        String filterPath = Utils.getLastDirPath();
+        if (path.exists()) {
+            try {
+                filterPath = path.getCanonicalPath();
+            } catch (IOException e) {
+                //empty
+            }
+        }
+        directoryDialog.setFilterPath(filterPath);
+        directory = directoryDialog.open();
+        if (directory != null) {
+            textField.setText(directory);
+            Utils.storeLastDirPath(directoryDialog.getFilterPath());  
+            putConfigValue(String.valueOf(textField.getData(
+                    MonitoringConstants.MONITORING_KEY)), 
+                    textField.getText());
+        }
+    }
+    
+    /**
+     * Creating an actual monitoring area
+     * 
+     * @param monitoringComposite
+     *            the composite
+     */
+    protected void createActualMonitoringArea(
+        Composite monitoringComposite) {     
+        GridLayout result = (GridLayout)monitoringComposite.getLayout();        
+        result.horizontalSpacing = 40;       
+        result.numColumns = 2;
+        monitoringComposite.setLayout(result);        
+        final String monitoringID = getConfigValue(
+                AutConfigConstants.MONITORING_AGENT_ID);
+              
+        if (!StringUtils.isEmpty(monitoringID)) {  
+            IConfigurationElement monitoringExtension = 
+                MonitoringRegistry.getElement(monitoringID);
+            if (monitoringExtension != null) {
+                createMonitoringUIComponents(monitoringComposite, 
+                        MonitoringRegistry.getAttributes(monitoringExtension));
+                String extURL = MonitoringRegistry
+                        .getExtUrlForMonitoringId(monitoringID);
+                if (!StringUtils.isEmpty(extURL)) { 
+                    UIComponentHelper.createLabel(monitoringComposite, 
+                            Messages.MonitoringAgentAddInfo);
+                    Link extRef = new Link(monitoringComposite, SWT.NONE);
+                    extRef.setText(extURL);
+                    extRef.addListener(SWT.Selection, new Listener() {
+                        public void handleEvent(Event event) {
+                            AboutUtils.openLink(getShell(), event.text);
+                        }
+                    });
+                }
+            } else {
+                StyledText missingExtensionLabel = 
+                    new StyledText(monitoringComposite, SWT.WRAP);
+                missingExtensionLabel.setText(
+                        Messages.MissingMonitoringExtension);
+                missingExtensionLabel.setEditable(false);
+                missingExtensionLabel.setEnabled(false);
+                missingExtensionLabel.setStyleRange(new StyleRange(
+                        0, missingExtensionLabel.getText().length(), 
+                        null, null, SWT.ITALIC));
+                ControlDecorator.createWarning(
+                        missingExtensionLabel,
+                        I18n.getString(
+                            "MissingMonitoringExtension.fieldDecorationText")); //$NON-NLS-1$
+            }
+        }
+        resize();
+        getShell().pack();
+    }
 }
- 

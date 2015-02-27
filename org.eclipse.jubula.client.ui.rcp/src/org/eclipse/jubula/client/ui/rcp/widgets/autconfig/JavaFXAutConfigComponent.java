@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.widgets.autconfig;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.zip.ZipException;
@@ -26,8 +28,10 @@ import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
+import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
+import org.eclipse.jubula.toolkit.common.monitoring.MonitoringRegistry;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -74,6 +78,8 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
     private Text m_autArgsTextField;
     /** GUI component */
     private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
+    /** gui component */
+    private DirectCombo<String> m_monitoringCombo;
     /** GUI component */
     private Text m_envTextArea;
     /** the WidgetModifyListener */
@@ -171,6 +177,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_execTextField.addFocusListener(getFocusListener());
         m_execTextField.addModifyListener(modifyListener);
         m_execButton.addSelectionListener(selectionListener);
+        m_monitoringCombo.addSelectionListener(selectionListener);
     }
 
     /**
@@ -192,6 +199,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_execTextField.removeFocusListener(getFocusListener());
         m_execTextField.removeModifyListener(modifyListener);
         m_execButton.removeSelectionListener(selectionListener);
+        m_monitoringCombo.removeSelectionListener(selectionListener);
     }
     
     /**
@@ -268,6 +276,28 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_activationMethodCombo.setSelectedObject(
                 ActivationMethod.getEnum(data
                         .get(AutConfigConstants.ACTIVATION_METHOD)));
+        
+        String monitoringAgentId = data.get(
+                AutConfigConstants.MONITORING_AGENT_ID);
+        if (StringUtils.isEmpty(monitoringAgentId)) { 
+            m_monitoringCombo.deselectAll();
+        } else {
+            m_monitoringCombo.setSelectedObject(monitoringAgentId);
+            if (m_monitoringCombo.getSelectedObject() == null) {
+                // additional handling for missing Monitoring extension
+                ArrayList<String> values = 
+                    new ArrayList<String>(m_monitoringCombo.getValues());
+                ArrayList<String> displayValues = new ArrayList<String>(
+                        Arrays.asList(m_monitoringCombo.getItems()));
+                values.add(0, monitoringAgentId);
+                values.remove(null);
+                displayValues.add(0, monitoringAgentId);
+                displayValues.remove(StringUtils.EMPTY);
+                
+                m_monitoringCombo.setItems(values, displayValues);
+                m_monitoringCombo.setSelectedObject(monitoringAgentId);
+            }
+        }
         
         if (!isDataNew(data)) {
             m_envTextArea.setText(StringUtils.defaultString(data
@@ -588,7 +618,10 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
             } else if (source.equals(m_activationMethodCombo)) {
                 handleActivationComboEvent();
                 return;
-            }
+            } else if (source.equals(m_monitoringCombo)) {
+                handleMonitoringComboEvent();
+                return;
+            } 
 
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
                     + StringConstants.LEFT_PARENTHESES + source 
@@ -599,6 +632,29 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         public void widgetDefaultSelected(SelectionEvent e) {
             widgetSelected(e);
         }
+    }
+    
+    /**
+     * This method handles the event which was fired when an item in the
+     * Combobox is selected.    
+     */
+    protected void handleMonitoringComboEvent() {  
+        
+        if (m_monitoringCombo.getSelectedObject() != null) {         
+            
+            putConfigValue(AutConfigConstants.MONITORING_AGENT_ID,   
+                    m_monitoringCombo.getSelectedObject().toString()); 
+          
+            cleanComposite(getMonitoringAreaComposite());
+            createActualMonitoringArea(getMonitoringAreaComposite());    
+            
+        } else {
+            cleanComposite(getMonitoringAreaComposite());
+            putConfigValue(AutConfigConstants.MONITORING_AGENT_ID, 
+                    StringConstants.EMPTY);            
+        }        
+        String autId = getConfigValue(AutConfigConstants.AUT_ID);
+        showMonitoringInfoDialog(autId);
     }
     
     /**
@@ -636,6 +692,17 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
                 expertAreaComposite, 2,
                 "AUTConfigComponent.ActivationMethod", ActivationMethod.class); //$NON-NLS-1$
 
+        UIComponentHelper.createSeparator(expertAreaComposite, 3);
+        
+        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
+                expertAreaComposite, "AUTConfigComponent.labelMonitoring"), //$NON-NLS-1$, 
+                "AUTConfigComponent.labelMonitoring.helpText", false); //$NON-NLS-1$
+                        
+        m_monitoringCombo = UIComponentHelper.createCombo(
+                expertAreaComposite, 2, 
+                MonitoringRegistry.getAllRegisteredMonitoringIds(), 
+                MonitoringRegistry.getAllRegisteredMonitoringNames(), true); 
+        
         super.createExpertArea(expertAreaComposite);
     }
 
@@ -711,5 +778,11 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
     public void dispose() {
         RemoteFileBrowserBP.clearCache(); // get rid of cached directories
         super.dispose();
-    } 
+    }
+    
+    @Override
+    protected void createMonitoringArea(Composite monitoringComposite) {
+        super.createActualMonitoringArea(monitoringComposite);
+        setCompositeVisible(monitoringComposite, true);
+    }
 }
