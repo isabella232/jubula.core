@@ -21,6 +21,7 @@ public class Messages extends NLS {
     public static String infoSwingToolkit;
     public static String infoSwtToolkit;
     public static String infoRcpToolkit;
+    public static String infoJavaFXToolkit;
     public static String infoAutId;
     public static String infoGenerateTechnicalComponentNames;
     public static String infoKbLayout;

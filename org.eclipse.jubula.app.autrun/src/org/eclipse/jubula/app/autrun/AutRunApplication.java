@@ -77,6 +77,9 @@ public class AutRunApplication implements IApplication {
     /** <code>TK_SWING</code> */
     private static final String TK_SWING = "swing"; //$NON-NLS-1$
 
+    /** <code>TK_JAVAFX</code> */
+    private static final String TK_JAVAFX = "javafx"; //$NON-NLS-1$
+
     /** <code>DEFAULT_NAME_TECHNICAL_COMPONENTS</code> */
     private static final boolean DEFAULT_NAME_TECHNICAL_COMPONENTS = true;
 
@@ -158,6 +161,9 @@ public class AutRunApplication implements IApplication {
     
     /** rcp class prefix */
     private static final String RCP_AUT_TOOLKIT_CLASS_PREFIX = "Rcp"; //$NON-NLS-1$
+    
+    /** javafx class prefix */
+    private static final String JAVAFX_AUT_TOOLKIT_CLASS_PREFIX = "JavaFX"; //$NON-NLS-1$
     // - Command line options - End //
 
     /**
@@ -250,6 +256,8 @@ public class AutRunApplication implements IApplication {
                 Messages.infoSwtToolkit));
         autToolkitOptionGroup.addOption(new Option(TK_RCP,
                 Messages.infoRcpToolkit));
+        autToolkitOptionGroup.addOption(new Option(TK_JAVAFX,
+                Messages.infoJavaFXToolkit));
         autToolkitOptionGroup.setRequired(true);
         options.addOptionGroup(autToolkitOptionGroup);
 
@@ -388,6 +396,8 @@ public class AutRunApplication implements IApplication {
                 toolkit = SWT_AUT_TOOLKIT_CLASS_PREFIX;
             } else if (cmdLine.hasOption(TK_RCP)) {
                 toolkit = RCP_AUT_TOOLKIT_CLASS_PREFIX;
+            } else if (cmdLine.hasOption(TK_JAVAFX)) {
+                toolkit = JAVAFX_AUT_TOOLKIT_CLASS_PREFIX;
             }
 
             int autAgentPort = EnvConstants.AUT_AGENT_DEFAULT_PORT;
