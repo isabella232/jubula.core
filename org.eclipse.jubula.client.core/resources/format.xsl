@@ -11,9 +11,27 @@
 					font-family: monospace;
 				}
 				
+				/* Turn off wrapping for list items */
+				li {
+					white-space: nowrap;
+				}
+				
 				/* Turn off list bullets */
 				ul.report li {
 					list-style: none;
+				}
+				
+				/* CAP details table style */
+				table.cap {
+					border-collapse: collapse;
+				}
+				
+				table.cap tr:nth-child(even) {
+				    background-color: lightgray;
+				}
+				
+				table.cap tr:nth-child(odd) {
+				    background-color: lightsteelblue;
 				}
 
 				ul.report, ul.report ul, ul.report li {
@@ -29,35 +47,121 @@
 				ul.report li a {
 					text-decoration: none;
 				}
+				
+				/*********************************/
+				
+				/* not tested */
+				big.not {
+					color: #999999;
+				}
+				
+				big.not::after {
+					content: " (not tested)";
+				}
+				
+				/* ok */
+				big.ok {
+					color: green;
+				}
+				
+				big.ok::after {
+					content: " (ok)";
+				}
+				
+				/* not ok */
+				big.nok {
+					color: #DD0000;
+				}
+				
+				big.nok::after {
+					content: " (failed)";
+				}
+				
+				/* not verified */
+				big.nov {
+					color: #DD0000;
+				}
+				
+				big.nov::after {
+					content: " (not verified)";
+				}
+				
+				/* nested error */
+				big.ner {
+					color: #DD0000;
+				}
+				
+				big.ner::after {
+					content: " (nested error)";
+				}
+				
+				/* retrying */
+				big.ret {
+					color: #DD0000;
+				}
+				
+				big.ret::after {
+					content: " (retrying)";
+				}
+				
+				/* ok after retrying */
+				big.okr {
+					color: green;
+				}
+				
+				big.okr::after {
+					content: " (ok after retry)";
+				}
+				
+				/* test aborted due to internal error */
+				big.abo {
+					color: #DD0000;
+				}
+				
+				big.abo::after {
+					content: " (test aborted due to internal error)";
+				}
+				
+				/* testing */
+				big.tst {
+					color: lightgray;
+				}
+				
+				big.tst::after {
+					content: " (testing)";
+				}
+				
+				/*********************************/
 
 				/* Show "bullets" in the links, depending on the class of the
-			     LI that the link's in */
-				ul.report li.open big :before {
+			     li that the link is in */
+				ul.report li.o big::before {
 					content: "&#8863; ";
 				}
 				
-				ul.report li.closed big :before {
+				ul.report li.c big::before {
 					content: "&#8862; ";
 				}
 
 				/* Actually show and hide sublists */
-				ul.report li.open ul {
+				ul.report li.o ul {
 					display: block;
 				}
 
-				ul.report li.closed ul {
+				ul.report li.c ul {
 					display: none;
 				}
 				</style>
 				<script type="text/javascript">
-				    function toggle(element) {
+					/* toggle expansion state */
+				    function t(element) {
 					    var sibling = element.nextSibling;
 					    var parent = element.parentNode;
-					    if (parent.className =='open') {
-							parent.className = 'closed';
+					    if (parent.className =='o') {
+							parent.className = 'c';
 							if (sibling) sibling.style.display = 'none';
 					    } else {
-							parent.className = 'open';
+							parent.className = 'o';
 							if (sibling) sibling.style.display = 'block';
 					    }
 				   }
@@ -206,16 +310,16 @@
 			<tr>
 				<td>
 					<ul class="report">
-						<LI nowrap="true">
+						<li>
 							<xsl:choose>
 								<xsl:when test="status != 2 and status != 3 and status != 5">
-									<xsl:attribute name="class">closed</xsl:attribute>
+									<xsl:attribute name="class">c</xsl:attribute>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:attribute name="class">open</xsl:attribute>
+									<xsl:attribute name="class">o</xsl:attribute>
 								</xsl:otherwise>
 							</xsl:choose>
-							<A HREF="#testsuite" onclick="toggle(this)">
+							<A HREF="#ts" onclick="t(this)">
 								<xsl:call-template name="writeColored">
 									<!-- quoted String -->
 									<xsl:with-param name="text" select="'TS'"/>
@@ -225,7 +329,7 @@
 							<ul>
 								<xsl:apply-templates select="test-run"/>
 							</ul>
-						</LI>
+						</li>
 					</ul>
 				</td>
 			</tr></table>
@@ -260,7 +364,7 @@
 	
 	<xsl:template match="error-message">
 		<tr>
-			<th colspan="2" align="left"><br></br>Test could not be executed</th>
+			<th colspan="2" align="left"><br/>Test could not be executed</th>
 		</tr>
 		<tr>
 			<td>Message</td>
@@ -274,16 +378,16 @@
 	</xsl:template>
 	
 	<xsl:template match="testcase">
-		<LI nowrap="true">
+		<li>
 			<xsl:choose>
 				<xsl:when test="status != 2 and status != 3 and status != 5">
-					<xsl:attribute name="class">closed</xsl:attribute>
+					<xsl:attribute name="class">c</xsl:attribute>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:attribute name="class">open</xsl:attribute>
+					<xsl:attribute name="class">o</xsl:attribute>
 				</xsl:otherwise>
 			</xsl:choose>
-			<A HREF="#testcase" onclick="toggle(this)">
+			<A HREF="#tc" onclick="t(this)">
 			<xsl:call-template name="writeColored">
 				<!-- quoted String -->
 				<xsl:with-param name="text" select="'TC'"/>
@@ -298,62 +402,45 @@
 						select="testcase|step|eventhandler"/>
 				</ul>
 			</xsl:if>
-		</LI>
+		</li>
 	</xsl:template>
 	
 	<xsl:template match="step">
-		<li nowrap="true">
+		<li>
 			<xsl:choose>
 				<xsl:when test="status != 2 and status != 3 and status != 5 and status != 9">
-					<xsl:attribute name="class">closed</xsl:attribute>
+					<xsl:attribute name="class">c</xsl:attribute>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:attribute name="class">open</xsl:attribute>
+					<xsl:attribute name="class">o</xsl:attribute>
 				</xsl:otherwise>
 			</xsl:choose>
-			<A HREF="#step" onclick="toggle(this)">
+			<a href="#cap" onclick="t(this)">
 			<xsl:call-template name="writeColored">
 				<!-- quoted String -->
 				<xsl:with-param name="text" select="'CAP'"/>
 			</xsl:call-template>
-			</A>
+			</a>
             <xsl:apply-templates select="@duration" />
 			<UL>
-				<table bgcolor="#BBBBBB" border="0">
-                    <tr> 
-                        <td>Timestamp</td>
-                        <td>:</td>
-                        <td><xsl:value-of select="timestamp"/></td>
-                    </tr>
-                    <!-- May be empty e.g. for components with default mapping -->
-                    <xsl:if test="component-name != ''">
-						<tr>
-							<td nowrap="true">Component Name</td>
-							<td>:</td>
-							<td><xsl:value-of select="component-name"/></td>
-						</tr>
+				<table class="cap">
+					<tr><th colspan="2"><xsl:value-of select="component-type"/> - <xsl:value-of select="action-type"/></th></tr>
+					<xsl:if test="component-name != ''">
+						<tr><th colspan="2">
+			                    <xsl:value-of select="component-name"/>
+								<xsl:if test="component-heuristic-match != ''">
+									(<xsl:value-of select='format-number(component-heuristic-match, "##%")' />)
+								</xsl:if>
+						</th></tr>
 					</xsl:if>
-					<tr>
-						<td>Component Type</td>
-						<td>:</td>
-						<td><xsl:value-of select="component-type"/></td>
-					</tr>
-					<xsl:if test="component-heuristic-match != ''">
-						<tr>
-							<td>Heuristic Match</td>
-							<td>:</td>
-							<td><xsl:value-of select='format-number(component-heuristic-match, "##%")' /></td>
-						</tr>
-					</xsl:if>
-					<tr><td colspan="3"><hr/></td></tr>
-					<tr>
-						<td>Action</td>
-						<td>:</td>
-						<td><xsl:value-of select="action-type"/></td>
-					</tr>
-                    <tr><td colspan="3"><hr/></td></tr>
 					<xsl:apply-templates select="parameter"/>
 					<xsl:apply-templates select="error"/>
+					<xsl:if test="timestamp != ''">
+	                   <tr> 
+	                       <td>Timestamp:</td>
+	                       <td><xsl:value-of select="timestamp"/></td>
+	                   </tr>
+					</xsl:if>
 				</table>
 			</UL>
 		</li>
@@ -361,47 +448,40 @@
 
 	<xsl:template match="parameter">
 		<tr>
-			<td><xsl:value-of select="parameter-name"/> [<xsl:value-of select="parameter-type"/>]</td>
-			<td>:</td>
+			<td><xsl:value-of select="parameter-name"/> [<xsl:value-of select="parameter-type"/>]:</td>
 			<td><xsl:value-of select="parameter-value"/></td>
 		</tr>
 	</xsl:template>
 		
 	<xsl:template match="error">
-		<tr><td colspan="3"><hr/></td></tr>
-		<tr><th colspan="3">Error Details</th></tr>
+		<tr><th colspan="2">Error Details</th></tr>
 		<tr>
-			<td>Error Type</td>
-			<td>:</td>
+			<td>Type:</td>
 			<td><xsl:value-of select="type"/></td>
 		</tr>
 		<xsl:choose>
 			<xsl:when test="type = 'Check Failed'">
 				<tr>
-					<td>Expected Value</td>
-					<td>:</td>
+					<td>Expected Value:</td>
 					<td><xsl:value-of select="guidancerPattern"/></td>
 				</tr>
 				<tr>
-					<td>Actual Value</td>
-					<td>:</td>
+					<td>Actual Value:</td>
 					<td><xsl:value-of select="guidancerActualValue"/></td>
 				</tr>
 			</xsl:when>
 			<xsl:when test="type = 'Action Error'">
 				<tr>
-					<td>description</td>
-					<td>:</td>
+					<td>Description:</td>
 					<td><xsl:value-of select="description"/></td>
 				</tr>
 			</xsl:when>
 		</xsl:choose>
         <xsl:choose>
           <xsl:when test="screenshot != ''">
-            <tr><td colspan="3"><hr/></td></tr>
-            <tr><th colspan="3">Screenshot</th></tr>
+            <tr><th colspan="2">Screenshot</th></tr>
             <tr>
-              <td colspan="3" align="center">
+              <td colspan="2" align="center">
                 <img width="400" onclick="toggleSize(this, 400)">
                   <xsl:attribute name="src">data:image/png;base64,<xsl:value-of select="screenshot"/></xsl:attribute>
                 </img>
@@ -412,16 +492,16 @@
 	</xsl:template>
 	
 	<xsl:template match="eventhandler">
-		<li nowrap="true">
+		<li>
 			<xsl:choose>
 				<xsl:when test="status != 2 and status != 3 and status != 5">
-					<xsl:attribute name="class">closed</xsl:attribute>
+					<xsl:attribute name="class">c</xsl:attribute>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:attribute name="class">open</xsl:attribute>
+					<xsl:attribute name="class">o</xsl:attribute>
 				</xsl:otherwise>
 			</xsl:choose>
-			<A HREF="#eventhandler" onclick="toggle(this)">
+			<A HREF="#eh" onclick="t(this)">
 			<xsl:call-template name="writeColored">
 				<!-- quoted String -->
 				<xsl:with-param name="text" select="'Event Handler'"/>
@@ -429,15 +509,13 @@
 			</A>
             <xsl:apply-templates select="@duration" />
 			<ul>
-				<table border="0" bgcolor="#BBBBBB">
+				<table class="cap">
 					<tr>
-						<td nowrap="true">Error Type</td>
-						<td>:</td>
+						<td>Error Type:</td>
 						<td><xsl:value-of select="type"/></td>
 					</tr>
 					<tr>
-						<td>Reentry Property</td>
-						<td>:</td>
+						<td>Reentry Property:</td>
 						<td><xsl:value-of select="reentry-property"/></td>
 					</tr>
 				</table>
@@ -456,47 +534,35 @@
 		<xsl:param name="text"/>
 		<big>
 			<xsl:choose>
-				<xsl:when test="status = 0">
-					<font color="#999999"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (not tested)</font>
+				<xsl:when test="status = 0 or status = 4">
+					<xsl:attribute name="class">not</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="status = 1">
-					<font color="green"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (ok)</font>
+					<xsl:attribute name="class">ok</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="status = 2">
-					<font color="#DD0000"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (failed)</font>
+					<xsl:attribute name="class">nok</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="status = 3">
-					<font color="#DD0000"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (not verified)</font>
-				</xsl:when>
-				<xsl:when test="status = 4">
-					<font color="#999999"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (not tested)</font>
+					<xsl:attribute name="class">nov</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="status = 5">
-					<font color="#DD0000"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (nested error)</font>
+					<xsl:attribute name="class">ner</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="status = 7">
-					<font color="#DD0000"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (retrying)</font>
+					<xsl:attribute name="class">ret</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="status = 8">
-					<font color="green"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (ok after retry)</font>
+					<xsl:attribute name="class">okr</xsl:attribute>
 				</xsl:when>
 				<xsl:when test="status = 9">
-					<font color="#DD0000"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (test aborted due to internal error)</font>
+					<xsl:attribute name="class">abo</xsl:attribute>
 				</xsl:when>
 				<xsl:otherwise>
-					<font color="lightgray"><xsl:value-of select="name"/> -
-						<xsl:value-of select="$text"/> (testing)</font>
+					<xsl:attribute name="class">tst</xsl:attribute>
 				</xsl:otherwise>
 			</xsl:choose>
+			<xsl:value-of select="name"/> - <xsl:value-of select="$text"/>
 		</big>
 		<xsl:if test="comment != ''">
 			<abbr><xsl:attribute name="title"><xsl:value-of select="comment"/></xsl:attribute>*</abbr>
