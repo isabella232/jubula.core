@@ -1,0 +1,32 @@
+= !JaCoCo =
+Dieser Wiki-Eintrag soll helfen, die in den GUIdancer integrierte Version von JaCoCO, auf den neusten Stand zu bringen. Des weiteren sind wichtige Links aufgeführt, die bei der Entwicklung geholfen haben.
+
+== Update auf eine neue Version: ==
+ 1. [http://www.eclemma.org/jacoco/ Herunterladen] der neusten Version (siehe Download). Es lohnt sich auch einen Blick in das [http://www.eclemma.org/jacoco/trunk/doc/changes.html Changelog] zu werfen, im Falle einer API-Änderung müssen ggf. Anpassungen an der GUIdancer Implementierung vorgenommen werden.
+ 1. Das Projekt '''com.bredexsw.guidancer.autagent.monitoring.jacoco''' anpassen:
+   1. Die Jar-Archive ''''' org.jacoco.core_X.X.X.X.jar''''' und '''''org.jacoco.report_X.X.X.X.jar''''', sowie''''' jacocoagent.jar''''' müssen in das lib-Verzeichnis.
+   1. Die Dateien '''.classpath''' und '''META-INF/MANIFEST.MF''' anpassen, damit diese auf die neuen Jar-Archive ''' org.jacoco.core_X.X.X.X.jar''' und '''org.jacoco.report_X.X.X.X.jar''' zeigen.
+ 1. Wurden keine API-Änderungen vorgenommen, ist das Update damit erledigt. (Ggf. müssen die ''imports'' in der Klasse '''''!MonitoringImpl.java '''''angepasst werden.)
+ 1. Falls eine Exception wie '''java.lang.[wiki:IncompatibleClassChangeError]''' im '''client.log''' auftritt, muss auch die [http://forge.ow2.org/projects/asm/ asm-Bibliothek] aktualisiert werden.
+
+== Update von 0.5.0.20110116185432 auf 0.5.1.XXX. (API-Änderung) ==
+ 1. Im Falle von API-Änderungen muss die Klasse '''''!MonitoringImpl.java''''' angepasst werden. Im Grunde beschränkt sich die Anpassung auf die Methoden '''''getMonitoringData()''''' und '''''buildMonitoringReport()'''''
+ 1. Die Klassen die im Attachment aufgeführt sind, geben einen groben Überblick wie !JaCoCo ab 0.5.1. arbeitet.
+   1. Die Klasse '''''Instrumentation.java''''' arbeitet wie '''''!MonitoringImpl.java'''''. Die Methode '''''calculateCodeCoverage()''''' in '''''Instrumentation.java'''''  gibt an wie  '''''getMonitoringData() '''''zu arbeiten hat.
+   1. Die Klassen '''''MyHTMLFormatter.java''''' und '''''IFormatterElement.java''''' müssen nicht angepasst werden. Sie müssen lediglich in das Package von '''''!MonitoringImpl.java''''' kopiert werden.
+ 1. In der !JaCoCo-Version 0.5.1. wurde die Erstellung des Reports überarbeitet. Die Analyse ist stärker mit dem Bau des Reports zusammengewachsen, sodass man sich überlegen könnte, in der Methode '''''getMonitoringData()''''' sowohl die Analyse, als auch den Bau des Reports durchzuführen. Der Report würde dann nicht mehr beim Aufruf von '''''buildMonitoringReport()''''' gebaut werden, sondern dort nur noch zurückgesendet werden.
+
+== Hilfreiche Links: ==
+Die Hauptseite zu !JaCoCo: http://www.eclemma.org/jacoco/trunk/index.html .
+
+=== Dokumentation: ===
+Die !JaCoCo-Dokumentation ist zu finden unter: http://www.eclemma.org/jacoco/trunk/doc/index.html .[[BR]]Unter dem Punkt '''''Integrating !JaCoCo''''' ist auch das aktuelle Java-Doc zum !JaCoCo-API zu finden.
+
+=== Download: ===
+Die aktuellen Milestones und Latest-Builds sind zu finden unter: http://www.eclemma.org/jacoco/ .
+
+=== Sourcen: ===
+SVN-Souce-Browse und Download (GNU tarball): http://eclemma.svn.sourceforge.net/viewvc/eclemma/
+
+=== Forum: ===
+Bei Problemen kann man Fragen im Entwickler-Forum stellen: https://sourceforge.net/projects/eclemma/forums/forum/614869 . Marc Hoffmann antwortet selbst, und das eigentlich immer innerhalb von einer Stunde. Wenn man glaubt einen Fehler gefunden zu haben ist es üblich, diesen erst mal zur Diskussion ins Forum zu Posten. Bugs und Feature Request werden über die ''!SoruceForge-Seite'' eingestellt: http://sourceforge.net/tracker/?group_id=177969 .
