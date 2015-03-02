@@ -25,3 +25,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.app,
  org.eclipse.jubula.app.core
+Eclipse-BundleShape: dir

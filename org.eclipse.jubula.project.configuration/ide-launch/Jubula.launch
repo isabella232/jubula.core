@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
-<setAttribute key="additional_plugins">
-<setEntry value="org.eclipse.e4.tools.context.spy:0.1.0.v20140808-1908:default:true"/>
-<setEntry value="org.eclipse.e4.tools.css.spy:0.12.0.v20140808-1908:default:true"/>
-<setEntry value="org.eclipse.e4.tools.event.spy:0.15.0.v20140808-1908:default:false"/>
-<setEntry value="org.eclipse.e4.tools.spy:0.1.0.v20141107-1620:default:true"/>
-</setAttribute>
+<setAttribute key="additional_plugins"/>
 <booleanAttribute key="append.args" value="true"/>
 <booleanAttribute key="askclear" value="true"/>
 <booleanAttribute key="automaticAdd" value="true"/>
@@ -28,6 +23,7 @@
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.jubula.app.product"/>
 <setAttribute key="selected_features">
+<setEntry value="com.bredexsw.guidancer.feature:default"/>
 <setEntry value="com.bredexsw.jubula.client.core.driver.feature:default"/>
 <setEntry value="com.bredexsw.jubula.feature:default"/>
 <setEntry value="org.eclipse.e4.rcp:default"/>
