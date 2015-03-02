@@ -64,7 +64,6 @@
 					</dependencies>
 					<repositories>
 						<repository>
-							<id>eclipse-luna</id>
 							<layout>p2</layout>
 							<url>http://download.eclipse.org/releases/luna</url>
 						</repository>
