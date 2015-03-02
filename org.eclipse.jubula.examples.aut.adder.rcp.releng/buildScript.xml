@@ -10,16 +10,12 @@
 <project name="SimpleAdder-RCP" default="cleanBuild" basedir=".">
 
     <target name="clean">
-        <exec executable="mvn" dir="." failonerror="true">
-            <env key="MAVEN_OPTS" value="-Xmx512m" />
-            <arg value="clean" />
-        </exec>
+    	<echo>Implitly cleaning before building. Skipping Clean</echo>
     </target>
 
     <target name="cleanBuild">
         <exec executable="mvn" dir="." failonerror="true">
             <env key="MAVEN_OPTS" value="-Xmx512m" />
-        	<arg value="-Dtycho.disableP2Mirrors=true" />
         	
             <arg value="clean" />
             <arg value="verify" />
