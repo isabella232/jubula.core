@@ -99,9 +99,11 @@ public class ErrorHandlingUtil {
             final Object[] params, final String[] details) {
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
-                dlg = createMessageDialog(messageID, params, details, 
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                if (!PlatformUI.getWorkbench().isClosing()) {
+                    dlg = createMessageDialog(messageID, params, details, 
+                            PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                             .getShell());
+                }
             }
         });
         return dlg;
