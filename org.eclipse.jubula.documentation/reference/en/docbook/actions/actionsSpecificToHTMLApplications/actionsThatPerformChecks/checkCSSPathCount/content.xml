@@ -15,7 +15,7 @@
      <itemizedlist>
       <listitem>
         <para>
-          Use this action to check how many items with a certain CSS locator 
+          Use this action to check how many elements with a certain CSS locator 
           are found. You can compare the amount found with a value you specify.
         </para>
       </listitem>
@@ -27,9 +27,9 @@
       </listitem>
       <listitem>
         <para>
-        You can use different types of locators, and can find out the locator for 
-        your component using website inspection tools. For example, the Firefox developer
-        options allow you to copy the unique selector (CSS Locator) for an item. 
+        You can find out the locator for 
+        your element using website inspection tools. For example, 
+        you can copy a unique selector (CSS Locator) for an item. 
         </para>
       </listitem>
     </itemizedlist>
