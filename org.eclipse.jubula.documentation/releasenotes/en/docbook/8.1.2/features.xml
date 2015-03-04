@@ -1,6 +1,30 @@
-<section id="new-features-and-developments-8.1.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="new-features-and-developments-8.1.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
+  
+  <para>
+    <emphasis role="strong">New actions for HTML to handle alerts, prompts and confirmations</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	You can now handle alert, prompt and confirmation dialogs in HTML AUTs.
+      </para>
+    </listitem>
+    <listitem>
+    	<para>
+    	You can use the actions: interact (to accept or dismiss the item), input text, check existence and check text.
+    	</para>
+    </listitem>
+    <listitem>
+    	<para>
+    	Alerts, prompts and confirmations are not shown during test execution, but they must 
+        still be handled in the test. You must use the actions to deal with the prompt, alert or
+        confirmation just before the item appears. The actions are designed to deal with the next prompt, alert or confirmation
+        that appears and not while it is already open. 
+    	</para>
+    </listitem>
+  </itemizedlist>
  
 </section>
