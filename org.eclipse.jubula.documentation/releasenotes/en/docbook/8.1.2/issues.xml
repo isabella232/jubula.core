@@ -1,5 +1,37 @@
 <section id="known-issues-and-other-information-8.1.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink">
-
+  <title>Known issues and other information</title>
+  
+  <para>
+    <emphasis role="strong">The name GUIdancer has been retired</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	We no longer build the product with the name GUIdancer.
+     	Since Jubula and GUIdancer have been functionally identical in 
+     	the standalone versions since 2013, this simply avoids confusion by
+     	only having one name.
+      </para>
+    </listitem>
+    <listitem>
+    	<para>
+  		Any scripts in your test execution that use the string GUIdancer 
+  		should be changed once you update to a new Jubula release. 
+    	</para>
+    </listitem>
+  </itemizedlist>
+	<para>
+    <emphasis role="strong">Reduction in test focus</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	In order to focus our development efforts, we are no 
+     	longer executing tests on .NET applications or on Mac systems 
+     	(with the exception of iOS tests).
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>
