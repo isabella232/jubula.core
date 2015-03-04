@@ -13,7 +13,9 @@
   <title>Actions that perform checks</title>
   
   <xi:include href="checkCSSPathCount/content.xml"/>
-  <xi:include href="checkText/content.xml"/>
+  <xi:include href="checkExistenceAlert/content.xml"/>
+  <xi:include href="checkTextAlert/content.xml"/>
+  <xi:include href="checkTextByLocator/content.xml"/>
   <xi:include href="actionCheckURL/content.xml"/>
   <xi:include href="checkXPathCount/content.xml"/>
   
