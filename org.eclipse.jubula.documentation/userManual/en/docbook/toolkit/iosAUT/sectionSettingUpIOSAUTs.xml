@@ -59,7 +59,7 @@
       <listitem>
         <para>
           The new target will be created. We suggest renaming it,
-          e.g. to <emphasis><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula Tests</emphasis>.
+          e.g. to <emphasis>Jubula Tests</emphasis>.
           by double-clicking the target in the list of project targets and changing the value
           to a new name.
         </para>
@@ -68,8 +68,7 @@
         <para>
           You can also (optionally) rename your <emphasis>iOS</emphasis>
           application to something more meaningful e.g. <emphasis>MyApp</emphasis>
-          (<emphasis><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis>
-          or Jubula Tests</emphasis>) by selecting the <emphasis>”Build Settings”</emphasis>
+          (<emphasis>Jubula Tests</emphasis>) by selecting the <emphasis>”Build Settings”</emphasis>
           tab and searching for <emphasis>”Product Name”</emphasis>, then changing the value
           to a new name. After target name change the product name will also have this new
           name if you give the next name to <emphasis>”Product Name”</emphasis> in build settings:

@@ -31,7 +31,7 @@
         </para>
         
         <para>
-          <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath"><emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis> or Jubula</emphasis>--&gt;<emphasis role="menuPath">Start AUT Agent</emphasis>.
+          <emphasis role="menuPath">Start</emphasis>--&gt;<emphasis role="menuPath">Jubula</emphasis>--&gt;<emphasis role="menuPath">Start AUT Agent</emphasis>.
         </para>
       </listitem>
       <listitem>

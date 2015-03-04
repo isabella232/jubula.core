@@ -13,7 +13,7 @@
   <?dbhtml dir="chapterIntro"?>
   <title>Introduction to this chapter</title>
   <para>
-    <emphasis role="strong">GUI</emphasis><emphasis>dancer</emphasis>/Jubula are tools for the automated testing of Graphical
+    Jubula is a tool for the automated testing of Graphical
     User Interfaces. The focus of the tool is on testing an
     application’s business logic (workflows, use cases) from the user
     perspective (functional, black-box, acceptance testing).

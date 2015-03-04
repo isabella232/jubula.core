@@ -164,7 +164,7 @@
         <para>
           Java is installed with the ITE. You can find the Java file in:
           
-          <emphasis role="menupath">Guidancer or Jubula</emphasis>--&gt;<emphasis role="menupath">jre</emphasis>--&gt;<emphasis role="menupath">bin</emphasis>. Use java.exe if you want to use a console, use javaw.exe if you do not want a console.
+          <emphasis role="menupath">Jubula</emphasis>--&gt;<emphasis role="menupath">jre</emphasis>--&gt;<emphasis role="menupath">bin</emphasis>. Use java.exe if you want to use a console, use javaw.exe if you do not want a console.
         </para>
       </listitem>
       <listitem>
