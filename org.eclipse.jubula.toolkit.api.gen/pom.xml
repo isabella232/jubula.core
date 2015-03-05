@@ -16,12 +16,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<extensions>true</extensions>
-			</plugin>
-			<plugin>
 				<groupId>org.eclipse.tycho.extras</groupId>
 				<artifactId>tycho-eclipserun-plugin</artifactId>
 				<version>${tycho-version}</version>
@@ -96,15 +90,27 @@
             </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.6</version>
+                <version>1.7</version>
                 <executions>
                     <execution>
                         <id>generateAPI</id>
-                        <phase>verify</phase>
+                        <phase>pre-integration-test</phase>
                         <configuration>
                             <target>
                                 <ant dir="${project.build.directory}/.." 
                                      antfile="generateAPI.xml" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-package-cleanup</id>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <delete dir="${project.build.directory}/dependent-libs"/>
                             </target>
                         </configuration>
                         <goals>

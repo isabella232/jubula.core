@@ -113,9 +113,9 @@
 	<target name="releaseSimpleAdderRCP">
 		<ant dir="../${SimpleAdder.RCP}" antfile="buildScript.xml" inheritAll="false" />
 		<mkdir dir="${examples.aut.simpleAdder.dir}/rcp"/>
-		<copy todir="${examples.aut.simpleAdder.dir}/rcp">
+		<move todir="${examples.aut.simpleAdder.dir}/rcp">
 			<fileset dir="../org.eclipse.jubula.examples.aut.adder.rcp.product/target/products/org.eclipse.jubula.product.examples.aut.adder.rcp/"/>
-		</copy>
+		</move>
 
 	</target>
 

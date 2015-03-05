@@ -1,73 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (c) 2014 BREDEX GmbH.
-    All rights reserved. This program and the accompanying materials
-    are made available under the terms of the Eclipse Public License v1.0
-    which accompanies this distribution, and is available at
-    http://www.eclipse.org/legal/epl-v10.html
- -->
+<!-- Copyright (c) 2014 BREDEX GmbH. All rights reserved. This program and 
+    the accompanying materials are made available under the terms of the Eclipse 
+    Public License v1.0 which accompanies this distribution, and is available 
+    at http://www.eclipse.org/legal/epl-v10.html -->
 <project
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.bredexsw.jubula</groupId>
-    <artifactId>com.bredexsw.jubula.releng.client</artifactId>
-    <version>3.0.0-SNAPSHOT</version>
-    <relativePath>../../com.bredexsw.jubula.core/com.bredexsw.jubula.releng.client</relativePath>
-  </parent>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.bredexsw.jubula</groupId>
+        <artifactId>com.bredexsw.jubula.releng.client</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+        <relativePath>../../com.bredexsw.jubula.core/com.bredexsw.jubula.releng.client</relativePath>
+    </parent>
 
-  <artifactId>org.eclipse.jubula.product</artifactId>
-  <packaging>eclipse-repository</packaging>
+    <artifactId>org.eclipse.jubula.product</artifactId>
+    <packaging>eclipse-repository</packaging>
 
-  <build>
-    <plugins>
-      <!-- image path workaround described in http://software.2206966.n2.nabble.com/How-to-apply-patch-no-launcher-icon-TYCHO-300-td6059641.html -->
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.5</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/products/${project.artifactId}/${project.artifactId}/icons/</outputDirectory>
-              <nonFilteredFileExtensions>
-                <nonFilteredFileExtension>ico</nonFilteredFileExtension>
-                <nonFilteredFileExtension>xpm</nonFilteredFileExtension>
-                <nonFilteredFileExtension>icns</nonFilteredFileExtension>
-                <nonFilteredFileExtension>bmp</nonFilteredFileExtension>
-                <nonFilteredFileExtension>gif</nonFilteredFileExtension>
-                <nonFilteredFileExtension>png</nonFilteredFileExtension>
-              </nonFilteredFileExtensions>
-              <resources>
-                <resource>
-                  <directory>icons</directory>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-p2-director-plugin</artifactId>
-        <version>${tycho-version}</version>
-        <configuration>
-          <includeAllDependencies>true</includeAllDependencies>
-        </configuration>
-        <executions>
-          <execution>
-            <id>materialize-products</id>
-            <goals>
-              <goal>materialize-products</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+    <build>
+        <plugins>
+            <!-- image path workaround described in http://software.2206966.n2.nabble.com/How-to-apply-patch-no-launcher-icon-TYCHO-300-td6059641.html -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/products/${project.artifactId}/${project.artifactId}/icons/</outputDirectory>
+                            <nonFilteredFileExtensions>
+                                <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>xpm</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>icns</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>bmp</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>gif</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>png</nonFilteredFileExtension>
+                            </nonFilteredFileExtensions>
+                            <resources>
+                                <resource>
+                                    <directory>icons</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-p2-director-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <includeAllDependencies>true</includeAllDependencies>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>materialize-products</id>
+                        <goals>
+                            <goal>materialize-products</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>post-package-cleanup</id>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <target>
+                                <delete
+                                    dir="${project.build.directory}/repository" />
+                                <delete>
+                                    <fileset
+                                        dir="${project.build.directory}/">
+                                        <include name="*.zip" />
+                                    </fileset>
+                                </delete>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
