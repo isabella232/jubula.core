@@ -943,6 +943,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 stopProcessing();
                 m_idle = false;
                 break;
+            case AUTServerEvent.COMMUNICATION:
             case AUTServerEvent.COULD_NOT_ACCEPTING:
                 sysErr(Messages.ExecutionControllerAUTStartError);
                 stopProcessing();
