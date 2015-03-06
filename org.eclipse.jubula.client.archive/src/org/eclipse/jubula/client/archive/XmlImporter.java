@@ -522,15 +522,15 @@ class XmlImporter {
                             xml.getProjectVersionQualifier())}));
             for (ReusedProject rp : xml.getReusedProjectsList()) {
                 ProjectVersion version = getProjectVersion(
-                        xml.isNilMajorProjectVersion()
-                        || !xml.isSetMajorProjectVersion() ? null
-                                : xml.getMajorProjectVersion(),
-                        xml.isNilMinorProjectVersion()
-                        || !xml.isSetMinorProjectVersion() ? null
-                                : xml.getMinorProjectVersion(),
-                        xml.isNilMicroProjectVersion()
-                        || !xml.isSetMicroProjectVersion() ? null
-                                : xml.getMicroProjectVersion(),
+                        rp.isNilMajorProjectVersion()
+                        || !rp.isSetMajorProjectVersion() ? null
+                                : rp.getMajorProjectVersion(),
+                        rp.isNilMinorProjectVersion()
+                        || !rp.isSetMinorProjectVersion() ? null
+                                : rp.getMinorProjectVersion(),
+                        rp.isNilMicroProjectVersion()
+                        || !rp.isSetMicroProjectVersion() ? null
+                                : rp.getMicroProjectVersion(),
                         rp.getProjectVersionQualifier());
                 String requiredProjectString = rp.getProjectName() != null 
                     ? NLS.bind(Messages.XmlImporterRequiredProject,
