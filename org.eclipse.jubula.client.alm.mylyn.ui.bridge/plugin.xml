@@ -70,12 +70,6 @@
       </viewContribution>
    </extension>
    <extension
-         point="org.eclipse.mylyn.monitor.ui.user">
-      <osActivityTimer
-            class="org.eclipse.jubula.client.alm.mylyn.ui.bridge.monitor.UserInteractionMonitor">
-      </osActivityTimer>
-   </extension>
-   <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="false"

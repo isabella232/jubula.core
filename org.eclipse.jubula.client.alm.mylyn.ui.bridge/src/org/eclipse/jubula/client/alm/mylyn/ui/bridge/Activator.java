@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.alm.mylyn.ui.bridge;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.alm.mylyn.ui.bridge.listener.TaskActivationListener;
 import org.eclipse.jubula.client.alm.mylyn.ui.bridge.monitor.EditorInteractionMonitor;
+import org.eclipse.jubula.client.alm.mylyn.ui.bridge.monitor.UserInteractionMonitor;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher.IProgrammableSelectionListener;
@@ -22,6 +23,7 @@ import org.eclipse.mylyn.context.core.AbstractContextStructureBridge;
 import org.eclipse.mylyn.context.core.ContextCore;
 import org.eclipse.mylyn.internal.resources.ui.ResourcesUiBridgePlugin.ResourcesUiBridgeStartup;
 import org.eclipse.mylyn.monitor.core.InteractionEvent;
+import org.eclipse.mylyn.monitor.ui.MonitorUi;
 import org.eclipse.mylyn.tasks.ui.TasksUi;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -113,6 +115,8 @@ public class Activator extends AbstractUIPlugin {
 
         DataEventDispatcher.getInstance().addProjectStateListener(
                 m_taskAktivationListener);
+        UserInteractionMonitor uIM = new UserInteractionMonitor();
+        MonitorUi.getSelectionMonitors().add(uIM);
     }
 
     /**
