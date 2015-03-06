@@ -17,6 +17,7 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -312,14 +313,14 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      *             if the active window has no menu bar.
      */
     protected IMenuComponent getAndCheckMenu() throws StepExecutionException {
-        Object menu = getMenuAdapter().getRealComponent();
+        IMenuComponent menuAdapter = getMenuAdapter();
         // Verify that the active window has a menu bar
-        if (menu == null) {
+        if (menuAdapter == null || menuAdapter.getRealComponent() == null) {
             throw new StepExecutionException(
                     I18n.getString(TestErrorEvent.NO_MENU_BAR),
                     EventFactory.createActionError(TestErrorEvent.NO_MENU_BAR));
         }
-        return getMenuAdapter();
+        return menuAdapter;
     }
 
     /**
@@ -406,13 +407,16 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param delay the time to wait after the component is found
      */
     public void waitForComponent(int timeout, int delay) {
-        if (getComponent().getRealComponent() == null) {
+        IComponent component = getComponent();
+        if (component == null || component.getRealComponent() == null) {
             long start = System.currentTimeMillis();
             do {
                 RobotTiming.sleepWaitForComponentPollingDelay();
+                component = getComponent();
             } while (System.currentTimeMillis() - start < timeout
-                    && getComponent().getRealComponent() == null);
-            if (getComponent().getRealComponent() == null) {
+                    && (component == null 
+                        || component.getRealComponent() == null));
+            if (component == null || component.getRealComponent() == null) {
                 throw new StepExecutionException("No Menubar found.", //$NON-NLS-1$
                         EventFactory.createComponentNotFoundErrorEvent());
             }
