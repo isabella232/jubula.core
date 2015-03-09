@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.javafx.tester;
 
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.tester.ListTester;
+import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
 import org.eclipse.jubula.toolkit.enums.ValueSets.BinaryChoice;
 
 /**
@@ -38,6 +39,7 @@ public class ListViewTester extends ListTester {
             rcSelectValue(value, operator, searchType,
                     BinaryChoice.no.rcValue(), dndHelper.getMouseButton(), 0);
             waitBeforeDrop(delayBeforeDrop);
+            ((RobotJavaFXImpl)getRobot()).shakeMouse();
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
@@ -62,9 +64,11 @@ public class ListViewTester extends ListTester {
             rcSelectIndex(String.valueOf(index), BinaryChoice.no.rcValue(),
                     dndHelper.getMouseButton(), 0);
             waitBeforeDrop(delayBeforeDrop);
+            ((RobotJavaFXImpl)getRobot()).shakeMouse();
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
         }
     }
+    
 }

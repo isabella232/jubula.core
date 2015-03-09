@@ -22,6 +22,7 @@ import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
@@ -95,6 +96,7 @@ public class TreeViewTester extends AbstractTreeTester {
             rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
+            ((RobotJavaFXImpl)getRobot()).shakeMouse();
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
@@ -122,6 +124,7 @@ public class TreeViewTester extends AbstractTreeTester {
             rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
+            ((RobotJavaFXImpl)getRobot()).shakeMouse();
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
