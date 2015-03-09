@@ -130,7 +130,7 @@ public abstract class VersionComposite extends Composite {
         GridData gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_majorVersionField);
         gridData.widthHint = Dialog.convertWidthInCharsToPixels(
-                LayoutUtil.getFontMetrics(m_majorVersionField), 6);
+                LayoutUtil.getFontMetrics(m_majorVersionField), 10);
         m_majorVersionField.setLayoutData(gridData);
         m_majorVersionField.setText(version.getMajorNumber() != null ? String
                 .valueOf(version.getMajorNumber()) : StringConstants.EMPTY);
@@ -148,7 +148,7 @@ public abstract class VersionComposite extends Composite {
         gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_minorVersionField);
         gridData.widthHint = Dialog.convertWidthInCharsToPixels(
-                LayoutUtil.getFontMetrics(m_minorVersionField), 6);
+                LayoutUtil.getFontMetrics(m_minorVersionField), 10);
         m_minorVersionField.setLayoutData(gridData);
         m_minorVersionField.setText(version.getMinorNumber() != null ? String
                 .valueOf(version.getMinorNumber()) : StringConstants.EMPTY);
@@ -165,7 +165,7 @@ public abstract class VersionComposite extends Composite {
         gridData = newGridData();
         LayoutUtil.addToolTipAndMaxWidth(gridData, m_microVersionField);
         gridData.widthHint = Dialog.convertWidthInCharsToPixels(
-                LayoutUtil.getFontMetrics(m_microVersionField), 11);
+                LayoutUtil.getFontMetrics(m_microVersionField), 10);
         m_microVersionField.setLayoutData(gridData);
         m_microVersionField.setText(version.getMicroNumber() != null ? String
                 .valueOf(version.getMicroNumber()) : StringConstants.EMPTY);

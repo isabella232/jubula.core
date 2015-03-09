@@ -377,7 +377,7 @@ public class ProjectDialog extends TitleAreaDialog {
                 });
         gridData = new GridData();
         gridData.grabExcessHorizontalSpace = false;
-        gridData.horizontalAlignment = GridData.BEGINNING;
+        gridData.horizontalAlignment = GridData.FILL;
         gridData.horizontalSpan = HORIZONTAL_SPAN;
         m_versionComboBox.setLayoutData(gridData);
         m_versionComboBox.select(m_versionComboBox.getItemCount() - 1);

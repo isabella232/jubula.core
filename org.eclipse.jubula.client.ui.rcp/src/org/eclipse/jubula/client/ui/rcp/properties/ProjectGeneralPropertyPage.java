@@ -255,12 +255,12 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         createLabel(leftComposite, 
             Messages.ProjectPropertyPageProjectVersion);
-        createLabel(rightComposite, getProject().getVersionString()); //$NON-NLS-1$
-        Label l = createLabel(rightComposite, StringConstants.EMPTY);
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.horizontalAlignment = GridData.FILL;
-        l.setLayoutData(layoutData);
+        Label versionLabel = new Label(rightComposite, SWT.WRAP);
+        GridData labelGrid = new GridData(GridData.FILL, GridData.CENTER, 
+                true , false, 1, 1);
+        labelGrid.widthHint = 124;
+        versionLabel.setLayoutData(labelGrid);
+        versionLabel.setText(getProject().getVersionString());
 
     }
 
