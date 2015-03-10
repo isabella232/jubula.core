@@ -270,14 +270,20 @@ public class MenuTester extends AbstractMenuTester {
         List<? extends MenuBar> bars = ComponentHandler
                 .getAssignableFrom(MenuBar.class);
 
-        if (bars.size() > 1) {
-            throw new StepExecutionException("Multiple MenuBars found", //$NON-NLS-1$
+        switch (bars.size()) {
+            case 1:
+                setComponent(bars.get(0));
+                break;
+            case 0:
+                setComponent(null);
+                break;
+            default:
+                throw new StepExecutionException("Multiple MenuBars found", //$NON-NLS-1$
                     EventFactory
                             .createActionError(TestErrorEvent.
                                     UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR));
-        }
 
-        setComponent(bars.get(0));
+        }
         return super.getComponent();
 
     }
