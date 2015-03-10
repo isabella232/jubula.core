@@ -26,5 +26,9 @@
     	</para>
     </listitem>
   </itemizedlist>
+  <para>
+  <emphasis role="strong">Support for drag and drop actions on lists in JavaFX 
+  </emphasis>
+  </para>
  
 </section>
