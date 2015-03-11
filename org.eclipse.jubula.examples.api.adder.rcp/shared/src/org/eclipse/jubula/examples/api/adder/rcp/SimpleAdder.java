@@ -104,21 +104,6 @@ public class SimpleAdder {
         }
     }
 
-    /**
-     * @return an AUT-Agent instance
-     */
-    protected AUTAgent getAUTAgentInstance() {
-        return MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
-    }
-
-    /** cleanup */
-    @After
-    public void tearDown() throws Exception {
-        m_aut.disconnect();
-        m_agent.stopAUT(m_aut.getIdentifier());
-        m_agent.disconnect();
-    }
-
     /** the actual test method */
     @Test(expected = CheckFailedException.class)
     public void testTestFirstSimpleAdderSteps() throws Exception {
@@ -143,5 +128,20 @@ public class SimpleAdder {
         } finally {
             Assert.assertTrue(results.size() == 15);
         }
+    }
+
+    /** cleanup */
+    @After
+    public void tearDown() throws Exception {
+    	m_aut.disconnect();
+    	m_agent.stopAUT(m_aut.getIdentifier());
+    	m_agent.disconnect();
+    }
+
+    /**
+     * @return an AUT-Agent instance
+     */
+    protected AUTAgent getAUTAgentInstance() {
+    	return MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
     }
 }
