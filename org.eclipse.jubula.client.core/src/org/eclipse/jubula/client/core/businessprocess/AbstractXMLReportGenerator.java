@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *     Oracle Corporation, Copyright (c) 2015, All Rights Reserved
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
@@ -42,11 +43,33 @@ import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
+ * @author Bryan Obright
  * @created 05.08.2005
  */
 public abstract class AbstractXMLReportGenerator {
     
-    /** The logger */
+	/**
+	 * Element name for Number of Steps
+	 */
+    public static final String EXPECTED_NUM_STEPS = "expectedNumSteps"; //$NON-NLS-1$
+
+	/**
+	 * Element name for Number of Steps Tested
+	 */
+    public static final String NUM_STEPS_TESTED = "numStepsTested"; //$NON-NLS-1$
+
+    /**
+	 * Element name for Number of Failed Steps
+	 */
+    public static final String NUM_FAILED_STEPS = "numFailedSteps"; //$NON-NLS-1$
+
+	/**
+	 * Element name for Number of Event Handler Steps
+	 */
+    public static final String NUM_EVENT_HANDLER_STEPS = "numEventHandlerSteps"; //$NON-NLS-1$
+
+
+	/** The logger */
     private static final Logger LOG = LoggerFactory.getLogger(
         AbstractXMLReportGenerator.class);
 
@@ -149,13 +172,13 @@ public abstract class AbstractXMLReportGenerator {
         int numberOfFailedTestSteps = 
             result.getNumberOfFailedSteps();
         
-        general.addElement("expectedNumSteps").addText(//$NON-NLS-1$
+        general.addElement(EXPECTED_NUM_STEPS).addText(
                 String.valueOf(expectedNumberOfSteps));
-        general.addElement("numStepsTested").addText(//$NON-NLS-1$
+        general.addElement(NUM_STEPS_TESTED).addText(
             String.valueOf(numberOfStepsExecuted));
-        general.addElement("numEventHandlerSteps").addText(//$NON-NLS-1$
+        general.addElement(NUM_EVENT_HANDLER_STEPS).addText(
                 String.valueOf(numberOfEventHandlerSteps));
-        general.addElement("numFailedSteps").addText(//$NON-NLS-1$
+        general.addElement(NUM_FAILED_STEPS).addText(
                 String.valueOf(numberOfFailedTestSteps));
     }
     
