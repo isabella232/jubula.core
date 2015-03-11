@@ -47,29 +47,28 @@ import org.slf4j.LoggerFactory;
  * @created 05.08.2005
  */
 public abstract class AbstractXMLReportGenerator {
-    
-	/**
-	 * Element name for Number of Steps
-	 */
+
+    /**
+     * Element name for Number of Steps
+     */
     public static final String EXPECTED_NUM_STEPS = "expectedNumSteps"; //$NON-NLS-1$
 
-	/**
-	 * Element name for Number of Steps Tested
-	 */
+    /**
+     * Element name for Number of Steps Tested
+     */
     public static final String NUM_STEPS_TESTED = "numStepsTested"; //$NON-NLS-1$
 
     /**
-	 * Element name for Number of Failed Steps
-	 */
+     * Element name for Number of Failed Steps
+     */
     public static final String NUM_FAILED_STEPS = "numFailedSteps"; //$NON-NLS-1$
 
-	/**
-	 * Element name for Number of Event Handler Steps
-	 */
+    /**
+     * Element name for Number of Event Handler Steps
+     */
     public static final String NUM_EVENT_HANDLER_STEPS = "numEventHandlerSteps"; //$NON-NLS-1$
 
-
-	/** The logger */
+    /** The logger */
     private static final Logger LOG = LoggerFactory.getLogger(
         AbstractXMLReportGenerator.class);
 
