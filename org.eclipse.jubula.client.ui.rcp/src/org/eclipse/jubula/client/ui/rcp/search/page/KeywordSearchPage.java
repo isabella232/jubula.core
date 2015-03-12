@@ -43,7 +43,8 @@ public class KeywordSearchPage extends AbstractSearchPage {
             new TypeName(NodeMaker.getCapPOClass(), true),
             new TypeName(NodeMaker.getCategoryPOClass(), true),
             new TypeName(NodeMaker.getRefTestSuitePOClass(), true),
-            new TypeName(NodeMaker.getExecTestCasePOClass(), true)};
+            new TypeName(NodeMaker.getExecTestCasePOClass(), true),
+            new TypeName(NodeMaker.getEventExecTestCasePOClass(), true)};
         
         // create the static search data object
         FieldName[] searchableFields = new FieldName[] {
