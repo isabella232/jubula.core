@@ -32,18 +32,17 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
-import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.views.AbstractJBTreeView;
-import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
-import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.ISearchResult;
 import org.eclipse.search.ui.ISearchResultListener;
@@ -435,39 +434,30 @@ public class BasicSearchResult implements ISearchResult {
                         .showView(Constants.TS_BROWSER_ID);
                 tv = jbtv.getTreeViewer();
                 node = UINodeBP.selectNodeInTree(id, tv, em);
+                if (node == null) {
+                    node  = em.find(NodeMaker.getNodePOClass(), id);
+                }
             }
-            BasicSearchResult.openEditorForNode(node, jbtv);
-        }
-    }
-
-    /**
-     * @param node
-     *            the node to open the editor for; may also be null
-     * @param gdtv
-     *            the gdtree view this node hast been found for
-     */
-    public static void openEditorForNode(INodePO node, 
-        AbstractJBTreeView gdtv) {
-        if (node instanceof ISpecTestCasePO || node instanceof IExecTestCasePO
-                || node instanceof IEventExecTestCasePO
-                || node instanceof ICapPO) {
-            if (gdtv instanceof TestSuiteBrowser) {
-                CommandHelper.executeCommand(
-                        RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
-            } else {
-                CommandHelper.executeCommand(
-                        RCPCommandIDs.OPEN_TESTCASE_EDITOR);
+            INodePO specNode = null;
+            if (node instanceof IExecTestCasePO
+                    || node instanceof IRefTestSuitePO 
+                    || node instanceof ICapPO
+                    || node instanceof IEventExecTestCasePO) {
+                specNode = node.getParentNode();
             }
-        } else if (node instanceof ITestSuitePO) {
-            CommandHelper.executeCommand(
-                    RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
-        } else if (node instanceof IRefTestSuitePO
-                || node instanceof ITestJobPO) {
-            CommandHelper.executeCommand(
-                    RCPCommandIDs.OPEN_TESTJOB_EDITOR);
-        } else if (node instanceof ITestDataCubePO) {
-            CommandHelper.executeCommand(
-                    RCPCommandIDs.OPEN_CENTRAL_TESTDATA_EDITOR);
+            if (node instanceof ISpecTestCasePO
+                    || node instanceof ITestSuitePO
+                    || node instanceof ITestJobPO) {
+                specNode = node;
+            }
+            
+            IEditorPart openEditor = AbstractOpenHandler.openEditor(specNode);
+            if (openEditor instanceof AbstractJBEditor) {
+                AbstractJBEditor jbEditor =
+                        (AbstractJBEditor) openEditor;
+                jbEditor.setSelection(
+                        new StructuredSelection(node));
+            }
         }
     }
 
