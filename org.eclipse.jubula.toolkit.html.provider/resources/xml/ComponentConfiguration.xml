@@ -471,5 +471,8 @@
 				</valueSet>
 			</param>
 		</action>
+        <action name="CompSystem.alert.close" changed="1.23">
+            <method>rcCloseDialog</method>
+        </action>
 	</toolkitComponent>
 </compSystem>
