@@ -46,7 +46,7 @@
     </target>
 
     <target name="cleanBuild-template">
-        <exec dir="${buildBaseDir}" executable="mvn" failonerror="true">
+        <exec dir="${buildBaseDir}" executable="mvn" failonerror="true" vmlauncher="false">
             <env key="MAVEN_OPTS" value="-Xmx512m" />
             <arg value="clean" />
             <arg value="verify" />
