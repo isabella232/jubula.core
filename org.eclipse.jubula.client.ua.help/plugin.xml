@@ -12,17 +12,17 @@
   		Define primary TOC
   	-->
    <extension point="org.eclipse.help.toc">
-      <toc primary="true" file="tocUserManual.xml"/>
-      <toc primary="true" file="tocReferenceManual.xml"/>
-      <toc primary="true" file="tocDeveloperManual.xml"/>
+      <toc primary="true" file="content/tocUserManual.xml"/>
+      <toc primary="true" file="content/tocReferenceManual.xml"/>
+      <toc primary="true" file="content/tocDeveloperManual.xml"/>
    </extension>
 
    <!--
    		Define F1 context files
    -->
    <extension point="org.eclipse.help.contexts">
-      <contexts file="contextUserManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
-      <contexts file="contextReferenceManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
-      <contexts file="contextDeveloperManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
+      <contexts file="content/contextUserManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
+      <contexts file="content/contextReferenceManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
+      <contexts file="content/contextDeveloperManual.xml" plugin="org.eclipse.jubula.client.ua.help"/>
    </extension>
 </plugin>

@@ -1,9 +1,9 @@
 /target
-/tocUserManual.xml
-/contextUserManual.xml
-/tocDeveloperManual.xml
-/contextDeveloperManual.xml
-/html/userManual
-/html/developerManual
-/html/releasenotes
-/html/install
+/content/tocUserManual.xml
+/content/contextUserManual.xml
+/content/tocDeveloperManual.xml
+/content/contextDeveloperManual.xml
+/content/html/userManual
+/content/html/developerManual
+/content/html/releasenotes
+/content/html/install

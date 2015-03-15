@@ -7,8 +7,8 @@
 -->
 
 <project name="buildHelp" default="buildDocumentation">
-    <property name="client.ua.help.path" value="../org.eclipse.jubula.client.ua.help"/>
-    <property name="html.path" value="html/${dir}"/>
+    <property name="client.ua.help.path" value="../org.eclipse.jubula.client.ua.help/"/>
+    <property name="html.path" value="content/html/${dir}"/>
     <property name="output" value="onlinehelp"/>
     <property name="build.path" value="${dir}/en/build/${output}"/>
     <property name="manual.name" value="${name}"/>
@@ -138,13 +138,14 @@
         </sequential>
     </macrodef>
     
-    <target name="buildDocumentation" depends="buildInstallationManual,
+    <target name="buildDocumentation" depends="validateEnv,
+                                               buildInstallationManual,
                                                buildUserManual,
                                                buildDeveloperManual,
                                                buildReleaseNotes">
     </target>
     
-    <target name="buildInstallationManual">
+    <target name="buildInstallationManual" unless="${isWindows}">
         <ant antfile="buildScript.xml" target="buildHTML" inheritall="false">
             <property name="name" value="InstallationManual"/>
             <property name="dir" value="install"/>
@@ -152,21 +153,21 @@
         </ant>
     </target>
     
-    <target name="buildUserManual">
+    <target name="buildUserManual" unless="${isWindows}">
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="UserManual"/>
             <property name="dir" value="userManual"/>
         </ant>
     </target>
     
-    <target name="buildDeveloperManual">
+    <target name="buildDeveloperManual" unless="${isWindows}">
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="DeveloperManual"/>
             <property name="dir" value="developerManual"/>
         </ant>
     </target>
     
-    <target name="buildReleaseNotes">
+    <target name="buildReleaseNotes" unless="${isWindows}">
         <ant antfile="buildScript.xml" target="buildReleaseNotesHTML" inheritall="false">
             <property name="name" value="ReleaseNotes"/>
             <property name="dir" value="releasenotes"/>
@@ -174,7 +175,7 @@
         </ant>
     </target>
     
-    <target name="buildReferenceManual">
+    <target name="buildReferenceManual" unless="${isWindows}">
         <ant antfile="buildScript.xml" target="buildReferenceManualChunkedHTML" inheritall="false">
             <property name="name" value="ReferenceManual"/>
             <property name="dir" value="reference"/>
@@ -379,6 +380,12 @@
         <delete file="output.log"/>
     </target>
     
+    <target name="validateEnv">
+        <condition property="isWindows">
+           <os family="windows" />
+        </condition>
+    </target>
+    
     <target name="checkImages">
         <java jar="HtmlImageLister.jar" outputProperty="imageList" failonerror="true" fork="true">
             <arg value="${basedir}/${dir}/en/build/${output}"/>
@@ -428,11 +435,11 @@
             <fileset file="context${manual.name}.xml"/>
         </move>
         
-        <move todir="${build.path}/html" >
-            <fileset dir="html"/>
+        <move todir="${build.path}/content/html" >
+            <fileset dir="content/html"/>
         </move>
         
-        <copy todir="${client.ua.help.path}">
+        <copy todir="${client.ua.help.path}/content">
             <fileset file="${build.path}/toc${manual.name}.xml"/>
             <fileset file="${build.path}/context${manual.name}.xml"/>
         </copy>

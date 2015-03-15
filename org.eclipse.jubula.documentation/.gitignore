@@ -1,4 +1,4 @@
-/build
+/content
 /buildlog
 *.jar
 /resources/validation/docbook.rng
