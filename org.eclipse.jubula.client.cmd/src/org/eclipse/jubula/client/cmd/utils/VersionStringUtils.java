@@ -80,7 +80,12 @@ public class VersionStringUtils {
         } else if (tokens.length == 2) {
             ProjectVersion projectNumbers = new ProjectVersion(null);
             if (StringUtils.isNotBlank(tokens[0])) {
-                projectNumbers = createVersionsNumbers(tokens[0]);
+                try {
+                    projectNumbers = createVersionsNumbers(tokens[0]);
+                } catch (NumberFormatException e) {
+                    throw new MalformedVersionException("parsing the version:" //$NON-NLS-1$
+                    + tokens[0] + " as numbers, was not possible"); //$NON-NLS-1$ 
+                }
             }
             String qualifier = tokens[1];
             return new ProjectVersion(projectNumbers.getMajorNumber(),

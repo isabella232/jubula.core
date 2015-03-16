@@ -179,10 +179,15 @@ public class TestexecClient extends AbstractCmdlineClient {
             appendError(errorMsgs, ClientTestStrings.PROJECT, 
                     ClientTestStrings.PROJECT_NAME);
         }
-        if (job.getProjectVersion() == null
-                || (job.getProjectVersion().getMajorNumber() == null 
-                && job.getProjectVersion().getVersionQualifier() == null)) {
+        if (job.getProjectVersion() == null) {
             appendError(errorMsgs, ClientTestStrings.PROJECT_VERSION,
+                    ClientTestStrings.PROJECT_VERSION_EX);
+        }
+        if (job.getProjectVersion() != null
+                && job.getProjectVersion().getMajorNumber() == null
+                && job.getProjectVersion().getVersionQualifier() == null) {
+            appendValidationError(errorInvalidArgsMsg,
+                    ClientTestStrings.PROJECT_VERSION,
                     ClientTestStrings.PROJECT_VERSION_EX);
         }
         if (job.getPort() == Constants.INVALID_VALUE) {

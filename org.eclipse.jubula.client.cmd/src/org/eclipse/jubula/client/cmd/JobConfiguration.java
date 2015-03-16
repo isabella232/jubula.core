@@ -434,7 +434,8 @@ public class JobConfiguration {
                 m_projectVersion = version;
   
             } catch (VersionStringUtils.MalformedVersionException e) {
-             // Do nothing. The version values will not be set and this will be noticed during pre-validation.
+                m_projectVersion = new ProjectVersion(null);
+               // will lead to an invalid version error message
             }
         }
         if (cmd.hasOption(ClientTestStrings.SERVER)) { 
@@ -1009,10 +1010,11 @@ public class JobConfiguration {
     private void setProjectVersion(String version) {
         try {
             ProjectVersion projVers = VersionStringUtils
-                    .createProjectVersion(version);  
+                    .createProjectVersion(version);
             setProjectVersion(projVers);
         } catch (MalformedVersionException e) {
-            return;
+            setProjectVersion(new ProjectVersion(null));
+            // will lead to an invalid version error message
         }
     }
     /**
