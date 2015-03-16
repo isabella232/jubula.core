@@ -18,7 +18,7 @@ import org.eclipse.osgi.util.NLS;
  */
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.core.i18n.messages"; //$NON-NLS-1$
-    
+
     public static String AcceptingFailed;
     public static String ActualExecutedCap;
     public static String ActualPeekObjectOnStack;
@@ -395,6 +395,7 @@ public class Messages extends NLS {
     public static String TestResultNodeTypeTestStep;
     public static String TestResultNodeTypeTestSuite;
     public static String TestResultNodeTypeUnknown;
+    public static String EmptyProperty;
     
     static {
         // initialize resource bundle
