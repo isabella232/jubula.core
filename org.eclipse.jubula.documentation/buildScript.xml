@@ -139,13 +139,18 @@
     </macrodef>
     
     <target name="buildDocumentation" depends="validateEnv,
+                                               echoEnvInfo,
                                                buildInstallationManual,
                                                buildUserManual,
                                                buildDeveloperManual,
                                                buildReleaseNotes">
     </target>
     
-    <target name="buildInstallationManual" unless="${isWindows}">
+    <target name="echoEnvInfo" if="${notSuited}">
+        <echo>WARNING: Can't build / generate documentation - therefore skipping this step!</echo>
+    </target>
+    
+    <target name="buildInstallationManual" unless="${notSuited}">
         <ant antfile="buildScript.xml" target="buildHTML" inheritall="false">
             <property name="name" value="InstallationManual"/>
             <property name="dir" value="install"/>
@@ -153,21 +158,21 @@
         </ant>
     </target>
     
-    <target name="buildUserManual" unless="${isWindows}">
+    <target name="buildUserManual" unless="${notSuited}">
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="UserManual"/>
             <property name="dir" value="userManual"/>
         </ant>
     </target>
     
-    <target name="buildDeveloperManual" unless="${isWindows}">
+    <target name="buildDeveloperManual" unless="${notSuited}">
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="DeveloperManual"/>
             <property name="dir" value="developerManual"/>
         </ant>
     </target>
     
-    <target name="buildReleaseNotes" unless="${isWindows}">
+    <target name="buildReleaseNotes" unless="${notSuited}">
         <ant antfile="buildScript.xml" target="buildReleaseNotesHTML" inheritall="false">
             <property name="name" value="ReleaseNotes"/>
             <property name="dir" value="releasenotes"/>
@@ -175,7 +180,7 @@
         </ant>
     </target>
     
-    <target name="buildReferenceManual" unless="${isWindows}">
+    <target name="buildReferenceManual" unless="${notSuited}">
         <ant antfile="buildScript.xml" target="buildReferenceManualChunkedHTML" inheritall="false">
             <property name="name" value="ReferenceManual"/>
             <property name="dir" value="reference"/>
@@ -381,7 +386,7 @@
     </target>
     
     <target name="validateEnv">
-        <condition property="isWindows">
+        <condition property="notSuited">
            <os family="windows" />
         </condition>
     </target>
