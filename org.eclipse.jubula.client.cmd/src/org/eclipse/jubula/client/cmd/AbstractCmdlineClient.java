@@ -184,10 +184,11 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                     m_cmd = parser.parse(options, cloneArgs);
                     parseNotOK = false;
                 } catch (ParseException exp) {
-                    cloneArgs = handleParseException(args, exp);
                     if (maxTrys-- < 0) {
+                        cloneArgs = handleParseException(args, exp, true);
                         throw new ParseException(StringConstants.EMPTY);
                     }
+                    cloneArgs = handleParseException(args, exp, false);
                 }
             }
             if (m_cmd.hasOption(ClientStrings.HELP)) {
@@ -524,22 +525,22 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      *          command line
      * @param exp
      *          exception
+     * @param printToConsole if <code>true</code> the error 
+     *          message will be shown in the console
      * @return arguments modified
      */
-    public String[] handleParseException(String [] args, ParseException exp) {
+    public String[] handleParseException(String [] args, ParseException exp,
+            boolean printToConsole) {
         // if there is an error we will remove that token
         // and try it again
-        int idx;
         String message = exp.getLocalizedMessage();
-        if (message != null && message.length() > 0) {
+        if (message != null && message.length() > 0 && printToConsole) {
             printlnConsoleError(message);
         }
         if (message.startsWith(OPT_NO_VAL)) {
-            idx = message.indexOf(StringConstants.COLON);
-            message = message.substring(idx + 1);
+            message = printAndGetEndOfMessage(message, 1);
         } else if (message.startsWith(OPT_UNKNOWN)) {
-            idx = message.indexOf(StringConstants.COLON);
-            message = message.substring(idx + 2);
+            message = printAndGetEndOfMessage(message, 2);
         }
         for (int i = 0; i < args.length; i++) {
             if (args[i].endsWith(message)) {
@@ -547,6 +548,21 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             }
         }
         return args;
+    }
+
+
+    /**
+     * prints the message and substrings it
+     * @param message the message
+     * @param indexForSubstring the value which should be cut
+     * @return the substringed message
+     */
+    private String printAndGetEndOfMessage(String message,
+            int indexForSubstring) {
+        printlnConsoleError(message);
+        int idx = message.indexOf(StringConstants.COLON);
+        String substring = message.substring(idx + indexForSubstring);
+        return substring;
     }
 
     /**
