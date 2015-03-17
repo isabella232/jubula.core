@@ -133,15 +133,15 @@ public class SimpleAdder {
     /** cleanup */
     @After
     public void tearDown() throws Exception {
-    	m_aut.disconnect();
-    	m_agent.stopAUT(m_aut.getIdentifier());
-    	m_agent.disconnect();
+        m_aut.disconnect();
+        m_agent.stopAUT(m_aut.getIdentifier());
+        m_agent.disconnect();
     }
 
     /**
      * @return an AUT-Agent instance
      */
     protected AUTAgent getAUTAgentInstance() {
-    	return MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
+        return MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
     }
 }
