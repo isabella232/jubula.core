@@ -144,6 +144,9 @@
                                                buildUserManual,
                                                buildDeveloperManual,
                                                buildReleaseNotes">
+    </target>
+
+    <target name="validateDocumentation">
         <ant antfile="resources/validation/validation.xml" target="validateManuals"/>
     </target>
     
