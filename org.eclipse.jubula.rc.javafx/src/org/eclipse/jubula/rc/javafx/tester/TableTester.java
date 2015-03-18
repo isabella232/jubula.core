@@ -14,7 +14,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javafx.geometry.Point2D;
@@ -212,14 +214,54 @@ public class TableTester extends AbstractTableTester {
                                 .getSelectedIndex());
                     }
                 });
-        clickCheckBoxFirstColumn(row);
+        int column = getIndexOfColumnWithCheckbox(row);
+        clickCheckBox(row, column);
+    }
+
+    /**
+     * @param row the row
+     * @return the index of the column containing a checkbox
+     */
+    private int getIndexOfColumnWithCheckbox(int row) {
+        int columnCount = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "rcToggleCheckboxInSelectedRow", new Callable<Integer>() { //$NON-NLS-1$
+
+                    @Override
+                    public Integer call() throws StepExecutionException {
+                        TableView<?> table = (TableView<?>) getRealComponent();
+                        return new Integer(table.getColumns().size());
+                    }
+                });
+        Map<Node, Integer> possibleCheckBoxes = new HashMap<Node, Integer>();
+        for (int column = 0; column < columnCount; column++) {
+            Node checkBox = getCheckBox(row, column);
+            if (checkBox != null) {
+                possibleCheckBoxes.put(checkBox, column);            
+            }
+        }
+        switch (possibleCheckBoxes.size()) {
+            case 0:
+                throw new StepExecutionException(
+                        "No checkbox found in selected row", //$NON-NLS-1$
+                        EventFactory.createActionError(
+                                TestErrorEvent.CHECKBOX_NOT_FOUND));
+            case 1: 
+                // only one checkbox in row, return its column
+                return possibleCheckBoxes.values().iterator().next();
+            default:
+                throw new StepExecutionException(
+                        "Multiple checkboxes found in selected row", //$NON-NLS-1$
+                        EventFactory.createActionError(
+                                TestErrorEvent.CHECKBOX_NOT_UNIQUE));
+        }
     }
 
     /**
      * Toggles the checkbox in the row under the Mouse Pointer
      */
     public void rcToggleCheckboxInRowAtMousePosition() {
-        clickCheckBoxFirstColumn(getCellAtMousePosition().getRow());
+        Cell cell = getCellAtMousePosition();
+        clickCheckBox(cell.getRow(), cell.getCol());
     }
 
     /**
@@ -232,8 +274,11 @@ public class TableTester extends AbstractTableTester {
      */
     public void rcVerifyCheckboxInSelectedRow(boolean checked)
         throws StepExecutionException {
-        int row = ((ITableComponent) getComponent()).getSelectedCell().getRow();
-        verifyCheckboxInRow(checked, row);
+        Cell selectedCell = ((ITableComponent) getComponent())
+                .getSelectedCell();
+        int row = selectedCell.getRow();
+        int column = getIndexOfColumnWithCheckbox(row);
+        verifyCheckboxInRow(checked, row, column);
     }
 
     /**
@@ -247,22 +292,26 @@ public class TableTester extends AbstractTableTester {
         Cell cell = getCellAtMousePosition();
         if (cell != null) {
             int row = cell.getRow();
-            verifyCheckboxInRow(checked, row);
+            int column = cell.getCol();
+            verifyCheckboxInRow(checked, row, column);
         } else {
-            log.error("No Ceckbox found at Mouseposition: " //$NON-NLS-1$
-                    + getRobot().getCurrentMousePosition());
+            throw new StepExecutionException(
+                    "No checkbox found", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.CHECKBOX_NOT_FOUND));
         }
     }
-
+    
     /**
-     * Clicks on the CheckBox in the first Column of the given row;
+     * Clicks on the CheckBox in given row and column
      *
      * @param row
      *            the Row
+     * @param column
+     *            the Column
      */
-    private void clickCheckBoxFirstColumn(final int row) {
-
-        Node box = getCheckBoxFirstColumn(row);
+    private void clickCheckBox(final int row, final int column) {
+        Node box = getCheckBox(row, column);
         if (box != null) {
             getRobot().click(box, null,
                     ClickOptions.create().setClickCount(1).setMouseButton(1));
@@ -278,9 +327,13 @@ public class TableTester extends AbstractTableTester {
      * @param row
      *            the row-index of the cell in which the checkbox-state should
      *            be verified
+     * @param column
+     *            the column-index of the cell in which the checkbox-state should
+     *            be verified
      */
-    private void verifyCheckboxInRow(boolean checked, final int row) {
-        final CheckBox box = (CheckBox) getCheckBoxFirstColumn(row);
+    private void verifyCheckboxInRow(boolean checked, final int row,
+            final int column) {
+        final CheckBox box = (CheckBox) getCheckBox(row, column);
         Boolean checkIndex = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "verifyCheckboxInRow", new Callable<Boolean>() { //$NON-NLS-1$
 
@@ -303,9 +356,11 @@ public class TableTester extends AbstractTableTester {
      *
      * @param row
      *            the Row
+     * @param column
+     *            the Column
      * @return the CheckBox or null
      */
-    private Node getCheckBoxFirstColumn(final int row) {
+    private Node getCheckBox(final int row, final int column) {
 
         return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "clickCheckBoxFirstColumn", new Callable<Node>() { //$NON-NLS-1$
@@ -314,7 +369,8 @@ public class TableTester extends AbstractTableTester {
                     public Node call() throws Exception {
                         TableView<?> table = (TableView<?>) getRealComponent();
                         table.layout();
-                        TableColumn<?, ?> col = table.getVisibleLeafColumn(0);
+                        TableColumn<?, ?> col = table.getVisibleLeafColumn(
+                                column);
                         // Check if the CheckBox is realized via a CheckBoxCell
                         List<? extends CheckBoxTableCell> checkboxCells = 
                                 ComponentHandler.getAssignableFrom(

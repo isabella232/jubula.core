@@ -28,6 +28,11 @@ public class TestErrorEvent {
      */
     public static final String CHECKBOX_NOT_FOUND =
         "TestErrorEvent.CheckboxNotFound"; //$NON-NLS-1$
+    /**
+     * Multiple checkboxes found
+     */
+    public static final String CHECKBOX_NOT_UNIQUE =
+        "TestErrorEvent.CheckboxNotUnique"; //$NON-NLS-1$
     
     /**
      * unsupported keyboard layout.
