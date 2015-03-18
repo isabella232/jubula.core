@@ -7,66 +7,80 @@
 -->
 
 <project name="validateHelp" basedir="../../." default="validateManuals">
-  <macrodef name="validate">
-    <attribute name="dir"/>
-    <sequential>
-      <mkdir dir="@{dir}/en/validate"/>
-      
-      <exec executable="xmllint" dir="@{dir}/en/docbook" output="@{dir}/en/validate/resolved.xml" errorproperty="xmllint.error">
-        <arg value="--xinclude"/>
-        <arg value="book.xml"/>
-      </exec>
-      
-      <java jar="resources/validation/lib/jing.jar" output="@{dir}/en/validate/validation.txt" fork="true">
-        <arg value="resources/validation/docbook.rng"/>
-        <arg value="@{dir}/en/validate/resolved.xml"/>
-      </java>
-      
-      <local name="validation.text"/>
-      <loadfile property="validation.text" srcfile="@{dir}/en/validate/validation.txt"/>
-      <property name="validation.text" value=""/>
-      
-      <echo>${validation.text}</echo>
-    </sequential>
-  </macrodef>
-  
-  <target name="setProxyAndGetRNG">
-    <setproxy proxyhost="gatekeeper.dev.bredex.local" proxyport="3128"/>
-    <get src="http://docbook.org/xml/5.0/rng/docbook.rng" dest="resources/validation/docbook.rng"/>
-  </target>
-  
-  <target name="getJing">
-    <exec executable="mvn" dir="./resources/validation" failonerror="true">
-      <env key="MAVEN_OPTS" value="-Xmx512m" />
-      <arg value="verify"/>
-      <arg value="clean"/>
-    </exec>
-  </target>
-  
-  <target name="validateManuals" depends="setProxyAndGetRNG, getJing">
-    <antcall target="validateUserManual"/>
-    <antcall target="validateDeveloperManual"/>
-    <antcall target="validateInstallationManual"/>
-    <antcall target="validateReleaseNotes"/>
-  </target>
-  
-  <target name="validateUserManual">
-    <validate dir="userManual"/>
-  </target>
-  
-  <target name="validateDeveloperManual">
-    <validate dir="developerManual"/>
-  </target>
-  
-  <target name="validateInstallationManual">
-    <validate dir="install"/>
-  </target>
-  
-  <target name="validateReleaseNotes">
-    <validate dir="releasenotes"/>
-  </target>
-  
-  <target name="validateReferenceManual">
-    <validate dir="reference"/>
-  </target>
+    <macrodef name="validate">
+        <attribute name="dir" />
+        <sequential>
+            <delete dir="@{dir}/en/validate" />
+            <mkdir dir="@{dir}/en/validate" />
+
+            <exec executable="xmllint" dir="@{dir}/en/docbook" output="@{dir}/en/validate/resolved.xml" errorproperty="xmllint.error">
+                <arg value="--xinclude" />
+                <arg value="book.xml" />
+            </exec>
+
+            <java jar="resources/validation/lib/jing.jar" output="@{dir}/en/validate/validation.txt" fork="true">
+                <arg value="resources/validation/lib/docbook.rng" />
+                <arg value="@{dir}/en/validate/resolved.xml" />
+            </java>
+
+            <local name="validation.text" />
+            <loadfile property="validation.text" srcfile="@{dir}/en/validate/validation.txt" />
+            <property name="validation.text" value="" />
+
+            <local name="trimmed.validation.text" />
+            <loadresource property="trimmed.validation.text">
+                <propertyresource name="validation.text" />
+                <filterchain>
+                    <tokenfilter>
+                        <filetokenizer />
+                        <replacestring from="${basedir}" to="" />
+                    </tokenfilter>
+                </filterchain>
+            </loadresource>
+            <property name="trimmed.validation.text" value="" />
+            
+            <echo>${trimmed.validation.text}</echo>
+        </sequential>
+    </macrodef>
+
+    <target name="setProxyAndGetRNG">
+        <setproxy proxyhost="gatekeeper.dev.bredex.local" proxyport="3128" />
+        <mkdir dir="resources/validation/lib/" />
+        <get src="http://docbook.org/xml/5.0/rng/docbook.rng" dest="resources/validation/lib/docbook.rng" />
+    </target>
+
+    <target name="getJing">
+        <exec executable="mvn" dir="./resources/validation" failonerror="true">
+            <env key="MAVEN_OPTS" value="-Xmx512m" />
+            <arg value="clean" />
+            <arg value="verify" />
+        </exec>
+    </target>
+
+    <target name="validateManuals" depends="setProxyAndGetRNG, getJing">
+        <antcall target="validateUserManual" />
+        <antcall target="validateDeveloperManual" />
+        <antcall target="validateInstallationManual" />
+        <antcall target="validateReleaseNotes" />
+    </target>
+
+    <target name="validateUserManual">
+        <validate dir="userManual" />
+    </target>
+
+    <target name="validateDeveloperManual">
+        <validate dir="developerManual" />
+    </target>
+
+    <target name="validateInstallationManual">
+        <validate dir="install" />
+    </target>
+
+    <target name="validateReleaseNotes">
+        <validate dir="releasenotes" />
+    </target>
+
+    <target name="validateReferenceManual">
+        <validate dir="reference" />
+    </target>
 </project>
