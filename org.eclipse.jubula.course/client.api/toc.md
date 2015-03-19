@@ -7,6 +7,11 @@
  - test-framework: JUnit, ... 
  
  - Java knowledge present
+ - Eclipse 4.x installed
+ - recent Jubula downloaded + installed
+ - JDK 6 and higher available
+ - ANT / maven installation present
+ - internet connection available
 
 ## day 1 - Jubula its concepts
 
@@ -28,6 +33,7 @@
  - **Hands-on:** export OM from ITE 
  - Introduction to API for test specification (including toolkit abstraction)
  - **Hands-on:** write and execute SimpleAdder 1+1 test within JavaAPI 
+ - **Hands-on:** write more complex scenario using multiple CAPs e.g. startup / help about / addition with data loop 
 
 ## day 2 - advanced topics
 
@@ -39,6 +45,7 @@
  - **Hands-on:** add execution event tracker
  - Introduction to result processing
  - **Hands-on:** write a small result collector
+ - Show JUnit result usage as an example for result processing
 
 ### afternoon
  - best practices / patterns
