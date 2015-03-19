@@ -257,7 +257,9 @@ public class TableTester extends AbstractTableTester {
     }
 
     /**
-     * Toggles the checkbox in the row under the Mouse Pointer
+     * Toggles the checkbox under the Mouse Pointer
+     * (The "InRow"-part of the name is not precise anymore,
+     * as in JavaFX checkboxes can appear not just in the first column.)
      */
     public void rcToggleCheckboxInRowAtMousePosition() {
         Cell cell = getCellAtMousePosition();
@@ -265,7 +267,8 @@ public class TableTester extends AbstractTableTester {
     }
 
     /**
-     * Verifies whether the checkbox in the row of the selected cell is checked
+     * Verifies whether the checkbox in the row of the selected cell is checked.
+     * Fails if there are no or more than one checkboxes in the selected row.
      *
      * @param checked
      *            true if checkbox in cell should be selected, false otherwise
@@ -315,6 +318,11 @@ public class TableTester extends AbstractTableTester {
         if (box != null) {
             getRobot().click(box, null,
                     ClickOptions.create().setClickCount(1).setMouseButton(1));
+        } else {
+            throw new StepExecutionException(
+                    "No checkbox found", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.CHECKBOX_NOT_FOUND));
         }
     }
 
