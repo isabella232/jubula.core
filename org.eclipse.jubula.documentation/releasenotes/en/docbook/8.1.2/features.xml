@@ -27,8 +27,21 @@
     </listitem>
   </itemizedlist>
   <para>
-  <emphasis role="strong">Support for drag and drop actions on lists in JavaFX 
-  </emphasis>
+    <emphasis role="strong">Progress in JavaFX toolkit</emphasis>
   </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+      Support for drag and drop actions on lists.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+      Support for actions on check boxes in tables which are not located in the first column.
+      It is not assumed anymore, that a check box can only occur in a first column 
+      of a table - contrary to the other toolkits.
+      </para>
+    </listitem>
+  </itemizedlist>
  
 </section>
