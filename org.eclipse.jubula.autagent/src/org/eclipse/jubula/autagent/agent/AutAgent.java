@@ -663,9 +663,9 @@ public class AutAgent {
      * @param autId The ID of the AUT to which the message should be sent.
      * @param clientHostName The host name to which the AUT should connect.
      * @param clientPort The port number to which the AUT should connect.
-     * @return a response that indicates whether the message was succesfully 
+     * @return a response that indicates whether the message was successfully 
      *         sent. This response does <b>not</b> indicate whether the message 
-     *         was sucessfully received and processed.
+     *         was successfully received and processed.
      */
     public ConnectToAutResponseMessage sendConnectToClientMessage(
             AutIdentifier autId, String clientHostName, 

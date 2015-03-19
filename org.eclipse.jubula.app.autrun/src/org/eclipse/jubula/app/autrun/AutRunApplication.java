@@ -16,6 +16,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
@@ -132,7 +134,7 @@ public class AutRunApplication implements IApplication {
     /** executable file used to start the AUT */
     private static final String OPT_EXECUTABLE_LONG = "exec"; //$NON-NLS-1$
     
-    /** AUT agent hostname */
+    /** AUT agent host name */
     private static final String HOSTNAME = "hostname"; //$NON-NLS-1$
     
     /** AUT agent port */
@@ -156,13 +158,13 @@ public class AutRunApplication implements IApplication {
     /** swing class prefix */
     private static final String SWING_AUT_TOOLKIT_CLASS_PREFIX = "Swing"; //$NON-NLS-1$
     
-    /** swt class prefix */
+    /** SWT class prefix */
     private static final String SWT_AUT_TOOLKIT_CLASS_PREFIX = "Swt"; //$NON-NLS-1$
     
-    /** rcp class prefix */
+    /** RCP class prefix */
     private static final String RCP_AUT_TOOLKIT_CLASS_PREFIX = "Rcp"; //$NON-NLS-1$
     
-    /** javafx class prefix */
+    /** JavaFX class prefix */
     private static final String JAVAFX_AUT_TOOLKIT_CLASS_PREFIX = "JavaFX"; //$NON-NLS-1$
     // - Command line options - End //
 
@@ -307,29 +309,47 @@ public class AutRunApplication implements IApplication {
      */
     private static final class WatchDog extends Thread {
         /**
+         * the barrier to await
+         */
+        private CyclicBarrier m_b;
+
+        /**
          * Constructor
          * 
          * @param name
          *            the name
+         * @param b the barrier to use
          */
-        private WatchDog(String name) {
+        private WatchDog(String name, CyclicBarrier b) {
             super(name);
+            m_b = b;
         }
         
         /** {@inheritDoc} */
         public void run() {
-            boolean shouldShutdown;
-            do {
-                TimeUtil.delay(2500);
-                shouldShutdown = true;
-                Set<Thread> allThreads = Thread.getAllStackTraces().keySet();
-                for (Thread t : allThreads) {
-                    if (t instanceof IsAliveThread) {
-                        shouldShutdown = false;
-                        break;
+            try {
+                boolean shouldShutdown;
+                do {
+                    TimeUtil.delay(2500);
+                    shouldShutdown = true;
+                    Set<Thread> allThreads = Thread.getAllStackTraces()
+                            .keySet();
+                    for (Thread t : allThreads) {
+                        if (t instanceof IsAliveThread) {
+                            shouldShutdown = false;
+                            break;
+                        }
                     }
+                } while (!shouldShutdown);
+            } finally {
+                try {
+                    m_b.await();
+                } catch (InterruptedException e) {
+                    LOG.error(e.getLocalizedMessage(), e);
+                } catch (BrokenBarrierException e) {
+                    LOG.error(e.getLocalizedMessage(), e);
                 }
-            } while (!shouldShutdown);
+            }
 
             try {
                 EclipseStarter.shutdown();
@@ -360,76 +380,75 @@ public class AutRunApplication implements IApplication {
     }
 
     /**
-     * 
      * {@inheritDoc}
      */
     public Object start(final IApplicationContext context) throws Exception {
-        Thread watchDog = new WatchDog("http://eclip.se/457600#c8"); //$NON-NLS-1$
-        watchDog.setDaemon(true);
-        watchDog.start();
-        
         String[] args = (String[])context.getArguments().get(
                 IApplicationContext.APPLICATION_ARGS);
         if (args == null) {
             args = new String[0];
         }
-
         Options options = createCmdLineOptions();
         Parser parser = new BasicParser();
         CommandLine cmdLine = null;
         try {
             cmdLine = parser.parse(options, args, false);
+            if (!cmdLine.hasOption(OPT_HELP)) {
+                
+                String toolkit = StringConstants.EMPTY;
+                if (cmdLine.hasOption(TK_SWING)) {
+                    toolkit = SWING_AUT_TOOLKIT_CLASS_PREFIX;
+                } else if (cmdLine.hasOption(TK_SWT)) {
+                    toolkit = SWT_AUT_TOOLKIT_CLASS_PREFIX;
+                } else if (cmdLine.hasOption(TK_RCP)) {
+                    toolkit = RCP_AUT_TOOLKIT_CLASS_PREFIX;
+                } else if (cmdLine.hasOption(TK_JAVAFX)) {
+                    toolkit = JAVAFX_AUT_TOOLKIT_CLASS_PREFIX;
+                }
+                
+                int autAgentPort = EnvConstants.AUT_AGENT_DEFAULT_PORT;
+                if (cmdLine.hasOption(OPT_AUT_AGENT_PORT)) {
+                    try {
+                        autAgentPort = Integer.parseInt(cmdLine
+                                .getOptionValue(OPT_AUT_AGENT_PORT));
+                    } catch (NumberFormatException nfe) {
+                        // use default
+                    }
+                }
+                String autAgentHost = EnvConstants.LOCALHOST_ALIAS;
+                if (cmdLine.hasOption(OPT_AUT_AGENT_HOST)) {
+                    autAgentHost = cmdLine.getOptionValue(OPT_AUT_AGENT_HOST);
+                }
+                
+                InetSocketAddress agentAddr = 
+                        new InetSocketAddress(autAgentHost, autAgentPort);
+                AutIdentifier autId = new AutIdentifier(cmdLine
+                        .getOptionValue(OPT_AUT_ID));
+                
+                Map<String, String> autConfiguration = createAutConfig(cmdLine);
+                
+                AutRunner runner = new AutRunner(
+                        toolkit, autId, agentAddr, autConfiguration);
+                try {
+                    runner.run();
+                } catch (ConnectException ce) {
+                    LOG.info(Messages.infoConnectionToAutAgentFailed, ce);
+                    System.err.println(Messages.infoNonAutAgentConnectionInfo);
+                }
+            } else {
+                printHelp(null);
+            }
         } catch (ParseException pe) {
             printHelp(pe);
+        } finally {
+            CyclicBarrier b = new CyclicBarrier(2);
+            Thread watchDog = new WatchDog("http://eclip.se/457600#c8", b); //$NON-NLS-1$
+            watchDog.setDaemon(true);
+            watchDog.start();
+            // http://eclip.se/461810: prevent application to quit too early, otherwise framework bundle lookups do not work
+            b.await();
         }
         
-        if (cmdLine != null) {
-            if (cmdLine.hasOption(OPT_HELP)) {
-                printHelp(null);
-                return IApplication.EXIT_OK;
-            }
-            
-            String toolkit = StringConstants.EMPTY;
-            if (cmdLine.hasOption(TK_SWING)) {
-                toolkit = SWING_AUT_TOOLKIT_CLASS_PREFIX;
-            } else if (cmdLine.hasOption(TK_SWT)) {
-                toolkit = SWT_AUT_TOOLKIT_CLASS_PREFIX;
-            } else if (cmdLine.hasOption(TK_RCP)) {
-                toolkit = RCP_AUT_TOOLKIT_CLASS_PREFIX;
-            } else if (cmdLine.hasOption(TK_JAVAFX)) {
-                toolkit = JAVAFX_AUT_TOOLKIT_CLASS_PREFIX;
-            }
-
-            int autAgentPort = EnvConstants.AUT_AGENT_DEFAULT_PORT;
-            if (cmdLine.hasOption(OPT_AUT_AGENT_PORT)) {
-                try {
-                    autAgentPort = Integer.parseInt(cmdLine
-                            .getOptionValue(OPT_AUT_AGENT_PORT));
-                } catch (NumberFormatException nfe) {
-                    // use default
-                }
-            }
-            String autAgentHost = EnvConstants.LOCALHOST_ALIAS;
-            if (cmdLine.hasOption(OPT_AUT_AGENT_HOST)) {
-                autAgentHost = cmdLine.getOptionValue(OPT_AUT_AGENT_HOST);
-            }
-            
-            InetSocketAddress agentAddr = 
-                new InetSocketAddress(autAgentHost, autAgentPort);
-            AutIdentifier autId = new AutIdentifier(cmdLine
-                    .getOptionValue(OPT_AUT_ID));
-            
-            Map<String, String> autConfiguration = createAutConfig(cmdLine);
-            
-            AutRunner runner = new AutRunner(
-                    toolkit, autId, agentAddr, autConfiguration);
-            try {
-                runner.run();
-            } catch (ConnectException ce) {
-                LOG.info(Messages.infoConnectionToAutAgentFailed, ce);
-                System.err.println(Messages.infoNonAutAgentConnectionInfo);
-            }
-        }
         return IApplication.EXIT_OK;
     }
 
