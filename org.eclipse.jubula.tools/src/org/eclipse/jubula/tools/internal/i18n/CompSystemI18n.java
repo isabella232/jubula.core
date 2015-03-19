@@ -103,7 +103,7 @@ public class CompSystemI18n {
      * @param throwable
      *            the throwable
      */
-    private static void logError(String key, Throwable throwable) {
+    static void logError(String key, Throwable throwable) {
         log.error("Cannot find I18N-key in resource bundles: " + key, throwable); //$NON-NLS-1$
     }
     
