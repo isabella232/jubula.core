@@ -29,7 +29,7 @@ public class I18n {
     /**
      * Name of the Bundle.
      */
-    private static final String BUNDLE_NAME = "org.eclipse.jubula.tools.internal.i18n.guidancerStrings"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.eclipse.jubula.tools.internal.i18n.jubulaI18n"; //$NON-NLS-1$
 
     /**
      * Resource bundle, contains locale-specific objects.
@@ -81,6 +81,7 @@ public class I18n {
         try {
             str = resourceBundle.getString(key);
         } catch (MissingResourceException mre) {
+            CompSystemI18n.logError(key, mre);
             if (fallBack) {
                 return key;
             }
