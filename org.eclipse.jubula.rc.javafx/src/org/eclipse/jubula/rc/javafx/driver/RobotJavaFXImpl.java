@@ -49,7 +49,6 @@ import javax.swing.UIManager;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
@@ -1117,9 +1116,8 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
     public void shakeMouse() {
         /** number of pixels by which a "mouse shake" offsets the mouse cursor */
         final int mouseShakeOffset = 10;
-        
-        Point origin = AUTServer.getInstance().getRobot()
-                .getCurrentMousePosition();
+
+        Point origin = getCurrentMousePosition();
         try {
             m_robot.mouseMove(
                     origin.x + mouseShakeOffset, 
@@ -1127,9 +1125,8 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
             m_robot.mouseMove(
                     origin.x - mouseShakeOffset, 
                     origin.y - mouseShakeOffset);
-            m_robot.mouseMove(origin.x, origin.y);
         } finally {
-            return;
+            m_robot.mouseMove(origin.x, origin.y);
         }
     }
 }
