@@ -637,7 +637,6 @@ public class ObjectMappingConfigComponent {
     /**
      * selects a combo entry depending on the profile values
      */
-    @SuppressWarnings("unchecked")
     private void setComboValue() {
         List<Profile> profiles = ProfileBuilder.getProfiles();
         for (Profile profile : profiles) {

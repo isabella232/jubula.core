@@ -36,7 +36,6 @@ public class RcpAutLaunchConfigurationDelegate
         extends EclipseApplicationLaunchConfiguration {
 
     @Override
-    @SuppressWarnings("unchecked")
     public void launch(ILaunchConfiguration configuration, String mode,
             ILaunch launch, IProgressMonitor monitor) throws CoreException {
 

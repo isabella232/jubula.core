@@ -22,13 +22,12 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 
 /**
- * Action to provide the 'show filtered children' funtion to the Test Case
+ * Action to provide the 'show filtered children' function to the Test Case
  * Browser and the Test Suite Browser menu
  * 
  * @author BREDEX GmbH
  * @created Nov 16, 2010
  */
-@SuppressWarnings("restriction")
 public class ShowFilteredChildrenAction implements IObjectActionDelegate,
         IViewActionDelegate {
     /**

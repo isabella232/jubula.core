@@ -403,7 +403,8 @@ public class SwtApplicationTester extends AbstractApplicationTester {
                 .getEventThreadQueuer().invokeAndWait(
                     this.getClass().getName() + ".getActiveWindowBounds", //$NON-NLS-1$
                         new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
-                            public org.eclipse.swt.graphics.Rectangle run() { //$NON-NLS-1$ // SYNCH THREAD START
+                            // SYNCH THREAD START
+                            public org.eclipse.swt.graphics.Rectangle run() {
                                 Display d = ((SwtAUTServer)AUTServer
                                         .getInstance()).getAutDisplay();
                                 if (d != null && d.getActiveShell() != null) {
