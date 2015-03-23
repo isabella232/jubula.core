@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.alm.mylyn.ui.handler;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.alm.mylyn.ui.mapping.TestResultNodeTaskMapping;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
@@ -22,7 +21,7 @@ import org.eclipse.mylyn.tasks.ui.TasksUiUtil;
  */
 public class AddTaskHandler extends AbstractSelectionBasedHandler {
     /** {@inheritDoc} */
-    public Object executeImpl(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(ExecutionEvent event) {
         Object selectedElement = getSelection().getFirstElement();
         if (selectedElement instanceof TestResultNode) {
             final TestResultNode node = (TestResultNode) selectedElement;

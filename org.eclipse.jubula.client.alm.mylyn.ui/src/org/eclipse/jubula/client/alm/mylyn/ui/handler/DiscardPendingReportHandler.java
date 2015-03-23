@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.alm.mylyn.ui.handler;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
@@ -23,8 +22,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus
  */
 public class DiscardPendingReportHandler extends AbstractALMReportHandler {
     /** {@inheritDoc} */
-    protected Object executeImpl(ExecutionEvent event) 
-        throws ExecutionException {
+    protected Object executeImpl(ExecutionEvent event) {
         final List<ITestResultSummaryPO> summaries = getPendingSummaries();
         final int sumCount = summaries.size();
         if (sumCount > 0) {

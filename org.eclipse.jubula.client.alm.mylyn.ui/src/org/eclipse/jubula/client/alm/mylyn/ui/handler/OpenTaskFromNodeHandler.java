@@ -14,7 +14,6 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -30,7 +29,7 @@ import org.eclipse.mylyn.tasks.ui.TasksUiUtil;
  */
 public class OpenTaskFromNodeHandler extends AbstractSelectionBasedHandler {
     /** {@inheritDoc} */
-    public Object executeImpl(ExecutionEvent event) throws ExecutionException {
+    public Object executeImpl(ExecutionEvent event) {
         IStructuredSelection selection = getSelection();
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (selection != null && project != null) {
@@ -39,7 +38,7 @@ public class OpenTaskFromNodeHandler extends AbstractSelectionBasedHandler {
             TaskRepository repository = ALMAccess
                     .getRepositoryByLabel(almRepositoryName);
             if (repository != null) {
-                Iterator<INodePO> it = selection.iterator();
+                Iterator it = selection.iterator();
                 while (it.hasNext()) {
                     Object element = it.next();
                     if (element instanceof INodePO) {

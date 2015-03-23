@@ -14,17 +14,16 @@ package org.eclipse.jubula.client.core.businessprocess;
  * Generates filenames for a Test Result Report.
  */
 public class TestResultReportNamer {
-
     /**
      * <code>ENCODING</code>
      */
     public static final String ENCODING = "UTF-8"; //$NON-NLS-1$
     
     /** file extension for XML */
-    private static final String FILE_EXTENSION_XML = ".xml"; //$NON-NLS-1$
+    public static final String FILE_EXTENSION_XML = ".xml"; //$NON-NLS-1$
 
     /** file extension for HTML */
-    private static final String FILE_EXTENSION_HTML = ".htm"; //$NON-NLS-1$
+    public static final String FILE_EXTENSION_HTML = ".html"; //$NON-NLS-1$
 
     /** 
      * ID for the report to write (must be unique within the context of the 

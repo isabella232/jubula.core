@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 import javax.persistence.EntityManager;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.apache.commons.beanutils.Converter;
 import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.lang.StringUtils;
@@ -234,8 +235,9 @@ class XmlImporter {
             }
         };
         
-        BEAN_UTILS.getConvertUtils().register(stringConverter, String.class);
-        BEAN_UTILS.getConvertUtils().register(converter, Date.class);
+        ConvertUtilsBean convertUtils = BEAN_UTILS.getConvertUtils();
+        convertUtils.register(stringConverter, String.class);
+        convertUtils.register(converter, Date.class);
     }
     
     /** number of characters of a GUID */

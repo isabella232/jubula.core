@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.alm.mylyn.ui.handler;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -30,8 +29,7 @@ import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultT
  */
 public class ReportToAlmHandler extends AbstractALMReportHandler {
     /** {@inheritDoc} */
-    protected Object executeImpl(ExecutionEvent event)
-        throws ExecutionException {
+    protected Object executeImpl(ExecutionEvent event) {
         final List<ITestResultSummaryPO> summaries = 
             getPendingSummaries();
         

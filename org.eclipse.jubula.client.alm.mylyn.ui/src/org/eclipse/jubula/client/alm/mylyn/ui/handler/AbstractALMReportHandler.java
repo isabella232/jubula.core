@@ -29,7 +29,7 @@ public abstract class AbstractALMReportHandler extends
     protected List<ITestResultSummaryPO> getPendingSummaries() {
         final List<ITestResultSummaryPO> pendingSummaries = 
             new LinkedList<ITestResultSummaryPO>();
-        Iterator<Object> iterator = getSelection().iterator();
+        Iterator iterator = getSelection().iterator();
         while (iterator.hasNext()) {
             Object o = iterator.next();
             if (o instanceof ITestResultSummaryPO) {

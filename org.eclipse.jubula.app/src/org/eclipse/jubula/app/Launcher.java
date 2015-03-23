@@ -163,7 +163,7 @@ public class Launcher implements IApplication {
                 return null;
             }
             // make sure the file exists
-            URL versionUrl = new URL(metaDir.toURL(), VERSION_FILENAME);
+            URL versionUrl = new URL(metaDir.toURI().toURL(), VERSION_FILENAME);
             File versionFile = new File(versionUrl.getFile());
             if (!versionFile.exists() 
                 && (!create || !versionFile.createNewFile())) {

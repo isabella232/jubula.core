@@ -45,6 +45,7 @@ import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListene
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
+import org.eclipse.jubula.client.core.businessprocess.TestResultReportNamer;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
@@ -688,9 +689,11 @@ public class ExecutionController implements IAUTServerEventListener,
         if (StringUtils.isNotBlank(m_job.getFileName())) {
             String filePath = m_job.getResultDir() + StringConstants.SLASH
                     + m_job.getFileName();
-            boolean isWritable = FileUtils.isWritableFile(filePath + ".xml");
+            boolean isWritable = FileUtils.isWritableFile(filePath
+                    + TestResultReportNamer.FILE_EXTENSION_XML);
             if (isWritable) {
-                isWritable = FileUtils.isWritableFile(filePath + ".html");
+                isWritable = FileUtils.isWritableFile(filePath
+                        + TestResultReportNamer.FILE_EXTENSION_HTML);
             }
             Validate.isTrue(isWritable,
                     Messages.ExecutionControllerResultNameError);

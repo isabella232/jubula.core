@@ -62,7 +62,8 @@ public class TestResultNodeTaskMapping extends TaskMapping {
             sb.append(StringConstants.MINUS);
             sb.append(StringConstants.SPACE);
             sb.append(pd.getDisplayName());
-            sb.append(": ");
+            sb.append(StringConstants.COLON);
+            sb.append(StringConstants.SPACE);
             sb.append(propSource.getPropertyValue(pd.getId()));
             if (count != propSource.getPropertyDescriptors().length) {
                 sb.append(StringConstants.NEWLINE);

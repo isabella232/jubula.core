@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends Plugin {
     /** the bundle ID */
-    public static final String ID = "org.eclipse.jubula.client.alm.mylyn.core";
+    public static final String ID = "org.eclipse.jubula.client.alm.mylyn.core"; //$NON-NLS-1$
     /** context */
     private static BundleContext context;
     /** the current instance */

@@ -361,8 +361,9 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             String fragmentHost = bundle.getHeaders().get(Constants.
                     FRAGMENT_HOST);
             if (fragmentHost != null) {
-                if (fragmentHost.contains(";")) {
-                    fragmentHost = fragmentHost.split(";")[0];
+                if (fragmentHost.contains(StringConstants.SEMICOLON)) {
+                    fragmentHost = fragmentHost.split(
+                            StringConstants.SEMICOLON)[0];
                 }
                 if (fragmentHost.equals(mainBundle.getSymbolicName())) {
                     for (Bundle fragment : fragments) {
