@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.eclipse.jubula.client.archive</name>
+	<name>org.eclipse.jubula.client.schema</name>
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.ui.externaltools.ExternalToolBuilder</name>
+			<triggers>full,incremental,</triggers>
+			<arguments>
+				<dictionary>
+					<key>LaunchConfigHandle</key>
+					<value>&lt;project&gt;/.externalToolBuilders/gen-xml-src.launch</value>
+				</dictionary>
+			</arguments>
+		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.pde.SchemaBuilder</name>
 			<arguments>
@@ -35,7 +45,7 @@
 		<link>
 			<name>.settings</name>
 			<type>2</type>
-			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.7</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.6</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>

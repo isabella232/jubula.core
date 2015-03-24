@@ -10,8 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.converter;
 
-import org.eclipse.jubula.client.archive.schema.Project;
-
+import org.eclipse.jubula.client.schema.Project;
 
 /**
  * general interface for import converter

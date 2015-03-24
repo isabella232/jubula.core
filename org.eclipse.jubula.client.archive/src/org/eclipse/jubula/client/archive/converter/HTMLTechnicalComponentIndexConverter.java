@@ -12,11 +12,11 @@ package org.eclipse.jubula.client.archive.converter;
 
 import java.util.List;
 
-import org.eclipse.jubula.client.archive.schema.Aut;
-import org.eclipse.jubula.client.archive.schema.OmCategory;
-import org.eclipse.jubula.client.archive.schema.OmEntry;
-import org.eclipse.jubula.client.archive.schema.Project;
-import org.eclipse.jubula.client.archive.schema.TechnicalName;
+import org.eclipse.jubula.client.schema.Aut;
+import org.eclipse.jubula.client.schema.OmCategory;
+import org.eclipse.jubula.client.schema.OmEntry;
+import org.eclipse.jubula.client.schema.Project;
+import org.eclipse.jubula.client.schema.TechnicalName;
 
 /**
  * Converter for ticket #3546
@@ -62,7 +62,7 @@ public class HTMLTechnicalComponentIndexConverter extends AbstractXmlConverter {
 
     /**
      * @param cat
-     *            the category to convert recursivly
+     *            the category to convert recursively
      */
     private void convertCategory(OmCategory cat) {
         List<OmCategory> childCat = cat.getCategoryList();

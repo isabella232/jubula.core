@@ -29,47 +29,47 @@ import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
-import org.eclipse.jubula.client.archive.schema.Aut;
-import org.eclipse.jubula.client.archive.schema.AutConfig;
-import org.eclipse.jubula.client.archive.schema.Cap;
-import org.eclipse.jubula.client.archive.schema.Category;
-import org.eclipse.jubula.client.archive.schema.CheckActivatedContext;
-import org.eclipse.jubula.client.archive.schema.CheckAttribute;
-import org.eclipse.jubula.client.archive.schema.CheckConfiguration;
-import org.eclipse.jubula.client.archive.schema.CompNames;
-import org.eclipse.jubula.client.archive.schema.ComponentName;
-import org.eclipse.jubula.client.archive.schema.EventHandler;
-import org.eclipse.jubula.client.archive.schema.EventTestCase;
-import org.eclipse.jubula.client.archive.schema.ExecCategory;
-import org.eclipse.jubula.client.archive.schema.I18NString;
-import org.eclipse.jubula.client.archive.schema.MapEntry;
-import org.eclipse.jubula.client.archive.schema.MonitoringValues;
-import org.eclipse.jubula.client.archive.schema.NamedTestData;
-import org.eclipse.jubula.client.archive.schema.Node;
-import org.eclipse.jubula.client.archive.schema.ObjectMapping;
-import org.eclipse.jubula.client.archive.schema.ObjectMappingProfile;
-import org.eclipse.jubula.client.archive.schema.OmCategory;
-import org.eclipse.jubula.client.archive.schema.OmEntry;
-import org.eclipse.jubula.client.archive.schema.ParamDescription;
-import org.eclipse.jubula.client.archive.schema.Project;
-import org.eclipse.jubula.client.archive.schema.ReentryProperty;
-import org.eclipse.jubula.client.archive.schema.RefTestCase;
-import org.eclipse.jubula.client.archive.schema.RefTestSuite;
-import org.eclipse.jubula.client.archive.schema.ReportingRule;
-import org.eclipse.jubula.client.archive.schema.ReusedProject;
-import org.eclipse.jubula.client.archive.schema.SummaryAttribute;
-import org.eclipse.jubula.client.archive.schema.TechnicalName;
-import org.eclipse.jubula.client.archive.schema.TestCase;
-import org.eclipse.jubula.client.archive.schema.TestCase.Teststep;
-import org.eclipse.jubula.client.archive.schema.TestData;
-import org.eclipse.jubula.client.archive.schema.TestDataCategory;
-import org.eclipse.jubula.client.archive.schema.TestDataCell;
-import org.eclipse.jubula.client.archive.schema.TestDataRow;
-import org.eclipse.jubula.client.archive.schema.TestJobs;
-import org.eclipse.jubula.client.archive.schema.TestSuite;
-import org.eclipse.jubula.client.archive.schema.TestresultSummaries;
-import org.eclipse.jubula.client.archive.schema.TestresultSummary;
-import org.eclipse.jubula.client.archive.schema.UsedToolkit;
+import org.eclipse.jubula.client.schema.Aut;
+import org.eclipse.jubula.client.schema.AutConfig;
+import org.eclipse.jubula.client.schema.Cap;
+import org.eclipse.jubula.client.schema.Category;
+import org.eclipse.jubula.client.schema.CheckActivatedContext;
+import org.eclipse.jubula.client.schema.CheckAttribute;
+import org.eclipse.jubula.client.schema.CheckConfiguration;
+import org.eclipse.jubula.client.schema.CompNames;
+import org.eclipse.jubula.client.schema.ComponentName;
+import org.eclipse.jubula.client.schema.EventHandler;
+import org.eclipse.jubula.client.schema.EventTestCase;
+import org.eclipse.jubula.client.schema.ExecCategory;
+import org.eclipse.jubula.client.schema.I18NString;
+import org.eclipse.jubula.client.schema.MapEntry;
+import org.eclipse.jubula.client.schema.MonitoringValues;
+import org.eclipse.jubula.client.schema.NamedTestData;
+import org.eclipse.jubula.client.schema.Node;
+import org.eclipse.jubula.client.schema.ObjectMapping;
+import org.eclipse.jubula.client.schema.ObjectMappingProfile;
+import org.eclipse.jubula.client.schema.OmCategory;
+import org.eclipse.jubula.client.schema.OmEntry;
+import org.eclipse.jubula.client.schema.ParamDescription;
+import org.eclipse.jubula.client.schema.Project;
+import org.eclipse.jubula.client.schema.ReentryProperty;
+import org.eclipse.jubula.client.schema.RefTestCase;
+import org.eclipse.jubula.client.schema.RefTestSuite;
+import org.eclipse.jubula.client.schema.ReportingRule;
+import org.eclipse.jubula.client.schema.ReusedProject;
+import org.eclipse.jubula.client.schema.SummaryAttribute;
+import org.eclipse.jubula.client.schema.TechnicalName;
+import org.eclipse.jubula.client.schema.TestCase;
+import org.eclipse.jubula.client.schema.TestCase.Teststep;
+import org.eclipse.jubula.client.schema.TestData;
+import org.eclipse.jubula.client.schema.TestDataCategory;
+import org.eclipse.jubula.client.schema.TestDataCell;
+import org.eclipse.jubula.client.schema.TestDataRow;
+import org.eclipse.jubula.client.schema.TestJobs;
+import org.eclipse.jubula.client.schema.TestSuite;
+import org.eclipse.jubula.client.schema.TestresultSummaries;
+import org.eclipse.jubula.client.schema.TestresultSummary;
+import org.eclipse.jubula.client.schema.UsedToolkit;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
@@ -120,6 +120,7 @@ import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 import org.slf4j.Logger;
@@ -310,20 +311,19 @@ class XmlExporter {
      * 
      * @param xml
      *            The XML element to be filled
-     * @param po
-     *            The persistent object which contains the information
+     * @param identifier
+     *            the identifier representing a UI component
      */
-    private void fillTechnicalName(TechnicalName xml, ICompIdentifierPO po) {
-        xml.setComponentClassName(po.getComponentClassName());
-        xml.setSupportedClassName(po.getSupportedClassName());
-        xml.setAlternativeDisplayName(po.getAlternativeDisplayName());
+    private void fillTechnicalName(TechnicalName xml,
+            IComponentIdentifier identifier) {
+        xml.setComponentClassName(identifier.getComponentClassName());
+        xml.setSupportedClassName(identifier.getSupportedClassName());
+        xml.setAlternativeDisplayName(identifier.getAlternativeDisplayName());
 
-        for (Object n : po.getNeighbours()) {
-            String neighbour = (String)n;
+        for (String neighbour : identifier.getNeighbours()) {
             xml.addNeighbour(neighbour);
         }
-        for (Object h : po.getHierarchyNames()) {
-            String hierarchy = (String)h;
+        for (String hierarchy : identifier.getHierarchyNames()) {
             xml.addHierarchyName(hierarchy);
         }
     }

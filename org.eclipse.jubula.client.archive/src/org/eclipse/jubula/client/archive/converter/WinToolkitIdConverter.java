@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.converter;
 
-import org.eclipse.jubula.client.archive.schema.Aut;
-import org.eclipse.jubula.client.archive.schema.Project;
-import org.eclipse.jubula.client.archive.schema.UsedToolkit;
+import org.eclipse.jubula.client.schema.Aut;
+import org.eclipse.jubula.client.schema.Project;
+import org.eclipse.jubula.client.schema.UsedToolkit;
 
 /**
  * @author BREDEX GmbH

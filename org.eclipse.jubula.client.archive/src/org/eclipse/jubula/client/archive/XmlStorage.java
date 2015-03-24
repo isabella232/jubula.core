@@ -36,9 +36,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
-import org.eclipse.jubula.client.archive.schema.ContentDocument;
-import org.eclipse.jubula.client.archive.schema.ContentDocument.Content;
-import org.eclipse.jubula.client.archive.schema.Project;
+import org.eclipse.jubula.client.schema.ContentDocument;
+import org.eclipse.jubula.client.schema.ContentDocument.Content;
+import org.eclipse.jubula.client.schema.Project;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -141,8 +141,13 @@ public class XmlStorage {
     /**
      * the current XML schema namespace
      */
-    private static final String SCHEMA_NAMESPACE = "http://www.eclipse.org/jubula/client/archive/schema"; //$NON-NLS-1$
+    private static final String SCHEMA_NAMESPACE = "http://www.eclipse.org/jubula/client/schema"; //$NON-NLS-1$
 
+    /**
+     * the pre 8.1.3 XML schema namespace
+     */
+    private static final String PRE_813_SCHEMA_NAMESPACE = "http://www.eclipse.org/jubula/client/archive/schema"; //$NON-NLS-1$
+    
     /** name of GUIdancer import/export XML element representing Exec Test Cases */
     private static final String EXEC_TC_XML_ELEMENT_NAME = "usedTestcase"; //$NON-NLS-1$
 
@@ -321,6 +326,7 @@ public class XmlStorage {
     private static ContentDocument getContent(InputStream projectXmlStream)
         throws XmlException, PMReadException {
         Map<String, String> substitutes = new HashMap<String, String>();
+        substitutes.put(PRE_813_SCHEMA_NAMESPACE, SCHEMA_NAMESPACE);
         substitutes.put(OLD_SCHEMA_NAMESPACE, SCHEMA_NAMESPACE);
         XmlOptions options = new XmlOptions();
         options.setLoadSubstituteNamespaces(substitutes);

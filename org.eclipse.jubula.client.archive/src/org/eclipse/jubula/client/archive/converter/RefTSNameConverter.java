@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.archive.schema.ExecCategory;
-import org.eclipse.jubula.client.archive.schema.Project;
-import org.eclipse.jubula.client.archive.schema.RefTestSuite;
-import org.eclipse.jubula.client.archive.schema.TestJobs;
-import org.eclipse.jubula.client.archive.schema.TestSuite;
+import org.eclipse.jubula.client.schema.ExecCategory;
+import org.eclipse.jubula.client.schema.Project;
+import org.eclipse.jubula.client.schema.RefTestSuite;
+import org.eclipse.jubula.client.schema.TestJobs;
+import org.eclipse.jubula.client.schema.TestSuite;
 
 /**
  * This converter deletes the name from {@link RefTestSuite} if it is the same

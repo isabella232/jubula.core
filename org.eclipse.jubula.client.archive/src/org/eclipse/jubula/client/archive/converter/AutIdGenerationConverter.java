@@ -11,10 +11,10 @@
 package org.eclipse.jubula.client.archive.converter;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.archive.schema.Aut;
-import org.eclipse.jubula.client.archive.schema.AutConfig;
-import org.eclipse.jubula.client.archive.schema.MapEntry;
-import org.eclipse.jubula.client.archive.schema.Project;
+import org.eclipse.jubula.client.schema.Aut;
+import org.eclipse.jubula.client.schema.AutConfig;
+import org.eclipse.jubula.client.schema.MapEntry;
+import org.eclipse.jubula.client.schema.Project;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 
 /**
