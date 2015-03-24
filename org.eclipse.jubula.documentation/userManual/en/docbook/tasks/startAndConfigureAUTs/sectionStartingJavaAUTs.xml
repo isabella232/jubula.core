@@ -368,6 +368,14 @@
               </row>
               <row>
                 <entry>
+                  -javafx
+                </entry>
+                <entry>
+                  If the AUT is a JavaFX AUT
+                </entry>
+              </row>
+              <row>
+                <entry>
                   -k, <literal>--</literal>kblayout
                 </entry>
                 <entry>

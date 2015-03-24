@@ -32,6 +32,11 @@
   <itemizedlist>
     <listitem>
       <para>
+      JavaFX AUTs can now be started via <emphasis>autrun</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
       Support for drag and drop actions on lists.
       </para>
     </listitem>
