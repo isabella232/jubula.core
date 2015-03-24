@@ -102,10 +102,12 @@ public class ProjectBP {
         public void run(IProgressMonitor monitor) throws InterruptedException, 
             InvocationTargetException {
             String pName = m_project.getName();
+            String pVersion = m_project.getVersionString();
             final SubMonitor subMonitor = SubMonitor.convert(
                     monitor, NLS.bind(Messages.
                         CreateNewProjectVersionOperationCreatingNewVersion,
-                                    new Object[] { m_projectVersion, pName }),
+                                    new Object[] { 
+                                        m_projectVersion, pName, pVersion }),
                             TOTAL_WORK);
             final ParamNameBPDecorator paramNameMapper = 
                 new ParamNameBPDecorator(ParamNameBP.getInstance());
