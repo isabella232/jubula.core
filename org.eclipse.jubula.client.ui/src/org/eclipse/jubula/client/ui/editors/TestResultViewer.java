@@ -199,7 +199,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                         Messages.TestResultViewerDetailsLoadingJobName,
                             remainingWork); 
                 sMonitor.subTask(Messages.
-                        TestResultViewerDetailsLoading2SubTask);
+                        TestResultViewerDetailsLoading3SubTask);
 
                 Stack<TestResultNode> parentNodeStack = 
                         new Stack<TestResultNode>();

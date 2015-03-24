@@ -168,7 +168,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          version="0.0.0"
          unpack="false"/>
          
-   <!-- This must be in one line for the build.xml in the jubula root directory -->
+   <!-- This must be in one line for the build.xml in the org.eclipse.jubula.core root directory -->
    <plugin id="com.bredexsw.jubula.client.core.driver" download-size="0" install-size="0" version="0.0.0" fragment="true"/>
 
    <plugin
