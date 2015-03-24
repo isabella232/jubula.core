@@ -7,8 +7,11 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <project name="Jubula" default="cleanBuild-allComponents">
+    <property name="releng.main" value="org.eclipse.jubula.releng" />
+    <property name="releng.dashboard" value="${releng.main}.dashboard" />
+    
     <description>
-        main Jubula releng build script
+        Main Jubula releng build script
     </description>
 
     <target name="cleanBuild-allComponents">
@@ -18,7 +21,7 @@
 
     <target name="cleanBuild-ite" description="Clean build for the ITE feature">
         <antcall target="cleanBuild-template">
-            <param name="buildBaseDir" value="org.eclipse.jubula.releng" />
+            <param name="buildBaseDir" value="${releng.main}" />
         </antcall>
     </target>
 
@@ -35,7 +38,7 @@
         <move tofile="${dashboardFeatureLocation}" file="${dashboardFeatureLocation}.tmp" overwrite="yes" />
 
         <antcall target="cleanBuild-template">
-            <param name="buildBaseDir" value="org.eclipse.jubula.releng.dashboard" />
+            <param name="buildBaseDir" value="${releng.dashboard}" />
         </antcall>
 
         <!-- revert the dynamically / temporarily remove external (optional) dependencies -->
@@ -51,6 +54,31 @@
             <arg value="clean" />
             <arg value="verify" />
             <arg value="-V" />
+        </exec>
+    </target>
+    
+    <target name="updateVersionNumbers">
+        <!--
+        <property name="newVersion" value="3.1.0-SNAPSHOT" />
+        -->
+        <fail unless="newVersion" message="New version number missing!" />
+
+        <antcall target="updateVersionNumbers-template">
+            <param name="buildBaseDir" value="${releng.main}" />
+        </antcall>
+        
+        <antcall target="updateVersionNumbers-template">
+            <param name="buildBaseDir" value="${releng.dashboard}" />
+        </antcall>
+    </target>
+
+    <target name="updateVersionNumbers-template">
+        <exec dir="${buildBaseDir}" executable="mvn" failonerror="true" vmlauncher="false">
+            <env key="MAVEN_OPTS" value="-Xmx512m" />
+            
+            <arg value="-Dtycho.mode=maven"/>
+            <arg value="org.eclipse.tycho:tycho-versions-plugin:set-version"/>
+            <arg value="-DnewVersion=${newVersion}"/>
         </exec>
     </target>
 
