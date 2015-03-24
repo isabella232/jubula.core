@@ -65,6 +65,7 @@ import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -175,31 +176,33 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
          */
         public void run(IProgressMonitor pMonitor) {
             SubMonitor monitor = SubMonitor.convert(pMonitor,
-                "Fetching test result data...", 3); //$NON-NLS-1$
+                Messages.TestResultViewerDetailsLoadingJobName, 3);
             try {
-                monitor.subTask("Loading test results from database..."); //$NON-NLS-1$
+                monitor.subTask(Messages.
+                        TestResultViewerDetailsLoading1SubTask);
                 List<ITestResultPO> testResultList = TestResultPM
                     .computeTestResultListForSummary(m_session, m_summaryId);
                 monitor.worked(1);
-                
                 TestResultNode createdNode = null;
-                Stack<TestResultNode> parentNodeStack = 
-                    new Stack<TestResultNode>();
                 Set<String> allGuids = new HashSet<String>();
                 for (ITestResultPO result : testResultList) {
                     allGuids.add(result.getInternalKeywordGuid());
                 }
-
-                monitor.subTask("Loading " + allGuids.size()  //$NON-NLS-1$
-                    + " backing nodes from database..."); //$NON-NLS-1$
+                monitor.subTask(NLS.bind(
+                    Messages.TestResultViewerDetailsLoading2SubTask,
+                        allGuids.size()));
                 Map<String, INodePO> guidToNodeMap = NodePM.getNodes(
                         m_parentProjectId, allGuids, m_session);
                 monitor.worked(1);
                 int remainingWork = testResultList.size();
                 SubMonitor sMonitor = SubMonitor.convert(monitor,
-                    "Fetching test result data...", //$NON-NLS-1$
-                    remainingWork);
-                sMonitor.subTask("Creating test result tree...");
+                        Messages.TestResultViewerDetailsLoadingJobName,
+                            remainingWork); 
+                sMonitor.subTask(Messages.
+                        TestResultViewerDetailsLoading2SubTask);
+
+                Stack<TestResultNode> parentNodeStack = 
+                        new Stack<TestResultNode>();
                 for (ITestResultPO result : testResultList) {
                     if (pMonitor.isCanceled()) {
                         throw new OperationCanceledException();
@@ -212,16 +215,15 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                             parentNodeStack.pop();
                         }
                     }
-                    INodePO backingNode = 
-                        guidToNodeMap.get(result.getInternalKeywordGuid()); 
+                    INodePO backingNode = guidToNodeMap.get(
+                            result.getInternalKeywordGuid()); 
                     final boolean backingNodeExists = backingNode != null;
                     if (!backingNodeExists) {
                         backingNode = generateBackingNode(result);
                     }
                     
                     createdNode = new TestResultNode(backingNodeExists, 
-                            backingNode, 
-                            parentNodeStack.isEmpty() ? null 
+                            backingNode, parentNodeStack.isEmpty() ? null 
                                     : parentNodeStack.peek());
                     createdNode.setComponentName(result.getComponentName());
                     createdNode.setComponentType(result.getComponentType());

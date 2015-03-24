@@ -129,6 +129,10 @@ public class Messages extends NLS {
     public static String TestresultSummaryTestsuite;
     public static String TestresultSummaryTestsuiteStatus;
     public static String TestresultSummaryToolkit;
+    public static String TestResultViewerDetailsLoadingJobName;
+    public static String TestResultViewerDetailsLoading1SubTask;
+    public static String TestResultViewerDetailsLoading2SubTask;
+    public static String TestResultViewerDetailsLoading3SubTask;
     public static String UIJobDeletingTestResultFromDB;
     public static String UIJobLoadingImage;
     public static String UnknownTypeOfElementInTreeOfType;
