@@ -201,14 +201,7 @@
   <itemizedlist>
     <listitem>
       <para>
-        The observation mode, <emphasis>autrun</emphasis> and code
-        coverage do not work for JavaFX AUTs.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        We do not currently support addressing components that have
-        been scaled (shrunk or enlarged).
+        The observation mode does not work for JavaFX AUTs.
       </para>
     </listitem>
   </itemizedlist>
