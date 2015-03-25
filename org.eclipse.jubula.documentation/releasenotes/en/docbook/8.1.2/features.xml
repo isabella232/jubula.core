@@ -37,6 +37,11 @@
     </listitem>
     <listitem>
       <para>
+      Code coverage reports are now supported for JavaFX AUTs as well.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
       Support for drag and drop actions on lists.
       </para>
     </listitem>
