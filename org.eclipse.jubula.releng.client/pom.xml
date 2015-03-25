@@ -1,78 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>org.eclipse.jubula.releng</artifactId>
-        <groupId>org.eclipse.jubula</groupId>
-        <version>3.0.0-SNAPSHOT</version>
-        <relativePath>../org.eclipse.jubula.releng</relativePath>
-    </parent>
-    <artifactId>org.eclipse.jubula.releng.client</artifactId>
-    <packaging>pom</packaging>
-    <description>Release engineering for Jubula ITE.</description>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>org.eclipse.jubula.releng</artifactId>
+    <groupId>org.eclipse.jubula</groupId>
+    <version>3.0.0-SNAPSHOT</version>
+    <relativePath>../org.eclipse.jubula.releng</relativePath>
+  </parent>
+  <artifactId>org.eclipse.jubula.releng.client</artifactId>
+  <packaging>pom</packaging>
+  <description>Release engineering for Jubula ITE.</description>
 
-    <modules>
-        <module>../org.eclipse.jubula.site</module>
-        <module>../org.eclipse.jubula.app</module>
-        <module>../org.eclipse.jubula.app.testexec</module>
-        <module>../org.eclipse.jubula.app.dbtool</module>
-        <module>../org.eclipse.jubula.feature</module>
+	<modules>
+		<module>../org.eclipse.jubula.site</module>
+		<module>../org.eclipse.jubula.app</module>
+		<module>../org.eclipse.jubula.app.testexec</module>
+		<module>../org.eclipse.jubula.app.dbtool</module>
+		<module>../org.eclipse.jubula.feature</module>
         <module>../org.eclipse.jubula.feature.api</module>
         <module>../org.eclipse.jubula.feature.api.core</module>
         <module>../org.eclipse.jubula.feature.api.converter</module>
-        <module>../org.eclipse.jubula.client.api</module>
-        <module>../org.eclipse.jubula.client.api.commands</module>
+		<module>../org.eclipse.jubula.client.api</module>
+		<module>../org.eclipse.jubula.client.api.commands</module>
         <module>../org.eclipse.jubula.client.api.ui</module>
         <module>../org.eclipse.jubula.client.api.converter</module>
         <module>../org.eclipse.jubula.client.api.converter.ui</module>
         <module>../org.eclipse.jubula.client.api.converter.annotations</module>
-        <module>../org.eclipse.jubula.client.core</module>
+		<module>../org.eclipse.jubula.client.core</module>
         <module>../org.eclipse.jubula.client.ui</module>
         <module>../org.eclipse.jubula.client.alm.mylyn.core</module>
         <module>../org.eclipse.jubula.client.alm.mylyn.ui</module>
         <module>../org.eclipse.jubula.client.alm.mylyn.ui.bridge</module>
-        <module>../org.eclipse.jubula.client.ui.rcp</module>
-        <module>../org.eclipse.jubula.client.toolkit.ui</module>
-        <module>../org.eclipse.jubula.client.qa.caa.gen.ui</module>
-        <module>../org.eclipse.jubula.client.inspector.ui</module>
-        <module>../org.eclipse.jubula.client.schema</module>
-        <module>../org.eclipse.jubula.client.archive</module>
-        <module>../org.eclipse.jubula.toolkit.api</module>
-        <module>../org.eclipse.jubula.toolkit.api.gen</module>
-        <module>../org.eclipse.jubula.toolkit.base.api</module>
-        <module>../org.eclipse.jubula.toolkit.base.provider</module>
-        <module>../org.eclipse.jubula.toolkit.concrete.api</module>
-        <module>../org.eclipse.jubula.toolkit.concrete.provider</module>
-        <module>../org.eclipse.jubula.toolkit.gef.api</module>
-        <module>../org.eclipse.jubula.toolkit.gef.provider</module>
-        <module>../org.eclipse.jubula.toolkit.html</module>
-        <module>../org.eclipse.jubula.toolkit.html.api</module>
-        <module>../org.eclipse.jubula.toolkit.html.provider</module>
-        <module>../org.eclipse.jubula.toolkit.ios.api</module>
-        <module>../org.eclipse.jubula.toolkit.ios.provider</module>
-        <module>../org.eclipse.jubula.toolkit.javafx.api</module>
-        <module>../org.eclipse.jubula.toolkit.javafx.provider</module>
-        <module>../org.eclipse.jubula.toolkit.mobile.api</module>
-        <module>../org.eclipse.jubula.toolkit.mobile.provider</module>
-        <module>../org.eclipse.jubula.toolkit.rcp.api</module>
-        <module>../org.eclipse.jubula.toolkit.rcp.provider</module>
-        <module>../org.eclipse.jubula.toolkit.swing.api</module>
-        <module>../org.eclipse.jubula.toolkit.swing.provider</module>
-        <module>../org.eclipse.jubula.toolkit.swt.api</module>
-        <module>../org.eclipse.jubula.toolkit.swt.provider</module>
+		<module>../org.eclipse.jubula.client.ui.rcp</module>
+		<module>../org.eclipse.jubula.client.toolkit.ui</module>
+		<module>../org.eclipse.jubula.client.qa.caa.gen.ui</module>
+		<module>../org.eclipse.jubula.client.inspector.ui</module>
+		<module>../org.eclipse.jubula.client.archive</module>
+		<module>../org.eclipse.jubula.toolkit.api</module>
+		<module>../org.eclipse.jubula.toolkit.api.gen</module>
+		<module>../org.eclipse.jubula.toolkit.base.api</module>
+		<module>../org.eclipse.jubula.toolkit.base.provider</module>
+		<module>../org.eclipse.jubula.toolkit.concrete.api</module>
+		<module>../org.eclipse.jubula.toolkit.concrete.provider</module>
+		<module>../org.eclipse.jubula.toolkit.gef.api</module>
+		<module>../org.eclipse.jubula.toolkit.gef.provider</module>
+		<module>../org.eclipse.jubula.toolkit.html</module>
+		<module>../org.eclipse.jubula.toolkit.html.api</module>
+		<module>../org.eclipse.jubula.toolkit.html.provider</module>
+		<module>../org.eclipse.jubula.toolkit.ios.api</module>
+		<module>../org.eclipse.jubula.toolkit.ios.provider</module>
+		<module>../org.eclipse.jubula.toolkit.javafx.api</module>
+		<module>../org.eclipse.jubula.toolkit.javafx.provider</module>
+		<module>../org.eclipse.jubula.toolkit.mobile.api</module>
+		<module>../org.eclipse.jubula.toolkit.mobile.provider</module>
+		<module>../org.eclipse.jubula.toolkit.rcp.api</module>
+		<module>../org.eclipse.jubula.toolkit.rcp.provider</module>
+		<module>../org.eclipse.jubula.toolkit.swing.api</module>
+		<module>../org.eclipse.jubula.toolkit.swing.provider</module>
+		<module>../org.eclipse.jubula.toolkit.swt.api</module>
+		<module>../org.eclipse.jubula.toolkit.swt.provider</module>
         <module>../org.eclipse.jubula.toolkit.win.api</module>
         <module>../org.eclipse.jubula.toolkit.win.provider</module>
         <module>../org.eclipse.jubula.toolkit.winapps.api</module>
         <module>../org.eclipse.jubula.toolkit.winapps.provider</module>
-        <module>../org.eclipse.jubula.toolkit.common</module>
-        <module>../org.eclipse.jubula.client.ua.cheatsheets</module>
-        <module>../org.eclipse.jubula.client.ua.welcome</module>
-        <module>../org.eclipse.jubula.documentation.orbit</module>
-        <module>../org.eclipse.jubula.client.ua.help</module>
-        <module>../org.eclipse.jubula.client.cmd</module>
-        <module>../org.eclipse.jubula.client.cmd.controller</module>
+		<module>../org.eclipse.jubula.toolkit.common</module>
+		<module>../org.eclipse.jubula.client.ua.cheatsheets</module>
+		<module>../org.eclipse.jubula.client.ua.welcome</module>
+		<module>../org.eclipse.jubula.documentation.orbit</module>
+		<module>../org.eclipse.jubula.client.ua.help</module>
+		<module>../org.eclipse.jubula.client.cmd</module>
+		<module>../org.eclipse.jubula.client.cmd.controller</module>
         <module>../org.eclipse.jubula.client.autagent</module>
         <module>../org.eclipse.jubula.launch</module>
         <module>../org.eclipse.jubula.launch.ui</module>
@@ -90,6 +88,6 @@
         <module>../org.eclipse.jubula.client.core.functions</module>
         <module>../org.eclipse.jubula.feature.sdk</module>
         <module>../org.eclipse.jubula.version</module>
-    </modules>
+	</modules>
 
 </project>

@@ -80,12 +80,12 @@ public interface IComponentIdentifier extends ComponentIdentifier {
     public abstract void setSupportedClassName(String supportedClassName);
 
     /**
-     * @return Returns the neighbors.
+     * @return Returns the neighbours.
      */
     public abstract List<String> getNeighbours();
 
     /**
-     * @param neighbours The neighbors to set.
+     * @param neighbours The neighbours to set.
      */
     public abstract void setNeighbours(List<String> neighbours);
 

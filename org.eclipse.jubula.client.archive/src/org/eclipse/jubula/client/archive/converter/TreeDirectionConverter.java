@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.converter;
 
-import org.eclipse.jubula.client.schema.Cap;
-import org.eclipse.jubula.client.schema.Category;
-import org.eclipse.jubula.client.schema.ParamDescription;
-import org.eclipse.jubula.client.schema.Project;
-import org.eclipse.jubula.client.schema.TestCase;
-import org.eclipse.jubula.client.schema.TestCase.Teststep;
+import org.eclipse.jubula.client.archive.schema.Cap;
+import org.eclipse.jubula.client.archive.schema.Category;
+import org.eclipse.jubula.client.archive.schema.ParamDescription;
+import org.eclipse.jubula.client.archive.schema.Project;
+import org.eclipse.jubula.client.archive.schema.TestCase;
+import org.eclipse.jubula.client.archive.schema.TestCase.Teststep;
 
 /**
  * @author BREDEX GmbH

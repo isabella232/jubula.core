@@ -6,5 +6,6 @@
   </fileset>
   <filter name="FilesFromPackage" enabled="true">
     <filter-data value="src/org/eclipse/jubula/client/archive/i18n"/>
+    <filter-data value="src-gen/org/eclipse/jubula/client/archive/schema"/>
   </filter>
 </fileset-config>

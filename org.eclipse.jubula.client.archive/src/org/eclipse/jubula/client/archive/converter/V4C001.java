@@ -14,9 +14,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.jubula.client.schema.Aut;
-import org.eclipse.jubula.client.schema.ComponentName;
-import org.eclipse.jubula.client.schema.Project;
+import org.eclipse.jubula.client.archive.schema.Aut;
+import org.eclipse.jubula.client.archive.schema.ComponentName;
+import org.eclipse.jubula.client.archive.schema.Project;
 
 /**
  * Converter for ticket #2820
