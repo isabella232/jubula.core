@@ -16,7 +16,7 @@
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console -clean -debug"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true &#10;-Dosgi.noShutdown=true &#10;-Dorg.eclipse.jubula.dashboard.jdbc_driver=oracle.jdbc.driver.OracleDriver &#10;-Dorg.eclipse.jubula.dashboard.jdbc_url=&lt;dbURL&gt;&#10;-Dorg.eclipse.jubula.dashboard.database_username=&lt;dbuser&gt;&#10;-Dorg.eclipse.jubula.dashboard.database_password=&lt;dbpw&gt;"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true &#10;-Dosgi.noShutdown=true &#10;-Dorg.eclipse.jubula.dashboard.jdbc_driver=oracle.jdbc.driver.OracleDriver &#10;-Dorg.eclipse.jubula.dashboard.jdbc_url=jdbc:oracle:thin:@&lt;HOSTNAME&gt;:&lt;PORT&gt;:&lt;SID&gt;&#10;-Dorg.eclipse.jubula.dashboard.database_username=&lt;dbuser&gt;&#10;-Dorg.eclipse.jubula.dashboard.database_password=&lt;dbpw&gt;"/>
 <stringAttribute key="org.eclipse.rap.launch.browserMode" value="INTERNAL"/>
 <stringAttribute key="org.eclipse.rap.launch.contextpath" value=""/>
 <stringAttribute key="org.eclipse.rap.launch.dataLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.rap.tools.launch/dashboard"/>
