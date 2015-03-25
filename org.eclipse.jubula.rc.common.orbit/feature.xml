@@ -32,21 +32,21 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="ch.qos.logback.classic"
          download-size="0"
          install-size="0"
-         version="1.0.7.v20121108-1250"
+         version="1.0.7"
          unpack="false"/>
 
    <plugin
          id="ch.qos.logback.core"
          download-size="0"
          install-size="0"
-         version="1.0.7.v20121108-1250"
+         version="1.0.7"
          unpack="false"/>
 
    <plugin
          id="ch.qos.logback.slf4j"
          download-size="0"
          install-size="0"
-         version="1.0.7.v20121108-1250"
+         version="1.0.7"
          fragment="true"
          unpack="false"/>
 
@@ -54,42 +54,42 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.beanutils"
          download-size="0"
          install-size="0"
-         version="1.8.0.v201205091237"
+         version="1.8.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.commons.collections"
          download-size="0"
          install-size="0"
-         version="3.2.0.v2013030210310"
+         version="3.2.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.commons.lang"
          download-size="0"
          install-size="0"
-         version="2.6.0.v201205030909"
+         version="2.6.0"
          unpack="false"/>
 
    <plugin
          id="org.apache.oro"
          download-size="0"
          install-size="0"
-         version="2.0.8.v201005080400"
+         version="2.0.8"
          unpack="false"/>
 
    <plugin
          id="org.slf4j.api"
          download-size="0"
          install-size="0"
-         version="1.7.2.v20121108-1250"
+         version="1.7.2"
          unpack="false"/>
 
    <plugin
          id="org.slf4j.jcl"
          download-size="0"
          install-size="0"
-         version="1.7.2.v20130115-1340"
+         version="1.7.2"
          unpack="false"/>
 
 </feature>
