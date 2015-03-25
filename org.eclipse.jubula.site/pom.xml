@@ -36,22 +36,26 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
+                                        <property name="targetDir" value="/home/data/httpd/download.eclipse.org/jubula/development"/>
                                         <checksum
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
                                             forceOverwrite="yes"
                                             algorithm="SHA-512" fileext=".sha" />
                                         <delete includeemptydirs="false">
-                                            <fileset
-                                                dir="/home/data/httpd/download.eclipse.org/jubula/development">
+                                            <fileset dir="${targetDir}">
                                                 <include name="**" />
                                             </fileset>
                                         </delete>
-                                        <copy includeemptydirs="false"
-                                            todir="/home/data/httpd/download.eclipse.org/jubula/development">
+                                        <move todir="${targetDir}">
+                                            <fileset dir="${project.build.directory}">
+                                                <include name="${project.artifactId}-${project.version}.zip*" />
+                                            </fileset>
+                                        </move>
+                                        <move includeemptydirs="false" todir="${targetDir}/repo">
                                             <fileset dir="target/repository">
                                                 <include name="**" />
                                             </fileset>
-                                        </copy>
+                                        </move>
                                     </tasks>
                                 </configuration>
                             </execution>
