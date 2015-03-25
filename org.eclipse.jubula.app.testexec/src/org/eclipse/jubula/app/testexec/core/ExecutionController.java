@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.app.testexec.batch;
+package org.eclipse.jubula.app.testexec.core;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.testexec;
 
+import org.eclipse.jubula.app.testexec.core.TestexecClient;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.AbstractLauncher;
 

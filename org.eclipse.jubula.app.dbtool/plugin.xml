@@ -10,19 +10,15 @@
 <plugin>
    <extension
          id="org.eclipse.jubula.app.dbtool.launcher"
-         name="Database tool"
+         name="dbtool"
          point="org.eclipse.core.runtime.applications">
       <application
             cardinality="singleton-global"
             thread="main"
             visible="true">
          <run
-               class="org.eclipse.jubula.app.dbtool.bundle.Launcher">
+               class="org.eclipse.jubula.app.dbtool.Launcher">
          </run>
       </application>
    </extension>
-   <extension
-         point="org.eclipse.ui.statusHandlers">
-   </extension>
-
 </plugin>

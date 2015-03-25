@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.app.dbtool.bundle;
+package org.eclipse.jubula.app.dbtool;
 
 import org.eclipse.jubula.app.dbtool.core.DBToolClient;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;

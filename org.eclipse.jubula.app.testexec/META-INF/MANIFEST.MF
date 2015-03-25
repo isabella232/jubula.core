@@ -4,7 +4,7 @@ Bundle-Name: Jubula Commandline Client
 Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
-Bundle-Activator: org.eclipse.jubula.app.testexec.PluginStarter
+Bundle-Activator: org.eclipse.jubula.app.testexec.Activator
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",

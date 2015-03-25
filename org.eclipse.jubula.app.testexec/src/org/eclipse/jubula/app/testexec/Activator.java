@@ -17,17 +17,17 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class PluginStarter extends Plugin {
+public class Activator extends Plugin {
     /** plugin id */
     public static final String PLUGIN_ID = "org.eclipse.jubula.app.testexec"; //$NON-NLS-1$
 
     /** the shared instance*/
-    private static PluginStarter plugin;
+    private static Activator plugin;
 
     /**
      * The constructor
      */
-    public PluginStarter() {
+    public Activator() {
         plugin = this;
     }
 
@@ -56,7 +56,7 @@ public class PluginStarter extends Plugin {
      * 
      * @return the shared instance
      */
-    public static PluginStarter getDefault() {
+    public static Activator getDefault() {
         return plugin;
     }
 
