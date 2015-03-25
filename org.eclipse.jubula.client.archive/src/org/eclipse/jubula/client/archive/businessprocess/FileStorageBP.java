@@ -1485,7 +1485,7 @@ public class FileStorageBP {
     }
     
     /**
-     * Imports a choosed project from a file.
+     * Imports a chosen project from a file.
      * 
      * @param elements
      *            What to import ? 0 = all >0 = elements
@@ -1638,7 +1638,7 @@ public class FileStorageBP {
     /**
      * Report to the user that the import of a project failed because the
      * toolkit for the imported project was not compatible with the toolkit
-     * ofthe current project.
+     * of the current project.
      * 
      * @param console
      *              The console to use to display progress and 
