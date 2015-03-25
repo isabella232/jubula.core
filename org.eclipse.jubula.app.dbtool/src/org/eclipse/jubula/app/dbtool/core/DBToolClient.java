@@ -46,6 +46,8 @@ import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -53,6 +55,9 @@ import org.eclipse.osgi.util.NLS;
  * @created Mar 12, 2009
  */
 public class DBToolClient extends AbstractCmdlineClient {
+    /** log facility */
+    private static Logger log = 
+            LoggerFactory.getLogger(DBToolClient.class);
     /** delete parameter */
     private static final String OPTION_DELETE = "delete"; //$NON-NLS-1$
     /** delete all projects parameter */
@@ -232,6 +237,11 @@ public class DBToolClient extends AbstractCmdlineClient {
         IStatus result = dbToolOperation.getResult();
         if (result.getSeverity() == IStatus.OK) {
             return EXIT_CODE_OK;
+        }
+        
+        Throwable exception = result.getException();
+        if (exception != null) {
+            log.error(exception.getLocalizedMessage(), exception);
         }
         return EXIT_CODE_ERROR;
     }
