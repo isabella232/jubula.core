@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
 <booleanAttribute key="append.args" value="true"/>
-<stringAttribute key="application" value="org.eclipse.jubula.app.testexec.launcher"/>
+<stringAttribute key="application" value="org.eclipse.jubula.app.testexec"/>
 <booleanAttribute key="askclear" value="true"/>
 <booleanAttribute key="automaticAdd" value="false"/>
 <booleanAttribute key="automaticValidate" value="false"/>
 <stringAttribute key="bootstrap" value=""/>
 <stringAttribute key="checked" value="[NONE]"/>
-<booleanAttribute key="clearConfig" value="false"/>
+<booleanAttribute key="clearConfig" value="true"/>
 <booleanAttribute key="clearws" value="false"/>
 <booleanAttribute key="clearwslog" value="false"/>
 <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/testexec"/>
@@ -16,12 +16,12 @@
 <stringAttribute key="location" value="${workspace_loc}/../runtime-testexec"/>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -debug -consoleLog -console -clean -v"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -debug -consoleLog -console -clean -h"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.platform.ide"/>
 <stringAttribute key="selected_target_plugins" value="ch.qos.logback.classic@default:default,ch.qos.logback.core@default:default,ch.qos.logback.slf4j@default:false,com.ibm.icu@default:default,javax.xml@default:default,org.apache.commons.beanutils@default:default,org.apache.commons.cli@default:default,org.apache.commons.codec*1.6.0.v201305230611@default:default,org.apache.commons.collections@default:default,org.apache.commons.lang*2.6.0.v201404270220@default:default,org.apache.commons.logging@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.gogo.shell@default:default,org.apache.poi@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.databinding.observable@default:default,org.eclipse.core.databinding.property@default:default,org.eclipse.core.databinding@default:default,org.eclipse.core.expressions@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.core.runtime@default:true,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.console@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.region@default:false,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.transforms.hook@default:false,org.eclipse.equinox.weaving.hook@default:false,org.eclipse.osgi.compatibility.state@default:false,org.eclipse.osgi@-1:true,org.h2@default:default,org.slf4j.api@default:default,org.slf4j.jcl@default:default"/>
-<stringAttribute key="selected_workspace_plugins" value="com.bredexsw.guidancer.autagent@default:false,com.bredexsw.jubula.client.core.driver@default:false,com.bredexsw.jubula.rc.common@default:default,com.bredexsw.jubula.version@default:false,org.eclipse.jubula.app.testexec@default:default,org.eclipse.jubula.autagent@default:default,org.eclipse.jubula.client.api@default:default,org.eclipse.jubula.client.cmd.controller@default:default,org.eclipse.jubula.client.cmd@default:default,org.eclipse.jubula.client.core@default:default,org.eclipse.jubula.communication@default:default,org.eclipse.jubula.logging@default:default,org.eclipse.jubula.toolkit.api@default:default,org.eclipse.jubula.toolkit.common@default:default,org.eclipse.jubula.tools@default:default,org.eclipse.jubula.ui.compatibility@default:default,org.eclipse.jubula.version*3.0.0.qualifier@default:default"/>
+<stringAttribute key="selected_workspace_plugins" value="com.bredexsw.guidancer.autagent@default:false,com.bredexsw.jubula.client.core.driver@default:false,com.bredexsw.jubula.rc.common@default:default,com.bredexsw.jubula.version@default:false,org.eclipse.jubula.app.testexec@default:default,org.eclipse.jubula.autagent@default:default,org.eclipse.jubula.client.api@default:default,org.eclipse.jubula.client.cmd.controller@default:default,org.eclipse.jubula.client.cmd@default:default,org.eclipse.jubula.client.core@default:default,org.eclipse.jubula.communication@default:default,org.eclipse.jubula.logging@default:default,org.eclipse.jubula.toolkit.api@default:default,org.eclipse.jubula.toolkit.common@default:default,org.eclipse.jubula.tools@default:default,org.eclipse.jubula.ui.compatibility@default:default,org.eclipse.jubula.version@default:default"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <stringAttribute key="templateConfig" value="${target_home}/configuration/config.ini"/>
 <booleanAttribute key="tracing" value="false"/>
