@@ -402,15 +402,15 @@
 		</action>
 		<action name="CompSystem.WaitForComponent" changed="1.18">
 			<method>rcWaitForComponent</method>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1000</defaultValue>
+            </param>
             <param name="html.locator"
                    descriptionKey="html.locator.descr" >
                 <type>java.lang.String</type>
             </param>
-			<param name="CompSystem.Timeout"
-                   descriptionKey="CompSystem.Timeout.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>1000</defaultValue>
-			</param>
 			<param name="CompSystem.DelayAfterVisibility"
                    descriptionKey="CompSystem.DelayAfterVisibility.descr" >
 				<type>java.lang.Integer</type>
