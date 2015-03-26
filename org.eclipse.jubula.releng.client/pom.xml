@@ -14,7 +14,7 @@
     <description>Release engineering for Jubula ITE.</description>
 
     <modules>
-        <module>../org.eclipse.jubula.site</module>
+        <module>../org.eclipse.jubula.repo</module>
         <module>../org.eclipse.jubula.app</module>
         <module>../org.eclipse.jubula.app.testexec</module>
         <module>../org.eclipse.jubula.app.dbtool</module>
