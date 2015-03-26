@@ -6,7 +6,7 @@ Bundle-Version: 3.0.0.qualifier
 Bundle-ClassPath: .,
  lib/org.apache.xmlbeans.jar,
  lib/javax.xml.stream_1.0.1.v201004272200.jar,
- lib/xml
+ lib/xml/
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.client.archive;uses:="org.eclipse.jubula.client.core.model,org.eclipse.core.runtime,org.eclipse.jubula.client.core.businessprocess",
