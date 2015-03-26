@@ -30,7 +30,7 @@
       <listitem>
         <para>
           Reference the zip-file<?linebreak?>
-          <emphasis role="input">development/org.eclipse.jubula.site.zip</emphasis><?linebreak?>
+          <emphasis role="input">development/org.eclipse.jubula.repo.zip</emphasis><?linebreak?>
           as a <emphasis role="strong">Software Site</emphasis> in your <emphasis role="strong">Target Platform</emphasis>. Verify while adding the software site, that the check box <emphasis role="strong">Include required software</emphasis> is not checked. This software site also includes the Java documention of the source code.
         </para>
       </listitem>
