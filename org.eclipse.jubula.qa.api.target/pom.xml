@@ -32,7 +32,7 @@
 					<source>
 						<!--source repositories to mirror from -->
 						<repository>
-							<url>http://download.eclipse.org/jubula/development</url>
+							<url>http://download.eclipse.org/jubula/nightly/repo</url>
 							<layout>p2</layout>
 						</repository>
 					</source>
