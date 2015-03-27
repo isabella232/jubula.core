@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.sdk"
       label="Jubula Functional Testing - SDK"
-      version="3.0.0.qualifier"
+      version="3.1.0.qualifier"
       provider-name="Eclipse Jubula"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
@@ -37,21 +37,21 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
       <import plugin="org.apache.commons.logging" version="1.0.0" match="compatible"/>
       <import plugin="org.apache.commons.lang" version="2.4.0" match="compatible"/>
       <import plugin="org.apache.commons.io" version="2.0.0" match="compatible"/>
-      <import plugin="org.eclipse.jubula.tools" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.api" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.base.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.common" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.concrete.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.html.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.javafx.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.ios.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.mobile.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.gef.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.rcp.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.swing.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.swt.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.winapps.provider" version="3.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.jubula.toolkit.win.provider" version="3.0.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.tools" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.api" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.base.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.common" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.concrete.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.html.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.javafx.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.ios.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.mobile.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.gef.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.rcp.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.swing.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.swt.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.winapps.provider" version="3.1.0" match="equivalent"/>
+      <import plugin="org.eclipse.jubula.toolkit.win.provider" version="3.1.0" match="equivalent"/>
    </requires>
 
    <plugin

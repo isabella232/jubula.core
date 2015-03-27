@@ -159,7 +159,7 @@ public class AutFrame extends JFrame {
      */
     private void initBasic() {
         setBackground(Color.white);
-        // Layout setzen und Komponenten hinzufügen
+        // set layout and add components
         m_gbl = new GridBagLayout();
         m_cont = getContentPane();
         m_cont.setLayout(m_gbl);

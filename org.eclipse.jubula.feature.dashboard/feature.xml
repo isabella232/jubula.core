@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.dashboard"
       label="Jubula Remote Control SDK"
-      version="3.0.0.qualifier"
+      version="3.1.0.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.client.ui.rap">
 
@@ -169,7 +169,6 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
          
    <!-- This must be in one line for the build.xml in the org.eclipse.jubula.core root directory -->
-   <plugin id="com.bredexsw.jubula.client.core.driver" download-size="0" install-size="0" version="0.0.0" fragment="true"/>
 
    <plugin
          id="javax.xml"

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.jubula.examples.extension.rcp.feature"
       label="Jubula Example - Toolkit Extension - RCP"
-      version="3.0.0.qualifier"
+      version="3.1.0.qualifier"
       provider-name="Eclipse Jubula">
 
    <description url="http://www.eclipse.org/jubula">
@@ -30,4 +30,5 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>

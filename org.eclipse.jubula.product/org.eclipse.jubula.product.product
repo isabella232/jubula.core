@@ -8,7 +8,7 @@
  -->
 <?pde version="3.5"?>
 
-<product name="Jubula" uid="org.eclipse.jubula.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="3.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Jubula" uid="org.eclipse.jubula.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="3.1.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="icons/about.png"/>
@@ -58,7 +58,7 @@
 
    <features>
       <feature id="com.bredexsw.guidancer.feature" version="8.1.0.qualifier"/>
-      <feature id="com.bredexsw.jubula.feature" version="3.0.0.qualifier"/>
+      <feature id="com.bredexsw.jubula.feature" version="3.1.0.qualifier"/>
    </features>
    
    <configurations>

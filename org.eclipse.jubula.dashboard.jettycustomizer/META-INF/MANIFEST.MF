@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Dashboard Jetty Customizer
 Bundle-SymbolicName: org.eclipse.jubula.dashboard.jettycustomizer;singleton:=true
-Bundle-Version: 3.0.0.qualifier
+Bundle-Version: 3.1.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Fragment-Host: org.eclipse.equinox.http.jetty;bundle-version="[2.0.100,4.0.0)"

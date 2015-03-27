@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.jubula.examples.extension.javafx.feature"
       label="Jubula Example - Toolkit Extension - JavaFX"
-      version="3.0.0.qualifier"
+      version="3.1.0.qualifier"
       provider-name="Eclipse Jubula">
 
    <description url="http://www.eclipse.org/jubula">
@@ -31,7 +31,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.examples.extension.javafx.rc.container"
          download-size="0"
