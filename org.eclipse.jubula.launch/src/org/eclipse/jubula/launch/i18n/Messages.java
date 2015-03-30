@@ -22,6 +22,7 @@ public class Messages extends NLS {
     
     public static String LaunchAutError_NoAgentConnection;
     public static String GetAutIdFromLaunchConfigError;
+    public static String GetToolkitFromLaunchConfigError;
     
     static {
         // initialize resource bundle

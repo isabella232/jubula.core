@@ -20,11 +20,15 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.launch.AutLaunchConfigurationConstants;
 import org.eclipse.jubula.launch.ui.i18n.Messages;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -58,6 +62,16 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
      */
     private Label m_autIdLabel;
 
+    /** 
+     * label for toolkit of AUT
+     */
+    private Label m_toolkitLabel;
+    
+    /** 
+     * combo box for toolkit of AUT
+     */
+    private Combo m_toolkitChoice;
+    
     /**
      * 
      * {@inheritDoc}
@@ -89,12 +103,29 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
                     + (autIdLabelDecoration.getMarginWidth() * 2), 0)
             .applyTo(m_autIdText);
 
-        m_autIdText.addModifyListener(new ModifyListener() {
+        ModifyListener listener = new ModifyListener() {
             public void modifyText(ModifyEvent e) {
                 setDirty(true);
                 updateLaunchConfigurationDialog();
             }
-        });
+        };
+        m_autIdText.addModifyListener(listener);
+        
+        
+        m_toolkitLabel = new Label(composite, SWT.NONE);
+        m_toolkitLabel.setText(
+                Messages.AutLaunchConfigurationTab_ToolkitChoice_label);
+        
+        m_toolkitChoice = new Combo(composite, SWT.DROP_DOWN);
+        try {
+            m_toolkitChoice.add(ToolkitSupportBP.getToolkitDescriptor(
+                    CommandConstants.SWING_TOOLKIT).getName());
+            m_toolkitChoice.add(ToolkitSupportBP.getToolkitDescriptor(
+                    CommandConstants.JAVAFX_TOOLKIT).getName());
+        } catch (ToolkitPluginException e) {
+            LOG.error("Error while resolving toolkit names", e); //$NON-NLS-1$
+        }
+        m_toolkitChoice.addModifyListener(listener);
         
         setControl(composite);
     }
@@ -107,6 +138,9 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
         configuration.setAttribute(
                 AutLaunchConfigurationConstants.AUT_ID_KEY, 
                 AutLaunchConfigurationConstants.AUT_ID_DEFAULT_VALUE);
+        configuration.setAttribute(
+                AutLaunchConfigurationConstants.AUT_TOOLKIT, 
+                AutLaunchConfigurationConstants.AUT_TOOLKIT_DEFAULT_VALUE);
     }
 
     /**
@@ -119,6 +153,11 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
                     configuration.getAttribute(
                         AutLaunchConfigurationConstants.AUT_ID_KEY, 
                         AutLaunchConfigurationConstants.AUT_ID_DEFAULT_VALUE));
+            m_toolkitChoice.setText(
+                    configuration.getAttribute(
+                        AutLaunchConfigurationConstants.AUT_TOOLKIT, 
+                        AutLaunchConfigurationConstants.
+                            AUT_TOOLKIT_DEFAULT_VALUE));
         } catch (CoreException ce) {
             LOG.error("An error occurred while initializing AUT ID text field.", ce); //$NON-NLS-1$
         }
@@ -132,6 +171,9 @@ public class AutLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
         configuration.setAttribute(
                 AutLaunchConfigurationConstants.AUT_ID_KEY, 
                 m_autIdText.getText());
+        configuration.setAttribute(
+                AutLaunchConfigurationConstants.AUT_TOOLKIT, 
+                m_toolkitChoice.getText());
     }
 
     /**

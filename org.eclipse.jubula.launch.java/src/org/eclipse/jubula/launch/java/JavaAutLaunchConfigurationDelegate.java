@@ -15,25 +15,36 @@ import java.net.InetSocketAddress;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.JavaLaunchDelegate;
+import org.eclipse.jubula.autagent.commands.AbstractStartJavaAutServer;
 import org.eclipse.jubula.autagent.commands.IStartAut;
+import org.eclipse.jubula.autagent.commands.StartJavaFXAutServerCommand;
 import org.eclipse.jubula.autagent.commands.StartSwingAutServerCommand;
+import org.eclipse.jubula.launch.Activator;
 import org.eclipse.jubula.launch.AutLaunchUtils;
+import org.eclipse.jubula.launch.i18n.Messages;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
- * Launch delegate for starting Java / Swing AUTs.
+ * Launch delegate for starting JavaFX / Swing AUTs.
  * 
  * @author BREDEX GmbH
  * @created 13.07.2011
  */
-public class SwingAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
+public class JavaAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
 
+    /** AUT toolkit */
+    private String m_toolkit;
+    
     @Override
     public void launch(ILaunchConfiguration configuration, String mode,
             ILaunch launch, IProgressMonitor monitor) throws CoreException {
@@ -41,6 +52,7 @@ public class SwingAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
         String autMainType = verifyMainTypeName(configuration);
         String autArgs = getProgramArguments(configuration);
         String autId = AutLaunchUtils.getAutId(configuration);
+        m_toolkit = AutLaunchUtils.getToolkit(configuration);
         
         ILaunchConfigurationWorkingCopy workingCopy = 
             configuration.getWorkingCopy();
@@ -52,12 +64,23 @@ public class SwingAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
         InetSocketAddress agentAddr = 
             AutLaunchUtils.verifyConnectedAgentAddress();
 
+        AbstractStartJavaAutServer startAutServerCommand;
+        String autServer;
+        try {
+            startAutServerCommand = determineStartCommand();
+            autServer = determineAutServer();
+        } catch (ToolkitPluginException e) {
+            throw new CoreException(new Status(
+                    IStatus.ERROR, Activator.PLUGIN_ID, 
+                    Messages.GetToolkitFromLaunchConfigError));
+        }
+        
         String [] args = {
             Integer.toString(agentAddr.getPort()), autMainType, 
             StringUtils.join(
-                    new StartSwingAutServerCommand().getLaunchClasspath(), 
+                    startAutServerCommand.getLaunchClasspath(), 
                     IStartAut.PATH_SEPARATOR), 
-            CommandConstants.AUT_SWING_SERVER, agentAddr.getHostName(),
+            autServer, agentAddr.getHostName(),
             Integer.toString(agentAddr.getPort()), autId, 
             CommandConstants.RC_COMMON_AGENT_INACTIVE, autArgs
         };
@@ -69,12 +92,61 @@ public class SwingAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
         super.launch(workingCopy, ILaunchManager.DEBUG_MODE, launch, monitor);
     }
 
+    /**
+     * @return the aut server start command
+     * @throws ToolkitPluginException 
+     */
+    private AbstractStartJavaAutServer determineStartCommand()
+            throws ToolkitPluginException {
+        AbstractStartJavaAutServer startAutServerCommand = null;
+        if (ToolkitSupportBP.getToolkitDescriptor(
+                CommandConstants.SWING_TOOLKIT).getName()
+                    .equals(m_toolkit)) {
+            startAutServerCommand = new StartSwingAutServerCommand();
+        } else if (ToolkitSupportBP.getToolkitDescriptor(
+                CommandConstants.JAVAFX_TOOLKIT).getName()
+                .equals(m_toolkit)) {
+            startAutServerCommand = new StartJavaFXAutServerCommand();
+        }
+        return startAutServerCommand;
+    }
+    
+    /**
+     * @return the aut server
+     * @throws ToolkitPluginException 
+     */
+    private String determineAutServer() throws ToolkitPluginException {
+        String autServer = null;
+        if (ToolkitSupportBP.getToolkitDescriptor(
+                CommandConstants.SWING_TOOLKIT).getName()
+                    .equals(m_toolkit)) {
+            autServer = CommandConstants.AUT_SWING_SERVER;
+        } else if (ToolkitSupportBP.getToolkitDescriptor(
+                CommandConstants.JAVAFX_TOOLKIT).getName()
+                .equals(m_toolkit)) {
+            autServer = CommandConstants.AUT_JAVAFX_SERVER;
+        }
+        return autServer;
+    }
+    
+
+
     @Override
     public String[] getClasspath(ILaunchConfiguration configuration)
         throws CoreException {
         
-        String[] rcClasspath = 
-            new StartSwingAutServerCommand().getLaunchClasspath();
+        m_toolkit = AutLaunchUtils.getToolkit(configuration);
+        
+        AbstractStartJavaAutServer startAutServerCommand = null;
+        try {
+            startAutServerCommand = determineStartCommand();
+        } catch (ToolkitPluginException e) {
+            throw new CoreException(new Status(
+                    IStatus.ERROR, Activator.PLUGIN_ID, 
+                    Messages.GetToolkitFromLaunchConfigError));
+        }
+        
+        String[] rcClasspath = startAutServerCommand.getLaunchClasspath();
         String[] autClasspath = super.getClasspath(configuration);
         String[] combinedClasspath = 
             new String [rcClasspath.length + autClasspath.length];
