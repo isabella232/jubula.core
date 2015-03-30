@@ -55,17 +55,18 @@ public class ShowDialogResultCommand implements ICommand {
     }
 
     /**
-     * Changes the mode aof the AUTServer to the mode taken from the message.
+     * Changes the mode of the AUTServer to the mode taken from the message.
      * Returns an AUTModeChangedMessage with the new mode.
      * 
      * {@inheritDoc}
      */
     public Message execute() {
-        AUTServer.getInstance().setObservingDialogOpen(m_message.isOpen());
+        AUTServer autserver = AUTServer.getInstance();
+        autserver.setObservingDialogOpen(m_message.isOpen());
         if (m_message.belongsToDialog()) {
             changeCheckModeState(m_message.getMode());
         } else {
-            changeCheckModeState(AUTServer.getInstance().getMode());
+            changeCheckModeState(autserver.getMode());
         }        
         
         return null;
@@ -78,26 +79,19 @@ public class ShowDialogResultCommand implements ICommand {
     private void changeCheckModeState(int mode) {
         ChangeAUTModeMessage msg = new ChangeAUTModeMessage();
         msg.setMode(mode);
-        msg.setKey(AUTServerConfiguration.getInstance().getKey());
-        msg.setKeyModifier(
-                AUTServerConfiguration.getInstance().getKeyMod());
-        msg.setKey2(AUTServerConfiguration.getInstance().getKey2());
-        msg.setKey2Modifier(
-                AUTServerConfiguration.getInstance().getKey2Mod());
-        msg.setCheckModeKey(AUTServerConfiguration.getInstance()
-                .getCheckModeKey());
-        msg.setCheckModeKeyModifier(
-                AUTServerConfiguration.getInstance().getCheckModeKeyMod());
-        msg.setCheckCompKey(AUTServerConfiguration.getInstance()
-                .getCheckCompKey());
-        msg.setCheckCompKeyModifier(
-                AUTServerConfiguration.getInstance().getCheckCompKeyMod());
-        
-        msg.setSingleLineTrigger(
-                AUTServerConfiguration.getInstance().getSingleLineTrigger());
-        msg.setMultiLineTrigger(
-                AUTServerConfiguration.getInstance().getMultiLineTrigger());
-        
+        AUTServerConfiguration config = AUTServerConfiguration.getInstance();
+        msg.setKey(config.getKey());
+        msg.setKeyModifier(config.getKeyMod());
+        msg.setKey2(config.getKey2());
+        msg.setKey2Modifier(config.getKey2Mod());
+        msg.setCheckModeKey(config.getCheckModeKey());
+        msg.setCheckModeKeyModifier(config.getCheckModeKeyMod());
+        msg.setCheckCompKey(config.getCheckCompKey());
+        msg.setCheckCompKeyModifier(config.getCheckCompKeyMod());
+
+        msg.setSingleLineTrigger(config.getSingleLineTrigger());
+        msg.setMultiLineTrigger(config.getMultiLineTrigger());
+
         ChangeAUTModeCommand cmd = new ChangeAUTModeCommand();
         cmd.setMessage(msg);
         try {
@@ -105,11 +99,10 @@ public class ShowDialogResultCommand implements ICommand {
                 AUTServer.getInstance().getCommunicator();
             if (clientCommunicator != null 
                     && clientCommunicator.getConnection() != null) {
-                AUTServer.getInstance().getCommunicator().send(
-                        cmd.execute());
+                clientCommunicator.send(cmd.execute());
             }
         } catch (CommunicationException e) {
-            e.printStackTrace();
+            log.error(e.getLocalizedMessage(), e);
         }
     }
 
