@@ -407,15 +407,15 @@
                 <type>java.lang.Integer</type>
                 <defaultValue>1000</defaultValue>
             </param>
-            <param name="html.locator"
-                   descriptionKey="html.locator.descr" >
-                <type>java.lang.String</type>
-            </param>
 			<param name="CompSystem.DelayAfterVisibility"
                    descriptionKey="CompSystem.DelayAfterVisibility.descr" >
 				<type>java.lang.Integer</type>
 				<defaultValue>200</defaultValue>
 			</param>
+            <param name="html.locator"
+                   descriptionKey="html.locator.descr" >
+                <type>java.lang.String</type>
+            </param>
 		</action>
 	</toolkitComponent>
 	

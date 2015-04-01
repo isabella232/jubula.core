@@ -40,10 +40,10 @@ public class MethodInvoker {
     public MethodInvoker(MessageCap messageCap) throws MethodParamException {
 
         m_methodParams = new MethodParams();
-        List paramList = messageCap.getMessageParams();
+        List<MessageParam> paramList = messageCap.getMessageParams();
 
-        for (Iterator it = paramList.iterator(); it.hasNext();) {
-            MessageParam param = (MessageParam)it.next();
+        for (Iterator<MessageParam> it = paramList.iterator(); it.hasNext();) {
+            MessageParam param = it.next();
             m_methodParams.add(param);
         }
         m_messageCap = messageCap;

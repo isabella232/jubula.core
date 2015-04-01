@@ -25,7 +25,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
  */
 public class MessageCap implements CAP {
     /** A list of parameters */
-    private List m_messageParams;
+    private List<MessageParam> m_messageParams;
 
     /**
      * The ComponentIdentifier that hold the technical name and the componentType
@@ -59,7 +59,7 @@ public class MessageCap implements CAP {
     /** The default constructor */
     public MessageCap() {
         super();
-        m_messageParams = new ArrayList();
+        m_messageParams = new ArrayList<MessageParam>();
     }
 
     /**
@@ -86,7 +86,7 @@ public class MessageCap implements CAP {
     }
 
     /** @return Returns the messageParams. */
-    public List getMessageParams() {
+    public List<MessageParam> getMessageParams() {
         return m_messageParams;
     }
 
@@ -202,9 +202,9 @@ public class MessageCap implements CAP {
         builder.append("Methodname:" + getMethod()); //$NON-NLS-1$
         builder.append(" CI: " + getCi()); //$NON-NLS-1$
         builder.append(" Parameter: "); //$NON-NLS-1$
-        for (Iterator iterator = getMessageParams().iterator();
+        for (Iterator<MessageParam> iterator = getMessageParams().iterator();
                 iterator.hasNext();) {
-            MessageParam parameter = (MessageParam) iterator.next();
+            MessageParam parameter = iterator.next();
             builder.append(parameter.getValue() + " | "); //$NON-NLS-1$
         }
         if (getPostExecutionCommand() != null) {

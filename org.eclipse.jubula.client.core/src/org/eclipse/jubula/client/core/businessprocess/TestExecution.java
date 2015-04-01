@@ -698,7 +698,7 @@ public class TestExecution {
         int timeout = 0;
         for (int index : timeOuts) {
             if (index > -1) {
-                final MessageParam param = (MessageParam)messageCap
+                final MessageParam param = messageCap
                     .getMessageParams().get(index);
                 final String paramTimeOut = param.getValue();
                 timeout += Integer.parseInt(paramTimeOut);
@@ -759,9 +759,9 @@ public class TestExecution {
      */
     private int calculateShowTextTimeout(MessageCap messageCap) {
         MessageParam textParam = 
-            (MessageParam)messageCap.getMessageParams().get(0);
+            messageCap.getMessageParams().get(0);
         MessageParam timePerWordParam = 
-            (MessageParam)messageCap.getMessageParams().get(2);
+            messageCap.getMessageParams().get(2);
         try {
             int numWords = StringParsing.countWords(textParam.getValue());
             return Integer.parseInt(timePerWordParam.getValue()) 

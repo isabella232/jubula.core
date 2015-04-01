@@ -461,7 +461,7 @@ public class CAPRecordedCommand implements ICommand {
     
     
     /**
-     * minimzes the component name, e.g. javax.swing.JButton_1 to Button_1
+     * minimizes the component name, e.g. javax.swing.JButton_1 to Button_1
      * @param capName String
      * @return the minimized CapName
      */

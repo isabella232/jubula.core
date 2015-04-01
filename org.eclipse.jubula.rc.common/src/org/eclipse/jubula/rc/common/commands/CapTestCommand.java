@@ -120,7 +120,7 @@ public class CapTestCommand implements ICommand {
                     WidgetTester.RC_METHOD_NAME_WAIT_FOR_COMPONENT
                         .equals(messageCap.getMethod());
             if (isWaitForComponent) { 
-                MessageParam timeoutParam = (MessageParam)messageCap.
+                MessageParam timeoutParam = messageCap.
                         getMessageParams().get(0);
                 try {
                     timeout = Integer.parseInt(timeoutParam.getValue());
@@ -141,7 +141,7 @@ public class CapTestCommand implements ICommand {
                     .getComponentClassName());
             }
             if (isWaitForComponent) {
-                MessageParam delayParam = (MessageParam)messageCap.
+                MessageParam delayParam = messageCap.
                         getMessageParams().get(1);
                 try {
                     int delay = Integer.parseInt(delayParam.getValue());
@@ -158,7 +158,7 @@ public class CapTestCommand implements ICommand {
             if (WidgetTester.RC_METHOD_NAME_CHECK_EXISTENCE
                     .equals(messageCap.getMethod())) {
                 MessageParam isVisibleParam = 
-                    (MessageParam)messageCap.getMessageParams().get(0);
+                    messageCap.getMessageParams().get(0);
                 handleComponentDoesNotExist(response, 
                     Boolean.valueOf(isVisibleParam.getValue())
                         .booleanValue());
