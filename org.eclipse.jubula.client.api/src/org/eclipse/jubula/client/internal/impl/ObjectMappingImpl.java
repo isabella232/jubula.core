@@ -61,7 +61,9 @@ public class ObjectMappingImpl implements ObjectMapping {
                                 + compName);
                     } else {
                         try {
-                            m_map.put(compName, getIdentifier(compName));
+                            String encodedString = m_objectMappingAssociations
+                                    .getProperty(compName);
+                            m_map.put(compName, getIdentifier(encodedString));
                         } catch (LoadResourceException e) {
                             log.error(e.getLocalizedMessage(), e);
                         }                    
@@ -79,33 +81,35 @@ public class ObjectMappingImpl implements ObjectMapping {
         
         return m_map.get(compName);
     }
-    
+
     /**
-     * Returns the component identifier for a component name
+     * Returns a component identifier instance for the given encoded component
+     * identifier
      * 
-     * @param compName
-     *            the component name
-     * @return the component identifier or <code>null</code> if no identifier
-     *         was found
-     * @throws LoadResourceException 
+     * @param encodedString
+     *            the encoded component identifier string
+     * @param <T>
+     *            the type of the component
+     * @return the component identifier or <code>null</code>
+     * @throws LoadResourceException
      */
-    private ComponentIdentifier getIdentifier(String compName) 
-        throws LoadResourceException {
+    public static <T> ComponentIdentifier<T> getIdentifier(String encodedString)
+            throws LoadResourceException {
         try {
-            String encodedString =
-                    m_objectMappingAssociations.getProperty(compName);
             if (encodedString != null) {
                 Object decodedObject = SerilizationUtils.decode(encodedString);
                 if (decodedObject instanceof ComponentIdentifier) {
-                    return (ComponentIdentifier) decodedObject;
+                    return (ComponentIdentifier<T>) decodedObject;
                 }
                 throw new LoadResourceException("The decoded object is " //$NON-NLS-1$
                         + "not of type 'IComponentIdentfier'."); //$NON-NLS-1$
             }
         } catch (IOException e) {
-            throw new LoadResourceException("Could load the given component name", e); //$NON-NLS-1$
+            throw new LoadResourceException(
+                    "Could load the given component name", e); //$NON-NLS-1$
         } catch (ClassNotFoundException e) {
-            throw new LoadResourceException("Problems during deserialization...", e); //$NON-NLS-1$
+            throw new LoadResourceException(
+                    "Problems during deserialization...", e); //$NON-NLS-1$
         }
         return null;
     }

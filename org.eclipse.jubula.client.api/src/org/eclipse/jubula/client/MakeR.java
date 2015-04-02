@@ -12,8 +12,12 @@ package org.eclipse.jubula.client;
 
 import java.io.InputStream;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jubula.client.exceptions.LoadResourceException;
 import org.eclipse.jubula.client.internal.impl.AUTAgentImpl;
 import org.eclipse.jubula.client.internal.impl.ObjectMappingImpl;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 
 /**
  * @author BREDEX GmbH
@@ -47,5 +51,20 @@ public final class MakeR {
      */
     public static ObjectMapping createObjectMapping(InputStream input) {
         return new ObjectMappingImpl(input);
+    }
+
+    /**
+     * @param <T>
+     *            the type of component identifier
+     * @param componentIdentifier
+     *            the component identifier string
+     * @return a component identifier instance or <code>null</code>.
+     * @throws LoadResourceException
+     *             in case of identifier creation problems
+     */
+    @Nullable
+    public static <T> ComponentIdentifier<T> createCI(
+            @NonNull String componentIdentifier) throws LoadResourceException {
+        return ObjectMappingImpl.getIdentifier(componentIdentifier);
     }
 }
