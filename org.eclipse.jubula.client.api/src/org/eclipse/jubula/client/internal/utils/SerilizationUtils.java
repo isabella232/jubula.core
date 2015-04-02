@@ -33,33 +33,52 @@ public class SerilizationUtils {
     }
     
 
-    /** 
+    /**
      * Encodes a serializable object to a Base64 string.
-     * @param serializableObject the serializable object
+     * 
+     * @param serializableObject
+     *            the serializable object
      * @return a String representation of the serializable
      */
     public static String encode(Serializable serializableObject)
-        throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(serializableObject);
-        oos.close();
-        return new String(
-                Base64.encodeBase64(baos.toByteArray()));
+            throws IOException {
+        ByteArrayOutputStream baos = null;
+        ObjectOutputStream oos = null;
+        String encoded = null;
+
+        try {
+            baos = new ByteArrayOutputStream();
+            oos = new ObjectOutputStream(baos);
+            oos.writeObject(serializableObject);
+            encoded = new String(Base64.encodeBase64(baos.toByteArray()));
+        } finally {
+            if (oos != null) {
+                oos.close();
+            }
+        }
+        return encoded;
     }
 
-    /** 
+    /**
      * Decodes a serializable from a base64 encoded string.
-     * @param encodedString Base64 encoded String
+     * 
+     * @param encodedString
+     *            Base64 encoded String
      * @return the translated object
      */
     public static Object decode(String encodedString) throws IOException,
             ClassNotFoundException {
-        byte [] data = Base64.decodeBase64(encodedString);
-        ObjectInputStream ois = new ObjectInputStream(
-                                        new ByteArrayInputStream(data));
-        Object decodedObject = ois.readObject();
-        ois.close();
+        byte[] data = Base64.decodeBase64(encodedString);
+        ObjectInputStream ois = null;
+        Object decodedObject = null;
+        try {
+            ois = new ObjectInputStream(new ByteArrayInputStream(data));
+            decodedObject = ois.readObject();
+        } finally {
+            if (ois != null) {
+                ois.close();
+            }
+        }
         return decodedObject;
-    } 
+    }
 }
