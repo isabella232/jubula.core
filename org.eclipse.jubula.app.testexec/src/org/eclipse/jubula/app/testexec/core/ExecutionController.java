@@ -1046,7 +1046,7 @@ public class ExecutionController implements IAUTServerEventListener,
     public void stateChanged(TestExecutionEvent event) {
         Exception exception = event.getException();
         if (exception instanceof JBException) {
-            String errorMsg = I18n.getString(exception.getMessage(), true);
+            String errorMsg = exception.getMessage();
             sysErr(errorMsg);
             stopProcessing();
         }

@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.core.gen.parser.parameter.node.PFunctionArgList
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.TComma;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 /**
@@ -107,15 +106,15 @@ public class ParsedParameter extends DepthFirstAdapter {
         } else {
             if (containsBraces && ref.getCloseBrace() != null) {
                 throw new SemanticParsingException(
-                        I18n.getString(MessageIDs.getMessage(
-                                MessageIDs.E_MISSING_CONTENT)), 
+                        MessageIDs.getMessage(
+                                MessageIDs.E_MISSING_CONTENT), 
                         MessageIDs.E_MISSING_CONTENT, 
                         ref.getReferenceToken().getPos());
             }
             
             throw new SemanticParsingException(
-                    I18n.getString(MessageIDs.getMessage(
-                            MessageIDs.E_ONE_CHAR_PARSE_ERROR)), 
+                    MessageIDs.getMessage(
+                            MessageIDs.E_ONE_CHAR_PARSE_ERROR), 
                     MessageIDs.E_ONE_CHAR_PARSE_ERROR, 
                     ref.getReferenceToken().getPos());
         }
@@ -123,16 +122,16 @@ public class ParsedParameter extends DepthFirstAdapter {
         if (ref.getCloseBrace() != null) {
             if (!containsBraces) {
                 throw new SemanticParsingException(
-                        I18n.getString(MessageIDs.getMessage(
-                                MessageIDs.E_GENERAL_PARSE_ERROR)), 
+                        MessageIDs.getMessage(
+                                MessageIDs.E_GENERAL_PARSE_ERROR), 
                         MessageIDs.E_GENERAL_PARSE_ERROR,
                         ref.getCloseBrace().getPos());
             }
             refBuilder.append(ref.getCloseBrace().getText());
         } else if (containsBraces) {
             throw new SemanticParsingException(
-                    I18n.getString(MessageIDs.getMessage(
-                            MessageIDs.E_MISSING_CLOSING_BRACE)), 
+                    MessageIDs.getMessage(
+                            MessageIDs.E_MISSING_CLOSING_BRACE), 
                     MessageIDs.E_MISSING_CLOSING_BRACE, 
                     ref.getOpenBrace().getPos());
         }
@@ -158,31 +157,31 @@ public class ParsedParameter extends DepthFirstAdapter {
         } else {
             if (containsBraces && var.getCloseBrace() != null) {
                 throw new SemanticParsingException(
-                        I18n.getString(MessageIDs.getMessage(
-                                MessageIDs.E_MISSING_CONTENT)), 
+                        MessageIDs.getMessage(
+                                MessageIDs.E_MISSING_CONTENT), 
                         MessageIDs.E_MISSING_CONTENT, 
                         var.getVariableToken().getPos());
             }
             
             throw new SemanticParsingException(
-                    I18n.getString(MessageIDs.getMessage(
-                            MessageIDs.E_ONE_CHAR_PARSE_ERROR)), 
+                    MessageIDs.getMessage(
+                            MessageIDs.E_ONE_CHAR_PARSE_ERROR), 
                     MessageIDs.E_ONE_CHAR_PARSE_ERROR, 
                     var.getVariableToken().getPos());
         }
         if (var.getCloseBrace() != null) {
             if (!containsBraces) {
                 throw new SemanticParsingException(
-                        I18n.getString(MessageIDs.getMessage(
-                                MessageIDs.E_GENERAL_PARSE_ERROR)), 
+                        MessageIDs.getMessage(
+                                MessageIDs.E_GENERAL_PARSE_ERROR), 
                         MessageIDs.E_GENERAL_PARSE_ERROR,
                         var.getCloseBrace().getPos());
             }
             varBuilder.append(var.getCloseBrace().getText());
         } else if (containsBraces) {
             throw new SemanticParsingException(
-                    I18n.getString(MessageIDs.getMessage(
-                            MessageIDs.E_MISSING_CLOSING_BRACE)), 
+                    MessageIDs.getMessage(
+                            MessageIDs.E_MISSING_CLOSING_BRACE), 
                     MessageIDs.E_MISSING_CLOSING_BRACE, 
                     var.getOpenBrace().getPos());
         }
@@ -219,8 +218,8 @@ public class ParsedParameter extends DepthFirstAdapter {
         if (function.getFunctionName() == null
                 || StringUtils.isEmpty(function.getFunctionName().getText())) {
             throw new SemanticParsingException(
-                    I18n.getString(MessageIDs.getMessage(
-                            MessageIDs.E_MISSING_FUNCTION_NAME)),
+                    MessageIDs.getMessage(
+                            MessageIDs.E_MISSING_FUNCTION_NAME),
                     MessageIDs.E_MISSING_FUNCTION_NAME, 
                     function.getFunctionToken().getPos());
         }

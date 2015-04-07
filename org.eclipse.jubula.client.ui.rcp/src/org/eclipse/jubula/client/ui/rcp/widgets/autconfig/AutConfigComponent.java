@@ -1462,10 +1462,10 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     private void createMonitoringWidgetLabel(Composite composite, 
             MonitoringAttribute attribute) {
         
-        Label widgetLabel = UIComponentHelper.createLabel(composite, 
+        Label widgetLabel = UIComponentHelper.createLabelWithText(composite, 
                 attribute.getDescription());
         if (!StringUtils.isEmpty(attribute.getInfoBobbleText())) {
-            ControlDecorator.decorateInfo(widgetLabel, 
+            ControlDecorator.createInfo(widgetLabel, 
                     attribute.getInfoBobbleText(), false);
         }
     }  
