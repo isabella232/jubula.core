@@ -1709,7 +1709,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 String extURL = MonitoringRegistry
                         .getExtUrlForMonitoringId(monitoringID);
                 if (!StringUtils.isEmpty(extURL)) { 
-                    UIComponentHelper.createLabel(monitoringComposite, 
+                    UIComponentHelper.createLabelWithText(monitoringComposite, 
                             Messages.MonitoringAgentAddInfo);
                     Link extRef = new Link(monitoringComposite, SWT.NONE);
                     extRef.setText(extURL);
