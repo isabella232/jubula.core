@@ -13,15 +13,13 @@ package org.eclipse.jubula.client.api.ui.handlers;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jubula.client.api.ui.utils.OMAssociation;
+import org.eclipse.jubula.client.api.ui.utils.OMExport;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -51,7 +49,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class ExportObjectMappingHandler extends AbstractHandler {
         
     /** map containing all object mappings */
-    private SortedMap<String, String> m_map = new TreeMap<String, String>();
+    private Map<String, String> m_map = new TreeMap<String, String>();
     
     /** the component name mapper to use */
     private IComponentNameMapper m_compMapper;
@@ -78,10 +76,8 @@ public class ExportObjectMappingHandler extends AbstractHandler {
                     Utils.storeLastDirPath(saveDialog.getFilterPath());
                     fillMap(omEditor, aut);
                     // map is filled and can be written to class or file
-                    OMAssociation omAssociations =
-                            generateEncodedAssociations();
-                    omAssociations.setTargetClassName(
-                            saveDialog.getFileName());
+                    OMExport omAssociations = new OMExport(
+                            m_map, saveDialog.getFileName());
                     try (BufferedWriter writer = new BufferedWriter(
                             new FileWriter(path))) {
                         switch (exportType) {
@@ -91,7 +87,7 @@ public class ExportObjectMappingHandler extends AbstractHandler {
                                 break;
                             case 1: // Write Properties File
                                 writer.append(omAssociations
-                                        .getEncodedAssociations());
+                                        .createEncodedAssociations());
                                 break;
                             default: // Nothing
                                 break;
@@ -179,50 +175,6 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     }
 
     /**
-     * @return StringBuffer containing the map with the encoded object mappings
-     */
-    private OMAssociation generateEncodedAssociations() {
-        StringBuffer encodedAssociations = new StringBuffer();
-        Map<String, String> identifierMap = new HashMap<String, String>();
-        for (String key : m_map.keySet()) {
-            String value = m_map.get(key);
-            encodedAssociations.append(key + StringConstants.EQUALS_SIGN + value
-                    + StringConstants.NEWLINE);
-            identifierMap.put(key, translateToJavaIdentifier(key));
-        }
-        return new OMAssociation(encodedAssociations, identifierMap);
-    }
-
-    /**
-     * Translates a string to a valid java identifier
-     * @param key the string
-     * @return a valid java identifier
-     */
-    private String translateToJavaIdentifier(String key) {
-        String modifiedKey = key;
-        String [] exceptions = new String[] {
-            StringConstants.DOT,
-            StringConstants.SPACE,
-            StringConstants.BACKSLASH,
-            StringConstants.SLASH,
-            StringConstants.STAR,
-            StringConstants.COLON,
-            StringConstants.LEFT_BRACKET,
-            StringConstants.RIGHT_BRACKET,
-            StringConstants.LEFT_PARENTHESES,
-            StringConstants.RIGHT_PARENTHESES,
-            StringConstants.EQUALS_SIGN,
-            StringConstants.PLUS,
-            StringConstants.MINUS,
-            StringConstants.PIPE};
-        for (String exception : exceptions) {
-            modifiedKey = modifiedKey.replace(
-                    exception, StringConstants.UNDERSCORE);
-        }
-        return modifiedKey;
-    }
-
-    /**
      * Writes all object mapping associations from a given category (and
      * recursively from all sub-categories) into the map
      * 
@@ -255,5 +207,4 @@ public class ExportObjectMappingHandler extends AbstractHandler {
             }
         }
     }
-    
 }

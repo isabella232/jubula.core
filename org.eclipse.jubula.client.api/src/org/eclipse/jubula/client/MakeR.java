@@ -59,12 +59,20 @@ public final class MakeR {
      * @param componentIdentifier
      *            the component identifier string
      * @return a component identifier instance or <code>null</code>.
-     * @throws LoadResourceException
-     *             in case of identifier creation problems
+     * @throws IllegalArgumentException
+     *             if the given string does not belong to an encoded component
+     *             identifier
      */
     @Nullable
     public static <T> ComponentIdentifier<T> createCI(
-            @NonNull String componentIdentifier) throws LoadResourceException {
-        return ObjectMappingImpl.getIdentifier(componentIdentifier);
+            @NonNull String componentIdentifier) 
+            throws IllegalArgumentException {
+        ComponentIdentifier<T> identifier = null;
+        try {
+            identifier = ObjectMappingImpl.getIdentifier(componentIdentifier);
+        } catch (LoadResourceException ex) {
+            throw new IllegalArgumentException(ex);
+        }
+        return identifier;
     }
 }

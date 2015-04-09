@@ -17,7 +17,6 @@ import junit.framework.Assert;
 
 import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.ObjectMapping;
-import org.eclipse.jubula.client.exceptions.LoadResourceException;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.qa.api.om.OM;
 import org.eclipse.jubula.toolkit.concrete.ConcreteComponents;
@@ -153,7 +152,7 @@ public class TestOMFactories {
      */
     @Test
     public void testComponentIdentifierViaInlinedStringIdentifier()
-            throws IOException, LoadResourceException {
+            throws IOException, IllegalArgumentException {
         ComponentIdentifier<TextComponent> value1 = MakeR.createCI("rO0ABXNyAD1vcmcuZWNsaXBzZS5qdWJ1bGEudG9vbHMuaW50ZXJuYWwub2JqZWN0cy5Db21wb25lbnRJZGVudGlmaWVyAAAAAAAABAcCAAlaABRtX2VxdWFsT3JpZ2luYWxGb3VuZEQAEW1fbWF0Y2hQZXJjZW50YWdlSQAhbV9udW1iZXJPZk90aGVyTWF0Y2hpbmdDb21wb25lbnRzTAAYbV9hbHRlcm5hdGl2ZURpc3BsYXlOYW1ldAASTGphdmEvbGFuZy9TdHJpbmc7TAAUbV9jb21wb25lbnRDbGFzc05hbWVxAH4AAUwAFW1fY29tcG9uZW50UHJvcGVydGllc3QAD0xqYXZhL3V0aWwvTWFwO0wAEG1faGllcmFyY2h5TmFtZXN0ABBMamF2YS91dGlsL0xpc3Q7TAAMbV9uZWlnaGJvdXJzcQB+AANMABRtX3N1cHBvcnRlZENsYXNzTmFtZXEAfgABeHAAv/AAAAAAAAD/////cHQAFmphdmF4LnN3aW5nLkpUZXh0RmllbGRwc3IAE2phdmEudXRpbC5BcnJheUxpc3R4gdIdmcdhnQMAAUkABHNpemV4cAAAAAZ3BAAAAAZ0AAZmcmFtZTB0ABdqYXZheC5zd2luZy5KUm9vdFBhbmVfMXQAEG51bGwubGF5ZXJlZFBhbmV0ABBudWxsLmNvbnRlbnRQYW5ldABBb3JnLmVjbGlwc2UuanVidWxhLmV4YW1wbGVzLmF1dC5hZGRlci5zd2luZy5ndWkuQ2FsY3VsYXRvclBhbmVsXzF0AAZ2YWx1ZTF4c3EAfgAGAAAACHcEAAAACHQAFGphdmF4LnN3aW5nLkpMYWJlbF8xdAAUamF2YXguc3dpbmcuSkxhYmVsXzJ0ABhqYXZheC5zd2luZy5KVGV4dEZpZWxkXzF0ABRqYXZheC5zd2luZy5KTGFiZWxfM3QAGGphdmF4LnN3aW5nLkpTZXBhcmF0b3JfMXQAGGphdmF4LnN3aW5nLkpUZXh0RmllbGRfMnQAFGphdmF4LnN3aW5nLkpMYWJlbF80dAAVamF2YXguc3dpbmcuSkJ1dHRvbl8xeHQAH2phdmF4LnN3aW5nLnRleHQuSlRleHRDb21wb25lbnQ=");  //$NON-NLS-1$
         
         Assert.assertEquals(MakeR.createObjectMapping(
