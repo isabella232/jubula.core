@@ -57,10 +57,11 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      * constructor to add the stage which has focus to our event confirming mechanism
      */
     public JavaFXApplicationTester() {
-        RobotJavaFXImpl robot = ((RobotJavaFXImpl) getRobot());
-        Stage focusStage = CurrentStages.getfocusStage();
-        robot.getInterceptor().addSceneGraph(
-                focusStage.getScene().windowProperty());
+      //Add scene graphs to the event confirmer
+        for (Stage s : CurrentStages.getStageList()) {
+            ((RobotJavaFXImpl) getRobot()).getInterceptor().addSceneGraph(
+                    s.getScene().windowProperty());
+        }
     }
     
     @Override
