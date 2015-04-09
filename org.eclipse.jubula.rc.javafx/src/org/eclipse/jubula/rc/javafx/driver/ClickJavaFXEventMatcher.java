@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.javafx.driver;
 
 import java.util.List;
 
+import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 
@@ -96,7 +97,15 @@ public class ClickJavaFXEventMatcher extends
     @Override
     public boolean isFallBackEventMatching(List eventObjects,
             Object graphicsComponent) {
-        return false;
+        int clickEventCount = 0;
+        for (Object object : eventObjects) {
+            Event e = (Event)object;
+            if (e != null && e.getEventType().
+                    equals(MouseEvent.MOUSE_CLICKED)) {
+                clickEventCount++;
+            }
+        }
+        return clickEventCount == m_clickOptions.getClickCount();
     }
 
     /**
