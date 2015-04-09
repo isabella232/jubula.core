@@ -122,6 +122,10 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     public static final Map<Image, Image> GENERATED_IMAGES = 
         new HashMap<Image, Image>();
     
+    /** maps images to their "cutted" (grey-tinted) counterparts */
+    public static final Map<Image, Image> GRAYED_IMAGES = 
+        new HashMap<Image, Image>();
+    
     /**
      * @param original The original, or base, image.
      * @return the "cut" version of the image. Client should not 
@@ -749,11 +753,11 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      *         dispose this image.
      */
     public static Image getCutImage(Image original) {
-        Image cutImage = GENERATED_IMAGES.get(original);
+        Image cutImage = GRAYED_IMAGES.get(original);
         if (cutImage == null) {
             cutImage = new Image(original.getDevice(), original, 
                     SWT.IMAGE_GRAY);
-            GENERATED_IMAGES.put(original, cutImage);
+            GRAYED_IMAGES.put(original, cutImage);
         }
         
         return cutImage;
