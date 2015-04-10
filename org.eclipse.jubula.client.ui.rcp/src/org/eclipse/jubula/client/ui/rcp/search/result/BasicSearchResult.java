@@ -20,6 +20,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -451,12 +452,15 @@ public class BasicSearchResult implements ISearchResult {
                 specNode = node;
             }
             
-            IEditorPart openEditor = AbstractOpenHandler.openEditor(specNode);
-            if (openEditor instanceof AbstractJBEditor) {
-                AbstractJBEditor jbEditor =
-                        (AbstractJBEditor) openEditor;
-                jbEditor.setSelection(
-                        new StructuredSelection(node));
+            if (NodeBP.isEditable(specNode)) {
+                IEditorPart openEditor = AbstractOpenHandler
+                        .openEditor(specNode);
+                if (openEditor instanceof AbstractJBEditor) {
+                    AbstractJBEditor jbEditor =
+                            (AbstractJBEditor) openEditor;
+                    jbEditor.setSelection(
+                            new StructuredSelection(node));
+                }
             }
         }
     }
