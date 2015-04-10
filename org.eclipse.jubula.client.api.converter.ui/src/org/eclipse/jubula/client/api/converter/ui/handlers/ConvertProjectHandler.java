@@ -370,6 +370,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                 }
             } else {
                 try {
+                    file.getParentFile().mkdirs();
                     file.createNewFile();
                     NodeGenerator gen = new NodeGenerator();
                     String content = gen.generate(info);
