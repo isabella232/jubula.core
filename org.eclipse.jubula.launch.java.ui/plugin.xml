@@ -26,7 +26,7 @@
    <extension
          point="org.eclipse.debug.ui.launchConfigurationTabGroups">
       <launchConfigurationTabGroup
-            class="org.eclipse.jubula.launch.java.ui.SwingAutLaunchConfigurationTabGroup"
+            class="org.eclipse.jubula.launch.java.ui.JavaAutLaunchConfigurationTabGroup"
             id="org.eclipse.jubula.launch.java.ui.AutTabGroup"
             type="org.eclipse.jdt.launching.localJavaApplication">
          <launchMode

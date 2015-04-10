@@ -45,6 +45,12 @@ public class JavaAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
     /** AUT toolkit */
     private String m_toolkit;
     
+    /** aut server start command */
+    private AbstractStartJavaAutServer m_startAutServerCommand;
+    
+    /** aut server */
+    private String m_autServer;
+    
     @Override
     public void launch(ILaunchConfiguration configuration, String mode,
             ILaunch launch, IProgressMonitor monitor) throws CoreException {
@@ -64,11 +70,9 @@ public class JavaAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
         InetSocketAddress agentAddr = 
             AutLaunchUtils.verifyConnectedAgentAddress();
 
-        AbstractStartJavaAutServer startAutServerCommand;
-        String autServer;
         try {
-            startAutServerCommand = determineStartCommand();
-            autServer = determineAutServer();
+            m_startAutServerCommand = determineStartCommand();
+            m_autServer = determineAutServer();
         } catch (ToolkitPluginException e) {
             throw new CoreException(new Status(
                     IStatus.ERROR, Activator.PLUGIN_ID, 
@@ -78,9 +82,9 @@ public class JavaAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
         String [] args = {
             Integer.toString(agentAddr.getPort()), autMainType, 
             StringUtils.join(
-                    startAutServerCommand.getLaunchClasspath(), 
+                    m_startAutServerCommand.getLaunchClasspath(), 
                     IStartAut.PATH_SEPARATOR), 
-            autServer, agentAddr.getHostName(),
+            m_autServer, agentAddr.getHostName(),
             Integer.toString(agentAddr.getPort()), autId, 
             CommandConstants.RC_COMMON_AGENT_INACTIVE, autArgs
         };
@@ -105,7 +109,7 @@ public class JavaAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
             startAutServerCommand = new StartSwingAutServerCommand();
         } else if (ToolkitSupportBP.getToolkitDescriptor(
                 CommandConstants.JAVAFX_TOOLKIT).getName()
-                .equals(m_toolkit)) {
+                    .equals(m_toolkit)) {
             startAutServerCommand = new StartJavaFXAutServerCommand();
         }
         return startAutServerCommand;
@@ -123,7 +127,7 @@ public class JavaAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
             autServer = CommandConstants.AUT_SWING_SERVER;
         } else if (ToolkitSupportBP.getToolkitDescriptor(
                 CommandConstants.JAVAFX_TOOLKIT).getName()
-                .equals(m_toolkit)) {
+                    .equals(m_toolkit)) {
             autServer = CommandConstants.AUT_JAVAFX_SERVER;
         }
         return autServer;
@@ -133,20 +137,8 @@ public class JavaAutLaunchConfigurationDelegate extends JavaLaunchDelegate {
 
     @Override
     public String[] getClasspath(ILaunchConfiguration configuration)
-        throws CoreException {
-        
-        m_toolkit = AutLaunchUtils.getToolkit(configuration);
-        
-        AbstractStartJavaAutServer startAutServerCommand = null;
-        try {
-            startAutServerCommand = determineStartCommand();
-        } catch (ToolkitPluginException e) {
-            throw new CoreException(new Status(
-                    IStatus.ERROR, Activator.PLUGIN_ID, 
-                    Messages.GetToolkitFromLaunchConfigError));
-        }
-        
-        String[] rcClasspath = startAutServerCommand.getLaunchClasspath();
+            throws CoreException {
+        String[] rcClasspath = m_startAutServerCommand.getLaunchClasspath();
         String[] autClasspath = super.getClasspath(configuration);
         String[] combinedClasspath = 
             new String [rcClasspath.length + autClasspath.length];
