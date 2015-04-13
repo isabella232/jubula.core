@@ -13,12 +13,14 @@ package org.eclipse.jubula.client.api.ui.handlers;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.api.ui.utils.OMExport;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -26,6 +28,7 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
@@ -110,13 +113,31 @@ public class ExportObjectMappingHandler extends AbstractHandler {
      */
     private void fillMap(final ObjectMappingMultiPageEditor omEditor,
             IAUTMainPO aut) {
-        IObjectMappingPO objMap = aut.getObjMap();
-        IObjectMappingCategoryPO mappedCategory =
-                objMap.getMappedCategory();
         m_compMapper = omEditor.getEditorHelper().getEditSupport()
                 .getCompMapper();
+        IObjectMappingPO objMap = aut.getObjMap();
+        IStructuredSelection selection = (IStructuredSelection) omEditor
+                .getTreeViewer().getSelection();
         try {
-            writeAssociationsToMap(objMap, mappedCategory);
+            if (selection.isEmpty()) {
+                IObjectMappingCategoryPO rootCategory = objMap
+                        .getMappedCategory();
+                writeAssociationsToMap(objMap, rootCategory);
+            } else {
+                Iterator<IPersistentObject> selectionIterator = 
+                        selection.iterator();
+                while (selectionIterator.hasNext()) {
+                    IPersistentObject next = selectionIterator
+                            .next();
+                    if (next instanceof IObjectMappingCategoryPO) {
+                        writeAssociationsToMap(objMap,
+                                (IObjectMappingCategoryPO) next);
+                    } else if (next instanceof IObjectMappingAssoziationPO) {
+                        addAssoziationToMap(objMap,
+                                (IObjectMappingAssoziationPO) next);
+                    }
+                }
+            }
         } catch (LogicComponentNotManagedException | IOException e) {
             ErrorHandlingUtil.createMessageDialog(new JBException(e
                     .getMessage(), e, MessageIDs.E_EXPORT_OM_ERROR));
@@ -198,13 +219,24 @@ public class ExportObjectMappingHandler extends AbstractHandler {
         }
         for (IObjectMappingAssoziationPO assoziation
                 : category.getUnmodifiableAssociationList()) {
-            for (String compUUID : assoziation.getLogicalNames()) {
-                String compName = m_compMapper.getCompNameCache()
-                        .getName(compUUID);
-                ComponentIdentifier identifier = (ComponentIdentifier) objMap
-                        .getTechnicalName(compUUID);
-                m_map.put(compName, SerilizationUtils.encode(identifier));
-            }
+            addAssoziationToMap(objMap, assoziation);
+        }
+    }
+
+    /**
+     * Adds an object mapping assoziation to the object map for export
+     * @param objMap object map
+     * @param assoziation the object mapping assoziation
+     */
+    private void addAssoziationToMap(final IObjectMappingPO objMap,
+            IObjectMappingAssoziationPO assoziation)
+            throws LogicComponentNotManagedException, IOException {
+        for (String compUUID : assoziation.getLogicalNames()) {
+            String compName = m_compMapper.getCompNameCache()
+                    .getName(compUUID);
+            ComponentIdentifier identifier = (ComponentIdentifier) objMap
+                    .getTechnicalName(compUUID);
+            m_map.put(compName, SerilizationUtils.encode(identifier));
         }
     }
 }
