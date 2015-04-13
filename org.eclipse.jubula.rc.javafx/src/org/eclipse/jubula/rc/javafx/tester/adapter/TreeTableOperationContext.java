@@ -21,6 +21,7 @@ import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -139,6 +140,9 @@ public class TreeTableOperationContext extends
      * @return the rendered text
      */
     private String getRenderedTextFromCell(final Object node, final int col) {
+        if (node instanceof TreeItem<?>) {
+            scrollNodeToVisible(node);
+        }
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getRenderedText", new Callable<String>() { //$NON-NLS-1$
 
@@ -538,9 +542,21 @@ public class TreeTableOperationContext extends
 
                     @Override
                     public Integer call() throws Exception {
+                        if (parent == null) {
+                            Object[] rootNodes = getRootNodes();
+                            for (int i = 0; i < rootNodes.length; i++) {
+                                if (ObjectUtils.equals(rootNodes[i], child)) {
+                                    return i;
+                                }
+                            }
 
-                        return ((TreeItem<?>) parent).getChildren().indexOf(
-                                child);
+                            return -1;
+                        }
+                        List<?> children = ((TreeItem<?>)parent).getChildren();
+                        if (children.contains(child)) {
+                            return children.indexOf(child);
+                        }
+                        return -1;
                     }
                 });
     }
