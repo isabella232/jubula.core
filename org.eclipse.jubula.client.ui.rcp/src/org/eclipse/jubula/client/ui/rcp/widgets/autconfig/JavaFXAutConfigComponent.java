@@ -668,7 +668,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
 
         // parameter editor
         ControlDecorator.createInfo(
-            UIComponentHelper.createLabel(advancedAreaComposite,
+            UIComponentHelper.createLabelWithText(advancedAreaComposite,
                 I18n.getString("AUTConfigComponent.autArguments")), //$NON-NLS-1$
             "ControlDecorator.AUTArguments", false); //$NON-NLS-1$
         m_autArgsTextField = 
