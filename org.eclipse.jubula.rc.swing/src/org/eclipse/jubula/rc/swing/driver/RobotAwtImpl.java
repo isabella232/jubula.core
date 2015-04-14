@@ -421,7 +421,7 @@ public class RobotAwtImpl implements IRobot<Rectangle> {
                 getLocation(component, new Point(0, 0)));
         bounds.width = component.getWidth();
         bounds.height = component.getHeight();
-        if (component instanceof Window) {
+        if (component instanceof Frame) {
             Frame window = (Frame) component;
             if (bounds.x < 0
                     && checkExtendedState(window, Frame.MAXIMIZED_HORIZ)) {
