@@ -333,4 +333,5 @@
         </figure>
         <para>However the usage of maven is not mandatory - you can also simply setup a plain Java project using the artifacts as plain JARs on the classpath.</para>
     </section>
+<xi:include href="sectionConverter.xml"/>
 </chapter>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2015 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<section xml:id="converter" xmlns="http://docbook.org/ns/docbook"
+                       xmlns:xi="http://www.w3.org/2001/XInclude"
+                       xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>Converting a project into API (experimental)</title>
+    <para>An existing Jubula project can be converted into the client-API. This following section will describe the limitations and how to install the converter.</para>
+    <section>
+        <title>Installing the converter plugin</title>
+        <orderedlist>
+        <listitem>
+          <para>
+            Start the ITE and select from the main menu
+            <emphasis role="menupath">Help</emphasis>--&gt;<emphasis role="menupath">Install new software...</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the "<emphasis>Add...</emphasis>" button in the
+            <emphasis>Install</emphasis> dialog that appears.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the "<emphasis>Archive...</emphasis>" button in the
+            <emphasis>Add Repository</emphasis> dialog that appears
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Navigate to the directory where Jubula is installed and select the org.eclipse.jubula.repo.zip in the development folder
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click "<emphasis>OK</emphasis>" to exit the <emphasis>Add
+            Repository</emphasis> dialog. The active dialog should now
+            be <emphasis>Install</emphasis>.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Select the Feature with the name "Jubula Functional Testing - API Converter (experimental)" and click "<emphasis>Next</emphasis>" 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Confirm the <emphasis>Installation Details</emphasis> by
+            clicking the "<emphasis>Next</emphasis>" button again.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Accept the license agreement terms and click
+            "<emphasis>Finish</emphasis>".
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Click the "<emphasis>Restart Now</emphasis>" button to
+            perform a restart, when a dialog appears to prompt the
+            restart that will safely finish the update / installation.
+            After the restart the converter is installed.
+          </para>
+        </listitem>
+    </orderedlist>
+    </section>
+    <section>
+          <title>Converting the project and other things to do</title>
+                 
+            
+        <para>After installing the converter, a project must be loaded to start the conversion with "Convert project to java for use in API"
+            <inlinemediaobject>
+              <imageobject>
+                 <imagedata fileref="images/convert.png"/>
+              </imageobject>
+            </inlinemediaobject> .
+            
+            If there are problems during the conversion they will be shown in the console window or an error window will occur.
+        </para>
+        <para>
+        For the converted project you need the <link xl:href="http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/tree/org.eclipse.jubula.qa.api.converter.target.rcp/src/org/eclipse/jubula/qa/api/converter/target/rcp/RuntimeContext.java">RuntimeContext</link> and the <link xl:href="http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git/tree/org.eclipse.jubula.qa.api.converter.target.rcp/src/org/eclipse/jubula/qa/api/converter/target/rcp/VariableStore.java">VariableStore</link>. These classes are used in many places in the converted project.
+        </para>
+    </section>
+    <section>
+        <title>Limitations of the converter</title>
+        <para>Current known limitations of the converter</para>
+        <itemizedlist>
+            <listitem>
+                <para>Only one Test Case will be converted if another Test Case exists with the same name in the same category</para>
+            </listitem>
+            <listitem>
+                <para>Only one Test Job or Test Suite will be converted if another Test Job or Test Suite exists with the same name in the same category</para>
+            </listitem>
+            <listitem>
+                <para>Names of Test Cases,Test Suites and Test Jobs should match the Java conventions for class names. However we are doing some minor adjustments to names like removing spaces.<link xl:href="http://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8">Java language specification</link></para>
+            </listitem>
+            <listitem>
+                <para>Test Cases,Test Suites and Test Jobs should not begin with numbers</para>
+            </listitem>
+            <listitem>
+                <para>There are actions which are not convertible (Store value, Read/Start Timer, Manual Test Step, restart and synchronize, restart, execute external command)</para>
+            </listitem>
+            <listitem>
+                <para>Event Handler will not be active after conversion. They need to be changed and other code might be necessary to work in the client-api</para>
+            </listitem>
+            <listitem>
+                <para>AUT configurations are not converted</para>
+            </listitem>
+            <listitem>
+                <para>The first AUT is used to determine the toolkit</para>
+            </listitem>
+        </itemizedlist>
+    </section>
+</section>
