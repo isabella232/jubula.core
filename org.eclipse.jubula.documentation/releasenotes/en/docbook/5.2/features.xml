@@ -1,4 +1,4 @@
-<section id="new-features-and-developments-5.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="new-features-and-developments-5.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
@@ -29,7 +29,7 @@
         The embedded AUT Agent is started on port 60000 by default;
         this number can be changed in the preferences.
       </para>
-      <figure id="RNEmbeddedAgent">
+      <figure xml:id="RNEmbeddedAgent">
         <title>Embedded AUT Agent</title>
         <mediaobject>
           <imageobject>
@@ -91,7 +91,7 @@
         no longer used in the entire Project, they can be deleted from
         the Component Names Browser.
       </para>
-      <figure id="RNDeleteUnusedCN">
+      <figure xml:id="RNDeleteUnusedCN">
         <title>Deleting unused Component Names</title>
         <mediaobject>
           <imageobject>
@@ -120,7 +120,7 @@
         In this release, the nodes in the HTML reports can be expanded
         and collapsed to view the whole test progress.
       </para>
-      <figure id="RNHTMLReport">
+      <figure xml:id="RNHTMLReport">
         <title>HTML Reports</title>
         <mediaobject>
           <imageobject>
@@ -131,7 +131,7 @@
       </figure>
     </listitem>
   </itemizedlist>
-  <para id="RNCompRec">
+  <para xml:id="RNCompRec">
     <emphasis role="strong">State of component recognition displayed
     when collecting technical names</emphasis>
   </para>
@@ -188,7 +188,7 @@
         Editor has been saved, all names are shown with plain black
         icons.
       </para>
-      <figure id="RNColorDot">
+      <figure xml:id="RNColorDot">
         <title>Colored Dots for Object Mapping</title>
         <mediaobject>
           <imageobject>
@@ -222,7 +222,7 @@
         The assistant will drop the tables in the database, recreate
         the necessary tables and import the Projects you specified.
       </para>
-      <figure id="RNMigration">
+      <figure xml:id="RNMigration">
         <title>Migration Wizard</title>
         <mediaobject>
           <imageobject>

@@ -1,8 +1,8 @@
-<section id="release-notes-for-version-4.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-4.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for version 4.1.01039</title>
-  <section id="new-features-and-developments-4.1">
+  <section xml:id="new-features-and-developments-4.1">
     <title>New features and developments</title>
     <para>
       <emphasis role="strong">New option in delete Project
@@ -132,7 +132,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="other-information-4.1">
+  <section xml:id="other-information-4.1">
     <title>Other information</title>
     <para>
       <emphasis role="strong">Compatibility with 4.0</emphasis>
@@ -229,7 +229,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="known-issues-4.1">
+  <section xml:id="known-issues-4.1">
     <title>Known issues</title>
     <para>
       <emphasis role="strong">Console output for DBTool</emphasis>
@@ -273,4 +273,4 @@
       </listitem>
     </itemizedlist>
   </section>
-</section>
+</chapter>

@@ -1,4 +1,4 @@
-<section id="known-issues-and-other-information-8.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="known-issues-and-other-information-8.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Known issues and other information</title>
@@ -113,9 +113,11 @@
   </para>
   <itemizedlist>
     <listitem>
-      There has been a minor but incompatible change in the <programlisting>org.eclipse.jubula.toolkit.common.IToolkitProvider</programlisting> interface regarding the name 
-      of the interface itself (lower k instead of upper K) as well as a method renaming: <programlisting>public ResourceBundle getI18nResourceBundle();</programlisting> is now 
-      <programlisting>public ResourceBundle getResourceBundle();</programlisting>.
+      <para>
+        There has been a minor but incompatible change in the <programlisting>org.eclipse.jubula.toolkit.common.IToolkitProvider</programlisting> interface regarding the name 
+        of the interface itself (lower k instead of upper K) as well as a method renaming: <programlisting>public ResourceBundle getI18nResourceBundle();</programlisting> is now 
+        <programlisting>public ResourceBundle getResourceBundle();</programlisting>.
+      </para>
     </listitem>
     <listitem>
       <para>

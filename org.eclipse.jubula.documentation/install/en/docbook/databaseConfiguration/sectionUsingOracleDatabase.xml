@@ -1,4 +1,4 @@
-<section id="using-an-oracle-database" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="using-an-oracle-database" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Using an Oracle database</title>
@@ -6,7 +6,7 @@
     The ITE is tested with Oracle and we recommend using an Oracle or
     Oracle Express database for working with it.
   </para>
-  <section id="some-tips-for-working-with-oracle-express">
+  <section xml:id="some-tips-for-working-with-oracle-express">
     <title>Some tips for working with Oracle Express</title>
     <para>
       <emphasis role="strong">Problems creating the database scheme: DBA rights</emphasis>

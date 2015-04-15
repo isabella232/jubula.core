@@ -1,4 +1,4 @@
-<section id="release-notes-for-version-3.1.2003" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-3.1.2003" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for version 3.1.2003</title>
@@ -6,7 +6,7 @@
     This release is a patch for the previous 3.1.01019 version. For more
     information about the 3.1 version, see the previous release notes.
   </para>
-  <section id="new-features-and-developments-3.1.2003">
+  <section xml:id="new-features-and-developments-3.1.2003">
     <title>New features and developments</title>
     <para>
       <emphasis role="strong">New timer actions</emphasis>
@@ -37,7 +37,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="other-information-3.1.2003">
+  <section xml:id="other-information-3.1.2003">
     <title>Other information</title>
     <para>
       <emphasis role="strong">Fix for GEF figure recognition</emphasis>
@@ -92,4 +92,4 @@
       </listitem>
     </itemizedlist>
   </section>
-</section>
+</chapter>

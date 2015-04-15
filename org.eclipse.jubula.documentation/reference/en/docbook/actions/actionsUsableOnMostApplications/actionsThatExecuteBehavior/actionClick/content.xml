@@ -12,8 +12,6 @@
   <?dbhtml dir="actionClick"?>
   <title>Click</title>
   
-  <xi:include href="generalComponents.xml"/>
-  
   <para><emphasis role="strong">Click in active window</emphasis></para>
   <para>
     <itemizedlist>
@@ -29,4 +27,6 @@
       </listitem>
     </itemizedlist>
   </para>
+  
+  <xi:include href="generalComponents.xml"/>
 </section>

@@ -1,8 +1,8 @@
-<section id="release-notes-for-version-5.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-5.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for Version 5.2.00265</title>
   
   <xi:include href="features.xml"/>
   <xi:include href="issues.xml"/>
-</section>
+</chapter>

@@ -1,4 +1,4 @@
-<section id="new-features-and-developments-8.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="new-features-and-developments-8.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
@@ -33,7 +33,9 @@
       </para>
     </listitem>
     <listitem>
-    There is a property inspector to let you see what properties a specific task has.
+      <para>
+        There is a property inspector to let you see what properties a specific task has.
+      </para>
     </listitem>
   </itemizedlist>
   <para>
@@ -175,8 +177,10 @@
       </para>
     </listitem>
     <listitem>
-    Once you have entered descriptions, you can see them via the Description View when you select 
-    a node with a description.
+      <para>
+        Once you have entered descriptions, you can see them via the Description View when you select 
+        a node with a description.
+      </para>
     </listitem>
   </itemizedlist>
   <para>

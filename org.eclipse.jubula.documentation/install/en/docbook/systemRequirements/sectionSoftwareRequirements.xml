@@ -1,8 +1,8 @@
-<section id="software-requirements" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="software-requirements" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Software requirements</title>
-  <section id="supported-operating-systems">
+  <section xml:id="supported-operating-systems">
     <title>Supported operating systems</title>
     <para>
       The following operating systems are supported:
@@ -31,7 +31,7 @@
       we support an installation on such systems.
     </para>
   </section>
-  <section id="supported-java-environments">
+  <section xml:id="supported-java-environments">
     <title>Supported <emphasis>Java</emphasis> environments</title>
     <variablelist>
       <varlistentry>
@@ -79,7 +79,7 @@
       Java 7 is provided in the installation for Linux and Windows.
     </para>
   </section>
-  <section id="database-requirements">
+  <section xml:id="database-requirements">
     <title>Database requirements</title>
     <para>
       The ITE supports <emphasis>Oracle</emphasis> as a multi-user
@@ -92,7 +92,7 @@
       proper use nor technical support.
     </para>
   </section>
-  <section id="firewalls">
+  <section xml:id="firewalls">
     <title>Firewalls</title>
     <para>
       The ITE and AUT Agent have to be able to perform interprocess

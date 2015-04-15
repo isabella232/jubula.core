@@ -1,4 +1,4 @@
-<section id="new-features-and-developments-6.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="new-features-and-developments-6.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
@@ -95,13 +95,14 @@
       <para>
         The sign to introduce a function is the question mark:
         <emphasis role="input">?</emphasis>
-        <para role="warning">
-          Any question marks used as test data
-          will have to be escaped using one or more backslashes as of
-          this new version. A warning in the console view will appear
-          after importing your Project if you have any unescaped
-          question marks in your data. You can then use the search
-          function to find them and mask them.</para>
+      </para>
+      <para role="warning">
+        Any question marks used as test data
+        will have to be escaped using one or more backslashes as of
+        this new version. A warning in the console view will appear
+        after importing your Project if you have any unescaped
+        question marks in your data. You can then use the search
+        function to find them and mask them.
       </para>
     </listitem>
     <listitem>

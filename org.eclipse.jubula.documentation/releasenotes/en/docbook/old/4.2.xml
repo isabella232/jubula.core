@@ -1,8 +1,8 @@
-<section id="release-notes-for-version-4.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-4.2" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for version 4.2.01053</title>
-  <section id="new-features-and-developments-4.2">
+  <section xml:id="new-features-and-developments-4.2">
     <title>New features and developments</title>
     <para>
       <emphasis role="strong">Eclipse 3.6 supported</emphasis>
@@ -253,7 +253,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="other-information-4.2">
+  <section xml:id="other-information-4.2">
     <title>Other information</title>
     <para>
       <emphasis role="strong">XML and HTML reports scheduled for
@@ -342,4 +342,4 @@
       </listitem>
     </itemizedlist>
   </section>
-</section>
+</chapter>

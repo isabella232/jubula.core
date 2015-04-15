@@ -1,8 +1,8 @@
-<section id="release-notes-for-version-3.1.01019" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-3.1.01019" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for version 3.1.01019</title>
-  <section id="new-features-and-developments-3.1.01019">
+  <section xml:id="new-features-and-developments-3.1.01019">
     <title>New features and developments</title>
     <para>
       <emphasis role="strong">GEF support</emphasis>
@@ -229,7 +229,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="other-information-3.1.01019">
+  <section xml:id="other-information-3.1.01019">
     <title>Other Information</title>
     <para>
       <emphasis role="strong">Coolbars and Toolbars in
@@ -346,7 +346,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="known-issues-3.1.01019">
+  <section xml:id="known-issues-3.1.01019">
     <title>Known issues</title>
     <para>
       <emphasis role="strong">Connecting to the AUT Agent</emphasis>
@@ -400,4 +400,4 @@
       </listitem>
     </itemizedlist>
   </section>
-</section>
+</chapter>

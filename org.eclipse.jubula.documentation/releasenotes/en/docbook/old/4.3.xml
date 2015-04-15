@@ -1,8 +1,8 @@
-<section id="release-notes-for-version-4.3" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-4.3" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for version 4.3.01105</title>
-  <section id="information-4.3">
+  <section xml:id="information-4.3">
     <title>Information</title>
     <para>
       This release is a patch to fix a problem that occurred in the
@@ -11,7 +11,7 @@
       The database and license are the same as in version 4.3.01105.
     </para>
   </section>
-  <section id="new-features-and-developments-4.3">
+  <section xml:id="new-features-and-developments-4.3">
     <title>New features and developments</title>
     <para>
       <emphasis role="strong">Mylyn integration</emphasis>
@@ -597,7 +597,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="other-information-4.3">
+  <section xml:id="other-information-4.3">
     <title>Other information</title>
     <para>
       <emphasis role="strong">New workspace recommended for
@@ -630,4 +630,4 @@
       </listitem>
     </itemizedlist>
   </section>
-</section>
+</chapter>

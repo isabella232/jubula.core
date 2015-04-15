@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<book id="userManual" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<book xml:id="userManual" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                     xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes</title>
   
-  <chapter>
-    <para>
-      This document presents the relevant differences between versions and
-      updates, and provides an account of any developments or known issues
-      with the current release.
-    </para>
-    <para>
-      For up-to-date information on a release, it is worth looking in the
-      FAQ's on the website.
-    </para>
-    <para>
-      The release notes are presented in chronological order, with the
-      most recent at the beginning of the document.
-    </para>
+    <chapter xml:id="introduction">
+      <title>Introduction</title>
+      <para>
+        This document presents the relevant differences between versions and
+        updates, and provides an account of any developments or known issues
+        with the current release.
+      </para>
+      <para>
+        For up-to-date information on a release, it is worth looking in the
+        FAQ's on the website.
+      </para>
+      <para>
+        The release notes are presented in chronological order, with the
+        most recent at the beginning of the document.
+      </para>
+    </chapter>
   
-    <section id="important-advice-for-migrating-to-new-versions">
+    <chapter xml:id="important-advice-for-migrating-to-new-versions">
       <title>Important advice for migrating to new versions</title>
       <para>
         Existing users who wish to update to a new version should follow the steps described online to ensure a problem-free migration:<?linebreak?>
         <link xl:href="http://testing.bredex.de/migration-information.html">http://testing.bredex.de/migration-information.html</link>
       </para>
-    </section>
+    </chapter>
     <xi:include href="8.1.2/notes.xml"/>
     <xi:include href="8.1.1/notes.xml"/>
     <xi:include href="8.1/notes.xml"/>
@@ -48,5 +50,4 @@
     <xi:include href="old/3.1.2.xml"/>
     <xi:include href="old/3.1.01.xml"/>
 
-  </chapter>
 </book>

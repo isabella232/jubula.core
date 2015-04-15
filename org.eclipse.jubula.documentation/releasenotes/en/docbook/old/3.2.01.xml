@@ -1,8 +1,8 @@
-<section id="release-notes-for-version-3.2.01081" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-3.2.01081" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for version 3.2.01081</title>
-  <section id="new-features-and-developments-3.2.01081">
+  <section xml:id="new-features-and-developments-3.2.01081">
     <title>New features and developments</title>
     <para>
       <emphasis role="strong">New actions</emphasis>
@@ -124,7 +124,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="other-information-3.2.01081">
+  <section xml:id="other-information-3.2.01081">
     <title>Other information</title>
     <para>
       <emphasis role="strong">Administrator privileges required for
@@ -234,7 +234,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="known-issues-3.2.01081">
+  <section xml:id="known-issues-3.2.01081">
     <title>Known issues</title>
     <para>
       <emphasis role="strong">Selection of multiple SWT list items under
@@ -255,4 +255,4 @@
       </listitem>
     </itemizedlist>
   </section>
-</section>
+</chapter>

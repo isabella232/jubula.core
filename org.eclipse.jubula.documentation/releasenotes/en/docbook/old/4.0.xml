@@ -1,8 +1,8 @@
-<section id="release-notes-for-version-4.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<chapter xml:id="release-notes-for-version-4.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
                                                           xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Release Notes for version 4.0.01205</title>
-  <section id="new-features-and-developments-4.0">
+  <section xml:id="new-features-and-developments-4.0">
     <title>New features and developments</title>
     <para>
       <emphasis role="strong">New implementation for HTML
@@ -280,7 +280,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="information-4.0">
+  <section xml:id="information-4.0">
     <title>Information</title>
     <para>
       <emphasis role="strong">Altered XML Scheme for
@@ -430,7 +430,7 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section id="known-issues-4.0">
+  <section xml:id="known-issues-4.0">
     <title>Known issues</title>
     <para>
       <emphasis role="strong">Refresh problem in the Component Names
@@ -547,4 +547,4 @@
       </listitem>
     </itemizedlist>
   </section>
-</section>
+</chapter>
