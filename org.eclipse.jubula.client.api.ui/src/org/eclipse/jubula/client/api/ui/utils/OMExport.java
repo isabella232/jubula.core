@@ -10,11 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.ui.utils;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
 
 /**
  * Containing encoded object mapping and information about
@@ -124,5 +127,15 @@ public class OMExport {
      */
     private void setObjectMapping(Map<String, String> objectMapping) {
         m_objectMapping = objectMapping;
+    }
+
+    /**
+     * Serializes a component identifier
+     * @param identifier the component identifier
+     * @return the serialization
+     */
+    public static String getSerialization(ComponentIdentifier identifier)
+            throws IOException {
+        return SerilizationUtils.encode(identifier);
     }
 }

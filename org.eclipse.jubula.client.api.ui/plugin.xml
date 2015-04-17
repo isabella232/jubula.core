@@ -13,15 +13,28 @@
           categoryId="org.eclipse.jubula.client.ui.rcp.commands"
           id="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
           name="Export Object Mapping for use in API" />
+        <command
+          categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+          id="org.eclipse.jubula.client.api.ui.commands.CopyIdentifierToClipboardCommand"
+          name="Copy Component Identifier to Clipboard" />
     </extension>
       
-    <extension
-      id="jubula.ComponentNameBrowserHandler"
-      name="ComponentNameBrowserHandler"
-      point="org.eclipse.ui.handlers">
+    <extension point="org.eclipse.ui.handlers">
         <handler
           class="org.eclipse.jubula.client.api.ui.handlers.ExportObjectMappingHandler"
           commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand">
+        </handler>
+        <handler
+          class="org.eclipse.jubula.client.api.ui.handlers.CopyIdentifierToClipboardHandler"
+          commandId="org.eclipse.jubula.client.api.ui.commands.CopyIdentifierToClipboardCommand">
+          <activeWhen>
+            <and>
+              <count value="1" />
+              <iterate ifEmpty="false" operator="or">
+                <instanceof value="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO" />
+              </iterate>
+            </and>
+          </activeWhen>
         </handler>
     </extension>
     
@@ -35,6 +48,14 @@
             </separator>
             <command
               commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
+              style="push">
+              <visibleWhen checkEnabled="false">
+                <reference
+                  definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+              </visibleWhen>
+            </command>
+            <command
+              commandId="org.eclipse.jubula.client.api.ui.commands.CopyIdentifierToClipboardCommand"
               style="push">
               <visibleWhen checkEnabled="false">
                 <reference

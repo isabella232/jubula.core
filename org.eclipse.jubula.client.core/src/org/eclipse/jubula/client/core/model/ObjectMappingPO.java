@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -34,8 +33,8 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.utils.ObjectMappingUtil;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
-import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.annotations.BatchFetch;
@@ -281,22 +280,9 @@ class ObjectMappingPO implements IObjectMappingPO {
                     NLS.bind(Messages.TheLogicComponentIsNotManaged, logical),
                     MessageIDs.E_COMPONENT_NOT_MANAGED); 
         }
-        
-        IComponentIdentifier assoCompId = asso.getTechnicalName();
-        if (assoCompId != null) {
-            IComponentIdentifier compId = new ComponentIdentifier();
-            compId.setComponentClassName(
-                    assoCompId.getComponentClassName());
-            compId.setHierarchyNames(new ArrayList<String>(
-                    assoCompId.getHierarchyNames()));
-            compId.setNeighbours(new ArrayList<String>(
-                    assoCompId.getNeighbours()));
-            compId.setSupportedClassName(
-                    assoCompId.getSupportedClassName());
-            return compId;
-        }
-        return null; 
+        return ObjectMappingUtil.createCompIdentifierFromAssoziation(asso);
     }
+   
 
     /**
      * @return      Set

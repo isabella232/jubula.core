@@ -30,7 +30,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
-import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
+import org.eclipse.jubula.client.core.utils.ObjectMappingUtil;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -122,7 +122,7 @@ public class ExportObjectMappingHandler extends AbstractHandler {
             if (selection.isEmpty()) {
                 IObjectMappingCategoryPO rootCategory = objMap
                         .getMappedCategory();
-                writeAssociationsToMap(objMap, rootCategory);
+                writeAssociationsToMap(rootCategory);
             } else {
                 Iterator<IPersistentObject> selectionIterator = 
                         selection.iterator();
@@ -130,11 +130,9 @@ public class ExportObjectMappingHandler extends AbstractHandler {
                     IPersistentObject next = selectionIterator
                             .next();
                     if (next instanceof IObjectMappingCategoryPO) {
-                        writeAssociationsToMap(objMap,
-                                (IObjectMappingCategoryPO) next);
+                        writeAssociationsToMap((IObjectMappingCategoryPO) next);
                     } else if (next instanceof IObjectMappingAssoziationPO) {
-                        addAssoziationToMap(objMap,
-                                (IObjectMappingAssoziationPO) next);
+                        addAssoziationToMap((IObjectMappingAssoziationPO) next);
                     }
                 }
             }
@@ -199,44 +197,40 @@ public class ExportObjectMappingHandler extends AbstractHandler {
      * Writes all object mapping associations from a given category (and
      * recursively from all sub-categories) into the map
      * 
-     * @param objMap
-     *            object mapping to retrieve technical names from
      * @param category
      *            the category
      * @throws LogicComponentNotManagedException when there is a problem with
      *      assigning component identifiers to their logical names
      * @throws IOException when there is a problem with encoding
      */
-    private void writeAssociationsToMap(final IObjectMappingPO objMap,
-            IObjectMappingCategoryPO category)
+    private void writeAssociationsToMap(IObjectMappingCategoryPO category)
         throws LogicComponentNotManagedException, IOException {
         List<IObjectMappingCategoryPO> subcategoryList =
                 category.getUnmodifiableCategoryList();
         if (!subcategoryList.isEmpty()) {
             for (IObjectMappingCategoryPO subcategory : subcategoryList) {
-                writeAssociationsToMap(objMap, subcategory);
+                writeAssociationsToMap(subcategory);
             }
         }
         for (IObjectMappingAssoziationPO assoziation
                 : category.getUnmodifiableAssociationList()) {
-            addAssoziationToMap(objMap, assoziation);
+            addAssoziationToMap(assoziation);
         }
     }
 
     /**
      * Adds an object mapping assoziation to the object map for export
-     * @param objMap object map
      * @param assoziation the object mapping assoziation
      */
-    private void addAssoziationToMap(final IObjectMappingPO objMap,
-            IObjectMappingAssoziationPO assoziation)
-            throws LogicComponentNotManagedException, IOException {
+    private void addAssoziationToMap(IObjectMappingAssoziationPO assoziation)
+            throws IOException {
         for (String compUUID : assoziation.getLogicalNames()) {
             String compName = m_compMapper.getCompNameCache()
                     .getName(compUUID);
-            ComponentIdentifier identifier = (ComponentIdentifier) objMap
-                    .getTechnicalName(compUUID);
-            m_map.put(compName, SerilizationUtils.encode(identifier));
+            ComponentIdentifier identifier = (ComponentIdentifier) 
+                    ObjectMappingUtil.createCompIdentifierFromAssoziation(
+                            assoziation);
+            m_map.put(compName, OMExport.getSerialization(identifier));
         }
     }
 }

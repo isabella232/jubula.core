@@ -823,6 +823,7 @@ public class TestExecution {
                         MessageIDs.E_COMPONENT_NOT_MANAGED);
             }
             Action action = comp.findAction(cap.getActionName());
+            messageCap.setAction(action);
             messageCap.setMethod(action.getMethod());
             messageCap.setPostExecutionCommand(
                 action.getPostExecutionCommand());
