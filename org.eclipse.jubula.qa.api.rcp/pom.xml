@@ -12,8 +12,8 @@
 
 	<repositories>
 		<repository>
-			<id>local-api-repo</id>
-			<url>file://${project.build.directory}/../../org.eclipse.jubula.feature.api/m2-repo</url>
+			<id>jubula-snapshots</id>
+			<url>https://repo.eclipse.org/content/repositories/jubula-snapshots</url>
 		</repository>
 	</repositories>
 
