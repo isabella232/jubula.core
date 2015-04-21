@@ -17,6 +17,19 @@
     <java8.jdk.base.path>${java.home}/../../java8</java8.jdk.base.path>
   </properties>
   
+  <distributionManagement>
+    <repository>
+      <id>repo.eclipse.org</id>
+      <name>Project Repository - Releases</name>
+      <url>https://repo.eclipse.org/content/repositories/jubula-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>repo.eclipse.org</id>
+      <name>Project Repository - Snapshots</name>
+      <url>https://repo.eclipse.org/content/repositories/jubula-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+  
   <profiles>
     <profile>
       <id>build-eclipse-org</id>
