@@ -11,19 +11,12 @@
   <packaging>pom</packaging>
   
   <properties>
-    <tycho-version>0.23.0-SNAPSHOT</tycho-version>
+    <tycho-version>0.22.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java8.jdk.base.path>${java.home}/../../java8</java8.jdk.base.path>
   </properties>
   
-  <pluginRepositories>
-   <pluginRepository>
-     <id>tycho-snapshots</id>
-     <url>https://repo.eclipse.org/content/repositories/tycho-snapshots/</url>
-   </pluginRepository>
-</pluginRepositories>
-
   <distributionManagement>
     <repository>
       <id>repo.eclipse.org</id>
