@@ -75,6 +75,7 @@
                 <supportedProjectType>eclipse-feature</supportedProjectType>
                 <supportedProjectType>jar</supportedProjectType>
               </supportedProjectTypes>
+              <fork>true</fork>
             </configuration>
           </plugin>
           <plugin>
@@ -115,6 +116,7 @@
                 <supportedProjectType>eclipse-feature</supportedProjectType>
                 <supportedProjectType>jar</supportedProjectType>
               </supportedProjectTypes>
+              <fork>true</fork>
             </configuration>
           </plugin>
           <plugin>
