@@ -20,6 +20,7 @@ import org.eclipse.jdt.debug.ui.launchConfigurations.JavaArgumentsTab;
 import org.eclipse.jdt.debug.ui.launchConfigurations.JavaClasspathTab;
 import org.eclipse.jdt.debug.ui.launchConfigurations.JavaJRETab;
 import org.eclipse.jdt.debug.ui.launchConfigurations.JavaMainTab;
+import org.eclipse.jubula.launch.ui.tab.AutLaunchConfigurationTab;
 
 /**
  * Tab group for "Start Java / Swing AUT" launch configuration.
@@ -27,7 +28,7 @@ import org.eclipse.jdt.debug.ui.launchConfigurations.JavaMainTab;
  * @author BREDEX GmbH
  * @created 13.07.2011
  */
-public class JavaAutLaunchConfigurationTabGroup extends
+public class SwingAutLaunchConfigurationTabGroup extends
         AbstractLaunchConfigurationTabGroup {
 
     /**
@@ -43,7 +44,7 @@ public class JavaAutLaunchConfigurationTabGroup extends
             new SourceLookupTab(),
             new EnvironmentTab(),
             new CommonTab(),
-            new JavaAutLaunchConfigurationTab()
+            new AutLaunchConfigurationTab()
         };
         
         setTabs(tabs);
