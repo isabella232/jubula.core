@@ -147,22 +147,4 @@ public class AutLaunchUtils {
         
         return autId;
     }
-    
-    /**
-     * 
-     * @param configuration The Launch Configuration to examine.
-     * @return the toolkit defined in the given Launch Configuration
-     */
-    public static String getToolkit(ILaunchConfiguration configuration) {
-
-        String toolkit = StringUtils.EMPTY;
-        try {
-            toolkit = configuration.getAttribute(
-                    AutLaunchConfigurationConstants.AUT_TOOLKIT, 
-                    StringUtils.EMPTY);
-        } catch (CoreException ce) {
-            LOG.error(Messages.GetToolkitFromLaunchConfigError, ce);
-        }
-        return toolkit;
-    }
 }

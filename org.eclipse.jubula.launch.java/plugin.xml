@@ -11,7 +11,7 @@
    <extension
          point="org.eclipse.debug.core.launchDelegates">
       <launchDelegate
-            delegate="org.eclipse.jubula.launch.java.JavaAutLaunchConfigurationDelegate"
+            delegate="org.eclipse.jubula.launch.java.SwingAutLaunchConfigurationDelegate"
             id="org.eclipse.jubula.launch.java.swingDelegate"
             modes="ui_test"
             name="Jubula UI Test AUT Launcher"

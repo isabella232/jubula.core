@@ -22,7 +22,6 @@ public class Messages extends NLS {
     public static String AutLaunchConfigurationTab_ActiveCheckbox_label;
     public static String AutLaunchConfigurationTab_AutIdTextField_info;
     public static String AutLaunchConfigurationTab_AutIdTextField_label;
-    public static String AutLaunchConfigurationTab_ToolkitChoice_label;
     public static String AutLaunchConfigurationTab_name;
     static {
         // initialize resource bundle

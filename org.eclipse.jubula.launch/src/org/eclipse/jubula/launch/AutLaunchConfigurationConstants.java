@@ -27,12 +27,6 @@ public final class AutLaunchConfigurationConstants {
     /** default value for AUT ID property */
     public static final String AUT_ID_DEFAULT_VALUE = ""; //$NON-NLS-1$
     
-    /** key for toolkit property */
-    public static final String AUT_TOOLKIT = "org.eclipse.jubula.launch.TOOLKIT"; //$NON-NLS-1$
-
-    /** default value for AUT ID property */
-    public static final String AUT_TOOLKIT_DEFAULT_VALUE = ""; //$NON-NLS-1$
-    
     /**
      * Private constructor to prevent instantiation of "constants" class.
      */
