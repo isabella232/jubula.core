@@ -156,6 +156,10 @@
           move the cursor over components. They will be highlighted
           with a green border (see <xref linkend="greenborders"/>).
         </para>
+        <para role="warning">
+	       Due to technical limitations in the JavaFX-Toolkit it might be that a
+	       component is not highlighted even though you can map it.
+        </para>
       </listitem>
       <listitem>
         <para>
