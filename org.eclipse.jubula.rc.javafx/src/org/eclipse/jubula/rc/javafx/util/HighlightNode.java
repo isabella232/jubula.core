@@ -44,6 +44,11 @@ public class HighlightNode {
      *            the Node
      */
     public static void drawHighlight(Node n) {
+        // If the effect property is bound to another property it is not allowed
+        // to change it.
+        if (n.effectProperty().isBound()) {
+            return;
+        }
         if (n.getEffect() != null) {
             oldEffects.put(n, n.getEffect());
         }
@@ -57,6 +62,9 @@ public class HighlightNode {
      *            the Node
      */
     public static void removeHighlight(Node n) {
+        if (n.effectProperty().isBound()) {
+            return;
+        }
         n.setEffect(oldEffects.remove(n));
     }
 }
