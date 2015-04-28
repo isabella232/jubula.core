@@ -62,6 +62,7 @@
         <antcall target="validateDeveloperManual" />
         <antcall target="validateInstallationManual" />
         <antcall target="validateReleaseNotes" />
+        <antcall target="validateReferenceManual" />
     </target>
 
     <target name="validateUserManual">
