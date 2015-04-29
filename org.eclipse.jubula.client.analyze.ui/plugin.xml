@@ -39,6 +39,10 @@
 <menuContribution
        allPopups="false"
        locationURI="popup:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor?after=additions">
+    <separator
+        name="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor.separatorAnalyze"
+        visible="true">
+    </separator>
     <menu
           label="Analyze">
        <dynamic

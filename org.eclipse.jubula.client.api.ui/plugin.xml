@@ -12,7 +12,7 @@
         <command
           categoryId="org.eclipse.jubula.client.ui.rcp.commands"
           id="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
-          name="Export Object Mapping for use in API" />
+          name="Export Object Mapping to File" />
         <command
           categoryId="org.eclipse.jubula.client.ui.rcp.commands"
           id="org.eclipse.jubula.client.api.ui.commands.CopyIdentifierToClipboardCommand"
@@ -46,22 +46,24 @@
                 name="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor.separatorExport"
                 visible="true">
             </separator>
-            <command
-              commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
-              style="push">
-              <visibleWhen checkEnabled="false">
-                <reference
-                  definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
-              </visibleWhen>
-            </command>
-            <command
-              commandId="org.eclipse.jubula.client.api.ui.commands.CopyIdentifierToClipboardCommand"
-              style="push">
-              <visibleWhen checkEnabled="false">
-                <reference
-                  definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
-              </visibleWhen>
-            </command>
+            <menu label="Use in API...">                  
+                <command
+                  commandId="org.eclipse.jubula.client.api.ui.commands.OMExportMappingCommand"
+                  style="push">
+                  <visibleWhen checkEnabled="false">
+                    <reference
+                      definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+                  </visibleWhen>
+                </command>
+                <command
+                  commandId="org.eclipse.jubula.client.api.ui.commands.CopyIdentifierToClipboardCommand"
+                  style="push">
+                  <visibleWhen checkEnabled="false">
+                    <reference
+                      definitionId="org.eclipse.jubula.client.ui.rcp.expression.isTestPerspectiveActive" />
+                  </visibleWhen>
+                </command>
+            </menu>
         </menuContribution>
     </extension>
     
