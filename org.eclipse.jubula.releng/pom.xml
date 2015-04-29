@@ -90,7 +90,7 @@
               </supportedProjectTypes>
             </configuration>
           </plugin>
-<!--          <plugin>
+          <plugin>
             <groupId>org.eclipse.tycho.extras</groupId>
             <artifactId>tycho-pack200b-plugin</artifactId>
             <version>${tycho-version}</version>
@@ -109,8 +109,8 @@
                 <supportedProjectType>jar</supportedProjectType>
               </supportedProjectTypes>
             </configuration>
-          </plugin> -->
-           <plugin>
+          </plugin>
+          <plugin>
             <groupId>org.eclipse.tycho</groupId>
             <artifactId>tycho-p2-plugin</artifactId>
             <version>${tycho-version}</version>
