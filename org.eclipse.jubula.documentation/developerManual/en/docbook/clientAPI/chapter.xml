@@ -304,8 +304,10 @@
                 </itemizedlist>
             </listitem>
         </orderedlist>
-        <para>You can find the artifacts in different shapes (plain JAR, maven artifact and OSGi bundles) within
-        the <emphasis>ITEInstallationFolder/development/api</emphasis> folder.</para>
+        <para>You can find the artifacts in different shapes (plain JAR and maven artifact) within
+        the <emphasis>&lt;ITEInstallationFolder&gt;/development/api</emphasis> folder. To define OSGi dependencies to the API artifacts
+        you can simply include the <emphasis>&lt;ITEInstallationFolder&gt;/development/org.eclipse.jubula.repo.zip</emphasis> in
+        your target platform (definition).</para>
     </section>
     
     <section>
@@ -320,10 +322,51 @@
         </figure>
         <para>A fully executable example setup for the RCP toolkit showing a basic SimpleAdder AUT start - see <xref linkend="start-aut" /> - 
         and test run - see <xref linkend="test-execution" /> - can be found in the git-Repository contained within every ITE installation. It's located in 
-        <emphasis>ITEInstallationFolder/development/git/org.eclipse.jubula.core.git</emphasis>. Simply create a clone
-        of that repository and checkout the Eclipse project <emphasis>org.eclipse.jubula.examples.api.adder.rcp.m2</emphasis>.
-        You still have to adjust the path to the local maven repository within the pom.xml of that project and point to the
-        one included in the installation: <emphasis>ITEInstallationFolder/development/api/m2-repo</emphasis>.</para>
+        <emphasis>&lt;ITEInstallationFolder&gt;/development/git/org.eclipse.jubula.core.git</emphasis>. Simply create a clone
+        of that repository and checkout the Eclipse projects <emphasis>org.eclipse.jubula.examples.api.adder.rcp.*</emphasis>.
+        There is an individual preconfigured project for all of the three shapes the API may be consumed as:</para>
+        <itemizedlist>
+            <listitem>
+            <para>
+                <emphasis role="strong">plain JAR:</emphasis>
+                The project for this example setup is
+                <emphasis>org.eclipse.jubula.examples.api.adder.rcp.jar
+                </emphasis>
+                . You still have to adjust the path to the (by default linked to
+                relative / local artifacts located within the git-clone itself)
+                library-directory (lib). Simply adjust this path to point to
+                e.g.
+                <emphasis>&lt;ITEInstallationFolder&gt;/development/api/JARs/</emphasis>
+                .
+            </para>
+            </listitem>
+            <listitem>
+            <para>
+                <emphasis role="strong">m2 / maven:</emphasis>
+                The project for this example setup is
+                <emphasis>org.eclipse.jubula.examples.api.adder.rcp.m2
+                </emphasis>
+                . You still have to adjust the path to the local maven
+                repository within the pom.xml of that project and point to the
+                one included in the installation:
+                <emphasis>&lt;ITEInstallationFolder&gt;/development/api/m2-repo
+                </emphasis>
+                .
+            </para>
+            </listitem>
+            <listitem>
+                <para>
+                    <emphasis role="strong">OSGi:</emphasis>
+                    The project for this example setup is
+                    <emphasis>org.eclipse.jubula.examples.api.adder.rcp.osgi
+                    </emphasis>
+                    . You still have to add the (e.g. local) Jubula p2-repository and its
+                    artifacts to your target platform:
+                    <emphasis>&lt;ITEInstallationFolder&gt;/development/org.eclipse.jubula.repo.zip
+                    </emphasis>
+                </para>
+            </listitem>
+        </itemizedlist>
         <figure xml:id="test-execution">
             <title>Exectuing a first test</title>
             <mediaobject>
@@ -332,7 +375,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>However the usage of maven is not mandatory - you can also simply setup a plain Java project using the artifacts as plain JARs on the classpath.</para>
     </section>
-<xi:include href="sectionConverter.xml"/>
+    
+    <xi:include href="sectionConverter.xml"/>
 </chapter>
