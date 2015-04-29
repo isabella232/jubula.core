@@ -24,6 +24,8 @@ import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.adaptable.IPropertyValue;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
@@ -32,6 +34,9 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 public class PropertyUtil {
     /** invalid XML character */
     public static final char[] INVALID_XML_CHARS = { 0 };
+    
+    /** the logger */
+    private static Logger log = LoggerFactory.getLogger(PropertyUtil.class);
     
     /** Constructor */
     private PropertyUtil() {
@@ -106,9 +111,12 @@ public class PropertyUtil {
                     componentProperties.put(propertyName,
                             "This property is not readable"); //$NON-NLS-1$
                 }
-            } catch (IllegalArgumentException e) {
-                componentProperties.put(propertyName,
-                        "Error"); //$NON-NLS-1$
+            } catch (Exception e) {
+                log.warn(
+                        "Property " + propertyName + " of " //$NON-NLS-1$ //$NON-NLS-2$
+                                + currComp.toString()
+                                + " caused an exception while being read.", e); //$NON-NLS-1$
+                componentProperties.put(propertyName, "---Error---"); //$NON-NLS-1$
             }
         }
         return componentProperties;
