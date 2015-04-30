@@ -12,7 +12,167 @@
   <?dbhtml dir="parameters"?>
   <title>Parameters</title>
   
-  <para>
-    Parameters
-  </para>
+  <table>
+  	<title>Parameter Overview</title>
+  	<tgroup cols="4" align="left" colsep="1" rowsep="1">
+  		<thead>
+  			<row>
+  				<entry align="center">Parameter Name</entry>
+  				<entry align="center">Type</entry>
+  				<entry align="center">Possible Values</entry>
+  				<entry align="center">Explication</entry>	
+  			</row>
+  		</thead>
+  		<tfoot>
+  			<row>
+  				<entry align="center">Parameter Name</entry>
+  				<entry align="center">Type</entry>
+  				<entry align="center">Possible Values</entry>
+  				<entry align="center">Explication</entry>	
+  			</row>
+  		</tfoot>
+  		<tbody>
+  			<row>
+  				<entry>ACTIVATE_KEY</entry>
+  				<entry>Boolean</entry>
+  				<entry>true, false</entry>
+  				<entry>Specify whether you want to turn the function on or off</entry>
+  			</row>
+  			<row>
+  				<entry>ACTIVATION_METHOD</entry>
+  				<entry>String</entry>
+  				<entry>AUT_DEFAULT, NONE, TITLEBAR, NW, NE, SW, SE, CENTER</entry>
+  				<entry>Bring the AUT into focus by clicking into it at a certain position.
+  				AUT_DEFAULT uses the method which is set in the AUT configuration</entry>
+  			</row>
+  			<row>
+  				<entry>BASE_KEY</entry>
+  				<entry>String</entry>
+  				<entry></entry>
+  				<entry>Specify which key to press</entry>
+  			</row>
+  			<row>
+  				<entry>COLUMN</entry>
+  				<entry>String</entry>
+  				<entry></entry>
+  				<entry>Specify the column either by entering its index or its title. 
+  				The first column is 1 (and so on). Index 0 refers to the header itself.</entry>
+  			</row>
+  			<row>
+  				<entry>COLUMN_OPERATOR</entry>
+  				<entry>String</entry>
+  				<entry>equals, not equals, matches, simple match</entry>
+  				<entry>The operator you want to use for the selection of the column
+  				when entering the column as a string</entry>
+  			</row>
+  			<row>
+  				<entry>COMMAND</entry>
+  				<entry>String</entry>
+  				<entry></entry>
+  				<entry>Use this parameter to specify which command to execute.</entry>
+  			</row>
+  			<row>
+  				<entry>COMPARISON_METHOD</entry>
+  				<entry>String</entry>
+  				<entry>less than, less or equal than, equal to, greater or equal than, greater than</entry>
+  				<entry>Select the comparison method you want to use to check two values or 
+  				variables.</entry>
+  			</row>
+  			<row>
+  				<entry>CREATE_DIRECTORIES</entry>
+  				<entry>Boolean</entry>
+  				<entry>true, false</entry>
+  				<entry>Determine how an image is saved if the given path does not exist.</entry>
+  			</row>
+  			<row>
+  				<entry>DELAY</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>Use this parameter to insert a delay.</entry>
+  			</row>
+  			<row>
+  				<entry>DELAY_AFTER_CLOSURE</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>Set the amount of time (in milliseconds) to wait once a window 
+  				has closed before continuing.</entry>
+  			</row>
+  			<row>
+  				<entry>DELAY_AFTER_VISIBILITY</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>Set the amount of time (in milliseconds) to wait once a component 
+  				or window has appeared before continuing.</entry>
+  			</row>
+  			<row>
+  				<entry>DELAY_BEFORE_DROP</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>Set the amount of time (in milliseconds) to wait before dropping 
+  				the item you have dragged.</entry>
+  			</row>
+  			<row>
+  				<entry>DESTINATION</entry>
+  				<entry>String</entry>
+  				<entry></entry>
+  				<entry>Define the path and filename of the saved image.</entry>
+  			</row>
+  			<row>
+  				<entry>DIRECTION</entry>
+  				<entry>String</entry>
+  				<entry>up, down, right, left</entry>
+  				<entry>Define the direction you want to move in.</entry>
+  			</row>
+  			<row>
+  				<entry>EXISTS</entry>
+  				<entry>Boolean</entry>
+  				<entry>true, false</entry>
+  				<entry>Set to <emphasis>true</emphasis> if you expect the item/component to exist. 
+  				Otherwise set to <emphasis>false</emphasis></entry>
+  			</row>
+  			<row>
+  				<entry>EXPECTED_BEHAVIOR</entry>
+  				<entry>String</entry>
+  				<entry></entry>
+  				<entry>Describe the expected behavior of an action. This description will
+  				be displayed during execution.</entry>
+  			</row>
+  			<row>
+  				<entry>EXPECTED_EXIT_CODE</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>Define the expected exit code.</entry>
+  			</row>
+  			<row>
+  				<entry>EXTEND_SELECTION</entry>
+  				<entry>String</entry>
+  				<entry>yes, no</entry>
+  				<entry><emphasis>yes</emphasis> will add the chosen item to the current selection, 
+  				<emphasis>no</emphasis>will begin a new selection.</entry>
+  			</row>
+  			<row>
+  				<entry>FILE_ACCESS</entry>
+  				<entry>String</entry>
+  				<entry>rename, overwrite</entry>
+  				<entry>Control how an image is saved if the destination file already exists.</entry>
+  			</row>
+  			<row>
+  				<entry>HAS_FOCUS</entry>
+  				<entry>Boolean</entry>
+  				<entry>true, false</entry>
+  				<entry>Set to <emphasis>true</emphasis> if you expect the component to be in
+  				focus. Otherwise set to <emphasis>false</emphasis>.</entry>
+  			</row>
+  			<row>
+  				<entry>INSERT_AFTER_PATTERN</entry>
+  				<entry>Boolean</entry>
+  				<entry>true, false</entry>
+  				<entry><emphasis>true</emphasis> inserts the text after the 
+  				the pattern, <emphasis>false</emphasis> inserts the text before the
+  				pattern</entry>
+  			</row>
+  			
+  		</tbody>
+  	</tgroup>
+  </table>
 </chapter>

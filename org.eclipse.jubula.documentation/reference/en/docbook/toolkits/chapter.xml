@@ -12,7 +12,91 @@
   <?dbhtml dir="toolkits"?>
   <title>Toolkits</title>
   
-  <para>
-    Toolkits
-  </para>
+  <section>
+    <title>Abstract Toolkit</title>
+  	<para>
+  		The abstract toolkit contains component types which are available on all toolkits
+  		supported, and which have been specially adapted to be able to test various different
+  		components which share a set of values. These components are the 
+  		<emphasis>abstract components</emphasis>
+  		available to make Test Steps more general. 
+  	</para>
+  </section>
+  <section>
+  	<title>Concrete Toolkit</title>
+    <para>
+  		The concrete toolkit contains components and actions which are available in all other
+  		supported toolkits. An action from the concrete toolkit can therefore be used in a test 
+  		for Swing, SWT, JavaFX, iOS and HTML applications. 
+  	</para>
+  </section>
+  <section>
+  	<title>GEF Toolkit</title>
+    <para>
+  		The GEF toolkit can be used to test components whithin a figure canvas in RCP applications.
+  		You must set the toolkit to 
+  		<emphasis>RCP</emphasis> 
+  		in the Project properties to be able to use the GEF actions. 
+  	</para>
+  </section>
+  <section>
+  	<title>HTML Toolkit</title>
+    <para>
+  		The HTML toolkit contains components that are specific to HTML applications. You will only 
+  		have access to these components in your tests if you select HTML as your AUT Toolkit.
+  	</para>
+  	<para>
+  		<emphasis role="strong">Unsupported components and actions in the web toolkit:</emphasis>
+  	</para>
+  	<para>
+  		Some components are not supported in web applications because they are either not present 
+  		or not meaningful in web applications. The unsupported components are:
+  			<itemizedlist>
+  				<listitem>Menus</listitem>
+  				<listitem>Tabbed panes</listitem>
+  				<listitem>Trees</listitem>
+  			</itemizedlist>
+  	</para>
+  </section>
+  <section>
+  	<title>iOS Toolkit</title>
+  	<para>
+  		The iOS toolkit contains components which are specific to iOS applications. You will only 
+  		have access to these components in your tests if you select iOS as your AUT Toolkit.
+  	</para>
+  </section>
+  <section>
+  	<title>JavaFX Toolkit</title>
+  	<para>
+  		The JavaFX toolkit contains components which are specific to JavaFX applications. You will 
+  		only have access to these components in your tests if you select JavaFX as your AUT Toolkit.
+  	</para>
+  </section>
+  <section>
+  	<title>RCP Toolkit</title>
+  	<para>
+  		The RCP toolkit contains components that are only found in SWT applications. You will
+  		only have access to these components in your tests if you choose RCP or SWT as the project
+  		toolkit. 
+  	</para>
+  	<para>
+  		Most of the RCP components are covered in the section on SWT. Components in GEF AUT´s are 
+  		are described in the section on GEF.
+  	</para>
+  </section>
+  <section>
+  	<title>Swing Toolkit</title>
+  	<para>
+  		The Swing toolkit contains components that can be used on Swing applications. All the Swing 
+  		components are also concrete components and can be found in the section on concrete 
+  		components.
+  	</para>
+  </section>
+  <section>
+  	<title>SWT Toolkit</title>
+  	<para>
+  		The SWT toolkit contains components specific to SWT applications. You will only have access 
+  		to these components if you select SWT as the toolkit for your AUT.
+  	</para>
+  </section>
 </chapter>
