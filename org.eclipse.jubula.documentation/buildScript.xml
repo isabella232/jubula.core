@@ -339,8 +339,8 @@
         <delete file="toc.xml"/>
         <delete dir="${html.path}/en"/>
         
-        <move todir="${build.path}/html" >
-            <fileset dir="html"/>
+        <move todir="${build.path}/content/html" >
+            <fileset dir="content/html"/>
         </move>
     </target>
     
