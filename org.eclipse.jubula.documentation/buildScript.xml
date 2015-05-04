@@ -142,6 +142,7 @@
                                                echoEnvInfo,
                                                buildInstallationManual,
                                                buildUserManual,
+                                               buildReferenceManual,
                                                buildDeveloperManual,
                                                buildReleaseNotes">
     </target>
