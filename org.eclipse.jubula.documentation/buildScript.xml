@@ -166,6 +166,7 @@
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="UserManual"/>
             <property name="dir" value="userManual"/>
+            <property name="chunk.depth" value="2"/>
         </ant>
     </target>
     
@@ -173,6 +174,7 @@
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="DeveloperManual"/>
             <property name="dir" value="developerManual"/>
+            <property name="chunk.depth" value="2"/>
         </ant>
     </target>
     
@@ -185,9 +187,10 @@
     </target>
     
     <target name="buildReferenceManual" unless="${notSuited}">
-        <ant antfile="buildScript.xml" target="buildReferenceManualChunkedHTML" inheritall="false">
+        <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="ReferenceManual"/>
             <property name="dir" value="reference"/>
+        	<property name="chunk.depth" value="5"/>
         </ant>
     </target>
     
@@ -249,7 +252,7 @@
             </fileset>
         </copy>
         
-        <xsltproc chunk.section.depth="2"/>
+        <xsltproc chunk.section.depth="${chunk.depth}"/>
         
         <loadfile property="output.log.msg" srcFile="output.log"/>
         <echo message="${output.log.msg}"/>
@@ -262,6 +265,7 @@
         <delete dir="${html.path}/en"/>
         
         <antcall target="moveGeneratedFiles"/>
+        <antcall target="checkImages"/>
     </target>
 
     <target name="buildHTML" if="standalone" unless="releaseNotes" depends="checkParam, buildHtmlImageLister">
@@ -316,32 +320,6 @@
         <antcall target="checkImages"/>
         
         <antcall target="moveGeneratedFilesStandalone"/>
-    </target>
-    
-    <target name="buildReferenceManualChunkedHTML" unless="standalone" depends="checkParam">
-        <antcall target="makeDir"/>
-        
-        <copy todir="${html.path}/images">
-            <fileset dir="${dir}/en/docbook/images">
-                <include name="*.jpg" />
-                <include name="*.png" />
-            </fileset>
-        </copy>
-        
-        <xsltproc chunk.section.depth="5"/>
-        
-        <antcall target="checkForErrors"/>
-        
-        <delete file="${html.path}/index.xml"/>
-        <delete file="plugin.xml"/>
-        <delete file="target.db"/>
-        <delete file="contexts.xml"/>
-        <delete file="toc.xml"/>
-        <delete dir="${html.path}/en"/>
-        
-        <move todir="${build.path}/content/html" >
-            <fileset dir="content/html"/>
-        </move>
     </target>
     
     <target name="buildReferenceManualHTML" depends="checkParam">
@@ -456,8 +434,6 @@
         <copy todir="${client.ua.help.path}/${html.path}">
             <fileset dir="${build.path}/${html.path}"/>
         </copy>
-        
-        <antcall target="checkImages"/>
     </target>
     
     <target name="moveGeneratedFilesStandalone">
