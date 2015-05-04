@@ -37,7 +37,17 @@
     </target>
 
     <target name="compile" depends="default, init">
-        <javac fork="true" executable="${java8.jdk.home}/bin/javac" includeantruntime="false" srcdir="${source.dir}" destdir="${out.dir}/classes" classpathref="classpath" source="1.8" target="1.8" />
+        <javac 
+            fork="true" 
+            executable="${java8.jdk.home}/bin/javac" 
+            includeantruntime="false" 
+            srcdir="${source.dir}" 
+            destdir="${out.dir}/classes" 
+            classpathref="classpath" 
+            source="1.8" 
+            target="1.8" 
+            debug="true"
+        />
     </target>
 
     <target name="build" depends="compile">

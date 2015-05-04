@@ -52,7 +52,6 @@
 	<!-- main class -->
 	<property name="mainClass" value="org.eclipse.jubula.examples.aut.adder.swt.SimpleAdderSWT"/>
 	<property name="javac" value="javac"/>
-	<property name="javac.debug" value="on"/>
 
 	<!-- 
 		Targets
@@ -83,7 +82,7 @@
 		<javac 
 		    srcdir="${src}" 
 		    destdir="${classes}" 
-		    debug="${javac.debug}" 
+		    debug="true" 
 		    fork="true" 
             includeantruntime="false"
 		    executable="${javac}">
