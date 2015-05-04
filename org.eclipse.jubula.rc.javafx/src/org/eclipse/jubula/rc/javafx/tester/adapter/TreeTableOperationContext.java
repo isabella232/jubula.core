@@ -16,8 +16,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 
@@ -47,7 +49,7 @@ public class TreeTableOperationContext extends
     private static AutServerLogger log = new AutServerLogger(
             TreeTableOperationContext.class);
     
-    /** The column **/
+    /** The column on which to perform the operation **/
     private int m_column = 0;
     
     /**
@@ -115,7 +117,21 @@ public class TreeTableOperationContext extends
     @Override
     public String getRenderedText(final Object node)
         throws StepExecutionException {
-        return getRenderedTextFromCell(node, 0);
+        int indexOfTreeColumn = getIndexOfTreeColumn();
+        return getRenderedTextFromCell(node, indexOfTreeColumn);
+    }
+
+    /**
+     * @return the index of the column containing the tree
+     */
+    private int getIndexOfTreeColumn() {
+        ObservableList<?> columns = getTree().getColumns();
+        TreeTableColumn<?, ?> treeColumn = getTree().getTreeColumn();
+        int indexOfColumnContainingTree = 0;
+        if (columns.contains(treeColumn)) {
+            indexOfColumnContainingTree = columns.indexOf(treeColumn);
+        }
+        return indexOfColumnContainingTree;
     }
     
     /**
