@@ -20,7 +20,7 @@
   				<entry align="center">Parameter Name</entry>
   				<entry align="center">Type</entry>
   				<entry align="center">Possible Values</entry>
-  				<entry align="center">Explication</entry>	
+  				<entry align="center">Explanation</entry>	
   			</row>
   		</thead>
   		<tfoot>
@@ -28,20 +28,32 @@
   				<entry align="center">Parameter Name</entry>
   				<entry align="center">Type</entry>
   				<entry align="center">Possible Values</entry>
-  				<entry align="center">Explication</entry>	
+  				<entry align="center">Explanation</entry>	
   			</row>
   		</tfoot>
   		<tbody>
   			<row>
   				<entry>ACTIVATE_KEY</entry>
   				<entry>Boolean</entry>
-  				<entry>true, false</entry>
+  				<entry>	
+  					<para>true</para>
+  					<para>false</para> 
+  				</entry>
   				<entry>Specify whether you want to turn the function on or off</entry>
   			</row>
   			<row>
   				<entry>ACTIVATION_METHOD</entry>
   				<entry>String</entry>
-  				<entry>AUT_DEFAULT, NONE, TITLEBAR, NW, NE, SW, SE, CENTER</entry>
+  				<entry>
+  					<para>AUT_DEFAULT</para>
+  					<para>NONE</para>
+  					<para>TITLEBAR</para>
+  					<para>NW</para>
+  					<para>NE</para>
+  					<para>SW</para>
+  					<para>SE</para>
+  					<para>CENTER</para>
+  				</entry>
   				<entry>Bring the AUT into focus by clicking into it at a certain position.
   				AUT_DEFAULT uses the method which is set in the AUT configuration</entry>
   			</row>
@@ -61,7 +73,12 @@
   			<row>
   				<entry>COLUMN_OPERATOR</entry>
   				<entry>String</entry>
-  				<entry>equals, not equals, matches, simple match</entry>
+  				<entry>
+  					<para>equals</para>
+  					<para>not equals</para>
+  					<para>matches</para>
+  					<para>simple match</para>
+  				</entry>
   				<entry>The operator you want to use for the selection of the column
   				when entering the column as a string</entry>
   			</row>
@@ -74,14 +91,23 @@
   			<row>
   				<entry>COMPARISON_METHOD</entry>
   				<entry>String</entry>
-  				<entry>less than, less or equal than, equal to, greater or equal than, greater than</entry>
+  				<entry>
+  					<para>less than</para>
+  					<para>less or equal than</para>
+  					<para>equal to</para>
+  					<para>greater or equal than</para>
+  					<para>greater than</para>
+  				</entry>
   				<entry>Select the comparison method you want to use to check two values or 
   				variables.</entry>
   			</row>
   			<row>
   				<entry>CREATE_DIRECTORIES</entry>
   				<entry>Boolean</entry>
-  				<entry>true, false</entry>
+  				<entry>
+  					<para>true</para>
+  					<para>false</para>
+  				</entry>
   				<entry>Determine how an image is saved if the given path does not exist.</entry>
   			</row>
   			<row>
@@ -120,13 +146,21 @@
   			<row>
   				<entry>DIRECTION</entry>
   				<entry>String</entry>
-  				<entry>up, down, right, left</entry>
+  				<entry>
+  					<para>up</para>
+  					<para>down</para>
+  					<para>right</para>
+  					<para>left</para>
+  				</entry>
   				<entry>Define the direction you want to move in.</entry>
   			</row>
   			<row>
   				<entry>EXISTS</entry>
   				<entry>Boolean</entry>
-  				<entry>true, false</entry>
+  				<entry>
+  					<para>true</para>
+  					<para>false</para>
+				</entry>
   				<entry>Set to <emphasis>true</emphasis> if you expect the item/component to exist. 
   				Otherwise set to <emphasis>false</emphasis></entry>
   			</row>
@@ -146,30 +180,197 @@
   			<row>
   				<entry>EXTEND_SELECTION</entry>
   				<entry>String</entry>
-  				<entry>yes, no</entry>
+  				<entry>
+  					<para>yes</para>
+  					<para>no</para>
+  				</entry>
   				<entry><emphasis>yes</emphasis> will add the chosen item to the current selection, 
   				<emphasis>no</emphasis>will begin a new selection.</entry>
   			</row>
   			<row>
   				<entry>FILE_ACCESS</entry>
   				<entry>String</entry>
-  				<entry>rename, overwrite</entry>
+  				<entry>
+  					<para>rename</para>
+  					<para>overwrite</para>
+  				</entry>
   				<entry>Control how an image is saved if the destination file already exists.</entry>
   			</row>
   			<row>
   				<entry>HAS_FOCUS</entry>
   				<entry>Boolean</entry>
-  				<entry>true, false</entry>
+  				<entry>
+  					<para>true</para>
+  					<para>false</para>
+  				</entry>
   				<entry>Set to <emphasis>true</emphasis> if you expect the component to be in
   				focus. Otherwise set to <emphasis>false</emphasis>.</entry>
   			</row>
   			<row>
+  				<entry>IDENTIFIER</entry>
+  				<entry>String</entry>
+  				<entry></entry>
+  				<entry>The identifier (title, name, variable) of the window you want to
+  				switch to in your test.</entry>
+  			</row>
+  			<row>
+  				<entry>IDENTIFIER_TYPE</entry>
+  				<entry>String</entry>
+  				<entry>
+  					<para>title</para>
+  					<para>name</para>
+  					<para>any</para>
+  				</entry>
+  				<entry>
+  					<para>The type of identifier you want to use.</para>
+  					<itemizedlist>
+  						<listitem>
+  							title: The window title that you can see at	the top of the window. 
+  							This action only supports <emphasis>equals</emphasis> as a matching 
+  							operator.
+  						</listitem>
+  						<listitem>
+  							name: The internal javascript name for the window.
+  						</listitem>
+  						<listitem>
+  							any: Use this option to be able to enter a
+  							javascript variable for the window. You must enter the variable name and value 
+  							as described at:
+  							<para>http://selenium.googlecode.com/svn/trunk/docs/api/java/com/thoughtworks/selenium/Selenium.html#selectWindow%28java.lang.String%29</para>
+  						</listitem>
+  					</itemizedlist>
+  					
+  					
+  					<para></para>
+  					<para><emphasis>
+  					</emphasis></para>
+  				</entry>
+  			</row>
+  			<row>
   				<entry>INSERT_AFTER_PATTERN</entry>
   				<entry>Boolean</entry>
-  				<entry>true, false</entry>
+  				<entry>
+  					<para>true</para>
+  					<para>false</para>
+  				</entry>
   				<entry><emphasis>true</emphasis> inserts the text after the 
   				the pattern, <emphasis>false</emphasis> inserts the text before the
   				pattern</entry>
+  			</row>
+  			<row>
+  				<entry>INDEX</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>The index of the item you want to check. If you want to check the first
+  				item enter <emphasis>1</emphasis>, if you want to check the fifth item enter
+  				<emphasis>5</emphasis></entry>
+  			</row>
+  			<row>
+  				<entry>INDEXPATH</entry>
+  				<entry>String</entry>
+  				<entry></entry>
+  				<entry>The path to an item as an indexpath. Use slash '/' as an separator to
+  				separate e.g. parent nodes from child nodes.</entry>
+  			</row>
+  			<row>
+  				<entry>KEY</entry>
+  				<entry>Integer</entry>
+  				<entry>
+  					<para>1</para>
+  					<para>2</para>
+  					<para>3</para>
+  				</entry>
+  				<entry>
+  					<para>Specify which key you want to (de-)activate</para>
+  					<itemizedlist>
+  						<listitem>1 = Num-lock</listitem>
+  						<listitem>2 = Caps-lock</listitem>
+  						<listitem>3 = Scroll-lock</listitem>
+  					</itemizedlist>
+  				</entry>
+  			</row>
+  			<row>
+  				<entry>LOCAL</entry>
+  				<entry>Boolean</entry>
+  				<entry>
+  					<para>true</para>
+  					<para>false</para>
+  				</entry>
+  				<entry>Define whether a command should be run locally on the same machine as the
+  				ITE <emphasis>(true)</emphasis> or remotely on the machine where the AUT Agent is
+  				installed and the AUT is running <emphasis>(false).</emphasis> </entry>
+  			</row>
+  			<row>
+  				<entry>MARGIN_BOTTOM</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>The amount of pixels you wish to include in the screenshot at the bottom
+  				of the dialog. You can enter positive and negative values. Enter 0 to neither
+  				extend nor reduce the margin.</entry>
+  			</row>
+  			<row>
+  				<entry>MARGIN_LEFT</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>The amount of pixels you wish to include in the screenshot to the left
+  				of the dialog. You can enter positive and negative values. Enter 0 to neither
+  				extend nor reduce the margin.</entry>
+  			</row>
+  			<row>
+  				<entry>MARGIN_RIGHT</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>The amount of pixels you wish to include in the screenshot to the right
+  				of the dialog. You can enter positive and negative values. Enter 0 to neither
+  				extend nor reduce the margin.</entry>
+  			</row>
+  			<row>
+  				<entry>MARGIN_TOP</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>The amount of pixels you wish to include in the screenshot above the top
+  				of the dialog. You can enter positive and negative values. Enter 0 to neither
+  				extend nor reduce the margin.</entry>
+  			</row>
+  			<row>
+  				<entry>MODIFIER_KEYS</entry>
+  				<entry>String</entry>
+  				<entry>
+  					<para>none</para>
+  					<para>shift</para>
+  					<para>control</para>
+  					<para>alt</para>
+  					<para>meta</para>
+  					<para>cmd</para>
+  					<para>mod</para>
+  				</entry>
+  				<entry>Specify a key or keys to be pressed at the same time as the action
+  				is being executed. <emphasis>mod</emphasis> is the platform-independent
+  				first modifier (<emphasis>control</emphasis> on Win and Lin, <emphasis>cmd</emphasis>
+  				on Mac).</entry>
+  			</row>
+  			<row>
+  				<entry>MOUSE_BUTTON</entry>
+  				<entry>Integer</entry>
+  				<entry>
+  					<para>1</para>
+  					<para>2</para>
+  					<para>3</para>
+  				</entry>
+  				<entry>
+  					<para>Select which mouse button you want to click with.</para>
+  					<itemizedlist>
+  						<listitem>1 = left mouse button</listitem>
+  						<listitem>2 = middle mouse button</listitem>
+  						<listitem>3 = right mouse button</listitem>
+  					</itemizedlist>
+  				</entry>
+  			</row>
+  			<row>
+  				<entry>MILLISECS</entry>
+  				<entry>Integer</entry>
+  				<entry></entry>
+  				<entry>The amount of time in Milliseconds.</entry>
   			</row>
   			
   		</tbody>
