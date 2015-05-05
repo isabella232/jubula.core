@@ -1,0 +1,110 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="base_key" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  	<title>Base Key</title>
+  
+  	<table>
+  		<title>BASE_KEY</title>
+  		<tgroup cols="4" align="left" colsep="1" rowsep="1">
+  			<thead>
+  				<row>
+  					<entry align="center">Parameter Name</entry>
+  					<entry align="center">Data Type</entry>
+  					<entry align="center">Possible Values</entry>
+  					<entry align="center">Default</entry>	
+  				</row>
+  			</thead>
+  			<tbody>
+  				<row>
+  					<entry>BASE_KEY</entry>
+  					<entry>String</entry>
+  					<entry></entry>
+  					<entry>none</entry>
+  				</row>
+  			</tbody>
+  		</tgroup>
+  	</table>
+  	<itemizedlist>
+  		<listitem>Use this parameter to specify which key to "press".</listitem>
+  		<listitem>The various keys have different codes.</listitem>
+  		<listitem>The most important key codes are:</listitem>
+  	</itemizedlist>
+  	<table>
+  		<title>Key codes</title>
+  		<tgroup cols="2" align="left" colsep="1" rowsep="1">
+  			<thead>
+  				<row>
+  					<entry align="center">value(s)</entry>
+  					<entry align="center">description</entry>
+  				</row>
+  			</thead>
+  			<tbody>
+  				<row>
+  					<entry>0...9</entry>
+  					<entry>Top row keys from 0 to 9</entry>
+  				</row>
+  				<row>
+  					<entry>A...Z</entry>
+  					<entry>Letters A to Z. For capital letters use "Shift as modifier key.</entry>
+  				</row>
+  				<row>
+  					<entry>ENTER</entry>
+  					<entry>Enter or Return key</entry>
+  				</row>
+  				<row>
+  					<entry>SPACE</entry>
+  					<entry>The Spacebar</entry>
+  				</row>
+  				<row>
+  					<entry>TAB</entry>
+  					<entry>The Tab key</entry>
+  				</row>
+  				<row>
+  					<entry>ESCAPE</entry>
+  					<entry>The Escape key</entry>
+  				</row>
+  				<row>
+  					<entry>BACK_SPACE</entry>
+  					<entry>The Backspace key</entry>
+  				</row>
+  				<row>
+  					<entry>F1...F12</entry>
+  					<entry>The function keys</entry>
+  				</row>
+  				<row>
+  					<entry>HOME, END</entry>
+  					<entry>The Home and End keys (not the number pad keys)</entry>
+  				</row>
+  				<row>
+  					<entry>INSERT, DELETE</entry>
+  					<entry>The Insertion and Deletion keys (not the number pad keys)</entry>
+  				</row>
+  				<row>
+  					<entry>PAGE_UP, PAGE_DOWN</entry>
+  					<entry>The Page up and Page down keys (not the number pad keys)</entry>
+  				</row>
+  				<row>
+  					<entry>UP, DOWN</entry>
+  					<entry>The Up and Down arrow keys (not the number pad keys)</entry>
+  				</row>
+  				<row>
+  					<entry>LEFT, RIGHT</entry>
+  					<entry>The Left and Right arrow keys (not the number pad keys)</entry>
+  				</row>
+  				<row>
+  					<entry>NUMPAD0...NUMPAD9</entry>
+  					<entry>The number pad keys</entry>
+  				</row>
+  			</tbody>
+  		</tgroup>
+  	</table>
+  
+</section>

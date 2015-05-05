@@ -1,0 +1,61 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="command" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  	<title>Command</title>
+  
+  	<table>
+  		<title>COMMAND</title>
+  		<tgroup cols="4" align="left" colsep="1" rowsep="1">
+  			<thead>
+  				<row>
+  					<entry align="center">Parameter Name</entry>
+  					<entry align="center">Data Type</entry>
+  					<entry align="center">Possible Values</entry>
+  					<entry align="center">Default</entry>	
+  				</row>
+  			</thead>
+  			<tbody>
+  				<row>
+  					<entry>COMMAND</entry>
+  					<entry>String</entry>
+  					<entry></entry>
+  					<entry>none</entry>
+  				</row>
+  			</tbody>
+  		</tgroup>
+  	</table>
+  	<itemizedlist>
+  		<listitem>Use this parameter to specify which command to execute.</listitem>
+  		<listitem>Give the path to the command, either on the local machine or on the remote machine
+  		, as define in the <emphasize>local</emphasize> parameter</listitem>
+  		<listitem>Relative paths can be written simply with the white spaces included. You will need
+  		to use quotes (") around the path or command if you are using path fragments (e.g ./ or ../)
+  		for the relative path.</listitem>
+  		<listitem>When using absolute paths, use quotes (") around the command or parameter containing
+  		the white spaces.</listitem>
+  		<listitem>You need to use quotes for path fragments as for example, instead of
+  			<para>
+  				C:\Program Files\MyProgram\example.exe -data C:\Program Files\MyProgram\ws
+  			</para>
+  			<para>
+  				enter:
+  			</para>
+  			<para>
+  				"C:\Program Files\MyProgram\example.exe" -data "C:\Program Files\MyProgram\ws"
+  			</para>
+  		</listitem>
+  		<listitem>In Linux, quotes may be placed around the command and the parameter. Windows cmd.exe
+  		can only accept quotes in either the parameter or the command.</listitem>
+  		<listitem>Please bear in mind that strings within quotes are not checked for validity.</listitem>
+  	</itemizedlist>
+  
+  
+</section>

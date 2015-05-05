@@ -1,0 +1,48 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="extend_selection" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  	<title>Expected exit code</title>
+  
+  	<table>
+  		<title>EXTEND_SELECTION</title>
+  		<tgroup cols="4" align="left" colsep="1" rowsep="1">
+  			<thead>
+  				<row>
+  					<entry align="center">Parameter Name</entry>
+  					<entry align="center">Data Type</entry>
+  					<entry align="center">Possible Values</entry>
+  					<entry align="center">Default</entry>	
+  				</row>
+  			</thead>
+  			<tbody>
+  				<row>
+  					<entry>EXTEND_SELECTION</entry>
+  					<entry>String</entry>
+  					<entry>
+  						<itemizedlist>
+  							<listitem>yes</listitem>
+  							<listitem>no</listitem>
+  						</itemizedlist>
+  					</entry>
+  					<entry>0</entry>
+  				</row>
+  			</tbody>
+  		</tgroup>
+  	</table>
+  	<itemizedlist>
+  		<listitem>The <emphasis>Extend Selection</emphasis> parameter has two possible values:</listitem>
+  		<listitem><emphasis>yes</emphasis> indicates the chosen item will be added to the current
+  		selection.</listitem>
+  		<listitem>Select <emphasis>no</emphasis> to begin a new selection with the chosen item.</listitem>
+  	</itemizedlist>
+  
+  
+</section>

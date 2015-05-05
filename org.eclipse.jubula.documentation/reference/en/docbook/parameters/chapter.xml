@@ -155,6 +155,30 @@
   				<entry>Define the direction you want to move in.</entry>
   			</row>
   			<row>
+  				<entry>EDITABLE</entry>
+  				<entry>Boolean</entry>
+  				<entry>
+  					<itemizedlist>
+  						<listitem>true</listitem>
+  						<listitem>false</listitem>
+  					</itemizedlist>
+  				</entry>
+  				<entry>Set the parameter to <emphasis>true</emphasis> if you expect the component to 
+  				be editable. Otherwise select <emphasis>false</emphasis>.</entry>
+  			</row>
+  			<row>
+  				<entry>ENABLED</entry>
+  				<entry>Boolean</entry>
+  				<entry>
+  					<itemizedlist>
+  						<listitem>true</listitem>
+  						<listitem>false</listitem>
+  					</itemizedlist>
+  				</entry>
+  				<entry>Set the parameter to <emphasis>true</emphasis> if you expect the component to 
+  				be enabled. Otherwise select <emphasis>false</emphasis>.</entry>
+  			</row>
+  			<row>
   				<entry>EXISTS</entry>
   				<entry>Boolean</entry>
   				<entry>
