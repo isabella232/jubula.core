@@ -12,7 +12,6 @@
 	<classpathentry kind="lib" path="lib/javax.xml.stream.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.commons.codec.jar"/>
 	<classpathentry kind="lib" path="lib/org.apache.commons.lang.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.jdt.annotation.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.client.api.converter.annotations.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.client.api.commands.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.jubula.client.api.jar"/>
