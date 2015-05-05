@@ -16,6 +16,7 @@
     
     <macrodef name="xsltproc">
         <attribute name="chunk.section.depth"/>
+        <attribute name="generate.section.toc.level"/>
         <sequential>
             <exec executable="xsltproc" failonerror="true">
                 <arg value="--xinclude"/>
@@ -57,7 +58,7 @@
                     <arg value="3"/>
                 <arg value="--stringparam"/>
                     <arg value="generate.section.toc.level"/>
-                    <arg value="1"/>
+                    <arg value="@{generate.section.toc.level}"/>
                 <arg value="--stringparam"/>
                     <arg value="collect.xref.targets"/>
                     <arg value="yes"/>
@@ -168,6 +169,7 @@
             <property name="name" value="UserManual"/>
             <property name="dir" value="userManual"/>
             <property name="chunk.depth" value="2"/>
+            <property name="toc.level" value="1"/>
         </ant>
     </target>
     
@@ -176,6 +178,7 @@
             <property name="name" value="DeveloperManual"/>
             <property name="dir" value="developerManual"/>
             <property name="chunk.depth" value="2"/>
+            <property name="toc.level" value="1"/>
         </ant>
     </target>
     
@@ -191,7 +194,8 @@
         <ant antfile="buildScript.xml" target="buildOnlineHelp" inheritall="false">
             <property name="name" value="ReferenceManual"/>
             <property name="dir" value="reference"/>
-        	<property name="chunk.depth" value="5"/>
+            <property name="chunk.depth" value="5"/>
+            <property name="toc.level" value="3"/>
         </ant>
     </target>
     
@@ -253,7 +257,7 @@
             </fileset>
         </copy>
         
-        <xsltproc chunk.section.depth="${chunk.depth}"/>
+        <xsltproc chunk.section.depth="${chunk.depth}" generate.section.toc.level="${toc.level}"/>
         
         <loadfile property="output.log.msg" srcFile="output.log"/>
         <echo message="${output.log.msg}"/>
