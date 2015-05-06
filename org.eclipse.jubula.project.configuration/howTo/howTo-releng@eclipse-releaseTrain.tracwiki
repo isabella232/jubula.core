@@ -2,16 +2,16 @@
 == General information ==
 We build on an hourly base triggered whenever necessary (by an SCM change) on http://hudson.eclipse.org using Maven3
 
- * [https://hudson.eclipse.org/hudson/job/jubula-nightly/ Jubula Hudson - nightly]
+ * [https://hudson.eclipse.org/jubula/job/jubula-nightly/ Jubula Hudson - nightly]
  * '''only ''' this job (e.g. no maintenance jobs) must publish its artifacts to "http://download.eclipse.org/jubula/development" - this p2-repository is used within our target-definitions of the ITE standalone version
 
 In addition to this there are - for each individual release train version - the following targets available: 
- * [https://hudson.eclipse.org/hudson/job/jubula-helios/ Jubula Hudson - 3.6 - helios]
- * [https://hudson.eclipse.org/hudson/job/jubula-indigo/ Jubula Hudson - 3.7 - indigo]
- * [https://hudson.eclipse.org/hudson/job/jubula-juno/ Jubula Hudson - 4.2 - juno]
- * [https://hudson.eclipse.org/hudson/job/jubula-kepler/ Jubula Hudson - 4.3 - kepler]
- * [https://hudson.eclipse.org/hudson/job/jubula-luna/ Jubula Hudson - 4.4 - luna]
- * [https://hudson.eclipse.org/hudson/job/jubula-mars/ Jubula Hudson - 4.5 - mars]
+ * [https://hudson.eclipse.org/jubula/job/jubula-helios/ Jubula Hudson - 3.6 - helios]
+ * [https://hudson.eclipse.org/jubula/job/jubula-indigo/ Jubula Hudson - 3.7 - indigo]
+ * [https://hudson.eclipse.org/jubula/job/jubula-juno/ Jubula Hudson - 4.2 - juno]
+ * [https://hudson.eclipse.org/jubula/job/jubula-kepler/ Jubula Hudson - 4.3 - kepler]
+ * [https://hudson.eclipse.org/jubula/job/jubula-luna/ Jubula Hudson - 4.4 - luna]
+ * [https://hudson.eclipse.org/jubula/job/jubula-mars/ Jubula Hudson - 4.5 - mars]
 
 To get a new CI job simply "reopen" the following bug providing all necessary information: http://eclip.se/334525
 
@@ -22,6 +22,8 @@ The general aggregation process can be easily tracked here (e.g. job name = "<cu
 Signed artifacts can only be created within the  Eclipse common build infrastructure - its being activated (the maven profile) by a set environment option "'''-Dbuild.env=eclipse.org'''" for the mvn3 invoke of the CI job
 
 == Useful commands / scripts ==
+ * Download from Jubula's hudson instance
+   * `wget "http://download.eclipse.org/jubula/nightly/org.eclipse.jubula.repo-3.1.0-SNAPSHOT.zip"`
  * Log into build.eclipse.org
    * `ssh <commiterId>@build.eclipse.org`
  * Log into dev.eclipse.org - only restricted-shell available
