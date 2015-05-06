@@ -1,0 +1,54 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="mouse_button" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  	<title>Mouse Button</title>
+  
+  	<table>
+  		<title>MOUSE_BUTTON</title>
+  		<tgroup cols="4" align="left" colsep="1" rowsep="1">
+  			<thead>
+  				<row>
+  					<entry align="center">Parameter Name</entry>
+  					<entry align="center">Data Type</entry>
+  					<entry align="center">Possible Values</entry>
+  					<entry align="center">Default</entry>	
+  				</row>
+  			</thead>
+  			<tbody>
+  				<row>
+  					<entry>MOUSE_BUTTON</entry>
+  					<entry>Integer</entry>
+  					<entry>
+  						<itemizedlist>
+  							<listitem>1</listitem>
+  							<listitem>2</listitem>
+  							<listitem>3</listitem>
+  						</itemizedlist>
+  					</entry>
+  					<entry>1</entry>
+  				</row>
+  			</tbody>
+  		</tgroup>
+  	</table>
+  	<itemizedlist>
+  		<listitem>Use this parameter to select which mouse button you want to click with:
+  			<itemizedlist>
+  				<listitem>1 = left mouse button</listitem>
+  				<listitem>2 = middle mouse button</listitem>
+  				<listitem>3 = right mouse button</listitem>
+  			</itemizedlist>
+  		</listitem>
+  		<listitem>The mouse button you use to click with can also have an effect on what happens</listitem>
+  		<listitem>The button to click will depend on your AUT and what the click should achieve.</listitem>
+  	</itemizedlist>
+  
+  
+</section>
