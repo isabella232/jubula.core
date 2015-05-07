@@ -47,5 +47,23 @@
         you can copy a unique selector (CSS Locator) for an item. 
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              	<para>
+                	<xref linkend="timeout_in_millisecs"/>
+              	</para>
+            </listitem>
+            <listitem>
+            	<para>
+            		<xref linkend="delay_after_visibility"/>	
+            	</para>
+            </listitem>
+       	 </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
 </section>
