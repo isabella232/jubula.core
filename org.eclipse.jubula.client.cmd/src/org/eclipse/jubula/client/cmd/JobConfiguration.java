@@ -89,8 +89,6 @@ public class JobConfiguration {
     private String m_dbpw;
     /** configuration detail */
     private String m_server;
-    /** port of the server */
-    private String m_serverport;
     /** configuration detail */
     private String m_resultDir;
     /** configuration detail */
@@ -270,13 +268,6 @@ public class JobConfiguration {
         return m_port;
     }
     
-    /**
-     * @return String
-     */
-    public String getServerPort() {
-        return m_serverport;
-    }
-
     /**
      * @return String
      */
@@ -507,80 +498,6 @@ public class JobConfiguration {
     }
     
     /**
-     * parses the command line parameter when the parameter startserver was set
-     * set the parsed parameter into a job object
-     * @param cmd CommandLine
-     */
-    public void parseOptionsWithServer(CommandLine cmd) {
-        // set default base path as platform's working directory
-        String defaultBasePath = getDefaultDataDirPath();
-        parseDBOptions(cmd);
-        if (cmd.hasOption(ClientTestStrings.STARTSERVER)) {
-            setServerPort(cmd.getOptionValue(ClientTestStrings.STARTSERVER));
-        }
-        if (cmd.hasOption(ClientTestStrings.PROJECT)) { 
-            setProjectName(cmd.getOptionValue(ClientTestStrings.PROJECT)); 
-        }
-        if (cmd.hasOption(ClientTestStrings.PROJECT_VERSION)) { 
-            // The format must be [majNum].[minNum]
-            String [] numbers = 
-                cmd.getOptionValue(ClientTestStrings.PROJECT_VERSION).split("\\."); //$NON-NLS-1$
-            if (numbers.length == 2) {
-                try {
-                    ProjectVersion version = VersionStringUtils
-                            .createProjectVersion(cmd.getOptionValue(
-                                    ClientTestStrings.PROJECT_VERSION));
-                    m_projectVersion = version;
-      
-                } catch (VersionStringUtils.MalformedVersionException e) {
-                 // Do nothing. The version values will not be set and this will be noticed during pre-validation.
-                }
-            }
-        }
-        if (cmd.hasOption(ClientTestStrings.SERVER)) { 
-            setServer(cmd.getOptionValue(ClientTestStrings.SERVER)); 
-        }
-        if (cmd.hasOption(ClientTestStrings.PORT)) { 
-            setPort(validateAndParseIntPortNumber(
-                    cmd.getOptionValue(ClientTestStrings.PORT)));
-        }
-        if (cmd.hasOption(ClientTestStrings.AUTO_SCREENSHOT)) { 
-            setAutoScreenshot(false);
-        }
-        if (cmd.hasOption(ClientTestStrings.NO_XML_SCREENSHOT)) { 
-            setXMLScreenshot(false);
-        }
-        if (cmd.hasOption(ClientTestStrings.RESULTDIR)) { 
-            setResultDir(FileUtils.resolveAgainstBasePath(
-                    cmd.getOptionValue(ClientTestStrings.RESULTDIR), 
-                    defaultBasePath));
-        }
-        if (cmd.hasOption(ClientTestStrings.AUT_CONFIG)) { 
-            setAutConfigName(cmd.getOptionValue(ClientTestStrings.AUT_CONFIG)); 
-        }
-        if (cmd.hasOption(ClientTestStrings.AUT_ID)) {
-            String autIdString = cmd.getOptionValue(ClientTestStrings.AUT_ID);
-            if (autIdString != null) {
-                setAutId(new AutIdentifier(autIdString)); 
-            }
-        }
-        if (cmd.hasOption(ClientTestStrings.DATA_DIR)) { 
-            setDataDir(FileUtils.resolveAgainstBasePath(
-                    cmd.getOptionValue(ClientTestStrings.DATA_DIR), 
-                    defaultBasePath));
-        }
-        if (cmd.hasOption(ClientTestStrings.LANGUAGE)) { 
-            setLanguage(LocaleUtil.convertStrToLocale(
-                    cmd.getOptionValue(ClientTestStrings.LANGUAGE))); 
-        }
-        if (cmd.hasOption(ClientStrings.NORUN)) {
-            setNoRunOptMode(TestExecutionConstants.RunSteps.
-                    validateRunStep(cmd.getOptionValue(ClientStrings.NORUN)));
-        }
-
-    }
-    
-    /**
      * @param cmd CommandLine
      */
     private void parseDBOptions(CommandLine cmd) {
@@ -713,13 +630,6 @@ public class JobConfiguration {
         m_port = port;
     }
 
-    /**
-     * @param port String
-     */
-    private void setServerPort(String port) {
-        m_serverport = port;
-    }
-    
     /**
      * @param projectName String
      */

@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,8 +31,6 @@ import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.eclipse.jubula.client.cmd.JobConfiguration;
-import org.eclipse.jubula.client.cmd.controller.IClcServer;
-import org.eclipse.jubula.client.cmd.controller.intern.RmiBase;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
@@ -47,7 +44,6 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestResultReportNamer;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
-import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
@@ -75,7 +71,6 @@ import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOper
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
-import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -103,96 +98,6 @@ import org.slf4j.LoggerFactory;
 public class ExecutionController implements IAUTServerEventListener,
         IServerEventListener, IAUTEventListener, ITestExecutionEventListener, 
         IAutRegistrationListener {
-    /**
-     * @author BREDEX GmbH
-     * @created Oct 13, 2010
-     */
-    private class ClcService implements IClcServer {
-
-        /** indicates if a Test Suite is running */
-        private boolean m_tsRunning;
-        /** result for caller */
-        private int m_result;
-
-        /**
-         * {@inheritDoc}
-         */
-        @SuppressWarnings("synthetic-access")
-        public int runTestSuite(String tsName, int timeout, 
-                Map<String, String> variables) {
-            m_tsRunning = false;
-            m_stopProcessing = false; // bugfix for ticket #3501: 1+n test
-                                      // execution is otherwise not correctly
-                                      // synchronized for the clcserver
-            setNoErrorWhileExecution(true); // bugfix for ticket #3501: m_result
-                                            // is otherwise not resettet
-            WatchdogTimer timer = null;
-            if (timeout > 0) {
-                timer = new WatchdogTimer(timeout);
-            }
-            m_result = 0;
-            IProjectPO project = m_job.getProject();
-            ITestSuitePO workUnit = null;
-            for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites(project)) {
-                if (ts.getName().equals(tsName)) {
-                    workUnit = ts;
-                    break;
-                }
-            }
-            if (workUnit == null) {
-                m_result = -1;
-            } else {
-                ClientTest.instance().startTestSuite(
-                        workUnit,
-                        m_job.getLanguage(),
-                        m_startedAutId,
-                        m_job.isAutoScreenshot(),
-                        variables,
-                        m_job.getNoRunOptMode());
-                m_tsRunning = true;
-                timer.start();
-            }
-            while (!m_stopProcessing && m_tsRunning) {
-                synchronized (m_rmiBase) {
-                    try {
-                        m_rmiBase.wait();
-                    } catch (InterruptedException e) {
-                        // just check
-                    }
-                }
-            }
-            if (timer != null) {
-                timer.abort();
-            }
-            return m_result;
-        }
-        
-        /**
-         * Notify the client that the TS has completed
-         * @param result result of the TS run
-         */
-        @SuppressWarnings("synthetic-access")
-        public void tsDone(int result) {
-            m_result = result;
-            m_tsRunning = false;
-            if (m_rmiBase != null) {
-                synchronized (m_rmiBase) {
-                    m_rmiBase.notifyAll();
-                }
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @SuppressWarnings("synthetic-access")
-        public void shutdown() {
-            m_clientActive = false;
-            stopProcessing();
-        }
-
-    }
-
     /**
      * @author BREDEX GmbH
      * @created Oct 16, 2009
@@ -325,14 +230,6 @@ public class ExecutionController implements IAUTServerEventListener,
     /** the ID of the AUT that was started for test execution */
     private AutIdentifier m_startedAutId = null;
     
-    /** the RMI service registry */
-    private RmiBase m_rmiBase;
-    /** the implementation of the service for internal use */
-    @SuppressWarnings("synthetic-access")
-    private final ClcService m_clcServiceImpl = new ClcService();
-    /** is there a CLC client connection */
-    private boolean m_clientActive = false;
-
     /** private constructor */
     private ExecutionController() {
         IClientTest clientTest = ClientTest.instance();
@@ -443,20 +340,15 @@ public class ExecutionController implements IAUTServerEventListener,
             endTestExecution();
         }
         try {
-            
-            if (m_rmiBase != null) { // run as a CLS server
-                doClcService();
-            } else {
-                //start AUT and check that it was started
-                ensureAutIsStarted(m_job.getActualTestSuite(), 
-                      m_job.getAutConfig());
-                if (TestExecution.shouldExecutionStop(noRun,
-                        TestExecutionConstants.RunSteps.SA)) {
-                    return true;
-                }
-                //start of the test execution
-                doTest(m_job.getTestJob() != null);
+            //start AUT and check that it was started
+            ensureAutIsStarted(m_job.getActualTestSuite(), 
+                  m_job.getAutConfig());
+            if (TestExecution.shouldExecutionStop(noRun,
+                    TestExecutionConstants.RunSteps.SA)) {
+                return true;
             }
+            //start of the test execution
+            doTest(m_job.getTestJob() != null);
         } catch (ToolkitPluginException e1) {
             sysErr(NLS.bind(Messages.ExecutionControllerAUT,
                 Messages.ErrorMessageAUT_TOOLKIT_NOT_AVAILABLE));
@@ -560,62 +452,10 @@ public class ExecutionController implements IAUTServerEventListener,
     }
 
     /**
-     * wait for the CLC service to receive a shutdown from the client
-     */
-    private void doClcService() throws ToolkitPluginException {
-        IProjectPO project = m_job.getProject();
-        String autConfigName = m_job.getAutConfigName();
-        
-        ITestSuitePO workUnit = null;
-        IAUTConfigPO autConfig = null;
-        
-        for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites(project)) {
-            for (IAUTConfigPO cfg : ts.getAut().getAutConfigSet()) {
-                if (autConfigName.equals(cfg.getName())) {
-                    workUnit = ts;
-                    autConfig = cfg;
-                    break;
-                }
-            }
-        }
-        if (workUnit != null && autConfig != null) {
-            ensureAutIsStarted(workUnit, autConfig);
-        }
-        m_clientActive = true;
-        do {
-            synchronized (m_rmiBase) {
-                try {
-                    m_rmiBase.wait();
-                } catch (InterruptedException e) {
-                    // just check if we should stop
-                }
-            }
-        } while (m_clientActive);
-        if (autConfig != null) {
-            try {
-                AutIdentifier startedAutId = new AutIdentifier(
-                        autConfig.getConfigMap().get(
-                                AutConfigConstants.AUT_ID));
-                if (AutAgentConnection.getInstance().isConnected()) {
-                    ClientTest.instance().stopAut(startedAutId);
-                }
-            } catch (ConnectionException e) {
-                LOG.info(Messages.ErrorWhileStoppingAUT, e);
-            }
-        }
-
-    }
-        
-    /**
      * end processing and notify any waiting CLC service threads
      */
     private void stopProcessing() {
         m_stopProcessing = true;
-        if (m_rmiBase != null) {
-            synchronized (m_rmiBase) {
-                m_rmiBase.notifyAll();
-            }
-        }
     }
     
     /** Prepares the test execution by:
@@ -1063,7 +903,6 @@ public class ExecutionController implements IAUTServerEventListener,
             case TEST_EXEC_FINISHED:
                 sysOut(Messages.ExecutionControllerTestSuiteEnd);
                 m_job.getNextTestSuite();
-                m_clcServiceImpl.tsDone(isNoErrorWhileExecution() ? 0 : 1);
                 m_isTestSuiteRunning = false;
                 break;
             case TEST_EXEC_PAUSED:
@@ -1159,10 +998,6 @@ public class ExecutionController implements IAUTServerEventListener,
      */
     public void setJob(JobConfiguration job) {
         m_job = job;
-        if (m_job.getServerPort() != null) {
-            Integer port = Integer.parseInt(m_job.getServerPort());
-            m_rmiBase = new RmiBase(port, m_clcServiceImpl);
-        }
     }
 
     /**

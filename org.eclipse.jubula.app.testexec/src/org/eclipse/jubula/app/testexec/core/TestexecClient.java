@@ -163,10 +163,6 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.TIMEOUT, true,
                 ClientTestStrings.TIMEOUT, Messages.ClientTimeout, 
                     false));  
-        // server option for the CLC extension
-        options.addOption(createOption(ClientTestStrings.STARTSERVER, true, 
-                ClientTestStrings.PORT_NUMBER, Messages.ClientStartServerOpt, 
-                    false));
     }
     
     /**
@@ -208,8 +204,7 @@ public class TestexecClient extends AbstractCmdlineClient {
             appendError(errorMsgs, ClientTestStrings.LANGUAGE, 
                     ClientTestStrings.LANGUAGE);
         }
-        if (job.getTestSuiteNames().isEmpty() && job.getTestJobName() == null
-                && job.getServerPort() == null) {
+        if (job.getTestSuiteNames().isEmpty() && job.getTestJobName() == null) {
             appendError(errorMsgs, ClientTestStrings.TESTSUITE, 
                     ClientTestStrings.TESTSUITE);
             appendError(errorMsgs, ClientTestStrings.TESTJOB, 

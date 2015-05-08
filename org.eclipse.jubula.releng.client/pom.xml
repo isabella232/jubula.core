@@ -71,7 +71,6 @@
         <module>../org.eclipse.jubula.documentation.orbit</module>
         <module>../org.eclipse.jubula.client.ua.help</module>
         <module>../org.eclipse.jubula.client.cmd</module>
-        <module>../org.eclipse.jubula.client.cmd.controller</module>
         <module>../org.eclipse.jubula.client.autagent</module>
         <module>../org.eclipse.jubula.launch</module>
         <module>../org.eclipse.jubula.launch.ui</module>

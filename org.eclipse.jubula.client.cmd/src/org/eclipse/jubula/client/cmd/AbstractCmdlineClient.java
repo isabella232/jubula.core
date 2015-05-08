@@ -222,12 +222,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                             m_job.getNoRunOptMode())) {
                 noRunValue = true;
             }
-            // then set attributes from command Line and check if parameter -startserver was called
-            if (m_cmd.hasOption(ClientTestStrings.STARTSERVER)) {
-                m_job.parseOptionsWithServer(m_cmd);
-            } else {
-                m_job.parseJobOptions(m_cmd);
-            }
+            m_job.parseJobOptions(m_cmd);
             // check if all needed attributes are set
             // and if port number is valid
             preValidate(m_job);

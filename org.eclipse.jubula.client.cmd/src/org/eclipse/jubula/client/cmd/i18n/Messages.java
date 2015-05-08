@@ -61,7 +61,6 @@ public class Messages extends NLS {
     public static String ClientResultdirOpt;
     public static String ClientResultnameOpt;
     public static String ClientServerOpt;
-    public static String ClientStartServerOpt;
     public static String ClientSwtOpt;
     public static String ClientTestJobOpt;
     public static String ClientTestSuiteOpt;

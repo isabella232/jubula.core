@@ -53,8 +53,6 @@ public class ClientTestStrings {
     public static final String TESTJOB = "testjob"; //$NON-NLS-1$
     /** object attribute */
     public static final String TIMEOUT = "timeout"; //$NON-NLS-1$
-    /** object attribute */
-    public static final String STARTSERVER = "startserver"; //$NON-NLS-1$
     
     /** object attribute */
     public static final String ENTRY = "entry"; //$NON-NLS-1$
