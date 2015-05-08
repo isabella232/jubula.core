@@ -7,11 +7,84 @@
 -->
 
 <chapter xml:id="parameters" version="5.0" xmlns="http://docbook.org/ns/docbook"
-                                       xmlns:xi="http://www.w3.org/2001/XInclude"
-                                       xmlns:xl="http://www.w3.org/1999/xlink" >
+                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                        xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="parameters"?>
   <title>Parameters</title>
   
-  <para>In this chapter you can find information on all parameters. </para>
-  
+  <xi:include href="actionToPerform/content.xml"/>
+  <xi:include href="activateKey/content.xml"/>
+  <xi:include href="activationMethod/content.xml"/>
+  <xi:include href="baseKey/content.xml"/>
+  <xi:include href="column/content.xml"/>
+  <xi:include href="columnOperator/content.xml"/>
+  <xi:include href="command/content.xml"/>
+  <xi:include href="comparisonMethod/content.xml"/>
+  <xi:include href="createDirectories/content.xml"/>
+  <xi:include href="delay/content.xml"/>
+  <xi:include href="delayAfterClosure/content.xml"/>
+  <xi:include href="delayAfterVisibility/content.xml"/>
+  <xi:include href="delayBeforeDrop/content.xml"/>
+  <xi:include href="destination/content.xml"/>
+  <xi:include href="direction/content.xml"/>
+  <xi:include href="editable/content.xml"/>
+  <xi:include href="enabled/content.xml"/>
+  <xi:include href="exists/content.xml"/>
+  <xi:include href="expectedBehavior/content.xml"/>
+  <xi:include href="expectedExitCode/content.xml"/>
+  <xi:include href="extendSelection/content.xml"/>
+  <xi:include href="fileAccess/content.xml"/>
+  <xi:include href="hasFocus/content.xml"/>
+  <xi:include href="identifier/content.xml"/>
+  <xi:include href="identifierType/content.xml"/>
+  <xi:include href="index/content.xml"/>
+  <xi:include href="indexpath/content.xml"/>
+  <xi:include href="insertAfterPattern/content.xml"/>
+  <xi:include href="key/content.xml"/>
+  <xi:include href="local/content.xml"/>
+  <xi:include href="marginBottom/content.xml"/>
+  <xi:include href="marginLeft/content.xml"/>
+  <xi:include href="marginRight/content.xml"/>
+  <xi:include href="marginTop/content.xml"/>
+  <xi:include href="millisecs/content.xml"/>
+  <xi:include href="modifierKeys/content.xml"/>
+  <xi:include href="mouseButton/content.xml"/>
+  <xi:include href="numberOfCells/content.xml"/>
+  <xi:include href="numberOfClicks/content.xml"/>
+  <xi:include href="numberOfNodes/content.xml"/>
+  <xi:include href="operator/content.xml"/>
+  <xi:include href="pathType/content.xml"/>
+  <xi:include href="pattern/content.xml"/>
+  <xi:include href="preAscend/content.xml"/>
+  <xi:include href="propertyName/content.xml"/>
+  <xi:include href="propertyValue/content.xml"/>
+  <xi:include href="row/content.xml"/>
+  <xi:include href="rowOperator/content.xml"/>
+  <xi:include href="scalingFactor/content.xml"/>
+  <xi:include href="searchType/content.xml"/>
+  <xi:include href="selected/content.xml"/>
+  <xi:include href="sourceOperator/content.xml"/>
+  <xi:include href="sourceTextPath/content.xml"/>
+  <xi:include href="startTimeVariableName/content.xml"/>
+  <xi:include href="targetOperator/content.xml"/>
+  <xi:include href="targetTextpath/content.xml"/>
+  <xi:include href="text/content.xml"/>
+  <xi:include href="textOperator/content.xml"/>
+  <xi:include href="textpath/content.xml"/>
+  <xi:include href="timeoutInMillisecs/content.xml"/>
+  <xi:include href="timerName/content.xml"/>
+  <xi:include href="timerValueVariableName/content.xml"/>
+  <xi:include href="title/content.xml"/>
+  <xi:include href="url/content.xml"/>
+  <xi:include href="value/content.xml"/>
+  <xi:include href="value1/content.xml"/>
+  <xi:include href="value2/content.xml"/>
+  <xi:include href="valueOperator/content.xml"/>
+  <xi:include href="variableName/content.xml"/>
+  <xi:include href="windowTitle/content.xml"/>
+  <xi:include href="xPosition/content.xml"/>
+  <xi:include href="xUnits/content.xml"/>
+  <xi:include href="yPosition/content.xml"/>
+  <xi:include href="yUnits/content.xml"/>
+
 </chapter>
