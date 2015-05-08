@@ -19,6 +19,44 @@
           Use this action to check whether a specific value exists in a column you specify.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="exists"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -28,6 +66,44 @@
       <listitem>
         <para>
           Use this action to check whether a specific value exists in a row you specify.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="exists"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

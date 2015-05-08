@@ -35,7 +35,7 @@
   	<itemizedlist>
   		<listitem>Use this parameter to specify which command to execute.</listitem>
   		<listitem>Give the path to the command, either on the local machine or on the remote machine
-  		, as define in the <emphasize>local</emphasize> parameter</listitem>
+  		, as define in the <emphasis>local</emphasis> parameter</listitem>
   		<listitem>Relative paths can be written simply with the white spaces included. You will need
   		to use quotes (") around the path or command if you are using path fragments (e.g ./ or ../)
   		for the relative path.</listitem>

@@ -29,6 +29,34 @@
           If a window is found and does not close within the timeout period, the action fails.
         </para>
       </listitem>
+            <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="title"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay_after_closure"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

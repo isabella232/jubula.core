@@ -29,6 +29,24 @@
           Some pickers do not have a finite amount of items – they scroll infinitely. We strongly advise against using index-based selection on such pickers.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="index"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -43,6 +61,34 @@
       <listitem>
         <para>
           Items that are grey in the picker cannot be selected. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

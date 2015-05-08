@@ -38,13 +38,13 @@
   		<listitem>The first column is '1' (without quotes) and so on. The index '0' (without
   		quotes)refers to the header itself</listitem>
   		<listitem>If the cell you want to execute an action on is in fourth column and is 
-  		called <emphasize>Price</emphasize>, you can address the column either with the index
-  		'4' or with the string <emphasize>Price</emphasize></listitem>
+  		called <emphasis>Price</emphasis>, you can address the column either with the index
+  		'4' or with the string <emphasis>Price</emphasis></listitem>
   		<listitem>Turning the function on when it is already on will not have any effect.
   		The function remains on.</listitem>
   		<listitem>In JavaFX AUT´s, you can also enter a path to the column to test tables that have
   		nested columns (i.e. where a column has child columns). Enter the column as a path, 
-  		separated with forward slash, e.g. <emphasize>Address/Street</emphasize>. You can use
+  		separated with forward slash, e.g. <emphasis>Address/Street</emphasis>. You can use
   		indexpaths and textpaths for columns in JavaFX tables.</listitem>
   	</itemizedlist>
   

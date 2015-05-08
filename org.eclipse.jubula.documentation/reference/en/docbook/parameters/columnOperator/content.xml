@@ -41,11 +41,11 @@
   	</table>
   	<itemizedlist>
   		<listitem>The operator parameter has four possible values:</listitem>
-  		<listitem><emphasize>not equals</emphasize> looks for something that does not
+  		<listitem><emphasis>not equals</emphasis> looks for something that does not
   		exactly match</listitem>
-  		<listitem><emphasize>equals</emphasize> looks for an exact match</listitem>
-  		<listitem>Select <emphasize>simple match</emphasize> to use a simple match expression</listitem>
-  		<listitem>Select <emphasize>matches</emphasize> to use a regular expression</listitem>
+  		<listitem><emphasis>equals</emphasis> looks for an exact match</listitem>
+  		<listitem>Select <emphasis>simple match</emphasis> to use a simple match expression</listitem>
+  		<listitem>Select <emphasis>matches</emphasis> to use a regular expression</listitem>
   		<listitem>Regardless of the operator used: if a selection action is being used and there
   		is more than one match, then the first item found will be chosen.</listitem>
   	</itemizedlist>

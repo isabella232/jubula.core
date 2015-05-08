@@ -52,6 +52,19 @@
           To enter text before/after previous text, see "<emphasis>Insert Text Before/After Pattern</emphasis>" in the "<emphasis>Text Field</emphasis>" component.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -80,6 +93,19 @@
       <listitem>
         <para>
           Use this action for supported components, and the "<emphasis>External Input Text</emphasis>" action for components in external dialogs, such as file choosers.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -130,6 +156,19 @@
           To enter text before/after previous text, see "<emphasis>Insert Text Before/After Pattern</emphasis>" in the "<emphasis>Text Field</emphasis>" component.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -152,6 +191,24 @@
       <listitem>
         <para>
           This is useful for actions such as »DELETE«, »ENTER«, etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="modifier_keys"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="base_key"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -188,6 +245,19 @@
       <listitem>
         <para>
           Combine this action with the "External Key Combination" action to send key combinations to native dialogs to be able to work with file choosers during your test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -237,6 +307,24 @@
           Some of the keystrokes you may need include <emphasis>ENTER, SPACE, PERIOD</emphasis> and /.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="modifier_keys"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="base_key"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -269,6 +357,24 @@
       <listitem>
         <para>
           You specify which key to (de)activate and whether the function should be turned on or off.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="key"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="activate_key"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -314,6 +420,24 @@
           </itemizedlist>
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="index"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -351,6 +475,34 @@
       <listitem>
         <para>
           If a pattern is not found, the text is not inserted.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pattern"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="insert_after_pattern"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

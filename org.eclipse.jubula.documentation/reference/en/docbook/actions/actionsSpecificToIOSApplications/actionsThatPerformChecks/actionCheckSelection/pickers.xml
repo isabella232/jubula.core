@@ -24,6 +24,29 @@
           Some pickers do not have a finite amount of items – they scroll infinitely. We strongly advise against using index-based checking on such pickers.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="index"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="selected"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

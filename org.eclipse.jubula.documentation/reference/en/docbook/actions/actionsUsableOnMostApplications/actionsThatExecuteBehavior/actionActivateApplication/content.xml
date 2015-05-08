@@ -54,6 +54,19 @@
           Using the activate action, you can also specify activation methods which differ from the default.
         </para>
       </listitem>
+            <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="activation_method"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   

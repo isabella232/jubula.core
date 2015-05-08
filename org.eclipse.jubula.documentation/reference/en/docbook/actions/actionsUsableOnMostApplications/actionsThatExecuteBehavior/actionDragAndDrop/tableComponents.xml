@@ -39,6 +39,64 @@
           You must follow this action with a <emphasis>drop</emphasis> action.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="modifier_keys"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -76,6 +134,49 @@
       <listitem>
         <para>
           You must follow this action with a <emphasis>drop</emphasis> action.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="modifier_keys"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -117,6 +218,49 @@
           You must follow this action with a <emphasis>drop</emphasis> action.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="modifier_keys"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -154,6 +298,59 @@
       <listitem>
         <para>
           Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay_before_drop"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -224,6 +421,44 @@
       <listitem>
         <para>
           Precede this action with a <emphasis>drag</emphasis> action.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay_before_drop"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

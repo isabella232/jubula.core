@@ -34,6 +34,19 @@
           In RCP AUT's , the index of the tab refers to the order in which the tabs were opened. So the first tab to be opened has an index of "1". This action selects the tab even if the tab with the given index is currently not visible (e.g. in the editor view).
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="index"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -63,6 +76,24 @@
       <listitem>
         <para>
           If more than one tab name corresponds to the value, the the tab with this value which was opened first will be selected.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="title"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

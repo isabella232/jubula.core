@@ -24,6 +24,19 @@
           This can be used in conjunction with the action "<emphasis>select node</emphasis>" with a click count of 0.
         </para>
       </listitem>
+      <listitem>
+      <para>
+        Parameters:
+      
+        <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="variable_name"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -32,8 +45,20 @@
     <itemizedlist>
       <listitem>
         <para>
+          Use this action to read the value from the currently selected node so that you can use the value as data for other Test Steps .
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
           
-    Use this action to read the value from the currently selected node so that you can use the value as data for other Test Steps .
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="variable_name"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

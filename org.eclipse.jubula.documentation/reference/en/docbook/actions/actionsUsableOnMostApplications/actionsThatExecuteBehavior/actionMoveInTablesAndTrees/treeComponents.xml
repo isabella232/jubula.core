@@ -67,6 +67,29 @@
           If no node is currently selected, the test will fail.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="direction"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_nodes"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   

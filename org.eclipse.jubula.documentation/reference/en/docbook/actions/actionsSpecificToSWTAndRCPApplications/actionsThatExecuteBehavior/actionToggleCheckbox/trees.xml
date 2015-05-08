@@ -29,6 +29,29 @@
           If the checkbox is currently selected, this action will deselect it and vice-versa.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -48,6 +71,34 @@
       <listitem>
         <para>
           If the checkbox is currently selected, this action will deselect it and vice-versa.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

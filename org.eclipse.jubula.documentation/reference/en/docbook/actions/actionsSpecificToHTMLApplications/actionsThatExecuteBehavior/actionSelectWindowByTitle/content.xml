@@ -19,4 +19,21 @@
   <para>
     This action allows you to use the window title to select the window. In most cases, this should be sufficient. You can, however, use the action Select wndow with identifier to be able to use other identifiers.
   </para>
+  
+  <para>
+    Parameters:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="window_title"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="operator"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

@@ -47,6 +47,44 @@
           </itemizedlist>
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -81,6 +119,49 @@
             <listitem>
               <para>
                 Clicking on the node, the amount of times you specify.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
               </para>
             </listitem>
           </itemizedlist>

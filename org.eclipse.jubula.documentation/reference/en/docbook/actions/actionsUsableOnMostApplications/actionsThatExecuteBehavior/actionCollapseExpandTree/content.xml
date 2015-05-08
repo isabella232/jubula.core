@@ -30,6 +30,29 @@
           This is achieved by activating the command in the tree to collapse it.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -49,6 +72,29 @@
       <listitem>
         <para>
           This is achieved by activating the command in the tree to collapse it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -72,6 +118,29 @@
           This is achieved by activating the command in the tree to expand it.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -91,6 +160,29 @@
       <listitem>
         <para>
           This is achieved by activating the command in the tree to expand it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
