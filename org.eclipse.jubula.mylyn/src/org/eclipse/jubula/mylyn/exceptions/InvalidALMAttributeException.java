@@ -8,22 +8,21 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.alm.mylyn.core.exceptions;
+package org.eclipse.jubula.mylyn.exceptions;
 
 /**
  * @author BREDEX GmbH
  *
  */
 public class InvalidALMAttributeException extends Exception {
-    
-    /**
-     * 
-     */
+    /** serialVersionUID */
     private static final long serialVersionUID = 8269674417361658951L;
 
     /**
      * Constructor
-     * @param message the message
+     * 
+     * @param message
+     *            the message
      */
     public InvalidALMAttributeException(String message) {
         super(message);
