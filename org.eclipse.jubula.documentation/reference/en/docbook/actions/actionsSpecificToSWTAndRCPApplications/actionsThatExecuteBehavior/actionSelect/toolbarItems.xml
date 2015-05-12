@@ -24,6 +24,19 @@
           The item you want to select is given using the indexpath to the item.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -38,6 +51,24 @@
       <listitem>
         <para>
           The item you want to select is given using the textpath to the item.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

@@ -26,4 +26,41 @@
   <para>
     Use this action to click within a figure you specify. The place to click in the figure is given with X and Y units.
   </para>
+  
+  <para>
+    Parameters:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="source_text_path"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="source_operator"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="target_text_path"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="target_operator"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="number_of_clicks"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="mouse_button"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

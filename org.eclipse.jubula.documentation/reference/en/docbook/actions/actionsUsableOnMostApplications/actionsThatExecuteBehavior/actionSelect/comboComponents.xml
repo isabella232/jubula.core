@@ -37,6 +37,19 @@
           </itemizedlist>
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="index"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -61,6 +74,19 @@
             <listitem>
               <para>
                 Selecting the item specified by clicking it once.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
               </para>
             </listitem>
           </itemizedlist>

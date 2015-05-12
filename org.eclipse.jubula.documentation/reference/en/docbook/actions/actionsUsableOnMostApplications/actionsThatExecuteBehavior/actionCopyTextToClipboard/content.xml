@@ -15,4 +15,15 @@
   <para>
     This action allows you to copy one string to the clipboard on your operating system. It can be used in combination with the key combination »CTRL+V« to paste text into your AUT , or into native dialogs (e.g. file choosers) opened by your AUT .
   </para>
+  <para>
+    Parameters:
+  
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="text"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

@@ -47,6 +47,69 @@
           </itemizedlist>
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="extend_selection"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -77,6 +140,54 @@
           This is achieved by clicking on the specified cell.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="extend_selection"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -105,6 +216,54 @@
       <listitem>
         <para>
           This is achieved by clicking on the specified cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="extend_selection"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

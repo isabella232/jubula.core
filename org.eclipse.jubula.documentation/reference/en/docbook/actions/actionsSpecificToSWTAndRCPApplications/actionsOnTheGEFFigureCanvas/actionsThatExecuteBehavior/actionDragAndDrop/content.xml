@@ -35,6 +35,54 @@
           Follow this action with a <emphasis>drop</emphasis> action.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="modifier_keys"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -59,6 +107,49 @@
       <listitem>
         <para>
           Precede this action with a drag action.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay_before_drop"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

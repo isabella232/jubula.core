@@ -33,6 +33,39 @@
           Enter the name of the property you want to check, and then what value it should have.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="text_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="property_name"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="property_value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   <para role="tip">

@@ -19,4 +19,21 @@
   <para>
     This action allows you to use the window title or other identifiers to select the window.
   </para>
+  
+  <para>
+    Parameters:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="identifier"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="identifier_type"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

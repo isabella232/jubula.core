@@ -24,6 +24,24 @@
           This is achieved by clicking three times within the text field.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -51,6 +69,24 @@
       <listitem>
         <para>
           This is achieved without performing any clicks. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

@@ -35,6 +35,24 @@
           This action is useful for measuring how long your AUT takes to execute certain actions.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="timer_name"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timer_value_variable_name"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -59,6 +77,24 @@
       <listitem>
         <para>
           This action is useful for measuring how long your AUT takes to execute certain actions.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="timer_name"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timer_value_variable_name"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

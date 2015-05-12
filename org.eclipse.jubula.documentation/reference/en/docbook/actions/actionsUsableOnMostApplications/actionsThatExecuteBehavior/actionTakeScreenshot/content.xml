@@ -30,8 +30,22 @@
           If you do not enter a file extension, the screenshot will be saved as a .png file. You can also save the file as an .jpeg or .bmp file.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="destination"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
+  
   
   <para><emphasis>Take Screenshot of Active Window</emphasis></para>
   <para>
@@ -54,6 +68,29 @@
       <listitem>
         <para>
           You can specify a margin around the active window to extend the range of the screenshot. This may be necessary on some systems where the title bar of some dialogs is not included in the screenshot.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="destination"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="file_access"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

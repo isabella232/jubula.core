@@ -29,6 +29,29 @@
           The menupath is given as an indexpath.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="selected"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -64,6 +87,49 @@
           If you want to open or check a context menu on a selected node or cell in a component, then use the action which selects the context menu without specifying the coordinate position.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="selected"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -87,6 +153,34 @@
       <listitem>
         <para>
           The menupath is given as a textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="selected"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
@@ -122,6 +216,54 @@
       <listitem>
         <para>
           If you want to open or check a context menu on a selected node or cell in a component, then use the action which selects the context menu without specifying the coordinate position.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="selected"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

@@ -34,6 +34,29 @@
           You must first find out the name of the property you want to check, and then what value it should have. You can find out what properties and values a component has in the Object Mapping Mode (for Swing and SWT/RCP AUT's ). When you collect a component, its property information is displayed in the Properties View .
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="property_name"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="property_value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   

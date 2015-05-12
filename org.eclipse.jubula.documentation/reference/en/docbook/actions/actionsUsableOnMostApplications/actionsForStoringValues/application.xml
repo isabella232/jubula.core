@@ -19,6 +19,19 @@
           Use this action to store a value you specify so that you can use it as data for other actions.
         </para>
       </listitem>
+    <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="variable_name"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

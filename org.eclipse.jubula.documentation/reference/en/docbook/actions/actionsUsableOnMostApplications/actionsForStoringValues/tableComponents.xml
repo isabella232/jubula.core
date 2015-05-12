@@ -19,6 +19,39 @@
           Use this action to read the value out of a cell so that you can use it as data for other Test Steps .
         </para>
       </listitem>
+          <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="variable_name"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>            
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -33,6 +66,19 @@
       <listitem>
         <para>
           This can be used in conjunction with the action "<emphasis>select cell</emphasis>" with a click count of 0.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="variable_name"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

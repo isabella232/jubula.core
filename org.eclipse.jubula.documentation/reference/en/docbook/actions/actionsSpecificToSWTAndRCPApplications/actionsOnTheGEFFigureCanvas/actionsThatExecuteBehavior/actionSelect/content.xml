@@ -16,4 +16,26 @@
   <para>
     Use this action to select a tool from the panel in the figure canvas.
   </para>
+  
+  <para>
+    Parameters:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="textpath"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="operator"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="number_of_clicks"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

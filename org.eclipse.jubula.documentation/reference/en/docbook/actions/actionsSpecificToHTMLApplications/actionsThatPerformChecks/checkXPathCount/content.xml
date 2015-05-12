@@ -31,5 +31,28 @@
         your element using website inspection tools.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="xpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="comparison_method"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="count"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
 </section>

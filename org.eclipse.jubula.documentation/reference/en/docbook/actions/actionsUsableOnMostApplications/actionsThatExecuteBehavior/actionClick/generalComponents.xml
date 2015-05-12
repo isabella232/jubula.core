@@ -29,6 +29,24 @@
           You can also specify which mouse button (left, middle, right) you want to click with.
         </para>
       </listitem>
+            <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -48,6 +66,44 @@
             <listitem>
               <para>
                 Clicking the specified mouse button the given number of times at the location indicated.
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
               </para>
             </listitem>
           </itemizedlist>

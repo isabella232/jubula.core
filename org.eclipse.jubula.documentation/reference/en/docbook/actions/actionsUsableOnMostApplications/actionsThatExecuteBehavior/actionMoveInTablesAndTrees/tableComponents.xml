@@ -72,6 +72,54 @@
           If the cursor is, for any reason, not currently over a cell, the movement is carried out relative to the selected cell.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="direction"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_cells"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="extend_selection"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   

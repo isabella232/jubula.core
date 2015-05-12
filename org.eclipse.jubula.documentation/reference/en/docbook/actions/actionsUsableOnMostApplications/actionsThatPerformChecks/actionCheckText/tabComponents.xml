@@ -24,6 +24,29 @@
           You enter the index of the tab you want to check and the text you expect.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="index"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="title"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

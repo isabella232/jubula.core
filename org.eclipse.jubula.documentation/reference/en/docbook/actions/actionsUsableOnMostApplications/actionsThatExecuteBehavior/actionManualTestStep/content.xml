@@ -29,6 +29,29 @@
           There is a special test execution mode for manual testing, in which the manual Test Steps are presented to the user to be executed.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="action_to_perform"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="expected_behavior"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

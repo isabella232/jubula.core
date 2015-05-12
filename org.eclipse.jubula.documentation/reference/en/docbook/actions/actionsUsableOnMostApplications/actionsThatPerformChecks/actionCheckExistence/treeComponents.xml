@@ -29,6 +29,34 @@
           For example, checking a textpath of ''1/2/3'' would check that the first node in the tree has at least 2 child nodes, and that the 2nd child node has at least 3 child nodes.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="indexpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="exists"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
   
@@ -48,6 +76,39 @@
       <listitem>
         <para>
           For example, checking a textpath of ''Dog/Bird/Cat'' would check whether an entry ''Cat'' exists beneath an entry for ''Bird'' in the tree, which furthermore lies beneath an entry ''Dog''.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="path_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="textpath"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="exists"/>
+              </para>
+            </listitem>
+          </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>

@@ -20,7 +20,9 @@
   <xi:include href="columnOperator/content.xml"/>
   <xi:include href="command/content.xml"/>
   <xi:include href="comparisonMethod/content.xml"/>
+  <xi:include href="count/content.xml"/>  
   <xi:include href="createDirectories/content.xml"/>
+  <xi:include href="cssPath/content.xml"/>
   <xi:include href="delay/content.xml"/>
   <xi:include href="delayAfterClosure/content.xml"/>
   <xi:include href="delayAfterVisibility/content.xml"/>
@@ -42,6 +44,7 @@
   <xi:include href="insertAfterPattern/content.xml"/>
   <xi:include href="key/content.xml"/>
   <xi:include href="local/content.xml"/>
+  <xi:include href="locator/content.xml"/> 
   <xi:include href="marginBottom/content.xml"/>
   <xi:include href="marginLeft/content.xml"/>
   <xi:include href="marginRight/content.xml"/>
@@ -82,6 +85,7 @@
   <xi:include href="valueOperator/content.xml"/>
   <xi:include href="variableName/content.xml"/>
   <xi:include href="windowTitle/content.xml"/>
+  <xi:include href="xPath/content.xml"/> 
   <xi:include href="xPosition/content.xml"/>
   <xi:include href="xUnits/content.xml"/>
   <xi:include href="yPosition/content.xml"/>

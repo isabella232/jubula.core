@@ -29,6 +29,19 @@
           There are also actions to wait for a window and a component. If you are waiting for a component, or a window, use the actions specific to these events.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="millisecs"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

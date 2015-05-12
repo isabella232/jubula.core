@@ -29,6 +29,29 @@
           You can also compare other variables you have read from your application with this action.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="value_1"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="comparison_method"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_2"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

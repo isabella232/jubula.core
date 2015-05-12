@@ -15,4 +15,29 @@
   <para>
     Use this action to compare the values of two strings in your test. This can be used if you want to check the value of a variable, for example.
   </para>
+  <itemizedlist>
+    <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="value_1"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_2"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+  </itemizedlist>
 </section>
