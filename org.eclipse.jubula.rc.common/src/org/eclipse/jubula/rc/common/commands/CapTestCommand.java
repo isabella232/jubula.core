@@ -55,6 +55,9 @@ public class CapTestCommand implements ICommand {
     /** The logger */
     private static final Logger LOG = LoggerFactory.getLogger(
         CapTestCommand.class);
+    /** The logger */
+    private static final Logger CAPLOG = LoggerFactory.getLogger("CAP");
+    
     
     /** The message. */
     private CAPTestMessage m_capTestMessage;
@@ -226,6 +229,11 @@ public class CapTestCommand implements ICommand {
             MethodInvoker invoker = new MethodInvoker(messageCap);
             Object returnValue = invoker.invoke(implClass);
             response.setReturnValue((String)returnValue);
+            if ("true".equals(System.getenv("LogExecutedCaps"))) {
+                CAPLOG.debug(messageCap.getCi().getComponentClassName() + " - "
+                        + CompSystemI18n.getString(
+                                messageCap.getAction().getName()));
+            }
         } catch (NoSuchMethodException nsme) {
             LOG.error("implementation class method not found", nsme); //$NON-NLS-1$
             event = EventFactory.createUnsupportedActionError();
@@ -255,9 +263,9 @@ public class CapTestCommand implements ICommand {
             }
         } catch (IllegalArgumentException e) {
             LOG.error(e.getLocalizedMessage(), e);
-        } catch (MethodParamException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-        } finally {
+        } catch (MethodParamException ex) {
+            LOG.error(ex.getLocalizedMessage(), ex);
+        } finally {    
             if (autServer.getMode() != oldMode) {
                 autServer.setMode(oldMode);
             }
