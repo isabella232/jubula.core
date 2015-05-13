@@ -24,7 +24,6 @@
             </activation>
             <build>
                 <plugins>
-                    <!-- deploy "development" p2 repository -->
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
@@ -36,26 +35,10 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <property name="targetDir" value="/home/data/httpd/download.eclipse.org/jubula/nightly"/>
                                         <checksum
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
                                             forceOverwrite="yes"
                                             algorithm="SHA-512" fileext=".sha" />
-                                        <delete includeemptydirs="false">
-                                            <fileset dir="${targetDir}">
-                                                <include name="**" />
-                                            </fileset>
-                                        </delete>
-                                        <move todir="${targetDir}">
-                                            <fileset dir="${project.build.directory}">
-                                                <include name="${project.artifactId}-${project.version}.zip*" />
-                                            </fileset>
-                                        </move>
-                                        <move includeemptydirs="false" todir="${targetDir}/repo">
-                                            <fileset dir="target/repository">
-                                                <include name="**" />
-                                            </fileset>
-                                        </move>
                                     </tasks>
                                 </configuration>
                             </execution>
