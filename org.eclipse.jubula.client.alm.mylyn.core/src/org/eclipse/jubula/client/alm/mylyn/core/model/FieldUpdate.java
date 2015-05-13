@@ -18,8 +18,8 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 public class FieldUpdate extends ALMChange {
     
     /** map containing all attribute changes which have to be reported */
-    private Map<String, Object> m_attributesToChange =
-            new HashMap<String, Object>();
+    private Map<String, String> m_attributesToChange =
+            new HashMap<String, String>();
 
     /**
      * Constructor
@@ -42,8 +42,7 @@ public class FieldUpdate extends ALMChange {
     /**
      * @return the map containing all attribute changes
      */
-    public Map<String, Object> getAttributesToChange() {
+    public Map<String, String> getAttributesToChange() {
         return m_attributesToChange;
     }
-
 }

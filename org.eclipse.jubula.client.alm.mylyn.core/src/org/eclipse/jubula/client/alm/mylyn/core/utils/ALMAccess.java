@@ -260,7 +260,7 @@ public final class ALMAccess {
 
         boolean failed = false;
         for (FieldUpdate u : fieldUpdates) {
-            Map<String, Object> attributesToChange = u.getAttributesToChange();
+            Map<String, String> attributesToChange = u.getAttributesToChange();
             for (String key : attributesToChange.keySet()) {
                 if (StringUtils.isBlank(key)) {
                     throw new InvalidALMAttributeException(NLS.bind(
@@ -276,25 +276,21 @@ public final class ALMAccess {
                     throw new InvalidALMAttributeException(NLS.bind(
                             Messages.ReadOnlyAttributeID, key));
                 }
-                Object value = attributesToChange.get(key);
-                if (value instanceof String) {
-                    try {
-                        value = getVariableValues((String)value, u);
-                    } catch (CouldNotResolveException ce) {
-                        // First validating all attributes and values before ending
-                        failed = true;
-                    }
-                    Map<String, String> options = fieldUpdate.getOptions();
-                    if (options != null && !options.isEmpty()) {
-                        if (!options.containsKey(value)) {
-                            throw new InvalidALMAttributeException(NLS.bind(
-                                    Messages.InvalidValue, value, key));
-                        }
-                    }
-                    fieldUpdate.setValue((String)value);
-                } else {
-                    fieldUpdate.setValue(value.toString());
+                String value = attributesToChange.get(key);
+                try {
+                    value = getVariableValues(value, u);
+                } catch (CouldNotResolveException ce) {
+                    // First validating all attributes and values before ending
+                    failed = true;
                 }
+                Map<String, String> options = fieldUpdate.getOptions();
+                if (options != null && !options.isEmpty()) {
+                    if (!options.containsKey(value)) {
+                        throw new InvalidALMAttributeException(NLS.bind(
+                                Messages.InvalidValue, value, key));
+                    }
+                }
+                fieldUpdate.setValue(value);
 
                 changes.add(fieldUpdate);
             }
