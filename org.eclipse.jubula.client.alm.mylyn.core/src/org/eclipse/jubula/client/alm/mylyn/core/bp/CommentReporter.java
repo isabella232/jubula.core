@@ -46,6 +46,7 @@ import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TestResultNodeTraverser;
+import org.eclipse.jubula.mylyn.utils.MylynAccess;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -419,7 +420,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                     getConsole().writeLine(
                         NLS.bind(Messages.TaskRepositoryConnectionTest,
                             almRepositoryName));
-                    IStatus connectionStatus = ALMAccess
+                    IStatus connectionStatus = MylynAccess
                         .testConnection(almRepositoryName);
                     if (connectionStatus.isOK()) {
                         getConsole().writeLine(

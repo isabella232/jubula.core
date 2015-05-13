@@ -14,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +24,6 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.alm.mylyn.core.Activator;
 import org.eclipse.jubula.client.alm.mylyn.core.bp.CommentReporter;
@@ -33,19 +31,17 @@ import org.eclipse.jubula.client.alm.mylyn.core.i18n.Messages;
 import org.eclipse.jubula.client.alm.mylyn.core.model.ALMChange;
 import org.eclipse.jubula.client.alm.mylyn.core.model.CommentEntry;
 import org.eclipse.jubula.client.alm.mylyn.core.model.FieldUpdate;
-import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueToken;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
+import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
 import org.eclipse.jubula.client.core.utils.VariableToken;
 import org.eclipse.jubula.mylyn.exceptions.InvalidALMAttributeException;
+import org.eclipse.jubula.mylyn.utils.MylynAccess;
+import org.eclipse.jubula.mylyn.utils.MylynAccess.CONNECTOR;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
-import org.eclipse.mylyn.tasks.core.IRepositoryManager;
-import org.eclipse.mylyn.tasks.core.IRepositoryModel;
 import org.eclipse.mylyn.tasks.core.ITask;
 import org.eclipse.mylyn.tasks.core.RepositoryResponse;
-import org.eclipse.mylyn.tasks.core.TaskMapping;
 import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.tasks.core.data.AbstractTaskDataHandler;
 import org.eclipse.mylyn.tasks.core.data.ITaskDataManager;
@@ -62,43 +58,6 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  */
 public final class ALMAccess {
-    /**
-     * @author BREDEX GmbH
-     */
-    public enum CONNECTOR {
-        /** default handling type */
-        DEFAULT, 
-        /** custom handling type */
-        HP_ALM
-    }
-    
-    /**
-     * @author BREDEX GmbH
-     */
-    public static class ALMDefaultTaskMapping extends TaskMapping {
-        /** m_values */
-        private Map<String, String> m_values = new HashMap<String, String>();
-
-        @Override
-        public String getDescription() {
-            return m_values.get(TaskAttribute.DESCRIPTION);
-        }
-
-        @Override
-        public String getSummary() {
-            return m_values.get(TaskAttribute.SUMMARY);
-        }
-
-        @Override
-        public String getProduct() {
-            return m_values.get(TaskAttribute.PRODUCT);
-        }
-        
-        @Override
-        public String getTaskKind() {
-            return m_values.get(TaskAttribute.TASK_KIND);
-        }
-    }
     /**
      * Exception for Problems with resolving a variable
      * @author BREDEX GmbH
@@ -133,63 +92,6 @@ public final class ALMAccess {
     }
 
     /**
-     * @param repoLabel
-     *            the label of the repository
-     * @return the task repository or <code>null</code> if not found
-     */
-    public static TaskRepository getRepositoryByLabel(String repoLabel) {
-        List<TaskRepository> allRepositories = getAllRepositories();
-
-        for (TaskRepository repo : allRepositories) {
-            if (repo.getRepositoryLabel().equals(repoLabel)) {
-                return repo;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @return a list of all available task repositories
-     */
-    public static List<TaskRepository> getAllRepositories() {
-        IRepositoryManager repositoryManager = TasksUi.getRepositoryManager();
-        return repositoryManager.getAllRepositories();
-    }
-
-    /**
-     * @param repo
-     *            the task repository
-     * @param taskId
-     *            the taskId
-     * @param monitor
-     *            the monitor to use
-     * @return the task or <code>null</code> if not found
-     * @throws CoreException
-     *             in case of a problem
-     */
-    private static ITask getTaskByID(TaskRepository repo, String taskId,
-        IProgressMonitor monitor) throws CoreException {
-        ITask task = null;
-        if (validRepository(repo)) {
-            IRepositoryModel repositoryModel = TasksUi.getRepositoryModel();
-            task = repositoryModel.getTask(repo, taskId);
-            if (task == null) {
-                task = repositoryModel.createTask(repo, taskId);
-            }
-        }
-        return task;
-    }
-
-    /**
-     * @param repo
-     *            the repository to check
-     * @return if the repository is valid
-     */
-    private static boolean validRepository(TaskRepository repo) {
-        return repo != null && !repo.isOffline();
-    }
-
-    /**
      * Writes comments to ALM system
      * @param repoLabel
      *            repoLabel
@@ -204,14 +106,16 @@ public final class ALMAccess {
     public static boolean createComment(String repoLabel, String taskId,
             List<CommentEntry> comments, IProgressMonitor monitor) {
         boolean succeeded = false;
-        TaskRepository repo = getRepositoryByLabel(repoLabel);
+        TaskRepository repo = MylynAccess.getRepositoryByLabel(repoLabel);
         try {
-            TaskData taskData = getTaskDataByID(repo, taskId, monitor);
+            TaskData taskData = MylynAccess
+                    .getTaskDataByID(repo, taskId, monitor);
             if (taskData == null) {
                 return succeeded;
             }
             
-            ITask task = getTaskByID(repo, taskData.getTaskId(), monitor);
+            ITask task = MylynAccess
+                    .getTaskByID(repo, taskData.getTaskId(), monitor);
             if (task != null) {
                 ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
                 ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
@@ -268,14 +172,16 @@ public final class ALMAccess {
             List<FieldUpdate> fieldUpdates, IProgressMonitor monitor) {
         IStatus status = new Status(IStatus.ERROR, Activator.ID,
                 "Unknown error."); //$NON-NLS-1$
-        TaskRepository repo = getRepositoryByLabel(repoLabel);
+        TaskRepository repo = MylynAccess.getRepositoryByLabel(repoLabel);
         try {
-            TaskData taskData = getTaskDataByID(repo, taskId, monitor);
+            TaskData taskData = MylynAccess.getTaskDataByID(
+                    repo, taskId, monitor);
             if (taskData == null) {
                 return status;
             }
             
-            ITask task = getTaskByID(repo, taskData.getTaskId(), monitor);
+            ITask task = MylynAccess.getTaskByID(
+                    repo, taskData.getTaskId(), monitor);
             if (task != null) {
                 ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
                 ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
@@ -441,28 +347,6 @@ public final class ALMAccess {
         }
         return value;
     }
-
-    /**
-     * @param repo
-     *            the task repository
-     * @param taskId
-     *            the taskId
-     * @param monitor
-     *            the monitor to use
-     * @return the tasks data or <code>null</code> if not found
-     * @throws CoreException
-     *             in case of a problem
-     */
-    private static TaskData getTaskDataByID(TaskRepository repo, String taskId,
-            IProgressMonitor monitor) throws CoreException {
-        TaskData taskData = null;
-        if (validRepository(repo)) {
-            AbstractRepositoryConnector connector = TasksUi
-                    .getRepositoryConnector(repo.getConnectorKind());
-            taskData = connector.getTaskData(repo, taskId, monitor);
-        }
-        return taskData;
-    }
     
     /**
      * @param comments
@@ -546,52 +430,6 @@ public final class ALMAccess {
         return CONNECTOR.DEFAULT;
     }
 
-    /**
-     * @param repoLabel
-     *            the repository to test the connection for
-     * @return a status reflecting the current connection state
-     */
-    public static IStatus testConnection(String repoLabel) {
-        TaskRepository repository = getRepositoryByLabel(repoLabel);
-        if (repository == null) {
-            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
-                    Messages.TaskRepositoryNotFound, repoLabel));
-        }
-        if (repository.isOffline()) {
-            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
-                    Messages.TaskRepositoryOffline, repoLabel));
-        }
-        
-        boolean savePassword = repository
-                .getSavePassword(AuthenticationType.REPOSITORY);
-        if (!savePassword) {
-            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
-                    Messages.TaskRepositoryNoCredentialsStored, repoLabel));
-        }
-        
-        AbstractRepositoryConnector connector = TasksUi
-                .getRepositoryConnector(repository.getConnectorKind());
-        if (connector == null) {
-            return new Status(IStatus.ERROR, Activator.ID, NLS.bind(
-                    Messages.TaskRepositoryNoConnectorFound, repoLabel));
-        }
-        
-        try {
-            connector.updateRepositoryConfiguration(repository,
-                    new NullProgressMonitor());
-        } catch (CoreException e) {
-            return new Status(IStatus.ERROR, Activator.ID,
-                    e.getLocalizedMessage().replace("\n\n", " ")); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-        
-        IStatus repoStatus = repository.getStatus();
-        if (repoStatus != null) {
-            return repoStatus;
-        }
-        return Status.OK_STATUS;
-    }
-    
-    
     /**
      * gets the variable out of the {@link TestResultNode} or {@link ITestResultSummaryPO}
      * @param fieldUpdate the FieldUpdate which has all necessary information

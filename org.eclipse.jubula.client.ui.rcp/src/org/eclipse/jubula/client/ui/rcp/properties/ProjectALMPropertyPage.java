@@ -38,7 +38,6 @@ import org.eclipse.jface.viewers.TableViewerFocusCellManager;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.model.ALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -57,6 +56,7 @@ import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedURLText;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
+import org.eclipse.jubula.mylyn.utils.MylynAccess;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.swt.SWT;
@@ -93,7 +93,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage
         public void widgetSelected(SelectionEvent e) {
             String selectedObject = m_almRepoCombo.getSelectedObject();
             if (selectedObject != null) {
-                IStatus connectionStatus = ALMAccess.testConnection(
+                IStatus connectionStatus = MylynAccess.testConnection(
                         selectedObject);
                 if (connectionStatus.isOK()) {
                     m_connectionTest.setImage(IconConstants.STEP_OK_IMAGE);

@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
+import org.eclipse.jubula.mylyn.utils.MylynAccess;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
@@ -184,7 +184,7 @@ public class ControlFactory {
 
         final List<String> values = new ArrayList<String>();
         final List<String> displayValues = new ArrayList<String>();
-        for (TaskRepository repo : ALMAccess.getAllRepositories()) {
+        for (TaskRepository repo : MylynAccess.getAllRepositories()) {
             String repositoryLabel = repo.getRepositoryLabel();
             values.add(repositoryLabel);
             displayValues.add(repositoryLabel);

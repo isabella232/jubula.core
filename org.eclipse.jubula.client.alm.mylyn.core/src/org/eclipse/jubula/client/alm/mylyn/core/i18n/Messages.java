@@ -18,13 +18,8 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.alm.mylyn.core.i18n.messages"; //$NON-NLS-1$
 
-    
     public static String TaskAttributeNotFound;
     public static String UnsupportedTaskAttribute;
-    public static String TaskRepositoryNotFound;
-    public static String TaskRepositoryOffline;
-    public static String TaskRepositoryNoCredentialsStored;
-    public static String TaskRepositoryNoConnectorFound;
     public static String NodeComment;
     public static String StatusPassed;
     public static String StatusFailed;
@@ -39,14 +34,14 @@ public class Messages extends NLS {
     public static String ReportingTaskFailed;
     public static String ReportingAbortedDueVariables;
     public static String NotAvailable;
-    public static String TaskRepositoryConnectionTest;
-    public static String TaskRepositoryConnectionTestFailed;
-    public static String TaskRepositoryConnectionTestSucceeded;
+    public static String UnresolvableVariable;
+    public static String ParsingReportingRuledFailed;
     public static String InvalidAttributeID;
     public static String InvalidValue;
     public static String ReadOnlyAttributeID;
-    public static String UnresolvableVariable;
-    public static String ParsingReportingRuledFailed;
+    public static String TaskRepositoryConnectionTest;
+    public static String TaskRepositoryConnectionTestFailed;
+    public static String TaskRepositoryConnectionTestSucceeded;
     
     static {
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

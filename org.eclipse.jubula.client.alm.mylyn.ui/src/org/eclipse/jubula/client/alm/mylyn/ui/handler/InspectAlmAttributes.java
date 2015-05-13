@@ -19,10 +19,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.alm.mylyn.core.utils.ALMAccess;
 import org.eclipse.jubula.client.alm.mylyn.ui.dialogs.InspectALMAttributesDialog;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.mylyn.utils.MylynAccess;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.mylyn.tasks.core.AbstractRepositoryConnector;
 import org.eclipse.mylyn.tasks.core.IRepositoryManager;
@@ -66,7 +66,7 @@ public class InspectAlmAttributes extends AbstractSelectionBasedHandler {
                     .getRepositoryManager();
             final TaskRepository repo = repositoryManager.getRepository(
                     m_task.getConnectorKind(), m_task.getRepositoryUrl());
-            IStatus ok = ALMAccess.testConnection(repo.getRepositoryLabel());
+            IStatus ok = MylynAccess.testConnection(repo.getRepositoryLabel());
             if (ok.getSeverity() != IStatus.OK) {
                 throw new InvocationTargetException(null, ok.getMessage());
             }
