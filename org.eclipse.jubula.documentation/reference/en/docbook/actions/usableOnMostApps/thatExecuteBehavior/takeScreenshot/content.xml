@@ -1,0 +1,98 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionTakeScreenshot" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="takeScreenshot"?>
+  <title>Take Screenshot</title>
+  
+  <para><emphasis>Take Screenshot</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action takes a screen capture and saves the resulting image to disk.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The action takes a screenshot of the whole screen on the primary monitor. To take a screenshot of only the active window, use the action <emphasis>Take Screenshot of Active Window</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you do not enter a file extension, the screenshot will be saved as a .png file. You can also save the file as an .jpeg or .bmp file.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="destination"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  
+  <para><emphasis>Take Screenshot of Active Window</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action takes a screen capture of the active window on the primary monitor and saves the resulting image to disk.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To take a screenshot of thw whole screen, use the action <emphasis>Take Screenshot</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you do not enter a file extension, the screenshot will be saved as a .png file. You can also save the file as an .jpeg or .bmp file.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You can specify a margin around the active window to extend the range of the screenshot. This may be necessary on some systems where the title bar of some dialogs is not included in the screenshot.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="destination"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="file_access"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>

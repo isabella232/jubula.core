@@ -1,0 +1,52 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionRestart" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="restart"?>
+  <title>Restart</title>
+  
+    <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to restart the AUT during the test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The action closes your AUT and all windows/dialogs associated with it.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          It then starts the same AUT with the same configuration as it had when you originally started it and carries on with the test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If your AUT takes a while to load/to be ready, it is a good idea to use the "<emphasis>wait for window</emphasis>" or "<emphasis>wait for component</emphasis>" action after the restart action.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para role="warning">
+    Do not use the restart action as the first Test Step in a test.
+  </para>
+  
+  <para role="tip">
+        If you want to close your AUT using e.g. the menu and have it restarted automatically, then use the actions to prepare for AUT termination and to synchronize termination and re-start of an AUT.
+  </para>
+  
+  <para>
+    This action has no parameters.
+  </para>
+  
+</section>

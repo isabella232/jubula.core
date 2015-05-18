@@ -1,0 +1,62 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionWaitForWindowActivation" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="waitForWindowActivation"?>
+  <title>Wait for Window Activation</title>
+  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          This action waits for the window you name to become active. A window is active only when it is the currently selected window.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Once the window is active (or if the window is already active when this test step begins), the test continues.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the window does not become active, the action fails.
+        </para>
+      </listitem>
+            <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="title"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay_after_visibility"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>
