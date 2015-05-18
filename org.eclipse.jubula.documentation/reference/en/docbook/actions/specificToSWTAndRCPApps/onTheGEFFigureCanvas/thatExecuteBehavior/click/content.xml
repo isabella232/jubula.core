@@ -1,0 +1,66 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionClickGEF" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="click"?>
+  <title>Click</title>
+  
+  <para><emphasis>Click Connection</emphasis></para>
+  <para>
+    Use this action to click a connection between two figures.
+  </para>
+  
+  <para><emphasis>Click Figure</emphasis></para>
+  <para>
+    Use this action to click a figure you specify on the canvas.
+  </para>
+  
+  <para><emphasis>Click in Figure</emphasis></para>
+  <para>
+    Use this action to click within a figure you specify. The place to click in the figure is given with X and Y units.
+  </para>
+  
+  <para>
+    Parameters:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="source_text_path"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="source_operator"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="target_text_path"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="target_operator"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="number_of_clicks"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="mouse_button"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>
