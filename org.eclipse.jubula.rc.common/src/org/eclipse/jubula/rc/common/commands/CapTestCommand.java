@@ -229,7 +229,12 @@ public class CapTestCommand implements ICommand {
             MethodInvoker invoker = new MethodInvoker(messageCap);
             Object returnValue = invoker.invoke(implClass);
             response.setReturnValue((String)returnValue);
-            if ("true".equals(System.getenv("LogExecutedCaps"))) {
+            if ("true".equals(System.getenv("LogExecutedCaps"))
+                    && messageCap != null
+                    && messageCap.getCi() != null
+                    && messageCap.getCi().getComponentClassName() != null
+                    && messageCap.getAction() != null
+                    && messageCap.getAction().getName() != null) {
                 CAPLOG.debug(messageCap.getCi().getComponentClassName() + " - "
                         + CompSystemI18n.getString(
                                 messageCap.getAction().getName()));
