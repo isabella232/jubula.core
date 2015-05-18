@@ -12,7 +12,6 @@ package org.eclipse.jubula.mylyn.exceptions;
 
 /**
  * @author BREDEX GmbH
- *
  */
 public class InvalidALMAttributeException extends Exception {
     /** serialVersionUID */

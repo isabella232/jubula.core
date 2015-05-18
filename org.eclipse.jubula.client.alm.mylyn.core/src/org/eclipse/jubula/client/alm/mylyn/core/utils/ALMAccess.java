@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.core.utils.IParamValueToken;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
 import org.eclipse.jubula.client.core.utils.VariableToken;
-import org.eclipse.jubula.mylyn.exceptions.InvalidALMAttributeException;
 import org.eclipse.jubula.mylyn.utils.MylynAccess;
 import org.eclipse.jubula.mylyn.utils.MylynAccess.CONNECTOR;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -162,143 +161,63 @@ public final class ALMAccess {
 
     /**
      * Updates fields in ALM system
-     * @param repoLabel name of repo
-     * @param taskId task id
-     * @param fieldUpdates list of field updates
-     * @param monitor monitor
+     * 
+     * @param repoLabel
+     *            name of repository
+     * @param taskId
+     *            task id
+     * @param fieldUpdates
+     *            list of field updates
+     * @param monitor
+     *            monitor
      * @return OK if succeeded; WARNING when problems; ERROR otherwise
      */
     public static IStatus updateFields(String repoLabel, String taskId,
             List<FieldUpdate> fieldUpdates, IProgressMonitor monitor) {
-        IStatus status = new Status(IStatus.ERROR, Activator.ID,
-                "Unknown error."); //$NON-NLS-1$
-        TaskRepository repo = MylynAccess.getRepositoryByLabel(repoLabel);
+        IStatus status;
         try {
-            TaskData taskData = MylynAccess.getTaskDataByID(
-                    repo, taskId, monitor);
-            if (taskData == null) {
-                return status;
-            }
-            
-            ITask task = MylynAccess.getTaskByID(
-                    repo, taskData.getTaskId(), monitor);
-            if (task != null) {
-                ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
-                ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
-                    .createWorkingCopy(task, taskData);
-                TaskDataModel taskModel = new TaskDataModel(repo, task,
-                    taskWorkingCopy);
-                
-                String connectorKind = repo.getConnectorKind();
-                AbstractRepositoryConnector connector = TasksUi
-                    .getRepositoryConnector(connectorKind);
-                AbstractTaskDataHandler taskDataHandler = connector
-                    .getTaskDataHandler();
-                TaskAttribute rootData = taskModel.getTaskData()
-                    .getRoot();
-                CONNECTOR handle = determineConnectorHandling(connectorKind);
-                List<TaskAttribute> changes = null;
-                switch (handle) {
-                    case HP_ALM:
-                    case DEFAULT:
-                    default:
-                        changes = defaultFieldUpdateHandling(
-                                fieldUpdates, rootData);
-                        break;
-                }
-                if (changes.isEmpty()) {
-                    return status;
-                }
-                for (TaskAttribute change : changes) {
-                    taskModel.attributeChanged(change);
-                }
-                
-                RepositoryResponse response = taskDataHandler.postTaskData(
-                    taskModel.getTaskRepository(), taskModel.getTaskData(),
-                    taskModel.getChangedOldAttributes(), monitor);
-                
-                if (RepositoryResponse.ResponseKind.TASK_UPDATED
-                        .equals(response.getReposonseKind())) {
-                    status = new Status(IStatus.OK, Activator.ID,
-                            "Task has been updated."); //$NON-NLS-1$
-                } else {
-                    status = new Status(IStatus.WARNING, Activator.ID,
-                            "Task has not been updated successfully."); //$NON-NLS-1$
-                }
-            }
-        } catch (InvalidALMAttributeException e) {
-            status = new Status(IStatus.ERROR, Activator.ID,
-                    e.getMessage());
+            TaskRepository repo = MylynAccess.getRepositoryByLabel(repoLabel);
+            status = MylynAccess.updateAttributes(repo, taskId,
+                    attributeUpdateMapping(fieldUpdates), monitor);
         } catch (CouldNotResolveException e) {
             status = new Status(IStatus.CANCEL, Activator.ID,
                     "Could not resolve variable"); //$NON-NLS-1$
-        } catch (CoreException e) {
-            status = new Status(IStatus.ERROR, Activator.ID,
-                    e.getLocalizedMessage());
-        } catch (IllegalArgumentException e) {
-            LOG.error("IllegalArgumentException occured", e); //$NON-NLS-1$
-            // This is necessary due to an IllegalArgumentException which might be
-            // thrown in the TaskDataHandler
-            status = new Status(IStatus.ERROR, Activator.ID,
-                    e.getLocalizedMessage(), e);
         }
         return status;
     }
     
     /**
-     * Creates list of task attributes to change for default repository type
-     * @param fieldUpdates the field updates
-     * @param rootAttr root attribute
+     * Creates list of task attributes to change
+     * 
+     * @param fieldUpdates
+     *            the field updates
      * @return list of task attributes to change
-     * @throws InvalidALMAttributeException 
      * @throws CouldNotResolveException
      */
-    private static List<TaskAttribute> defaultFieldUpdateHandling(
-            List<FieldUpdate> fieldUpdates, TaskAttribute rootAttr)
-        throws InvalidALMAttributeException, CouldNotResolveException {
-        List<TaskAttribute> changes = new ArrayList<TaskAttribute>();
+    private static List<Map<String, String>> attributeUpdateMapping(
+            List<FieldUpdate> fieldUpdates) throws CouldNotResolveException {
+        List<Map<String, String>> attributeUpdates = 
+                new ArrayList<Map<String, String>>(fieldUpdates.size());
 
         boolean failed = false;
         for (FieldUpdate u : fieldUpdates) {
             Map<String, String> attributesToChange = u.getAttributesToChange();
             for (String key : attributesToChange.keySet()) {
-                if (StringUtils.isBlank(key)) {
-                    throw new InvalidALMAttributeException(NLS.bind(
-                            Messages.InvalidAttributeID,
-                            StringConstants.EMPTY));
-                }
-                TaskAttribute fieldUpdate = rootAttr.getAttribute(key);
-                if (fieldUpdate == null) {
-                    throw new InvalidALMAttributeException(NLS.bind(
-                            Messages.InvalidAttributeID, key));
-                }
-                if (fieldUpdate.getMetaData().isReadOnly()) {
-                    throw new InvalidALMAttributeException(NLS.bind(
-                            Messages.ReadOnlyAttributeID, key));
-                }
                 String value = attributesToChange.get(key);
                 try {
                     value = getVariableValues(value, u);
+                    attributesToChange.put(key, value);
                 } catch (CouldNotResolveException ce) {
                     // First validating all attributes and values before ending
                     failed = true;
                 }
-                Map<String, String> options = fieldUpdate.getOptions();
-                if (options != null && !options.isEmpty()) {
-                    if (!options.containsKey(value)) {
-                        throw new InvalidALMAttributeException(NLS.bind(
-                                Messages.InvalidValue, value, key));
-                    }
-                }
-                fieldUpdate.setValue(value);
-
-                changes.add(fieldUpdate);
             }
+            attributeUpdates.add(attributesToChange);
         }
         if (failed) {
             throw new CouldNotResolveException();
         }
-        return changes;
+        return attributeUpdates;
     }
 
     /**
@@ -322,9 +241,9 @@ public final class ALMAccess {
             }
             List<IParamValueToken> liste = converter.getTokens();
             String result = StringConstants.EMPTY;
-            for (Iterator iterator = liste.iterator(); iterator.hasNext();) {
-                IParamValueToken iParamValueToken = (IParamValueToken) iterator
-                        .next();
+            for (Iterator<IParamValueToken> iter = liste.iterator(); 
+                    iter.hasNext();) {
+                IParamValueToken iParamValueToken = iter.next();
                 if (iParamValueToken instanceof VariableToken) {
                     try {
                         result += getBeanString(fieldUpdate,

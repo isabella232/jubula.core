@@ -36,9 +36,6 @@ public class Messages extends NLS {
     public static String NotAvailable;
     public static String UnresolvableVariable;
     public static String ParsingReportingRuledFailed;
-    public static String InvalidAttributeID;
-    public static String InvalidValue;
-    public static String ReadOnlyAttributeID;
     public static String TaskRepositoryConnectionTest;
     public static String TaskRepositoryConnectionTestFailed;
     public static String TaskRepositoryConnectionTestSucceeded;
