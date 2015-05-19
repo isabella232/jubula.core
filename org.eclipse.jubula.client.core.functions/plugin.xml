@@ -203,5 +203,67 @@
             type="string">
       </parameter>
    </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.SystemPropertyEvaluator"
+         evaluator="local"
+         name="ite_getSystemProperty">
+      <parameter
+            name="propertyName"
+            type="string">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.EnvironmentPropertyEvaluator"
+         evaluator="local"
+         name="ite_getEnvironmentProperty">
+      <parameter
+            name="propertyName"
+            type="string">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.TestUDVEvaluator"
+         evaluator="local"
+         name="ite_getTestUDV">
+      <parameter
+            name="envName"
+            type="string">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.Substring"
+         evaluator="local"
+         name="substring">
+      <parameter
+            name="string"
+            type="string">
+      </parameter>
+      <parameter
+            name="from"
+            type="number">
+      </parameter>
+      <parameter
+            name="to"
+            type="number">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.Trim"
+         evaluator="local"
+         name="trim">
+      <parameter
+            name="string"
+            type="string">
+      </parameter>
+   </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.Concat"
+         evaluator="local"
+         name="concat">
+      <varArg
+            defaultArgumentCount="2"
+            type="string">
+      </varArg>
+   </function>
    </extension>
 </plugin>
