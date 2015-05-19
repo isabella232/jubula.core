@@ -16,17 +16,6 @@
   <para>
     Use this action to click a connection between two figures.
   </para>
-  
-  <para><emphasis>Click Figure</emphasis></para>
-  <para>
-    Use this action to click a figure you specify on the canvas.
-  </para>
-  
-  <para><emphasis>Click in Figure</emphasis></para>
-  <para>
-    Use this action to click within a figure you specify. The place to click in the figure is given with X and Y units.
-  </para>
-  
   <para>
     Parameters:
     
@@ -59,6 +48,90 @@
       <listitem>
         <para>
           <xref linkend="mouse_button"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  
+  <para><emphasis>Click Figure</emphasis></para>
+  <para>
+    Use this action to click a figure you specify on the canvas.
+  </para>
+  <para>
+    Parameters:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="textpath"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="operator"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="number_of_clicks"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="mouse_button"/>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para><emphasis>Click in Figure</emphasis></para>
+  <para>
+    Use this action to click within a figure you specify. The place to click in the figure is given with X and Y units.
+  </para>
+  
+  <para>
+    Parameters:
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          <xref linkend="textpath"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="operator"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="number_of_clicks"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="mouse_button"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="x_position"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="x_units"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="y_position"/>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          <xref linkend="y_units"/>
         </para>
       </listitem>
     </itemizedlist>

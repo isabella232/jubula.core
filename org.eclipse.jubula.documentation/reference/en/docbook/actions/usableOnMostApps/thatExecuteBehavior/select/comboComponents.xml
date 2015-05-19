@@ -84,6 +84,16 @@
           Parameters:
           
           <itemizedlist>
+          	<listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
             <listitem>
               <para>
                 <xref linkend="text"/>

@@ -62,6 +62,11 @@
             		<xref linkend="delay_after_visibility"/>	
             	</para>
             </listitem>
+            <listitem>
+            	<para>
+            		<xref linkend="locator"/>	
+            	</para>
+            </listitem>
        	 </itemizedlist>
         </para>
       </listitem>

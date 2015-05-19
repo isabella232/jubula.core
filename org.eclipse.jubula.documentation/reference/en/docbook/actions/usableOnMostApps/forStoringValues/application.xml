@@ -29,6 +29,11 @@
                 <xref linkend="variable_name"/>
               </para>
             </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>

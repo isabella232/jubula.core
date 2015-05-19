@@ -35,9 +35,29 @@
           Parameters:
           
           <itemizedlist>
+          	<listitem>
+              <para>
+                <xref linkend="create_directories"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay"/>
+              </para>
+            </listitem>
             <listitem>
               <para>
                 <xref linkend="destination"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="file_access"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="scaling_factor"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -75,9 +95,9 @@
           Parameters:
           
           <itemizedlist>
-            <listitem>
+          	<listitem>
               <para>
-                <xref linkend="destination"/>
+                <xref linkend="create_directories"/>
               </para>
             </listitem>
             <listitem>
@@ -87,7 +107,17 @@
             </listitem>
             <listitem>
               <para>
+                <xref linkend="destination"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
                 <xref linkend="file_access"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="scaling_factor"/>
               </para>
             </listitem>
           </itemizedlist>

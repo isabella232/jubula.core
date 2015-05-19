@@ -1,0 +1,45 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="time_per_word" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  	<title>Time per word</title>
+  
+  	<table>
+  		<title>TIME_PER_WORD</title>
+  		<tgroup cols="4" align="left" colsep="1" rowsep="1">
+  			<thead>
+  				<row>
+  					<entry align="center">Parameter Name</entry>
+  					<entry align="center">Data Type</entry>
+  					<entry align="center">Possible Values</entry>
+  					<entry align="center">Default</entry>	
+  				</row>
+  			</thead>
+  			<tbody>
+  				<row>
+  					<entry>Time per Word (in milliseconds)</entry>
+  					<entry>Integer</entry>
+  					<entry></entry>
+  					<entry>500</entry>
+  				</row>
+  			</tbody>
+  		</tgroup>
+  	</table>
+  	<itemizedlist>
+  		<listitem>Use this parameter to define how log the text should be shown for.</listitem>
+  		<listitem>The time is calculated per word.</listitem>
+  		<listitem>Enter the value (in milliseconds) that you want to allow per word.</listitem>
+  		<listitem>For 3 seconds, enter 3000.</listitem>
+  		<listitem>The time per word is multiplied by the amount of words in your text to give the total
+  		amount of time the text is shown for.</listitem>
+  	</itemizedlist>
+  
+  
+</section>

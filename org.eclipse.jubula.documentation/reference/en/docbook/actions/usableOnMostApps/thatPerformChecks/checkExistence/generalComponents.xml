@@ -137,6 +137,11 @@
                 <xref linkend="y_units"/>
               </para>
             </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>
@@ -253,6 +258,11 @@
             <listitem>
               <para>
                 <xref linkend="y_units"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="mouse_button"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -34,6 +34,16 @@
                 <xref linkend="text"/>
               </para>
             </listitem>
+            <listitem>
+              <para>
+                <xref linkend="textsize"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="time_per_word"/>
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>
