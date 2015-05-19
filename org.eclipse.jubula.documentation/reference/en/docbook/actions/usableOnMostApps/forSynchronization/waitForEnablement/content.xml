@@ -34,6 +34,24 @@
           The event handler waits for a certain amount of time (in ms) and then retries the check again.
         </para>
       </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="enabled"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="millisecs"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
 </section>

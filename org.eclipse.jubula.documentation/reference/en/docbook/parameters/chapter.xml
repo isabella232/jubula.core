@@ -43,6 +43,7 @@
   <xi:include href="indexpath/content.xml"/>
   <xi:include href="insertAfterPattern/content.xml"/>
   <xi:include href="key/content.xml"/>
+  <xi:include href="label/content.xml"/>
   <xi:include href="local/content.xml"/>
   <xi:include href="locator/content.xml"/> 
   <xi:include href="marginBottom/content.xml"/>
@@ -74,10 +75,13 @@
   <xi:include href="text/content.xml"/>
   <xi:include href="textOperator/content.xml"/>
   <xi:include href="textpath/content.xml"/>
+  <xi:include href="textSize/content.xml"/>
   <xi:include href="timeoutInMillisecs/content.xml"/>
+  <xi:include href="timePerWord/content.xml"/>
   <xi:include href="timerName/content.xml"/>
   <xi:include href="timerValueVariableName/content.xml"/>
   <xi:include href="title/content.xml"/>
+  <xi:include href="type/content.xml"/>
   <xi:include href="url/content.xml"/>
   <xi:include href="value/content.xml"/>
   <xi:include href="value1/content.xml"/>

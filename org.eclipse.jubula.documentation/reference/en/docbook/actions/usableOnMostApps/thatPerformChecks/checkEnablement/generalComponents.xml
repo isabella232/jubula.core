@@ -179,6 +179,11 @@
           Parameters:
           
           <itemizedlist>
+          	<listitem>
+              <para>
+                <xref linkend="enabled"/>
+              </para>
+            </listitem>
             <listitem>
               <para>
                 <xref linkend="textpath"/>
@@ -245,6 +250,11 @@
             <listitem>
               <para>
                 <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="enabled"/>
               </para>
             </listitem>
             <listitem>

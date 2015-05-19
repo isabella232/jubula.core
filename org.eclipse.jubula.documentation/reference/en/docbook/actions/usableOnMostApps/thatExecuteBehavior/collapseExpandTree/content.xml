@@ -91,6 +91,11 @@
             </listitem>
             <listitem>
               <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
                 <xref linkend="textpath"/>
               </para>
             </listitem>
@@ -175,6 +180,11 @@
             <listitem>
               <para>
                 <xref linkend="pre_ascend"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
               </para>
             </listitem>
             <listitem>
