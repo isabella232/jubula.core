@@ -28,8 +28,8 @@
   					<entry>Boolean</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>true</listitem>
-  							<listitem>false</listitem>
+  							<listitem><para>true</para></listitem>
+  							<listitem><para>false</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>true</entry>
@@ -38,10 +38,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Set this parameter to <emphasis>true</emphasis> to insert the text after the 
-  		pattern</listitem>
-  		<listitem>Set this parameter to <emphasis>false</emphasis> to insert the text before the 
-  		pattern</listitem>
+  		<listitem><para>Set this parameter to <emphasis>true</emphasis> to insert the text after the 
+  		pattern.</para></listitem>
+  		<listitem><para>Set this parameter to <emphasis>false</emphasis> to insert the text before the 
+  		pattern.</para></listitem>
   	</itemizedlist>
   
   

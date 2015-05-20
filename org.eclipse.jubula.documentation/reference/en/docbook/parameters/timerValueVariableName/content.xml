@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the variable name you will use to save the time difference between starting the timer
-  		and reading it.</listitem>
+  		<listitem><para>Enter the variable name you will use to save the time difference between starting the timer
+  		and reading it.</para></listitem>
   	</itemizedlist>
   
   

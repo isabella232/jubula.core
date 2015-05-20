@@ -28,9 +28,9 @@
   					<entry>Integer</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>1</listitem>
-  							<listitem>2</listitem>
-  							<listitem>3</listitem>
+  							<listitem><para>1</para></listitem>
+  							<listitem><para>2</para></listitem>
+  							<listitem><para>3</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>1</entry>
@@ -39,15 +39,15 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to select which mouse button you want to click with:
+  		<listitem><para>Use this parameter to select which mouse button you want to click with:</para>
   			<itemizedlist>
-  				<listitem>1 = left mouse button</listitem>
-  				<listitem>2 = middle mouse button</listitem>
-  				<listitem>3 = right mouse button</listitem>
+  				<listitem><para>1 = left mouse button</para></listitem>
+  				<listitem><para>2 = middle mouse button</para></listitem>
+  				<listitem><para>3 = right mouse button</para></listitem>
   			</itemizedlist>
   		</listitem>
-  		<listitem>The mouse button you use to click with can also have an effect on what happens</listitem>
-  		<listitem>The button to click will depend on your AUT and what the click should achieve.</listitem>
+  		<listitem><para>The mouse button you use to click with can also have an effect on what happens</para></listitem>
+  		<listitem><para>The button to click will depend on your AUT and what the click should achieve.</para></listitem>
   	</itemizedlist>
   
   

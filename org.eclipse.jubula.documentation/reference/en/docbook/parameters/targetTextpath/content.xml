@@ -33,16 +33,16 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to enter the textpath of the first figure that has this
-  		connection.</listitem>
-  		<listitem>Enter the path to the item as a textpath</listitem>
-  		<listitem>Use slash '/' as a path separator to separate parent nodes from child nodes.</listitem>
-  		<listitem>For example <emphasis>File/Open/</emphasis> or <emphasis>Category/Action</emphasis>.</listitem>
-  		<listitem>Either make sure that your path is written exactly as it appears in the interface
-  		or use a regular expression to match the text.</listitem>
-  		<listitem>Each segment of the path will be used to find a corresponding item, using the
-  		operator provided.</listitem>
-  		<listitem>Use the GEF Inspector View to find out the textpath of items on the canvas</listitem>
+  		<listitem><para>Use this parameter to enter the textpath of the first figure that has this
+  		connection.</para></listitem>
+  		<listitem><para>Enter the path to the item as a textpath</para></listitem>
+  		<listitem><para>Use slash '/' as a path separator to separate parent nodes from child nodes.</para></listitem>
+  		<listitem><para>For example <emphasis>File/Open/</emphasis> or <emphasis>Category/Action</emphasis>.</para></listitem>
+  		<listitem><para>Either make sure that your path is written exactly as it appears in the interface
+  		or use a regular expression to match the text.</para></listitem>
+  		<listitem><para>Each segment of the path will be used to find a corresponding item, using the
+  		operator provided.</para></listitem>
+  		<listitem><para>Use the GEF Inspector View to find out the textpath of items on the canvas</para></listitem>
   	</itemizedlist>
   
   

@@ -28,10 +28,10 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>up</listitem>
-  							<listitem>down</listitem>
-  							<listitem>right</listitem>
-  							<listitem>left</listitem>
+  							<listitem><para>up</para></listitem>
+  							<listitem><para>down</para></listitem>
+  							<listitem><para>right</para></listitem>
+  							<listitem><para>left</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>right</entry>
@@ -40,12 +40,12 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to define the direction you want to move/swipe in.</listitem>
-  		<listitem>Combined with the cell/node count you can move any number of cells/nodes in any
-  		direction.</listitem>
-  		<listitem>For iOS applications you can define the direction you want a swipe to be performed on the
+  		<listitem><para>Use this parameter to define the direction you want to move/swipe in.</para></listitem>
+  		<listitem><para>Combined with the cell/node count you can move any number of cells/nodes in any
+  		direction.</para></listitem>
+  		<listitem><para>For iOS applications you can define the direction you want a swipe to be performed on the
   		desired component. Direction means the direction in which the finger would swipe, e.g. 
-  		<emphasis>left</emphasis> means that the swipe is performed from right to left on the component.</listitem>
+  		<emphasis>left</emphasis> means that the swipe is performed from right to left on the component.</para></listitem>
   	</itemizedlist>
   
   

@@ -33,12 +33,12 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the name of the variable to want to use.</listitem>
-  		<listitem>Variable names may only contain letters, numbers and underscores.</listitem>
-  		<listitem>You can then enter this variable name as data for other Test Cases.</listitem>
-  		<listitem>When you enter the variable name as data, place a dollar sign before it.</listitem>
-  		<listitem>The data associated with this variable name remains the same until the project is closed,
-  		or until you overwrite the name by using it for another value.</listitem>
+  		<listitem><para>Enter the name of the variable to want to use.</para></listitem>
+  		<listitem><para>Variable names may only contain letters, numbers and underscores.</para></listitem>
+  		<listitem><para>You can then enter this variable name as data for other Test Cases.</para></listitem>
+  		<listitem><para>When you enter the variable name as data, place a dollar sign before it.</para></listitem>
+  		<listitem><para>The data associated with this variable name remains the same until the project is closed,
+  		or until you overwrite the name by using it for another value.</para></listitem>
   	</itemizedlist>
   
   

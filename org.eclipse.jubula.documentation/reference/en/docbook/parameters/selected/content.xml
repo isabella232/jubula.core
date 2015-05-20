@@ -28,8 +28,8 @@
   					<entry>Boolean</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>true</listitem>
-  							<listitem>false</listitem>
+  							<listitem><para>true</para></listitem>
+  							<listitem><para>false</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>true</entry>
@@ -38,8 +38,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Set this parameter to true if you expect the component to be selected.</listitem>
-  		<listitem>Set this parameter to false if you expect the component to not be selected.</listitem>
+  		<listitem><para>Set this parameter to true if you expect the component to be selected.</para></listitem>
+  		<listitem><para>Set this parameter to false if you expect the component to not be selected.</para></listitem>
   	</itemizedlist>
   
   

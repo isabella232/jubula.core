@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>percent</listitem>
-  							<listitem>pixels</listitem>
+  							<listitem><para>percent</para></listitem>
+  							<listitem><para>pixels</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>percent</entry>
@@ -38,10 +38,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to specify whether you want your values for the x-coordinate to be in
-  		pixels or percent.</listitem>
-  		<listitem>If you choose percent for this parameter, and 50 for the x-position parameter, the click will
-  		always be in the middle of the x-axis.</listitem>
+  		<listitem><para>Use this parameter to specify whether you want your values for the x-coordinate to be in
+  		pixels or percent.</para></listitem>
+  		<listitem><para>If you choose percent for this parameter, and 50 for the x-position parameter, the click will
+  		always be in the middle of the x-axis.</para></listitem>
   	</itemizedlist>
   
   

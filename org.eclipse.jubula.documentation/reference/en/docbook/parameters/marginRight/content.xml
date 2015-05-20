@@ -6,7 +6,7 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="margin_bottom" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="margin_right" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                              xmlns:xi="http://www.w3.org/2001/XInclude"
                                              xmlns:xl="http://www.w3.org/1999/xlink" >
   	<title>Margin Right</title>
@@ -33,11 +33,11 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to enter the amount of pixels you wish to include in the
-  		screenshot to the right of the dialog</listitem>
-  		<listitem>You can enter positive and negative values.</listitem>
-  		<listitem>Enter 0 to neither extend nor reduce the margin.</listitem>
-  		<listitem></listitem>
+  		<listitem><para>Use this parameter to enter the amount of pixels you wish to include in the
+  		screenshot to the right of the dialog</para></listitem>
+  		<listitem><para>You can enter positive and negative values.</para></listitem>
+  		<listitem><para>Enter 0 to neither extend nor reduce the margin.</para></listitem>
+  		<listitem><para></para></listitem>
   	</itemizedlist>
   
   

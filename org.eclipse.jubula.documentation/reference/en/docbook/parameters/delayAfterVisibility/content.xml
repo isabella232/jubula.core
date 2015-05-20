@@ -33,10 +33,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Sometimes a widget is not ready to receive events (mouse clicks, key presses) until
-  		a few moments after becoming visible.</listitem>
-  		<listitem>Use this parameter to set the amount of time (in milliseconds) to wait once the
-  		widget has appeared before continuing.</listitem>
+  		<listitem><para>Sometimes a widget is not ready to receive events (mouse clicks, key presses) until
+  		a few moments after becoming visible.</para></listitem>
+  		<listitem><para>Use this parameter to set the amount of time (in milliseconds) to wait once the
+  		widget has appeared before continuing.</para></listitem>
   	</itemizedlist>
   
   

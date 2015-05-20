@@ -33,15 +33,15 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to specify which command to execute.</listitem>
-  		<listitem>Give the path to the command, either on the local machine or on the remote machine
-  		, as define in the <emphasis>local</emphasis> parameter</listitem>
-  		<listitem>Relative paths can be written simply with the white spaces included. You will need
+  		<listitem><para>Use this parameter to specify which command to execute.</para></listitem>
+  		<listitem><para>Give the path to the command, either on the local machine or on the remote machine
+  		, as define in the <emphasis>local</emphasis> parameter</para></listitem>
+  		<listitem><para>Relative paths can be written simply with the white spaces included. You will need
   		to use quotes (") around the path or command if you are using path fragments (e.g ./ or ../)
-  		for the relative path.</listitem>
-  		<listitem>When using absolute paths, use quotes (") around the command or parameter containing
-  		the white spaces.</listitem>
-  		<listitem>You need to use quotes for path fragments as for example, instead of
+  		for the relative path.</para></listitem>
+  		<listitem><para>When using absolute paths, use quotes (") around the command or parameter containing
+  		the white spaces.</para></listitem>
+  		<listitem><para>You need to use quotes for path fragments as for example, instead of</para>
   			<para>
   				C:\Program Files\MyProgram\example.exe -data C:\Program Files\MyProgram\ws
   			</para>
@@ -52,9 +52,9 @@
   				"C:\Program Files\MyProgram\example.exe" -data "C:\Program Files\MyProgram\ws"
   			</para>
   		</listitem>
-  		<listitem>In Linux, quotes may be placed around the command and the parameter. Windows cmd.exe
-  		can only accept quotes in either the parameter or the command.</listitem>
-  		<listitem>Please bear in mind that strings within quotes are not checked for validity.</listitem>
+  		<listitem><para>In Linux, quotes may be placed around the command and the parameter. Windows cmd.exe
+  		can only accept quotes in either the parameter or the command.</para></listitem>
+  		<listitem><para>Please bear in mind that strings within quotes are not checked for validity.</para></listitem>
   	</itemizedlist>
   
   
