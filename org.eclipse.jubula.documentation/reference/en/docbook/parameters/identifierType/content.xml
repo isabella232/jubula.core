@@ -28,9 +28,9 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>title</listitem>
-  							<listitem>name</listitem>
-  							<listitem>any</listitem>
+  							<listitem><para>title</para></listitem>
+  							<listitem><para>name</para></listitem>
+  							<listitem><para>any</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>none</entry>
@@ -39,7 +39,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Choose the type of identifier you are using:</listitem>
+  		<listitem><para>Choose the type of identifier you are using:</para></listitem>
   		<listitem><emphasis role="strong">title:</emphasis> If you use the title, this is the window
   		title that you can see at the top of the window. This action only supports
   		<emphasis>equals</emphasis> as a matching operator - if you want to be able to match window

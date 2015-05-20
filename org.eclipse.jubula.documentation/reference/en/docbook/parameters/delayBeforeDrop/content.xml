@@ -33,9 +33,9 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to wait before dropping the item you have dragged.</listitem>
-  		<listitem>This can be useful to give the user interface time to scroll etc.</listitem>
-  		<listitem>Give the time to delay in milliseconds.</listitem>
+  		<listitem><para>Use this parameter to wait before dropping the item you have dragged.</para></listitem>
+  		<listitem><para>This can be useful to give the user interface time to scroll etc.</para></listitem>
+  		<listitem><para>Give the time to delay in milliseconds.</para></listitem>
   	</itemizedlist>
   
   

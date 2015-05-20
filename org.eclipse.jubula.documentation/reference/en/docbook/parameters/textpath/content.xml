@@ -33,9 +33,9 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the path to an item as a textpath.</listitem>
-  		<listitem>Use slash '/' as a path separator to separate parent items from child items.</listitem>
-  		<listitem>For example <emphasis>File/Open/</emphasis> or <emphasis>Category/Action</emphasis>.</listitem>
+  		<listitem><para>Enter the path to an item as a textpath.</para></listitem>
+  		<listitem><para>Use slash '/' as a path separator to separate parent items from child items.</para></listitem>
+  		<listitem><para>For example <emphasis>File/Open/</emphasis> or <emphasis>Category/Action</emphasis>.</para></listitem>
   		<listitem>Either make sure that your path is written exactly as it appears in the interface
   		or use a regular expression to match the text.</listitem>
   		<listitem>Each segment of the path will be used to find a corresponding item, using the

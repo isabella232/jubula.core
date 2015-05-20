@@ -35,9 +35,9 @@
   	<itemizedlist>
   		<listitem>Use this parameter to enter the amount of pixels you wish to include in the
   		screenshot to the right of the dialog</listitem>
-  		<listitem>You can enter positive and negative values.</listitem>
-  		<listitem>Enter 0 to neither extend nor reduce the margin.</listitem>
-  		<listitem></listitem>
+  		<listitem><para>You can enter positive and negative values.</para></listitem>
+  		<listitem><para>Enter 0 to neither extend nor reduce the margin.</para></listitem>
+  		<listitem><para></para></listitem>
   	</itemizedlist>
   
   

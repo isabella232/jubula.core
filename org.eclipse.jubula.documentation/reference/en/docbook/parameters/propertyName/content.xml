@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the name of the property you want perform an action on.</listitem>
-  		<listitem>For example, to check the width, enter <emphasis>width</emphasis>.</listitem>
+  		<listitem><para>Enter the name of the property you want perform an action on.</para></listitem>
+  		<listitem><para>For example, to check the width, enter <emphasis>width</emphasis>.</para></listitem>
   	</itemizedlist>
   
   

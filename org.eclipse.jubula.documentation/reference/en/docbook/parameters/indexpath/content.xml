@@ -33,9 +33,9 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the path to the item as an indexpath.</listitem>
-  		<listitem>Use slash '/' as a path separator (to separate parent nodes from child nodes).</listitem>
-  		<listitem>For example, '1/2' (without the quotes).</listitem>
+  		<listitem><para>Enter the path to the item as an indexpath.</para></listitem>
+  		<listitem><para>Use slash '/' as a path separator (to separate parent nodes from child nodes).</para></listitem>
+  		<listitem><para>For example, '1/2' (without the quotes).</para></listitem>
   	</itemizedlist>
   
   

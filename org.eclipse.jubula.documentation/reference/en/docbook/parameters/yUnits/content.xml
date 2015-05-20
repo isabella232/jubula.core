@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>percent</listitem>
-  							<listitem>pixels</listitem>
+  							<listitem><para>percent</para></listitem>
+  							<listitem><para>pixels</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>percent</entry>

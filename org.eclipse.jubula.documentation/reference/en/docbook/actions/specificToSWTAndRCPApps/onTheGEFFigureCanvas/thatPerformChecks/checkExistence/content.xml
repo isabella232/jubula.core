@@ -55,8 +55,9 @@
   <para>
     Use this action to check whether a tool entry exists.
   </para>
-  <listitem>
-        <para>
+  <itemizedlist>
+  	<listitem>
+  		<para>
           Parameters:
           
           <itemizedlist>
@@ -77,5 +78,6 @@
             </listitem>
           </itemizedlist>
         </para>
-      </listitem>
+   </listitem>
+  </itemizedlist>
 </section>

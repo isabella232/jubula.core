@@ -28,8 +28,8 @@
   					<entry>Boolean</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>true</listitem>
-  							<listitem>false</listitem>
+  							<listitem><para>true</para></listitem>
+  							<listitem><para>false</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>true</entry>

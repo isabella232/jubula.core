@@ -28,8 +28,8 @@
   					<entry>Boolean</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>true</listitem>
-  							<listitem>false</listitem>
+  							<listitem><para>true</para></listitem>
+  							<listitem><para>false</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>false</entry>
@@ -41,8 +41,8 @@
   		<listitem>Use this parameter to define whether a command should be run locally (on the
   		same machine as the ITE) or remotely (on the machine where the AUT Agent is installed, and 
   		the AUT is running).</listitem>
-  		<listitem>Set this parameter to true to run the command locally.</listitem>
-  		<listitem>Set this parameter to false to run the command remotely.</listitem>
+  		<listitem><para>Set this parameter to true to run the command locally.</para></listitem>
+  		<listitem><para>Set this parameter to false to run the command remotely.</para></listitem>
   	</itemizedlist>
   
   

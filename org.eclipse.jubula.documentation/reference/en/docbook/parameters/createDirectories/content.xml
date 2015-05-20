@@ -28,8 +28,8 @@
   					<entry>BOOLEAN</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>true</listitem>
-  							<listitem>false</listitem>
+  							<listitem><para>true</para></listitem>
+  							<listitem><para>false</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>true</entry>
@@ -38,11 +38,11 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to determine how the image is saved if the given path does
-  		not exist.</listitem>
-  		<listitem>Select <emphasis>true</emphasis> to create the necessary directories automatically</listitem>
-  		<listitem>Selecting <emphasis>false</emphasis> will cause the test step to fail if the path
-  		does not already exist.</listitem>
+  		<listitem><para>Use this parameter to determine how the image is saved if the given path does
+  		not exist.</para></listitem>
+  		<listitem><para>Select <emphasis>true</emphasis> to create the necessary directories automatically</para></listitem>
+  		<listitem><para>Selecting <emphasis>false</emphasis> will cause the test step to fail if the path
+  		does not already exist.</para></listitem>
   	</itemizedlist>
   
   

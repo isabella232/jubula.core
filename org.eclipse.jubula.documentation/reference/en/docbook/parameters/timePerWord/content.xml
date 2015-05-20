@@ -33,10 +33,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to define how log the text should be shown for.</listitem>
-  		<listitem>The time is calculated per word.</listitem>
-  		<listitem>Enter the value (in milliseconds) that you want to allow per word.</listitem>
-  		<listitem>For 3 seconds, enter 3000.</listitem>
+  		<listitem><para>Use this parameter to define how log the text should be shown for.</para></listitem>
+  		<listitem><para>The time is calculated per word.</para></listitem>
+  		<listitem><para>Enter the value (in milliseconds) that you want to allow per word.</para></listitem>
+  		<listitem><para>For 3 seconds, enter 3000.</para></listitem>
   		<listitem>The time per word is multiplied by the amount of words in your text to give the total
   		amount of time the text is shown for.</listitem>
   	</itemizedlist>

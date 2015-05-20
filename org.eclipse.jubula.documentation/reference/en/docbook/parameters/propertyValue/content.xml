@@ -33,7 +33,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the value you expect the property to have.</listitem>
+  		<listitem><para>Enter the value you expect the property to have.</para></listitem>
   		<listitem>For<emphasis>width</emphasis> and <emphasis>height</emphasis>, enter the value
   		in pixels.</listitem>
   	</itemizedlist>

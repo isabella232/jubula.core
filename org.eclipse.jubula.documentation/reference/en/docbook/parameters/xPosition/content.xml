@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>With this parameter, you can specify where in the component you should click.</listitem>
-  		<listitem>Use this parameter to enter a value for the x-axis (the horizontal position).</listitem>
+  		<listitem><para>With this parameter, you can specify where in the component you should click.</para></listitem>
+  		<listitem><para>Use this parameter to enter a value for the x-axis (the horizontal position).</para></listitem>
   		<listitem>Using the x-units parameter, you can specify whether the value should be in pixels or
   		percent.</listitem>
   		<listitem>For example, if you enter <emphasis>50</emphasis> and then <emphasis>percent</emphasis>, then

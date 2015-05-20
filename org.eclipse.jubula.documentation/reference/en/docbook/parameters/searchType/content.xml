@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>absolute</listitem>
-  							<listitem>relative</listitem>
+  							<listitem><para>absolute</para></listitem>
+  							<listitem><para>relative</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>absolute</entry>
@@ -40,7 +40,7 @@
   	<itemizedlist>
   		<listitem>The <emphasis>search type</emphasis> parameter has two options:
   			<itemizedlist>
-  				<listitem>absolute - begins searching for the value at the first entry</listitem>
+  				<listitem><para>absolute - begins searching for the value at the first entry</para></listitem>
   				<listitem>relative - begins the search for the value at the currently selected
   				entry. This allows you to search for the next occurence of a value, ignoring
   				all elements before the selected entry.</listitem>

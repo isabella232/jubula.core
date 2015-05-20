@@ -24,7 +24,7 @@
   			</thead>
   			<tbody>
   				<row>
-  					<entry>TILE</entry>
+  					<entry>TITLE</entry>
   					<entry>String</entry>
   					<entry></entry>
   					<entry>none</entry>
@@ -33,7 +33,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the name of the window you are e.g. waiting for.</listitem>
+  		<listitem><para>Enter the name of the window you are e.g. waiting for.</para></listitem>
   		<listitem>The title you provide will be compared to the title bar of each window as it opens, using
   		the operator provided.</listitem>
   	</itemizedlist>
