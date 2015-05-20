@@ -28,8 +28,8 @@
   					<entry>Boolean</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>true</para></listitem>
-  							<listitem><para>false</para></listitem>
+  							<listitem>true</listitem>
+  							<listitem>false</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>true</entry>
@@ -38,11 +38,11 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Use this parameter to specify wheter you want to turn the function on or off.</para></listitem>
-  		<listitem><para>Select true to turn the function on.</para></listitem>
-  		<listitem><para>Select false to turn the function off.</para></listitem>
-  		<listitem><para>Turning the function on when it is already on will not have any effect.
-  		The function remains on.</para></listitem>
+  		<listitem>Use this parameter to specify wheter you want to turn the function on or off.</listitem>
+  		<listitem>Select true to turn the function on.</listitem>
+  		<listitem>Select false to turn the function off.</listitem>
+  		<listitem>Turning the function on when it is already on will not have any effect.
+  		The function remains on.</listitem>
   	</itemizedlist>
   
   

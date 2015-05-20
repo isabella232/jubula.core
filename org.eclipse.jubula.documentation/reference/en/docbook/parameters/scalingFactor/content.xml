@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Use this parameter to scale the image created by the screenshot.</para></listitem>
-  		<listitem><para>The value for this parameter must lie between 1 and 200 (inclusive.)</para></listitem>
+  		<listitem>Use this parameter to scale the image created by the screenshot.</listitem>
+  		<listitem>The value for this parameter must lie between 1 and 200 (inclusive.)</listitem>
   		<listitem>The units for this parameter are percent. This means that a value of 50 scales
   		the image to half of its original size and a value of 200 scales the image to double its
   		original size.</listitem>

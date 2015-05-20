@@ -28,10 +28,10 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>equals</para></listitem>
-  							<listitem><para>not equals</para></listitem>
-  							<listitem><para>matches</para></listitem>
-  							<listitem><para>simple match</para></listitem>
+  							<listitem>equals</listitem>
+  							<listitem>not equals</listitem>
+  							<listitem>matches</listitem>
+  							<listitem>simple match</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>equals</entry>
@@ -42,10 +42,10 @@
   	<itemizedlist>
   		<listitem>The <emphasis>operator</emphasis> parameter has four possible values:
   			<itemizedlist>
-  				<listitem><para>equals - looks for an exact match</para></listitem>
-  				<listitem><para>not equals - looks for something that does not exactly match</para></listitem>
-  				<listitem><para>matches - select this operator to use regular expressions</para></listitem>
-  				<listitem><para>simple match - select this operator to use a simple match expressions</para></listitem>
+  				<listitem>equals - looks for an exact match</listitem>
+  				<listitem>not equals - looks for something that does not exactly match</listitem>
+  				<listitem>matches - select this operator to use regular expressions</listitem>
+  				<listitem>simple match - select this operator to use a simple match expressions</listitem>
   			</itemizedlist>
   		</listitem>
   	</itemizedlist>

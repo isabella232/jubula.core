@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>ACCEPT</para></listitem>
-  							<listitem><para>DISMISS</para></listitem>
+  							<listitem>ACCEPT</listitem>
+  							<listitem>DISMISS</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>none</entry>

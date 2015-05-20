@@ -33,9 +33,9 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Use this parameter to specify which key to "press".</para></listitem>
-  		<listitem><para>The various keys have different codes.</para></listitem>
-  		<listitem><para>The most important key codes are:</para></listitem>
+  		<listitem>Use this parameter to specify which key to "press".</listitem>
+  		<listitem>The various keys have different codes.</listitem>
+  		<listitem>The most important key codes are:</listitem>
   	</itemizedlist>
   	<table>
   		<title>Key codes</title>

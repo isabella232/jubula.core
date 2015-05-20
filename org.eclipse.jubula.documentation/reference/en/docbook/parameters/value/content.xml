@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Enter the value which is in the cell you want to drag/drop.</para></listitem>
-  		<listitem><para>This parameter will be compared to cells in the column, using the operator provided.</para></listitem>
+  		<listitem>Enter the value which is in the cell you want to drag/drop.</listitem>
+  		<listitem>This parameter will be compared to cells in the column, using the operator provided.</listitem>
   	</itemizedlist>
   
   

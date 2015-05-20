@@ -33,13 +33,13 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Select how many clicks you want to make on a component.</para></listitem>
-  		<listitem><para>Different click counts can cause different results.</para></listitem>
+  		<listitem>Select how many clicks you want to make on a component.</listitem>
+  		<listitem>Different click counts can cause different results.</listitem>
   		<listitem>For example:
   			<itemizedlist>
   				<listitem>A single click on an editable text field puts the cursor in the text
   				field.</listitem>
-  				<listitem><para>A triple click on an editable text field selects the whole text.</para></listitem>
+  				<listitem>A triple click on an editable text field selects the whole text.</listitem>
   			</itemizedlist>
   		</listitem>
   		<listitem>Depending on your application, you may need to send one, two or three clicks to a 

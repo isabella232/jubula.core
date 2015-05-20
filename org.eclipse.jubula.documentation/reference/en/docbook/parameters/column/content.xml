@@ -33,19 +33,19 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>In tables you can address the header of a table either by using its index
-  		or by entering its title</para></listitem>
-  		<listitem><para>The first column is '1' (without quotes) and so on. The index '0' (without
-  		quotes)refers to the header itself</para></listitem>
-  		<listitem><para>If the cell you want to execute an action on is in fourth column and is 
+  		<listitem>In tables you can address the header of a table either by using its index
+  		or by entering its title</listitem>
+  		<listitem>The first column is '1' (without quotes) and so on. The index '0' (without
+  		quotes)refers to the header itself</listitem>
+  		<listitem>If the cell you want to execute an action on is in fourth column and is 
   		called <emphasis>Price</emphasis>, you can address the column either with the index
-  		'4' or with the string <emphasis>Price</emphasis></para></listitem>
-  		<listitem><para>Turning the function on when it is already on will not have any effect.
-  		The function remains on.</para></listitem>
-  		<listitem><para>In JavaFX AUT´s, you can also enter a path to the column to test tables that have
+  		'4' or with the string <emphasis>Price</emphasis></listitem>
+  		<listitem>Turning the function on when it is already on will not have any effect.
+  		The function remains on.</listitem>
+  		<listitem>In JavaFX AUT´s, you can also enter a path to the column to test tables that have
   		nested columns (i.e. where a column has child columns). Enter the column as a path, 
   		separated with forward slash, e.g. <emphasis>Address/Street</emphasis>. You can use
-  		indexpaths and textpaths for columns in JavaFX tables.</para></listitem>
+  		indexpaths and textpaths for columns in JavaFX tables.</listitem>
   	</itemizedlist>
   
   

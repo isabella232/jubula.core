@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Enter a description of the action you wish to be performed.</para></listitem>
-  		<listitem><para>This description will be displayed during execution.</para></listitem>
+  		<listitem>Enter a description of the action you wish to be performed.</listitem>
+  		<listitem>This description will be displayed during execution.</listitem>
   	</itemizedlist>
   
   

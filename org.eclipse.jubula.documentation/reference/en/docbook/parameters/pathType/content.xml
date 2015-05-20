@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>absolute</para></listitem>
-  							<listitem><para>relative</para></listitem>
+  							<listitem>absolute</listitem>
+  							<listitem>relative</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>absolute</entry>
@@ -40,7 +40,7 @@
   	<itemizedlist>
   		<listitem>The <emphasis>path type</emphasis> parameter has two possible values:
   			<itemizedlist>
-  				<listitem><para>absolute - begins searching for the path at the first item of a component</para></listitem>
+  				<listitem>absolute - begins searching for the path at the first item of a component</listitem>
   				<listitem>relative - begins the search for the path at the currently selected item.
   				This allows you to enter a partial path, ignoring all items above the selected item.</listitem>
   			</itemizedlist>

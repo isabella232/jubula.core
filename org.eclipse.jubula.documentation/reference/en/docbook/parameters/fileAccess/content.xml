@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>rename</para></listitem>
-  							<listitem><para>overwrite</para></listitem>
+  							<listitem>rename</listitem>
+  							<listitem>overwrite</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>rename</entry>
@@ -40,7 +40,7 @@
   	<itemizedlist>
   		<listitem>Use this parameter to control how the image is saved if the destination file
   		already exists.</listitem>
-  		<listitem><para>Select <emphasis>overwrite</emphasis> to simply overwrite the destination file</para></listitem>
+  		<listitem>Select <emphasis>overwrite</emphasis> to simply overwrite the destination file</listitem>
   		<listitem>Select <emphasis>rename</emphasis> to append a sequential integer to the file name.
   		This automates the creation of sequentially labeled screenshots.</listitem>
   	</itemizedlist>

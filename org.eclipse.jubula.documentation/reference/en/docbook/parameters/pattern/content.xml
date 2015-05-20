@@ -33,7 +33,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Enter the pattern to search for. The search uses the operator provided.</para></listitem>
+  		<listitem>Enter the pattern to search for. The search uses the operator provided.</listitem>
   		<listitem>If this pattern is found in the text, your text will be inserted before or after it,
   		as defined.</listitem>
   	</itemizedlist>

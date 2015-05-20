@@ -35,7 +35,7 @@
   	<itemizedlist>
   		<listitem>In tables, you can address the row of a table either by using its index or by
   		entering the value in the first column of the particular row</listitem>
-  		<listitem><para>The first row is 1 and so on.</para></listitem>
+  		<listitem>The first row is 1 and so on.</listitem>
   		<listitem>The row of table headers at the top of the table can be addressed using the index
   		0.</listitem>
   		<listitem>If the cell you want to execute an action on is the fourth row and contains the

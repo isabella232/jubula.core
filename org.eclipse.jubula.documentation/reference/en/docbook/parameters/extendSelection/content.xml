@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>yes</para></listitem>
-  							<listitem><para>no</para></listitem>
+  							<listitem>yes</listitem>
+  							<listitem>no</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>0</entry>
@@ -38,10 +38,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>The <emphasis>Extend Selection</emphasis> parameter has two possible values:</para></listitem>
+  		<listitem>The <emphasis>Extend Selection</emphasis> parameter has two possible values:</listitem>
   		<listitem><emphasis>yes</emphasis> indicates the chosen item will be added to the current
   		selection.</listitem>
-  		<listitem><para>Select <emphasis>no</emphasis> to begin a new selection with the chosen item.</para></listitem>
+  		<listitem>Select <emphasis>no</emphasis> to begin a new selection with the chosen item.</listitem>
   	</itemizedlist>
   
   

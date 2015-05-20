@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Use this parameter to define how large the text should be.</para></listitem>
-  		<listitem><para>Give the font size you want to use in points.</para></listitem>
+  		<listitem>Use this parameter to define how large the text should be.</listitem>
+  		<listitem>Give the font size you want to use in points.</listitem>
   	</itemizedlist>
   
   

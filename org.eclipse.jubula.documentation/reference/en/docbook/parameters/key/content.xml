@@ -28,9 +28,9 @@
   					<entry>Integer</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>1</para></listitem>
-  							<listitem><para>2</para></listitem>
-  							<listitem><para>3</para></listitem>
+  							<listitem>1</listitem>
+  							<listitem>2</listitem>
+  							<listitem>3</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>1</entry>
@@ -39,10 +39,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Use this parameter to specify which key you want to (de)activate</para></listitem>
-  		<listitem><para>1 = Num-lock</para></listitem>
-  		<listitem><para>2 = Caps-lock</para></listitem>
-  		<listitem><para>3 = Scroll-lock</para></listitem>
+  		<listitem>Use this parameter to specify which key you want to (de)activate</listitem>
+  		<listitem>1 = Num-lock</listitem>
+  		<listitem>2 = Caps-lock</listitem>
+  		<listitem>3 = Scroll-lock</listitem>
   	</itemizedlist>
   
   

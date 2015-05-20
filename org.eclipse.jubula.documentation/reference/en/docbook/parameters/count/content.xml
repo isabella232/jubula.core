@@ -33,10 +33,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Using this parameter you can define a certain number of expected items in combination
-  		with CSS Path Count and XPath Count.</para></listitem>
-  		<listitem><para>E.g.: If you expect the amount of items matching an XPath locator to be less or equal to 4
-  		enter 4 as the parameter value.</para></listitem>
+  		<listitem>Using this parameter you can define a certain number of expected items in combination
+  		with CSS Path Count and XPath Count.</listitem>
+  		<listitem>E.g.: If you expect the amount of items matching an XPath locator to be less or equal to 4
+  		enter 4 as the parameter value.</listitem>
   	</itemizedlist>
   
   

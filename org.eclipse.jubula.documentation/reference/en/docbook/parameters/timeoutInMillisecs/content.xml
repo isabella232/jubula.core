@@ -33,7 +33,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Enter the amount of time (in milliseconds) to wait before Test Step fails.</para></listitem>
+  		<listitem>Enter the amount of time (in milliseconds) to wait before Test Step fails.</listitem>
   	</itemizedlist>
   
   

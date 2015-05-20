@@ -35,7 +35,7 @@
   	<itemizedlist>
   		<listitem>Scripts generally have an exit code (for example, 0 usually means that the script
   		was successful).</listitem>
-  		<listitem><para>Use this parameter to define the expected exit code.</para></listitem>
+  		<listitem>Use this parameter to define the expected exit code.</listitem>
   	</itemizedlist>
   
   

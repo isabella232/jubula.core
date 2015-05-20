@@ -28,11 +28,11 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>less than</para></listitem>
-  							<listitem><para>less or equal than</para></listitem>
-  							<listitem><para>equal to</para></listitem>
-  							<listitem><para>greater or equal than</para></listitem>
-  							<listitem><para>greater than</para></listitem>
+  							<listitem>less than</listitem>
+  							<listitem>less or equal than</listitem>
+  							<listitem>equal to</listitem>
+  							<listitem>greater or equal than</listitem>
+  							<listitem>greater than</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>equal to</entry>
@@ -41,7 +41,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Select the comparison method you want to use to check the two values or variables.</para></listitem>
+  		<listitem>Select the comparison method you want to use to check the two values or variables.</listitem>
   	</itemizedlist>
   
   

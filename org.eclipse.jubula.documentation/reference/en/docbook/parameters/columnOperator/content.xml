@@ -28,10 +28,10 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>equals</para></listitem>
-  							<listitem><para>not equals</para></listitem>
-  							<listitem><para>matches</para></listitem>
-  							<listitem><para>simple match</para></listitem>
+  							<listitem>equals</listitem>
+  							<listitem>not equals</listitem>
+  							<listitem>matches</listitem>
+  							<listitem>simple match</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>equals</entry>
@@ -40,14 +40,14 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>The operator parameter has four possible values:</para></listitem>
-  		<listitem><para><emphasis>not equals</emphasis> looks for something that does not
-  		exactly match</para></listitem>
-  		<listitem><para><emphasis>equals</emphasis> looks for an exact match</para></listitem>
-  		<listitem><para>Select <emphasis>simple match</emphasis> to use a simple match expression</para></listitem>
-  		<listitem><para>Select <emphasis>matches</emphasis> to use a regular expression</para></listitem>
-  		<listitem><para>Regardless of the operator used: if a selection action is being used and there
-  		is more than one match, then the first item found will be chosen.</para></listitem>
+  		<listitem>The operator parameter has four possible values:</listitem>
+  		<listitem><emphasis>not equals</emphasis> looks for something that does not
+  		exactly match</listitem>
+  		<listitem><emphasis>equals</emphasis> looks for an exact match</listitem>
+  		<listitem>Select <emphasis>simple match</emphasis> to use a simple match expression</listitem>
+  		<listitem>Select <emphasis>matches</emphasis> to use a regular expression</listitem>
+  		<listitem>Regardless of the operator used: if a selection action is being used and there
+  		is more than one match, then the first item found will be chosen.</listitem>
   	</itemizedlist>
   
   

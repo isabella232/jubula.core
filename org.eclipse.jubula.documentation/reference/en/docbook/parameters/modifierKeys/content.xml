@@ -28,13 +28,13 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem><para>none</para></listitem>
-  							<listitem><para>shift</para></listitem>
-  							<listitem><para>control</para></listitem>
-  							<listitem><para>alt</para></listitem>
-  							<listitem><para>meta</para></listitem>
-  							<listitem><para>cmd</para></listitem>
-  							<listitem><para>mod</para></listitem>
+  							<listitem>none</listitem>
+  							<listitem>shift</listitem>
+  							<listitem>control</listitem>
+  							<listitem>alt</listitem>
+  							<listitem>meta</listitem>
+  							<listitem>cmd</listitem>
+  							<listitem>mod</listitem>
   						</itemizedlist>
   					</entry>
   					<entry>0</entry>
@@ -49,17 +49,17 @@
   		thereof:</listitem>
   		<listitem>
 			<itemizedlist>
-				<listitem><para>shift</para></listitem>
-				<listitem><para>control - This is the first modifier for Win and Lin</para></listitem>
-				<listitem><para>cmd - This is the first modifier for Mac</para></listitem>
+				<listitem>shift</listitem>
+				<listitem>control - This is the first modifier for Win and Lin</listitem>
+				<listitem>cmd - This is the first modifier for Mac</listitem>
 				<listitem>mod - This is the platform-independent first modifier and corresponds
 				to <emphasis>control</emphasis> on Win and Lin, and <emphasis>cmd</emphasis> 
 				for Mac.</listitem>
-				<listitem><para>meta</para></listitem>
-				<listitem><para>alt</para></listitem>
+				<listitem>meta</listitem>
+				<listitem>alt</listitem>
 			</itemizedlist>
 		</listitem>
-  		<listitem><para>You can also select <emphasis>none</emphasis> if you do not need a modifier</para></listitem>
+  		<listitem>You can also select <emphasis>none</emphasis> if you do not need a modifier</listitem>
   		<listitem>You can enter multiple modifiers for a key combination by entering a space-separated
   		list of modifiers, e.g. <emphasis>alt shift</emphasis>.</listitem>
   	</itemizedlist>

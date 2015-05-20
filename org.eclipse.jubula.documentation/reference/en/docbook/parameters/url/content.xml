@@ -33,7 +33,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Enter the URL you wish to open, e.g. <emphasis>http://testing.bredex.de</emphasis>.</para></listitem>
+  		<listitem>Enter the URL you wish to open, e.g. <emphasis>http://testing.bredex.de</emphasis>.</listitem>
   		<listitem>We recommend using single quotes around the URL so that you do not have to escape special
   		characters: 'http://testing.bredex.de'.</listitem>
   	</itemizedlist>
