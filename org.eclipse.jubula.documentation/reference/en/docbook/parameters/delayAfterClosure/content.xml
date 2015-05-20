@@ -33,10 +33,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Sometimes windows are not ready to receive events (mouse clicks, key presses) until
-  		a view moments after the overlapping window is closed.</listitem>
-  		<listitem>Use this parameter to set the amount of time (in milliseconds) to wait once
-  		the window has closed before continuing.</listitem>
+  		<listitem><para>Sometimes windows are not ready to receive events (mouse clicks, key presses) until
+  		a view moments after the overlapping window is closed.</para></listitem>
+  		<listitem><para>Use this parameter to set the amount of time (in milliseconds) to wait once
+  		the window has closed before continuing.</para></listitem>
   	</itemizedlist>
   
   

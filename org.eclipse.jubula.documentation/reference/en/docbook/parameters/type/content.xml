@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>ACCEPT</listitem>
-  							<listitem>DISMISS</listitem>
+  							<listitem><para>ACCEPT</para></listitem>
+  							<listitem><para>DISMISS</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>none</entry>
@@ -38,10 +38,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Choose the way you want to handle Alert/Prompt/Confirm dialogs. You have the options to accept
-  		or dismiss them.</listitem>
-  		<listitem>E.g.: If a Prompt dialog has the options to click OK and Cancel ACCEPT would click OK and DISMISS
-  		would click Cancel.</listitem>
+  		<listitem><para>Choose the way you want to handle Alert/Prompt/Confirm dialogs. You have the options to accept
+  		or dismiss them.</para></listitem>
+  		<listitem><para>E.g.: If a Prompt dialog has the options to click OK and Cancel ACCEPT would click OK and DISMISS
+  		would click Cancel.</para></listitem>
   	</itemizedlist>
   
   

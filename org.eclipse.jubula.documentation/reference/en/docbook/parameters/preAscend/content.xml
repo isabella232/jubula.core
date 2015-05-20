@@ -33,15 +33,15 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter with a <emphasis>relative path</emphasis> to start the search
-  		above the currently selected item.</listitem>
-  		<listitem>The search will begin <emphasis>n</emphasis> items above the currently selected
-  		item, where <emphasis>n</emphasis> is the value of this parameter.</listitem>
-  		<listitem>For example, a value of 0 will simply begin with the currently selected item, and
-  		a value of 2 will begin with the parent of the parent of the currently selected item.</listitem>
-  		<listitem>A value can be given such that the search begins 1 level above the topmost visible
-  		level. This is then equivalent to an <emphasis>absolute path</emphasis>.</listitem>
-  		<listitem>If the search would begin any higher than this, the action fails.</listitem>
+  		<listitem><para>Use this parameter with a <emphasis>relative path</emphasis> to start the search
+  		above the currently selected item.</para></listitem>
+  		<listitem><para>The search will begin <emphasis>n</emphasis> items above the currently selected
+  		item, where <emphasis>n</emphasis> is the value of this parameter.</para></listitem>
+  		<listitem><para>For example, a value of 0 will simply begin with the currently selected item, and
+  		a value of 2 will begin with the parent of the parent of the currently selected item.</para></listitem>
+  		<listitem><para>A value can be given such that the search begins 1 level above the topmost visible
+  		level. This is then equivalent to an <emphasis>absolute path</emphasis>.</para></listitem>
+  		<listitem><para>If the search would begin any higher than this, the action fails.</para></listitem>
   	</itemizedlist>
   
   

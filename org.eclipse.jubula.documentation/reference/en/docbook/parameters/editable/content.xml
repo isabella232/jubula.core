@@ -28,8 +28,8 @@
   					<entry>Boolean</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>true</listitem>
-  							<listitem>false</listitem>
+  							<listitem><para>true</para></listitem>
+  							<listitem><para>false</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>true</entry>
@@ -38,10 +38,10 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Set the parameter to <emphasis>true</emphasis> if you expect the component to be 
-  		editable.</listitem>
-  		<listitem>Set the parameter to <emphasis>false</emphasis> if you expect the component to be 
-  		not editable.</listitem>
+  		<listitem><para>Set the parameter to <emphasis>true</emphasis> if you expect the component to be 
+  		editable.</para></listitem>
+  		<listitem><para>Set the parameter to <emphasis>false</emphasis> if you expect the component to be 
+  		not editable.</para></listitem>
   	</itemizedlist>
   
   

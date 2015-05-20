@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the identifier (title, name, variable) of the window that you would like
-  		to switch to in your test.</listitem>
+  		<listitem><para>Enter the identifier (title, name, variable) of the window that you would like
+  		to switch to in your test.</para></listitem>
   	</itemizedlist>
   
   

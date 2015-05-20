@@ -33,7 +33,7 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to enter the XPath you want to use in your test.</listitem>
+  		<listitem><para>Use this parameter to enter the XPath you want to use in your test.</para></listitem>
   	</itemizedlist>
   
   

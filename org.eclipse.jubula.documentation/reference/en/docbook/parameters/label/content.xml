@@ -33,19 +33,19 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>If you would like to press specific buttons on the iOS keyboard such as <emphasis>DONE</emphasis>,
-  		<emphasis>DELETE</emphasis> and so on then you can access them by using the <emphasis>Accessibility Label</emphasis>.</listitem>
-  		<listitem>This allows you to press any item on the screen (one the keyboard or elsewhere) based on its
-  		accessibility label:
+  		<listitem><para>If you would like to press specific buttons on the iOS keyboard such as <emphasis>DONE</emphasis>,
+  		<emphasis>DELETE</emphasis> and so on then you can access them by using the <emphasis>Accessibility Label</emphasis>.</para></listitem>
+  		<listitem><para>This allows you to press any item on the screen (one the keyboard or elsewhere) based on its
+  		accessibility label:</para>
   			<itemizedlist>
-  				<listitem>The accessibility label is an internal attribute for a component that is designed to be used
-  				by screen readers etc.</listitem>
-  				<listitem>You can find the accessibility label for an item by using the Accessibility Inspector on
-  				e.g. an iOS simulator. You can activate the Inspector via the General Settings.</listitem>
-  				<listitem>Once you know the label, you can enter it as a parameter (exactly as it is written).</listitem>
-  				<listitem>Bear in mind that accessibility labels are language-dependent and also sometime orientation
+  				<listitem><para>The accessibility label is an internal attribute for a component that is designed to be used
+  				by screen readers etc.</para></listitem>
+  				<listitem><para>You can find the accessibility label for an item by using the Accessibility Inspector on
+  				e.g. an iOS simulator. You can activate the Inspector via the General Settings.</para></listitem>
+  				<listitem><para>Once you know the label, you can enter it as a parameter (exactly as it is written).</para></listitem>
+  				<listitem><para>Bear in mind that accessibility labels are language-dependent and also sometime orientation
   				dependent. It is also not necessarily the case that the accessibility label is the same as the text on
-  				the item that is visible in the AUT.</listitem>
+  				the item that is visible in the AUT.</para></listitem>
   			</itemizedlist>
   		</listitem>
   	</itemizedlist>

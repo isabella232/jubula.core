@@ -28,8 +28,8 @@
   					<entry>String</entry>
   					<entry>
   						<itemizedlist>
-  							<listitem>absolute</listitem>
-  							<listitem>relative</listitem>
+  							<listitem><para>absolute</para></listitem>
+  							<listitem><para>relative</para></listitem>
   						</itemizedlist>
   					</entry>
   					<entry>absolute</entry>
@@ -38,11 +38,11 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>The <emphasis>path type</emphasis> parameter has two possible values:
+  		<listitem><para>The <emphasis>path type</emphasis> parameter has two possible values:</para>
   			<itemizedlist>
-  				<listitem>absolute - begins searching for the path at the first item of a component</listitem>
-  				<listitem>relative - begins the search for the path at the currently selected item.
-  				This allows you to enter a partial path, ignoring all items above the selected item.</listitem>
+  				<listitem><para>absolute - begins searching for the path at the first item of a component</para></listitem>
+  				<listitem><para>relative - begins the search for the path at the currently selected item.
+  				This allows you to enter a partial path, ignoring all items above the selected item.</para></listitem>
   			</itemizedlist>
   		</listitem>
   	</itemizedlist>

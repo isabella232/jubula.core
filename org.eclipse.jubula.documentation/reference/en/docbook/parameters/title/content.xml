@@ -33,9 +33,9 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Enter the name of the window you are e.g. waiting for.</listitem>
-  		<listitem>The title you provide will be compared to the title bar of each window as it opens, using
-  		the operator provided.</listitem>
+  		<listitem><para>Enter the name of the window you are e.g. waiting for.</para></listitem>
+  		<listitem><para>The title you provide will be compared to the title bar of each window as it opens, using
+  		the operator provided.</para></listitem>
   	</itemizedlist>
   
   

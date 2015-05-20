@@ -52,9 +52,9 @@
   		Some components are not supported in web applications because they are either not present 
   		or not meaningful in web applications. The unsupported components are:
   			<itemizedlist>
-  				<listitem>Menus</listitem>
-  				<listitem>Tabbed panes</listitem>
-  				<listitem>Trees</listitem>
+  				<listitem><para>Menus</para></listitem>
+  				<listitem><para>Tabbed panes</para></listitem>
+  				<listitem><para>Trees</para></listitem>
   			</itemizedlist>
   	</para>
   </section>

@@ -33,8 +33,8 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem>Use this parameter to define which locator you want to use.</listitem>
-  		<listitem>This can be a CSS locator or a XPath locator.</listitem>
+  		<listitem><para>Use this parameter to define which locator you want to use.</para></listitem>
+  		<listitem><para>This can be a CSS locator or a XPath locator.</para></listitem>
   	</itemizedlist>
   
   
