@@ -106,8 +106,6 @@
         name="${scope.project.label}"
         activeRepositoryList="${eclipse.target.platform}">
       <requirement
-          name="org.eclipse.jubula.feature.sdk.feature.group"/>
-      <requirement
           name="org.eclipse.jubula.feature.api.feature.group"/>
       <requirement
           name="org.eclipse.jubula.feature.api.converter.feature.group"/>

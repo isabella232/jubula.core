@@ -53,7 +53,6 @@
 <unit id="org.eclipse.jubula.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.jubula.feature.api.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.jubula.feature.api.source.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.jubula.feature.sdk.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/jubula/nightly/repo"/>
 </location>
 <!-- license -->
