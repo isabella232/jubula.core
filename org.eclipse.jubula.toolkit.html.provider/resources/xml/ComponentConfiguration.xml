@@ -300,6 +300,11 @@
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlMenuBarImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" />
 	</toolkitComponent>
+	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.Tooltip" visible="false" hasDefaultMapping="true">
+        <realizes>guidancer.concrete.Tooltip</realizes>
+        <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.TooltipImplClass</testerClass>
+        <componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.Tooltip" />
+    </toolkitComponent>
 	<toolkitComponent type="html.Div" visible="false">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.label.LabelImplClass</testerClass>

@@ -2842,6 +2842,6 @@
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
 	</concreteComponent>
-	
+	<concreteComponent type="guidancer.concrete.Tooltip" hasDefaultMapping="true">        <action name="CompSystem.CheckTooltipText" changed="8.1.5">            <method>rcCheckTooltipText</method>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>            <param name="CompSystem.Text"                   descriptionKey="CompSystem.Text.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>    </concreteComponent>
 	
 </compSystem>

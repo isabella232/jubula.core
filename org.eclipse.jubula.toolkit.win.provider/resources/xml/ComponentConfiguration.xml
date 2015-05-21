@@ -207,5 +207,10 @@
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>com.bredexsw.guidancer.rc.win.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.Menu" />
-	</toolkitComponent>		
+	</toolkitComponent>
+	<toolkitComponent type="org.eclipse.jubula.rc.dotnet.components.controltype.Tooltip" visible="false" hasDefaultMapping="true">
+        <realizes>guidancer.concrete.Tooltip</realizes>
+        <testerClass>com.bredexsw.guidancer.rc.win.tester.TooltipTester</testerClass>
+        <componentClass name="org.eclipse.jubula.rc.dotnet.components.controltype.Tooltip" />
+    </toolkitComponent> 		
 </compSystem>

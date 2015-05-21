@@ -338,4 +338,10 @@
     </action>
   </toolkitComponent>
 
+  <toolkitComponent type="ios.UITooltip" visible="false" hasDefaultMapping="true">
+    <realizes>guidancer.concrete.Tooltip</realizes>
+    <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITooltipTester</testerClass>
+    <componentClass name="ios.UITooltip" />
+  </toolkitComponent>
+
 </compSystem>

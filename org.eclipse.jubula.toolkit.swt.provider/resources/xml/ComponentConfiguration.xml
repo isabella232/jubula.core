@@ -213,7 +213,7 @@
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.MenuDefaultMapping" />
-	</toolkitComponent>
+	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.ToolTip" visible="false" hasDefaultMapping="true">        <realizes>guidancer.concrete.Tooltip</realizes>        <testerClass>org.eclipse.jubula.rc.swt.tester.TooltipTester</testerClass>        <componentClass name="org.eclipse.swt.widgets.ToolTip" />    </toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Combo" visible="false">
 		<realizes>guidancer.abstract.SwtCombo</realizes>
