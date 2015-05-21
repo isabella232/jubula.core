@@ -428,16 +428,16 @@ public class ExecutionController implements IAUTServerEventListener,
      * run a test job
      */
     private void doTestJob() {
-        sysOut(NLS.bind(Messages.ExecutionControllerTestJobBegin, m_job
-                        .getTestJob().getName()));
+        String tjName = m_job.getTestJob().getName();
+        sysOut(NLS.bind(Messages.ExecutionControllerTestJobBegin, tjName));
         sysOut(NLS.bind(Messages.ExecutionControllerTestJobExpectedTestSuites,
-                new Object[] { m_job.getTestJob().getName(),
+                new Object[] { tjName,
                                 m_job.getTestJob().getNodeListSize()}));
         List<INodePO> executedTestSuites = ClientTest.instance().startTestJob(
                 m_job.getTestJob(), m_job.getLanguage(),
                 m_job.isAutoScreenshot(), m_job.getNoRunOptMode());
         sysOut(NLS.bind(Messages.ExecutionControllerTestJobExecutedTestSuites,
-                new Object[] { m_job.getTestJob().getName(),
+                new Object[] { tjName,
                         executedTestSuites.size()}));
         Iterator<INodePO> tsIterator = m_job.getTestJob().getNodeListIterator();
         while (tsIterator.hasNext()) {
@@ -445,7 +445,7 @@ public class ExecutionController implements IAUTServerEventListener,
             if (!executedTestSuites.contains(testsuite)) {
                 sysErr(NLS.bind(Messages.
                         ExecutionControllerTestJobUnsuccessfulTestSuites,
-                        new Object[] { m_job.getTestJob().getName(),
+                        new Object[] { tjName,
                                 testsuite.getName()}));
             }
         }
