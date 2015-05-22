@@ -388,9 +388,46 @@
           Precede this action with a <emphasis>drag</emphasis> action.
         </para>
       </listitem>
+      <listitem>
+       <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="column"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="search_type"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="delay_before_drop"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
     </itemizedlist>
   </para>
-  
   <para role="tip">
     This action is unsupported for the HTML toolkit.
   </para>
