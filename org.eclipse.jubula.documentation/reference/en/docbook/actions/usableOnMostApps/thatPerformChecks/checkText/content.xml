@@ -16,5 +16,6 @@
   <xi:include href="tabComponents.xml"/>
   <xi:include href="tableComponents.xml"/>
   <xi:include href="treeComponents.xml"/>
+  <xi:include href="tooltipComponents.xml"/>
   
 </section>

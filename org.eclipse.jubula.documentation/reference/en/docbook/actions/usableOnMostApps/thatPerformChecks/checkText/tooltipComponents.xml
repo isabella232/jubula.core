@@ -1,0 +1,74 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionCheckTextTooltip" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Tooltip</title>
+  
+  <para><emphasis>Check Text of Tooltip</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          	Use this action to check the text of a tooltip e.g. on a decorated cell in a table, in a textfield etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          	To do so you have to navigate the mouse cursor to the item on which you would like to check the tooltip text, e.g.
+          	in a table you can move the mouse cursor to the desired cell by using <emphasis>ub_tbl_selectCell</emphasis>
+          	with a click count of <emphasis>0</emphasis>. In a tree you can move the mouse cursor to the desired node by using
+          	e.g. <emphasis>ub_tre_selectNode_byTextpath</emphasis> also with a click count of <emphasis>0</emphasis>. To check the tooltip text of
+          	e.g. a toolbar item you can move the mouse cursor to the toolbar item by using e.g. <emphasis>ub_grc_clickInComponent</emphasis>
+          	with a click count of <emphasis>0</emphasis>. 
+        </para>
+      </listitem>
+      <listitem>
+      	<para>
+      		In most of the cases you want to check the text of a tooltip it is important <emphasis>not</emphasis> to
+      		click the item you would like to check therefore use a click count of <emphasis>0</emphasis>.
+      	</para>
+      </listitem>
+      <listitem>
+      	<para>
+      		Although this action is contained in <emphasis>unbound_modules_concrete</emphasis> it is currently supported
+      		on <emphasis>JavaFX</emphasis> only.
+      	</para>
+      </listitem>
+      <listitem>
+      	<para>
+      		If the tooltip does not appear in the given time, a component not found error is thrown.
+      	</para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="text"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>
