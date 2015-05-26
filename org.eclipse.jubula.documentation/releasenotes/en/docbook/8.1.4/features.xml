@@ -4,12 +4,12 @@
   <title>New Features and Developments</title>
   
   <para>
-    <emphasis role="strong"></emphasis>
+    <emphasis role="strong">New action for checking the text of tooltips</emphasis>
   </para>
   <itemizedlist>
     <listitem>
       <para>
-     	
+     	You can now check the text of tooltips using the unbound module <emphasis>ub_ttp_checkTooltipText</emphasis>.
       </para>
     </listitem>
       </itemizedlist>
