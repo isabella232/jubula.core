@@ -187,7 +187,9 @@ public class SearchResultPage extends AbstractSearchResultPage
             SearchResultElement<Long> element = 
                 (SearchResultElement<Long>)((IStructuredSelection)event
                     .getSelection()).getFirstElement();
-            element.jumpToResult();
+            if (element != null) {
+                element.jumpToResult();
+            }
         }
 
     }
