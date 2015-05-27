@@ -15,7 +15,9 @@
   
   <xi:include href="introduction/chapter.xml"/>
   <xi:include href="toolkits/chapter.xml"/>
+<!-- Chapter components commented out because it is currently empty 
   <xi:include href="components/chapter.xml"/>
+-->
   <xi:include href="parameters/chapter.xml"/>
   <xi:include href="actions/chapter.xml"/>  
   
