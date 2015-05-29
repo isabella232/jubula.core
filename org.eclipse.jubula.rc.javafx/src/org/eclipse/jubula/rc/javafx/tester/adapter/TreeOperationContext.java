@@ -31,8 +31,8 @@ import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContex
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 
 /**
@@ -115,11 +115,16 @@ public class TreeOperationContext
                     @Override
                     public String call() throws Exception {
                         scrollNodeToVisible(node);
-                        List<? extends TreeCell> tCells = ComponentHandler
-                                .getAssignableFrom(TreeCell.class);
+                        TreeView<?> tree = getTree();
+                        // Update the layout coordinates otherwise
+                        // we would get old position values
+                        tree.layout();
+                        List<? extends TreeCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(tree, TreeCell.class);
                         for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
-                            if (item != null && item.equals(node)) {
+                            if (NodeTraverseHelper.isVisible(cell)
+                                    && item != null && item.equals(node)) {
                                 return cell.getText();
                             }
                         }
@@ -201,16 +206,18 @@ public class TreeOperationContext
 
                     @Override
                     public Object call() throws Exception {
-                        List<? extends TreeCell> tCells = ComponentHandler
-                                .getAssignableFrom(TreeCell.class);
+                        TreeView<?> tree = getTree();
+                        // Update the layout coordinates otherwise
+                        // we would get old position values
+                        tree.layout();
+                        List<? extends TreeCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(tree, TreeCell.class);
                         for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
-                            if (item != null && item.equals(node)
+                            if (NodeTraverseHelper.isVisible(cell)
+                                    && item != null && item.equals(node)
                                     && !item.isExpanded()) {
-                                TreeView<?> tree = getTree();
-                                // Update the layout coordinates otherwise
-                                // we would get old position values
-                                tree.layout();
+
                                 return cell.getDisclosureNode();
                             }
                         }
@@ -245,16 +252,18 @@ public class TreeOperationContext
 
                     @Override
                     public Object call() throws Exception {
-                        List<? extends TreeCell> tCells = ComponentHandler
-                                .getAssignableFrom(TreeCell.class);
+                        TreeView<?> tree = getTree();
+                        // Update the layout coordinates otherwise
+                        // we would get old position values
+                        tree.layout();
+                        List<? extends TreeCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(tree, TreeCell.class);
                         for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
-                            if (item != null && item.equals(node)
+                            if (NodeTraverseHelper.isVisible(cell) 
+                                    && item != null && item.equals(node)
                                     && item.isExpanded()) {
-                                TreeView<?> tree = getTree();
-                                // Update the layout coordinates otherwise
-                                // we would get old position values
-                                tree.layout();
+
                                 return cell.getDisclosureNode();
                             }
                         }
@@ -408,15 +417,16 @@ public class TreeOperationContext
                 "getNodeBounds", new Callable<Rectangle>() { //$NON-NLS-1$
                     @Override
                     public Rectangle call() throws Exception {
-                        List<? extends TreeCell> tCells = ComponentHandler
-                                .getAssignableFrom(TreeCell.class);
+                        TreeView<?> tree = getTree();
+                        // Update the layout coordinates otherwise
+                        // we would get old position values
+                        tree.layout();
+                        List<? extends TreeCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(tree, TreeCell.class);
                         for (TreeCell<?> cell : tCells) {
                             TreeItem<?> item = cell.getTreeItem();
-                            TreeView<?> tree = getTree();
-                            if ((item != null && item.equals(node))) {
-                                // Update the layout coordinates otherwise
-                                // we would get old position values
-                                tree.layout();
+                            if (NodeTraverseHelper.isVisible(cell)
+                                    && (item != null && item.equals(node))) {
 
                                 Rectangle b = NodeBounds
                                         .getAbsoluteBounds(cell);

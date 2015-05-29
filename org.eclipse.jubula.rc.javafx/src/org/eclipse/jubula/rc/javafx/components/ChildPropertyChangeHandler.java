@@ -10,35 +10,26 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.components;
 
-import java.util.List;
-
-import javafx.collections.ListChangeListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventTarget;
 
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
 /**
- * Handles List Changes in the AUT
+ * Handles property Changes in the AUT
  *
  * @author BREDEX GmbH
  * @created 24.10.2013
  */
-public class AUTListChangeHandler implements ListChangeListener<EventTarget> {
-
+public class ChildPropertyChangeHandler implements ChangeListener<EventTarget> {
     /** Hierarchy **/
     private AUTJavaFXHierarchy m_hierarchy = ComponentHandler.getAutHierarchy();
 
     @Override
-    public void onChanged(Change<? extends EventTarget> c) {
-        c.next();
-        List<? extends EventTarget> changedObjects = c.getRemoved();
-        for (EventTarget o : changedObjects) {
-            m_hierarchy.removeComponentFromHierarchy(o);
-        }
-        changedObjects = c.getAddedSubList();
-        for (EventTarget o : changedObjects) {
-            m_hierarchy.createHierarchyFrom(o);
-        }
+    public void changed(ObservableValue<? extends EventTarget> observable,
+            EventTarget oldValue, EventTarget newValue) {
+        m_hierarchy.removeComponentFromHierarchy(oldValue);
+        m_hierarchy.createHierarchyFrom(newValue);
     }
-
 }

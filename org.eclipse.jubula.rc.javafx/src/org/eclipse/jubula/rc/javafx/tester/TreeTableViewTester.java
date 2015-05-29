@@ -62,8 +62,7 @@ public class TreeTableViewTester extends TreeViewTester {
                         // we would get old position values
                         ((TreeTableView<?>) getRealComponent()).layout();
 
-                        List<TreeTableCell> tCells = 
-                                new NodeTraverseHelper<TreeTableCell>()
+                        List<TreeTableCell> tCells = NodeTraverseHelper
                                 .getInstancesOf((Parent) getRealComponent(),
                                         TreeTableCell.class);
                         for (TreeTableCell cell : tCells) {

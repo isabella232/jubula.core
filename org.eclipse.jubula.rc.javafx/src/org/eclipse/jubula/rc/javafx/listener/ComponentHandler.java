@@ -296,11 +296,9 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             if (content.contains(n)) {
                 return true;
             }
-            NodeTraverseHelper<Node> helper = 
-                    new NodeTraverseHelper<>();
             for (Node contentNode : content) {
                 if (contentNode instanceof Parent 
-                        && helper.isChildOf(
+                        && NodeTraverseHelper.isChildOf(
                                 n, (Parent)contentNode)) {
                     return true;
                 }
@@ -317,12 +315,11 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      */
     private static boolean isSkinNode(Node node, SkinBase<?> skin) {
         ObservableList<Node> skinChildren = skin.getChildren();
-        NodeTraverseHelper<Node> help = new NodeTraverseHelper<>();
         for (Node n : skinChildren) {
             if (n == node) {
                 return true;
             } else if (n instanceof Parent) {
-                if (help.isChildOf(node, (Parent) n)) {
+                if (NodeTraverseHelper.isChildOf(node, (Parent) n)) {
                     return true;
                 }
             }

@@ -22,43 +22,51 @@ import javafx.scene.Parent;
  * 
  * @author BREDEX GmbH
  * @created 25.03.2014
- * @param <T>
- *            the type
  */
-public class NodeTraverseHelper<T extends Node> {
-
-    /** The result where all instances of the given type are stored */
-    private List<T> m_result = new ArrayList<T>();
+public class NodeTraverseHelper {
+    
+    /**
+     * Constructor
+     */
+    private NodeTraverseHelper() {
+        //private
+    }
 
     /**
      * Finds instances of a certain type in the hierarchy below a given node
      * 
+     * @param <T> the type
      * @param parent the parent
      * @param type the type
+     * @param r the result
+     * @return the result
      */
-    private void findInstancesOf(Parent parent, Class<T> type) {
+    private static <T> List<T> findInstancesOf(Parent parent,
+            Class<T> type, List<T> r) {
+        List<T> result = r;
         for (Node object : parent.getChildrenUnmodifiable()) {
             if (type.isAssignableFrom(object.getClass())) {
-                m_result.add((T) object);
+                result.add((T) object);
             }
             if (object instanceof Parent) {
-                findInstancesOf((Parent) object, type);
+                result = findInstancesOf((Parent) object, type, result);
             }
         }
+        return result;
     }
 
     /**
      * Gives instances of a certain type in the hierarchy below a given node
      * 
+     * @param <T> the type
      * @param parent the parent
      * @param type the type
      * @return returns all instances of the given type which are below the
      *         parent in the hierarchy
      */
-    public List<T> getInstancesOf(Parent parent, Class<T> type) {
-        m_result.clear();
-        findInstancesOf(parent, type);
-        return m_result;
+    public static <T> List<T> getInstancesOf(Parent parent, 
+            Class<T> type) {
+        return findInstancesOf(parent, type, new ArrayList<T>());
     }
 
     /**
@@ -69,7 +77,7 @@ public class NodeTraverseHelper<T extends Node> {
      * @return true if the given node is related to the given parent, false if
      *         not
      */
-    public boolean isChildOf(Node node, Parent parent) {
+    public static boolean isChildOf(Node node, Parent parent) {
         boolean result = false;
         for (Node n : parent.getChildrenUnmodifiable()) {
             if (!result) {
@@ -82,6 +90,25 @@ public class NodeTraverseHelper<T extends Node> {
             }
         }
         return result;
+    }
+    
+    /**
+     * Checks if a given Node is Visible by checking if all parent nodes are visible
+     * @param node the node 
+     * @return true if visible, false otherwise
+     */
+    public static boolean isVisible(Node node) {
+        if (node == null) {
+            return false;
+        }
+        Node tmp = node;
+        while (tmp != null) {
+            if (!tmp.isVisible()) {
+                return false;
+            }
+            tmp = tmp.getParent();
+        }
+        return true;
     }
     
 }

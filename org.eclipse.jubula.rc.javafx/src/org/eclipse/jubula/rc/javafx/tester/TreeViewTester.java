@@ -23,8 +23,8 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -53,12 +53,14 @@ public class TreeViewTester extends AbstractTreeTester {
                     public Object call() throws Exception {
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        ((TreeView<?>) getRealComponent()).layout();
+                        TreeView<?> tree = ((TreeView<?>) getRealComponent());
+                        tree.layout();
 
-                        List<? extends TreeCell> tCells = ComponentHandler
-                                .getAssignableFrom(TreeCell.class);
+                        List<? extends TreeCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(tree, TreeCell.class);
                         for (TreeCell<?> cell : tCells) {
-                            if (NodeBounds.checkIfContains(point, cell)) {
+                            if (NodeBounds.checkIfContains(point, cell)
+                                    && NodeTraverseHelper.isVisible(cell)) {
                                 return cell.getTreeItem();
                             }
                         }

@@ -35,10 +35,10 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
 import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -155,12 +155,13 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         table.scrollTo(row);
                         table.scrollToColumn(col);
                         table.layout();
-                        List<? extends TableCell> tCells = ComponentHandler
-                                .getAssignableFrom(TableCell.class);
+                        List<? extends TableCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(table, TableCell.class);
                         for (TableCell<?, ?> cell : tCells) {
                             if (cell.getIndex() == row
                                     && cell.getTableColumn() == col
-                                    && cell.getTableView() == table) {
+                                    && cell.getTableView() == table
+                                    && NodeTraverseHelper.isVisible(cell)) {
                                 String txt = cell.getText();
                                 if (txt == null
                                         && cell instanceof TextFieldTableCell
@@ -447,12 +448,14 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                 table.scrollToColumn(col);
                                 table.layout();
                                 List<? extends TableCell> tCells = 
-                                        ComponentHandler.getAssignableFrom(
-                                                TableCell.class);
+                                        NodeTraverseHelper
+                                        .getInstancesOf(table, TableCell.class);
                                 for (TableCell<?, ?> cell : tCells) {
                                     if (cell.getIndex() == row
                                             && cell.getTableColumn() == col
-                                            && cell.getTableView() == table) {
+                                            && cell.getTableView() == table
+                                            && NodeTraverseHelper
+                                            .isVisible(cell)) {
                                         return cell.isEditable();
                                     }
                                 }
@@ -501,8 +504,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
-                        List<? extends TableCell> tCells = ComponentHandler
-                                .getAssignableFrom(TableCell.class);
+                        List<? extends TableCell> tCells = NodeTraverseHelper.
+                                getInstancesOf(table, TableCell.class);
                         for (TableCell<?, ?> cell : tCells) {
                             if (cell.getIndex() == row
                                     && cell.getTableColumn() == col

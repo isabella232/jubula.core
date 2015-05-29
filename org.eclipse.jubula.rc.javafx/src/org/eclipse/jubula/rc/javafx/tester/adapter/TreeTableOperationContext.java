@@ -171,8 +171,7 @@ public class TreeTableOperationContext extends
                         } else if (node instanceof TreeItem) {
                             TreeItem<?> item = (TreeItem<?>) node;
                             TreeTableView<?> treeTable = getTree();
-                            List<TreeTableCell> cells = 
-                                    new NodeTraverseHelper<TreeTableCell>()
+                            List<TreeTableCell> cells = NodeTraverseHelper
                                     .getInstancesOf(treeTable,
                                             TreeTableCell.class);
                             for (TreeTableCell<?, ?> cell : cells) {
@@ -274,8 +273,7 @@ public class TreeTableOperationContext extends
                     public Object call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
                         TreeTableView<?> treeTable = getTree();
-                        List<TreeTableCell> cells = 
-                                new NodeTraverseHelper<TreeTableCell>()
+                        List<TreeTableCell> cells = NodeTraverseHelper
                                 .getInstancesOf(treeTable, TreeTableCell.class);
                         for (TreeTableCell<?, ?> treeTableCell : cells) {
                             // Nullchecks because of the virtual flow cells
@@ -331,8 +329,7 @@ public class TreeTableOperationContext extends
                     public Object call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
                         TreeTableView<?> treeTable = getTree();
-                        List<TreeTableCell> cells = 
-                                new NodeTraverseHelper<TreeTableCell>()
+                        List<TreeTableCell> cells = NodeTraverseHelper
                                 .getInstancesOf(treeTable, TreeTableCell.class);
                         for (TreeTableCell<?, ?> treeTableCell : cells) {
                             // Nullchecks because of the virtual flow cells
@@ -515,8 +512,7 @@ public class TreeTableOperationContext extends
                         TreeTableView<?> treeTable = getTree();
                         treeTable.layout();
                         TreeItem<?> item = (TreeItem<?>) node;
-                        List<TreeTableCell> cells = 
-                                new NodeTraverseHelper<TreeTableCell>()
+                        List<TreeTableCell> cells = NodeTraverseHelper
                                 .getInstancesOf(treeTable, TreeTableCell.class);
                         for (TreeTableCell<?, ?> cell : cells) {
                             // Nullchecks because of the virtual flow cells

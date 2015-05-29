@@ -12,8 +12,10 @@ package org.eclipse.jubula.rc.javafx.components;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.value.WeakChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventTarget;
+import javafx.scene.Node;
 
 import org.eclipse.jubula.rc.common.components.AUTComponent;
 
@@ -43,6 +45,11 @@ public class JavaFXComponent extends AUTComponent<EventTarget> {
      *            the component
      */
     public void addChangeListener(EventTarget component) {
+        if (component instanceof Node) {
+            ((Node)component).visibleProperty()
+                .addListener(new WeakChangeListener<Boolean>(
+                        VisibleChangeHandler.INSTACE));
+        }
         Object children = ChildrenGetter.getAsRealType(component);
         if (children instanceof ReadOnlyObjectProperty) {
             ChildrenListenerHelper.addListener(
@@ -58,6 +65,11 @@ public class JavaFXComponent extends AUTComponent<EventTarget> {
      */
     public void removeChangeListener() {
         Object children = ChildrenGetter.getAsRealType(getComponent());
+        EventTarget component = getComponent();
+        if (component instanceof Node) {
+            ((Node)component).visibleProperty()
+                .removeListener(VisibleChangeHandler.INSTACE);
+        }
         if (children instanceof ObjectProperty) {
             ChildrenListenerHelper.removeListener(
                 (ObjectProperty<? extends EventTarget>) children);

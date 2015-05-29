@@ -39,10 +39,10 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
 import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
@@ -106,11 +106,13 @@ public class TableTester extends AbstractTableTester {
                         table.layout();
                         TableColumn<?, ?> col = table
                                 .getVisibleLeafColumn(column);
-                        List<? extends TableCell> tCells = ComponentHandler
-                                .getAssignableFrom(TableCell.class);
+                        
+                        List<? extends TableCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(table, TableCell.class);
                         for (TableCell<?, ?> cell : tCells) {
                             if (cell.getIndex() == row
-                                    && cell.getTableColumn() == col) {
+                                    && cell.getTableColumn() == col
+                                    && NodeTraverseHelper.isVisible(cell)) {
                                 return cell;
                             }
                         }
@@ -137,14 +139,16 @@ public class TableTester extends AbstractTableTester {
                         TableView<?> table = (TableView<?>) getRealComponent();
                         // Update the layout coordinates otherwise
                         // we would get old position values
+                        table.requestLayout();
                         table.layout();
                         
-                        List<? extends TableCell> tCells = ComponentHandler
-                                .getAssignableFrom(TableCell.class);
+                        List<? extends TableCell> tCells = NodeTraverseHelper
+                                .getInstancesOf(table, TableCell.class);
                         for (TableCell<?, ?> cell : tCells) {
                             if (NodeBounds.checkIfContains(
                                     new Point2D(p.x, p.y), cell)
-                                    && cell.getTableView().equals(table)) {
+                                    && cell.getTableView().equals(table)
+                                    && NodeTraverseHelper.isVisible(cell)) {
                                 TableColumn cellColumn = cell
                                         .getTableColumn();
                                 int col = table.getVisibleLeafIndex(cellColumn);
@@ -381,22 +385,24 @@ public class TableTester extends AbstractTableTester {
                                 column);
                         // Check if the CheckBox is realized via a CheckBoxCell
                         List<? extends CheckBoxTableCell> checkboxCells = 
-                                ComponentHandler.getAssignableFrom(
-                                        CheckBoxTableCell.class);
+                                NodeTraverseHelper
+                                .getInstancesOf(table, CheckBoxTableCell.class);
                         for (CheckBoxTableCell<?, ?> cell : checkboxCells) {
                             if (cell.getTableColumn().equals(col)
-                                    && cell.getIndex() == row) {
+                                    && cell.getIndex() == row
+                                    && NodeTraverseHelper.isVisible(cell)) {
                                 return cell.lookup(CheckBox.class
                                         .getSimpleName());
                             }
                         }
                         // No CheckBoxCell found. Now we have to check all
                         // Cells!
-                        List<? extends TableCell> cells = ComponentHandler
-                                .getAssignableFrom(TableCell.class);
+                        List<? extends TableCell> cells = NodeTraverseHelper
+                                .getInstancesOf(table, TableCell.class);
                         for (TableCell<?, ?> cell : cells) {
                             if (cell.getTableColumn().equals(col)
-                                    && cell.getIndex() == row) {
+                                    && cell.getIndex() == row
+                                    && NodeTraverseHelper.isVisible(cell)) {
                                 return cell.lookup(CheckBox.class
                                         .getSimpleName());
                             }

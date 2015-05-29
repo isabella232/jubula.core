@@ -95,10 +95,8 @@ public class ListViewAdapter<T extends ListView<?>> extends
                     final T listView = getRealComponent();
                     listView.scrollTo(index.intValue());
                     listView.layout();
-                    NodeTraverseHelper<ListCell> helper = 
-                            new NodeTraverseHelper<ListCell>();
-                    List<ListCell> lCells = 
-                            helper.getInstancesOf(listView, ListCell.class);
+                    List<ListCell> lCells = NodeTraverseHelper
+                            .getInstancesOf(listView, ListCell.class);
                     for (ListCell<?> cell : lCells) {
                         if (cell.getIndex() == index.intValue()
                                 && cell.getListView() == listView) {
@@ -151,10 +149,8 @@ public class ListViewAdapter<T extends ListView<?>> extends
                         int index = i.intValue();
                         listView.scrollTo(index);
                         listView.layout();
-                        NodeTraverseHelper<ListCell> helper = 
-                                new NodeTraverseHelper<ListCell>();
-                        List<ListCell> lCells = 
-                                helper.getInstancesOf(listView, ListCell.class);
+                        List<ListCell> lCells = NodeTraverseHelper
+                                .getInstancesOf(listView, ListCell.class);
                         for (ListCell<?> cell : lCells) {
                             if (cell.getIndex() == index
                                 && cell.getListView() == listView) {
@@ -181,10 +177,8 @@ public class ListViewAdapter<T extends ListView<?>> extends
                     for (int i = 0; i < itemCount; i++) {
                         listView.scrollTo(i);
                         listView.layout();
-                        NodeTraverseHelper<ListCell> helper = 
-                                new NodeTraverseHelper<ListCell>();
-                        List<ListCell> lCells = 
-                                helper.getInstancesOf(listView, ListCell.class);
+                        List<ListCell> lCells = NodeTraverseHelper
+                                .getInstancesOf(listView, ListCell.class);
                         for (ListCell<?> cell : lCells) {
                             if (cell.getIndex() == i
                                 && cell.getListView() == listView) {
