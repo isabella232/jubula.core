@@ -9,7 +9,7 @@
   <itemizedlist>
     <listitem>
       <para>
-     	You can now check the text of tooltips using the unbound module <emphasis>ub_ttp_checkTooltipText</emphasis>.
+     	You can now check the text of tooltips using the unbound module <emphasis>ub_ttc_checkTooltipText</emphasis>.
       </para>
     </listitem>
       </itemizedlist>
