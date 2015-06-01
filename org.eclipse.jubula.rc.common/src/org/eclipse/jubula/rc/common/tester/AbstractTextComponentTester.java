@@ -56,10 +56,16 @@ public class AbstractTextComponentTester
      * @param text The text to insert at the current caret position
      */
     protected void insertText(final String text) {
-        // Scroll it to visible first to ensure that the typing
-        // performs correctly.
-        getRobot().scrollToVisible(getComponent().getRealComponent(), null);
-        getRobot().type(getComponent().getRealComponent(), text);
+        if (getTextCompAdapter().isEditable()) {
+            // Scroll it to visible first to ensure that the typing
+            // performs correctly.
+            getRobot().scrollToVisible(getComponent().getRealComponent(), null);
+            getRobot().type(getComponent().getRealComponent(), text);
+        } else {
+            throw new StepExecutionException(
+                    "The textfield is not editable", EventFactory //$NON-NLS-1$
+                        .createActionError("The textfield is not editable")); //$NON-NLS-1$
+        }
     }
     
     /**

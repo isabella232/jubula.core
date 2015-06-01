@@ -15,6 +15,7 @@ import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.ListView;
@@ -40,6 +41,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.ButtonBaseAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ChoiceBoxAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ComboBoxAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ContextMenuAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.DatePickerAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.LabeledAdapter;
@@ -81,7 +83,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ImageView.class, Text.class, TitledPane.class, ListView.class,
         ComboBox.class, TabPane.class, ChoiceBox.class, Accordion.class,
         ScrollPane.class, SplitPane.class, ToolBar.class,
-        TreeTableView.class, MenuButton.class, Labeled.class
+        TreeTableView.class, MenuButton.class, Labeled.class, DatePicker.class
         };
 
     @Override
@@ -104,6 +106,9 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof TextInputControl) {
                 returnvalue = new TextComponentAdapter(
                         (TextInputControl) objectToAdapt);
+            } else if (objectToAdapt instanceof DatePicker) {
+                returnvalue = new DatePickerAdapter(
+                        (DatePicker) objectToAdapt);
             } else if (objectToAdapt instanceof TreeView) {
                 returnvalue = new TreeViewAdapter((TreeView<?>) objectToAdapt);
             } else if (objectToAdapt instanceof TableView) {
