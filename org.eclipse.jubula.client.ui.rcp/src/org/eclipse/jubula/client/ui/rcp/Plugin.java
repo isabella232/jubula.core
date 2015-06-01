@@ -1089,7 +1089,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
 
     /**
      * register business processes and service that should be available
-     * while complete Jubula live cycle
+     * while complete Jubula life cycle
      * - ProgressController
      * - ComponentNamesListBP
      */
