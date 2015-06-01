@@ -8,11 +8,11 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.core.commands;
+package org.eclipse.jubula.client.internal.commands;
 
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.TestResultNode;
-import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.APICommand;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotResponseMessage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -23,9 +23,8 @@ import org.slf4j.LoggerFactory;
 /**
  * @author BREDEX GmbH
  * @created Apr 19, 2010
- * 
  */
-public class TakeScreenshotResponseCommand implements ICommand {
+public class TakeScreenshotResponseCommand implements APICommand {
     /** the logger */
     private static Logger log = LoggerFactory
             .getLogger(TakeScreenshotResponseCommand.class);

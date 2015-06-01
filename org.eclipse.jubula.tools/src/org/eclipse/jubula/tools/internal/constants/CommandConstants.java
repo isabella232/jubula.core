@@ -168,8 +168,8 @@ public abstract class CommandConstants {
     public static final String SERVER_LOG_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.ServerLogResponseCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.TakeScreenshotCommand"  */
     public static final String TAKE_SCREENSHOT_COMMAND = "org.eclipse.jubula.rc.common.commands.TakeScreenshotCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.client.core.commands..TakeScreenshotResponseCommand"  */
-    public static final String TAKE_SCREENSHOT_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.TakeScreenshotResponseCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.client.internal.commands.TakeScreenshotResponseCommand"  */
+    public static final String TAKE_SCREENSHOT_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.TakeScreenshotResponseCommand"; //$NON-NLS-1$
     
     /** constant: "org.eclipse.jubula.rc.common.commands.EndTestExecutionCommand"  */
     public static final String END_TESTEXECUTION_COMMAND = "org.eclipse.jubula.rc.common.commands.EndTestExecutionCommand"; //$NON-NLS-1$

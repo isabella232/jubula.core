@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2015 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,50 +10,51 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.commands;
 
+import java.util.concurrent.Exchanger;
+
 import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.communication.internal.APICommand;
 import org.eclipse.jubula.communication.internal.message.Message;
-import org.eclipse.jubula.communication.internal.message.RegisteredAutListMessage;
+import org.eclipse.jubula.communication.internal.message.TakeScreenshotResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 /**
- * Returns a collection of all currently running AUTs.
- *
  * @author BREDEX GmbH
- * @created Jan 26, 2010
  */
-public class RegisteredAutListCommand implements APICommand {
+public class TakeScreenshotResponseCommand implements APICommand {
     /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(RegisteredAutListCommand.class);
-    
+    private static Logger log = LoggerFactory
+            .getLogger(TakeScreenshotResponseCommand.class);
+
     /** the message */
-    private RegisteredAutListMessage m_message;
+    private TakeScreenshotResponseMessage m_message;
 
     /**
      * Constructor
      */
-    public RegisteredAutListCommand() {
+    public TakeScreenshotResponseCommand() {
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public Message execute() {
+        Exchanger<Object> exchanger = Synchronizer.instance();
         try {
-            Synchronizer.instance().exchange(m_message.getAutIds());
+            exchanger.exchange(getMessage());
         } catch (InterruptedException e) {
-            LOG.debug(e.getLocalizedMessage(), e);
+            log.error(e.getLocalizedMessage(), e);
         }
+        
         return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public RegisteredAutListMessage getMessage() {
+    public TakeScreenshotResponseMessage getMessage() {
         return m_message;
     }
 
@@ -61,13 +62,13 @@ public class RegisteredAutListCommand implements APICommand {
      * {@inheritDoc}
      */
     public void setMessage(Message message) {
-        m_message = (RegisteredAutListMessage)message;
+        m_message = (TakeScreenshotResponseMessage)message;
     }
 
     /**
      * {@inheritDoc}
      */
     public void timeout() {
-        LOG.error(this.getClass().getName() + " timeout called."); //$NON-NLS-1$
+        log.error(this.getClass().getName());
     }
 }

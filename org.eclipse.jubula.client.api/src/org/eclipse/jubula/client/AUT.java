@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import java.awt.image.BufferedImage;
+
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.CommunicationException;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
@@ -55,4 +57,12 @@ public interface AUT extends Remote {
      *            the exception handler for this AUT; may be <code>null</code>.
      */
     void setHandler(@Nullable ExecutionExceptionHandler handler);
+    
+    /**
+     * @return a screenshot of the AUTs primary display.
+     * 
+     * @throws IllegalStateException
+     *             in case of e.g. being called when not connected to an AUT
+     */
+    @Nullable BufferedImage getScreenshot() throws IllegalStateException;
 }

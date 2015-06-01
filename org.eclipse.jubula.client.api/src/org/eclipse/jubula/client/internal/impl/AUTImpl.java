@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.awt.image.BufferedImage;
 import java.net.ConnectException;
 import java.util.Map;
 
@@ -32,7 +33,10 @@ import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
+import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
+import org.eclipse.jubula.communication.internal.message.TakeScreenshotResponseMessage;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
@@ -40,6 +44,7 @@ import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.serialisation.SerializedImage;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -226,5 +231,46 @@ public class AUTImpl implements AUT {
     public void setHandler(
         @Nullable ExecutionExceptionHandler handler) {
         m_handler = handler;
+    }
+
+    /** {@inheritDoc} */
+    public BufferedImage getScreenshot() throws IllegalStateException {
+        if (isConnected()) {
+            Message message = new TakeScreenshotMessage();
+            try {
+                m_instance.send(message);
+                
+                Object exchange = Synchronizer.instance().exchange(null);
+                if (exchange instanceof TakeScreenshotResponseMessage) {
+                    TakeScreenshotResponseMessage response = 
+                        (TakeScreenshotResponseMessage) exchange;
+
+                    return SerializedImage.computeImage(
+                            response.getScreenshot());
+                }
+                log.error("Unexpected response received: " //$NON-NLS-1$
+                    + String.valueOf(exchange));
+            } catch (NotConnectedException nce) {
+                if (log.isErrorEnabled()) {
+                    log.error(nce.getLocalizedMessage(), nce);
+                }
+            } catch (IllegalArgumentException e) {
+                if (log.isErrorEnabled()) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
+            } catch (org.eclipse.jubula.tools.internal.
+                    exception.CommunicationException e) {
+                if (log.isErrorEnabled()) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
+            } catch (InterruptedException e) {
+                if (log.isErrorEnabled()) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
+            }
+        } else {
+            throw new IllegalStateException("No AUT connection!"); //$NON-NLS-1$
+        }
+        return null;
     }
 }

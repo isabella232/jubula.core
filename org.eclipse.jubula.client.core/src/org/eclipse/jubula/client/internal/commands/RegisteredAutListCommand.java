@@ -14,7 +14,7 @@ import org.eclipse.jubula.client.core.agent.AutRegistrationEvent;
 import org.eclipse.jubula.client.core.agent.AutRegistrationEvent.RegistrationStatus;
 import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.communication.internal.ICommand;
+import org.eclipse.jubula.communication.internal.APICommand;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.RegisteredAutListMessage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created Jan 26, 2010
  */
-public class RegisteredAutListCommand implements ICommand {
+public class RegisteredAutListCommand implements APICommand {
 
     /** the logger */
     private static final Logger LOG = 

@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
 import org.eclipse.jubula.client.core.commands.DisplayManualTestStepResponseCommand;
 import org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand;
-import org.eclipse.jubula.client.core.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.core.constants.TestExecutionConstants;
 import org.eclipse.jubula.client.core.events.AUTEvent;
@@ -73,6 +72,7 @@ import org.eclipse.jubula.client.core.utils.Traverser;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand;
+import org.eclipse.jubula.client.internal.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
@@ -1072,7 +1072,7 @@ public class TestExecution {
      * @param resultNode the result node to add the screenshot for
      */
     private void addScreenshot(TestResultNode resultNode) {
-        // Send request to aut starter and wait for response
+        // Send request to AUT and wait for response
         ICommand command = new TakeScreenshotResponseCommand(resultNode);
         Message message = new TakeScreenshotMessage();
         try {
