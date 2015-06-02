@@ -4,5 +4,5 @@
   <title>Release Notes for version 8.1.5</title>
   
   <xi:include href="features.xml"/>
-  <!--  <xi:include href="issues.xml"/>-->
+  <xi:include href="issues.xml"/>
 </chapter>
