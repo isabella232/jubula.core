@@ -2,6 +2,16 @@
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
-  
+  <para>
+    <emphasis role="strong">Sister release to Eclipse Mars</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	This version is the "sister" release to the Eclipse Mars release. It was 
+     	produced in the same sprint as the branch for the Mars release. 
+      </para>
+    </listitem>
+      </itemizedlist>
   
 </section>
