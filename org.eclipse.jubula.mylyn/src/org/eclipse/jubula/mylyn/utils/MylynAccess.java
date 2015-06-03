@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.mylyn.Activator;
@@ -194,115 +195,123 @@ public final class MylynAccess {
      * @param taskId task id
      * @param attributeUpdates list of field updates
      * @param monitor monitor
-     * @return OK if succeeded; WARNING when problems; ERROR otherwise
+     * @return a list of status information per performed attribute update
      */
-    public static IStatus updateAttributes(TaskRepository repo, String taskId,
-        List<Map<String, String>> attributeUpdates, IProgressMonitor monitor) {
-        
-        IStatus status = new Status(IStatus.ERROR, Activator.ID,
-                "No task data found in the given repository!"); //$NON-NLS-1$
+    public static IStatus updateAttributes(TaskRepository repo,
+            String taskId, List<Map<String, String>> attributeUpdates,
+            IProgressMonitor monitor) {
+        MultiStatus updateInfo = new MultiStatus(Activator.ID,
+                IStatus.INFO, "Task update is about to start...", null); //$NON-NLS-1$
         try {
-            TaskData taskData = MylynAccess.getTaskDataByID(
-                    repo, taskId, monitor);
-            if (taskData == null) {
-                return status;
-            }
-            
-            ITask task = MylynAccess.getTaskByID(
-                    repo, taskData.getTaskId(), monitor);
-            if (task != null) {
-                ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
-                ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
-                    .createWorkingCopy(task, taskData);
-                TaskDataModel taskModel = new TaskDataModel(repo, task,
-                    taskWorkingCopy);
-                
-                String connectorKind = repo.getConnectorKind();
-                AbstractRepositoryConnector connector = TasksUi
-                    .getRepositoryConnector(connectorKind);
-                AbstractTaskDataHandler taskDataHandler = connector
-                    .getTaskDataHandler();
-                TaskAttribute rootData = taskModel.getTaskData()
-                    .getRoot();
-                List<TaskAttribute> changes = attributeUpdateHandling(
-                                attributeUpdates, rootData);
-                
-                if (changes.isEmpty()) {
-                    return status;
+            TaskData taskData = getTaskDataByID(repo, taskId, monitor);
+            if (taskData != null) {
+                ITask task = getTaskByID(repo, taskData.getTaskId(), monitor);
+                if (task != null) {
+                    String connectorKind = repo.getConnectorKind();
+                    AbstractRepositoryConnector connector = TasksUi
+                            .getRepositoryConnector(connectorKind);
+                    AbstractTaskDataHandler taskDataHandler = connector
+                            .getTaskDataHandler();
+                    ITaskDataManager taskDataManager = 
+                            TasksUi.getTaskDataManager();
+
+                    ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
+                            .createWorkingCopy(task, taskData);
+                    TaskDataModel taskModel = new TaskDataModel(repo, task,
+                            taskWorkingCopy);
+                    
+                    TaskAttribute rootData = taskModel.getTaskData()
+                            .getRoot();
+                    for (Map<String, String> udpate : attributeUpdates) {
+                        List<TaskAttribute> changes = attributeUpdateHandling(
+                                udpate, rootData);
+                        if (changes.isEmpty()) {
+                            updateInfo.add(new Status(IStatus.INFO,
+                                    Activator.ID, "No changes for Task.")); //$NON-NLS-1$
+                            continue;
+                        }
+                        for (TaskAttribute change : changes) {
+                            taskModel.attributeChanged(change);
+                        }
+                        RepositoryResponse response = taskDataHandler
+                            .postTaskData(
+                                taskModel.getTaskRepository(), 
+                                taskModel.getTaskData(),
+                                taskModel.getChangedOldAttributes(), monitor);
+                        if (response != null
+                                && RepositoryResponse.ResponseKind.TASK_UPDATED
+                                .equals(response.getReposonseKind())) {
+                            updateInfo.add(new Status(IStatus.OK,
+                                    Activator.ID, "Task has been updated.")); //$NON-NLS-1$
+                        } else {
+                            updateInfo.add(new Status(IStatus.WARNING,
+                                    Activator.ID,
+                                    "Task might not have been updated successfully.")); //$NON-NLS-1$
+                        }
+                        if (monitor.isCanceled()) {
+                            updateInfo.add(new Status(IStatus.OK,
+                                    Activator.ID, "Task update has been cancelled.")); //$NON-NLS-1$
+                            break;
+                        }
+                    }
                 }
-                for (TaskAttribute change : changes) {
-                    taskModel.attributeChanged(change);
-                }
-                
-                RepositoryResponse response = taskDataHandler.postTaskData(
-                    taskModel.getTaskRepository(), taskModel.getTaskData(),
-                    taskModel.getChangedOldAttributes(), monitor);
-                
-                if (RepositoryResponse.ResponseKind.TASK_UPDATED
-                        .equals(response.getReposonseKind())) {
-                    status = new Status(IStatus.OK, Activator.ID,
-                        "Task has been updated."); //$NON-NLS-1$
-                } else {
-                    status = new Status(IStatus.WARNING, Activator.ID,
-                        "Task has not been updated successfully."); //$NON-NLS-1$
-                }
+            } else {
+                updateInfo.add(new Status(IStatus.ERROR, Activator.ID,
+                        "No task data found in the given repository!")); //$NON-NLS-1$
             }
         } catch (InvalidALMAttributeException e) {
-            status = new Status(IStatus.ERROR, Activator.ID,
-                    e.getMessage());
+            updateInfo.add(new Status(IStatus.ERROR, Activator.ID,
+                    e.getMessage()));
         } catch (CoreException e) {
-            status = new Status(IStatus.ERROR, Activator.ID,
-                    e.getLocalizedMessage());
+            updateInfo.add(new Status(IStatus.ERROR, Activator.ID,
+                    e.getLocalizedMessage()));
         } catch (IllegalArgumentException e) {
             LOG.error(e.getLocalizedMessage(), e);
             // This is necessary due to an IllegalArgumentException which might be
             // thrown in the TaskDataHandler
-            status = new Status(IStatus.ERROR, Activator.ID,
-                    e.getLocalizedMessage(), e);
+            updateInfo.add(new Status(IStatus.ERROR, Activator.ID,
+                    e.getLocalizedMessage(), e));
         }
-        return status;
+        return updateInfo;
     }
-    
 
     /**
      * Creates list of task attributes to change for default repository type
-     * @param attributeUpdates the attributes updates
+     * @param attributesToChange the attributes to update
      * @param rootAttr root attribute
      * @return list of task attributes to change
      * @throws InvalidALMAttributeException 
      */
     private static List<TaskAttribute> attributeUpdateHandling(
-            List<Map<String, String>> attributeUpdates, TaskAttribute rootAttr)
+            Map<String, String> attributesToChange, TaskAttribute rootAttr)
         throws InvalidALMAttributeException {
         List<TaskAttribute> changes = new ArrayList<TaskAttribute>();
 
-        for (Map<String, String> attributesToChange : attributeUpdates) {
-            for (String key : attributesToChange.keySet()) {
-                if (StringUtils.isBlank(key)) {
-                    throw new InvalidALMAttributeException(
-                            Messages.BlankAttributeID);
-                }
-                TaskAttribute attributeUpdate = rootAttr.getAttribute(key);
-                if (attributeUpdate == null) {
-                    throw new InvalidALMAttributeException(NLS.bind(
-                            Messages.InvalidAttributeID, key));
-                }
-                if (attributeUpdate.getMetaData().isReadOnly()) {
-                    throw new InvalidALMAttributeException(NLS.bind(
-                            Messages.ReadOnlyAttributeID, key));
-                }
-                String value = attributesToChange.get(key);
-                Map<String, String> options = attributeUpdate.getOptions();
-                if (options != null && !options.isEmpty()) {
-                    if (!options.containsKey(value)) {
-                        throw new InvalidALMAttributeException(NLS.bind(
-                                Messages.InvalidValue, value, key));
-                    }
-                }
-                attributeUpdate.setValue(value);
-
-                changes.add(attributeUpdate);
+        for (String key : attributesToChange.keySet()) {
+            if (StringUtils.isBlank(key)) {
+                throw new InvalidALMAttributeException(
+                        Messages.BlankAttributeID);
             }
+            TaskAttribute attributeUpdate = rootAttr.getAttribute(key);
+            if (attributeUpdate == null) {
+                throw new InvalidALMAttributeException(NLS.bind(
+                        Messages.InvalidAttributeID, key));
+            }
+            if (attributeUpdate.getMetaData().isReadOnly()) {
+                throw new InvalidALMAttributeException(NLS.bind(
+                        Messages.ReadOnlyAttributeID, key));
+            }
+            String value = attributesToChange.get(key);
+            Map<String, String> options = attributeUpdate.getOptions();
+            if (options != null && !options.isEmpty()) {
+                if (!options.containsKey(value)) {
+                    throw new InvalidALMAttributeException(NLS.bind(
+                            Messages.InvalidValue, value, key));
+                }
+            }
+            attributeUpdate.setValue(value);
+
+            changes.add(attributeUpdate);
         }
         return changes;
     }
