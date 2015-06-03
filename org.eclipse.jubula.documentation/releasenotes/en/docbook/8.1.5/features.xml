@@ -24,4 +24,14 @@
       </para>
     </listitem>
    </itemizedlist>
+   <para>
+    <emphasis role="strong">Take screenshot on error now supported in the Java API</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	 Take screenshot on error is now supported when using the Java API.
+      </para>
+    </listitem>
+   </itemizedlist>
 </section>
