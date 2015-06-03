@@ -12,5 +12,16 @@
      	You can now check the text of tooltips using the unbound module <emphasis>ub_ttc_checkTooltipText</emphasis>.
       </para>
     </listitem>
-      </itemizedlist>
+   </itemizedlist>
+   <para>
+    <emphasis role="strong">Support for DatePickers in JavaFX</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+     	DatePickers in the JavaFX toolkit can now be addressed as components with text input. You can also execute tests
+     	which address graphics components <emphasis>(ub_grc)</emphasis> on DatePickers.
+      </para>
+    </listitem>
+   </itemizedlist>
 </section>
