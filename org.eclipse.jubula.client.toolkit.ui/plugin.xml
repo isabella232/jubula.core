@@ -33,7 +33,7 @@
     
     <extension point="org.eclipse.ui.handlers">
         <handler
-            class="org.eclipse.jubula.client.toolkit.ui.ExportActionsHandler"
+            class="org.eclipse.jubula.client.toolkit.ui.handlers.ExportActionsHandler"
             commandId="org.eclipse.jubula.client.ui.rcp.commands.ExportActionsCommand">
         </handler>
     </extension>

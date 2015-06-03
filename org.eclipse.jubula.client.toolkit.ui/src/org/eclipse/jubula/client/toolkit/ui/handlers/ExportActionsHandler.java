@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.toolkit.ui;
+package org.eclipse.jubula.client.toolkit.ui.handlers;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,6 +19,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jubula.client.toolkit.ui.utils.ComponentActionPair;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
