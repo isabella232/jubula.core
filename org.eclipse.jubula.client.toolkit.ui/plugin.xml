@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         point="org.eclipse.ui.views">
+   <extension point="org.eclipse.ui.views">
       <view
             allowMultiple="true"
             category="org.eclipse.jubula.client.views"
@@ -12,5 +11,38 @@
             restorable="true">
       </view>
    </extension>
-	
+   
+   <extension point="org.eclipse.ui.commands">
+       <command
+            categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+            id="org.eclipse.jubula.client.ui.rcp.commands.ExportActionsCommand"
+            name="Export Actions"
+            description="Export list of supported actions to file">
+        </command>
+    </extension>
+    
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+          locationURI="toolbar:org.eclipse.jubula.client.toolkit.ui.overView?after=additions">
+            <command
+                commandId="org.eclipse.jubula.client.ui.rcp.commands.ExportActionsCommand"
+                style="push">
+            </command>
+        </menuContribution>
+    </extension>
+    
+    <extension point="org.eclipse.ui.handlers">
+        <handler
+            class="org.eclipse.jubula.client.toolkit.ui.ExportActionsHandler"
+            commandId="org.eclipse.jubula.client.ui.rcp.commands.ExportActionsCommand">
+        </handler>
+    </extension>
+    
+    <extension
+      point="org.eclipse.ui.commandImages">
+        <image
+            commandId="org.eclipse.jubula.client.ui.rcp.commands.ExportActionsCommand"
+            icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/saveAsNew.gif">
+        </image>
+    </extension>
 </plugin>

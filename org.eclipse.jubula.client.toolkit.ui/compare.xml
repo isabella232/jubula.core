@@ -1,0 +1,133 @@
+<!--
+    Copyright (c) 2015 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<project name="org.eclipse.jubula.client.toolkit.ui" default="run" basedir="."
+    xmlns:if="ant:if" xmlns:unless="ant:unless">
+	
+	<target name="run">
+		<antcall target="compareAll">
+			
+		  <param name="expectedBase"
+		      value="CAPs/expected"/>
+
+		  <param name="executedBase"
+              value="/projects/guidancer/Workspace/hu_snapshot/current/Testenvironment/testresults"/>
+
+		  <param name="target"
+              value="CAPs"/>
+
+		  <param name="ignoreCommon"
+              value="true"/>
+          
+		</antcall>
+	</target>
+		
+	<target name="compareAll">
+        <fail unless="expectedBase" message="You have to specify where the lists of expected CAPs are located"/>
+        <fail unless="executedBase" message="You have to specify where the log files of executed CAPs are located"/>
+        <fail unless="target" message="You have to specify the target directory for creating the diffs"/>
+        <fail unless="ignoreCommon" message="You have to specify whether you want common CAPs from log and expectation in the diffs"/>
+		
+        <property name="targetExecuted" value="${target}/executed"/>
+        <property name="targetDiff" value="${target}/diff"/>
+        <mkdir dir="${targetExecuted}"/>
+        <mkdir dir="${targetDiff}"/>
+		<script language="javascript">
+			<![CDATA[
+            var toolkits = ["javafx", "swing", "swt", "html"];
+            var platforms = ["GDWIN81", "GDWIN7", "gdcentos"];
+            for (var i = 0; i < toolkits.length; i++) {
+                var tk = toolkits[i];
+			    var expectedCAPs = expectedBase + "/" + tk + "_expectedCAPs.txt";
+			
+		        sortExpectedTask = project.createTask("antcall");
+                sortExpectedTask.init();
+                sortExpectedTask.setTarget("sort");
+        
+                sortExpectedTaskParam1 = sortExpectedTask.createParam();
+                sortExpectedTaskParam1.setName("unsorted");
+                sortExpectedTaskParam1.setValue(expectedCAPs);
+                    
+                sortExpectedTaskParam2 = sortExpectedTask.createParam();
+                sortExpectedTaskParam2.setName("sorted");
+                sortExpectedTaskParam2.setValue(expectedCAPs + ".tmp");
+                    
+                sortExpectedTask.execute();
+			
+		        for (var j = 0; j < platforms.length; j++) {
+			        var pf = platforms[j];
+			
+			        sortTask = project.createTask("antcall");
+                    sortTask.init();
+                    sortTask.setTarget("sort");
+            
+                    sortTaskParam1 = sortTask.createParam();
+                    sortTaskParam1.setName("unsorted");
+                    sortTaskParam1.setValue(executedBase + "/" + pf + "/logs/rc_" + tk + "_ExecutedCaps.log");
+            
+			        var sortTarget = targetExecuted + "/rc_" + tk + "_" + pf + "_executedCAPs.log";
+			
+                    sortTaskParam2 = sortTask.createParam();
+                    sortTaskParam2.setName("sorted");
+                    sortTaskParam2.setValue(sortTarget);
+			            
+                    sortTask.execute();
+			
+                    diffTask = project.createTask("antcall");
+                    diffTask.init();
+                    diffTask.setTarget("compareCAPs");
+			
+                    diffTaskParam1 = diffTask.createParam();
+                    diffTaskParam1.setName("expected");
+                    diffTaskParam1.setValue(expectedCAPs + ".tmp");
+			
+                    diffTaskParam2 = diffTask.createParam();
+                    diffTaskParam2.setName("executed");
+                    diffTaskParam2.setValue(sortTarget);
+		            
+		            diffTaskParam3 = diffTask.createParam();
+                    diffTaskParam3.setName("output");
+                    diffTaskParam3.setValue(targetDiff + "/rc_" + tk + "_" + pf + ".log");
+			
+                    diffTask.execute();
+		        }
+            }
+            ]]>
+        </script>
+	</target>
+
+	<target name="compareCAPs">
+		<fail unless="expected" />
+        <fail unless="executed" />
+        <fail unless="output" />
+        <echo message="Compare ${expected}" />
+        <echo message="with ${executed}" />
+		<exec executable="sdiff" output="${output}">
+			<arg value="-bBW"/>
+			<arg value="-s" if:true="${ignoreCommon}"/>
+            <arg value="-w"/>
+            <arg value="250"/>
+			<arg value="${expected}"/>
+			<arg value="${executed}"/>
+		</exec>
+	</target>
+	
+	<target name="sort">
+        <fail unless="unsorted" />
+        <fail unless="sorted" />
+        <echo message="Sort ${unsorted}" />
+        <echo message="to ${sorted}" />
+		<property name="tmp.cmd" value="sort.sh" />
+        <echo message="cat ${unsorted} | sort -f -b -i | uniq > ${sorted}" file="${tmp.cmd}" append="false"/>
+        <exec executable="chmod">
+            <arg value="+x"/>
+            <arg value="${tmp.cmd}"/>
+        </exec>
+		<exec executable="${tmp.cmd}" />
+        <delete file="${tmp.cmd}" />
+    </target>
+</project>

@@ -61,7 +61,7 @@ public class ToolkitOverView extends ViewPart {
                     final ToolkitDescriptor parentDescriptor = COMP_SYSTEM
                         .getToolkitDescriptor(parent);
                     if (parentDescriptor != null) {
-                        sb.append(" --> ");
+                        sb.append(" --> "); //$NON-NLS-1$
                         sb.append(parentDescriptor.getName());
                     }
                 }
@@ -77,7 +77,7 @@ public class ToolkitOverView extends ViewPart {
                     final String componentClass = 
                         concreteComponent.getComponentClass().getName();
                     if (!StringUtils.isBlank(componentClass)) {
-                        sb.append(" - ");
+                        sb.append(" - "); //$NON-NLS-1$
                         sb.append(componentClass);
                     }
                 }
@@ -99,20 +99,20 @@ public class ToolkitOverView extends ViewPart {
                 Param param = (Param) element;
                 StringBuilder sb = new StringBuilder();
                 sb.append(CompSystemI18n.getString(param.getType()));
-                sb.append(" : ");
+                sb.append(" : "); //$NON-NLS-1$
                 sb.append(sh.get(param.getName(), true));
                 if (param.hasValueSet()) {
-                    sb.append(" [");
+                    sb.append(" ["); //$NON-NLS-1$
                     ParamValueSet valueSet = param.getValueSet();
                     Iterator<ValueSetElement> iterator = valueSet.iterator();
                     while (iterator.hasNext()) {
                         sb.append(CompSystemI18n.getString(iterator.next()
                             .getValue(), true));
                         if (iterator.hasNext()) {
-                            sb.append(", ");
+                            sb.append(", "); //$NON-NLS-1$
                         }
                     }
-                    sb.append("]");
+                    sb.append("]"); //$NON-NLS-1$
                 }
                 String description = param.getDescriptionKey();
                 if (description != null) {
