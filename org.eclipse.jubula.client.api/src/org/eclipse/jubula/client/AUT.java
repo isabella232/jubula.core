@@ -59,7 +59,7 @@ public interface AUT extends Remote {
     void setHandler(@Nullable ExecutionExceptionHandler handler);
     
     /**
-     * @return a screenshot of the AUTs primary display.
+     * @return a screenshot of the AUTs primary display; may be <code>null</code>.
      * 
      * @throws IllegalStateException
      *             in case of e.g. being called when not connected to an AUT
