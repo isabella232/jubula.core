@@ -64,7 +64,9 @@ public class ExportActionsHandler extends AbstractHandler {
                         continue;
                     }
                     for (Action action : component.getActions()) {
-                        list.add(new ComponentActionPair(component.getType(),
+                        list.add(new ComponentActionPair(
+                                ((ConcreteComponent) component)
+                                        .getComponentClass().getName(),
                                 CompSystemI18n.getString(action.getName())));
                     }
                 }
