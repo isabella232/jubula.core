@@ -329,15 +329,19 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
     /** {@inheritDoc} */
     protected void setInitialInput() {
-        ITestDataCategoryPO rootPOTop = (ITestDataCategoryPO)getEditorHelper()
-                .getEditSupport().getWorkVersion();
-        try {
-            getTreeViewer().getTree().getParent().setRedraw(false);
-            getTreeViewer().setInput(rootPOTop);
-            getTreeViewer().expandAll();
-        } finally {
-            getTreeViewer().getTree().getParent().setRedraw(true);
-        }
+        final ITestDataCategoryPO rootPOTop = (ITestDataCategoryPO)
+                getEditorHelper().getEditSupport().getWorkVersion();
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {                
+                try {
+                    getTreeViewer().getTree().getParent().setRedraw(false);
+                    getTreeViewer().setInput(rootPOTop);
+                    getTreeViewer().expandAll();
+                } finally {
+                    getTreeViewer().getTree().getParent().setRedraw(true);
+                }
+            }
+        });
     }
 
     /** {@inheritDoc} */
@@ -452,15 +456,23 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     }
 
     /** {@inheritDoc} */
-    public void handleDataChanged(DataChangedEvent... events) {
-        getMainTreeViewer().getTree().setRedraw(false);
+    public void handleDataChanged(final DataChangedEvent... events) {
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getMainTreeViewer().getTree().setRedraw(false);
+            }
+        });
         try {
             for (DataChangedEvent e : events) {
                 handleDataChanged(e.getPo(), e.getDataState(),
                         e.getUpdateState());
             }
         } finally {
-            getMainTreeViewer().getTree().setRedraw(true);
+            Plugin.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    getMainTreeViewer().getTree().setRedraw(true);
+                }
+            });
         }
     }
     
@@ -521,28 +533,32 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
      * @param category
      *            the category
      */
-    private void handleDataChanged(
-            DataState dataState, ITestDataCategoryPO category) {
-        
-        switch (dataState) {
-            case Added:
-                getTreeViewer().add(category.getParent(), category);
-                getTreeViewer().setSelection(new StructuredSelection(category));
-                break;
-            case Deleted:
-                getTreeViewer().remove(category);
-                break;
-            case Renamed:
-                getTreeViewer().update(category, null);
-                break;
-            case ReuseChanged:
-                break;
-            case StructureModified:
-                getTreeViewer().refresh(category);
-                break;
-            default:
-                break;
-        }
+    private void handleDataChanged(final DataState dataState,
+            final ITestDataCategoryPO category) {
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {                
+                switch (dataState) {
+                    case Added:
+                        getTreeViewer().add(category.getParent(), category);
+                        getTreeViewer().setSelection(
+                                new StructuredSelection(category));
+                        break;
+                    case Deleted:
+                        getTreeViewer().remove(category);
+                        break;
+                    case Renamed:
+                        getTreeViewer().update(category, null);
+                        break;
+                    case ReuseChanged:
+                        break;
+                    case StructureModified:
+                        getTreeViewer().refresh(category);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     /**

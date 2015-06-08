@@ -521,7 +521,11 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                 case Added:
                 case StructureModified:
                     if (po != null) {
-                        m_treeViewer.refresh();
+                        Plugin.getDisplay().syncExec(new Runnable() {
+                            public void run() {
+                                m_treeViewer.refresh();
+                            }
+                        });
                         expandTrackedChanges();
                     }
                     break;
@@ -529,7 +533,11 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                     clearView();
                     break;
                 case Renamed:
-                    m_treeViewer.refresh();
+                    Plugin.getDisplay().syncExec(new Runnable() {
+                        public void run() {
+                            m_treeViewer.refresh();
+                        }
+                    });
                     expandTrackedChanges();
                     break;
                 default:
@@ -549,9 +557,13 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
      * For some reasons the view needs persuasion to expand the tracked changes sometimes.
      */
     private void expandTrackedChanges() {
-        m_treeViewer.setExpandedState(
-                Messages.SpecTestCaseGUIPropertySourceTrackedChangesCategory, 
-                true);
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {                
+                m_treeViewer.setExpandedState(Messages.
+                    SpecTestCaseGUIPropertySourceTrackedChangesCategory,
+                    true);
+            }
+        });
     }
     
     /**
@@ -577,8 +589,12 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                 return;
             }
         }
-        m_treeViewer.refresh();
-        m_treeViewer.expandToLevel(m_treeViewer.getAutoExpandLevel());
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                m_treeViewer.refresh();
+                m_treeViewer.expandToLevel(m_treeViewer.getAutoExpandLevel());
+            }
+        });
     }
 
     /**
@@ -593,27 +609,30 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         IStructuredSelection selection) {
         
         m_correspondingPart = part;
-        Object firstElement = selection.getFirstElement();
+        final Object firstElement = selection.getFirstElement();
         
-        if (firstElement == null) {
-            // e.g. when a project was opened and no view has a selection
-            m_treeViewer.setSelection(null);
-            m_treeViewer.setInput(null);
-        } else { // TestResultNodes must be excluded
-            if (firstElement instanceof IPersistentObject) {
-                m_treeViewer.setInput(firstElement);
-                workaroundSpringySelection(m_focusCellManager);
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                if (firstElement == null) {
+                    // e.g. when a project was opened and no view has a selection
+                    m_treeViewer.setSelection(null);
+                    m_treeViewer.setInput(null);
+                } else { // TestResultNodes must be excluded
+                    if (firstElement instanceof IPersistentObject) {
+                        m_treeViewer.setInput(firstElement);
+                        workaroundSpringySelection(m_focusCellManager);
+                    }
+                }
+                // property informations should be collapsed by default
+                m_treeViewer.setExpandedState(Messages.
+                        OMTechNameGUIPropertySourcePropertyInformation, 
+                        false);
+                
+                // parameters should be expanded by default
+                m_treeViewer.setExpandedState(Messages.
+                        SpecTestCaseGUIPropertySourceParameter, true);
             }
-        }
-        
-        // property informations should be collapsed by default
-        m_treeViewer.setExpandedState(Messages.
-                OMTechNameGUIPropertySourcePropertyInformation, 
-                false);
-        
-        // parameters should be expanded by default
-        m_treeViewer.setExpandedState(Messages.
-                SpecTestCaseGUIPropertySourceParameter, true);
+        });
         
         expandTrackedChanges();
 
@@ -1106,7 +1125,11 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
      * {@inheritDoc}
      */
     public void handleLanguageChanged(Locale locale) {
-        m_treeViewer.refresh();
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                m_treeViewer.refresh();
+            }
+        });
     }
 
     /**
