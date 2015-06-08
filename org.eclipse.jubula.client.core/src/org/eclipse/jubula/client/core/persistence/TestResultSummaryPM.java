@@ -289,7 +289,8 @@ public class TestResultSummaryPM {
             Integer microVersion, String versionQualifier) throws JBException {
         EntityManager session = null;
         if (Persistor.instance() == null) {
-            return null;
+            log.error("Error while finding test result summaries. Persistor is null."); //$NON-NLS-1$
+            return new HashSet<Long>();
         }
         try {
             session = Persistor.instance().openSession();
