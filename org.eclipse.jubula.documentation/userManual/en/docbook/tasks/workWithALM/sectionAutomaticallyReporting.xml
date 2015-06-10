@@ -330,7 +330,7 @@
     <itemizedlist>
       <listitem>
         <para>
-          A connection is made to ALM system configured in the
+          A connection is made to the ALM system configured in the
           Project properties.
         </para>
       </listitem>
@@ -343,14 +343,14 @@
       <listitem>
         <para>
           If there is reporting to be done, the ITE
-          reports to each necessary task as a batch job. The batch job contains 
-          any field updates and any comments. 
+          reports to each necessary task as batch jobs. These batch jobs contain 
+          the desired field updates and comments. Although this is displayed as one operation in the console view
+          you will get <emphasis>N</emphasis> transactions for <emphasis>N</emphasis> comments/field updates.
           If multiple items in one test run reference the 
           same task ID, or if an item with a task ID is executed multiple times in the 
-          same test run, then only one comment will be written. 
+          same test run, then only one comment will be written, but this one will contain information about 
+          all executed items with this ID. 
           However, field updates will occur for each item linked to the task ID. 
-          In this case, you will see a warning in the console that you have multiple items
-          in one test that are joined to one single task ID.
         </para>
         <para role="tip">
           Tests that have
