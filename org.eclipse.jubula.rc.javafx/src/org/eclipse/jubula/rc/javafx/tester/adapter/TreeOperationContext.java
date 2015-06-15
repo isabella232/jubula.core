@@ -22,7 +22,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -34,6 +33,8 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 /**
  * This context holds the tree and supports access to the Robot. It also
@@ -62,7 +63,11 @@ public class TreeOperationContext
     public TreeOperationContext(IEventThreadQueuer queuer, IRobot robot,
             TreeView<?> tree) {
         super(queuer, robot, tree);
-        Validate.notNull(tree.getRoot());
+        if (tree.getRoot() == null) {
+            throw new StepExecutionException(
+                    "Tree is empty.",
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
     }
 
     /**

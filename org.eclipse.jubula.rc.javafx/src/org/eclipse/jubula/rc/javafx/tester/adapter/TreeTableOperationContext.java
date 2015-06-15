@@ -24,7 +24,6 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -36,6 +35,8 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on the tree inside a TreeTableView.
@@ -65,7 +66,11 @@ public class TreeTableOperationContext extends
     public TreeTableOperationContext(IEventThreadQueuer queuer, IRobot robot,
             TreeTableView<?> treeTable) {
         super(queuer, robot, treeTable);
-        Validate.notNull(treeTable.getRoot());
+        if (treeTable.getRoot() == null) {
+            throw new StepExecutionException(
+                    "Tree Table is empty.",
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
     }
     
     /**
