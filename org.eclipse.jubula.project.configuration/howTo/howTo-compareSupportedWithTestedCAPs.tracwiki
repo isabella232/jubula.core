@@ -1,0 +1,14 @@
+= Pre-requisites =
+* Logs from a "representative" nightly test execution 
+
+= Recipe =
+* Open "Toolkit Hierarchy" perspective in Jubula, click "Export" to save lists with all supported CAPs to a specified location.
+* Update your `org.eclipse.jubula.core` repository and open the `compare.xml` script from `o.e.j.client.toolkit.ui`
+* Set variables:
+ * `expectedBase` - where you exported the CAP lists to, earlier (e.g. `/projects/guidancer/Workspace/users/***/tmp/CAPs/expected`)
+ * `executedBase` - where nightly test results are located (e.g. `/projects/guidancer/Workspace/hu_snapshot/current/Testenvironment/testresults`)
+ * `target` - where to generate the diff to (e.g. `/projects/guidancer/Workspace/users/***/tmp/CAPs`)
+* execute default ant-target (`run`)
+* list containing diffs will be located in your `target/diff` directory
+ * actions on the left hand side of the diff are supported, '''but not tested'''
+ * actions on the right hand side of the diff are tested, yet not explicitly supported (only via inheritance)
