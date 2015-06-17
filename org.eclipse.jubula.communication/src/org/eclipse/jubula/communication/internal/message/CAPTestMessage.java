@@ -22,9 +22,6 @@ public class CAPTestMessage extends Message {
     /** The CAP message data. */
     private MessageCap m_messageCap;
 
-    /** message is used for 2 purposes */
-    private boolean m_requestAnswer = true;
-
     /**
      * Default constructor. Do nothing (required by Betwixt).
      */
@@ -60,19 +57,6 @@ public class CAPTestMessage extends Message {
      */
     public void setMessageCap(MessageCap messageCap) {
         m_messageCap = messageCap;
-    }
-
-    /** @return Returns the requestAnswer. */
-    public boolean isRequestAnswer() {
-        return m_requestAnswer;
-    }
-
-    /**
-     * @param requestAnswer
-     *            The requestAnswer to set.
-     */
-    public void setRequestAnswer(boolean requestAnswer) {
-        m_requestAnswer = requestAnswer;
     }
     
     /**

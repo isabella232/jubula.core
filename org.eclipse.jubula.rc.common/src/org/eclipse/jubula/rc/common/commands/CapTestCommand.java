@@ -278,10 +278,7 @@ public class CapTestCommand implements ICommand {
         if (event != null) {
             response.setTestErrorEvent(event);
         }
-        if (m_capTestMessage.isRequestAnswer()) {
-            return response;
-        }
-        return null;
+        return response;
     }
 
     /**
