@@ -325,6 +325,12 @@ public class AUTJavaFXHierarchy extends AUTHierarchy<EventTarget> {
         Validate.notNull(component, "The component must not be null"); //$NON-NLS-1$
         ArrayList<String> hierarchy = new ArrayList<String>();
         JavaFXHierarchyContainer container = getHierarchyContainer(component);
+        if (container == null) {
+            log.error("component '" + component //$NON-NLS-1$ 
+                    + "' is not managed by this hierarchy"); //$NON-NLS-1$
+            throw new ComponentNotManagedException("unmanaged component " //$NON-NLS-1$ 
+                    + component.toString(), MessageIDs.E_COMPONENT_NOT_MANAGED);
+        }
         hierarchy.add(container.getName());
         JavaFXHierarchyContainer parent = (JavaFXHierarchyContainer) container
                 .getPrnt();

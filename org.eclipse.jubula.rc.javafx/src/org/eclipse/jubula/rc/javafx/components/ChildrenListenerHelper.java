@@ -12,9 +12,9 @@ package org.eclipse.jubula.rc.javafx.components;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.value.WeakChangeListener;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.collections.WeakListChangeListener;
 import javafx.event.EventTarget;
 
 /**
@@ -27,14 +27,12 @@ import javafx.event.EventTarget;
 public class ChildrenListenerHelper {
 
     /** List Handler **/
-    private static WeakListChangeListener<EventTarget> listhandler =
-            new WeakListChangeListener<EventTarget>(
-                    new ChildListChangeHandler());
+    private static ListChangeListener<EventTarget> listhandler =
+                    new ChildListChangeHandler();
 
     /** Property Handler **/
-    private static WeakChangeListener<EventTarget> prophandler =
-            new WeakChangeListener<EventTarget>(
-                    new ChildPropertyChangeHandler());
+    private static ChangeListener<EventTarget> prophandler =
+                    new ChildPropertyChangeHandler();
 
     /**
      * Private Constructor
