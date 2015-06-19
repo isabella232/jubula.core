@@ -14,7 +14,6 @@ import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import org.eclipse.jubula.rc.common.components.FindComponentBP;
@@ -26,14 +25,12 @@ import org.eclipse.jubula.rc.common.components.FindComponentBP;
 public class FindJavaFXComponentBP extends FindComponentBP {
     /** {@inheritDoc} */
     public String getCompName(Object currComp) {
-        if (currComp instanceof Scene) {
-            return null;
-        } else if (currComp instanceof Stage) {
-            return null;
-        } else if (currComp instanceof Node) {
+        if (currComp instanceof Node) {
             return ((Node) currComp).getId();
-        } else {
+        } else if (currComp instanceof MenuItem) {
             return ((MenuItem) currComp).getId();
+        } else {
+            return null;
         }
     }
 
@@ -46,15 +43,17 @@ public class FindJavaFXComponentBP extends FindComponentBP {
             // And therefore the scene isn't available
             Window w = ((Scene) currComp).getWindow();
             return w != null && w.isShowing();
-        } else if (currComp instanceof Stage) {
-            return ((Stage) currComp).isShowing();
+        } else if (currComp instanceof Window) {
+            return ((Window) currComp).isShowing();
         } else if (currComp instanceof Node) {
             Node currNode = (Node) currComp;
             EventTarget parent = ParentGetter.get(currNode);
             return currNode.isVisible() && parent != null
                     && isAvailable(parent);
-        } else {
+        } else if (currComp instanceof MenuItem) {
             return ((MenuItem) currComp).isVisible();
+        } else {
+            return false;
         }
     }
 }
