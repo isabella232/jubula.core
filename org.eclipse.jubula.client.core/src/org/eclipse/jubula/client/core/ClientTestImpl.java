@@ -147,7 +147,7 @@ public class ClientTestImpl implements IClientTest {
      * timeout for report job, after this time the job will be canceled
      * 1200000ms = 20min
      */
-    private static final int BUILD_REPORT_TIMEOUT = 1200000;
+    private static final int MONITORING_REPORT_TIMEOUT = 1200000;
     
     /** timeout for requesting AutConfigMap from Agent */
     private static final int REQUEST_CONFIG_MAP_TIMEOUT = 10000;
@@ -907,42 +907,12 @@ public class ClientTestImpl implements IClientTest {
                 try {
                     monitor.beginTask(Messages.ClientWritingReportToDB,
                             IProgressMonitor.UNKNOWN);
-                    ITestResultSummaryPO summary = writeTestresultToDB(result);
+                    writeTestresultToDB(result);
                     if (m_logPath != null) {
                         monitor.beginTask(Messages.ClientWritingReport,
                                 IProgressMonitor.UNKNOWN);
                         writeReportToFileSystem(result);
                     }
-                    if (isRunningWithMonitoring()) {
-                        monitor.setTaskName(Messages.ClientCalculating);
-                        getMonitoringData();
-                        while (result.getMonitoringValues() == null
-                                || result.getMonitoringValues().isEmpty()) {
-                            TimeUtil.delay(500);
-                            if (result.getMonitoringValues() != null) {
-                                break;
-                            }
-                            if (monitor.isCanceled()) {
-                                return Status.CANCEL_STATUS;
-                            }
-                        }
-                        monitor.setTaskName(Messages.ClientBuildingReport);
-                        buildMonitoringReport();
-                        while (result.getReportData() == null) {
-                            TimeUtil.delay(500);
-                            if (result.getReportData() 
-                                    ==  (MonitoringConstants.EMPTY_REPORT)) {
-                                break;
-                            }
-                            if (monitor.isCanceled()) {
-                                return Status.CANCEL_STATUS;
-                            }
-                        }
-                        writeMonitoringResults(result);
-                    }
-                    DataEventDispatcher.getInstance()
-                            .fireTestresultSummaryChanged(summary,
-                                    DataState.Added);
                     monitor.done();
                     return Status.OK_STATUS;
                 } catch (Throwable t) {
@@ -955,22 +925,94 @@ public class ClientTestImpl implements IClientTest {
         }; 
         job.addJobChangeListener(new JobChangeAdapter() {
             public void done(IJobChangeEvent event) {
-                ab.set(true);                
+                if (isRunningWithMonitoring()) {
+                    final Job monJob = createMonitoringJob(result);
+                    monJob.addJobChangeListener(new JobChangeAdapter() {
+                        public void done(IJobChangeEvent event) {
+                            ab.set(true);
+                            DataEventDispatcher.getInstance()
+                                .fireTestresultSummaryChanged(
+                                    getTestresultSummary(),
+                                    DataState.Added);
+                        }
+                    });
+                    monJob.schedule();
+                    final Timer timerTimeout = new Timer();
+                    timerTimeout.schedule(new TimerTask() {
+                        public void run() {
+                            monJob.cancel();
+                            timerTimeout.cancel();
+                        }
+                    }, MONITORING_REPORT_TIMEOUT);
+                } else {
+                    ab.set(true);
+                    DataEventDispatcher.getInstance()
+                        .fireTestresultSummaryChanged(
+                            getTestresultSummary(),
+                            DataState.Added);
+                }
             }
-        });        
-        final Timer timerTimeout = new Timer();
-        timerTimeout.schedule(new TimerTask() {
-            public void run() {
-                job.cancel();
-                timerTimeout.cancel();
-            }
-        }, BUILD_REPORT_TIMEOUT);
+        });
         job.setPriority(Job.LONG);        
         job.schedule();             
         while (!ab.get()) {
             TimeUtil.delay(200);            
         }            
-    }     
+    }
+    
+    /**
+     * Creates the Job which can be scheduled to create the monitoring report
+     * @param result the result to create the monitoring report for
+     * @return the Job
+     */
+    private Job createMonitoringJob(final TestResult result) {
+        return new Job(Messages.ClientCollectingInformation) {
+            private String m_jobFamily = this.getName();
+
+            public boolean belongsTo(Object family) {
+                return m_jobFamily.equals(family);
+            }
+
+            protected IStatus run(IProgressMonitor monitor) {
+                try {
+                    monitor.beginTask(Messages.ClientWritingReportToDB,
+                            IProgressMonitor.UNKNOWN);
+                    monitor.setTaskName(Messages.ClientCalculating);
+                    getMonitoringData();
+                    while (result.getMonitoringValues() == null
+                            || result.getMonitoringValues().isEmpty()) {
+                        TimeUtil.delay(500);
+                        if (result.getMonitoringValues() != null) {
+                            break;
+                        }
+                        if (monitor.isCanceled()) {
+                            return Status.CANCEL_STATUS;
+                        }
+                    }
+                    monitor.setTaskName(Messages.ClientBuildingReport);
+                    buildMonitoringReport();
+                    while (result.getReportData() == null) {
+                        TimeUtil.delay(500);
+                        if (result.getReportData() 
+                                == (MonitoringConstants.EMPTY_REPORT)) {
+                            break;
+                        }
+                        if (monitor.isCanceled()) {
+                            return Status.CANCEL_STATUS;
+                        }
+                    }
+                    writeMonitoringResults(result);
+                    monitor.done();
+                    return Status.OK_STATUS;
+                } catch (Throwable t) {
+                    // this is due that everything that happens in the job
+                    // will otherwise not be logged (like memory Exception)
+                    log.error(Messages.ClientWritingReportError, t);
+                    return Status.CANCEL_STATUS;
+                }
+            }
+        };
+    }
     /**
      * writes monitoring results
      * @param result The monitoring results
@@ -996,7 +1038,8 @@ public class ClientTestImpl implements IClientTest {
                     .getReportData()));
             summary.setReportWritten(true);
         }
-        TestResultSummaryPM.mergeTestResultSummaryInDB(summary);        
+        summary = TestResultSummaryPM.mergeTestResultSummaryInDB(summary); 
+        setTestresultSummary(summary);
         //set the monitoring report in result to null, 
         //so it can be garbage collected
         result.setReportData(null);

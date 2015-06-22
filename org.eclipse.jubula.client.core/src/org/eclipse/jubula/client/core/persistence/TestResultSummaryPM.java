@@ -127,7 +127,7 @@ public class TestResultSummaryPM {
      * store the testresult summary of test run in database
      * @param summary the testresult summary to store
      */
-    public static final void storeTestResultSummaryInDB(
+    public static void storeTestResultSummaryInDB(
         ITestResultSummaryPO summary) {
         final EntityManager sess = Persistor.instance().openSession();
         try {            
@@ -150,15 +150,17 @@ public class TestResultSummaryPM {
      * saving collected monitoring data into DB. Instead of sess.persist() 
      * sess.merge() is called.
      * @param summary the testresult summary to store
+     * @return the new managed summary instance
      */
-    public static final void mergeTestResultSummaryInDB(
+    public static final ITestResultSummaryPO mergeTestResultSummaryInDB(
         ITestResultSummaryPO summary) {
         final EntityManager sess = Persistor.instance().openSession();
         try {            
             final EntityTransaction tx = 
                 Persistor.instance().getTransaction(sess);
-            sess.merge(summary);
+            ITestResultSummaryPO msummary = sess.merge(summary);
             Persistor.instance().commitTransaction(sess, tx);
+            return msummary;
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                     MessageIDs.E_DATABASE_GENERAL);
