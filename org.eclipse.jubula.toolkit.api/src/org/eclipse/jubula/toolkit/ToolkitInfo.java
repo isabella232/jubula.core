@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit;
 
+import org.eclipse.jdt.annotation.NonNull;
+
+
 /**
  * Information about a toolkit and its components
  * 
@@ -19,5 +22,23 @@ package org.eclipse.jubula.toolkit;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ToolkitInfo {
+    
+    /**
+     * Allows adding of a tester class for a component class into a toolkit
+     * @param componentClassName name of the component class
+     * @param testerClassName name of the tester class
+     * @return previously registered tester class for the component class
+     *         or <code>null</code> if there was none
+     */
+    public String registerTesterClass(@NonNull String componentClassName,
+            @NonNull String testerClassName);
+    
+    /**
+     * Allows removing of a tester class for a component class from a toolkit
+     * @param componentClassName name of the component class
+     * @return previously registered tester class for the component class
+     *         or <code>null</code> if there was none
+     */
+    public String deregisterTesterClass(@NonNull String componentClassName);
 
 }
