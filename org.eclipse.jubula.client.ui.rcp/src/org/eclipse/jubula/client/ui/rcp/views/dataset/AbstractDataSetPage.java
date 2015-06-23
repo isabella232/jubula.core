@@ -47,6 +47,7 @@ import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.TextControlBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
@@ -116,6 +117,9 @@ public abstract class AbstractDataSetPage extends Page
     /** The current IParameterInterfacePO */
     private IParameterInterfacePO m_paramInterfaceObj;
 
+    /** The state of the buttons for the current editor selection */
+    private boolean m_buttonEnabled;
+    
     /** List of DirectCombos which depend on each other */
     private List<DirectCombo> m_propertyCombos;
     /** The Combo for selecting a language to display */
@@ -138,6 +142,10 @@ public abstract class AbstractDataSetPage extends Page
     private Button m_insertButton;
     /** The Delete Button */
     private Button m_deleteButton;
+    /** The Up Button */
+    private Button m_upButton;
+    /** The Down Button */
+    private Button m_downButton;
     
     /** En-/Disabler for swt.Controls */
     private ControlEnabler m_controlEnabler;
@@ -150,7 +158,18 @@ public abstract class AbstractDataSetPage extends Page
     private IStructuredSelection m_currentSelection;
     
     /** Constants for the button actions */
-    private enum TestDataRowAction { ADDED, INSERTED, DELETED }
+    private enum TestDataRowAction { 
+        /** Add button clicked */
+        ADDED, 
+        /** Insert button clicked */
+        INSERTED, 
+        /** Delete button clicked */
+        DELETED, 
+        /** Up button clicked */
+        MOVED_UP, 
+        /** Down button clicked */
+        MOVED_DOWN 
+    }
 
     /**
      *  The constructor
@@ -419,6 +438,16 @@ public abstract class AbstractDataSetPage extends Page
                         getTableViewer().refresh();
                     }
                     break;
+                case MOVED_DOWN :
+                    getDataSetCombo().setSelectedObject(row + 1);
+                    getTableViewer().refresh();
+                    break;
+                case MOVED_UP :
+                    if ((row - 1) >= 0) {
+                        getDataSetCombo().setSelectedObject(row - 1);
+                        getTableViewer().refresh();
+                    }
+                    break;
                 default :
                     break;
             }
@@ -514,8 +543,23 @@ public abstract class AbstractDataSetPage extends Page
      * @param parent the parent composite
      */
     private void createButtons(Composite parent) {
+        
+        Composite bottomComp = new Composite(parent, SWT.NONE);
+
+        // Set numColumns to 3 for the buttons
+        GridLayout layout = new GridLayout(5, false);
+        layout.marginWidth = 5;
+        layout.marginHeight = 5;
+        layout.verticalSpacing = 2;
+        GridData gridDataBottom = new GridData(SWT.NONE, SWT.NONE, 
+                true, false);
+        gridDataBottom.horizontalAlignment = GridData.FILL;
+        gridDataBottom.horizontalSpan = 3;
+        bottomComp.setLayoutData(gridDataBottom);
+        bottomComp.setLayout(layout);
+        
         // Create and configure the "Add" button
-        setAddButton(new Button(parent, SWT.PUSH | SWT.CENTER));
+        setAddButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
         getAddButton().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.AddButton"); //$NON-NLS-1$
         getAddButton().setText(Messages.JubulaDataSetViewAppend);
         GridData gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
@@ -525,7 +569,7 @@ public abstract class AbstractDataSetPage extends Page
         getControlEnabler().addControl(getAddButton());
         
         // Create and configure the "Insert" button
-        setInsertButton(new Button(parent, SWT.PUSH | SWT.CENTER));
+        setInsertButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
         getInsertButton().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.InsertButton"); //$NON-NLS-1$
         getInsertButton().setText(Messages.DataSetViewInsert);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
@@ -535,14 +579,33 @@ public abstract class AbstractDataSetPage extends Page
         getControlEnabler().addControl(getInsertButton());
         
         //  Create and configure the "Delete" button
-        setDeleteButton(new Button(parent, SWT.PUSH | SWT.CENTER));
+        setDeleteButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
         getDeleteButton().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DeleteButton"); //$NON-NLS-1$
         getDeleteButton().setText(Messages.JubulaDataSetViewDelete);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
+        gridData.grabExcessHorizontalSpace = true;
         gridData.widthHint = 80; 
         getDeleteButton().setLayoutData(gridData); 
         getDeleteButton().setEnabled(false);
         getControlEnabler().addControl(getDeleteButton());
+        
+        // Create and configure the "Down" button
+        setDownButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
+        getDownButton().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DownButton"); //$NON-NLS-1$
+        getDownButton().setImage(IconConstants.DOWN_ARROW_IMAGE);
+        gridData = new GridData (GridData.HORIZONTAL_ALIGN_END);
+        getDownButton().setLayoutData(gridData);
+        getDownButton().setEnabled(false);
+        getControlEnabler().addControl(getDownButton());
+
+        // Create and configure the "Up" button
+        setUpButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
+        getUpButton().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.UpButton"); //$NON-NLS-1$
+        getUpButton().setImage(IconConstants.UP_ARROW_IMAGE);
+        gridData = new GridData (GridData.HORIZONTAL_ALIGN_END);
+        getUpButton().setLayoutData(gridData);
+        getUpButton().setEnabled(false);
+        getControlEnabler().addControl(getUpButton());
         
         addListenerToButtons();
     }
@@ -595,6 +658,74 @@ public abstract class AbstractDataSetPage extends Page
                 checkComboSelection(TestDataRowAction.DELETED, index);
             }
         });
+        getUpButton().addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                final int index = getSelectedDataSet();
+                moveDataSetUp();
+                checkComboSelection(TestDataRowAction.MOVED_UP, index);
+            }
+        });
+        getDownButton().addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) {
+                final int index = getSelectedDataSet();
+                moveDataSetDown();
+                checkComboSelection(TestDataRowAction.MOVED_DOWN, index);
+            }
+        });
+    }
+    
+    /**
+     * Moves a data set one row down
+     */
+    private void moveDataSetDown() {
+        final int row = getSelectedDataSet();
+        moveDataSet(row, row + 1);
+        fillDataSetCombo();
+    }
+    
+    /**
+     * Moves a data set one row up
+     */
+    private void moveDataSetUp() {
+        final int row = getSelectedDataSet();
+        moveDataSet(row, row - 1);
+        fillDataSetCombo();
+    }
+    
+    /**
+     * Moves a data set one row down
+     * @param fromIndex Position from where to move
+     * @param toIndex Target position of the dataset
+     */
+    private void moveDataSet(int fromIndex, int toIndex) {
+        final int rowCount = getParamInterfaceObj().getDataManager()
+                .getDataSetCount();
+        final AbstractJBEditor editor = (AbstractJBEditor)m_currentPart;
+        editor.getEditorHelper().requestEditableState();
+        if (getParamInterfaceObj() instanceof IExecTestCasePO) {
+            ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
+                    .resolveTDReference();
+            if (!man.equals(getTableViewer().getInput())) {
+                getTableViewer().setInput(man);
+            }
+        }
+        ITDManager tdman = getParamInterfaceObj().getDataManager();
+        if (fromIndex >= 0 && fromIndex < rowCount 
+                && toIndex >= 0 && toIndex < rowCount) {
+            IDataSetPO selectedDataSet = tdman.getDataSet(fromIndex);
+            if (fromIndex > toIndex) {
+                tdman.insertDataSet(selectedDataSet, toIndex);
+                tdman.removeDataSet(fromIndex + 1);
+            } else {
+                tdman.insertDataSet(selectedDataSet, toIndex + 1);
+                tdman.removeDataSet(fromIndex);
+            }
+            getTableCursor().setSelection(toIndex, 
+                    getTableCursor().getColumn());
+            getTableViewer().refresh();
+            DataEventDispatcher.getInstance().fireParamChangedListener();
+            editor.getEditorHelper().setDirty(true);
+        }
     }
     
     /**
@@ -730,6 +861,34 @@ public abstract class AbstractDataSetPage extends Page
      */
     private Button getDeleteButton() {
         return m_deleteButton;
+    }
+    
+    /**
+     * @param upButton the upButton to set
+     */
+    private void setUpButton(Button upButton) {
+        m_upButton = upButton;
+    }
+
+    /**
+     * @return the upButton
+     */
+    private Button getUpButton() {
+        return m_upButton;
+    }
+    
+    /**
+     * @param downButton the downButton to set
+     */
+    private void setDownButton(Button downButton) {
+        m_downButton = downButton;
+    }
+
+    /**
+     * @return the downButton
+     */
+    private Button getDownButton() {
+        return m_downButton;
     }
 
     /**
@@ -956,7 +1115,10 @@ public abstract class AbstractDataSetPage extends Page
                         getCurrentSelectedValue(false));
                 return;
             }
-
+            if (((DirectCombo)source).getSelectionIndex() != 0) {
+                getUpButton().setEnabled(false);
+                getDownButton().setEnabled(false);
+            }
             initTableViewerLanguageColumns(false);
             getTableViewer().setContentProvider(new DataSetContentProvider());
             getTableViewer().setLabelProvider(new DataSetLabelProvider());
@@ -981,6 +1143,11 @@ public abstract class AbstractDataSetPage extends Page
                     setSelectedObject(getComboTracker().
                         getCurrentSelectedValue(false));
                 return;
+            }
+            if (m_buttonEnabled && ((DirectCombo)source)
+                    .getSelectionIndex() != 0) {
+                getUpButton().setEnabled(true);
+                getDownButton().setEnabled(true);
             }
             getTableViewer().setContentProvider(new LanguageContentProvider());
             getTableViewer().setLabelProvider(new LanguageLabelProvider());
@@ -1007,7 +1174,10 @@ public abstract class AbstractDataSetPage extends Page
                         getCurrentSelectedValue(false));
                 return;
             }
-
+            if (((DirectCombo)source).getSelectionIndex() != 0) {
+                getUpButton().setEnabled(true);
+                getDownButton().setEnabled(true);
+            }
             initTableViewerLanguageColumns(true);
             getTableViewer().setContentProvider(new ParameterContentProvider());
             getTableViewer().setLabelProvider(new ParameterLabelProvider());
@@ -1878,6 +2048,8 @@ public abstract class AbstractDataSetPage extends Page
                     } else {
                         getDeleteButton().setEnabled(false);
                         getInsertButton().setEnabled(false);
+                        getUpButton().setEnabled(false);
+                        getDownButton().setEnabled(false);
                     }
                     setFocus();
                     DataEventDispatcher.getInstance()
@@ -1989,10 +2161,10 @@ public abstract class AbstractDataSetPage extends Page
             }
             // En-/disable controls
             boolean isCAP = paramNode instanceof ICapPO;
-            final boolean enable = correctPart && hasInput && isEditorOpen
+            m_buttonEnabled = correctPart && hasInput && isEditorOpen
                 && !isCAP && !hasExcelFile && !hasReferencedDataCube 
                 && hasParameter;
-            setControlsEnabled(enable);
+            setControlsEnabled(m_buttonEnabled);
         }
     }
     /**
