@@ -11,6 +11,7 @@
 package org.eclipse.jubula.toolkit;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 
 
 /**
@@ -25,20 +26,28 @@ public interface ToolkitInfo {
     
     /**
      * Allows adding of a tester class for a component class into a toolkit
-     * @param componentClassName name of the component class
-     * @param testerClassName name of the tester class
+     * @param componentClassName fully qualified name of the component class
+     * @param testerClassName fully qualified name of the tester class
      * @return previously registered tester class for the component class
      *         or <code>null</code> if there was none
      */
-    public String registerTesterClass(@NonNull String componentClassName,
+    @Nullable public String registerTesterClass(
+            @NonNull String componentClassName,
             @NonNull String testerClassName);
     
     /**
      * Allows removing of a tester class for a component class from a toolkit
-     * @param componentClassName name of the component class
+     * @param componentClassName fully qualified name of the component class
      * @return previously registered tester class for the component class
      *         or <code>null</code> if there was none
      */
-    public String deregisterTesterClass(@NonNull String componentClassName);
+    @Nullable public String deregisterTesterClass(
+            @NonNull String componentClassName);
+    
+    /**
+     * Allows merging of another toolkit into this toolkit
+     * @param otherToolkit the other toolkit
+     */
+    public abstract void merge(@NonNull ToolkitInfo otherToolkit);
 
 }

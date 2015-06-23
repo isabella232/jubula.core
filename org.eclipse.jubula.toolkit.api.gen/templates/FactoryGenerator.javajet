@@ -49,15 +49,26 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
 public final class <%=factoryName%> {
     
     <%if (toolkitInfoName != null) {%>
-    @NonNull private final static ToolkitInfo m_toolkitInformation = new <%=toolkitInfoName%>();<%}%>
+    @NonNull private final static ToolkitInfo TOOLKIT_INFORMATION = new <%=toolkitInfoName%>();<%}%>
 
     private <%=factoryName%>() {
         super();
     }
     
     <%if (toolkitInfoName != null) {%>
+    /** 
+     *  @return the toolkit information, not recommended to be modified
+     */
     @NonNull public static ToolkitInfo getToolkitInformation() {
-        return m_toolkitInformation;
+        return TOOLKIT_INFORMATION;
+    }
+    
+    /** 
+     *  Returns a new instance of toolkit information. Use this method if you want to modify the toolkit by adding tester classes.
+     *  @return a toolkit information
+     */
+    @NonNull public static ToolkitInfo createToolkitInformation() {
+        return new <%=toolkitInfoName%>();
     }<%}%>
 
 <%for (CompInfoForFactoryGen compInfo : compInfoList) {

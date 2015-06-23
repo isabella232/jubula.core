@@ -52,4 +52,14 @@ public abstract class AbstractToolkitInfo implements ToolkitInfo {
         }
         return null;
     }
+    
+    /** {@inheritDoc} */
+    public void merge(ToolkitInfo otherToolkit) {
+        Validate.notNull(otherToolkit);
+        Map<ComponentClass, String> otherTypeMapping =
+                ((AbstractToolkitInfo) otherToolkit).getTypeMapping();
+        for (ComponentClass cc : otherTypeMapping.keySet()) {
+            registerTesterClass(cc.getName(), otherTypeMapping.get(cc));
+        }
+    }
 }
