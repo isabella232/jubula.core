@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.InvalidRegistryObjectException;
 import org.eclipse.jubula.toolkit.common.IToolkitProvider;
-import org.eclipse.jubula.toolkit.common.PluginStarter;
+import org.eclipse.jubula.toolkit.common.Activator;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.i18n.Messages;
@@ -68,7 +68,7 @@ public class ComponentBuilder extends AbstractComponentBuilder {
      * Toolkit-Plugins.
      */
     private void initCompSystem() throws ToolkitPluginException {
-        IExtension[] plugins = PluginStarter.getDefault().findToolkitPlugins();
+        IExtension[] plugins = Activator.getDefault().findToolkitPlugins();
         for (IExtension extension : plugins) {
             IConfigurationElement[] elements = extension
                 .getConfigurationElements();

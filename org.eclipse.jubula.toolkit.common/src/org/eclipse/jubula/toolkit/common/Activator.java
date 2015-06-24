@@ -14,31 +14,30 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 
 /**
  * The activator class controls the plug-in life cycle
  */
-public class PluginStarter extends AbstractUIPlugin {
+public class Activator extends Plugin {
 
     /** The plug-in ID */
     public static final String PLUGIN_ID = ToolkitConstants.PLUGIN_ID;
 
     /** The shared instance */
-    private static PluginStarter plugin;
+    private static Activator plugin;
 
     /**
      * The constructor
      */
-    public PluginStarter() {
+    public Activator() {
         plugin = this;
     }
 
     /**
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
      * {@inheritDoc}
      */
     public void start(BundleContext context) throws Exception {
@@ -46,7 +45,6 @@ public class PluginStarter extends AbstractUIPlugin {
     }
 
     /**
-     * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
      * {@inheritDoc}
      */
     public void stop(BundleContext context) throws Exception {
@@ -55,16 +53,11 @@ public class PluginStarter extends AbstractUIPlugin {
     }
 
     /**
-     * Returns the shared instance
-     *
      * @return the shared instance
      */
-    public static PluginStarter getDefault() {
+    public static Activator getDefault() {
         return plugin;
     }
-
-   
-    
 
     /**
      * Gets all Toolkit Plugins using extension point "toolkitsupport"
@@ -76,7 +69,4 @@ public class PluginStarter extends AbstractUIPlugin {
             ToolkitConstants.EXT_POINT_ID);
         return extensionPoint.getExtensions();
     }
-  
-    
-    
 }
