@@ -45,9 +45,10 @@ public interface ToolkitInfo {
             @NonNull String componentClassName);
     
     /**
-     * Allows merging of another toolkit into this toolkit
-     * @param otherToolkit the other toolkit
+     * Allows combining of toolkit information
+     * 
+     * @param otherToolkit
+     *            the other toolkit to merge into this
      */
-    public abstract void merge(@NonNull ToolkitInfo otherToolkit);
-
+    public void merge(@NonNull ToolkitInfo otherToolkit);
 }
