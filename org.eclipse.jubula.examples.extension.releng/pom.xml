@@ -18,10 +18,14 @@
         <module>../org.eclipse.jubula.examples.extension.swing.feature</module>
         <module>../org.eclipse.jubula.examples.extension.swing.rc</module>
         <module>../org.eclipse.jubula.examples.extension.swing.toolkit</module>
+        <module>../org.eclipse.jubula.examples.extension.swing.api</module>
+        
         <module>../org.eclipse.jubula.examples.extension.javafx.feature</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.rc</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.rc.container</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.toolkit</module>
+        <module>../org.eclipse.jubula.examples.extension.javafx.api</module>
+        
         <module>../org.eclipse.jubula.examples.extension.site</module>
     </modules>
 
