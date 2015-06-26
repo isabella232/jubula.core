@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.labelprovider;
 
-import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,7 +31,6 @@ import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
-import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -42,6 +40,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.utils.NodeNameUtil;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -221,15 +220,15 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             }
             
             if (node instanceof IRefTestSuitePO) {
-                name = getText((IRefTestSuitePO)node);
+                name = NodeNameUtil.getText((IRefTestSuitePO)node);
             } else if (node.getName() == null) {
                 name = UNNAMED_NODE;
             } else if (node instanceof ICapPO) {
                 name = getText((ICapPO)node);
             } else if (node instanceof IExecTestCasePO) {
-                name = getText((IExecTestCasePO)node);
+                name = NodeNameUtil.getText((IExecTestCasePO)node, true);
             } else if (node instanceof ISpecTestCasePO) {
-                name = getText((ISpecTestCasePO)node);
+                name = NodeNameUtil.getText((ISpecTestCasePO)node, true);
             }  else {
                 name = node.getName();
             }
@@ -404,48 +403,6 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     }
 
     /**
-     * 
-     * @param testCaseRef The Test Case Reference to examine.
-     * @return label text for the given Test Case Reference.
-     */
-    public static String getText(IExecTestCasePO testCaseRef) {
-        StringBuilder nameBuilder = new StringBuilder();
-        
-        String realName = testCaseRef.getRealName();
-        if (!StringUtils.isBlank(realName)) {
-            nameBuilder.append(realName);
-            if (Plugin.getDefault().getPreferenceStore().getBoolean(
-                    Constants.SHOWORIGINALNAME_KEY)) {
-                ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();
-                String testCaseName = testCase != null 
-                        ? testCase.getName() 
-                        : StringUtils.EMPTY;
-                appendSpecName(nameBuilder, testCaseName);
-            }
-            
-        } else {
-            ISpecTestCasePO testCase = testCaseRef.getSpecTestCase();
-            String testCaseName = testCase != null 
-                    ? testCase.getName() 
-                    : StringUtils.EMPTY;
-            createSpecName(nameBuilder, testCaseName); 
-        }
-
-        nameBuilder.append(getParameterString(testCaseRef));
-        
-        return nameBuilder.toString();
-    }
-
-    /**
-     * 
-     * @param testCase The Test Case to examine.
-     * @return label text for the given Test Case.
-     */
-    private static String getText(ISpecTestCasePO testCase) {
-        return testCase.getName() + getParameterString(testCase);
-    }
-
-    /**
      * @param paramDesc The parameter description.
      * @return The short type name of the given parameter description, e.g.
      *         the name <code>String</code>, if the parameter has the type
@@ -466,90 +423,5 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 + OPEN_BRACKED
                 + getShortTypeName(paramDesc)
                 + CLOSE_BRACKED;
-    }
-
-    /**
-     * 
-     * @param paramNode The Parameter Node to examine.
-     * @return a label representing all Parameters used by the given node.
-     */
-    private static String getParameterString(IParamNodePO paramNode) {
-        StringBuilder nameBuilder = new StringBuilder();
-        Iterator<IParamDescriptionPO> iter = 
-            paramNode.getParameterList().iterator();
-        boolean parameterExist = false;
-        if (iter.hasNext()) {
-            parameterExist = true;
-            nameBuilder.append(GeneralLabelProvider.OPEN_BRACKED);
-        }
-        if (iter.hasNext()) {
-            while (iter.hasNext()) {
-                IParamDescriptionPO descr = iter.next();
-                nameBuilder.append(descr.getName());
-                if (iter.hasNext()) {
-                    nameBuilder.append(GeneralLabelProvider.SEPARATOR);
-                }
-            }
-        }
-        if (parameterExist) {
-            nameBuilder.append(GeneralLabelProvider.CLOSE_BRACKED);
-        }
-        
-        return nameBuilder.toString();
-    }
-    
-    /** 
-     * 
-     * @param testSuitRef The Reference Test Suit to examine.
-     * @return label text for the given Reference Test Suit.
-     */
-    private static String getText(IRefTestSuitePO testSuitRef) {
-        StringBuilder nameBuilder = new StringBuilder();
-        
-        String refRealName = testSuitRef.getRealName();
-
-        if (!StringUtils.isBlank(refRealName)) {
-            nameBuilder.append(refRealName);
-            if (Plugin.getDefault().getPreferenceStore().getBoolean(
-                    Constants.SHOWORIGINALNAME_KEY)) {
-                ITestSuitePO testSuite = testSuitRef.getTestSuite();
-                String testSuiteName = testSuite != null
-                        ? testSuite.getName()
-                        : StringUtils.EMPTY;
-                appendSpecName(nameBuilder, testSuiteName);
-            }
-
-        } else {
-            String testSuiteRefName = testSuitRef != null ? testSuitRef
-                    .getTestSuite().getName() : UNNAMED_NODE;
-            createSpecName(nameBuilder, testSuiteRefName);
-
-        }
-        return nameBuilder.toString();
-    }
-
-    /**
-     * helper method to have same appearance for TS and TC
-     * @param nameBuilder {@link StringBuilder} where the name should be appended
-     * @param refName ref TC or TS string
-     */
-    private static void createSpecName(StringBuilder nameBuilder,
-            String refName) {
-        nameBuilder.append(StringConstants.LEFT_INEQUALITY_SING)
-                .append(refName)
-                .append(StringConstants.RIGHT_INEQUALITY_SING);
-    }
-
-    /**
-     * helper method to have same appearance for TS and TC
-     * @param nameBuilder {@link StringBuilder} where the name should be appended
-     * @param specName spec TC or TS string
-     */
-    private static void appendSpecName(StringBuilder nameBuilder,
-            String specName) {
-        nameBuilder.append(StringConstants.SPACE)
-            .append(StringConstants.LEFT_PARENTHESES)
-            .append(specName)
-            .append(StringConstants.RIGHT_PARENTHESES);
     }
 }

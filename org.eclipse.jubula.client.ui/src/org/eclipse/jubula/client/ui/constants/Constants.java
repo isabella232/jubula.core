@@ -237,9 +237,6 @@ public interface Constants {
     /** Key for m_text value to be stored as a resource property */
     public static final String MINIMIZEONSUITESTART_KEY = "MINIMIZEONSUITESTART_PREF_KEY"; //$NON-NLS-1$
     
-    /** Key for preferences to show the original test case name for overridden names at test case references */
-    public static final String SHOWORIGINALNAME_KEY = "SHOWORIGINALNAME_PREF_KEY"; //$NON-NLS-1$
-    
     /** Key for m_text value to be stored as a resource property */
     public static final String TREEAUTOSCROLL_KEY = "TREEAUTOSCROLL_PREF_KEY"; //$NON-NLS-1$
 
@@ -435,9 +432,6 @@ public interface Constants {
     
     /** Key for boolean value to be stored as a resource property */
     public static final boolean MINIMIZEONSUITESTART_KEY_DEFAULT = true;
-    
-    /** Key for boolean value to be stored as a resource property */
-    public static final boolean SHOWORIGINALNAME_KEY_DEFAULT = true;
     
     /** Key for boolean value to be stored as a resource property */
     public static final boolean TREEAUTOSCROLL_KEY_DEFAULT = true;

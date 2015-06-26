@@ -329,9 +329,6 @@ public class TestExecution {
         setPaused(false);
         Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
         m_executionLanguage = locale;
-        //prepare test execution
-        monitor.subTask(NLS.bind(Messages.PreparingTestSuiteExecution,
-                testSuite.getName()));
         m_externalTestDataBP.clearExternalData();
         if (TestExecution.shouldExecutionStop (noRunOptMode, 
               TestExecutionConstants.RunSteps.PTE)) {

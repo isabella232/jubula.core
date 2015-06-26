@@ -77,8 +77,6 @@ public class PrefPageBasic extends PreferencePage implements
     /** widgets used in preference page to define preference values private */
     private Button m_minimize;
     /** widgets used in preference page to define preference values private */
-    private Button m_showOrigName;
-    /** widgets used in preference page to define preference values private */
     private Button m_treeScroll;
     /** widgets used in preference page to define preference values private */
     private Button m_askStopAUT;
@@ -170,7 +168,6 @@ public class PrefPageBasic extends PreferencePage implements
         createTreeScrollButton(composite);
         createMinimizeClientButton(composite);
         createAskStopAUTButton(composite);
-        createShowOrigTestCaseName(composite);
         createShowCAPInfosCheckbox(composite);
         createShowTransientChildrensCheckbox(composite);
         createDefaultProjectCheckbox(composite);
@@ -197,16 +194,6 @@ public class PrefPageBasic extends PreferencePage implements
         validatePage();
         
         return scrollComposite;
-    }
-
-    /**
-     * @param composite the composite
-     */
-    private void createShowOrigTestCaseName(Composite composite) {
-        m_showOrigName = new Button(composite, SWT.CHECK);
-        m_showOrigName.setText(Messages.JubulaPrefPageBasicShowOrig);
-        m_showOrigName.setSelection(getPreferenceStore()
-                .getBoolean(Constants.SHOWORIGINALNAME_KEY));
     }
     
     /**
@@ -548,8 +535,6 @@ public class PrefPageBasic extends PreferencePage implements
                 .getDefaultBoolean(Constants.TREEAUTOSCROLL_KEY));
         m_askStopAUT.setSelection(m_store
                 .getDefaultBoolean(Constants.ASKSTOPAUT_KEY));
-        m_showOrigName.setSelection(m_store
-                .getDefaultBoolean(Constants.SHOWORIGINALNAME_KEY));
         m_capInfoCheckbox.setSelection(m_store
                 .getDefaultBoolean(Constants.SHOWCAPINFO_KEY));
         m_showTransientChildrenCheckBox.setSelection(m_store
@@ -595,8 +580,6 @@ public class PrefPageBasic extends PreferencePage implements
                 m_dataDirIsWorkspaceValue);
         getPreferenceStore().setValue(Constants.DATADIR_PATH_KEY,
                 m_dataDirPathTextfield.getText());
-        getPreferenceStore().setValue(Constants.SHOWORIGINALNAME_KEY,
-                m_showOrigName.getSelection());
         getPreferenceStore().setValue(Constants.SHOWCAPINFO_KEY,
                 m_capInfoCheckbox.getSelection());
         getPreferenceStore().setValue(Constants.SHOW_TRANSIENT_CHILDREN_KEY,
