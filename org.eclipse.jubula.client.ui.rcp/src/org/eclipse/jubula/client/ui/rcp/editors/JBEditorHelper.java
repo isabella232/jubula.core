@@ -137,9 +137,10 @@ public class JBEditorHelper implements ILockedObjects,
      * @return the edit support
      */
     public EditSupport getEditSupport() {
-        return (m_editor.getEditorInput() instanceof PersistableEditorInput)
-            ? ((PersistableEditorInput)m_editor.getEditorInput()).
-                getEditSupport() : null;
+        IEditorInput editorInput = m_editor.getEditorInput();
+        return (editorInput instanceof PersistableEditorInput)
+            ? ((PersistableEditorInput)editorInput).getEditSupport()
+            : null;
     }
 
     /**

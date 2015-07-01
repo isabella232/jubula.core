@@ -83,9 +83,6 @@ public class ChangeAUTModeMessage extends Message {
     /** multiLineTrigger for Observation Mode */
     private SortedSet m_multiLineTrigger;
 
-    /** which toolkit is selected for this project */
-    private String m_toolkit;
-
     /** default constructor */
     public ChangeAUTModeMessage() {
         super();
