@@ -236,32 +236,43 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             @NonNull <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
         <%}%>
         ) <%if (!params.isEmpty()) {%>throws IllegalArgumentException<%} if (genInterface) {%>;<%} else {%> {
-            MessageCap messageCap = new MessageCap();
-            messageCap.setMethod("<%=action.getMethod()%>"); //$NON-NLS-1$
-            messageCap.sethasDefaultMapping(<%=hasDefaultMapping%>);
-            <%if (!hasDefaultMapping) {%>
-            messageCap.setCi(m_componentIdentifier);
-            <%} else {%>
-            messageCap.setCi(getPseudoComponentIdentifier());<%}%>
             <%for (Param parameter : params) {
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
             Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
+                <%String paramEnumType = paramMap.get(paramName);%>
+                <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
+                    <%if (hasCombineableValueSet) {%>
+            Validate.noNullElements(<%=translatedParamName%>, "Elements of argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
+                    <%}%>
+                <%}%>
+            <%}%>
+            
+            return new CAP.Builder("<%=action.getMethod()%>")
+                        .setDefaultMapping(<%=hasDefaultMapping%>)
+            <%if (!hasDefaultMapping) {%>
+                        .setComponentIdentifier(m_componentIdentifier)
+            <%} else {%>
+                        .setComponentIdentifier(getPseudoComponentIdentifier())
+            <%}%>
+            <%for (Param parameter : params) {
+            boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
+            String paramName = parameter.getName();%>
+            <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
                 <%String paramEnumType = paramMap.get(paramName);
                 String fqParamType = paramTypeMap.get(paramName);%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
-            messageCap.addMessageParam(new MessageParam(<%=translatedParamName%>.rcValue(), "<%=fqParamType%>")); //$NON-NLS-1$
+                        .addParameter(<%=translatedParamName%>.rcValue())
                     <%} else {%>
-            Validate.noNullElements(<%=translatedParamName%>, "Elements of argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
-            messageCap.addMessageParam(new MessageParam(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR), "<%=fqParamType%>")); //$NON-NLS-1$
+                        .addParameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
                     <%}%>
                 <%} else {%>
-            messageCap.addMessageParam(new MessageParam(String.valueOf(<%=translatedParamName%>), "<%=fqParamType%>")); //$NON-NLS-1$
+                        .addParameter(<%=translatedParamName%>)
                 <%}%>
             <%}%>
-            return messageCap;
+                        .build();
         }<%}%>
         
     <%}%>
