@@ -24,23 +24,23 @@ public interface ICompIdentifierPO extends IPersistentObject,
     /**
      * @return Returns the neighbours.
      */
-    public abstract List getNeighbours();
+    public abstract List<String> getNeighbours();
 
     /**
      * @param neighbours The neighbours to set.
      */
-    public abstract void setNeighbours(List neighbours);
+    public abstract void setNeighbours(List<String> neighbours);
 
     /**
      * @return Returns the hierarchyNames.
      */
-    public abstract List getHierarchyNames();
+    public abstract List<String> getHierarchyNames();
 
     /**
      * @param hierarchyNames
      *            The hierarchyNames to set. if null, the list will be cleared.
      */
-    public abstract void setHierarchyNames(List hierarchyNames);
+    public abstract void setHierarchyNames(List<String> hierarchyNames);
 
     /**
      * @return Clone of object

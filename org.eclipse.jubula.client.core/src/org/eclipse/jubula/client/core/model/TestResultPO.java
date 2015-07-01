@@ -35,6 +35,8 @@ import javax.persistence.Version;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Index;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -525,6 +527,7 @@ class TestResultPO implements ITestResultPO {
                 fetch = FetchType.LAZY)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_TESTRESULT")
+    @BatchFetch (size = 1000, value = BatchFetchType.IN)
     List<IParameterDetailsPO> getHbmParameterList() {
         return m_parameterList;
     }

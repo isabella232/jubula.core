@@ -157,7 +157,6 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
         }
     }
     
-    // getter and settor for serialisation 
     /**
      * @return Returns the hierarchyNames.
      */

@@ -59,23 +59,23 @@ class CompIdentifierPO extends ComponentIdentifier implements
     }
     
     /**
-     * 
-     * @return Returns the neighbours.
+     * @return Returns the neighbors.
      */
-    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = String.class, 
+                       fetch = FetchType.EAGER)
     @CollectionTable(name = "NEIGHBOURS")
     @Column(name = "NEIGHBOUR", length = MAX_STRING_LENGTH)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_COMP_ID")
     @BatchFetch(value = BatchFetchType.JOIN)
-    public List getNeighbours() { // NOPMD by al on 3/19/07 1:26 PM
+    public List<String> getNeighbours() {
         return super.getNeighbours();
     }
 
     /**
-     * @param neighbours The neighbours to set.
+     * @param neighbours The neighbors to set.
      */
-    public void setNeighbours(List neighbours) { // NOPMD by al on 3/19/07 1:26 PM
+    public void setNeighbours(List<String> neighbours) {
         super.setNeighbours(neighbours);
     }
 
@@ -117,13 +117,14 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * 
      * @return Returns the hierarchyNames.
      */
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = String.class, 
+                       fetch = FetchType.EAGER)
     @CollectionTable(name = "HIERARCHY_NAMES")
     @Column(name = "HIERARCHY_NAME", length = MAX_STRING_LENGTH)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_COMP_ID")
     @BatchFetch(value = BatchFetchType.JOIN)
-    public List<String> getHierarchyNames() { // NOPMD by al on 3/19/07 1:26 PM
+    public List<String> getHierarchyNames() {
         return super.getHierarchyNames();
     }
     
@@ -131,7 +132,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * @param hierarchyNames
      *            The hierarchyNames to set. if null, the list will be cleared.
      */
-    public void setHierarchyNames(List hierarchyNames) { // NOPMD by al on 3/19/07 1:26 PM
+    public void setHierarchyNames(List<String> hierarchyNames) {
         super.setHierarchyNames(hierarchyNames);
     }
     
@@ -140,14 +141,14 @@ class CompIdentifierPO extends ComponentIdentifier implements
      */
     public ICompIdentifierPO makePoClone() {
         ICompIdentifierPO clone = new CompIdentifierPO();
-        clone.setHierarchyNames(new ArrayList<Object>(
+        clone.setHierarchyNames(new ArrayList<String>(
             getHierarchyNames()));
         clone.setComponentClassName(getComponentClassName());
         if (getComponentClassName() != null) {
             clone.setSupportedClassName(getComponentClassName());
         }
         if (getNeighbours() != null) {
-            clone.setNeighbours(new ArrayList<Object>(
+            clone.setNeighbours(new ArrayList<String>(
                     getNeighbours()));
         }
         if (getParentProjectId() != null) {
@@ -210,12 +211,12 @@ class CompIdentifierPO extends ComponentIdentifier implements
         m_parentProjectId = projectId;
     }
 
-    /** 
+    /**
      * 
      * {@inheritDoc}
      */
     @Version
-    public Integer getVersion() {        
+    public Integer getVersion() {
         return m_version;
     }
 
@@ -252,5 +253,4 @@ class CompIdentifierPO extends ComponentIdentifier implements
     public void setAlternativeDisplayName(String alternativeDisplayName) {
         super.setAlternativeDisplayName(alternativeDisplayName);
     }
-
 }

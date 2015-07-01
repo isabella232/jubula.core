@@ -170,18 +170,6 @@ public class TestResultNode {
     
     /** the task Id of the result node */
     private String m_taskId;
-    
-    /**
-     * Constructor
-     * 
-     * @param node The Test Execution node (i.e. Test Suite, Test Case, 
-     *             Test Step, etc.) associated with this result.
-     * @param parent The parent Test Result node. May be <code>null</code>, in 
-     *               which case this node is the root of a Test Result tree.
-     */
-    public TestResultNode(INodePO node, TestResultNode parent) {
-        this(true, node, parent);
-    }
 
     /**
      * Constructor
@@ -207,20 +195,39 @@ public class TestResultNode {
         m_status = NOT_YET_TESTED;
         m_event = null;
         m_hasBackingNode = hasBackingNode;
-        m_taskId = NodePropertyTester.getTaskIdforNode(node);
+    }
+    
+    
+    /**
+     * Constructor
+     * 
+     * @param node The Test Execution node (i.e. Test Suite, Test Case, 
+     *             Test Step, etc.) associated with this result.
+     * @param parent The parent Test Result node. May be <code>null</code>, in 
+     *               which case this node is the root of a Test Result tree.
+     */
+    public TestResultNode(INodePO node, TestResultNode parent) {
+        this(node, parent, -1);
     }
     
     /**
-     * @param node associated node in testexecution tree
-     * @param parent parent resultNode (in case of testsuite null)
+     * @param node
+     *            associated node in testexecution tree
+     * @param parent
+     *            parent resultNode (in case of testsuite null)
      * @param pos
-     *      int
+     *            inserts this into the parents child list; if a negative
+     *            position is given its added to the child list
      */
     public TestResultNode(INodePO node, TestResultNode parent, int pos) {
         m_node = node;
         m_parent = parent;
         if (m_parent != null) {
-            m_parent.addChildAtPosition(pos, this);
+            if (pos > -1) {
+                m_parent.addChildAtPosition(pos, this);
+            } else {
+                m_parent.addChild(this);
+            }
         }
         m_status = NOT_YET_TESTED;
         m_event = null;
