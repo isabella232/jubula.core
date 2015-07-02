@@ -43,6 +43,17 @@ public interface CAP {
      */
     public static class Builder {
         
+        /** Identifier for Boolean parameters */
+        private static final String BOOLEAN_IDENTIFIER = Boolean.class
+                .getName();
+
+        /** Identifier for Integer parameters */
+        private static final String INTEGER_IDENTIFIER = Integer.class
+                .getName();
+
+        /** Identifier for String parameters */
+        private static final String STRING_IDENTIFIER = String.class.getName();
+
         /** the name of the method */
         private String m_rcMethod;
         
@@ -70,7 +81,7 @@ public interface CAP {
          */
         public Builder addParameter(String value) {
             m_params.add(new MessageParam(String.valueOf(value),
-                    "java.lang.String")); //$NON-NLS-1$
+                    STRING_IDENTIFIER));
             return this;
         }
         
@@ -80,7 +91,7 @@ public interface CAP {
          */
         public Builder addParameter(Integer value) {
             m_params.add(new MessageParam(String.valueOf(value),
-                    "java.lang.Integer")); //$NON-NLS-1$
+                    INTEGER_IDENTIFIER));
             return this;
         }
         
@@ -90,7 +101,7 @@ public interface CAP {
          */
         public Builder addParameter(Boolean value) {
             m_params.add(new MessageParam(String.valueOf(value),
-                    "java.lang.Boolean")); //$NON-NLS-1$
+                    BOOLEAN_IDENTIFIER));
             return this;
         }
         

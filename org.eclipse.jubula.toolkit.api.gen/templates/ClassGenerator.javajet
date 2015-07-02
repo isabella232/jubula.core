@@ -264,7 +264,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
                 String fqParamType = paramTypeMap.get(paramName);%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
+                        <%if (fqParamType.contains("Integer")) {%>
+                        .addParameter(<%=translatedParamName%>.rcIntValue())
+                        <%} else {%>
                         .addParameter(<%=translatedParamName%>.rcValue())
+                        <%}%>
                     <%} else {%>
                         .addParameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
                     <%}%>
