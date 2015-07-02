@@ -43,9 +43,6 @@ public class TestResultEditorInput implements IEditorInput {
     /** end time of the corresponding Test Suite */
     private Date m_testSuiteEndTime;
 
-    /** database ID of the Project associated with the test run */
-    private Long m_parentProjectId;
-    
     /**
      * Constructor
      * 
@@ -58,7 +55,6 @@ public class TestResultEditorInput implements IEditorInput {
         m_testSuiteName = testResultSummary.getTestsuiteName();
         m_testSuiteStartTime = testResultSummary.getTestsuiteStartTime();
         m_testSuiteEndTime = testResultSummary.getTestsuiteEndTime();
-        m_parentProjectId = testResultSummary.getInternalProjectID();
     }
 
     /**
@@ -120,14 +116,6 @@ public class TestResultEditorInput implements IEditorInput {
         return m_testResultSumaryId;
     }
 
-    /**
-     * 
-     * @return the database ID of the Project associated with the test run.
-     */
-    public Long getParentProjectId() {
-        return m_parentProjectId;
-    }
-    
     /**
      * {@inheritDoc}
      */

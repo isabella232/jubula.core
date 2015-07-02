@@ -142,9 +142,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
         /** the database ID of the summary for which to generate the tree */
         private Long m_summaryId;
         
-        /** the database ID of the Project associated with the test run */
-        private Long m_parentProjectId;
-
         /** the root node of the created Test Result tree */
         private TestResultNode m_rootNode;
 
@@ -156,17 +153,14 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
          * 
          * @param summaryId The database ID of the summary for which to generate the
          *                  tree.
-         * @param parentProjectId The database ID of the Project associated 
-         *                        with the test run.
          * @param session The manager for Test Result entities. The caller is
          *                  responsible for managing the session (opening, 
          *                  closing, etc.). Closing the session before or during
          *                  the operation will cause errors.
          */
         public GenerateTestResultTreeOperation(
-                Long summaryId, Long parentProjectId, EntityManager session) {
+                Long summaryId, EntityManager session) {
             m_summaryId = summaryId;
-            m_parentProjectId = parentProjectId;
             m_session = session;
         }
         
@@ -391,24 +385,21 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
      * 
      * @param summaryId The database ID of the summary for which to generate the
      *                  tree.
-     * @param parentProjectId The database ID of the Project associated with 
-     *                        the test run.
      * @return the root node of the generated Test Result tree.
      * 
      * @throws InterruptedException if the operation was cancelled by the user.
      */
-    private TestResultNode generateTestResult(
-            Long summaryId, Long parentProjectId) throws InterruptedException {
+    private TestResultNode generateTestResult(Long summaryId)
+            throws InterruptedException {
         
         IProgressService progressService = 
             (IProgressService)getSite().getService(IProgressService.class);
         
         GenerateTestResultTreeOperation operation = 
-            new GenerateTestResultTreeOperation(summaryId, 
-                    parentProjectId, m_cacheResults 
-                        ? GeneralStorage.getInstance().getMasterSession() 
-                                : m_session);
-        
+                new GenerateTestResultTreeOperation(
+                        summaryId, m_cacheResults ? GeneralStorage.getInstance()
+                                .getMasterSession() : m_session);
+
         try {
             progressService.busyCursorWhile(operation);
         } catch (InvocationTargetException e) {
@@ -470,8 +461,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                 ContextHelpIds.RESULT_TREE_VIEW);
         try {
             setTestResultRootNode(generateTestResult(
-                    editorInput.getTestResultSummaryId(),
-                    editorInput.getParentProjectId()));
+                    editorInput.getTestResultSummaryId()));
             m_viewer.setInput(new TestResultNode[] {getTestResultRootNode()});
         } catch (InterruptedException ie) {
             // Operation was cancelled by user

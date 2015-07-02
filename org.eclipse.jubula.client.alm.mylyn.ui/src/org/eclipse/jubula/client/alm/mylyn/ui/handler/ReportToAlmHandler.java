@@ -72,7 +72,7 @@ public class ReportToAlmHandler extends AbstractALMReportHandler {
         throws InterruptedException {
         GenerateTestResultTreeOperation operation = 
             new GenerateTestResultTreeOperation(
-                summary.getId(), summary.getInternalProjectID(), GeneralStorage
+                summary.getId(), GeneralStorage
                     .getInstance().getMasterSession());
 
         operation.run(new NullProgressMonitor());
