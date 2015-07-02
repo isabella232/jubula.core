@@ -48,7 +48,6 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.ui.Plugin;
@@ -176,7 +175,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
          */
         public void run(IProgressMonitor pMonitor) {
             SubMonitor monitor = SubMonitor.convert(pMonitor,
-                Messages.TestResultViewerDetailsLoadingJobName, 3);
+                Messages.TestResultViewerDetailsLoadingJobName, 2);
             try {
                 monitor.subTask(Messages.
                         TestResultViewerDetailsLoading1SubTask);
@@ -191,9 +190,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                 monitor.subTask(NLS.bind(
                     Messages.TestResultViewerDetailsLoading2SubTask,
                         allGuids.size()));
-                Map<String, INodePO> guidToNodeMap = NodePM.getNodes(
-                        m_parentProjectId, allGuids, m_session);
-                monitor.worked(1);
                 int remainingWork = testResultList.size();
                 SubMonitor sMonitor = SubMonitor.convert(monitor,
                         Messages.TestResultViewerDetailsLoadingJobName,
@@ -215,15 +211,10 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                             parentNodeStack.pop();
                         }
                     }
-                    INodePO backingNode = guidToNodeMap.get(
-                            result.getInternalKeywordGuid()); 
-                    final boolean backingNodeExists = backingNode != null;
-                    if (!backingNodeExists) {
-                        backingNode = generateBackingNode(result);
-                    }
                     
-                    createdNode = new TestResultNode(backingNodeExists, 
-                            backingNode, parentNodeStack.isEmpty() ? null 
+                    createdNode = new TestResultNode(false, 
+                            generateBackingNode(result),
+                            parentNodeStack.isEmpty() ? null
                                     : parentNodeStack.peek());
                     createdNode.setComponentName(result.getComponentName());
                     createdNode.setComponentType(result.getComponentType());
