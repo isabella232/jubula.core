@@ -175,7 +175,6 @@ public class ExportTestResultsHandler extends AbstractHandler {
                     GenerateTestResultTreeOperation operation =
                             new GenerateTestResultTreeOperation(
                                     summary.getId(), 
-                                    summary.getInternalProjectID(),
                                     session);
 
                     operation.run(subMonitor.newChild(1));
