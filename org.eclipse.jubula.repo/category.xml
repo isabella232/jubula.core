@@ -28,4 +28,11 @@
       <category name="org.eclipse.test"/>
    </feature>
    <category-def name="org.eclipse.test" label="Testing"/>
+   <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="3.1.0.qualifier">
+      <category name="org.eclipse.jubula.examples.extension.site"/>
+   </feature>
+   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_3.1.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="3.1.0.qualifier">
+      <category name="org.eclipse.jubula.examples.extension.site"/>
+   </feature>
+   <category-def name="org.eclipse.jubula.examples.extension.site" label="Jubula - Examples"/>
 </site>

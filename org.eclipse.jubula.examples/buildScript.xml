@@ -32,6 +32,7 @@
 	<property name="ExampleSwingExtensionRC"        value="org.eclipse.jubula.examples.extension.swing.rc"/>
 	<property name="ExampleSwingExtensionFeature"   value="org.eclipse.jubula.examples.extension.swing.feature"/>
 
+    <property name="ExampleJavaFXExtensionAUT"       value="org.eclipse.jubula.examples.extension.javafx.aut"/>
 	<property name="ExampleJavaFXExtensionClient"    value="org.eclipse.jubula.examples.extension.javafx.toolkit"/>
 	<property name="ExampleJavaFXExtensionRC"        value="org.eclipse.jubula.examples.extension.javafx.rc"/>
 	<property name="ExampleJavaFXExtensionRCContainer"        value="org.eclipse.jubula.examples.extension.javafx.rc.container"/>
@@ -97,6 +98,20 @@
 		</copy>
 		<antcall target="markAsExecutable" />
 	</target>
+
+    <target name="releaseExampleJavaFXExtensionAUT">
+        <exec dir="../${ExampleJavaFXExtensionAUT}" executable="ant" >
+            <env key="JAVA_HOME" value="/devapps/java64/java8"/>
+            <arg value="-f"/>
+            <arg value="buildScript.xml"/>
+            <arg value="build"/>
+        </exec>
+        <mkdir dir="${examples.development.dir}/extension/AUT"/>
+        <copy todir="${examples.development.dir}/extension/AUT">
+            <fileset dir="../${ExampleJavaFXExtensionAUT}/build/jars/"/>
+        </copy>
+        <antcall target="markAsExecutable" />
+    </target>
 
 	<target name="releaseSimpleAdderSWT">
 		<ant dir="../${SimpleAdder.SWT}" antfile="buildScript.xml" target="build" inheritAll="false" />
@@ -171,7 +186,8 @@
 		</copy>
 	</target>
 
-	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT">
+	<target name="releaseDevelopment" depends="releaseExampleSwingExtensionAUT,
+		releaseExampleJavaFXExtensionAUT">
 		<mkdir dir="${examples.development.dir}/gef"/>
 		<zip destfile="${examples.development.dir}/gef/${ExampleGEFIdentifierExample}.zip">
 			<zipfileset dir="../${ExampleGEFIdentifierExample}" prefix="${ExampleGEFIdentifierExample}"/>
