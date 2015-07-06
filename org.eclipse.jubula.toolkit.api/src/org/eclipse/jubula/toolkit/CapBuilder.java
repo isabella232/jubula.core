@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.MessageParam;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 /**
@@ -41,7 +42,7 @@ public class CapBuilder {
     private String m_rcMethod;
 
     /** the component identifier */
-    private IComponentIdentifier m_ci = null;
+    private ComponentIdentifier m_ci = null;
 
     /** the parameters of the CAP */
     private List<MessageParam> m_params = new ArrayList<MessageParam>();
@@ -104,7 +105,8 @@ public class CapBuilder {
      * @return the modified builder
      */
     public CapBuilder setComponentIdentifier(
-            @Nullable IComponentIdentifier ci) {
+            @Nullable ComponentIdentifier ci) {
+        Validate.isTrue(ci instanceof IComponentIdentifier);
         m_ci = ci;
         return this;
     }
@@ -132,7 +134,7 @@ public class CapBuilder {
         MessageCap messageCap = new MessageCap();
         messageCap.setMethod(m_rcMethod);
         messageCap.sethasDefaultMapping(m_defaultMapping);
-        messageCap.setCi(m_ci);
+        messageCap.setCi((IComponentIdentifier) m_ci);
         for (MessageParam param : m_params) {
             messageCap.addMessageParam(param);
         }
