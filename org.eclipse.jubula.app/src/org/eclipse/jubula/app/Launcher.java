@@ -240,7 +240,7 @@ public class Launcher implements IApplication {
                     Integer.getInteger(PROP_EXIT_CODE)) ? EXIT_RELAUNCH
                             : EXIT_RESTART;
         } finally {
-            if (display != null) {
+            if (display != null && !display.isDisposed()) {
                 display.dispose();
             }
             Location instanceLoc = Platform.getInstanceLocation();
