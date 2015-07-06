@@ -99,14 +99,14 @@ public class PieCharTest {
     public void testPieChartSpecificAction() throws Exception {
         m_aut.execute(m_pcc.checkNumberOfItems(pieChartIdentifier,
                 DEFAULT_NO_OF_SLICES), 
-                "Verify initial number of pies");
+                "Verify initial number of slices");
 
         m_aut.execute(button.click(1, InteractionMode.primary),
                 "Increment number of pies");
 
         m_aut.execute(m_pcc.checkNumberOfItems(pieChartIdentifier,
                 DEFAULT_NO_OF_SLICES + 1),
-                "Verify incremented number of pies");
+                "Verify incremented number of slices");
     }
     
     /** the actual test method */
