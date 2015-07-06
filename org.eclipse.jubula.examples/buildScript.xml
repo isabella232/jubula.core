@@ -25,7 +25,6 @@
 	<property name="DvdTool"			value="org.eclipse.jubula.examples.aut.dvdtool"/>
 
 	<property name="ExampleExtensionReleng"       value="org.eclipse.jubula.examples.extension.releng"/>
-	<property name="ExampleExtensionUpdateSite"       value="org.eclipse.jubula.examples.extension.site"/>
 
 	<property name="ExampleSwingExtensionAUT"       value="org.eclipse.jubula.examples.extension.swing.aut"/>
 	<property name="ExampleSwingExtensionClient"    value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
@@ -217,7 +216,6 @@
 			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml" />
 			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml" />
 			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml" />
-			<zipfileset dir="../${ExampleExtensionUpdateSite}" prefix="${ExampleExtensionUpdateSite}" excludes="build, build/**, target, target/**, buildScript.xml" />
 			<zipfileset dir="../${ExampleExtensionReleng}" prefix="${ExampleExtensionReleng}" excludes="build, build/**, target, target/**, buildScript.xml" />
 		</zip>
 
