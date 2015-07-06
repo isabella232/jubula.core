@@ -120,6 +120,11 @@ import org.eclipse.ui.menus.CommandContributionItem;
 @SuppressWarnings("synthetic-access")
 public abstract class AbstractTestCaseEditor extends AbstractJBEditor 
     implements IParamChangedListener {
+    
+    /** central test data update listener */
+    private CentralTestDataUpdateListener m_ctdUpdateListener =
+            new CentralTestDataUpdateListener();
+
     /**
      * Creates the initial Context of this Editor.<br>
      * Subclasses may override this method. 
@@ -149,8 +154,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
 
         GuiEventDispatcher.getInstance()
             .addEditorDirtyStateListener(this, true);
-        ded.addDataChangedListener(
-                new CentralTestDataUpdateListener(), false);
+        ded.addDataChangedListener(m_ctdUpdateListener, false);
         ded.addParamChangedListener(this, true);
     }
     
@@ -717,6 +721,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     public void dispose() {
         try {
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
+            ded.removeParamChangedListener(this);
+            ded.removeDataChangedListener(m_ctdUpdateListener);
             if (CAPRecordedCommand.getRecordListener() == this) {
                 CAPRecordedCommand.setRecordListener(null);
                 TestExecutionContributor.getInstance().getClientTest()
@@ -727,7 +733,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 ded.fireRecordModeStateChanged(RecordModeState.notRunning);
                 removeGlobalActionHandler();
             }
-            ded.removeParamChangedListener(this);
         } finally {
             super.dispose();
         }
