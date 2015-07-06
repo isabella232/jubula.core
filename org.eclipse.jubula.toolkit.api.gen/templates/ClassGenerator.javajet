@@ -94,6 +94,7 @@ package <%=packageName%>;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.toolkit.CapBuilder;
 import org.eclipse.jubula.toolkit.enums.ValueSets.*;
 import javax.annotation.Generated;
 
@@ -249,7 +250,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
                 <%}%>
             <%}%>
             
-            return new CAP.Builder("<%=action.getMethod()%>")
+            return new CapBuilder("<%=action.getMethod()%>")
                         .setDefaultMapping(<%=hasDefaultMapping%>)
             <%if (!hasDefaultMapping) {%>
                         .setComponentIdentifier(m_componentIdentifier)
