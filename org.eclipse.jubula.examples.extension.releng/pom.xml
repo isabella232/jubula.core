@@ -25,6 +25,7 @@
         <module>../org.eclipse.jubula.examples.extension.javafx.rc.container</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.toolkit</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.api</module>
+        <module>../org.eclipse.jubula.examples.extension.javafx.api.test</module>
     </modules>
 
 </project> 
