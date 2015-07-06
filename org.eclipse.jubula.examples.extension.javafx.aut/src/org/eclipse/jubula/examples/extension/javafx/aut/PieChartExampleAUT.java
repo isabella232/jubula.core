@@ -84,8 +84,4 @@ public class PieChartExampleAUT extends Application {
             dataAmount--;
         }
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
