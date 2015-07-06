@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.extension.javafx;
 
+import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.toolkit.CapBuilder;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
+import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,5 +67,14 @@ public class PieChartComponents {
      */
     private void setToolkitInfo(ToolkitInfo toolkit) {
         m_toolkitInfo = toolkit;
+    }
+
+    public CAP checkNumberOfItems(ComponentIdentifier<?> ci,
+            int expectedNumberOfItems) {
+        return new CapBuilder("rcVerifyNrItems")
+                .setDefaultMapping(false)
+                .setComponentIdentifier(ci)
+                .addParameter(expectedNumberOfItems)
+                .build();
     }
 }
