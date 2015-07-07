@@ -82,7 +82,7 @@ public class StartSwtAutServerCommand extends StartSwingAutServerCommand {
      * 
      * {@inheritDoc}
      */
-    protected String getRcBundleId() {
+    public String getRcBundleId() {
         return CommandConstants.RC_SWT_BUNDLE_ID;
     }
 

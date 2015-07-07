@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.internal.message;
 
+import java.util.Map;
+
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 
 /**
@@ -26,6 +28,9 @@ public class ConnectToClientMessage extends Message {
 
     /** the port number on which the client is listening */
     private int m_clientPort;
+    
+    /** Key: path to fragment jar. Value: fragment name*/
+    private Map<String, String> m_fragments;
 
     /**
      * Default constructor for transportation layer. Don't use for normal
@@ -44,10 +49,14 @@ public class ConnectToClientMessage extends Message {
      *            The host name at which the client is listening.
      * @param clientPort
      *            The port number on which the client is listening.
+     * @param fragments
+     *            Map of fragments which should be loaded by the AUT     
      */
-    public ConnectToClientMessage(String clientHostName, int clientPort) {
+    public ConnectToClientMessage(String clientHostName, int clientPort,
+            Map<String, String> fragments) {
         m_clientHostName = clientHostName;
         m_clientPort = clientPort;
+        m_fragments = fragments;
     }
 
     /** {@inheritDoc} */
@@ -63,5 +72,13 @@ public class ConnectToClientMessage extends Message {
     /** @return the port nubmer on which the client is listening. */
     public int getClientPort() {
         return m_clientPort;
+    }
+
+    /**
+     * 
+     * @return Key: path to fragment jar. Value: fragment name
+     */
+    public Map<String, String> getFragments() {
+        return m_fragments;
     }
 }

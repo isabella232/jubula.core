@@ -90,6 +90,8 @@ public abstract class CommandConstants {
     public static final String RC_SWING_BUNDLE_ID = "org.eclipse.jubula.rc.swing"; //$NON-NLS-1$
     /** ID of the SWT RC bundle */
     public static final String RC_SWT_BUNDLE_ID = "org.eclipse.jubula.rc.swt"; //$NON-NLS-1$
+    /** ID of the RCP RC bundle */
+    public static final String RC_RCP_BUNDLE_ID = "org.eclipse.jubula.rc.rcp.swt"; //$NON-NLS-1$
     /** ID of the HTML RC bundle */
     public static final String RC_HTML_BUNDLE_ID = "com.bredexsw.jubula.rc.html"; //$NON-NLS-1$
     /** ID of the Win RC bundle */

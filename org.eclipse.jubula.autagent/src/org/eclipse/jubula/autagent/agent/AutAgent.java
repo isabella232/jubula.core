@@ -21,12 +21,16 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.jubula.autagent.commands.AbstractStartToolkitAut;
+import org.eclipse.jubula.autagent.commands.IStartAut;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.IConnectionInitializer;
 import org.eclipse.jubula.communication.internal.connection.ConnectionState;
@@ -37,6 +41,7 @@ import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
@@ -44,6 +49,7 @@ import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.osgi.framework.Bundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -168,14 +174,17 @@ public class AutAgent {
                 @SuppressWarnings("synthetic-access")
                 public void run() {
                     try {
-                        String infoLine = reader.readLine();
-                        if (infoLine != null 
-                                && infoLine.length() > 0) {
+                        String autID = reader.readLine();
+                        String toolkit = reader.readLine();
+                        if (autID != null 
+                                && autID.length() > 0
+                                && toolkit != null 
+                                && toolkit.length() > 0) {
 
-                            AutIdentifier autId = 
-                                new AutIdentifier(infoLine);
+                            AutIdentifier autId = new AutIdentifier(autID);
                             m_autIdToRestartHandler.put(autId, 
-                                new RestartAutAutRun(autId, socket, reader));
+                                    new RestartAutAutRun(
+                                            autId, socket, reader, toolkit));
                         }
                     } catch (IOException ioe) {
                         // Error occurred while constructing the stream
@@ -668,9 +677,8 @@ public class AutAgent {
      *         was successfully received and processed.
      */
     public ConnectToAutResponseMessage sendConnectToClientMessage(
-            AutIdentifier autId, String clientHostName, 
-            int clientPort) {
-        
+            AutIdentifier autId, String clientHostName, int clientPort) {
+
         synchronized (m_auts) {
             Communicator autSocket = m_auts.get(autId);
             if (autSocket == null) {
@@ -680,9 +688,48 @@ public class AutAgent {
             }
 
             try {
-                autSocket.send(
-                    new ConnectToClientMessage(clientHostName, clientPort));
-            } catch (CommunicationException ce) {
+                Map<String, String> fragmentMap = new HashMap<>();
+                //Create fragment classpath for on demand fragment loading
+                synchronized (m_autIdToRestartHandler) {
+                    //Determine toolkit of the AUT
+                    String startClass = m_autIdToRestartHandler.get(autId)
+                            .getAUTStartClass();
+                    Class autServerClass = Class.forName(startClass);
+                    AbstractStartToolkitAut autStarter = 
+                            (AbstractStartToolkitAut) autServerClass
+                            .newInstance();
+                    String rcBundleID = autStarter.getRcBundleId();
+                    //Only for Java Toolkits
+                    if (rcBundleID.equals(CommandConstants.RC_JAVAFX_BUNDLE_ID)
+                            || rcBundleID.equals(
+                                    CommandConstants.RC_SWING_BUNDLE_ID)
+                            || rcBundleID.equals(
+                                    CommandConstants.RC_SWT_BUNDLE_ID)) {
+                        List<Bundle> fragments = new ArrayList<Bundle>();
+                        fragments = AbstractStartToolkitAut
+                                .getFragmentsForBundleId(rcBundleID);
+
+                        for (Bundle bundle : fragments) {
+                            StringBuilder pathBuilder = new StringBuilder();
+                            for (String entry : AbstractStartToolkitAut
+                                    .getPathforBundle(bundle)) {
+                                pathBuilder.append(entry).append(
+                                        IStartAut.PATH_SEPARATOR);
+                            }
+                            if (pathBuilder.length() > 0) {
+                                fragmentMap.put(pathBuilder.substring(
+                                        0,
+                                        pathBuilder.lastIndexOf
+                                        (IStartAut.PATH_SEPARATOR)),
+                                        bundle.getSymbolicName());
+                            }
+                        }
+                    }
+                }
+                autSocket.send(new ConnectToClientMessage(clientHostName,
+                        clientPort, fragmentMap));
+            } catch (CommunicationException | ClassNotFoundException
+                    | InstantiationException | IllegalAccessException ce) {
                 return new ConnectToAutResponseMessage(
                         ce.getLocalizedMessage());
             }

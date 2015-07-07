@@ -40,7 +40,8 @@ public class ConnectToClientCommand implements ICommand {
         try {
             AUTServer.getInstance().initClientCommunication(
                     m_message.getClientHostName(), 
-                    m_message.getClientPort());
+                    m_message.getClientPort(),
+                    m_message.getFragments());
         } catch (UnknownHostException uhe) {
             LOG.error("Error while attempting to connect to client.", uhe); //$NON-NLS-1$
         }

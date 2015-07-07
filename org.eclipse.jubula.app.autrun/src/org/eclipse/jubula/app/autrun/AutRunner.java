@@ -127,6 +127,7 @@ public class AutRunner {
     /** the address for the AUT Agent */
     private InetSocketAddress m_agentAddr;
     
+    
 
     /**
      * Constructor
@@ -188,6 +189,7 @@ public class AutRunner {
         
         writer.println(
                 m_autConfiguration.get(AutConfigConstants.AUT_NAME));
+        writer.println(m_startAut.getClass().getName());
         
         Thread agentConnectionThread = new AgentConnectionWatcher(
             AGENT_CONNECTION_THREAD_NAME, writer, agentSocket, reader);

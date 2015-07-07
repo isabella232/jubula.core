@@ -9,16 +9,22 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.rc.common;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
@@ -27,6 +33,7 @@ import org.eclipse.jubula.communication.internal.message.AUTStartMessage;
 import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.commands.AUTStartCommand;
 import org.eclipse.jubula.rc.common.commands.ChangeAUTModeCommand;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -44,6 +51,7 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.ClassPathHacker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -475,18 +483,21 @@ public abstract class AUTServer {
      * <li>AUT Agent and AUT</li>
      * </ul>
      * 
-     * @param clientHostName
-     *            Host name to use for connecting to the client.
-     * @param clientPort
-     *            Port number to use for connecting to the client.
+     * @param clientHostName Host name to use for connecting to the client.
+     * @param clientPort Port number to use for connecting to the client.
+     * @param fragments Key: path to fragment jar. Value: fragment name
      * 
      * @throws UnknownHostException
      *             if no IP address can be found for <code>clientHostName</code>
      *             .
      */
-    public void initClientCommunication(String clientHostName, int clientPort) 
+    public void initClientCommunication(String clientHostName, int clientPort,
+            Map<String, String> fragments) 
         throws UnknownHostException {
-        
+        List<String> errors = new ArrayList<String>();
+        if (!fragments.isEmpty()) {
+            errors = loadExtensions(fragments);
+        }
         if (log.isDebugEnabled()) {
             log.debug("initializing communication"); //$NON-NLS-1$                
         }
@@ -495,6 +506,113 @@ public abstract class AUTServer {
             InetAddress.getByName(clientHostName);
         createCommunicator(new InetSocketAddress(clientAddress, clientPort));
         connectToITE();
+    }
+
+    /**
+     * Uses the class loader of the AUT server to load the extensions which are
+     * in the map
+     * 
+     * @param fragments Key: path to fragment jar. Value: fragment name
+     * @return List containing error messages. A message should contain the name
+     *         of the fragment which was affected by the error and therefore not
+     *         loaded
+     */
+    protected List<String> loadExtensions(Map<String, String> fragments) {
+        Map<URL, String> jars = new HashMap<URL, String>();
+        ArrayList<String> errors = new ArrayList<String>();
+        for (String classpath : fragments.keySet()) {
+            try {
+                String[] path = classpath
+                        .split(AutServerLauncher.PATH_SEPARATOR);
+                // Splitting up the classpath of each fragment because it might
+                // contain several jars
+                for (String p : path) {
+                    URL url = new File(p).toURI().toURL();
+                    jars.put(url, fragments.get(classpath));
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        URL[] urls = jars.keySet().toArray(new URL[jars.keySet().size()]);
+        List<URL> notLoaded = addURLsToClassloader(urls);
+        for (URL url : notLoaded) {
+            errors.add(jars.get(url));
+        }
+        String path = AdapterFactoryRegistry.EXT_ADAPTER_PACKAGE_NAME.replace(
+                '.', '/');
+        Enumeration<URL> extensionsFactories = null;
+        try {
+            extensionsFactories = 
+                    this.getClass().getClassLoader().getResources(path);
+        } catch (IOException e) {
+            log.error("Loading classloader resources failed: " + e); //$NON-NLS-1$
+        }
+        while (extensionsFactories != null
+                && extensionsFactories.hasMoreElements()) {
+            URL url = extensionsFactories.nextElement();
+            try {
+                List<Class> classes = ClassPathHacker.findClassesInJar(url,
+                        AdapterFactoryRegistry.EXT_ADAPTER_PACKAGE_NAME,
+                        this.getClass().getClassLoader());
+                for (Class<?> c : classes) {
+                    if (IAdapterFactory.class.isAssignableFrom(c)) {
+                        IAdapterFactory fac = (IAdapterFactory) c.newInstance();
+                        if (!AdapterFactoryRegistry.getInstance()
+                                .isRegistered(fac)) {
+                            AdapterFactoryRegistry.getInstance()
+                                    .registerFactory(fac);
+                        }                      
+                    }
+                }
+            } catch (IOException e) {
+                try {
+                    errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
+                } catch (MalformedURLException e1) {
+                    log.error("Creating error message failed: " + e1); //$NON-NLS-1$
+                }
+                log.error("Loading class failed: " + e); //$NON-NLS-1$
+            } catch (ReflectiveOperationException e) {
+                try {
+                    errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
+                } catch (MalformedURLException e1) {
+                    log.error("Creating error message failed: " + e1); //$NON-NLS-1$
+                }
+                log.error("Loading class failed: " + e); //$NON-NLS-1$
+            } catch (NoClassDefFoundError e) {
+                try {
+                    errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
+                } catch (MalformedURLException e1) {
+                    log.error("Creating error message failed: " + e1); //$NON-NLS-1$
+                }
+                log.error("Loading class failed: " + e); //$NON-NLS-1$
+            }
+        }
+        return errors;
+    }
+
+    /**
+     * Adds the given urls to the AUT Server class loader
+     * @param urls the urls to add 
+     * @return list of urls which could not be added
+     */
+    private List<URL> addURLsToClassloader(URL[] urls) {
+        List<URL> notLoaded = new ArrayList<URL>();
+        for (URL u : urls) {
+            try {
+                ClassPathHacker.addURL(u, this.getClass().getClassLoader());
+            }  catch (IOException e) {
+                log.error("Could not add url: " + e); //$NON-NLS-1$
+                notLoaded.add(u);
+            } catch (ReflectiveOperationException e) {
+                log.error("Could not add url: " + e); //$NON-NLS-1$
+                notLoaded.add(u);
+            } catch (NoClassDefFoundError e) {
+                log.error("Could not add url: " + e); //$NON-NLS-1$
+                notLoaded.add(u);
+            } 
+        }
+        return notLoaded;
     }
 
     /**

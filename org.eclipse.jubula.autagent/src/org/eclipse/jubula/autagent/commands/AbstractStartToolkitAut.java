@@ -285,66 +285,64 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *         </ul>
      *         an empty array will be returned.
      */
-    public static String[] getClasspathEntriesForBundleId(String bundleId) {
-        Bundle mainBundle = Platform.getBundle(bundleId);
-        List<Bundle> bundleAndFragmentList = new ArrayList<Bundle>();
-        if (mainBundle == null) {
-            mainBundle = bundleLookupWithInactive(bundleId);
-            if (mainBundle == null) {
-                log.error("No bundle found for ID '" + bundleId + "'."); //$NON-NLS-1$//$NON-NLS-2$
-                return new String[0];
-            }
-        }
-
-        bundleAndFragmentList.add(mainBundle);  
-        Bundle[] mainBundleFragments = Platform.getFragments(mainBundle);
-        if (mainBundleFragments == null) {
-            bundleAndFragmentList.addAll(
-                    fragmentLookupWithInactive(mainBundle));
-        } else {
-            for (Bundle fragment : mainBundleFragments) {
-                bundleAndFragmentList.add(fragment);
-            }
-        }       
+    private static String[] getClasspathEntriesForBundleId(String bundleId) {
+        Bundle mainBundle = getBundleForID(bundleId);
+        ArrayList<Bundle> bundleAndFragmentList = new ArrayList<>();        
+        bundleAndFragmentList.add(mainBundle);
+        bundleAndFragmentList.addAll(getFragmentsForBundleId(bundleId));
         List<String> classpathEntries = new ArrayList<String>();
         for (Bundle bundle : bundleAndFragmentList) {
-            try {
-                File bundleFile = FileLocator.getBundleFile(bundle);
-                if (bundleFile.isFile()) {
-                    // bundle file is not a directory, so we assume it's a JAR file
-                    classpathEntries.add(bundleFile.getAbsolutePath());   
-                    // since the classloader cannot handle nested JARs, we need to extract
-                    // all known nested JARs and add them to the classpath
-                    try {
-                        // assuming that it's a JAR/ZIP file
-                        File[] createdFiles = ZipUtil.unzipTempJars(bundleFile);
-                        for (int i = 0; i < createdFiles.length; i++) {
-                            classpathEntries.add(createdFiles[i].
-                                    getAbsolutePath());
-                        }
-                    } catch (IOException e) {
-                        log.error("An error occurred while trying to extract nested JARs from " + bundleId, e); //$NON-NLS-1$
+            classpathEntries.addAll(getPathforBundle(bundle));
+        }
+        return classpathEntries.toArray(new String[classpathEntries.size()]);
+    }
+
+    /**
+     * Determines the file-system path to the jar for the given bundle and also
+     * for nested jars within this jar
+     * 
+     * @param bundle the bundle to get the path for
+     * @return A list containing the path to the jar, or several paths if the
+     *         jar contained nested jars
+     */
+    public static List<String> getPathforBundle(Bundle bundle) {
+        List<String> path = new ArrayList<String>();
+        try {
+            File bundleFile = FileLocator.getBundleFile(bundle);
+            if (bundleFile.isFile()) {
+                // bundle file is not a directory, so we assume it's a JAR file
+                path.add(bundleFile.getAbsolutePath());   
+                // since the classloader cannot handle nested JARs, we need to extract
+                // all known nested JARs and add them to the classpath
+                try {
+                    // assuming that it's a JAR/ZIP file
+                    File[] createdFiles = ZipUtil.unzipTempJars(bundleFile);
+                    for (int i = 0; i < createdFiles.length; i++) {
+                        path.add(createdFiles[i].
+                                getAbsolutePath());
                     }
-                } else {
-                    Enumeration<URL> e = bundle.findEntries(
-                            "/", "*.jar", true); //$NON-NLS-1$//$NON-NLS-2$
-                    if (e != null) {
-                        while (e.hasMoreElements()) {
-                            URL jarUrl = e.nextElement();
-                            File jarFile = 
-                                new File(bundleFile + jarUrl.getFile());
-                            if (!isJarFileWithManifestAttr(
-                                    jarFile, SOURCE_BUNDLE_MANIFEST_ATTR)) {
-                                classpathEntries.add(jarFile.getAbsolutePath());
-                            }
+                } catch (IOException e) {
+                    log.error("An error occurred while trying to extract nested JARs from " + bundle.getSymbolicName(), e); //$NON-NLS-1$
+                }
+            } else {
+                Enumeration<URL> e = bundle.findEntries(
+                        "/", "*.jar", true); //$NON-NLS-1$//$NON-NLS-2$
+                if (e != null) {
+                    while (e.hasMoreElements()) {
+                        URL jarUrl = e.nextElement();
+                        File jarFile = 
+                            new File(bundleFile + jarUrl.getFile());
+                        if (!isJarFileWithManifestAttr(
+                                jarFile, SOURCE_BUNDLE_MANIFEST_ATTR)) {
+                            path.add(jarFile.getAbsolutePath());
                         }
                     }
                 }
-            } catch (IOException ioe) {
-                log.error("Bundle with ID '" + bundleId + "' could not be resolved to a file.", ioe); //$NON-NLS-1$//$NON-NLS-2$
             }
+        } catch (IOException ioe) {
+            log.error("Bundle with ID '" + bundle.getSymbolicName() + "' could not be resolved to a file.", ioe); //$NON-NLS-1$//$NON-NLS-2$
         }
-        return classpathEntries.toArray(new String[classpathEntries.size()]);
+        return path;
     }
 
     /**
@@ -410,6 +408,25 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
     }
     
     /**
+     * Looks for the bundle with the given ID and the highest Version. This
+     * search also includes non active bundles.
+     * 
+     * @param bundleId
+     *            the bundle ID to look for
+     * @return the bundle
+     */
+    public static Bundle getBundleForID(String bundleId) {
+        Bundle bundle = Platform.getBundle(bundleId);
+        if (bundle == null) {
+            bundle = bundleLookupWithInactive(bundleId);
+            if (bundle == null) {
+                log.error("No bundle found for ID '" + bundleId + "'."); //$NON-NLS-1$//$NON-NLS-2$
+            }
+        }
+        return bundle;
+    }
+    
+    /**
      * 
      * @param file The file to check.
      * @param manifestAttr The name of the Manifest Attribute to check for.
@@ -463,8 +480,18 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      *         an empty String will be returned.
      */
     public static String getClasspathForBundleId(String bundleId) {
+        String[] classPath = getClasspathEntriesForBundleId(bundleId);
+        return createClassPath(classPath);
+    }
+
+    /**
+     * Creates a class path sting for a given string array
+     * @param classPath the array
+     * @return a the class path in the same order as the array
+     */
+    protected static String createClassPath(String[] classPath) {
         StringBuilder pathBuilder = new StringBuilder();
-        for (String entry : getClasspathEntriesForBundleId(bundleId)) {
+        for (String entry : classPath) {
             pathBuilder.append(entry).append(PATH_SEPARATOR);
         }
         
@@ -491,5 +518,35 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             cmds.add("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=" + rcDebug); //$NON-NLS-1$
             cmds.add("-Djava.compiler=NONE"); //$NON-NLS-1$
         }
+    }
+    
+    /**
+     * Return the bundle id of the RC bundle
+     * @return the bundle name
+     */
+    public abstract String getRcBundleId();
+
+    /**
+     * Finds fragments for the given bundle in the running Platform. If no
+     * active fragments are found, e.g. when jre version is below the minimum
+     * BREE of a bundle, we are also adding non-active (installed) fragments.
+     * 
+     * @param rcBundleId the bundle name
+     * @return the fragments which have been found
+     */
+    public static List<Bundle> getFragmentsForBundleId(String rcBundleId) {
+        Bundle fragmentHost = getBundleForID(rcBundleId);
+        ArrayList<Bundle> fragments = new ArrayList<Bundle>();
+        
+        Bundle[] f = Platform.getFragments(fragmentHost);
+        if (f == null) {
+            fragments.addAll(
+                    fragmentLookupWithInactive(fragmentHost));
+        } else {
+            for (Bundle fragment : f) {
+                fragments.add(fragment);
+            }
+        } 
+        return fragments;
     }
 }

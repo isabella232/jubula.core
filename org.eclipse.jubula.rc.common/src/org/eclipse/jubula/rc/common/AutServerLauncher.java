@@ -26,6 +26,10 @@ import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
  * @created 10.11.2005
  */
 public class AutServerLauncher {
+    
+    /** <code>PATH_SEPARATOR</code> */
+    public static final String PATH_SEPARATOR = System.getProperty("path.separator"); //$NON-NLS-1$
+    
     /** 
      * name for environment variable that should be set if old/classic class 
      * loading should be used 

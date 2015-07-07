@@ -27,4 +27,10 @@ public interface IRestartAutHandler {
      *            0) or whether the AUT should terminate by itself (timeout > 0)
      */
     public void restartAut(AutAgent agent, int timeout);
+    
+    /**
+     * Get the class which was used to start the AUT
+     * @return the class name of the class
+     */
+    public String getAUTStartClass();
 }

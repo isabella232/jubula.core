@@ -154,4 +154,10 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
               
         return browserString;
     }
+
+
+    @Override
+    public String getRcBundleId() {
+        return CommandConstants.RC_HTML_BUNDLE_ID;
+    }
 }

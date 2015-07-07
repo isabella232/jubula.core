@@ -254,5 +254,10 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
 
         return props;
     }
+    
+    @Override
+    public String getRcBundleId() {
+        return CommandConstants.RC_RCP_BUNDLE_ID;
+    }
 
 }

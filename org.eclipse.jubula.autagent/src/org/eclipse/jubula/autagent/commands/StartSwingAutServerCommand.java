@@ -18,6 +18,7 @@ import java.util.Vector;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.utils.MonitoringUtil;
+import org.osgi.framework.Bundle;
 
 
 /**
@@ -79,20 +80,25 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
           
         return super.createEnvArray(parameters, isAgentSet);
     }
-
+    
     /**
      * 
      * @return the class path corresponding to the receiver's RC bundle. 
      */ 
     protected String getRcBundleClassPath() {
-        return AbstractStartToolkitAut.getClasspathForBundleId(getRcBundleId());
+        Bundle rcBundle = AbstractStartToolkitAut
+                .getBundleForID(getRcBundleId());
+        List<String> classList = AbstractStartToolkitAut
+                .getPathforBundle(rcBundle);
+        return AbstractStartToolkitAut.createClassPath(classList
+                .toArray(new String[classList.size()]));
     }
-
+    
     /**
      * 
      * @return the ID of the receiver's RC bundle.
      */
-    protected String getRcBundleId() {
+    public String getRcBundleId() {
         return CommandConstants.RC_SWING_BUNDLE_ID;
     }
     

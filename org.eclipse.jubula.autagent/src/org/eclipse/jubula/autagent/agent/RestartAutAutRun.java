@@ -41,6 +41,9 @@ public class RestartAutAutRun implements IRestartAutHandler {
     
     /** reader used for communicating with autrun */
     private BufferedReader m_socketReader;
+
+    /** the class which was used to start the AUT **/
+    private String m_autStartClass;
     
     /**
      * Constructor
@@ -48,13 +51,15 @@ public class RestartAutAutRun implements IRestartAutHandler {
      * @param autId The ID of the started AUT.
      * @param socket The socket used for communicating with autrun.
      * @param reader Reader for the given socket.
+     * @param startClass the class which was used to start the AUT
      */
     public RestartAutAutRun(AutIdentifier autId, Socket socket,
-            BufferedReader reader) {
+            BufferedReader reader, String startClass) {
 
         m_autId = autId;
         m_autrunSocket = socket;
         m_socketReader = reader;
+        m_autStartClass = startClass;
     }
 
     /**
@@ -76,6 +81,11 @@ public class RestartAutAutRun implements IRestartAutHandler {
             LOG.error("Error occurred while restarting AUT.", e); //$NON-NLS-1$
         }
         
+    }
+
+    @Override
+    public String getAUTStartClass() {
+        return m_autStartClass;
     }
 
 }

@@ -10,12 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.adaptable;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,11 +20,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 import org.eclipse.jubula.rc.common.classloader.DefaultUrlLocator;
 import org.eclipse.jubula.rc.common.classloader.IUrlLocator;
+import org.eclipse.jubula.tools.internal.utils.ClassPathHacker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +35,7 @@ public class AdapterFactoryRegistry {
     public static final String ADAPTER_PACKAGE_NAME = "org.eclipse.jubula.rc.common.adapter"; //$NON-NLS-1$
 
     /** the name of the package to search for extension adapters */
-    private static final String EXT_ADAPTER_PACKAGE_NAME = "org.eclipse.jubula.ext.rc.common.adapter"; //$NON-NLS-1$
+    public static final String EXT_ADAPTER_PACKAGE_NAME = "org.eclipse.jubula.ext.rc.common.adapter"; //$NON-NLS-1$
     
     /** the logger */
     private static Logger log = LoggerFactory
@@ -266,105 +261,37 @@ public class AdapterFactoryRegistry {
         List<Class> classes = new ArrayList<Class>();
         for (int i = 0; i < dirs.size(); i++) {
             if (dirs.get(i).toString().startsWith("jar:")) { //$NON-NLS-1$
-                classes.addAll(findClassesInJar(dirs.get(i), packageName));
+                classes.addAll(ClassPathHacker.
+                        findClassesInJar(dirs.get(i), packageName,
+                                classLoader));
             } else {
-                classes.addAll(findClasses(dirs.get(i), packageName));
+                classes.addAll(ClassPathHacker.findClasses(
+                        dirs.get(i), packageName));
             }
         }
         return castListToClassArray(classes);
     }
 
-
     /**
-     * Recursive method used to find all classes in a given directory and
-     * subdirectories.
-     * 
-     * @param directoryUrl
-     *            The base directory
-     * @param packageName
-     *            The package name for classes found inside the base directory
-     * @return The classes
-     * @throws ClassNotFoundException
+     * Checks if the given factory is already registered
+     * @param factory the factory to check
+     * @return true if the factory is already registered, false otherwise
      */
-    private static List<Class> findClasses(URL directoryUrl, String packageName)
-        throws ClassNotFoundException {
-        List<Class> classes = new ArrayList<Class>();
-        File directory = new File(directoryUrl.getFile());
-        if (!directory.exists()) {
-            return classes;
-        }
-        File[] files = directory.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            File file = files[i];
-            String fileName = file.getName();
-            if (file.isDirectory()) {
-                try {
-                    classes.addAll(findClasses(file.toURI().toURL(),
-                            packageName + '.' + fileName));
-                } catch (MalformedURLException e) {
-                    log.error(e.getLocalizedMessage(), e);
-                }
-            } else if (fileName.endsWith(".class")) { //$NON-NLS-1$
-                classes.add(Class.forName(packageName + '.'
-                        + fileName.substring(0, fileName.length() - 6)));
+    public boolean isRegistered(IAdapterFactory factory) {
+        Class[] supportedClasses = factory.getSupportedClasses();
+        for (int i = 0; i < supportedClasses.length; i++) {
+            final Class supportedClass = supportedClasses[i];
+            Collection<IAdapterFactory> registeredFactories = m_registrationMap
+                    .get(supportedClass);
+            if (registeredFactories == null) {
+                return false;
             }
-        }
-        return classes;
-    }
-
-    /**
-     * method to find all classes in a given jar
-     * 
-     * @param resource
-     *            The URL to the jar file
-     * @param pkgname
-     *            The package name for classes found inside the base directory
-     * @return The classes
-     */
-    private static List<Class> findClassesInJar(URL resource, String pkgname) {
-        String relPath = pkgname.replace('.', '/');
-        String path = resource.getPath()
-                .replaceFirst("[.]jar[!].*", ".jar") //$NON-NLS-1$ //$NON-NLS-2$
-                .replaceFirst("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        try {
-            path = URLDecoder.decode(path, "utf-8"); //$NON-NLS-1$
-        } catch (UnsupportedEncodingException uee) {
-            log.error(uee.getLocalizedMessage(), uee);
-        }
-        List<Class> classes = new ArrayList<Class>();
-        JarFile jarFile = null;
-        try {            
-            jarFile = new JarFile(path);        
-            Enumeration<JarEntry> entries = jarFile.entries();
-            while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
-                String entryName = entry.getName();
-                String className = null;
-                if (entryName.endsWith(".class")  //$NON-NLS-1$
-                        && entryName.startsWith(relPath)) {
-                    className = entryName.replace('/', '.').replace('\\', '.')
-                            .replaceAll(".class", ""); //$NON-NLS-1$ //$NON-NLS-2$
-                
-                    if (className != null) {
-                        try {
-                            classes.add(Class.forName(className));
-                        } catch (ClassNotFoundException cnfe) {
-                            log.error(cnfe.getLocalizedMessage(), cnfe);
-                        }
-                    }
-                }
-            }
-        } catch (IOException ioe) {            
-            log.warn(ioe.getLocalizedMessage(), ioe);
-        } finally {
-            if (jarFile != null) {
-                try {
-                    jarFile.close();
-                } catch (IOException e) {
-                    log.error(e.getLocalizedMessage(), e);
+            for (IAdapterFactory iAdapterFactory : registeredFactories) {
+                if (iAdapterFactory.getClass().equals(factory.getClass())) {
+                    return true;
                 }
             }
         }
-        return classes;
+        return false;
     }
 }

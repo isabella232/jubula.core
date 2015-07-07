@@ -49,4 +49,15 @@ public class RestartAutConfiguration implements IRestartAutHandler {
         startCommand.setMessage(m_startAutMessage);
         startCommand.execute();
     }
+
+    @Override
+    public String getAUTStartClass() {
+        String autToolkit = m_startAutMessage.getAutToolKit();
+        String toolkitName = autToolkit.substring(
+            autToolkit.lastIndexOf('.') + 1, 
+            autToolkit.lastIndexOf("ToolkitPlugin")); //$NON-NLS-1$
+        String className = "org.eclipse.jubula.autagent.commands.Start" //$NON-NLS-1$
+            + toolkitName + "AutServerCommand"; //$NON-NLS-1$
+        return className;
+    }
 }

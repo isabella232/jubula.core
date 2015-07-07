@@ -18,6 +18,7 @@ import java.util.Vector;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.utils.MonitoringUtil;
+import org.osgi.framework.Bundle;
 
 /**
  * @author BREDEX GmbH
@@ -75,7 +76,7 @@ public class StartJavaFXAutServerCommand extends AbstractStartJavaAutServer {
     /**
      * {@inheritDoc}
      */
-    protected String getRcBundleId() {
+    public String getRcBundleId() {
         return CommandConstants.RC_JAVAFX_BUNDLE_ID;
     }
 
@@ -97,7 +98,12 @@ public class StartJavaFXAutServerCommand extends AbstractStartJavaAutServer {
      * @return the class path corresponding to the receiver's RC bundle.
      */
     protected String getRcBundleClassPath() {
-        return AbstractStartToolkitAut.getClasspathForBundleId(getRcBundleId());
+        Bundle rcBundle = AbstractStartToolkitAut
+                .getBundleForID(getRcBundleId());
+        List<String> classList = AbstractStartToolkitAut
+                .getPathforBundle(rcBundle);
+        return AbstractStartToolkitAut.createClassPath(classList
+                .toArray(new String[classList.size()]));
     }
 
     @Override
