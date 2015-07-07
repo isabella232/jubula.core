@@ -9,70 +9,35 @@
 <section xml:id="extensionExamples" xmlns="http://docbook.org/ns/docbook"
                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                 xmlns:xl="http://www.w3.org/1999/xlink">
-  <title>ITE and remote control extension examples</title>
+  <title>ITE, client API and remote control extension examples</title>
   <para>
-    In the installation, there are source code examples for extending supported toolkits.
-    The examples can be found in the directory
-      <emphasis role="input">examples/development/extension</emphasis>,
-    which contains the following sub-folders:
+    Each installation contains source code examples for extending the supported toolkits.
+    The examples can be found as source- and binary-features in the local p2-repository
+      <emphasis role="input">development/org.eclipse.jubula.repo.zip</emphasis>,
+    and are out-of-the-box ready to be installed into the ITE.
   </para>
-  <variablelist>
-    <varlistentry>
-      <term>
-        src
-      </term>
-      <listitem>
-        <para>
-          Contains some zip-files with example source code projects,
-          which can be imported by Eclipse:
-        </para>
-        <itemizedlist>
+  <para>
+      <itemizedlist>
           <listitem>
-            <para>
-              <emphasis role="input">RCPExtension.zip</emphasis><?linebreak?>
-              An extension supporting <emphasis role="input">Group</emphasis> for SWT including client
-              and remote control projects. After deploying these projects you should be able to test the
-              <emphasis role="input">Group</emphasis> in RCP applications.
-            </para>
+            <para>Jubula Example - Toolkit Extension - JavaFX: PieChart</para>
           </listitem>
           <listitem>
-            <para>
-              <emphasis role="input">SwingAUT.zip</emphasis><?linebreak?>
-              An AUT using <emphasis role="input">JSlider</emphasis> from Swing.
-            </para>
+            <para>Jubula Example - Toolkit Extension - Swing: JSlider</para>
           </listitem>
-          <listitem>
-            <para>
-              <emphasis role="input">SwingExtension.zip</emphasis><?linebreak?>
-              The extension supporting <emphasis role="input">JSlider</emphasis> for Swing including client
-              and remote control projects. After deploying these projects you should be able to test the
-              <emphasis role="input">JSlider</emphasis> in the Swing example AUT.
-            </para>
-          </listitem>
-          <listitem>
-            <para>
-              <emphasis role="input">SwingRendererExtension.zip</emphasis><?linebreak?>
-              A remote control extension supporting a custom graphics component for
-              Swing.
-            </para>
-          </listitem>
-        </itemizedlist>
-      </listitem>
-    </varlistentry>
-    <varlistentry>
-      <term>
-        AUT
-      </term>
-      <listitem>
-        <para>
-          Contains the binary file <emphasis role="input">JSlider.jar</emphasis>, which
-          is a simple example AUT using the normally unsupported
-          component <emphasis role="input">JSlider</emphasis>. After installing the
-          <emphasis role="input">JSlider</emphasis> example extension from the
-          <emphasis role="strong">src</emphasis> folder, you will be
-          able to test this new component.
-        </para>
-      </listitem>
-    </varlistentry>
-  </variablelist>
+      </itemizedlist>
+  </para>
+  <para>
+  Each toolkit extension consists of four individual modules:
+  </para>
+  <programlisting>
+<![CDATA[
+org.eclipse.jubula.examples.extension.<toolkitName>.api : holds the custom client API information 
+org.eclipse.jubula.examples.extension.<toolkitName>.api.test : holds an example JUnit based client API test for the AUT
+org.eclipse.jubula.examples.extension.<toolkitName>.rc : holds the remote control implementation
+org.eclipse.jubula.examples.extension.<toolkitName>.toolkit : holds the declarative toolkit description for the ITE
+]]>
+    </programlisting>
+  <para>
+  The individual AUTs showing the capability of these extensions are located in "examples/development/extension/AUT".
+  </para>
 </section>

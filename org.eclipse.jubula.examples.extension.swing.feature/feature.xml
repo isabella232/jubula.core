@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.jubula.examples.extension.swing.feature"
-      label="Jubula Example - Toolkit Extension - Swing"
+      label="Jubula Example - Toolkit Extension - Swing: JSlider"
       version="3.1.0.qualifier"
       provider-name="Eclipse Jubula">
 
    <description url="http://www.eclipse.org/jubula">
-      Example Jubula Toolkit Extension - Swing
+      Example Jubula Toolkit Extension - Swing: JSlider
    </description>
 
    <copyright url="http://www.eclipse.org/jubula">

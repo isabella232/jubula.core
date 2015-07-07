@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2015 BREDEX GmbH. All rights reserved. This program and 
+    the accompanying materials are made available under the terms of the Eclipse 
+    Public License v1.0 which accompanies this distribution, and is available 
+    at http://www.eclipse.org/legal/epl-v10.html -->
+<section xml:id="apiExtension" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>Addressing custom controls via the client API</title>
+    <para>
+        In order to execute CAPs on custom controls / custom CAPs via
+        the client API you have to perform two additional steps.
+    </para>
+    <para>
+        At first you have to register the responsible tester class for
+        the fully qualified new components class name by using:
+    </para>
+    <programlisting>
+<![CDATA[
+public interface org.eclipse.jubula.toolkit.ToolkitInfo {
+    /**
+     * Allows adding of a tester class for a component class into a toolkit
+     * @param componentClassName fully qualified name of the component class
+     * @param testerClassName fully qualified name of the tester class
+     * @return previously registered tester class for the component class
+     *         or <code>null</code> if there was none
+     */
+    @Nullable public String registerTesterClass(
+            @NonNull String componentClassName,
+            @NonNull String testerClassName);
+
+...
+]]>
+    </programlisting>
+    <para>
+        This extended ToolkitInformation is then used for retrieving
+        the AUT from the AUT-Agent:
+    </para>
+    <programlisting>
+<![CDATA[
+public interface org.eclipse.jubula.client.AUTAgent extends Remote {
+...
+
+    /**
+     * @param autID
+     *            the autID to get an AUT for
+     * @param information
+     *            the information about the toolkit
+     * @return an AUT - note: currently the underlying implementation only
+     *         supports <b>ONE</b> connection at a time to a remotely running AUT;
+     *         multiple connections may only be established sequentially!
+     * @throws CommunicationException
+     *             in case of communication problems with the remote side
+     */
+    AUT getAUT(AUTIdentifier autID, ToolkitInfo information)
+        throws CommunicationException;
+
+...
+]]>
+    </programlisting>
+    <para>
+        And then you can use the CapBuilder to create
+        custom CAP-instances:
+    </para>
+    <programlisting>
+<![CDATA[
+public class org.eclipse.jubula.toolkit.CapBuilder {
+...
+         public CapBuilder addParameter(@NonNull String value) {...}
+         public CapBuilder addParameter(@NonNull Integer value) {...}
+         public CapBuilder addParameter(@NonNull Boolean value) {...}
+     
+         public CapBuilder setComponentIdentifier(@Nullable ComponentIdentifier ci) {...}
+             
+         public CAP build() {}
+...
+}
+]]>
+    </programlisting>
+    <para>
+        These custom CAP instances can then be executed as usual
+        within an AUT context.
+    </para>
+    <para role="warning">
+        The built method signature (by subsequently calling
+        addParameter(...)) has to match the one that's
+        called remotely on
+        the given tester class with the given
+        rcMethodName.
+    </para>
+</section>

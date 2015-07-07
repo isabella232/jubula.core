@@ -37,11 +37,13 @@
     actions. This chapter begins by listing the requirements followed by
     showing the necessary steps for creating an ITE and remote control
     extension. The ITE toolkit extension is described in <xref linkend="iteExtension"/>
-    and the implementation for the remote control extension in <xref linkend="remoteControlExtension"/>.
+    and the implementation for the remote control extension in <xref linkend="remoteControlExtension"/>. 
+    Additionally the <xref linkend="apiExtension"/> describes the usage of custom CAPs within 
+    the context of the client API.
   </para>
   <para>
-    Extension examples with source code can be found in the subdirectory
-      <emphasis role="input">examples/development/extension/src/</emphasis>
+    Extension examples with source code can be found in the p2-repository
+      <emphasis role="input">"development/org.eclipse.jubla.repo.zip"</emphasis>
     of the installation.
   </para>
   <para>
@@ -69,6 +71,7 @@
   <xi:include href="sectionRequirements.xml"/>
   <xi:include href="sectionITEExtension.xml"/>
   <xi:include href="sectionRemoteControlExtension.xml"/>
+  <xi:include href="sectionAPIExtension.xml"/>
   <xi:include href="sectionExtensionExamples.xml"/>
   
 </chapter>
