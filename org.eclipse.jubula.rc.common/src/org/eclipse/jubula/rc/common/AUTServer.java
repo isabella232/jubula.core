@@ -566,35 +566,46 @@ public abstract class AUTServer {
                     }
                 }
             } catch (IOException e) {
-                try {
-                    errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
-                } catch (MalformedURLException e1) {
-                    log.error("Creating error message failed: " + e1); //$NON-NLS-1$
-                }
-                log.error("Loading class failed: " + e); //$NON-NLS-1$
-            } catch (ReflectiveOperationException e) {
-                try {
-                    errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
-                } catch (MalformedURLException e1) {
-                    log.error("Creating error message failed: " + e1); //$NON-NLS-1$
-                }
-                log.error("Loading class failed: " + e); //$NON-NLS-1$
+                handleException(jars, errors, url, e);
+            } catch (ClassNotFoundException e) {
+                handleException(jars, errors, url, e);
+            } catch (IllegalAccessException e) {
+                handleException(jars, errors, url, e);
+            } catch (InstantiationException e) {
+                handleException(jars, errors, url, e);
             } catch (NoClassDefFoundError e) {
-                try {
-                    errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
-                } catch (MalformedURLException e1) {
-                    log.error("Creating error message failed: " + e1); //$NON-NLS-1$
-                }
-                log.error("Loading class failed: " + e); //$NON-NLS-1$
+                handleException(jars, errors, url, e);
             }
         }
         return errors;
     }
 
     /**
-     * Adds the given urls to the AUT Server class loader
-     * @param urls the urls to add 
-     * @return list of urls which could not be added
+     * @param jars
+     *            the JARs involved within the extension context
+     * @param errors
+     *            a modifiable list of errors
+     * @param url
+     *            the URL that's been used to load the JAR for
+     * @param t
+     *            the throwable that occurred
+     */
+    private void handleException(Map<URL, String> jars, List<String> errors,
+            URL url, Throwable t) {
+        try {
+            errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
+        } catch (MalformedURLException e1) {
+            log.error("Creating error message failed: " + e1); //$NON-NLS-1$
+        }
+        log.error("Loading class failed: " + t); //$NON-NLS-1$
+    }
+
+    /**
+     * Adds the given URLs to the AUT Server class loader
+     * 
+     * @param urls
+     *            the URLs to add
+     * @return list of URLs which could not be added
      */
     private List<URL> addURLsToClassloader(URL[] urls) {
         List<URL> notLoaded = new ArrayList<URL>();
@@ -604,13 +615,25 @@ public abstract class AUTServer {
             }  catch (IOException e) {
                 log.error("Could not add url: " + e); //$NON-NLS-1$
                 notLoaded.add(u);
-            } catch (ReflectiveOperationException e) {
+            } catch (SecurityException e) {
+                log.error("Could not add url: " + e); //$NON-NLS-1$
+                notLoaded.add(u);
+            } catch (IllegalArgumentException e) {
+                log.error("Could not add url: " + e); //$NON-NLS-1$
+                notLoaded.add(u);
+            } catch (NoSuchMethodException e) {
+                log.error("Could not add url: " + e); //$NON-NLS-1$
+                notLoaded.add(u);
+            } catch (IllegalAccessException e) {
+                log.error("Could not add url: " + e); //$NON-NLS-1$
+                notLoaded.add(u);
+            } catch (InvocationTargetException e) {
                 log.error("Could not add url: " + e); //$NON-NLS-1$
                 notLoaded.add(u);
             } catch (NoClassDefFoundError e) {
                 log.error("Could not add url: " + e); //$NON-NLS-1$
                 notLoaded.add(u);
-            } 
+            }
         }
         return notLoaded;
     }
