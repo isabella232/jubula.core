@@ -34,7 +34,7 @@ public class DvdDialogs {
     /** constant for no */
     public static final int NO = JOptionPane.NO_OPTION;
 
-    /** constant for cacnel */
+    /** constant for cancel */
     public static final int CANCEL = JOptionPane.CANCEL_OPTION;
     
     /**
@@ -45,7 +45,7 @@ public class DvdDialogs {
     }
     
     /**
-     * display a confirmation dialog with initernationalized messages from <code>keys</code>
+     * display a confirmation dialog with internationalized messages from <code>keys</code>
      * the dialog display an OK - and a CANCEL - Button
      * @param parent the parent for the dialog
      * @param titleKey the key for the title 
@@ -55,7 +55,7 @@ public class DvdDialogs {
     public static boolean confirm2(Component parent, String titleKey, 
         List keys) {
         
-        List message = new Vector();
+        List<String> message = new Vector<String>();
         for (Iterator iter = keys.iterator(); iter.hasNext();) {
             message.add(Resources.getString((String) iter.next()));
         }
@@ -69,17 +69,17 @@ public class DvdDialogs {
     }
     
     /**
-     * display a confirmation dialog with initernationalized messages from <code>keys</code>
+     * display a confirmation dialog with internationalized messages from <code>keys</code>
      * the dialog display an YES -, NO -, and a CANCEL - Button
      * @param parent the parent for the dialog
      * @param titleKey the key for the title 
      * @param keys the resource key(s) of the message(s) to display, must be Strings
-     * @return the choosen button, see constants defined in this class
+     * @return the chosen button, see constants defined in this class
      */
     public static int confirm3(Component parent, String titleKey, 
         List keys) {
         
-        List message = new Vector();
+        List<String> message = new Vector<String>();
         for (Iterator iter = keys.iterator(); iter.hasNext();) {
             message.add(Resources.getString((String) iter.next()));
         }
@@ -92,7 +92,7 @@ public class DvdDialogs {
                 JOptionPane.QUESTION_MESSAGE);
     }
     /**
-     * displays an error message with an internationlized message 
+     * displays an error message with an internationalized message 
      * @param parent the parent for the dialog
      * @param key the resource key of the message to display 
      */
@@ -105,7 +105,7 @@ public class DvdDialogs {
     }
     
     /**
-     * displays an information message with an internationlized message 
+     * displays an information message with an internationalized message 
      * @param parent the parent for the dialog
      * @param key the resource key of the message to display 
      */
@@ -118,7 +118,7 @@ public class DvdDialogs {
     }
     
     /**
-     * displays an input dialog with an internationlized message 
+     * displays an input dialog with an internationalized message 
      * @param parent the parent for the dialog
      * @param key the resource key of the message to display 
      * @return users input, or <code>null</code> meaning the user

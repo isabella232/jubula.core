@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.analyze.ui.definition.IResultRendererUI;
 import org.eclipse.jubula.client.analyze.ui.internal.listener.AnalyzeTreeViewerDoubleClickListener;
 import org.eclipse.jubula.client.analyze.ui.internal.provider.QueryTreeContentProvider;
 import org.eclipse.jubula.client.analyze.ui.internal.provider.QueryTreeLabelProvider;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.search.ui.ISearchResult;
 import org.eclipse.search.ui.ISearchResultPage;
 import org.eclipse.search.ui.ISearchResultViewPart;
@@ -245,11 +246,14 @@ public class ResultPage extends Page implements
     /** {@inheritDoc} */
     public void setViewPart(ISearchResultViewPart part) {
     }
+    
     /** {@inheritDoc} */
     public void restoreState(IMemento memento) {
+        // no memento support at the moment
     }
     /** {@inheritDoc} */
     public void saveState(IMemento memento) {
+        // no memento support at the moment
     }
     /** {@inheritDoc} */
     public void setID(String id) {
@@ -262,6 +266,6 @@ public class ResultPage extends Page implements
     }
     /** {@inheritDoc} */
     public String getLabel() {
-        return "";
+        return StringConstants.EMPTY;
     }
 }

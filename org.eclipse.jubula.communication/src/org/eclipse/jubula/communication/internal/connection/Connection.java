@@ -104,10 +104,10 @@ public class Connection {
     private OutputStream m_outputStream;
 
     /** the set which contains the listeners for messages */
-    private Set m_messageHandlers;
+    private Set<IMessageHandler> m_messageHandlers;
 
     /** the set which contains the listeners for error */
-    private Set m_errorHandlers;
+    private Set<IErrorHandler> m_errorHandlers;
 
     /** the exception handler for reading from the network */
     private IExceptionHandler m_exceptionHandler = null;
@@ -160,8 +160,8 @@ public class Connection {
         // use HashSets to store the registered handlers
         // the set for the handlers must be a set supporting remove!
         // see remove*Handler() AND fire*- methods
-        m_messageHandlers = new HashSet();
-        m_errorHandlers = new HashSet();
+        m_messageHandlers = new HashSet<IMessageHandler>();
+        m_errorHandlers = new HashSet<IErrorHandler>();
         m_headerSerializer = new MessageHeaderSerializer();
     }
 

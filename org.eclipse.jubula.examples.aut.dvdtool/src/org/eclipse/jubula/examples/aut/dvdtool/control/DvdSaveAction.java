@@ -54,7 +54,7 @@ public class DvdSaveAction extends AbstractAction {
                 File file = frame.getFileChooser().getSelectedFile();
                 boolean save = true;
                 if (file.exists()) {
-                    List keys = new Vector();
+                    List<String> keys = new Vector<String>();
                     keys.add("save.overwrite.confirmation.fileexists"); //$NON-NLS-1$
                     keys.add("save.overwrite.confirmation.question"); //$NON-NLS-1$
                     save = DvdDialogs.confirm2(m_controller.getDvdMainFrame(),

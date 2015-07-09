@@ -51,7 +51,7 @@ public class DvdOpenAction extends AbstractAction {
         boolean open = true;
         if (m_controller.isChanged()) {
             boolean save = true;
-            List keys = new Vector();
+            List<String> keys = new Vector<String>();
             keys.add("open.library.has.changed"); //$NON-NLS-1$
             keys.add("open.question.save"); //$NON-NLS-1$
             int choice = DvdDialogs.confirm3(m_controller.getDvdMainFrame(), 

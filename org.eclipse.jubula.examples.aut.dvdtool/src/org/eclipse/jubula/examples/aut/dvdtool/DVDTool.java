@@ -38,7 +38,7 @@ public class DVDTool {
         DvdMainFrame frame = new DvdMainFrameController().getDvdMainFrame();
         frame.setLocation(100, 90);
         frame.pack();
-        frame.show();
+        frame.setVisible(true);
     }
 
     /**

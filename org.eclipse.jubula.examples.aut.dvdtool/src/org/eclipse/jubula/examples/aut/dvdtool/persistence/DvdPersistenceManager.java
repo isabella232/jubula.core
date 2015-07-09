@@ -129,7 +129,7 @@ public class DvdPersistenceManager {
             DvdPersistenceException {
         try {
             ObjectInputStream input = new ObjectInputStream(is);
-            List list = new Vector();
+            List<Object> list = new Vector<Object>();
             try {
                 // this infinite loop will be exited by an EOFException
                 // when the end of the stream is reached

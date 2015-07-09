@@ -122,10 +122,10 @@ public class Communicator {
     private ErrorListener m_errorListener;
     
     /** a map for storing awaiting commands */
-    private Map m_awaitingCommands;
+    private Map<MessageIdentifier, AwaitingCommand> m_awaitingCommands;
 
     /** Set with ICommunicationErrorListeners listening to this communicator */
-    private LinkedHashSet m_errorListeners;
+    private LinkedHashSet<ICommunicationErrorListener> m_errorListeners;
 
     /** the connection manager, implementing the strategy for accepting connections */
     private ConnectionManager m_connectionManager;
@@ -147,7 +147,7 @@ public class Communicator {
      *  
      * <code>String</code> => <code>IConnectionInitializer</code> 
      */
-    private Map m_responseToInitializer;
+    private Map<String, IConnectionInitializer> m_responseToInitializer;
     
     /**
      * The commandFactory for this communicator
@@ -232,7 +232,7 @@ public class Communicator {
      * @throws SecurityException if the security manager does not allow connections.
      */
     public Communicator(int port, ClassLoader cl, 
-            Map responseToInitializer) 
+            Map<String, IConnectionInitializer> responseToInitializer) 
         throws IOException, SecurityException, AssertException {
 
         super();
@@ -250,7 +250,7 @@ public class Communicator {
         m_localPort = m_serverSocket.getLocalPort();
         m_classLoader = cl;
 
-        m_responseToInitializer = new HashMap();
+        m_responseToInitializer = new HashMap<String, IConnectionInitializer>();
         if (responseToInitializer != null) {
             m_responseToInitializer.putAll(responseToInitializer);
         }
@@ -271,11 +271,11 @@ public class Communicator {
         m_connection = null;
         setConnectionManager(new DefaultConnectionManager());
         // initialize map for awaiting commands
-        m_awaitingCommands = new HashMap();
+        m_awaitingCommands = new HashMap<MessageIdentifier, AwaitingCommand>();
         // using a LinkedHashSet, because LinkedHashSet supports
         // ordered iteration and also supports remove, see
         // removeErrorHandler AND fire*-methods
-        m_errorListeners = new LinkedHashSet();
+        m_errorListeners = new LinkedHashSet<ICommunicationErrorListener>();
         // create a connection listener for incoming commands
         m_connectionListener = new ConnectionListener();
         // create an error handler
@@ -1097,13 +1097,13 @@ public class Communicator {
         private static final int BACKLOG = 1;
 
         /** list with accepted connections */
-        private List m_connections; 
+        private List<Connection> m_connections; 
         
         /**
          * default constructor <br>
          */
         public DefaultConnectionManager() {
-            m_connections = new ArrayList(BACKLOG);
+            m_connections = new ArrayList<Connection>(BACKLOG);
         }
         
         /**
@@ -1157,7 +1157,9 @@ public class Communicator {
      * Call this when the TestExecution gets interrupted.
      */
     public void interruptAllTimeouts() {
-        Set keys = new HashMap(m_awaitingCommands).keySet();
+        Set<MessageIdentifier> keys = new HashMap
+            <MessageIdentifier, AwaitingCommand>(
+                    m_awaitingCommands).keySet();
         Iterator iter = keys.iterator();
         while (iter.hasNext()) {
             final Object key = iter.next();

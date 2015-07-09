@@ -57,7 +57,7 @@ public class DvdRemoveCategoryAction extends AbstractAction  {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) selectionPath
                     .getLastPathComponent();
             DvdDataObject data = (DvdDataObject) node.getUserObject();
-            List keys = new Vector();
+            List<String> keys = new Vector<String>();
             if (data.hasCategories()) {
                 keys.add("remove.category.confirmation.has.categories"); //$NON-NLS-1$                    
             }

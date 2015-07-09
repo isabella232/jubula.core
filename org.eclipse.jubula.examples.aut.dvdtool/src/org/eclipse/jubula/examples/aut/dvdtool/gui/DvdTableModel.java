@@ -158,14 +158,6 @@ public class DvdTableModel extends AbstractTableModel {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public Class getColumnClass(int column) {
-        return getRowCount() > 0 ? getValueAt(0, column).getClass()
-                : Object.class;
-    }
-
-    /**
      * returns the (international) category as string representation.
      * {@inheritDoc}
      */

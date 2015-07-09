@@ -21,11 +21,8 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Modifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Unit;
 import org.eclipse.jubula.toolkit.javafx.JavafxComponents;
-import org.eclipse.jubula.toolkit.javafx.components.Button;
-import org.eclipse.jubula.toolkit.javafx.components.ImageView;
 import org.eclipse.jubula.toolkit.javafx.config.JavaFXAUTConfiguration;
 import org.eclipse.jubula.tools.AUTIdentifier;
-import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,18 +53,12 @@ public class TowersOfHanoi {
     private AUT m_aut;
 
     /** global prepare */
-    @SuppressWarnings("unchecked")
     @BeforeClass
     public static void loadObjectMapping() throws Exception {
-        ComponentIdentifier<ImageView> area1_ = OM.Area1;
-        ComponentIdentifier<ImageView> area2_ = OM.Area2;
-        ComponentIdentifier<ImageView> area3_ = OM.Area3;
-        ComponentIdentifier<Button> resetButton_ = OM.ResetButton;
-
-        area1 = JavafxComponents.createImageView(area1_);
-        area2 = JavafxComponents.createImageView(area2_);
-        area3 = JavafxComponents.createImageView(area3_);
-        resetButton = JavafxComponents.createButton(resetButton_);
+        area1 = JavafxComponents.createImageView(OM.Area1);
+        area2 = JavafxComponents.createImageView(OM.Area2);
+        area3 = JavafxComponents.createImageView(OM.Area3);
+        resetButton = JavafxComponents.createButton(OM.ResetButton);
     }
 
     /** prepare */

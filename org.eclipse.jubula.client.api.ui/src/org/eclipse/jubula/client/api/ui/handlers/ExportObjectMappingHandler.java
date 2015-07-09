@@ -109,7 +109,7 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     /**
      * fills the map with the encoded object mapping associations
      * @param omEditor the object mapping editor
-     * @param aut the aut
+     * @param aut the AUT
      */
     private void fillMap(final ObjectMappingMultiPageEditor omEditor,
             IAUTMainPO aut) {
@@ -219,8 +219,8 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     }
 
     /**
-     * Adds an object mapping assoziation to the object map for export
-     * @param assoziation the object mapping assoziation
+     * Adds an object mapping association to the object map for export
+     * @param assoziation the object mapping association
      */
     private void addAssoziationToMap(IObjectMappingAssoziationPO assoziation)
             throws IOException {

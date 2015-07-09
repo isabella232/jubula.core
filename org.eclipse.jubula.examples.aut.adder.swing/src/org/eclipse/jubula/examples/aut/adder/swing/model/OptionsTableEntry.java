@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.aut.adder.swing.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Represents a row in the options table.
@@ -20,54 +18,40 @@ import java.util.List;
  * @created 29.03.2005
  */
 public class OptionsTableEntry {
-    /**
-     * The list of row columns.
-     */
-    private List m_columns = new ArrayList();
+    /** description */
+    private String m_description;
+    /** value*/
+    private Object m_value;
     /**
      * @param description The first column.
      * @param value The second column.
      */
     public OptionsTableEntry(String description, Object value) {
-        m_columns.add(description);
-        m_columns.add(value);
+        m_description = description;
+        m_value = value;
     }
     /**
      * @return The first column.
      */
     public String getDescription() {
-        return (String)m_columns.get(0);
+        return m_description;
     }
     /**
      * @param description The first column.
      */
     public void setDescription(String description) {
-        m_columns.set(0, description);
+        m_description = description;
     }
     /**
      * @return The second column.
      */
     public Object getValue() {
-        return m_columns.get(1);
+        return m_value;
     }
     /**
      * @param value The second column.
      */
     public void setValue(Object value) {
-        m_columns.set(1, value);
-    }
-    /**
-     * @param col The column index.
-     * @return The column value.
-     */
-    public Object getColumn(int col) {
-        return m_columns.get(col);
-    }
-    /**
-     * @param col The column index.
-     * @return The class of the column value.
-     */
-    public Class getColumnClass(int col) {
-        return m_columns.get(col).getClass();
+        m_value = value;
     }
 }

@@ -40,7 +40,7 @@ public class SendDirectoryResponseMessage extends Message {
     private String m_base;
 
     /** m_dirEntries */
-    private List m_dirEntries;
+    private List<String> m_dirEntries;
 
     /** m_error */
     private int m_error = OK;
@@ -49,13 +49,13 @@ public class SendDirectoryResponseMessage extends Message {
     private char m_separator = File.separatorChar;
 
     /** m_roots */
-    private List m_roots;
+    private List<String> m_roots;
 
     /** basic constructor */
     public SendDirectoryResponseMessage() {
         super();
-        m_dirEntries = new ArrayList(101);
-        m_roots = new ArrayList(26);
+        m_dirEntries = new ArrayList<String>(101);
+        m_roots = new ArrayList<String>(26);
     }
 
     /** {@inheritDoc} */

@@ -378,8 +378,8 @@ public class AutFrameBP {
     private void updateFont() {
         OptionsTableModel model = (OptionsTableModel) getAutFrame()
                 .getOptionsTable().getModel();
-        String name = (String) model.getRowEntry(0).getColumn(1);
-        String size = (String) model.getRowEntry(1).getColumn(1);
+        String name =  model.getRowEntry(0).getDescription();
+        String size =  model.getRowEntry(1).getDescription();
         Font font = new Font(name, Font.PLAIN, Integer.parseInt(size));
         getAutFrame().setFont(font);
     }

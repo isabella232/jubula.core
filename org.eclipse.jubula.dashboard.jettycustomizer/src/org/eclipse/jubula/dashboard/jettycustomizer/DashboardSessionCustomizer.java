@@ -27,9 +27,9 @@ import org.eclipse.jetty.server.session.SessionHandler;
  */
 public class DashboardSessionCustomizer extends JettyCustomizer {
 
-    @SuppressWarnings("rawtypes")
     @Override
-    public Object customizeContext(Object context, Dictionary settings) {
+    public Object customizeContext(Object context,
+            Dictionary<String, ?> settings) {
         Object result = super.customizeContext(context, settings);
 
         // disables cookies for session management
@@ -52,10 +52,9 @@ public class DashboardSessionCustomizer extends JettyCustomizer {
         return result;
     }
     
-    @SuppressWarnings("rawtypes")
     @Override
     public Object customizeHttpConnector(
-            Object connector, Dictionary settings) {
+            Object connector, Dictionary<String, ?> settings) {
         
         Object result = super.customizeHttpConnector(connector, settings);
 

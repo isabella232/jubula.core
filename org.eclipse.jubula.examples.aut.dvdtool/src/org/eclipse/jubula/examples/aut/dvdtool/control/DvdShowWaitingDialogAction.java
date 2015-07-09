@@ -88,12 +88,12 @@ public class DvdShowWaitingDialogAction extends AbstractAction {
                 } catch (InterruptedException ex) {
                     // allow interruption
                 } finally {
-                    dialog.hide();
+                    dialog.setVisible(false);
                 }
             }
         };
         
         waitThread.start();
-        dialog.show();
+        dialog.setVisible(true);
     }
 }

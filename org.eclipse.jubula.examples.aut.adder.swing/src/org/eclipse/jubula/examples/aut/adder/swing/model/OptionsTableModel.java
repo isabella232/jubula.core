@@ -25,7 +25,7 @@ public class OptionsTableModel extends AbstractTableModel {
     /**
      * The table rows.
      */
-    private List m_rows = new ArrayList();
+    private List<OptionsTableEntry> m_rows = new ArrayList<OptionsTableEntry>();
     /**
      * {@inheritDoc}
      */
@@ -42,7 +42,7 @@ public class OptionsTableModel extends AbstractTableModel {
      * {@inheritDoc}
      */
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return getRowEntry(rowIndex).getColumn(columnIndex);
+        return getRowEntry(rowIndex).getValue();
     }
     /**
      * {@inheritDoc}
@@ -75,12 +75,6 @@ public class OptionsTableModel extends AbstractTableModel {
     /**
      * {@inheritDoc}
      */
-    public Class getColumnClass(int columnIndex) {
-        return getRowEntry(0).getColumnClass(columnIndex);
-    }
-    /**
-     * {@inheritDoc}
-     */
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
@@ -96,6 +90,6 @@ public class OptionsTableModel extends AbstractTableModel {
      * @return The row entry.
      */
     public OptionsTableEntry getRowEntry(int row) {
-        return (OptionsTableEntry)m_rows.get(row);
+        return m_rows.get(row);
     }
 }

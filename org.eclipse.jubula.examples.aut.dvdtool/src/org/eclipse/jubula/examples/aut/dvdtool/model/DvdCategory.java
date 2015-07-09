@@ -11,8 +11,8 @@
 package org.eclipse.jubula.examples.aut.dvdtool.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  * This is the model class for a category.
@@ -28,10 +28,10 @@ public class DvdCategory implements Serializable {
     private DvdCategory m_parent = null;
     
     /** the children categories, a Vector, see insert() and remove() */
-    private List m_categories; 
+    private List<DvdCategory> m_categories; 
     
     /** the dvds of this category, a Vector, see insert() and remove() */
-    private List m_dvds;
+    private List<Dvd> m_dvds;
     
     /** the enable state of the data object */
     private boolean m_enabled = true;
@@ -47,11 +47,11 @@ public class DvdCategory implements Serializable {
     }
     
     /**
-     * private method for initialisation
+     * private method for initialization
      */
     private void init() {
-        m_categories = new Vector();
-        m_dvds = new Vector();
+        m_categories = new ArrayList<DvdCategory>();
+        m_dvds = new ArrayList<Dvd>();
     }
     
     /**
@@ -94,11 +94,7 @@ public class DvdCategory implements Serializable {
         }
 
         newChild.setParent(this);
-        try {
-            ((Vector) m_categories).insertElementAt(newChild, childIndex);
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
-            ((Vector) m_categories).add(newChild);
-        }
+        m_categories.add(childIndex, newChild);
     }
 
     /**
@@ -119,13 +115,13 @@ public class DvdCategory implements Serializable {
         
         if (m_categories.contains(child)) {
             child.setParent(null);
-            ((Vector)m_categories).remove(child);
+            m_categories.remove(child);
         }
     }
-    
+
     /**
-     * removes <code>dvd</code> from this category, id <code>dvd</code> does
-     * not contains to this category, no changes are made.
+     * removes <code>dvd</code> from this category, id <code>dvd</code> does not
+     * contains to this category, no changes are made.
      * 
      * @param dvd
      *            the dvd to remove, must not be null
@@ -136,13 +132,13 @@ public class DvdCategory implements Serializable {
         if (dvd == null) {
             throw new IllegalArgumentException("dvd must not be null"); //$NON-NLS-1$
         }
-        
+
         if (m_dvds.contains(dvd)) {
             dvd.setCategory(null);
-            ((Vector)m_dvds).remove(dvd);
+            m_dvds.remove(dvd);
         }
     }
-    
+
     /**
      * @return Returns the children.
      */
@@ -183,11 +179,7 @@ public class DvdCategory implements Serializable {
         }
         
         dvd.setCategory(this);
-        try {
-            ((Vector) m_dvds).insertElementAt(dvd, index);
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
-            ((Vector) m_dvds).add(dvd);
-        }
+        m_dvds.add(index, dvd);
     }
     
     

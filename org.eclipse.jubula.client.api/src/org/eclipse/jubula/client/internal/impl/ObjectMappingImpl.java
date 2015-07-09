@@ -102,7 +102,7 @@ public class ObjectMappingImpl implements ObjectMapping {
                     return (ComponentIdentifier<T>) decodedObject;
                 }
                 throw new LoadResourceException("The decoded object is " //$NON-NLS-1$
-                        + "not of type 'IComponentIdentfier'."); //$NON-NLS-1$
+                        + "not of type 'org.eclipse.jubula.tools.ComponentIdentifier<T>'."); //$NON-NLS-1$
             }
         } catch (IOException e) {
             throw new LoadResourceException(
