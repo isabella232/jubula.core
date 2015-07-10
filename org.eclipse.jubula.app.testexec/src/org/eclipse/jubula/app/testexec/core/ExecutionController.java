@@ -62,6 +62,7 @@ import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -69,6 +70,7 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.NodeNameUtil;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -419,7 +421,7 @@ public class ExecutionController implements IAUTServerEventListener,
                         m_job.getLanguage(),
                         m_startedAutId != null ? m_startedAutId : m_job
                                 .getAutId(), m_job.isAutoScreenshot(), null,
-                        m_job.getNoRunOptMode());
+                        m_job.getNoRunOptMode(), null);
             }
         }
     }
@@ -938,21 +940,25 @@ public class ExecutionController implements IAUTServerEventListener,
          */
         public void stackIncremented(INodePO node) {
             String nodeType = StringConstants.EMPTY;
+            String name = String.valueOf(node.getName());
             if (node instanceof IEventExecTestCasePO) {
                 IEventExecTestCasePO evPo = (IEventExecTestCasePO)node;
                 if (evPo.getReentryProp() != ReentryProperty.RETRY) {
                     setNoErrorWhileExecution(false);
                 }
                 nodeType = Messages.EventHandler;
-            } else if (node instanceof ITestSuitePO) {
+            } else if (node instanceof IRefTestSuitePO) {
                 nodeType = Messages.TestSuite;
+                name = NodeNameUtil.getText((IRefTestSuitePO)node);
             } else if (node instanceof IExecTestCasePO) {
                 nodeType = Messages.TestCase;
+                name = NodeNameUtil.getText((IExecTestCasePO)node, false);
             }
+            
             StringBuilder sb = new StringBuilder(nodeType);
             sb.append(StringConstants.COLON);
             sb.append(StringConstants.SPACE);
-            sb.append(String.valueOf(node.getName()));
+            sb.append(name);
             sysOut(sb.toString());
         }
 

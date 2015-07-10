@@ -139,10 +139,13 @@ public interface IClientTest {
      *            a map of externally set variables; may be <code>null</code>
      * @param noRunOptMode
      *            The value of no-run option argument if no-run mode was specified, null otherwise
+     * @param jobDesc
+     *            The displayed TS name or null for using of execTestSuite name.
      */
     public abstract void startTestSuite(ITestSuitePO execTestSuite,
         Locale locale, AutIdentifier autId, boolean autoScreenshot,
-        Map<String, String> externalVars, String noRunOptMode);
+        Map<String, String> externalVars, String noRunOptMode,
+        String jobDesc);
 
     /**
      * Starts the given Test Job.

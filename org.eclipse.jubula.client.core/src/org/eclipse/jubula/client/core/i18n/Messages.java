@@ -310,7 +310,6 @@ public class Messages extends NLS {
     public static String StartingObjectMapping;
     public static String StartingRecordModus;
     public static String StartingTransaction;
-    public static String PreparingTestSuiteExecution;
     public static String StartingTestSuite;
     public static String StartingTestSuite_buildingTestExecutionTree;
     public static String StartingTestSuite_resolvingTestStepsToExecute;
@@ -373,6 +372,7 @@ public class Messages extends NLS {
     public static String UnknownObject;
     public static String UnknownSourceType;
     public static String UnknownState;
+    public static String UnnamedNode;
     public static String UnsupportedINodePOSubclass;
     public static String UnsupportedReentryProperty;
     public static String UpdateOfTimestampFailed;

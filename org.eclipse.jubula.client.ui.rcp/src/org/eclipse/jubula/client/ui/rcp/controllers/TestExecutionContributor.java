@@ -751,7 +751,7 @@ public class TestExecutionContributor
         TimeUtil.delay(TimingConstantsClient.START_TEST_SUITE_DELAY);
         getClientTest().startTestSuite(ts, WorkingLanguageBP.getInstance()
             .getWorkingLanguage(), autId, autoScreenshot, null,
-            TestExecutionConstants.RunSteps.NORMAL.getStepValue());
+            TestExecutionConstants.RunSteps.NORMAL.getStepValue(), null);
     }
 
     /**

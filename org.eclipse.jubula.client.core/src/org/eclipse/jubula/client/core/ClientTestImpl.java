@@ -80,6 +80,7 @@ import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.client.core.utils.NodeNameUtil;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
@@ -514,9 +515,16 @@ public class ClientTestImpl implements IClientTest {
             final Locale locale, final AutIdentifier autId,
             final boolean autoScreenshot, 
             final Map<String, String> externalVars,
-            final String noRunOptMode) {
-        final String jobName = NLS.bind(Messages.StartWorkingWithTestSuite,
-                execTestSuite.getName());
+            final String noRunOptMode,
+            String jobDesc) {
+        final String jobName;
+        if (jobDesc == null) {
+            jobName = NLS.bind(Messages.StartWorkingWithTestSuite,
+                    execTestSuite.getName());
+        } else {
+            jobName = NLS.bind(Messages.StartWorkingWithTestSuite,
+                    jobDesc);
+        }
         Job runningTestSuite = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName,
@@ -596,7 +604,8 @@ public class ClientTestImpl implements IClientTest {
                 AutIdentifier autId = new AutIdentifier(refTestSuite
                         .getTestSuiteAutID());
                 startTestSuite(refTestSuite.getTestSuite(), locale, autId,
-                        autoScreenshot, null, noRunOptMode);
+                        autoScreenshot, null, noRunOptMode, 
+                        NodeNameUtil.getText(refTestSuite));
                 while (!isTestExecutionFinished.get()) {
                     TimeUtil.delay(500);
                 }
