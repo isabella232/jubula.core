@@ -163,7 +163,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
                     .getParentProjectId(), GeneralStorage.getInstance().
                     getMasterSession());
         }
-        monitor.beginTask("", workAmount);
+        monitor.beginTask("", workAmount); //$NON-NLS-1$
         monitor.subTask(analyzeName);
 
         CountElementOperation c = new CountElementOperation(monitor);
@@ -191,7 +191,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
     private void traverse(CountElementOperation count, Object obj,
             String objContType) {
 
-        if (obj instanceof INodePO && objContType.equals("IExecObjContPO")) {
+        if (obj instanceof INodePO && objContType.equals("IExecObjContPO")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             
             TreeTraverser tt = new TreeTraverser(root, count, true, true) {
@@ -204,7 +204,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
             };
             tt.traverse(true);
         } else if (obj instanceof INodePO
-                && objContType.equals("ISpecObjContPO")) {
+                && objContType.equals("ISpecObjContPO")) { //$NON-NLS-1$
             
             final INodePO root = (INodePO) obj;
             
@@ -219,7 +219,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
             tt.traverse(true);
         }
         
-        if (obj instanceof INodePO && objContType.equals("project")) {
+        if (obj instanceof INodePO && objContType.equals("project")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             
             TreeTraverser tt = new TreeTraverser(root, count, true, true) {
@@ -232,7 +232,7 @@ public class NumericalProjectElementCounter implements IAnalyze {
             };
             tt.traverse(true);
         }
-        if (obj instanceof INodePO && objContType.equals("")) {
+        if (obj instanceof INodePO && objContType.equals("")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             
             TreeTraverser tt = new TreeTraverser(root, count, true, true) {

@@ -63,7 +63,7 @@ public class AutFrame {
      * Manages the Layout of the AUT Frame
      */
     private void initialize() {
-        m_stage.setTitle("Adder");
+        m_stage.setTitle("Adder"); //$NON-NLS-1$
         m_scene = new Scene(m_borderPane, 300, 250);
 
         m_borderPane.setCenter(m_calcPanel);

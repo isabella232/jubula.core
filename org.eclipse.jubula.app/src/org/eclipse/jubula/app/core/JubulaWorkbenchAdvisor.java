@@ -89,51 +89,51 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
         configurer.setSaveAndRestore(true);
         
         // To get the icons for projects correctly registered
-        final String iconsPath = "icons/full/";
-        final String pathObject = iconsPath + "obj16/";
-        final String problemsViewPath = iconsPath + "etool16/";
-        final String elclPath = iconsPath + "elcl16/";
-        final String dlclPath = iconsPath + "dlcl16/";
+        final String iconsPath = "icons/full/"; //$NON-NLS-1$
+        final String pathObject = iconsPath + "obj16/"; //$NON-NLS-1$
+        final String problemsViewPath = iconsPath + "etool16/"; //$NON-NLS-1$
+        final String elclPath = iconsPath + "elcl16/"; //$NON-NLS-1$
+        final String dlclPath = iconsPath + "dlcl16/"; //$NON-NLS-1$
         final String wizbanPath = iconsPath + "wizban/"; //Wizard icons //$NON-NLS-1$
         
         Bundle ideBundle = Platform.getBundle(IDEWorkbenchPlugin.IDE_WORKBENCH);
         declareWorkbenchImage(configurer, ideBundle, 
                 IDE.SharedImages.IMG_OBJ_PROJECT, 
-                pathObject + "prj_obj.gif", true);
+                pathObject + "prj_obj.gif", true); //$NON-NLS-1$
         declareWorkbenchImage(configurer, ideBundle, 
                 IDE.SharedImages.IMG_OBJ_PROJECT_CLOSED,
-                pathObject + "cprj_obj.gif", true);
+                pathObject + "cprj_obj.gif", true); //$NON-NLS-1$
 
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_ETOOL_PROBLEM_CATEGORY,
-                problemsViewPath + "problem_category.gif",
+                problemsViewPath + "problem_category.gif", //$NON-NLS-1$
                 true);
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_OBJS_ERROR_PATH,
-                pathObject + "error_tsk.gif",
+                pathObject + "error_tsk.gif", //$NON-NLS-1$
                 true);
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_OBJS_WARNING_PATH,
-                pathObject + "warn_tsk.gif",
+                pathObject + "warn_tsk.gif", //$NON-NLS-1$
                 true);
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_OBJS_INFO_PATH,
-                pathObject + "info_tsk.gif",
+                pathObject + "info_tsk.gif", //$NON-NLS-1$
                 true);
 
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_ELCL_QUICK_FIX_ENABLED,
-                elclPath + "smartmode_co.gif",
+                elclPath + "smartmode_co.gif", //$NON-NLS-1$
                 true);
         
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_DLCL_QUICK_FIX_DISABLED,
-                dlclPath + "smartmode_co.gif",
+                dlclPath + "smartmode_co.gif", //$NON-NLS-1$
                 true);
         
         declareWorkbenchImage(configurer, ideBundle,
                 IDEInternalWorkbenchImages.IMG_DLGBAN_QUICKFIX_DLG,
-                wizbanPath + "quick_fix.png", 
+                wizbanPath + "quick_fix.png",  //$NON-NLS-1$
                 true);
         
         declareWorkbenchImage(configurer, ideBundle,

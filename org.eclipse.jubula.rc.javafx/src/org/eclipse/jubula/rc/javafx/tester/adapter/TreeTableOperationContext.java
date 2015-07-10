@@ -68,7 +68,7 @@ public class TreeTableOperationContext extends
         super(queuer, robot, treeTable);
         if (treeTable.getRoot() == null) {
             throw new StepExecutionException(
-                    "Tree Table is empty.",
+                    "Tree Table is empty.", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
     }

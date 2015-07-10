@@ -807,28 +807,28 @@ public class ProjectPM extends PersistenceManager
         findReusedProjects(projectIds,
                 key.getProjectProperties().getUsedProjects());
 
-        preloadDataForClass(s, projectIds, "CompNamesPairPO");
-        preloadDataForClass(s, projectIds, "CompIdentifierPO");
-        preloadDataForClass(s, projectIds, "AUTConfigPO");
-        preloadDataForClass(s, projectIds, "AUTMainPO");
-        preloadDataForClass(s, projectIds, "ReusedProjectPO");
-        preloadDataForClass(s, projectIds, "UsedToolkitPO");
-        preloadDataForClass(s, projectIds, "AUTContPO");
-        preloadDataForClass(s, projectIds, "ParamDescriptionPO");
+        preloadDataForClass(s, projectIds, "CompNamesPairPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "CompIdentifierPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "AUTConfigPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "AUTMainPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "ReusedProjectPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "UsedToolkitPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "AUTContPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "ParamDescriptionPO"); //$NON-NLS-1$
 
-        preloadDataForClass(s, projectIds, "TDManagerPO");
+        preloadDataForClass(s, projectIds, "TDManagerPO"); //$NON-NLS-1$
         // Special pre-load due to http://eclip.se/432394
-        preloadDistinctDataForClass(s, projectIds, "TestDataCubePO");
+        preloadDistinctDataForClass(s, projectIds, "TestDataCubePO"); //$NON-NLS-1$
 
-        preloadDataForClass(s, projectIds, "CapPO");
+        preloadDataForClass(s, projectIds, "CapPO"); //$NON-NLS-1$
         List<ISpecTestCasePO> testCases =
-                preloadDataForClass(s, projectIds, "SpecTestCasePO");
+                preloadDataForClass(s, projectIds, "SpecTestCasePO"); //$NON-NLS-1$
         preloadDataForClass(
-                s, projectIds, "EventExecTestCasePO");
-        preloadDataForClass(s, projectIds, "TestSuitePO");
+                s, projectIds, "EventExecTestCasePO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "TestSuitePO"); //$NON-NLS-1$
         List<IExecTestCasePO> testCaseRefs =
-                preloadDataForClass(s, projectIds, "ExecTestCasePO");
-        preloadDataForClass(s, projectIds, "CategoryPO");
+                preloadDataForClass(s, projectIds, "ExecTestCasePO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "CategoryPO"); //$NON-NLS-1$
 
         // for performance reasons, we prefill the cachedSpecTestCase
         // in ExecTestCasePOs

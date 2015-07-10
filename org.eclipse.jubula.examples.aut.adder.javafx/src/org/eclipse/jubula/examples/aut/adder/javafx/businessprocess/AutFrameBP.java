@@ -87,12 +87,12 @@ public class AutFrameBP {
             int value2 = Integer.parseInt(m_calcPanel.getAddend2());
 
             if (value1 == 17 && value2 == 4) {
-                m_calcPanel.setResult("jackpot");
+                m_calcPanel.setResult("jackpot"); //$NON-NLS-1$
             } else {
                 m_calcPanel.setResult(String.valueOf(value1 + value2));
             }
         } catch (NumberFormatException nfe) {
-            m_calcPanel.setResult("#error");
+            m_calcPanel.setResult("#error"); //$NON-NLS-1$
         }
     }
 

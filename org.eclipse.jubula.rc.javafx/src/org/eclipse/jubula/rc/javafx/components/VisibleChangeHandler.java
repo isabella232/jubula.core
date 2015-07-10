@@ -38,7 +38,7 @@ public enum VisibleChangeHandler implements ChangeListener<Boolean> {
             Boolean oldValue, Boolean newValue) {
         if (!(observable instanceof BooleanProperty)) {
             // this should not happen
-            log.error("The observed visible property is not a BooleanProperty");
+            log.error("The observed visible property is not a BooleanProperty"); //$NON-NLS-1$
             return;
         }
         if (!newValue) {

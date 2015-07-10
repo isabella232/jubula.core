@@ -174,9 +174,9 @@ public class Ratio implements IAnalyze {
                         cap.getComponentType());
                 String type = StringConstants.EMPTY;
 
-                if (comp.getToolkitDesriptor().getName().equals("abstract")
+                if (comp.getToolkitDesriptor().getName().equals("abstract") //$NON-NLS-1$
                         || comp.getToolkitDesriptor().getName()
-                                .equals("concrete")
+                                .equals("concrete") //$NON-NLS-1$
                         || comp.getToolkitDesriptor().getName()
                                 .equals(StringConstants.EMPTY)) {
                     type = Messages.General;
@@ -290,9 +290,9 @@ public class Ratio implements IAnalyze {
             double curr = Double.parseDouble(Integer.toString(e.getValue())); 
             double resNF = curr / d;
             
-            DecimalFormat df = new DecimalFormat("0.00");
+            DecimalFormat df = new DecimalFormat("0.00"); //$NON-NLS-1$
             
-            String resu = df.format(resNF * 100) + "%";
+            String resu = df.format(resNF * 100) + "%"; //$NON-NLS-1$
             
             result.put(e.getKey(), resu);
         }
@@ -343,7 +343,7 @@ public class Ratio implements IAnalyze {
             tt.traverse(true);
         }
         
-        if (obj instanceof INodePO && objContType.equals("project")) {
+        if (obj instanceof INodePO && objContType.equals("project")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             
             TreeTraverser tt = new TreeTraverser(root, count, true, true) {

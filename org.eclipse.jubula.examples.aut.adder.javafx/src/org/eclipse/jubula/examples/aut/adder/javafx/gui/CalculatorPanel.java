@@ -65,29 +65,29 @@ public class CalculatorPanel extends GridPane {
      * Constructor that Initializes the CalculatorPanel
      */
     public CalculatorPanel() {
-        m_value1 = new Label("value1");
-        m_value1.setId("Label value1");
+        m_value1 = new Label("value1"); //$NON-NLS-1$
+        m_value1.setId("Label value1"); //$NON-NLS-1$
 
-        m_value2 = new Label("value2");
-        m_value2.setId("Label value2");
+        m_value2 = new Label("value2"); //$NON-NLS-1$
+        m_value2.setId("Label value2"); //$NON-NLS-1$
 
-        m_opSymbol = new Label("+");
-        m_opSymbol.setId("opSymbol");
+        m_opSymbol = new Label("+"); //$NON-NLS-1$
+        m_opSymbol.setId("opSymbol"); //$NON-NLS-1$
 
-        m_result = new Label("result");
-        m_result.setId("Label result");
+        m_result = new Label("result"); //$NON-NLS-1$
+        m_result.setId("Label result"); //$NON-NLS-1$
 
         m_fieldValue1 = new TextField();
-        m_fieldValue1.setId("value1");
+        m_fieldValue1.setId("value1"); //$NON-NLS-1$
 
         m_fieldValue2 = new TextField();
-        m_fieldValue2.setId("value2");
+        m_fieldValue2.setId("value2"); //$NON-NLS-1$
 
         m_fieldResult = new TextField();
-        m_fieldResult.setId("result");
+        m_fieldResult.setId("result"); //$NON-NLS-1$
 
-        m_buttonResult = new Button("=");
-        m_buttonResult.setId("equal");
+        m_buttonResult = new Button("="); //$NON-NLS-1$
+        m_buttonResult.setId("equal"); //$NON-NLS-1$
 
         initialize();
     }
@@ -165,8 +165,8 @@ public class CalculatorPanel extends GridPane {
      * Deletes the Text in all TextFields
      */
     public void reset() {
-        m_fieldResult.setText("");
-        m_fieldValue1.setText("");
-        m_fieldValue2.setText("");
+        m_fieldResult.setText(""); //$NON-NLS-1$
+        m_fieldValue1.setText(""); //$NON-NLS-1$
+        m_fieldValue2.setText(""); //$NON-NLS-1$
     }
 }

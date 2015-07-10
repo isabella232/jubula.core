@@ -99,7 +99,7 @@ public class RcpAutLaunchConfigurationTab extends AutLaunchConfigurationTab {
                 org.eclipse.jubula.client.ui.rcp.i18n.Messages.
                 AUTPropertiesDialogGenerateNames);
         ControlDecorator.createInfo(label,
-                I18n.getString("AUTPropertiesDialog.generateNamesDescription"),
+                I18n.getString("AUTPropertiesDialog.generateNamesDescription"), //$NON-NLS-1$
                 false);
         m_generateNamesFlag = new Button(additionalComposite, SWT.CHECK);
         

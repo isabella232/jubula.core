@@ -224,7 +224,7 @@ public class ChainRenderer implements IResultRendererUI {
             if (parentElement instanceof String) {
 
                 String parent = (String) parentElement;
-                String length = parent.replace(Messages.Chainlength, "");
+                String length = parent.replace(Messages.Chainlength, ""); //$NON-NLS-1$
                 ISpecTestCasePO[] res = new ISpecTestCasePO[getChainModel()
                         .getParents(Integer.parseInt(length)).length];
 
@@ -270,7 +270,7 @@ public class ChainRenderer implements IResultRendererUI {
         public Object getParent(Object element) {
 
             for (List<String> list : getChainModel().getResult()) {
-                String prev = "";
+                String prev = ""; //$NON-NLS-1$
                 for (Iterator<String> it = list.iterator(); it.hasNext();) {
                     String guid = it.next();
                     if (prev.equals(guid)) {
@@ -281,7 +281,7 @@ public class ChainRenderer implements IResultRendererUI {
                         String[] res = new String[1];
                         res[0] = node.getName();
                         return res;
-                    } else if (prev.equals("")) {
+                    } else if (prev.equals("")) { //$NON-NLS-1$
                         String[] res = new String[1];
                         res[0] = Messages.Chainlength
                                 + Integer.toString(list.size());

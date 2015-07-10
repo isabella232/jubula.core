@@ -110,10 +110,10 @@ public class Query extends AbstractQuery {
     public String getLabel() {
         if (getAnalyzeRun().getAnalyzeRunList().size() == 1) {
             // Add the actual TimeStamp to the AnalyzeName
-            return  getTimestamp() + ": " 
+            return  getTimestamp() + ": "  //$NON-NLS-1$
                 + getAnalyzeRun().getAnalyzeRunList().get(0).getName();
         }
-        return "";
+        return ""; //$NON-NLS-1$
     }
     /**
      * {@inheritDoc}

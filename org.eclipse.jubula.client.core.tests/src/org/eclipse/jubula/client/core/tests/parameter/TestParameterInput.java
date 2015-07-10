@@ -53,13 +53,13 @@ public class TestParameterInput {
             ParsedParameter param = 
                     new ParsedParameter(true, null, null);
             ast.apply(param);
-            assertTrue(m_inputString + " succeeded unexpectedly.", m_inputIsValid);
+            assertTrue(m_inputString + " succeeded unexpectedly.", m_inputIsValid); //$NON-NLS-1$
         } catch (ParserException e) {
-            assertFalse(m_inputString + " failed unexpectedly.", m_inputIsValid);
+            assertFalse(m_inputString + " failed unexpectedly.", m_inputIsValid); //$NON-NLS-1$
         } catch (LexerException e) {
-            assertFalse(m_inputString + " failed unexpectedly.", m_inputIsValid);
+            assertFalse(m_inputString + " failed unexpectedly.", m_inputIsValid); //$NON-NLS-1$
         } catch (SemanticParsingException spe) {
-            assertFalse(m_inputString + " failed unexpectedly.", m_inputIsValid);
+            assertFalse(m_inputString + " failed unexpectedly.", m_inputIsValid); //$NON-NLS-1$
         }
     }
 
@@ -74,33 +74,33 @@ public class TestParameterInput {
     @Parameters
     public static Collection<Object[]> createInputStrings() {
         return Arrays.asList(new Object[][] {
-                {"", true},
-                {"abc123", true},
-                {"=PARAMETER", true},
-                {"={PARAMETER}", true},
-                {"=1", true},
-                {"={1}", true},
-                {"?abc()", true},
-                {"?abc(arg)", true},
-                {"?abc(arg1, arg2)", true},
-                {"?abc(?abc(arg1, arg2), ={PARAM_ARG}, \\=prefix${VARIABLE_ARG}\\$\\?suffix)", true},
+                {"", true}, //$NON-NLS-1$
+                {"abc123", true}, //$NON-NLS-1$
+                {"=PARAMETER", true}, //$NON-NLS-1$
+                {"={PARAMETER}", true}, //$NON-NLS-1$
+                {"=1", true}, //$NON-NLS-1$
+                {"={1}", true}, //$NON-NLS-1$
+                {"?abc()", true}, //$NON-NLS-1$
+                {"?abc(arg)", true}, //$NON-NLS-1$
+                {"?abc(arg1, arg2)", true}, //$NON-NLS-1$
+                {"?abc(?abc(arg1, arg2), ={PARAM_ARG}, \\=prefix${VARIABLE_ARG}\\$\\?suffix)", true}, //$NON-NLS-1$
                 
-                {"=", false},       // missing parameter name
-                {"={}", false},       // missing parameter name
-                {"$", false},       // missing variable name
-                {"${}", false},       // missing variable name
-                {"'", false},       // missing closing single quote
-                {"?", false},       // missing function body
-                {"?(", false},       // missing closing parentheses
-                {"?)", false},       // missing opening parentheses
-                {"?()", false},     // missing function name
-                {"?a", false},       // missing function argument list
-                {"?=", false},       // invalid (parameter symbol) after function symbol
-                {"??", false},       // invalid (function symbol) after function symbol
-                {"?$", false},       // invalid (variable symbol) after function symbol
-                {"?''", false},       // invalid (single quote) after function symbol
-                {"?abc(?abc(arg1, arg2))", true},
-                {"?abc(?abc(arg1, arg2), ={PARAM_ARG}, prefix${VARIABLE_ARG}suffix)", true},
+                {"=", false},       // missing parameter name //$NON-NLS-1$
+                {"={}", false},       // missing parameter name //$NON-NLS-1$
+                {"$", false},       // missing variable name //$NON-NLS-1$
+                {"${}", false},       // missing variable name //$NON-NLS-1$
+                {"'", false},       // missing closing single quote //$NON-NLS-1$
+                {"?", false},       // missing function body //$NON-NLS-1$
+                {"?(", false},       // missing closing parentheses //$NON-NLS-1$
+                {"?)", false},       // missing opening parentheses //$NON-NLS-1$
+                {"?()", false},     // missing function name //$NON-NLS-1$
+                {"?a", false},       // missing function argument list //$NON-NLS-1$
+                {"?=", false},       // invalid (parameter symbol) after function symbol //$NON-NLS-1$
+                {"??", false},       // invalid (function symbol) after function symbol //$NON-NLS-1$
+                {"?$", false},       // invalid (variable symbol) after function symbol //$NON-NLS-1$
+                {"?''", false},       // invalid (single quote) after function symbol //$NON-NLS-1$
+                {"?abc(?abc(arg1, arg2))", true}, //$NON-NLS-1$
+                {"?abc(?abc(arg1, arg2), ={PARAM_ARG}, prefix${VARIABLE_ARG}suffix)", true}, //$NON-NLS-1$
                 });
     }
 }

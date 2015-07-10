@@ -504,7 +504,7 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
         boolean isInside = true;
         if (graphicsComponent instanceof Node) {
             isInside = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "CheckIfContains", new Callable<Boolean>() {
+                "CheckIfContains", new Callable<Boolean>() { //$NON-NLS-1$
                     @Override
                     public Boolean call() throws Exception {
                         return NodeBounds.checkIfContains(new Point2D(

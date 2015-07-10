@@ -65,9 +65,9 @@ public class ShowWhereUsedComponentNameQuery
         sb.append(StringConstants.COLON);
         sb.append(StringConstants.SPACE);
         sb.append(Messages.UIJobSearchingCompNames);
-        sb.append(" \"");
+        sb.append(" \""); //$NON-NLS-1$
         sb.append(getCompName().getName());
-        sb.append("\"");
+        sb.append("\""); //$NON-NLS-1$
         return sb.toString();
     }
 

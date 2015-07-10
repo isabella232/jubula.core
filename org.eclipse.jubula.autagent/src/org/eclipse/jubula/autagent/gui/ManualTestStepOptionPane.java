@@ -148,19 +148,19 @@ public class ManualTestStepOptionPane extends JOptionPane {
             String expectedBehavior, int timeout) {
         if (GraphicsEnvironment.isHeadless()) {
             return new ManualTestStepResult(
-                    "Test step has been skipped due to headless running mode",
+                    "Test step has been skipped due to headless running mode", //$NON-NLS-1$
                     false);
         }
         StringBuilder message = new StringBuilder();
-        message.append("Manual action to perform: ");
+        message.append("Manual action to perform: "); //$NON-NLS-1$
         message.append(LINE_BREAK);
         message.append(actionToPerform);
         message.append(LINE_BREAK).append(LINE_BREAK);
-        message.append("Expected Behavior: ");
+        message.append("Expected Behavior: "); //$NON-NLS-1$
         message.append(LINE_BREAK);
         message.append(expectedBehavior);
         message.append(LINE_BREAK).append(LINE_BREAK);
-        message.append("Comment: ");
+        message.append("Comment: "); //$NON-NLS-1$
 
         return showManualTestStepDialog(message, timeout);
     }

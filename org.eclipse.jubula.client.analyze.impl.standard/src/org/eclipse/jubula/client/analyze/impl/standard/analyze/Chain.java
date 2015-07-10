@@ -324,7 +324,7 @@ public class Chain implements IAnalyze {
     private void traverse(Object obj, NodeOperation nodeOp, 
             String objContType) {
 
-        if (obj instanceof INodePO && objContType.equals("IExecObjContPO")) {
+        if (obj instanceof INodePO && objContType.equals("IExecObjContPO")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             TreeTraverser tt = new TreeTraverser(root, nodeOp, true, true) {
                 @Override
@@ -336,7 +336,7 @@ public class Chain implements IAnalyze {
             };
             tt.traverse(true);
         } else if (obj instanceof INodePO
-                && objContType.equals("ISpecObjContPO")) {
+                && objContType.equals("ISpecObjContPO")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             TreeTraverser tt = new TreeTraverser(root, nodeOp, true, true) {
                 @Override
@@ -347,7 +347,7 @@ public class Chain implements IAnalyze {
                 }
             };
             tt.traverse(true);
-        } else if (obj instanceof INodePO && objContType.equals("project")) {
+        } else if (obj instanceof INodePO && objContType.equals("project")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             TreeTraverser tt = new TreeTraverser(root, nodeOp, true, true) {
                 @Override
@@ -358,7 +358,7 @@ public class Chain implements IAnalyze {
                 }
             };
             tt.traverse(true);
-        } else if (obj instanceof INodePO && objContType.equals("")) {
+        } else if (obj instanceof INodePO && objContType.equals("")) { //$NON-NLS-1$
             final INodePO root = (INodePO) obj;
             TreeTraverser tt = new TreeTraverser(root, nodeOp, true, true) {
                 @Override
@@ -390,7 +390,7 @@ public class Chain implements IAnalyze {
         for (ISpecTestCasePO sp : nodeOp.getSingleUsedSpecTCs()) {
             counter++;
             isParent = true;
-            monitor.subTask(Messages.PossibleChildren + " " + counter + "/"
+            monitor.subTask(Messages.PossibleChildren + " " + counter + "/" //$NON-NLS-1$ //$NON-NLS-2$
                     + nodeOp.getSingleUsedSpecTCs().size());
             for (ISpecTestCasePO pp : nodeOp.getSingleUsedSpecTCs()) {
                 if (pp != null && pp.getUnmodifiableNodeList().size() == 1) {

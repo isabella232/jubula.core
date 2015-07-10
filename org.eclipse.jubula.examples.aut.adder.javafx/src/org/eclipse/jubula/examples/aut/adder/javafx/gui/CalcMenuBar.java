@@ -52,12 +52,12 @@ public class CalcMenuBar extends MenuBar {
      * Constructor that Initializes the MenuBar
      */
     public CalcMenuBar() {
-        this.setId("menuBar");
-        m_file = new Menu("File");
-        m_reset = new MenuItem("reset");
-        m_quit = new MenuItem("quit");
-        m_help = new Menu("Help");
-        m_about = new MenuItem("about");
+        this.setId("menuBar"); //$NON-NLS-1$
+        m_file = new Menu("File"); //$NON-NLS-1$
+        m_reset = new MenuItem("reset"); //$NON-NLS-1$
+        m_quit = new MenuItem("quit"); //$NON-NLS-1$
+        m_help = new Menu("Help"); //$NON-NLS-1$
+        m_about = new MenuItem("about"); //$NON-NLS-1$
         initialize();
     }
 
@@ -65,7 +65,7 @@ public class CalcMenuBar extends MenuBar {
      * Manages the Layout of the MenuBar
      */
     private void initialize() {
-        m_reset.setAccelerator(KeyCombination.keyCombination("Ctrl+R"));
+        m_reset.setAccelerator(KeyCombination.keyCombination("Ctrl+R")); //$NON-NLS-1$
         this.getMenus().addAll(m_file, m_help);
 
         m_file.getItems().addAll(m_reset, m_quit);

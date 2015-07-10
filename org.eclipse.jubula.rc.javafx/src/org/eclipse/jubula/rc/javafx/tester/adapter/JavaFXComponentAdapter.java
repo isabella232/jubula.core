@@ -238,9 +238,8 @@ public class JavaFXComponentAdapter<T extends Node> extends
                                                     POPUP_NOT_FOUND));
                         } else if (result.size() > 1) {
                             throw new StepExecutionException("Multiple Context Menus were found", //$NON-NLS-1$
-                                    EventFactory
-                                            .createActionError(TestErrorEvent.
-                                            UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR)); //$NON-NLS-1$
+                                EventFactory.createActionError(TestErrorEvent.
+                                    UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR));
                         }
                         return menuTester;
                     }
@@ -321,7 +320,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
         Point2D mousePos = new Point2D(currentMousePosition.x,
                 currentMousePosition.y);
         boolean widgetContainsCurrentPos = 
-                EventThreadQueuerJavaFXImpl.invokeAndWait("showPopup",
+                EventThreadQueuerJavaFXImpl.invokeAndWait("showPopup", //$NON-NLS-1$
                         new Callable<Boolean>() {
                             @Override
                             public Boolean call() throws Exception {
@@ -331,7 +330,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
                         });
         if (widgetContainsCurrentPos) {
             Point2D local = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "showPopup", new Callable<Point2D>() {
+                "showPopup", new Callable<Point2D>() { //$NON-NLS-1$
                     @Override
                     public Point2D call() throws Exception {
                         return getRealComponent().screenToLocal(mousePos);

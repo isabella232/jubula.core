@@ -38,7 +38,7 @@ public class ToolBarAdapter extends JavaFXComponentAdapter<ToolBar> implements
 
     @Override
     public List<Node> getContent() {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent", //$NON-NLS-1$
                 new Callable<List<Node>>() {
 
                     @Override

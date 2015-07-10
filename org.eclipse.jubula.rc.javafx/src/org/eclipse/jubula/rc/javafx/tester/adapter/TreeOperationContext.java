@@ -65,7 +65,7 @@ public class TreeOperationContext
         super(queuer, robot, tree);
         if (tree.getRoot() == null) {
             throw new StepExecutionException(
-                    "Tree is empty.",
+                    "Tree is empty.", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
     }

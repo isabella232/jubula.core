@@ -30,31 +30,31 @@ public class BorderPropertyValueAdapter
         Iterator<BorderStroke> strokeIterator = b.getStrokes().iterator();
         while (strokeIterator.hasNext()) {
             BorderStroke stroke = strokeIterator.next();
-            sb.append("LeftStroke: "
-                    + "Color=" + stroke.getLeftStroke().toString()
-                    + ","
-                    + "Style=" + stroke.getLeftStyle().toString()
+            sb.append("LeftStroke: " //$NON-NLS-1$
+                    + "Color=" + stroke.getLeftStroke().toString() //$NON-NLS-1$
+                    + "," //$NON-NLS-1$
+                    + "Style=" + stroke.getLeftStyle().toString() //$NON-NLS-1$
             );
-            sb.append("; ");
-            sb.append("RightStroke: "
-                    + "Color=" + stroke.getRightStroke().toString()
-                    + ","
-                    + "Style=" + stroke.getRightStyle().toString()
+            sb.append("; "); //$NON-NLS-1$
+            sb.append("RightStroke: " //$NON-NLS-1$
+                    + "Color=" + stroke.getRightStroke().toString() //$NON-NLS-1$
+                    + "," //$NON-NLS-1$
+                    + "Style=" + stroke.getRightStyle().toString() //$NON-NLS-1$
             );
-            sb.append("; ");
-            sb.append("TopStroke: "
-                    + "Color=" + stroke.getTopStroke().toString()
-                    + ","
-                    + "Style=" + stroke.getTopStyle().toString()
+            sb.append("; "); //$NON-NLS-1$
+            sb.append("TopStroke: " //$NON-NLS-1$
+                    + "Color=" + stroke.getTopStroke().toString() //$NON-NLS-1$
+                    + "," //$NON-NLS-1$
+                    + "Style=" + stroke.getTopStyle().toString() //$NON-NLS-1$
             );
-            sb.append("; ");
-            sb.append("BottomStroke: "
-                    + "Color=" + stroke.getBottomStroke().toString()
-                    + ","
-                    + "Style=" + stroke.getBottomStyle().toString()
+            sb.append("; "); //$NON-NLS-1$
+            sb.append("BottomStroke: " //$NON-NLS-1$
+                    + "Color=" + stroke.getBottomStroke().toString() //$NON-NLS-1$
+                    + "," //$NON-NLS-1$
+                    + "Style=" + stroke.getBottomStyle().toString() //$NON-NLS-1$
             );
             if (strokeIterator.hasNext()) {
-                sb.append(" | ");
+                sb.append(" | "); //$NON-NLS-1$
             }
         }
         return sb.toString();

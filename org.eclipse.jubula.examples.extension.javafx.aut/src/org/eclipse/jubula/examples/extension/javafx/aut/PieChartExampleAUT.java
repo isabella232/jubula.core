@@ -36,7 +36,7 @@ public class PieChartExampleAUT extends Application {
     public void start(Stage stage) {
         Pane root = new VBox();
         Scene scene = new Scene(root);
-        stage.setTitle("Pie Chart Example");
+        stage.setTitle("Pie Chart Example"); //$NON-NLS-1$
         stage.setWidth(500);
         stage.setHeight(500);
         
@@ -45,21 +45,21 @@ public class PieChartExampleAUT extends Application {
         }
         
         final PieChart chart = new PieChart(pieChartData);
-        chart.setTitle("Random Data");
-        chart.setId("pieChart");
+        chart.setTitle("Random Data"); //$NON-NLS-1$
+        chart.setId("pieChart"); //$NON-NLS-1$
         
         Pane buttonArea = new HBox();
         root.getChildren().addAll(chart, buttonArea);
         
-        Button plus = new Button("+");
-        plus.setId("plusButton");
+        Button plus = new Button("+"); //$NON-NLS-1$
+        plus.setId("plusButton"); //$NON-NLS-1$
         plus.setPrefWidth(50);
         plus.setOnMouseClicked(e -> {
             addData();
         });
 
-        Button minus = new Button("-");
-        minus.setId("minusButton");
+        Button minus = new Button("-"); //$NON-NLS-1$
+        minus.setId("minusButton"); //$NON-NLS-1$
         minus.setPrefWidth(50);
         minus.setOnMouseClicked(e -> {
             removeData();
@@ -73,7 +73,7 @@ public class PieChartExampleAUT extends Application {
 
     /** adds a data set */
     private void addData() {
-        pieChartData.add(new PieChart.Data("Data" + dataAmount, Math.random()));
+        pieChartData.add(new PieChart.Data("Data" + dataAmount, Math.random())); //$NON-NLS-1$
         dataAmount++;
     }
 

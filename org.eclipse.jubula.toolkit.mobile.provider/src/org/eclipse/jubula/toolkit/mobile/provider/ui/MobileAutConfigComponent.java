@@ -147,7 +147,7 @@ public class MobileAutConfigComponent extends AutConfigComponent {
         DialogStatusParameter error = null;
         String autHostname = m_autHostTextField.getText();
         if (autHostname.length() == 0) {
-            error = createErrorStatus("The " + Messages.emptyHostname);
+            error = createErrorStatus("The " + Messages.emptyHostname); //$NON-NLS-1$
         } else {
             putConfigValue(AutConfigConstants.AUT_HOST, autHostname);
         }
@@ -163,7 +163,7 @@ public class MobileAutConfigComponent extends AutConfigComponent {
         DialogStatusParameter error = null;
         String autPortname = m_autPortTextField.getText();
         if (autPortname.length() == 0) {
-            error = createErrorStatus("The " + Messages.emptyPort);
+            error = createErrorStatus("The " + Messages.emptyPort); //$NON-NLS-1$
         } else {
             putConfigValue(AutConfigConstants.AUT_HOST_PORT, autPortname);
         }

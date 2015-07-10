@@ -41,7 +41,7 @@ public class ButtonBarContainerAdapter<T extends ButtonBar> extends
 
     /** {@inheritDoc} */
     public List<Node> getContent() {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getContent", //$NON-NLS-1$
                 new Callable<List<Node>>() {
 
                     @Override
@@ -53,7 +53,7 @@ public class ButtonBarContainerAdapter<T extends ButtonBar> extends
 
     /** {@inheritDoc} */
     public ReadOnlyObjectProperty<? extends Window> getWindow() {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getWindow",
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getWindow", //$NON-NLS-1$
                 new Callable<ReadOnlyObjectProperty<? extends Window>>() {
 
                     @Override

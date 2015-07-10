@@ -30,7 +30,7 @@ public class IOSAutConfigComponent extends MobileAutConfigComponent {
     /** the technical name prefix */
     private static final String TECHNICAL_NAME_PREFIX = "org.eclipse.jubula.toolkit.mobile.provider.ios.ui.iOSAutConfigComponent."; //$NON-NLS-1$
     /** the platform name */
-    private static final String PLATFORM = "iOS";
+    private static final String PLATFORM = "iOS"; //$NON-NLS-1$
 
     /**
      * Constructor
@@ -61,7 +61,7 @@ public class IOSAutConfigComponent extends MobileAutConfigComponent {
 
         // AUT hostname property
         Label autHostnameLabel = UIComponentHelper.createLabelWithText(
-                basicAreaComposite, PLATFORM + " " + Messages.autHostnameLabel);
+                basicAreaComposite, PLATFORM + " " + Messages.autHostnameLabel); //$NON-NLS-1$
         autHostnameLabel.setData(SwtToolkitConstants.WIDGET_NAME,
                 TECHNICAL_NAME_PREFIX + "autHostnameLabel"); //$NON-NLS-1$
 

@@ -44,7 +44,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
  */
 public class GenerateAllHandler extends AbstractHandler {
     /** prefix */
-    private static final String REQ_PREFIX = "[] [] [] [] - ";
+    private static final String REQ_PREFIX = "[] [] [] [] - "; //$NON-NLS-1$
     /** eh */
     private ISpecTestCasePO m_aeEH;
     /** eh */
@@ -57,13 +57,13 @@ public class GenerateAllHandler extends AbstractHandler {
     /** {@inheritDoc} */
     protected Object executeImpl(ExecutionEvent event) 
         throws ExecutionException {
-        final String toolkitID = "ui.toolkit.mobile.IOSToolkitPlugin";
+        final String toolkitID = "ui.toolkit.mobile.IOSToolkitPlugin"; //$NON-NLS-1$
         List<ConcreteComponent> toolkitComponents = 
             getToolkitComponentList(toolkitID);
 
         StringHelper sh = StringHelper.getInstance();
 
-        ICategoryPO category = NodeMaker.createCategoryPO("GENERATED");
+        ICategoryPO category = NodeMaker.createCategoryPO("GENERATED"); //$NON-NLS-1$
         try {
             NodePM.addAndPersistChildNode(ISpecObjContPO.TCB_ROOT_NODE, 
                 category, null);
@@ -80,8 +80,8 @@ public class GenerateAllHandler extends AbstractHandler {
 
                 final String componentClass = c.getComponentClass().getName();
                 if (StringUtils.isNotBlank(componentClass)) {
-                    testcaseName += " - "
-                        + StringUtils.substringAfterLast(componentClass, ".");
+                    testcaseName += " - " //$NON-NLS-1$
+                        + StringUtils.substringAfterLast(componentClass, "."); //$NON-NLS-1$
                 }
 
                 ICategoryPO typeCat = NodeMaker.createCategoryPO(testcaseName);
@@ -99,9 +99,9 @@ public class GenerateAllHandler extends AbstractHandler {
                 
                 createActionTestCases(typeCat, typeTC, c);
             }
-            CommandHelper.executeCommand("org.eclipse.ui.file.refresh");
+            CommandHelper.executeCommand("org.eclipse.ui.file.refresh"); //$NON-NLS-1$
         } catch (Throwable e) {
-            throw new ExecutionException("error", e);
+            throw new ExecutionException("error", e); //$NON-NLS-1$
         }
 
         return null;
@@ -122,13 +122,13 @@ public class GenerateAllHandler extends AbstractHandler {
     private void createEventHandler(ICategoryPO category)
         throws PMSaveException, PMAlreadyLockedException, PMException,
         ProjectDeletedException {
-        m_aeEH = TestCaseBP.createNewSpecTestCase("EH - Action Error",
+        m_aeEH = TestCaseBP.createNewSpecTestCase("EH - Action Error", //$NON-NLS-1$
             category, null);
-        m_cfEH = TestCaseBP.createNewSpecTestCase("EH - Check Failed",
+        m_cfEH = TestCaseBP.createNewSpecTestCase("EH - Check Failed", //$NON-NLS-1$
             category, null);
-        m_cnfEH = TestCaseBP.createNewSpecTestCase("EH - Component not found",
+        m_cnfEH = TestCaseBP.createNewSpecTestCase("EH - Component not found", //$NON-NLS-1$
             category, null);
-        m_ceEH = TestCaseBP.createNewSpecTestCase("EH - Configuration Error",
+        m_ceEH = TestCaseBP.createNewSpecTestCase("EH - Configuration Error", //$NON-NLS-1$
             category, null);
     }
 
@@ -154,7 +154,7 @@ public class GenerateAllHandler extends AbstractHandler {
         PMAlreadyLockedException, PMException, ProjectDeletedException, 
         InvalidDataException {
 
-        ICategoryPO actionsCat = NodeMaker.createCategoryPO("Actions");
+        ICategoryPO actionsCat = NodeMaker.createCategoryPO("Actions"); //$NON-NLS-1$
         NodePM.addAndPersistChildNode(typeCat, actionsCat, null);
 
         final StringHelper sh = StringHelper.getInstance();
@@ -185,7 +185,7 @@ public class GenerateAllHandler extends AbstractHandler {
                 NodeMaker.createExecTestCasePO(actionTC), null);
             
             ISpecTestCasePO actionTC01 = TestCaseBP.createNewSpecTestCase(
-                REQ_PREFIX + actionName + " - 01", actionCat, null);
+                REQ_PREFIX + actionName + " - 01", actionCat, null); //$NON-NLS-1$
 
             TestCaseBP.addReferencedTestCase(actionTC,
                 NodeMaker.createExecTestCasePO(actionTC01), null);
@@ -201,25 +201,25 @@ public class GenerateAllHandler extends AbstractHandler {
     private void addEH(ISpecTestCasePO actionTC) throws InvalidDataException {
         final IEventExecTestCasePO ae = NodeMaker.createEventExecTestCasePO(
             m_aeEH, actionTC);
-        ae.setEventType("TestErrorEvent.Action");
+        ae.setEventType("TestErrorEvent.Action"); //$NON-NLS-1$
         ae.setReentryProp(ReentryProperty.RETURN);
         actionTC.addEventTestCase(ae);
         
         final IEventExecTestCasePO cf = NodeMaker.createEventExecTestCasePO(
             m_cfEH, actionTC);
-        cf.setEventType("TestErrorEvent.VerifyFailed");
+        cf.setEventType("TestErrorEvent.VerifyFailed"); //$NON-NLS-1$
         cf.setReentryProp(ReentryProperty.CONTINUE);
         actionTC.addEventTestCase(cf);
         
         final IEventExecTestCasePO cnf = NodeMaker.createEventExecTestCasePO(
             m_cnfEH, actionTC);
-        cnf.setEventType("TestErrorEvent.CompNotFound");
+        cnf.setEventType("TestErrorEvent.CompNotFound"); //$NON-NLS-1$
         cnf.setReentryProp(ReentryProperty.RETURN);
         actionTC.addEventTestCase(cnf);
         
         final IEventExecTestCasePO ce = NodeMaker.createEventExecTestCasePO(
             m_ceEH, actionTC);
-        ce.setEventType("TestErrorEvent.Config");
+        ce.setEventType("TestErrorEvent.Config"); //$NON-NLS-1$
         ce.setReentryProp(ReentryProperty.RETURN);
         actionTC.addEventTestCase(ce);
     }

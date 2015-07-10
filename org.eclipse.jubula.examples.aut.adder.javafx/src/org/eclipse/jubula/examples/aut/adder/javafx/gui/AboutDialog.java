@@ -55,8 +55,8 @@ public class AboutDialog {
         m_dialogStage = new Stage();
         m_dialogStage.initModality(Modality.APPLICATION_MODAL);
 
-        m_aboutText = new Label("Application under Test\n" + "\ncopyright by "
-                + "BREDEX Software GmbH");
+        m_aboutText = new Label("Application under Test\n" + "\ncopyright by " //$NON-NLS-1$ //$NON-NLS-2$
+                + "BREDEX Software GmbH"); //$NON-NLS-1$
         m_borderPane = new BorderPane();
 
         initialize();
@@ -69,7 +69,7 @@ public class AboutDialog {
         m_borderPane.setPadding(new Insets(10));
         m_aboutScene = new Scene(m_borderPane);
 
-        Button okBtn = new Button("OK");
+        Button okBtn = new Button("OK"); //$NON-NLS-1$
         okBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -77,7 +77,7 @@ public class AboutDialog {
             }
         });
 
-        m_dialogStage.setTitle("about");
+        m_dialogStage.setTitle("about"); //$NON-NLS-1$
 
         m_borderPane.setCenter(m_aboutText);
         m_borderPane.setBottom(okBtn);

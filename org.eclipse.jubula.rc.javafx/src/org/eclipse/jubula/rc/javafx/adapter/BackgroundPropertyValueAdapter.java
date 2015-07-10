@@ -27,13 +27,13 @@ public class BackgroundPropertyValueAdapter
     /** {@inheritDoc} */
     public String getStringRepresentation(Background b) {
         
-        StringBuilder sb = new StringBuilder("Fills=");
+        StringBuilder sb = new StringBuilder("Fills="); //$NON-NLS-1$
         Iterator<BackgroundFill> fillIterator = b.getFills().iterator();
         while (fillIterator.hasNext()) {
             BackgroundFill backgroundFill = fillIterator.next();
             sb.append(backgroundFill.getFill().toString());
             if (fillIterator.hasNext()) {
-                sb.append(",");
+                sb.append(","); //$NON-NLS-1$
             }
         }        
         return sb.toString();

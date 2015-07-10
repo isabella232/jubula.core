@@ -168,7 +168,7 @@ public class TableTester extends AbstractTableTester {
      * @return the index path
      */
     private String getColumnPath(TableColumnBase column, TableView table) {
-        String colPath = "";
+        String colPath = ""; //$NON-NLS-1$
         TableColumnBase nxtColumn = column;
         while (nxtColumn.getParentColumn() != null) {
             colPath = String.valueOf(TestDataConstants.
@@ -422,7 +422,7 @@ public class TableTester extends AbstractTableTester {
         final int implRow = adapter.getRowFromString(row, rowOperator);
         // if row is header
         boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "rcVerifyValueInRow", new Callable<Boolean>() {
+                "rcVerifyValueInRow", new Callable<Boolean>() { //$NON-NLS-1$
 
                     @Override
                     public Boolean call() throws Exception {
@@ -456,7 +456,7 @@ public class TableTester extends AbstractTableTester {
     private String getColumnByName(final String name, final String operator,
             final String searchType, final ITableComponent adapter,
             final int implRow) {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getColumnByName",
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getColumnByName", //$NON-NLS-1$
                 new Callable<String>() {
 
                     @Override
@@ -550,7 +550,7 @@ public class TableTester extends AbstractTableTester {
             final String searchType, final ITableComponent adapter,
             final int implRow) {
         return EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getColumnByValue", new Callable<String>() {
+                "getColumnByValue", new Callable<String>() { //$NON-NLS-1$
 
                     @Override
                     public String call() {
@@ -566,7 +566,7 @@ public class TableTester extends AbstractTableTester {
                                 int index = adapter.getColumnFromString(
                                         getColumnPath(column,
                                                 (TableView) getRealComponent()),
-                                                "equals");
+                                                "equals"); //$NON-NLS-1$
                                 String cellValue = adapter.
                                         getCellText(implRow, index);
                                 if (MatchUtil.getInstance().match(
@@ -594,7 +594,7 @@ public class TableTester extends AbstractTableTester {
         final int implRow = adapter.getRowFromString(row, rowOperator);
         // if row is header
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "rcSelectCellByColValue", new Callable<String>() {
+                "rcSelectCellByColValue", new Callable<String>() { //$NON-NLS-1$
 
                     @Override
                     public String call() throws Exception {

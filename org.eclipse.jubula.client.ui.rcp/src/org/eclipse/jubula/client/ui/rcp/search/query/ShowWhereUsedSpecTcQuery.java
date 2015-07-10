@@ -105,9 +105,9 @@ public class ShowWhereUsedSpecTcQuery
         sb.append(StringConstants.COLON);
         sb.append(StringConstants.SPACE);
         sb.append(Messages.UIJobSearchingTestCases);
-        sb.append(" \"");
+        sb.append(" \""); //$NON-NLS-1$
         sb.append(m_specTC.getName());
-        sb.append("\"");
+        sb.append("\""); //$NON-NLS-1$
         return sb.toString();
     }
     

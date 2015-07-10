@@ -84,13 +84,13 @@ public class AnalyzeConstants {
      * Constants for the Category-Element in the Extension
      */
     /** The Category */
-    public static final String CATEGORY = "Category"; //$NON-NLS-1
+    public static final String CATEGORY = "Category"; //NON-NLS-1$ //$NON-NLS-1$
     /** The id */
-    public static final String CATEGORY_ID = "id"; //$NON-NLS-1
+    public static final String CATEGORY_ID = "id"; //NON-NLS-1$ //$NON-NLS-1$
     /** The name */
-    public static final String CATEGORY_NAME = "name"; //$NON-NLS-1
+    public static final String CATEGORY_NAME = "name"; //NON-NLS-1$ //$NON-NLS-1$
     /** The id of the topLevelCategory */
-    public static final String CATEGORY_TOP_CAT_ID = "categoryid"; //$NON-NLS-1
+    public static final String CATEGORY_TOP_CAT_ID = "categoryid"; //NON-NLS-1$ //$NON-NLS-1$
     
     /**
      * Empty constructor

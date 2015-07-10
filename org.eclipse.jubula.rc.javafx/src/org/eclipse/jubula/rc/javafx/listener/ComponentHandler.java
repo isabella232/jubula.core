@@ -133,7 +133,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
      * @return List
      */
     public static <T> List<? extends T> getAssignableFrom(final Class<T> type) {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getAssignableFrom",
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getAssignableFrom", //$NON-NLS-1$
                 new Callable<List<? extends T>>() {
 
                     @Override

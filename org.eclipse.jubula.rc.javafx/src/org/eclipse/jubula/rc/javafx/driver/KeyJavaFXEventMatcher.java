@@ -46,7 +46,7 @@ public class KeyJavaFXEventMatcher extends DefaultJavaFXEventMatcher<KeyEvent> {
         for (Object object : eventObjects) {
             Event e = (Event) object;
             if (e instanceof KeyEvent) {
-                log.warn("Key event matching fallback used.");
+                log.warn("Key event matching fallback used."); //$NON-NLS-1$
                 return true;
             }
         }

@@ -87,9 +87,9 @@ public class ShowWhereUsedTestSuiteQuery
         sb.append(StringConstants.COLON);
         sb.append(StringConstants.SPACE);
         sb.append(Messages.UIJobSearchingTestSuites);
-        sb.append(" \"");
+        sb.append(" \""); //$NON-NLS-1$
         sb.append(m_testSuite.getName());
-        sb.append("\"");
+        sb.append("\""); //$NON-NLS-1$
         return sb.toString();
     }
 

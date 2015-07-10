@@ -40,7 +40,7 @@ public class TitledPaneAdapter extends
     @Override
     public List<Node> getContent() {
         List<Node> l = super.getContent();
-        l.addAll(EventThreadQueuerJavaFXImpl.invokeAndWait("getContent",
+        l.addAll(EventThreadQueuerJavaFXImpl.invokeAndWait("getContent", //$NON-NLS-1$
                 new Callable<List<Node>>() {
 
                     @Override

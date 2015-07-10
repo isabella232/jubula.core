@@ -191,7 +191,7 @@ public class ExtensionRegistry {
                                 AnalyzeConstants.PARAM_DEFAULT_VALUE),
                         param.getAttribute(AnalyzeConstants.PARAM_NAME),
                         param.getAttribute(AnalyzeConstants.PARAM_DESCRIPTION),
-                        "");
+                        ""); //$NON-NLS-1$
                 parameterList.add(anaParam);
             }
 

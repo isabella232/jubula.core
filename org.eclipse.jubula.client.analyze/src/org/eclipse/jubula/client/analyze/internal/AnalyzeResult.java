@@ -24,16 +24,16 @@ public class AnalyzeResult {
     /**
      * ResultType identifier for the Renderer selection in the ResultRendererHandler
      */
-    private String m_rType = "";
+    private String m_rType = ""; //$NON-NLS-1$
     
     /** Analyze ID */
-    private String m_analyzeID = "";
+    private String m_analyzeID = ""; //$NON-NLS-1$
     
     /** CategoryID */
-    private String m_catID = "";
+    private String m_catID = ""; //$NON-NLS-1$
     
     /** ContextType */
-    private String m_context = "";
+    private String m_context = ""; //$NON-NLS-1$
     
     /** The result-Object */
     private Object m_analyzeResult;

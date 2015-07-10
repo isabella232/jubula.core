@@ -56,7 +56,7 @@ public class CapTestCommand implements ICommand {
     private static final Logger LOG = LoggerFactory.getLogger(
         CapTestCommand.class);
     /** The logger */
-    private static final Logger CAPLOG = LoggerFactory.getLogger("CAP");
+    private static final Logger CAPLOG = LoggerFactory.getLogger("CAP"); //$NON-NLS-1$
     
     
     /** The message. */
@@ -229,13 +229,13 @@ public class CapTestCommand implements ICommand {
             MethodInvoker invoker = new MethodInvoker(messageCap);
             Object returnValue = invoker.invoke(implClass);
             response.setReturnValue((String)returnValue);
-            if ("true".equals(System.getenv("LogExecutedCaps"))
+            if ("true".equals(System.getenv("LogExecutedCaps")) //$NON-NLS-1$ //$NON-NLS-2$
                     && messageCap != null
                     && messageCap.getCi() != null
                     && messageCap.getCi().getComponentClassName() != null
                     && messageCap.getAction() != null
                     && messageCap.getAction().getName() != null) {
-                CAPLOG.debug(messageCap.getCi().getComponentClassName() + " - "
+                CAPLOG.debug(messageCap.getCi().getComponentClassName() + " - " //$NON-NLS-1$
                         + CompSystemI18n.getString(
                                 messageCap.getAction().getName()));
             }

@@ -50,9 +50,9 @@ public class ShowWhereUsedTestDataCubeQuery extends AbstractShowWhereUsedQuery {
         sb.append(StringConstants.COLON);
         sb.append(StringConstants.SPACE);
         sb.append(Messages.UIJobSearchingTestDataCube);
-        sb.append(" \"");
+        sb.append(" \""); //$NON-NLS-1$
         sb.append(m_testDataCube.getName());
-        sb.append("\"");
+        sb.append("\""); //$NON-NLS-1$
         return sb.toString();
     }
     

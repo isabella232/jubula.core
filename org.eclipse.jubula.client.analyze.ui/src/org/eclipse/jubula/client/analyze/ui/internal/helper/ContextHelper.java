@@ -52,7 +52,7 @@ public class ContextHelper {
      */
     public static boolean isEnabled(Analyze analyze) {
 
-        ProjectContextHelper.setObjContType("");
+        ProjectContextHelper.setObjContType(""); //$NON-NLS-1$
         String[] contextData = contextDataToArray(analyze.getContextType());
         
         for (Map.Entry<String, Context> c : ExtensionRegistry.getContexts()
@@ -63,7 +63,7 @@ public class ContextHelper {
 
                 // check if the Element is the Context of the given Analyze
                 if (contextData[i].equals(context.getID())
-                        && !(context.getID().equals("projectloaded"))) {
+                        && !(context.getID().equals("projectloaded"))) { //$NON-NLS-1$
 
                     IContext iCon = (IContext) context.getContextInstance();
 
@@ -85,13 +85,13 @@ public class ContextHelper {
                             setSelection(GeneralStorage.
                                     getInstance().getProject());
                             ProjectContextHelper.
-                            setObjContType("IExecObjContPO");
+                            setObjContType("IExecObjContPO"); //$NON-NLS-1$
                         } else if (structuredSel.getFirstElement() 
                                 instanceof ISpecObjContPO) {
                             setSelection(GeneralStorage.
                                     getInstance().getProject());
                             ProjectContextHelper.
-                            setObjContType("ISpecObjContPO");
+                            setObjContType("ISpecObjContPO"); //$NON-NLS-1$
                         } else {
                             setSelection(structuredSel.getFirstElement());
                         }
@@ -126,12 +126,12 @@ public class ContextHelper {
             for (int i = 0; i < contextData.length; i++) {
 
                 // check if the Context of the given Analyze is "projectLoaded"
-                if (contextData[i].equals("projectloaded")
-                        && context.getID().equals("projectloaded")) {
+                if (contextData[i].equals("projectloaded") //$NON-NLS-1$
+                        && context.getID().equals("projectloaded")) { //$NON-NLS-1$
 
                     if (GeneralStorage.getInstance().getProject() != null) {
 
-                        ProjectContextHelper.setObjContType("project");
+                        ProjectContextHelper.setObjContType("project"); //$NON-NLS-1$
                         setSelection(GeneralStorage.getInstance().getProject());
                         if (iCon.isActive(getSelection())) {
                             return true;
@@ -153,7 +153,7 @@ public class ContextHelper {
      */
     public static String[] contextDataToArray(String context) {
 
-        final String pattern = ",";
+        final String pattern = ","; //$NON-NLS-1$
 
         Pattern p = Pattern.compile(pattern);
         String[] contextData = p.split(context, 0);
