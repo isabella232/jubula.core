@@ -1,0 +1,31 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="concreteToolkitComponentOverview" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="concreteToolkit"?>
+  <title>Concrete toolkit component overview</title>
+  <para>
+  	The concrete toolkit contains components and actions which are available in all other supported toolkits. An
+  	action from the concrete toolkit can therefore be used in a test for Swing, SWT, RCP, HTML, JavaFX and iOS 
+  	applications.
+  </para>
+  
+  <xi:include href="application/content.xml"/>
+  <xi:include href="buttonComponent/content.xml"/>
+  <xi:include href="comboComponent/content.xml"/>
+  <xi:include href="listComponent/content.xml"/>
+  <xi:include href="menuBarComponent/content.xml"/>
+  <xi:include href="tabComponent/content.xml"/>
+  <xi:include href="tableComponent/content.xml"/>
+  <xi:include href="textComponent/content.xml"/>
+  <xi:include href="textInputComponent/content.xml"/>
+  <xi:include href="treeComponent/content.xml"/>
+    
+</section>

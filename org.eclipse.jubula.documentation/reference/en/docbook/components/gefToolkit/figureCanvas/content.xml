@@ -1,0 +1,145 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="GEFToolkitFigureCanvas" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="figureCanvas"?>
+  <title>GEF toolkit figure canvas</title>
+  <para>
+  	<itemizedlist>
+  		<listitem>
+  			<para>
+  				The <emphasis>figure canvas</emphasis> is an editor where figures, connections and anchors are displayed.
+  			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				Testing GEF components involves mapping this figure canvas and locating the figures based on their textpath.
+  			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				Use the GEF Inspector View to find out the textpath of the figures in the canvas.
+  			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				The figure canvas itself contains various items which can be addressed.
+  				<itemizedlist>
+  					<listitem>
+  						<para>
+  							Individual figures
+  						</para>
+  					</listitem>
+  					<listitem>
+  						<para>
+  							Tools
+  						</para>
+  					</listitem>
+  					<listitem>
+  						<para>
+  							Connections
+  						</para>
+  					</listitem>
+  					<listitem>
+  						<para>
+  							Connection anchors. These are the points where connections join to figures. Connection anchors
+  							are considered as figures. As such, they can be addressed (clicked, checked etc.) using a textpath.
+  						</para>
+  					</listitem>
+  				</itemizedlist>
+  			</para>
+  		</listitem>
+  	</itemizedlist>
+  </para>
+  
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckExistenceGEF"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckPropertyGEF"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionClickGEF"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropGEF"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectGEF"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckEnablementGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckExistenceGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckFocus"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckProperty"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckSelectionGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionClickGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectContextMenus"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionShowText"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsForStoringValuesGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForComponentGeneral"/>
+  		</para>
+  	</listitem>
+  </itemizedlist>
+  
+</section>

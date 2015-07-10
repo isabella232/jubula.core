@@ -1,0 +1,163 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="ConcreteToolkitTableComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="tableComponent"?>
+  <title>Concrete toolkit table component</title>
+  <para>
+  	<itemizedlist>
+  		<listitem>
+  			<para>
+  				A <emphasis>table</emphasis> is a component in which data is displayed and edited.
+  			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				The format of a table is a two-dimensional layout of cells which are organized into columns and
+  				rows.
+  			</para>
+  		</listitem>
+  	</itemizedlist>
+  </para>
+  <figure>
+  	<title>
+  		Table Component
+  	</title>
+  	<mediaobject>
+  		<imageobject>
+  			<imagedata fileref="../../../../../../images/component/concrete/tableComponent.png" format="PNG"/>
+  		</imageobject>
+  	</mediaobject>
+  </figure>
+  
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckEditabilityTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckExistenceTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckSelectionTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckTextTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionThatSendKeyboardInteractionTableComponent"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionMoveInTablesAndTreesTableComponent"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionForStoringValuesTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionToggleCheckboxInTableComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckEditabilityGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckEnablementGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckExistenceGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckFocus"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckProperty"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckSelectionGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckTextComponentsThatShowText"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionClickGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsThatSendKeyboardInteractionGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectContextMenus"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionShowText"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsForStoringValuesGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForComponentGeneral"/>
+  		</para>
+  	</listitem>
+  </itemizedlist>
+  
+</section>

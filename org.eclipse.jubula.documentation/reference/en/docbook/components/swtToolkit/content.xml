@@ -1,0 +1,24 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="swtToolkitComponentOverview" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="swtToolkit"?>
+  <title>SWT toolkit component overview</title>
+  <para>
+  	The SWT toolkit contains components specific to SWT applications. You will only have access to these components if you 
+  	select the SWT or RCP toolkit as toolkit for your AUT.
+  </para>
+  
+  <xi:include href="toolItem/content.xml"/>
+  <xi:include href="tree/content.xml"/>
+  <xi:include href="treeTable/content.xml"/>
+  
+    
+</section>

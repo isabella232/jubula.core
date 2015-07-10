@@ -1,0 +1,111 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="ConcreteToolkitListComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="listComponent"?>
+  <title>Concrete toolkit list component</title>
+  <para>
+  	A <emphasis>list</emphasis> is a component which displays a number of values. Lists allow single or multiple
+  	values to be selected. 	
+  </para>
+  <para>
+  	Because the comma (,) is a special symbol for lists, if you want to use a comma as part of your parameter value,
+  	you have to mask it.
+  </para>
+  <figure>
+  	<title>
+  		List Component
+  	</title>
+  	<mediaobject>
+  		<imageobject>
+  			<imagedata fileref="../../../../../../images/component/concrete/listComponent.png" format="PNG"/>
+  		</imageobject>
+  	</mediaobject>
+  </figure>
+  
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckExistenceListComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckSelectionListComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropListComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectListComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckEnablementGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckExistenceGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckSelectionGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckTextComponentsThatShowText"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionClickGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectContextMenus"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionShowText"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsForStoringValuesGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckExistenceListComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForComponentGeneral"/>
+  		</para>
+  	</listitem>
+  </itemizedlist>
+  
+</section>

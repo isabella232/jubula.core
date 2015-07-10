@@ -1,0 +1,136 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="SWTToolkitTreeTable" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="treeTable"?>
+  <title>SWT toolkit tree table</title>
+  <para>
+  	A tree table is an SWT component which has some of the properties of a tree (e.g. nodes which can be expanded or 
+  	collapsed) and some of the properties of a table (e.g. rows and columns). 
+  </para>
+  <para>
+  	Because the forward slash (/) is a special symbol for trees, if you want to use a slash as part of your parameter value,
+  	you have to mask it.
+  </para>
+  <figure>
+  	<title>
+  		Tree Table Component
+  	</title>
+  	<mediaobject>
+  		<imageobject>
+  			<imagedata fileref="../../../../../../images/component/SWT/treeTable.png" format="PNG"/>
+  		</imageobject>
+  	</mediaobject>
+  </figure>
+  
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckSelectionSWTTreeTables"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectSWTTreeTables"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionToggleCheckboxTrees"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckEnablementGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckExistenceGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckFocus"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckProperty"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckSelectionGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckTextTreeComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionClickGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCollapseExpandTree"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionDragAndDropTreeComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionMoveInTablesAndTreesTreeComponent"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectContextMenus"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectTreeComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionShowText"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsForStoringValuesGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionForStoringValuesTreeComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForComponentGeneral"/>
+  		</para>
+  	</listitem>
+  </itemizedlist>
+  
+</section>

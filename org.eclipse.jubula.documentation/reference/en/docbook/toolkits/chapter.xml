@@ -21,6 +21,7 @@
   		<emphasis>abstract components</emphasis>
   		available to make Test Steps more general. 
   	</para>
+  	
   </section>
   <section>
   	<title>Concrete Toolkit</title>
@@ -33,7 +34,7 @@
   <section>
   	<title>GEF Toolkit</title>
     <para>
-  		The GEF toolkit can be used to test components whithin a figure canvas in RCP applications.
+  		The GEF toolkit can be used to test components within a figure canvas in RCP applications.
   		You must set the toolkit to 
   		<emphasis>RCP</emphasis> 
   		in the Project properties to be able to use the GEF actions. 

@@ -13,6 +13,18 @@
   <title>Components</title>
   
   <para>
-    Components
+  	This chapter provides a reference of all currently supported AUT components and lists the actions which can be 
+  	executed on these components. Additionally you will find mockups to make it easier to identify what kind of 
+  	component you are dealing with. 
   </para>
+  
+  	<xi:include href="abstractToolkit/content.xml"/>
+  	<xi:include href="concreteToolkit/content.xml"/>
+   	<xi:include href="gefToolkit/content.xml"/>
+   	<xi:include href="htmlToolkit/content.xml"/>
+   	<xi:include href="iosToolkit/content.xml"/>
+   	<xi:include href="javaFXToolkit/content.xml"/>
+   	<xi:include href="swtToolkit/content.xml"/>
+  
+  
 </chapter>

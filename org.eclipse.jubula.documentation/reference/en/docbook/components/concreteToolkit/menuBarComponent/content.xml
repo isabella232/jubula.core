@@ -1,0 +1,87 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="ConcreteToolkitMenuBarComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="menuBarComponent"?>
+  <title>Concrete toolkit menu bar component</title>
+  <para>
+  	<itemizedlist>
+  		<listitem>
+  			<para>
+  				A <emphasis>menu bar</emphasis> is the component typically found at the top of an application window.
+   			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				It typically contains menus such as <emphasis>"File", "Edit", "Help", etc.</emphasis>.
+  			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				Because the forward slash (/) is a special symbol for menus, if you want to use a slash as part
+  				of your parameter value, you have to mask it.
+  			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				Menu bars do not need to be mapped in the Object Mapping Mode as they are automatically found during
+  				test execution.
+  			</para>
+  		</listitem>
+  	</itemizedlist>
+  </para>
+  <para role="warning">
+    Actions on menus are not supported in the HTML toolkit.
+  </para>
+  <figure>
+  	<title>
+  		Menu Bar Component
+  	</title>
+  	<mediaobject>
+  		<imageobject>
+  			<imagedata fileref="../../../../../../images/component/concrete/menuBarComponent.png" format="PNG"/>
+  		</imageobject>
+  	</mediaobject>
+  </figure>
+  
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckEnablementMenuBarComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckExistenceMenuBarComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckSelectionMenuBarComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSelectMenuBarComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckEnablementMenuBarComponents"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForComponentMenuBar"/>
+  		</para>
+  	</listitem>
+  </itemizedlist>
+    
+</section>

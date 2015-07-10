@@ -1,0 +1,157 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="ConcreteToolkitApplicationComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="application"?>
+  <title>Concrete toolkit application component</title>
+  <para>
+  	<itemizedlist>
+  		<listitem>
+  			<para>
+  				The <emphasis>Application</emphasis> component is the container for all other components.
+  			</para>
+  		</listitem>
+  		<listitem>
+  			<para>
+  				It represents the AUT as a whole.
+  			</para>
+  		</listitem>
+  	</itemizedlist>
+  </para>
+  <figure>
+  	<title>
+  		Application with window in foreground
+  	</title>
+  	<mediaobject>
+		<imageobject>
+  			<imagedata fileref="../../../../../../images/component/concrete/application_with_window_in_foreground.png" format="PNG"/>
+  		</imageobject>
+  	</mediaobject>
+  </figure>
+  <figure>
+  	<title>
+  		Application
+  	</title>
+  	<mediaobject>
+  		<imageobject>
+  			<imagedata fileref="../../../../../../images/component/concrete/application.png" format="PNG"/>
+  		</imageobject>
+  	</mediaobject>
+  </figure>
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionActivateApplication"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckExistenceApplication"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckNumericValues"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckStringValues"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionPrepareForAUTTermination"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionRestart"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSynchronizeTerminationAndRestartOfAUT"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionForStoringValuesApplication"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWait"/>
+  		</para>
+  	</listitem>
+  </itemizedlist>
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForWindow"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForWindowActivation"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForWindowToClose"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionClick"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCopyTextToClipboard"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionExecuteExternalCommand"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionManualTestStep"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionPauseTestExecution"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionStopwatch"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionTakeScreenshot"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsThatSendKeyboardInteractionGeneral"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionClick"/>
+  		</para>
+  	</listitem>
+  </itemizedlist>
+</section>
