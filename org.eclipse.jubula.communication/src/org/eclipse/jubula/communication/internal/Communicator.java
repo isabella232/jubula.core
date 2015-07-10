@@ -801,8 +801,7 @@ public class Communicator {
                     // data is an answer
                     // it's an awaiting command too ?
                     synchronized (m_awaitingCommands) {
-                        awaitingCommand = (AwaitingCommand)m_awaitingCommands
-                            .get(boundedId);
+                        awaitingCommand = m_awaitingCommands.get(boundedId);
                     }
                 }
                 if (awaitingCommand != null) {
@@ -1023,8 +1022,7 @@ public class Communicator {
 
                     if (response != null) {
                         IConnectionInitializer initializer = 
-                            (IConnectionInitializer)m_responseToInitializer.get(
-                                    response);
+                                m_responseToInitializer.get(response);
                         if (initializer != null) {
                             initializer.initConnection(socket, reader);
                         } else {
@@ -1163,7 +1161,7 @@ public class Communicator {
         Iterator iter = keys.iterator();
         while (iter.hasNext()) {
             final Object key = iter.next();
-            AwaitingCommand cmd = (AwaitingCommand)m_awaitingCommands.get(key);
+            AwaitingCommand cmd = m_awaitingCommands.get(key);
             cmd.commandReceived();
             m_awaitingCommands.remove(key);
         }

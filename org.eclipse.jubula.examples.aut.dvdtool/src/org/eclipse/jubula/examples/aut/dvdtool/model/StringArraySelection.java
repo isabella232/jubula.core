@@ -53,7 +53,7 @@ public class StringArraySelection implements Transferable {
     public DataFlavor[] getTransferDataFlavors() {
         // Note: Returning flavors itself would allow client code to modify
         // our internal behavior.
-        return (DataFlavor[])SUPPORTED_FLAVORS.clone();
+        return SUPPORTED_FLAVORS.clone();
     }
 
     /**
