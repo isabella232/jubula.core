@@ -107,7 +107,7 @@ public class NodeNameUtil {
      * @return label text for the given Test Case.
      */
     public static String getText(ISpecTestCasePO testCase, boolean params) {
-        if (params) {
+        if (!params) {
             return testCase.getName();
         }
         return testCase.getName() + getParameterString(testCase);
