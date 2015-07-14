@@ -49,7 +49,11 @@ import org.eclipse.persistence.annotations.Index;
  * 
  */
 @Entity
-@Table(name = "PARAM_INTERFACE")
+@Table(name = "PARAM_INTERFACE", 
+        indexes = {@javax.persistence.Index(
+                        name = "FK_PARENT_IDX", 
+                        columnList = "FK_PARENT",
+                        unique = false)})
 class TestDataCubePO implements ITestDataCubePO {
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;

@@ -26,6 +26,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
@@ -46,7 +47,11 @@ import org.eclipse.persistence.annotations.BatchFetchType;
  * @created 08.12.2004
  */
 @Entity
-@Table(name = "TEST_DATA")
+@Table(name = "TEST_DATA",
+        indexes = {@Index(
+                        name = "FK_TEST_DATA_LIST_IDX", 
+                        columnList = "FK_TEST_DATA_LIST",
+                        unique = false)})
 class TestDataPO implements ITestDataPO {
     /**
      * <code>DEFAULT_NUMBER_OF_LANGUAGES</code> the default number of Languages
@@ -181,7 +186,11 @@ class TestDataPO implements ITestDataPO {
      * @return Returns the map.
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "LOCALE_TO_TD")
+    @CollectionTable(name = "LOCALE_TO_TD",
+            indexes = {@Index(
+                    name = "TESTDATAPO_ID_IDX", 
+                    columnList = "TESTDATAPO_ID",
+                    unique = false)})
     @MapKeyColumn(name = "LOCALE")
     @Column(name = "TD_VALUE", length = MAX_STRING_LENGTH, nullable = false)
     @JoinColumn(name = "I18N_STR")
