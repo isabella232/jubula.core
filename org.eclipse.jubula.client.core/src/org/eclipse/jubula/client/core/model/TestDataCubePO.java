@@ -53,6 +53,10 @@ import org.eclipse.persistence.annotations.Index;
         indexes = {@javax.persistence.Index(
                         name = "FK_PARENT_IDX", 
                         columnList = "FK_PARENT",
+                        unique = false),
+                    @javax.persistence.Index(
+                        name = "TD_MANAGER_IDX", 
+                        columnList = "TD_MANAGER",
                         unique = false)})
 class TestDataCubePO implements ITestDataCubePO {
     /** Persistence (JPA / EclipseLink) OID */
