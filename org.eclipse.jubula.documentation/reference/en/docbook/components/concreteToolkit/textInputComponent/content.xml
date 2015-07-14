@@ -20,7 +20,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/textInputComponent.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/textInputComponent.png" format="PNG"/>
   		</imageobject>
  	</mediaobject>
   </figure>

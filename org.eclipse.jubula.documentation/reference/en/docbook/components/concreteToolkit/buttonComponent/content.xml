@@ -42,7 +42,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/buttonComponent.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/buttonComponent.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -52,7 +52,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/buttonComponent_checkBox_deselected.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/buttonComponent_checkBox_deselected.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -62,7 +62,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/buttonComponent_checkBox_selected.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/buttonComponent_checkBox_selected.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -72,7 +72,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/buttonComponent_radioButton_deselected.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/buttonComponent_radioButton_deselected.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -82,7 +82,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/buttonComponent_radioButton_selected.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/buttonComponent_radioButton_selected.png" format="PNG"/>
   		</imageobject>
   </mediaobject>
   </figure>

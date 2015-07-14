@@ -252,8 +252,8 @@
         
         <copy todir="${html.path}/images">
             <fileset dir="${dir}/en/docbook/images">
-                <include name="*.jpg" />
-                <include name="*.png" />
+                <include name="**/*.jpg" />
+                <include name="**/*.png" />
             </fileset>
         </copy>
         

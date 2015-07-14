@@ -32,7 +32,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/tableComponent.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/tableComponent.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>

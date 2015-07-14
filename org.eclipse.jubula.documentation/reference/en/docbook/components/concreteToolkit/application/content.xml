@@ -31,7 +31,7 @@
   	</title>
   	<mediaobject>
 		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/application_with_window_in_foreground.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/application_with_window_in_foreground.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -41,7 +41,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/application.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/application.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>

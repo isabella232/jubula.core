@@ -41,7 +41,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/comboComponent.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/comboComponent.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -51,7 +51,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/editableComboComponent.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/editableComboComponent.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>

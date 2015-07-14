@@ -22,7 +22,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/SWT/tree.png" format="PNG"/>
+  			<imagedata fileref="images/component/SWT/tree.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>

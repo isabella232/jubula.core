@@ -21,7 +21,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/concrete/tabComponent.png" format="PNG"/>
+  			<imagedata fileref="images/component/concrete/tabComponent.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>

@@ -25,7 +25,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="../../../../../../images/component/SWT/treeTable.png" format="PNG"/>
+  			<imagedata fileref="images/component/SWT/treeTable.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
