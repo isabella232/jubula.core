@@ -9,7 +9,7 @@
 <section xml:id="actionToggleCheckboxTrees" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Trees (SWT Trees)</title>
+  <title>Toggle Checkbox in Trees (SWT Trees)</title>
   
   <para><emphasis>Toggle Checkbox on Node by Indexpath</emphasis></para>
   <para>

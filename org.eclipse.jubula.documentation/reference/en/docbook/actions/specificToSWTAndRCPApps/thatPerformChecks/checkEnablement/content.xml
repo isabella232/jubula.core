@@ -10,7 +10,7 @@
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="checkEnablement"?>
-  <title>Check Enablement</title>
+  <title>Check Enablement in Toolbar item</title>
   
   <para><emphasis>Check Enablement of Entry by Indexpath</emphasis></para>
   <para>

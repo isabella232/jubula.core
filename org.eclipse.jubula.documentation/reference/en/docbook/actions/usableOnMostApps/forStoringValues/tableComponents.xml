@@ -9,7 +9,7 @@
 <section xml:id="actionForStoringValuesTableComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Table Components</title>
+  <title>Store Value in Table Components</title>
   
   <para><emphasis>Store Value (Specify Cell)</emphasis></para>
   <para>

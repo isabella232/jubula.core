@@ -19,6 +19,10 @@
   	Because the forward slash (/) is a special symbol for trees, if you want to use a slash as part of your parameter value,
   	you have to mask it.
   </para>
+  <para role="tip">
+  	Please keep in mind that it is not possible to object map nodes/cells within the tree table but to object map the tree table 
+  	as a whole only. In order to interact with single nodes/cells you have to use the according actions.
+  </para>
   <figure>
   	<title>
   		Tree Table Component

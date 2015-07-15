@@ -9,7 +9,7 @@
 <section xml:id="actionCheckSelectionSWTTreeTables" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Tree Tables (SWT)</title>
+  <title>Check Selection in Tree Tables (SWT)</title>
   
   <para><emphasis>Check Selection by Value(s) (Specify Column)</emphasis></para>
   <para>

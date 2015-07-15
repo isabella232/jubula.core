@@ -9,7 +9,7 @@
 <section xml:id="actionCheckExistenceListComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>List Components</title>
+  <title>Check Existence in List Components</title>
   
   <para><emphasis>Check Existence of Entry by Value</emphasis></para>
   <para>

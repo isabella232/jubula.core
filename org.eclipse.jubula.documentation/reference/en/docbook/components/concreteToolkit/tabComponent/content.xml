@@ -15,6 +15,10 @@
   	A <emphasis>tabbed pane</emphasis> is a container that allows you to switch between multiple groups of
   	components within a single area.
   </para>
+  <para role="tip">
+  	Please keep in mind that it is not possible to object map a single component within the container but only the container as
+  	a whole. To switch between the single components you have to use the according actions. 
+  </para>
   <figure>
   	<title>
   		Tabbed Component

@@ -9,7 +9,7 @@
 <section xml:id="actionDragAndDropTreeComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Tree Components</title>
+  <title>Drag and Drop in Tree Components</title>
   
   <para><emphasis>Drag Node by Indexpath</emphasis></para>
   <para>

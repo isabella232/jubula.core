@@ -9,7 +9,7 @@
 <section xml:id="actionCheckSelectionSWTToolbarItems" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Toolbar items</title>
+  <title>Check Selection in Toolbar items</title>
   
   <para><emphasis>Check Selection of Entry by Indexpath</emphasis></para>
   <para>

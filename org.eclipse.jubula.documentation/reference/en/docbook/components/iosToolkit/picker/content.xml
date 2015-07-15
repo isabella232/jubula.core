@@ -15,6 +15,10 @@
   	A <emphasis>picker</emphasis> lets the user choose between certain options by spinning a wheel on the screen. Picker views
   	allow users to quickly choose between a set of distinct options.   
   </para>
+  <para role="tip">
+  	Please keep in mind that it is not possible to object map single columns within the picker but to object map the picker 
+  	as a whole only. In order to interact with single columns you have to use the according actions. 
+  </para>
   
   <itemizedlist>
   	<listitem>

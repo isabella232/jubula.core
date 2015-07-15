@@ -26,6 +26,10 @@
   		</listitem>
   	</itemizedlist>
   </para>
+  <para role="tip">
+  	Please keep in mind that it is not possible to object map a single cell within the table but to map the table as a whole 
+  	only. In order to interact with certain cells within the table you have to use the according actions. 
+  </para>
   <figure>
   	<title>
   		Table Component

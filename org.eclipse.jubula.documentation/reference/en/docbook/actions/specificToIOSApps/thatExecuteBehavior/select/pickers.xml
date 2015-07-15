@@ -9,7 +9,7 @@
 <section xml:id="actionSelectIOSPickers" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Pickers</title>
+  <title>Select Entry from Column by Index</title>
   
   <para><emphasis>Select Entry from Column by Index</emphasis></para>
   <para>

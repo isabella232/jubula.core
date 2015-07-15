@@ -16,6 +16,10 @@
   	A tab bar is used to give users access to different perspectives on the same set of data or different subtasks related
   	to the overall function of an app. 
   </para>
+  <para role="tip">
+  	Please keep in mind that it is not possible to object map single tabs  within the tab bar but to object map the tab bar 
+  	as a whole only. In order to interact with single tabs you have to use the according actions.
+  </para>
   
   <itemizedlist>
   	<listitem>

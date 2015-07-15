@@ -10,7 +10,7 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="checkExistence"?>
-  <title>Check Existence</title>
+  <title>Check Existence of entry in Toolbar item</title>
   
   <para><emphasis>Check Existence of Entry by Indexpath</emphasis></para>
   <para>

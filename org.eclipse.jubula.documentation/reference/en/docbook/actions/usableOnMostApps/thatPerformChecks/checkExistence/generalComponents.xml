@@ -9,7 +9,7 @@
 <section xml:id="actionsCheckExistenceGeneral" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>General (can be used on different components)</title>
+  <title>Check Existence (General Components)</title>
   
   <para><emphasis>Check Existence</emphasis></para>
   <para>

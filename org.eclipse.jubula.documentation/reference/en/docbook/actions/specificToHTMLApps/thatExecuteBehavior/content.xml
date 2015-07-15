@@ -10,7 +10,7 @@
                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="thatExecuteBehavior"?>
-  <title>Actions that execute behavior</title>
+  <title>Actions that execute behavior - HTML toolkit</title>
   
   <xi:include href="clickLocator/content.xml"/>
   <xi:include href="goBack/content.xml"/>

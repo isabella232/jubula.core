@@ -58,6 +58,11 @@
   		</listitem>
   	</itemizedlist>
   </para>
+  <para role="tip">
+  	Please keep in mind that it is not possible to object map single components within the figure canvas but to object map 
+  	the figure canvas as a whole only. In order to interact with certain components within the figure canvas you have to use
+  	the according actions.
+  </para>
   
   <itemizedlist>
   	<listitem>

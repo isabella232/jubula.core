@@ -10,7 +10,7 @@
                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="checkSelection"?>
-  <title>Check Selection</title>
+  <title>Check Selection - SWT toolkit</title>
   
   <xi:include href="toolbarItems.xml"/>
   <xi:include href="trees.xml"/>

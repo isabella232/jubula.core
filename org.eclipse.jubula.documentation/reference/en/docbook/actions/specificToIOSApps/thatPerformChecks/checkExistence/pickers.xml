@@ -9,7 +9,7 @@
 <section xml:id="actionCheckExistenceIOSPickers" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Pickers</title>
+  <title>Check Existence of Entry in Column by Value</title>
   
   <para><emphasis>Check Existence of Entry in Column by Value</emphasis></para>
   <para>

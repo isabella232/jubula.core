@@ -9,7 +9,7 @@
 <section xml:id="actionForStoringValuesTreeComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Tree Components</title>
+  <title>Store Value in Tree Components</title>
   
   <para><emphasis>Store Text at Mouse Position</emphasis></para>
   <para>

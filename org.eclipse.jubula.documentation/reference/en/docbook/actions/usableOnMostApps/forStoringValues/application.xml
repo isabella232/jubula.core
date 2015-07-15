@@ -9,7 +9,7 @@
 <section xml:id="actionForStoringValuesApplication" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Application Component (used for interacting with windows, dialogs and the application as a whole)</title>
+  <title>Store value</title>
   
   <para><emphasis>Store Value (by declaring the value and the variable)</emphasis></para>
   <para>

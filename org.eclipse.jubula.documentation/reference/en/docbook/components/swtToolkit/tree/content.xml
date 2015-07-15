@@ -16,6 +16,10 @@
   	tree. Use this component if you want to select or check the selection of checkboxes on an SWT tree. For other actions on
   	trees use the tree component in the <emphasis>concrete</emphasis> toolkit. 
   </para>
+  <para role="tip">
+  	Please keep in mind that it is not possible to object map nodes within the tree  but to object map the tree  
+  	as a whole only. In order to interact with single nodes you have to use the according actions.
+  </para>
   <figure>
   	<title>
   		SWT Tree Component
