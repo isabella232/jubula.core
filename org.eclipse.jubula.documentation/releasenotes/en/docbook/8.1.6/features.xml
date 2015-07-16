@@ -1,0 +1,26 @@
+<section xml:id="new-features-and-developments-8.1.6" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  
+  <para>
+    <emphasis role="strong">It is now possible to change the order of data sets in the Data Sets View.</emphasis>
+  </para>
+  <para>
+  	It is now possible to change the order of single data sets in the Data Sets View. You can now move single data sets
+  	up and down in the Data Sets View
+  </para>
+  <para>
+  	<emphasis role="strong">GEF figure canvas are addressable via API CAPs</emphasis>
+  </para>
+  <para>
+  	GEF figure canvas can now be addressed by using the Jubula client API.
+  </para>
+  <para>
+  	<emphasis role="strong">Performance for opening Test Result Details in the Reporting Perspective has been improved</emphasis>
+  </para>
+  <para>
+  	The performance for opening Test Result Details in the Reporting Perspective has been drastically improved. Currently
+  	it is not possible to use the functions Open Specification and Show Specification due to these changes. 
+  </para>
+</section>

@@ -14,24 +14,30 @@
     </listitem>
    </itemizedlist>
    <para>
-    <emphasis role="strong">Support for DatePickers in JavaFX</emphasis>
+    	<emphasis role="strong">Support for DatePickers in JavaFX</emphasis>
   </para>
   <itemizedlist>
     <listitem>
       <para>
-     	DatePickers in the JavaFX toolkit can now be addressed as components with text input. You can also execute tests
-     	which address graphics components <emphasis>(ub_grc)</emphasis> on DatePickers.
+     		DatePickers in the JavaFX toolkit can now be addressed as components with text input. You can also execute tests
+     		which address graphics components <emphasis>(ub_grc)</emphasis> on DatePickers.
       </para>
     </listitem>
    </itemizedlist>
    <para>
-    <emphasis role="strong">Take screenshot on error now supported in the Java API</emphasis>
+    	<emphasis role="strong">Take screenshot on error now supported in the Java API</emphasis>
   </para>
   <itemizedlist>
     <listitem>
       <para>
-     	 Take screenshot on error is now supported when using the Java API.
+     	 	Take screenshot on error is now supported when using the Java API.
       </para>
+    </listitem>
+    <listitem>
+    	<para>
+    		<emphasis role="strong">Reporting to ALM is now performed by having n transactions for n test results / 
+    		field updates.</emphasis>
+    	</para>
     </listitem>
    </itemizedlist>
 </section>
