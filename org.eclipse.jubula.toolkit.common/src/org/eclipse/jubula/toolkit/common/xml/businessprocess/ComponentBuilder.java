@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.eclipse.core.runtime.CoreException;
@@ -54,6 +56,9 @@ public class ComponentBuilder extends AbstractComponentBuilder {
     /** The logger. */
     private static Logger log = LoggerFactory.getLogger(ComponentBuilder.class);
     
+    /** exception during initialization with {@link #initCompSystem()} */
+    private Map<String, Exception> m_initExceptions = 
+            new HashMap<String, Exception>();
     
     /**
      * Default constructor.
@@ -62,6 +67,14 @@ public class ComponentBuilder extends AbstractComponentBuilder {
         super();
     }
     
+    /**
+     * 
+     * @return the Exceptions which occurred during initialization
+     */
+    public Map<String, Exception> getInitExceptions() {
+        return m_initExceptions;
+    }
+
     /**
      * Initializes the Component System.<br>
      * Reads in all ComponentConfiguration Files of all installed 
@@ -103,10 +116,20 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                     final String msg = Messages.ComponenConfigurationNotFound
                         + StringConstants.EXCLAMATION_MARK;
                     log.error(msg, fileNotFoundEx);
+                    m_initExceptions.put(extension.getContributor().getName(),
+                            fileNotFoundEx);
                 } catch (CoreException coreEx) {
                     final String msg = Messages.CouldNotCreateToolkitProvider
                         + StringConstants.EXCLAMATION_MARK;
                     log.error(msg, coreEx);
+                    m_initExceptions.put(extension.getContributor().getName(),
+                            coreEx);
+                } catch (RuntimeException ce) {
+                    final String msg = Messages.CouldNotCreateToolkitProvider
+                            + StringConstants.EXCLAMATION_MARK;
+                    log.error(msg, ce);
+                    m_initExceptions.put(extension.getContributor().getName(),
+                            ce);
                 }
             }
         }
