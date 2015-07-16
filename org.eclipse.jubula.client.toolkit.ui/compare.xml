@@ -19,6 +19,9 @@
 
 		  <param name="target"
               value="CAPs"/>
+			
+		  <param name="exceptions"
+              value="CAPs/exceptions"/>
 
 		  <param name="ignoreCommon"
               value="true"/>
@@ -30,12 +33,15 @@
         <fail unless="expectedBase" message="You have to specify where the lists of expected CAPs are located"/>
         <fail unless="executedBase" message="You have to specify where the log files of executed CAPs are located"/>
         <fail unless="target" message="You have to specify the target directory for creating the diffs"/>
+        <fail unless="exceptions" message="You have to specify the directory containing exceptions"/>
         <fail unless="ignoreCommon" message="You have to specify whether you want common CAPs from log and expectation in the diffs"/>
 		
         <property name="targetExecuted" value="${target}/executed"/>
         <property name="targetDiff" value="${target}/diff"/>
+		<property name="resultDir" value="${target}/results"/>
         <mkdir dir="${targetExecuted}"/>
         <mkdir dir="${targetDiff}"/>
+        <mkdir dir="${resultDir}"/>
 		<script language="javascript">
 			<![CDATA[
             var toolkits = ["javafx", "swing", "swt", "html"];
@@ -94,6 +100,24 @@
                     diffTaskParam3.setValue(targetDiff + "/rc_" + tk + "_" + pf + ".log");
 			
                     diffTask.execute();
+			
+			        resultTask = project.createTask("antcall");
+                    resultTask.init();
+                    resultTask.setTarget("compareCAPs");
+            
+                    resultTaskParam1 = resultTask.createParam();
+                    resultTaskParam1.setName("expected");
+                    resultTaskParam1.setValue(targetDiff + "/rc_" + tk + "_" + pf + ".log");
+            
+                    resultTaskParam2 = resultTask.createParam();
+                    resultTaskParam2.setName("executed");
+                    resultTaskParam2.setValue(exceptions + "/" + tk + "_exceptions" + ".txt");
+                    
+                    resultTaskParam3 = resultTask.createParam();
+                    resultTaskParam3.setName("output");
+                    resultTaskParam3.setValue(resultDir + "/rc_" + tk + "_" + pf + ".log");
+            
+                    resultTask.execute();
 		        }
             }
             ]]>
