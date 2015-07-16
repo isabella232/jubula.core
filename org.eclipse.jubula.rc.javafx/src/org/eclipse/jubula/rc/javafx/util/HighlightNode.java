@@ -65,6 +65,7 @@ public class HighlightNode {
         if (n.effectProperty().isBound()) {
             return;
         }
-        n.setEffect(oldEffects.remove(n));
+        Effect oldEffect = oldEffects.remove(n);
+        n.setEffect(oldEffect);
     }
 }

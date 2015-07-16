@@ -26,7 +26,6 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
@@ -86,20 +85,17 @@ public class MappingListener extends AbstractFXAUTEventHandler {
         public void handle(WorkerStateEvent workerEvent) {
             MouseEvent event = (MouseEvent) workerEvent.getSource().getValue();
             Point2D pos = new Point2D(event.getScreenX(), event.getScreenY());
-            Node currN = getCurrentNode();
-            if (currN != null) {
-                if (!(NodeBounds.checkIfContains(pos, currN))) {
+            Node currNode = getCurrentNode();
+            Node newNode = ComponentHandler.getComponentByPos(pos);
+            if (currNode != newNode) {
+                if (currNode != null) {
                     lowlightCurrentNode();
                     setCurrentNode(null);
                 }
-            }
-
-            Node n = ComponentHandler.getComponentByPos(pos);
-
-            if (n != null && n != currN) {
-
-                setCurrentNode(n);
-                highlightCurrentNode();
+                if (newNode != null) {
+                    setCurrentNode(newNode);
+                    highlightCurrentNode();
+                }
             }
         }
 

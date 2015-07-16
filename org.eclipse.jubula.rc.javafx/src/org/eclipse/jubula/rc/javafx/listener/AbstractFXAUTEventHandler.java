@@ -40,9 +40,6 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
      *            the <code>Node</code> to be highlighted
      */
     public void setCurrentNode(Node n) {
-        if (m_currentNode != null) {
-            lowlightCurrentNode();
-        }
         m_currentNode = n;
     }
 
