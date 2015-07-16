@@ -21,7 +21,7 @@
               value="CAPs"/>
 			
 		  <param name="exceptions"
-              value="CAPs/exceptions"/>
+              value="notToCheck"/>
 
 		  <param name="ignoreCommon"
               value="true"/>
