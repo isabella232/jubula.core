@@ -14,6 +14,7 @@ import java.util.concurrent.Callable;
 
 import javafx.scene.control.TreeTableView;
 
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -69,4 +70,12 @@ public class TreeTableViewAdapter extends
         return result;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, Object cell) {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
+    }
 }

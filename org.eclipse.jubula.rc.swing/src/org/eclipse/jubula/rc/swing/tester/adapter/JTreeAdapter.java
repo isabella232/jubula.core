@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.swing.tester.adapter;
 
 import javax.swing.JTree;
 
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 //import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
@@ -60,6 +61,15 @@ public class JTreeAdapter extends JComponentAdapter implements ITreeComponent {
      */
     public boolean isRootVisible() {
         return getTable().isRootVisible();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, Object cell) {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
     }
     
 }

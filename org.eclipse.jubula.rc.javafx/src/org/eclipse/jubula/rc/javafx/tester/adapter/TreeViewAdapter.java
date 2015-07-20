@@ -15,9 +15,13 @@ import java.util.concurrent.Callable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
+import org.eclipse.jubula.rc.common.exception.RobotException;
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 /**
  * Implementation of the Tree interface as an adapter for <code>TreeView</code>.
@@ -71,4 +75,27 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
         return result;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, Object cell) {
+        Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
+                new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        try {
+                            return getRobot().getPropertyValue(cell, name);
+                        } catch (RobotException e) {
+                            throw new StepExecutionException(
+                                    e.getMessage(),
+                                    EventFactory
+                                            .createActionError(TestErrorEvent.
+                                                    PROPERTY_NOT_ACCESSABLE));
+                        }
+                    }
+                });
+        return String.valueOf(prop);
+    }
 }

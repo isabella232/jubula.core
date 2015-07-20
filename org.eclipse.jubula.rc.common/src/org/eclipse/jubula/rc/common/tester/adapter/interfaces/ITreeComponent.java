@@ -38,4 +38,12 @@ public interface ITreeComponent extends IWidgetComponent {
      * @return The visibility of the Root Node
      */
     public boolean isRootVisible();
+
+    /**
+     * Gets the property value of a tree cell
+     * @param name the name of the property
+     * @param cell the cell
+     * @return the value
+     */
+    public String getPropertyValueOfCell(String name, Object cell);
 }
