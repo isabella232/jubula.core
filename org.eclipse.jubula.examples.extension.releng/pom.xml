@@ -30,6 +30,8 @@
         <module>../org.eclipse.jubula.examples.extension.javafx.toolkit</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.api</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.api.test</module>
+        
+        <module>../org.eclipse.jubula.examples.extension.rcp.aut</module>
     </modules>
 
 </project> 

@@ -27,12 +27,15 @@
    <feature url="features/org.eclipse.jubula.feature.rc_3.1.0.qualifier.jar" id="org.eclipse.jubula.feature.rc" version="3.1.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <category-def name="org.eclipse.test" label="Testing"/>
    <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="3.1.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_3.1.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="3.1.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
+   <bundle id="org.eclipse.jubula.examples.extension.rcp.aut" version="3.1.0.qualifier">
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
+   </bundle>
+   <category-def name="org.eclipse.test" label="Testing"/>
    <category-def name="org.eclipse.jubula.examples.extension.repo" label="Jubula - Examples"/>
 </site>

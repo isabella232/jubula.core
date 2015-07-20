@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+         <category
+               id="org.eclipse.jubula.examples.extension.rcp.aut.ExtensionCatergory"
+               name="Jubula Example Views">
+         </category>
+      <view
+            class="org.eclipse.jubula.examples.extension.rcp.aut.ExtensionView"
+            id="org.eclipse.jubula.examples.extension.rcp.aut.ExtensionView"
+            category="org.eclipse.jubula.examples.extension.rcp.aut.ExtensionCatergory"
+            name="Group test View"
+            restorable="true">
+      </view>
+   </extension>
+      <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.jubula.example.aut.adder.rcp.showView">
+                <command
+                     commandId="org.eclipse.ui.views.showView"
+                     label="Extension View"
+                     style="push">
+                  <parameter
+                        name="org.eclipse.ui.views.showView.viewId"
+                        value="org.eclipse.jubula.examples.extension.rcp.aut.ExtensionView">
+                  </parameter>
+               </command>
+           </menuContribution>
+            </extension>
+
+</plugin>
