@@ -16,8 +16,9 @@ import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContex
  * Interface for all necessary methods for testing trees.
  * 
  * @author BREDEX GmbH
+ * @param <T> the type of a tree item
  */
-public interface ITreeComponent extends IWidgetComponent {
+public interface ITreeComponent<T> extends IWidgetComponent {
 
     /**
      * Gets the root node(s) of the tree.
@@ -45,5 +46,5 @@ public interface ITreeComponent extends IWidgetComponent {
      * @param cell the cell
      * @return the value
      */
-    public String getPropertyValueOfCell(String name, Object cell);
+    public String getPropertyValueOfCell(String name, T cell);
 }

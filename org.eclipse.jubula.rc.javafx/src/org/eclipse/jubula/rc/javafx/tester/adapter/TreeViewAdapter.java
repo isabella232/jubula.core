@@ -30,7 +30,7 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created 19.11.2013
  */
 public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
-        implements ITreeComponent {
+        implements ITreeComponent<TreeItem<?>> {
 
     /**
      * Constructor
@@ -79,7 +79,7 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
     /**
      * {@inheritDoc}
      */
-    public String getPropertyValueOfCell(String name, Object cell) {
+    public String getPropertyValueOfCell(String name, TreeItem<?> cell) {
         Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
                 new Callable<String>() {
 
