@@ -211,14 +211,14 @@ public class Launcher implements IApplication {
                 context.applicationRunning();
                 return instanceLocationCheck;
             }
-
-            Platform.addLogListener(new ILogListener() {
+            ILogListener runtimeLogger = new ILogListener() {
                 public void logging(IStatus status, String pluginId) {
                     if (status.getException() instanceof RuntimeException) {
                         Plugin.getDefault().handleError(status.getException());
                     }
                 }
-            });
+            };
+            Platform.addLogListener(runtimeLogger);
             
             // create the workbench with this advisor and run it until it exits
             // N.B. createWorkbench remembers the advisor, and also registers
@@ -227,6 +227,7 @@ public class Launcher implements IApplication {
             int returnCode = PlatformUI.createAndRunWorkbench(display,
                     getWorkbenchAdvisor());
 
+            Platform.removeLogListener(runtimeLogger);
             // the workbench doesn't support relaunch yet (bug http://eclip.se/61809) so
             // for now restart is used, and exit data properties are checked
             // here to substitute in the relaunch return code if needed
