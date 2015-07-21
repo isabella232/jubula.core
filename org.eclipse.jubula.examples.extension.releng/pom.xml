@@ -22,6 +22,7 @@
         <module>../org.eclipse.jubula.examples.extension.swing.rc</module>
         <module>../org.eclipse.jubula.examples.extension.swing.toolkit</module>
         <module>../org.eclipse.jubula.examples.extension.swing.api</module>
+        <module>../org.eclipse.jubula.examples.extension.swing.api.test</module>
         <module>../org.eclipse.jubula.examples.extension.swing.aut</module>
 
         <module>../org.eclipse.jubula.examples.extension.javafx.feature</module>
@@ -31,7 +32,12 @@
         <module>../org.eclipse.jubula.examples.extension.javafx.api</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.api.test</module>
         
+        <module>../org.eclipse.jubula.examples.extension.rcp.feature</module>
+        <module>../org.eclipse.jubula.examples.extension.rcp.rc</module>
+        <module>../org.eclipse.jubula.examples.extension.rcp.toolkit</module>
+        <module>../org.eclipse.jubula.examples.extension.rcp.api</module>
         <module>../org.eclipse.jubula.examples.extension.rcp.aut</module>
+        <module>../org.eclipse.jubula.examples.extension.rcp.api.test</module>
     </modules>
 
 </project> 

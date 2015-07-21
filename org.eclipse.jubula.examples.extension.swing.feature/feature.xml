@@ -41,6 +41,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.jubula.examples.extension.swing.toolkit.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.jubula.examples.extension.swing.rc"
          download-size="0"
          install-size="0"
@@ -49,7 +56,54 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
+         id="org.eclipse.jubula.examples.extension.swing.rc.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.examples.extension.swing.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.examples.extension.swing.api.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.examples.extension.swing.api.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.examples.extension.swing.api.test.source"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
          id="org.eclipse.jubula.examples.extension.swing.aut"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.examples.extension.swing.aut.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
