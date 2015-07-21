@@ -21,6 +21,8 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.ILogListener;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeySequenceText;
@@ -65,6 +67,17 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     private static Logger log = 
         LoggerFactory.getLogger(JubulaWorkbenchAdvisor.class);
 
+    /** {@link ILogListener} for Platform to handle errors
+     * see {@link Plugin#handleError(Throwable)} 
+     */
+    private ILogListener m_runtimeLogger = new ILogListener() {
+        public void logging(IStatus status, String pluginId) {
+            if (status.getException() instanceof RuntimeException) {
+                Plugin.getDefault().handleError(status.getException());
+            }
+        }
+    };
+
     /**
      * Constructs a new <code>JubulaWorkbenchAdvisor</code>.
      */
@@ -83,7 +96,6 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
      * @param configurer
      *            IWorkbenchConfigurer
      */
-    @SuppressWarnings("nls")
     public void initialize(IWorkbenchConfigurer configurer) {
         super.initialize(configurer);
         configurer.setSaveAndRestore(true);
@@ -198,7 +210,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
      * normal behavior of Eclipse.
      */
     public void postStartup() {
-        // do nothing after application-start
+        Platform.addLogListener(m_runtimeLogger);
     }
 
     /**
@@ -400,7 +412,8 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
             if (log.isErrorEnabled()) {
                 log.error(Messages.UnhandledRuntimeException, e);
             }
-        }  
+        }
+        Platform.removeLogListener(m_runtimeLogger);
         return super.preShutdown();
     }
     

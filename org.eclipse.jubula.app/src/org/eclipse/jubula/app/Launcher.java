@@ -19,7 +19,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Properties;
 
-import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -28,7 +27,6 @@ import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.app.core.JubulaWorkbenchAdvisor;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -211,15 +209,7 @@ public class Launcher implements IApplication {
                 context.applicationRunning();
                 return instanceLocationCheck;
             }
-            ILogListener runtimeLogger = new ILogListener() {
-                public void logging(IStatus status, String pluginId) {
-                    if (status.getException() instanceof RuntimeException) {
-                        Plugin.getDefault().handleError(status.getException());
-                    }
-                }
-            };
-            Platform.addLogListener(runtimeLogger);
-            
+
             // create the workbench with this advisor and run it until it exits
             // N.B. createWorkbench remembers the advisor, and also registers
             // the workbench globally so that all UI plug-ins can find it using
@@ -227,7 +217,6 @@ public class Launcher implements IApplication {
             int returnCode = PlatformUI.createAndRunWorkbench(display,
                     getWorkbenchAdvisor());
 
-            Platform.removeLogListener(runtimeLogger);
             // the workbench doesn't support relaunch yet (bug http://eclip.se/61809) so
             // for now restart is used, and exit data properties are checked
             // here to substitute in the relaunch return code if needed
