@@ -767,4 +767,10 @@ public class TableTester extends AbstractTableTester {
                 setScrollToVisible(false),
                 itemBounds.x / 2, true, itemHeight / 2, true);
     }
+
+    /** {@inheritDoc} */
+    protected Object getNodeAtMousePosition() throws StepExecutionException {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
+    }
 }

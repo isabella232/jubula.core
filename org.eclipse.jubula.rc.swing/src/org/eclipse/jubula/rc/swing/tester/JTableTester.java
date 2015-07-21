@@ -175,4 +175,10 @@ public class JTableTester extends AbstractTableTester {
                     }
                 });
     }
+
+    /** {@inheritDoc} */
+    protected Object getNodeAtMousePosition() throws StepExecutionException {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
+    }
 }

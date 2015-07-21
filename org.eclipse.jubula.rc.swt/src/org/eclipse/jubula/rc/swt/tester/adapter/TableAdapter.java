@@ -466,4 +466,13 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
     public Object getTableHeader() {
         return m_table;
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, Object cell) {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
+    }
 }

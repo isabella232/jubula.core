@@ -19,8 +19,9 @@ import org.eclipse.jubula.rc.common.implclasses.table.Cell;
  * Interface for all necessary methods for testing tables.
  * 
  * @author BREDEX GmbH
+ * @param <T> the type of a table item
  */
-public interface ITableComponent extends ITextComponent {
+public interface ITableComponent<T> extends ITextComponent {
     
     
     /**
@@ -149,6 +150,13 @@ public interface ITableComponent extends ITextComponent {
      *                  the table is returned.
      */
     public Object getTableHeader();
-    
+
+    /**
+     * Gets the property value of a table cell
+     * @param name the name of the property
+     * @param cell the cell
+     * @return the value
+     */
+    public String getPropertyValueOfCell(String name, T cell);
 
 }

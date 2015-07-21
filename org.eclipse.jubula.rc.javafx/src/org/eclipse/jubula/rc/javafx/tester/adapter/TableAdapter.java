@@ -17,18 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.Pane;
-
+import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
@@ -47,6 +36,18 @@ import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
 
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Pane;
+
 /**
  * Adapter for a TableView(Table)
  *
@@ -54,7 +55,7 @@ import com.sun.javafx.scene.control.skin.TableColumnHeader;
  * @created 7.11.2013
  */
 public class TableAdapter extends JavaFXComponentAdapter<TableView<?>> 
-                          implements ITableComponent {
+                          implements ITableComponent<TableCell<?, ?>> {
 
     /**
      * Workaround to support nested Columns without modifying classes which would
@@ -539,6 +540,30 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     }
                 });
         return result;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, TableCell<?, ?> cell) {
+        Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
+                new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        try {
+                            return getRobot().getPropertyValue(cell, name);
+                        } catch (RobotException e) {
+                            throw new StepExecutionException(
+                                    e.getMessage(),
+                                    EventFactory
+                                            .createActionError(TestErrorEvent.
+                                                    PROPERTY_NOT_ACCESSABLE));
+                        }
+                    }
+                });
+        return String.valueOf(prop);
     }
 
 }

@@ -1071,11 +1071,38 @@ public abstract class AbstractTableTester
      */
     protected abstract Cell getCellAtMousePosition() 
         throws StepExecutionException;
-   
+
+    /**
+     * @return the object under the current mouse position.
+     * @throws StepExecutionException If no cell is found.
+     */
+    protected abstract Object getNodeAtMousePosition() 
+        throws StepExecutionException;
+    
     /**
      * Verifies if mouse is on header.
      * @return true if mouse is on header
      */
     protected abstract boolean isMouseOnHeader();
+    
+    /**
+     * Verifies the value of the property with the name <code>name</code>
+     * of the tree item at the current mouse position.
+     * The name of the property has be specified according to the JavaBean
+     * specification. The value returned by the property is converted into a
+     * string by calling <code>toString()</code> and is compared to the passed
+     * <code>value</code>.
+     * 
+     * @param name The name of the property
+     * @param value The value of the property as a string
+     * @param operator The operator used to verify
+     */
+    public void rcCheckPropertyAtMousePosition(final String name, String value,
+            String operator) {
+        final Object cell = getNodeAtMousePosition();
+        final ITableComponent bean = getTableAdapter();
+        final String propToStr = bean.getPropertyValueOfCell(name, cell);
+        Verifier.match(propToStr, value, operator);
+    }
 
 }

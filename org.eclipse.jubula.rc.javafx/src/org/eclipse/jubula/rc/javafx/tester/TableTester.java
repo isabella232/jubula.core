@@ -19,17 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumnBase;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.CheckBoxTableCell;
-
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
@@ -50,6 +39,17 @@ import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
+
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumnBase;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
 
 /**
  * Toolkit specific commands for the <code>TableView</code>
@@ -634,5 +634,37 @@ public class TableTester extends AbstractTableTester {
             startingIndex = c.getCol();
         }
         return startingIndex + 1;
-    } 
+    }
+
+    /** {@inheritDoc} */
+    protected Object getNodeAtMousePosition() throws StepExecutionException {
+        Point awtPoint = getRobot().getCurrentMousePosition();
+        final Point2D point = new Point2D(awtPoint.x, awtPoint.y);
+        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getNodeAtMousePosition", new Callable<Object>() { //$NON-NLS-1$
+                    @Override
+                    public Object call() throws Exception {
+                        // Update the layout coordinates otherwise
+                        // we would get old position values
+                        ((TableView<?>) getRealComponent()).layout();
+
+                        List<TableCell> tCells = NodeTraverseHelper
+                                .getInstancesOf((Parent) getRealComponent(),
+                                        TableCell.class);
+                        for (TableCell cell : tCells) {
+                            if (NodeBounds.checkIfContains(point, cell)) {
+                                return cell;
+                            }
+                        }
+                        throw new StepExecutionException(
+                                "No table node found at mouse position: " //$NON-NLS-1$
+                                        + "X: " + point.getX() //$NON-NLS-1$
+                                        + "Y: " + point.getY(), //$NON-NLS-1$
+                                EventFactory
+                                        .createActionError(
+                                                TestErrorEvent.NOT_FOUND));
+                    }
+                });
+        return result;
+    }
 }

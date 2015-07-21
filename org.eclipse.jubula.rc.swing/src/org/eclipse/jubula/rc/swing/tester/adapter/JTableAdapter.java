@@ -374,4 +374,13 @@ public class JTableAdapter extends JComponentAdapter
                 });
 
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, Object cell) {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
+    }
 }
