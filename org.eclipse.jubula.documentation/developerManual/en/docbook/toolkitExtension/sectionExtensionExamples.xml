@@ -24,6 +24,9 @@
           <listitem>
             <para>Jubula Example - Toolkit Extension - Swing: JSlider</para>
           </listitem>
+          <listitem>
+            <para>Jubula Example - Toolkit Extension - RCP: Group</para>
+          </listitem>
       </itemizedlist>
   </para>
   <para>
@@ -38,6 +41,6 @@ org.eclipse.jubula.examples.extension.<toolkitName>.toolkit : holds the declarat
 ]]>
     </programlisting>
   <para>
-  The individual AUTs showing the capability of these extensions are located in "examples/development/extension/AUT".
+  The individual AUTs showing the capability of these extensions are located in "examples/development/extension/AUT". For RCP the AUT is the SimpleAdder located in "examples/AUTs/SimpleAdder/rcp"
   </para>
 </section>

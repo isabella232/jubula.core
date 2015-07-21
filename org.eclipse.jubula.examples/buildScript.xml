@@ -191,47 +191,6 @@
 		<zip destfile="${examples.development.dir}/gef/${ExampleGEFIdentifierExample}.zip">
 			<zipfileset dir="../${ExampleGEFIdentifierExample}" prefix="${ExampleGEFIdentifierExample}"/>
 		</zip>
-
-		<mkdir dir="${examples.development.dir}/extension"/>
-		<property name="extensionSourceDir" value="${examples.development.dir}/extension/src"/>
-		<mkdir dir="${extensionSourceDir}"/>
-		<zip destfile="${extensionSourceDir}/SwingExtension.zip">
-			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-		</zip>
-
-		<zip destfile="${extensionSourceDir}/JavaFXExtension.zip">
-			<zipfileset dir="../${ExampleJavaFXExtensionClient}" prefix="${ExampleJavaFXExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-			<zipfileset dir="../${ExampleJavaFXExtensionRC}" prefix="${ExampleJavaFXExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-			<zipfileset dir="../${ExampleJavaFXExtensionRCContainer}" prefix="${ExampleJavaFXExtensionRCContainer}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-			<zipfileset dir="../${ExampleJavaFXExtensionFeature}" prefix="${ExampleJavaFXExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-		</zip>
-
-		<zip destfile="${extensionSourceDir}/MavenBuildExtension.zip">
-			<zipfileset dir="../${ExampleJavaFXExtensionClient}" prefix="${ExampleJavaFXExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml" />
-			<zipfileset dir="../${ExampleJavaFXExtensionRC}" prefix="${ExampleJavaFXExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml" />
-			<zipfileset dir="../${ExampleJavaFXExtensionRCContainer}" prefix="${ExampleJavaFXExtensionRCContainer}" excludes="build, build/**, target, target/**, buildScript.xml" />
-			<zipfileset dir="../${ExampleJavaFXExtensionFeature}" prefix="${ExampleJavaFXExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml" />
-			<zipfileset dir="../${ExampleSwingExtensionClient}" prefix="${ExampleSwingExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml" />
-			<zipfileset dir="../${ExampleSwingExtensionRC}" prefix="${ExampleSwingExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml" />
-			<zipfileset dir="../${ExampleSwingExtensionFeature}" prefix="${ExampleSwingExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml" />
-			<zipfileset dir="../${ExampleExtensionReleng}" prefix="${ExampleExtensionReleng}" excludes="build, build/**, target, target/**, buildScript.xml" />
-		</zip>
-
-		<zip destfile="${extensionSourceDir}/RCPExtension.zip">
-			<zipfileset dir="../${ExampleRCPExtensionClient}" prefix="${ExampleRCPExtensionClient}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml" />
-			<zipfileset dir="../${ExampleRCPExtensionRC}" prefix="${ExampleRCPExtensionRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-			<zipfileset dir="../${ExampleRCPExtensionFeature}" prefix="${ExampleRCPExtensionFeature}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-		</zip>
-
-		<zip destfile="${extensionSourceDir}/SwingRendererExtension.zip">
-			<zipfileset dir="../${ExampleSwingRendererAdapterRC}" prefix="${ExampleSwingRendererAdapterRC}" excludes="build, build/**, target, target/**, buildScript.xml, pom.xml"/>
-		</zip>
-
-		<zip destfile="${extensionSourceDir}/SwingAUT.zip">
-			<zipfileset dir="../${ExampleSwingExtensionAUT}" prefix="${ExampleSwingExtensionAUT}" />
-		</zip>
 	</target>
 
 	<target name="releaseLibrary">
