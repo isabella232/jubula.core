@@ -14,6 +14,7 @@
   <para>
   	This class of components describes generally all editable text areas.
   </para>
+  <para><emphasis role="strong">Example Mockups</emphasis></para>
   <figure>
   	<title>
   		Text Input Component
@@ -24,83 +25,82 @@
   		</imageobject>
  	</mediaobject>
   </figure>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionsThatSendKeyboardInteractionGeneral"/>
+  			<xref linkend="actionCheckEditabilityGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectTextInputComponents"/>
+  			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckEditabilityGeneral"/>
+  			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckEnablementGeneral"/>
+  			<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckExistenceGeneral"/>
+  			<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckFocus"/>
+  			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckProperty"/>
+  			<xref linkend="actionCheckTextComponentsThatShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckSelectionGeneral"/>
+  			<xref linkend="actionClickGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextComponentsThatShowText"/>
+  			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickGeneral"/>
+  			<xref linkend="actionsThatSendKeyboardInteractionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGeneral"/>
+  			<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectContextMenus"/>
+  			<xref linkend="actionSelectTextInputComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionShowText"/>
+  			<xref linkend="actionShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsForStoringValuesGeneral"/>
+  			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponentGeneral"/>
+  			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>
-  
 </section>

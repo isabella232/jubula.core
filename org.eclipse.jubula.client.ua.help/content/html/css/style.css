@@ -54,3 +54,7 @@
 .table-title, .figure-title {
     margin-top: 5px;
 }
+
+.mediaobject img {
+	max-width: 80%;
+}

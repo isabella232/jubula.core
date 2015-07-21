@@ -14,61 +14,61 @@
   <para>
   	A HTML hyperlink is a link which can be followed from within a browser.
   </para>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
-  	<listitem>
+  <listitem>
   		<para>
-  			<xref linkend="actionCheckURL"/>
+  			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckEnablementGeneral"/>
+  			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckExistenceGeneral"/>
+  			<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckFocus"/>
+  			<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckProperty"/>
+  			<xref linkend="actionCheckTextComponentsThatShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextComponentsThatShowText"/>
+  			<xref linkend="actionCheckURL" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickGeneral"/>
+  			<xref linkend="actionClickGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGeneral"/>
+  			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionShowText"/>
+  			<xref linkend="actionShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsForStoringValuesGeneral"/>
+  			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponentGeneral"/>
+  			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>

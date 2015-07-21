@@ -12,13 +12,14 @@
   <?dbhtml dir="listComponent"?>
   <title>Concrete toolkit list component</title>
   <para>
-  	A <emphasis>list</emphasis> is a component which displays a number of values. Lists allow single or multiple
+  	A <emphasis>list</emphasis> component is a component which displays a number of values. Lists allow single or multiple
   	values to be selected. 	
   </para>
   <para>
-  	Because the comma (,) is a special symbol for lists, if you want to use a comma as part of your parameter value,
+  	Because the comma (,) is a special symbol for list components, if you want to use a comma as part of your parameter value,
   	you have to mask it.
   </para>
+  <para><emphasis role="strong">Example Mockups</emphasis></para>
   <figure>
   	<title>
   		List Component
@@ -29,81 +30,76 @@
   		</imageobject>
   	</mediaobject>
   </figure>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
-  	<listitem>
+  <listitem>
   		<para>
-  			<xref linkend="actionCheckExistenceListComponents"/>
+  			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckSelectionListComponents"/>
+  			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropListComponents"/>
+  			<xref linkend="actionCheckExistenceListComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectListComponents"/>
+  			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckEnablementGeneral"/>
+  			<xref linkend="actionCheckSelectionListComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckExistenceGeneral"/>
+  			<xref linkend="actionCheckTextComponentsThatShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckSelectionGeneral"/>
+  			<xref linkend="actionClickGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextComponentsThatShowText"/>
+  			<xref linkend="actionDragAndDropListComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickGeneral"/>
+  			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGeneral"/>
+  			<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectContextMenus"/>
+  			<xref linkend="actionSelectListComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionShowText"/>
+  			<xref linkend="actionShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsForStoringValuesGeneral"/>
+  			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckExistenceListComponents"/>
-  		</para>
-  	</listitem>
-  	<listitem>
-  		<para>
-  			<xref linkend="actionWaitForComponentGeneral"/>
+  			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>

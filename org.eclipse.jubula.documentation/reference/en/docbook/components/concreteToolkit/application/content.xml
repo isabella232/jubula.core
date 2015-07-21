@@ -12,26 +12,20 @@
   <?dbhtml dir="application"?>
   <title>Concrete toolkit application component</title>
   <para>
-  	<itemizedlist>
-  		<listitem>
-  			<para>
-  				The <emphasis>Application</emphasis> component is the container for all other components.
-  			</para>
-  		</listitem>
-  		<listitem>
-  			<para>
-  				It represents the AUT as a whole.
-  			</para>
-  		</listitem>
-  	</itemizedlist>
+  	The <emphasis>Application</emphasis> component is the container for all other components.
   </para>
+  <para>
+  	It represents the AUT as a whole.
+  </para>
+  		
+  <para><emphasis role="strong">Example Mockups</emphasis></para>
   <figure>
   	<title>
   		Application with window in foreground
   	</title>
   	<mediaobject>
 		<imageobject>
-  			<imagedata fileref="images/component/concrete/application_with_window_in_foreground.png" format="PNG"/>
+  			<imagedata contentwidth="4cm" fileref="images/component/concrete/application_with_window_in_foreground.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -45,113 +39,108 @@
   		</imageobject>
   	</mediaobject>
   </figure>
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionActivateApplication"/>
+  			<xref linkend="actionActivateApplication" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckExistenceApplication"/>
+  			<xref linkend="actionCheckExistenceApplication" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckNumericValues"/>
+  			<xref linkend="actionCheckNumericValues" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckStringValues"/>
+  			<xref linkend="actionCheckStringValues" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionPrepareForAUTTermination"/>
+  			<xref linkend="actionClick" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionRestart"/>
+  			<xref linkend="actionCopyTextToClipboard" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSynchronizeTerminationAndRestartOfAUT"/>
+  			<xref linkend="actionsThatSendKeyboardInteractionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionForStoringValuesApplication"/>
+  			<xref linkend="actionExecuteExternalCommand" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWait"/>
-  		</para>
-  	</listitem>
-  </itemizedlist>
-  <itemizedlist>
-  	<listitem>
-  		<para>
-  			<xref linkend="actionWaitForWindow"/>
+  			<xref linkend="actionManualTestStep" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForWindowActivation"/>
+  			<xref linkend="actionPauseTestExecution" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForWindowToClose"/>
+  			<xref linkend="actionPrepareForAUTTermination" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	
+  	<listitem>
+  		<para>
+  			<xref linkend="actionRestart" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClick"/>
+  			<xref linkend="actionStopwatch" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCopyTextToClipboard"/>
+  			<xref linkend="actionForStoringValuesApplication" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionExecuteExternalCommand"/>
+  			<xref linkend="actionSynchronizeTerminationAndRestartOfAUT" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionManualTestStep"/>
+  			<xref linkend="actionTakeScreenshot" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionPauseTestExecution"/>
+  			<xref linkend="actionWait" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+   	<listitem>
+  		<para>
+  			<xref linkend="actionWaitForWindow" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionStopwatch"/>
+  			<xref linkend="actionWaitForWindowActivation" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionTakeScreenshot"/>
+  			<xref linkend="actionWaitForWindowToClose" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
-  	<listitem>
-  		<para>
-  			<xref linkend="actionsThatSendKeyboardInteractionGeneral"/>
-  		</para>
-  	</listitem>
-  	<listitem>
-  		<para>
-  			<xref linkend="actionClick"/>
-  		</para>
-  	</listitem>
-  </itemizedlist>
+ </itemizedlist>
 </section>

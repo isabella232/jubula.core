@@ -19,33 +19,32 @@
   	Usually this dialog appears before a potentially dangerous operation is performed (program termination, file deletion, etc.)
 	Typically confirmation dialog boxes have two options (e.g. Yes / No, Confirm / Cancel).
   </para>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponent"/>
+  			<xref linkend="actionCheckExistenceAlert" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionInputTextAlert"/>
+  			<xref linkend="actionCheckTextAlert" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionInteractAlert"/>
+  			<xref linkend="actionInputTextAlert" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckExistenceAlert"/>
+  			<xref linkend="actionInteractAlert" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextAlert"/>
+  			<xref linkend="actionWaitForComponent" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>
-  
 </section>

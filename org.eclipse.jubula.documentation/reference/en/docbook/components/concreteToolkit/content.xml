@@ -22,10 +22,11 @@
   <xi:include href="comboComponent/content.xml"/>
   <xi:include href="listComponent/content.xml"/>
   <xi:include href="menuBarComponent/content.xml"/>
-  <xi:include href="tabComponent/content.xml"/>
+  <xi:include href="tabbedComponent/content.xml"/>
   <xi:include href="tableComponent/content.xml"/>
   <xi:include href="textComponent/content.xml"/>
   <xi:include href="textInputComponent/content.xml"/>
+  <xi:include href="tooltipComponent/content.xml"/>
   <xi:include href="treeComponent/content.xml"/>
     
 </section>

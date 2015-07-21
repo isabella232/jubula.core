@@ -17,31 +17,31 @@
   <para>
   	It represents the AUT as a whole.
   </para>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionGoBack"/>
+  			<xref linkend="actionGoBack" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionOpenURL"/>
+  			<xref linkend="actionOpenURL" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionReloadPage"/>
+  			<xref linkend="actionReloadPage" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectWindowByTitle"/>
+  			<xref linkend="actionSelectWindowByTitle" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectWindowWithID"/>
+  			<xref linkend="actionSelectWindowWithID" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>

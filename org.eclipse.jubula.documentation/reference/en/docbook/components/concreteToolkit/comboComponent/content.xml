@@ -12,29 +12,22 @@
   <?dbhtml dir="comboComponent"?>
   <title>Concrete toolkit combo component</title>
   <para>
-  	<itemizedlist>
-  		<listitem>
-  			<para>
-  				A <emphasis>combo box</emphasis> is a component which consists of a field or button and a drop down
-  				list.
-  			</para>
-  		</listitem>
-  		<listitem>
-  			<para>
-  				When the field or button is clicked, the list opens, allowing you to select one of a number of values.
-  			</para>
-  		</listitem>
-  	</itemizedlist>
+  	A <emphasis>combo component</emphasis> is a component which consists of a field or button and a drop down
+  	list.
   </para>
   <para>
-  	Because the comma (,)is a special symbol for combo boxes, if you want to use a comma as part of your parameter
+  	When the field or button is clicked, the list opens, allowing you to select one of a number of values.
+  </para>
+  <para>
+  	Because the comma (,)is a special symbol for combo components, if you want to use a comma as part of your parameter
   	value, you have to mask it. 
   </para>
   <para role="warning">
   	If you execute a <emphasis>click in component</emphasis> or <emphasis>click</emphasis> action on a combo
-  	box, please be aware that the combo box will then be active, and must be deactivated (e.g. by pressing Escape)
+  	component, please be aware that the combo component will then be active, and must be deactivated (e.g. by pressing Escape)
   	before continuing with other steps (e.g. clicking buttons) in the test.  
   </para>
+  <para><emphasis role="strong">Example Mockups</emphasis></para>
   <figure>
   	<title>
   		Combo Component
@@ -55,70 +48,71 @@
   		</imageobject>
   	</mediaobject>
   </figure>
+  <para><emphasis role="strong">Available Actions></para>
   <itemizedlist>
-  	<listitem>
+	<listitem>
   		<para>
-  			<xref linkend="actionCheckSelectionButtonComponents"/>
+  			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckEnablementGeneral"/>
+  			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckExistenceGeneral"/>
+  			<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckFocus"/>
+  			<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckProperty"/>
+  			<xref linkend="actionCheckSelectionButtonComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckSelectionGeneral"/>
+  			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextComponentsThatShowText"/>
+  			<xref linkend="actionCheckTextComponentsThatShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClick"/>
+  			<xref linkend="actionClick" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGeneral"/>
+  			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectContextMenus"/>
+  			<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionShowText"/>
+  			<xref linkend="actionShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsForStoringValuesGeneral"/>
+  			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponentGeneral"/>
+  			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>

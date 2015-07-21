@@ -12,139 +12,127 @@
   <?dbhtml dir="figureCanvas"?>
   <title>GEF toolkit figure canvas</title>
   <para>
+  	The <emphasis>figure canvas</emphasis> component is an editor where figures, connections and anchors are displayed.
+  </para>
+  <para>
+  	Testing GEF components involves mapping this figure canvas component and locating the figures based on their textpath.
+  </para>
+  <para>
+  	Use the GEF Inspector View to find out the textpath of the figures in the canvas component.
+  </para>
+  <para>
+  	The figure canvas component itself contains various items which can be addressed.
   	<itemizedlist>
   		<listitem>
   			<para>
-  				The <emphasis>figure canvas</emphasis> is an editor where figures, connections and anchors are displayed.
+  				Individual figures
   			</para>
   		</listitem>
   		<listitem>
   			<para>
-  				Testing GEF components involves mapping this figure canvas and locating the figures based on their textpath.
+  				Tools
   			</para>
   		</listitem>
   		<listitem>
   			<para>
-  				Use the GEF Inspector View to find out the textpath of the figures in the canvas.
+  				Connections
   			</para>
   		</listitem>
   		<listitem>
   			<para>
-  				The figure canvas itself contains various items which can be addressed.
-  				<itemizedlist>
-  					<listitem>
-  						<para>
-  							Individual figures
-  						</para>
-  					</listitem>
-  					<listitem>
-  						<para>
-  							Tools
-  						</para>
-  					</listitem>
-  					<listitem>
-  						<para>
-  							Connections
-  						</para>
-  					</listitem>
-  					<listitem>
-  						<para>
-  							Connection anchors. These are the points where connections join to figures. Connection anchors
-  							are considered as figures. As such, they can be addressed (clicked, checked etc.) using a textpath.
-  						</para>
-  					</listitem>
-  				</itemizedlist>
+  				Connection anchors. These are the points where connections join to figures. Connection anchors
+  				are considered as figures. As such, they can be addressed (clicked, checked etc.) using a textpath.
   			</para>
   		</listitem>
   	</itemizedlist>
   </para>
   <para role="tip">
-  	Please keep in mind that it is not possible to object map single components within the figure canvas but to object map 
-  	the figure canvas as a whole only. In order to interact with certain components within the figure canvas you have to use
+  	Please keep in mind that it is not possible to object map single components within the figure canvas component but to object map 
+  	the figure canvas component as a whole only. In order to interact with certain components within the figure canvas component you have to use
   	the according actions.
   </para>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckExistenceGEF"/>
+  			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckPropertyGEF"/>
+  			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickGEF"/>
+  			<xref linkend="actionCheckExistenceGEF" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGEF"/>
+  			<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectGEF"/>
+  			<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckEnablementGeneral"/>
+  			<xref linkend="actionCheckPropertyGEF" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckExistenceGeneral"/>
+  			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckFocus"/>
+  			<xref linkend="actionClickGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckProperty"/>
+  			<xref linkend="actionClickGEF" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckSelectionGeneral"/>
+  			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickGeneral"/>
+  			<xref linkend="actionDragAndDropGEF" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGeneral"/>
+  			<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectContextMenus"/>
+  			<xref linkend="actionSelectGEF" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionShowText"/>
+  			<xref linkend="actionShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsForStoringValuesGeneral"/>
+  			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponentGeneral"/>
+  			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>
-  
+  	
 </section>

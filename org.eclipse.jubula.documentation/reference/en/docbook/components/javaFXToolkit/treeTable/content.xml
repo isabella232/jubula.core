@@ -23,103 +23,113 @@
   	Please keep in mind that it is not possible to object map nodes/cells within the tree table but to object map the tree table 
   	as a whole only. In order to interact with single nodes/cells you have to use the according actions.
   </para>
-  
+  <para><emphasis role="strong">Example Mockups</emphasis></para>
+  <figure>
+  	<title>
+  		Tree Table Component
+  	</title>
+  	<mediaobject>
+  		<imageobject>
+  			<imagedata fileref="images/component/SWT/treeTable.png" format="PNG"/>
+  		</imageobject>
+  	</mediaobject>
+  </figure>
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckSelectionJavaFXTreeTables"/>
+  			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectJavaFXTreeTables"/>
+  			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckEnablementGeneral"/>
+  			<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckExistenceGeneral"/>
+  			<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckFocus"/>
+  			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckProperty"/>
+  			<xref linkend="actionCheckSelectionJavaFXTreeTables" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckSelectionGeneral"/>
+  			<xref linkend="actionCheckTextTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextTreeComponents"/>
+  			<xref linkend="actionClickGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickGeneral"/>
+  			<xref linkend="actionCollapseExpandTree" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCollapseExpandTree"/>
+  			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGeneral"/>
+  			<xref linkend="actionDragAndDropTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropTreeComponents"/>
+  			<xref linkend="actionMoveInTablesAndTreesTreeComponent" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionMoveInTablesAndTreesTreeComponent"/>
+  			<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectContextMenus"/>
+  			<xref linkend="actionSelectJavaFXTreeTables" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectTreeComponents"/>
+  			<xref linkend="actionSelectTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionShowText"/>
+  			<xref linkend="actionShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsForStoringValuesGeneral"/>
+  			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionForStoringValuesTreeComponents"/>
+  			<xref linkend="actionForStoringValuesTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponentGeneral"/>
+  			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>
-  
 </section>

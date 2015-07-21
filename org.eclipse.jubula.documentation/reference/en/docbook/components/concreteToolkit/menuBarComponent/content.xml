@@ -12,34 +12,24 @@
   <?dbhtml dir="menuBarComponent"?>
   <title>Concrete toolkit menu bar component</title>
   <para>
-  	<itemizedlist>
-  		<listitem>
-  			<para>
-  				A <emphasis>menu bar</emphasis> is the component typically found at the top of an application window.
-   			</para>
-  		</listitem>
-  		<listitem>
-  			<para>
-  				It typically contains menus such as <emphasis>"File", "Edit", "Help", etc.</emphasis>.
-  			</para>
-  		</listitem>
-  		<listitem>
-  			<para>
-  				Because the forward slash (/) is a special symbol for menus, if you want to use a slash as part
-  				of your parameter value, you have to mask it.
-  			</para>
-  		</listitem>
-  		<listitem>
-  			<para>
-  				Menu bars do not need to be mapped in the Object Mapping Mode as they are automatically found during
-  				test execution.
-  			</para>
-  		</listitem>
-  	</itemizedlist>
+  	A <emphasis>menu bar</emphasis> component is the component typically found at the top of an application window.
   </para>
+  <para>
+  	It typically contains menus such as <emphasis>"File", "Edit", "Help", etc.</emphasis>.
+  </para>
+  <para>
+  	Because the forward slash (/) is a special symbol for menus, if you want to use a slash as part
+  	of your parameter value, you have to mask it.
+  </para>
+  <para>
+  	Menu bars do not need to be mapped in the Object Mapping Mode as they are automatically found during
+  	test execution.
+  </para>
+  
   <para role="warning">
     Actions on menus are not supported in the HTML toolkit.
   </para>
+  <para><emphasis role="strong">Example Mockups</emphasis></para>
   <figure>
   	<title>
   		Menu Bar Component
@@ -50,36 +40,31 @@
   		</imageobject>
   	</mediaobject>
   </figure>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckEnablementMenuBarComponents"/>
+  			<xref linkend="actionCheckEnablementMenuBarComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckExistenceMenuBarComponents"/>
+  			<xref linkend="actionCheckExistenceMenuBarComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckSelectionMenuBarComponents"/>
+  			<xref linkend="actionCheckSelectionMenuBarComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectMenuBarComponents"/>
+  			<xref linkend="actionSelectMenuBarComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckEnablementMenuBarComponents"/>
-  		</para>
-  	</listitem>
-  	<listitem>
-  		<para>
-  			<xref linkend="actionWaitForComponentMenuBar"/>
+  			<xref linkend="actionWaitForComponentMenuBar" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>

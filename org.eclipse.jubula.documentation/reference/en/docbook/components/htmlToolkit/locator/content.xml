@@ -59,31 +59,31 @@
   		</listitem>
   	</itemizedlist>
   </para>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponent"/>
+  			<xref linkend="actionCheckCSSPathCount" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickLocator"/>
+  			<xref linkend="actionCheckText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckText"/>
+  			<xref linkend="actionCheckXPathCount" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckCSSPathCount"/>
+  			<xref linkend="actionClickLocator" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckXPathCount"/>
+  			<xref linkend="actionWaitForComponent" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   </itemizedlist>

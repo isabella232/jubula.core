@@ -12,30 +12,24 @@
   <?dbhtml dir="treeComponent"?>
   <title>Concrete toolkit tree component</title>
   <para>
-  	<itemizedlist>
-  		<listitem>
-  			<para>
-  				A <emphasis>tree</emphasis> is a component with linked elements (nodes) and a hierarchical structure. One
-  				common example is the display of directory structures used in most file managers (e.g. <emphasis>Windows 
-  				Explorer</emphasis>).
-  			</para>
-  		</listitem>
-  		<listitem>
-  			<para>
-  				Because the forward slash(/) is a special symbol for trees, if you want to use a slash as part of your parameter
-  				value, you have to mask it.
-  			</para>
-  		</listitem>
-  	</itemizedlist>
+  	A <emphasis>tree</emphasis> component is a component with linked elements (nodes) and a hierarchical structure. One
+  	common example is the display of directory structures used in most file managers (e.g. <emphasis>Windows 
+  	Explorer</emphasis>).
   </para>
+  <para>
+  	Because the forward slash(/) is a special symbol for tree components, if you want to use a slash as part of your parameter
+  	value, you have to mask it.
+  </para>
+  		
   <para role="warning">
-    Actions on trees (as a hierarchical component) are not supported in the HTML toolkit. Individual nodes must be addressed
+    Actions on tree components (as a hierarchical component) are not supported in the HTML toolkit. Individual nodes must be addressed
     as single links.
   </para>
   <para role="tip">
-  	Please keep in mind that it is not possible to object map single nodes within a tree but to object map the tree as a whole 
-  	only. In order to interact with certain nodes within the tree you have to use the according actions.
+  	Please keep in mind that it is not possible to object map single nodes within a tree component but to object map the tree component 
+  	as a whole only. In order to interact with certain nodes within the tree component you have to use the according actions.
   </para>
+  <para><emphasis role="strong">Example Mockups</emphasis></para>
   <figure>
   	<title>
   		Tree Component
@@ -56,98 +50,98 @@
   		</imageobject>
   	</mediaobject>
   </figure>
-  
+  <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckExistenceTreeComponents"/>
+  			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextTreeComponents"/>
+  			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCollapseExpandTree"/>
+  			<xref linkend="actionCheckExistenceTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropTreeComponents"/>
+  			<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionMoveInTablesAndTreesTreeComponent"/>
+  			<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectTreeComponents"/>
+  			<xref linkend="actionCheckTextTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionForStoringValuesTreeComponents"/>
+  			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckEnablementGeneral"/>
+  			<xref linkend="actionClickGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckExistenceGeneral"/>
+  			<xref linkend="actionCollapseExpandTree" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckFocus"/>
+  			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckProperty"/>
+  			<xref linkend="actionDragAndDropTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsCheckSelectionGeneral"/>
+  			<xref linkend="actionMoveInTablesAndTreesTreeComponent" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionClickGeneral"/>
+  			<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionDragAndDropGeneral"/>
+  			<xref linkend="actionSelectTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectContextMenus"/>
+  			<xref linkend="actionShowText" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionShowText"/>
+  			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionsForStoringValuesGeneral"/>
+  			<xref linkend="actionForStoringValuesTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionWaitForComponentGeneral"/>
+  			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
-  </itemizedlist>
+ </itemizedlist>
   
 </section>

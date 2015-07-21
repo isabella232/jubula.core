@@ -12,89 +12,82 @@
   <?dbhtml dir="buttonComponent"?>
   <title>Abstract toolkit button component</title>
   <para>
-  	<itemizedlist>
-  		<listitem>
-  			<para>
-  				This is an abstract component.
-  			</para>
-  		</listitem>
-  		<listitem>
-  			<para>
-  				It is implemented by all components which can be clicked like buttons.
-  			</para>
-  		</listitem>
-  	</itemizedlist>
+  	This is an abstract component.
   </para>
+  <para>
+  	It is implemented by all components which can be clicked like buttons.
+  </para>
+  <para><emphasis role="strong">Available Actions</emphasis></para> 
   <para>
   <itemizedlist>
             <listitem>
+            	<para>
+            		<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>	
+            	</para>
+            </listitem>
+            <listitem>
+            	<para>
+            		<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
+            	</para>
+            </listitem>
+            <listitem>
+            	<para>
+            		<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
+            	</para>
+            </listitem>
+            <listitem>
+            	<para>
+            		<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
+            	</para>
+            </listitem>
+            <listitem>
+            	<para>
+            		<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>
+            	</para>
+            </listitem>
+            <listitem>
               	<para>
-               	 	<xref linkend="actionCheckSelectionButtonComponents"/>
+               	 	<xref linkend="actionCheckSelectionButtonComponents" xrefstyle="template:%t"/>
               	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionsCheckEnablementGeneral"/>	
+            		<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
             	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionsCheckEnablementGeneral"/>
+            		<xref linkend="actionCheckTextComponentsThatShowText" xrefstyle="template:%t"/>
             	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionsCheckExistenceGeneral"/>
+            		<xref linkend="actionClick" xrefstyle="template:%t"/>
             	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionsCheckFocus"/>
+            		<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
             	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionsCheckProperty"/>
+            		<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>
             	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionsCheckSelectionGeneral"/>
+            		<xref linkend="actionShowText" xrefstyle="template:%t"/>
             	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionCheckTextComponentsThatShowText"/>
+            		<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
             	</para>
             </listitem>
             <listitem>
             	<para>
-            		<xref linkend="actionClick"/>
-            	</para>
-            </listitem>
-            <listitem>
-            	<para>
-            		<xref linkend="actionDragAndDropGeneral"/>
-            	</para>
-            </listitem>
-            <listitem>
-            	<para>
-            		<xref linkend="actionSelectContextMenus"/>
-            	</para>
-            </listitem>
-            <listitem>
-            	<para>
-            		<xref linkend="actionShowText"/>
-            	</para>
-            </listitem>
-            <listitem>
-            	<para>
-            		<xref linkend="actionsForStoringValuesGeneral"/>
-            	</para>
-            </listitem>
-            <listitem>
-            	<para>
-            		<xref linkend="actionWaitForComponentGeneral"/>
+            		<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
             	</para>
             </listitem>
     </itemizedlist>
