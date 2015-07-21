@@ -1,0 +1,31 @@
+<section xml:id="new-features-and-developments-8.1.7" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  
+  <para>
+    <emphasis role="strong">Four new actions for the JavaFX toolkit</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        You can now check the property of list items using the unbound module <emphasis>ub_lst_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_concrete</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can now check the property of table items using the unbound module <emphasis>ub_tbl_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_concrete</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can now check the property of tree items using the unbound module <emphasis>ub_tre_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_concrete</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        You can now check the property of tree table items using the unbound module <emphasis>ub_trt_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_javafx</emphasis>.
+      </para>
+    </listitem>
+   </itemizedlist>
+</section>
