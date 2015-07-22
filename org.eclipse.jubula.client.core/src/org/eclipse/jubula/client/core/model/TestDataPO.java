@@ -247,6 +247,7 @@ class TestDataPO implements ITestDataPO {
      * @param lang language, for which to get the value
      * @return value
      */
+    @Transient
     public String getValue(Locale lang) {
         Validate.notNull(lang);
         return getMap().get(lang.toString());
