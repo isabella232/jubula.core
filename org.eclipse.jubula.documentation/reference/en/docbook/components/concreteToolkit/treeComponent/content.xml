@@ -79,6 +79,11 @@
   	</listitem>
   	<listitem>
   		<para>
+  			<xref linkend="actionsCheckPropertyTreeComponents" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
   			<xref linkend="actionCheckTextTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>

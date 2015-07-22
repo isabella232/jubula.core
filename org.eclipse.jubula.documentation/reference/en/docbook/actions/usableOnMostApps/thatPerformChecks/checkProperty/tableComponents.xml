@@ -1,0 +1,67 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionsCheckPropertyTableComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="checkProperty"?>
+  <title>Check Property in Table Components</title>
+  
+  <para><emphasis>Check Property at Mouse Position</emphasis></para>
+  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the properties for a specific cell in a table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To do so you first have to navigate the mouse cursor to the cell for which you want to check the property. 	
+          You can then check whether a value you enter for a given property matches the actual value for the property.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Every cell has properties (attributes). These can include the text size, the color etc.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You must first find out the name of the property you want to check, and then what value it should have.
+        </para>
+      </listitem>
+    </itemizedlist>
+   </para>
+   <para role="warning">
+   	This action does not work for Swing AUTs.
+   </para>
+   <para>
+   	Parameters:
+   </para>
+   <para>  
+   	<itemizedlist>
+    	<listitem>
+        	<para>
+            	<xref linkend="property_name"/>
+              		</para>
+        </listitem>
+        <listitem>
+        	<para>
+            	<xref linkend="property_value"/>
+            </para>
+        </listitem>
+        <listitem>
+        	<para>
+            	<xref linkend="operator"/>
+            </para>
+        </listitem>
+    </itemizedlist>
+   </para>
+</section>
