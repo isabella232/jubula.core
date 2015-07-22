@@ -143,10 +143,10 @@ public class ZipUtil {
             }
         };
         ZipFile archive = new ZipFile(srcZip);
-        Enumeration e = archive.entries();
+        Enumeration<? extends ZipEntry> e = archive.entries();
         List<File> extractedFiles = new ArrayList<File>();
         while (e.hasMoreElements()) {
-            ZipEntry entry = (ZipEntry)e.nextElement();
+            ZipEntry entry = e.nextElement();
             if (filter.accept(entry)) {
                 if (!entry.isDirectory()) {
                     String prefix = entry.getName().substring(

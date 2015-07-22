@@ -18,58 +18,55 @@ import java.util.Set;
  * @created 20.12.2005
  */
 public interface ITestDataPO extends IPersistentObject {
-  
+
     /**
      * set the value for the given language
-     * @param lang language, for which to set the value
-     * @param value value
-     * @param project associated project
+     * 
+     * @param lang
+     *            language, for which to set the value
+     * @param value
+     *            value
+     * @param project
+     *            associated project
      */
-    public abstract void setValue(Locale lang, String value, 
-        IProjectPO project);
+    public void setValue(Locale lang, String value, IProjectPO project);
 
     /**
      * get the value for a given locale
-     * @param lang language, for which to get the value
+     * 
+     * @param lang
+     *            language, for which to get the value
      * @return value
      */
-    public abstract String getValue(Locale lang);
+    public String getValue(Locale lang);
 
     /**
      * @return a set of all Locale's used in this I18NString
      */
-    public abstract Set<Locale> getLanguages();
-
-    /**
-     * Overides Object.equals()
-     * Compares this TestDataPO object to the given object to equality.
-     * @param obj the object to compare.
-     * @return true or false
-     * {@inheritDoc}
-     */
-    public abstract boolean equals(Object obj);
+    public Set<Locale> getLanguages();
 
     /**
      * @return empty string
      */
-    public abstract String getName();
+    public String getName();
 
     /**
      * Creates a deep copy of this instance.
      * 
      * @return The new test data instance
      */
-    public abstract ITestDataPO deepCopy();
-    
+    public ITestDataPO deepCopy();
+
     /**
      * Copies the the given test data to the receiver.
      * 
-     * @param testData The test data to copy.
+     * @param testData
+     *            The test data to copy.
      */
-    public abstract void setData(ITestDataPO testData);
+    public void setData(ITestDataPO testData);
 
     /**
      * Removes all test data from the receiver.
      */
-    public abstract void clear();
+    public void clear();
 }

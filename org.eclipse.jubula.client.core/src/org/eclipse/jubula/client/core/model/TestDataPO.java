@@ -65,7 +65,7 @@ class TestDataPO implements ITestDataPO {
     /** maps languages (locales) to string values
      * key: Locale (string representation), value: value as string
      */
-    private Map<String, String> m_map = 
+    private transient Map<String, String> m_map = 
         new HashMap<String, String>(DEFAULT_NUMBER_OF_LANGUAGES);
 
     /** Persistence (JPA / EclipseLink) version id */

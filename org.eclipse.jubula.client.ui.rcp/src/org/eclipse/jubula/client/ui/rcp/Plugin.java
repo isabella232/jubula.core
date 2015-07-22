@@ -907,7 +907,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                 if (e instanceof RuntimeException
                         && OperationCanceledUtil.isOperationCanceled(
                                 (RuntimeException)e)) {
-                    // root cause of exception is the cancelation of an
+                    // root cause of exception is the cancellation of an
                     // operation, so it can be safely ignored
                     return;
                 }
