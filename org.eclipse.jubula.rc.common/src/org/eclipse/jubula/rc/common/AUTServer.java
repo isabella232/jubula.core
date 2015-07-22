@@ -834,46 +834,48 @@ public abstract class AUTServer {
         }
         // restore mode to oldMode in case of an unknown mode
         int oldMode = m_mode;
-        m_mode = newMode;
-        switch (newMode) {
-            // => (remove TestAWTEventListener),
-            // install a MappingAWTEventListener
-            case ChangeAUTModeMessage.OBJECT_MAPPING:
-                removeToolkitEventListener(m_mappingListener);
-                removeToolkitEventListener(m_recordListener);
-                removeToolkitEventListener(m_checkListener);
-                refreshMode();
-                addToolkitEventListener(m_mappingListener);
-                break;
-            case ChangeAUTModeMessage.RECORD_MODE:
-                removeToolkitEventListener(m_mappingListener);
-                removeToolkitEventListener(m_recordListener);
-                removeToolkitEventListener(m_checkListener);
-                m_mappingListener.cleanUp();
-                addToolkitEventListener(m_recordListener);
-                if (oldMode != ChangeAUTModeMessage.CHECK_MODE) {
-                    setObservTimestamp(0);
-                }
-                break;
-            case ChangeAUTModeMessage.CHECK_MODE:
-                removeToolkitEventListener(m_mappingListener);
-                removeToolkitEventListener(m_recordListener);
-                removeToolkitEventListener(m_checkListener);
-                m_mappingListener.cleanUp();
-                addToolkitEventListener(m_checkListener);
-                break;
-            case ChangeAUTModeMessage.TESTING:
-                // => remove MappingAWTEventListener
-                removeToolkitEventListener(m_mappingListener);
-                removeToolkitEventListener(m_recordListener);
-                removeToolkitEventListener(m_checkListener);
-                m_recordListener.cleanUp();
-                m_checkListener.cleanUp();
-                break;
-            default:
-                log.error("unkown mode: " //$NON-NLS-1$ 
-                        + String.valueOf(newMode)); 
-                m_mode = oldMode;
+        if (oldMode != newMode) {
+            m_mode = newMode;
+            switch (newMode) {
+                // => (remove TestAWTEventListener),
+                // install a MappingAWTEventListener
+                case ChangeAUTModeMessage.OBJECT_MAPPING:
+                    removeToolkitEventListener(m_mappingListener);
+                    removeToolkitEventListener(m_recordListener);
+                    removeToolkitEventListener(m_checkListener);
+                    refreshMode();
+                    addToolkitEventListener(m_mappingListener);
+                    break;
+                case ChangeAUTModeMessage.RECORD_MODE:
+                    removeToolkitEventListener(m_mappingListener);
+                    removeToolkitEventListener(m_recordListener);
+                    removeToolkitEventListener(m_checkListener);
+                    m_mappingListener.cleanUp();
+                    addToolkitEventListener(m_recordListener);
+                    if (oldMode != ChangeAUTModeMessage.CHECK_MODE) {
+                        setObservTimestamp(0);
+                    }
+                    break;
+                case ChangeAUTModeMessage.CHECK_MODE:
+                    removeToolkitEventListener(m_mappingListener);
+                    removeToolkitEventListener(m_recordListener);
+                    removeToolkitEventListener(m_checkListener);
+                    m_mappingListener.cleanUp();
+                    addToolkitEventListener(m_checkListener);
+                    break;
+                case ChangeAUTModeMessage.TESTING:
+                    // => remove MappingAWTEventListener
+                    removeToolkitEventListener(m_mappingListener);
+                    removeToolkitEventListener(m_recordListener);
+                    removeToolkitEventListener(m_checkListener);
+                    m_recordListener.cleanUp();
+                    m_checkListener.cleanUp();
+                    break;
+                default:
+                    log.error("unkown mode: " //$NON-NLS-1$ 
+                            + String.valueOf(newMode)); 
+                    m_mode = oldMode;
+            }
         }
     }
 
