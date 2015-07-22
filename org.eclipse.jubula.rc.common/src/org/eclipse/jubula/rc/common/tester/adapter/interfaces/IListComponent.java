@@ -14,8 +14,9 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions;
 
 /**
  * @author BREDEX GmbH
+ * @param <T> the type of a list item
  */
-public interface IListComponent extends ITextComponent {
+public interface IListComponent<T> extends ITextComponent {
     /**
      * @return The array of selected indices
      */
@@ -40,4 +41,12 @@ public interface IListComponent extends ITextComponent {
      * @return the list items as String array
      */
     public String[] getValues();
+    
+    /**
+     * Gets the property value of a list cell
+     * @param name the name of the property
+     * @param cell the cell
+     * @return the value
+     */
+    public String getPropertyValueOfCell(String name, T cell);
 }

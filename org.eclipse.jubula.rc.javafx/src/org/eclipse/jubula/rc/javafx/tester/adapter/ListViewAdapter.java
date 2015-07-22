@@ -15,12 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -29,6 +26,10 @@ import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 
 /**
  * ListView Adapter
@@ -39,7 +40,7 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created 14.03.2014
  */
 public class ListViewAdapter<T extends ListView<?>> extends
-    JavaFXComponentAdapter<T> implements IListComponent {
+    JavaFXComponentAdapter<T> implements IListComponent<ListCell<?>> {
     /**
      * Creates an object with the adapted Label.
      *
@@ -190,5 +191,28 @@ public class ListViewAdapter<T extends ListView<?>> extends
                     return values.toArray(new String[0]);
                 }
             });
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, ListCell<?> cell) {
+        Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
+                new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        try {
+                            return getRobot().getPropertyValue(cell, name);
+                        } catch (RobotException e) {
+                            throw new StepExecutionException(
+                                    e.getMessage(),
+                                    EventFactory
+                                            .createActionError(TestErrorEvent.
+                                                    PROPERTY_NOT_ACCESSABLE));
+                        }
+                    }
+                });
+        return String.valueOf(prop);
     }
 }

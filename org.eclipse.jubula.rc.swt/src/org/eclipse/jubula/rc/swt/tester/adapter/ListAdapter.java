@@ -154,4 +154,12 @@ public class ListAdapter extends ControlAdapter implements IListComponent {
                     }
                 });
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getPropertyValueOfCell(String name, Object cell) {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
+    }
 }
