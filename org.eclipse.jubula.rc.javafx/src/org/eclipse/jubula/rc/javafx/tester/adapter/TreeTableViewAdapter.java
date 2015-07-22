@@ -12,12 +12,16 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.util.concurrent.Callable;
 
-import javafx.scene.control.TreeTableView;
-
+import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableView;
 
 /**
  * Implementation of the Tree interface as an adapter for <code>TreeTableView</code>.
@@ -25,8 +29,9 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
  * @author BREDEX GmbH
  * @created 23.06.2014
  */
-public class TreeTableViewAdapter extends
-        JavaFXComponentAdapter<TreeTableView<?>> implements ITreeComponent {
+public class TreeTableViewAdapter 
+        extends JavaFXComponentAdapter<TreeTableView<?>>
+        implements ITreeComponent<TreeTableCell<?, ?>> {
 
     /**
      * Creates a new Instance
@@ -69,13 +74,28 @@ public class TreeTableViewAdapter extends
 
         return result;
     }
-
-
+    
     /**
      * {@inheritDoc}
      */
-    public String getPropertyValueOfCell(String name, Object cell) {
-        StepExecutionException.throwUnsupportedAction();
-        return null;
+    public String getPropertyValueOfCell(String name,
+            TreeTableCell<?, ?> cell) {
+        Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
+                new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        try {
+                            return getRobot().getPropertyValue(cell, name);
+                        } catch (RobotException e) {
+                            throw new StepExecutionException(
+                                    e.getMessage(),
+                                    EventFactory
+                                            .createActionError(TestErrorEvent.
+                                                    PROPERTY_NOT_ACCESSABLE));
+                        }
+                    }
+                });
+        return String.valueOf(prop);
     }
 }
