@@ -53,7 +53,11 @@ import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
  * @created 22.01.2010
  */
 @Entity
-@Table(name = "TESTRESULT_SUMMARY")
+@Table(name = "TESTRESULT_SUMMARY", indexes = {
+        @javax.persistence.Index(name = "TS_NAME_IDX",
+                columnList = "TS_NAME", unique = false),
+        @javax.persistence.Index(name = "TS_DATE_IDX",
+        columnList = "TS_DATE", unique = false) })
 class TestResultSummaryPO implements ITestResultSummaryPO {
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
