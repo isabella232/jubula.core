@@ -178,10 +178,10 @@ public class CheckListener extends AbstractAutSwingEventListener {
      */
     protected void openCheckDialog(IComponentIdentifier id,
             Map<String, String> checkValues, String logName) {
+        AUTServer autsever = AUTServer.getInstance();
         try {            
             // send a message with the identifier of the selected component
-            AUTServer.getInstance().setMode(
-                ChangeAUTModeMessage.TESTING);
+            autsever.setMode(ChangeAUTModeMessage.TESTING);
             // set always to true, before showing observing
             // dialog. Changing AUTServer mode sets it to false
             m_active = true;
@@ -191,16 +191,14 @@ public class CheckListener extends AbstractAutSwingEventListener {
                 .findComponent(id.getSupportedClassName());
 
             sendMessage(id, comp, checkValues, logName);
-            AUTServer.getInstance()
-                .setObservingDialogOpen(true);
+            autsever.setObservingDialogOpen(true);
             // m_active could be set to false, by ending observation
             // mode in client
             if (m_active) {
-                AUTServer.getInstance().setMode(
-                        ChangeAUTModeMessage.CHECK_MODE);
+                autsever.setMode(ChangeAUTModeMessage.CHECK_MODE);
             }
         } catch (CommunicationException nifce) {
-            AUTServer.getInstance().setObservingDialogOpen(false);
+            autsever.setObservingDialogOpen(false);
             log.error("communication exception: '" + nifce); //$NON-NLS-1$
         }
     }

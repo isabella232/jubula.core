@@ -214,9 +214,7 @@ public class CapTestCommand implements ICommand {
         final int oldMode = autServer.getMode();
         TestErrorEvent event = null;
         CAPTestResponseMessage response = new CAPTestResponseMessage();
-        if (oldMode != ChangeAUTModeMessage.TESTING) {
-            autServer.setMode(ChangeAUTModeMessage.TESTING);
-        } 
+        autServer.setMode(ChangeAUTModeMessage.TESTING);
         try {
             MessageCap messageCap = m_capTestMessage.getMessageCap();
             response.setMessageCap(messageCap);
@@ -271,9 +269,7 @@ public class CapTestCommand implements ICommand {
         } catch (MethodParamException ex) {
             LOG.error(ex.getLocalizedMessage(), ex);
         } finally {    
-            if (autServer.getMode() != oldMode) {
-                autServer.setMode(oldMode);
-            }
+            autServer.setMode(oldMode);
         }
         if (event != null) {
             response.setTestErrorEvent(event);

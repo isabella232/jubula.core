@@ -89,9 +89,10 @@ public class ChangeAUTModeCommand implements ICommand {
         log.info("changing mode of the AUTServer to: " //$NON-NLS-1$
                 + m_message.getMode());
 
-        int oldMode = AUTServer.getInstance().getMode();
-        AUTServer.getInstance().setMode(m_message.getMode());
-        AUTServer.getInstance().refreshMode();
+        AUTServer autserver = AUTServer.getInstance();
+        int oldMode = autserver.getMode();
+        autserver.setMode(m_message.getMode());
+        autserver.refreshMode();
         ServerShowObservConsoleMessage shellMsg = 
             new ServerShowObservConsoleMessage();
         ServerShowDialogMessage dialogMsg =
@@ -119,11 +120,10 @@ public class ChangeAUTModeCommand implements ICommand {
         }        
 
         try {
-            AUTServer.getInstance().getServerCommunicator().send(shellMsg);
+            autserver.getServerCommunicator().send(shellMsg);
             if (m_message.getMode() != oldMode && (m_message.getMode() 
                     == ChangeAUTModeMessage.TESTING)) {
-                AUTServer.getInstance().getServerCommunicator()
-                    .send(dialogMsg);
+                autserver.getServerCommunicator().send(dialogMsg);
             }
         } catch (CommunicationException e) {
             // Could not send message to AUT Agent. This is not a problem,
@@ -133,7 +133,7 @@ public class ChangeAUTModeCommand implements ICommand {
         }
 
         AUTModeChangedMessage result = new AUTModeChangedMessage();
-        result.setMode(AUTServer.getInstance().getMode());        
+        result.setMode(autserver.getMode());
         return result;
     }
 
