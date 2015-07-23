@@ -208,7 +208,6 @@ public class ClientTestImpl implements IClientTest {
      */
     public ClientTestImpl() {
         super();
-        ComponentBuilder.getInstance().getCompSystem();
     }
 
     /**

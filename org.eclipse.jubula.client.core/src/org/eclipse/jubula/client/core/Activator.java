@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core;
 
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.jubula.logging.Configurator;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -42,6 +43,8 @@ public class Activator extends Plugin {
         super.start(context);
         plugin = this;
         Configurator.loadLogbackConfiguration("client"); //$NON-NLS-1$
+        // initializing the component system
+        ComponentBuilder.getInstance().getCompSystem();
     }
 
     /**
