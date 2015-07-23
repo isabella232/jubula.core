@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.app.core;
 
-import java.util.Map;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -39,11 +37,8 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ProjectUIBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
@@ -224,15 +219,6 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         Plugin.showStatusLine((IWorkbenchPart)null);
         addMainWindowTitleUpdater();
         checkAndPerformStartupHooks();
-        Map<String, Exception> exceptionList = ComponentBuilder
-                .getInstance().getInitExceptions();
-        for (Map.Entry<String, Exception> entry : exceptionList.entrySet()) {
-            ErrorHandlingUtil.createMessageDialog(
-                    MessageIDs.E_TOOLKIT_COMPSYS_ERROR,
-                    new Object[]{entry.getKey()},
-                    ErrorHandlingUtil.getStackTrace(entry.getValue()))
-                    .create();
-        }
     }
 
     /**
