@@ -2,3 +2,10 @@ javafx.scene.control.Accordion - Check Focus										    <
 javafx.scene.control.Button - Check Selection											<
 javafx.stage.Stage - Prepare for AUT termination									    <
 javafx.stage.Stage - Synchronize termination and re-start of AUT						<
+javafx.scene.control.ButtonBase - Check Enablement									    <
+javafx.scene.control.ButtonBase - Check Existence									    <
+javafx.scene.control.ButtonBase - Check Focus										    <
+javafx.scene.control.ButtonBase - Check Property									    <
+javafx.scene.control.ButtonBase - Check Selection									    <
+javafx.scene.control.ButtonBase - Click											    	<
+javafx.scene.control.ButtonBase - Click in Component									<
