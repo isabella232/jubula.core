@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2015 BREDEX GmbH. All rights reserved. This program and 
+    the accompanying materials are made available under the terms of the Eclipse 
+    Public License v1.0 which accompanies this distribution, and is available 
+    at http://www.eclipse.org/legal/epl-v10.html -->
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>org.eclipse.jubula.examples.extension.releng</artifactId>
+        <groupId>org.eclipse.jubula</groupId>
+        <version>3.1.0-SNAPSHOT</version>
+        <relativePath>../org.eclipse.jubula.examples.extension.releng</relativePath>
+    </parent>
+    <artifactId>org.eclipse.jubula.examples.extension.javafx.aut</artifactId>
+    <version>3.1.0</version>
+    <packaging>eclipse-plugin</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.tycho</groupId>
+                <artifactId>tycho-compiler-plugin</artifactId>
+                <version>${tycho-version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <!-- add JavaFX to classpath -->
+                    <extraClasspathElements>
+                        <extraClasspathElement>
+                            <groupId>com.oracle</groupId>
+                            <artifactId>javafx</artifactId>
+                            <version>8.1.0-SNAPSHOT</version>
+                            <systemPath>${java8.jdk.base.path}/jre/lib/ext/jfxrt.jar</systemPath>
+                            <scope>system</scope>
+                        </extraClasspathElement>
+                    </extraClasspathElements>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

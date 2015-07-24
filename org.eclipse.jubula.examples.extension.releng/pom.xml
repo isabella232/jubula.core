@@ -31,13 +31,14 @@
         <module>../org.eclipse.jubula.examples.extension.javafx.toolkit</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.api</module>
         <module>../org.eclipse.jubula.examples.extension.javafx.api.test</module>
+        <module>../org.eclipse.jubula.examples.extension.javafx.aut</module>
         
         <module>../org.eclipse.jubula.examples.extension.rcp.feature</module>
         <module>../org.eclipse.jubula.examples.extension.rcp.rc</module>
         <module>../org.eclipse.jubula.examples.extension.rcp.toolkit</module>
         <module>../org.eclipse.jubula.examples.extension.rcp.api</module>
-        <module>../org.eclipse.jubula.examples.extension.rcp.aut</module>
         <module>../org.eclipse.jubula.examples.extension.rcp.api.test</module>
+        <module>../org.eclipse.jubula.examples.extension.rcp.aut</module>
     </modules>
 
     <build>

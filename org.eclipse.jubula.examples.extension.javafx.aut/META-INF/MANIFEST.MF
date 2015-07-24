@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula Extension Example - JavaFX - AUT
+Bundle-SymbolicName: org.eclipse.jubula.examples.extension.javafx.aut
+Bundle-Version: 3.1.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: Eclipse Jubula
+Bundle-ClassPath: .
+Implementation-Title: PieChart
+JavaFX-Application-Class: org.eclipse.jubula.examples.extension.javafx.aut.PieChartExampleAUT
+Main-Class: it.is.valid.that.this.class.does.not.exist.however.the.attribute.value.is.mandatory

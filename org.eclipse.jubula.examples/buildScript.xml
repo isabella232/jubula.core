@@ -24,24 +24,9 @@
 	<property name="SimpleAdder.Web"	value="org.eclipse.jubula.examples.aut.adder.html"/>
 	<property name="DvdTool"			value="org.eclipse.jubula.examples.aut.dvdtool"/>
 
-	<property name="ExampleExtensionReleng"       value="org.eclipse.jubula.examples.extension.releng"/>
-
 	<property name="ExampleSwingExtensionAUT"       value="org.eclipse.jubula.examples.extension.swing.aut"/>
-	<property name="ExampleSwingExtensionClient"    value="org.eclipse.jubula.examples.extension.swing.toolkit"/>
-	<property name="ExampleSwingExtensionRC"        value="org.eclipse.jubula.examples.extension.swing.rc"/>
-	<property name="ExampleSwingExtensionFeature"   value="org.eclipse.jubula.examples.extension.swing.feature"/>
-
     <property name="ExampleJavaFXExtensionAUT"       value="org.eclipse.jubula.examples.extension.javafx.aut"/>
-	<property name="ExampleJavaFXExtensionClient"    value="org.eclipse.jubula.examples.extension.javafx.toolkit"/>
-	<property name="ExampleJavaFXExtensionRC"        value="org.eclipse.jubula.examples.extension.javafx.rc"/>
-	<property name="ExampleJavaFXExtensionRCContainer"        value="org.eclipse.jubula.examples.extension.javafx.rc.container"/>
-	<property name="ExampleJavaFXExtensionFeature"   value="org.eclipse.jubula.examples.extension.javafx.feature"/>
 
-	<property name="ExampleRCPExtensionClient"      value="org.eclipse.jubula.examples.extension.rcp.toolkit"/>
-	<property name="ExampleRCPExtensionRC"          value="org.eclipse.jubula.examples.extension.rcp.rc"/>
-	<property name="ExampleRCPExtensionFeature"     value="org.eclipse.jubula.examples.extension.rcp.feature"/>
-
-	<property name="ExampleSwingRendererAdapterRC"  value="org.eclipse.jubula.examples.extension.swing.rc.renderer"/>
 	<property name="ExampleGEFIdentifierExample"    value="org.eclipse.jubula.examples.extension.rcp.gef.logic.identifier"/>
 
 	<target name="build"   depends="clean, 
@@ -206,5 +191,3 @@
 	</target>
 
 </project>
-
-
