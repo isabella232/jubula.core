@@ -39,12 +39,10 @@ public class TDVariableStore {
     public static final String VAR_USERNAME = PREDEF_VAR_PREFIX + "USERNAME"; //$NON-NLS-1$
     
     /** id for the predefined db username variable */
-    public static final String VAR_DBUSERNAME = 
-        PREDEF_VAR_PREFIX + "DBUSERNAME"; //$NON-NLS-1$
+    public static final String VAR_DBUSERNAME = PREDEF_VAR_PREFIX + "DBUSERNAME"; //$NON-NLS-1$
 
     /** id for the predefined AUT-Agent hostname variable */
-    public static final String VAR_AUTAGENT = 
-        PREDEF_VAR_PREFIX + "AUTAGENT"; //$NON-NLS-1$
+    public static final String VAR_AUTAGENT = PREDEF_VAR_PREFIX + "AUTAGENT"; //$NON-NLS-1$
 
     /** id for the predefined AutStarter port variable */
     public static final String VAR_PORT = PREDEF_VAR_PREFIX + "PORTNUMBER"; //$NON-NLS-1$
@@ -53,12 +51,16 @@ public class TDVariableStore {
     public static final String VAR_AUT = PREDEF_VAR_PREFIX + "AUT"; //$NON-NLS-1$
     
     /** id for the predefined AUT configuration name variable */
-    public static final String VAR_AUTCONFIG = 
-        PREDEF_VAR_PREFIX + "AUTCONFIG"; //$NON-NLS-1$
-    
+    public static final String VAR_AUTCONFIG = PREDEF_VAR_PREFIX + "AUTCONFIG"; //$NON-NLS-1$
+
     /** id for the predefined Jubula client version variable */
-    public static final String VAR_CLIENTVERSION = 
-        PREDEF_VAR_PREFIX + "CLIENTVERSION"; //$NON-NLS-1$
+    public static final String VAR_CLIENTVERSION = PREDEF_VAR_PREFIX + "CLIENTVERSION"; //$NON-NLS-1$
+
+    /** id for the predefined client project name variable */
+    public static final String VAR_PROJECT_NAME = PREDEF_VAR_PREFIX + "PROJECT_NAME"; //$NON-NLS-1$
+
+    /** id for the predefined client project name variable */
+    public static final String VAR_PROJECT_VERSION = PREDEF_VAR_PREFIX + "PROJECT_VERSION"; //$NON-NLS-1$
     
     
     /** Holds the key value pairs */

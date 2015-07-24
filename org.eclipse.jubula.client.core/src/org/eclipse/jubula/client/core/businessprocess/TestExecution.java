@@ -50,6 +50,7 @@ import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -459,6 +460,16 @@ public class TestExecution {
         // TEST_dbusername
         varStore.store(TDVariableStore.VAR_DBUSERNAME, 
                 Persistor.instance().getCurrentDBUser());
+        
+        IProjectPO cProject = GeneralStorage.getInstance().getProject();
+        
+        // TEST_PROJECT_NAME
+        varStore.store(TDVariableStore.VAR_PROJECT_NAME, 
+                cProject.getName());
+        
+        // TEST_PROJECT_VERSION
+        varStore.store(TDVariableStore.VAR_PROJECT_VERSION, 
+                cProject.getVersionString());
         
         try {
             AutAgentConnection serverConn = AutAgentConnection.getInstance();
