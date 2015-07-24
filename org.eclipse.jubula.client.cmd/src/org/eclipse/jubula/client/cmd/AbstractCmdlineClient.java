@@ -27,6 +27,7 @@ import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.cmd.constants.ClientStrings;
 import org.eclipse.jubula.client.cmd.exceptions.PreValidateException;
@@ -46,6 +47,7 @@ import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
@@ -332,6 +334,36 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     public void writeLine(String line) {
         printConsole(line + StringConstants.NEWLINE);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void writeStatus(IStatus status) {
+        printConsole(StringHelper.getStringOf(status) 
+                + StringConstants.NEWLINE);
+        if (status.isMultiStatus()) {
+            for (IStatus s : status.getChildren()) {
+                printConsole(StringHelper.getStringOf(s)
+                        + StringConstants.NEWLINE);
+            }
+        }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void writeStatus(IStatus status, String id) {
+        printConsole(id + StringConstants.NEWLINE);
+        writeStatus(status);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void closeConsole() {
+        //no op
+    }
+
 
     /**
      * writes an output to console

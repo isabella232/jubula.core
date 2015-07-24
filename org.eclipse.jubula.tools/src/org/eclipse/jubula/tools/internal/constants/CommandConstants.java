@@ -253,6 +253,10 @@ public abstract class CommandConstants {
     public static final String RC_JAVAFX_BUNDLE_ID = "org.eclipse.jubula.rc.javafx"; //$NON-NLS-1$
     /** constant: "JavaFX" */
     public static final String JAVAFX_TOOLKIT = "org.eclipse.jubula.JavaFXToolkitPlugin"; //$NON-NLS-1$
+    /** response command which will be executed on the client side */
+    public static final String AUT_ERRORS_RESPONSE_COMMAND = "org.eclipse.jubula.communication.internal.message.AUTErrorsResponseCommand"; //$NON-NLS-1$
+    /** command which will be executed on the AUT-Server side */
+    public static final String AUT_ERRORS_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTErrorsCommand"; //$NON-NLS-1$
    
     /** to prevent instantiation */
     private CommandConstants() {

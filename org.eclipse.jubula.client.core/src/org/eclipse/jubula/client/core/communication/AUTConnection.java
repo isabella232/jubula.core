@@ -14,6 +14,10 @@ import java.net.InetAddress;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.agent.AutAgentRegistration;
@@ -28,12 +32,16 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.client.core.progress.ProgressConsoleRegistry;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseAUTConnection;
 import org.eclipse.jubula.client.internal.commands.AUTStartedCommand;
 import org.eclipse.jubula.client.internal.commands.ConnectToAutResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
+import org.eclipse.jubula.communication.internal.message.AUTErrorsMessage;
+import org.eclipse.jubula.communication.internal.message.AUTErrorsResponseCommand;
 import org.eclipse.jubula.communication.internal.message.AUTStateMessage;
 import org.eclipse.jubula.communication.internal.message.ConnectToAutMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
@@ -68,6 +76,7 @@ import org.slf4j.LoggerFactory;
  * @created 22.07.2004
  */
 public class AUTConnection extends BaseAUTConnection {
+    
     /** the logger */
     static final Logger LOG = LoggerFactory.getLogger(AUTConnection.class);
 
@@ -76,6 +85,8 @@ public class AUTConnection extends BaseAUTConnection {
 
     /** The m_autConnectionListener */
     private AUTConnectionListener m_autConnectionListener;
+    
+   
     
     /**
      * private constructor. creates a communicator
@@ -130,44 +141,37 @@ public class AUTConnection extends BaseAUTConnection {
      * @return <code>true</code> if a connection to the AUT could be 
      *         established. Otherwise <code>false</code>.
      */
-    public boolean connectToAut(AutIdentifier autId,
+    public IStatus connectToAut(AutIdentifier autId,
             IProgressMonitor monitor) {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        MultiStatus status;
+        IProgressConsole pc = ProgressConsoleRegistry.INSTANCE.getConsole();
         if (!isConnected()) {
             ded.fireAutServerConnectionChanged(ServerState.Connecting);
             try {
-                monitor.subTask(NLS.bind(Messages.ConnectingToAUT, 
-                        autId.getExecutableName()));
-                LOG.info(Messages.EstablishingConnectionToAUT);
-                run();
-                getCommunicator().addCommunicationErrorListener(
-                        m_autConnectionListener);
-                ConnectToAutResponseCommand responseCommand =
-                    new ConnectToAutResponseCommand();
-                AutAgentConnection.getInstance().getCommunicator().request(
-                    new ConnectToAutMessage(
-                        EnvConstants.LOCALHOST_FQDN, 
-                        getCommunicator().getLocalPort(), autId), 
-                    responseCommand, 10000);
-                if (responseCommand.getMessage() != null 
-                        && responseCommand.getMessage().getErrorMessage() 
-                            != null) {
-                    // Connection has failed
-                    ded.fireAutServerConnectionChanged(
-                            ServerState.Disconnected);
-                    return false;
+                Status s = sendRequestToAgent(autId, monitor, ded, pc);
+                if (s.getSeverity() != IStatus.OK) {
+                    return s;
                 }
                 long startTime = System.currentTimeMillis();
-                while (!monitor.isCanceled() && !isConnected() 
+                while (!monitor.isCanceled()
+                        && !isConnected()
                         && AutAgentConnection.getInstance().isConnected()
-                        && startTime + CONNECT_TO_AUT_TIMEOUT 
-                            > System.currentTimeMillis()) {
+                        && startTime + CONNECT_TO_AUT_TIMEOUT > System
+                                .currentTimeMillis()) {
                     TimeUtil.delay(200);
                 }
                 if (isConnected()) {
+                    MultiStatus connect = new MultiStatus(Activator.PLUGIN_ID,
+                            IStatus.OK, Messages.ConnectionToAUTEstablished,
+                            null);
+                    pc.writeStatus(connect, autId.encode());
+                    MultiStatus ext = getExtensionStatus();
+                    pc.writeStatus(ext, autId.encode());
+                    connect.add(ext);
                     setConnectedAutId(autId);
                     LOG.info(Messages.ConnectionToAUTEstablished);
-                    IAUTMainPO aut = AutAgentRegistration.getAutForId(autId, 
+                    IAUTMainPO aut = AutAgentRegistration.getAutForId(autId,
                             GeneralStorage.getInstance().getProject());
                     if (aut != null) {
                         AUTStartedCommand response = new AUTStartedCommand();
@@ -176,22 +180,132 @@ public class AUTConnection extends BaseAUTConnection {
                         setup(response);
                     } else {
                         LOG.warn(Messages.ErrorOccurredActivatingObjectMapping);
+                        connect.add(new Status(IStatus.WARNING,
+                                Activator.PLUGIN_ID,
+                                Messages.ErrorOccurredActivatingObjectMapping));
                     }
-                    return true;
+                    return connect;
                 }
                 LOG.error(Messages.ConnectionToAUTCouldNotBeEstablished);
+                status = new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
+                        Messages.ConnectionToAUTCouldNotBeEstablished, null);
             } catch (CommunicationException e) {
                 LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);
+                status = new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
+                       Messages.ErrorOccurredEstablishingConnectionToAUT, null);
             } catch (JBVersionException e) {
                 LOG.error(Messages.ErrorOccurredEstablishingConnectionToAUT, e);
+                status = new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
+                       Messages.ErrorOccurredEstablishingConnectionToAUT, null);
             } finally {
                 monitor.done();
             }
         } else {
             LOG.warn(Messages.CannotEstablishNewConnectionToAUT);
-        } 
+            status = new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
+                    Messages.CannotEstablishNewConnectionToAUT, null);
+        }
         ded.fireAutServerConnectionChanged(ServerState.Disconnected);
-        return false;
+        pc.writeStatus(status, autId.encode());
+        return status;
+    }
+
+    /**
+     * @param autId the autID
+     * @param monitor the monitor
+     * @param ded DataEventDispatcher
+     * @param pc IProgressConsole
+     * @throws AlreadyConnectedException
+     * @throws JBVersionException
+     * @throws CommunicationException
+     * @throws ConnectionException
+     * @return Status indicating if sending the request to the agent was successful
+     */
+    private Status sendRequestToAgent(AutIdentifier autId,
+            IProgressMonitor monitor, DataEventDispatcher ded,
+            IProgressConsole pc) throws AlreadyConnectedException,
+            JBVersionException, CommunicationException, ConnectionException {
+        monitor.subTask(NLS.bind(Messages.ConnectingToAUT,
+                autId.getExecutableName()));
+        LOG.info(Messages.EstablishingConnectionToAUT);
+        run();
+        getCommunicator()
+                .addCommunicationErrorListener(m_autConnectionListener);
+        ConnectToAutResponseCommand responseCommand = sendConnectToAUT(autId);
+        if (responseCommand.getMessage() != null
+                && responseCommand.getMessage().getErrorMessage() != null) {
+            // Connection has failed
+            ded.fireAutServerConnectionChanged(ServerState.Disconnected);
+            Status s = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    responseCommand.getMessage().getErrorMessage());
+            pc.writeStatus(s, autId.encode());
+            return s;
+        }
+        return new Status(IStatus.OK, Activator.PLUGIN_ID, "Request send to Agent"); //$NON-NLS-1$
+    }
+
+    /**
+     * Sends a message to the AUT-Agent which starts the connect to AUT
+     * procedure. The Invoker will wait for a response from the AUT-Agent
+     * whether or not a "connectToITE" message could be send to the AUT. If that
+     * was successful AUT will try to setup a connection with the client.
+     * 
+     * @param autId the autId of the AUT to connect to
+     * @return the response from the AUT-Agent
+     * @throws CommunicationException
+     * @throws ConnectionException
+     */
+    private ConnectToAutResponseCommand sendConnectToAUT(AutIdentifier autId)
+            throws CommunicationException, ConnectionException {
+        ConnectToAutResponseCommand responseCommand =
+            new ConnectToAutResponseCommand();
+        try {
+            AutAgentConnection.getInstance().getCommunicator()
+                .requestAndWait(new ConnectToAutMessage(
+                    EnvConstants.LOCALHOST_FQDN, 
+                    getCommunicator().getLocalPort(), autId), 
+                responseCommand, 10000);
+        } catch (InterruptedException e) {
+            LOG.error("connect to AUT: " + e); //$NON-NLS-1$
+        }
+        return responseCommand;
+    }
+
+    /**
+     * Communicates with the AUT, therefore this has to be called after a
+     * connection to the AUT communicator has been made. Sends a Message to the
+     * AUT and awaits a response with errors and warnings which occurred during
+     * the connection.
+     * 
+     * @return MultiStatus containing information about loaded and not loaded extensions
+     * @throws CommunicationException
+     */
+    private MultiStatus getExtensionStatus()
+            throws CommunicationException {
+        AUTErrorsResponseCommand resp = 
+                new AUTErrorsResponseCommand();
+        try {
+            MultiStatus status = new MultiStatus(Activator.PLUGIN_ID,
+                    IStatus.INFO, "Extension Status", null); //$NON-NLS-1$
+            this.getCommunicator().requestAndWait(
+                    new AUTErrorsMessage(),
+                    resp, 10000);
+            List<String> err = resp.getErrors();
+            for (String string : err) {
+                status.add(new Status(IStatus.WARNING,
+                        Activator.PLUGIN_ID, string));
+            }
+            List<String> war = resp.getWarnings();
+            for (String string : war) {
+                status.add(new Status(IStatus.INFO,
+                        Activator.PLUGIN_ID, string));
+            }
+            return status;
+        } catch (InterruptedException e) {
+            LOG.error("AUT Connection, could not recieve AUT Extension errors" + e); //$NON-NLS-1$
+            return new MultiStatus(Activator.PLUGIN_ID, IStatus.ERROR,
+                    "AUT Connection, could not recieve AUT Extension errors", e); //$NON-NLS-1$
+        }
     }
     
     /**

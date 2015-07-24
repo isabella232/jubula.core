@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
@@ -219,5 +220,38 @@ public class StringHelper {
         }
         
         return null;
+    }
+    
+    /**
+     * Gets a string representation of the given status, but this includes only
+     * the severity and the message.
+     * 
+     * @param s the status
+     * @return string representation
+     */
+    public static String getStringOf(IStatus s) {
+        String result = ""; //$NON-NLS-1$
+        switch (s.getSeverity()) {
+            case IStatus.OK:
+                result = "OK"; //$NON-NLS-1$
+                break;
+            case IStatus.ERROR:
+                result = "ERROR"; //$NON-NLS-1$
+                break;
+            case IStatus.WARNING:
+                result = "WARNING"; //$NON-NLS-1$
+                break;
+            case IStatus.CANCEL:
+                result = "CANCEL"; //$NON-NLS-1$
+                break;
+            case IStatus.INFO:
+                result = "INFO"; //$NON-NLS-1$
+                break;
+            default:
+                //Don't print out severity code
+                break;
+        }
+        result += " " + s.getMessage(); //$NON-NLS-1$
+        return result;
     }
 }

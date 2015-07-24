@@ -187,8 +187,9 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         protected IStatus run(IProgressMonitor monitor) {
             
             try {
-                if (AUTConnection.getInstance().connectToAut(m_autId, 
-                        new NullProgressMonitor())) {
+                IStatus connected = AUTConnection.getInstance().connectToAut(
+                        m_autId, new NullProgressMonitor());
+                if (connected.getCode() == IStatus.OK) {
                     final String toolkit = TestExecution.getInstance()
                         .getConnectedAut().getToolkit();
                     if (toolkit.equals(CommandConstants.SWT_TOOLKIT)

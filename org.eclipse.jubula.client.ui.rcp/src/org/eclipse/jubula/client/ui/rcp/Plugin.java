@@ -19,6 +19,7 @@ import java.util.Map;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -29,6 +30,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.alm.mylyn.core.bp.CommentReporter;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
@@ -36,14 +38,19 @@ import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagato
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
+import org.eclipse.jubula.client.core.events.AutAgentEvent;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
+import org.eclipse.jubula.client.core.events.IServerEventListener;
+import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.client.core.progress.ProgressConsoleRegistry;
 import org.eclipse.jubula.client.core.utils.Languages;
+import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer;
@@ -153,6 +160,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private static final String AUT_TOOLKIT_STATUSLINE_ITEM = "autToolKitInfo"; //$NON-NLS-1$
     /** <code>LANG_STATUSLINE_ITEM</code> */
     private static final String LANG_STATUSLINE_ITEM = "lang"; //$NON-NLS-1$
+    /** Connection console name **/
+    private static final String CONNECTION_CONSOLE_NAME = "Connection:"; //$NON-NLS-1$
     /** the client status */
     private ClientStatus m_status = ClientStatus.STARTING;
     /** the preference store for this bundle */
@@ -169,6 +178,17 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private String m_runningApplicationTitle = null;
     /** the DataChangedListener which listens for a project*/
     private IDataChangedListener m_projectLifecycleLister = null;
+    /** aut agent disconnect listener, which closes the progress console(s) */
+    private IServerEventListener m_agentCloseListener = 
+            new IServerEventListener() {
+        
+        @Override
+        public void stateChanged(AutAgentEvent event) {
+            if (event.getState() == ServerEvent.CONNECTION_CLOSED) {
+                ProgressConsoleRegistry.INSTANCE.getConsole().closeConsole();
+            }
+        }
+    };
     
     static {
         GENERATED_IMAGES.put(IconConstants.TC_IMAGE, 
@@ -229,6 +249,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             DataEventDispatcher.getInstance().removeDataChangedListener(
                 m_projectLifecycleLister);
         }
+        ProgressConsoleRegistry.INSTANCE.deregister();
+        ClientTest.instance().removeAutAgentEventListener(m_agentCloseListener);
     }
 
     /**
@@ -493,6 +515,29 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             stream.println(msg);
         }
     }
+    
+    /**
+     * Writes the given line to the given console
+     * 
+     * @param console the console
+     * @param msg the text
+     * @param forceActivate if this is true than activate will be called on the console
+     */
+    public void writeLineToConsole(MessageConsole console, String msg,
+            boolean forceActivate) {
+        // FIXME zeb this "if" statement is necessary because the DB Tool, which never
+        //           starts the workbench because it never intends to use PlatformUI,
+        //           depends on and uses methods from org.eclipse.jubula.client.ui.rcp.
+        //           Thus, these dependencies should be removed, and then the "if"
+        //           statement should thereafter also be removed.
+        if (PlatformUI.isWorkbenchRunning()) {
+            MessageConsoleStream stream = console.newMessageStream();
+            if (forceActivate) {
+                stream.getConsole().activate();
+            }
+            stream.println(msg);
+        }
+    }
 
     /**
      * Writes a line of text to the console.
@@ -562,6 +607,27 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
 
         }
         return m_console;
+    }
+    
+    /**
+     * Return the console with the given name or creates a new one
+     * @param name the name of the console
+     * @return the console
+     */
+    private synchronized MessageConsole getConsole(String name) {
+        IConsole[] cons = ConsolePlugin.getDefault().getConsoleManager()
+                .getConsoles();
+        for (IConsole c : cons) {
+            if (c.getName().equals(CONNECTION_CONSOLE_NAME + name)
+                    && c instanceof MessageConsole) {
+                return (MessageConsole) c;
+            }
+        }
+        MessageConsole console = new MessageConsole(CONNECTION_CONSOLE_NAME
+                + name, null);
+        ConsolePlugin.getDefault().getConsoleManager()
+                .addConsoles(new IConsole[] { console });
+        return console;
     }
     
     /**
@@ -1084,7 +1150,8 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         };
         DataEventDispatcher.getInstance().addDataChangedListener(
             m_projectLifecycleLister, true);
-        
+        ProgressConsoleRegistry.INSTANCE.register(this);
+        ClientTest.instance().addAutAgentEventListener(m_agentCloseListener);
     }
 
     /**
@@ -1339,6 +1406,80 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      */
     public void writeLine(String line) {
         writeLineToConsole(line, true);
+    }
+    
+    @Override
+    public void writeStatus(IStatus status) {
+        MessageConsole c = getConsole();
+        boolean activate = false;
+        //Only Activate console if the status is a warning or error
+        if (status.isMultiStatus()) {
+            for (IStatus s : status.getChildren()) {
+                if (s.getSeverity() == IStatus.ERROR
+                        || s.getSeverity() == IStatus.WARNING) {
+                    activate = true;
+                    break;
+                }
+            }
+        }
+        if (status.getSeverity() == IStatus.ERROR
+                || status.getSeverity() == IStatus.WARNING) {
+            activate = true;
+        }
+        printStatus(status, c, activate);
+    }
+
+    /**
+     * Prints the given status in the given console
+     * @param status the status
+     * @param c the console
+     * @param activate set this to true if you want to activate this console
+     */
+    private void printStatus(IStatus status, MessageConsole c,
+            boolean activate) {
+        writeLineToConsole(c, StringHelper.getStringOf(status), activate);
+        if (status.isMultiStatus()) {
+            for (IStatus s : status.getChildren()) {
+                writeLineToConsole(c,
+                        StringHelper.getStringOf(s), activate);
+            }
+        }
+    }
+    
+    @Override
+    public void writeStatus(IStatus status, String id) {
+        MessageConsole c = getConsole(id);
+        boolean activate = false;
+        //Only Activate console if the status is a warning or error
+        if (status.isMultiStatus()) {
+            for (IStatus s : status.getChildren()) {
+                if (s.getSeverity() == IStatus.ERROR
+                        || s.getSeverity() == IStatus.WARNING) {
+                    activate = true;
+                    break;
+                }
+            }
+        }
+        if (status.getSeverity() == IStatus.ERROR
+                || status.getSeverity() == IStatus.WARNING) {
+            activate = true;
+        }
+        printStatus(status, c, activate);
+    }
+    
+    @Override
+    public void closeConsole() {
+        IConsole[] cons = ConsolePlugin.getDefault().getConsoleManager()
+                .getConsoles();
+        ArrayList<IConsole> toRemove = new ArrayList<IConsole>();
+        for (IConsole c : cons) {
+            if (c.getName().contains(CONNECTION_CONSOLE_NAME)
+                    && c instanceof MessageConsole) {
+                toRemove.add(c);
+            }
+        }
+        ConsolePlugin.getDefault().getConsoleManager()
+        .removeConsoles(toRemove.toArray(new IConsole[toRemove.size()]));
     }
 
     /**

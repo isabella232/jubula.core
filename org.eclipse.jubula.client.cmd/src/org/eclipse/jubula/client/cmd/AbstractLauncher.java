@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.cmd;
 import org.apache.commons.collections.MapUtils;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
+import org.eclipse.jubula.client.core.progress.ProgressConsoleRegistry;
 
 /**
  * @author Markus Tiede
@@ -21,7 +22,9 @@ import org.eclipse.equinox.app.IApplicationContext;
 public abstract class AbstractLauncher implements IApplication {
     /** {@inheritDoc} */
     public Object start(IApplicationContext context) throws Exception {
-        return getAbstractCmdLineClient().run(
+        AbstractCmdlineClient cmdC = getAbstractCmdLineClient();
+        ProgressConsoleRegistry.INSTANCE.register(cmdC);
+        return cmdC.run(
                 (String[])MapUtils.getObject(context.getArguments(),
                         IApplicationContext.APPLICATION_ARGS, new String[0]));
     }
@@ -33,6 +36,6 @@ public abstract class AbstractLauncher implements IApplication {
 
     /** {@inheritDoc} */
     public void stop() {
-        // nothing yet
+        ProgressConsoleRegistry.INSTANCE.deregister();
     }
 }

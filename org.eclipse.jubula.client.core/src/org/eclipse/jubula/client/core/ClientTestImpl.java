@@ -402,9 +402,9 @@ public class ClientTestImpl implements IClientTest {
         log.info(Messages.StartingObjectMapping);
         // put the AUTServer into the mode OBJECT_MAPPING via sending a
         // ChangeAUTModeMessage(OBJECT_MAPPING).
-
-        if (AUTConnection.getInstance().connectToAut(autId, 
-                new NullProgressMonitor())) {
+        IStatus autConnection = AUTConnection.getInstance().connectToAut(autId, 
+                new NullProgressMonitor());
+        if (autConnection.getCode() == IStatus.OK) {
 
             ChangeAUTModeMessage message = new ChangeAUTModeMessage();
             message.setMode(ChangeAUTModeMessage.OBJECT_MAPPING);

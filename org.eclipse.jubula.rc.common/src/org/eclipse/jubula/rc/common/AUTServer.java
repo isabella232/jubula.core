@@ -161,6 +161,12 @@ public abstract class AUTServer {
     
     /** the AUT ID to use for registration with the AUT-Agent */
     private String m_autID;
+    
+    /** List for error messages during extension loading **/
+    private List<String> m_errors = new ArrayList<String>();
+    
+    /** List for error messages during extension loading **/
+    private List<String> m_warnings = new ArrayList<String>();
 
     /** 
      * private constructor instantiates the listeners
@@ -494,9 +500,8 @@ public abstract class AUTServer {
     public void initClientCommunication(String clientHostName, int clientPort,
             Map<String, String> fragments) 
         throws UnknownHostException {
-        List<String> errors = new ArrayList<String>();
         if (!fragments.isEmpty()) {
-            errors = loadExtensions(fragments);
+            m_errors = loadExtensions(fragments);
         }
         if (log.isDebugEnabled()) {
             log.debug("initializing communication"); //$NON-NLS-1$                
@@ -562,6 +567,7 @@ public abstract class AUTServer {
                                 .isRegistered(fac)) {
                             AdapterFactoryRegistry.getInstance()
                                     .registerFactory(fac);
+                            m_warnings.add("Loaded: " + jars.get(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$ //$NON-NLS-2$
                         }                      
                     }
                 }
@@ -593,7 +599,9 @@ public abstract class AUTServer {
     private void handleException(Map<URL, String> jars, List<String> errors,
             URL url, Throwable t) {
         try {
-            errors.add(jars.remove(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$
+            String error = "Could not load: " + jars.remove(new URL(url.getPath().split("!")[0])); //$NON-NLS-1$ //$NON-NLS-2$
+            errors.add(error);
+            log.error(error);
         } catch (MalformedURLException e1) {
             log.error("Creating error message failed: " + e1); //$NON-NLS-1$
         }
@@ -1171,6 +1179,24 @@ public abstract class AUTServer {
         return m_observTimestamp;
     }
     
+    /**
+     * 
+     * @return List of Strings which contains the error massages from the last time
+     *         extensions were loaded
+     */
+    public List<String> getErrors() {
+        return m_errors;
+    }
+    
+    /**
+     * 
+     * @return List of Strings which contains the warning massages from the last time
+     *         extensions were loaded
+     */
+    public List<String> getWarnings() {
+        return m_warnings;
+    }
+
     /**
      * @param timestamp the timestamp of last recorded action
      */

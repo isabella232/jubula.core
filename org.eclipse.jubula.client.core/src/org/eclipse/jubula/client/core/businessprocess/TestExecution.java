@@ -24,6 +24,7 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SubProgressMonitor;
@@ -337,8 +338,9 @@ public class TestExecution {
             return;
         }
         try {
-            if (AUTConnection.getInstance().connectToAut(
-                    autId, new SubProgressMonitor(monitor, 0))) {
+            IStatus connected = AUTConnection.getInstance().connectToAut(
+                    autId, new SubProgressMonitor(monitor, 0));
+            if (connected.getCode() == IStatus.OK) {
                 if (TestExecution.shouldExecutionStop (noRunOptMode, 
                         TestExecutionConstants.RunSteps.CA)) {
                     endTestExecution();

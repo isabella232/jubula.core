@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.output;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 
 /**
@@ -32,5 +33,20 @@ public class NullImportOutput implements IProgressConsole {
     /** {@inheritDoc} */
     public void writeWarningLine(String line) {
         // no output
+    }
+
+    /** {@inheritDoc} */
+    public void writeStatus(IStatus status) {
+     // no output
+    }
+    
+    /** {@inheritDoc} */
+    public void writeStatus(IStatus status, String id) {
+     // no output
+    }
+    
+    /** {@inheritDoc} */
+    public void closeConsole() {
+     // no output
     }
 }
