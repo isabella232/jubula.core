@@ -49,6 +49,16 @@
   	</listitem>
   	<listitem>
   		<para>
+  			<xref linkend="actionsCheckPropertyGeneral" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionsCheckPropertyListComponents" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
   			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>

@@ -58,6 +58,11 @@
   	</listitem>
   	<listitem>
   		<para>
+  			<xref linkend="actionsCheckPropertyTreeTableComponents" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
   			<xref linkend="actionsCheckSelectionGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
