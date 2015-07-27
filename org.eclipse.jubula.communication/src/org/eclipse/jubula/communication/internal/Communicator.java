@@ -526,67 +526,11 @@ public class Communicator {
      */
     public void request(Message message, ICommand command, int timeout)
         throws CommunicationException {
-        checkConnectionState("request()"); //$NON-NLS-1$
-        // check parameter
-        if (message == null) {
-            log.debug("method request with null for parameter" //$NON-NLS-1$
-                + "message called."); //$NON-NLS-1$
-            throw new CommunicationException(
-                "no message to send as request", MessageIDs.E_MESSAGE_NOT_TO_REQUEST); //$NON-NLS-1$
-        }
-        if (command == null) {
-            log.debug("method request with null for parameter " //$NON-NLS-1$
-                + "command called"); //$NON-NLS-1$
-            throw new CommunicationException(
-                "no command for receiving response", //$NON-NLS-1$
-                MessageIDs.E_NO_RECEIVING_COMMAND); 
-        }
-        int timeoutToUse = DEFAULT_REQUEST_TIMEOUT;
-        if (timeout <= 0) {
-            log.debug("invalid timeout given to request: " + //$NON-NLS-1$
-                "using default timeout"); //$NON-NLS-1$
-        } else {
-            timeoutToUse = timeout;
-        }
-        MessageIdentifier messageIdentifier = new MessageIdentifier(
-            m_connection.getNextSequenceNumber());
         try {
-            message.setMessageId(messageIdentifier);
-            // create string message
-            String messageToSend = m_serializer.serialize(message);
-            // put command into awaiting responses
-            AwaitingCommand awaitingCommand = new AwaitingCommand(command,
-                timeoutToUse);
-            synchronized (m_awaitingCommands) {
-                m_awaitingCommands.put(messageIdentifier, awaitingCommand);
-            }
-            // send message and start thread
-            m_connection.send(
-                new MessageHeader(MessageHeader.REQUEST, message),
-                messageToSend);
-            awaitingCommand.start();
-        } catch (SerialisationException se) {
-            log.error(se.getLocalizedMessage(), se);
-            throw new CommunicationException(
-                "could not send message as request:" //$NON-NLS-1$
-                    + se.getMessage(), MessageIDs.E_MESSAGE_NOT_TO_REQUEST); 
-        } catch (IOException ioe) {
-            log.error(ioe.getLocalizedMessage(), ioe);
-            synchronized (m_awaitingCommands) {
-                m_awaitingCommands.remove(messageIdentifier);
-            }
-            throw new CommunicationException(
-                "io error occured during requesting a message: "//$NON-NLS-1$
-                    + ioe.getMessage(), MessageIDs.E_MESSAGE_REQUEST);
-        } catch (IllegalArgumentException iae) {
-            log.error(iae.getLocalizedMessage(), iae);
-            synchronized (m_awaitingCommands) {
-                m_awaitingCommands.remove(messageIdentifier);
-            }
-            log.debug(iae.getLocalizedMessage(), iae);
-            throw new CommunicationException(
-                "message could not send as a request", //$NON-NLS-1$
-                MessageIDs.E_MESSAGE_NOT_TO_REQUEST); 
+            requestImpl(message, command, timeout, false);
+        } catch (InterruptedException e) {
+            // this can not happen due to calling requestImpl block = false
+            log.error(e.getLocalizedMessage(), e);
         }
     }
     
@@ -620,6 +564,42 @@ public class Communicator {
      */
     public void requestAndWait(Message message, ICommand command, int timeout)
             throws CommunicationException, InterruptedException {
+        requestImpl(message, command, timeout, true);
+    }
+    
+    /**
+     * Send a message through this communicator and expect a response of type
+     * command. ICommand.request will be called at the other site. If a response
+     * was received the corresponding data will be set to the command object via
+     * setData(). If the response was received during the given timeout,
+     * command.response will be called. Otherwise command.timeout will be
+     * called. The calling thread of this method will wait until a response is
+     * received or the timeout is reached.
+     * 
+     * @param message
+     *            - the Message to send, must not be null otherwise an
+     *            CommunicationException is thrown.
+     * @param command
+     *            - the expected command, must not be null or a
+     *            CommunicationException is thrown. If the command arrives in
+     *            good time, the method execute() of the given instance will be
+     *            called. If the commands arrives to late timeout() will be
+     *            called.
+     * @param timeout
+     *            - max milliseconds to wait for a response. Only values greater
+     *            than zero are valid. For values less or equals to zero the
+     *            configured default timeout will be used. If the timeout
+     *            expires, the method timeout() in command will be called.
+     * @param wait 
+     *            whether this method should block (wait) for the command being executed
+     * @throws CommunicationException
+     *             if any error/exception occurs. A CommnunicationException is
+     *             also thrown if this communicator is not connected, e.g. run()
+     *             was not called, or exceptions at creation time were ignored
+     */
+    private void requestImpl(Message message, ICommand command, int timeout,
+            boolean wait) throws CommunicationException, 
+            InterruptedException {
         checkConnectionState("request()"); //$NON-NLS-1$
         // check parameter
         if (message == null) {
@@ -659,7 +639,9 @@ public class Communicator {
                     new MessageHeader(MessageHeader.REQUEST, message),
                     messageToSend);
             awaitingCommand.start();
-            awaitingCommand.join(timeoutToUse);
+            if (wait) {
+                awaitingCommand.join(timeoutToUse);
+            }
         } catch (SerialisationException se) {
             log.error(se.getLocalizedMessage(), se);
             throw new CommunicationException(
