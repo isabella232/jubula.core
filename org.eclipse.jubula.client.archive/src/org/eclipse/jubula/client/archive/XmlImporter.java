@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.archive.converter.AbstractXmlConverter;
 import org.eclipse.jubula.client.archive.converter.AutIdGenerationConverter;
 import org.eclipse.jubula.client.archive.converter.HTMLTechnicalComponentIndexConverter;
 import org.eclipse.jubula.client.archive.converter.IXmlConverter;
+import org.eclipse.jubula.client.archive.converter.ObjectMappingAssoziationConverter;
 import org.eclipse.jubula.client.archive.converter.RefTSNameConverter;
 import org.eclipse.jubula.client.archive.converter.TreeDirectionConverter;
 import org.eclipse.jubula.client.archive.converter.V4C001;
@@ -436,6 +437,7 @@ class XmlImporter {
         listOfConverter.add(new WinToolkitIdConverter());
         listOfConverter.add(new TreeDirectionConverter());
         listOfConverter.add(new RefTSNameConverter());
+        listOfConverter.add(new ObjectMappingAssoziationConverter());
         // =======================================
         
         for (IXmlConverter c : listOfConverter) {

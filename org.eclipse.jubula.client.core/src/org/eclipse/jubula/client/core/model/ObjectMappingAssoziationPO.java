@@ -29,6 +29,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
@@ -185,7 +186,9 @@ public class ObjectMappingAssoziationPO
      * {@inheritDoc}
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "LOGICAL_NAME")
+    @CollectionTable(name = "LOGICAL_NAME",
+        uniqueConstraints = {@UniqueConstraint(columnNames = 
+                {"LOGICAL_NAME", "OBJECTMAPPINGASSOZIATIONPO_ID"})})
     @JoinColumn(name = "OM_ASSOC")
     @OrderColumn(name = "IDX")
     @Column(name = "LOGICAL_NAME", length = MAX_STRING_LENGTH)
