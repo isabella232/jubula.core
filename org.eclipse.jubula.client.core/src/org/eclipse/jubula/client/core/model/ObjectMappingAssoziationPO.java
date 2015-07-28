@@ -49,6 +49,9 @@ import org.eclipse.persistence.annotations.BatchFetchType;
 public class ObjectMappingAssoziationPO 
     implements IObjectMappingAssoziationPO {
     
+    /** column name for id */
+    private static final String ID_COLUMN_NAME = "OBJECTMAPPINGASSOZIATIONPO_ID"; //$NON-NLS-1$
+
     /** Persistence (JPA / EclipseLink) OID */
     private transient Long m_id = null;
    
@@ -188,7 +191,7 @@ public class ObjectMappingAssoziationPO
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "LOGICAL_NAME",
         uniqueConstraints = {@UniqueConstraint(columnNames = 
-                {"LOGICAL_NAME", "OBJECTMAPPINGASSOZIATIONPO_ID"})})
+                {"LOGICAL_NAME", ID_COLUMN_NAME})})
     @JoinColumn(name = "OM_ASSOC")
     @OrderColumn(name = "IDX")
     @Column(name = "LOGICAL_NAME", length = MAX_STRING_LENGTH)
@@ -242,6 +245,7 @@ public class ObjectMappingAssoziationPO
      */
     @Id
     @GeneratedValue
+    @Column(name = ID_COLUMN_NAME)
     public Long getId() {
         return m_id;
     }
