@@ -22,32 +22,32 @@
     <itemizedlist>
       <listitem>
         <para>
-          <xref linkend="source_text_path"/>
+          <xref linkend="source_text_path" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="source_operator"/>
+          <xref linkend="source_operator" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="target_text_path"/>
+          <xref linkend="target_text_path" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="target_operator"/>
+          <xref linkend="target_operator" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="number_of_clicks"/>
+          <xref linkend="number_of_clicks" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="mouse_button"/>
+          <xref linkend="mouse_button" xrefstyle="template:%t"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -64,22 +64,22 @@
     <itemizedlist>
       <listitem>
         <para>
-          <xref linkend="textpath"/>
+          <xref linkend="textpath" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="operator"/>
+          <xref linkend="operator" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="number_of_clicks"/>
+          <xref linkend="number_of_clicks" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="mouse_button"/>
+          <xref linkend="mouse_button" xrefstyle="template:%t"/>
         </para>
       </listitem>
     </itemizedlist>
@@ -96,42 +96,42 @@
     <itemizedlist>
       <listitem>
         <para>
-          <xref linkend="textpath"/>
+          <xref linkend="textpath" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="operator"/>
+          <xref linkend="operator" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="number_of_clicks"/>
+          <xref linkend="number_of_clicks" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="mouse_button"/>
+          <xref linkend="mouse_button" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="x_position"/>
+          <xref linkend="x_position" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="x_units"/>
+          <xref linkend="x_units" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="y_position"/>
+          <xref linkend="y_position" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="y_units"/>
+          <xref linkend="y_units" xrefstyle="template:%t"/>
         </para>
       </listitem>
     </itemizedlist>

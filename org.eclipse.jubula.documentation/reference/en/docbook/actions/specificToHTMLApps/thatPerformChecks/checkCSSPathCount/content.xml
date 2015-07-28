@@ -39,17 +39,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="css_path"/>
+                <xref linkend="css_path" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="comparison_method"/>
+                <xref linkend="comparison_method" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="count"/>
+                <xref linkend="count" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

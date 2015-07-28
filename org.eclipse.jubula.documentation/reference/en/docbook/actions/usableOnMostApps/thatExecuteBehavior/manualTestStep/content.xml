@@ -36,17 +36,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="action_to_perform"/>
+                <xref linkend="action_to_perform" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="expected_behavior"/>
+                <xref linkend="expected_behavior" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="timeout_in_millisecs"/>
+                <xref linkend="timeout_in_millisecs" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -26,27 +26,27 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="variable_name"/>
+                <xref linkend="variable_name" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="row"/>
+                <xref linkend="row" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="row_operator"/>
+                <xref linkend="row_operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="column"/>
+                <xref linkend="column" xrefstyle="template:%t"/>
               </para>
             </listitem>            
             <listitem>
               <para>
-                <xref linkend="column_operator"/>
+                <xref linkend="column_operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -75,7 +75,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="variable_name"/>
+                <xref linkend="variable_name" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

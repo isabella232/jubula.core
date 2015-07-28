@@ -52,17 +52,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="property_name"/>
+                <xref linkend="property_name" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="property_value"/>
+                <xref linkend="property_value" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

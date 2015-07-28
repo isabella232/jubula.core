@@ -31,7 +31,7 @@
         <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="variable_name"/>
+                <xref linkend="variable_name" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -55,7 +55,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="variable_name"/>
+                <xref linkend="variable_name" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -46,17 +46,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="mouse_button"/>
+                <xref linkend="mouse_button" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="modifier_keys"/>
+                <xref linkend="modifier_keys" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="index"/>
+                <xref linkend="index" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -100,27 +100,27 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="mouse_button"/>
+                <xref linkend="mouse_button" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="modifier_keys"/>
+                <xref linkend="modifier_keys" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="search_type"/>
+                <xref linkend="search_type" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -164,12 +164,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="index"/>
+                <xref linkend="index" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="delay_before_drop"/>
+                <xref linkend="delay_before_drop" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -213,22 +213,22 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="search_type"/>
+                <xref linkend="search_type" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="delay_before_drop"/>
+                <xref linkend="delay_before_drop" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -26,12 +26,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="index"/>
+                <xref linkend="index" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="selected"/>
+                <xref linkend="selected" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

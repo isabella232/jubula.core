@@ -74,17 +74,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="direction"/>
+                <xref linkend="direction" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="number_of_nodes"/>
+                <xref linkend="number_of_nodes" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="number_of_clicks"/>
+                <xref linkend="number_of_clicks" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

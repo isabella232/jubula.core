@@ -25,7 +25,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="url"/>
+                <xref linkend="url" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

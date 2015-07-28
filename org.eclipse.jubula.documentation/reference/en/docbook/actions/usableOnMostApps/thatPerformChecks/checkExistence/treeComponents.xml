@@ -36,22 +36,22 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="path_type"/>
+                <xref linkend="path_type" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="pre_ascend"/>
+                <xref linkend="pre_ascend" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="indexpath"/>
+                <xref linkend="indexpath" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="exists"/>
+                <xref linkend="exists" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -85,27 +85,27 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="path_type"/>
+                <xref linkend="path_type" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="pre_ascend"/>
+                <xref linkend="pre_ascend" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="textpath"/>
+                <xref linkend="textpath" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="exists"/>
+                <xref linkend="exists" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

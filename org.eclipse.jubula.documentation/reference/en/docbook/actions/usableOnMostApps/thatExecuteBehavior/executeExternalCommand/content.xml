@@ -31,22 +31,22 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="command"/>
+                <xref linkend="command" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="expected_exit_code"/>
+                <xref linkend="expected_exit_code" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="local"/>
+                <xref linkend="local" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="timeout_in_millisecs"/>
+                <xref linkend="timeout_in_millisecs" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

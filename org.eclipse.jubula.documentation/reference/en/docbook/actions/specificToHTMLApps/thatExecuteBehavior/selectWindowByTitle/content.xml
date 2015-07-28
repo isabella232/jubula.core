@@ -26,12 +26,12 @@
     <itemizedlist>
       <listitem>
         <para>
-          <xref linkend="window_title"/>
+          <xref linkend="window_title" xrefstyle="template:%t"/>
         </para>
       </listitem>
       <listitem>
         <para>
-          <xref linkend="operator"/>
+          <xref linkend="operator" xrefstyle="template:%t"/>
         </para>
       </listitem>
     </itemizedlist>

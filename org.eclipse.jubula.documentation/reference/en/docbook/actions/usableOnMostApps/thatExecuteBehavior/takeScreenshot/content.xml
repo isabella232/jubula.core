@@ -37,27 +37,27 @@
           <itemizedlist>
           	<listitem>
               <para>
-                <xref linkend="create_directories"/>
+                <xref linkend="create_directories" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="delay"/>
+                <xref linkend="delay" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="destination"/>
+                <xref linkend="destination" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="file_access"/>
+                <xref linkend="file_access" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="scaling_factor"/>
+                <xref linkend="scaling_factor" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -97,27 +97,27 @@
           <itemizedlist>
           	<listitem>
               <para>
-                <xref linkend="create_directories"/>
+                <xref linkend="create_directories" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="delay"/>
+                <xref linkend="delay" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="destination"/>
+                <xref linkend="destination" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="file_access"/>
+                <xref linkend="file_access" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="scaling_factor"/>
+                <xref linkend="scaling_factor" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -36,17 +36,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="value_1"/>
+                <xref linkend="value_1" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="comparison_method"/>
+                <xref linkend="comparison_method" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="value_2"/>
+                <xref linkend="value_2" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

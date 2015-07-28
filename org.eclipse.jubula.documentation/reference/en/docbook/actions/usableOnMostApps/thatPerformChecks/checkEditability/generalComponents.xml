@@ -26,7 +26,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="editable"/>
+                <xref linkend="editable" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -53,17 +53,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="locator"/>
+                <xref linkend="locator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

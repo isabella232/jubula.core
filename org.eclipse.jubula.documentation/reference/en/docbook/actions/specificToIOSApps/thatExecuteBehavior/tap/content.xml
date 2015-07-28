@@ -32,7 +32,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="label"/>
+                <xref linkend="label" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

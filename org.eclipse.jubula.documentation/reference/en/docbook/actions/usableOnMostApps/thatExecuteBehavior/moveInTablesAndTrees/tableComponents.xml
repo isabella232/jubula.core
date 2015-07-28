@@ -79,42 +79,42 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="direction"/>
+                <xref linkend="direction" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="number_of_cells"/>
+                <xref linkend="number_of_cells" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="number_of_clicks"/>
+                <xref linkend="number_of_clicks" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="x_position"/>
+                <xref linkend="x_position" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="x_units"/>
+                <xref linkend="x_units" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="y_position"/>
+                <xref linkend="y_position" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="y_units"/>
+                <xref linkend="y_units" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="extend_selection"/>
+                <xref linkend="extend_selection" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

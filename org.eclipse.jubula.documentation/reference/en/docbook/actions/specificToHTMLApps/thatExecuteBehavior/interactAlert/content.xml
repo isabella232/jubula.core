@@ -59,7 +59,7 @@
           			<itemizedlist>
             			<listitem>
               				<para>
-                				<xref linkend="type"/>
+                				<xref linkend="type" xrefstyle="template:%t"/>
               				</para>
             			</listitem>
           			</itemizedlist>

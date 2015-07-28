@@ -41,12 +41,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="enabled"/>
+                <xref linkend="enabled" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="millisecs"/>
+                <xref linkend="millisecs" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

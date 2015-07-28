@@ -31,12 +31,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="index"/>
+                <xref linkend="index" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="selected"/>
+                <xref linkend="selected" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -65,17 +65,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="title"/>
+                <xref linkend="title" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="selected"/>
+                <xref linkend="selected" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

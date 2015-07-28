@@ -59,7 +59,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -102,7 +102,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -163,7 +163,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -200,12 +200,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="modifier_keys"/>
+                <xref linkend="modifier_keys" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="base_key"/>
+                <xref linkend="base_key" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -254,7 +254,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -314,12 +314,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="modifier_keys"/>
+                <xref linkend="modifier_keys" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="base_key"/>
+                <xref linkend="base_key" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -366,12 +366,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="key"/>
+                <xref linkend="key" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="activate_key"/>
+                <xref linkend="activate_key" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -427,12 +427,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="index"/>
+                <xref linkend="index" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -484,22 +484,22 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="text"/>
+                <xref linkend="text" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="pattern"/>
+                <xref linkend="pattern" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="insert_after_pattern"/>
+                <xref linkend="insert_after_pattern" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

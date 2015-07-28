@@ -36,7 +36,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="millisecs"/>
+                <xref linkend="millisecs" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

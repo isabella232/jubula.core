@@ -42,42 +42,42 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="textpath"/>
+                <xref linkend="textpath" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="mouse_button"/>
+                <xref linkend="mouse_button" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="modifier_keys"/>
+                <xref linkend="modifier_keys" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="x_position"/>
+                <xref linkend="x_position" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="x_units"/>
+                <xref linkend="x_units" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="y_position"/>
+                <xref linkend="y_position" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="y_units"/>
+                <xref linkend="y_units" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -116,37 +116,37 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="textpath"/>
+                <xref linkend="textpath" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="operator"/>
+                <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="x_position"/>
+                <xref linkend="x_position" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="x_units"/>
+                <xref linkend="x_units" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="y_position"/>
+                <xref linkend="y_position" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="y_units"/>
+                <xref linkend="y_units" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="delay_before_drop"/>
+                <xref linkend="delay_before_drop" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -31,7 +31,7 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="selected"/>
+                <xref linkend="selected" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

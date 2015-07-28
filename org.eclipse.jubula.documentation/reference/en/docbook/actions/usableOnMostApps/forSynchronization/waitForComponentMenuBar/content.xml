@@ -26,12 +26,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="timeout_in_millisecs"/>
+                <xref linkend="timeout_in_millisecs" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="delay_after_visibility"/>
+                <xref linkend="delay_after_visibility" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
