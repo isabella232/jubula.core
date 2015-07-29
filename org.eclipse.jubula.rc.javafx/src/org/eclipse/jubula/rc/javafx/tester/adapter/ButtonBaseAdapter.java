@@ -64,11 +64,9 @@ public class ButtonBaseAdapter extends LabeledAdapter<ButtonBase>
                     });
         }
         throw new StepExecutionException(
-                "The Button is not a RadioButton and CheckBoxButton", //$NON-NLS-1$
-                EventFactory
-                        .createActionError(
-                                TestErrorEvent.
-                                UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR));
+                "The Button is neither a Toggle nor a CheckBox", //$NON-NLS-1$
+                EventFactory.createActionError(TestErrorEvent.
+                        UNSUPPORTED_OPERATION_IN_TOOLKIT_ERROR));
     }
 
 }

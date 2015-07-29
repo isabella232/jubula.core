@@ -93,11 +93,10 @@ public class OMEditorTreeContentProvider extends
                             compNameGuid);
                 if (compNamePo != null) {
                     componentNamePoList.add(compNamePo);
-                    m_childToParentMap.put(compNamePo, parentElement);
                 } else {
                     componentNamePoList.add(compNameGuid);
-                    m_childToParentMap.put(compNamePo, parentElement);
                 }
+                m_childToParentMap.put(compNamePo, parentElement);
             }
             Validate.noNullElements(componentNamePoList);
             return componentNamePoList.toArray();

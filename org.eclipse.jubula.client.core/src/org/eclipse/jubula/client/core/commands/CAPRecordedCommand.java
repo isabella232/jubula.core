@@ -392,12 +392,13 @@ public class CAPRecordedCommand implements ICommand {
             if (checkTechNameExists) {
                 for (IObjectMappingAssoziationPO oma : connectedAut.getObjMap()
                         .getMappings()) {
-                    if (!(oma.getLogicalNames().isEmpty())
+                    List<String> logicalNames = oma.getLogicalNames();
+                    if (!(logicalNames.isEmpty())
                             && oma.getTechnicalName() != null
                             && oma.getTechnicalName()
                                     .equals(messageCap.getCi())) {
-                        if (oma.getLogicalNames().get(0) != null) {
-                            for (String compNameGuid : oma.getLogicalNames()) {
+                        if (logicalNames.get(0) != null) {
+                            for (String compNameGuid : logicalNames) {
                                 IComponentNamePO compNamePo = compNamesMapper
                                         .getCompNameCache().getCompNamePo(
                                                 compNameGuid);
