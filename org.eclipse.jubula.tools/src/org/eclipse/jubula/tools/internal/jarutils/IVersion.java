@@ -39,7 +39,7 @@ public interface IVersion {
      *  modifications in client code without modification of ToolkitPlugins
      *  require an increase of this version
      */
-    public final Integer JB_CLIENT_METADATA_VERSION = new Integer(7);
+    public final Integer JB_CLIENT_METADATA_VERSION = new Integer(6);
     
     /** minimum required metadata version for project import */
     public final Integer JB_CLIENT_MIN_XML_METADATA_VERSION = new Integer(5);
