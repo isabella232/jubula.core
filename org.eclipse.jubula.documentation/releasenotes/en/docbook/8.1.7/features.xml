@@ -28,4 +28,14 @@
       </para>
     </listitem>
    </itemizedlist>
+   <para>
+    <emphasis role="strong">Selenium version updated</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The version of Selenium used by Jubula to execute HTML tests has been updated to version 2.46.0.
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>
