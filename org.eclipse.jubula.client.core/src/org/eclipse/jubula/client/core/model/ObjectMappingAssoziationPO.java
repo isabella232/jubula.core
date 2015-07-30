@@ -245,7 +245,6 @@ public class ObjectMappingAssoziationPO
      */
     @Id
     @GeneratedValue
-    @Column(name = ID_COLUMN_NAME)
     public Long getId() {
         return m_id;
     }
