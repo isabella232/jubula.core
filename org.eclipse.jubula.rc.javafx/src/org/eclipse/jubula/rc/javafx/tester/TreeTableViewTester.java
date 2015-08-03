@@ -11,19 +11,16 @@
 package org.eclipse.jubula.rc.javafx.tester;
 
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.concurrent.Callable;
-
-import javafx.geometry.Point2D;
-import javafx.scene.Parent;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableView;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeTraverser;
 import org.eclipse.jubula.rc.common.implclasses.tree.ExpandCollapseTreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.INodePath;
@@ -31,14 +28,22 @@ import org.eclipse.jubula.rc.common.implclasses.tree.PathBasedTraverser;
 import org.eclipse.jubula.rc.common.implclasses.tree.SelectTreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TreeTableOperationContext;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.geometry.Point2D;
+import javafx.scene.Parent;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableView;
 
 
 /**
@@ -49,6 +54,10 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created 23.06.2014
  */
 public class TreeTableViewTester extends TreeViewTester {
+
+    /** the logger */
+    private static AutServerLogger log = new AutServerLogger(
+            TreeTableViewTester.class);
 
     @Override
     protected Object getNodeAtMousePosition() throws StepExecutionException {
@@ -190,9 +199,7 @@ public class TreeTableViewTester extends TreeViewTester {
         final int implCol = IndexConverter.toImplementationIndex(column);
         checkColumnIndex(implCol);
 
-        TreeTableOperationContext context = new TreeTableOperationContext(
-                getEventThreadQueuer(), getRobot(),
-                (TreeTableView<?>) getRealComponent());
+        TreeTableOperationContext context = getContext();
         context.setColumn(implCol);
 
         String text = context.getRenderedTextOfColumn(
@@ -200,6 +207,15 @@ public class TreeTableViewTester extends TreeViewTester {
         
         Verifier.match(text, pattern, operator);
 
+    }
+
+    /**
+     * @return the tree table operation context
+     */
+    private TreeTableOperationContext getContext() {
+        return new TreeTableOperationContext(
+                getEventThreadQueuer(), getRobot(),
+                (TreeTableView<?>) getRealComponent());
     }
     
     /**
@@ -213,7 +229,7 @@ public class TreeTableViewTester extends TreeViewTester {
      *            parameter.
      * @param operation The tree node operation.
      * @param column The target column for the operation.
-     * @throws StepExecutionException If the path traversion fails.
+     * @throws StepExecutionException If the path traversal fails.
      */
     private void traverseLastElementByPath(INodePath treePath, 
             String pathType, int preAscend, TreeNodeOperation operation,
@@ -223,9 +239,7 @@ public class TreeTableViewTester extends TreeViewTester {
         Validate.notNull(treePath);
         Validate.notNull(operation);
 
-        TreeTableOperationContext context = new TreeTableOperationContext(
-                getEventThreadQueuer(), getRobot(),
-                (TreeTableView<?>) getRealComponent());
+        TreeTableOperationContext context = getContext();
         context.setColumn(column);
         TreeItem<?> startNode = (TreeItem<?>) getStartNode(pathType, preAscend,
                 context);
@@ -259,5 +273,200 @@ public class TreeTableViewTester extends TreeViewTester {
                 EventFactory.createActionError(
                     TestErrorEvent.INVALID_INDEX));
         }
+    }
+    
+    /**
+     * Verifies the editable property of the given indices.
+     *
+     * @param editable
+     *            The editable property to verify.
+     * @param row the row to select
+     * @param rowOperator the row header operator
+     * @param col the column to select
+     * @param colOperator the column header operator
+     */
+    public void rcVerifyEditable(boolean editable, String row,
+            String rowOperator, String col, String colOperator) {
+        TreeTableOperationContext context = getContext();
+        if (context.getRowFromString(row, rowOperator) == -1) {
+            throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
+        }        
+        selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
+                ValueSets.BinaryChoice.no.rcValue());
+        rcVerifyEditable(editable);
+    }
+    
+    /**
+     * Verifies the editable property of the current selected cell.
+     *
+     * @param editable The editable property to verify.
+     */
+    public void rcVerifyEditable(boolean editable) {
+        Cell cell = getContext().getSelectedCell();
+        
+        Verifier.equals(editable, getContext().isCellEditable(
+                cell.getRow(), cell.getCol()));
+    }
+    
+    /**
+     * Verifies, whether value exists in row..
+     *
+     * @param row The row of the cell.
+     * @param rowOperator the row header operator
+     * @param value The cell text to verify.
+     * @param operator The operation used to verify
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param exists true if value exists, false otherwise
+     * @throws StepExecutionException
+     *             If the row or the column is invalid, or if the rendered text
+     *             cannot be extracted.
+     */
+    public void rcVerifyValueInRow(final String row, final String rowOperator,
+            final String value, final String operator, final String searchType,
+            boolean exists)
+        throws StepExecutionException {
+        StepExecutionException.throwUnsupportedAction();
+    }
+    
+    /**
+     * Verifies, whether value exists in column.
+     *
+     * @param col The column of the cell.
+     * @param colOperator the column header operator
+     * @param value The cell text to verify.
+     * @param operator The operation used to verify
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param exists true if value exists, false otherwise
+     * @throws StepExecutionException
+     *             If the row or the column is invalid, or if the rendered text
+     *             cannot be extracted.
+     */
+    public void rcVerifyValueInColumn(final String col,
+            final String colOperator, final String value,
+            final String operator, final String searchType, boolean exists)
+        throws StepExecutionException {
+        StepExecutionException.throwUnsupportedAction();
+    }
+    
+    /**
+     * Verifies the rendered text inside the passed cell.
+     * @param row The row of the cell.
+     * @param rowOperator The row header operator
+     * @param col The column of the cell.
+     * @param colOperator The column header operator
+     * @param text The cell text to verify.
+     * @param operator The operation used to verify
+     * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
+     */
+    public void rcVerifyText(String text, String operator, final String row,
+            final String rowOperator, final String col,
+            final String colOperator) throws StepExecutionException {
+        StepExecutionException.throwUnsupportedAction();
+    }
+    
+    /**
+     * Action to read the value of the passed cell of the table
+     * to store it in a variable in the Client
+     * @param variable the name of the variable
+     * @param row the row to select
+     * @param rowOperator the row header operator
+     * @param col the column to select
+     * @param colOperator the column header operator
+     * @return the text value.
+     */
+    public String rcReadValue(String variable, String row, String rowOperator,
+            String col, String colOperator) {
+        StepExecutionException.throwUnsupportedAction();
+        return null;
+    }
+    
+    /**
+     * Selects a table cell in the given row and column via click in the middle of the cell.
+     * @param row The row of the cell.
+     * @param rowOperator The row header operator
+     * @param col The column of the cell.
+     * @param colOperator The column header operator
+     * @param co the click options to use
+     * @param extendSelection Should this selection be part of a multiple selection
+     */
+    private void selectCell(final String row, final String rowOperator,
+            final String col, final String colOperator,
+            final ClickOptions co, final String extendSelection) {
+            
+        rcSelectCell(row, rowOperator, col, colOperator, co.getClickCount(),
+                50, ValueSets.Unit.percent.rcValue(), 50,
+                ValueSets.Unit.percent.rcValue(), extendSelection,
+                co.getMouseButton());
+    }
+    
+    /**
+     * Selects the cell of the Table.<br>
+     * With the xPos, yPos, xUnits and yUnits the click position inside the cell can be defined.
+     * @param row The row of the cell.
+     * @param rowOperator The row header operator
+     * @param col The column of the cell.
+     * @param colOperator The column header operator
+     * @param clickCount The number of clicks with the right mouse button
+     * @param xPos what x position
+     * @param xUnits should x position be pixel or percent values
+     * @param yPos what y position
+     * @param yUnits should y position be pixel or percent values
+     * @param extendSelection Should this selection be part of a multiple selection
+     * @param button what mouse button should be used
+     * @throws StepExecutionException If the row or the column is invalid
+     */
+    public void rcSelectCell(final String row, final String rowOperator,
+        final String col, final String colOperator,
+        final int clickCount, final int xPos, final String xUnits,
+        final int yPos, final String yUnits, final String extendSelection,
+        int button) 
+        throws StepExecutionException {
+        TreeTableOperationContext adapter = getContext();
+        final int implRow = adapter.getRowFromString(row, rowOperator);
+        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final boolean isExtendSelection = extendSelection.equals(
+                ValueSets.BinaryChoice.yes.rcValue()); 
+        if (log.isDebugEnabled()) {
+            log.debug("Selecting row, col: " + row + ", " + col); //$NON-NLS-1$//$NON-NLS-2$
+        }
+        
+        Rectangle cellBounds;
+        Object source = getRealComponent();
+        //if row is header and col is existing
+        if (implRow == -1 && implCol > -1) {
+            cellBounds = adapter.getHeaderBounds(implCol);
+            source = adapter.getTableHeader();
+        } else {
+            cellBounds = adapter.scrollCellToVisible(implRow, implCol);
+        }        
+        ClickOptions clickOptions = ClickOptions.create();
+        clickOptions.setClickCount(clickCount).setScrollToVisible(false);
+        clickOptions.setMouseButton(button);
+        try {
+            if (isExtendSelection) {
+                getRobot().keyPress(getRealComponent(),
+                        getExtendSelectionModifier());
+            }
+            getRobot().click(source, cellBounds, clickOptions, 
+                    xPos, xUnits.equalsIgnoreCase(
+                            ValueSets.Unit.pixel.rcValue()), 
+                    yPos, yUnits.equalsIgnoreCase(
+                            ValueSets.Unit.pixel.rcValue()));
+        } finally {
+            if (isExtendSelection) {
+                getRobot().keyRelease(getRealComponent(),
+                        getExtendSelectionModifier());
+            }
+        }
+    }
+    
+    /**
+     * Gets The modifier for an extended selection (more than one item)
+     * @return the modifier
+     */
+    protected int getExtendSelectionModifier() {
+        return KeyEvent.VK_CONTROL;
     }
 }

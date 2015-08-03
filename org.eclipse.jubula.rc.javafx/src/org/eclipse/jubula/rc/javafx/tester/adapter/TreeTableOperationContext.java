@@ -13,30 +13,43 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
-
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableRow;
-import javafx.scene.control.TreeTableView;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.IndexConverter;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.StringParsing;
+
+import com.sun.javafx.scene.control.skin.TableColumnHeader;
+
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTablePosition;
+import javafx.scene.control.TreeTableRow;
+import javafx.scene.control.TreeTableView;
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on the tree inside a TreeTableView.
@@ -52,6 +65,13 @@ public class TreeTableOperationContext extends
     
     /** The column on which to perform the operation **/
     private int m_column = 0;
+    
+    /**
+     * Workaround to support nested Columns without modifying classes which would
+     * affect other toolkits
+     **/
+    private List<TreeTableColumn<?, ?>> m_columns =
+            new ArrayList<TreeTableColumn<?, ?>>();
     
     /**
      * Creates a new instance.
@@ -576,5 +596,357 @@ public class TreeTableOperationContext extends
                         return -1;
                     }
                 });
+    }
+    
+    /**
+     * Gets row index from string with index or text of first column
+     * 
+     * @param row
+     *            index or value in first row
+     * @param operator
+     *            the operation used to verify
+     * @return integer of String of row
+     */
+    public int getRowFromString(final String row, final String operator) {
+        Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getRowFromString", new Callable<Integer>() { //$NON-NLS-1$
+                    @Override
+                    public Integer call() throws Exception {
+                        Integer rowInt = null;
+                        TreeTableView<?> treetable = getTree();
+                        if (treetable.getColumns().size() <= 0) {
+                            throw new StepExecutionException(
+                                    "No Header", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                            TestErrorEvent.NO_HEADER));
+                        }
+                        try {
+                            rowInt = IndexConverter
+                                    .toImplementationIndex(Integer
+                                            .parseInt(row));
+                        } catch (NumberFormatException nfe) {
+                            TreeTableColumn<?, ?> firstColumn =
+                                    treetable.getColumns().get(0);
+                            int i = 0;
+                            Object cellData = firstColumn.getCellData(i);
+                            while (cellData != null) {
+                                String cellTxt =
+                                        getRenderedTextFromCell(cellData, 0);
+                                if (MatchUtil.getInstance().match(cellTxt, row,
+                                        operator)) {
+                                    return new Integer(i);
+                                }
+                                i++;
+                                cellData = firstColumn.getCellData(i);
+                            }
+                        }
+                        if (rowInt == null) {
+                            throw new StepExecutionException(
+                                "Row not found", //$NON-NLS-1$
+                                EventFactory
+                                        .createActionError(TestErrorEvent.
+                                                NOT_FOUND));
+                        }
+                        return rowInt;
+                    }
+                });
+        return result.intValue();
+    }
+    
+    /**
+     * Gets column index from string with index or text of first row
+     * 
+     * @param colPath
+     *            index or value in first col
+     * @param op
+     *            the operation used to verify
+     * @return integer of String of col
+     */
+    public int getColumnFromString(final String colPath, final String op) {
+        Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait("getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
+            @Override
+            public Integer call() throws Exception {
+                TreeTableView<?> treeTable = getTree();
+                TreeTableColumn<?, ?> column = null;
+                List<String> path = StringParsing.splitToList(colPath,
+                        TestDataConstants.PATH_CHAR_DEFAULT,
+                        TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
+                ObservableList<?> columns;
+                if (colPath.contains("" + TestDataConstants.PATH_CHAR_DEFAULT)) { //$NON-NLS-1$
+                    columns = treeTable.getColumns();
+                } else {
+                    columns = treeTable.getVisibleLeafColumns();
+                }
+                Iterator<String> pathIterator = path.iterator();
+                String currCol = null;
+                while (pathIterator.hasNext()) {
+                    try {
+                        currCol = pathIterator.next();
+                        int usrIdxCol = Integer.parseInt(currCol);
+                        if (usrIdxCol == 0) {
+                            usrIdxCol = usrIdxCol + 1;
+                        }
+                        int i = IndexConverter.toImplementationIndex(usrIdxCol);
+                        if (pathIterator.hasNext()) {
+                            columns = ((TreeTableColumn<?, ?>)
+                                    columns.get(i)).getColumns();
+                        } else {
+                            column = (TreeTableColumn<?, ?>) columns.get(i);
+                        }
+                    } catch (NumberFormatException nfe) {
+                        try {
+                            if (path.size() <= 1) {
+                                columns = treeTable.getColumns();
+                            }
+                            if (columns.size() <= 0) {
+                                throw new StepExecutionException(
+                                        "No Columns", EventFactory.createActionError(//$NON-NLS-1$
+                                                    TestErrorEvent.NO_HEADER));
+                            }
+                            for (Object c: columns) {
+                                TreeTableColumn<?, ?> col =
+                                        (TreeTableColumn<?, ?>) c;
+                                String header = col.getText();
+                                if (MatchUtil.getInstance().match(
+                                        header, currCol, op)) {
+                                    column = col;
+                                    if (pathIterator.hasNext()) {
+                                        columns = col.getColumns();
+                                    }
+                                    break;
+                                }
+                            }
+                        } catch (IllegalArgumentException iae) {
+                            // do nothing here
+                        }
+                    }
+                } 
+                if (column == null) {
+                    throw new StepExecutionException("Column not found", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                            TestErrorEvent.NOT_FOUND));
+                }
+                if (treeTable.getVisibleLeafColumns().contains(column)) {
+                    return treeTable.getVisibleLeafColumns().indexOf(column);
+                }
+                if (!m_columns.contains(column)) {
+                    m_columns.add(column);
+                }
+                return m_columns.indexOf(column); 
+            }
+        });
+        return result.intValue();
+    }
+    
+    /**
+     * gets header bounds for column
+     * 
+     * @param column
+     *            the zero based index of the column.
+     * @return The rectangle of the header
+     */
+    public Rectangle getHeaderBounds(final int column) {
+        Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getHeaderBounds", new Callable<Rectangle>() { //$NON-NLS-1$
+
+                    @Override
+                    public Rectangle call() throws Exception {
+                        TreeTableView<?> treeTable = getTree();
+                        TreeTableColumn col;
+                        if (m_columns.size() > 0) {
+                            col = m_columns.get(column);
+                        } else {
+                            col = treeTable.getVisibleLeafColumn(column);
+                        }
+                        treeTable.scrollToColumn(col);
+                        // Update the layout coordinates otherwise
+                        // we would get old position values
+                        treeTable.layout();
+                        Parent headerRow = (Parent) treeTable
+                                .lookup("TableHeaderRow"); //$NON-NLS-1$
+                        Set<Node> columnHeaders = headerRow
+                                .lookupAll("column-header"); //$NON-NLS-1$
+                        Point2D parentPos = treeTable.localToScreen(0, 0);
+
+                        for (Node n : columnHeaders) {
+                            //DEPENDENCY TO INTERNAL API
+                            TableColumnHeader colH = (TableColumnHeader) n;
+                            if (colH.getTableColumn().equals(col)) {
+                                Rectangle b = NodeBounds
+                                        .getAbsoluteBounds(n);
+                                Rectangle tableB = NodeBounds
+                                        .getAbsoluteBounds(treeTable);
+                                return new Rectangle(
+                                        Math.abs(tableB.x - b.x),
+                                        Math.abs(tableB.y - b.y),
+                                        Rounding.round(b.getWidth()),
+                                        Rounding.round(b.getHeight()));
+                            }
+                        }
+                        return null;
+                    }
+                });
+        return result;
+    }
+    
+    /**
+     * @return The TableHeader if there is one,otherwise
+     *                  the table is returned.
+     */
+    public Object getTableHeader() {
+        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getTableHeader", new Callable<Object>() { //$NON-NLS-1$
+
+                    @Override
+                    public Object call() throws Exception {
+                        return getTree().lookup("TableHeaderRow"); //$NON-NLS-1$
+                    }
+                });
+        return result;
+    }
+
+    /**
+     * Scrolls the passed cell (as row and column) to visible.<br>
+     * This method must return null if there is no scrolling.
+     * 
+     * @param row
+     *            zero based index of the row.
+     * @param column
+     *            zero based index of the column.
+     * @return The rectangle of the cell.
+     * @throws StepExecutionException
+     *             If getting the cell rectangle or the scrolling fails.
+     */
+    public Rectangle scrollCellToVisible(final int row, final int column)
+        throws StepExecutionException {
+        Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "scrollCellToVisible", new Callable<Rectangle>() { //$NON-NLS-1$
+
+                    @Override
+                    public Rectangle call() throws Exception {
+                        TreeTableView<?> treeTable = getTree();
+                        TreeTableColumn col = null;
+                        if (m_columns.size() == 0) {
+                            col = treeTable.getVisibleLeafColumn(column);
+                        } else {
+                            col = m_columns.get(column);
+                        }
+
+                        treeTable.scrollTo(row);
+                        treeTable.scrollToColumn(col);
+                        // Update the layout coordinates otherwise
+                        // we would get old position values
+                        treeTable.layout();
+                        List<? extends TreeTableCell> tCells =
+                                NodeTraverseHelper.getInstancesOf(
+                                        treeTable, TreeTableCell.class);
+                        for (TreeTableCell<?, ?> cell : tCells) {
+                            if (cell.getIndex() == row
+                                    && cell.getTableColumn() == col
+                                    && cell.getTreeTableView() == treeTable) {
+
+                                Rectangle b = NodeBounds
+                                        .getAbsoluteBounds(cell);
+                                Rectangle tableB = NodeBounds
+                                        .getAbsoluteBounds(treeTable);
+                                return new Rectangle(
+                                        Math.abs(tableB.x - b.x),
+                                        Math.abs(tableB.y - b.y),
+                                        Rounding.round(b.getWidth()),
+                                        Rounding.round(b.getHeight()));
+                            }
+                        }
+                        return null;
+                    }
+                });
+        return result;
+    }
+    
+    /**
+     * @return The currently selected cell of the Table.
+     * @throws StepExecutionException
+     *             If no cell is selected.
+     */
+    public Cell getSelectedCell() throws StepExecutionException {
+        Cell result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getSelectedCell", new Callable<Cell>() { //$NON-NLS-1$
+
+                    @Override
+                    public Cell call() throws StepExecutionException {
+                        TreeTableView<?> treeTable = getTree();
+                        ObservableList<?> list = treeTable
+                                .getSelectionModel().getSelectedCells();
+
+                        if (list.size() > 0) {
+                            TreeTablePosition<?, ?> pos = null;
+                            for (Object object : list) {
+                                TreeTablePosition<?, ?> curr =
+                                        (TreeTablePosition<?, ?>) object;
+                                if (curr.getRow() == treeTable
+                                        .getSelectionModel()
+                                        .getSelectedIndex()) {
+                                    pos = curr;
+                                    break;
+                                }
+                            }
+                            if (pos != null) {
+                                return new Cell(pos.getRow(), pos.getColumn());
+                            }
+                        }
+                        throw new StepExecutionException("No selection found", //$NON-NLS-1$
+                                EventFactory
+                                .createActionError(TestErrorEvent.
+                                        NO_SELECTION));
+                    }
+                });
+        return result;
+    }
+    
+    /**
+     * 
+     * @param row
+     *            zero based index of the row
+     * @param column
+     *            zero based index of the column
+     * @return <code>true</code> if the Cell is editable, <code>false</code>
+     *         otherwise
+     */
+    public boolean isCellEditable(final int row, final int column) {
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "isCellEditable", new Callable<Boolean>() { //$NON-NLS-1$
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        TreeTableView treeTable = getTree();
+                        if (treeTable.isEditable()) {
+                            TreeTableColumn<?, ?> col = null;
+                            if (m_columns.size() == 0) {
+                                col = treeTable.getVisibleLeafColumn(column);
+                            } else {
+                                col = m_columns.get(column);
+                            }
+                            if (col.isEditable()) {
+                                treeTable.scrollTo(row);
+                                treeTable.scrollToColumn(col);
+                                treeTable.layout();
+                                List<? extends TreeTableCell> tCells = 
+                                        NodeTraverseHelper.getInstancesOf(
+                                                treeTable, TreeTableCell.class);
+                                for (TreeTableCell<?, ?> cell : tCells) {
+                                    if (cell.getIndex() == row
+                                            && cell.getTableColumn() == col
+                                            && cell.getTreeTableView()
+                                                == treeTable
+                                            && NodeTraverseHelper
+                                            .isVisible(cell)) {
+                                        return cell.isEditable();
+                                    }
+                                }
+                            }
+                        }
+                        return false;
+                    }
+                });
+        return result;
     }
 }
