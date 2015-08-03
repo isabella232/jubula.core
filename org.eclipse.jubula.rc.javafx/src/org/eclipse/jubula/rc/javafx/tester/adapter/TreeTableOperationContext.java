@@ -30,6 +30,8 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
+import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
@@ -44,6 +46,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
@@ -945,6 +948,134 @@ public class TreeTableOperationContext extends
                             }
                         }
                         return false;
+                    }
+                });
+        return result;
+    }
+    
+    /**
+     * Returns the text of the column appearing in the view at column position
+     * <code>column</code>.
+     * 
+     * @param column
+     *            the zero based index of the column in the view being queried
+     * @return the text of the column at position <code>column</code> in the
+     *         view where the first column is column 0
+     */
+    public String getColumnHeaderText(final int column) {
+        String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getColumnHeaderText", //$NON-NLS-1$
+                new Callable<String>() {
+
+                    @Override
+                    public String call() throws Exception {
+                        if (m_columns.size() > 0) {
+                            TreeTableColumn<?, ?> tCol = m_columns.get(column);
+                            return tCol.getText();
+                        }
+                        TreeTableColumn<?, ?> tCol = getTree()
+                                .getVisibleLeafColumn(column);
+                        return tCol.getText();
+                    }
+                });
+        return result;
+    }
+    
+    /**
+     * Gets the number of rows
+     * 
+     * @return the number of rows
+     */
+    public int getRowCount() {
+        int result = EventThreadQueuerJavaFXImpl.invokeAndWait("getRowCount", //$NON-NLS-1$
+                new Callable<Integer>() {
+
+                    @Override
+                    public Integer call() throws Exception {
+                        return getTree().getExpandedItemCount();
+                    }
+                });
+        return result;
+    }
+    
+    /**
+     * Gets the number of columns
+     * 
+     * @return the number of columns
+     */
+    public int getColumnCount() {
+        int result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+            "getColumnCount", new Callable<Integer>() { //$NON-NLS-1$
+                @Override
+                public Integer call() throws Exception {
+                    int counter = 0;
+                    for (TreeTableColumn<?, ?> column
+                            : getTree().getColumns()) {
+                        counter += new GenericTraverseHelper
+                                <TreeTableColumn, TreeTableColumn>()
+                                .getInstancesOf(
+                                        new AbstractTraverser
+                                        <TreeTableColumn, TreeTableColumn>(
+                                                column) {
+
+                                            @Override
+                                            public Iterable<TreeTableColumn> 
+                                                getTraversableData() {
+                                                return this.getObject()
+                                                        .getColumns();
+                                            }
+                                        }, TreeTableColumn.class).size();
+                    }
+                    return counter + getTree().getColumns().size();
+                }
+            });
+        return result;
+    }
+    
+    /**
+     * @param row
+     *            the zero based index of the row
+     * @param column
+     *            the zero based index of the column
+     * @return the text of the cell of the given coordinates
+     */
+    public String getCellText(final int row, final int column) {
+        String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getCellText", new Callable<String>() { //$NON-NLS-1$
+
+                    @Override
+                    public String call() throws Exception {
+                        TreeTableView table = getTree();
+                        TreeTableColumn<?, ?> col = null;
+                        if (m_columns.size() == 0) {
+                            col = table.getVisibleLeafColumn(column);
+                        } else {
+                            col = m_columns.get(column);
+                        }
+                        table.scrollTo(row);
+                        table.scrollToColumn(col);
+                        table.layout();
+                        List<? extends TreeTableCell> tCells =
+                                NodeTraverseHelper.getInstancesOf(table,
+                                        TreeTableCell.class);
+                        for (TreeTableCell<?, ?> cell : tCells) {
+                            if (cell.getIndex() == row
+                                    && cell.getTableColumn() == col
+                                    && cell.getTreeTableView() == table
+                                    && NodeTraverseHelper.isVisible(cell)) {
+                                String txt = cell.getText();
+                                if (txt == null && cell.isEditing()) {
+                                    // The cell is in its editing state,
+                                    // therefore its text property is empty.
+                                    // We have to check the TextField for the
+                                    // text.
+                                    TextField f = (TextField) cell.getGraphic();
+                                    txt = f.getText();
+                                }
+                                return txt;
+                            }
+                        }
+                        return null;
                     }
                 });
         return result;

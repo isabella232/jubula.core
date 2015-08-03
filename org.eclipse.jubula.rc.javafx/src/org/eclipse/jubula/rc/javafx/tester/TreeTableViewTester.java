@@ -360,10 +360,78 @@ public class TreeTableViewTester extends TreeViewTester {
      * @param operator The operation used to verify
      * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
      */
+    /**
+     * Verifies the rendered text inside the passed cell.
+     * @param row The row of the cell.
+     * @param rowOperator The row header operator
+     * @param col The column of the cell.
+     * @param colOperator The column header operator
+     * @param text The cell text to verify.
+     * @param operator The operation used to verify
+     * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
+     */
     public void rcVerifyText(String text, String operator, final String row,
             final String rowOperator, final String col,
             final String colOperator) throws StepExecutionException {
-        StepExecutionException.throwUnsupportedAction();
+        TreeTableOperationContext adapter = getContext();
+        final int implRow = adapter.getRowFromString(row, rowOperator);
+        final int implCol = adapter.getColumnFromString(col, colOperator);
+        String current;
+        //if row is header and column is existing
+        if (implRow == -1 && implCol > -1) {
+            current = adapter.getColumnHeaderText(implCol);        
+        } else {
+            checkRowColBounds(implRow, implCol);
+            adapter.scrollCellToVisible(implRow, implCol);
+            current = getCellText(implRow, implCol);
+        }
+        
+        Verifier.match(current, text, operator);
+    }
+    
+    /**
+     * Checks if the passed row and column are inside the bounds of the Table. 
+     * @param row The row
+     * @param column The column
+     * @throws StepExecutionException If the row or the column is outside of the Table's bounds.
+     */
+    protected void checkRowColBounds(int row, int column)
+        throws StepExecutionException {
+        TreeTableOperationContext adapter = getContext();
+        checkBounds(row, adapter.getRowCount());
+        
+        // Corner case: Only check the bounds if the table is not being
+        //              used as a list or anything other than the first column
+        //              is being checked.
+        int colCount = adapter.getColumnCount();
+        if (colCount > 0 || column > 0) {
+            checkBounds(column, colCount);
+        }
+    }
+     
+    /**
+     * Checks whether <code>0 <= value < count</code>. 
+     * @param value The value to check.
+     * @param count The upper bound.
+     */
+    private void checkBounds(int value, int count) {
+        if (value < 0 || value >= count) {
+            throw new StepExecutionException("Invalid row/column: " + value, //$NON-NLS-1$
+                EventFactory.createActionError(
+                        TestErrorEvent.INVALID_INDEX_OR_HEADER));
+        }
+    }
+
+    /**
+     * Gets the text from the specific cell which is given
+     * by the row and the column.
+     * @param row the zero based index of the row
+     * @param column the zero based index of the column
+     * @return the text of the cell of the given coordinates
+     */
+    private String getCellText(final int row, final int column) {
+        return getContext().getCellText(row, column);
+
     }
     
     /**
