@@ -30,12 +30,14 @@ import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TreeTableOperationContext;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -327,7 +329,44 @@ public class TreeTableViewTester extends TreeViewTester {
             final String value, final String operator, final String searchType,
             boolean exists)
         throws StepExecutionException {
-        StepExecutionException.throwUnsupportedAction();
+        final TreeTableOperationContext adapter = getContext();
+        final int implRow = adapter.getRowFromString(row, rowOperator);
+        boolean valueIsExisting = false;
+        //if row is header
+        if (implRow == -1) {
+            for (int i = getStartingColIndex(searchType); 
+                    i < adapter.getColumnCount(); ++i) {
+                if (MatchUtil.getInstance().match(
+                        adapter.getColumnHeaderText(i),
+                        value, operator)) {
+                    valueIsExisting = true;
+                    break;
+                }
+            }             
+        } else {
+            for (int i = getStartingColIndex(searchType); 
+                    i < adapter.getColumnCount(); ++i) {
+                if (MatchUtil.getInstance().match(
+                        getCellText(implRow, i), value, operator)) {
+                    valueIsExisting = true;
+                    break;
+                }
+            }
+        }
+        Verifier.equals(exists, valueIsExisting);
+    }
+
+    /**
+     * @param searchType Determines column where the search begins ("relative" or "absolute")
+     * @return The index from which to begin a search, based on the search type
+     *         and (if appropriate) the currently selected cell.
+     */
+    private int getStartingColIndex(String searchType) {
+        int startingIndex = 0;
+        if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
+            startingIndex = getContext().getSelectedCell().getCol() + 1;
+        }
+        return startingIndex;
     }
     
     /**
@@ -347,7 +386,55 @@ public class TreeTableViewTester extends TreeViewTester {
             final String colOperator, final String value,
             final String operator, final String searchType, boolean exists)
         throws StepExecutionException {
-        StepExecutionException.throwUnsupportedAction();
+        TreeTableOperationContext adapter = getContext();
+        final int implCol = adapter.getColumnFromString(col, colOperator);
+        
+        boolean valueExists = isValueExisting(adapter, implCol,
+                value, operator, searchType);
+
+        Verifier.equals(exists, valueExists);
+    }
+
+    /**
+     * Looks if value exists in the Column.
+     * 
+     * @param adapter the table adapter working on.
+     * @param implCol the implementation column of the cell.
+     * @param value the cell text to verify.
+     * @param operator The operation used to verify.
+     * @param searchType searchType Determines where the search begins ("relative" or "absolute")
+     * @return <code>true</code> it the value exists in the column
+     */
+    private boolean isValueExisting(TreeTableOperationContext adapter,
+            int implCol, String value, String operator,
+            final String searchType) {
+        final int rowCount = adapter.getRowCount();
+        for (int i = getStartingRowIndex(searchType); i < rowCount; ++i) {
+            if (MatchUtil.getInstance().match(getCellText(i, implCol),
+                    value, operator)) {
+                return true;
+            }
+        }
+        if (adapter.isHeaderVisible()) {
+            String header = adapter.getColumnHeaderText(implCol);
+            if (MatchUtil.getInstance().match(header, value, operator)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param searchType Determines the row where the search begins ("relative" or "absolute")
+     * @return The index from which to begin a search, based on the search type
+     *         and (if appropriate) the currently selected cell.
+     */
+    private int getStartingRowIndex(String searchType) {
+        int startingIndex = 0;
+        if (searchType.equalsIgnoreCase(SearchType.relative.rcValue())) {
+            startingIndex = getContext().getSelectedCell().getRow() + 1;
+        }
+        return startingIndex;
     }
     
     /**
@@ -399,14 +486,7 @@ public class TreeTableViewTester extends TreeViewTester {
         throws StepExecutionException {
         TreeTableOperationContext adapter = getContext();
         checkBounds(row, adapter.getRowCount());
-        
-        // Corner case: Only check the bounds if the table is not being
-        //              used as a list or anything other than the first column
-        //              is being checked.
-        int colCount = adapter.getColumnCount();
-        if (colCount > 0 || column > 0) {
-            checkBounds(column, colCount);
-        }
+        checkBounds(column, adapter.getColumnCount());
     }
      
     /**
@@ -446,8 +526,17 @@ public class TreeTableViewTester extends TreeViewTester {
      */
     public String rcReadValue(String variable, String row, String rowOperator,
             String col, String colOperator) {
-        StepExecutionException.throwUnsupportedAction();
-        return null;
+        TreeTableOperationContext adapter = getContext();
+        final int implRow = adapter.getRowFromString(row, rowOperator);
+        final int implCol = adapter.getColumnFromString(col, colOperator);
+        
+        //if row is header and column is existing
+        if (implRow == -1 && implCol > -1) {
+            return adapter.getColumnHeaderText(implCol); 
+        }
+        checkRowColBounds(implRow, implCol);
+        adapter.scrollCellToVisible(implRow, implCol);
+        return getCellText(implRow, implCol);
     }
     
     /**

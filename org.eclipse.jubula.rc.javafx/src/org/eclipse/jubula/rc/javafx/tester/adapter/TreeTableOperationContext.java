@@ -53,6 +53,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTablePosition;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.layout.Pane;
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on the tree inside a TreeTableView.
@@ -666,79 +667,101 @@ public class TreeTableOperationContext extends
      * @return integer of String of col
      */
     public int getColumnFromString(final String colPath, final String op) {
-        Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait("getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
-            @Override
-            public Integer call() throws Exception {
-                TreeTableView<?> treeTable = getTree();
-                TreeTableColumn<?, ?> column = null;
-                List<String> path = StringParsing.splitToList(colPath,
-                        TestDataConstants.PATH_CHAR_DEFAULT,
-                        TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
-                ObservableList<?> columns;
-                if (colPath.contains("" + TestDataConstants.PATH_CHAR_DEFAULT)) { //$NON-NLS-1$
-                    columns = treeTable.getColumns();
-                } else {
-                    columns = treeTable.getVisibleLeafColumns();
+        Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
+                    @Override
+                    public Integer call() throws Exception {
+                        TreeTableView<?> treeTable = getTree();
+                        List<String> path = StringParsing.splitToList(colPath,
+                                TestDataConstants.PATH_CHAR_DEFAULT,
+                                TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
+                        TreeTableColumn<?, ?> column = determineColumn(
+                                colPath, op, treeTable, path); 
+                        if (column == null) {
+                            throw new StepExecutionException("Column not found", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                                    TestErrorEvent.NOT_FOUND));
+                        }
+                        if (treeTable.getVisibleLeafColumns()
+                                .contains(column)) {
+                            return treeTable.getVisibleLeafColumns()
+                                    .indexOf(column);
+                        }
+                        if (!m_columns.contains(column)) {
+                            m_columns.add(column);
+                        }
+                        return m_columns.indexOf(column); 
+                    }
+                });
+        return result.intValue();
+    }
+    
+    /**
+     * @param colPath
+     *            index or value in first col
+     * @param op
+     *            the operation used to verify
+     * @param treeTable
+     *            the tree table
+     * @param path
+     *            path
+     * @return the column matching the path
+     */
+    private TreeTableColumn<?, ?> determineColumn(final String colPath,
+            final String op, TreeTableView<?> treeTable,
+            List<String> path) {
+        ObservableList<?> columns;
+        if (colPath.contains("" + TestDataConstants.PATH_CHAR_DEFAULT)) { //$NON-NLS-1$
+            columns = treeTable.getColumns();
+        } else {
+            columns = treeTable.getVisibleLeafColumns();
+        }
+        TreeTableColumn<?, ?> column = null;
+        Iterator<String> pathIterator = path.iterator();
+        String currCol = null;
+        while (pathIterator.hasNext()) {
+            try {
+                currCol = pathIterator.next();
+                int usrIdxCol = Integer.parseInt(currCol);
+                if (usrIdxCol == 0) {
+                    usrIdxCol = usrIdxCol + 1;
                 }
-                Iterator<String> pathIterator = path.iterator();
-                String currCol = null;
-                while (pathIterator.hasNext()) {
-                    try {
-                        currCol = pathIterator.next();
-                        int usrIdxCol = Integer.parseInt(currCol);
-                        if (usrIdxCol == 0) {
-                            usrIdxCol = usrIdxCol + 1;
-                        }
-                        int i = IndexConverter.toImplementationIndex(usrIdxCol);
-                        if (pathIterator.hasNext()) {
-                            columns = ((TreeTableColumn<?, ?>)
-                                    columns.get(i)).getColumns();
-                        } else {
-                            column = (TreeTableColumn<?, ?>) columns.get(i);
-                        }
-                    } catch (NumberFormatException nfe) {
-                        try {
-                            if (path.size() <= 1) {
-                                columns = treeTable.getColumns();
+                int i = IndexConverter.toImplementationIndex(usrIdxCol);
+                if (pathIterator.hasNext()) {
+                    columns = ((TreeTableColumn<?, ?>)
+                            columns.get(i)).getColumns();
+                } else {
+                    column = (TreeTableColumn<?, ?>) columns.get(i);
+                }
+            } catch (NumberFormatException nfe) {
+                try {
+                    if (path.size() <= 1) {
+                        columns = treeTable.getColumns();
+                    }
+                    if (columns.size() <= 0) {
+                        throw new StepExecutionException(
+                                "No Columns", EventFactory.createActionError(//$NON-NLS-1$
+                                        TestErrorEvent.NO_HEADER));
+                    }
+                    for (Object c: columns) {
+                        TreeTableColumn<?, ?> col =
+                                (TreeTableColumn<?, ?>) c;
+                        String header = col.getText();
+                        if (MatchUtil.getInstance().match(
+                                header, currCol, op)) {
+                            column = col;
+                            if (pathIterator.hasNext()) {
+                                columns = col.getColumns();
                             }
-                            if (columns.size() <= 0) {
-                                throw new StepExecutionException(
-                                        "No Columns", EventFactory.createActionError(//$NON-NLS-1$
-                                                    TestErrorEvent.NO_HEADER));
-                            }
-                            for (Object c: columns) {
-                                TreeTableColumn<?, ?> col =
-                                        (TreeTableColumn<?, ?>) c;
-                                String header = col.getText();
-                                if (MatchUtil.getInstance().match(
-                                        header, currCol, op)) {
-                                    column = col;
-                                    if (pathIterator.hasNext()) {
-                                        columns = col.getColumns();
-                                    }
-                                    break;
-                                }
-                            }
-                        } catch (IllegalArgumentException iae) {
-                            // do nothing here
+                            break;
                         }
                     }
-                } 
-                if (column == null) {
-                    throw new StepExecutionException("Column not found", //$NON-NLS-1$
-                            EventFactory.createActionError(
-                                            TestErrorEvent.NOT_FOUND));
+                } catch (IllegalArgumentException iae) {
+                    // do nothing here
                 }
-                if (treeTable.getVisibleLeafColumns().contains(column)) {
-                    return treeTable.getVisibleLeafColumns().indexOf(column);
-                }
-                if (!m_columns.contains(column)) {
-                    m_columns.add(column);
-                }
-                return m_columns.indexOf(column); 
             }
-        });
-        return result.intValue();
+        }
+        return column;
     }
     
     /**
@@ -1076,6 +1099,26 @@ public class TreeTableOperationContext extends
                             }
                         }
                         return null;
+                    }
+                });
+        return result;
+    }
+
+    /**
+     * 
+     * @return <code>true</code> if the header is visible, <code>false</code> otherwise
+     */
+    public boolean isHeaderVisible() {
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "isHeaderVisible", new Callable<Boolean>() { //$NON-NLS-1$
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        Pane header = (Pane) getTree().lookup("TableHeaderRow"); //$NON-NLS-1$
+                        if (header != null) {
+                            return header.isVisible();
+                        }
+                        return false;
                     }
                 });
         return result;
