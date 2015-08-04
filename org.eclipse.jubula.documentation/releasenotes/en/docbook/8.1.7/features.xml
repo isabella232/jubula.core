@@ -4,7 +4,7 @@
   <title>New Features and Developments</title>
   
   <para>
-    <emphasis role="strong">Four new actions for the JavaFX toolkit</emphasis>
+    <emphasis role="strong">Lots of new actions for the JavaFX toolkit</emphasis>
   </para>
   <itemizedlist>
     <listitem>
@@ -25,6 +25,11 @@
     <listitem>
       <para>
         You can now check the property of tree table items using the unbound module <emphasis>ub_trt_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_javafx</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Furthermore, there are several new check and select actions for tree tables in the JavaFX toolkit which emphasize the table aspect of that component. 
       </para>
     </listitem>
    </itemizedlist>
