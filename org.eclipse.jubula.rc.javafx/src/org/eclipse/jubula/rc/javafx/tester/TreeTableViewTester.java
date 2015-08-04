@@ -626,4 +626,150 @@ public class TreeTableViewTester extends TreeViewTester {
     protected int getExtendSelectionModifier() {
         return KeyEvent.VK_CONTROL;
     }
+    
+    /**
+     * Finds the first column which contains the value <code>value</code>
+     * in the given row and selects the cell.
+     *
+     * @param row the row to select
+     * @param rowOperator the row header operator
+     * @param value the value
+     * @param clickCount the number of clicks
+     * @param regex search using regex
+     * @param extendSelection Should this selection be part of a multiple selection
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param button what mouse button should be used
+     */
+    public void rcSelectCellByColValue(String row, String rowOperator,
+        final String value, final String regex, int clickCount,
+        final String extendSelection, final String searchType, int button) {
+        selectCellByColValue(row, rowOperator, value, regex, extendSelection,
+                searchType, ClickOptions.create()
+                    .setClickCount(clickCount)
+                    .setMouseButton(button));
+    }
+    
+    /**
+     * Finds the first column which contains the value <code>value</code>
+     * in the given row and selects the cell.
+     *
+     * @param row the row
+     * @param rowOperator the row header operator
+     * @param value the value
+     * @param regex search using regex
+     * @param extendSelection Should this selection be part of a multiple selection
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param co the click options to use
+     */
+    protected void selectCellByColValue(String row, String rowOperator,
+        final String value, final String regex, final String extendSelection,
+        final String searchType, ClickOptions co) { 
+        TreeTableOperationContext adapter = getContext();
+        final int implRow = adapter.getRowFromString(row, rowOperator);
+        int colCount = adapter.getColumnCount();
+        Integer implCol = null;
+        if (implRow == -1) {
+            
+            for (int i = getStartingColIndex(searchType); i < colCount; ++i) {
+                if (MatchUtil.getInstance().match(
+                        adapter.getColumnHeaderText(i), value, regex)) {
+                    implCol = new Integer(i);
+                    break;
+                }
+            }           
+        } else {
+            for (int i = getStartingColIndex(searchType); i < colCount; ++i) {
+                if (MatchUtil.getInstance().match(getCellText(implRow, i), 
+                        value, regex)) {
+
+                    implCol = new Integer(i);
+                    break;
+                }
+            } 
+        }
+        if (implCol == null) {
+            throw new StepExecutionException("no such cell found", EventFactory //$NON-NLS-1$
+                    .createActionError(TestErrorEvent.NOT_FOUND));
+        }
+        
+        String usrIdxRowStr = new Integer(IndexConverter.toUserIndex(
+                implRow)).toString();
+        String usrIdxColStr = new Integer(IndexConverter.toUserIndex(
+                implCol.intValue())).toString();
+        
+        selectCell(usrIdxRowStr, rowOperator, usrIdxColStr, MatchUtil.EQUALS,
+                co, extendSelection);
+        
+    }
+
+    /**
+     * Finds the first row which contains the value <code>value</code>
+     * in column <code>col</code> and selects this row.
+     * @param col the column
+     * @param colOperator the column header operator
+     * @param value the value
+     * @param clickCount the number of clicks.
+     * @param regexOp the regex operator
+     * @param extendSelection Should this selection be part of a multiple selection
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param button what mouse button should be used
+     */
+    public void rcSelectRowByValue(String col, String colOperator,
+            final String value, final String regexOp, int clickCount,
+            final String extendSelection, final String searchType, int button) {
+        selectRowByValue(col, colOperator, value, regexOp, extendSelection,
+                searchType, ClickOptions.create()
+                        .setClickCount(clickCount)
+                        .setMouseButton(button));
+    }
+
+    
+    /**
+     * Finds the first row which contains the value <code>value</code>
+     * in column <code>col</code> and selects this row.
+     *
+     * @param col the column
+     * @param colOperator the column header operator
+     * @param value the value
+     * @param regexOp the regex operator
+     * @param extendSelection Should this selection be part of a multiple selection
+     * @param searchType Determines where the search begins ("relative" or "absolute")
+     * @param co the clickOptions to use
+     */
+    protected void selectRowByValue(String col, String colOperator,
+        final String value, final String regexOp, final String extendSelection,
+        final String searchType, ClickOptions co) {
+        TreeTableOperationContext adapter = getContext();
+        final int implCol = adapter.getColumnFromString(col, colOperator);
+        Integer implRow = null;
+        final int rowCount = adapter.getRowCount();
+        
+        for (int i = getStartingRowIndex(searchType); i < rowCount; ++i) {
+            if (MatchUtil.getInstance().match(getCellText(i, implCol), 
+                    value, regexOp)) {
+
+                implRow = new Integer(i);
+                break;
+            }
+        }
+        if (implRow == null) {
+            String header = adapter.getColumnHeaderText(implCol);
+            if (MatchUtil.getInstance().match(header, value, regexOp)) {
+                implRow = new Integer(-1);
+            }
+        }
+
+        if (implRow == null) {
+            throw new StepExecutionException("no such row found", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
+        
+        String  userIdxRow = new Integer(IndexConverter.toUserIndex(
+                implRow.intValue())).toString();
+        String  userIdxCol = new Integer(IndexConverter.toUserIndex(
+                implCol)).toString();            
+        
+        selectCell(userIdxRow, MatchUtil.EQUALS, userIdxCol, colOperator, co,
+                extendSelection);
+    }
 }

@@ -632,16 +632,14 @@ public class TreeTableOperationContext extends
                             TreeTableColumn<?, ?> firstColumn =
                                     treetable.getColumns().get(0);
                             int i = 0;
-                            Object cellData = firstColumn.getCellData(i);
-                            while (cellData != null) {
-                                String cellTxt =
-                                        getRenderedTextFromCell(cellData, 0);
+                            String cellTxt = getCellText(i, 0);
+                            while (cellTxt != null) {
+                                cellTxt = getCellText(i, 0);
                                 if (MatchUtil.getInstance().match(cellTxt, row,
                                         operator)) {
                                     return new Integer(i);
                                 }
                                 i++;
-                                cellData = firstColumn.getCellData(i);
                             }
                         }
                         if (rowInt == null) {
