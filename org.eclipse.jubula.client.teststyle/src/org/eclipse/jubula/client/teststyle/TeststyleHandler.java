@@ -89,12 +89,19 @@ public final class TeststyleHandler implements IDataChangedListener,
         if (!isEnabled()) {
             return;
         }
+        boolean isUpdateInEditor = true;
         for (DataChangedEvent e : events) {
-            handleChangedPo(e.getPo(), e.getDataState(), e.getUpdateState());
+            if (e.getUpdateState() != UpdateState.onlyInEditor) {
+                handleChangedPo(e.getPo(), e.getDataState(),
+                        e.getUpdateState());
+                isUpdateInEditor = false;
+            }
         }
-        refresh();
-        addTeststyleProblems();
-        ProblemPropagator.getInstance().propagate();
+        if (!isUpdateInEditor) {
+            refresh();
+            addTeststyleProblems();
+            ProblemPropagator.getInstance().propagate();
+        }
     }
     
     /**
