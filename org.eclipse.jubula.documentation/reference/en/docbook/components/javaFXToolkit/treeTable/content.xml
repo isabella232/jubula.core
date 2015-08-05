@@ -38,12 +38,22 @@
   <itemizedlist>
   	<listitem>
   		<para>
+  			<xref linkend="actionCheckEditabilityTableComponents" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
   			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
   			<xref linkend="actionsCheckExistenceGeneral" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckExistenceTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -69,6 +79,11 @@
   	<listitem>
   		<para>
   			<xref linkend="actionCheckSelectionJavaFXTreeTables" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckTextTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -113,6 +128,11 @@
   	</listitem>
   	<listitem>
   		<para>
+  			<xref linkend="actionSelectTableComponents" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
   			<xref linkend="actionSelectTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
@@ -124,6 +144,11 @@
   	<listitem>
   		<para>
   			<xref linkend="actionsForStoringValuesGeneral" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionForStoringValuesTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
