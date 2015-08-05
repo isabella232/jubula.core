@@ -73,6 +73,8 @@ public class SimpleAdder {
     /** prepare */
     @Before
     public void setUp() throws Exception {
+        /* Connecting to external Jubula AUT Agent which
+        must be started manually BEFORE test execution! */
         m_agent = getAUTAgentInstance();
         m_agent.connect();
 
