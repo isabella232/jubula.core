@@ -443,16 +443,22 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     public void handleParamChanged() {
         // assuming that the currently selected element (or rather, 
         // all currently selected elements) have had some kind of param change
-        ISelection currentSelection = getMainTreeViewer().getSelection();
-        if (currentSelection instanceof IStructuredSelection) {
-            for (Object selectedObj 
-                    : ((IStructuredSelection)currentSelection).toArray()) {
-                if (selectedObj instanceof ITestDataCubePO) {
-                    getElementsToRefresh().add((ITestDataCubePO)selectedObj);
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                ISelection currentSelection = getMainTreeViewer()
+                        .getSelection();
+                if (currentSelection instanceof IStructuredSelection) {
+                    for (Object selectedObj : ((IStructuredSelection)
+                            currentSelection).toArray()) {
+                        if (selectedObj instanceof ITestDataCubePO) {
+                            getElementsToRefresh().add(
+                                    (ITestDataCubePO)selectedObj);
+                        }
+                    }
                 }
+                getMainTreeViewer().refresh();
             }
-        }
-        getMainTreeViewer().refresh();
+        });
     }
 
     /** {@inheritDoc} */
