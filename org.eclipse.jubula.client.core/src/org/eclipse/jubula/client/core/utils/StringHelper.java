@@ -18,8 +18,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.status.ITimeStatus;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -44,10 +46,16 @@ public class StringHelper {
 
     /** the currentToolKit */
     private static String toolkit = StringConstants.EMPTY;
+    
+    /** Pattern for Time as String **/
+    private static final String TIME_PATTERN = "yyyy/mm/dd hh:mm:ss a"; //$NON-NLS-1$
+    
     /**
      * Comment for <code>m_map</code>
      */
     private Map < String, String > m_map = null;
+    
+    
 
     /**
      * private constructor
@@ -224,28 +232,34 @@ public class StringHelper {
     
     /**
      * Gets a string representation of the given status, but this includes only
-     * the severity and the message.
+     * the severity and the message and if the Status is an ITimeStatus a time
+     * stamp is also added. The pattern is yyyy-mm-dd hh:mm:ss
      * 
-     * @param s the status
+     * @param s
+     *            the status
      * @return string representation
      */
     public static String getStringOf(IStatus s) {
         String result = ""; //$NON-NLS-1$
+        if (s instanceof ITimeStatus) {
+            result +=  DateFormatUtils.format(((ITimeStatus)s).getTime(),
+                    TIME_PATTERN) + " "; //$NON-NLS-1$
+        }
         switch (s.getSeverity()) {
             case IStatus.OK:
-                result = "OK"; //$NON-NLS-1$
+                result += "OK"; //$NON-NLS-1$
                 break;
             case IStatus.ERROR:
-                result = "ERROR"; //$NON-NLS-1$
+                result += "ERROR"; //$NON-NLS-1$
                 break;
             case IStatus.WARNING:
-                result = "WARNING"; //$NON-NLS-1$
+                result += "WARNING"; //$NON-NLS-1$
                 break;
             case IStatus.CANCEL:
-                result = "CANCEL"; //$NON-NLS-1$
+                result += "CANCEL"; //$NON-NLS-1$
                 break;
             case IStatus.INFO:
-                result = "INFO"; //$NON-NLS-1$
+                result += "INFO"; //$NON-NLS-1$
                 break;
             default:
                 //Don't print out severity code
