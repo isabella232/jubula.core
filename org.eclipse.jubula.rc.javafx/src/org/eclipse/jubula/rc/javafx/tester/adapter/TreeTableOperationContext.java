@@ -288,6 +288,10 @@ public class TreeTableOperationContext extends
     public void clickNode(final Object node, final ClickOptions clickOps) {
         scrollNodeToVisible(node);
         Rectangle rowBounds = getNodeBounds(node);
+        if (rowBounds == null) {
+            throw new StepExecutionException("Node not found", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
         Rectangle visibleRowBounds = getVisibleRowBounds(rowBounds);
         getRobot().click(getTree(), visibleRowBounds, clickOps);
     }
