@@ -1,11 +1,14 @@
 javafx.scene.control.Accordion - Check Focus										    <
-javafx.scene.control.Button - Check Selection											<
-javafx.stage.Stage - Prepare for AUT termination									    <
-javafx.stage.Stage - Synchronize termination and re-start of AUT						<
-javafx.scene.control.ButtonBase - Check Enablement									    <
-javafx.scene.control.ButtonBase - Check Existence									    <
-javafx.scene.control.ButtonBase - Check Focus										    <
-javafx.scene.control.ButtonBase - Check Property									    <
-javafx.scene.control.ButtonBase - Check Selection									    <
-javafx.scene.control.ButtonBase - Click											    	<
-javafx.scene.control.ButtonBase - Click in Component									<
+javafx.scene.control.ComboBox - Drag													<
+javafx.scene.control.ComboBox - Drop													<
+javafx.scene.control.ListView - Drag													<
+javafx.scene.control.ListView - Drop													<
+javafx.scene.control.TitledPane - Check Focus											<
+javafx.scene.control.TitledPane - Drag													<
+javafx.scene.control.TitledPane - Drop													<
+javafx.scene.control.ToggleButton - Drag												<
+javafx.scene.control.ToggleButton - Drop												<
+javafx.scene.text.Text - Drag															<
+javafx.scene.text.Text - Drop															<
+javafx.stage.Stage - Manual Test Step													<
+javafx.stage.Stage - Pause Test Execution												<
