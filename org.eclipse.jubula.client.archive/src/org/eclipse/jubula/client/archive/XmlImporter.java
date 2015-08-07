@@ -1759,7 +1759,7 @@ class XmlImporter {
             // If the list is used directly, then 
             IObjectMappingAssoziationPO assoc = 
                 PoMaker.createObjectMappingAssoziationPO(tecName, 
-                        new ArrayList<String>(logNames));
+                        new HashSet<String>(logNames));
             assoc.setType(assocXml.getType());
             category.addAssociation(assoc);
         }

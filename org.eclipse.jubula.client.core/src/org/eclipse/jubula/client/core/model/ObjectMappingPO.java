@@ -233,8 +233,7 @@ class ObjectMappingPO implements IObjectMappingPO {
             return res;
         }
         for (IObjectMappingAssoziationPO assoc : getMappings()) {
-            int pos = assoc.getLogicalNames().indexOf(compNameGuid);
-            if (pos != -1) {
+            if (assoc.getLogicalNames().contains(compNameGuid)) {
                 m_logicalNameToAssoc.put(compNameGuid, assoc);
                 return assoc;
             }

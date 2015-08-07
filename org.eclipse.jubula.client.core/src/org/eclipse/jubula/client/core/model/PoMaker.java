@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
@@ -154,7 +155,7 @@ public abstract class PoMaker {
      * @return ObjectMAppingAssoziationPO
      */ 
     public static IObjectMappingAssoziationPO createObjectMappingAssoziationPO(
-        IComponentIdentifier tec, List<String> logic) {
+        IComponentIdentifier tec, Set<String> logic) {
         return new ObjectMappingAssoziationPO(tec, logic);
     }
 

@@ -392,22 +392,20 @@ public class CAPRecordedCommand implements ICommand {
             if (checkTechNameExists) {
                 for (IObjectMappingAssoziationPO oma : connectedAut.getObjMap()
                         .getMappings()) {
-                    List<String> logicalNames = oma.getLogicalNames();
+                    Set<String> logicalNames = oma.getLogicalNames();
                     if (!(logicalNames.isEmpty())
                             && oma.getTechnicalName() != null
                             && oma.getTechnicalName()
                                     .equals(messageCap.getCi())) {
-                        if (logicalNames.get(0) != null) {
-                            for (String compNameGuid : logicalNames) {
-                                IComponentNamePO compNamePo = compNamesMapper
-                                        .getCompNameCache().getCompNamePo(
-                                                compNameGuid);
-                                if (compNamePo != null) {
-                                    if (compNamePo.getParentProjectId().equals(
-                                            GeneralStorage.getInstance()
-                                                    .getProject().getId())) {
-                                        compName = compNamePo.getName();
-                                    }
+                        for (String compNameGuid : logicalNames) {
+                            IComponentNamePO compNamePo = compNamesMapper
+                                    .getCompNameCache().getCompNamePo(
+                                            compNameGuid);
+                            if (compNamePo != null) {
+                                if (compNamePo.getParentProjectId().equals(
+                                        GeneralStorage.getInstance()
+                                                .getProject().getId())) {
+                                    compName = compNamePo.getName();
                                 }
                             }
                         }

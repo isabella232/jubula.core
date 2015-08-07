@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -164,7 +165,7 @@ public class OMEditorDndSupport {
                 try {
                     IObjectMappingAssoziationPO newAssoc = 
                         PoMaker.createObjectMappingAssoziationPO(
-                                null, new ArrayList<String>());
+                                null, new HashSet<String>());
                     compMapper.changeReuse(newAssoc, null, compNameGuid);
                     compMapper.changeReuse(oldAssoc, compNameGuid, null);
                     target.addAssociation(newAssoc);
@@ -233,7 +234,7 @@ public class OMEditorDndSupport {
                         compMapper.changeReuse(assoc, compNameGuid, null);
                         IObjectMappingAssoziationPO compNameAssoc = 
                             PoMaker.createObjectMappingAssoziationPO(
-                                    null, new ArrayList<String>());
+                                    null, new HashSet<String>());
                         compMapper.changeReuse(
                                 compNameAssoc, null, compNameGuid);
                         unmappedCompNames.addAssociation(compNameAssoc);

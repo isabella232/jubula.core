@@ -85,9 +85,8 @@ public class OMEditorTreeContentProvider extends
         if (parentElement instanceof IObjectMappingAssoziationPO) {
             IObjectMappingAssoziationPO assoc = 
                 (IObjectMappingAssoziationPO)parentElement;
-            List<String> componentNameGuidList = assoc.getLogicalNames();
             List<Object> componentNamePoList = new ArrayList<Object>();
-            for (String compNameGuid : componentNameGuidList) {
+            for (String compNameGuid : assoc.getLogicalNames()) {
                 IComponentNamePO compNamePo = 
                     m_compNameMapper.getCompNameCache().getCompNamePo(
                             compNameGuid);

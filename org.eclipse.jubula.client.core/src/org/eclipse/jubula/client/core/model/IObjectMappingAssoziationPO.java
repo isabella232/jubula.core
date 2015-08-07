@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
@@ -34,7 +34,7 @@ public interface IObjectMappingAssoziationPO
     /**
      * @param logicalNames list of GUIDs of ComponentNamePOs to set.
      */
-    public abstract void setLogicalNames(List<String> logicalNames);
+    public abstract void setLogicalNames(Set<String> logicalNames);
 
     /**
      * adds a logical Name GUID
@@ -56,7 +56,7 @@ public interface IObjectMappingAssoziationPO
     /**
      * @return Returns the list of GUIDs of ComponentNamePOs.
      */
-    public abstract List<String> getLogicalNames();
+    public abstract Set<String> getLogicalNames();
 
     /**
      * @param technicalName The technicalName to set.

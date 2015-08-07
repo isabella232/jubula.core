@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
@@ -81,7 +81,7 @@ public class NewLogicalNameHandler extends AbstractNewComponentNameHandler {
         try {
             IObjectMappingAssoziationPO assoc = 
                 PoMaker.createObjectMappingAssoziationPO(
-                        null, new ArrayList<String>());
+                        null, new HashSet<String>());
             mapper.changeReuse(assoc, null, 
                     performOperation(newName, mapper).getGuid());
             objMap.getUnmappedLogicalCategory().addAssociation(assoc);

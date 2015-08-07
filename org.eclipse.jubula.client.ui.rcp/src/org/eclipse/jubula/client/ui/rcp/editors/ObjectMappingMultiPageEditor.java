@@ -297,7 +297,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
                         IObjectMappingAssoziationPO assoc = 
                             PoMaker.createObjectMappingAssoziationPO(
-                                    null, new ArrayList<String>());
+                                    null, new HashSet<String>());
                         try {
                             getCompMapper().changeReuse(
                                     assoc, null, compNamePo.getGuid());

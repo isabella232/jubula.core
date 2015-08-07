@@ -11,8 +11,8 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -26,7 +26,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -79,7 +78,7 @@ public class ObjectMappingAssoziationPO
     /**
      * Logical names of compontent
      */
-    private List<String> m_logicalNames = new LinkedList<String>();
+    private Set<String> m_logicalNames = new HashSet<String>();
     
     /**
      * The component identifier which has been used to create this po
@@ -116,7 +115,7 @@ public class ObjectMappingAssoziationPO
      * @param tec      technical name
      * @param logic    logical name
      */
-    ObjectMappingAssoziationPO(IComponentIdentifier tec, List<String> logic) {
+    ObjectMappingAssoziationPO(IComponentIdentifier tec, Set<String> logic) {
         this(tec);
         setLogicalNames(logic);
     }
@@ -152,7 +151,7 @@ public class ObjectMappingAssoziationPO
     /**
      * {@inheritDoc}
      */
-    public void setLogicalNames(List<String> logicalNames) {
+    public void setLogicalNames(Set<String> logicalNames) {
         m_logicalNames = logicalNames;
     }
     /**
@@ -193,10 +192,9 @@ public class ObjectMappingAssoziationPO
         uniqueConstraints = {@UniqueConstraint(columnNames = 
                 {"LOGICAL_NAME", ID_COLUMN_NAME})})
     @JoinColumn(name = "OM_ASSOC")
-    @OrderColumn(name = "IDX")
     @Column(name = "LOGICAL_NAME", length = MAX_STRING_LENGTH)
     @BatchFetch(value = BatchFetchType.JOIN)
-    public List<String> getLogicalNames() {
+    public Set<String> getLogicalNames() {
         return m_logicalNames;
     }
     
