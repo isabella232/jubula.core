@@ -48,7 +48,7 @@ public class StringHelper {
     private static String toolkit = StringConstants.EMPTY;
     
     /** Pattern for Time as String **/
-    private static final String TIME_PATTERN = "yyyy/mm/dd hh:mm:ss a"; //$NON-NLS-1$
+    private static final String TIME_PATTERN = "dd/MM/yy hh:mm:ss a"; //$NON-NLS-1$
     
     /**
      * Comment for <code>m_map</code>
