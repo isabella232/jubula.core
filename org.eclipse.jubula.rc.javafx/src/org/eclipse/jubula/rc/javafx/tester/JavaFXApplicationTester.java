@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -62,6 +63,21 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
             ((RobotJavaFXImpl) getRobot()).getInterceptor().addSceneGraph(
                     s.getScene().windowProperty());
         }
+        CurrentStages.addStagesListener(new ListChangeListener<Stage>() {
+            @Override
+            public void onChanged(
+                    ListChangeListener.Change<? extends Stage> c) {
+                if (c.next()) {
+                    if (c.wasAdded()) {
+                        for (Stage stage : c.getAddedSubList()) {
+                            ((RobotJavaFXImpl) getRobot())
+                                .getInterceptor().addSceneGraph(
+                                    stage.getScene().windowProperty());
+                        }
+                    }
+                }
+            }
+        });
     }
     
     @Override
