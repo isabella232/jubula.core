@@ -22,8 +22,11 @@ import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.NodePM;
 
 
 /**
@@ -71,6 +74,11 @@ public class UINodeBP {
         } else if (firstElement instanceof TestResultNode) {
             TestResultNode trNode = (TestResultNode)firstElement;
             INodePO nodePO = trNode.getNode();
+            if (nodePO instanceof ITestCasePO
+                    && !(nodePO instanceof IExecTestCasePO)) {
+                nodePO = NodePM.getNode(GeneralStorage.getInstance()
+                        .getProject().getId(), nodePO.getGuid());
+            }
             while (!(nodePO instanceof IExecTestCasePO)) {
                 trNode = trNode.getParent();
                 if (trNode == null) {

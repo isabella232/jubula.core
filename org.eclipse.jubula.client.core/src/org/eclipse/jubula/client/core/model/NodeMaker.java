@@ -379,6 +379,20 @@ public abstract class NodeMaker {
             String tsGuid, String autId) {
         return new RefTestSuitePO(name, tsGuid, autId);
     }
+    
+    /**
+     * creates a TestCasePO (which could be a {@link ISpecTestCasePO} or {@link IExecTestCasePO} but we do not know.
+     * This is needed for the TestResult since we only have the name and the UUID of the {@link INodePO}.
+     * @param name the name
+     * @param uuid the guid
+     * @return a TestCasePO which is generated and has only a name and a uuid
+     */
+    public static ITestCasePO createTransientTestCasePO(String name,
+            String uuid) {
+        return new TestCasePO(name, uuid, true) {
+            // empty since this should only be a transient object used for TestResults
+        };
+    }
 
     /**
      * get the class instance of NodePO (needed by Persistor)

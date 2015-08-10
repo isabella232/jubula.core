@@ -274,7 +274,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                                 .getInternalActionName()
                                 : StringConstants.SPACE);
                 case TestresultSummaryBP.TYPE_TEST_CASE:
-                    return NodeMaker.createSpecTestCasePO(
+                    return NodeMaker.createTransientTestCasePO(
                             result.getKeywordName(),
                             result.getInternalKeywordGuid());
                 case TestresultSummaryBP.TYPE_TEST_SUITE:

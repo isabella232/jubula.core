@@ -20,7 +20,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -66,14 +66,10 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
         Image image = null;
         if (node instanceof ITestSuitePO) {
             image = IconConstants.TS_IMAGE;
-        } else if (node instanceof ISpecTestCasePO) {
+        } else if (node instanceof ITestCasePO) {
             image = IconConstants.TC_IMAGE;
-        }
-        if (node instanceof IExecTestCasePO) {
             if (node instanceof IEventExecTestCasePO) {
                 image = IconConstants.RESULT_EH_IMAGE;
-            } else {
-                image = IconConstants.TC_IMAGE;
             }
         }
         if (node instanceof ICapPO) {
