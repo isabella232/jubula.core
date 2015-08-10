@@ -447,6 +447,11 @@ public class TreeOperationContext
                         return null;
                     }
                 });
+        if (result == null) {
+            throw new StepExecutionException(
+                    "Could not retrieve visible node bounds.", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
+        }
         return result;
     }
 

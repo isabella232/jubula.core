@@ -288,10 +288,6 @@ public class TreeTableOperationContext extends
     public void clickNode(final Object node, final ClickOptions clickOps) {
         scrollNodeToVisible(node);
         Rectangle rowBounds = getNodeBounds(node);
-        if (rowBounds == null) {
-            throw new StepExecutionException("Node not found", //$NON-NLS-1$
-                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
-        }
         Rectangle visibleRowBounds = getVisibleRowBounds(rowBounds);
         getRobot().click(getTree(), visibleRowBounds, clickOps);
     }
@@ -537,7 +533,7 @@ public class TreeTableOperationContext extends
     @Override
     public Rectangle getNodeBounds(final Object node) {
         scrollNodeToVisible(node);
-        return EventThreadQueuerJavaFXImpl.invokeAndWait(
+        Rectangle nodeBounds = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getNodeBounds", new Callable<Rectangle>() { //$NON-NLS-1$
 
                     @Override
@@ -578,6 +574,12 @@ public class TreeTableOperationContext extends
                         return null;
                     }
                 });
+        if (nodeBounds == null) {
+            throw new StepExecutionException(
+                    "Could not retrieve visible node bounds.", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
+        }
+        return nodeBounds;
     }
 
     @Override
