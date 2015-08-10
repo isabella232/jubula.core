@@ -149,7 +149,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.toolkit.winapps.provider"
          download-size="0"
@@ -177,7 +177,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.client.archive"
          download-size="0"
@@ -415,16 +415,9 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.rc.javafx"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-   
-   <plugin
-         id="org.eclipse.jubula.rc.javafx.j8u40"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -548,13 +541,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.client.ua.help"
          download-size="0"
          install-size="0"
          version="0.0.0"/>
-         
+
    <plugin
          id="org.eclipse.jubula.version"
          download-size="0"
@@ -566,6 +559,14 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          download-size="0"
          install-size="0"
          version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.javafx.j8u40"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
          unpack="false"/>
 
 </feature>
