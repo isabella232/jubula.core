@@ -353,8 +353,11 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      * {@inheritDoc}
      */
     public void writeStatus(IStatus status, String id) {
-        printConsole(id + StringConstants.NEWLINE);
+        printConsole("Connection status of AUT: " + id //$NON-NLS-1$
+                + StringConstants.NEWLINE); 
         writeStatus(status);
+        printConsole("----------------------------------------" //$NON-NLS-1$
+                + StringConstants.NEWLINE);
     }
     
     /**
