@@ -40,8 +40,8 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
    <plugin id="org.eclipse.jubula.rc.swing.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.eclipse.jubula.rc.javafx" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.eclipse.jubula.rc.javafx.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="org.eclipse.jubula.rc.javafx.j8u40" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-   <plugin id="org.eclipse.jubula.rc.javafx.j8u40.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="org.eclipse.jubula.rc.javafx.j8u40" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
+   <plugin id="org.eclipse.jubula.rc.javafx.j8u40.source" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
    <plugin id="org.eclipse.jubula.rc.swt" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.eclipse.jubula.rc.swt.source" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    <plugin id="org.eclipse.jubula.tools" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
