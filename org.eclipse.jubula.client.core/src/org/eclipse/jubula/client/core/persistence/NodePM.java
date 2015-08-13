@@ -988,6 +988,30 @@ public class NodePM extends PersistenceManager {
         return null;
     }
     
+    
+    /**
+     * Finds a node within the project with the given ID.
+     * @param nodeGuid The GUID of the node
+     * @return the {@inheritDoc INodePO} with the given GUID, or <code>null</code> if 
+     *         the {@link INodePO} cannot be found
+     */
+    public static synchronized INodePO getNode(String nodeGuid) {
+        EntityManager session = GeneralStorage.getInstance().getMasterSession();
+        Validate.notNull(session);
+        
+        Query specTcQuery = session.createQuery("select node from NodePO node where node.guid = :guid"); //$NON-NLS-1$
+        specTcQuery.setParameter("guid", nodeGuid); //$NON-NLS-1$
+ 
+        try {
+            Object result = specTcQuery.getSingleResult();
+            if (result instanceof INodePO) {
+                return (INodePO)result;
+            }
+        } catch (NoResultException nre) {
+            // No result found. Fall through to return null.
+        }
+        return null;
+    }
     /**
      * Loads a bag of Nodes into the given session and returns the loaded
      * Nodes.

@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers.open;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -71,20 +71,36 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
     protected boolean isEditableImpl(INodePO selected) {
         return true;
     }
-
+    
+    /**
+     * 
+     * @param testSuite the testsuite to open the editor for
+     */
+    protected void openEditorForSpecTS(ITestSuitePO testSuite) {
+        openEditorForSpec(testSuite);
+    }
     /**
      * @param specTc the spec to open the editor for
      */
     protected void openEditorForSpecTC(ISpecTestCasePO specTc) {
-        boolean isNodeEditable = TestCaseBP.belongsToCurrentProject(specTc);
+        openEditorForSpec(specTc);
+    }
+
+    /**
+     * This method is checking if the node belongs to the current project
+     * and if not is opening a dialog to show that this node is from a other project
+     * @param node the node to open. 
+     */
+    private void openEditorForSpec(INodePO node) {
+        boolean isNodeEditable = NodeBP.belongsToCurrentProject(node);
         if (isNodeEditable) {
-            IEditorPart editor = openEditor(specTc);
+            IEditorPart editor = openEditor(node);
             editor.getSite().getPage().activate(editor);
             if (editor instanceof AbstractJBEditor) {
                 AbstractJBEditor jbEditor =
                         (AbstractJBEditor) editor;
                 jbEditor.setSelection(
-                        new StructuredSelection(specTc));
+                        new StructuredSelection(node));
             }
         } else {
             ErrorHandlingUtil.createMessageDialog(

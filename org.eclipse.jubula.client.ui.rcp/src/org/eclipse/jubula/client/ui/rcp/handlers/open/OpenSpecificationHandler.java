@@ -14,6 +14,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -42,6 +43,11 @@ public class OpenSpecificationHandler extends AbstractOpenHandler {
      */
     private void openSpecNode(IStructuredSelection structuredSel) {
         ISpecTestCasePO specTc = UINodeBP.getSpecTC(structuredSel);
-        openEditorForSpecTC(specTc);
+        if (specTc != null) {
+            openEditorForSpecTC(specTc);
+        } else {
+            ITestSuitePO testSuite = UINodeBP.getSpecTS(structuredSel);
+            openEditorForSpecTS(testSuite);
+        }
     }
 }

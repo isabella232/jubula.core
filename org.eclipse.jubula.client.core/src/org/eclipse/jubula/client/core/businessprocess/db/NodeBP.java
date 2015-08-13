@@ -17,6 +17,7 @@ import javax.persistence.PersistenceException;
 
 import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -139,5 +140,21 @@ public class NodeBP {
             parentNode = parentNode.getParentNode();
         }
         return true;
+    }
+    
+    /**
+     * @param nodePO
+     *            the node to test
+     * @return true if editable --> belongs to current project; false otherwise
+     *         or if nodePO == null
+     */
+    public static boolean belongsToCurrentProject(INodePO nodePO) {
+        if (nodePO != null) {
+            EqualsBuilder eb = new EqualsBuilder();
+            eb.append(nodePO.getParentProjectId(), GeneralStorage.getInstance()
+                    .getProject().getId());
+            return eb.isEquals();
+        }
+        return false;
     }
 }

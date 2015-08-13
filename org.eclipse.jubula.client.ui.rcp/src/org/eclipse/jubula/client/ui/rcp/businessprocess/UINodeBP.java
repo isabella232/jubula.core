@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -73,23 +74,44 @@ public class UINodeBP {
             execTc = (IExecTestCasePO)firstElement;
         } else if (firstElement instanceof TestResultNode) {
             TestResultNode trNode = (TestResultNode)firstElement;
-            INodePO nodePO = trNode.getNode();
+            INodePO nodePO = getExecFromTestResultNode(trNode);
             if (nodePO instanceof ITestCasePO
                     && !(nodePO instanceof IExecTestCasePO)) {
-                nodePO = NodePM.getNode(GeneralStorage.getInstance()
-                        .getProject().getId(), nodePO.getGuid());
+                nodePO = NodePM.getNode(nodePO.getGuid());
             }
             while (!(nodePO instanceof IExecTestCasePO)) {
                 trNode = trNode.getParent();
                 if (trNode == null) {
                     return null;
                 }
-                nodePO = trNode.getNode();
+                nodePO = getExecFromTestResultNode(trNode);
             }
             execTc = (IExecTestCasePO)nodePO;
         }
         if (execTc != null) {
             return execTc.getSpecTestCase();
+        }
+        return null;
+    }
+    
+    /**
+     * 
+     * @param structuredSel find the referenced {@link ITestSuitePO}
+     * @return a valid {@link ITestSuitePO} <code>null</code> if no reference
+     *         could be found
+     */
+    public static ITestSuitePO getSpecTS(IStructuredSelection structuredSel) {
+        Object firstElement = structuredSel.getFirstElement();
+        if (firstElement instanceof TestResultNode) {
+            TestResultNode trNode = (TestResultNode)firstElement;
+            INodePO nodePO = trNode.getNode();
+            if (nodePO instanceof ITestSuitePO) {
+                return (ITestSuitePO) NodePM.getNode(
+                        GeneralStorage.getInstance()
+                        .getProject().getId(), nodePO.getGuid());
+            }
+        } else if (firstElement instanceof ITestSuitePO) {
+            return (ITestSuitePO) firstElement;
         }
         return null;
     }
@@ -153,5 +175,21 @@ public class UINodeBP {
         }
         tv.setSelection(oldSelection);
         return null;
+    }
+    
+    /**
+     * This method is getting the Node from {@link TestResultNode}. 
+     * If this is a generated {@link ITestCasePO} than it is searched in the 
+     * database for the correct node.
+     * @param trNode the testResult node
+     * @return an {@link INodePO} which can be of any kind and from any project
+     */
+    private static INodePO getExecFromTestResultNode(TestResultNode trNode) {
+        INodePO nodePO = trNode.getNode();
+        if (nodePO instanceof ITestCasePO 
+                && nodePO.isGenerated()) {
+            nodePO = NodePM.getNode(nodePO.getGuid());
+        }
+        return nodePO;
     }
 }
