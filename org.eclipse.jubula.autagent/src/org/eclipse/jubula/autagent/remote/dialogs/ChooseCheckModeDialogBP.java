@@ -277,7 +277,7 @@ public class ChooseCheckModeDialogBP {
         try {
             AutStarter.getInstance().getCommunicator().send(capTestMessage);
         } catch (CommunicationException e) { // NOPMD by al on 4/11/07 3:39 PM
-            // no log available here
+            LOG.error(e.getLocalizedMessage(), e);
         }
     }
     

@@ -736,7 +736,7 @@ public class RecordActionsSWT {
                 new RecordActionMessage(capRecMessage);            
             AUTServer.getInstance().getServerCommunicator().send(message);
         } catch (CommunicationException e) { 
-            // no log available here
+            log.error(e.getLocalizedMessage(), e);
         }
         AUTServer.getInstance().setObservTimestamp(System.currentTimeMillis());
     }

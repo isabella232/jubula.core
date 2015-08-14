@@ -481,19 +481,19 @@ public class Communicator {
             m_connection.send(new MessageHeader(MessageHeader.MESSAGE,
                 message), messageToSend);
         } catch (SerialisationException se) {
-            log.error(se.getLocalizedMessage(), se);
+            log.debug(se.getLocalizedMessage(), se);
             throw new CommunicationException(
                 "could not send message:" //$NON-NLS-1$
-                + se.getMessage(), MessageIDs.E_MESSAGE_NOT_SEND);
+                + se.getMessage(), se , MessageIDs.E_MESSAGE_NOT_SEND);
         } catch (IOException ioe) {
-            log.error(ioe.getLocalizedMessage(), ioe);
+            log.debug(ioe.getLocalizedMessage(), ioe);
             throw new CommunicationException(
                 "io error occured during sending a message:" //$NON-NLS-1$
-                    + ioe.getMessage(), MessageIDs.E_MESSAGE_SEND);
+                    + ioe.getMessage(), ioe, MessageIDs.E_MESSAGE_SEND);
         } catch (IllegalArgumentException iae) {
-            log.error(iae.getLocalizedMessage(), iae);
+            log.debug(iae.getLocalizedMessage(), iae);
             throw new CommunicationException(
-                "message could not send", MessageIDs.E_MESSAGE_NOT_SEND); //$NON-NLS-1$
+                "message could not send", iae, MessageIDs.E_MESSAGE_NOT_SEND); //$NON-NLS-1$
         }
     }
 

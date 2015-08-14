@@ -60,7 +60,7 @@ public class RecordActionCommand implements ICommand {
         try {
             AutStarter.getInstance().getCommunicator().send(messageRecCap);
         } catch (CommunicationException e) { // NOPMD by al on 4/11/07 3:39 PM
-            // no log available here
+            log.error(e.getLocalizedMessage(), e);
         }
 
         return null;

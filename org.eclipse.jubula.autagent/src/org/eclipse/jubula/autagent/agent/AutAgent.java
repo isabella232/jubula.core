@@ -291,6 +291,7 @@ public class AutAgent {
                 try {
                     m_autCommunicator.send(new PrepareForShutdownMessage());
                 } catch (CommunicationException e) {
+                    LOG.info(e.getLocalizedMessage(), e);
                     // As a result of not being able to send the message,
                     // the AUT will end with a different exit code. This
                     // may result in an unnecessary error dialog.
@@ -475,6 +476,7 @@ public class AutAgent {
                         autCommunicator.send(
                                 new PrepareForShutdownMessage());
                     } catch (CommunicationException e) {
+                        LOG.info(e.getLocalizedMessage(), e);
                         // As a result of not being able to send the message,
                         // the AUT will end with a different exit code. This
                         // may result in an unnecessary error dialog.
@@ -730,6 +732,7 @@ public class AutAgent {
                         clientPort, fragmentMap));
             } catch (CommunicationException | ClassNotFoundException
                     | InstantiationException | IllegalAccessException ce) {
+                LOG.error(ce.getLocalizedMessage(), ce);
                 return new ConnectToAutResponseMessage(
                         ce.getLocalizedMessage());
             }
