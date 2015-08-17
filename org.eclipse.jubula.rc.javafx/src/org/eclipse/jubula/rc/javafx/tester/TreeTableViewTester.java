@@ -124,6 +124,38 @@ public class TreeTableViewTester extends TreeViewTester {
     }
     
     /**
+     * Selects the last node of the path given by <code>indexPath</code>
+     * at the column given by the column path
+     * 
+     * @param pathType whether the path is relative or absolute
+     * @param preAscend
+     *            Relative traversals will start this many parent nodes 
+     *            above the current node. Absolute traversals ignore this 
+     *            parameter.
+     * @param indexPath the index path
+     * @param clickCount the number of times to click
+     * @param column the column or column path of the item to select
+     * @param operator for the column path
+     * @param button what mouse button should be used
+     * @throws StepExecutionException if <code>indexPath</code> is not a valid
+     * path
+     */
+    public void rcSelectByColumnPath(String pathType, int preAscend,
+            String indexPath, int clickCount, String column, String operator,
+            int button)
+        throws StepExecutionException {
+        final int implCol = getContext().getColumnFromString(
+                column, operator, true);
+        checkColumnIndex(implCol);
+
+        selectByPath(pathType, preAscend, 
+            createIndexNodePath(splitIndexTreePath(indexPath)),
+                ClickOptions.create()
+                    .setClickCount(clickCount)
+                    .setMouseButton(button), implCol);
+    }
+    
+    /**
      * Selects the item at the end of the <code>treepath</code> at column 
      * <code>column</code>.
      * 
@@ -148,6 +180,42 @@ public class TreeTableViewTester extends TreeViewTester {
         
         final int implCol = IndexConverter.toImplementationIndex(column);
         checkColumnIndex(implCol);
+        selectByPath(pathType, preAscend, 
+            createStringNodePath(splitTextTreePath(treePath), operator), 
+            ClickOptions.create()
+                .setClickCount(clickCount)
+                .setMouseButton(button), implCol);
+
+    }
+    
+    /**
+     * Selects the item at the end of the <code>treepath</code> at column 
+     * <code>column</code>.
+     * 
+     * @param pathType whether the path is relative or absolute
+     * @param preAscend
+     *            Relative traversals will start this many parent nodes 
+     *            above the current node. Absolute traversals ignore this 
+     *            parameter.
+     * @param treePath The tree path.
+     * @param operator
+     *  If regular expressions are used to match the tree path
+     * @param clickCount the click count
+     * @param column the column or column path of the item to select
+     * @param colOperator the operator for the column path
+     * @param button what mouse button should be used
+     * @throws StepExecutionException If the tree path is invalid, if the
+     * double-click to expand the node fails, or if the selection is invalid.
+     */
+    public void rcSelectColumnPath(String pathType, int preAscend,
+            String treePath, String operator, int clickCount, String column,
+            String colOperator, int button)
+        throws StepExecutionException {
+        
+        final int implCol = getContext()
+                .getColumnFromString(column, colOperator, true);
+        checkColumnIndex(implCol);
+        
         selectByPath(pathType, preAscend, 
             createStringNodePath(splitTextTreePath(treePath), operator), 
             ClickOptions.create()
@@ -210,6 +278,37 @@ public class TreeTableViewTester extends TreeViewTester {
         Verifier.match(text, pattern, operator);
 
     }
+    
+    /**
+     * Verifies if the selected node underneath <code>treePath</code> at column
+     * <code>column</code> has a rendered text which is equal to 
+     * <code>selection</code>.
+     * 
+     * @param pattern the pattern
+     * @param operator
+     *            The operator to use when comparing the expected and 
+     *            actual values.
+     * @param column the column or column path of the item to select
+     * @param colOperator the operator for the column path
+     * @throws StepExecutionException If there is no tree node selected, the tree path contains no
+     *             selection or the verification fails
+     */
+    public void rcVerifySelectedValueAtPath(String pattern, String operator,
+            String column, String colOperator)
+        throws StepExecutionException {
+        
+        TreeTableOperationContext context = getContext();
+        final int implCol = context.getColumnFromString(
+                column, colOperator, true);
+        checkColumnIndex(implCol);
+        context.setColumn(implCol);
+
+        String text = context
+                .getRenderedTextOfColumn(context.getSelectedNode());
+
+        Verifier.match(text, pattern, operator);
+
+    }
 
     /**
      * @return the tree table operation context
@@ -258,18 +357,16 @@ public class TreeTableViewTester extends TreeViewTester {
      */
     private void checkColumnIndex(final int index) 
         throws StepExecutionException {
-       
-        int numColumns = getEventThreadQueuer().invokeAndWait(
+        int numCol = getEventThreadQueuer().invokeAndWait(
                 "checkColumnIndex", //$NON-NLS-1$
                 new IRunnable<Integer>() {
 
                     public Integer run() {
                         return ((TreeTableView<?>) getRealComponent())
-                                .getColumns().size();
+                                .getVisibleLeafColumns().size();
                     }
                 });
-
-        if ((index < 0 || index >= numColumns) && index != 0) {
+        if (index < 0 || index >= numCol) {
             throw new StepExecutionException("Invalid column: " //$NON-NLS-1$
                 + IndexConverter.toUserIndex(index), 
                 EventFactory.createActionError(
@@ -387,7 +484,7 @@ public class TreeTableViewTester extends TreeViewTester {
             final String operator, final String searchType, boolean exists)
         throws StepExecutionException {
         TreeTableOperationContext adapter = getContext();
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implCol = adapter.getColumnFromString(col, colOperator, true);
         
         boolean valueExists = isValueExisting(adapter, implCol,
                 value, operator, searchType);
@@ -462,7 +559,8 @@ public class TreeTableViewTester extends TreeViewTester {
             final String colOperator) throws StepExecutionException {
         TreeTableOperationContext adapter = getContext();
         final int implRow = adapter.getRowFromString(row, rowOperator);
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implCol = adapter.getColumnFromString(
+                col, colOperator, implRow != -1);
         String current;
         //if row is header and column is existing
         if (implRow == -1 && implCol > -1) {
@@ -528,7 +626,8 @@ public class TreeTableViewTester extends TreeViewTester {
             String col, String colOperator) {
         TreeTableOperationContext adapter = getContext();
         final int implRow = adapter.getRowFromString(row, rowOperator);
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implCol = adapter.getColumnFromString(
+                col, colOperator, implRow != -1);
         
         //if row is header and column is existing
         if (implRow == -1 && implCol > -1) {
@@ -582,7 +681,8 @@ public class TreeTableViewTester extends TreeViewTester {
         throws StepExecutionException {
         TreeTableOperationContext adapter = getContext();
         final int implRow = adapter.getRowFromString(row, rowOperator);
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implCol = adapter.getColumnFromString(col, colOperator,
+                implRow != -1);
         final boolean isExtendSelection = extendSelection.equals(
                 ValueSets.BinaryChoice.yes.rcValue()); 
         if (log.isDebugEnabled()) {
@@ -740,7 +840,7 @@ public class TreeTableViewTester extends TreeViewTester {
         final String value, final String regexOp, final String extendSelection,
         final String searchType, ClickOptions co) {
         TreeTableOperationContext adapter = getContext();
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implCol = adapter.getColumnFromString(col, colOperator, true);
         Integer implRow = null;
         final int rowCount = adapter.getRowCount();
         

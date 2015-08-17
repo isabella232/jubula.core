@@ -215,11 +215,10 @@ public class TreeTableOperationContext extends
                                 if (checkItem == null) {
                                     continue;
                                 }
-                                if (item != null
-                                        && checkItem.equals(item)
-                                        && treeTable.getColumns().indexOf(
-                                                cell.getTableColumn()) 
-                                                == col) {
+                                if (item != null && checkItem.equals(item)
+                                        && treeTable.getVisibleLeafColumns()
+                                        .indexOf(cell.getTableColumn()) 
+                                        == col) {
                                     return cell.getText();
                                 }
                             }
@@ -274,11 +273,20 @@ public class TreeTableOperationContext extends
                     public Void call() throws Exception {
                         int index = ((TreeTableView) getTree())
                                 .getRow((TreeItem<?>) node);
-                        getTree().scrollTo(index);
-                        getTree().scrollToColumnIndex(m_column);
+                        TreeTableView<?> trt = getTree();
+                        trt.scrollTo(index);
+                        if (m_column >= trt.getColumns().size()) {
+                            // We want to scroll to a leaf column but the tree
+                            // table only considers the top column for scrolling
+                            // via index
+                            trt.scrollToColumnIndex(
+                                    trt.getColumns().size() - 1);
+                        } else {
+                            trt.scrollToColumnIndex(m_column);
+                        }
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        getTree().layout();
+                        trt.layout();
                         return null;
                     }
                 });
@@ -557,8 +565,8 @@ public class TreeTableOperationContext extends
                             }
                             if (item != null
                                     && checkItem.equals(item)
-                                    && treeTable.getColumns().indexOf(
-                                            cell.getTableColumn()) 
+                                    && treeTable.getVisibleLeafColumns()
+                                        .indexOf(cell.getTableColumn()) 
                                             == m_column) {
                                 Rectangle b = NodeBounds
                                         .getAbsoluteBounds(cell);
@@ -668,9 +676,14 @@ public class TreeTableOperationContext extends
      *            index or value in first col
      * @param op
      *            the operation used to verify
-     * @return integer of String of col
+     * @param leafColumn
+     *            true if the column found has to be a leaf column
+     * @return index of the column found, this is either the index in the list
+     *         of leaf columns or the index in the "workaround list" for parent
+     *         columns
      */
-    public int getColumnFromString(final String colPath, final String op) {
+    public int getColumnFromString(final String colPath, final String op,
+            final boolean leafColumn) {
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
                     @Override
@@ -690,6 +703,12 @@ public class TreeTableOperationContext extends
                                 .contains(column)) {
                             return treeTable.getVisibleLeafColumns()
                                     .indexOf(column);
+                        }
+                        if (leafColumn) {
+                            throw new StepExecutionException("Invalid column path: " //$NON-NLS-1$
+                                    + colPath + " not a leaf column",  //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                        TestErrorEvent.INVALID_INDEX));
                         }
                         if (!m_columns.contains(column)) {
                             m_columns.add(column);
@@ -799,18 +818,16 @@ public class TreeTableOperationContext extends
                         Point2D parentPos = treeTable.localToScreen(0, 0);
 
                         for (Node n : columnHeaders) {
-                            //DEPENDENCY TO INTERNAL API
+                            // DEPENDENCY TO INTERNAL API
                             TableColumnHeader colH = (TableColumnHeader) n;
                             if (colH.getTableColumn().equals(col)) {
-                                Rectangle b = NodeBounds
-                                        .getAbsoluteBounds(n);
+                                Rectangle b = NodeBounds.getAbsoluteBounds(n);
                                 Rectangle tableB = NodeBounds
                                         .getAbsoluteBounds(treeTable);
-                                return new Rectangle(
-                                        Math.abs(tableB.x - b.x),
-                                        Math.abs(tableB.y - b.y),
-                                        Rounding.round(b.getWidth()),
-                                        Rounding.round(b.getHeight()));
+                                return new Rectangle(Math.abs(tableB.x - b.x),
+                                        Math.abs(tableB.y - b.y), Rounding
+                                                .round(b.getWidth()), Rounding
+                                                .round(b.getHeight()));
                             }
                         }
                         return null;

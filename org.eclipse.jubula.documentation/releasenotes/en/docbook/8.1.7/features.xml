@@ -29,7 +29,12 @@
     </listitem>
     <listitem>
       <para>
-        Furthermore, there are several new check and select actions for tree tables in the JavaFX toolkit which emphasize the table aspect of that component. 
+	Furthermore, there are several new check and select actions for tree
+	tables in the JavaFX toolkit which emphasize the table aspect of that
+	component. It is now possible to select/check tree table items by providing
+	the name of the column or the path of nested columns. Please refer to
+	the reference manual for a detailed description. The unbound
+	modules that used integers to address columns are now deprecated.
       </para>
     </listitem>
    </itemizedlist>
