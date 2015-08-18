@@ -79,6 +79,11 @@
             </listitem>
             <listitem>
               <para>
+                <xref linkend="column_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
                 <xref linkend="mouse_button" xrefstyle="template:%t"/>
               </para>
             </listitem>
@@ -157,6 +162,11 @@
             <listitem>
               <para>
                 <xref linkend="column" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
