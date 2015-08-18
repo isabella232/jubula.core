@@ -30,7 +30,7 @@ import org.eclipse.ui.PlatformUI;
 public abstract class AbstractShowSpecificationHandler 
     extends AbstractSelectionBasedHandler {
     /**
-     * Shows the SpecTS in the Test Suite Browser
+     * Shows the node in the specific viewPart if possible
      * 
      * @param node
      *            the node to show
@@ -38,8 +38,36 @@ public abstract class AbstractShowSpecificationHandler
      *            the view part to show the specification in
      */
     protected void showSpecUINode(INodePO node, IViewPart viewPart) {
-        if (!Utils.openPerspective(Constants.SPEC_PERSPECTIVE)) {
+        if (!openSpecPerspectiveAndShowError()) {
             return;
+        }
+        activatViewAndSelect(node, viewPart);
+    }
+
+    /**
+     * Shows the node in the specific viewPart if possible
+     *
+     * @param node
+     *            the node to show
+     * @param viewPartID
+     *            the view part ID to show the specification in
+     */
+    protected void showSpecUINode(INodePO node, String viewPartID) {
+        if (!openSpecPerspectiveAndShowError()) {
+            return;
+        }
+        IViewPart viewPart = Plugin.showView(viewPartID);
+        activatViewAndSelect(node, viewPart);
+    }
+
+    /**
+     *
+     * @return <code>true</code> if the {@link Constants#SPEC_PERSPECTIVE}
+     * has been opened or is open
+     */
+    private boolean openSpecPerspectiveAndShowError()  {
+        if (!Utils.openPerspective(Constants.SPEC_PERSPECTIVE)) {
+            return false;
         }
         if (!PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().getPerspective().getId()
@@ -47,8 +75,16 @@ public abstract class AbstractShowSpecificationHandler
             // show error must be in SpecPers
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.I_NO_PERSPECTIVE_CHANGE);
-            return;
+            return false;
         }
+        return true;
+    }
+    /**
+     *
+     * @param node the node to select
+     * @param viewPart the view part to activate
+     */
+    private void activatViewAndSelect(INodePO node, IViewPart viewPart) {
         if (viewPart instanceof AbstractJBTreeView) {
             AbstractJBTreeView jbtv = (AbstractJBTreeView)viewPart;
             Plugin.activate(jbtv);

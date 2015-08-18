@@ -14,10 +14,8 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
-import org.eclipse.ui.IViewPart;
 
 
 /**
@@ -36,8 +34,7 @@ public class ShowSpecificationHandler extends AbstractShowSpecificationHandler {
         }
         ITestSuitePO testSuite = UINodeBP.getSpecTS(getSelection());
         if (testSuite != null) {
-            IViewPart view = Plugin.showView(Constants.TS_BROWSER_ID);
-            showSpecUINode(testSuite, view);
+            showSpecUINode(testSuite, Constants.TS_BROWSER_ID);
             
         }
         return null;
