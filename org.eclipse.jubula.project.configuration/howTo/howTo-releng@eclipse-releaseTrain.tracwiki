@@ -12,6 +12,7 @@ In addition to this there are - for each individual release train version - the 
  * [https://hudson.eclipse.org/jubula/job/jubula-kepler/ Jubula Hudson - 4.3 - kepler]
  * [https://hudson.eclipse.org/jubula/job/jubula-luna/ Jubula Hudson - 4.4 - luna]
  * [https://hudson.eclipse.org/jubula/job/jubula-mars/ Jubula Hudson - 4.5 - mars]
+ * [https://hudson.eclipse.org/jubula/job/jubula-neon/ Jubula Hudson - 4.6 - neon]
 
 To get a new CI job simply "reopen" the following bug providing all necessary information: http://eclip.se/334525
 
