@@ -196,6 +196,26 @@
           executing a Test Suite:
         </para>
         <variablelist>
+        <varlistentry>
+            <term>
+              TEST_PROJECT_NAME:
+            </term>
+            <listitem>
+              <para>
+                The Project Name.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              TEST_PROJECT_VERSION:
+            </term>
+            <listitem>
+              <para>
+                The Project version.
+              </para>
+            </listitem>
+          </varlistentry>
           <varlistentry>
             <term>
               TEST_TESTSUITE:
