@@ -82,6 +82,13 @@ public interface IClientTest {
      *                  UI element
      * @param inputType the type of input that will trigger UI collection
      *                  (key press, mouse click, etc.)
+     * @param modWP key modifier that will collect a 
+     *                  UI element together with its parents
+     * @param inputCodeWP the code representing the input that will collect a 
+     *                  UI element together with its parents
+     * @param inputTypeWP the type of input that will trigger collection of
+     *                      a UI component together with its parents
+     *                  (key press, mouse click, etc.)
      * @param autId The ID of the AUT for which to start the Object Mapping.
      * 
      * @throws ConnectionException
@@ -89,7 +96,8 @@ public interface IClientTest {
      * @throws CommunicationException
      */
     public abstract void startObjectMapping(AutIdentifier autId, int mod, 
-            int inputCode, int inputType) throws ConnectionException, 
+            int inputCode, int inputType, int modWP, 
+            int inputCodeWP, int inputTypeWP) throws ConnectionException, 
             NotConnectedException, CommunicationException;
 
     /**

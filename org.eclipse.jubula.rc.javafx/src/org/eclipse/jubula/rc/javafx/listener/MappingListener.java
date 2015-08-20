@@ -16,6 +16,7 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -109,33 +110,52 @@ public class MappingListener extends AbstractFXAUTEventHandler {
         @Override
         public void handle(InputEvent event) {
             Node currNode = getCurrentNode();
-            if (currNode != null
-                    && KeyAcceptor.accept(event) == KeyAcceptor.
-                    MAPPING_KEY_COMB) {
-                IComponentIdentifier id;
-                try {
-                    id = ComponentHandler.getIdentifier(currNode);
-                    if (log.isInfoEnabled()) {
-                        log.info("send a message with identifier for the component '" //$NON-NLS-1$
-                                + id + "'"); //$NON-NLS-1$
+            int acceptCode = KeyAcceptor.accept(event);
+            boolean doMapping =
+                    acceptCode == KeyAcceptor.MAPPING_KEY_COMB;
+            boolean doMappingWithParents =
+                    acceptCode == KeyAcceptor.MAPPING_WITH_PARENTS_KEY_COMB;
+            if (currNode != null && (doMapping || doMappingWithParents)) {
+                sendIdentifier(currNode);
+                if (doMappingWithParents) {
+                    Parent p = currNode.getParent();
+                    while (p != null) {
+                        if (ComponentHandler.isMappable(p)) {
+                            sendIdentifier(p);
+                        }
+                        p = p.getParent();
                     }
-                    
-                    Map<String, String> componentProperties = PropertyUtil
-                            .getMapOfComponentProperties(currNode);
-                    id.setComponentPropertiesMap(componentProperties);
-                    // send a message with the identifier of the selected
-                    // component
-                    ObjectMappedMessage message = new ObjectMappedMessage();
-                    message.setComponentIdentifier(id);
-                    AUTServer.getInstance().getCommunicator().send(message);
-                } catch (NoIdentifierForComponentException nifce) {
-                    // no identifier for the component, log this as an error
-                    log.error("no identifier for '" + currNode); //$NON-NLS-1$
-                } catch (CommunicationException ce) {
-                    log.error(ce);
-                    // do nothing here: a closed connection is handled by the
-                    // AUTServer
                 }
+            }
+        }
+
+        /**
+         * @param node the node for which to send identifier
+         */
+        private void sendIdentifier(Node node) {
+            IComponentIdentifier id;
+            try {
+                id = ComponentHandler.getIdentifier(node);
+                if (log.isInfoEnabled()) {
+                    log.info("send a message with identifier for the component '" //$NON-NLS-1$
+                            + id + "'"); //$NON-NLS-1$
+                }
+                
+                Map<String, String> componentProperties = PropertyUtil
+                        .getMapOfComponentProperties(node);
+                id.setComponentPropertiesMap(componentProperties);
+                // send a message with the identifier of the selected
+                // component
+                ObjectMappedMessage message = new ObjectMappedMessage();
+                message.setComponentIdentifier(id);
+                AUTServer.getInstance().getCommunicator().send(message);
+            } catch (NoIdentifierForComponentException nifce) {
+                // no identifier for the component, log this as an error
+                log.error("no identifier for '" + node); //$NON-NLS-1$
+            } catch (CommunicationException ce) {
+                log.error(ce);
+                // do nothing here: a closed connection is handled by the
+                // AUTServer
             }
         }
 

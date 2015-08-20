@@ -60,9 +60,17 @@ public class ChangeAUTModeCommand implements ICommand {
             case ChangeAUTModeMessage.CHECK_MODE :
             case ChangeAUTModeMessage.RECORD_MODE :
             case ChangeAUTModeMessage.OBJECT_MAPPING :
-                autServerConfig.setKeyMod(m_message.getKeyModifier());
-                autServerConfig.setKey(m_message.getKey());
-                autServerConfig.setMouseButton(m_message.getMouseButton());
+                autServerConfig.setMappingKeyMod(m_message
+                        .getMappingKeyModifier());
+                autServerConfig.setMappingWithParentsKeyMod(m_message
+                        .getMappingWithParentsKeyModifier());
+                autServerConfig.setMappingKey(m_message.getMappingKey());
+                autServerConfig.setMappingWithParentsKey(m_message
+                        .getMappingWithParentsKey());
+                autServerConfig.setMappingMouseButton(m_message
+                        .getMappingMouseButton());
+                autServerConfig.setMappingWithParentsMouseButton(m_message
+                        .getMappingWithParentsMouseButton());
                 autServerConfig.setKey2Mod(m_message.getKey2Modifier());
                 autServerConfig.setKey2(m_message.getKey2());
                 autServerConfig.setCheckModeKeyMod(m_message

@@ -89,6 +89,12 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
         /** the code for the key used to collect UI Elements */
         private int m_key;
 
+        /** the code for the modifier key(s) used to collect UI Elements and their parents */
+        private int m_modifierWithParents;
+        
+        /** the code for the key used to collect UI Elements and their parents */
+        private int m_keyWithParents;
+        
         /** the category into which collected UI Elements will be collected */
         private IObjectMappingCategoryPO m_category;
         
@@ -98,6 +104,13 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
          * @see {@link org.eclipse.jubula.tools.internal.constants.InputConstants}
          */
         private int m_type;
+        
+        /** 
+         * the type of input action that will collect a UI Element and its parents
+         * 
+         * @see {@link org.eclipse.jubula.tools.internal.constants.InputConstants}
+         */
+        private int m_typeWithParents;
 
         /**
          * Constructor
@@ -112,11 +125,18 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
          * @param category  The category into which collected UI Elements will 
          *                  be collected.
          * @param type  The type of input action that will collect a UI Element.
+         * @param modifierWP  The code for the modifier key(s) used to collect 
+         *                  UI Elements and their parents.
+         * @param keyWP   The code for the key used to collect UI Elements
+         *                  and their parents.
+         * @param typeWP  The type of input action that will collect a UI Element
+         *                  and its parents.
          * @see {@link org.eclipse.jubula.tools.internal.constants.InputConstants}
          */
         public StartObjectMappingModeJob(ObjectMappingMultiPageEditor editor, 
                 AutIdentifier autId, int modifier, int key, 
-                IObjectMappingCategoryPO category, int type) {
+                IObjectMappingCategoryPO category, int type,
+                int modifierWP, int keyWP, int typeWP) {
             super("Start Object Mapping Mode"); //$NON-NLS-1$
             m_editor = editor;
             m_autId = autId;
@@ -124,6 +144,9 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
             m_key = key;
             m_category = category;
             m_type = type;
+            m_modifierWithParents = modifierWP;
+            m_keyWithParents = keyWP;
+            m_typeWithParents = typeWP;
         }
         
         /**
@@ -134,7 +157,9 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
             try {
                 TestExecutionContributor.getInstance()
                     .getClientTest().startObjectMapping(
-                        m_autId, m_modifier, m_key, m_type);
+                        m_autId, m_modifier, m_key, m_type,
+                        m_modifierWithParents, m_keyWithParents,
+                        m_typeWithParents);
                 DataEventDispatcher.getInstance()
                     .fireOMStateChanged(OMState.running);
                 DataEventDispatcher.getInstance()
@@ -267,20 +292,29 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
         } else {
             IPreferenceStore preferenceStore = Plugin.getDefault()
                     .getPreferenceStore();
-            int mod = preferenceStore.getInt(Constants.MAPPING_MOD_KEY);
-            int key = preferenceStore.getInt(Constants.MAPPING_TRIGGER_KEY);
-            int type = preferenceStore
+            int mappingMod = preferenceStore.getInt(
+                    Constants.MAPPING_MOD_KEY);
+            int mappingKey = preferenceStore.getInt(
+                    Constants.MAPPING_TRIGGER_KEY);
+            int mappingType = preferenceStore
                     .getInt(Constants.MAPPING_TRIGGER_TYPE_KEY);
+            int mappingWPMod = preferenceStore.getInt(
+                    Constants.MAPPING_WITH_PARENTS_MOD_KEY);
+            int mappingWPKey = preferenceStore.getInt(
+                    Constants.MAPPING_WITH_PARENTS_TRIGGER_KEY);
+            int mappingWPType = preferenceStore
+                    .getInt(Constants.MAPPING_WITH_PARENTS_TRIGGER_TYPE_KEY);
             final String toolkit = editor.getAut().getToolkit();
             if (toolkit.equals(CommandConstants.SWT_TOOLKIT)
                     || toolkit.equals(CommandConstants.RCP_TOOLKIT)) {
 
-                mod = KeyConverter.convertSwingStateMask(mod);
-                key = KeyConverter.convertSwingToSwt(key);
+                mappingMod = KeyConverter.convertSwingStateMask(mappingMod);
+                mappingKey = KeyConverter.convertSwingToSwt(mappingKey);
             }
 
             Job startObjectMappingModeJob = new StartObjectMappingModeJob(
-                    editor, autId, mod, key, category, type);
+                    editor, autId, mappingMod, mappingKey, category,
+                    mappingType, mappingWPMod, mappingWPKey, mappingWPType);
             startObjectMappingModeJob.setSystem(true);
             JobUtils.executeJob(startObjectMappingModeJob, null);
         }

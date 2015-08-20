@@ -75,17 +75,32 @@ public class AUTServerConfiguration {
     /**
      * keyboard shortcut for starting Mapping/Records Mode Modifier
      */
-    private int m_keyMod;
+    private int m_mappingKeyMod;
 
+    /**
+     * keyboard shortcut for mapping of components together with their parents
+     */
+    private int m_mappingWithParentsKeyMod;
+    
     /**
      * keyboard shortcut for starting Mapping/Record Mode
      */
-    private int m_key;
+    private int m_mappingKey;
+    
+    /**
+     * keyboard shortcut for mapping of components together with their parents
+     */
+    private int m_mappingWithParentsKey;
     
     /**
      * mouse button for collecting a UI element in Mapping Mode
      */
-    private int m_mouseButton;
+    private int m_mappingMouseButton;
+
+    /**
+     * mouse button for collecting a UI element together with its parents in Mapping Mode
+     */
+    private int m_mappingWithParentsMouseButton;
     
     /**
      * keyboard shortcut for starting Mapping/Records Mode Modifier
@@ -496,42 +511,80 @@ public class AUTServerConfiguration {
         m_profile = p;
     }
     /**
-     * @return Returns the key.
+     * @return Returns the key for mapping components .
      */
-    public int getKey() {
-        return m_key;
+    public int getMappingKey() {
+        return m_mappingKey;
     }
     /**
-     * @param key The key to set.
+     * @param key The key for mapping components to set.
      */
-    public void setKey(int key) {
-        m_key = key;
+    public void setMappingKey(int key) {
+        m_mappingKey = key;
+    }
+    /**
+     * @return Returns the key for mapping components .
+     */
+    public int getMappingWithParentsKey() {
+        return m_mappingWithParentsKey;
+    }
+    /**
+     * @param key The key for mapping components to set.
+     */
+    public void setMappingWithParentsKey(int key) {
+        m_mappingWithParentsKey = key;
     }
     /**
      * @param mouseButton the mouseButton to set
      */
-    public void setMouseButton(int mouseButton) {
-        m_mouseButton = mouseButton;
+    public void setMappingMouseButton(int mouseButton) {
+        m_mappingMouseButton = mouseButton;
     }
 
     /**
      * @return the mouseButton
      */
-    public int getMouseButton() {
-        return m_mouseButton;
+    public int getMappingMouseButton() {
+        return m_mappingMouseButton;
+    }
+    /**
+     * @param mouseButton the mouseButton to set
+     */
+    public void setMappingWithParentsMouseButton(int mouseButton) {
+        m_mappingWithParentsMouseButton = mouseButton;
+    }
+
+    /**
+     * @return the mouseButton
+     */
+    public int getMappingWithParentsMouseButton() {
+        return m_mappingWithParentsMouseButton;
     }
 
     /**
      * @return Returns the keyMod.
      */
-    public int getKeyMod() {
-        return m_keyMod;
+    public int getMappingKeyMod() {
+        return m_mappingKeyMod;
     }
     /**
      * @param keyMod The keyMod to set.
      */
-    public void setKeyMod(int keyMod) {
-        m_keyMod = keyMod;
+    public void setMappingKeyMod(int keyMod) {
+        m_mappingKeyMod = keyMod;
+    }
+
+    /**
+     * @return Returns the keyMod.
+     */
+    public int getMappingWithParentsKeyMod() {
+        return m_mappingWithParentsKeyMod;
+    }
+    /**
+     * @param keyMod The keyMod to set.
+     */
+    public void setMappingWithParentsKeyMod(int keyMod) {
+        m_mappingWithParentsKeyMod = keyMod;
     }
 
     /**

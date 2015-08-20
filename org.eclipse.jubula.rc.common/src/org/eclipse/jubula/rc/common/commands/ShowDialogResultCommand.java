@@ -80,8 +80,11 @@ public class ShowDialogResultCommand implements ICommand {
         ChangeAUTModeMessage msg = new ChangeAUTModeMessage();
         msg.setMode(mode);
         AUTServerConfiguration config = AUTServerConfiguration.getInstance();
-        msg.setKey(config.getKey());
-        msg.setKeyModifier(config.getKeyMod());
+        msg.setMappingKey(config.getMappingKey());
+        msg.setMappingWithParentsKey(config.getMappingWithParentsKey());
+        msg.setMappingKeyModifier(config.getMappingKeyMod());
+        msg.setMappingWithParentsKeyModifier(
+                config.getMappingWithParentsKeyMod());
         msg.setKey2(config.getKey2());
         msg.setKey2Modifier(config.getKey2Mod());
         msg.setCheckModeKey(config.getCheckModeKey());

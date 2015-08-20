@@ -134,6 +134,13 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.MAPPING_TRIGGER_DEFAULT);
         prefStore.setDefault(Constants.MAPPING_TRIGGER_TYPE_KEY,
                 Constants.MAPPING_TRIGGER_TYPE_DEFAULT);
+        
+        prefStore.setDefault(Constants.MAPPING_WITH_PARENTS_MOD_KEY,
+                Constants.MAPPING_WP_MOD1_KEY_DEFAULT);
+        prefStore.setDefault(Constants.MAPPING_WITH_PARENTS_TRIGGER_KEY,
+                Constants.MAPPING_WP_TRIGGER_DEFAULT);
+        prefStore.setDefault(Constants.MAPPING_WITH_PARENTS_TRIGGER_TYPE_KEY,
+                Constants.MAPPING_WP_TRIGGER_TYPE_DEFAULT);
     }
     
     /**

@@ -58,7 +58,13 @@ public class ObjectMappingPreferencePage extends PreferencePage
     private Combo m_mappingModifier = null;
 
     /** combo for mapping keyboard shortcut */
+    private Combo m_mappingWithParentsModifier = null;
+
+    /** combo for mapping keyboard shortcut */
     private DirectCombo<UserInput> m_mappingKey = null;
+
+    /** combo for mapping keyboard shortcut */
+    private DirectCombo<UserInput> m_mappingWithParentsKey = null;
     
     /**
      * Default Constructor
@@ -167,6 +173,21 @@ public class ObjectMappingPreferencePage extends PreferencePage
         label.setText(" + "); //$NON-NLS-1$
         m_mappingKey = InputComboUtil.createInputCombo(
                 composite, SWT.DROP_DOWN | SWT.READ_ONLY);
+        
+        label = new Label(composite, SWT.NONE);
+        label.setText(Messages
+                .ObjectMappingPreferencePageCollectWithParentsShortcut);
+        label.setFont(LayoutUtil.BOLD_TAHOMA);
+        label.setLayoutData(data2);
+        
+        label = new Label(composite, SWT.NONE);
+        m_mappingWithParentsModifier = new Combo(composite,
+                SWT.DROP_DOWN | SWT.READ_ONLY);
+        m_mappingWithParentsModifier.setItems(keys.getModifierString());
+        label = new Label(composite, SWT.NONE);
+        label.setText(" + "); //$NON-NLS-1$
+        m_mappingWithParentsKey = InputComboUtil.createInputCombo(
+                composite, SWT.DROP_DOWN | SWT.READ_ONLY);
     }
 
     /**
@@ -189,9 +210,17 @@ public class ObjectMappingPreferencePage extends PreferencePage
         m_mappingModifier.select(InputCodeHelper.getInstance()
                 .getIndexOfModifier(
                         getDefaultPrefsInt(Constants.MAPPING_MOD_KEY)));
+        m_mappingWithParentsModifier.select(InputCodeHelper.getInstance()
+                .getIndexOfModifier(
+                        getDefaultPrefsInt(
+                                Constants.MAPPING_WITH_PARENTS_MOD_KEY)));
         InputComboUtil.setSelectedInput(m_mappingKey,
                 getDefaultPrefsInt(Constants.MAPPING_TRIGGER_KEY),
                 getDefaultPrefsInt(Constants.MAPPING_TRIGGER_TYPE_KEY));
+        InputComboUtil.setSelectedInput(m_mappingWithParentsKey,
+                getDefaultPrefsInt(Constants.MAPPING_WITH_PARENTS_TRIGGER_KEY),
+                getDefaultPrefsInt(Constants.
+                        MAPPING_WITH_PARENTS_TRIGGER_TYPE_KEY));
     }
 
     /**
@@ -205,9 +234,18 @@ public class ObjectMappingPreferencePage extends PreferencePage
         m_mappingModifier.select(
             InputCodeHelper.getInstance().getIndexOfModifier(
                 getPreferenceStore().getInt(Constants.MAPPING_MOD_KEY)));
+        m_mappingWithParentsModifier.select(
+                InputCodeHelper.getInstance().getIndexOfModifier(
+                    getPreferenceStore().getInt(
+                            Constants.MAPPING_WITH_PARENTS_MOD_KEY)));
         InputComboUtil.setSelectedInput(m_mappingKey, 
             getPreferenceStore().getInt(Constants.MAPPING_TRIGGER_KEY), 
             getPreferenceStore().getInt(Constants.MAPPING_TRIGGER_TYPE_KEY));
+        InputComboUtil.setSelectedInput(m_mappingWithParentsKey, 
+            getPreferenceStore().getInt(
+                    Constants.MAPPING_WITH_PARENTS_TRIGGER_KEY), 
+            getPreferenceStore().getInt(
+                    Constants.MAPPING_WITH_PARENTS_TRIGGER_TYPE_KEY));
     }
 
 
@@ -241,12 +279,24 @@ public class ObjectMappingPreferencePage extends PreferencePage
         getPreferenceStore().setValue(Constants.SHOWCHILDCOUNT_KEY, showCount);
         getPreferenceStore().setValue(
                 Constants.MAPPING_MOD_KEY,
-                InputCodeHelper.getInstance().getModifier()[m_mappingModifier
-                        .getSelectionIndex()]);
+                InputCodeHelper.getInstance().getModifier()[
+                    m_mappingModifier.getSelectionIndex()]);
+        getPreferenceStore().setValue(
+                Constants.MAPPING_WITH_PARENTS_MOD_KEY,
+                InputCodeHelper.getInstance().getModifier()[
+                    m_mappingWithParentsModifier.getSelectionIndex()]);
+        
         InputComboUtil.setPrefCode(m_mappingKey, getPreferenceStore(),
                 Constants.MAPPING_TRIGGER_KEY);
         InputComboUtil.setPrefType(m_mappingKey, getPreferenceStore(),
                 Constants.MAPPING_TRIGGER_TYPE_KEY);
+        
+        InputComboUtil.setPrefCode(m_mappingWithParentsKey,
+                getPreferenceStore(),
+                Constants.MAPPING_WITH_PARENTS_TRIGGER_KEY);
+        InputComboUtil.setPrefType(m_mappingWithParentsKey,
+                getPreferenceStore(),
+                Constants.MAPPING_WITH_PARENTS_TRIGGER_TYPE_KEY);
         return super.performOk();
     }
 }

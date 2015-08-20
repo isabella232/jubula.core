@@ -444,6 +444,7 @@ public class Messages extends NLS {
     public static String ObjectMappingEditorSplitPaneView;
     public static String ObjectMappingEditorTechnicalName;
     public static String ObjectMappingPreferencePageCollectShortcut;
+    public static String ObjectMappingPreferencePageCollectWithParentsShortcut;
     public static String ObjectMappingPreferencePageContextFactor;
     public static String ObjectMappingPreferencePageDescription;
     public static String ObjectMappingPreferencePageLock;

@@ -159,9 +159,13 @@ public abstract class AbstractAutSwingEventListener
     protected void changeCheckModeState(int mode) {
         ChangeAUTModeMessage msg = new ChangeAUTModeMessage();
         msg.setMode(mode);
-        msg.setKey(AUTServerConfiguration.getInstance().getKey());
-        msg.setKeyModifier(
-                AUTServerConfiguration.getInstance().getKeyMod());
+        msg.setMappingKey(AUTServerConfiguration.getInstance().getMappingKey());
+        msg.setMappingWithParentsKey(AUTServerConfiguration
+                .getInstance().getMappingWithParentsKey());
+        msg.setMappingKeyModifier(AUTServerConfiguration
+                .getInstance().getMappingKeyMod());
+        msg.setMappingWithParentsKeyModifier(AUTServerConfiguration
+                .getInstance().getMappingWithParentsKeyMod());
         msg.setKey2(AUTServerConfiguration.getInstance().getKey2());
         msg.setKey2Modifier(
                 AUTServerConfiguration.getInstance().getKey2Mod());

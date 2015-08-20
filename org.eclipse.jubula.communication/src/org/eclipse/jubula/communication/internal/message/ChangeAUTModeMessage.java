@@ -48,13 +48,22 @@ public class ChangeAUTModeMessage extends Message {
     private int m_mode;
 
     /** modifier to map an item/record */
-    private int m_keyModifier = 0;
+    private int m_mappingKeyModifier = 0;
+
+    /** modifier to map an item/record together with its parents */
+    private int m_mappingWithParentsKeyModifier = 0;
 
     /** key to map an item/record */
-    private int m_key = 0;
+    private int m_mappingKey = 0;
+    
+    /** key to map an item/record together with its parents */
+    private int m_mappingWithParentsKey = 0;
 
     /** mouse button to map an item/record */
-    private int m_mouseButton = 0;
+    private int m_mappingMouseButton = 0;
+
+    /** mouse button to map an item/record */
+    private int m_mappingWithParentsMouseButton = 0;
 
     /** modifier to record Application */
     private int m_key2Modifier = 0;
@@ -113,46 +122,91 @@ public class ChangeAUTModeMessage extends Message {
     /**
      * @return Returns the key to map an item/record.
      */
-    public int getKey() {
-        return m_key;
+    public int getMappingKey() {
+        return m_mappingKey;
     }
 
     /**
      * @param key
      *            The key to set.
      */
-    public void setKey(int key) {
-        m_key = key;
+    public void setMappingKey(int key) {
+        m_mappingKey = key;
+    }
+
+    /**
+     * @return Returns the key to map an item/record.
+     */
+    public int getMappingWithParentsKey() {
+        return m_mappingWithParentsKey;
+    }
+
+    /**
+     * @param key
+     *            The key to set.
+     */
+    public void setMappingWithParentsKey(int key) {
+        m_mappingWithParentsKey = key;
     }
 
     /**
      * @return the mouse button used for object mapping
      */
-    public int getMouseButton() {
-        return m_mouseButton;
+    public int getMappingMouseButton() {
+        return m_mappingMouseButton;
     }
 
     /**
      * @param mouseButton
      *            the mouse button to use for object mapping
      */
-    public void setMouseButton(int mouseButton) {
-        m_mouseButton = mouseButton;
+    public void setMappingWithParentsMouseButton(int mouseButton) {
+        m_mappingWithParentsMouseButton = mouseButton;
+    }
+
+    /**
+     * @return the mouse button used for object mapping
+     */
+    public int getMappingWithParentsMouseButton() {
+        return m_mappingWithParentsMouseButton;
+    }
+
+    /**
+     * @param mouseButton
+     *            the mouse button to use for object mapping
+     */
+    public void setMappingMouseButton(int mouseButton) {
+        m_mappingMouseButton = mouseButton;
     }
 
     /**
      * @return Returns the keyModifier.
      */
-    public int getKeyModifier() {
-        return m_keyModifier;
+    public int getMappingKeyModifier() {
+        return m_mappingKeyModifier;
     }
 
     /**
      * @param keyModifier
      *            The keyModifier to set.
      */
-    public void setKeyModifier(int keyModifier) {
-        m_keyModifier = keyModifier;
+    public void setMappingKeyModifier(int keyModifier) {
+        m_mappingKeyModifier = keyModifier;
+    }
+
+    /**
+     * @return Returns the keyModifier.
+     */
+    public int getMappingWithParentsKeyModifier() {
+        return m_mappingWithParentsKeyModifier;
+    }
+
+    /**
+     * @param keyModifier
+     *            The keyModifier to set.
+     */
+    public void setMappingWithParentsKeyModifier(int keyModifier) {
+        m_mappingWithParentsKeyModifier = keyModifier;
     }
 
     /**

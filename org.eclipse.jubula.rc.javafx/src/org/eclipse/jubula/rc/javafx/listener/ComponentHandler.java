@@ -203,32 +203,7 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         }
         List<Node> result = new ArrayList<Node>();
         for (Node n : matches) {
-            if (n.getScene() == null || !isSupported(n.getClass())
-                    || !n.isVisible()) {
-                continue;
-            }
-            boolean add = true;
-            Parent parent = n.getParent();
-            while (parent != null) {
-                if (parent instanceof Skinnable || isContainer(parent)) {
-                    if (isContentNode(n, parent)) {
-                        break;
-                    }
-                    Skin<?> skin = ((Skinnable) parent).getSkin();
-                    if (skin instanceof SkinBase) {
-                        // We don't want skin nodes
-                        if (isSkinNode(n, (SkinBase<?>) skin)) {
-                            add = false;
-                            break;
-                        }
-                    } else {
-                        parent = parent.getParent();
-                    }
-                } else {
-                    parent = parent.getParent();
-                }
-            }
-            if (add) {
+            if (isMappable(n)) {
                 result.add(n);
             }
         }
@@ -242,6 +217,40 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         return filterMatches(result);
     }
     
+    /**
+     * Determines whether a node is mappable or not
+     * @param n the node
+     * @return the result
+     */
+    public static boolean isMappable(Node n) {
+        boolean mappable = true;
+        if (n.getScene() == null || !isSupported(n.getClass())
+                || !n.isVisible()) {
+            return false;
+        }
+        Parent parent = n.getParent();
+        while (parent != null) {
+            if (parent instanceof Skinnable || isContainer(parent)) {
+                if (isContentNode(n, parent)) {
+                    break;
+                }
+                Skin<?> skin = ((Skinnable) parent).getSkin();
+                if (skin instanceof SkinBase) {
+                    // We don't want skin nodes
+                    if (isSkinNode(n, (SkinBase<?>) skin)) {
+                        mappable = false;
+                        break;
+                    }
+                } else {
+                    parent = parent.getParent();
+                }
+            } else {
+                parent = parent.getParent();
+            }
+        }
+        return mappable;
+    }
+
     /**
      * Checks if the given node is a container.
      * @param n the possible container

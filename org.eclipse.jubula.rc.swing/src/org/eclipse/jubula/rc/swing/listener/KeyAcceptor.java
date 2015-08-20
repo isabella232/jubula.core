@@ -90,11 +90,12 @@ public class KeyAcceptor {
             }
         }
         if ((inputCode 
-                == AUTServerConfiguration.getInstance().getKey()
+                == AUTServerConfiguration.getInstance().getMappingKey()
                 || inputCode 
-                    == AUTServerConfiguration.getInstance().getMouseButton()) 
+                    == AUTServerConfiguration.getInstance()
+                        .getMappingMouseButton()) 
             && keyMod 
-                == AUTServerConfiguration.getInstance().getKeyMod()) {
+                == AUTServerConfiguration.getInstance().getMappingKeyMod()) {
             return MAPPING_KEY_COMB;            
         }
         if (inputCode 

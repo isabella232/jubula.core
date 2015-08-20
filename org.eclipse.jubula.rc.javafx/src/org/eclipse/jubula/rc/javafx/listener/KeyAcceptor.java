@@ -42,6 +42,11 @@ public class KeyAcceptor {
      * <code>CHECKCOMP_KEY_COMB</code>
      */
     public static final int CHECKCOMP_KEY_COMB = 3;
+    
+    /**
+     * <code>MAPPING_KEY_COMB</code>
+     */
+    public static final int MAPPING_WITH_PARENTS_KEY_COMB = 4;
 
     /**
      * private Constructor
@@ -95,10 +100,11 @@ public class KeyAcceptor {
                     break;
             }
         }
-        if (inputCode == AUTServerConfiguration.getInstance().getKey()
+        if (inputCode == AUTServerConfiguration.getInstance().getMappingKey()
                 || inputCode == AUTServerConfiguration.getInstance()
-                        .getMouseButton()
-                && keyMod == AUTServerConfiguration.getInstance().getKeyMod()) {
+                        .getMappingMouseButton()
+                && keyMod == AUTServerConfiguration.getInstance()
+                    .getMappingKeyMod()) {
             return MAPPING_KEY_COMB;
         }
         if (inputCode == AUTServerConfiguration.getInstance().getCheckModeKey()
@@ -110,6 +116,14 @@ public class KeyAcceptor {
                 && keyMod == AUTServerConfiguration.getInstance()
                         .getCheckCompKeyMod()) {
             return CHECKCOMP_KEY_COMB;
+        }
+        if (inputCode == AUTServerConfiguration.getInstance()
+                .getMappingWithParentsKey()
+                || inputCode == AUTServerConfiguration.getInstance()
+                        .getMappingWithParentsMouseButton()
+                && keyMod == AUTServerConfiguration.getInstance()
+                    .getMappingWithParentsKeyMod()) {
+            return MAPPING_WITH_PARENTS_KEY_COMB;
         }
         return 0;
     }

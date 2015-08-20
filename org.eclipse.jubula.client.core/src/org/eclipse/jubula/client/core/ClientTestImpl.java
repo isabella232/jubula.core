@@ -396,7 +396,8 @@ public class ClientTestImpl implements IClientTest {
      * {@inheritDoc}
      */
     public void startObjectMapping(AutIdentifier autId, int mod, 
-            int inputCode, int inputType) throws ConnectionException, 
+            int inputCode, int inputType, int modWP, 
+            int inputCodeWP, int inputTypeWP) throws ConnectionException, 
             NotConnectedException, CommunicationException {
         
         log.info(Messages.StartingObjectMapping);
@@ -408,17 +409,31 @@ public class ClientTestImpl implements IClientTest {
 
             ChangeAUTModeMessage message = new ChangeAUTModeMessage();
             message.setMode(ChangeAUTModeMessage.OBJECT_MAPPING);
-            message.setKeyModifier(mod);
+            message.setMappingKeyModifier(mod);
             switch (inputType) {
                 case InputConstants.TYPE_MOUSE_CLICK:
-                    message.setMouseButton(inputCode);
-                    message.setKey(InputConstants.NO_INPUT);
+                    message.setMappingMouseButton(inputCode);
+                    message.setMappingKey(InputConstants.NO_INPUT);
                     break;
                 case InputConstants.TYPE_KEY_PRESS:
                     // fall through
                 default:
-                    message.setKey(inputCode);
-                    message.setMouseButton(InputConstants.NO_INPUT);
+                    message.setMappingKey(inputCode);
+                    message.setMappingMouseButton(InputConstants.NO_INPUT);
+                    break;
+            }
+            message.setMappingWithParentsKeyModifier(modWP);
+            switch (inputTypeWP) {
+                case InputConstants.TYPE_MOUSE_CLICK:
+                    message.setMappingWithParentsMouseButton(inputCodeWP);
+                    message.setMappingWithParentsKey(InputConstants.NO_INPUT);
+                    break;
+                case InputConstants.TYPE_KEY_PRESS:
+                    // fall through
+                default:
+                    message.setMappingWithParentsKey(inputCodeWP);
+                    message.setMappingWithParentsMouseButton(
+                            InputConstants.NO_INPUT);
                     break;
             }
             AUTConnection.getInstance().send(message);
@@ -445,8 +460,8 @@ public class ClientTestImpl implements IClientTest {
         try {
             ChangeAUTModeMessage message = new ChangeAUTModeMessage();
             message.setMode(ChangeAUTModeMessage.RECORD_MODE);
-            message.setKeyModifier(recordCompMod);
-            message.setKey(recordCompKey);
+            message.setMappingKeyModifier(recordCompMod);
+            message.setMappingKey(recordCompKey);
             message.setKey2Modifier(recordApplMod);
             message.setKey2(recordApplKey);
             message.setCheckModeKeyModifier(checkModeKeyMod);

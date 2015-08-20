@@ -87,10 +87,12 @@ public class KeyAcceptor {
         if (eventCode >= 97 && eventCode <= 122) {
             eventCode = eventCode - 32;  
         }
-        if ((eventCode == AUTServerConfiguration.getInstance().getKey()
+        if ((eventCode == AUTServerConfiguration.getInstance().getMappingKey()
                 || eventCode 
-                    == AUTServerConfiguration.getInstance().getMouseButton())
-            && keyMod == AUTServerConfiguration.getInstance().getKeyMod()) {
+                    == AUTServerConfiguration.getInstance()
+                    .getMappingMouseButton())
+            && keyMod == AUTServerConfiguration.getInstance()
+                    .getMappingKeyMod()) {
             
             return MAPPING_KEY_COMB;
         }
