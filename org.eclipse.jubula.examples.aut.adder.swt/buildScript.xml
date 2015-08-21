@@ -44,10 +44,9 @@
 	<property name="lib" 			value="../../com.bredexsw.jubula.core/com.bredexsw.guidancer.project.configuration/lib/org.eclipse.jubula.examples.aut.adder.swt"/>
 
 	<!-- JARs, DLLs -->
-	<property name="swtLibWin32" value="win32-win32-x86/swt.jar"/>
+	<property name="swtLibWin32" value="win32/win32/x86/swt.jar"/>
 	<property name="swtLibCompile" value="${lib}/${swtLibWin32}"/>
-	<property name="swtLibWin32JARCp" value="./lib/${swtLibWin32}"/>
-	<property name="swtLibGtkJARCp" value="./lib/gtk-linux-x86/swt.jar"/>
+	<property name="swtLibJARCp" value="./lib/swt.jar"/>
 
 	<!-- main class -->
 	<property name="mainClass" value="org.eclipse.jubula.examples.aut.adder.swt.SimpleAdderSWT"/>
@@ -92,23 +91,11 @@
 		</javac>
 	</target>
 
-	<target name="jar" depends="jarWin32, jarGtk">
-	</target>
-
-	<target name="jarWin32" depends="compile">
-		<jar basedir="${classes}" destfile="${jars}/${jarname}Win32.jar">
+	<target name="jar">
+		<jar basedir="${classes}" destfile="${jars}/${jarname}.jar">
 			<manifest>
 				<attribute name="Main-Class" value="${mainClass}"/>
-				<attribute name="Class-Path" value="${swtLibWin32JARCp}"/>
-			</manifest>
-		</jar>
-	</target>
-
-	<target name="jarGtk" depends="compile">
-		<jar basedir="${classes}" destfile="${jars}/${jarname}Gtk.jar">
-			<manifest>
-				<attribute name="Main-Class" value="${mainClass}"/>
-				<attribute name="Class-Path" value="${swtLibGtkJARCp}"/>
+				<attribute name="Class-Path" value="${swtLibJARCp}"/>
 			</manifest>
 		</jar>
 	</target>

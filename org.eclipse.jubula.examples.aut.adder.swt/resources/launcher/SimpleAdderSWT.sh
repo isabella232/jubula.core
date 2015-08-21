@@ -10,4 +10,4 @@
 #*******************************************************************************
 #! /bin/sh
 
-../../../../jre/bin/java -jar SimpleAdderSWTGtk.jar
+../../../../jre/bin/java -jar SimpleAdderSWT.jar
