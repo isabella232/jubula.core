@@ -11,7 +11,6 @@
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
-import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.swt.tester.tree.TreeOperationContext;
@@ -68,8 +67,12 @@ public class TreeAdapter extends ControlAdapter implements ITreeComponent {
     /**
      * {@inheritDoc}
      */
-    public String getPropertyValueOfCell(String name, Object cell) {
-        StepExecutionException.throwUnsupportedAction();
-        return null;
+    public String getPropertyValueOfCell(final String name, final Object cell) {
+        return getEventThreadQueuer().invokeAndWait(
+            "getPropertyValueOfCell", new IRunnable<String>() { //$NON-NLS-1$
+                public String run() {
+                    return getRobot().getPropertyValue(cell, name);
+                }
+            });
     }
 }
