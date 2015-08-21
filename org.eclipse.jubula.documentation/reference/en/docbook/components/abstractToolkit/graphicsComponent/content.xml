@@ -11,7 +11,7 @@
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   <?dbhtml dir="graphicsComponent"?>
   <title>Abstract toolkit graphics component</title>
-  <para>
+  
   	<para>
   		This is an abstract component.
   	</para>
@@ -35,7 +35,7 @@
   			</listitem>
   		</itemizedlist>
   	</para>
-  </para>
+  
   <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>
