@@ -232,40 +232,43 @@ public class StringHelper {
     
     /**
      * Gets a string representation of the given status, but this includes only
-     * the severity and the message and if the Status is an ITimeStatus a time
-     * stamp is also added. The pattern is yyyy-mm-dd hh:mm:ss
+     * the severity and the message and if the Status is an ITimeStatus and
+     * outputTime is true, a time stamp is also added. The pattern is yyyy-mm-dd
+     * hh:mm:ss
      * 
      * @param s
      *            the status
+     * @param outputTime
+     *            add Timestamp
      * @return string representation
      */
-    public static String getStringOf(IStatus s) {
+    public static String getStringOf(IStatus s, boolean outputTime) {
         String result = ""; //$NON-NLS-1$
-        if (s instanceof ITimeStatus) {
-            result +=  DateFormatUtils.format(((ITimeStatus)s).getTime(),
-                    TIME_PATTERN) + " "; //$NON-NLS-1$
-        }
         switch (s.getSeverity()) {
             case IStatus.OK:
-                result += "OK"; //$NON-NLS-1$
+                result += "OK:"; //$NON-NLS-1$
                 break;
             case IStatus.ERROR:
-                result += "ERROR"; //$NON-NLS-1$
+                result += "ERROR:"; //$NON-NLS-1$
                 break;
             case IStatus.WARNING:
-                result += "WARNING"; //$NON-NLS-1$
+                result += "WARNING:"; //$NON-NLS-1$
                 break;
             case IStatus.CANCEL:
-                result += "CANCEL"; //$NON-NLS-1$
+                result += "CANCEL:"; //$NON-NLS-1$
                 break;
             case IStatus.INFO:
-                result += "INFO"; //$NON-NLS-1$
+                result += "INFO:"; //$NON-NLS-1$
                 break;
             default:
                 //Don't print out severity code
                 break;
         }
         result += " " + s.getMessage(); //$NON-NLS-1$
+        if (s instanceof ITimeStatus && outputTime) {
+            result +=  " " + DateFormatUtils.format(((ITimeStatus)s).getTime(), //$NON-NLS-1$
+                    TIME_PATTERN); 
+        }
         return result;
     }
 }

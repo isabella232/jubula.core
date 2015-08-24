@@ -1437,11 +1437,12 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      */
     private void printStatus(IStatus status, MessageConsole c,
             boolean activate) {
-        writeLineToConsole(c, StringHelper.getStringOf(status), activate);
+        writeLineToConsole(c, StringHelper
+                .getStringOf(status, false), activate);
         if (status.isMultiStatus()) {
             for (IStatus s : status.getChildren()) {
                 writeLineToConsole(c,
-                        StringHelper.getStringOf(s), activate);
+                        StringHelper.getStringOf(s, false), activate);
             }
         }
     }

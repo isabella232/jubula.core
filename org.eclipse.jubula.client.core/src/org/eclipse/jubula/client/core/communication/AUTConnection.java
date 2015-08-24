@@ -164,7 +164,7 @@ public class AUTConnection extends BaseAUTConnection {
                 if (isConnected()) {
                     TimeMultiStatus connect = new TimeMultiStatus(
                             Activator.PLUGIN_ID, IStatus.OK, 
-                            "Connection to AUT: " + autId.encode() + " established", //$NON-NLS-1$ //$NON-NLS-2$
+                            "Connection to AUT: \"" + autId.encode() + "\" established", //$NON-NLS-1$ //$NON-NLS-2$
                             null);
                     pc.writeStatus(connect, autId.encode());
                     TimeMultiStatus ext = getExtensionStatus();

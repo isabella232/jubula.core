@@ -567,7 +567,7 @@ public abstract class AUTServer {
                                 .isRegistered(fac)) {
                             AdapterFactoryRegistry.getInstance()
                                     .registerFactory(fac);
-                            m_warnings.add("Loaded: " + jars.get(new URL(url.getPath().split("!")[0]))); //$NON-NLS-1$ //$NON-NLS-2$
+                            m_warnings.add("Loaded \"" + jars.get(new URL(url.getPath().split("!")[0])) + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         }                      
                     }
                 }
@@ -599,7 +599,7 @@ public abstract class AUTServer {
     private void handleException(Map<URL, String> jars, List<String> errors,
             URL url, Throwable t) {
         try {
-            String error = "Could not load: " + jars.remove(new URL(url.getPath().split("!")[0])); //$NON-NLS-1$ //$NON-NLS-2$
+            String error = "Could not load \"" + jars.remove(new URL(url.getPath().split("!")[0])) + "\""; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             errors.add(error);
             log.error(error);
         } catch (MalformedURLException e1) {

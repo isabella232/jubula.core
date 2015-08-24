@@ -339,12 +339,12 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      * {@inheritDoc}
      */
     public void writeStatus(IStatus status) {
-        printConsole(StringHelper.getStringOf(status) 
-                + StringConstants.NEWLINE);
+        printConsoleLn("AUT " + StringHelper.getStringOf(status, false)  //$NON-NLS-1$
+                + "..." + StringConstants.NEWLINE, true); //$NON-NLS-1$
         if (status.isMultiStatus()) {
             for (IStatus s : status.getChildren()) {
-                printConsole(StringHelper.getStringOf(s)
-                        + StringConstants.NEWLINE);
+                printConsoleLn("AUT " + StringHelper.getStringOf(s, false) //$NON-NLS-1$
+                        + "..." + StringConstants.NEWLINE, true); //$NON-NLS-1$
             }
         }
     }
@@ -353,11 +353,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      * {@inheritDoc}
      */
     public void writeStatus(IStatus status, String id) {
-        printConsole("Connection status of AUT: " + id //$NON-NLS-1$
-                + StringConstants.NEWLINE); 
         writeStatus(status);
-        printConsole("----------------------------------------" //$NON-NLS-1$
-                + StringConstants.NEWLINE);
     }
     
     /**

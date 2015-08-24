@@ -50,6 +50,7 @@ import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +63,7 @@ import org.slf4j.LoggerFactory;
  * @created Dec 1, 2009
  */
 public class AutAgent {
+    
     /**
      * the default value to wait after a proper AUT termination (== de-registration) 
      */
@@ -723,7 +725,8 @@ public class AutAgent {
                                         0,
                                         pathBuilder.lastIndexOf
                                         (IStartAut.PATH_SEPARATOR)),
-                                        bundle.getSymbolicName());
+                                        bundle.getHeaders()
+                                        .get(Constants.BUNDLE_NAME));
                             }
                         }
                     }
