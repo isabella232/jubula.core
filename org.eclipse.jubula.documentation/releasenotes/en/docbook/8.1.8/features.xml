@@ -3,4 +3,14 @@
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
   
+  <para>
+    <emphasis role="strong">New actions for the SWT toolkit</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The unbound modules <emphasis>ub_tbl_checkPropertyAtMousePosition</emphasis> and <emphasis>ub_tre_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_concrete</emphasis> are now also implemented for the SWT toolkit.
+      </para>
+    </listitem>
+   </itemizedlist>
 </section>
