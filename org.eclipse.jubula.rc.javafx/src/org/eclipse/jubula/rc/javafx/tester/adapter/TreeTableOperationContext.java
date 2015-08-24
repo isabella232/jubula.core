@@ -750,11 +750,18 @@ public class TreeTableOperationContext extends
                     usrIdxCol = usrIdxCol + 1;
                 }
                 int i = IndexConverter.toImplementationIndex(usrIdxCol);
-                if (pathIterator.hasNext()) {
-                    columns = ((TreeTableColumn<?, ?>)
-                            columns.get(i)).getColumns();
-                } else {
-                    column = (TreeTableColumn<?, ?>) columns.get(i);
+                try {
+                    if (pathIterator.hasNext()) {
+                        columns = ((TreeTableColumn<?, ?>) columns.get(i))
+                                .getColumns();
+                    } else {
+                        column = (TreeTableColumn<?, ?>) columns.get(i);
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    throw new StepExecutionException(
+                            "Invalid Index: " + IndexConverter.toUserIndex(i), //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                    TestErrorEvent.INVALID_INDEX));
                 }
             } catch (NumberFormatException nfe) {
                 try {
