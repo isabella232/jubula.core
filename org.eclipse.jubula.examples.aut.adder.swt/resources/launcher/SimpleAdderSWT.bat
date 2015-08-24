@@ -10,4 +10,4 @@
 @rem ***************************************************************************
 @echo off 
 
-..\..\..\..\jre\bin\javaw -jar SimpleAdderSWTWin32.jar
+..\..\..\..\jre\bin\javaw -jar SimpleAdderSWT.jar
