@@ -23,6 +23,7 @@ import org.eclipse.jubula.rc.common.tester.AbstractTableTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.rc.swt.components.SWTCell;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
@@ -151,7 +152,8 @@ public class TableTester extends AbstractTableTester {
                                             itemBounds.width,
                                             itemBounds.height);
                                     if (absRect.contains(awtMousePos)) {
-                                        cell = new Cell(rowCount, col);
+                                        cell = new SWTCell(rowCount, col,
+                                                table.getItem(rowCount));
                                         break;
                                     }
                                 }
@@ -770,7 +772,6 @@ public class TableTester extends AbstractTableTester {
 
     /** {@inheritDoc} */
     protected Object getNodeAtMousePosition() throws StepExecutionException {
-        StepExecutionException.throwUnsupportedAction();
-        return null;
+        return getCellAtMousePosition();
     }
 }

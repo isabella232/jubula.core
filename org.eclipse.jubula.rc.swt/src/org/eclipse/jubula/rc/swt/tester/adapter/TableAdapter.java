@@ -471,8 +471,12 @@ public class TableAdapter extends ControlAdapter implements ITableComponent {
     /**
      * {@inheritDoc}
      */
-    public String getPropertyValueOfCell(String name, Object cell) {
-        StepExecutionException.throwUnsupportedAction();
-        return null;
+    public String getPropertyValueOfCell(final String name, final Object cell) {
+        return getEventThreadQueuer().invokeAndWait(
+            "getPropertyValueOfCell", new IRunnable<String>() { //$NON-NLS-1$
+                public String run() {
+                    return getRobot().getPropertyValue(cell, name);
+                }
+            });
     }
 }
