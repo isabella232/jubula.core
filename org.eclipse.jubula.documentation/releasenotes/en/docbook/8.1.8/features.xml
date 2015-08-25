@@ -3,6 +3,16 @@
                                                               xmlns:xl="http://www.w3.org/1999/xlink">
   <title>New Features and Developments</title>
   
+   <para>
+    <emphasis role="strong">Additional option for Object Mapping in the JavaFX toolkit</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        There is a new key combination in object mapping mode. With that it is now possible to map the current component at mouse position and all its supported parents from the AUT's hierarchy.
+      </para>
+    </listitem>
+  </itemizedlist>
   <para>
     <emphasis role="strong">New actions for the SWT toolkit</emphasis>
   </para>

@@ -38,7 +38,15 @@
     <listitem>
       <para>
         Choose which keystrokes or mouse buttons you want to use to
-        collect components in the Object Mapping Mode.
+        collect a component from a Java AUT in the Object Mapping Mode.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Choose which keystrokes or mouse buttons you want to use to
+        collect a component and all its supported parent components 
+        from the AUT which contain it. This option is currently only
+        available for Object Mapping in the JavaFX toolkit.
       </para>
     </listitem>
   </orderedlist>
