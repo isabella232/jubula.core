@@ -750,18 +750,31 @@ public class TreeTableOperationContext extends
                     usrIdxCol = usrIdxCol + 1;
                 }
                 int i = IndexConverter.toImplementationIndex(usrIdxCol);
-                try {
-                    if (pathIterator.hasNext()) {
-                        columns = ((TreeTableColumn<?, ?>) columns.get(i))
-                                .getColumns();
-                    } else {
-                        column = (TreeTableColumn<?, ?>) columns.get(i);
+                if (MatchUtil.NOT_EQUALS == op) {
+                    for (int j = 0; j < columns.size(); j++) {
+                        if (j != i) {
+                            if (pathIterator.hasNext()) {
+                                columns = ((TreeTableColumn<?, ?>) 
+                                        columns.get(j)).getColumns();
+                            } else {
+                                column = (TreeTableColumn<?, ?>) columns.get(j);
+                            }
+                        }
                     }
-                } catch (IndexOutOfBoundsException e) {
-                    throw new StepExecutionException(
-                            "Invalid Index: " + IndexConverter.toUserIndex(i), //$NON-NLS-1$
-                            EventFactory.createActionError(
-                                    TestErrorEvent.INVALID_INDEX));
+                } else {
+                    try {
+                        if (pathIterator.hasNext()) {
+                            columns = ((TreeTableColumn<?, ?>) columns.get(i))
+                                    .getColumns();
+                        } else {
+                            column = (TreeTableColumn<?, ?>) columns.get(i);
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        throw new StepExecutionException(
+                                "Invalid Index: " + IndexConverter.toUserIndex(i), //$NON-NLS-1$
+                                EventFactory.createActionError(
+                                        TestErrorEvent.INVALID_INDEX));
+                    }
                 }
             } catch (NumberFormatException nfe) {
                 try {

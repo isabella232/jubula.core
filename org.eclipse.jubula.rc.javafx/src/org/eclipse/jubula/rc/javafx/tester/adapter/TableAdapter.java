@@ -17,6 +17,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Pane;
+
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
@@ -35,18 +47,6 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
-
-import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.Pane;
 
 /**
  * Adapter for a TableView(Table)
@@ -211,59 +211,12 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public Integer call() throws Exception {
                         TableView table = getRealComponent();
-                        TableColumn<?, ?> column = null;
+                        
                         List<String> path = StringParsing.splitToList(colPath,
                                 TestDataConstants.PATH_CHAR_DEFAULT,
                                 TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
-                        ObservableList<TableColumn> columns;
-                        if (colPath.contains("" + TestDataConstants.PATH_CHAR_DEFAULT)) { //$NON-NLS-1$
-                            columns = table.getColumns();
-                        } else {
-                            columns = table.getVisibleLeafColumns();
-                        }
-                        Iterator<String> pathIterator = path.iterator();
-                        String currCol = null;
-                        while (pathIterator.hasNext()) {
-                            try {
-                                currCol = pathIterator.next();
-                                int usrIdxCol = Integer.parseInt(currCol);
-                                if (usrIdxCol == 0) {
-                                    usrIdxCol = usrIdxCol + 1;
-                                }
-                                int i = IndexConverter
-                                        .toImplementationIndex(usrIdxCol);
-                                if (pathIterator.hasNext()) {
-                                    columns = (columns.get(i)).getColumns();
-                                } else {
-                                    column = columns.get(i);
-                                }
-                            } catch (NumberFormatException nfe) {
-                                try {
-                                    if (path.size() <= 1) {
-                                        columns = table.getColumns();
-                                    }
-                                    if (columns.size() <= 0) {
-                                        throw new StepExecutionException(
-                                                "No Columns", EventFactory.createActionError(//$NON-NLS-1$
-                                                                TestErrorEvent.
-                                                                NO_HEADER));
-                                    }
-                                    for (TableColumn c: columns) {
-                                        String header = c.getText();
-                                        if (MatchUtil.getInstance().match(
-                                                header, currCol, op)) {
-                                            column = c;
-                                            if (pathIterator.hasNext()) {
-                                                columns = c.getColumns();
-                                            }
-                                            break;
-                                        }
-                                    }
-                                } catch (IllegalArgumentException iae) {
-                                    // do nothing here
-                                }
-                            }
-                        } 
+                        TableColumn<?, ?> column = determineColumn(colPath, op,
+                                table, path); 
                         if (column == null) {
                             throw new StepExecutionException("Column not found", //$NON-NLS-1$
                                     EventFactory.createActionError(
@@ -278,6 +231,85 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     }
                 });
         return result.intValue();
+    }
+    
+    /**
+     * get column for the given path
+     * @param colPath the path
+     * @param op the operation
+     * @param table the table
+     * @param path the path as list
+     * @return the column or null if no column was found
+     */
+    private TableColumn<?, ?> determineColumn(final String colPath,
+            final String op, TableView table, List<String> path) {
+        ObservableList<TableColumn> columns;
+        if (colPath.contains("" + TestDataConstants.PATH_CHAR_DEFAULT)) { //$NON-NLS-1$
+            columns = table.getColumns();
+        } else {
+            columns = table.getVisibleLeafColumns();
+        }
+        Iterator<String> pathIterator = path.iterator();
+        String currCol = null;
+        TableColumn<?, ?> column = null;
+        while (pathIterator.hasNext()) {
+            try {
+                currCol = pathIterator.next();
+                int usrIdxCol = Integer.parseInt(currCol);
+                if (usrIdxCol == 0) {
+                    usrIdxCol = usrIdxCol + 1;
+                }
+                int i = IndexConverter.toImplementationIndex(usrIdxCol);
+                if (MatchUtil.NOT_EQUALS == op) {
+                    for (int j = 0; j < columns.size(); j++) {
+                        if (j != i) {
+                            if (pathIterator.hasNext()) {
+                                columns = columns.get(j).getColumns();
+                            } else {
+                                column = columns.get(j);
+                            }
+                        }
+                    }
+                } else {
+                    try {
+                        if (pathIterator.hasNext()) {
+                            columns = columns.get(i).getColumns();
+                        } else {
+                            column = columns.get(i);
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        throw new StepExecutionException(
+                                "Invalid Index: " + IndexConverter.toUserIndex(i), //$NON-NLS-1$
+                                EventFactory.createActionError(
+                                        TestErrorEvent.INVALID_INDEX));
+                    }
+                }
+            } catch (NumberFormatException nfe) {
+                try {
+                    if (path.size() <= 1) {
+                        columns = table.getColumns();
+                    }
+                    if (columns.size() <= 0) {
+                        throw new StepExecutionException(
+                                "No Columns", EventFactory.createActionError(//$NON-NLS-1$
+                                        TestErrorEvent.NO_HEADER));
+                    }
+                    for (TableColumn c : columns) {
+                        String h = c.getText();
+                        if (MatchUtil.getInstance().match(h, currCol, op)) {
+                            column = c;
+                            if (pathIterator.hasNext()) {
+                                columns = c.getColumns();
+                            }
+                            break;
+                        }
+                    }
+                } catch (IllegalArgumentException iae) {
+                    // do nothing here
+                }
+            }
+        }
+        return column;
     }
 
     @Override
