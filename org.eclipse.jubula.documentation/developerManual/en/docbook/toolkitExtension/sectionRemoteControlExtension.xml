@@ -265,6 +265,12 @@
       components aware of its presence. This is done by exporting the
       fragment and deploying it into the remote control.
     </para>
+    <para role="tip">The AUT remote control status
+        (succuessfully loaded or warnings occurred) of a
+        deployed
+        fragment is echoed to the console of the ITE as well as the testexec
+        when the connection to the AUT gets established.
+    </para>
     <para>
       There are different ways for installing your fragment into the
       remote control, depending on the AUT Agent used and the specific
@@ -342,18 +348,20 @@
       when deploying a new version with the same fragment ID. Apart from the deploying methods mentioned, it is also possible to install
       your fragment using a p2 repository or the OSGi console.
     </para>
-	<para role="tip">If you have deployed fragments for the JavaFX RC
-		bundle, you have to keep in mind that if you are executing the ITE
-		with Java 7 the RC bundle is not active and therefore the wiring for
-		the fragments has not been done by the OSGI framework. The current
-		workaround in Jubula is that all the fragments for the JavaFX RC
-		bundle are added, without taking any version ranges from the fragments
-		into account.
-	</para>
+    <para role="tip">If you have deployed fragments for the JavaFX RC
+        bundle, you have to keep in mind that if you are executing the
+        ITE
+        with Java 7 the RC bundle is not active and therefore the wiring for
+        the fragments has not been done by the OSGI framework. The current
+        workaround in Jubula is that all the fragments for the JavaFX RC
+        bundle are added, without taking any version ranges from the
+        fragments
+        into account.
+    </para>
     <para>
       You should be able to test your new component once you have
       installed the toolkit feature into the ITE and the fragment as
-      described below.
+      described before.
     </para>
   </section>
 </section>
