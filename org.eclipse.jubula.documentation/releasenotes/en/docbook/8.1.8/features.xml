@@ -19,6 +19,11 @@
   <itemizedlist>
     <listitem>
       <para>
+        You can now check the property of tree table items using the unbound module <emphasis>ub_trt_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_swt</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
         The unbound modules <emphasis>ub_tbl_checkPropertyAtMousePosition</emphasis> and <emphasis>ub_tre_checkPropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_concrete</emphasis> are now also implemented for the SWT toolkit.
       </para>
     </listitem>

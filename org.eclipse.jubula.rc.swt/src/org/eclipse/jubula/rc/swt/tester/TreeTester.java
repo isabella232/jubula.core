@@ -14,9 +14,11 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeTraverser;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
@@ -36,6 +38,7 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.rc.swt.components.SWTCell;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.tester.tree.TableTreeOperationContext;
@@ -44,15 +47,20 @@ import org.eclipse.jubula.rc.swt.tester.tree.TreeOperationContext;
 import org.eclipse.jubula.rc.swt.tester.tree.VerifyCheckboxOperation;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 /**
  * Toolkit specific commands for the <code>Tree</code>
@@ -340,6 +348,136 @@ public class TreeTester extends AbstractTreeTester {
                                 TestErrorEvent.NOT_FOUND));
             }
         });
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    protected Cell getCellAtMousePosition() throws StepExecutionException {
+        
+        final Tree tree = getTree();
+        final java.awt.Point awtMousePos = getRobot().getCurrentMousePosition();
+        Cell returnvalue = getEventThreadQueuer().invokeAndWait(
+                "getCellAtMousePosition",  //$NON-NLS-1$
+                new IRunnable<Cell>() {
+                    private int m_rowCount = 0;
+
+                    public Cell run() throws StepExecutionException {
+                        Cell cell = null;
+                        for (TreeItem item : tree.getItems()) {
+                            cell = findCell(item);
+                            if (cell != null) {
+                                break;
+                            }
+                        }
+                        if (cell == null) {
+                            throw new StepExecutionException(
+                                "No cell under mouse position found!", //$NON-NLS-1$
+                                EventFactory.createActionError(
+                                        TestErrorEvent.NOT_FOUND));
+                        }
+                        return cell;
+                    }
+
+                    /**
+                     * This method tries to find the cell which is under the current mouse position
+                     * belonging to a given tree item or its sub items
+                     * @param item the tree item
+                     * @return the cell if found, <code>null</code> if not
+                     */
+                    private Cell findCell(TreeItem item) {
+                        Cell cell = null;
+                        for (int col = 0; col < tree.getColumnCount(); col++) {
+                            final Rectangle itemBounds = getCellBounds(
+                                    getEventThreadQueuer(), tree,
+                                    m_rowCount, col, item);
+                            final org.eclipse.swt.graphics.Point 
+                                absItemBounds = tree.toDisplay(itemBounds.x,
+                                            itemBounds.y);
+                            final java.awt.Rectangle absRect =
+                                new java.awt.Rectangle(absItemBounds.x,
+                                    absItemBounds.y, itemBounds.width,
+                                    itemBounds.height);
+                            if (absRect.contains(awtMousePos)) {
+                                cell = new SWTCell(m_rowCount, col, item);
+                            }
+                        }
+                        m_rowCount++;
+                        if (cell == null && item.getExpanded()) {
+                            for (TreeItem subItem : item.getItems()) {
+                                cell = findCell(subItem);
+                                if (cell != null) {
+                                    break;
+                                }
+                            }
+                        }
+                        return cell;
+                    }
+                });
+        return returnvalue;
+    }
+
+    
+    /**
+     * @param etq
+     *            the EventThreadQueuer to use
+     * @param table
+     *            the table to use
+     * @param row
+     *            The row of the cell
+     * @param col
+     *            The column of the cell
+     * @param ti
+     *            The tree item
+     * @return The bounding rectangle for the cell, relative to the table's
+     *         location.
+     */
+    private static Rectangle getCellBounds(IEventThreadQueuer etq,
+        final Tree table, final int row, final int col, final TreeItem ti) {
+        Rectangle cellBounds = etq.invokeAndWait(
+                "getCellBounds", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() {
+                        int column = (table.getColumnCount() > 0 || col > 0) 
+                            ? col : 0;
+                        org.eclipse.swt.graphics.Rectangle r = 
+                                ti.getBounds(column);
+                        String text = CAPUtil.getWidgetText(ti,
+                                SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
+                                        + column, ti.getText(column));
+                        Image image = ti.getImage(column);
+                        if (text != null && text.length() != 0) {
+                            GC gc = new GC(table);
+                            int charWidth = 0; 
+                            try {
+                                FontMetrics fm = gc.getFontMetrics();
+                                charWidth = fm.getAverageCharWidth();
+                            } finally {
+                                gc.dispose();
+                            }
+                            r.width = text.length() * charWidth;
+                            if (image != null) {
+                                r.width += image.getBounds().width;
+                            }
+                        } else if (image != null) {
+                            r.width = image.getBounds().width;
+                        }
+                        if (column > 0) {
+                            TreeColumn tc = table.getColumn(column);
+                            int alignment = tc.getAlignment();
+                            if (alignment == SWT.CENTER) {
+                                r.x += ((double)tc.getWidth() / 2) 
+                                        - ((double)r.width / 2);
+                            }
+                            if (alignment == SWT.RIGHT) {
+                                r.x += tc.getWidth() - r.width;
+                            }
+                        }
+                        
+                        return new Rectangle(r.x, r.y, r.width, r.height);
+                    }
+                });
+        return cellBounds;
     }
     
     /**
@@ -885,4 +1023,26 @@ public class TreeTester extends AbstractTreeTester {
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void rcCheckPropertyAtMousePosition(final String name, String value,
+            String operator) {
+        Object cell = null;
+        int numColumns = getEventThreadQueuer().invokeAndWait(
+                "checkColumnIndex", //$NON-NLS-1$
+                new IRunnable<Integer>() {
+
+                    public Integer run() {
+                        return getTree().getColumnCount();
+                    }
+                });
+        if (numColumns > 0) {            
+            cell = getCellAtMousePosition();
+        } else {
+            cell = getNodeAtMousePosition();
+        }
+        final ITreeComponent bean = getTreeAdapter();
+        final String propToStr = bean.getPropertyValueOfCell(name, cell);
+        Verifier.match(propToStr, value, operator);
+    }
 }
