@@ -1,6 +1,8 @@
 javafx.scene.control.Accordion - Check Focus										    <
 javafx.scene.control.ComboBox - Drag													<
 javafx.scene.control.ComboBox - Drop													<
+javafx.scene.control.Hyperlink - Check Selection										<
+javafx.scene.control.Hyperlink - Show Text												<
 javafx.scene.control.ListView - Drag													<
 javafx.scene.control.ListView - Drop													<
 javafx.scene.control.TitledPane - Check Focus											<
