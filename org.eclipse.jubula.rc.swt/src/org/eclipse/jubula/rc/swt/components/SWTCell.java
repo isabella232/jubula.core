@@ -11,9 +11,10 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.TreeItem;
 
 /**
- * This class represents a cell in a SWT Table.
+ * This class represents a cell in a SWT Table or Tree Table.
  * @author BREDEX GmbH
  * @created 21.08.2015
  */
@@ -78,6 +79,32 @@ public class SWTCell extends Cell implements DynaBean {
             log.error("Error while creating instance of SWT table cell", e); //$NON-NLS-1$
         } catch (InstantiationException e) {
             log.error("Error while creating instance of SWT table cell", e); //$NON-NLS-1$
+        } 
+    }
+
+
+    /**
+     * Creates a new Cell instance.
+     * @param row The zero based row of the cell.
+     * @param col The zero based column of the cell.
+     * @param item The tree table item containing the actual cell
+     */
+    public SWTCell(int row, int col, TreeItem item) {
+        super(row, col);
+        try {
+            m_bean = new BasicDynaClass("cell", null, m_properties).newInstance(); //$NON-NLS-1$
+            set(BACKGROUND, item.getBackground(col));
+            set(BOUNDS, item.getBounds(col));
+            set(FONT, item.getFont(col));
+            set(FOREGROUND, item.getForeground(col));
+            set(GRAYED, item.getGrayed());
+            set(IMAGE, item.getImage(col));
+            set(STYLE, item.getStyle());
+            set(TEXT, item.getText(col));
+        } catch (IllegalAccessException e) {
+            log.error("Error while creating instance of SWT tree table cell", e); //$NON-NLS-1$
+        } catch (InstantiationException e) {
+            log.error("Error while creating instance of SWT tree table cell", e); //$NON-NLS-1$
         } 
     }
 

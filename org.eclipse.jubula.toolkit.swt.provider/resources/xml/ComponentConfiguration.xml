@@ -390,7 +390,7 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-		</action>
+		</action>        <action name="CompSystem.CheckPropertyAtMousePosition" changed="8.1.8">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>  
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">

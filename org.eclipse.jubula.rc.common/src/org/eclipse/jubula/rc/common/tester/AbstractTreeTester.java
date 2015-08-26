@@ -61,7 +61,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
      *  This method is only casting the IComponentAdapter to the wanted ITreeAdapter
      * @return The ITreeAdapter out of the stored IComponentAdapter
      */
-    private ITreeComponent getTreeAdapter() {
+    protected ITreeComponent getTreeAdapter() {
         return (ITreeComponent)getComponent();
         
     }
