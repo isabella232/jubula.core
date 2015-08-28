@@ -1,0 +1,42 @@
+= Pre-requisites =
+
+== general architecture ==
+* org.eclipse.jubula.rc.rcp.e3 is responsible for tester class
+  * part of the rcp accessor
+  * only for pure e3 at this moment
+  * dependencies are optional so this bundle could be loaded if no GEF is available
+  * !FigureCanvas is the only supported component
+    * tests on figures and editparts on the !FigureCanvas are done by textpath
+    * naming the Figures with an IEditPartIdentifier is therefore very important
+  * Names could be inspected via Inspector (Window->Show View -> Inspector)
+    * only one editpart at a time, means you activate the inspector only for one figure name/hierarchy
+    * name or name with hierarchy could be copied from this view
+ * org.eclipse.jubula.toolkit.gef.provider responsible for CAPS
+   * depends on rcp toolkit
+[[BR]][[BR]]
+
+== Naming EditParts for tests ==
+
+* org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier is responsible for naming the !EditParts
+* to name parts own plugin is necessary which must be deployed in the AUT
+ * a org.eclipse.core.runtime.IAdapterFactory must be implemented
+ * an extension for org.eclipse.core.runtime.adapters must be written see `[1]`
+
+[[BR]][[BR]]
+
+`[1]` example for plugin.xml
+{{{
+<plugin>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+       <factory
+            adaptableType="class.path.to.wanted.editPart"
+            class="class.path.to.own.adapterFactory">
+         <adapter
+               type="org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier">
+         </adapter>
+      </factory>
+   </extension>
+</plugin>
+}}}
+
