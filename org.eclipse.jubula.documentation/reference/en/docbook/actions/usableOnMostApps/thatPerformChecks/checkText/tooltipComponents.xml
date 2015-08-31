@@ -41,6 +41,13 @@
       		on <emphasis>JavaFX</emphasis> only.
       	</para>
       </listitem>
+            <listitem>
+        <para>
+            This action cannot be used for RCP JFace tooltips since components in JFace tooltips have to be addressed directly.
+            To map the components of a JFace tooltip simply collect the component when the tooltip is showing. 
+            Since the tooltip is mostly hiding after mouse movement this can only be done if the object mapping mode is using a key combination.
+        </para>
+      </listitem>
       <listitem>
       	<para>
       		If the tooltip does not appear in the given time, a component not found error is thrown.

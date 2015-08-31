@@ -16,6 +16,14 @@
   	The user hovers the pointer over an item, without clicking it, and a tooltip may appear — a small "hover box" 
   	with information about the item being hovered over.
   </para>
+  
+  <para role="warning">
+    JFace tooltips in the RCP toolkit are handled diffently since the tooltip itself is recognized as a component on its own.
+    To collect the tooltip move the mouse pointer over the component which includes the tooltip and 
+    wait for it to show up then perform the Object Mapping.
+    You will recognize that two or more components will be collected: the component including the tooltip and the tooltip itself.
+    Since the tooltip is mostly hiding after mouse movement this can only be done if the object mapping mode is using a key combination.
+  </para>
   <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
   	<listitem>

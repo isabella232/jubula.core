@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jubula.communication.internal.message.ObjectMappedMessage;
@@ -22,8 +24,10 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,19 +114,35 @@ public class MappingListener extends AbstractAutSwtEventListener {
         if (currComp != null 
             && getAcceptor().accept(event) == KeyAcceptor.MAPPING_KEY_COMB) {
             try {
+                Shell toolshell = getTooltipShell();
+                List<IComponentIdentifier> list = 
+                        new ArrayList<IComponentIdentifier>();
+                if (toolshell != null) {
+                    for (Control control : toolshell.getChildren()) {
+                        try {
+                            list.add(ComponentHandler.getIdentifier(control));
+                        } catch (Exception e) {
+                            // does not really interest in this point
+                            LOG.info("no identifier for: " + control); //$NON-NLS-1$
+                        }
+                    }
+                }
+                
                 IComponentIdentifier id = ComponentHandler.getIdentifier(
                     currComp);
+                list.add(id);
                 Map componentProperties = PropertyUtil
                         .getMapOfComponentProperties(currComp);
-                id.setComponentPropertiesMap(componentProperties);
                 if (LOG.isInfoEnabled()) {
                     LOG.info("send a message with identifier " //$NON-NLS-1$
                             + "for the component '" + id //$NON-NLS-1$ 
                             + "'"); //$NON-NLS-1$
                 }
+                id.setComponentPropertiesMap(componentProperties);
                 // send a message with the identifier of the selected component
                 ObjectMappedMessage message = new ObjectMappedMessage();
-                message.setComponentIdentifier(id);
+                message.setComponentIdentifiers(
+                        list.toArray(new IComponentIdentifier[list.size()]));
                 AUTServer.getInstance().getCommunicator().send(message);
             } catch (NoIdentifierForComponentException nifce) { 
                 
@@ -134,5 +154,24 @@ public class MappingListener extends AbstractAutSwtEventListener {
                 // is handled by the AUTServer
             }
         }
+    }
+
+    /**
+     * This is getting the Tooltip {@link Shell} if it exists. This is not
+     * defintive the Tooltip Shell. We are only looking for a Shell with a
+     * specific Style. It might be that there is also another Shell with these
+     * Styles.
+     * 
+     * @return probably the tooltip shell
+     */
+    private Shell getTooltipShell() {
+        Shell toolshell = null;
+        for (Shell shell : Display.getCurrent().getShells()) {
+            if ((shell.getStyle() & (SWT.ON_TOP | SWT.TOOL | SWT.NO_FOCUS))
+                    == (SWT.ON_TOP | SWT.TOOL | SWT.NO_FOCUS)) {
+                toolshell = shell;
+            }
+        }
+        return toolshell;
     }
 }
