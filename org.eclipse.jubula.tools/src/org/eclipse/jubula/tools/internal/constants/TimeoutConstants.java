@@ -21,6 +21,9 @@ public interface TimeoutConstants {
     /** The default timeout for cap-test-requests in MILLISECONDS! */
     public static final int CLIENT_SERVER_TIMEOUT_DEFAULT_REQUEST = 600000;
     
+    /** timeout for reporting after a job aborting failure( cap test request timeout) */
+    public static final int CLIENT_REPORTING_AFTER_FAILURE_TIMEOUT = 1800000;
+    
     /**
      * <code>CLIENT_SERVER_TIMEOUT_TAKE_SCREENSHOT</code>
      */

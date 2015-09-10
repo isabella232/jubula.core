@@ -238,7 +238,8 @@ public class AUTConnection extends BaseAUTConnection {
             // Connection has failed
             ded.fireAutServerConnectionChanged(ServerState.Disconnected);
             TimeStatus s = new TimeStatus(IStatus.ERROR, Activator.PLUGIN_ID,
-                    responseCommand.getMessage().getErrorMessage());
+                    IStatus.ERROR, responseCommand
+                    .getMessage().getErrorMessage(), null);
             pc.writeStatus(s, autId.encode());
             return s;
         }

@@ -202,6 +202,9 @@ public class ClientTestImpl implements IClientTest {
      * name of the file which is overwriting the default behavior
      */
     private String m_fileName;
+    
+    /** true if the report testresult Job is running */
+    private AtomicBoolean m_isReportRunning = new AtomicBoolean(false);
 
     /**
      * empty default constructor
@@ -927,6 +930,7 @@ public class ClientTestImpl implements IClientTest {
                 return m_jobFamily.equals(family);
             } 
             protected IStatus run(IProgressMonitor monitor) {  
+                m_isReportRunning.set(true);
                 try {
                     monitor.beginTask(Messages.ClientWritingReportToDB,
                             IProgressMonitor.UNKNOWN);
@@ -937,11 +941,13 @@ public class ClientTestImpl implements IClientTest {
                         writeReportToFileSystem(result);
                     }
                     monitor.done();
+                    m_isReportRunning.set(false);
                     return Status.OK_STATUS;
                 } catch (Throwable t) {
                     // this is due that everything that happens in the job
                     // will otherwise not be logged (like memory Exception)
                     log.error(Messages.ClientWritingReportError, t);
+                    m_isReportRunning.set(false);
                     return Status.CANCEL_STATUS;
                 }
             }
@@ -1410,5 +1416,12 @@ public class ClientTestImpl implements IClientTest {
             fireAutAgentStateChanged(new AutAgentEvent(
                     AutAgentEvent.SERVER_CANNOT_CONNECTED));
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isReportingRunning() {
+        return m_isReportRunning.get();
     }
 }

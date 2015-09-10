@@ -76,6 +76,7 @@ import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
@@ -424,6 +425,8 @@ public class ExecutionController implements IAUTServerEventListener,
                         m_job.getNoRunOptMode(), null);
             }
         }
+        waitForReportingToFinish(TimeoutConstants
+                .CLIENT_REPORTING_AFTER_FAILURE_TIMEOUT);
     }
 
     /**
@@ -442,6 +445,8 @@ public class ExecutionController implements IAUTServerEventListener,
                 new Object[] { tjName,
                         executedTestSuites.size()}));
         Iterator<INodePO> tsIterator = m_job.getTestJob().getNodeListIterator();
+        waitForReportingToFinish(TimeoutConstants
+                .CLIENT_REPORTING_AFTER_FAILURE_TIMEOUT);
         while (tsIterator.hasNext()) {
             INodePO testsuite = tsIterator.next();
             if (!executedTestSuites.contains(testsuite)) {
@@ -451,8 +456,23 @@ public class ExecutionController implements IAUTServerEventListener,
                                 testsuite.getName()}));
             }
         }
+
     }
 
+    /**
+     * waits for the reporting job to finish.
+     * @param timeout timeout in milliseconds
+     */
+    private void waitForReportingToFinish(long timeout) {
+        long endtime = System.currentTimeMillis() + timeout;
+        while (ClientTest.instance().isReportingRunning()) {
+            TimeUtil.delay(250);
+            if (endtime - System.currentTimeMillis() < 0) {
+                return;
+            }
+        }
+    }
+    
     /**
      * end processing and notify any waiting CLC service threads
      */

@@ -366,4 +366,9 @@ public interface IClientTest {
      * @param fileName the name of the file
      */
     public void setFileName(String fileName);
+    
+    /**
+     * @return <code>true</code> if report testresults is running
+     */
+    public boolean isReportingRunning();
 }
