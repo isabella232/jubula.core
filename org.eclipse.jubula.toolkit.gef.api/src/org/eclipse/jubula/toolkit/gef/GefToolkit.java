@@ -18,7 +18,7 @@ import org.eclipse.jubula.toolkit.gef.internal.GefToolkitInfo;
  * GEF toolkit information
  * 
  * @noextend This class is not intended to be extended by clients.
- * @since 3.2
+ * @since 4.0
  */
 public class GefToolkit {
     /** Constructor */

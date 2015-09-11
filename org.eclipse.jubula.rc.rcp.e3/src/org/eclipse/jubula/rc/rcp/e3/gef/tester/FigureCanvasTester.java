@@ -27,6 +27,7 @@ import org.eclipse.gef.EditDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.ui.palette.PaletteViewer;
@@ -302,35 +303,91 @@ public class FigureCanvasTester extends WidgetTester {
             String targetTextPath, String targetOperator,
             int count, int button) {
 
-        GraphicalEditPart sourceEditPart =
-            findEditPart(sourceTextPath, sourceOperator);
-        GraphicalEditPart targetEditPart =
-            findEditPart(targetTextPath, targetOperator);
+        IFigure connectionFigure = getConnectionFigure(sourceTextPath,
+                sourceOperator, targetTextPath, targetOperator);
+
+        if (connectionFigure instanceof Connection) {
+            Point midpoint =
+                ((Connection)connectionFigure).getPoints().getMidpoint();
+            connectionFigure.translateToAbsolute(midpoint);
+            getRobot().click(getViewerControl(), null,
+                    ClickOptions.create().setScrollToVisible(false)
+                        .setClickCount(count).setMouseButton(button),
+                    midpoint.x, true, midpoint.y, true);
+        } else {
+            getRobot().click(getViewerControl(),
+                    getBounds(connectionFigure),
+                    ClickOptions.create().setScrollToVisible(false)
+                        .setClickCount(count).setMouseButton(button));
+        }
+
+    }
+
+    /**
+     * Gets the {@link IFigure} from a {@link ConnectionEditPart} if there is
+     * one between the {@link EditPart} given by the source and target path.
+     * 
+     * @param sourceTextPath
+     *            the source path to an {@link EditPart} or its
+     *            {@link ConnectionAnchor}
+     * @param sourceOperator
+     *            the source operator
+     * @param targetTextPath
+     *            the target path to an {@link EditPart} or its
+     *            {@link ConnectionAnchor}
+     * @param targetOperator
+     *            the target operator
+     * @return a {@link I Figure} from the found {@link ConnectionEditPart} or
+     *         {@link StepExecutionException} will occur.
+     */
+    private IFigure getConnectionFigure(String sourceTextPath,
+            String sourceOperator, String targetTextPath,
+            String targetOperator) {
+        ConnectionAnchor sourceConnectionAnchor = findConnectionAnchor(
+                sourceTextPath, sourceOperator);
+        GraphicalEditPart sourceEditPart = getPartWithAnchor(sourceTextPath,
+                sourceOperator, sourceConnectionAnchor != null);
+
+        ConnectionAnchor targetConnectionAnchor = findConnectionAnchor(
+                targetTextPath, targetOperator);
+        GraphicalEditPart targetEditPart = getPartWithAnchor(targetTextPath,
+                targetOperator, targetConnectionAnchor != null);
 
         ConnectionEditPart connectionEditPart = null;
 
         if (sourceEditPart != null) {
             List<?> sourceConnectionList = sourceEditPart
                     .getSourceConnections();
-            ConnectionEditPart [] sourceConnections =
-                sourceConnectionList.toArray(
-                    new ConnectionEditPart[sourceConnectionList.size()]);
-            for (int i = 0; i < sourceConnections.length
-                    && connectionEditPart == null; i++) {
+            ConnectionEditPart[] sourceConnections = sourceConnectionList
+                    .toArray(new ConnectionEditPart[sourceConnectionList
+                                                    .size()]);
+            for (int i = 0; i < sourceConnections.length; i++) {
                 if (sourceConnections[i].getTarget() == targetEditPart) {
-                    connectionEditPart = sourceConnections[i];
+                    ConnectionEditPart connection = checkConnectionWithAnchor(
+                            sourceConnections[i], sourceConnectionAnchor,
+                            targetConnectionAnchor);
+                    if (connection != null) {
+                        connectionEditPart = connection;
+                        break;
+                    }
                 }
             }
         } else if (targetEditPart != null) {
             List<?> targetConnectionList = targetEditPart
                     .getTargetConnections();
-            ConnectionEditPart [] targetConnections =
-                targetConnectionList.toArray(
-                    new ConnectionEditPart[targetConnectionList.size()]);
+            ConnectionEditPart[] targetConnections = targetConnectionList
+                    .toArray(new ConnectionEditPart[targetConnectionList
+                                                    .size()]);
             for (int i = 0; i < targetConnections.length
                     && connectionEditPart == null; i++) {
                 if (targetConnections[i].getSource() == targetEditPart) {
-                    connectionEditPart = targetConnections[i];
+                    ConnectionEditPart connection = checkConnectionWithAnchor(
+                            targetConnections[i],
+                            sourceConnectionAnchor, targetConnectionAnchor);
+                    if (connection != null) {
+                        connectionEditPart = connection;
+                        break;
+                    }
                 }
             }
         } else {
@@ -349,22 +406,7 @@ public class FigureCanvasTester extends WidgetTester {
 
         // Scrolling
         revealEditPart(connectionEditPart);
-
-        if (connectionFigure instanceof Connection) {
-            Point midpoint =
-                ((Connection)connectionFigure).getPoints().getMidpoint();
-            connectionFigure.translateToAbsolute(midpoint);
-            getRobot().click(getViewerControl(), null,
-                    ClickOptions.create().setScrollToVisible(false)
-                        .setClickCount(count).setMouseButton(button),
-                    midpoint.x, true, midpoint.y, true);
-        } else {
-            getRobot().click(getViewerControl(),
-                    getBounds(connectionFigure),
-                    ClickOptions.create().setScrollToVisible(false)
-                        .setClickCount(count).setMouseButton(button));
-        }
-
+        return connectionFigure;
     }
 
     /**
@@ -758,4 +800,111 @@ public class FigureCanvasTester extends WidgetTester {
         }
     }
     
+    /**
+     * Finds and checks if a connection between a source figure and a
+     * target figure exists.
+     *
+     * @param sourceTextPath The path to the source figure.
+     * @param sourceOperator The operator to use for matching the source
+     *                       figure path.
+     * @param targetTextPath The path to the target figure.
+     * @param targetOperator The operator to use for matching the target
+     *                       figure path.
+     * @param exists whether the connection is expected to exist.
+     */
+    public void rcCheckConnectionExists(String sourceTextPath,
+            String sourceOperator, String targetTextPath,
+            String targetOperator, boolean exists) {
+        boolean found = true;
+        try {
+            getConnectionFigure(sourceTextPath,
+                    sourceOperator, targetTextPath, targetOperator);
+        } catch (StepExecutionException see) {
+            found = false;
+        }
+        Verifier.equals(exists, found);
+
+    }
+
+    /**
+     * This is a helper method to find a {@link EditPart} which has an {@link ConnectionAnchor} as last path parameter.
+     * If there is no {@link ConnectionAnchor} 
+     * @param path the complete path including the {@code Anchor} part
+     * @param operator the operator for the search
+     * @param pathWithAnchor if there is an {@link ConnectionAnchor} found for this part
+     * @return the {@link EditPart}
+     */
+    private GraphicalEditPart getPartWithAnchor(String path,
+            String operator, boolean pathWithAnchor) {
+        String[] pathItems = MenuUtilBase.splitPath(path);
+        if (pathWithAnchor) {
+            final String[] editPartPathItems = new String[pathItems.length - 1];
+            System.arraycopy(pathItems, 0, editPartPathItems, 0,
+                    editPartPathItems.length);
+            pathItems = editPartPathItems; // strip of last part because we know
+                                           // it is an anchor
+        }
+        return findEditPart(operator, pathItems);
+    }
+
+    /**
+     * Checks if if the <code>connection</code> is connected to the
+     * <code>sourceConnectionAnchor</code> and
+     * <code>targetConnectionAnchor</code>. I there are no
+     * {@link ConnectionAnchor} given the {@code connection} is returned.
+     *
+     * @param connection
+     *            the {@link ConnectionEditPart} which should be checked if it
+     *            is connected to the {@link ConnectionAnchor}a
+     * @param sourceConnectionAnchor
+     *            the source {@link ConnectionAnchor} which the
+     *            {@link ConnectionEditPart} should be connected to. Could be
+     *            <code>null</code> if there is no {@link ConnectionAnchor} or
+     *            we are only checking if there is any connection between the
+     *            {@link EditPart}
+     * @param targetConnectionAnchor
+     *            the target {@link ConnectionAnchor} which the
+     *            {@link ConnectionEditPart} should be connected to. Could be
+     *            <code>null</code> if there is no {@link ConnectionAnchor} or
+     *            we are only checking if there is any connection between the
+     *            {@link EditPart}
+     * @return <code>null</code> or the <code>connection </code>
+     */
+    private ConnectionEditPart checkConnectionWithAnchor(
+            ConnectionEditPart connection,
+            ConnectionAnchor sourceConnectionAnchor,
+            ConnectionAnchor targetConnectionAnchor) {
+        EditPart source = connection.getSource();
+        EditPart target = connection.getTarget();
+        boolean isSourceCorrect = false;
+        boolean isTargetCorrect = false;
+        if (source instanceof NodeEditPart && sourceConnectionAnchor != null) {
+            NodeEditPart node = (NodeEditPart) source;
+            ConnectionAnchor anchor = node
+                    .getSourceConnectionAnchor(
+                            connection);
+            if (sourceConnectionAnchor == anchor) {
+                isSourceCorrect = true;
+            }
+
+        }
+        if (target instanceof NodeEditPart && targetConnectionAnchor != null) {
+            NodeEditPart node = (NodeEditPart) target;
+            ConnectionAnchor anchor = node
+                    .getTargetConnectionAnchor(
+                            connection);
+            if (targetConnectionAnchor == anchor) {
+                isTargetCorrect = true;
+            }
+        }
+        if (isSourceCorrect && isTargetCorrect
+                || isSourceCorrect && (targetConnectionAnchor == null)
+                || isTargetCorrect && (sourceConnectionAnchor == null)
+                || (targetConnectionAnchor == null)
+                    && (sourceConnectionAnchor == null)) {
+            return connection;
+        }
+        return null;
+        // this is still valid since there are simple connections
+    }
 }
