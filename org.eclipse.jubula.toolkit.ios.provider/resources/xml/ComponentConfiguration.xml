@@ -20,7 +20,7 @@
   <!-- Button -->
   <concreteComponent type="abstract.ios.Button">
     <realizes>guidancer.concrete.Button</realizes>
-    <action name="CompSystem.Swipe" changed="1.00">
+    <action name="CompSystem.Swipe">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction"
              descriptionKey="CompSystem.Direction.descr" >
@@ -49,7 +49,7 @@
     <!-- Textfield -->
   <concreteComponent type="abstract.ios.TextComponent">
     <realizes>guidancer.concrete.TextComponent</realizes>
-    <action name="CompSystem.Swipe" changed="1.00">
+    <action name="CompSystem.Swipe">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction"
              descriptionKey="CompSystem.Direction.descr" >
@@ -78,7 +78,7 @@
   <!-- Label -->
   <concreteComponent type="abstract.ios.TextVerifiable">
     <realizes>guidancer.concrete.Label</realizes>
-    <action name="CompSystem.Swipe" changed="1.00">
+    <action name="CompSystem.Swipe">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction"
              descriptionKey="CompSystem.Direction.descr" >
@@ -127,7 +127,7 @@
   <!-- List -->
   <concreteComponent type="abstract.ios.List">
     <realizes>guidancer.concrete.List</realizes>
-    <action name="CompSystem.Swipe" changed="1.00">
+    <action name="CompSystem.Swipe">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction"
              descriptionKey="CompSystem.Direction.descr" >
@@ -151,7 +151,7 @@
   <!-- Tabbed Control -->
   <concreteComponent type="abstract.ios.TabComponent">
     <realizes>guidancer.concrete.TabbedPane</realizes>
-    <action name="CompSystem.Swipe" changed="1.00">
+    <action name="CompSystem.Swipe">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction"
              descriptionKey="CompSystem.Direction.descr" >
@@ -176,7 +176,7 @@
     <realizes>abstract.ios.TabComponent</realizes>
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITabComponentTester</testerClass>
     <componentClass name="ios.UITabBar" />
-    <action name="CompSystem.CheckBadgeValue" changed="1.0">
+    <action name="CompSystem.CheckBadgeValue">
       <method>rcCheckBadgeValue</method>
       <param name="CompSystem.Text"
              descriptionKey="CompSystem.Text.descr" >
@@ -204,7 +204,7 @@
   <concreteComponent type="abstract.ios.Picker" visible="true">
     <realizes>guidancer.concrete.ComboBox</realizes>
     
-    <action name="CompSystem.Swipe" changed="1.00">
+    <action name="CompSystem.Swipe">
       <method>rcSwipe</method>
       <param name="CompSystem.Direction"
              descriptionKey="CompSystem.Direction.descr" >
@@ -219,7 +219,7 @@
 	  </param>
     </action>
     
-    <action name="CompSystem.VerifyContainsValueInColumn" changed="2.2">
+    <action name="CompSystem.VerifyContainsValueInColumn">
       <method>rcVerifyContainsValue</method>
       <param name="CompSystem.Text"
              descriptionKey="CompSystem.Text.descr" >
@@ -252,7 +252,7 @@
       </param>
     </action>
     
-    <action name="CompSystem.VerifySelectedIndexInColumn" changed="2.2">
+    <action name="CompSystem.VerifySelectedIndexInColumn">
       <method>rcVerifySelectedIndex</method>
       <param name="CompSystem.OneIndex"
              descriptionKey="CompSystem.OneIndex.descr" >
@@ -273,7 +273,7 @@
         <defaultValue>1</defaultValue>
       </param>
     </action>
-    <action name="CompSystem.SelectIndexInColumn" changed="1.3">
+    <action name="CompSystem.SelectIndexInColumn">
       <method>rcSelectIndex</method>
       <param name="CompSystem.OneIndex"
              descriptionKey="CompSystem.OneIndex.descr" >
@@ -285,7 +285,7 @@
       <defaultValue>1</defaultValue>
       </param>
     </action>
-    <action name="CompSystem.SelectValueInColumn" changed="1.20">
+    <action name="CompSystem.SelectValueInColumn">
       <method>rcSelectValue</method>
       <param name="CompSystem.Text"
              descriptionKey="CompSystem.Text.descr" >
@@ -329,7 +329,7 @@
     <realizes>guidancer.concrete.GraphicApplication</realizes>
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UIApplicationTester</testerClass>
     <componentClass name="ios.UIApplication" />
-    <action name="CompSystem.TapViewWithAccessibilityLabel" changed="1.0">
+    <action name="CompSystem.TapViewWithAccessibilityLabel">
       <method>rcTapViewWithAccessibilityLabel</method>
       <param name="CompSystem.Label"
              descriptionKey="CompSystem.Label.descr" >
@@ -338,7 +338,7 @@
     </action>
   </toolkitComponent>
 
-  <toolkitComponent type="ios.UITooltip" visible="false" hasDefaultMapping="true">
+  <toolkitComponent type="ios.UITooltip" visible="false" hasDefaultMapping="true" supported="false">
     <realizes>guidancer.concrete.Tooltip</realizes>
     <testerClass>com.bredexsw.jubula.rc.mobile.ios.impl.UITooltipTester</testerClass>
     <componentClass name="ios.UITooltip" />

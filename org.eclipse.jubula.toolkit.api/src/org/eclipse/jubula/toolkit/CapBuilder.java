@@ -26,6 +26,7 @@ import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
  * Class following builder pattern to create CAP instances
  * 
  * @author BREDEX GmbH
+ * @since 4.0
  */
 public class CapBuilder {
 

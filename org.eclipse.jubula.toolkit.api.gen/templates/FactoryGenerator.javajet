@@ -41,7 +41,7 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
 <%if (toolkitInfoFqName != null) {%>import <%=toolkitInfoFqName%>;<%}%>
 
 /**
- * Factory for creating components from the <%=genInfo.getToolkitName()%> toolkit.
+ * Factory for creating components from the <%=genInfo.getToolkitPackageName()%> toolkit.
  * @noextend This class is not intended to be extended by clients.
  */
 @Generated(value = "<%=fqnGeneratorClassName%>", 
@@ -49,7 +49,7 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
 public final class <%=factoryName%> {
     
     <%if (toolkitInfoName != null) {%>
-    @NonNull private final static ToolkitInfo TOOLKIT_INFORMATION = new <%=toolkitInfoName%>();<%}%>
+    @NonNull private final static ToolkitInfo TOOLKIT_INFORMATION = <%=toolkitInfoName%>Toolkit.createToolkitInformation();<%}%>
 
     private <%=factoryName%>() {
         super();
@@ -61,14 +61,6 @@ public final class <%=factoryName%> {
      */
     @NonNull public static ToolkitInfo getToolkitInformation() {
         return TOOLKIT_INFORMATION;
-    }
-    
-    /** 
-     *  Returns a new instance of toolkit information. Use this method if you want to modify the toolkit by adding tester classes.
-     *  @return a toolkit information
-     */
-    @NonNull public static ToolkitInfo createToolkitInformation() {
-        return new <%=toolkitInfoName%>();
     }<%}%>
 
 <%for (CompInfoForFactoryGen compInfo : compInfoList) {
@@ -82,13 +74,23 @@ public final class <%=factoryName%> {
         hasComponentClass = true;
     }
     String returnType = compInfo.getMostSpecificVisibleSuperTypeName();
-    Boolean hasDefaultMapping = compInfo.hasDefaultMapping();%>
+    Boolean hasDefaultMapping = compInfo.hasDefaultMapping();
+    
+    String sinceC = "";
+    String sinceCVersion = compInfo.getSince();
+    if (sinceCVersion != null) {
+        sinceC = "@since " + sinceCVersion;
+    }%>
     <%if (hasDefaultMapping) {%>
-    /** create a new representative for a {@link <%=componentName%>} component.*/
+    /** create a new representative for a {@link <%=componentName%>} component.
+     * <%=sinceC%>
+     */
     @NonNull public static <%=returnType%> create<%=componentName%> () {
         return new <%=implClassName%>();
     }<%} else {%>
-    /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.*/
+    /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.
+     * <%=sinceC%>
+     */
     @NonNull public static <%=returnType%> create<%=componentName%> (@NonNull ComponentIdentifier<? extends <%=returnType%>> componentIdentifier) {
         Validate.notNull(componentIdentifier);
         return new <%=implClassName%>(componentIdentifier);

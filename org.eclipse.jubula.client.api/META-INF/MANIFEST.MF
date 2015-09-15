@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Client - API
 Bundle-SymbolicName: org.eclipse.jubula.client.api
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 3.2.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
@@ -11,9 +11,9 @@ Require-Bundle: org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  org.apache.commons.codec;bundle-version="[1.3.0,2.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional,
- org.eclipse.jubula.tools;bundle-version="[3.1.0,3.2.0)",
- org.eclipse.jubula.toolkit.api;bundle-version="[3.1.0,3.2.0)",
- org.eclipse.jubula.communication;bundle-version="[3.1.0,3.2.0)"
+ org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.jubula.toolkit.api;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.jubula.communication;bundle-version="[4.0.0,5.0.0)"
 Export-Package: org.eclipse.jubula.client,
  org.eclipse.jubula.client.exceptions,
  org.eclipse.jubula.client.internal;x-friends:="org.eclipse.jubula.client.core",

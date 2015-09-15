@@ -17,7 +17,7 @@
 		<realizes>guidancer.abstract.SwtItem</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.ToolItemTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.ToolItem" />
-		<action name="CompSystem.SelectMenuItem" changed="1.12">
+		<action name="CompSystem.SelectMenuItem">
 			<method>rcSelectContextMenuItem</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -35,14 +35,14 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.SelectMenuItemByIndexpath" changed="1.11">
+		<action name="CompSystem.SelectMenuItemByIndexpath">
 			<method>rcSelectContextMenuItemByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledByTextpath" changed="1.12">
+		<action name="CompSystem.VerifyEnabledByTextpath">
 			<method>rcVerifyContextMenuEnabled</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -69,7 +69,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledByIndexpath" changed="1.14">
+		<action name="CompSystem.VerifyEnabledByIndexpath">
 			<method>rcVerifyContextMenuEnabledByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -85,7 +85,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExistsByTextpath" changed="1.12">
+		<action name="CompSystem.VerifyExistsByTextpath">
 			<method>rcVerifyContextMenuExists</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -112,7 +112,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExistsByIndexpath" changed="1.14">
+		<action name="CompSystem.VerifyExistsByIndexpath">
 			<method>rcVerifyContextMenuExistsByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -128,7 +128,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifySelectedByTextpath" changed="1.12">
+		<action name="CompSystem.VerifySelectedByTextpath">
 			<method>rcVerifyContextMenuSelected</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -155,7 +155,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifySelectedByIndexpath" changed="1.14">
+		<action name="CompSystem.VerifySelectedByIndexpath">
 			<method>rcVerifyContextMenuSelectedByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -213,7 +213,7 @@
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.MenuDefaultMapping" />
-	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.ToolTip" visible="false" hasDefaultMapping="true">        <realizes>guidancer.concrete.Tooltip</realizes>        <testerClass>org.eclipse.jubula.rc.swt.tester.TooltipTester</testerClass>        <componentClass name="org.eclipse.swt.widgets.ToolTip" />    </toolkitComponent>
+	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.ToolTip" visible="false" hasDefaultMapping="true" supported="false">        <realizes>guidancer.concrete.Tooltip</realizes>        <testerClass>org.eclipse.jubula.rc.swt.tester.TooltipTester</testerClass>        <componentClass name="org.eclipse.swt.widgets.ToolTip" />    </toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Combo" visible="false">
 		<realizes>guidancer.abstract.SwtCombo</realizes>
@@ -255,7 +255,7 @@
 		<realizes>guidancer.concrete.Tree</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
-		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" changed="4.1">
+		<action name="CompSystem.VerifyCheckboxOfSelectedEntry">
 			<method>rcVerifySelectedCheckbox</method>
 			<param name="CompSystem.Checked"
                    descriptionKey="CompSystem.Checked.descr" >
@@ -267,7 +267,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.ToggleCheckboxByTextpath" changed="4.1">
+		<action name="CompSystem.ToggleCheckboxByTextpath">
 			<method>rcToggleCheckbox</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -299,7 +299,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.ToggleCheckboxByIndexpath" changed="4.1">
+		<action name="CompSystem.ToggleCheckboxByIndexpath">
 			<method>rcToggleCheckboxByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -320,7 +320,7 @@
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyCheckboxOfNodeByTextpath" changed="4.1">
+		<action name="CompSystem.VerifyCheckboxOfNodeByTextpath">
 			<method>rcVerifyCheckbox</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -361,7 +361,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyCheckboxOfNodeByIndexpath" changed="4.1">
+		<action name="CompSystem.VerifyCheckboxOfNodeByIndexpath">
 			<method>rcVerifyCheckboxByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -390,14 +390,14 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-		</action>        <action name="CompSystem.CheckPropertyAtMousePosition" changed="8.1.8">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>  
+		</action>        <action name="CompSystem.CheckPropertyAtMousePosition">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>  
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
 		<realizes>org.eclipse.swt.widgets.Tree</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
-		<action name="CompSystem.SelectByTextPathAtColumn" changed="1.22">
+		<action name="CompSystem.SelectByTextPathAtColumn">
 			<method>rcSelect</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -449,7 +449,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.SelectByIndexPathAtColumn" changed="1.22">
+		<action name="CompSystem.SelectByIndexPathAtColumn">
 			<method>rcSelectByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -490,7 +490,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifySelectedValueAtColumn" changed="1.24">
+		<action name="CompSystem.VerifySelectedValueAtColumn">
 			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >

@@ -23,6 +23,7 @@ import org.eclipse.jubula.toolkit.base.components.GraphicsComponent;
 import org.eclipse.jubula.toolkit.concrete.components.ButtonComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.javafx.JavafxComponents;
+import org.eclipse.jubula.toolkit.javafx.JavafxToolkit;
 import org.eclipse.jubula.toolkit.javafx.config.JavaFXAUTConfiguration;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.ComponentIdentifier;
@@ -82,7 +83,7 @@ public class PieCharTest {
 
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {
-            ToolkitInfo toolkitInformation = JavafxComponents
+            ToolkitInfo toolkitInformation = JavafxToolkit
                     .createToolkitInformation();
             
             m_pcc = new PieChartComponents(toolkitInformation);

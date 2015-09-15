@@ -26,7 +26,7 @@
 		<testerClass>org.eclipse.jubula.ext.rc.swing.tester.JSliderTester</testerClass>
 		<componentClass name="javax.swing.JSlider" />
 	<!-- <action> tag defines the action name, method and parameter -->
-		<action name="CompSystem.VerifyLabelsExists" changed="2.0.0">
+		<action name="CompSystem.VerifyLabelsExists">
 			<!-- <method> tag defines the methodname in the java class -->
 			<method>rcVerifyLabelsExists</method>
 			<!-- <param> tag defines the parameter, name is name of the Parameters -->
@@ -49,7 +49,7 @@
 			component -->
 		<extends>javax.swing.text.JTextComponent</extends>
 		<testerClass>org.eclipse.jubula.ext.rc.swing.tester.JTextComponentExtensionTester</testerClass>
-		<action name="CompSystem.VerifyTooltipText" changed="1.0.0">
+		<action name="CompSystem.VerifyTooltipText">
 			<method>rcVerifyToolTip</method>
 			<param name="CompSystem.Text">
 				<type>java.lang.String</type>

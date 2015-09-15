@@ -62,9 +62,12 @@ public class Action {
      */
     private boolean m_clientAction = false;
     
-    /** The version number of the last change of this action */
-    private String m_changed;
-
+    /**
+     * The version of the bundle (important for semantic versions) that's
+     * initially been present for that new component
+     */
+    private String m_since;
+    
     /** Default constructor. Do nothing. */
     public Action() {
         super();
@@ -194,22 +197,6 @@ public class Action {
         m_method = method;
     }
     
-    
-    /**
-     * @return The version number of the last change of this action
-     */
-    public Float getChanged() {
-        return new Float(m_changed);
-    }
-
-    /**
-     * Sets the changed status
-     * @param changed the status to set
-     */
-    public void setChanged(String changed) {
-        m_changed = changed;
-    }
-
     /**
      * @return whether this Action is deprecated or not
      */
@@ -277,5 +264,19 @@ public class Action {
      */
     public void setDescriptionKey(String descriptionKey) {
         m_descriptionKey = descriptionKey;
+    }
+
+    /**
+     * @return the since
+     */
+    public String getSince() {
+        return m_since;
+    }
+
+    /**
+     * @param since the since to set
+     */
+    public void setSince(String since) {
+        m_since = since;
     }
 }

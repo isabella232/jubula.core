@@ -91,12 +91,6 @@ public abstract class Component {
     private boolean m_deprecated = false;
     
     /**
-     * The version number of the last change of this component
-     * could be null because optional
-     */
-    private String m_changed;
-
-    /**
      * <code>m_visible</code> property indicating whether this
      * Component shall be usable within the client UI
      */
@@ -116,6 +110,12 @@ public abstract class Component {
      * Component is observable
      */
     private boolean m_observable = true;
+    
+    /**
+     * The version of the bundle (important for semantic versions) that's
+     * initially been present for that new component
+     */
+    private String m_since;
 
     /** Default constructor. Do nothing. */
     public Component() {
@@ -477,18 +477,6 @@ public abstract class Component {
     public void setDeprecated(boolean deprecated) {
         m_deprecated = deprecated;
     }
-    /**
-     * @return the version of last change or null
-     */
-    public String getChanged() {
-        return m_changed;
-    }
-    /**
-     * @param changed the changed to set
-     */
-    public void setChanged(String changed) {
-        m_changed = changed;
-    }
     
     /**
      * @param visible the visible to set
@@ -577,5 +565,17 @@ public abstract class Component {
      */
     public void setDescriptionKey(String descriptionKey) {
         m_descriptionKey = descriptionKey;
+    }
+    /**
+     * @return the since
+     */
+    public String getSince() {
+        return m_since;
+    }
+    /**
+     * @param since the since to set
+     */
+    public void setSince(String since) {
+        m_since = since;
     }
 }

@@ -19,7 +19,7 @@
 		<realizes>guidancer.abstract.Widget</realizes>
 		<testerClass>org.eclipse.jubula.ext.rc.swt.tester.GroupTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Group" />
-        <action name="CompSystem.VerifyText" changed="1.11">
+        <action name="CompSystem.VerifyText">
           <method>rcVerifyText</method>
           <param name="CompSystem.Text">
             <type>java.lang.String</type>

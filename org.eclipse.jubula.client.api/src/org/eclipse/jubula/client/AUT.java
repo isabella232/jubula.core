@@ -63,6 +63,7 @@ public interface AUT extends Remote {
      * 
      * @throws IllegalStateException
      *             in case of e.g. being called when not connected to an AUT
+     * @since 3.2
      */
     @Nullable BufferedImage getScreenshot() throws IllegalStateException;
 }

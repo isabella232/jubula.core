@@ -222,7 +222,7 @@ public class NameLoader {
      * @param toolkitDesriptor toolkit descriptor
      * @return the toolkit name
      */
-    public String getToolkitName(ToolkitDescriptor toolkitDesriptor) {
+    public String getToolkitPackageName(ToolkitDescriptor toolkitDesriptor) {
         return toolkitDesriptor.getName().toLowerCase();
     }
     
@@ -236,13 +236,21 @@ public class NameLoader {
     }
 
     /**
+     * Returns the toolkit name
+     * @param toolkitName the toolkit name
+     * @return the name for a toolkit
+     */
+    public String getToolkitName(String toolkitName) {
+        return WordUtils.capitalize(toolkitName);
+    }
+    
+    /**
      * Returns the name for a component factory for a toolkit
      * @param toolkitName the toolkit name
      * @return the name for a component factory for a toolkit
      */
     public String getFactoryName(String toolkitName) {
-        String tkName = WordUtils.capitalize(toolkitName);
-        return tkName + FACTORY_NAME_EXTENSION;
+        return getToolkitName(toolkitName) + FACTORY_NAME_EXTENSION;
     }
     
     /**
@@ -251,8 +259,7 @@ public class NameLoader {
      * @return the name for a component factory for a toolkit
      */
     public String getToolkitComponentClassName(String toolkitName) {
-        String tkName = WordUtils.capitalize(toolkitName);
-        return tkName + TOOLKITINFO_NAME_EXTENSION;
+        return getToolkitName(toolkitName) + TOOLKITINFO_NAME_EXTENSION;
     }
     
     /**

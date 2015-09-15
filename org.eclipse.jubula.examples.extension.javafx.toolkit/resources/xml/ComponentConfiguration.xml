@@ -19,7 +19,7 @@
 		<realizes>guidancer.abstract.Widget</realizes>
 		<testerClass>org.eclipse.jubula.ext.rc.javafx.tester.PieChartTester</testerClass>
 		<componentClass name="javafx.scene.chart.PieChart" />
-        <action name="CompSystem.VerifyNrItems" changed="2.0.0">
+        <action name="CompSystem.VerifyNrItems">
           <method>rcVerifyNrItems</method>
           <param name="CompSystem.Number">
             <type>java.lang.Integer</type>

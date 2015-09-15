@@ -208,7 +208,7 @@
 		<testerClass>com.bredexsw.guidancer.rc.win.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.rc.dotnet.components.controltype.Menu" />
 	</toolkitComponent>
-	<toolkitComponent type="org.eclipse.jubula.rc.dotnet.components.controltype.Tooltip" visible="false" hasDefaultMapping="true">
+	<toolkitComponent type="org.eclipse.jubula.rc.dotnet.components.controltype.Tooltip" visible="false" hasDefaultMapping="true" supported="false">
         <realizes>guidancer.concrete.Tooltip</realizes>
         <testerClass>com.bredexsw.guidancer.rc.win.tester.TooltipTester</testerClass>
         <componentClass name="org.eclipse.jubula.rc.dotnet.components.controltype.Tooltip" />

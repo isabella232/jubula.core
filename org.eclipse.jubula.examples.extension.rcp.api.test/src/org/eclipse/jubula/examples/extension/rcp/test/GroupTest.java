@@ -23,6 +23,7 @@ import org.eclipse.jubula.toolkit.concrete.components.MenuBarComponent;
 import org.eclipse.jubula.toolkit.enums.ValueSets.Operator;
 import org.eclipse.jubula.toolkit.rcp.config.RCPAUTConfiguration;
 import org.eclipse.jubula.toolkit.swt.SwtComponents;
+import org.eclipse.jubula.toolkit.swt.SwtToolkit;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 import org.junit.After;
@@ -66,7 +67,7 @@ public class GroupTest {
 
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {
-            ToolkitInfo toolkitInformation = SwtComponents
+            ToolkitInfo toolkitInformation = SwtToolkit
                     .createToolkitInformation();
             
             m_gc = new GroupComponents(toolkitInformation);

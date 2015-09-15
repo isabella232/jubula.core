@@ -20,6 +20,7 @@ import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
 import org.eclipse.jubula.toolkit.api.gen.FactoryGenerator;
 import org.eclipse.jubula.toolkit.api.gen.ToolkitInfoGenerator;
@@ -119,7 +120,7 @@ public class APIGenerator {
             tookitGenInfo = new ToolkitGenInfo();
             toolkitNeedsInfoClass = false;
             List<ComponentInfo> compInfos = processor.getCompInfos(
-                    tkInfo.getType(), tkInfo.getShortType(), false);
+                    tkInfo.getType(), tkInfo.getShortType());
             for (ComponentInfo compInfo : compInfos) {
                 compNameMap.clear();
                 Component component = compInfo.getComponent();
@@ -141,7 +142,7 @@ public class APIGenerator {
                         new CommonGenInfo(toolkitDesriptor, true);
                 createToolkitInfo(genInfoForToolkit, generationBaseDir);
                 factoryGenInfo.setToolkitInfoName(
-                        genInfoForToolkit.getClassName(),
+                        genInfoForToolkit.getToolkitName(),
                         genInfoForToolkit.getFqClassName());
             }
             createFactory(genInfoForFactory, generationBaseDir);
@@ -213,7 +214,7 @@ public class APIGenerator {
             String generationBaseDirTemplate, Boolean generateInterface) {
         CommonGenInfo genInfo = new CommonGenInfo(component);
         ComponentGenInfo compInfo = new ComponentGenInfo(component,
-                generateInterface, genInfo.getToolkitName(),
+                generateInterface, genInfo.getToolkitPackageName(),
                 genInfo.getClassName(), compNameMap);
         genInfo.setSpecificInformation(compInfo);
         String path = StringConstants.EMPTY;
@@ -225,7 +226,7 @@ public class APIGenerator {
         String className = genInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
-                new Object[] {genInfo.getToolkitName()});
+                new Object[] {genInfo.getToolkitPackageName()});
         File dir = new File(generationBaseDir + path);
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
         String content = classGenerator.generate(genInfo);
@@ -250,12 +251,18 @@ public class APIGenerator {
             if (!compInfo.hasDefaultMapping()
                     || (componentClass != null 
                         && !componentClass.getName().isEmpty())) {
-                factoryGenInfo.addCompInformation(new CompInfoForFactoryGen(
+                CompInfoForFactoryGen compInfoForFactory = 
+                    new CompInfoForFactoryGen(
                         genInfo.getClassName(),
                         genInfo.getFqClassName(),
                         componentClass,
                         compInfo.hasDefaultMapping(),
-                        compInfo.getMostSpecificVisibleSuperTypeName()));
+                        compInfo.getMostSpecificVisibleSuperTypeName());
+                String sinceC = component.getSince();
+                if (StringUtils.isNotBlank(sinceC)) {
+                    compInfoForFactory.setSince(sinceC);
+                }
+                factoryGenInfo.addCompInformation(compInfoForFactory);
             }
             
             tookitGenInfo.addCompInformation(new CompInfoForToolkitGen(
@@ -275,7 +282,7 @@ public class APIGenerator {
         String className = tkGenInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
-                new Object[] {tkGenInfo.getToolkitName()});
+                new Object[] {tkGenInfo.getToolkitPackageName()});
         File dir = new File(generationBaseDir + path);
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
         String content = factoryGenerator.generate(tkGenInfo);
@@ -295,7 +302,7 @@ public class APIGenerator {
         String className = tkGenInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
                 generationBaseDirTemplate,
-                new Object[] {tkGenInfo.getToolkitName()});
+                new Object[] {tkGenInfo.getToolkitPackageName()});
         File dir = new File(generationBaseDir + path);
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
         String content = toolkitInfoGenerator.generate(tkGenInfo);

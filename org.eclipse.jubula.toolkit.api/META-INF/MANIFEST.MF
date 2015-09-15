@@ -2,16 +2,16 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Toolkit - API
 Bundle-SymbolicName: org.eclipse.jubula.toolkit.api
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.toolkit,
  org.eclipse.jubula.toolkit.enums,
- org.eclipse.jubula.toolkit.internal,
- org.eclipse.jubula.toolkit.internal.annotations
+ org.eclipse.jubula.toolkit.internal;x-internal:=true,
+ org.eclipse.jubula.toolkit.internal.annotations;x-internal:=true
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
- org.eclipse.jubula.tools;bundle-version="[3.1.0,3.2.0)",
- org.eclipse.jubula.communication;bundle-version="[3.1.0,3.2.0)",
+ org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
+ org.eclipse.jubula.communication;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional

@@ -30,6 +30,7 @@ public interface ToolkitInfo {
      * @param testerClassName fully qualified name of the tester class
      * @return previously registered tester class for the component class
      *         or <code>null</code> if there was none
+     * @since 4.0
      */
     @Nullable public String registerTesterClass(
             @NonNull String componentClassName,
@@ -40,6 +41,7 @@ public interface ToolkitInfo {
      * @param componentClassName fully qualified name of the component class
      * @return previously registered tester class for the component class
      *         or <code>null</code> if there was none
+     * @since 4.0
      */
     @Nullable public String deregisterTesterClass(
             @NonNull String componentClassName);
@@ -49,6 +51,7 @@ public interface ToolkitInfo {
      * 
      * @param otherToolkit
      *            the other toolkit to merge into this
+     * @since 4.0
      */
     public void merge(@NonNull ToolkitInfo otherToolkit);
 }

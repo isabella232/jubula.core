@@ -40,6 +40,11 @@ public class ConcreteComponent extends Component {
      */
     private boolean m_hasDefaultMapping;
 
+    /**
+     * information whether this component is actually supported within the toolkit
+     */
+    private boolean m_isSupported = true;
+    
     /** @return Returns the testerClass. */
     public String getTesterClass() {
         return m_testerClass;
@@ -129,5 +134,19 @@ public class ConcreteComponent extends Component {
         } else {
             compClassList.add(componentClass);
         }
+    }
+
+    /**
+     * @return the isSupported
+     */
+    public boolean isSupported() {
+        return m_isSupported;
+    }
+
+    /**
+     * @param isSupported the isSupported to set
+     */
+    public void setSupported(boolean isSupported) {
+        m_isSupported = isSupported;
     }
 }

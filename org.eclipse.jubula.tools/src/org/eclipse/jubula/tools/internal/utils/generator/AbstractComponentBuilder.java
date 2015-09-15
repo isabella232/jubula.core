@@ -86,7 +86,7 @@ public class AbstractComponentBuilder {
         if (m_compSystem == null) {
             m_compSystem = compSystem;
         } else {
-            m_compSystem.merge(compSystem);            
+            m_compSystem.merge(compSystem);
         }
     }
     

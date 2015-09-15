@@ -206,7 +206,7 @@
 		<componentClass name="html.forms.Anchor">
             <property name="selector" value="a" />
         </componentClass>
-		<action name="html.VerifyURL" changed="1.0">
+		<action name="html.VerifyURL">
 			<method>rcVerifyURL</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -247,20 +247,20 @@
     <toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" visible="true" hasDefaultMapping="true">
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlApplicationImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.WebBrowser" />
-		<action name="html.BrowserGotoAction" changed="1.0">
+		<action name="html.BrowserGotoAction">
 			<method>rcGotoUrl</method>
 			<param name="html.BrowserGotoUrl"
                    descriptionKey="html.BrowserGotoUrl.descr" >
 				<type>java.lang.String</type>
 			</param>		
 		</action>
-		<action name="html.BrowserBackAction" changed="1.0">
+		<action name="html.BrowserBackAction">
 			<method>rcBack</method>
 		</action>
-		<action name="html.BrowserReloadAction" changed="1.0">
+		<action name="html.BrowserReloadAction">
 			<method>rcReload</method>	
 		</action>
-        <action name="html.BrowserSelectWindow" changed="1.0">
+        <action name="html.BrowserSelectWindow">
             <method>rcSelectWindowByIdentifier</method>
             <param name="html.BrowserIdentifier"
                    descriptionKey="html.BrowserIdentifier.descr" >
@@ -276,7 +276,7 @@
                 </valueSet>
             </param>         
         </action>
-        <action name="html.BrowserSelectWindowWithTitle" changed="1.0">
+        <action name="html.BrowserSelectWindowWithTitle">
             <method>rcSelectWindow</method>
             <param name="html.BrowserTitle"
                    descriptionKey="html.BrowserTitle.descr" >
@@ -295,12 +295,12 @@
             </param>        
         </action>
 	</toolkitComponent>
-	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false" hasDefaultMapping="true">
+	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" visible="false" hasDefaultMapping="true" supported="false">
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.HtmlMenuBarImplClass</testerClass>
 		<componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.MenuBar" />
 	</toolkitComponent>
-	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.Tooltip" visible="false" hasDefaultMapping="true">
+	<toolkitComponent type="com.bredexsw.guidancer.webautserver.web.implclasses.Tooltip" visible="false" hasDefaultMapping="true" supported="false">
         <realizes>guidancer.concrete.Tooltip</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.TooltipImplClass</testerClass>
         <componentClass name="com.bredexsw.guidancer.webautserver.web.implclasses.Tooltip" />
@@ -330,7 +330,7 @@
 	<toolkitComponent type="html.generic.Locator" visible="true" hasDefaultMapping="true">
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.LocatorImplClass</testerClass>
 		<componentClass name="html.generic.Locator" />
-        <action name="html.checkXpathCount" changed="1.0">
+        <action name="html.checkXpathCount">
             <method>rcCheckXPathCount</method>
             <param name="html.locator.xpath"
                    descriptionKey="html.locator.xpath.descr" >
@@ -353,7 +353,7 @@
                 <type>java.lang.Integer</type>
             </param>        
         </action>
-        <action name="html.checkCssPathCount" changed="1.0">
+        <action name="html.checkCssPathCount">
             <method>rcCheckCSSPathCount</method>
             <param name="html.locator.css"
                    descriptionKey="html.locator.css.descr" >
@@ -376,7 +376,7 @@
                 <type>java.lang.Integer</type>
             </param>        
         </action>
-		<action name="CompSystem.VerifyText" changed="1.11">
+		<action name="CompSystem.VerifyText">
 			<method>rcCheckText</method>
             <param name="html.locator"
                    descriptionKey="html.locator.descr" >
@@ -398,14 +398,14 @@
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.Click" changed="1.26">
+		<action name="CompSystem.Click">
 			<method>rcClick</method>
             <param name="html.locator"
                    descriptionKey="html.locator.descr" >
                 <type>java.lang.String</type>
             </param>
 		</action>
-		<action name="CompSystem.WaitForComponent" changed="1.18">
+		<action name="CompSystem.WaitForComponent">
 			<method>rcWaitForComponent</method>
             <param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -427,7 +427,7 @@
 	<toolkitComponent type="html.alert" visible="true" hasDefaultMapping="true">
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.AlertImplClass</testerClass>
 		<componentClass name="html.alert" />
-		<action name="CompSystem.VerifyText" changed="1.11">
+		<action name="CompSystem.VerifyText">
 			<method>rcCheckText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -445,7 +445,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExists" changed="1.23">
+		<action name="CompSystem.VerifyExists">
 			<method>rcVerifyExists</method>
 			<param name="CompSystem.IsExisting"
                    descriptionKey="CompSystem.IsExisting.descr" >
@@ -457,14 +457,14 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.InputTextDirect" changed="1.3">
+		<action name="CompSystem.InputTextDirect">
 			<method>rcInputText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.alert.interact" changed="1.23">
+		<action name="CompSystem.alert.interact">
 			<method>rcInteract</method>
 			<param name="CompSystem.alert.interact.type"
                    descriptionKey="CompSystem.alert.interact.type.descr" >
@@ -476,7 +476,7 @@
 				</valueSet>
 			</param>
 		</action>
-        <action name="CompSystem.alert.close" changed="1.23">
+        <action name="CompSystem.alert.close">
             <method>rcCloseDialog</method>
         </action>
 	</toolkitComponent>
