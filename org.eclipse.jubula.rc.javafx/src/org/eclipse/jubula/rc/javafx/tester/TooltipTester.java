@@ -10,20 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Control;
-import javafx.scene.control.Tooltip;
-import javafx.stage.Stage;
-
 import org.eclipse.jubula.rc.common.tester.AbstractTooltipTester;
-import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+
+import javafx.scene.control.Tooltip;
+import javafx.stage.Window;
 
 
 
@@ -40,36 +34,15 @@ public class TooltipTester extends AbstractTooltipTester {
 
         return EventThreadQueuerJavaFXImpl.invokeAndWait("getTooltipText", //$NON-NLS-1$
                 new Callable<String>() {
-                    private List<Tooltip> m_tooltips =
-                            new ArrayList<Tooltip>();
-            
                     public String call() {
-                        Stage focusStage = CurrentStages.getfocusStage();
-                        if (focusStage != null) {            
-                            final Scene scene = focusStage.getScene();
-                            if (scene != null) {
-                                Parent root = scene.getRoot();
-                                searchTooltips(root);
+                        Iterator<Window> iter = Window.impl_getWindows();
+                        while (iter.hasNext()) {
+                            Window window = iter.next();
+                            if (window instanceof Tooltip) {
+                                return ((Tooltip)window).getText();
                             }
                         }
-                        return m_tooltips.size() == 1
-                                    ? m_tooltips.get(0).getText() : null;
-                    }
-                    
-                    private void searchTooltips(Parent n) {
-                        for (Node child : n.getChildrenUnmodifiable()) {
-                            if (child instanceof Control) {
-                                Tooltip tooltip =
-                                        ((Control)child).getTooltip();
-                                if (tooltip != null
-                                        && tooltip.isShowing()) {
-                                    m_tooltips.add(tooltip);
-                                }
-                            }
-                            if (child instanceof Parent) {
-                                searchTooltips((Parent)child);
-                            }
-                        }
+                        return null;
                     }
                 }
         );
