@@ -436,7 +436,11 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
     /** {@inheritDoc} */
     public void handlePropertyChanged(boolean isCompNameChanged) {
-        getMainTreeViewer().refresh();
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getMainTreeViewer().refresh();
+            }
+        });
     }
 
     /** {@inheritDoc} */

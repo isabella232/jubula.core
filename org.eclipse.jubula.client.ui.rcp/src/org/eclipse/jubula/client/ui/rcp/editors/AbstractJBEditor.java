@@ -338,7 +338,11 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     public void handlePropertyChanged(boolean isCompNameChanged) {
         createPartName();
-        getTreeViewer().refresh();
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getTreeViewer().refresh();
+            }
+        });
     }
     
 
@@ -682,6 +686,10 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      * Refreshes the editors viewer
      */
     public void refresh() {
-        getTreeViewer().refresh(true);
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getTreeViewer().refresh(true);
+            }
+        });
     }
 }
