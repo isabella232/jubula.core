@@ -1,0 +1,101 @@
+<!-- 
+  Copyright (c) 2015 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionCheckTextTableComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                           xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                           xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Check Text in Tree Tables</title>
+  
+  <para><emphasis>Check Text (Mouse Position)</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check the text in a cell based on the current position of the cursor.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This can be used in conjunction with the action "select cell" with a click count of 0.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+  <para><emphasis>Check Text (Specify Cell)</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether the text in a cell matches a given value.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify the text you want to check and the row and column values for the cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="text" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="text_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="row_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>

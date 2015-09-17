@@ -14,5 +14,7 @@
   
   <xi:include href="thatExecuteBehavior/content.xml"/>
   <xi:include href="thatPerformChecks/content.xml"/>
+  <xi:include href="forStoringValues/content.xml"/>
+  <xi:include href="forStoringProperties/content.xml"/>
   
 </section>
