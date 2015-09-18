@@ -643,8 +643,11 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
 
                         @Override
                         public Rectangle call() throws Exception {
-                            node.getParent().requestLayout();
-                            node.getParent().layout();
+                            Parent parent = node.getParent();
+                            if (parent != null) {
+                                parent.requestLayout();
+                                parent.layout();
+                            }
                             return NodeBounds.getAbsoluteBounds(node);
                         }
                     });
