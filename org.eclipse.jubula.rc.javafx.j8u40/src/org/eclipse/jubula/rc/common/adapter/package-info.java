@@ -8,4 +8,4 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.ext.rc.common.adapter;
+package org.eclipse.jubula.rc.common.adapter;

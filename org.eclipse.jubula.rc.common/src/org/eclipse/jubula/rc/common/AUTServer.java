@@ -21,7 +21,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -546,20 +546,26 @@ public abstract class AUTServer {
         }
         String path = AdapterFactoryRegistry.EXT_ADAPTER_PACKAGE_NAME.replace(
                 '.', '/');
-        Enumeration<URL> extensionsFactories = null;
+        List<URL> extensionsFactories = null;
         try {
-            extensionsFactories = 
-                    this.getClass().getClassLoader().getResources(path);
+            extensionsFactories = Collections.list(this.getClass()
+                    .getClassLoader().getResources(path));
+            path = AdapterFactoryRegistry.ADAPTER_PACKAGE_NAME
+                    .replace('.', '/');
+            extensionsFactories.addAll(Collections.list(this.getClass()
+                    .getClassLoader().getResources(path)));
+            
         } catch (IOException e) {
             log.error("Loading classloader resources failed: " + e); //$NON-NLS-1$
         }
-        while (extensionsFactories != null
-                && extensionsFactories.hasMoreElements()) {
-            URL url = extensionsFactories.nextElement();
+        for (URL url : extensionsFactories) {
             try {
                 List<Class> classes = ClassPathHacker.findClassesInJar(url,
                         AdapterFactoryRegistry.EXT_ADAPTER_PACKAGE_NAME,
                         this.getClass().getClassLoader());
+                classes.addAll(ClassPathHacker.findClassesInJar(url,
+                        AdapterFactoryRegistry.ADAPTER_PACKAGE_NAME,
+                        this.getClass().getClassLoader()));
                 for (Class<?> c : classes) {
                     if (IAdapterFactory.class.isAssignableFrom(c)) {
                         IAdapterFactory fac = (IAdapterFactory) c.newInstance();

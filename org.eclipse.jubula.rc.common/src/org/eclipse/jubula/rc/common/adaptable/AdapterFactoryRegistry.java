@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -81,7 +82,7 @@ public class AdapterFactoryRegistry {
             Collection<IAdapterFactory> registeredFactories = m_registrationMap
                     .get(supportedClasses[i]);
             if (registeredFactories == null) {
-                registeredFactories = new ArrayList<IAdapterFactory>();
+                registeredFactories = new HashSet<IAdapterFactory>();
             }
             registeredFactories.add(factory);
             m_registrationMap.put(supportedClasses[i], registeredFactories);

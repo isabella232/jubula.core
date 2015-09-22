@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jubula.ext.rc.common.adapter;
+package org.eclipse.jubula.rc.common.adapter;
 
 import javafx.scene.control.ButtonBar;
 
