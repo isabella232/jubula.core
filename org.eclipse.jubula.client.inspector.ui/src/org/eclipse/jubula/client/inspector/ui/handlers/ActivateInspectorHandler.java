@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.inspector.ui.handlers;
 
+import java.util.List;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -21,6 +23,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.inspector.ui.commands.ActivateInspectorResponseCommand;
 import org.eclipse.jubula.client.inspector.ui.i18n.Messages;
+import org.eclipse.jubula.client.inspector.ui.provider.sourceprovider.InspectableAutSourceProvider;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -43,17 +46,43 @@ public class ActivateInspectorHandler extends AbstractHandler {
     public static final String AUT_ID = 
         "org.eclipse.jubula.client.inspector.ui.commands.parameter.activateInspector.autId"; //$NON-NLS-1$
 
+    /** last inspected AUT */
+    private static AutIdentifier lastAut = null;
+    
     /**
-     * 
      * {@inheritDoc}
      */
-    public Object execute(ExecutionEvent event) throws ExecutionException {
-        final AutIdentifier autId = 
-            (AutIdentifier)event.getObjectParameterForExecution(AUT_ID);
+    public Object execute(final ExecutionEvent event) {
         final String jobName = Messages.UIJobActivateInspector;
         Job activateInspectorJob = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);
+                AutIdentifier autId = null;
+                try {            
+                    autId = (AutIdentifier)event
+                                .getObjectParameterForExecution(AUT_ID);
+                    lastAut = autId;
+                } catch (ExecutionException e) {
+                    InspectableAutSourceProvider iasp =
+                            new InspectableAutSourceProvider();
+                    Object inspectableAUTs = iasp.getCurrentState().get(
+                            InspectableAutSourceProvider.INSPECTABLE_AUTS);
+                    if (inspectableAUTs != null
+                            && inspectableAUTs instanceof List) {
+                        List auts = (List)inspectableAUTs;
+                        if (auts.size() == 1) {
+                            Object object = auts.get(0);
+                            autId = object instanceof AutIdentifier 
+                                ? (AutIdentifier)object : null;
+                            lastAut = autId;
+                        } else if (lastAut != null && auts.contains(lastAut)) {
+                            autId = lastAut;
+                        }
+                    }
+                }
+                if (autId == null) {
+                    return Status.CANCEL_STATUS;
+                }
                 ActivateInspectorMessage message = 
                     new ActivateInspectorMessage();
                 try {
