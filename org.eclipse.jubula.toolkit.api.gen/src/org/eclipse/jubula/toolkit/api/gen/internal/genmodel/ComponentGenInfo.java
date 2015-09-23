@@ -156,7 +156,7 @@ public class ComponentGenInfo {
         }
         CommonGenInfo visibleSuperType = new CommonGenInfo(tmp);
         ComponentGenInfo specificInformation = new ComponentGenInfo(tmp, true,
-                visibleSuperType.getToolkitName(),
+                visibleSuperType.getToolkitPackageName(),
                 visibleSuperType.getClassName(), null);
         return specificInformation.getFqInterfaceName();
     }

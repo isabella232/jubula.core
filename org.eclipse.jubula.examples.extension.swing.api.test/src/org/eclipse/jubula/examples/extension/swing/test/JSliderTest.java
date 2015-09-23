@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
 import org.eclipse.jubula.examples.extension.swing.JSliderComponents;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
-import org.eclipse.jubula.toolkit.swing.SwingComponents;
+import org.eclipse.jubula.toolkit.swing.SwingToolkit;
 import org.eclipse.jubula.toolkit.swing.config.SwingAUTConfiguration;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.ComponentIdentifier;
@@ -65,7 +65,7 @@ public class JSliderTest {
 
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {
-            ToolkitInfo toolkitInformation = SwingComponents
+            ToolkitInfo toolkitInformation = SwingToolkit
                     .createToolkitInformation();
             
             m_jsc = new JSliderComponents(toolkitInformation);

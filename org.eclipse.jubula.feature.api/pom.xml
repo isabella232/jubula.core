@@ -10,6 +10,7 @@
 		<relativePath>../org.eclipse.jubula.releng.client</relativePath>
 	</parent>
 	<artifactId>org.eclipse.jubula.feature.api</artifactId>
+    <version>4.0.0-SNAPSHOT</version>
 	<packaging>eclipse-feature</packaging>
 	<build>
 		<plugins>

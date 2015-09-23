@@ -25,6 +25,9 @@ public class CompInfoForFactoryGen {
 
     /** the componentClass */
     private ComponentClass m_componentClass;
+
+    /** semantic version information */
+    private String m_since;
     
     /**
      * Contains all necessary information of a component for factory generation
@@ -88,5 +91,19 @@ public class CompInfoForFactoryGen {
      */
     public void setComponentClass(ComponentClass componentClass) {
         m_componentClass = componentClass;
+    }
+
+    /**
+     * @return the since
+     */
+    public String getSince() {
+        return m_since;
+    }
+
+    /**
+     * @param since the since to set
+     */
+    public void setSince(String since) {
+        m_since = since;
     }
 }

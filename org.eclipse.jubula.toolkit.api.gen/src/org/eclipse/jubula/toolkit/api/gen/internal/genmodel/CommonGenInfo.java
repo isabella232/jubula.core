@@ -21,13 +21,16 @@ public class CommonGenInfo {
     private String m_classDirectoryPath;
 
     /** the toolkit name */
-    private String m_toolkitName;
+    private String m_toolkitPackageName;
 
     /** the toolkit id */
     private String m_toolkitID;
     
     /** generation dependent information */
     private Object m_specificInformation;
+
+    /** the toolkit name */
+    private String m_toolkitName;
     
     /**
      * Contains all necessary information for API generation of a component
@@ -37,9 +40,11 @@ public class CommonGenInfo {
     public CommonGenInfo(Component component) {
         NameLoader nameLoader = NameLoader.getInstance();
         ToolkitDescriptor toolkitDesriptor = component.getToolkitDesriptor();
-        m_toolkitName = nameLoader.getToolkitName(toolkitDesriptor);
+        m_toolkitPackageName = nameLoader
+                .getToolkitPackageName(toolkitDesriptor);
         m_className = nameLoader.getClassName(component.getType());
-        m_classPackageName = nameLoader.getClassPackageName(m_toolkitName);
+        m_classPackageName = nameLoader
+                .getClassPackageName(m_toolkitPackageName);
         m_toolkitID = toolkitDesriptor.getToolkitID();
         
         // Use package name as directory path name, replace "." by "/"
@@ -50,37 +55,43 @@ public class CommonGenInfo {
         m_classPackageName = nameLoader.executeExceptions(m_classPackageName);
         m_classDirectoryPath = nameLoader.executeExceptions(
                 m_classDirectoryPath);
-        m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
+        m_toolkitPackageName = nameLoader
+                .executeExceptions(m_toolkitPackageName);
     }
     
     /**
      * Contains all necessary information for API generation of a component
      * Supposed to be used for toolkit info or factory generation
-     * @param tkDescriptor the toolkit descriptor
-     * @param genToolkitInfo whether generation info is for creating toolkit information
+     * 
+     * @param tkDescriptor
+     *            the toolkit descriptor
+     * @param genToolkitInfo
+     *            whether generation info is for creating toolkit information
      */
     public CommonGenInfo(ToolkitDescriptor tkDescriptor,
             boolean genToolkitInfo) {
         NameLoader nameLoader = NameLoader.getInstance();
-        m_toolkitName = nameLoader.getToolkitName(tkDescriptor);
+        m_toolkitPackageName = nameLoader.getToolkitPackageName(tkDescriptor);
+        setToolkitName(nameLoader.getToolkitName(m_toolkitPackageName));
         if (genToolkitInfo) {
-            m_className = nameLoader.getToolkitComponentClassName(
-                    m_toolkitName);
+            m_className = nameLoader
+                    .getToolkitComponentClassName(m_toolkitPackageName);
         } else {
-            m_className = nameLoader.getFactoryName(m_toolkitName);
+            m_className = nameLoader.getFactoryName(m_toolkitPackageName);
         }
-        m_classPackageName = nameLoader.getToolkitPackageName(m_toolkitName,
-                genToolkitInfo);
+        m_classPackageName = nameLoader
+                .getToolkitPackageName(m_toolkitPackageName, genToolkitInfo);
         m_toolkitID = tkDescriptor.getToolkitID();
-        
-        m_classDirectoryPath = m_classPackageName
-                .replace(StringConstants.DOT, StringConstants.SLASH);
-        
+
+        m_classDirectoryPath = m_classPackageName.replace(StringConstants.DOT,
+                StringConstants.SLASH);
+
         // Check for exceptions in naming
         m_classPackageName = nameLoader.executeExceptions(m_classPackageName);
-        m_classDirectoryPath = nameLoader.executeExceptions(
-                m_classDirectoryPath);
-        m_toolkitName = nameLoader.executeExceptions(m_toolkitName);
+        m_classDirectoryPath = nameLoader
+                .executeExceptions(m_classDirectoryPath);
+        m_toolkitPackageName = nameLoader
+                .executeExceptions(m_toolkitPackageName);
     }
     
     /**
@@ -112,8 +123,8 @@ public class CommonGenInfo {
      * Returns the toolkit name
      * @return the toolkit name
      */
-    public String getToolkitName() {
-        return m_toolkitName;
+    public String getToolkitPackageName() {
+        return m_toolkitPackageName;
     }
     
     /**
@@ -146,5 +157,19 @@ public class CommonGenInfo {
      */
     public void setSpecificInformation(Object specificInformation) {
         m_specificInformation = specificInformation;
+    }
+
+    /**
+     * @return the toolkitName
+     */
+    public String getToolkitName() {
+        return m_toolkitName;
+    }
+
+    /**
+     * @param toolkitName the toolkitName to set
+     */
+    private void setToolkitName(String toolkitName) {
+        m_toolkitName = toolkitName;
     }
 }

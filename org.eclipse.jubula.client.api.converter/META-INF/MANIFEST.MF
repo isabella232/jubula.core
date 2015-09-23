@@ -4,7 +4,7 @@ Bundle-Name: Jubula API - Converter
 Bundle-SymbolicName: org.eclipse.jubula.client.api.converter
 Bundle-Version: 3.1.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Require-Bundle: org.eclipse.jubula.tools;bundle-version="[3.1.0,3.2.0)",
+Require-Bundle: org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",

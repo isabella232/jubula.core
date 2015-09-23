@@ -42,7 +42,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Property;
 
 /**
- * Contains information about the <%=genInfo.getToolkitName()%> toolkit and its components
+ * Contains information about the <%=genInfo.getToolkitPackageName()%> toolkit and its components
  */
 @Generated(value = "<%=fqnGeneratorClassName%>", 
            date =  "<%=GenerateUtil.getISO8601Timestamp()%>")

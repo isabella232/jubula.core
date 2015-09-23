@@ -52,14 +52,9 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:attribute>
-			<xs:attribute name="changed" use="required" />
-			<xs:attribute name="deprecated">
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:enumeration value="true" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
+			<xs:attribute name="changed" use="optional" />
+			<xs:attribute name="deprecated" default="false" type="xs:boolean" />
+            <xs:attribute name="since" use="optional" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
 

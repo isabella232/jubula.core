@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.AbstractTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
+import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
@@ -33,6 +34,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ParamValueSet;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.FilteredTree;
@@ -50,7 +52,6 @@ public class ToolkitOverView extends ViewPart {
         /** {@inheritDoc} */
         public String getText(Object element) {
             final StringHelper sh = StringHelper.getInstance();
-            
             if (element instanceof ToolkitDescriptor) {
                 ToolkitDescriptor toolkitDescriptor = 
                     (ToolkitDescriptor) element;
@@ -66,7 +67,6 @@ public class ToolkitOverView extends ViewPart {
                     }
                 }
                 return sb.toString();
-                
             } else if (element instanceof Component) {
                 Component component = (Component) element;
                 StringBuilder sb = new StringBuilder(sh.get(
@@ -77,14 +77,16 @@ public class ToolkitOverView extends ViewPart {
                     final String componentClass = 
                         concreteComponent.getComponentClass().getName();
                     if (!StringUtils.isBlank(componentClass)) {
-                        sb.append(" - "); //$NON-NLS-1$
-                        sb.append(componentClass);
+                        sb.append(" - ").append(componentClass); //$NON-NLS-1$
                     }
                 }
-
                 String description = component.getDescriptionKey();
                 if (description != null) {
                     sb.append(" (" + CompSystemI18n.getString(description) + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+                }
+                final String since = component.getSince();
+                if (!StringUtils.isBlank(since)) {
+                    sb.append(" @since ").append(since); //$NON-NLS-1$
                 }
                 return sb.toString();
             } else if (element instanceof Action) {
@@ -148,6 +150,18 @@ public class ToolkitOverView extends ViewPart {
                 return IconConstants.UP_ARROW_DIS_IMAGE;
             }
             return null;
+        }
+        
+        @Override
+        public Color getForeground(Object element) {
+            if (element instanceof ConcreteComponent) {
+                ConcreteComponent concreteComponent = 
+                    (ConcreteComponent) element;
+                if (!concreteComponent.isSupported()) {
+                    return LayoutUtil.GRAY_COLOR;
+                }
+            }
+            return super.getForeground(element);
         }
     }
 

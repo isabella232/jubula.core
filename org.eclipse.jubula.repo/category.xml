@@ -9,16 +9,16 @@
    <feature url="features/org.eclipse.jubula.feature.launch.rcp_3.1.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="3.1.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api_3.1.0.qualifier.jar" id="org.eclipse.jubula.feature.api" version="3.1.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api" version="4.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api.source_3.1.0.qualifier.jar" id="org.eclipse.jubula.feature.api.source" version="3.1.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api.source_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.source" version="4.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api.core_3.1.0.qualifier.jar" id="org.eclipse.jubula.feature.api.core" version="3.1.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api.core_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.core" version="4.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api.core.source_3.1.0.qualifier.jar" id="org.eclipse.jubula.feature.api.core.source" version="3.1.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api.core.source_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.core.source" version="4.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
    <feature url="features/org.eclipse.jubula.feature.api.converter_3.1.0.qualifier.jar" id="org.eclipse.jubula.feature.api.converter" version="3.1.0.qualifier">

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="jubula-latest" sequenceNumber="0">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.jubula.feature.api.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jubula.feature.api.core.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jubula.feature.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jubula.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jubula.feature.api.core.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jubula.feature.rc.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jubula.feature.api.source.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/jubula/release/mars"/>
+</location>
+</locations>
+</target>

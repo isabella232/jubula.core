@@ -24,7 +24,7 @@ Object specInfo = genInfo.getSpecificInformation();
 String fqnGeneratorClassName = this.getClass().getName();
 if (specInfo instanceof ComponentGenInfo) {
     ComponentGenInfo compGenInfo = (ComponentGenInfo) specInfo;
-    String toolkitName = genInfo.getToolkitName();
+    String toolkitName = genInfo.getToolkitPackageName();
     String className = genInfo.getClassName();
     Component component = compGenInfo.getComponent();
     Boolean genInterface = compGenInfo.generatesInterface();
@@ -35,10 +35,10 @@ if (specInfo instanceof ComponentGenInfo) {
         packageName = compGenInfo.getInterfacePackageName();
         compNameMap.put("interfacePackageName", packageName);
         compNameMap.put("componentTypeName", className);
-      compNameMap.put("hasDefaultMapping", hasDefaultMapping.toString());
+        compNameMap.put("hasDefaultMapping", hasDefaultMapping.toString());
         CommonGenInfo faketory =
                     new CommonGenInfo(component.getToolkitDesriptor(), false);
-      compNameMap.put("factoryName", faketory.getFqClassName());
+        compNameMap.put("factoryName", faketory.getFqClassName());
     } else {
         packageName = genInfo.getClassPackageName();
         compNameMap.put("implClassPackageName", packageName);
@@ -60,7 +60,7 @@ if (specInfo instanceof ComponentGenInfo) {
         superActions = realizedComponent.getActions();
         if (genInterface) {
             ComponentGenInfo superCompGenInfo = new ComponentGenInfo(
-                realizedComponent, true, superInfo.getToolkitName(),
+                realizedComponent, true, superInfo.getToolkitPackageName(),
                 superInfo.getClassName(), null);
             realizedTypeFqn = superCompGenInfo.getFqInterfaceName();
             compNameMap.put("superComp", realizedComponent.getType());
@@ -78,6 +78,11 @@ if (specInfo instanceof ComponentGenInfo) {
         if (!componentClassName.isEmpty()) {
             hasComponentClass = true;
         }
+    }
+    String sinceC = "";
+    String sinceCVersion = component.getSince();
+    if (sinceCVersion != null && !sinceCVersion.isEmpty()) {
+        sinceC = "@since " + sinceCVersion;
     }
     %>
 /*******************************************************************************
@@ -117,6 +122,7 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
 <%}%>
+ * <%=sinceC%>
  */
 <%if (!genInterface) {%>
 <%if (realizedType != null && !realizedType.isEmpty()) {%>
@@ -181,6 +187,12 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
     Iterator<Action> actionsIterator = actions.iterator();
     while (actionsIterator.hasNext()) {    
         Action action = actionsIterator.next();
+        
+        String sinceA = "";
+        String sinceAVersion = action.getSince();
+        if (sinceAVersion != null && !sinceAVersion.isEmpty()) {
+            sinceA = "@since " + sinceAVersion;
+        }
         if (action.isITEInvolved()) {
             continue;
         }
@@ -216,6 +228,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
        <%
          }
          %>* @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
+         * <%=sinceA%>
          */<%}%>
         <%if (action.isDeprecated()) {%>@Deprecated<%}%>
         @NonNull public CAP <%=methodName%>(

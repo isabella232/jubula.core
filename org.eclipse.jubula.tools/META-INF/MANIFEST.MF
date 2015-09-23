@@ -1,30 +1,30 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Tools
-Bundle-SymbolicName: org.eclipse.jubula.tools;singleton:=true
-Bundle-Version: 3.1.0.qualifier
+Bundle-SymbolicName: org.eclipse.jubula.tools
+Bundle-Version: 4.0.0.qualifier
 Bundle-ClassPath: .,
  lib/com.thoughtworks.xstream-1.3.1.v201111240924.jar,
  lib/org.xmlpull-1.1.3.4_v201201052148.jar
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
-Export-Package: com.thoughtworks.xstream,
- com.thoughtworks.xstream.converters,
- com.thoughtworks.xstream.io,
+Export-Package: com.thoughtworks.xstream;x-internal:=true,
+ com.thoughtworks.xstream.converters;x-internal:=true,
+ com.thoughtworks.xstream.io;x-internal:=true,
  org.eclipse.jubula.tools,
- org.eclipse.jubula.tools.internal.constants,
- org.eclipse.jubula.tools.internal.exception,
- org.eclipse.jubula.tools.internal.i18n,
- org.eclipse.jubula.tools.internal.jarutils,
- org.eclipse.jubula.tools.internal.messagehandling,
- org.eclipse.jubula.tools.internal.objects,
- org.eclipse.jubula.tools.internal.objects.event,
- org.eclipse.jubula.tools.internal.registration,
- org.eclipse.jubula.tools.internal.serialisation,
- org.eclipse.jubula.tools.internal.utils,
- org.eclipse.jubula.tools.internal.utils.generator,
- org.eclipse.jubula.tools.internal.xml.businessmodell,
- org.eclipse.jubula.tools.internal.xml.businessprocess
+ org.eclipse.jubula.tools.internal.constants;x-internal:=true,
+ org.eclipse.jubula.tools.internal.exception;x-internal:=true,
+ org.eclipse.jubula.tools.internal.i18n;x-internal:=true,
+ org.eclipse.jubula.tools.internal.jarutils;x-internal:=true,
+ org.eclipse.jubula.tools.internal.messagehandling;x-internal:=true,
+ org.eclipse.jubula.tools.internal.objects;x-internal:=true,
+ org.eclipse.jubula.tools.internal.objects.event;x-internal:=true,
+ org.eclipse.jubula.tools.internal.registration;x-internal:=true,
+ org.eclipse.jubula.tools.internal.serialisation;x-internal:=true,
+ org.eclipse.jubula.tools.internal.utils;x-internal:=true,
+ org.eclipse.jubula.tools.internal.utils.generator;x-internal:=true,
+ org.eclipse.jubula.tools.internal.xml.businessmodell;x-internal:=true,
+ org.eclipse.jubula.tools.internal.xml.businessprocess;x-internal:=true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)"

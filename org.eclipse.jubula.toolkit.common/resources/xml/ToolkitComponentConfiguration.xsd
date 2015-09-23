@@ -35,38 +35,13 @@
 			</xs:sequence>
 			<xs:attribute name="type" use="required" type="xs:ID" />
 			<xs:attribute name="descriptionKey" use="optional" type="xs:string" />
-			<xs:attribute name="visible" default="true">
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:enumeration value="true" />
-						<xs:enumeration value="false" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-			<xs:attribute name="hasDefaultMapping" default="false">
-                <xs:simpleType>
-                    <xs:restriction base="xs:token">
-                        <xs:enumeration value="true"/>
-                        <xs:enumeration value="false"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:attribute>
-			<xs:attribute name="observable" default="true">
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:enumeration value="true" />
-						<xs:enumeration value="false" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-			<xs:attribute name="changed" />
-			<xs:attribute name="deprecated">
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:enumeration value="true" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
+			<xs:attribute name="visible" default="true" type="xs:boolean" />
+			<xs:attribute name="hasDefaultMapping" default="false" type="xs:boolean" />
+			<xs:attribute name="observable" default="true" type="xs:boolean" />
+			<xs:attribute name="changed" use="optional"/>
+			<xs:attribute name="deprecated" default="false" type="xs:boolean" />
+            <xs:attribute name="since" use="optional" type="xs:string" />
+            <xs:attribute name="supported" default="true" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="abstractComponent">
@@ -78,22 +53,10 @@
 			</xs:sequence>
 			<xs:attribute name="type" use="required" type="xs:ID" />
 			<xs:attribute name="descriptionKey" use="optional" type="xs:string" />
-			<xs:attribute name="visible" default="true">
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:enumeration value="true" />
-						<xs:enumeration value="false" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
-			<xs:attribute name="changed" />
-			<xs:attribute name="deprecated">
-				<xs:simpleType>
-					<xs:restriction base="xs:token">
-						<xs:enumeration value="true" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:attribute>
+			<xs:attribute name="visible" default="true" type="xs:boolean" />
+			<xs:attribute name="changed" use="optional"/>
+			<xs:attribute name="deprecated" default="false" type="xs:boolean" />
+            <xs:attribute name="since" use="optional" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="testerClass" type="xs:string" />
@@ -120,29 +83,10 @@
             </xs:sequence>
 	      <xs:attribute name="type" use="required" type="xs:ID"/>
 	      <xs:attribute name="descriptionKey" use="optional" type="xs:string" />
-	      <xs:attribute name="visible" default="true">
-	        <xs:simpleType>
-	          <xs:restriction base="xs:token">
-	            <xs:enumeration value="true"/>
-	            <xs:enumeration value="false"/>
-	          </xs:restriction>
-	        </xs:simpleType>
-	      </xs:attribute>
-	      <xs:attribute name="hasDefaultMapping" default="false">
-	        <xs:simpleType>
-	          <xs:restriction base="xs:token">
-	            <xs:enumeration value="true"/>
-	            <xs:enumeration value="false"/>
-	          </xs:restriction>
-	        </xs:simpleType>
-	      </xs:attribute>
-	      <xs:attribute name="changed"/>
-	      <xs:attribute name="deprecated">
-	        <xs:simpleType>
-	          <xs:restriction base="xs:token">
-	            <xs:enumeration value="true"/>
-	          </xs:restriction>
-	        </xs:simpleType>
-	      </xs:attribute>
+	      <xs:attribute name="visible" default="true" type="xs:boolean" />
+	      <xs:attribute name="hasDefaultMapping" default="false" type="xs:boolean" />
+	      <xs:attribute name="changed" use="optional"/>
+	      <xs:attribute name="deprecated" default="false" type="xs:boolean" />
+          <xs:attribute name="since" use="optional" type="xs:string" />
 	    </xs:complexType>
     </xs:element></xs:schema>

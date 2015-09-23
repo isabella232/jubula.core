@@ -15,7 +15,7 @@
 	</configVersion>
 	
 	<abstractComponent type="guidancer.abstract.Widget">
-		<action name="CompSystem.ShowText" changed="1.36">
+		<action name="CompSystem.ShowText">
 			<method>rcShowText</method>
 			<param name="CompSystem.Text"
 			       descriptionKey="CompSystem.Text.descr">
@@ -37,7 +37,7 @@
 				<defaultValue>250</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExists" changed="1.23">
+		<action name="CompSystem.VerifyExists">
 			<method>rcVerifyExists</method>
 			<param name="CompSystem.IsExisting"
                    descriptionKey="CompSystem.IsExisting.descr" >
@@ -49,7 +49,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabled" changed="1.3">
+		<action name="CompSystem.VerifyEnabled">
 			<method>rcVerifyEnabled</method>
 			<param name="CompSystem.IsEnabled"
                    descriptionKey="CompSystem.IsEnabled.descr" >
@@ -61,7 +61,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyProperty" changed="1.3">
+		<action name="CompSystem.VerifyProperty">
 			<method>rcVerifyProperty</method>
 			<param name="CompSystem.PropertyName"
                    descriptionKey="CompSystem.PropertyName.descr" >
@@ -82,10 +82,10 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
-		</action>		<action name="CompSystem.StorePropertyValue" changed="1.3">			<method>rcStorePropertyValue</method>			<param name="CompSystem.Variable"
+		</action>		<action name="CompSystem.StorePropertyValue">			<method>rcStorePropertyValue</method>			<param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName"
                    descriptionKey="CompSystem.PropertyName.descr" >				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
-		<action name="CompSystem.VerifyFocus" changed="1.3">
+		<action name="CompSystem.VerifyFocus">
 			<method>rcVerifyFocus</method>
 			<param name="CompSystem.HasFocus"
                    descriptionKey="CompSystem.HasFocus.descr" >
@@ -97,7 +97,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.WaitForComponent" changed="1.18">
+		<action name="CompSystem.WaitForComponent">
 			<method>rcWaitForComponent</method>
 			<param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -110,7 +110,7 @@
 				<defaultValue>200</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.Click" changed="1.26">
+		<action name="CompSystem.Click">
 			<method>rcClick</method>
 			<param name="CompSystem.ClickCount"
                    descriptionKey="CompSystem.ClickCount.descr" >
@@ -128,7 +128,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.ClickDirect" changed="1.4">
+		<action name="CompSystem.ClickDirect">
 			<method>rcClickDirect</method>
 			<param name="CompSystem.ClickCount"
                    descriptionKey="CompSystem.ClickCount.descr" >
@@ -174,7 +174,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupSelectByTextPathPositionNew" changed="2.1">
+		<action name="CompSystem.PopupSelectByTextPathPositionNew">
 			<method>rcPopupSelectByTextPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -230,7 +230,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupSelectByIndexPathNew" changed="2.1">
+		<action name="CompSystem.PopupSelectByIndexPathNew">
 			<method>rcPopupSelectByIndexPath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -247,7 +247,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupSelectByTextPathNew" changed="2.1">
+		<action name="CompSystem.PopupSelectByTextPathNew">
 			<method>rcPopupSelectByTextPath</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -275,7 +275,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupSelectByIndexPathPositionNew" changed="2.1">
+		<action name="CompSystem.PopupSelectByIndexPathPositionNew">
 			<method>rcPopupSelectByIndexPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -320,7 +320,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByIndexpath" changed="2.1">
+		<action name="CompSystem.PopupVerifyEnabledByIndexpath">
 			<method>rcPopupVerifyEnabledByIndexPath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -346,7 +346,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByIndexpathPosition" changed="2.1">
+		<action name="CompSystem.PopupVerifyEnabledByIndexpathPosition">
 			<method>rcPopupVerifyEnabledByIndexPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -400,7 +400,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByTextpath" changed="2.1">
+		<action name="CompSystem.PopupVerifyEnabledByTextpath">
 			<method>rcPopupVerifyEnabledByTextPath</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -437,7 +437,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByTextpathPosition" changed="2.1">
+		<action name="CompSystem.PopupVerifyEnabledByTextpathPosition">
 			<method>rcPopupVerifyEnabledByTextPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -502,7 +502,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByIndexpath" changed="2.1">
+		<action name="CompSystem.PopupVerifyExistsByIndexpath">
 			<method>rcPopupVerifyExistsByIndexPath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -528,7 +528,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByIndexpathPosition" changed="2.1">
+		<action name="CompSystem.PopupVerifyExistsByIndexpathPosition">
 			<method>rcPopupVerifyExistsByIndexPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -582,7 +582,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByTextpath" changed="2.1">
+		<action name="CompSystem.PopupVerifyExistsByTextpath">
 			<method>rcPopupVerifyExistsByTextPath</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -619,7 +619,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByTextpathPosition" changed="2.1">
+		<action name="CompSystem.PopupVerifyExistsByTextpathPosition">
 			<method>rcPopupVerifyExistsByTextPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -684,7 +684,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByIndexpath" changed="2.1">
+		<action name="CompSystem.PopupVerifySelectedByIndexpath">
 			<method>rcPopupVerifySelectedByIndexPath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -710,7 +710,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByIndexpathPosition" changed="2.1">
+		<action name="CompSystem.PopupVerifySelectedByIndexpathPosition">
 			<method>rcPopupVerifySelectedByIndexPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -764,7 +764,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByTextpath" changed="2.1">
+		<action name="CompSystem.PopupVerifySelectedByTextpath">
 			<method>rcPopupVerifySelectedByTextPath</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -801,7 +801,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByTextpathPosition" changed="2.1">
+		<action name="CompSystem.PopupVerifySelectedByTextpathPosition">
 			<method>rcPopupVerifySelectedByTextPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -867,7 +867,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.Drag" changed="2.0">
+		<action name="CompSystem.Drag">
 			<method>rcDrag</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -923,7 +923,7 @@
 			</param>			
 		</action>
 		
-		<action name="CompSystem.Drop" changed="2.0">
+		<action name="CompSystem.Drop">
 			<method>rcDrop</method>
 						<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -963,7 +963,7 @@
 	
 	<abstractComponent type="guidancer.abstract.TextInputSupport">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
-		<action name="CompSystem.VerifyEditable" changed="1.26">
+		<action name="CompSystem.VerifyEditable">
 			<method>rcVerifyEditable</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -975,14 +975,14 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.InputText" changed="1.3">
+		<action name="CompSystem.InputText">
 			<method>rcReplaceText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.InputTextDirect" changed="1.3">
+		<action name="CompSystem.InputTextDirect">
 			<method>rcInputText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -993,7 +993,7 @@
 	
 	<abstractComponent type="guidancer.abstract.TextVerifiable">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<action name="CompSystem.VerifyText" changed="1.11">
+		<action name="CompSystem.VerifyText">
 			<method>rcVerifyText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1011,7 +1011,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.ReadValue" changed="1.3">
+		<action name="CompSystem.ReadValue">
 			<method>rcReadValue</method>
 			<param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -1023,7 +1023,7 @@
 	
 	<abstractComponent type="guidancer.abstract.ButtonComp">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
-		<action name="CompSystem.VerifySelected" changed="1.26">
+		<action name="CompSystem.VerifySelected">
 			<method>rcVerifySelected</method>
 			<param name="CompSystem.IsSelected"
                    descriptionKey="CompSystem.IsSelected.descr" >

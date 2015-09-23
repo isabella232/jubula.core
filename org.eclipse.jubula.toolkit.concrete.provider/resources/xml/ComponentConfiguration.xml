@@ -15,7 +15,7 @@
 	</configVersion>
 	
 	<concreteComponent type="guidancer.concrete.GraphicApplication" hasDefaultMapping="true" descriptionKey="guidancer.concrete.GraphicApplication.descr">
-		<action name="CompSystem.ClickInActiveWindow" changed="1.27" descriptionKey="CompSystem.ClickInActiveWindow.descr">			<method>rcClickDirect</method>
+		<action name="CompSystem.ClickInActiveWindow" descriptionKey="CompSystem.ClickInActiveWindow.descr">			<method>rcClickDirect</method>
 			<param name="CompSystem.ClickCount"
                    descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
@@ -60,7 +60,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.Activate" changed="1.3">
+		<action name="CompSystem.Activate">
 			<method>rcActivate</method>
 			<param name="CompSystem.ActivationMethod"
                    descriptionKey="CompSystem.ActivationMethod.descr" >
@@ -78,7 +78,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.InputTextDirect" changed="1.25">
+		<action name="CompSystem.InputTextDirect">
 			<method>rcInputText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -86,7 +86,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.KeyStroke" changed="1.17">
+		<action name="CompSystem.KeyStroke">
 			<method>rcKeyStroke</method>
 			<param name="CompSystem.ModifierSpecification"
                    descriptionKey="CompSystem.ModifierSpecification.descr" >
@@ -108,7 +108,7 @@
 			</param>
 		</action>
 
-		<action name="CompSystem.KeyToogle" changed="1.3">
+		<action name="CompSystem.KeyToogle">
 			<method>rcToggle</method>
 			<param name="CompSystem.ToogleKey"
                    descriptionKey="CompSystem.ToogleKey.descr" >
@@ -131,17 +131,17 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.Wait" changed="1.3">
+		<action name="CompSystem.Wait">
 			<method>rcWait</method>
 			<param name="CompSystem.TimeMillSec"
                    descriptionKey="CompSystem.TimeMillSec.descr" >
 				<type>java.lang.Integer</type>
 			</param>
 		</action>
-		<action name="CompSystem.Pause" changed="1.3">
+		<action name="CompSystem.Pause">
 			<method>rcPause</method>
 		</action>
-		<action name="CompSystem.WaitForWindow" changed="1.11">
+		<action name="CompSystem.WaitForWindow">
 			<method>rcWaitForWindow</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -170,7 +170,7 @@
 			</param>
 		</action>
 				
-		<action name="CompSystem.WaitForWindowActivation" changed="1.16">
+		<action name="CompSystem.WaitForWindowActivation">
 			<method>rcWaitForWindowActivation</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -199,7 +199,7 @@
 			</param>
 		</action>
 
-		<action name="CompSystem.WaitForWindowToClose" changed="1.21">
+		<action name="CompSystem.WaitForWindowToClose">
 			<method>rcWaitForWindowToClose</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -228,13 +228,13 @@
 			</param>
 		</action>
 
-		<action name="CompSystem.Restart" changed="1.3" clientAction="true">
+		<action name="CompSystem.Restart" clientAction="true">
 			<method>rcRestart</method>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$RestartCmd</postExecutionCommand>
 		</action>
-		<action name="CompSystem.PrepareForShutdown" changed="2.0" clientAction="true">			<method>rcPrepareForShutdown</method>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PrepareForShutdownCmd</postExecutionCommand>		</action>		<action name="CompSystem.SyncShutdownAndRestart" changed="2.0" clientAction="true">			<method>rcSyncShutdownAndRestart</method>			<param name="CompSystem.Timeout"
+		<action name="CompSystem.PrepareForShutdown" clientAction="true">			<method>rcPrepareForShutdown</method>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PrepareForShutdownCmd</postExecutionCommand>		</action>		<action name="CompSystem.SyncShutdownAndRestart" clientAction="true">			<method>rcSyncShutdownAndRestart</method>			<param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >				<type>java.lang.Integer</type>				<defaultValue>10000</defaultValue>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$SyncShutdownAndRestartCmd</postExecutionCommand>		</action>
-		<action name="CompSystem.TakeScreenshot" changed="1.15">
+		<action name="CompSystem.TakeScreenshot">
 			<method>rcTakeScreenshot</method>
 			<param name="CompSystem.Destination"
                    descriptionKey="CompSystem.Destination.descr" >
@@ -270,7 +270,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.ExecuteCommand" changed="1.38">
+		<action name="CompSystem.ExecuteCommand">
 			<method>rcExecuteExternalCommand</method>
 			<param name="CompSystem.Command"
                    descriptionKey="CompSystem.Command.descr" >
@@ -298,7 +298,7 @@
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$CommandExecutorCmd</postExecutionCommand>	
 		</action>
 
-		<action name="CompSystem.NativeKeyStroke" changed="1.39">
+		<action name="CompSystem.NativeKeyStroke">
 			<method>rcNativeKeyStroke</method>
 			<param name="CompSystem.ModifierSpecification"
                    descriptionKey="CompSystem.ModifierSpecification.descr" >
@@ -320,14 +320,14 @@
 			</param>
 		</action>
 
-		<action name="CompSystem.NativeInputText" changed="1.39">
+		<action name="CompSystem.NativeInputText">
 			<method>rcNativeInputText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.ReadValue" changed="4.0">
+		<action name="CompSystem.ReadValue">
 			<method>rcSetValue</method>
 			<param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -339,14 +339,14 @@
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
-		<action name="CompSystem.CopyToClipboard" changed="4.1">
+		<action name="CompSystem.CopyToClipboard">
 			<method>rcCopyToClipboard</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.StartTimer" changed="4.2">
+		<action name="CompSystem.StartTimer">
             <method>rcStartTimer</method>
             <param name="CompSystem.TimerName"
                    descriptionKey="CompSystem.TimerName.descr" >
@@ -358,7 +358,7 @@
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$StartTimerCmd</postExecutionCommand>
         </action>
-        <action name="CompSystem.ReadTimer" changed="4.2">
+        <action name="CompSystem.ReadTimer">
             <method>rcReadTimer</method>
             <param name="CompSystem.TimerName"
                    descriptionKey="CompSystem.TimerName.descr" >
@@ -370,7 +370,7 @@
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$ReadTimerCmd</postExecutionCommand>
         </action>
-        <action name="CompSystem.CheckValues" changed="4.2">
+        <action name="CompSystem.CheckValues">
             <method>rcCheckValues</method>
             <param name="CompSystem.Value1"
                    descriptionKey="CompSystem.Value1.descr" >
@@ -393,7 +393,7 @@
                 <type>java.lang.String</type>
             </param>
         </action>
-        <action name="CompSystem.TakeScreenshotOfActiveWindow" changed="4.3">
+        <action name="CompSystem.TakeScreenshotOfActiveWindow">
             <method>rcTakeScreenshotOfActiveWindow</method>
             <param name="CompSystem.Destination"
                    descriptionKey="CompSystem.Destination.descr" >
@@ -448,7 +448,7 @@
                 <defaultValue>0</defaultValue>
             </param>
         </action>
-        <action name="CompSystem.CheckStringValues" changed="4.4">
+        <action name="CompSystem.CheckStringValues">
             <method>rcCheckStringValues</method>
             <param name="CompSystem.Value1"
                    descriptionKey="CompSystem.Value1.descr" >
@@ -470,7 +470,7 @@
                 <type>java.lang.String</type>
             </param>
         </action>
-     	<action name="CompSystem.CheckExistenceOfWindow" changed="4.5">
+     	<action name="CompSystem.CheckExistenceOfWindow">
 			<method>rcCheckExistenceOfWindow</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -497,7 +497,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.ManualTestStep" changed="4.5">
+		<action name="CompSystem.ManualTestStep">
 			<method>rcManualTestStep</method>
 			<param name="CompSystem.ActionToPerfom"
                    descriptionKey="CompSystem.ActionToPerfom.descr" >
@@ -520,7 +520,7 @@
 	</concreteComponent>
 
 	<concreteComponent type="guidancer.concrete.MenuBar" hasDefaultMapping="true">
-		<action name="CompSystem.SelectMenuItem" changed="1.12">
+		<action name="CompSystem.SelectMenuItem">
 			<method>selectMenuItem</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -538,14 +538,14 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.SelectMenuItemByIndexpath" changed="1.11">
+		<action name="CompSystem.SelectMenuItemByIndexpath">
 			<method>selectMenuItemByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledByTextpath" changed="1.12">
+		<action name="CompSystem.VerifyEnabledByTextpath">
 			<method>verifyEnabled</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -572,7 +572,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledByIndexpath" changed="1.14">
+		<action name="CompSystem.VerifyEnabledByIndexpath">
 			<method>verifyEnabledByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -588,7 +588,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExistsByTextpath" changed="1.12">
+		<action name="CompSystem.VerifyExistsByTextpath">
 			<method>verifyExists</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -615,7 +615,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExistsByIndexpath" changed="1.14">
+		<action name="CompSystem.VerifyExistsByIndexpath">
 			<method>verifyExistsByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -631,7 +631,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifySelectedByTextpath" changed="1.12">
+		<action name="CompSystem.VerifySelectedByTextpath">
 			<method>verifySelected</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -658,7 +658,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifySelectedByIndexpath" changed="1.14">
+		<action name="CompSystem.VerifySelectedByIndexpath">
 			<method>verifySelectedByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -674,7 +674,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.WaitForComponent" changed="4.2">
+		<action name="CompSystem.WaitForComponent">
 			<method>waitForComponent</method>
 			<param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -691,7 +691,7 @@
 	
 	<concreteComponent type="guidancer.concrete.ComboBox">
 		<realizes>guidancer.abstract.TextInputSupport</realizes>
-		<action name="CompSystem.VerifyContainsValue" changed="2.2">
+		<action name="CompSystem.VerifyContainsValue">
 			<method>rcVerifyContainsValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -718,7 +718,7 @@
                 </valueSet>
             </param>
 		</action>
-		<action name="CompSystem.VerifySelectedIndex" changed="2.2">
+		<action name="CompSystem.VerifySelectedIndex">
 			<method>rcVerifySelectedIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -734,14 +734,14 @@
                 </valueSet>
             </param>
 		</action>
-		<action name="CompSystem.SelectIndex" changed="1.3">
+		<action name="CompSystem.SelectIndex">
 			<method>rcSelectIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.SelectValue" changed="1.20">
+		<action name="CompSystem.SelectValue">
 			<method>rcSelectValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -773,7 +773,7 @@
 	
 	<concreteComponent type="guidancer.concrete.List">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
-		<action name="CompSystem.VerifySelectedValue" changed="2.2">
+		<action name="CompSystem.VerifySelectedValue">
 			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -801,7 +801,7 @@
             </param>
 		</action>
 		
-		<action name="CompSystem.VerifyContainsValue" changed="2.2">
+		<action name="CompSystem.VerifyContainsValue">
 			<method>rcVerifyContainsValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -828,7 +828,7 @@
                 </valueSet>
             </param>
 		</action>
-		<action name="CompSystem.VerifySelectedIndices" changed="2.2">
+		<action name="CompSystem.VerifySelectedIndices">
 			<method>rcVerifySelectedIndex</method>
 			<param name="CompSystem.Index"
                    descriptionKey="CompSystem.Index.descr" >
@@ -844,7 +844,7 @@
                 </valueSet>
             </param>
 		</action>
-		<action name="CompSystem.SelectIndices" changed="1.4">
+		<action name="CompSystem.SelectIndices">
 			<method>rcSelectIndex</method>
 			<param name="CompSystem.Index"
                    descriptionKey="CompSystem.Index.descr" >
@@ -871,7 +871,7 @@
 			</param>			<param name="CompSystem.ClickCount"
                    descriptionKey="CompSystem.ClickCount.descr" >				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
 		</action>
-		<action name="CompSystem.SelectValues" changed="1.4">
+		<action name="CompSystem.SelectValues">
 			<method>rcSelectValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -918,7 +918,7 @@
 			</param>			<param name="CompSystem.ClickCount"
                    descriptionKey="CompSystem.ClickCount.descr" >				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
 		</action>
-		<action name="CompSystem.DragByValue" changed="4.2">
+		<action name="CompSystem.DragByValue">
 			<method>rcDragValue</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -969,7 +969,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.DragByIndex" changed="4.2">
+		<action name="CompSystem.DragByIndex">
 			<method>rcDragIndex</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -1000,7 +1000,7 @@
 				<type>java.lang.Integer</type>
 			</param>
 		</action>
-		<action name="CompSystem.DropByValue" changed="2.0">
+		<action name="CompSystem.DropByValue">
 			<method>rcDropValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1032,7 +1032,7 @@
 				<defaultValue>100</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.DropByIndex" changed="2.0">
+		<action name="CompSystem.DropByIndex">
 			<method>rcDropIndex</method>
 			<param name="CompSystem.IndexOnly"
                    descriptionKey="CompSystem.IndexOnly.descr" >
@@ -1043,7 +1043,7 @@
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
-		</action>		<action name="CompSystem.CheckPropertyAtMousePosition" changed="8.1.7">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>
+		</action>		<action name="CompSystem.CheckPropertyAtMousePosition" since="3.2">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>
 	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.Label">
@@ -1052,7 +1052,7 @@
 	
 	<concreteComponent type="guidancer.concrete.TabbedPane">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<action name="CompSystem.VerifySelectedTab" changed="1.11">
+		<action name="CompSystem.VerifySelectedTab">
 			<method>rcVerifySelectedTab</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -1079,7 +1079,7 @@
                 </valueSet>
             </param>
 		</action>
-		<action name="CompSystem.SelectTab" changed="1.11">
+		<action name="CompSystem.SelectTab">
 			<method>rcSelectTab</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -1097,7 +1097,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledTab" changed="1.12">
+		<action name="CompSystem.VerifyEnabledTab">
 			<method>rcVerifyEnabled</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -1124,7 +1124,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifySelectedTabByIndex" changed="1.3">
+		<action name="CompSystem.VerifySelectedTabByIndex">
 			<method>rcVerifySelectedTabByIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -1140,14 +1140,14 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.SelectTabByIndex" changed="1.3">
+		<action name="CompSystem.SelectTabByIndex">
 			<method>rcSelectTabByIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
 				<type>java.lang.Integer</type>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledTabByIndex" changed="1.3">
+		<action name="CompSystem.VerifyEnabledTabByIndex">
 			<method>rcVerifyEnabledByIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -1163,7 +1163,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyTextOfTabByIndex" changed="4.2">
+		<action name="CompSystem.VerifyTextOfTabByIndex">
 			<method>rcVerifyTextOfTabByIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -1185,7 +1185,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExistenceOfTab" changed="4.2">
+		<action name="CompSystem.VerifyExistenceOfTab">
 			<method>rcVerifyExistenceOfTab</method>
 			<param name="CompSystem.Tab"
                    descriptionKey="CompSystem.Tab.descr" >
@@ -1216,7 +1216,7 @@
 	
 	<concreteComponent type="guidancer.concrete.Table">
 		<realizes>guidancer.abstract.TextInputSupport</realizes>
-		<action name="CompSystem.InputTextInTableCellNew" changed="4.5">
+		<action name="CompSystem.InputTextInTableCellNew">
 			<method>rcInputText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1255,7 +1255,7 @@
 		</action>
 		
 		
-		<action name="CompSystem.ReplaceTextInTableCellNew" changed="4.5">
+		<action name="CompSystem.ReplaceTextInTableCellNew">
 			<method>rcReplaceText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1293,7 +1293,7 @@
 			</param>
 		</action>		
 			
-		<action name="CompSystem.SelectCellNew" changed="4.5">
+		<action name="CompSystem.SelectCellNew">
 			<method>rcSelectCell</method>
 			<param name="CompSystem.Row"
                    descriptionKey="CompSystem.Row.descr" >
@@ -1379,7 +1379,7 @@
 			</param>
 		</action>
 				
-		<action name="CompSystem.Move" changed="1.9">
+		<action name="CompSystem.Move">
 			<method>rcMove</method>
 			<param name="CompSystem.Direction"
                    descriptionKey="CompSystem.Direction.descr" >
@@ -1441,7 +1441,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifyTableCellEditableNew" changed="4.5">
+		<action name="CompSystem.VerifyTableCellEditableNew">
 			<method>rcVerifyEditable</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -1484,7 +1484,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifySelectedTableCellEditable" changed="4.2">
+		<action name="CompSystem.VerifySelectedTableCellEditable">
 			<method>rcVerifyEditableSelected</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -1497,7 +1497,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifyTableCellEditableMousePosition" changed="4.2">
+		<action name="CompSystem.VerifyTableCellEditableMousePosition">
 			<method>rcVerifyEditableMousePosition</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -1510,7 +1510,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifyTableCellTextNew" changed="4.5">
+		<action name="CompSystem.VerifyTableCellTextNew">
 			<method>rcVerifyText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1559,7 +1559,7 @@
 			</param>
 		</action>
 				
-		<action name="CompSystem.VerifyTableCellTextAtMousePosition" changed="1.11">
+		<action name="CompSystem.VerifyTableCellTextAtMousePosition">
 			<method>rcVerifyTextAtMousePosition</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1578,7 +1578,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifyValueInRow" changed="4.5">
+		<action name="CompSystem.VerifyValueInRow">
 			<method>rcVerifyValueInRow</method>
 			<param name="CompSystem.Row"
                    descriptionKey="CompSystem.Row.descr" >
@@ -1630,7 +1630,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifyValueInColumn" changed="4.5">
+		<action name="CompSystem.VerifyValueInColumn">
 			<method>rcVerifyValueInColumn</method>
 			<param name="CompSystem.Column"
                    descriptionKey="CompSystem.Column.descr" >
@@ -1682,7 +1682,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.SelectRowByValueNew" changed="4.5">
+		<action name="CompSystem.SelectRowByValueNew">
 			<method>rcSelectRowByValue</method>
 			<param name="CompSystem.Column"
                    descriptionKey="CompSystem.Column.descr" >
@@ -1749,7 +1749,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.SelectCellByColValueNew" changed="4.5">
+		<action name="CompSystem.SelectCellByColValueNew">
 			<method>rcSelectCellByColValue</method>
 			<param name="CompSystem.Row"
                    descriptionKey="CompSystem.Row.descr" >
@@ -1815,7 +1815,7 @@
 				</valueSet>
 			</param>
 		</action>  
-		<action name="CompSystem.ReadTableCellValueNew" changed="4.5">
+		<action name="CompSystem.ReadTableCellValueNew">
 			<method>rcReadValue</method>
 			<param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -1854,7 +1854,7 @@
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
 
-		<action name="CompSystem.ReadTableCellValueAtMousePosition" changed="4.5">
+		<action name="CompSystem.ReadTableCellValueAtMousePosition">
 			<method>rcReadValueAtMousePosition</method>
 			<param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -1863,7 +1863,7 @@
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
 		
-		<action name="CompSystem.DragCellNew" changed="4.5">
+		<action name="CompSystem.DragCellNew">
 			<method>rcDragCell</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -1949,7 +1949,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DropCellNew" changed="4.5">
+		<action name="CompSystem.DropCellNew">
 			<method>rcDropCell</method>
 			<param name="CompSystem.Row"
                    descriptionKey="CompSystem.Row.descr" >
@@ -2016,7 +2016,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DragRowByValueNew" changed="4.5">
+		<action name="CompSystem.DragRowByValueNew">
 			<method>rcDragRowByValue</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -2083,7 +2083,7 @@
 			</param>
 		</action>
 			
-		<action name="CompSystem.DropRowByValueNew" changed="4.5">
+		<action name="CompSystem.DropRowByValueNew">
 			<method>rcDropRowByValue</method>
 			<param name="CompSystem.Column"
                    descriptionKey="CompSystem.Column.descr" >
@@ -2131,7 +2131,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DragCellByColValueNew" changed="4.5">
+		<action name="CompSystem.DragCellByColValueNew">
 			<method>rcDragCellByColValue</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -2198,7 +2198,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DropCellByColValueNew" changed="4.5">
+		<action name="CompSystem.DropCellByColValueNew">
 			<method>rcDropCellByColValue</method>
 			<param name="CompSystem.Row"
                    descriptionKey="CompSystem.Row.descr" >
@@ -2244,14 +2244,14 @@
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
-		</action>				<action name="CompSystem.VerifyCheckboxInSelectedRow" changed="4.5">			<method>rcVerifyCheckboxInSelectedRow</method>			<param name="CompSystem.Checked"
-                   descriptionKey="CompSystem.Checked.descr" >				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.VerifyCheckboxOfRowAtMousePosition" changed="4.5">			<method>rcVerifyCheckboxInRowAtMousePosition</method>			<param name="CompSystem.Checked"
-                   descriptionKey="CompSystem.Checked.descr" >				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.ToggleCheckboxInSelectedRow" changed="4.5">			<method>rcToggleCheckboxInSelectedRow</method>		</action>				<action name="CompSystem.ToggleCheckboxOfRowAtMousePosition" changed="4.5">			<method>rcToggleCheckboxInRowAtMousePosition</method>		</action>		        <action name="CompSystem.CheckPropertyAtMousePosition" changed="8.1.7">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>		
+		</action>				<action name="CompSystem.VerifyCheckboxInSelectedRow">			<method>rcVerifyCheckboxInSelectedRow</method>			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.VerifyCheckboxOfRowAtMousePosition">			<method>rcVerifyCheckboxInRowAtMousePosition</method>			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.ToggleCheckboxInSelectedRow">			<method>rcToggleCheckboxInSelectedRow</method>		</action>				<action name="CompSystem.ToggleCheckboxOfRowAtMousePosition">			<method>rcToggleCheckboxInRowAtMousePosition</method>		</action>		        <action name="CompSystem.CheckPropertyAtMousePosition" since="3.2">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>		
 	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.TextComponent">
 		<realizes>guidancer.abstract.TextInputSupport</realizes>
-		<action name="CompSystem.InsertTextAtIndex" changed="1.3">
+		<action name="CompSystem.InsertTextAtIndex">
 			<method>rcInsertText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -2262,7 +2262,7 @@
 				<type>java.lang.Integer</type>
 			</param>
 		</action>
-		<action name="CompSystem.InsertTextAtPattern" changed="1.12">
+		<action name="CompSystem.InsertTextAtPattern">
 			<method>rcInsertText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -2293,10 +2293,10 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.SelectAll" changed="1.3">
+		<action name="CompSystem.SelectAll">
 			<method>rcSelect</method>
 		</action>
-		<action name="CompSystem.Select" changed="1.11">
+		<action name="CompSystem.Select">
 			<method>rcSelect</method>
 			<param name="CompSystem.Pattern"
                    descriptionKey="CompSystem.Pattern.descr" >
@@ -2319,7 +2319,7 @@
 	
 	<concreteComponent type="guidancer.concrete.Tree">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<action name="CompSystem.CollapseByTextPath" changed="1.22">
+		<action name="CompSystem.CollapseByTextPath">
 			<method>rcCollapse</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2351,7 +2351,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.CollapseByIndexPath" changed="1.22">
+		<action name="CompSystem.CollapseByIndexPath">
 			<method>rcCollapseByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2372,7 +2372,7 @@
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.ExpandByTextPath" changed="1.22">
+		<action name="CompSystem.ExpandByTextPath">
 			<method>rcExpand</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2404,7 +2404,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.ExpandByIndexPath" changed="1.22">
+		<action name="CompSystem.ExpandByIndexPath">
 			<method>rcExpandByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2425,7 +2425,7 @@
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.SelectByTextPath" changed="1.22">
+		<action name="CompSystem.SelectByTextPath">
 			<method>rcSelect</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2481,7 +2481,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.SelectByIndexPath" changed="1.22">
+		<action name="CompSystem.SelectByIndexPath">
 			<method>rcSelectByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2526,7 +2526,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.Move" changed="1.10">
+		<action name="CompSystem.Move">
 			<method>rcMove</method>
 			<param name="CompSystem.TreeDirection"
                    descriptionKey="CompSystem.TreeDirection.descr" >
@@ -2550,7 +2550,7 @@
 				<defaultValue>1</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyPath" changed="1.22">
+		<action name="CompSystem.VerifyPath">
 			<method>rcVerifyPath</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2591,7 +2591,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyPathByIndices" changed="1.22">
+		<action name="CompSystem.VerifyPathByIndices">
 			<method>rcVerifyPathByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2621,7 +2621,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyTextOfSelectedEntry" changed="1.41">
+		<action name="CompSystem.VerifyTextOfSelectedEntry">
 			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -2639,7 +2639,7 @@
 				</valueSet>
 			</param>	
 		</action>
-		<action name="CompSystem.VerifyTextAtMousePosition" changed="4.6">
+		<action name="CompSystem.VerifyTextAtMousePosition">
 			<method>rcVerifyTextAtMousePosition</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -2658,7 +2658,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DragByTextPath" changed="4.2">
+		<action name="CompSystem.DragByTextPath">
 			<method>rcDragByTextPath</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -2715,7 +2715,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DropByTextPath" changed="">
+		<action name="CompSystem.DropByTextPath">
 			<method>rcDropByTextPath</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2753,7 +2753,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DragByIndexPath" changed="4.2">
+		<action name="CompSystem.DragByIndexPath">
 			<method>rcDragByIndexPath</method>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -2799,7 +2799,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.DropByIndexPath" changed="">
+		<action name="CompSystem.DropByIndexPath">
 			<method>rcDropByIndexPath</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2825,7 +2825,7 @@
 				<defaultValue>100</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.ReadTextOfSelectedEntry" changed="4.5">
+		<action name="CompSystem.ReadTextOfSelectedEntry">
 			<method>rcStoreSelectedNodeValue</method>
 			<param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -2833,15 +2833,15 @@
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
-		<action name="CompSystem.ReadTextAtMousePosition" changed="4.5">
+		<action name="CompSystem.ReadTextAtMousePosition">
 			<method>rcStoreValueAtMousePosition</method>
 			<param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
 				<type>guidancer.datatype.Variable</type>
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
-		</action>		<action name="CompSystem.CheckPropertyAtMousePosition" changed="8.1.7">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>
+		</action>		<action name="CompSystem.CheckPropertyAtMousePosition" since="3.2">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>
 	</concreteComponent>
-	<concreteComponent type="guidancer.concrete.Tooltip" hasDefaultMapping="true">        <action name="CompSystem.CheckTooltipText" changed="8.1.5">            <method>rcCheckTooltipText</method>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>            <param name="CompSystem.Text"                   descriptionKey="CompSystem.Text.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>    </concreteComponent>
+	<concreteComponent type="guidancer.concrete.Tooltip" hasDefaultMapping="true" since="3.2">        <action name="CompSystem.CheckTooltipText">            <method>rcCheckTooltipText</method>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>            <param name="CompSystem.Text"                   descriptionKey="CompSystem.Text.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>    </concreteComponent>
 	
 </compSystem>

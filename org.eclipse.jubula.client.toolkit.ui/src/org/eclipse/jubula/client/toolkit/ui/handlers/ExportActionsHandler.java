@@ -55,7 +55,7 @@ public class ExportActionsHandler extends AbstractHandler {
                         new TreeSet<ComponentActionPair>();
                 String tkName = tkInfo.getShortType();
                 List<ComponentInfo> compInfos = processor.getCompInfos(
-                        tkInfo.getType(), tkName, false);
+                        tkInfo.getType(), tkName);
                 for (ComponentInfo compInfo : compInfos) {
                     Component component = compInfo.getComponent();
                     if (!component.isConcrete()

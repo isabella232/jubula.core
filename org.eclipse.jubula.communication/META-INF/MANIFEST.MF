@@ -2,20 +2,20 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Communication
 Bundle-SymbolicName: org.eclipse.jubula.communication;singleton:=true
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
-Export-Package: org.eclipse.jubula.communication.internal,
- org.eclipse.jubula.communication.internal.commands,
- org.eclipse.jubula.communication.internal.connection,
- org.eclipse.jubula.communication.internal.listener,
- org.eclipse.jubula.communication.internal.message,
- org.eclipse.jubula.communication.internal.message.html,
- org.eclipse.jubula.communication.internal.parser,
- org.eclipse.jubula.communication.internal.writer,
- org.eclipse.jubula.communication
-Require-Bundle: org.eclipse.jubula.tools;bundle-version="[3.1.0,3.2.0)",
+Export-Package: org.eclipse.jubula.communication,
+ org.eclipse.jubula.communication.internal;x-internal:=true,
+ org.eclipse.jubula.communication.internal.commands;x-internal:=true,
+ org.eclipse.jubula.communication.internal.connection;x-internal:=true,
+ org.eclipse.jubula.communication.internal.listener;x-internal:=true,
+ org.eclipse.jubula.communication.internal.message;x-internal:=true,
+ org.eclipse.jubula.communication.internal.message.html;x-internal:=true,
+ org.eclipse.jubula.communication.internal.parser;x-internal:=true,
+ org.eclipse.jubula.communication.internal.writer;x-internal:=true
+Require-Bundle: org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

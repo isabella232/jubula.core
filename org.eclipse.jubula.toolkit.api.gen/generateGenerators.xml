@@ -12,6 +12,6 @@
         <emf.JETCompiler templateFile="./templates/FactoryGenerator.javajet"
           sourceDirectory="src-gen"/>
         <emf.JETCompiler templateFile="./templates/ToolkitInfoGenerator.javajet"
-                  sourceDirectory="src-gen"/>
+          sourceDirectory="src-gen"/>
     </target>
 </project>

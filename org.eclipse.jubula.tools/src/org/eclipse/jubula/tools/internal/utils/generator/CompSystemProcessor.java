@@ -19,6 +19,7 @@ import org.eclipse.jubula.tools.internal.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.InvalidAction;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 
@@ -115,19 +116,18 @@ public class CompSystemProcessor implements IProcessor {
      * @param toolkitName
      *            the display name of the toolkit for which
      *            components should be listed.
-     * @param showOnlyVisible if true, then only visible components will be returned;
-     *                        if false, then all components will be returned
      * @return the list of components
      */
     public List<ComponentInfo> getCompInfos(String toolkitId, 
-        String toolkitName, boolean showOnlyVisible) {
+        String toolkitName) {
         List<ComponentInfo> infos = new ArrayList<ComponentInfo>();
         ToolkitInfo tkInfo = new ToolkitInfo(toolkitName, toolkitId);
-        for (Iterator it = 
+        for (Iterator<Component> it = 
                 m_compSystem.getComponents(toolkitId, false).iterator();
             it.hasNext();) {
-            Component component = (Component)it.next();
-            if (showOnlyVisible && !component.isVisible()) {
+            Component component = it.next();
+            if ((component instanceof ConcreteComponent)
+                    && !(((ConcreteComponent) component)).isSupported()) {
                 continue;
             }
             infos.add(new ComponentInfo(component, tkInfo));
