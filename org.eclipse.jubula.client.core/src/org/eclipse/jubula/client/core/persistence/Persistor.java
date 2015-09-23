@@ -60,14 +60,15 @@ import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.internal.jarutils.IVersion;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
+import org.eclipse.jubula.version.SemanticVersionUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.eclipse.persistence.exceptions.DatabaseException;
 import org.eclipse.persistence.sessions.server.ServerSession;
 import org.eclipse.persistence.tools.schemaframework.SchemaManager;
+import org.osgi.framework.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,6 +79,9 @@ import org.slf4j.LoggerFactory;
 public class Persistor {
     /** the name of the default persistence unit for Jubula */
     private static final String DEFAULT_PU_NAME = "org.eclipse.jubula"; //$NON-NLS-1$
+    
+    /** the database model version */
+    private static final Version MODEL_VERSION = new Version(46, 0, 0);
     
     /** shutdown hook to dispose the current Persistor */
     private static final Thread SHUTDOWN_HOOK = new IsAliveThread(
@@ -294,8 +298,8 @@ public class Persistor {
                         Messages.DBVersionProblem, new Object[] {
                             -1, 
                             -1, 
-                            IVersion.JB_DB_MAJOR_VERSION,
-                            IVersion.JB_DB_MINOR_VERSION 
+                            MODEL_VERSION.getMajor(),
+                            MODEL_VERSION.getMinor() 
                         }),
                         MessageIDs.E_NOT_CHECKABLE_DB_VERSION);
                 }
@@ -442,22 +446,16 @@ public class Persistor {
         }
         if (!hits.isEmpty() && hits.size() == 1) {
             DBVersionPO dbVersion = hits.get(0);
-            Integer dbMaj = dbVersion.getMajorVersion();
-            Integer dbMin = dbVersion.getMinorVersion();
-            if (dbMaj.equals(IVersion.JB_DB_MAJOR_VERSION)) {
-                if (dbMin.equals(IVersion.JB_DB_MINOR_VERSION)) {
-                    log.info(Messages.DBVersion + StringConstants.COLON
-                            + StringConstants.SPACE + Messages.OK);
-                } else {
-                    log.error(Messages.DBVersion + StringConstants.COLON
-                            + StringConstants.SPACE
-                            + Messages.MinorVersionInvalid);
-                    throw new DatabaseVersionConflictException(dbMaj, dbMin);
-                }
-            } else {
+            Version dbVers = new Version(dbVersion.getMajorVersion(),
+                    dbVersion.getMinorVersion(), 0);
+            if (SemanticVersionUtil.isCompatibleWith(dbVers, MODEL_VERSION)) {
+                log.info(Messages.DBVersion + StringConstants.COLON
+                        + StringConstants.SPACE + Messages.OK);
+            } else {                
                 log.error(Messages.DBVersion + StringConstants.COLON
                         + StringConstants.SPACE + Messages.MajorVersionInvalid);
-                throw new DatabaseVersionConflictException(dbMaj, dbMin);
+                throw new DatabaseVersionConflictException(
+                        dbVers.getMajor(), dbVers.getMinor());
             }
         } else {
             log.error(Messages.DBVersion + StringConstants.COLON
@@ -538,12 +536,12 @@ public class Persistor {
             try {
                 DBVersionPO version = 
                     (DBVersionPO)em.createQuery("select version from DBVersionPO as version").getSingleResult(); //$NON-NLS-1$
-                version.setMajorVersion(IVersion.JB_DB_MAJOR_VERSION);
-                version.setMinorVersion(IVersion.JB_DB_MINOR_VERSION);
+                version.setMajorVersion(MODEL_VERSION.getMajor());
+                version.setMinorVersion(MODEL_VERSION.getMinor());
                 em.merge(version);
             } catch (NoResultException nre) {
-                em.merge(new DBVersionPO(IVersion.JB_DB_MAJOR_VERSION,
-                        IVersion.JB_DB_MINOR_VERSION));
+                em.merge(new DBVersionPO(MODEL_VERSION.getMajor(),
+                        MODEL_VERSION.getMinor()));
             }
 
             tx.commit();
@@ -615,8 +613,8 @@ public class Persistor {
             } catch (DatabaseVersionConflictException e) {
                 final Integer dbMajorVersion = e.getDatabaseMajorVersion();
                 final Integer dbMinorVersion = e.getDatabaseMinorVersion();
-                final Integer cDBMajorVersion = IVersion.JB_DB_MAJOR_VERSION;
-                final Integer cDBMinorVersion = IVersion.JB_DB_MINOR_VERSION;
+                final Integer cDBMajorVersion = MODEL_VERSION.getMajor();
+                final Integer cDBMinorVersion = MODEL_VERSION.getMinor();
                 final String errorMessage = NLS.bind(
                     Messages.DBVersionProblem, new Object[] { dbMajorVersion,
                         dbMinorVersion, cDBMajorVersion, cDBMinorVersion });

@@ -18,8 +18,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
-import org.eclipse.jubula.tools.internal.jarutils.IVersion;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.version.IVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

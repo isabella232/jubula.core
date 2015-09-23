@@ -15,9 +15,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.SerialisationException;
-import org.eclipse.jubula.tools.internal.jarutils.IVersion;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 import com.thoughtworks.xstream.XStream;
@@ -35,11 +33,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 public class XStreamXmlSerializer implements IXmlSerializer {
     /** static xml header */
     private static final String XML_HEADER =
-        "<?xml version=\"1.0\" minor=\""  //$NON-NLS-1$
-        + IVersion.JB_XML_IMPORT_MINOR_VERSION 
-        + "\" major=\"" //$NON-NLS-1$
-        + IVersion.JB_XML_IMPORT_MAJOR_VERSION
-        + "\"?>"; //$NON-NLS-1$
+        "<?xml version=\"1.0\"?>"; //$NON-NLS-1$
     /** The XStream instance. This is the facade for all XStream operations. */
     private final XStream m_stream;
     /** A list of all class loaders which have been added to the XStream <code>CompositeClassLoader</code>. */
@@ -85,7 +79,6 @@ public class XStreamXmlSerializer implements IXmlSerializer {
             if (text.startsWith("<?")) { //$NON-NLS-1$
                 String xmlHeader = text.substring(0, text.indexOf(">") + 1); //$NON-NLS-1$
                 String xmlBody = StringUtils.substringAfter(text, ">"); //$NON-NLS-1$
-                checkVersion(xmlHeader);
                 return m_stream.fromXML(xmlBody);
             } 
             return m_stream.fromXML(text);
@@ -94,22 +87,6 @@ public class XStreamXmlSerializer implements IXmlSerializer {
             throw new SerialisationException(e.getMessage(), 
                 MessageIDs.E_SERILIZATION_FAILED);
         }
-    }
-
-    /**
-     * checks if xml file has supported Version
-     * @param header XML Header
-     */
-    private void checkVersion(String header) {
-        if (header.indexOf("minor") == -1 //$NON-NLS-1$
-            || header.indexOf("major") == -1) { //$NON-NLS-1$
-            return;
-        }
-        String minor = header.substring(header.indexOf("minor"), //$NON-NLS-1$
-            header.indexOf("major")); //$NON-NLS-1$ 
-        String major = header.substring(header.indexOf("major")); //$NON-NLS-1$
-        StringUtils.substringBetween(minor, StringConstants.QUOTE);
-        StringUtils.substringBetween(major, StringConstants.QUOTE);
     }
     
     /**

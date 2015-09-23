@@ -23,6 +23,7 @@ Export-Package: com.thoughtworks.xstream;x-internal:=true,
  org.eclipse.jubula.tools.internal.serialisation;x-internal:=true,
  org.eclipse.jubula.tools.internal.utils;x-internal:=true,
  org.eclipse.jubula.tools.internal.utils.generator;x-internal:=true,
+ org.eclipse.jubula.tools.internal.version;x-internal:=true,
  org.eclipse.jubula.tools.internal.xml.businessmodell;x-internal:=true,
  org.eclipse.jubula.tools.internal.xml.businessprocess;x-internal:=true
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

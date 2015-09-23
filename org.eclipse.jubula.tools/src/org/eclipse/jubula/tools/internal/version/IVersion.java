@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.tools.internal.jarutils;
+package org.eclipse.jubula.tools.internal.version;
 
 /**
  * Interface to manage all relevant versions for Jubula
@@ -22,18 +22,6 @@ public interface IVersion {
      * of status messages from server or creation of new messages
      */
     public final Integer JB_PROTOCOL_MAJOR_VERSION = new Integer(11);
-    
-    /** major version for DB */
-    public final Integer JB_DB_MAJOR_VERSION = new Integer(46);
-    
-    /** minor version for DB */
-    public final Integer JB_DB_MINOR_VERSION = new Integer(0);
-    
-    /** major version for XML import support */
-    public final Integer JB_XML_IMPORT_MAJOR_VERSION = new Integer(1);
-    
-    /** minor version for XML import support */
-    public final Integer JB_XML_IMPORT_MINOR_VERSION = new Integer(1);
     
     /** major version for state of metadata in XML-format or from database
      *  modifications in client code without modification of ToolkitPlugins

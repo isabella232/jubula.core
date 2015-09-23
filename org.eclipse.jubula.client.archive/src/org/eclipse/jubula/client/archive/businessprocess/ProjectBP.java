@@ -41,7 +41,7 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
-import org.eclipse.jubula.tools.internal.jarutils.IVersion;
+import org.eclipse.jubula.tools.internal.version.IVersion;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

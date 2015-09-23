@@ -19,9 +19,9 @@ import java.util.StringTokenizer;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
-import org.eclipse.jubula.tools.internal.jarutils.IVersion;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.version.IVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
