@@ -648,8 +648,9 @@ public class ClientTestImpl implements IClientTest {
      */
     private boolean continueTestJobExecution(AtomicInteger testExecutionState,
             AtomicInteger testExecutionMessageId) {
-        if (testExecutionMessageId.get() 
-                == MessageIDs.E_NO_AUT_CONNECTION_ERROR.intValue()) {
+        int messageID = testExecutionMessageId.get();
+        if (messageID == MessageIDs.E_NO_AUT_CONNECTION_ERROR.intValue()
+                || messageID == MessageIDs.E_TIMEOUT_CONNECTION.intValue()) {
             return false;
         }
         if (testExecutionState.get() == State.TEST_EXEC_STOP.ordinal()) {

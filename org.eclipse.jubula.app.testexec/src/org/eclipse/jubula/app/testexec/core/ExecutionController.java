@@ -465,6 +465,7 @@ public class ExecutionController implements IAUTServerEventListener,
      */
     private void waitForReportingToFinish(long timeout) {
         long endtime = System.currentTimeMillis() + timeout;
+        TimeUtil.delay(500); // wait for reporting job to start
         while (ClientTest.instance().isReportingRunning()) {
             TimeUtil.delay(250);
             if (endtime - System.currentTimeMillis() < 0) {
@@ -910,6 +911,7 @@ public class ExecutionController implements IAUTServerEventListener,
         if (exception instanceof JBException) {
             String errorMsg = exception.getMessage();
             sysErr(errorMsg);
+            TestExecution.getInstance().stopExecution();
             stopProcessing();
         }
 
