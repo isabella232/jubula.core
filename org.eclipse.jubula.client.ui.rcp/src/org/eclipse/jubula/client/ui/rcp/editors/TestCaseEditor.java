@@ -597,7 +597,11 @@ public class TestCaseEditor extends AbstractTestCaseEditor
      */
     public void handlePropertyChanged(boolean isCompNameChanged) {
         super.handlePropertyChanged(isCompNameChanged);
-        m_eventHandlerTreeViewer.refresh();
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getEventHandlerTreeViewer().refresh();
+            }
+        });
     }
     
     @Override
@@ -631,7 +635,11 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     @Override
     public void refresh() {
         super.refresh();
-        getEventHandlerTreeViewer().refresh(true);
+        Plugin.getDisplay().syncExec(new Runnable() {
+            public void run() {
+                getEventHandlerTreeViewer().refresh();
+            }
+        });
     }
     
     /** {@inheritDoc} */
