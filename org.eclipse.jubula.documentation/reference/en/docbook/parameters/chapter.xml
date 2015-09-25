@@ -15,6 +15,7 @@
   <xi:include href="actionToPerform/content.xml"/>
   <xi:include href="activateKey/content.xml"/>
   <xi:include href="activationMethod/content.xml"/>
+  <xi:include href="anchorType/content.xml"/>
   <xi:include href="baseKey/content.xml"/>
   <xi:include href="column/content.xml"/>
   <xi:include href="columnOperator/content.xml"/>

@@ -53,6 +53,11 @@
   </para>
   <para><emphasis role="strong">Available Actions</emphasis></para>
   <itemizedlist>
+    <listitem>
+        <para>
+            <xref linkend="actionCheckAnchorCountGEF" xrefstyle="template:%t"/>
+        </para>
+    </listitem>
   	<listitem>
   		<para>
   			<xref linkend="actionsCheckEnablementGeneral" xrefstyle="template:%t"/>

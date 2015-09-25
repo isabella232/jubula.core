@@ -9,7 +9,13 @@
   <itemizedlist>
     <listitem>
       <para>
-      You can now check existence of connections in GEF Figure canvas using the unbound module <emphasis>ub_fcv_checkExistenceOfConnection_byTextpaths</emphasis> from <emphasis>unbound_modules_rcp</emphasis>
+      You can now check the existence of connections in GEF Figure canvas using the unbound module <emphasis>ub_fcv_checkExistenceOfConnection_byTextpaths</emphasis> from <emphasis>unbound_modules_rcp</emphasis>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+      You can now check the Anchor count of an edit part in GEF Figure canvas using the unbound module <emphasis>ub_fcv_checkAnchorCountOfEditPart_byTextpath</emphasis> from <emphasis>unbound_modules_rcp</emphasis>.
+      This action can only be used if you are using a custom extension implementing the identifier for edit parts. See the developer manual for more information.
       </para>
     </listitem>
    </itemizedlist>

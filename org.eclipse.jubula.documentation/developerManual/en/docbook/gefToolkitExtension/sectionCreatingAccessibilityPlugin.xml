@@ -95,6 +95,10 @@
           to provide adapters from the GEF component that implements
           <emphasis role="input">EditPart</emphasis> from
           <emphasis>org.eclipse.gef</emphasis>.
+          If you want to use the <emphasis>check Anchor count</emphasis> Action to 
+          differentiate between incoming and outgoing connections you must implement
+          <emphasis role="input">IExtendedEditPartIdentifier</emphasis> from the package named
+          <emphasis>org.eclipse.jubula.rc.rcp.e3.gef.identifier</emphasis>.
         </para>
       </listitem>
       <listitem>

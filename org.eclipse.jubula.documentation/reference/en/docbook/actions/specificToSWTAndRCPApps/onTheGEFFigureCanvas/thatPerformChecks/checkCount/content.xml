@@ -1,0 +1,77 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionCheckAnchorCountGEF" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="checkCount"?>
+  <title>Check Anchor Count</title>
+  
+  <para><emphasis>Check Anchor Count</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check whether an edit part has a specific count of anchors. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You identify the edit part based on its textpath.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is only working if there is an implementation for IEditPartIdentifier for the edit part (See developerManual how to write a GEF Toolkit extension).
+          The Anchor type incoming and outgoing are only working if the IExtendedEditPartIdentifier interface is implemented.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="textpath" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="exists" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="anchor_type" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="count" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="comparison_method" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+
+  
+</section>
