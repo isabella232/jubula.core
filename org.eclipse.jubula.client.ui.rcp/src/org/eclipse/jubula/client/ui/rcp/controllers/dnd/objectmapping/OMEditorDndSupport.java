@@ -89,7 +89,7 @@ public class OMEditorDndSupport {
                     cleanupAssociation(editor, oldAssoc);
                 } catch (IncompatibleTypeException e) {
                     ErrorHandlingUtil.createMessageDialog(
-                            MessageIDs.E_OM_WRONG_COMP_TYPE);
+                            e, e.getErrorMessageParams(), null);
                 } catch (PMException pme) {
                     PMExceptionHandler.handlePMExceptionForEditor(pme, editor);
                 }
