@@ -440,6 +440,51 @@
                 </valueSet>
             </param>
 		</action>
+		
+		<action name="CompSystem.CheckAnchorCount" since="4.0">
+            <method>rcCheckNumberOfAnchors</method>
+            <param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.TextOperator"
+                   descriptionKey="CompSystem.TextOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>    
+            <param name="CompSystem.AnchorType"
+                   descriptionKey="CompSystem.AnchorType.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>both</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Both" value="both"/>
+                    <element name="CompSystem.Incoming" value="incoming"/>
+                    <element name="CompSystem.Outgoing" value="outgoing"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.AnchorCount"
+                   descriptionKey="CompSystem.AnchorCount.descr" >
+                <type>java.lang.Integer</type>
+            </param>
+            <param name="CompSystem.ComparisonMethod"
+                   descriptionKey="CompSystem.ComparisonMethod.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equal to</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Less" value="less than"/>
+                    <element name="CompSystem.LessOrEqual" value="less or equal than"/>
+                    <element name="CompSystem.Equals" value="equal to"/>
+                    <element name="CompSystem.GreaterOrEqual" value="greater or equal than"/>
+                    <element name="CompSystem.Greater" value="greater than"/>
+                </valueSet>
+            </param>
+        </action>
 	</toolkitComponent>
 	
 </compSystem>

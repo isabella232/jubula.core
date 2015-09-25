@@ -14,7 +14,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
-
+import org.eclipse.jubula.toolkit.enums.ValueSets.NumberComparisonOperator;
 
 /**
  * Utilities to compare values.
@@ -23,21 +23,6 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created 20.08.2009
  */
 public class Comparer {
-
-    /** comparison string for less */
-    private static final String LESS = "less than"; //$NON-NLS-1$
-
-    /** comparison string for less or equal */
-    private static final String LESS_OR_EQUAL = "less or equal than"; //$NON-NLS-1$
-
-    /** comparison string for equal */
-    private static final String EQUAL = "equal to"; //$NON-NLS-1$
-
-    /** comparison string for greater or equal */
-    private static final String GREATER_OR_EQUAL = "greater or equal than"; //$NON-NLS-1$
-
-    /** comparison string for greater */
-    private static final String GREATER = "greater than"; //$NON-NLS-1$
 
     /**
      * Default constructor.
@@ -63,15 +48,20 @@ public class Comparer {
             Double val2 = new Double(value2);
             int comparisonResult = val1.compareTo(val2);
             boolean expectedComparison = false;
-            if (comparisonMethod.equals(LESS)) {
+            if (comparisonMethod
+                    .equals(NumberComparisonOperator.less.rcValue())) {
                 expectedComparison = comparisonResult < 0;
-            } else if (comparisonMethod.equals(LESS_OR_EQUAL)) {
+            } else if (comparisonMethod
+                    .equals(NumberComparisonOperator.lessOrEqual.rcValue())) {
                 expectedComparison = comparisonResult <= 0;
-            } else if (comparisonMethod.equals(EQUAL)) {
+            } else if (comparisonMethod
+                    .equals(NumberComparisonOperator.equals.rcValue())) {
                 expectedComparison = comparisonResult == 0;
-            } else if (comparisonMethod.equals(GREATER_OR_EQUAL)) {
+            } else if (comparisonMethod.equals(
+                    NumberComparisonOperator.greaterorEqual.rcValue())) {
                 expectedComparison = comparisonResult >= 0;
-            } else if (comparisonMethod.equals(GREATER)) {
+            } else if (comparisonMethod
+                    .equals(NumberComparisonOperator.greater.rcValue())) {
                 expectedComparison = comparisonResult > 0;
             }
             if (!expectedComparison) {

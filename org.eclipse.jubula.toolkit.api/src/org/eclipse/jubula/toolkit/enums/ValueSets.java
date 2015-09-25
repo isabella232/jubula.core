@@ -423,6 +423,78 @@ public final class ValueSets {
             return map.get(i);
         }
     }
+
+    /**
+     * @author BREDEX GmbH 
+     * @since 4.0
+     * the anchor type is used in GEF to determine between incoming 
+     * and outgoing anchors
+     */
+    public enum AnchorType implements LiteralProvider {
+        /** incoming anchors */
+        incoming("incoming"), //$NON-NLS-1$
+        /** outgoing anchors */
+        outgoing("outgoing"), //$NON-NLS-1$
+        /** incoming and outgoing anchors */
+        both("both"); //$NON-NLS-1$
+        /** holds the value necessary for the RC side */
+        private String m_value;
+        
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private AnchorType(String rcValue) {
+            m_value = rcValue;
+        }
+        /**
+         * @return the value
+         * @since 4.0
+         */
+        public String rcValue() {
+            return m_value;
+        }
+        
+    }
+
+    /**
+     * @since 4.0
+     * NumberComparisonOperator is used for standard number comparisons
+     */
+    public enum NumberComparisonOperator implements LiteralProvider {
+        /** number comparison operator */
+        equals("equal to"), //$NON-NLS-1$
+        /** number comparison operator */
+        greater("greater than"), //$NON-NLS-1$
+        /** number comparison operator */
+        greaterorEqual("greater or equal than"), //$NON-NLS-1$
+        /** number comparison operator */
+        less("less than"), //$NON-NLS-1$
+        /** number comparison operator */
+        lessOrEqual("less or equal than"); //$NON-NLS-1$
+        
+        /** holds the value necessary for the RC side */
+        private String m_value;
+        
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private NumberComparisonOperator(String rcValue) {
+            m_value = rcValue;
+        }
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_value;
+        }
+        
+    }
     /** Constructor */
     private ValueSets() {
         // hide

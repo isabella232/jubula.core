@@ -330,7 +330,7 @@
 	<toolkitComponent type="html.generic.Locator" visible="true" hasDefaultMapping="true">
 		<testerClass>com.bredexsw.jubula.rc.html.web.implclasses.LocatorImplClass</testerClass>
 		<componentClass name="html.generic.Locator" />
-        <action name="html.checkXpathCount">
+        <action name="html.checkXpathCount" since="4.0">
             <method>rcCheckXPathCount</method>
             <param name="html.locator.xpath"
                    descriptionKey="html.locator.xpath.descr" >
@@ -353,7 +353,7 @@
                 <type>java.lang.Integer</type>
             </param>        
         </action>
-        <action name="html.checkCssPathCount">
+        <action name="html.checkCssPathCount" since="4.0">
             <method>rcCheckCSSPathCount</method>
             <param name="html.locator.css"
                    descriptionKey="html.locator.css.descr" >

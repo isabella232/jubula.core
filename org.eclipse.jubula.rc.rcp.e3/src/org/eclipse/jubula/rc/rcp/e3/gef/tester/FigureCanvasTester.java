@@ -36,17 +36,20 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.WidgetTester;
+import org.eclipse.jubula.rc.common.util.Comparer;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.MenuUtilBase;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.factory.DefaultEditPartAdapterFactory;
 import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
+import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IExtendedEditPartIdentifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter;
-import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.toolkit.enums.ValueSets.AnchorType;
+import org.eclipse.jubula.toolkit.enums.ValueSets.Unit;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.graphics.Rectangle;
@@ -431,9 +434,9 @@ public class FigureCanvasTester extends WidgetTester {
                 ClickOptions.create().setScrollToVisible(false)
                     .setClickCount(count).setMouseButton(button),
                 xPos, xUnits.equalsIgnoreCase(
-                        ValueSets.Unit.pixel.rcValue()),
+                        Unit.pixel.rcValue()),
                 yPos, yUnits.equalsIgnoreCase(
-                        ValueSets.Unit.pixel.rcValue()));
+                        Unit.pixel.rcValue()));
     }
 
     /**
@@ -906,5 +909,57 @@ public class FigureCanvasTester extends WidgetTester {
         }
         return null;
         // this is still valid since there are simple connections
+    }
+
+    /**
+     * 
+     * @param textPath
+     *            the textpath to the {@link GraphicalEditPart}
+     * @param operator
+     *            the operator to find the editpart should be a rcValue from
+     *            {@link org.eclipse.jubula.toolkit.enums.ValueSets.Operator}
+     * @param anchorType
+     *            the anchor type should be a rc value from {@link AnchorType}
+     * @param count
+     *            the count to compare
+     * @param comparisonMethod
+     *            the comparison method should be a rc value from
+     *            {@link org.eclipse.jubula.toolkit.enums.ValueSets.NumberComparisonOperator}
+     */
+    public void rcCheckNumberOfAnchors(String textPath, String operator,
+            String anchorType, int count, String comparisonMethod) {
+        GraphicalEditPart editPart =
+                findEditPart(textPath, operator);
+        if (editPart == null) {
+            throw new StepExecutionException(
+                    "No Edit Part could be found for the given text path.", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
+        IEditPartIdentifier editPartIdentifier =
+                DefaultEditPartAdapterFactory.loadFigureIdentifier(
+                        editPart);
+        int connectionCount = 0;
+        
+        if (anchorType
+                .equals(AnchorType.both.rcValue())) {
+            connectionCount = editPartIdentifier.getConnectionAnchors().size();
+        } else if (editPartIdentifier instanceof IExtendedEditPartIdentifier) {
+            IExtendedEditPartIdentifier extended = 
+                    (IExtendedEditPartIdentifier) editPartIdentifier;
+            
+            if (anchorType.equals(AnchorType.incoming.rcValue())) {
+                connectionCount = extended
+                        .getIncomingConnectionAnchors().size();
+            } else if (anchorType
+                    .equals(AnchorType.outgoing.rcValue())) {
+                connectionCount = extended
+                        .getOutgoingConnectionAnchors().size();
+            }
+        } else  {
+            throw new StepExecutionException("GraphicalEditPart does not support the anchor type" + anchorType,  //$NON-NLS-1$
+                    EventFactory.createActionError());
+        }
+        Comparer.compare(Integer.toString(connectionCount), 
+                Integer.toString(count), comparisonMethod);
     }
 }
