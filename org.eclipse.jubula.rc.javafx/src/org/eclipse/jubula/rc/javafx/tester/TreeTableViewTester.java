@@ -16,12 +16,6 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Point2D;
-import javafx.scene.Parent;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableView;
-
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -46,6 +40,12 @@ import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.geometry.Point2D;
+import javafx.scene.Parent;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableView;
 
 
 /**
@@ -394,7 +394,7 @@ public class TreeTableViewTester extends TreeViewTester {
         }        
         selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
                 ValueSets.BinaryChoice.no.rcValue());
-        rcVerifySelectedEditable(editable);
+        rcVerifyEditable(editable);
     }
     
     /**
@@ -402,23 +402,13 @@ public class TreeTableViewTester extends TreeViewTester {
      *
      * @param editable The editable property to verify.
      */
-    public void rcVerifySelectedEditable(boolean editable) {
+    public void rcVerifyEditable(boolean editable) {
         Cell cell = getContext().getSelectedCell();
         
         Verifier.equals(editable, getContext().isCellEditable(
                 cell.getRow(), cell.getCol()));
     }
     
-    /**
-     * Verifies the editable property of the cell under the mouse.
-     *
-     * @param editable The editable property to verify.
-     */
-    public void rcVerifyEditableAtMousePosition(boolean editable) {
-        TreeTableCell<?, ?> cell = 
-                (TreeTableCell<?, ?>)getNodeAtMousePosition();
-        Verifier.equals(editable, getContext().isCellEditable(cell));
-    }
     /**
      * Verifies, whether value exists in row..
      *
@@ -585,24 +575,6 @@ public class TreeTableViewTester extends TreeViewTester {
     }
     
     /**
-     * Verifies the text of the cell under the mouse
-     * @param txt the text
-     * @param operator the operator
-     */
-    public void rcVerifyCellTextAtMousePosition(String txt, String operator) {
-        String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "rcVerifyCellTextAtMousePosition", new Callable<String>() { //$NON-NLS-1$
-                    @Override
-                    public String call() throws Exception {
-                        TreeTableCell<?, ?> cell = 
-                                (TreeTableCell<?, ?>)getNodeAtMousePosition();
-                        return getContext().getRenderedText(cell);
-                    }
-                });
-        Verifier.match(result, txt, operator);
-    }
-    
-    /**
      * Checks if the passed row and column are inside the bounds of the Table. 
      * @param row The row
      * @param column The column
@@ -665,35 +637,7 @@ public class TreeTableViewTester extends TreeViewTester {
         adapter.scrollCellToVisible(implRow, implCol);
         return getCellText(implRow, implCol);
     }
-
-    /**
-    * Read the value of the cell under the mouse and
-    * store it in a variable in the Client
-    * @param variable the name of the variable
-    * @return the text value.
-    */
-    public String rcReadValueAtMousePosition(String variable) {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "rcVerifyCellTextAtMousePosition", new Callable<String>() { //$NON-NLS-1$
-                    @Override
-                    public String call() throws Exception {
-                        TreeTableCell<?, ?> cell = 
-                                (TreeTableCell<?, ?>) getNodeAtMousePosition();
-                        return getContext().getRenderedText(cell);
-                    }
-                });
-    }
-    /**
-     * Store the string representation of the value of the property of the given Node
-     * @param variableName the name of the variable
-     * @param propertyName the name of the property
-     * @return string representation of the property value
-     */
-    public String rcStorePropertyValueAtMousePosition(String variableName,
-            final String propertyName) {
-        return getContext().getPropteryValue(getNodeAtMousePosition(),
-                propertyName);
-    }
+    
     /**
      * Selects a table cell in the given row and column via click in the middle of the cell.
      * @param row The row of the cell.

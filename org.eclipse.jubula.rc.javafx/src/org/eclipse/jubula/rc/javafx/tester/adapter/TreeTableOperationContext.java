@@ -18,24 +18,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTablePosition;
-import javafx.scene.control.TreeTableRow;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.layout.Pane;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
-import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
@@ -55,6 +41,19 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
+
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTablePosition;
+import javafx.scene.control.TreeTableRow;
+import javafx.scene.control.TreeTableView;
+import javafx.scene.layout.Pane;
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on the tree inside a TreeTableView.
@@ -1019,27 +1018,6 @@ public class TreeTableOperationContext extends
     }
     
     /**
-     * checks if the given cell is editable
-     * @param cell the cell
-     * @return true if editable, otherwise false
-     */
-    public boolean isCellEditable(final TreeTableCell<?, ?> cell) {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "isCellEditable", new Callable<Boolean>() { //$NON-NLS-1$
-
-                    @Override
-                    public Boolean call() throws Exception {
-                        TreeTableView<?> treeTable = getTree();
-                        if (treeTable.isEditable()) {
-                            return cell.isEditable();
-                        }
-                        return false;
-                    }
-                });
-        return result;
-    }
-    
-    /**
      * Returns the text of the column appearing in the view at column position
      * <code>column</code>.
      * 
@@ -1185,33 +1163,5 @@ public class TreeTableOperationContext extends
                     }
                 });
         return result;
-    }
-
-    /**
-     * Returns the string representation of the value of the property of the given Node
-     * @param node the node
-     * @param propertyname the name of the property
-     * @return string representation of the property value
-     */
-    public String getPropteryValue(final Object node,
-            final String propertyname) {
-        Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getPropertyValue", //$NON-NLS-1$
-                new Callable<String>() {
-
-                    @Override
-                    public String call() throws Exception {
-                        try {
-                            return getRobot().getPropertyValue(
-                                    node, propertyname);
-                        } catch (RobotException e) {
-                            throw new StepExecutionException(
-                                    e.getMessage(),
-                                    EventFactory
-                                            .createActionError(TestErrorEvent.
-                                                    PROPERTY_NOT_ACCESSABLE));
-                        }
-                    }
-                });
-        return String.valueOf(prop);
     }
 }
