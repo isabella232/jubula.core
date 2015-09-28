@@ -5,10 +5,6 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-
-<!-- CAUTION: don't format any entries, especially don't use line breaks!
-	The value of the formated item may contain formating characters like tabs or
-	newlines, making them unusable for class or data lookup!-->
 <compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
 	<configVersion>		<majorVersion>4</majorVersion>
 		<minorVersion>0</minorVersion>

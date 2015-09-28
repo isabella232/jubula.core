@@ -11,6 +11,7 @@
 package org.eclipse.jubula.tools.internal.utils.generator;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -72,8 +73,28 @@ public class AbstractComponentBuilder {
      * @return a CompSystem
      */
     protected CompSystem createCompSystem(InputStream inputStream) {
-        InputStreamReader reader = new InputStreamReader(inputStream);
-        CompSystem compSystem = (CompSystem)m_xStream.fromXML(reader);
+        BufferedReader reader = new BufferedReader(
+                (new InputStreamReader(inputStream)));
+        String string = ""; //$NON-NLS-1$
+        String line = null;
+        try {
+            do {
+                line = reader.readLine();
+                if (line != null) {
+                    string += line;
+                }
+            } while (line != null);
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        string = string.replaceAll("[\r\n]+", " "); //$NON-NLS-1$ //$NON-NLS-2$
+        string = string.replace("\t", " "); //$NON-NLS-1$ //$NON-NLS-2$
+        string = string.replaceAll("[^\\S\\r\\n]+", " "); //$NON-NLS-1$ //$NON-NLS-2$
+        string = string.replaceAll(">\\s", ">"); //$NON-NLS-1$ //$NON-NLS-2$
+        string = string.replaceAll("\\s<", "<"); //$NON-NLS-1$ //$NON-NLS-2$
+        
+        CompSystem compSystem = (CompSystem)m_xStream.fromXML(string);
         return compSystem;
     }
     
