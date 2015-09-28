@@ -18,35 +18,5 @@
       This action can only be used if you are using a custom extension implementing the identifier for edit parts. See the developer manual for more information.
       </para>
     </listitem>
-  </itemizedlist>
-  <para>
-    <emphasis role="strong">New actions for Tree Tables in the JavaFX toolkit</emphasis>
-  </para>
-  <itemizedlist>
-    <listitem>
-      <para>
-        You can now check the editability of a cell at the current mouse position using the unbound module <emphasis>ub_trt_checkEditabilityAtMousePosition</emphasis> from <emphasis>unbound_modules_javafx</emphasis>.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        You can now check the editability of a cell which is currently selected using the unbound module <emphasis>ub_trt_checkEditabilityOfSelectedCell</emphasis> from <emphasis>unbound_modules_javafx</emphasis>.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        You can now check the text of a cell at the current mouse position using the unbound module <emphasis>ub_trt_checkTextAtMousePosition</emphasis> from <emphasis>unbound_modules_javafx</emphasis>.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        You can now store the text of a cell at the current mouse position using the unbound module <emphasis>ub_trt_storeValueAtMousePosition</emphasis> from <emphasis>unbound_modules_javafx</emphasis>.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        You can now store any property value of a cell at the current mouse position using the unbound module <emphasis>ub_trt_storePropertyAtMousePosition</emphasis> from <emphasis>unbound_modules_javafx</emphasis>.
-      </para>
-    </listitem>
-  </itemizedlist>
+   </itemizedlist>
 </section>
