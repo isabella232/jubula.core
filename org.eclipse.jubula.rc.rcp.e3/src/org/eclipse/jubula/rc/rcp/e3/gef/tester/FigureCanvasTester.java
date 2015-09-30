@@ -358,11 +358,8 @@ public class FigureCanvasTester extends WidgetTester {
         ConnectionEditPart connectionEditPart = null;
 
         if (sourceEditPart != null) {
-            List<?> sourceConnectionList = sourceEditPart
-                    .getSourceConnections();
-            ConnectionEditPart[] sourceConnections = sourceConnectionList
-                    .toArray(new ConnectionEditPart[sourceConnectionList
-                                                    .size()]);
+            ConnectionEditPart[] sourceConnections =
+                    getSourceConnectionEditParts(sourceEditPart);
             for (int i = 0; i < sourceConnections.length; i++) {
                 if (sourceConnections[i].getTarget() == targetEditPart) {
                     ConnectionEditPart connection = checkConnectionWithAnchor(
@@ -375,11 +372,9 @@ public class FigureCanvasTester extends WidgetTester {
                 }
             }
         } else if (targetEditPart != null) {
-            List<?> targetConnectionList = targetEditPart
-                    .getTargetConnections();
-            ConnectionEditPart[] targetConnections = targetConnectionList
-                    .toArray(new ConnectionEditPart[targetConnectionList
-                                                    .size()]);
+
+            ConnectionEditPart[] targetConnections =
+                    getTargetConnectionEditParts(targetEditPart);
             for (int i = 0; i < targetConnections.length
                     && connectionEditPart == null; i++) {
                 if (targetConnections[i].getSource() == targetEditPart) {
@@ -944,5 +939,85 @@ public class FigureCanvasTester extends WidgetTester {
         }
         Comparer.compare(Integer.toString(connectionCount), 
                 Integer.toString(count), comparisonMethod);
+    }
+
+    /**
+     *
+     * @param textPath
+     *            the textpath to the {@link ConnectionAnchor}
+     * @param operator
+     *            the operator to find the editpart should be a rcValue from
+     *            {@link org.eclipse.jubula.toolkit.enums.ValueSets.Operator}
+     * @param hasConnection
+     *            if the anchor has a connection or not
+     */
+    public void rcCheckAnchorConnection(String textPath, String operator,
+            boolean hasConnection) {
+
+        ConnectionAnchor anchor = findConnectionAnchor(
+                textPath, operator);
+        if (anchor == null) {
+            throw new StepExecutionException(
+                    "No Anchor could be found for the given text path.", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
+        GraphicalEditPart anchorEditPart = getPartWithAnchor(textPath,
+                operator, true);
+
+        ConnectionEditPart[] sourceConnections =
+                getSourceConnectionEditParts(anchorEditPart);
+        ConnectionEditPart[] targetConnections =
+                getTargetConnectionEditParts(anchorEditPart);
+
+        boolean connection = false;
+        for (int i = 0; i < sourceConnections.length; i++) {
+            ConnectionEditPart connectiontest = checkConnectionWithAnchor(
+                    sourceConnections[i], anchor, null);
+            if (connectiontest != null) {
+                connection = true;
+                break;
+            }
+        }
+        if (!connection) {
+            for (int i = 0; i < targetConnections.length; i++) {
+                ConnectionEditPart connectiontest = checkConnectionWithAnchor(
+                        targetConnections[i], null, anchor);
+                if (connectiontest != null) {
+                    connection = true;
+                    break;
+                }
+            }
+        }
+        Verifier.equals(hasConnection, connection);
+    }
+
+    /**
+     * gets an array of connections which the {@link GraphicalEditPart} is the source of
+     * @param editPart the edit part
+     * @return the connections which are coming from the edit part
+     */
+    private ConnectionEditPart[] getSourceConnectionEditParts(
+            GraphicalEditPart editPart) {
+        List<?> sourceConnectionList = editPart
+                .getSourceConnections();
+        ConnectionEditPart[] sourceConnections = sourceConnectionList
+                .toArray(new ConnectionEditPart[sourceConnectionList
+                                                .size()]);
+        return sourceConnections;
+    }
+
+    /**
+     * gets an array of connections which target the {@link GraphicalEditPart}
+     * @param editPart the edit part
+     * @return the connections which are going to another edit part
+     */
+    private ConnectionEditPart[] getTargetConnectionEditParts(
+            GraphicalEditPart editPart) {
+        List<?> targetConnectionList = editPart
+                .getSourceConnections();
+        ConnectionEditPart[] targetConnections = targetConnectionList
+                .toArray(new ConnectionEditPart[targetConnectionList
+                                                .size()]);
+        return targetConnections;
     }
 }

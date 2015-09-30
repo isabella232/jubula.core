@@ -78,6 +78,11 @@
   			<xref linkend="actionsCheckFocus" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
+    <listitem>
+        <para>
+            <xref linkend="actionCheckAnchorHasConnectionGEF" xrefstyle="template:%t"/>
+        </para>
+    </listitem>
   	<listitem>
   		<para>
   			<xref linkend="actionsCheckProperty" xrefstyle="template:%t"/>

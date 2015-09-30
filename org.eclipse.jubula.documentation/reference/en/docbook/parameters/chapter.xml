@@ -37,6 +37,7 @@
   <xi:include href="expectedExitCode/content.xml"/>
   <xi:include href="extendSelection/content.xml"/>
   <xi:include href="fileAccess/content.xml"/>
+  <xi:include href="hasConnection/content.xml"/>
   <xi:include href="hasFocus/content.xml"/>
   <xi:include href="identifier/content.xml"/>
   <xi:include href="identifierType/content.xml"/>

@@ -481,6 +481,34 @@
                 </valueSet>
             </param>
         </action>
+        <action name="CompSystem.CheckAnchorConnection"
+            descriptionKey="CompSystem.CheckAnchorConnection.descr" since="4.0">
+            <method>rcCheckAnchorConnection</method>
+            <param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.HasConnection"
+                   descriptionKey="CompSystem.HasConnection.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>true</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+        </action>
 	</toolkitComponent>
 	
 </compSystem>
