@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula API - Commands
 Bundle-SymbolicName: org.eclipse.jubula.client.api.commands
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-RegisterBuddy: org.eclipse.jubula.client.api

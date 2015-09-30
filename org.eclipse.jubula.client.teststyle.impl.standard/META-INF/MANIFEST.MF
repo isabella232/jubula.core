@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Teststyle Rules - Standard
 Bundle-SymbolicName: org.eclipse.jubula.client.teststyle.impl.standard;singleton:=true
-Bundle-Version: 3.1.0.qualifier
+Bundle-Version: 4.0.0.qualifier
 Bundle-Activator: org.eclipse.jubula.client.teststyle.impl.standard.Activator
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.jubula.client.teststyle;bundle-version="[3.1.0,3.2.0)",
- org.eclipse.jubula.client.core;bundle-version="[3.1.0,3.2.0)",
- org.eclipse.jubula.client.ui.rcp;bundle-version="[3.1.0,3.2.0)"
+ org.eclipse.jubula.client.teststyle;bundle-version="[4.0.0,4.1.0)",
+ org.eclipse.jubula.client.core;bundle-version="[4.0.0,4.1.0)",
+ org.eclipse.jubula.client.ui.rcp;bundle-version="[4.0.0,4.1.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

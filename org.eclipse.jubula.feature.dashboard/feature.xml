@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.dashboard"
       label="Jubula Remote Control SDK"
-      version="3.1.0.qualifier"
+      version="4.0.0.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.client.ui.rap">
 
