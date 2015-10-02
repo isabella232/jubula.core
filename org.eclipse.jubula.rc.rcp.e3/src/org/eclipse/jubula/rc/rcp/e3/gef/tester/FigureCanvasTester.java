@@ -44,6 +44,7 @@ import org.eclipse.jubula.rc.rcp.e3.gef.factory.DefaultEditPartAdapterFactory;
 import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IExtendedEditPartIdentifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
+import org.eclipse.jubula.rc.rcp.e3.gef.util.FigureCanvasUtil;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
@@ -193,7 +194,7 @@ public class FigureCanvasTester extends WidgetTester {
     public void rcCheckFigureExists(
             String textPath, String operator, boolean exists) {
 
-        boolean isExisting =
+        boolean isExisting = FigureCanvasUtil.
             findFigure(findEditPart(textPath, operator)) != null;
         if (!isExisting) {
             // See if there's a connection anchor at the given path
@@ -217,7 +218,7 @@ public class FigureCanvasTester extends WidgetTester {
             String textPathOperator, final String propertyName,
             String expectedPropValue, String valueOperator) {
 
-        final IFigure figure =
+        final IFigure figure = FigureCanvasUtil.
             findFigure(findEditPart(textPath, textPathOperator));
         if (figure == null) {
             throw new StepExecutionException(
@@ -309,21 +310,19 @@ public class FigureCanvasTester extends WidgetTester {
         IFigure connectionFigure = getConnectionFigure(sourceTextPath,
                 sourceOperator, targetTextPath, targetOperator);
 
+        ClickOptions clickOptions = ClickOptions.create()
+                .setScrollToVisible(false).setClickCount(count)
+                .setMouseButton(button);
         if (connectionFigure instanceof Connection) {
-            Point midpoint =
-                ((Connection)connectionFigure).getPoints().getMidpoint();
+            Point midpoint = ((Connection) connectionFigure).getPoints()
+                    .getMidpoint();
             connectionFigure.translateToAbsolute(midpoint);
-            getRobot().click(getViewerControl(), null,
-                    ClickOptions.create().setScrollToVisible(false)
-                        .setClickCount(count).setMouseButton(button),
-                    midpoint.x, true, midpoint.y, true);
+            getRobot().click(getViewerControl(), null, clickOptions, midpoint.x,
+                    true, midpoint.y, true);
         } else {
-            getRobot().click(getViewerControl(),
-                    getBounds(connectionFigure),
-                    ClickOptions.create().setScrollToVisible(false)
-                        .setClickCount(count).setMouseButton(button));
+            getRobot().click(getViewerControl(), getBounds(connectionFigure),
+                    clickOptions);
         }
-
     }
 
     /**
@@ -399,7 +398,8 @@ public class FigureCanvasTester extends WidgetTester {
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
 
-        IFigure connectionFigure = findFigure(connectionEditPart);
+        IFigure connectionFigure = FigureCanvasUtil
+                .findFigure(connectionEditPart);
         if (connectionFigure == null) {
             String missingEnd = sourceEditPart == null ? "source" : "target"; //$NON-NLS-1$ //$NON-NLS-2$
             throw new StepExecutionException(
@@ -531,7 +531,7 @@ public class FigureCanvasTester extends WidgetTester {
     private Rectangle getFigureBoundsChecked(String textPath, String operator) {
         GraphicalEditPart editPart =
             findEditPart(textPath, operator);
-        IFigure figure = findFigure(editPart);
+        IFigure figure = FigureCanvasUtil.findFigure(editPart);
         ConnectionAnchor anchor = null;
 
         if (figure == null) {
@@ -546,7 +546,8 @@ public class FigureCanvasTester extends WidgetTester {
                         editPartPathItems.length);
                 editPart = findEditPart(operator, editPartPathItems);
             }
-            if (anchor == null || findFigure(editPart) == null) {
+            if (anchor == null || FigureCanvasUtil
+                    .findFigure(editPart) == null) {
                 throw new StepExecutionException(
                         "No figure could be found for the given text path.", //$NON-NLS-1$
                         EventFactory.createActionError(
@@ -698,7 +699,7 @@ public class FigureCanvasTester extends WidgetTester {
         // Scrolling
         revealEditPart(editPart);
 
-        return findFigure(editPart);
+        return FigureCanvasUtil.findFigure(editPart);
     }
 
     /**
@@ -719,24 +720,6 @@ public class FigureCanvasTester extends WidgetTester {
         }
         return figure;
 
-    }
-
-    /**
-     *
-     * @param editPart The EditPart for which to find the corresponding figure.
-     * @return the (visible) figure corresponding to the given EditPart, or
-     *         <code>null</code> if no visible figure corresponds to the given
-     *         EditPart.
-     */
-    private IFigure findFigure(GraphicalEditPart editPart) {
-        if (editPart != null) {
-            IFigure figure = editPart.getFigure();
-            if (figure.isShowing()) {
-                return figure;
-            }
-        }
-
-        return null;
     }
 
     /**

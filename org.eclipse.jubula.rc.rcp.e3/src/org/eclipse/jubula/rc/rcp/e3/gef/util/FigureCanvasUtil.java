@@ -11,9 +11,11 @@
 package org.eclipse.jubula.rc.rcp.e3.gef.util;
 
 import org.eclipse.draw2d.FigureCanvas;
+import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.jubula.rc.rcp.e3.gef.factory.DefaultEditPartAdapterFactory;
@@ -111,4 +113,22 @@ public class FigureCanvasUtil {
         return null;
     }
 
+    /**
+     *
+     * @param editPart
+     *            The EditPart for which to find the corresponding figure.
+     * @return the (visible) figure corresponding to the given EditPart, or
+     *         <code>null</code> if no visible figure corresponds to the given
+     *         EditPart.
+     */
+    public static IFigure findFigure(GraphicalEditPart editPart) {
+        if (editPart != null) {
+            IFigure figure = editPart.getFigure();
+            if (figure.isShowing()) {
+                return figure;
+            }
+        }
+
+        return null;
+    }
 }

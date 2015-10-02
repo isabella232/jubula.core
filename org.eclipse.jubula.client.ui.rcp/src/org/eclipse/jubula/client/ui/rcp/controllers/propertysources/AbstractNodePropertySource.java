@@ -374,7 +374,7 @@ public abstract class AbstractNodePropertySource
      * @return the corresponding NodePO object
      */
     protected INodePO getPoNode() {
-        return getGuiNode();
+        return getNode();
     }
     
     /**

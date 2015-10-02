@@ -208,7 +208,7 @@ public class MappingListener extends AbstractAutSwingEventListener {
                 IComponentIdentifier id;
                 try {
                     id = ComponentHandler.getIdentifier(bean);
-                    Map componentProperties = PropertyUtil
+                    Map<String, String> componentProperties = PropertyUtil
                             .getMapOfComponentProperties(bean);
                     id.setComponentPropertiesMap(componentProperties);
                     

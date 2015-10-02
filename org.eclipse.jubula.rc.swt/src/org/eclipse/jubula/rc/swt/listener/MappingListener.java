@@ -131,7 +131,7 @@ public class MappingListener extends AbstractAutSwtEventListener {
                 IComponentIdentifier id = ComponentHandler.getIdentifier(
                     currComp);
                 list.add(id);
-                Map componentProperties = PropertyUtil
+                Map<String, String> componentProperties = PropertyUtil
                         .getMapOfComponentProperties(currComp);
                 if (LOG.isInfoEnabled()) {
                     LOG.info("send a message with identifier " //$NON-NLS-1$

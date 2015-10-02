@@ -201,5 +201,11 @@
          </viewShortcut>
       </perspectiveExtension>
    </extension>
-
+   <extension point="org.eclipse.core.runtime.adapters">
+    <factory
+      adaptableType="org.eclipse.jubula.client.inspector.ui.model.InspectorTreeNode"
+      class="org.eclipse.jubula.client.inspector.ui.adapter.InspectorAdapterFactory">
+      <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+    </factory>
+   </extension>
 </plugin>

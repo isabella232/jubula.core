@@ -154,10 +154,11 @@ public interface IComponentIdentifier extends ComponentIdentifier {
     /**
      * @return the keyValueProperties
      */
-    public Map getComponentPropertiesMap();
+    public Map<String, String> getComponentPropertiesMap();
 
     /**
      * @param keyValueProperties the keyValueProperties to set
      */
-    public void setComponentPropertiesMap(Map keyValueProperties);
+    public void setComponentPropertiesMap(
+            Map<String, String> keyValueProperties);
 }

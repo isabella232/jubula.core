@@ -15,17 +15,22 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.inspector.ui.model.InspectedComponent;
+import org.eclipse.jubula.client.inspector.ui.model.InspectorTreeNode;
 import org.eclipse.jubula.client.inspector.ui.provider.labelprovider.InspectorLabelProvider;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 
 /**
@@ -43,26 +48,40 @@ public class InspectorView extends ViewPart {
     private TreeViewer m_treeViewer;
 
     /** informs the part when the inspected component has changed */
-    private PropertyChangeListener m_propChangeListener =
-        new PropertyChangeListener() {
+    private PropertyChangeListener m_propChangeListener = 
+            new PropertyChangeListener() {
 
-            @SuppressWarnings("synthetic-access")
-            public void propertyChange(PropertyChangeEvent evt) {
-                final TreeNode [] input = convertToViewerModel(
-                    InspectedComponent.getInstance()
-                        .getCompId());
-                PlatformUI.getWorkbench().getDisplay().syncExec(
-                    new Runnable() {
+        @SuppressWarnings("synthetic-access")
+        public void propertyChange(PropertyChangeEvent evt) {
+            final TreeNode[] input = convertToViewerModel(
+                    InspectedComponent.getInstance().getCompId());
+            Display display = PlatformUI.getWorkbench().getDisplay();
+            display.syncExec(new Runnable() {
 
-                        public void run() {
-                            m_treeViewer.setInput(input);
-                            m_treeViewer.expandAll();
+                public void run() {
+                    m_treeViewer.setInput(input);
+                    m_treeViewer.expandAll();
+                }
+
+            });
+            if (input != null) {
+                display.syncExec(new Runnable() {
+                    public void run() {
+                        TreeNode element = input[0];
+                        while (element != null && element.hasChildren()) {
+                            element = element.getChildren()[0];
                         }
+                        if (element != null) {
+                            m_treeViewer.setSelection(
+                                    new StructuredSelection(element));
+                        }
+                    }
 
-                    });
+                });
             }
-    
-        };
+        }
+
+    };
     
     /**
      * 
@@ -99,6 +118,14 @@ public class InspectorView extends ViewPart {
         m_treeViewer.getTree().setFocus();
     }
 
+    /** {@inheritDoc} */
+    public Object getAdapter(Class key) {
+        if (key.equals(IPropertySheetPage.class)) {
+            return new NonSortedPropertySheetPage();
+        }
+        return super.getAdapter(key);
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -116,7 +143,8 @@ public class InspectorView extends ViewPart {
      *               viewer model.
      * @return the top-level elements of the converted viewer model.
      */
-    private TreeNode [] convertToViewerModel(IComponentIdentifier compId) {
+    private InspectorTreeNode[] convertToViewerModel(
+            IComponentIdentifier compId) {
         if (compId == null) {
             return null;
         }
@@ -127,14 +155,14 @@ public class InspectorView extends ViewPart {
         String [] hierarchy = 
             hierarchyList.toArray(new String[hierarchyList.size()]);
 
-        TreeNode rootNode = new TreeNode(hierarchy);
+        InspectorTreeNode rootNode = new InspectorTreeNode(hierarchy);
         TreeNode node = rootNode;
         // Start iteration at index 1 because we already have the first element
         for (int i = 1; i < hierarchy.length; i++) {
             String [] childData = new String [hierarchy.length - i];
             System.arraycopy(hierarchy, i, childData, 0, 
                     childData.length);
-            TreeNode child = new TreeNode(childData);
+            TreeNode child = new InspectorTreeNode(childData);
             TreeNode [] nodeChildren = node.getChildren();
             if (nodeChildren == null) {
                 nodeChildren = new TreeNode[0];
@@ -149,6 +177,6 @@ public class InspectorView extends ViewPart {
             node = child;
         }
 
-        return new TreeNode [] {rootNode};
+        return new InspectorTreeNode [] {rootNode};
     }
 }

@@ -21,6 +21,10 @@
     the Developer Manual for further information on creating your
     own accessibility plug-in.
   </para>
+  <para role="tip">
+    The figure properties (key and value) of a GEF element can also be seen within 
+    the normal ITE properties view after inspection.
+  </para>
   <para>
     To use the inspector, you must have started the AUT
     (<xref linkend="starting-the-aut"/>).

@@ -28,9 +28,9 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
  * 
  * @author BREDEX GmbH
  * @created 31.01.2005
- * @param <GUINODE_TYPE> type of node
+ * @param <NODE_TYPE> type of node
  */
-public abstract class AbstractPropertySource <GUINODE_TYPE>
+public abstract class AbstractPropertySource <NODE_TYPE>
     extends org.eclipse.jubula.client.ui.controllers.
     propertysources.AbstractPropertySource {
     /** The default image */
@@ -50,14 +50,14 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
     /** Image for warning */
     public static final Image WARNING_IMAGE = IconConstants.WARNING_IMAGE;
     /** The INodePO for this PropertySource*/
-    private GUINODE_TYPE m_guiNode;
+    private NODE_TYPE m_node;
     
     /**
      * Constructor.
      * @param guiNode the INodePO for this PropertySource.
      */
-    public AbstractPropertySource(GUINODE_TYPE guiNode) {
-        m_guiNode = guiNode;
+    public AbstractPropertySource(NODE_TYPE guiNode) {
+        m_node = guiNode;
     }
 
     /**
@@ -107,8 +107,8 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
     /**
      * @return Returns the guiNode.
      */
-    protected GUINODE_TYPE getGuiNode() {
-        return m_guiNode;
+    protected NODE_TYPE getNode() {
+        return m_node;
     }
     
     /**
@@ -119,12 +119,12 @@ public abstract class AbstractPropertySource <GUINODE_TYPE>
         IPropertyController {
         
         /**
-         * parent propertysource
+         * parent property source
          */
         private AbstractNodePropertySource m_propertySource;
         
         /**
-         * contructor
+         * Constructor
          * @param s
          *      AbstractNodePropertySource
          */

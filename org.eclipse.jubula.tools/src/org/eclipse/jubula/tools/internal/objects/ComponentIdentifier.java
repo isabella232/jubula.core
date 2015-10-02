@@ -104,7 +104,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      * the key represents the name of the property
      * the value is only represented by its first 200 characters
      */
-    private Map m_componentProperties;
+    private Map<String, String> m_componentProperties;
     
     /**
      * public constructor <br>
@@ -390,12 +390,13 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     }
     
     /** {@inheritDoc} */
-    public Map getComponentPropertiesMap() {
+    public Map<String, String> getComponentPropertiesMap() {
         return m_componentProperties;
     }
 
     /** {@inheritDoc} */
-    public void setComponentPropertiesMap(Map componentProperties) {
+    public void setComponentPropertiesMap(
+            Map<String, String> componentProperties) {
         m_componentProperties = componentProperties;
     }
 }

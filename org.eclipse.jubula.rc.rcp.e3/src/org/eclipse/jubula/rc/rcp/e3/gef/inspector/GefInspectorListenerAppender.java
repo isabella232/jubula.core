@@ -34,6 +34,7 @@ import org.eclipse.jubula.communication.internal.message.InspectorComponentSelec
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.listener.IAutListenerAppender;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.rcp.e3.gef.factory.DefaultEditPartAdapterFactory;
 import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
@@ -218,13 +219,12 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                 return;
             }
 
-            FigureCanvas figureCanvas =
-                (FigureCanvas)selectedWidget;
+            FigureCanvas figureCanvas = (FigureCanvas)selectedWidget;
             Composite parent = figureCanvas;
-            while (parent != null
-                    && !(parent.getData(
-                            GefPartListener.TEST_GEF_VIEWER_DATA_KEY)
-                                instanceof GraphicalViewer)) {
+            String testGefViewerDataKey = 
+                    GefPartListener.TEST_GEF_VIEWER_DATA_KEY;
+            while (parent != null && !(parent.getData(
+                    testGefViewerDataKey) instanceof GraphicalViewer)) {
                 parent = parent.getParent();
             }
 
@@ -233,9 +233,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                 return;
             }
 
-            Object gefData =
-                parent.getData(GefPartListener.TEST_GEF_VIEWER_DATA_KEY);
-
+            Object gefData = parent.getData(testGefViewerDataKey);
             if (gefData instanceof EditPartViewer) {
                 EditPartViewer viewer = (EditPartViewer)gefData;
                 Point cursorLocation = new Point(display.map(null,
@@ -245,11 +243,17 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                 EditPart primaryEditPart = FigureCanvasUtil.getPrimaryEditPart(
                         editPart, viewer.getRootEditPart());
                 List<String> idStringList = Collections.EMPTY_LIST;
+                Map properties = null;
 
                 if (primaryEditPart != null) {
                     idStringList = getPathToRoot(viewer.getRootEditPart(),
                             cursorLocation, primaryEditPart);
-
+                    if (primaryEditPart instanceof GraphicalEditPart) {
+                        GraphicalEditPart gep = 
+                                (GraphicalEditPart) primaryEditPart;
+                        properties = PropertyUtil.getMapOfComponentProperties(
+                                FigureCanvasUtil.findFigure(gep));
+                    }
                 } else {
                     // No primary figure found.
                     // Check whether a tool was selected.
@@ -271,8 +275,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                         }
                     }
                 }
-
-                compId = createCompId(idStringList);
+                compId = createCompId(idStringList, properties);
             }
             sendIdInfo(compId);
         }
@@ -392,18 +395,23 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
 
         /**
          *
-         * @param idStringList The path to root for a specific edit part or
-         *                     connection anchor.
+         * @param idStringList
+         *            The path to root for a specific edit part or connection
+         *            anchor.
+         * @param properties
+         *            the properties
          * @return a component identifier for the given path, or
          *         <code>null</code> if no valid component identifier can be
          *         generated.
          */
-        private IComponentIdentifier createCompId(List<String> idStringList) {
+        private IComponentIdentifier createCompId(List<String> idStringList,
+                Map properties) {
             IComponentIdentifier compId = null;
             if (!idStringList.isEmpty()) {
                 Collections.reverse(idStringList);
                 compId = new ComponentIdentifier();
                 compId.setHierarchyNames(idStringList);
+                compId.setComponentPropertiesMap(properties);
             }
 
             return compId;

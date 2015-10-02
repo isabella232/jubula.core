@@ -112,38 +112,32 @@ public class OMTechNameGUIPropertySource
     
     /**
      * initializes the ComponentProperties
-     *
      */
-    @SuppressWarnings("unchecked")
     private void initComponentProperties() {
-        IComponentIdentifier compId = getGuiNode().getCompIdentifier();
+        IComponentIdentifier compId = getNode().getCompIdentifier();
         if (compId != null) {
             Map<String, String> componentProperties = 
                     compId.getComponentPropertiesMap();
             if (componentProperties != null) {
-                int i = 0;
-                for (Object o : componentProperties.keySet()) {
-                    if (o instanceof String) {
-                        String key = (String)o;
-                        JBPropertyDescriptor propDes = new JBPropertyDescriptor(
-                                new ComponentPropertiesController(i), key);
-                        propDes.setCategory(
-                                P_ELEMENT_DISPLAY_PROPERTY_INFORMATION);
-                        addPropertyDescriptor(propDes);
-                        i++;
-                    }
+                for (String key : componentProperties.keySet()) {
+                    JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+                        new ComponentPropertiesController(
+                                key, compId), key);
+                    propDes.setCategory(
+                        P_ELEMENT_DISPLAY_PROPERTY_INFORMATION);
+                    addPropertyDescriptor(propDes);
                 }
             }
         }
     }
 
     /**
-     * initalizes the hierarchy
+     * Initializes the hierarchy
      *
      */
     private void initHierarchy() {
         JBPropertyDescriptor propDes = null;
-        IComponentIdentifier compId = getGuiNode().getTechnicalName();
+        IComponentIdentifier compId = getNode().getTechnicalName();
         if (compId != null) {
             List hierarchy = compId.getHierarchyNames();
             for (int i = 0; i < hierarchy.size(); i++) {
@@ -162,12 +156,12 @@ public class OMTechNameGUIPropertySource
         }
     }
     /**
-     * initalizes the context
+     * Initializes the context
      *
      */
     private void initContext() {
         JBPropertyDescriptor propDes = null;
-        IComponentIdentifier compId = getGuiNode().getTechnicalName();
+        IComponentIdentifier compId = getNode().getTechnicalName();
         if (compId != null) {
             List context = compId.getNeighbours();
             for (int i = 0; i < context.size(); i++) {
@@ -185,9 +179,8 @@ public class OMTechNameGUIPropertySource
             }
         }
     }
-    /**
-     * {@inheritDoc}
-     */
+    
+    /** {@inheritDoc} */
     public boolean isPropertySet(Object id) {
         boolean isPropSet = false;
         return isPropSet;
@@ -200,18 +193,14 @@ public class OMTechNameGUIPropertySource
      * @created 07.01.2005
      */
     private class ComponentNameController extends AbstractPropertyController {
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public boolean setProperty(Object value) {
             return true;
         }
         
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public Object getProperty() {
-            IComponentIdentifier compId = getGuiNode().getTechnicalName();
+            IComponentIdentifier compId = getNode().getTechnicalName();
             if (compId != null) {
                 if (compId.getComponentName() != null) {
                     return compId.getComponentName();
@@ -220,9 +209,7 @@ public class OMTechNameGUIPropertySource
             return StringConstants.EMPTY;
         }  
         
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public Image getImage() {
             return IconConstants.TECHNICAL_NAME_IMAGE;
         }
@@ -246,7 +233,7 @@ public class OMTechNameGUIPropertySource
          * {@inheritDoc}
          */
         public Object getProperty() {
-            IComponentIdentifier compId = getGuiNode().getTechnicalName();
+            IComponentIdentifier compId = getNode().getTechnicalName();
             if (compId != null) {
                 if (compId.getComponentClassName() != null) {
                     return compId.getComponentClassName();
@@ -282,7 +269,7 @@ public class OMTechNameGUIPropertySource
          * {@inheritDoc}
          */
         public Object getProperty() {
-            IComponentIdentifier compId = getGuiNode().getTechnicalName();
+            IComponentIdentifier compId = getNode().getTechnicalName();
             if (compId != null) {
                 if (compId.getSupportedClassName() != null) {
                     return compId.getSupportedClassName();
@@ -334,7 +321,7 @@ public class OMTechNameGUIPropertySource
          * {@inheritDoc}
          */
         public Object getProperty() {
-            IComponentIdentifier compId = getGuiNode().getTechnicalName();
+            IComponentIdentifier compId = getNode().getTechnicalName();
             if (compId != null) {
                 if (compId.getSupportedClassName() != null
                         && compId.getHierarchyNames().get(m_index) != null) {
@@ -389,7 +376,7 @@ public class OMTechNameGUIPropertySource
          */
         @SuppressWarnings("unchecked")
         public Object getProperty() {
-            IComponentIdentifier compId = getGuiNode().getTechnicalName();
+            IComponentIdentifier compId = getNode().getTechnicalName();
             if (compId != null) {
                 if (compId.getSupportedClassName() != null
                         && compId.getNeighbours().get(m_index) != null) {
@@ -416,53 +403,43 @@ public class OMTechNameGUIPropertySource
      * @author BREDEX GmbH
      * @created 02.10.2013
      */
-    private class ComponentPropertiesController extends
+    public static class ComponentPropertiesController extends
         AbstractPropertyController {
         
-        /** 
-         * index of array
-         */
-        private int m_index = 0;
+        /** the key */
+        private String m_key = null;
+        
+        /**the identifier */
+        private IComponentIdentifier m_compId = null;
         
         /**
          * constructor
          * 
-         * @param i
-         *      int
+         * @param key
+         *            the lookup key
+         * @param compId
+         *            the component identifier
          */
-        public ComponentPropertiesController(int i) {
-            m_index = i;
+        public ComponentPropertiesController(String key,
+                IComponentIdentifier compId) {
+            m_compId = compId;
+            m_key = key;
         }
 
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public boolean setProperty(Object value) {
             return true;
         }
-        
-        /**
-         * {@inheritDoc}
-         */
-        @SuppressWarnings("unchecked")
+
+        /** {@inheritDoc} */
         public Object getProperty() {
-            IComponentIdentifier compId = getGuiNode().getCompIdentifier();
-            if (compId != null) {
-                Map<String, String> componentProperties = 
-                        compId.getComponentPropertiesMap();
-                if (componentProperties != null) {
-                    List values = 
-                            new ArrayList<String>(componentProperties.values());
-                    return values.get(m_index);
-                }
+            if (m_compId != null && m_key != null) {
+                return  m_compId.getComponentPropertiesMap().get(m_key);
             }
             return StringConstants.EMPTY;
-        }  
-        
-        
-        /**
-         * {@inheritDoc}
-         */
+        }
+
+        /** {@inheritDoc} */
         public Image getImage() {
             return DEFAULT_IMAGE;
         }

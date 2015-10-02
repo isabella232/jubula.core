@@ -111,7 +111,7 @@ public class OMLogicNameGUIPropertySource
          * {@inheritDoc}
          */
         public Object getProperty() {
-            IComponentNamePO compName = getGuiNode();
+            IComponentNamePO compName = getNode();
             IComponentNameMapper compMapper = Plugin.getActiveCompMapper();
             if (compMapper != null) {
                 compName = compMapper.getCompNameCache().getCompNamePo(
@@ -148,7 +148,7 @@ public class OMLogicNameGUIPropertySource
          * {@inheritDoc}
          */
         public Object getProperty() {
-            IComponentNamePO compName = getGuiNode();
+            IComponentNamePO compName = getNode();
             IComponentNameMapper compMapper = Plugin.getActiveCompMapper();
             if (compMapper != null) {
                 compName = compMapper.getCompNameCache().getCompNamePo(
@@ -186,7 +186,7 @@ public class OMLogicNameGUIPropertySource
          * {@inheritDoc}
          */
         public Object getProperty() {
-            IComponentNamePO compName = getGuiNode();
+            IComponentNamePO compName = getNode();
             Long parentProjectId = compName.getParentProjectId();
             IProjectPO currentProject = GeneralStorage.getInstance()
                     .getProject();
