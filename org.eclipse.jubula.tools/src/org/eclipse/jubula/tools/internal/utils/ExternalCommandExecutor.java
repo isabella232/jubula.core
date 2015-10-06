@@ -172,8 +172,10 @@ public class ExternalCommandExecutor {
                             m_dir);
                     
                     if (m_process != null) {
-                        new DevNull(m_process.getErrorStream()).start();
-                        new DevNull(m_process.getInputStream()).start();
+                        new SysoRedirect(m_process.getErrorStream(), 
+                                "Command syserr: ").start(); //$NON-NLS-1$
+                        new SysoRedirect(m_process.getInputStream(), 
+                                "Command sysout: ").start(); //$NON-NLS-1$
                         m_process.waitFor();
                     } else {
                         m_isCmdValid = false;

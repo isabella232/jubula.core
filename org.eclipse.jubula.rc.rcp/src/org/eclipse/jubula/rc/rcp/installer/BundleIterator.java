@@ -23,7 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 
 /**
- * Helper class for installing OSGI bundles located in a bundle. This class
+ * Helper class for installing OSGi bundles located in a bundle. This class
  * requires bundle files (*.jar) in the directory named "bundles/" in the given
  * bundle context. The file names must contain a version between the last '_'
  * and the file name extension.

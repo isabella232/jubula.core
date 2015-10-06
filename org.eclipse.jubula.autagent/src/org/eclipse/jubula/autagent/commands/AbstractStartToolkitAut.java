@@ -212,16 +212,15 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         String [] cmdArray, String [] envArray, File workingDir)
         throws IOException {
 
-        final AutStarter autStarter = AutStarter.getInstance();
+        final AutStarter autAgent = AutStarter.getInstance();
         Process process = Runtime.getRuntime().exec(cmdArray, envArray,
             workingDir);
         if (isErrorMessage()) {
-            System.out.println("AbstractStartToolkitAut - executeCommand: " //$NON-NLS-1$
+            log.error("AbstractStartToolkitAut - executeCommand: " //$NON-NLS-1$
                     + getErrorMessage());
             return getErrorMessage();
         }
-        // give the process to AutStarter to watch
-        if (!autStarter.watchAutServer(process, m_isAgentSet)) {
+        if (!autAgent.watchAUT(process, m_isAgentSet)) {
             process.destroy(); // new AUTServer could not be watched
             return createBusyMessage();
         }

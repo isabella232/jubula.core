@@ -24,7 +24,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionGUIController;
+import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
@@ -71,7 +71,7 @@ public class StopAutHandler extends AbstractHandler {
             }
             
             for (AutIdentifier autId : autsToStop) {
-                TestExecutionGUIController.stopAUT(autId);
+                TestExecutionContributor.getInstance().stopAUT(autId);
             }
         }
         return null;

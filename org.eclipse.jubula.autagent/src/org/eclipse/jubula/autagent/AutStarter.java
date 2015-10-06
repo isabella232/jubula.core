@@ -42,7 +42,7 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
-import org.eclipse.jubula.tools.internal.utils.DevNull;
+import org.eclipse.jubula.tools.internal.utils.SysoRedirect;
 import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,13 +152,13 @@ public class AutStarter {
 
     /**
      * starts watching the given process <br>
-     * @param process the process representing an AutServer, must not be null
+     * @param process the process representing an AUT, must not be null
      * @param isAgentSet true if executable file and agent are set.
      * @throws IllegalArgumentException if the given process is null
      * @return false when no more server can watched (it's only one),
      *         true otherwise
      */
-    public boolean watchAutServer(Process process, boolean isAgentSet)
+    public boolean watchAUT(Process process, boolean isAgentSet)
         throws IllegalArgumentException {
         // check parameter
         if (process == null) {
@@ -167,7 +167,7 @@ public class AutStarter {
         }
 
         // start thread waiting for termination
-        new AUTServerWatcher(process, isAgentSet, m_messenger).start();
+        new AUTWatcher(process, isAgentSet, m_messenger).start();
         return true;
     }
 
@@ -430,7 +430,7 @@ public class AutStarter {
      * @author BREDEX GmbH
      * @created 03.08.2004
      */
-    private static class AUTServerWatcher extends IsAliveThread {
+    private static class AUTWatcher extends IsAliveThread {
 
         /** lock for synchronizing on m_autServerVM */
         private final Object m_autServerLock = new Object();
@@ -439,7 +439,7 @@ public class AutStarter {
          * the started VM the AUTServer running in, it's null, when no AutServer
          * was started 
          */
-        private Process m_autServerProcess;
+        private Process m_autProcess;
 
         /** the exit value of the VM the AUTServer is running in */
         private int m_autExitValue;
@@ -462,16 +462,16 @@ public class AutStarter {
         /**
          * Constructor
          * 
-         * @param autServerProcess The process in which the AUT and AUT Server
+         * @param autProcess The process in which the AUT and AUT Server
          *                         are running.
          * @param isAgentSet Whether the AUT was started using the Java agent 
          *                   mechanism.
          * @param messenger Sends messages concerning the AUT Server.
          */
-        public AUTServerWatcher(Process autServerProcess, boolean isAgentSet, 
+        public AUTWatcher(Process autProcess, boolean isAgentSet, 
                 CommunicationHelper messenger) {
-            super("AUTServerWatcher"); //$NON-NLS-1$
-            m_autServerProcess = autServerProcess;
+            super("AUTWatcher"); //$NON-NLS-1$
+            m_autProcess = autProcess;
             m_isAgentSet = isAgentSet;
             m_messenger = messenger;
         }
@@ -556,22 +556,24 @@ public class AutStarter {
          * {@inheritDoc}
          */
         public void run() {
-            DevNull dn;
+            SysoRedirect dn;
             try {
                 // clear the streams of the autServerVM
                 synchronized (m_autServerLock) {
-                    dn = new DevNull(m_autServerProcess.getErrorStream());
+                    dn = new SysoRedirect(m_autProcess.getErrorStream(),
+                            "AUTs syserr: "); //$NON-NLS-1$
                     dn.start();
-                    new DevNull(m_autServerProcess.getInputStream()).start();
+                    new SysoRedirect(m_autProcess.getInputStream(),
+                            "AUTs sysout: ").start(); //$NON-NLS-1$
                 }
                 // don't synchronized, catching NullPointerException which is
                 // raised if the process has already terminated
-                m_autExitValue = m_autServerProcess.waitFor();
+                m_autExitValue = m_autProcess.waitFor();
                 // picking up the 'Unrecognized option' error stream
                 m_errorStream = dn.getLine();
 
                 synchronized (m_autServerLock) {
-                    m_autServerProcess = null;
+                    m_autProcess = null;
                 }
 
                 if (log.isInfoEnabled()) {

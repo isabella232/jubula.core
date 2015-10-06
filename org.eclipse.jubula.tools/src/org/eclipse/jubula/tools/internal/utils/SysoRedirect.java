@@ -20,14 +20,14 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class reads buffered from an inputstream in a seperated thread. 
- * Used for clearing the inputstream and errorstream of an external process.
+ * Used for redirecting a stream of an external process.
  *
  * @author BREDEX GmbH
  * @created 10.08.2004
  */
-public class DevNull extends IsAliveThread {
+public class SysoRedirect extends IsAliveThread {
     /** the logger */
-    private static Logger log = LoggerFactory.getLogger(DevNull.class);
+    private static Logger log = LoggerFactory.getLogger(SysoRedirect.class);
     
     /** the error stream if a SUN VM does not know -javaagent */
     private static final String UNRECOGNIZED_SUN_JO = 
@@ -38,14 +38,23 @@ public class DevNull extends IsAliveThread {
 
     /** picks up the error stream if -javaagent is unknown */
     private String m_line;
+
+    /** a descriptive prefix used for the syso redirection */
+    private final String m_sysoPrefix;
     
     /**
      * public constructor
-     * @param inputStream the inputstream to trash
+     * 
+     * @param inputStream
+     *            the input stream to redirect to system out
+     * @param sysoPrefix
+     *            a descriptive prefix used for the syso redirection; mighty not
+     *            be <code>null</code>
      */
-    public DevNull(InputStream inputStream) {
+    public SysoRedirect(InputStream inputStream, String sysoPrefix) {
         super("Stream Redirect"); //$NON-NLS-1$
         m_inputStream = inputStream;
+        m_sysoPrefix = sysoPrefix;
     }
     
     /**
@@ -57,7 +66,7 @@ public class DevNull extends IsAliveThread {
             BufferedReader br = new BufferedReader(isr);
             String line = br.readLine();
             while (line != null) {
-                System.out.println("AUT:" + line); //$NON-NLS-1$
+                System.out.println(m_sysoPrefix + line);
                 if (line.indexOf(UNRECOGNIZED_SUN_JO) > -1) {
                     m_line = line;
                 }

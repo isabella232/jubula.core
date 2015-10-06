@@ -121,15 +121,6 @@ public class TestExecutionGUIController {
     }
 
     /**
-     * Stops the Running AUT with the given ID.
-     * 
-     * @param autId The ID of the Running AUT to stop.
-     */
-    public static void stopAUT(AutIdentifier autId) {
-        TestExecutionContributor.getInstance().stopAUT(autId);
-    }
-
-    /**
      * starts the selected test suite. Testsuite must be
      * startable
      * @param ts ITestSuitePO
