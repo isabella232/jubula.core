@@ -215,10 +215,10 @@ public class FigureCanvasTester extends WidgetTester {
      * @param valueOperator The operator used to verify
      */
     public void rcVerifyFigureProperty(String textPath,
-            String textPathOperator, final String propertyName,
+            String textPathOperator, String propertyName,
             String expectedPropValue, String valueOperator) {
 
-        final IFigure figure = FigureCanvasUtil.
+        IFigure figure = FigureCanvasUtil.
             findFigure(findEditPart(textPath, textPathOperator));
         if (figure == null) {
             throw new StepExecutionException(
@@ -226,32 +226,7 @@ public class FigureCanvasTester extends WidgetTester {
                     EventFactory.createActionError(
                             TestErrorEvent.NOT_FOUND));
         }
-        Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
-            new IRunnable() {
-
-                public Object run() throws StepExecutionException {
-                    try {
-                        return PropertyUtils.getProperty(figure, propertyName);
-                    } catch (IllegalAccessException e) {
-                        throw new StepExecutionException(
-                            e.getMessage(),
-                            EventFactory.createActionError(
-                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
-                    } catch (InvocationTargetException e) {
-                        throw new StepExecutionException(
-                            e.getMessage(),
-                            EventFactory.createActionError(
-                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
-                    } catch (NoSuchMethodException e) {
-                        throw new StepExecutionException(
-                            e.getMessage(),
-                            EventFactory.createActionError(
-                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
-                    }
-                }
-
-            });
-        final String propToStr = String.valueOf(prop);
+        String propToStr = getPropertyFromFigure(propertyName, figure);
         Verifier.match(propToStr, expectedPropValue, valueOperator);
 
     }
@@ -1019,5 +994,66 @@ public class FigureCanvasTester extends WidgetTester {
                 .toArray(new ConnectionEditPart[targetConnectionList
                                                 .size()]);
         return targetConnections;
+    }
+    
+    /**
+     * Finds and checks if a connection between a source figure and a
+     * target figure exists.
+     *
+     * @param sourceTextPath The path to the source figure.
+     * @param sourceOperator The operator to use for matching the source
+     *                       figure path.
+     * @param targetTextPath The path to the target figure.
+     * @param targetOperator The operator to use for matching the target
+     *                       figure path.
+     * @param propertyName The name of the property
+     * @param expectedPropValue The value of the property as a string
+     * @param valueOperator The operator used to verify
+     */
+    public void rcVerifyConnectionProperty(String sourceTextPath,
+            String sourceOperator, String targetTextPath,
+            String targetOperator, final String propertyName,
+            String expectedPropValue, String valueOperator) {
+        final IFigure figure = getConnectionFigure(sourceTextPath,
+                sourceOperator, targetTextPath, targetOperator);        
+        final String propToStr = getPropertyFromFigure(propertyName, figure);
+        Verifier.match(propToStr, expectedPropValue, valueOperator);
+    }
+
+    /**
+     * 
+     * @param propertyName The name of the property
+     * @param figure The figure we want the property from
+     * @return The property in its String representation
+     */
+    private String getPropertyFromFigure(final String propertyName,
+            final IFigure figure) {
+        Object prop = getEventThreadQueuer().<Object>invokeAndWait("getProperty",  //$NON-NLS-1$
+            new IRunnable<Object>() {
+
+                public Object run() throws StepExecutionException {
+                    try {
+                        return PropertyUtils.getProperty(figure, propertyName);
+                    } catch (IllegalAccessException e) {
+                        throw new StepExecutionException(
+                            e.getMessage(),
+                            EventFactory.createActionError(
+                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
+                    } catch (InvocationTargetException e) {
+                        throw new StepExecutionException(
+                            e.getMessage(),
+                            EventFactory.createActionError(
+                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
+                    } catch (NoSuchMethodException e) {
+                        throw new StepExecutionException(
+                            e.getMessage(),
+                            EventFactory.createActionError(
+                                TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
+                    }
+                }
+
+            });
+        final String propToStr = String.valueOf(prop);
+        return propToStr;
     }
 }

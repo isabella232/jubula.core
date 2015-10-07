@@ -68,6 +68,65 @@
       </listitem>
     </itemizedlist>
   </para>
+  
+    <para><emphasis>Check Figure Property</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to check a specific property of a connection figure.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The connection is addressed via the source and the target text path
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="source_text_path" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="source_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="target_text_path" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="target_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="property_name" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="property_value" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="value_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
   <para role="tip">
     If the property is private, it cannot be checked, as the remote control component has no access to it.
   </para>

@@ -500,12 +500,66 @@
                 </valueSet>
             </param>
             <param name="CompSystem.HasConnection"
-                   descriptionKey="CompSystem.HasConnection.descr" >
+                   descriptionKey="CompSystem.HasConnection.descr">
                 <type>java.lang.Boolean</type>
                 <defaultValue>true</defaultValue>
                 <valueSet>
                     <element name="CompSystem.True" value="true"/>
                     <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+        </action>
+        
+        <action name="CompSystem.VerifyConnectionProperty" 
+        descriptionKey="CompSystem.VerifyConnectionProperty.descr" since="4.0">
+            <method>rcVerifyConnectionProperty</method>
+                        <param name="CompSystem.SourceTextPath"
+                   descriptionKey="CompSystem.SourceTextPath.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.SourceOperator"
+                   descriptionKey="CompSystem.SourceOperator.descr">
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.TargetTextPath"
+                   descriptionKey="CompSystem.TargetTextPath.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.TargetOperator"
+                   descriptionKey="CompSystem.TargetOperator.descr">
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>   
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.PropertyValue"
+                   descriptionKey="CompSystem.PropertyValue.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ValueOperator"
+                   descriptionKey="CompSystem.ValueOperator.descr">
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
         </action>
