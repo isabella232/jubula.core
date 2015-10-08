@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.FigureCanvas;
@@ -332,13 +333,33 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
             if (connectionId != null) {
                 idStringList.add(connectionId);
             }
-
             while (currentEditPart != root.getContents()
                     && currentEditPart != null) {
-                IEditPartIdentifier identifier =
-                    DefaultEditPartAdapterFactory.loadFigureIdentifier(
-                            currentEditPart);
-                if (identifier != null) {
+                IEditPartIdentifier identifier = DefaultEditPartAdapterFactory
+                        .loadFigureIdentifier(currentEditPart);
+                if (currentEditPart instanceof ConnectionEditPart) {
+                    while (currentEditPart instanceof ConnectionEditPart) {
+                        ConnectionEditPart connection =
+                                (ConnectionEditPart) currentEditPart;
+                        IEditPartIdentifier connectionIdentifier =
+                                DefaultEditPartAdapterFactory
+                                        .loadFigureIdentifier(connection);
+                        idStringList.add(connectionIdentifier.getIdentifier());
+                        Entry<String, ConnectionAnchor> anchorAndName =
+                                FigureCanvasUtil
+                                        .getConnectionAnchor(connection);
+                        if (anchorAndName != null) {
+                            idStringList.add(anchorAndName.getKey());
+                        }
+                        EditPart source = connection.getSource();
+                        IEditPartIdentifier sourceIdentifier =
+                                DefaultEditPartAdapterFactory
+                                        .loadFigureIdentifier(source);
+                        idStringList.add(sourceIdentifier.getIdentifier());
+                        currentEditPart = source;
+                    }
+
+                } else if (identifier != null) {
                     idStringList.add(identifier.getIdentifier());
                 }
                 currentEditPart = currentEditPart.getParent();

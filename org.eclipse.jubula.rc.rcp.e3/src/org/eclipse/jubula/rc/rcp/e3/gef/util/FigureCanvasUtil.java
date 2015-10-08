@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.rcp.e3.gef.util;
 
+import java.util.Map.Entry;
+
+import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.GraphicalViewer;
+import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.jubula.rc.rcp.e3.gef.factory.DefaultEditPartAdapterFactory;
 import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
@@ -130,5 +135,83 @@ public class FigureCanvasUtil {
         }
 
         return null;
+    }
+    
+    
+    /**
+     * gets an {@link Entry} which has the identifier as key and the anchor as value
+     * @param connection
+     *            the connection for that we want the anchor
+     * @return {@link SimpleEntry} with the identifier and the
+     *         {@link ConnectionAnchor} or <code>null</code> if not anchor was
+     *         found
+     */
+    public static Entry<String, ConnectionAnchor> getConnectionAnchor(
+            ConnectionEditPart connection) {
+        if (connection != null) {
+            IEditPartIdentifier connectionIdentifier =
+                    DefaultEditPartAdapterFactory
+                            .loadFigureIdentifier(connection);
+            EditPart source = connection.getSource();
+            if (source instanceof GraphicalEditPart) {
+                GraphicalEditPart graphEditPart = (GraphicalEditPart) source;
+                IEditPartIdentifier editPartIdentifier =
+                        DefaultEditPartAdapterFactory
+                                .loadFigureIdentifier(source);
+                if (graphEditPart instanceof NodeEditPart) {
+                    NodeEditPart nodeEditPart = (NodeEditPart) graphEditPart;
+                    ConnectionAnchor anchor =
+                            nodeEditPart.getSourceConnectionAnchor(connection);
+                    editPartIdentifier.getConnectionAnchors();
+                    for (Entry<String, ConnectionAnchor> entry 
+                            : editPartIdentifier
+                            .getConnectionAnchors().entrySet()) {
+                        if (anchor.equals(entry.getValue())) {
+                            return entry;
+                        }
+                    }
+                    return new SimpleEntry<String, ConnectionAnchor>(
+                            anchor.getClass().getName(), anchor);
+                }
+            }
+        }
+
+        return null;
+    }
+    
+    /**
+     * Helper class could be deleted and replaced with
+     * <code>java.util.AbstractMap.SimpleEntry</code> when using java 1.6 and higher
+     * FIXME
+     */
+    private static class SimpleEntry<K, V> implements Entry<K, V> {
+        /** key */
+        private K m_key;
+        /** value*/
+        private V m_value;
+        /**
+         * 
+         * @param key the key
+         * @param value the value
+         */
+        public SimpleEntry(K key, V value) {
+            this.m_key = key;
+            this.m_value = value;
+        }
+        /** {@inheritDoc}  */
+        public K getKey() {
+            return m_key;
+        }
+        /** {@inheritDoc}  */
+        public V getValue() {
+            return m_value;
+        }
+        /** {@inheritDoc}  */
+        public V setValue(V value) {
+            V oldValue = value;
+            this.m_value = value;
+            return oldValue;
+        }
+        
     }
 }

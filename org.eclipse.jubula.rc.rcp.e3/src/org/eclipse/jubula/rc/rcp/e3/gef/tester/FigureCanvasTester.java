@@ -11,9 +11,11 @@
 package org.eclipse.jubula.rc.rcp.e3.gef.tester;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.Validate;
@@ -220,15 +222,24 @@ public class FigureCanvasTester extends WidgetTester {
 
         IFigure figure = FigureCanvasUtil.
             findFigure(findEditPart(textPath, textPathOperator));
+        nullCheckFigure(figure);
+        String propToStr = getPropertyFromFigure(propertyName, figure);
+        Verifier.match(propToStr, expectedPropValue, valueOperator);
+
+    }
+    
+    /**
+     * 
+     * @param figure the figure to check
+     * @throws StepExecutionException if figure is <code>null</code>
+     */
+    private void nullCheckFigure(IFigure figure) {
         if (figure == null) {
             throw new StepExecutionException(
                     "No figure could be found for the given text path.", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.NOT_FOUND));
         }
-        String propToStr = getPropertyFromFigure(propertyName, figure);
-        Verifier.match(propToStr, expectedPropValue, valueOperator);
-
     }
 
     /**
@@ -259,10 +270,11 @@ public class FigureCanvasTester extends WidgetTester {
     public void rcClickFigure(String textPath, String operator,
             int count, int button) {
 
-        getRobot().click(getViewerControl(),
-                getFigureBoundsChecked(textPath, operator),
-                ClickOptions.create().setScrollToVisible(false)
-                    .setClickCount(count).setMouseButton(button));
+        IFigure figure = FigureCanvasUtil.findFigure(
+                findEditPart(textPath, operator));
+        nullCheckFigure(figure);
+        clickFigure(count, button, figure);
+        
     }
 
     /**
@@ -284,18 +296,28 @@ public class FigureCanvasTester extends WidgetTester {
 
         IFigure connectionFigure = getConnectionFigure(sourceTextPath,
                 sourceOperator, targetTextPath, targetOperator);
+        nullCheckFigure(connectionFigure);
+        clickFigure(count, button, connectionFigure);
+    }
 
+    /**
+     * 
+     * @param count The number of times to click.
+     * @param button The mouse button to use for the click.
+     * @param figure the figure to click
+     */
+    private void clickFigure(int count, int button, IFigure figure) {
         ClickOptions clickOptions = ClickOptions.create()
                 .setScrollToVisible(false).setClickCount(count)
                 .setMouseButton(button);
-        if (connectionFigure instanceof Connection) {
-            Point midpoint = ((Connection) connectionFigure).getPoints()
+        if (figure instanceof Connection) {
+            Point midpoint = ((Connection) figure).getPoints()
                     .getMidpoint();
-            connectionFigure.translateToAbsolute(midpoint);
+            figure.translateToAbsolute(midpoint);
             getRobot().click(getViewerControl(), null, clickOptions, midpoint.x,
                     true, midpoint.y, true);
         } else {
-            getRobot().click(getViewerControl(), getBounds(connectionFigure),
+            getRobot().click(getViewerControl(), getBounds(figure),
                     clickOptions);
         }
     }
@@ -624,20 +646,44 @@ public class FigureCanvasTester extends WidgetTester {
         EditPart currentEditPart = getRootEditPart().getContents();
 
         for (int i = 0; i < pathItems.length && currentEditPart != null; i++) {
-            List<?> effectiveChildren = currentEditPart.getChildren();
-            EditPart [] children =
-                effectiveChildren.toArray(
-                    new EditPart[effectiveChildren.size()]);
+            List<EditPart> childrens =
+                    new ArrayList<EditPart>(currentEditPart.getChildren());
+            if (currentEditPart instanceof GraphicalEditPart) {
+                GraphicalEditPart graph = (GraphicalEditPart) currentEditPart;
+                childrens.addAll(graph.getSourceConnections());
+            }
+            EditPart[] children =
+                    childrens.toArray(new EditPart[childrens.size()]);
             boolean itemFound = false;
             for (int j = 0; j < children.length && !itemFound; j++) {
                 IEditPartIdentifier childFigureIdentifier =
-                    DefaultEditPartAdapterFactory.loadFigureIdentifier(
-                            children[j]);
-                if (childFigureIdentifier != null) {
+                        DefaultEditPartAdapterFactory
+                                .loadFigureIdentifier(children[j]);
+                if (children[j] instanceof ConnectionEditPart) {
+                    ConnectionEditPart connection =
+                            (ConnectionEditPart) children[j];
+                    Entry<String, ConnectionAnchor> anchorWithIdentifier =
+                            FigureCanvasUtil.getConnectionAnchor(connection);
+                    if (anchorWithIdentifier != null && MatchUtil.getInstance()
+                            .match(anchorWithIdentifier.getKey(), pathItems[i],
+                            operator)) {
+                        if (childFigureIdentifier != null) {
+                            String figureId =
+                                    childFigureIdentifier.getIdentifier();
+                            if (figureId != null && !(pathItems.length < i + 2)
+                                    && MatchUtil.getInstance().match(figureId,
+                                            pathItems[i + 1], operator)) {
+                                itemFound = true;
+                                currentEditPart = children[j];
+                                i++;
+                            }
+                        }
+                    }
+
+                } else if (childFigureIdentifier != null) {
                     String figureId = childFigureIdentifier.getIdentifier();
-                    if (figureId != null
-                        && MatchUtil.getInstance().match(
-                            figureId, pathItems[i], operator)) {
+                    if (figureId != null && MatchUtil.getInstance()
+                            .match(figureId, pathItems[i], operator)) {
                         itemFound = true;
                         currentEditPart = children[j];
                     }
@@ -651,7 +697,7 @@ public class FigureCanvasTester extends WidgetTester {
         }
 
         return isExisting && currentEditPart instanceof GraphicalEditPart
-            ? (GraphicalEditPart)currentEditPart : null;
+                ? (GraphicalEditPart) currentEditPart : null;
     }
 
     /**
