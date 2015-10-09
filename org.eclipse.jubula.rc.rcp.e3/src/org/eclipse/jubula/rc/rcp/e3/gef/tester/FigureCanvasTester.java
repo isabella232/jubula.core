@@ -44,7 +44,7 @@ import org.eclipse.jubula.rc.common.util.MenuUtilBase;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.factory.DefaultEditPartAdapterFactory;
 import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IEditPartIdentifier;
-import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IExtendedEditPartIdentifier;
+import org.eclipse.jubula.rc.rcp.e3.gef.identifier.IDirectionalEditPartAnchorIdentifier;
 import org.eclipse.jubula.rc.rcp.e3.gef.listener.GefPartListener;
 import org.eclipse.jubula.rc.rcp.e3.gef.util.FigureCanvasUtil;
 import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
@@ -942,9 +942,10 @@ public class FigureCanvasTester extends WidgetTester {
         if (anchorType
                 .equals(AnchorType.both.rcValue())) {
             connectionCount = editPartIdentifier.getConnectionAnchors().size();
-        } else if (editPartIdentifier instanceof IExtendedEditPartIdentifier) {
-            IExtendedEditPartIdentifier extended = 
-                    (IExtendedEditPartIdentifier) editPartIdentifier;
+        } else if (editPartIdentifier 
+                instanceof IDirectionalEditPartAnchorIdentifier) {
+            IDirectionalEditPartAnchorIdentifier extended = 
+                    (IDirectionalEditPartAnchorIdentifier) editPartIdentifier;
             
             if (anchorType.equals(AnchorType.incoming.rcValue())) {
                 connectionCount = extended

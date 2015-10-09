@@ -19,7 +19,7 @@ import org.eclipse.draw2d.ConnectionAnchor;
  * 
  * @author BREDEX GmbH
  */
-public interface IExtendedEditPartIdentifier extends IEditPartIdentifier {
+public interface IDirectionalEditPartAnchorIdentifier {
 
     /**
      *
