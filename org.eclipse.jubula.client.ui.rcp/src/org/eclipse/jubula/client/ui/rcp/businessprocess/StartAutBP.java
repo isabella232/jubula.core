@@ -490,7 +490,7 @@ public class StartAutBP {
      * start aut button is changed
      */
     private void fireAUTButtonStateCouldBeChanged() {
-        final String jobName = Messages.UIJobResolveStartableAuts;
+        final String jobName = Messages.UIJobUpdatingRecentlyUsedAuts;
         Job resolveStartableAUTs = new Job(jobName) {
             protected IStatus run(IProgressMonitor monitor) {
                 monitor.beginTask(jobName, IProgressMonitor.UNKNOWN);

@@ -16,6 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -80,7 +82,9 @@ public class TreeTraverser {
      * already visited Nodes. We do not want to visit the same node twice
      */
     private Set<String> m_visited = new HashSet<String>(1001);
-    
+
+    /** the progress monitor */
+    private IProgressMonitor m_monitor;
 
     /**
      * The constructor.
@@ -90,6 +94,7 @@ public class TreeTraverser {
      */
     public TreeTraverser(INodePO rootNode) {
         m_rootNode = rootNode;
+        setMonitor(new NullProgressMonitor());
     }
 
     /**
@@ -141,7 +146,7 @@ public class TreeTraverser {
             ITreeNodeOperation<INodePO> operation, 
         boolean traverseSpecPart,
         boolean traverseExecPart) {
-        m_rootNode = rootNode;
+        this(rootNode);
         m_operations.add(operation);
         m_traverseSpecPart = traverseSpecPart;
         m_traverseExecPart = traverseExecPart;
@@ -178,7 +183,7 @@ public class TreeTraverser {
      */
     protected void traverseImpl(ITreeTraverserContext<INodePO> context, 
             INodePO parent, INodePO node) {
-        if (m_maxDepth == NO_DEPTH_LIMIT 
+        if (m_maxDepth == NO_DEPTH_LIMIT && !getMonitor().isCanceled()
                 || m_maxDepth > context.getCurrentTreePath().size()) {
             context.append(node);
             final boolean alreadyVisited = alreadyVisited(node);
@@ -206,8 +211,7 @@ public class TreeTraverser {
                 } else {
                     for (Iterator<INodePO> it = node.getNodeListIterator(); 
                             it.hasNext();) {
-                        INodePO child = it.next();
-                        traverseImpl(context, node, child);
+                        traverseImpl(context, node, it.next());
                     }
                     if (m_traverseEventHandlers
                             && node instanceof ITestCasePO) {
@@ -223,8 +227,7 @@ public class TreeTraverser {
                                     testCase.getAllEventEventExecTC()
                                         .iterator();
                                 it.hasNext();) {
-                                IEventExecTestCasePO child = it.next();
-                                traverseImpl(context, node, child);
+                                traverseImpl(context, node, it.next());
                             }
                         }
                     }
@@ -375,5 +378,19 @@ public class TreeTraverser {
      */
     private void clearVisited() {
         m_visited.clear();
+    }
+
+    /**
+     * @return the monitor
+     */
+    public IProgressMonitor getMonitor() {
+        return m_monitor;
+    }
+
+    /**
+     * @param monitor the monitor to set
+     */
+    public void setMonitor(IProgressMonitor monitor) {
+        m_monitor = monitor;
     }
 }

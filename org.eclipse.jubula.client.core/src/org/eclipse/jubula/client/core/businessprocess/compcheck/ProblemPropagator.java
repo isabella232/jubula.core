@@ -10,16 +10,18 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -28,44 +30,93 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
  * @author BREDEX GmbH
  * @created 27.10.2011
  */
-public class ProblemPropagator {
-    /** Represents a error in a child */
-    public static final IProblem ERROR_IN_CHILD = ProblemFactory
-            .createProblem(new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                    Messages.TooltipErrorInChildren));
+public enum ProblemPropagator {
+    /** Singleton */
+    INSTANCE;
 
-    /** Represents a warning in a child */
-    public static final IProblem WARNING_IN_CHILD = ProblemFactory
-            .createProblem(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
-                    Messages.TooltipWarningInChildren));
+    /** {@inheritDoc} */
+    public void propagate() {
+        final IProjectPO project = GeneralStorage.getInstance().getProject();
+        if (project != null) {
+            Job pp = new ProblemPropagationJob(
+                    Messages.ProblemPropagationJobName, project);
+            pp.schedule(1000);
+        }
+    }
     
-    /** this instance */
-    private static ProblemPropagator instance;
+    /**
+     * @author BREDEX GmbH
+     */
+    private final class ProblemPropagationJob extends Job {
+        /** the project */
+        private final IProjectPO m_project;
 
-    /** private constructor */
-    private ProblemPropagator() {
-        // currently empty
+        /**
+         * @param name the name of the job
+         * @param project the project to use
+         */
+        private ProblemPropagationJob(String name, IProjectPO project) {
+            super(name);
+            m_project = project;
+        }
+
+        /** {@inheritDoc} */
+        public boolean belongsTo(Object family) {
+            if (family instanceof ProblemPropagationJob) {
+                return true;
+            }
+            return super.belongsTo(family);
+        }
+        
+        /** {@inheritDoc} */
+        protected IStatus run(IProgressMonitor monitor) {
+            for (Job job : getJobManager().find(this)) {
+                if (job != this) {
+                    job.cancel();
+                }
+            }
+            
+            int status = IStatus.OK;
+            try {
+                TreeTraverser treeTraverser = new TreeTraverser(m_project,
+                        new ProblemCleanupOperation(), false, true);
+                treeTraverser.addOperation(
+                        new ProblemPropagationOperation());
+                treeTraverser.setMonitor(monitor);
+                treeTraverser.traverse(true);
+                
+            } finally {
+                if (monitor.isCanceled()) {
+                    status = IStatus.CANCEL;
+                } else {
+                    DataEventDispatcher.getInstance()
+                        .fireProblemPropagationFinished();
+                }
+                monitor.done();
+            }
+            
+            return new Status(status, Activator.PLUGIN_ID, getName());
+        }
     }
 
     /**
-     * @return the Completeness Propagator instance
+     * @author BREDEX GmbH
      */
-    public static ProblemPropagator getInstance() {
-        if (instance == null) {
-            instance = new ProblemPropagator();
+    public static class ProblemCleanupOperation 
+        extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
+        /** {@inheritDoc} */
+        public boolean operate(ITreeTraverserContext<INodePO> ctx, 
+            INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (alreadyVisited) {
+                return false;
+            }
+            boolean hasHadProblems = false;
+            hasHadProblems |= node.removeProblem(
+                    ProblemFactory.ERROR_IN_CHILD);
+            hasHadProblems |= node.removeProblem(
+                    ProblemFactory.WARNING_IN_CHILD);
+            return hasHadProblems;
         }
-        return instance;
-    }
-    
-    /** {@inheritDoc} */
-    public void propagate() {
-        IProjectPO project = GeneralStorage.getInstance().getProject();
-        if (project != null) {
-            new TreeTraverser(project, 
-                new ProblemPropagationOperation(), false, true)
-                    .traverse(true);
-        }
-        DataEventDispatcher.getInstance().fireProblemPropagationFinished();
     }
     
     /**
@@ -76,8 +127,6 @@ public class ProblemPropagator {
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
             INodePO parent, INodePO node, boolean alreadyVisited) {
-            node.removeProblem(ERROR_IN_CHILD);
-            node.removeProblem(WARNING_IN_CHILD);
             return node.isActive();
         }
 
@@ -85,30 +134,29 @@ public class ProblemPropagator {
         public void postOperate(ITreeTraverserContext<INodePO> ctx, 
             INodePO parent, INodePO node, boolean alreadyVisited) {
             if (ProblemFactory.hasProblem(node)) {
-                setParentProblem(parent,
-                        ProblemFactory.getWorstProblem(node.getProblems())
-                                .getStatus().getSeverity());
+                setProblem(parent, ProblemFactory.getWorstProblem(
+                        node.getProblems()).getStatus().getSeverity());
             }
         }
 
-        /**
-         * @param node
-         *            the node where the problem should be added.
-         * @param severity
-         *            severity of which the problem should be set
-         */
-        private void setParentProblem(INodePO node, int severity) {
-            switch (severity) {
-                case IStatus.ERROR:
-                    node.addProblem(ERROR_IN_CHILD);
-                    break;
-                case IStatus.WARNING:
-                    node.addProblem(WARNING_IN_CHILD);
-                    break;
-                case IStatus.INFO:
-                default:
-                    break;
-            }
+    }
+    /**
+     * @param node
+     *            the node where the problem should be added.
+     * @param severity
+     *            severity of which the problem should be set
+     */
+    public static void setProblem(INodePO node, int severity) {
+        switch (severity) {
+            case IStatus.ERROR:
+                node.addProblem(ProblemFactory.ERROR_IN_CHILD);
+                break;
+            case IStatus.WARNING:
+                node.addProblem(ProblemFactory.WARNING_IN_CHILD);
+                break;
+            case IStatus.INFO:
+            default:
+                break;
         }
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
@@ -43,7 +44,6 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
  * @author BREDEX GmbH
  * @created 10.05.2005
  */
-@SuppressWarnings("synthetic-access")
 public final class CompletenessGuard {
     /**
      * Operation to set the CompleteSpecTc flag for a node
@@ -79,7 +79,7 @@ public final class CompletenessGuard {
                     node.removeProblem(problem);
                 }
             }
-            return true;
+            return !alreadyVisited;
         }
     }
 
@@ -236,10 +236,14 @@ public final class CompletenessGuard {
      *            the Locale to check
      * @param root
      *            INodePO
+     * @param monitor
+     *            the progress monitor to use
      */
-    public static void checkAll(Locale loc, INodePO root) {
+    public static void checkAll(Locale loc, INodePO root,
+            IProgressMonitor monitor) {
         // Iterate Execution tree
         final TreeTraverser traverser = new TreeTraverser(root);
+        traverser.setMonitor(monitor);
         traverser.addOperation(new CheckObjectMappingCompleteness());
         traverser.addOperation(new CheckTestDataCompleteness(loc));
         traverser.addOperation(new CheckMissingTestCaseReferences());
@@ -301,9 +305,7 @@ public final class CompletenessGuard {
      */
     private static void setCompletenessMissingTestCase(INodePO node,
             boolean completeTCFlag) {
-        setNodeProblem(node,
-                ProblemFactory.createMissingReferencedSpecTestCasesProblem(),
-                completeTCFlag);
+        setNodeProblem(node, ProblemFactory.MISSING_NODE, completeTCFlag);
     }
 
     /**
@@ -365,6 +367,7 @@ public final class CompletenessGuard {
                 resetTestDataCompleteness(nodeToModify);
                 setCompletenessTestData(nodeToModify, locale,
                         dataSourceNode.isTestDataComplete(locale));
+                
             }
         }
     }

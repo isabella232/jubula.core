@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
@@ -1184,7 +1183,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         
         // register service for checking completeness
         CompletenessBP.getInstance();
-        ProblemPropagator.getInstance();
 
         // register Component Name reuse tracker
         ComponentNameReuseBP.getInstance();

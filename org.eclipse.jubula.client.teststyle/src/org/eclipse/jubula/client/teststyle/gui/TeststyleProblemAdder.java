@@ -40,7 +40,7 @@ public class TeststyleProblemAdder
         
         clearNodeFromTeststyleProblem(node);
 
-        for (BaseCheck chk : ProblemCont.getInstance().getChecksFor(node)) {
+        for (BaseCheck chk : ProblemCont.instance.getChecksFor(node)) {
             int severity = getIntForSeverity(chk.getSeverity());
             String message = chk.getDescription();
             if (severity > IStatus.INFO) {
@@ -75,27 +75,9 @@ public class TeststyleProblemAdder
     private void handleExecTestCase(IExecTestCasePO execTestCase) {
         ISpecTestCasePO specTestCase = execTestCase.getSpecTestCase();
         int worstSeverity =
-                getWorstSeverity(ProblemCont.getInstance().getChecksFor(
+                getWorstSeverity(ProblemCont.instance.getChecksFor(
                         specTestCase));
-        setReferencedProblem(execTestCase, worstSeverity);
-    }
-    
-    /**
-     * @param node The node which reference contains errors
-     * @param severity the highest severity of this node.
-     */
-    private void setReferencedProblem(INodePO node, int severity) {
-        switch (severity) {
-            case IStatus.ERROR:
-                node.addProblem(ProblemPropagator.ERROR_IN_CHILD);
-                break;
-            case IStatus.WARNING:
-                node.addProblem(ProblemPropagator.WARNING_IN_CHILD);
-                break;
-            case IStatus.INFO:
-            default:
-                break;
-        }
+        ProblemPropagator.setProblem(execTestCase, worstSeverity);
     }
     
     /**

@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.State;
@@ -51,7 +52,7 @@ public class StartAutHandler extends AbstractHandler
         "org.eclipse.jubula.client.ui.rcp.commands.ChooseAutCommand.state.lastStartedAut"; //$NON-NLS-1$
 
     /** ID of command state for most recently started AUT Configuration */
-    public static final String LAST_STARTED_AUT_CONFIG =
+    public static final String LAST_STARTED_CONFIG =
         "org.eclipse.jubula.client.ui.rcp.commands.ChooseAutCommand.state.lastStartedAutConfig"; //$NON-NLS-1$
     
     /**
@@ -72,6 +73,7 @@ public class StartAutHandler extends AbstractHandler
             // Not a problem, we'll try later to use the current command
             // state to find out which AUT to start.
         }
+        Command command = event.getCommand();
         if (autToStartObj instanceof IAUTMainPO
                 && autConfigToStartObj instanceof IAUTConfigPO) {
             autToStart = (IAUTMainPO)autToStartObj;
@@ -79,9 +81,9 @@ public class StartAutHandler extends AbstractHandler
             
         } else {
             State lastStartedAutState = 
-                event.getCommand().getState(LAST_STARTED_AUT);
+                command.getState(LAST_STARTED_AUT);
             State lastStartedAutConfigState = 
-                event.getCommand().getState(LAST_STARTED_AUT_CONFIG);
+                command.getState(LAST_STARTED_CONFIG);
             if (lastStartedAutState != null
                     && lastStartedAutConfigState != null) {
 
@@ -108,15 +110,12 @@ public class StartAutHandler extends AbstractHandler
             startAut(autToStart, autConfigToStart);
 
             // Update command state
-            State lastStartedAutState = 
-                event.getCommand().getState(LAST_STARTED_AUT);
-            State lastStartedAutConfigState = 
-                event.getCommand().getState(LAST_STARTED_AUT_CONFIG);
-            if (lastStartedAutState != null 
-                    && lastStartedAutConfigState != null) {
-                
-                lastStartedAutState.setValue(autToStart);
-                lastStartedAutConfigState.setValue(autConfigToStart);
+            State lastAutState = command.getState(LAST_STARTED_AUT);
+            State lastConfigState = command.getState(LAST_STARTED_CONFIG);
+            if (lastAutState != null && lastConfigState != null) {
+
+                lastAutState.setValue(autToStart);
+                lastConfigState.setValue(autConfigToStart);
             }
         }
         
@@ -146,7 +145,7 @@ public class StartAutHandler extends AbstractHandler
     }
 
     /**
-     * @param aut aut to start
+     * @param aut AUT to start
      * @param conf corresponding configuration
      */
     private void startAut(IAUTMainPO aut, IAUTConfigPO conf) {
@@ -154,10 +153,10 @@ public class StartAutHandler extends AbstractHandler
             NagDialog.runNagDialog(null, "InfoNagger.RunRcpAut",  //$NON-NLS-1$
                     ContextHelpIds.AUT_CONFIG_SETTING_WIZARD_PAGE);
         }
-        StartAutBP.getInstance().fireAutStarted();
+        StartAutBP instance = StartAutBP.getInstance();
+        instance.fireAutStarted();
         TestExecutionGUIController.startAUT(aut, conf);
-        StartAutBP.getInstance().setLastUsedAut(aut);
-        StartAutBP.getInstance().setLastUsedAutConf(conf);
+        instance.setLastUsedAut(aut);
+        instance.setLastUsedAutConf(conf);
     }
-
 }

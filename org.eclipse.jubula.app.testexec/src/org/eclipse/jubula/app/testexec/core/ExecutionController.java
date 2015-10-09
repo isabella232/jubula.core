@@ -26,6 +26,7 @@ import java.util.TimerTask;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jubula.app.testexec.i18n.Messages;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.autagent.AutStarter.Verbosity;
@@ -760,7 +761,8 @@ public class ExecutionController implements IAUTServerEventListener,
         distinctListOfTs.addAll(m_job.getTestSuites());
         for (ITestSuitePO ts : distinctListOfTs) {
             boolean noError = true;
-            CompletenessGuard.checkAll(m_job.getLanguage(), ts);
+            CompletenessGuard.checkAll(m_job.getLanguage(), ts,
+                    new NullProgressMonitor());
             sysOut(NLS.bind(Messages.ExecutionControllerTestSuiteCompleteness,
                     ts.getName()));
             final CollectAllErrorsOperation op = 

@@ -25,34 +25,16 @@ import org.eclipse.jubula.client.teststyle.gui.MarkerHandler;
 /**
  * Contains all Problems that Checkstyle has to handle.
  * 
- * @author marcell
+ * @author BREDEX GmbH
  * 
  */
-public class ProblemCont {
-
+public enum ProblemCont {
     /** singleton */
-    private static ProblemCont instance;
+    instance;
 
     /** List containing the problems to the POs */
     private Map<Object, Set<Problem>> m_problems = Collections
             .synchronizedMap(new HashMap<Object, Set<Problem>>());
-
-    /**
-     * Private constructor for the singleton
-     */
-    private ProblemCont() {
-    // LET THE EMPTY BRACKETS ALONE
-    }
-
-    /**
-     * @return The singleton instance
-     */
-    public static ProblemCont getInstance() {
-        if (instance == null) {
-            instance = new ProblemCont();
-        }
-        return instance;
-    }
 
     /**
      * Adds an Object and the problem to the container. This objects will be in

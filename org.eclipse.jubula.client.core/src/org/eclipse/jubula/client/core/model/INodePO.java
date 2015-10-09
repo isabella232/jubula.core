@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
-
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 
 /**
@@ -122,7 +121,7 @@ public interface INodePO extends ITimestampPO {
      * @return Returns the GUID.
      */
     public abstract String getGuid();
-
+    
     /**
      * Checks for circular dependences with a potential parent.
      * @param parent the parent to check

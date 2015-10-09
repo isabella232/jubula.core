@@ -25,7 +25,7 @@ import java.util.List;
 public interface ITreeTraverserContext<T> {
     /**
      * @return The actual tree path as a list. The first element of the list is
-     *         the root node passed to the contructor of the tree traverser. The
+     *         the root node passed to the constructor of the tree traverser. The
      *         last node is the node passed as <code>node</code> to
      *         {@link ITreeNodeOperation#operate(ITreeTraverserContext, INodePO, INodePO)}
      *         or
@@ -33,7 +33,7 @@ public interface ITreeTraverserContext<T> {
      */
     public List<T> getCurrentTreePath();
     /**
-     * @return The root node passed to the contructor of the tree traverser
+     * @return The root node passed to the constructor of the tree traverser
      */
     public T getRootNode();
     /**
@@ -45,7 +45,7 @@ public interface ITreeTraverserContext<T> {
     
     /**
      * 
-     * @return <code>true</code> if the receiver indicates that traersal should
+     * @return <code>true</code> if the receiver indicates that traversal should
      *         continue. Otherwise, <code>false</code>.
      */
     public boolean isContinue();

@@ -417,23 +417,19 @@ class ExecTestCasePO extends TestCasePO implements
         return getDataManager();
     }
     
-    
-    /** 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transient
     public Iterator<INodePO> getNodeListIterator() {
-        if (getSpecTestCase() != null) {
-            return getSpecTestCase().getNodeListIterator();
+        ISpecTestCasePO specTestCase = getSpecTestCase();
+        if (specTestCase != null) {
+            return specTestCase.getNodeListIterator();
         }
         
         List<INodePO> emptyList = Collections.emptyList();
         return emptyList.iterator();
     }
     
-    /** (non-Javadoc)
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Transient
     public int getNodeListSize() {
         if (getSpecTestCase() != null) {

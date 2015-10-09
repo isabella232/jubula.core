@@ -97,7 +97,7 @@ public class CapBP {
      * Gets all {@link ICapPO}s which are direct or indirect children of the 
      * given nodePo.
      * @param nodePo an {@link INodePO} which children are to get. 
-     * @param resultList the resullt-List for the {@link ICapPO}s
+     * @param resultList the result-List for the {@link ICapPO}s
      */
     public static void getCaps(INodePO nodePo, List<ICapPO> resultList) {
         if (nodePo instanceof ICapPO) {

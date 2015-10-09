@@ -27,7 +27,6 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
  * @created May 28, 2010
  */
 public class TreeTraverserContext<T> implements ITreeTraverserContext<T> {
-
     /**
      * The current tree path (top-down).
      */
@@ -51,7 +50,7 @@ public class TreeTraverserContext<T> implements ITreeTraverserContext<T> {
     
     /**
      * @return The actual tree path as a list. The first element of the list is
-     *         the root node passed to the contructor of the tree traverser. The
+     *         the root node passed to the constructor of the tree traverser. The
      *         last node is the node passed as <code>node</code> to
      *         <br>{@link ITreeNodeOperation#operate(ITreeTraverserContext, INodePO, INodePO)}
      *         <br>or

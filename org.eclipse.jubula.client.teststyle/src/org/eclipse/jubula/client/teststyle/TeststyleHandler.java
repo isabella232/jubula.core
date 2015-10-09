@@ -100,7 +100,7 @@ public final class TeststyleHandler implements IDataChangedListener,
         if (!isUpdateInEditor) {
             refresh();
             addTeststyleProblems();
-            ProblemPropagator.getInstance().propagate();
+            ProblemPropagator.INSTANCE.propagate();
         }
     }
     
@@ -113,7 +113,7 @@ public final class TeststyleHandler implements IDataChangedListener,
         UpdateState updateState) {
         // FIXME mbs Need a event for closing a project
         // Clean up first
-        ProblemCont.getInstance().remove(po);
+        ProblemCont.instance.remove(po);
         switch (dataState) {
             case Renamed: // fall through
             case Added: // fall through
@@ -128,7 +128,7 @@ public final class TeststyleHandler implements IDataChangedListener,
         // always check the project after each change
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (project != null) {
-            ProblemCont.getInstance().remove(project);
+            ProblemCont.instance.remove(project);
             check(project);
         }
         if (po instanceof ISpecTestCasePO || po instanceof ITestSuitePO
@@ -155,7 +155,7 @@ public final class TeststyleHandler implements IDataChangedListener,
 
     /**
      * This method checks the Object obj with every check in the contexts of
-     * this check for violation and decorates it approriatly.
+     * this check for violation and decorates it appropriately.
      * 
      * @param obj
      *            The object that should be checked.
@@ -169,10 +169,10 @@ public final class TeststyleHandler implements IDataChangedListener,
         for (BaseCheck check : checks) {
             if (check.isActive(context) && check.hasError(obj)) {
                 if (obj instanceof ITestDataCubePO) {
-                    ProblemCont.getInstance().add(
+                    ProblemCont.instance.add(
                             ((ITestDataCubePO)obj).getId(), check);
                 } else {
-                    ProblemCont.getInstance().add(obj, check);
+                    ProblemCont.instance.add(obj, check);
                 }
             }
         }
@@ -183,7 +183,7 @@ public final class TeststyleHandler implements IDataChangedListener,
      */
     public void checkEverything() {
         // Clean up
-        ProblemCont.getInstance().clear();
+        ProblemCont.instance.clear();
         
         if (isEnabled()) {
             // Check'em all!
@@ -196,7 +196,6 @@ public final class TeststyleHandler implements IDataChangedListener,
         
         refresh();
         addTeststyleProblems();
-        ProblemPropagator.getInstance().propagate();
     }
 
     /** */
@@ -246,11 +245,11 @@ public final class TeststyleHandler implements IDataChangedListener,
         if (isEnabled()) {
             removeFromListener();
         }
-        ProblemCont.getInstance().clear();
+        ProblemCont.instance.clear();
     }
 
     /**
-     * Refreshes the decoratos so that they start decorating the available 
+     * Refreshes the decorators so that they start decorating the available 
      * resources again.
      */
     public void refresh() {
@@ -275,7 +274,7 @@ public final class TeststyleHandler implements IDataChangedListener,
                 checkEverything();
                 break;
             case closed:
-                ProblemCont.getInstance().clear();
+                ProblemCont.instance.clear();
                 break;
             case opened:
             default:

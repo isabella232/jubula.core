@@ -34,14 +34,10 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
-import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ICompletenessCheckListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -85,7 +81,7 @@ import org.slf4j.LoggerFactory;
  * @created 12.03.2007
  */
 public class ProblemsBP implements ICompletenessCheckListener,
-    IServerConnectionListener, IDataChangedListener {
+    IServerConnectionListener {
     
     /** this instance */
     private static ProblemsBP instance; 
@@ -135,7 +131,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addAutAgentConnectionListener(this, true);
         ded.addCompletenessCheckListener(this);
-        ded.addDataChangedListener(this, true);
         
         // trigger first problem check
         doProblemsCheck(true, null);
@@ -230,7 +225,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
         // remove no needed items from ProblemView
         cleanupProblems();
         
-        ProblemPropagator.getInstance().propagate();
+        ProblemPropagator.INSTANCE.propagate();
     }
     
     /**
@@ -969,7 +964,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 IExecTestCasePO execTC = (IExecTestCasePO)node;
                 boolean hasCompleteTestCaseReferences =
                         !execTC.getProblems().contains(ProblemFactory
-                                .createMissingReferencedSpecTestCasesProblem());
+                                .MISSING_NODE);
                 if (hasCompleteTestCaseReferences) {
                     // Only check CompNamesPair if test case reference
                     // is available.
@@ -1034,47 +1029,28 @@ public class ProblemsBP implements ICompletenessCheckListener,
          */
         private void problemNoCompTypeForCompNamesPairExists(
             IExecTestCasePO execTC) {
-            if (execTC.getParentNode() == null) {
+            INodePO parentNode = execTC.getParentNode();
+            if (parentNode == null) {
                 // in case of EventExecTestCase
                 return;
             }
-            String name = execTC.getParentNode().getName();
+            String name = parentNode.getName();
             if (StringConstants.EMPTY.equals(name)
-                && execTC.getParentNode() instanceof IExecTestCasePO) {
+                && parentNode instanceof IExecTestCasePO) {
 
-                name = ((IExecTestCasePO)execTC.getParentNode())
+                name = ((IExecTestCasePO)parentNode)
                     .getSpecTestCase().getName();
             } 
             m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
                     new Status(IStatus.WARNING, Activator.PLUGIN_ID, 
                         NLS.bind(Messages.ProblemCheckerNoCompType, name)),
                         NLS.bind(Messages.ProblemCheckerNoCompType, name), 
-                    execTC.getParentNode(), ProblemType.REASON_NO_COMPTYPE));
+                    parentNode, ProblemType.REASON_NO_COMPTYPE));
         }
     }
     
     /** {@inheritDoc} */
     public void completenessCheckFinished() {
         doProblemsCheck(true, null);
-    }
-    
-    /** {@inheritDoc} */
-    public void handleDataChanged(DataChangedEvent... events) {
-        boolean shouldRun = false;
-        for (DataChangedEvent dce : events) {
-            if (dce.getUpdateState() != UpdateState.onlyInEditor) {
-                DataState ds = dce.getDataState();
-                if (ds == DataState.Added 
-                        || ds == DataState.Deleted
-                        || ds == DataState.StructureModified) {
-                    shouldRun = true;
-                    break;
-                }
-            }
-        }
-
-        if (shouldRun) {
-            doProblemsCheck(true, null);
-        }
     }
 }

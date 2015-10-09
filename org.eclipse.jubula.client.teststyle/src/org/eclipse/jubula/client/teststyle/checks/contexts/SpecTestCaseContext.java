@@ -20,11 +20,8 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
 
-
-
 /**
  * @author marcell
- * 
  */
 public class SpecTestCaseContext extends BaseContext {
 

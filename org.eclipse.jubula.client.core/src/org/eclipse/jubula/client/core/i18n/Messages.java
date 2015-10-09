@@ -274,6 +274,7 @@ public class Messages extends NLS {
     public static String ProblemIncompleteTestDataMarkerText;
     public static String ProblemIncompleteTestDataTooltip;
     public static String ProblemInstallingDBScheme;
+    public static String ProblemPropagationJobName;
     public static String ProblemMissingReferencedTestCaseMarkerText;
     public static String ProblemMissingReferencedTestCaseTooltip;
     public static String ProblemWithDatabaseSchemeConf;

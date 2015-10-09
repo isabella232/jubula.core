@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.views;
 
 import java.util.Locale;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
@@ -24,6 +25,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -49,7 +51,6 @@ import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TestExecDropTargetListener;
@@ -67,7 +68,10 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +83,8 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("synthetic-access")
 public class TestSuiteBrowser extends AbstractJBTreeView implements
-    ITreeViewerContainer, IJBPart, ILanguageChangedListener {
+    ITreeViewerContainer, IJBPart, ILanguageChangedListener, 
+    IProblemPropagationListener {
 
     /** New-menu */
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$  
@@ -118,12 +123,31 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addLanguageChangedListener(this, true);
-        ded.addProblemPropagationListener(CompletenessBP.getInstance());
+        ded.addProblemPropagationListener(this);
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
     }
 
+    /** {@inheritDoc} */
+    public void problemPropagationFinished() {
+        final IWorkbench workbench = PlatformUI.getWorkbench();
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                try {
+                    getTreeViewer().refresh();
+                    // completenessCheckDecorator can safely be enabled 
+                    // after checking the project is done
+                    IDecoratorManager dm = workbench.getDecoratorManager();
+                    dm.setEnabled(Constants.CC_DECORATOR_ID, true);
+                    dm.update(Constants.CC_DECORATOR_ID);
+                } catch (CoreException e) {
+                    LOG.error(e.getLocalizedMessage(), e);
+                }
+            }
+        });
+    }
+    
     /**
      * Adds a double click listener to the tree view.
      */
@@ -193,7 +217,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.removeDataChangedListener(this);
         ded.removeLanguageChangedListener(this);
-        ded.removeProblemPropagationListener(CompletenessBP.getInstance());
+        ded.removeProblemPropagationListener(this);
         super.dispose();
     }
   

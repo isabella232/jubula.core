@@ -30,6 +30,20 @@ import org.eclipse.osgi.util.NLS;
  * @created 24.01.2011
  */
 public final class ProblemFactory {
+    /** Represents a error in a child */
+    public static final IProblem ERROR_IN_CHILD = createProblem(
+            new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    Messages.TooltipErrorInChildren));
+
+    /** Represents a warning in a child */
+    public static final IProblem WARNING_IN_CHILD = createProblem(
+            new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+                    Messages.TooltipWarningInChildren));
+    
+    /** Represents a missing node */
+    public static final IProblem MISSING_NODE = 
+            createMissingReferencedSpecTestCasesProblem();
+    
     /** 
      * private constructor because its a utility class 
      */
@@ -77,9 +91,9 @@ public final class ProblemFactory {
     }
 
     /**
-     * @return Problem that represents missing spectestcases.
+     * @return Problem that represents missing node
      */
-    public static IProblem createMissingReferencedSpecTestCasesProblem() {
+    private static IProblem createMissingReferencedSpecTestCasesProblem() {
         return new Problem(Messages.ProblemMissingReferencedTestCaseMarkerText,
                 new Status(IStatus.ERROR, Activator.PLUGIN_ID, 
                         Messages.ProblemMissingReferencedTestCaseTooltip),
@@ -97,7 +111,7 @@ public final class ProblemFactory {
 
     /**
      * @param status
-     *            Status with which the problem will be intialized.
+     *            Status with which the problem will be initialized.
      * @param markerMessage
      *            message of the marker
      * @param data

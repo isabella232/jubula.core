@@ -250,7 +250,7 @@ abstract class NodePO implements INodePO {
         if (LOG.isErrorEnabled() && parent == null) {
             try {
                 throw new IllegalArgumentException(
-                        "The parent of the INodePO (GUID " + getGuid()  //$NON-NLS-1$
+                        "The parent of the INodePO (UUID " + getGuid()  //$NON-NLS-1$
                             + ") is not intended to be set to null."); //$NON-NLS-1$
             } catch (IllegalArgumentException e) {
                 LOG.info(ExceptionUtils.getFullStackTrace(e), e);
@@ -425,9 +425,7 @@ abstract class NodePO implements INodePO {
     }
     
     
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public int hashCode() { // NOPMD by al on 3/19/07 1:35 PM
         return getGuid().hashCode();
     }
@@ -438,8 +436,7 @@ abstract class NodePO implements INodePO {
      */
     @Transient
     public Iterator<INodePO> getNodeListIterator() {
-        List<INodePO> nodeList = Collections.unmodifiableList(getNodeList());
-        return nodeList.iterator();
+        return Collections.unmodifiableList(getNodeList()).iterator();
     }
        
     /**

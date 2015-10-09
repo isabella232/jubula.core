@@ -106,7 +106,7 @@ public class DecoratorHandler extends GeneralLabelProvider implements
      * 
      */
     private Set<BaseCheck> getViolatingBaseChecks(Object obj) {
-        ProblemCont pCont = ProblemCont.getInstance();
+        ProblemCont pCont = ProblemCont.instance;
         return pCont.getChecksFor(obj);
     }
     
