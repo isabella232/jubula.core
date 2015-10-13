@@ -59,7 +59,7 @@
     
     <target name="updateVersionNumbers">
         <!--
-        <property name="newVersion" value="3.1.0-SNAPSHOT" />
+        <property name="newVersion" value="4.0.0-SNAPSHOT" />
         -->
         <fail unless="newVersion" message="New version number missing!" />
 
