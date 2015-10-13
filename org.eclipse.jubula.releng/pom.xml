@@ -15,6 +15,8 @@
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java8.jdk.base.path>${java.home}/../../java8</java8.jdk.base.path>
+    
+    <java8.jdk.base.path.eclipse>/opt/public/common/jdk1.8.0_x64-latest</java8.jdk.base.path.eclipse>
   </properties>
   
   <distributionManagement>
@@ -32,6 +34,18 @@
   
   <profiles>
     <profile>
+        <id>build-eclipse-org-gerrit</id>
+        <activation>
+            <property>
+                <name>build.env</name>
+                <value>eclipse.org-gerrit</value>
+            </property>
+        </activation>
+        <properties>
+            <java8.jdk.base.path>${java8.jdk.base.path.eclipse}</java8.jdk.base.path>
+        </properties>
+    </profile>
+    <profile>
       <id>build-eclipse-org</id>
       <activation>
         <property>
@@ -40,7 +54,7 @@
         </property>
       </activation>
       <properties>
-      	<java8.jdk.base.path>/opt/public/common/jdk1.8.0_x64-latest</java8.jdk.base.path>
+            <java8.jdk.base.path>${java8.jdk.base.path.eclipse}</java8.jdk.base.path>
       </properties>
       <pluginRepositories>
         <pluginRepository>
