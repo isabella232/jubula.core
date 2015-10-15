@@ -47,6 +47,9 @@ public class BundleInstaller implements BundleActivator {
     /** The suffixes of the bundles used in Eclipse RCP e4. */
     private static final String BUNDLE_FOLDER_SUFFIX_E4_SWT = ".e4.swt"; //$NON-NLS-1$
 
+    /** The suffixes of the external extension bundles */
+    private static final String BUNDLE_FOLDER_SUFFIX_EXT = ".ext"; //$NON-NLS-1$
+
     /**
      * Install embedded bundles, if they have not been already installed.
      * @param context The bundle context.
@@ -90,6 +93,7 @@ public class BundleInstaller implements BundleActivator {
             bundleFolderSuffixes.add(BUNDLE_FOLDER_SUFFIX_SWT);
             bundleFolderSuffixes.add(BUNDLE_FOLDER_SUFFIX_E3);
         }
+        bundleFolderSuffixes.add(BUNDLE_FOLDER_SUFFIX_EXT);
         return bundleFolderSuffixes;
     }
 
