@@ -18,10 +18,7 @@ import org.eclipse.jubula.rc.common.tester.WidgetTester;
 import org.eclipse.jubula.rc.common.util.Verifier;
 
 
-/**
- * @author BREDEX GmbH
- * 
- */
+/** @author BREDEX GmbH */
 public class PieChartTester extends WidgetTester {
     /**
      * @return the casted PieChart instance
