@@ -69,7 +69,7 @@
     </itemizedlist>
   </para>
   
-    <para><emphasis>Check Figure Property</emphasis></para>
+    <para><emphasis>Check Connection Figure Property</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
@@ -79,7 +79,7 @@
       </listitem>
       <listitem>
         <para>
-          The connection is addressed via the source and the target text path
+          The connection is addressed via the corresponding source and the target text path. The figure as well as the appropriate anchor can be used as the source.
         </para>
       </listitem>
       <listitem>
