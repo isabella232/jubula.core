@@ -1,0 +1,29 @@
+<section xml:id="new-features-and-developments-8.2.0" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                              xmlns:xl="http://www.w3.org/1999/xlink">
+  <title>New Features and Developments</title>
+  
+  <para>
+    <emphasis role="strong">New actions for the RCP toolkit(GEF)</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+      You can now check the status of a connection point (anchor) on a block.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+      You can now check properties of ConnectionEditParts.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+      Now the GEF Inspector additionally gives information about the properties of an inspected figure or connection.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    <emphasis role="strong">A list of changes which happened in the API since version 8.1 is located <link xl:href="../api-comparison/changes/8.1_to_8.2.0.html">here</link>.</emphasis>
+  </para>
+</section>
