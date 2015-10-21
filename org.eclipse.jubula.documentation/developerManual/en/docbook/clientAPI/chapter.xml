@@ -305,6 +305,7 @@
         the <emphasis>&lt;ITEInstallationFolder&gt;/development/api</emphasis> folder. To define OSGi dependencies to the API artifacts
         you can simply include the <emphasis>&lt;ITEInstallationFolder&gt;/development/org.eclipse.jubula.repo.zip</emphasis> in
         your target platform (definition) and define a dependency to the "Jubula Functional Testing - API Core"-feature.</para>
+        <para>A list of changes which happened over time in the API is located <link xl:href="../../api-comparison/index.html">here</link>.</para>
     </section>
     
     <section>
