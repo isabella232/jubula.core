@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2015 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,39 +8,41 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers.edit;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
-import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.swt.dnd.Transfer;
 
 
 /**
- * Implementation of the Cut action within the Test Case Browser.
+ * Implementation of the Copy action within most of the Editors.
  *
  * @author BREDEX GmbH
- * @created 18.03.2008
  */
-public class CutTreeItemActionTCBrowser extends AbstractCutTreeItemAction {
+public class CopyJBEditorHandler extends AbstractHandler {
 
     /**
      * {@inheritDoc}
      */
-    public void run() {
-        TestCaseBrowser tcb = (TestCaseBrowser) Plugin.getActiveView();
-        ISelection selection = tcb.getSelection();
+    public Object execute(ExecutionEvent event) {
+        AbstractJBEditor jbe = (AbstractJBEditor) Plugin.getActiveEditor();
+        ISelection selection = jbe.getSelection();
         if (!(selection instanceof IStructuredSelection)) {
-            return;
+            return null;
         }
         IStructuredSelection strucSelection = (IStructuredSelection) selection;
         LocalSelectionClipboardTransfer transfer = 
                 LocalSelectionClipboardTransfer.getInstance();
-        tcb.getClipboard().setContents(new Object[] { strucSelection },
-                new Transfer[] { transfer });
-        transfer.setSelection(strucSelection, tcb.getTreeViewer(), true);
-        tcb.getActionListener().selectionChanged(tcb, selection);
+        jbe.getEditorHelper().getClipboard()
+                .setContents(new Object[] { strucSelection },
+                        new Transfer[] { transfer });
+        transfer.setSelection(strucSelection, jbe.getTreeViewer(), false);
+        return null;
     }
 }

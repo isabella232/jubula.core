@@ -276,6 +276,7 @@ public class Utils {
         }
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
+                Plugin.clearAllEditorsClipboard();
                 final ProblemsBP problemsBP = ProblemsBP.getInstance();
                 problemsBP.clearOldProblems();
                 problemsBP.cleanupProblems();

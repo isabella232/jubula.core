@@ -110,6 +110,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.menus.CommandContributionItem;
 
 
@@ -675,8 +676,10 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_CAP);
         mgr.add(submenuAdd);
-        mgr.add(getCutTreeItemAction());
-        mgr.add(getPasteTreeItemAction());
+        CommandHelper.createContributionPushItem(mgr,
+                IWorkbenchCommandConstants.EDIT_COPY);
+        CommandHelper.createContributionPushItem(mgr,
+                IWorkbenchCommandConstants.EDIT_PASTE);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.TOGGLE_ACTIVE_STATE);
         mgr.add(new Separator());

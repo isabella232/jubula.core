@@ -17,16 +17,25 @@ import java.util.List;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor;
@@ -47,6 +56,80 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
      */
     private TJEditorDndSupport() {
         // Do nothing
+    }
+    
+    /**
+     * 
+     * @param targetEditor The editor to which the item is to be pasted.
+     * @param toDrop The items that were copy.
+     * @param dropTarget The paste target.
+     *                     indicate the drop position relative to the drop
+     *                     target.
+     * @return <code>true</code> if the paste was successful. 
+     *         Otherwise <code>false</code>.
+     */
+    public static boolean copyPaste(AbstractJBEditor targetEditor,
+            IStructuredSelection toDrop, INodePO dropTarget) {
+        
+        final IProjectPO project = GeneralStorage.getInstance().getProject();
+        
+        if (targetEditor.getEditorHelper().requestEditableState() 
+                != JBEditorHelper.EditableState.OK) {
+            return false;
+        }
+        @SuppressWarnings("unchecked")
+        List<Object> selectedElements = toDrop.toList();
+        
+        ITestJobPO targetNode;
+        if (dropTarget instanceof ITestJobPO) {
+            targetNode = (ITestJobPO)dropTarget;
+        } else {
+            targetNode = (ITestJobPO)dropTarget.getParentNode();
+        }
+        int position = targetNode.indexOf(dropTarget);
+        for (Object obj : selectedElements.toArray()) {
+            position++;
+            
+            if (obj instanceof IRefTestSuitePO) {
+                
+                copyPasteTestSuite(targetEditor, (IRefTestSuitePO)obj,
+                        targetNode, position, project);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * 
+     * @param targetEditor The editor to which the item is to be pasted.
+     * @param refTestSuit The item that was copy.
+     * @param dropPosition One of the values defined in ViewerDropAdapter to 
+     *                     indicate the drop position relative to the drop
+     *                     target.
+     * @param targetNode target parent node
+     * @param project currently project
+     * @return <code>true</code> if the paste was successful. 
+     *         Otherwise <code>false</code>.
+     */
+    public static boolean copyPasteTestSuite(
+        AbstractJBEditor targetEditor, IRefTestSuitePO refTestSuit,
+        ITestJobPO targetNode, int dropPosition, IProjectPO project) {
+    
+        IRefTestSuitePO newRefTestSuite = NodeMaker
+                .createRefTestSuitePO(refTestSuit.getTestSuite());
+        fillRefTestSuit(refTestSuit, newRefTestSuite);
+        ParamNameBPDecorator pMapper = targetEditor.getEditorHelper()
+                .getEditSupport().getParamMapper();
+        targetNode.addNode(dropPosition, newRefTestSuite);
+        targetEditor.getEditorHelper().setDirty(true);
+        DataEventDispatcher.getInstance()
+            .fireDataChangedListener(newRefTestSuite,
+                DataState.Added, UpdateState.onlyInEditor);
+        postDropAction(newRefTestSuite, targetEditor);
+        
+        return true;
     }
 
     /**
@@ -129,6 +212,19 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
             }
         }
         return true;
+    }
+
+    /**
+     * 
+     * @param toDrop The items that were dragged/cut.
+     * @param dropTarget The drop/paste target.
+     * @return <code>true</code> if the given information indicates that the
+     *         drop/paste is valid. Otherwise <code>false</code>.
+     */
+    public static boolean validateCopy(IStructuredSelection toDrop,
+            INodePO dropTarget) {
+        return validateCopy(toDrop, dropTarget, IRefTestSuitePO.class,
+                IEventExecTestCasePO.class);
     }
 
     /**

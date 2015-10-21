@@ -131,16 +131,18 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             image = Plugin.getGeneratedImage(image);
         }
         
+        LocalSelectionClipboardTransfer transfer =
+                LocalSelectionClipboardTransfer.getInstance();
         // elements that have been "cut" to the clipboard should be grayscale
-        Object cbContents = getClipboard().getContents(
-                LocalSelectionClipboardTransfer.getInstance());
-        if (cbContents instanceof IStructuredSelection) {
-            IStructuredSelection sel = (IStructuredSelection)cbContents;
-            if (sel.toList().contains(element)) {
-                image = Plugin.getCutImage(image);
+        if (transfer.getIsItCut()) {
+            Object cbContents = getClipboard().getContents(transfer);
+            if (cbContents instanceof IStructuredSelection) {
+                IStructuredSelection sel = (IStructuredSelection)cbContents;
+                if (sel.toList().contains(element)) {
+                    image = Plugin.getCutImage(image);
+                }
             }
         }
-        
         return image;
     }
     

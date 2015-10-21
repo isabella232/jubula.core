@@ -52,6 +52,11 @@ public class LocalSelectionClipboardTransfer extends ByteArrayTransfer {
      * type - id
      */
     private static final int TYPEID = registerType(TYPE_NAME);
+    
+    /**
+     * is <code>true</code> when the last action is cut.
+     */
+    private static boolean isCut = false;
 
     /**
      * instance
@@ -92,6 +97,13 @@ public class LocalSelectionClipboardTransfer extends ByteArrayTransfer {
      */
     public IStructuredSelection getSelection() {
         return m_selection;
+    }
+
+    /**
+     * @return <code>true</code> when the last action is cut.
+     */
+    public boolean getIsItCut() {
+        return isCut;
     }
 
     /**
@@ -162,11 +174,12 @@ public class LocalSelectionClipboardTransfer extends ByteArrayTransfer {
      * @param source
      *            The source to set. A value of <code>null</code> clears the
      *            source data.
+     * @param isItCut <code>true</code> when the action is cut.
      */
     public void setSelection(IStructuredSelection sel, 
-            StructuredViewer source) {
+            StructuredViewer source, boolean isItCut) {
         
-        setSelection(sel, source, null);
+        setSelection(sel, source, null, isItCut);
     }
 
     /**
@@ -182,18 +195,21 @@ public class LocalSelectionClipboardTransfer extends ByteArrayTransfer {
      *            Viewers that should be updated (in addition to the source 
      *            viewer) after the selection change. May be <code>null</code>
      *            or empty, in which case no additional viewers will be updated.
-     *            
+     * @param isItCut <code>true</code> when the action is cut.
      */
     public void setSelection(IStructuredSelection sel, 
-            StructuredViewer source, StructuredViewer[] otherViewersToRefresh) {
+            StructuredViewer source, StructuredViewer[] otherViewersToRefresh,
+            boolean isItCut) {
+        
         IStructuredSelection oldSelection = getSelection();
         StructuredViewer oldSource = getSource();
         StructuredViewer[] oldViewersToRefresh = getOtherViewersToRefresh();
-        setSelection(sel);
+        setSelection(sel, isItCut);
         setSource(source);
         setOtherViewersToRefresh(otherViewersToRefresh);
         
-        if (oldSource != null && !oldSource.getControl().isDisposed()) {
+        if (oldSource != null && !oldSource.getControl().isDisposed()
+                && oldSelection != null) {
             // Allows the other item previously marked as "cut" to 
             // now be marked as normal.
             oldSource.update(oldSelection.toArray(), null);
@@ -222,9 +238,11 @@ public class LocalSelectionClipboardTransfer extends ByteArrayTransfer {
      * @param sel
      *            The transfer data. A value of <code>null</code> clears the
      *            transfer data.
+     * @param isItCut <code>true</code> when the action is cut.
      */
-    private void setSelection(IStructuredSelection sel) {
+    public void setSelection(IStructuredSelection sel, boolean isItCut) {
         m_selection = sel;
+        isCut = isItCut;
     }
 
     /**

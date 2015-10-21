@@ -58,7 +58,7 @@ public class PasteTreeItemActionTCBrowser extends AbstractPasteTreeItemAction {
             INodePO target = (INodePO)selArray[selArray.length - 1];
             
             tstv.getClipboard().clearContents();
-            transfer.setSelection(null, null);
+            transfer.setSelection(null, null, false);
             
             // Update enablement manually because these is no selection
             // change to update the enablement automatically.

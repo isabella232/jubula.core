@@ -67,7 +67,8 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         if (newTestCaseName == null) {
             return null;
         }
-        
+
+        editor.getEditorHelper().getClipboard().clearContents();
         final INodePO node = (INodePO) editor.getEditorHelper()
                 .getEditSupport().getOriginal();
         if (node != null) {

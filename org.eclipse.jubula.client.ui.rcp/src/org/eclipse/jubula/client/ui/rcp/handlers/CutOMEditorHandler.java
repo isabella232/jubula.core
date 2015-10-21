@@ -45,8 +45,8 @@ public class CutOMEditorHandler extends AbstractHandler {
             LocalSelectionClipboardTransfer.getInstance(); 
         ome.getEditorHelper().getClipboard().setContents(
                 new Object [] {selection}, new Transfer [] {transfer});
-        transfer.setSelection(selection, 
-                ome.getTreeViewer(), ome.getTreeViewers());
+        transfer.setSelection(selection, ome.getTreeViewer(),
+                ome.getTreeViewers(), true);
         
         return null;
     }

@@ -57,6 +57,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.menus.CommandContributionItem;
 
 
@@ -67,7 +68,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
  * @created Mar 17, 2010
  */
 public class TestJobEditor extends AbstractJBEditor {
-
+    
     /**
      * {@inheritDoc}
      */
@@ -95,16 +96,6 @@ public class TestJobEditor extends AbstractJBEditor {
         ded.addPropertyChangedListener(this, true);
         GuiEventDispatcher.getInstance().addEditorDirtyStateListener(
                 this, true);
-    }
-
-    /**
-     * Sets all necessary global action handlers for this editor. This
-     * ensures that the editor's actions control the enablement of the 
-     * corresponding actions in the main menu.
-     */
-    protected void setActionHandlers() {
-        getSite().setSelectionProvider(this);
-        getEditorSite().getActionBars().updateActionBars();
     }
     
     @Override
@@ -138,13 +129,14 @@ public class TestJobEditor extends AbstractJBEditor {
      * {@inheritDoc}
      */
     protected void fillContextMenu(IMenuManager mgr) {
+        CommandHelper.createContributionPushItem(mgr,
+                IWorkbenchCommandConstants.EDIT_COPY);
+        CommandHelper.createContributionPushItem(mgr,
+                IWorkbenchCommandConstants.EDIT_PASTE);
+        mgr.add(new Separator());
         mgr.add(new GroupMarker("editing")); //$NON-NLS-1$
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REVERT_CHANGES);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
@@ -152,6 +144,10 @@ public class TestJobEditor extends AbstractJBEditor {
                 RCPCommandIDs.FIND,
                 null, Messages.FindContextMenu,
                 CommandContributionItem.STYLE_PUSH));
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         mgr.add(new Separator());

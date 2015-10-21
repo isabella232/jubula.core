@@ -60,6 +60,7 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ToolkitBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
+import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
@@ -452,6 +453,21 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             }
         }
         return editorList;
+    }
+    
+    /**
+     * clear clipboard on all editors
+     */
+    public static void clearAllEditorsClipboard() {
+        for (IEditorReference editorRef : getAllEditors()) {
+            IEditorPart editorPart = editorRef.getEditor(true);
+            if (editorPart instanceof AbstractJBEditor) {
+                ((AbstractJBEditor)editorPart).getEditorHelper().getClipboard()
+                    .clearContents();
+            }
+        }
+        LocalSelectionClipboardTransfer.getInstance()
+            .setSelection(null, false);
     }
 
     /**

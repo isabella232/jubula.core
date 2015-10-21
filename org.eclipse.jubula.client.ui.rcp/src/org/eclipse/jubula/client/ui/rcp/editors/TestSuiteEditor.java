@@ -11,19 +11,15 @@
 package org.eclipse.jubula.client.ui.rcp.editors;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -37,8 +33,6 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
-import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TSEditorDndSupport;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TSEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.TestSuiteEditorContentProvider;
@@ -51,6 +45,7 @@ import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 
 
 /**
@@ -64,8 +59,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
     /** {@inheritDoc} */
     public void createPartControlImpl(Composite parent) {
         super.createPartControlImpl(parent);
-        ActionListener actionListener = new ActionListener();
-        getTreeViewer().addSelectionChangedListener(actionListener);
         if (!Plugin.getDefault().anyDirtyStar())  {
             checkAndRemoveUnusedTestData();
         }
@@ -245,11 +238,22 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         }
         MenuManager submenuAdd = new MenuManager(Messages.TestSuiteBrowserAdd,
                 ADD_ID);
-        MenuManager submenuRefactor = new MenuManager(
-            Messages.TestCaseEditorRefactor, REFACTOR_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REFERENCE_TC);
         mgr.add(submenuAdd);
+        CommandHelper.createContributionPushItem(mgr,
+                IWorkbenchCommandConstants.EDIT_COPY);
+        CommandHelper.createContributionPushItem(mgr,
+                IWorkbenchCommandConstants.EDIT_PASTE);
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.TOGGLE_ACTIVE_STATE);
+        mgr.add(new Separator());
+        mgr.add(new GroupMarker("editing")); //$NON-NLS-1$
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.REVERT_CHANGES);
+        mgr.add(new Separator());
+        MenuManager submenuRefactor = new MenuManager(
+                Messages.TestCaseEditorRefactor, REFACTOR_ID);
         mgr.add(submenuRefactor);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 RCPCommandIDs.EXTRACT_TESTCASE);
@@ -257,22 +261,15 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 RCPCommandIDs.REPLACE_WITH_TESTCASE);
         CommandHelper.createContributionPushItem(submenuRefactor,
                 RCPCommandIDs.SAVE_AS_NEW);
-        mgr.add(new GroupMarker("editing")); //$NON-NLS-1$
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.REVERT_CHANGES);
         mgr.add(new Separator());
-        mgr.add(getCutTreeItemAction());
-        mgr.add(getPasteTreeItemAction());
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.TOGGLE_ACTIVE_STATE);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
-        CommandHelper.createContributionPushItem(mgr,
-                RCPCommandIDs.SHOW_WHERE_USED);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.OPEN_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.SHOW_WHERE_USED);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -281,86 +278,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                 RCPCommandIDs.NEW_COMMENT);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.EDIT_COMMENT);
-    }
-    
-    /**
-     * SelectionListener to en-/disable delete-action
-     * 
-     * @author BREDEX GmbH
-     * @created 02.03.2006
-     */
-    private class ActionListener implements ISelectionChangedListener {
-        /**
-         * {@inheritDoc}
-         */
-        @SuppressWarnings("unchecked") 
-        public void selectionChanged(SelectionChangedEvent event) {
-            if (!(event.getSelection() instanceof IStructuredSelection)) {
-                return;
-            }
-            IStructuredSelection sel = 
-                (IStructuredSelection)event.getSelection();
-
-            if (GeneralStorage.getInstance().getProject() == null
-                    || (sel == null 
-                            || sel.isEmpty())) {
-                
-                getCutTreeItemAction().setEnabled(false);
-                getPasteTreeItemAction().setEnabled(false);
-            } else {
-                List<INodePO> selList = sel.toList();
-                enableCutAction(selList);
-                enablePasteAction(selList);
-            }
-        }
-
-        /**
-         * en-/disable cut-action
-         * @param selList actual selection 
-         */
-        private void enableCutAction(List<INodePO> selList) {
-            getCutTreeItemAction().setEnabled(true);
-
-            for (INodePO node : selList) {
-                if (!(node instanceof IExecTestCasePO
-                        || node instanceof ICapPO)) {
-                    getCutTreeItemAction().setEnabled(false);
-                    return;
-                }
-            }
-        }
-
-        /**
-         * en-/disable paste-action
-         * @param selList actual selection 
-         */
-        private void enablePasteAction(List<INodePO> selList) {
-            
-            getPasteTreeItemAction().setEnabled(true);
-            LocalSelectionClipboardTransfer transfer = 
-                LocalSelectionClipboardTransfer.getInstance();
-            Object cbContents = 
-                getEditorHelper().getClipboard().getContents(transfer);
-
-            if (cbContents instanceof IStructuredSelection) {
-                IStructuredSelection cbSelection = 
-                    (IStructuredSelection)cbContents;
-                for (INodePO guiNode : selList) {
-                    if (guiNode == null
-                            || !(cbContents instanceof StructuredSelection)
-                            || !TSEditorDndSupport.validateDrop(
-                                    transfer.getSource(), 
-                                    TestSuiteEditor.this.getTreeViewer(),
-                                    cbSelection, guiNode, false)) {
-                        
-                        getPasteTreeItemAction().setEnabled(false);
-                        return;
-                    }
-                }
-            } else {
-                getPasteTreeItemAction().setEnabled(false);
-            }
-        }
     }
 
     /**

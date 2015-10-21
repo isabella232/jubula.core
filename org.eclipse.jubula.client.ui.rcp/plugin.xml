@@ -138,12 +138,17 @@
       properties="usedMonitoringAgent"
       type="org.eclipse.jubula.client.core.model.ITestResultSummaryPO" />
     <propertyTester
-          class="org.eclipse.jubula.client.ui.rcp.propertytester.ObjectMappingCollectionPropertyTester"
-          id="org.eclipse.jubula.client.ui.rcp.propertytester.ObjectMappingCollectionPropertyTester"
-          namespace="org.eclipse.jubula.client.ui.rcp.ObjectMappingCollection"
-          properties="isPasteAllowed"
-          type="java.util.Collection">
-    </propertyTester>
+      class="org.eclipse.jubula.client.ui.rcp.propertytester.ObjectMappingCollectionPropertyTester"
+      id="org.eclipse.jubula.client.ui.rcp.propertytester.ObjectMappingCollectionPropertyTester"
+      namespace="org.eclipse.jubula.client.ui.rcp.ObjectMappingCollection"
+      properties="isPasteAllowed"
+      type="java.util.Collection" />
+    <propertyTester
+      class="org.eclipse.jubula.client.ui.rcp.propertytester.AbstractJBCollectionPropertyTester"
+      id="org.eclipse.jubula.client.ui.rcp.propertytester.AbstractJBCollectionPropertyTester"
+      namespace="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection"
+      properties="isPasteAllowed,isCopyAllowed"
+      type="java.util.Collection" />
   </extension>
   <extension
     id="jbMarker"
@@ -3982,6 +3987,48 @@
        <enabledWhen>
           <test
                 property="org.eclipse.jubula.client.ui.rcp.ObjectMappingCollection.isPasteAllowed">
+          </test></enabledWhen>
+    </handler>
+    <handler
+          class="org.eclipse.jubula.client.ui.rcp.handlers.edit.PasteJBEditorHandler"
+          commandId="org.eclipse.ui.edit.paste">
+       <activeWhen>
+            <or>
+              <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
+              </with>
+              <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+              </with>
+              <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor" />
+              </with>
+            </or>
+       </activeWhen>
+       <enabledWhen>
+          <test
+                property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.isPasteAllowed">
+          </test></enabledWhen>
+    </handler>
+    <handler
+          class="org.eclipse.jubula.client.ui.rcp.handlers.edit.CopyJBEditorHandler"
+          commandId="org.eclipse.ui.edit.copy">
+       <activeWhen>
+            <or>
+              <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
+              </with>
+              <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+              </with>
+              <with variable="activePartId">
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor" />
+              </with>
+            </or>
+       </activeWhen>
+       <enabledWhen>
+          <test
+                property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.isCopyAllowed">
           </test></enabledWhen>
     </handler>
   </extension>

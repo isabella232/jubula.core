@@ -121,7 +121,7 @@ public class PasteOMEditor extends AbstractHandler {
     private void handlePostPaste(ObjectMappingMultiPageEditor ome,
             LocalSelectionClipboardTransfer transfer, Object target) {
         ome.getEditorHelper().getClipboard().clearContents();
-        transfer.setSelection(null, null);
+        transfer.setSelection(null, null, false);
         
         // Update enablement manually because these is no selection
         // change to update the enablement automatically.
