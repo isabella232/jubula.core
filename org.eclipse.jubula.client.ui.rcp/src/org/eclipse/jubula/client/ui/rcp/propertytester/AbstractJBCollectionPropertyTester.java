@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -44,13 +45,16 @@ public class AbstractJBCollectionPropertyTester extends
     
     /** the id of the "isCopyAllowed" property */
     public static final String IS_COPY_ALLOWED = "isCopyAllowed"; //$NON-NLS-1$
-
+    
+    /** the id of the "isCutAllowed" property */
+    public static final String IS_CUT_ALLOWED = "isCutAllowed"; //$NON-NLS-1$
     /**
      * testable properties
      */
     private static final String[] PROPERTIES = new String[] { 
         IS_PASTE_ALLOWED,
-        IS_COPY_ALLOWED };
+        IS_COPY_ALLOWED,
+        IS_CUT_ALLOWED };
 
     /**
      * 
@@ -63,25 +67,29 @@ public class AbstractJBCollectionPropertyTester extends
         if (property.equals(IS_PASTE_ALLOWED)) {
             return testIsPasteAllowed(selectionContents);
         } else if (property.equals(IS_COPY_ALLOWED)) {
-            return testIsCopyAllowed(selectionContents);
+            return testIsCopyCutAllowed(selectionContents, false);
+        } else if (property.equals(IS_CUT_ALLOWED)) {
+            return testIsCopyCutAllowed(selectionContents, true);
         }
-
         return false;
     }
 
     /**
      * 
      * @param selectionContents The selection contents to test.
-     * @return <code>true</code> if the paste command should be enabled for
+     * @param isItCut true if is it a cut event
+     * @return <code>true</code> if the copy command should be enabled for
      *         the given selection contents. Otherwise <code>false</code>.
      */
-    private boolean testIsCopyAllowed(
-            Collection<? extends Object> selectionContents) {
+    private boolean testIsCopyCutAllowed(
+            Collection<? extends Object> selectionContents,
+            boolean isItCut) {
         
         IEditorPart activeEditor = Plugin.getActiveEditor();
         if (!(activeEditor instanceof AbstractJBEditor)
-                || activeEditor.isDirty() || selectionContents == null
-                || selectionContents.isEmpty()) {
+                || selectionContents == null
+                || selectionContents.isEmpty()
+                || (activeEditor.isDirty() && !isItCut)) {
             return false;
         }
         
@@ -90,13 +98,16 @@ public class AbstractJBCollectionPropertyTester extends
         if (activeEditor instanceof TestCaseEditor) {
             classes.add(IExecTestCasePO.class);
             classes.add(ICapPO.class);
-            isEnable = getCopyActionEnablement(selectionContents, classes);
+            isEnable = getCopyActionEnablement(selectionContents, classes,
+                    isItCut);
         } else if (activeEditor instanceof TestSuiteEditor) {
             classes.add(IExecTestCasePO.class);
-            isEnable = getCopyActionEnablement(selectionContents, classes);
+            isEnable = getCopyActionEnablement(selectionContents, classes,
+                    isItCut);
         } else if (activeEditor instanceof TestJobEditor) {
             classes.add(IRefTestSuitePO.class);
-            isEnable = getCopyActionEnablement(selectionContents, classes);
+            isEnable = getCopyActionEnablement(selectionContents, classes,
+                    isItCut);
         }
         return isEnable;
     }
@@ -125,7 +136,10 @@ public class AbstractJBCollectionPropertyTester extends
         if (toDrop == null || !(toDrop instanceof IStructuredSelection)
                 || aJBEditor.getSelection() == null
                 || !(aJBEditor.getSelection()
-                        instanceof IStructuredSelection)) {
+                        instanceof IStructuredSelection)
+                || (transfer.getIsItCut() && !aJBEditor.getTreeViewer()
+                        .equals(transfer.getSource()))) {
+
             return false;
         }
         
@@ -133,8 +147,8 @@ public class AbstractJBCollectionPropertyTester extends
                 (IStructuredSelection)aJBEditor.getSelection();
         boolean isEnable = false;
         if (aJBEditor instanceof TestCaseEditor) {
-            isEnable = getPasteActionEnablementForTCE((
-                    IStructuredSelection)toDrop, targetSel);
+            isEnable = getPasteActionEnablementForTCE(
+                    (IStructuredSelection)toDrop, targetSel);
         } else if (aJBEditor instanceof TestSuiteEditor) {
             isEnable = getPasteActionEnablementForTSE(
                     (IStructuredSelection)toDrop, targetSel);
@@ -147,17 +161,19 @@ public class AbstractJBCollectionPropertyTester extends
     
     /**
      * @param selectionContents The element what we would like to paste.
-     * @param checkedClasses SelectionContents items should be on it. 
+     * @param checkedClasses SelectionContents items should be on it.
+     * @param isItCut it is true if the event is cut
      * @return <code>true</code> if the paste operation should be
      *         enabled for the given arguments. Otherwise, 
      *         <code>false</code>.
      */
     private boolean getCopyActionEnablement(
             Collection<? extends Object> selectionContents,
-            List<Class<?>> checkedClasses) {
+            List<Class<?>> checkedClasses, boolean isItCut) {
 
         for (Object node : selectionContents) {
-            if (node == null) {
+            if (node == null || (node instanceof IEventExecTestCasePO
+                    && isItCut)) {
                 return false;
             }
             boolean contains = false;

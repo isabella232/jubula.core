@@ -677,6 +677,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 RCPCommandIDs.NEW_CAP);
         mgr.add(submenuAdd);
         CommandHelper.createContributionPushItem(mgr,
+                IWorkbenchCommandConstants.EDIT_CUT);
+        CommandHelper.createContributionPushItem(mgr,
                 IWorkbenchCommandConstants.EDIT_COPY);
         CommandHelper.createContributionPushItem(mgr,
                 IWorkbenchCommandConstants.EDIT_PASTE);

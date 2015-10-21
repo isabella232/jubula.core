@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2015 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,32 +8,34 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.actions;
+package org.eclipse.jubula.client.ui.rcp.handlers.edit;
 
+import org.eclipse.core.commands.AbstractHandler;
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 
 
 /**
- * Implementation of the Cut action within the Test Case Editor.
+ * Implementation of the Copy and Cut action within most of the Editors.
  *
  * @author BREDEX GmbH
- * @created 20.03.2008
  */
-public class CutTreeItemActionJBEditor extends AbstractCutTreeItemAction {
+public class CopyCutJBEditorHandler extends AbstractHandler {
 
     /**
      * {@inheritDoc}
      */
-    public void run() {
+    public Object execute(ExecutionEvent event) {
         AbstractJBEditor jbe = (AbstractJBEditor) Plugin.getActiveEditor();
         ISelection selection = jbe.getSelection();
         if (!(selection instanceof IStructuredSelection)) {
-            return;
+            return null;
         }
         IStructuredSelection strucSelection = (IStructuredSelection) selection;
         LocalSelectionClipboardTransfer transfer = 
@@ -41,6 +43,10 @@ public class CutTreeItemActionJBEditor extends AbstractCutTreeItemAction {
         jbe.getEditorHelper().getClipboard()
                 .setContents(new Object[] { strucSelection },
                         new Transfer[] { transfer });
-        transfer.setSelection(strucSelection, jbe.getTreeViewer(), true);
+        
+        boolean isItCut = event.getCommand().getId()
+                .equals(IWorkbenchCommandConstants.EDIT_CUT);
+        transfer.setSelection(strucSelection, jbe.getTreeViewer(), isItCut);
+        return null;
     }
 }

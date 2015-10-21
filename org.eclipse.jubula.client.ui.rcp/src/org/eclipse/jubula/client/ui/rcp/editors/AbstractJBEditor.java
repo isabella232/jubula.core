@@ -37,7 +37,6 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionJBEditor;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.AbstractPartListener;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
@@ -105,10 +104,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
 
     /** The parent Control. */
     private Control m_control;
-    
-    /** action to cut TreeItems */
-    private CutTreeItemActionJBEditor m_cutTreeItemAction =
-        new CutTreeItemActionJBEditor();
     
     /** PartListener of this WokbenchPart */
     private PartListener m_partListener = new PartListener();
@@ -612,21 +607,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     private Control getControl() {
         return m_control;
-    }
-
-    /**
-     * @param cutTreeItemAction the cutTreeItemAction to set
-     */
-    protected void setCutTreeItemAction(
-            CutTreeItemActionJBEditor cutTreeItemAction) {
-        m_cutTreeItemAction = cutTreeItemAction;
-    }
-
-    /**
-     * @return the cutTreeItemAction
-     */
-    protected CutTreeItemActionJBEditor getCutTreeItemAction() {
-        return m_cutTreeItemAction;
     }
     
     /**
