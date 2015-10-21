@@ -1,64 +1,68 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<link rel="stylesheet" href="../../css/layout.css" type="text/css">
+<head>
+<link rel="stylesheet" href="../../css/layout.css" type="text/css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>What's New</title>
-	</head>
-		<body>
-		
-		
-		<div id="bodywrapper">	
-		
-			<div id="head">
-				 <div class="whatsnew_pic">
-				</div>
+<title>What's New</title>
+</head>
+<body>
+	<div id="bodywrapper">
+
+		<div id="head">
+			<div class="whatsnew_pic"></div>
+		</div>
+
+		<!--Zusatzinfos "Rechte Seite"-->
+
+		<div id="right">
+			<div id="right_bluediv">
+				<span class="rightheadline">Info</span>
 			</div>
-			
-		
-			
-			<!--Zusatzinfos "Rechte Seite"-->
-			
-			<div id="right">
-					<div id="right_bluediv">
-						<span class="rightheadline">Info</span>	
-				</div>
-				
-				<span class="tab"><b>Back-up!</b></span>
-					<div class="righttxt">											
-					See the migration section for information on updating to new
-					versions.															
-					</div>
-					
-			</div>
-			
-			
-			<div id="main">
-				<p class="headline1">What's new:</p>
-		
-				<ul>
-				<li>There is a new key combination in object mapping mode. With that it is now possible to map the current component at mouse position and all its supported parents from the AUT's hierarchy in the JavaFX toolkit.</li>
-				<li>You can now check the property of items in tables, trees, lists and tree tables .</li>
-				<li>You can now use <emphasis>ub_tbl_checkPropertyAtMousePosition</emphasis> and <emphasis>ub_tre_checkPropertyAtMousePosition</emphasis> in the SWT toolkit.</li>
-				<li>We now use Selenium version 2.46.0.</li>
-				<li>We added an example for our Client API using JavaFX.</li>
-				<li>It is now possible to change the order of single data sets in the Data Sets View.</li>
-				<li>Performance for opening Test Result Details in the Reporting Perspective has been improved.</li>
-				</ul>
-				<p class="maintxt">
-				The list above is just an overview. 
-				For a more complete guide to new features, read the release notes. 
-				</p>
-				</div>
-	
-			</div>
-			
-			<div id="gdlogo">
-			</div>
-			
-		<!-- </div>-->	
-		
-			
-			
-		</body>
+
+			<span class="tab"><b>Back-up!</b></span>
+			<div class="righttxt">See the migration section for information
+				on updating to new versions.</div>
+
+		</div>
+
+
+		<div id="main">
+			<p class="headline1">What's new:</p>
+
+			<p class="headline2">Toolkit updates</p>
+			<ul>
+				<li>We have added new actions for the GEF toolkit to address
+					connection points on figures and to check figure properties.</li>
+				<li>The GEF inspector also provides property information about
+					the selected figure</li>
+				<li>It is now possible to address GEF figures using the Jubula
+					Client API. It is also possible to write extensions for use in the
+					Jubula Client API.</li>
+				<li>We have added various new actions to the JavaFX toolkit,
+					including actions on tree tables, actions to check tooltips,
+					actions on date pickers, and various other additions.</li>
+				<li>In the JavaFX object mapping mode, you can now choose to
+					collect all supported parent components as well as the highlighted
+					component</li>
+				<li>In the SWT/RCP toolkit, there are new actions to check the
+					property at mouse position for tables, trees and tree tables. You
+					can also check JFace tooltips.</li>
+			</ul>
+			<p class="headline2">Other updates</p>
+			<ul>
+				<li>We have drastically improved the performance for opening
+					test result reports in the ITE</li>
+				<li>The order of data sets in the Data Sets View can now be
+					changed using buttons to move rows up or down</li>
+			</ul>
+            <br>
+			<p class="maintxt">The list above is just an overview. For a more
+				complete guide to new features, read the release notes.</p>
+		</div>
+
+	</div>
+
+	<div id="gdlogo"></div>
+
+</body>
 </html>
