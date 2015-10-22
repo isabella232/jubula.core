@@ -326,6 +326,11 @@
       settings. You may have test execution problems if you have set
       the values too strictly, or not strictly enough.
     </para>
+    <para role="tip">
+	You can change the profile for individual components, please read
+	<xref linkend="component-specific-profile" />
+	for more information.
+    </para>
   </section>
   <section xml:id="refreshing-the-object-mapping-editor">
     <title>Refreshing the Object Mapping Editor</title>

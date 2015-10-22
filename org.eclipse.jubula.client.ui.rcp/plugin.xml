@@ -532,6 +532,20 @@
     <category
       id="org.eclipse.jubula.client.ui.rcp.commands"
       name="%JubulaCommandCategory" />
+       <commandParameterType
+        converter="org.eclipse.jubula.client.ui.rcp.command.parameters.ProfileParameterConverter"
+        id="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.profiles"
+        type="org.eclipse.jubula.client.ui.rcp.command.parameters.ProfileTypeParameter" />
+       <command
+       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+       id="org.eclipse.jubula.client.ui.rcp.commands.SetProfile"
+       name="%SetProfile">
+    <commandParameter
+          id="org.eclipse.jubula.client.ui.rcp.command.parameters.profilesParameter"
+          name="Profile"
+          typeId="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.profiles">
+    </commandParameter>
+</command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"
@@ -736,6 +750,26 @@
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"
       name="%NewLogicalName" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.FilterProfile"
+      name="%FilterProfile">
+      <commandParameter
+          id="org.eclipse.jubula.client.ui.rcp.command.parameters.filterProfilesParameter"
+          name="Profile"
+          typeId="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.profiles">
+      </commandParameter>
+      <commandParameter
+            id="org.eclipse.jubula.client.ui.rcp.command.parameters.filterActiveParameter"
+            name="Filter Active">
+      </commandParameter>
+      <state
+        class="org.eclipse.core.commands.State"
+        id="org.eclipse.jubula.client.ui.rcp.commands.FilterProfile.state.filterProfile" />
+      <state
+        class="org.eclipse.jface.commands.ToggleState:false"
+        id="org.eclipse.ui.commands.toggleState" /> 
+    </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.sort.name"
@@ -1440,6 +1474,21 @@
           </visibleWhen>
         </command>
         <command
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.FilterProfile"
+          id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.FilterProfile"
+          style="pulldown"
+          tooltip="%FilterProfile">
+          <visibleWhen checkEnabled="false">
+            <with variable="activeEditorId">
+              <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
+            </with>
+          </visibleWhen>
+          <parameter
+                name="org.eclipse.jubula.client.ui.rcp.command.parameters.filterActiveParameter"
+                value="true">
+          </parameter>
+        </command>
+        <command
           commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
           id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand"
           style="pulldown"
@@ -1596,6 +1645,12 @@
       <dynamic
         class="org.eclipse.jubula.client.ui.rcp.contributionitems.StartObjectMappingModeContributionItem"
         id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.OMStartMappingModeCommand.dropdown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.FilterProfile">
+      <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.ProfileContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor.FilterProfile.dropdown" /> 
     </menuContribution>
     <menuContribution
       locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObservationToolbar.StartObservationModeCommand">
@@ -1949,6 +2004,7 @@
              commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowResponsibleNodes"
              style="push">
        </command>
+       <menu label="Set Profile..." id="org.eclipse.jubula.client.ui.rcp.profileMenu"/>
        <separator
              name="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor.separator3"
              visible="true">
@@ -1960,6 +2016,11 @@
                 style="push">
           </command>
        </menu>
+    </menuContribution>
+    <menuContribution locationURI="popup:org.eclipse.jubula.client.ui.rcp.profileMenu">
+        <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.ProfileContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor.dropdown" />         
     </menuContribution>
     <menuContribution
       locationURI="popup:org.eclipse.jubula.client.ui.views.Image?after=additions">
@@ -2037,6 +2098,15 @@
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.NewLogicalNameHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand">
+      <enabledWhen>
+        <with variable="activePartId">
+          <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
+        </with>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.FilterProfileHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.FilterProfile">
       <enabledWhen>
         <with variable="activePartId">
           <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
@@ -2939,6 +3009,9 @@
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addLogicalName.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.FilterProfile"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/find.gif"/>
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.sort.name"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/sort.gif" />
@@ -4022,6 +4095,22 @@
           <test
                 property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.isCutAllowed">
           </test></enabledWhen>
+    </handler>
+    <handler
+          class="org.eclipse.jubula.client.ui.rcp.handlers.SetComponentIdentifierProfile"
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.SetProfile">
+           <activeWhen>
+           <and>
+           <count value="1" />
+           <iterate
+             ifEmpty="false"
+             operator="and">
+             <instanceof
+                value="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO" 
+                />
+           </iterate>
+         </and>
+       </activeWhen>
     </handler>
   </extension>
   <extension point="org.eclipse.ui.services">

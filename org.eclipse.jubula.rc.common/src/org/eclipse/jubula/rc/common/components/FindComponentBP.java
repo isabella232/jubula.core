@@ -59,7 +59,14 @@ public abstract class FindComponentBP {
         throws IllegalArgumentException {
         
         m_hierarchy = hierarchy;
-        setProfile(AUTServerConfiguration.getInstance().getProfile());
+        AUTServerConfiguration serverConfig = 
+                AUTServerConfiguration.getInstance();
+        org.eclipse.jubula.tools.Profile p = componentIdentifier.getProfile();
+        if (p != null && p instanceof Profile) {
+            setProfile((Profile) p);
+        } else {
+            setProfile(serverConfig.getProfile());
+        }
         // Fuzzy logic parameter
         List<String> hierarchyNames = null;
         // parameter check

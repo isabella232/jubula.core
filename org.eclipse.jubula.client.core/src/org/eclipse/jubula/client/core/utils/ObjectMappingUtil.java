@@ -48,6 +48,7 @@ public final class ObjectMappingUtil {
                     assoCompId.getNeighbours()));
             compId.setSupportedClassName(
                     assoCompId.getSupportedClassName());
+            compId.setProfile(assoCompId.getProfile());
         }
         return compId;
     }

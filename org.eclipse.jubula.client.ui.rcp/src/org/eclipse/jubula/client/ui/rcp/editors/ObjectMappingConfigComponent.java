@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.editors;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeansObservables;
@@ -25,6 +28,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jubula.client.core.model.ClientProfileNames;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -32,6 +36,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.databinding.InverseBooleanConverter;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.tools.internal.objects.StandardProfiles;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.internal.xml.businessprocess.ProfileBuilder;
 import org.eclipse.swt.SWT;
@@ -59,9 +64,6 @@ import org.eclipse.swt.widgets.Scale;
  * @created Nov 5, 2008
  */
 public class ObjectMappingConfigComponent {
-
-    /** the display string to represent a non-named profile */
-    private static final String CUSTOM_NAME = "Custom"; //$NON-NLS-1$
     
     /**
      * Takes care of IJBEditor-specific steps when changing a value via a 
@@ -163,6 +165,31 @@ public class ObjectMappingConfigComponent {
             Double fromDouble = (Double)fromObject;
             return String.format(FORMAT_STRING, 
                     fromDouble * CONVERSION_FACTOR);
+        }
+    }
+    
+    /**
+     * Databinding converter: Label => Model
+     *
+     * @author BREDEX GmbH
+     * @created Nov 19, 2008
+     */
+    private static class LabelToModelConverter extends Converter {
+
+        /**
+         * Constructor
+         */
+        public LabelToModelConverter() {
+            super(String.class, double.class);
+        }
+
+        /**
+         * 
+         * {@inheritDoc}
+         */
+        public Object convert(Object fromObject) {
+            String doubleString = (String)fromObject;
+            return Double.parseDouble(doubleString.replaceAll("%", "")) / 100; //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
@@ -309,6 +336,10 @@ public class ObjectMappingConfigComponent {
      */
     private ModelToLabelConverter m_modelToLabelConverter = 
         new ModelToLabelConverter();
+    
+    /** instance to convert the label Text to a value in the model **/
+    private LabelToModelConverter m_labelToModelConverter = 
+            new LabelToModelConverter();
 
     /** Model */
     private IObjectMappingPO m_input;
@@ -320,7 +351,13 @@ public class ObjectMappingConfigComponent {
     private DataBindingContext m_bindingContext;
 
     /** observable for the editor input */
-    private IObservableValue m_profileObservable; 
+    private IObservableValue m_profileObservable;
+    
+    /** map for the sliders. this is necessary for the binding update **/
+    private Map<Scale, String> m_factorSliders;
+    
+    /** map for the value labels. this is necessary for the binding update **/
+    private Map<Scale, Label> m_factorLabels = new HashMap<Scale, Label>();
     
     /**
      * Constructor
@@ -362,23 +399,26 @@ public class ObjectMappingConfigComponent {
         createProfileCombo(composite);
 
         m_sliderComposite = createSliderComposite(composite);
-        Set<Scale> factorSliders = new HashSet<Scale>();
+        m_factorSliders = new HashMap<Scale, String>();
         m_profileObservable = PojoObservables.observeValue(input,
                 IObjectMappingPO.PROP_PROFILE);
-        factorSliders.add(createFactorSlider(m_sliderComposite,
+        m_factorSliders.put(createFactorSlider(m_sliderComposite,
                 Messages.ObjectMappingPreferencePagePathFactor,
                 IObjectMappingProfilePO.PROP_PATH_FACTOR, m_bindingContext,
-                m_profileObservable, editor));
-        factorSliders.add(createFactorSlider(m_sliderComposite,
+                m_profileObservable, editor),
+                IObjectMappingProfilePO.PROP_PATH_FACTOR);
+        m_factorSliders.put(createFactorSlider(m_sliderComposite,
                 Messages.ObjectMappingPreferencePageNameFactor,
                 IObjectMappingProfilePO.PROP_NAME_FACTOR, m_bindingContext,
-                m_profileObservable, editor));
-        factorSliders.add(createFactorSlider(m_sliderComposite,
+                m_profileObservable, editor),
+                IObjectMappingProfilePO.PROP_NAME_FACTOR);
+        m_factorSliders.put(createFactorSlider(m_sliderComposite,
                 Messages.ObjectMappingPreferencePageContextFactor,
                 IObjectMappingProfilePO.PROP_CONTEXT_FACTOR, m_bindingContext,
-                m_profileObservable, editor));
+                m_profileObservable, editor),
+                IObjectMappingProfilePO.PROP_CONTEXT_FACTOR);
 
-        linkFactorSliders(m_bindingContext, factorSliders, editor);
+        linkFactorSliders(m_bindingContext, m_factorSliders.keySet(), editor);
 
         createThresholdSlider(m_sliderComposite, m_bindingContext,
                 m_profileObservable);
@@ -389,7 +429,8 @@ public class ObjectMappingConfigComponent {
         Plugin.getHelpSystem().setHelp(parent,
                 ContextHelpIds.PREFPAGE_OBJECT_MAP);
         /** return the widget used as the base for the user interface */
-        m_profileCombo.setSize(factorSliders.iterator().next().getSize().x,
+        m_profileCombo.setSize(
+                m_factorSliders.keySet().iterator().next().getSize().x,
                 m_profileCombo.getSize().y);
         scrollComposite.setContent(composite);
         scrollComposite.setExpandHorizontal(true);
@@ -425,7 +466,7 @@ public class ObjectMappingConfigComponent {
         label.setText(" %");  //$NON-NLS-1$
         label = new Label(sliderComposite, SWT.NONE);
         label.setText(Messages.ObjectMappingPreferencePageLock);
-        
+
         return sliderComposite;
     }
 
@@ -499,7 +540,7 @@ public class ObjectMappingConfigComponent {
         new Label(parent, SWT.NONE);
         new Label(parent, SWT.NONE);
         new Label(parent, SWT.NONE);
-        
+        m_factorLabels.put(factorScale, factorText);
         return factorScale;
     }
 
@@ -539,9 +580,10 @@ public class ObjectMappingConfigComponent {
         uiElement = 
             SWTObservables.observeText(factorText);
         bindingContext.bindValue(uiElement, modelElement, 
-                new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), 
-                new UpdateValueStrategy().setConverter(
-                        m_modelToLabelConverter));
+                new UpdateValueStrategy()
+                        .setConverter(m_labelToModelConverter),
+                new UpdateValueStrategy()
+                        .setConverter(m_modelToLabelConverter));
 
         IObservableValue checkboxSelection = 
             SWTObservables.observeSelection(lockCheckbox);
@@ -575,6 +617,96 @@ public class ObjectMappingConfigComponent {
                         m_modelToEnablementConverter));
         
     }
+    
+    /**
+     * Updates the binding between the given scale and its corresponding model
+     * value. This is done by removing the old bindings and creating new ones.
+     * 
+     * @param boundProperty the property for the binding
+     * @param bindingContext the binding context
+     * @param factorScale the scale
+     * @param masterObservable the observable
+     */
+    private void updateBindFactor(String boundProperty,
+            final DataBindingContext bindingContext, final Scale factorScale,
+            IObservableValue masterObservable) {
+        
+        IObservableValue uiElement = 
+                SWTObservables.observeSelection(factorScale);
+        IObservableValue modelElement = BeansObservables.observeDetailValue(
+                masterObservable, boundProperty, double.class);
+        
+        removeBinding(uiElement, modelElement);
+        bindingContext.bindValue(uiElement, modelElement, 
+                new JBEditorUpdateValueStrategy(
+                        UpdateValueStrategy.POLICY_ON_REQUEST)
+                            .setConverter(m_sliderToModelConverter),
+                new UpdateValueStrategy()
+                        .setConverter(m_modelToSliderConverter));
+
+        Label factorText = m_factorLabels.get(factorScale);
+        uiElement = SWTObservables.observeText(factorText);
+        removeBinding(uiElement, modelElement);
+        bindingContext.bindValue(uiElement, modelElement,
+                new UpdateValueStrategy().setConverter(m_labelToModelConverter),
+                new UpdateValueStrategy()
+                        .setConverter(m_modelToLabelConverter));
+
+        uiElement = SWTObservables.observeEnabled(factorScale);
+        removeBinding(uiElement, masterObservable);
+        bindingContext.bindValue(uiElement, masterObservable,
+                new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+                new UpdateValueStrategy()
+                        .setConverter(m_modelToEnablementConverter));
+    }
+
+    /**
+     * Updates the binding for the threshold
+     * @param bindingContext the binding context
+     * @param masterObservable the model observable
+     */
+    private void updateThresholdBind(final DataBindingContext bindingContext,
+            IObservableValue masterObservable) {
+        IObservableValue uiElement;
+        IObservableValue modelElement;
+        String boundProperty = 
+                IObjectMappingProfilePO.PROP_THRESHOLD;
+        uiElement = SWTObservables.observeSelection(m_threshold);
+        modelElement = BeansObservables.observeDetailValue(masterObservable,
+                boundProperty, double.class);
+        removeBinding(uiElement, masterObservable);
+        bindingContext.bindValue(uiElement, modelElement,
+                new UpdateValueStrategy()
+                        .setConverter(m_sliderToModelConverter),
+                new UpdateValueStrategy()
+                        .setConverter(m_modelToSliderConverter));
+
+        uiElement = SWTObservables.observeText(m_thresholdText);
+        removeBinding(uiElement, masterObservable);
+        bindingContext.bindValue(uiElement, modelElement,
+                new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+                new UpdateValueStrategy()
+                        .setConverter(m_modelToLabelConverter));
+    }
+
+    /**
+     * Removes all bindings between the given UI-Element and the Model element
+     * in the binding context
+     * 
+     * @param uiElement the UI-Element
+     * @param modelElement the model element
+     */
+    private void removeBinding(IObservableValue uiElement,
+            IObservableValue modelElement) {
+        ArrayList<Binding> binds = new ArrayList<Binding>(
+                m_bindingContext.getBindings());
+        for (Binding object : binds) {
+            if (object.getTarget().equals(uiElement)
+                    || object.getModel().equals(modelElement)) {
+                m_bindingContext.removeBinding(object);
+            }
+        }
+    }
 
     /**
      * @param composite The composite.
@@ -607,9 +739,9 @@ public class ObjectMappingConfigComponent {
         
         m_profileCombo = new Combo(composite, SWT.CHECK | SWT.READ_ONLY);
         m_profileCombo.setTextLimit(20);
-        m_profileCombo.setItems(ProfileBuilder.getProfileNames());
-        m_profileCombo.add(CUSTOM_NAME);
-        
+        List<String> names = StandardProfiles.getProfileNames();
+        m_profileCombo.setItems(names.toArray(new String[names.size()]));
+        m_profileCombo.add(ClientProfileNames.CUSTOM);
         setComboValue();
         
         m_profileCombo.addModifyListener(new ModifyListener() {
@@ -626,6 +758,9 @@ public class ObjectMappingConfigComponent {
                         Profile p = ProfileBuilder.getProfile(name);
                         if (p != null) {
                             m_input.getProfile().useTemplate(p);
+                            m_bindingContext.updateTargets();
+                            m_bindingContext.updateModels();
+                            setComboValue();
                         }
                     }
                 }
@@ -650,7 +785,7 @@ public class ObjectMappingConfigComponent {
                 }
             }
         }
-        int index = m_profileCombo.indexOf("Custom"); //$NON-NLS-1$
+        int index = m_profileCombo.indexOf(ClientProfileNames.CUSTOM);
         if (index != -1) {
             if (index != m_profileCombo.getSelectionIndex()) {
                 m_profileCombo.select(index);
@@ -814,6 +949,11 @@ public class ObjectMappingConfigComponent {
     public void setInput(IObjectMappingPO input) {
         m_input = input;
         m_profileObservable.setValue(input.getProfile());
+        for (Scale scale : m_factorSliders.keySet()) {
+            updateBindFactor(m_factorSliders.get(scale), m_bindingContext,
+                    scale, m_profileObservable);
+        }
+        updateThresholdBind(m_bindingContext, m_profileObservable);
         m_bindingContext.updateTargets();
         setComboValue();
     }

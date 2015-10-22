@@ -74,6 +74,7 @@ public class HighlightInAUTHandler
                         assoCompId.getSupportedClassName());
                 compId.setAlternativeDisplayName(assoCompId
                         .getAlternativeDisplayName());
+                compId.setProfile(assoCompId.getProfile());
             }
             AUTHighlightComponentCommand response = 
                     new AUTHighlightComponentCommand(

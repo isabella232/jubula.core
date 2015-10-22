@@ -42,4 +42,9 @@
       Component</phrase></textobject>
     </mediaobject>
   </figure>
+	<para>
+		If this doesn't help either, it might be a good idea to change the heuristic
+		profile for the components which Jubula can't find. For further details
+	    read <xref linkend="component-specific-profile" />.
+  </para>
 </section>

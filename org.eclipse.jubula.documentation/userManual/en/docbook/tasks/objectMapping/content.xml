@@ -19,6 +19,7 @@
   <xi:include href="sectionCollectingComponentsFromTheAUT.xml"/>
   <xi:include href="sectionMappingCollectedNamesToComponentNames.xml"/>
   <xi:include href="sectionObjectMappingAndAUTChanges.xml"/>
+  <xi:include href="sectionObjectMappingAndSpecificProfile.xml"/>
   <xi:include href="sectionViewingPropertiesForComponent.xml"/>
   
 </section>

@@ -163,6 +163,7 @@ import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 import org.eclipse.jubula.tools.internal.version.IVersion;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
@@ -1785,6 +1786,13 @@ class XmlImporter {
                         new ArrayList(tecNameXml.getNeighbourList()));
                 tecName.setHierarchyNames(
                         new ArrayList(tecNameXml.getHierarchyNameList()));
+                ObjectMappingProfile omp = tecNameXml.getProfile();
+                if (omp != null) {
+                    Profile p = new Profile(omp.getName(), omp.getNameFactor(),
+                            omp.getPathFactor(), omp.getContextFactor(),
+                            omp.getThreshold());
+                    tecName.setProfile(p);
+                }
             }
 
             // It is necessary to create a new (cloneable) list from the list

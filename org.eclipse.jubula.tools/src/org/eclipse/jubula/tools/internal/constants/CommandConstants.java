@@ -257,6 +257,8 @@ public abstract class CommandConstants {
     public static final String AUT_ERRORS_RESPONSE_COMMAND = "org.eclipse.jubula.communication.internal.message.AUTErrorsResponseCommand"; //$NON-NLS-1$
     /** command which will be executed on the AUT-Server side */
     public static final String AUT_ERRORS_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTErrorsCommand"; //$NON-NLS-1$
+    /** command which sets the profile of the AUT Server **/
+    public static final String SET_PROFILE_COMMAND = "org.eclipse.jubula.rc.common.commands.SetProfileCommand"; //$NON-NLS-1$
    
     /** to prevent instantiation */
     private CommandConstants() {

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -22,6 +23,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -29,6 +31,7 @@ import javax.persistence.Version;
 
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
 
@@ -50,6 +53,9 @@ class CompIdentifierPO extends ComponentIdentifier implements
     
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
+    
+    /** po profile */
+    private IObjectMappingProfilePO m_profilePO = null;
 
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -129,6 +135,36 @@ class CompIdentifierPO extends ComponentIdentifier implements
     }
     
     /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public org.eclipse.jubula.tools.Profile getProfile() {
+        if (super.getProfile() != null && m_profilePO != null) {
+            return super.getProfile();
+        }
+        return null;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public void setProfile(org.eclipse.jubula.tools.Profile profile) {
+        if (profile != null) {
+            super.setProfile(profile);
+            if (m_profilePO == null) {
+                m_profilePO = PoMaker
+                        .createObjectMappingProfile((Profile) profile);
+            } else {
+                m_profilePO.useTemplate((Profile) profile);
+            }   
+        } else {
+            m_profilePO = null;
+            super.setProfile(null);
+        }
+    }
+    
+    /**
      * @param hierarchyNames
      *            The hierarchyNames to set. if null, the list will be cleared.
      */
@@ -140,7 +176,7 @@ class CompIdentifierPO extends ComponentIdentifier implements
      * @return Clone of object
      */
     public ICompIdentifierPO makePoClone() {
-        ICompIdentifierPO clone = new CompIdentifierPO();
+        CompIdentifierPO clone = new CompIdentifierPO();
         clone.setHierarchyNames(new ArrayList<String>(
             getHierarchyNames()));
         clone.setComponentClassName(getComponentClassName());
@@ -153,6 +189,12 @@ class CompIdentifierPO extends ComponentIdentifier implements
         }
         if (getParentProjectId() != null) {
             clone.setParentProjectId(getParentProjectId());
+        }
+        if (getProfile() != null) {
+            clone.setProfile(getProfile());
+        }
+        if (getProfilePO() != null) {
+            clone.setProfilePO(getProfilePO());
         }
         clone.setAlternativeDisplayName(getAlternativeDisplayName());
         return clone;
@@ -252,5 +294,26 @@ class CompIdentifierPO extends ComponentIdentifier implements
      */
     public void setAlternativeDisplayName(String alternativeDisplayName) {
         super.setAlternativeDisplayName(alternativeDisplayName);
+    }
+
+    /**
+     * set the po profile
+     * @param profile the profile
+     */
+    private void setProfilePO(IObjectMappingProfilePO profile) {
+        if (profile != null) {
+            super.setProfile(new Profile(profile.getName(),
+                    profile.getNameFactor(), profile.getPathFactor(),
+                    profile.getContextFactor(), profile.getThreshold()));
+        }
+        m_profilePO = profile;
+    }
+    
+    @OneToOne(targetEntity = ObjectMappingProfilePO.class,
+            optional = true, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "FK_PROFILE", nullable = true)
+    @Override
+    public IObjectMappingProfilePO getProfilePO() {
+        return m_profilePO;
     }
 }

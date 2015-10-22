@@ -206,6 +206,7 @@
       <xs:element name="supportedClassName" type="xs:string" />
       <xs:element name="hierarchyName" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="alternativeDisplayName" type="xs:string" nillable="true" minOccurs="0" maxOccurs="1" />
+      <xs:element name="profile" type="gd:objectMappingProfile" nillable="true" minOccurs="0" maxOccurs="1" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="testSuite">

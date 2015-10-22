@@ -301,6 +301,16 @@ class XmlExporter {
         xml.setComponentClassName(po.getComponentClassName());
         xml.setSupportedClassName(po.getSupportedClassName());
         xml.setAlternativeDisplayName(po.getAlternativeDisplayName());
+        
+        IObjectMappingProfilePO profilePo = po.getProfilePO();
+        if (profilePo != null) {
+            ObjectMappingProfile profileXml = xml.addNewProfile();
+            profileXml.setName(profilePo.getName());
+            profileXml.setContextFactor(profilePo.getContextFactor());
+            profileXml.setNameFactor(profilePo.getNameFactor());
+            profileXml.setPathFactor(profilePo.getPathFactor());
+            profileXml.setThreshold(profilePo.getThreshold());
+        }
 
         for (Object n : po.getNeighbours()) {
             String neighbour = (String)n;

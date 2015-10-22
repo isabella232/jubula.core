@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.LoadResourceException;
 import org.eclipse.jubula.client.internal.impl.AUTAgentImpl;
 import org.eclipse.jubula.client.internal.impl.ObjectMappingImpl;
+import org.eclipse.jubula.client.internal.impl.ProfileFactoryImpl;
 import org.eclipse.jubula.tools.ComponentIdentifier;
 
 /**
@@ -74,5 +75,14 @@ public final class MakeR {
             throw new IllegalArgumentException(ex);
         }
         return identifier;
+    }
+    
+    /**
+     * Get the factory for heuristic profiles
+     * @return the profile factory instance
+     * @since 3.2
+     */
+    public static ProfileFactory getProfileFactory() {
+        return ProfileFactoryImpl.INSTANCE;
     }
 }

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.utils.ImageUtils;
 import org.eclipse.swt.graphics.Image;
@@ -37,6 +38,12 @@ public class IconConstants {
     public static final ImageDescriptor WARNING_IMAGE_DESCRIPTOR = PlatformUI
             .getWorkbench().getSharedImages()
             .getImageDescriptor(ISharedImages.IMG_DEC_FIELD_WARNING);
+    
+    /** PROFILE_FILTER_OFF image descriptor */
+    public static final ImageDescriptor PROFILE_FILTER_OFF_DESCRIPTOR = getImageDescriptor("find.gif"); //$NON-NLS-1$
+    
+    /** PROFILE_FILTER_ON image descriptor */
+    public static final ImageDescriptor PROFILE_FILTER_ON_DESCRIPTOR = getImageDescriptor("filterOff.gif"); //$NON-NLS-1$
     
     /** info image descriptor */
     public static final ImageDescriptor INFO_IMAGE_DESCRIPTOR = getImageDescriptor("info.gif"); //$NON-NLS-1$
@@ -330,6 +337,8 @@ public class IconConstants {
     public static final Image TRSV_DETAILS = getImage("TRSV_Details.png"); //$NON-NLS-1$
     /** TestResultSummaryView no details image */
     public static final Image TRSV_NODETAILS = getImage("TRSV_NoDetails.png"); //$NON-NLS-1$
+    /** icon for specific profile **/
+    public static final ImageDescriptor TRIANGLE_OVERLAY = getImageDescriptor("triangleOverlay.gif"); //$NON-NLS-1$
     
     /** to prevent instantiation */
     private IconConstants() {
@@ -359,5 +368,24 @@ public class IconConstants {
     public static ImageDescriptor getImageDescriptor(String name) {
         return ImageUtils.getImageDescriptor(
             Plugin.getDefault().getBundle(), name);
+    }
+    
+    /**
+     * Puts the given overlay on top of another image
+     * @param image the image
+     * @param overlay the overlay
+     * @param quadrant the position
+     * @return image
+     */
+    public static Image decorateImage(Image image, ImageDescriptor overlay,
+            int quadrant) {
+        DecorationOverlayIcon icon = new DecorationOverlayIcon(image, overlay,
+                quadrant);
+        Image img = CACHE.get(icon);
+        if (img == null) {
+            img = icon.createImage();
+            CACHE.put(icon, img);
+        }
+        return img;
     }
 }

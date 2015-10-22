@@ -80,6 +80,7 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.OMEditorBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
+import org.eclipse.jubula.client.ui.rcp.controllers.OpenOMETracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.LimitingDragSourceListener;
@@ -397,6 +398,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         ObjectMappingEventDispatcher.addObserver(this);
 
         checkAndFixInconsistentData();
+        OpenOMETracker.INSTANCE.addOME(this);
     }
 
     /**
@@ -1299,6 +1301,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     public void dispose() {
         ObjectMappingEventDispatcher.removeObserver(this);
+        OpenOMETracker.INSTANCE.removeOME(this);
         getEditorSite().getActionBars().setGlobalActionHandler(
                 ActionFactory.REFRESH.getId(), null);
         IAUTMainPO connectedAut = TestExecution.getInstance().getConnectedAut();
@@ -1401,6 +1404,30 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_compNameTreeViewer, 
             m_uiElementTreeViewer,
             m_mappedComponentTreeViewer };
+    }
+    
+    /**
+     * 
+     * @return the component name TreeViewer
+     */
+    public TreeViewer getCompNameTreeViewer() {
+        return m_compNameTreeViewer;
+    }
+    
+    /**
+     * 
+     * @return the UI-Element TreeViewer
+     */
+    public TreeViewer getUIElementTreeViewer() {
+        return m_uiElementTreeViewer;
+    }
+    
+    /**
+     * 
+     * @return the mapped components TreeViewer
+     */
+    public TreeViewer getMappedTreeViewer() {
+        return m_mappedComponentTreeViewer;
     }
 
     /**

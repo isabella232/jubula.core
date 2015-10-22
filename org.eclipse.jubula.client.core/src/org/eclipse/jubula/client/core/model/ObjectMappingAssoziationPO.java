@@ -303,6 +303,7 @@ public class ObjectMappingAssoziationPO
         techNamePO.setNeighbours(tech.getNeighbours());
         techNamePO.setSupportedClassName(tech.getSupportedClassName());
         techNamePO.setAlternativeDisplayName(tech.getAlternativeDisplayName());
+        techNamePO.setProfile(tech.getProfile());
         return techNamePO;
     }
     

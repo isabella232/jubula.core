@@ -35,12 +35,14 @@ import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.SetProfileMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotResponseMessage;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
+import org.eclipse.jubula.tools.Profile;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
@@ -272,5 +274,36 @@ public class AUTImpl implements AUT {
             throw new IllegalStateException("No AUT connection!"); //$NON-NLS-1$
         }
         return null;
+    }
+
+    @Override
+    public void setProfile(Profile profile) throws IllegalArgumentException,
+            IllegalStateException, CommunicationException {
+        if (profile == null) {
+            throw new IllegalArgumentException("Profile is null"); //$NON-NLS-1$
+        }
+        if (isConnected()) {
+            SetProfileMessage message = new SetProfileMessage();
+            message.setProfile((org.eclipse.jubula.tools
+                            .internal.xml.businessmodell.Profile) profile);
+            try {
+                m_instance.send(message);
+            } catch (NotConnectedException nce) {
+                if (log.isErrorEnabled()) {
+                    log.error(nce.getLocalizedMessage(), nce);
+                }
+            } catch (IllegalArgumentException e) {
+                if (log.isErrorEnabled()) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
+            } catch (org.eclipse.jubula.tools.internal.
+                    exception.CommunicationException e) {
+                if (log.isErrorEnabled()) {
+                    log.error(e.getLocalizedMessage(), e);
+                }
+            }
+        } else {
+            throw new IllegalStateException("No AUT connection!"); //$NON-NLS-1$
+        }
     }
 }

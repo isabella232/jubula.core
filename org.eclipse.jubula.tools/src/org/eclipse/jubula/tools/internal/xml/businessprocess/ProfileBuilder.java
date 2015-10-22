@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.jubula.tools.internal.objects.StandardProfiles;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 
 /**
@@ -45,14 +46,9 @@ public class ProfileBuilder {
         if (profiles == null) {
             profiles = new ArrayList<Profile>();
 
-            Profile profile = new Profile("Standard", 0.60, 0.30, 0.10, 0.85); //$NON-NLS-1$
-            profiles.add(profile);
-
-            profile = new Profile("Strict", 0.60, 0.30, 0.10, 1.00); //$NON-NLS-1$
-            profiles.add(profile);
-
-            profile = new Profile("Given names", 1.00, 0.00, 0.00, 1.00); //$NON-NLS-1$
-            profiles.add(profile);
+            for (StandardProfiles profile : StandardProfiles.values()) {
+                profiles.add(profile.instance());
+            }
 
         }
         return profiles;
@@ -94,6 +90,6 @@ public class ProfileBuilder {
      * @return the default object mapping profile.
      */
     public static Profile getDefaultProfile() {
-        return ProfileBuilder.getProfiles().get(0);
+        return StandardProfiles.STANDARD.instance();
     }
 }

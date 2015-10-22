@@ -21,12 +21,12 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.eclipse.jubula.tools.Profile;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * This class holds the information for identifying a component in the AUT. <br>
@@ -106,6 +106,8 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
      */
     private Map<String, String> m_componentProperties;
     
+    /** profile for the component identifier */
+    private Profile m_profile = null;
     /**
      * public constructor <br>
      * 
@@ -206,6 +208,7 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
             clone.setNeighbours(new ArrayList<String>(m_neighbours));
         }
         clone.setAlternativeDisplayName(m_alternativeDisplayName);
+        clone.setProfile(m_profile);
         return clone;
     }
     
@@ -398,5 +401,15 @@ public class ComponentIdentifier implements Serializable, IComponentIdentifier {
     public void setComponentPropertiesMap(
             Map<String, String> componentProperties) {
         m_componentProperties = componentProperties;
+    }
+
+    /** {@inheritDoc} */
+    public void setProfile(Profile profile) {
+        m_profile = profile;
+    }
+
+    /** {@inheritDoc} */
+    public Profile getProfile() {
+        return m_profile;
     }
 }

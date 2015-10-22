@@ -10,13 +10,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.internal.xml.businessmodell;
 
+import java.io.Serializable;
+
 /**
  * This class represents the params which belongs to an action.
  * A param has a name and a type.
  * @author BREDEX GmbH
  * @created 25.06.2005
  */
-public class Profile {
+public class Profile implements org.eclipse.jubula.tools.Profile, Serializable {
+    
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
+    
     /** Name of the parameter */
     private String m_name = null;
 

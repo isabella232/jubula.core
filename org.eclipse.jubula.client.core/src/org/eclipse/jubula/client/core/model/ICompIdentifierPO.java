@@ -51,4 +51,10 @@ public interface ICompIdentifierPO extends IPersistentObject,
      * {@inheritDoc}
      */
     public abstract void setId(Long id);
+    
+    /**
+     * get the po profile
+     * @return the po profile
+     */
+    public IObjectMappingProfilePO getProfilePO();
 }

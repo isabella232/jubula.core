@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
@@ -109,6 +110,11 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
                 default:
                     image = IconConstants.TECHNICAL_NAME_IMAGE;
                     break;
+            }
+            if (((IObjectMappingAssoziationPO) element).getTechnicalName()
+                    .getProfile() != null) {
+                image = IconConstants.decorateImage(image,
+                        IconConstants.TRIANGLE_OVERLAY, IDecoration.TOP_LEFT);
             }
         } else if (element instanceof IObjectMappingCategoryPO) {
             image = IconConstants.CATEGORY_IMAGE;

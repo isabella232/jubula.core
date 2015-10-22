@@ -14,5 +14,17 @@
             </para>
         </listitem>
     </itemizedlist>
+    <para>
+        <emphasis role="strong">Set heuristic profiles for individual components</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                You can set specific profiles for the object recognition for individual
+                components. This might be useful for components which can't be found
+                with the standard profile.
+            </para>
+        </listitem>
+    </itemizedlist>
     
 </section>

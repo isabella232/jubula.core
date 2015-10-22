@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools;
 
+
 /**
  * Information for identifying a component in the AUT.
  * 
@@ -22,5 +23,19 @@ package org.eclipse.jubula.tools;
  *            the type of UI component this identifier represents
  */
 public interface ComponentIdentifier<T> {
-
+    /**
+     * Set the Profile for this component identifier
+     * @param profile the profile to set
+     * @since 4.0
+     */
+    public void setProfile(Profile profile);
+    
+    /**
+     * Get the Profile of this component identifier
+     * 
+     * @return the profile which is used for this component identifier or null
+     *         if no profile was set
+     * @since 4.0
+     */
+    public Profile getProfile();
 }

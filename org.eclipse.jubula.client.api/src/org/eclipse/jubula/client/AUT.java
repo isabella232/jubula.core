@@ -18,6 +18,7 @@ import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.client.exceptions.ExecutionExceptionHandler;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.tools.AUTIdentifier;
+import org.eclipse.jubula.tools.Profile;
 
 /**
  * Instances of this class represent a (remotely) running instance of an AUT.
@@ -66,4 +67,16 @@ public interface AUT extends Remote {
      * @since 3.2
      */
     @Nullable BufferedImage getScreenshot() throws IllegalStateException;
+    
+    /**
+     * Sets the Profile which will be used in the test execution
+     * @param profile the heuristic profile to use in the test execution
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
+     * @throws CommunicationException
+     * @since 3.2
+     */
+    void setProfile(Profile profile) throws IllegalArgumentException,
+            IllegalStateException, CommunicationException;
+    
 }
