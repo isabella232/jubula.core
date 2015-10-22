@@ -6,6 +6,7 @@ Bundle-SymbolicName: org.eclipse.jubula.examples.aut.adder.javafx
 Bundle-Version: 4.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Localization: plugin
 Implementation-Title: SimpleAdder
 JavaFX-Application-Class: org.eclipse.jubula.examples.aut.adder.javafx.SimpleAdder
 Main-Class: it.is.valid.that.this.class.does.not.exist.however.the.attribute.value.is.mandatory
