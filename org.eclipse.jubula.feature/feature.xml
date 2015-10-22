@@ -286,7 +286,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.codec"
          download-size="0"
          install-size="0"
-         version="1.4.0.v201209201156"
+         version="1.6.0.v201305230611"
          unpack="false"/>
 
    <plugin
