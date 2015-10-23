@@ -6,7 +6,7 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<project name="Jubula" default="cleanBuild-allComponents">
+<project name="Jubula" default="clean+verify-allComponents">
     <property name="releng.main" value="org.eclipse.jubula.releng" />
     <property name="releng.dashboard" value="${releng.main}.dashboard" />
     
@@ -14,18 +14,28 @@
         Main Jubula releng build script
     </description>
 
-    <target name="cleanBuild-allComponents">
-        <antcall target="cleanBuild-dashboard" />
-        <antcall target="cleanBuild-ite" />
+    <target name="clean+verify-allComponents">
+        <antcall target="clean+verify-dashboard" />
+        <antcall target="clean+verify-ite" />
     </target>
 
-    <target name="cleanBuild-ite" description="Clean build for the ITE feature">
-        <antcall target="cleanBuild-template">
-            <param name="buildBaseDir" value="${releng.main}" />
-        </antcall>
+    <target name="clean+verify-ite" description="Clean build for the ITE feature">
+        <invokeMaven dir="${releng.main}">
+            <arg value="clean" />
+            <arg value="verify" />
+        </invokeMaven>
     </target>
 
-    <target name="cleanBuild-dashboard" description="Clean build for the dashboard product">
+    <target name="clean" description="Clean all locally created artifacts">
+        <invokeMaven dir="${releng.dashboard}">
+            <arg value="clean" />
+        </invokeMaven>
+        <invokeMaven dir="${releng.main}">
+            <arg value="clean" />
+        </invokeMaven>
+    </target>
+    
+    <target name="clean+verify-dashboard" description="Clean build for the dashboard product">
         <!-- dynamically / temporarily remove external (optional) dependencies -->
         <property name="dashboardFeatureLocation" value="org.eclipse.jubula.feature.dashboard/feature.xml" />
         <copy file="${dashboardFeatureLocation}" tofile="${dashboardFeatureLocation}.tmp" overwrite="yes">
@@ -36,10 +46,11 @@
             </filterchain>
         </copy>
         <move tofile="${dashboardFeatureLocation}" file="${dashboardFeatureLocation}.tmp" overwrite="yes" />
-
-        <antcall target="cleanBuild-template">
-            <param name="buildBaseDir" value="${releng.dashboard}" />
-        </antcall>
+        
+        <invokeMaven dir="${releng.dashboard}">
+            <arg value="clean" />
+            <arg value="verify" />
+        </invokeMaven>
 
         <!-- revert the dynamically / temporarily remove external (optional) dependencies -->
         <exec dir="${basedir}" executable="git">
@@ -48,14 +59,17 @@
         </exec>
     </target>
 
-    <target name="cleanBuild-template">
-        <exec dir="${buildBaseDir}" executable="mvn" failonerror="true" vmlauncher="false">
-            <env key="MAVEN_OPTS" value="-Xmx512m" />
-            <arg value="clean" />
-            <arg value="verify" />
-            <arg value="-V" />
-        </exec>
-    </target>
+    <macrodef name="invokeMaven">
+        <attribute name="dir"/>
+        <element name="arg-elements" implicit="true"/>
+        <sequential>
+            <exec executable="mvn" dir="@{dir}" failonerror="true" vmlauncher="false">
+                <env key="MAVEN_OPTS" value="-Xmx512m" />
+                <arg-elements />
+                <arg value="-V" />
+            </exec>
+        </sequential>
+    </macrodef>
     
     <target name="updateVersionNumbers">
         <!--
@@ -73,13 +87,11 @@
     </target>
 
     <target name="updateVersionNumbers-template">
-        <exec dir="${buildBaseDir}" executable="mvn" failonerror="true" vmlauncher="false">
-            <env key="MAVEN_OPTS" value="-Xmx512m" />
-            
+        <invokeMaven dir="${buildBaseDir}" >
             <arg value="-Dtycho.mode=maven"/>
             <arg value="org.eclipse.tycho:tycho-versions-plugin:set-version"/>
             <arg value="-DnewVersion=${newVersion}"/>
-        </exec>
+        </invokeMaven>
     </target>
 
 </project>
