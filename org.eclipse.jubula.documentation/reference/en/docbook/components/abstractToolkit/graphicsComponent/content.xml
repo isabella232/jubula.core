@@ -73,6 +73,11 @@
   			<xref linkend="actionDragAndDropGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
+    <listitem>
+        <para>
+            <xref linkend="actionInvokeMethodGeneral" xrefstyle="template:%t"/>
+        </para>
+    </listitem>
   	<listitem>
   		<para>
   			<xref linkend="actionSelectContextMenus" xrefstyle="template:%t"/>

@@ -10,14 +10,23 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.commons.beanutils.MethodUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
+import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
+import org.eclipse.jubula.rc.common.driver.IRobotFactory;
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
+import org.eclipse.jubula.rc.common.util.ReflectionUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
@@ -529,6 +538,162 @@ public class WidgetTester extends AbstractUITester {
      */
     protected int getKeyCode(String mod) {
         return getWidgetAdapter().getKeyCode(mod);
+    }
+    
+    /**
+     * Invokes the specified Method
+     * 
+     * @param fqcn Fully qualified class name
+     * @param name name of the Method
+     * @param signature signature of the method
+     * @param args arguments for the method
+     * @param argsSplit separator for the Arguments
+     * @return returns null or if the invoked method return
+     *         java.util.Properties, the string representation of the properties
+     */
+    public String rcInvokeMethod(final String fqcn, final String name,
+            final String signature, final String args, final String argsSplit) {
+        IRobotFactory factory = getComponent().getRobotFactory();
+        IEventThreadQueuer queuer = factory.getEventThreadQueuer();
+        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                createInvokeRunnable(fqcn, name, signature, args, argsSplit));
+        return null;
+    }
+
+    /**
+     * Invokes the specified Method
+     * 
+     * @param variableName name of the variable of the cap. This isn't used.
+     * @param fqcn Fully qualified class name
+     * @param name name of the Method
+     * @param signature signature of the method
+     * @param args arguments for the method
+     * @param argsSplit separator for the Arguments
+     * @return returns the string representation of the return value of the
+     *         invoked method
+     */
+    public String rcInvokeMethodStoreReturn(final String variableName,
+            final String fqcn, final String name, final String signature,
+            final String args, final String argsSplit) {
+        IRobotFactory factory = getComponent().getRobotFactory();
+        IEventThreadQueuer queuer = factory.getEventThreadQueuer();
+        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                createInvokeRunnable(fqcn, name, signature, args, argsSplit));
+        return result.toString();
+    }
+    
+    /**
+     * Creates the runnable object which will invoke the specified Method
+     * @param fqcn fully qualified class name
+     * @param name method name
+     * @param signature method signature
+     * @param args method arguments
+     * @param argsSplit separator for the arguments
+     * @return the IRunnable object
+     */
+    private IRunnable<Object> createInvokeRunnable(final String fqcn,
+            final String name, final String signature, final String args,
+            final String argsSplit) {
+        return new IRunnable<Object>() {
+
+            public Object run() {
+                ClassLoader uiClassloader = Thread.currentThread()
+                        .getContextClassLoader();
+                try {
+                    Class<?> clazz = Class.forName(fqcn, true,
+                            uiClassloader);
+                    Class[] parameterClasses = {};
+                    Object[] argObjects = {};
+                    if (!StringUtils.isEmpty(signature)
+                            && !StringUtils.isEmpty(args)) {
+                        parameterClasses = ReflectionUtil
+                                .getParameterClasses(signature, uiClassloader);
+                        argObjects = ReflectionUtil.getParameterValues(args,
+                                argsSplit, parameterClasses);
+                    }
+                    List<Object> argList = new ArrayList<Object>(
+                            Arrays.asList(argObjects));
+                    argList.add(0, getComponent().getRealComponent());
+                    List<Class> clsList = new ArrayList<Class>(
+                            Arrays.asList(parameterClasses));
+                    clsList.add(0, getComponent().getRealComponent()
+                            .getClass());
+                    return MethodUtils.invokeStaticMethod(clazz, name,
+                            argList.toArray(),
+                            clsList.toArray(
+                                    new Class[parameterClasses.length
+                                            + 1]));
+                } catch (Throwable e) {
+                    ReflectionUtil.handleException(e);
+                }
+                return null;
+            }
+        };
+    }
+
+    /**
+     * Invokes the specified Method
+     * 
+     * @param fqcn Fully qualified class name
+     * @param name name of the Method
+     * @return returns null or if the invoked method return
+     *         java.util.Properties, the string representation of the properties
+     */
+    public String rcInvokeMethod(final String fqcn, final String name) {
+        IRobotFactory factory = getComponent().getRobotFactory();
+        IEventThreadQueuer queuer = factory.getEventThreadQueuer();
+        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                createInvokeRunnable(fqcn, name));
+        return null;
+    }
+
+    /**
+     * Invokes the specified Method
+     * 
+     * @param variableName name of the variable of the cap. This isn't used.
+     * @param fqcn Fully qualified class name
+     * @param name name of the Method
+     * @return returns the string representation of the return value of the
+     *         invoked method
+     */
+    public String rcInvokeMethodStoreReturn(final String variableName,
+            final String fqcn, final String name) {
+        IRobotFactory factory = getComponent().getRobotFactory();
+        IEventThreadQueuer queuer = factory.getEventThreadQueuer();
+        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                createInvokeRunnable(fqcn, name));
+        return result.toString();
+    }
+    
+    /**
+     * Creates the runnable object which will invoke the specified Method
+     * @param fqcn fully qualified class name
+     * @param name method name
+     * @return the IRunnable object
+     */
+    private IRunnable<Object> createInvokeRunnable(final String fqcn,
+            final String name) {
+        return new IRunnable<Object>() {
+
+            public Object run() {
+                ClassLoader uiClassloader = Thread.currentThread()
+                        .getContextClassLoader();
+                try {
+                    Class<?> clazz = Class.forName(fqcn, true,
+                            uiClassloader);
+                    Object[] param = new Object[] {
+                            getComponent().getRealComponent()};
+                    Class[] paramClass = new Class[] {
+                            getComponent().getRealComponent().getClass()
+                    };
+                    return MethodUtils.invokeStaticMethod(clazz, name,
+                            param, paramClass);
+                } catch (Throwable e) {
+                    ReflectionUtil.handleException(e);
+                }
+                return null;
+            }
+        };
     }
 
     /**

@@ -1596,6 +1596,58 @@ public class TestExecution {
     }
     
     /**
+     * IPostExecutionCommand to store properties in the m_varStore
+     * 
+     * @author BREDEX GmbH
+     * @created 29.11.2015
+     */
+    public class PropertyStorerCmd extends AbstractPostExecutionCommand {
+        /**
+         * Constructor
+         */
+        public PropertyStorerCmd() {
+            super();
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public TestErrorEvent execute() throws JBException {
+
+            try {
+                String propertyMap = m_varStore.getValue(
+                        LAST_ACTION_RETURN);
+                Map<String, String> propMap = StringParsing
+                        .convertToMap(propertyMap);
+                for (String key : propMap.keySet()) {
+                    m_varStore.store(key, propMap.get(key));
+                }
+                //Store properties as string in the specified Variable
+                IParamDescriptionPO desc = 
+                        m_currentCap.getParameterList().get(0); 
+                try {
+                    ITDManager tdManager = m_externalTestDataBP
+                            .getExternalCheckedTDManager(m_currentCap);
+                    ITestDataPO date = tdManager.getCell(0, desc);
+                    String varName = getValueForParam(date, m_currentCap, desc);
+                    m_varStore.store(varName,
+                            m_varStore.getValue(LAST_ACTION_RETURN));
+                    return null;
+                } catch (IllegalArgumentException e) {
+                    throw new JBException("IllegalArgumentException", e, // //$NON-NLS-1$
+                            MessageIDs.E_STEP_EXEC);
+                } catch (InvalidDataException e) {
+                    throw new JBException("InvalidDataException", e, // //$NON-NLS-1$
+                            MessageIDs.E_STEP_EXEC);
+                }
+            } catch (IllegalArgumentException e) {
+                throw new JBException("IllegalArgumentException", e,  // //$NON-NLS-1$
+                    MessageIDs.E_STEP_EXEC);
+            } 
+        }
+    }
+    
+    /**
      * abstract class for timer commands
      * 
      * @author BREDEX GmbH

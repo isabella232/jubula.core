@@ -13,7 +13,9 @@
 package org.eclipse.jubula.tools.internal.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -291,5 +293,30 @@ public class StringParsing {
         }
 
         return builder.toString();
+    }
+    
+    /**
+     * Converts a given string with the form {key1=value1, key2...,}
+     * @param map the string to convert
+     * @return the map
+     */
+    public static Map<String, String> convertToMap(String map) {
+        Map<String, String> propMap = new HashMap<String, String>();
+        int indexOfCurl = map.indexOf("{"); //$NON-NLS-1$
+        int lastIndexOfCurl = map.lastIndexOf("}"); //$NON-NLS-1$
+        if (map.length() < 2 || indexOfCurl == -1 || lastIndexOfCurl == -1) {
+            return propMap;
+        }
+        String props = map.substring(indexOfCurl + 1, lastIndexOfCurl);
+        String[] pairs = props.split(","); //$NON-NLS-1$
+        for (String pair : pairs) {
+            String[] kv = pair.split("="); //$NON-NLS-1$
+            if (kv.length == 2) {
+                propMap.put(kv[0].trim(), kv[1].trim());
+            } else {
+                propMap.put(kv[0].trim(), ""); //$NON-NLS-1$
+            }
+        }
+        return propMap;
     }
 }

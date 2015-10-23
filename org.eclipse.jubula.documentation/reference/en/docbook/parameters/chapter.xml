@@ -37,6 +37,7 @@
   <xi:include href="expectedExitCode/content.xml"/>
   <xi:include href="extendSelection/content.xml"/>
   <xi:include href="fileAccess/content.xml"/>
+  <xi:include href="fqClassName/content.xml"/>
   <xi:include href="hasConnection/content.xml"/>
   <xi:include href="hasFocus/content.xml"/>
   <xi:include href="identifier/content.xml"/>
@@ -52,6 +53,10 @@
   <xi:include href="marginLeft/content.xml"/>
   <xi:include href="marginRight/content.xml"/>
   <xi:include href="marginTop/content.xml"/>
+  <xi:include href="methodArguments/content.xml"/>
+  <xi:include href="methodArgumentSeparator/content.xml"/>
+  <xi:include href="methodName/content.xml"/>
+  <xi:include href="methodSignature/content.xml"/>
   <xi:include href="millisecs/content.xml"/>
   <xi:include href="modifierKeys/content.xml"/>
   <xi:include href="mouseButton/content.xml"/>

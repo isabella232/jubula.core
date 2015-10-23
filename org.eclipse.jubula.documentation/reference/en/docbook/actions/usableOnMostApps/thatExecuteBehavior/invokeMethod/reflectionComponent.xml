@@ -1,0 +1,117 @@
+<!-- 
+  Copyright (c) 2015 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionInvokeMethod" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+    
+  <title>Invoke Method without a Component</title>
+  
+  <para><emphasis>Invoke Method</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to invoke static methods in the AUT. Exceptions that occure during the execution of the method will be shown in the ITE as action errors. You can use an IllegalStateException in your method to indicate that something went wrong, the ITE will interpret that as a check failed error.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You have to enter the fully qualified class name, method name, method signature, method arguments and the separator for the method arguments. The result of the method is not stored, with the exception of java.util.Properties. If the method returns an Object of this type, Jubula will create variables with the names of the Properties and the corresponding values. These variables can than be further used in the test execution. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="fullyQualifiedClassName" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodName" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodSignature" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodArguments" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodArgumentSeparator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  
+    <para><emphasis>Invoke Method and Store Value</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to invoke static methods in the AUT. Exceptions that occure during the execution of the method will be shown in the ITE as action errors. You can use an IllegalStateException in your method to indicate that something went wrong, the ITE will interpret that as a check failed error.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You have to enter the fully qualified class name, method name, method signature, method arguments and the separator for the method arguments. The return value of the method will be stored as string in the given variable.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+          <listitem>
+              <para>
+                <xref linkend="variable_name" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="fullyQualifiedClassName" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodName" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodSignature" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodArguments" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="methodArgumentSeparator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>
