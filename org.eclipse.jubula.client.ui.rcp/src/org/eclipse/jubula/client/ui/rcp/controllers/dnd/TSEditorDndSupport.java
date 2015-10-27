@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -99,6 +100,8 @@ public class TSEditorDndSupport {
             INodePO transferGUI = (INodePO)transferObj;
             if (!((transferGUI instanceof IExecTestCasePO
                     && sourceViewer == targetViewer)
+                    || (transferGUI instanceof ICommentPO
+                            && sourceViewer == targetViewer)
                     || (transferGUI instanceof ISpecTestCasePO))) {
                 
                 return false;

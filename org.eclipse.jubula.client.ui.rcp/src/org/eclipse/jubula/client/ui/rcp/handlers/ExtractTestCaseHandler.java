@@ -31,7 +31,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -163,11 +162,11 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
     private ExtractionReturn performExtraction(final String newTcName,
             final INodePO node, final IStructuredSelection selection) {
 
-        final List<IParamNodePO> modNodes = new ArrayList<IParamNodePO>(
+        final List<INodePO> modNodes = new ArrayList<INodePO>(
                 selection.size());
         Iterator it = selection.iterator();
         while (it.hasNext()) {
-            modNodes.add((IParamNodePO) it.next());
+            modNodes.add((INodePO) it.next());
         }
         try {
             ExtractionReturn extractionRet = persistExtraction(node, newTcName,
@@ -209,7 +208,7 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
      *             in case of deleted project
      */
     private ExtractionReturn persistExtraction(final INodePO ownerNode,
-        final String newTcName, final List<IParamNodePO> modNodes)
+        final String newTcName, final List<INodePO> modNodes)
         throws PMException, ProjectDeletedException {
 
         final ExtractionReturn extractionRet = new ExtractionReturn();
@@ -222,8 +221,8 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
                 try {
                     Persistor.instance().refreshPO(s, ownerNode,
                             LockModeType.PESSIMISTIC_WRITE);
-                    List<IParamNodePO> nodesToRef = 
-                            new ArrayList<IParamNodePO>();
+                    List<INodePO> nodesToRef = 
+                            new ArrayList<INodePO>();
                     getModNodesFromCurrentSession(s, nodesToRef);
                     final IExecTestCasePO newExecTc = TreeOpsBP
                             .extractTestCase(newTcName, ownerNode, nodesToRef,
@@ -253,9 +252,9 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
              *            nodes to refactor from current session
              */
             private void getModNodesFromCurrentSession(EntityManager s,
-                    List<IParamNodePO> nodesToRef) {
-                for (IParamNodePO node : modNodes) {
-                    IParamNodePO object = s.find(node.getClass(), node.getId());
+                    List<INodePO> nodesToRef) {
+                for (INodePO node : modNodes) {
+                    INodePO object = s.find(node.getClass(), node.getId());
                     if (object != null) {
                         nodesToRef.add(object);
                     }

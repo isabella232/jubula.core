@@ -98,7 +98,7 @@ public class TreeOpsBP {
      * @throws TreeOpFailedException if the operation failed
      */
     public static IExecTestCasePO extractTestCase(String newTcName,
-        INodePO ownerNode, List<IParamNodePO> modNodes, EntityManager s, 
+        INodePO ownerNode, List<INodePO> modNodes, EntityManager s, 
         ParamNameBPDecorator mapper) throws TreeOpFailedException {
 
         final boolean isOwnerSpecTestCase = 
@@ -111,15 +111,15 @@ public class TreeOpsBP {
         handler.add(parent, newTc, null);
         int pos = -1;
         Map<String, String> oldToNewParamGuids = new HashMap<String, String>();
-        for (IParamNodePO selectecNode : modNodes) {
+        for (INodePO selectecNode : modNodes) {
             INodePO moveNode = findNode(ownerNode, selectecNode);
             if (moveNode == null) {
                 throw new TreeOpFailedException(Messages.NodeMismatch,
                     MessageIDs.E_PO_NOT_FOUND);
             }
-            if (isOwnerSpecTestCase) {
-                addParamsToParent(newTc, selectecNode, mapper, 
-                    (ISpecTestCasePO)ownerNode, oldToNewParamGuids);
+            if (isOwnerSpecTestCase && selectecNode instanceof IParamNodePO) {
+                addParamsToParent(newTc, (IParamNodePO)selectecNode, mapper,
+                        (ISpecTestCasePO)ownerNode, oldToNewParamGuids);
             }
             pos = ownerNode.indexOf(moveNode);
             AbstractCmdHandleChild childHandler = NodePM.getCmdHandleChild(
@@ -213,10 +213,10 @@ public class TreeOpsBP {
      * @param modNodes the extracted nodes.
      * @param newExec the new ExecTestCasePO.
      */
-    private static void propagateCompNames(List<IParamNodePO> modNodes, 
+    private static void propagateCompNames(List<INodePO> modNodes, 
         IExecTestCasePO newExec) {
         
-        for (IParamNodePO modNode : modNodes) {
+        for (INodePO modNode : modNodes) {
             if (modNode instanceof IExecTestCasePO) {
                 final IExecTestCasePO execTc = (IExecTestCasePO)modNode;
                 for (ICompNamesPairPO pair : execTc.getCompNamesPairs()) {

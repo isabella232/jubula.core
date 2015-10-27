@@ -33,8 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 08.10.2004
  */
-public class TestCaseBrowserContentProvider 
-    extends AbstractTreeViewContentProvider {
+public class TestCaseBrowserContentProvider extends BrowserContentProvider {
 
     /** the logger */
     private static final Logger LOG = 
@@ -66,11 +65,12 @@ public class TestCaseBrowserContentProvider
             ISpecTestCasePO referencedTestCase = 
                 ((IExecTestCasePO)parentElement).getSpecTestCase();
             if (referencedTestCase != null) {
+                List<INodePO> displayedChildren = getChildrenToDisplay(
+                        referencedTestCase);
                 return ArrayUtils.addAll(
                         Collections.unmodifiableCollection(
                                 referencedTestCase.getAllEventEventExecTC())
-                                .toArray(), referencedTestCase
-                                .getUnmodifiableNodeList().toArray());
+                                .toArray(), displayedChildren.toArray());
             }
             
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
@@ -78,7 +78,8 @@ public class TestCaseBrowserContentProvider
 
         if (parentElement instanceof INodePO) {
             INodePO parentNode = ((INodePO) parentElement);
-            Object[] children = parentNode.getUnmodifiableNodeList().toArray();
+            List<INodePO> displayedChildren = getChildrenToDisplay(parentNode);
+            Object[] children = displayedChildren.toArray();
             if (parentElement instanceof ISpecTestCasePO) {
                 children = ArrayUtils.addAll(
                         Collections.unmodifiableCollection(
@@ -108,5 +109,5 @@ public class TestCaseBrowserContentProvider
         }
         
         return ArrayUtils.EMPTY_OBJECT_ARRAY;
-    }  
+    } 
 }

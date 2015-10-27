@@ -401,6 +401,8 @@ public class Messages extends NLS {
     public static String NewCAPDialogReservedCompName;
     public static String NewCAPDialogShellTitle;
     public static String NewCapDialogTitle;
+    public static String NewCommentDialogMessage;
+    public static String NewCommentDialogTitle;
     public static String NewLogicalNameDialogMessage;
     public static String NewLogicalNameDialogTitle;
     public static String DialogMessageButton_YES;

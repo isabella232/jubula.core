@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -130,7 +131,7 @@ public class BasicSearchResult implements ISearchResult {
     
     /**
      * Class for search results
-     *
+     * @param <DATATYPE> the data type of the element
      * @author BREDEX GmbH
      * @created 07.12.2005
      * 
@@ -274,6 +275,7 @@ public class BasicSearchResult implements ISearchResult {
      * Encapsulates the ability to "jump to" a search result. This can include
      * opening Views / Editors and setting the selection.
      *
+     * @param <DATATYPE> the data type of the element
      * @author BREDEX GmbH
      * @created Mar 10, 2009
      * 
@@ -447,7 +449,8 @@ public class BasicSearchResult implements ISearchResult {
             if (node instanceof IExecTestCasePO
                     || node instanceof IRefTestSuitePO 
                     || node instanceof ICapPO
-                    || node instanceof IEventExecTestCasePO) {
+                    || node instanceof IEventExecTestCasePO
+                    || node instanceof ICommentPO) {
                 specNode = node.getParentNode();
             }
             if (node instanceof ISpecTestCasePO

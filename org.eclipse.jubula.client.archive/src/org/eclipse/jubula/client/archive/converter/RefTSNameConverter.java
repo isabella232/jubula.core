@@ -20,6 +20,7 @@ import org.eclipse.jubula.client.archive.schema.ExecCategory;
 import org.eclipse.jubula.client.archive.schema.Project;
 import org.eclipse.jubula.client.archive.schema.RefTestSuite;
 import org.eclipse.jubula.client.archive.schema.TestJobs;
+import org.eclipse.jubula.client.archive.schema.TestJobs.Testjobelement;
 import org.eclipse.jubula.client.archive.schema.TestSuite;
 
 /**
@@ -63,11 +64,14 @@ public class RefTSNameConverter extends AbstractXmlConverter {
         }
 
         for (TestJobs jobs : m_testJobs) {
-            for (RefTestSuite refTS : jobs.getRefTestSuiteList()) {
-                TestSuite ts = m_testSuiteMap.get(refTS.getTsGuid());
-                if (ts != null) {
-                    if (StringUtils.equals(refTS.getName(), ts.getName())) {
-                        refTS.setName(null);
+            for (Testjobelement element : jobs.getTestjobelementList()) {
+                if (element instanceof RefTestSuite) {
+                    RefTestSuite refTS = (RefTestSuite) element;
+                    TestSuite ts = m_testSuiteMap.get(refTS.getTsGuid());
+                    if (ts != null) {
+                        if (StringUtils.equals(refTS.getName(), ts.getName())) {
+                            refTS.setName(null);
+                        }
                     }
                 }
             }

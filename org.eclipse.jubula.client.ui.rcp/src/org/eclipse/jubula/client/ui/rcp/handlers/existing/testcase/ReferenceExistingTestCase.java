@@ -117,8 +117,7 @@ public class ReferenceExistingTestCase
                             Integer index = null;
                             if (node instanceof IExecTestCasePO) {
                                 index = NewTestCaseHandlerTCEditor
-                                        .getPositionToInsert(editorNode,
-                                                (IExecTestCasePO)node);
+                                        .getPositionToInsert(editorNode, node);
                             }
                             addedElements.add(TestCaseBP.addReferencedTestCase(
                                     tce.getEditorHelper().getEditSupport(),

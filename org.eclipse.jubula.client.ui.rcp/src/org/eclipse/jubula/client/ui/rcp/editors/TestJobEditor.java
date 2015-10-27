@@ -154,6 +154,11 @@ public class TestJobEditor extends AbstractJBEditor {
                 CommandContributionItem.STYLE_PUSH));
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.NEW_COMMENT);
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.EDIT_COMMENT);
     }
 
     /**

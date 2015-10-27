@@ -66,6 +66,15 @@ public interface RCPCommandIDs {
     /** the ID of the "new cap" command */
     public static final String NEW_CAP = "org.eclipse.jubula.client.ui.rcp.commands.newCap"; //$NON-NLS-1$
     
+    /** the ID of the "new comment" command */
+    public static final String NEW_COMMENT = "org.eclipse.jubula.client.ui.rcp.commands.newComment"; //$NON-NLS-1$
+    
+    /** the ID of the "edit comment" command */
+    public static final String EDIT_COMMENT = "org.eclipse.jubula.client.ui.rcp.commands.editComment"; //$NON-NLS-1$
+    
+    /** the ID of the "delete comment" command */
+    public static final String DELETE_COMMENT = "org.eclipse.jubula.client.ui.rcp.commands.deleteComment"; //$NON-NLS-1$
+    
     /** the ID of the "new category" command */
     public static final String NEW_CATEGORY = "org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"; //$NON-NLS-1$
 

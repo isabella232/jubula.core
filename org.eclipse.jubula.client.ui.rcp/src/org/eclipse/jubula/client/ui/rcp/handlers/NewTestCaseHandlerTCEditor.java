@@ -89,8 +89,7 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
                 if (newSpecTC != null) {
                     Integer index = null;
                     if (selectedNode instanceof IExecTestCasePO) {
-                        index = getPositionToInsert(
-                                editorNode, (IExecTestCasePO)selectedNode);
+                        index = getPositionToInsert(editorNode, selectedNode);
                     }
 
                     try {
@@ -123,7 +122,7 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
      * @return the position to add
      */
     public static Integer getPositionToInsert(INodePO workNode,
-            IExecTestCasePO selectedNode) {
+            INodePO selectedNode) {
 
         int positionToAdd = workNode.indexOf(selectedNode) + 1;
         if (Plugin.getDefault().getPreferenceStore()

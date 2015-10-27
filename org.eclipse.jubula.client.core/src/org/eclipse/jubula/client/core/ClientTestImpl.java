@@ -67,6 +67,7 @@ import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -614,24 +615,28 @@ public class ClientTestImpl implements IClientTest {
                 testJob.getUnmodifiableNodeList();
             
             for (INodePO node : refTestSuiteList) {
-                IRefTestSuitePO refTestSuite = (IRefTestSuitePO)node;
-                isTestExecutionFailed.set(false);
-                isTestExecutionFinished.set(false);
-                addTestExecutionEventListener(executionListener);
-                AutIdentifier autId = new AutIdentifier(refTestSuite
-                        .getTestSuiteAutID());
-                startTestSuite(refTestSuite.getTestSuite(), locale, autId,
-                        autoScreenshot, null, noRunOptMode, 
-                        NodeNameUtil.getText(refTestSuite));
-                while (!isTestExecutionFinished.get()) {
-                    TimeUtil.delay(500);
-                }
-                if (!isTestExecutionFailed.get()) {
-                    executedTestSuites.add(refTestSuite);
-                }                
-                if (!continueTestJobExecution(testExecutionState, 
-                        testExecutionMessageId)) {
-                    break;
+                if (node instanceof ICommentPO) {
+                    continue;
+                } else if (node instanceof IRefTestSuitePO) {
+                    IRefTestSuitePO refTestSuite = (IRefTestSuitePO)node;
+                    isTestExecutionFailed.set(false);
+                    isTestExecutionFinished.set(false);
+                    addTestExecutionEventListener(executionListener);
+                    AutIdentifier autId = new AutIdentifier(refTestSuite
+                            .getTestSuiteAutID());
+                    startTestSuite(refTestSuite.getTestSuite(), locale, autId,
+                            autoScreenshot, null, noRunOptMode, 
+                            NodeNameUtil.getText(refTestSuite));
+                    while (!isTestExecutionFinished.get()) {
+                        TimeUtil.delay(500);
+                    }
+                    if (!isTestExecutionFailed.get()) {
+                        executedTestSuites.add(refTestSuite);
+                    }                
+                    if (!continueTestJobExecution(testExecutionState, 
+                            testExecutionMessageId)) {
+                        break;
+                    }
                 }
             }
         } finally {

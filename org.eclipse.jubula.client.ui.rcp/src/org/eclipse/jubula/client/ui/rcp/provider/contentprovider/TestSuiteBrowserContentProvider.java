@@ -32,8 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 15.10.2004
  */
-public class TestSuiteBrowserContentProvider 
-    extends AbstractTreeViewContentProvider {
+public class TestSuiteBrowserContentProvider extends BrowserContentProvider {
 
     /** the logger */
     private static final Logger LOG = 
@@ -63,9 +62,8 @@ public class TestSuiteBrowserContentProvider
                 Collection<IEventExecTestCasePO> eventTCs = Collections
                         .unmodifiableCollection(referencedTestCase
                                 .getAllEventEventExecTC());
-                List<INodePO> nodes = referencedTestCase
-                        .getUnmodifiableNodeList();
-                return ArrayUtils.addAll(eventTCs.toArray(), nodes.toArray());
+                return ArrayUtils.addAll(eventTCs.toArray(),
+                        getChildrenToDisplay(referencedTestCase).toArray());
             }
             
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
@@ -83,8 +81,7 @@ public class TestSuiteBrowserContentProvider
         }
         
         if (parentElement instanceof INodePO) {
-            List<INodePO> nodes = ((INodePO)parentElement)
-                .getUnmodifiableNodeList();
+            List<INodePO> nodes = getChildrenToDisplay((INodePO) parentElement);
             return nodes.toArray();
         }
 

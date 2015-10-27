@@ -53,9 +53,9 @@ public class ReplaceTCRWizard extends Wizard {
     private final AbstractJBEditor m_editor;
 
     /**
-     * <code>m_listOfExecsToReplace</code>
+     * <code>m_listOfNodesToReplace</code>
      */
-    private final List<IExecTestCasePO> m_listOfExecsToReplace;
+    private final List<INodePO> m_listOfExecsToReplace;
 
     /**
      * <code>m_parentTC</code>
@@ -88,10 +88,10 @@ public class ReplaceTCRWizard extends Wizard {
      * @param editor
      *            the editor
      * @param listOfExecsToReplace
-     *            the list of execs to replace by this refactor wizard
+     *            the list of nodes to replace by this refactor wizard
      */
     public ReplaceTCRWizard(AbstractJBEditor editor,
-            List<IExecTestCasePO> listOfExecsToReplace) {
+            List<INodePO> listOfExecsToReplace) {
         setNeedsProgressMonitor(true);
         setWindowTitle(Messages.ReplaceTCRWizardTitle);
         m_editor = editor;
@@ -140,7 +140,7 @@ public class ReplaceTCRWizard extends Wizard {
      * {@inheritDoc}
      */
     public boolean performFinish() {
-        IExecTestCasePO placeToInsert = m_listOfExecsToReplace.get(0);
+        INodePO placeToInsert = m_listOfExecsToReplace.get(0);
         ISpecTestCasePO specTcToInsert = m_choosePage.getChoosenTestCase();
         try {
             Integer index = NewTestCaseHandlerTCEditor.getPositionToInsert(

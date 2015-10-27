@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
@@ -236,6 +237,10 @@ public abstract class AbstractXMLReportGenerator {
             insertInto = element.addElement("step"); //$NON-NLS-1$
             addGeneralElements(resultNode, insertInto);
             addCapElements(resultNode, insertInto, (ICapPO)node);
+        } else if (node instanceof ICommentPO) {
+            insertInto = element.addElement("comment"); //$NON-NLS-1$
+            Element nameElement = insertInto.addElement("name"); //$NON-NLS-1$
+            nameElement.addCDATA(((ICommentPO) node).getName());
         }
 
         addParamNodeElements(resultNode, insertInto);

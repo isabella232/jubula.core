@@ -404,6 +404,25 @@ public abstract class NodeMaker {
     }
 
     /**
+     * factory method to replace constructor
+     * @param comment comment
+     * @return ICommentPO
+     */
+    public static ICommentPO createCommentPO(String comment) {
+        return new CommentPO(comment);
+    }
+
+    /**
+     * factory method to replace constructor
+     * @param comment comment
+     * @param guid guid
+     * @return ICommentPO
+     */
+    public static ICommentPO createCommentPO(String comment, String guid) {
+        return new CommentPO(comment, guid);
+    }
+
+    /**
      * get the class instance of NodePO (needed by Persistor)
      * @return the class instance of NodePO
      */
@@ -498,5 +517,13 @@ public abstract class NodeMaker {
      */
     public static Class<EventExecTestCasePO> getEventExecTestCasePOClass() {
         return EventExecTestCasePO.class;
+    }
+
+    /**
+     * get the class instance of CommentPO (needed by Persistor)
+     * @return the class instance of CommentPO
+     */
+    public static Class<CommentPO> getCommentPOClass() {
+        return CommentPO.class;
     }
 }

@@ -276,6 +276,11 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.NEW_COMMENT);
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.EDIT_COMMENT);
     }
     
     /**

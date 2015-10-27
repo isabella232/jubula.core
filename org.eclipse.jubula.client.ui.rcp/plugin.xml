@@ -770,6 +770,14 @@
       name="%NewCap" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.newComment"
+      name="%NewComment" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.editComment"
+      name="%EditComment" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.newTestCaseReference"
       name="%NewTestCaseReference" />
     <command
@@ -1054,6 +1062,16 @@
       contextId="org.eclipse.ui.contexts.window"
       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
       sequence="M2+ENTER" />
+    <key
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newComment"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="M3+C" />
+    <key
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.editComment"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="M3+E" />
     <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.RevertChanges"
       contextId="org.eclipse.ui.contexts.window"
@@ -2268,6 +2286,7 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
             </or>
             <not>
               <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
@@ -2466,6 +2485,58 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+            </or>
+          </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NewCommentHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newComment">
+      <activeWhen>
+        <and>
+          <with variable="activePartId">
+              <or>
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor" />
+              </or>
+          </with>
+          <or>
+              <count value="1" />
+              <count value="0" />
+          </or>
+          <iterate
+            ifEmpty="true"
+            operator="or">
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+            </or>
+          </iterate>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.EditCommentHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.editComment">
+      <activeWhen>
+        <and>
+          <with variable="activePartId">
+              <or>
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
+                <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestJobEditor" />
+              </or>
+          </with>
+          <count value="1" />
+          <iterate
+            ifEmpty="false"
+            operator="or">
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
             </or>
           </iterate>
         </and>
@@ -2943,6 +3014,9 @@
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newCapIcon_disabled.gif"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/newCapIcon.gif" />
     <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newComment"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addComment.gif" />
+    <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testCaseRef.gif" />
     <image
@@ -3191,6 +3265,7 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
             </or>
           </iterate>
           <not>
@@ -3222,6 +3297,7 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
             </or>
           </iterate>
           <not>
@@ -3813,19 +3889,24 @@
           <iterate
             ifEmpty="false"
             operator="and">
-            <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-            <not>
-              <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
-            </not>
-            <test
-              property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesExcel"
-              value="false" />
-            <test
-              property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesCTDS"
-              value="false" />
-            <test
-              property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.hasMultipleDataSets"
-              value="false" />
+            <or>
+                <and>
+                    <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+                    <not>
+                      <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
+                    </not>
+                    <test
+                      property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesExcel"
+                      value="false" />
+                    <test
+                      property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.usesCTDS"
+                      value="false" />
+                    <test
+                      property="org.eclipse.jubula.client.core.model.IParameterInterfacePO.hasMultipleDataSets"
+                      value="false" />
+                </and>
+                <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
+            </or>
           </iterate>
         </and>
       </activeWhen>

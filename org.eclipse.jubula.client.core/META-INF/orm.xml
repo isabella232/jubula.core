@@ -20,6 +20,7 @@
 	<entity class="org.eclipse.jubula.client.core.model.TestSuitePO" />
 	<entity class="org.eclipse.jubula.client.core.model.CapPO" />
 	<entity class="org.eclipse.jubula.client.core.model.CategoryPO" />
+    <entity class="org.eclipse.jubula.client.core.model.CommentPO" />
 	<entity class="org.eclipse.jubula.client.core.model.EventExecTestCasePO" />
 	<entity class="org.eclipse.jubula.client.core.model.ExecTestCasePO" />
 	<entity class="org.eclipse.jubula.client.core.model.ParamNodePO" />

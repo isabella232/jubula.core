@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -80,11 +81,13 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 return false;
             }
             INodePO node = (INodePO)obj;
-            if (node instanceof ICapPO || node instanceof IExecTestCasePO) {
+            if (node instanceof ICapPO || node instanceof IExecTestCasePO
+                    || node instanceof ICommentPO) {
                 INodePO target = dropTarget;
                 if (target != node
                     && (target instanceof ICapPO 
-                        || target instanceof IExecTestCasePO)) {
+                        || target instanceof IExecTestCasePO
+                        || target instanceof ICommentPO)) {
                         
                     droppedNode = moveNode(node, target);
                 }

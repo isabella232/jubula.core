@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -115,10 +116,12 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
             }
             if (objectToDrop instanceof INodePO) {
                 INodePO nodeToDrop = (INodePO)objectToDrop;
-                if (nodeToDrop instanceof IRefTestSuitePO) {
+                if (nodeToDrop instanceof IRefTestSuitePO
+                        || nodeToDrop instanceof ICommentPO) {
                     INodePO target = dropTarget;
                     if (target != nodeToDrop
-                            && (target instanceof IRefTestSuitePO)) {
+                            && (target instanceof IRefTestSuitePO
+                                    || target instanceof ICommentPO)) {
                         moveNode(nodeToDrop, target);
                     }
                 }
@@ -159,7 +162,8 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
 
         for (Object toDropElement : toDrop.toArray()) {
             if (!(toDropElement instanceof ITestSuitePO 
-                    || toDropElement instanceof IRefTestSuitePO)) {
+                    || toDropElement instanceof IRefTestSuitePO
+                    || toDropElement instanceof ICommentPO)) {
                 return false;
             }
         }

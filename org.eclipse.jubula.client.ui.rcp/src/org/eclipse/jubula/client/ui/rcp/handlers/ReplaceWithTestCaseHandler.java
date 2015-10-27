@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
@@ -38,8 +38,7 @@ public class ReplaceWithTestCaseHandler extends AbstractSelectionBasedHandler {
             (AbstractTestCaseEditor)HandlerUtil.getActiveEditor(event);
         tce.getEditorHelper().doEditorOperation(new IEditorOperation() {
             public void run(IPersistentObject workingPo) {
-                List<IExecTestCasePO> listOfExecsToReplace = 
-                        getSelection().toList();
+                List<INodePO> listOfExecsToReplace = getSelection().toList();
                 WizardDialog dialog = new WizardDialog(getActiveShell(),
                         new ReplaceTCRWizard(tce, listOfExecsToReplace)) {
                     /** {@inheritDoc} */

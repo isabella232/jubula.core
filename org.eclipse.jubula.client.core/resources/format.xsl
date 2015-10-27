@@ -336,6 +336,18 @@
 		
 	</xsl:template>
 	
+	<xsl:template match="comment">
+        <table border="0" width="100%">
+            <tr>
+                <td>
+	                <xsl:call-template name="LFsToBRs">
+	                    <xsl:with-param name="input" select="name"/>
+                    </xsl:call-template>
+                </td>
+            </tr>
+        </table>
+    </xsl:template>
+	
 	<xsl:template match="aut">
 		<tr bgcolor="#DDDDDD">
 			<th colspan="2" align="left"><h2>Application Under Test (AUT) Information</h2></th>
@@ -374,7 +386,7 @@
 	</xsl:template>
 
 	<xsl:template match="test-run">
-		<xsl:apply-templates select="testcase|step|eventhandler"/>
+		<xsl:apply-templates select="comment|testcase|step|eventhandler"/>
 	</xsl:template>
 	
 	<xsl:template match="testcase">
@@ -395,11 +407,11 @@
 			</A>
             <xsl:apply-templates select="@duration" />
 			<xsl:variable name="child_nodes" 
-					      select="testcase|step|eventhandler"/>
+					      select="comment|testcase|step|eventhandler"/>
 			<xsl:if test="count($child_nodes) != 0">
 				<ul>
 					<xsl:apply-templates
-						select="testcase|step|eventhandler"/>
+						select="comment|testcase|step|eventhandler"/>
 				</ul>
 			</xsl:if>
 		</li>

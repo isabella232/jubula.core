@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -100,9 +101,12 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     
     /** The color for disabled elements */
     private static final Color DISABLED_COLOR = LayoutUtil.GRAY_COLOR;
-    
+
     /** The color for reusedProjects */
     private static Color reusedProjectsColor = null;
+    
+    /** The color for comments */
+    private static Color commentColor = null;
     
     /** clipboard */
     private static Clipboard clipboard = null;
@@ -156,6 +160,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * {@inheritDoc}
      */
     public String getToolTipText(Object element) {
+        if (element instanceof ICommentPO) {
+            ICommentPO comment = (ICommentPO)element;
+            return comment.getName();
+        }
         if (element instanceof INodePO) {
             INodePO node = (INodePO)element;
             StringBuilder toolTip = new StringBuilder();
@@ -314,6 +322,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         if (element instanceof ITestDataCubePO) {
             return IconConstants.TDC_IMAGE;
         }
+        
+        if (element instanceof ICommentPO) {
+            return IconConstants.COMMENT_IMAGE;
+        }
         return null;
     }
 
@@ -346,6 +358,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 && !NodeBP.isEditable((INodePO)element))) {
             return getReusedProjectsColor();
         }
+        
+        if (element instanceof ICommentPO) {
+            return getCommentColor();
+        }
 
         return null;
     }
@@ -360,6 +376,18 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                     .getSystemColor(SWT.COLOR_BLUE);
         }
         return reusedProjectsColor;
+    }
+    
+    /**
+     * returns the color of a comment after creating it if necessary
+     * @return the color of a comment
+     */
+    private Color getCommentColor() {
+        if (commentColor == null) {
+            commentColor = Display.getDefault()
+                    .getSystemColor(SWT.COLOR_BLUE);
+        }
+        return commentColor;
     }
 
     /**

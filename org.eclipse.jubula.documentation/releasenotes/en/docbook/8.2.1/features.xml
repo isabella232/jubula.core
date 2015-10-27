@@ -30,12 +30,22 @@
     <para>
         <emphasis role="strong">New view for logs from execute external command</emphasis>
     </para>
-        <itemizedlist>
+    <itemizedlist>
         <listitem>
             <para>
                 A new view is introduced which can show the logs from the execute external command action. When selecting such an action in a testresult the log will be shown.
                 
                 Use <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis> to open the Log View.
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
+        <emphasis role="strong">New way to add comments</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                In the test case, test suite and test job editors it is now possible to add a new kind of comment as a node to your test via <emphasis role="input">alt+c</emphasis>. These comments are only visible in the editors and can help you structuring your tests.
             </para>
         </listitem>
     </itemizedlist>

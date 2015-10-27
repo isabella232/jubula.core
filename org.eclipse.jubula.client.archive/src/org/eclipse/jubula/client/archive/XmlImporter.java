@@ -49,6 +49,7 @@ import org.eclipse.jubula.client.archive.schema.Category;
 import org.eclipse.jubula.client.archive.schema.CheckActivatedContext;
 import org.eclipse.jubula.client.archive.schema.CheckAttribute;
 import org.eclipse.jubula.client.archive.schema.CheckConfiguration;
+import org.eclipse.jubula.client.archive.schema.Comment;
 import org.eclipse.jubula.client.archive.schema.CompNames;
 import org.eclipse.jubula.client.archive.schema.ComponentName;
 import org.eclipse.jubula.client.archive.schema.EventHandler;
@@ -78,7 +79,9 @@ import org.eclipse.jubula.client.archive.schema.TestDataCategory;
 import org.eclipse.jubula.client.archive.schema.TestDataCell;
 import org.eclipse.jubula.client.archive.schema.TestDataRow;
 import org.eclipse.jubula.client.archive.schema.TestJobs;
+import org.eclipse.jubula.client.archive.schema.TestJobs.Testjobelement;
 import org.eclipse.jubula.client.archive.schema.TestSuite;
+import org.eclipse.jubula.client.archive.schema.TestSuite.Testsuiteelement;
 import org.eclipse.jubula.client.archive.schema.TestresultSummaries;
 import org.eclipse.jubula.client.archive.schema.TestresultSummary;
 import org.eclipse.jubula.client.archive.schema.UsedToolkit;
@@ -97,6 +100,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICheckConfContPO;
 import org.eclipse.jubula.client.core.model.ICheckConfPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -1212,9 +1216,11 @@ class XmlImporter {
         for (Teststep stepXml : xml.getTeststepList()) {
             if (stepXml.getCap() != null) {
                 tc.addNode(createCap(proj, stepXml.getCap(), assignNewGuid));
-            } else {
+            } else if (stepXml.getUsedTestcase() != null) {
                 tc.addNode(createExecTestCase(
                     proj, stepXml.getUsedTestcase(), assignNewGuid));
+            } else if (stepXml.getComment() != null) {
+                tc.addNode(createComment(stepXml.getComment(), assignNewGuid));
             }
         }
         for (EventTestCase evTcXml : xml.getEventTestcaseList()) {
@@ -1414,6 +1420,27 @@ class XmlImporter {
         
         for (TestCase tcXml : xml.getTestcaseList()) {
             cat.addNode(createTestCaseBase(proj, tcXml, assignNewGuid, mapper));
+        }
+        return cat;
+    }
+    
+    /**
+     * Creates the instance of the persistent object which is defined by the
+     * XML element used as prameter. The method generates all dependend objects
+     * as well.
+     * @param xml Abstraction of the XML element (see Apache XML Beans)
+     * @param assignNewGuid <code>true</code> if the testcase and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @return a persistent object generated from the information in the XML
+     * element
+     */
+    private ICommentPO createComment(Comment xml, boolean assignNewGuid) {
+        ICommentPO cat;
+        if (!assignNewGuid && xml.getGUID() != null) {
+            cat = NodeMaker.createCommentPO(xml.getName(), xml.getGUID());
+        } else {
+            cat = NodeMaker.createCommentPO(xml.getName());
         }
         return cat;
     }
@@ -2118,8 +2145,25 @@ class XmlImporter {
         if (xml.getSelectedAut() != null) {
             ts.setAut(findReferencedAut(xml.getSelectedAut()));
         }
-        for (RefTestCase refXml : xml.getUsedTestcaseList()) {
-            ts.addNode(createExecTestCase(proj, refXml, assignNewGuid));
+        List<RefTestCase> usedTestcaseList = xml.getUsedTestcaseList();
+        if (!usedTestcaseList.isEmpty()) {
+            // Deprecated way
+            for (RefTestCase refXml : usedTestcaseList) {
+                ts.addNode(createExecTestCase(proj, refXml, assignNewGuid));
+            }
+        } else {
+            // New way
+            for (Testsuiteelement element : xml.getTestsuiteelementList()) {
+                RefTestCase refXml = element.getUsedTestcase();
+                if (refXml != null) {                
+                    ts.addNode(createExecTestCase(proj, refXml, assignNewGuid));
+                } else {
+                    Comment comXml = element.getComment();
+                    if (comXml != null) {
+                        ts.addNode(createComment(comXml, assignNewGuid));
+                    }
+                }
+            }
         }
         
         Map<String, Integer> defaultEventHandler = 
@@ -2166,7 +2210,39 @@ class XmlImporter {
         tj.setTaskId(xml.getTaskId());
         fillTrackedChangesInformation(tj, xml);
         
-        for (RefTestSuite xmlRts : xml.getRefTestSuiteList()) {
+        List<RefTestSuite> refTestSuiteList = xml.getRefTestSuiteList();
+        if (!refTestSuiteList.isEmpty()) {
+            // Deprecated way
+            for (RefTestSuite xmlRts : refTestSuiteList) {
+                processRefTestSuite(assignNewGuid, tj, xmlRts);
+            }
+        } else {
+            // New way
+            for (Testjobelement element : xml.getTestjobelementList()) {
+                RefTestSuite xmlRts = element.getRefTestSuite();
+                if (xmlRts != null) { 
+                    processRefTestSuite(assignNewGuid, tj, xmlRts);
+                } else {
+                    Comment xmlComment = element.getComment();
+                    tj.addNode(createComment(xmlComment, false));
+                }
+            }
+        }
+        return tj;
+    }
+
+    /**
+     * Adds ref test suite to test job
+     * @param assignNewGuid <code>true</code> if the test suite
+     *                      should be assigned a new GUID. Otherwise 
+     *                      <code>false</code>.
+     * @param tj test job
+     * @param xmlRts ref test suite from xml
+     * @throws InvalidDataException 
+     */
+    private void processRefTestSuite(boolean assignNewGuid, ITestJobPO tj,
+            RefTestSuite xmlRts) throws InvalidDataException {
+        if (xmlRts != null) {                
             IRefTestSuitePO rts;
             if (assignNewGuid) {
                 // Only Test Suites from the same project can be referenced,
@@ -2174,7 +2250,8 @@ class XmlImporter {
                 // initialized (so they have already been entered into the 
                 // old to new GUID map). This is why we can simply directly use 
                 // the old to new GUID map.
-                String testSuiteGuid = m_oldToNewGuids.get(xmlRts.getTsGuid());
+                String testSuiteGuid = m_oldToNewGuids.get(
+                        xmlRts.getTsGuid());
                 if (testSuiteGuid == null) {
                     throw new InvalidDataException(
                             "Test Suite Reference: No new GUID found for Test Suite with old GUID: " + xmlRts.getTsGuid(),  //$NON-NLS-1$ 
@@ -2183,15 +2260,15 @@ class XmlImporter {
                 rts = NodeMaker.createRefTestSuitePO(xmlRts.getName(), 
                         testSuiteGuid, xmlRts.getAutId());
             } else {
-                rts = NodeMaker.createRefTestSuitePO(xmlRts.getName(), xmlRts
-                        .getGUID(), xmlRts.getTsGuid(), xmlRts.getAutId());
-
+                rts = NodeMaker.createRefTestSuitePO(xmlRts.getName(),
+                        xmlRts.getGUID(), xmlRts.getTsGuid(),
+                        xmlRts.getAutId());
+                
             }
             rts.setComment(xmlRts.getComment());
             rts.setDescription(xmlRts.getDescription());
             tj.addNode(rts);
         }
-        return tj;
     }
 
     /**

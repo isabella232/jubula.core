@@ -38,6 +38,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
 import org.eclipse.jubula.client.core.model.ITestResultAdditionPO;
@@ -306,6 +307,11 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     backingTestSuite.setAut(PoMaker.createAUTMainPO(summary
                             .getAutName()));
                     return backingTestSuite;
+                case TestresultSummaryBP.TYPE_COMMENT:
+                    ICommentPO backingComment = NodeMaker.createCommentPO(
+                            result.getKeywordName(),
+                            result.getInternalKeywordGuid());
+                    return backingComment;
                 default:
                     return null;
             }

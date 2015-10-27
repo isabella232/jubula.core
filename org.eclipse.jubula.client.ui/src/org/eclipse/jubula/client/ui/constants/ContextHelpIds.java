@@ -85,6 +85,10 @@ public interface ContextHelpIds {
     public static final String IMPORT_PROJECT_DIALOG = PRAEFIX
         + "importProjectDialogContextId"; //$NON-NLS-1$
     
+    /** ContextHelpId for adding comments */
+    public static final String NEW_COMMENT_DIALOG = PRAEFIX
+        + "newCommentDialogContextId"; //$NON-NLS-1$
+    
     /** ContextHelpId for JRE selection dialog */
     public static final String JRE_CHOOSE_DIALOG = PRAEFIX
         + "jreChooseContextId"; //$NON-NLS-1$

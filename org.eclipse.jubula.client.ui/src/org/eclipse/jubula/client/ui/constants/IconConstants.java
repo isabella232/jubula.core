@@ -277,6 +277,8 @@ public class IconConstants {
         getImageDescriptor("testDataCubeDecoration.gif"); //$NON-NLS-1$
     /** test data cube image */
     public static final Image TDC_IMAGE = getImage("testDataCube.gif"); //$NON-NLS-1$
+    /** comment image */
+    public static final Image COMMENT_IMAGE = getImage("file_obj.png"); //$NON-NLS-1$
     /** testJob image */
     public static final Image TJ_IMAGE = getImage("testJobNode.gif"); //$NON-NLS-1$
     /** testSuite image */

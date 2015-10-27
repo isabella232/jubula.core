@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -69,7 +70,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
         /**
          * the param nodes to clone
          */
-        private final List<IParamNodePO> m_nodesToClone;
+        private final List<INodePO> m_nodesToClone;
 
         /**
          * the new spec test case
@@ -85,7 +86,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
          *            the param nodes to clone
          */
         public CloneTransaction(String newTestCaseName,
-                List<IParamNodePO> nodesToClone) {
+                List<INodePO> nodesToClone) {
             m_newTestCaseName = newTestCaseName;
             m_nodesToClone = nodesToClone;
         }
@@ -102,7 +103,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
                     newTc);
             handler.add(parent, newTc, null);
             Map<String, String> oldToNewGuids = new HashMap<String, String>();
-            for (IParamNodePO node : m_nodesToClone) {
+            for (INodePO node : m_nodesToClone) {
                 addCloneToNewSpecTc(newTc, node, s, pMapper, oldToNewGuids);
             }
             registerParamNamesToSave(newTc, pMapper);
@@ -123,16 +124,16 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
          * @throws PMException in case of an persitence exception
          */
         private void addCloneToNewSpecTc(ISpecTestCasePO newSpecTC,
-            IParamNodePO nodeToCopy, EntityManager session,
+            INodePO nodeToCopy, EntityManager session,
             ParamNameBPDecorator pMapper, Map<String, String> oldToNewGuids)
             throws PMException {
-            IParamNodePO newParamNode = null;
+            INodePO newNode = null;
             if (nodeToCopy instanceof IExecTestCasePO) {
                 IExecTestCasePO origExec = (IExecTestCasePO) nodeToCopy;
                 IExecTestCasePO newExec = NodeMaker.createExecTestCasePO(
                         origExec.getSpecTestCase());
                 fillExec(origExec, newExec);
-                newParamNode = newExec;
+                newNode = newExec;
             } else if (nodeToCopy instanceof ICapPO) {
                 ICapPO origCap = (ICapPO) nodeToCopy;
                 ICapPO newCap = NodeMaker.createCapPO(
@@ -141,12 +142,19 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
                         origCap.getComponentType(), 
                         origCap.getActionName());
                 fillCap(origCap, newCap);
-                newParamNode = newCap;
+                newNode = newCap;
+            } else if (nodeToCopy instanceof ICommentPO) {
+                ICommentPO origComment = (ICommentPO) nodeToCopy;
+                ICommentPO newComment = NodeMaker.createCommentPO(
+                        origComment.getName());
+                newNode = newComment;
             }
-            if (newParamNode != null) {
-                addParamsToNewParent(newSpecTC, 
-                        newParamNode, pMapper, oldToNewGuids);
-                newSpecTC.addNode(newParamNode);
+            if (newNode != null) {
+                if (newNode instanceof IParamNodePO) {                    
+                    addParamsToNewParent(newSpecTC, (IParamNodePO) newNode,
+                            pMapper, oldToNewGuids);
+                }
+                newSpecTC.addNode(newNode);
             }
         }
 
@@ -279,12 +287,11 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
         if (newTestCaseName != null) {
             ISpecTestCasePO newSpecTC = null;
             IStructuredSelection ss = getSelection();
-            final List<IParamNodePO> nodesToClone = 
-                    new ArrayList<IParamNodePO>(
-                    ss.size());
+            final List<INodePO> nodesToClone =
+                    new ArrayList<INodePO>(ss.size());
             Iterator it = ss.iterator();
             while (it.hasNext()) {
-                nodesToClone.add((IParamNodePO) it.next());
+                nodesToClone.add((INodePO) it.next());
             }
             newSpecTC = createAndPerformNodeDuplication(newTestCaseName,
                     nodesToClone);
@@ -308,7 +315,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
      * @return the new spec test case with cloned param nodes
      */
     private ISpecTestCasePO createAndPerformNodeDuplication(
-            String newTestCaseName, List<IParamNodePO> nodesToClone) {
+            String newTestCaseName, List<INodePO> nodesToClone) {
         final CloneTransaction op = 
                 new CloneTransaction(newTestCaseName, nodesToClone);
         try {

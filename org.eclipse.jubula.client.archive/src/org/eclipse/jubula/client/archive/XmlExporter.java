@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.archive.schema.Category;
 import org.eclipse.jubula.client.archive.schema.CheckActivatedContext;
 import org.eclipse.jubula.client.archive.schema.CheckAttribute;
 import org.eclipse.jubula.client.archive.schema.CheckConfiguration;
+import org.eclipse.jubula.client.archive.schema.Comment;
 import org.eclipse.jubula.client.archive.schema.CompNames;
 import org.eclipse.jubula.client.archive.schema.ComponentName;
 import org.eclipse.jubula.client.archive.schema.EventHandler;
@@ -82,6 +83,7 @@ import org.eclipse.jubula.client.core.model.ICapParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICheckConfContPO;
 import org.eclipse.jubula.client.core.model.ICheckConfPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompIdentifierPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -663,12 +665,18 @@ class XmlExporter {
         for (Object child : tj.getUnmodifiableNodeList()) {
             if (child instanceof IRefTestSuitePO) {
                 IRefTestSuitePO rts = (IRefTestSuitePO)child;
-                RefTestSuite xmlRts = xmlTj.addNewRefTestSuite();
+                RefTestSuite xmlRts = xmlTj.addNewTestjobelement()
+                        .addNewRefTestSuite();
                 fillNode(xmlRts, rts);
                 xmlRts.setName(rts.getRealName());
                 xmlRts.setGUID(rts.getGuid());
                 xmlRts.setTsGuid(rts.getTestSuiteGuid());
                 xmlRts.setAutId(rts.getTestSuiteAutID());
+            } else if (child instanceof ICommentPO) {
+                ICommentPO cPO = (ICommentPO)child;
+                Comment xmlComment = xmlTj.addNewTestjobelement()
+                        .addNewComment();
+                fillComment(xmlComment, cPO);
             }
         }
     }
@@ -852,8 +860,14 @@ class XmlExporter {
         for (Object o : po.getUnmodifiableNodeList()) {
             if (o instanceof IExecTestCasePO) {
                 IExecTestCasePO tc = (IExecTestCasePO)o;
-                RefTestCase xmlTc = xml.addNewUsedTestcase();
+                RefTestCase xmlTc = xml.addNewTestsuiteelement()
+                        .addNewUsedTestcase();
                 fillRefTestCase(xmlTc, tc);
+            } else if (o instanceof ICommentPO) {
+                ICommentPO cPO = (ICommentPO)o;
+                Comment xmlComment = xml.addNewTestsuiteelement()
+                        .addNewComment();
+                fillComment(xmlComment, cPO);
             }
         }
         for (Object o : po.getDefaultEventHandler().keySet()) {
@@ -985,6 +999,10 @@ class XmlExporter {
                 IExecTestCasePO tcPO = (IExecTestCasePO)o;
                 RefTestCase xmlTC = stepXml.addNewUsedTestcase();
                 fillRefTestCase(xmlTC, tcPO);
+            } else if (o instanceof ICommentPO) {
+                ICommentPO cPO = (ICommentPO)o;
+                Comment xmlComment = stepXml.addNewComment();
+                fillComment(xmlComment, cPO);
             }
         }
 
@@ -1161,6 +1179,18 @@ class XmlExporter {
                 }
             }
         }
+    }
+
+    /**
+     * Write the information from the Object to its corresponding XML element.
+     * 
+     * @param xml
+     *            The XML element to be filled
+     * @param po
+     *            The persistent object which contains the information
+     */
+    private void fillComment(Comment xml, ICommentPO po) {
+        fillNode(xml, po);
     }
     
     /**

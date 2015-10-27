@@ -26,6 +26,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
@@ -59,7 +60,7 @@ public class MatchComponentNamesPage extends WizardPage {
     /**
      * <code>m_execTCList</code>
      */
-    private final List<IExecTestCasePO> m_execTCList;
+    private final List<INodePO> m_execTCList;
     
     /**
      * <code>m_parents</code> mapping
@@ -165,10 +166,10 @@ public class MatchComponentNamesPage extends WizardPage {
      * @param editor
      *            the current editor
      * @param execTCList
-     *            the exec test case list to extract the component interface for
+     *            the node list to extract the component interface for
      */
     public MatchComponentNamesPage(String pageName, AbstractJBEditor editor, 
-        List<IExecTestCasePO> execTCList) {
+        List<INodePO> execTCList) {
         super(pageName, Messages.ReplaceTCRWizard_matchComponentNames_title,
                 null);
         m_editor = editor;

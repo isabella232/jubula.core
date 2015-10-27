@@ -108,11 +108,14 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             String paramGUID, Locale loc, boolean isFirstCall, 
             Set<Param> result) {
         if (node instanceof ISpecTestCasePO) {
-            Iterator it = node.getNodeListIterator();
+            Iterator<INodePO> it = node.getNodeListIterator();
             while (it.hasNext()) {
-                IParamNodePO n = (IParamNodePO)it.next();
-                getValuesForParameterImp(n, paramGUID, loc, 
-                        false, result);
+                INodePO next = it.next();
+                if (next instanceof IParamNodePO) {
+                    IParamNodePO n = (IParamNodePO) next;
+                    getValuesForParameterImp(n, paramGUID, loc, 
+                            false, result);
+                }
             }            
         } else if (node instanceof IExecTestCasePO) {
             IExecTestCasePO execTC = (IExecTestCasePO)node;

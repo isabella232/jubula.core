@@ -395,6 +395,7 @@ public class Messages extends NLS {
     public static String TestResultNodeTypeTestCase;
     public static String TestResultNodeTypeTestStep;
     public static String TestResultNodeTypeTestSuite;
+    public static String TestResultNodeTypeComment;
     public static String TestResultNodeTypeUnknown;
     public static String EmptyProperty;
     

@@ -670,6 +670,8 @@ public class TestResultNode {
             return Messages.TestResultNodeTypeTestStep;
         } else if (node instanceof ITestSuitePO) {
             return Messages.TestResultNodeTypeTestSuite;
+        } else if (node instanceof ICommentPO) {
+            return Messages.TestResultNodeTypeComment;
         }
         return Messages.TestResultNodeTypeUnknown;
     }

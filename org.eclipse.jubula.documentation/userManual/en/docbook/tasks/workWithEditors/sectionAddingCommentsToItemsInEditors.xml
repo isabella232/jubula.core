@@ -14,10 +14,37 @@
   <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="viewing-and-changing-data-sources-for-test-cases.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
   <anchor role="helpid" condition="testSuiteEditorContextId" xml:id="viewing-and-changing-data-sources-for-test-cases.testSuiteEditorContextId" xreflabel="Test Suite Editor"/>
   <anchor role="helpid" condition="guidancerTestJobEditorContextId" xml:id="viewing-and-changing-data-sources-for-test-cases.guidancerTestJobEditorContextId" xreflabel="Test Job Editor"/>
+  <anchor role="helpid" condition="newCommentDialogContextId" xml:id="newCommentDialogContextId" xreflabel="Add a comment"/>
   <para>
-    You can add comments to items via the editor for an item. You
-    can add comments to the item itself, or to other items used in
-    it.
+    There are two ways to add comments. You can either add a comment
+    directly as a node into your test or you can add comments to items
+    via the editor for an item. You can add comments to the item itself,
+    or to other items used in it.
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        Open the editor for the test case, test suite or test job you want to add comments to.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Right-click and choose <emphasis>Add Comment</emphasis> from the context menu.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Type the comment and click <emphasis>OK</emphasis>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Save the changes.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para>
+    Or if you want to add a comment to a specific item
   </para>
   <orderedlist>
     <listitem>
@@ -33,7 +60,7 @@
     </listitem>
     <listitem>
       <para>
-        Save the changes
+        Save the changes.
       </para>
     </listitem>
     <listitem>

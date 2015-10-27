@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
@@ -71,6 +72,9 @@ public class TestresultSummaryBP {
      * use this constant for summary table
      */
     public static final String AUTRUN = "autrun"; //$NON-NLS-1$
+
+    /** constant for keyword type Comment */
+    public static final int TYPE_COMMENT = 4;
 
     /** constant for keyword type Test Step */
     public static final int TYPE_TEST_STEP = 3;
@@ -304,6 +308,8 @@ public class TestresultSummaryBP {
             keyword.setInternalKeywordType(TYPE_TEST_CASE);
         } else if (node instanceof ITestSuitePO) {
             keyword.setInternalKeywordType(TYPE_TEST_SUITE);
+        } else if (node instanceof ICommentPO) {
+            keyword.setInternalKeywordType(TYPE_COMMENT);
         }
     }
     

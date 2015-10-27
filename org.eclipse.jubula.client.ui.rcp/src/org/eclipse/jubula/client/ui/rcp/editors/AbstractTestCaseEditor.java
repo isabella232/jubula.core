@@ -713,6 +713,11 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         CommandHelper.createContributionPushItem(submenuRefactor,
                 RCPCommandIDs.SAVE_AS_NEW);
         mgr.add(new GroupMarker(IWorkbenchActionConstants.MB_ADDITIONS));
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.NEW_COMMENT);
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.EDIT_COMMENT);
     }
 
     /**

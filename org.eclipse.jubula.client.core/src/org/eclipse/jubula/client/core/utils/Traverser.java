@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IEventStackModificationListener;
@@ -240,6 +241,12 @@ public class Traverser {
                             MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA);
                     }
                     processExecTestCase(stackObj, (IExecTestCasePO)childNode);
+                    return next();
+                }
+                if (childNode instanceof ICommentPO) {
+                    m_execStack.push(new ExecObject(childNode, NO_INDEX,
+                            NO_DATASET));
+                    fireExecStackIncremented(childNode);
                     return next();
                 }
                 Assert.notReached(Messages.ErrorInTestExecutionTree);
