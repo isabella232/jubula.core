@@ -1,5 +1,19 @@
-<section xml:id="new-features-and-developments-8.2.1" version="5.0" xmlns="http://docbook.org/ns/docbook"
-                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
-                                                              xmlns:xl="http://www.w3.org/1999/xlink">
-  <title>New Features and Developments</title>
+<section xml:id="new-features-and-developments-8.2.1" version="5.0"
+    xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>New Features and Developments</title>
+
+    <para>
+        <emphasis role="strong">ITE performance improvements</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                Completeness check operations within the ITE, that are
+                supposed to ensure the projects executable consistency,
+                are now performed in the background and do no longer
+                cause the UI from being blocked.
+            </para>
+        </listitem>
+    </itemizedlist>
 </section>
