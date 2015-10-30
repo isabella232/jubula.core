@@ -27,6 +27,7 @@
   <xi:include href="sectionTestResultSummaryView.xml"/>
   <xi:include href="sectionRunningAUTsView.xml"/>
   <xi:include href="sectionImageView.xml"/>
+  <xi:include href="sectionLogView.xml"/>
   <xi:include href="sectionProgressView.xml"/>
   
 </section>

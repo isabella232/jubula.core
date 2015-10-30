@@ -331,4 +331,14 @@ public interface ITestResultPO {
      * @param taskId the taskId of this result node
      */
     public void setTaskId(String taskId);
+    
+    /**
+     * @param addition the {@link ITestResultAdditionPO} to add
+     */
+    public void addAdditon(ITestResultAdditionPO addition);
+    
+    /**
+     * @return gets the complete list of {@link ITestResultAdditionPO}
+     */
+    public List<ITestResultAdditionPO> getTestResultAdditions();
 }

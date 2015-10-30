@@ -15,6 +15,8 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.controllers.propertysources.TestResultNodePropertySource;
 import org.eclipse.jubula.client.ui.views.imageview.ImageProvider;
 import org.eclipse.jubula.client.ui.views.imageview.TestResultNodeImageProvider;
+import org.eclipse.jubula.client.ui.views.logview.LogProvider;
+import org.eclipse.jubula.client.ui.views.logview.TestResultNodeLogProvider;
 import org.eclipse.ui.views.properties.IPropertySource;
 
 /**
@@ -26,6 +28,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
 public class TestResultNodeAdapterFactory implements IAdapterFactory {
     /** types for which adapters are available */
     private final Class[] m_types = { ImageProvider.class,
+                                      LogProvider.class,
                                       TestResultNode.class, 
                                       IPropertySource.class};
 
@@ -33,7 +36,10 @@ public class TestResultNodeAdapterFactory implements IAdapterFactory {
      * {@inheritDoc}
      */
     public Object getAdapter(Object adaptableObject, Class adapterType) {
-        if (adapterType == ImageProvider.class) {
+        if (adapterType == LogProvider.class) {
+            return new TestResultNodeLogProvider(
+                    (TestResultNode) adaptableObject);
+        } else if (adapterType == ImageProvider.class) {
             return new TestResultNodeImageProvider(
                     (TestResultNode) adaptableObject);
         } else if (adapterType == TestResultNode.class) {

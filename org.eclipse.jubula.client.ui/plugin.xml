@@ -26,7 +26,14 @@
 		    id="org.eclipse.jubula.client.ui.views.Image"
 		    name="%ImageView"
 		    restorable="true">
-  </view>
+      </view>
+      <view
+            category="org.eclipse.jubula.client.views"
+            class="org.eclipse.jubula.client.ui.views.logview.LogView"
+            id="org.eclipse.jubula.client.ui.views.Log"
+            name="%LogView"
+            restorable="true">
+      </view>
     </extension>
     <extension
           point="org.eclipse.ui.menus">
@@ -130,6 +137,10 @@
   </image>
   <image
         commandId="org.eclipse.jubula.client.ui.commands.SaveImageAs"
+        icon="icons/saveAsNew.gif">
+  </image>
+  <image
+        commandId="org.eclipse.jubula.client.ui.commands.SaveLogAs"
         icon="icons/saveAsNew.gif">
   </image>
     </extension>
@@ -288,6 +299,11 @@
 		    id="org.eclipse.jubula.client.ui.commands.SaveImageAs"
 		    name="%SaveImageAs">
 	</command>
+	<command
+            categoryId="org.eclipse.jubula.client.ui.commands"
+            id="org.eclipse.jubula.client.ui.commands.SaveLogAs"
+            name="%SaveLogAs">
+    </command>
     </extension>
     <extension
           point="org.eclipse.ui.preferencePages">
@@ -376,12 +392,21 @@
             class="org.eclipse.jubula.client.ui.adapter.MonitoringSourceAdapterFactory">
            <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
         </factory>
+        <factory adaptableType="org.eclipse.jubula.client.core.model.TestResultNode"
+            class="org.eclipse.jubula.client.ui.adapter.TestResultNodeAdapterFactory">
+            <adapter type="org.eclipse.jubula.client.ui.views.logview.LogProvider" />
+        </factory>
 	</extension>
     <extension
           point="org.eclipse.ui.contexts">
        <context
              id="org.eclipse.jubula.client.ui.contexts.ImageViewDisplaysImage"
              name="org.eclipse.jubula.client.ui.contexts.ImageViewDisplaysImage"
+             parentId="org.eclipse.ui.contexts.dialogAndWindow">
+       </context>
+       <context
+             id="org.eclipse.jubula.client.ui.contexts.LogViewDisplaysLog"
+             name="org.eclipse.jubula.client.ui.contexts.LogViewDisplaysLog"
              parentId="org.eclipse.ui.contexts.dialogAndWindow">
        </context>
     </extension>

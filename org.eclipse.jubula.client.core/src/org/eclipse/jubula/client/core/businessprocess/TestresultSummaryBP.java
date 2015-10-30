@@ -40,6 +40,7 @@ import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
@@ -288,6 +289,11 @@ public class TestresultSummaryBP {
             keyword.setInternalActionName(cap.getActionName());
             keyword.setActionName(CompSystemI18n.getString(
                     cap.getActionName()));
+            String commandlog = resultNode.getCommandLog();
+            if (StringUtils.isNotBlank(commandlog)) {
+                keyword.addAdditon(
+                        NodeMaker.createTestResultAddtionPO(commandlog));
+            }
             //add error details
             addErrorDetails(keyword, resultNode);
             keyword.setNoOfSimilarComponents(

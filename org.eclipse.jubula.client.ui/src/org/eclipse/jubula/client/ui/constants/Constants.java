@@ -88,6 +88,9 @@ public interface Constants {
     /** ID of the ImageView */
     public static final String IMAGEVIEW_ID = "org.eclipse.jubula.client.ui.views.Image"; //$NON-NLS-1$
     
+    /** ID of the LogView */
+    public static final String LOGVIEW_ID = "org.eclipse.jubula.client.ui.views.Log"; //$NON-NLS-1$
+    
     /** ID of the Jubula Component Names View (override component names) */
     public static final String COMPNAMESVIEW_ID =
         "org.eclipse.jubula.client.ui.rcp.views.CompNamesView"; //$NON-NLS-1$
@@ -134,6 +137,10 @@ public interface Constants {
     /** if there is an image displayed in the image view */
     public static final String IMAGEVIEW_DISPLAYS_IMAGE = 
         "org.eclipse.jubula.client.ui.contexts.ImageViewDisplaysImage"; //$NON-NLS-1$
+    
+    /** if there is a log displayed in the log view */
+    public static final String LOGVIEW_DISPLAYS_LOG = 
+            "org.eclipse.jubula.client.ui.contexts.LogViewDisplaysLog"; //$NON-NLS-1$
     
     //  -------------------------------------------------------------
     //  decorator ids

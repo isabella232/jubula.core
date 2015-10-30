@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
+import org.eclipse.jubula.client.ui.views.ContextBasedView;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.swt.SWT;
@@ -42,12 +43,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.ISelectionService;
-import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.contexts.IContextActivation;
-import org.eclipse.ui.contexts.IContextService;
-import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
 
 
@@ -55,7 +50,8 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  * @author BREDEX GmbH
  * @created Apr 14, 2010
  */
-public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
+public class ImageView extends ContextBasedView 
+    implements IJBPart, ISelectionProvider {
     /**
      * <code>image</code>
      */
@@ -82,26 +78,17 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
     private Composite m_child;
     
     /**
-     * context activation
+     * constructor which sets the contextID
      */
-    private IContextActivation m_contextActivation;
+    public ImageView() {
+        super(Constants.IMAGEVIEW_DISPLAYS_IMAGE);
+    }
     
-    /**
-     * The selectionListener listens for changes in the workbench's selection
-     * service.
-     */
-    private ISelectionListener m_selectionListener = new ISelectionListener() {
-        public void selectionChanged(IWorkbenchPart part, 
-                ISelection selection) {
-            handleSelection(selection);
-        }
-    };
-
     /**
      * @param selection
      *            the selection
      */
-    private void handleSelection(ISelection selection) {
+    protected void handleSelection(ISelection selection) {
         ImageProvider provider = null;
         if (selection != null && selection instanceof IStructuredSelection) {
             IStructuredSelection ss = (IStructuredSelection)selection;
@@ -211,7 +198,7 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
                 SWT.DEFAULT, SWT.DEFAULT));
         m_scrollComposite.setContent(m_child);
         
-        getSelectionService().addSelectionListener(m_selectionListener);
+        super.createPartControl(parent);
         handleSelection(getSelectionService().getSelection());
         getSite().setSelectionProvider(this);
     }
@@ -231,7 +218,7 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
                     if (img != null) {
                         Rectangle bounds = img.getBounds();
                         m_imgWidget.setSize(bounds.width, bounds.height);
-                        setStatusOfImageContext(true);
+                        setStatusOfContext(true);
                     }
                     m_scrollComposite.setMinSize(m_child.computeSize(
                             SWT.DEFAULT, SWT.DEFAULT));
@@ -240,26 +227,6 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
         });
     }
     
-    /**
-     * set the status of the image context - does nothing if context service is
-     * not available
-     * 
-     * @param active
-     *            the status to set
-     */
-    private void setStatusOfImageContext(boolean active) {
-        IContextService cs = (IContextService) getSite().getWorkbenchWindow()
-                .getService(IContextService.class);
-        if (cs != null) {
-            if (active) {
-                m_contextActivation = cs.activateContext(
-                        Constants.IMAGEVIEW_DISPLAYS_IMAGE);
-            } else {
-                cs.deactivateContext(m_contextActivation);
-            }
-        }
-    }
-
     /**
      * make image invisible and dispose it
      */
@@ -270,14 +237,13 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
             oldImage.dispose();
         }
         
-        setStatusOfImageContext(false);
+        setStatusOfContext(false);
     }
     
     /**
      * {@inheritDoc}
      */
     public void dispose() {
-        getSelectionService().removeSelectionListener(m_selectionListener);
         if (m_imgData != null) {
             m_imgData.dispose();
         }
@@ -289,13 +255,6 @@ public class ImageView extends ViewPart implements IJBPart, ISelectionProvider {
      */
     public void setFocus() {
         m_imgWidget.setFocus();
-    }
-
-    /**
-     * @return the selection service
-     */
-    private ISelectionService getSelectionService() {
-        return getSite().getWorkbenchWindow().getSelectionService();
     }
     
     /**

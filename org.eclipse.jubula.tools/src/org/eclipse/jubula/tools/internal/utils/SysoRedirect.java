@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +40,13 @@ public class SysoRedirect extends IsAliveThread {
     /** picks up the error stream if -javaagent is unknown */
     private String m_line;
 
+    /** {@link StringBuffer} for truncated/complete log */
+    private StringBuffer m_stringBuffer = new StringBuffer();
     /** a descriptive prefix used for the syso redirection */
     private final String m_sysoPrefix;
+    
+    /** if there are deleted lines */
+    private boolean m_removedLines = false;
     
     /**
      * public constructor
@@ -67,6 +73,7 @@ public class SysoRedirect extends IsAliveThread {
             String line = br.readLine();
             while (line != null) {
                 System.out.println(m_sysoPrefix + line);
+                writeLine(line);
                 if (line.indexOf(UNRECOGNIZED_SUN_JO) > -1) {
                     m_line = line;
                 }
@@ -83,5 +90,30 @@ public class SysoRedirect extends IsAliveThread {
      */
     public String getLine() {
         return m_line;
+    }
+    
+    /**
+     * write a line to the {@link StringBuffer}
+     * @param string the line to add to the {@link StringBuffer}
+     */
+    private void writeLine(String string) {
+        if (m_stringBuffer.length() > 10000) {
+            int i = m_stringBuffer.indexOf(StringConstants.NEWLINE);
+            m_stringBuffer.delete(0, i + StringConstants.NEWLINE.length());
+            m_stringBuffer.trimToSize();
+            m_removedLines = true;
+        }
+        m_stringBuffer.append(string + StringConstants.NEWLINE);
+    }
+    /**
+     * 
+     * @return the content of the {@link StringBuffer}
+     */
+    public String getTruncatedLog() {
+        if (m_removedLines) {
+            return "..." + StringConstants.NEWLINE //$NON-NLS-1$
+                    + m_stringBuffer.toString();
+        }
+        return m_stringBuffer.toString();
     }
 }

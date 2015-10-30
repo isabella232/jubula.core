@@ -16,4 +16,17 @@
             </para>
         </listitem>
     </itemizedlist>
+    <para>
+        <emphasis role="strong">New view for logs from execute external command</emphasis>
+    </para>
+        <itemizedlist>
+        <listitem>
+            <para>
+                A new view is introduced which can show the logs from the execute external command action. When selecting such an action in a testresult the log will be shown.
+                
+                Use <emphasis role="menuPath">Window</emphasis>--&gt;<emphasis role="menuPath">Show View</emphasis>--&gt;<emphasis role="menuPath">Other</emphasis> to open the Log View.
+            </para>
+        </listitem>
+    </itemizedlist>
+
 </section>

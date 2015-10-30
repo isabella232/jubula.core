@@ -393,6 +393,15 @@ public abstract class NodeMaker {
             // empty since this should only be a transient object used for TestResults
         };
     }
+    /**
+     * creates a new instance of {@link TestResultAdditionPO}
+     * @param commandLineText the text from the system error and output
+     * @return new instance of {@link TestResultAdditionPO}
+     */
+    public static ITestResultAdditionPO createTestResultAddtionPO(
+            String commandLineText) {
+        return new TestResultAdditionPO(commandLineText);
+    }
 
     /**
      * get the class instance of NodePO (needed by Persistor)

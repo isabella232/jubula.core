@@ -1162,6 +1162,14 @@
         </command>
     </menuContribution>
     <menuContribution
+        locationURI="toolbar:org.eclipse.jubula.client.ui.views.Log?after=additions">
+        <command
+            commandId="org.eclipse.jubula.client.ui.commands.SaveLogAs"
+            id="org.eclipse.jubula.client.ui.toolbar.LogViewToolbar.SaveLogAs"
+            style="push">
+        </command>
+    </menuContribution>
+    <menuContribution
       locationURI="menu:org.eclipse.jubula.client.ui.rcp.views.ComponentNameBrowser?after=additions">
       <menu label="&amp;Sort by">
         <command
@@ -1967,6 +1975,12 @@
         commandId="org.eclipse.jubula.client.ui.commands.SaveImageAs"
         style="push" />
     </menuContribution>
+    <menuContribution
+      locationURI="popup:org.eclipse.jubula.client.ui.views.Log?after=additions">
+      <command
+        commandId="org.eclipse.jubula.client.ui.commands.SaveLogAs"
+        style="push" />
+    </menuContribution>
   </extension>
   <extension point="org.eclipse.ui.handlers">
   <handler
@@ -1979,7 +1993,18 @@
             </iterate>
         </with>     
      </enabledWhen>
-  </handler>
+   </handler>
+   <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.SaveLogAsHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.SaveLogAs">
+     <enabledWhen>
+        <with variable="activeContexts">
+            <iterate ifEmpty="false" operator="or">
+                <equals value="org.eclipse.jubula.client.ui.contexts.LogViewDisplaysLog"/>
+            </iterate>
+        </with>     
+     </enabledWhen>
+   </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.AddTestResultSummaryCommentHandler"
       commandId="org.eclipse.jubula.client.ui.commands.AddComment">

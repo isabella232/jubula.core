@@ -170,7 +170,10 @@ public class TestResultNode {
     
     /** the task Id of the result node */
     private String m_taskId;
-
+    
+    /** logging string*/
+    private String m_commandLog;
+    
     /**
      * Constructor
      * 
@@ -707,5 +710,20 @@ public class TestResultNode {
      */
     public void setTaskId(String taskId) {
         m_taskId = taskId;
+    }
+
+    /**
+     * @return the log from the command or null
+     */
+    public String getCommandLog() {
+        return m_commandLog;
+    }
+
+    /**
+     * 
+     * @param commandLog sets the log from a command
+     */
+    public void setCommandLog(String commandLog) {
+        this.m_commandLog = commandLog;
     }
 }

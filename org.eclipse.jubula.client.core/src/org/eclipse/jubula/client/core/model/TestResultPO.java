@@ -148,6 +148,10 @@ class TestResultPO implements ITestResultPO {
      */
     private int m_noOfSimilarComponents = -1;
     
+    /** additional details for a testresultNode */
+    private List<ITestResultAdditionPO> m_additions = 
+            new ArrayList<ITestResultAdditionPO>();
+    
     /**
      * only for Persistence (JPA / EclipseLink)
      */
@@ -748,5 +752,34 @@ class TestResultPO implements ITestResultPO {
             }
         }
         m_taskId = newTaskId;
+    }
+    
+    /**
+     *      
+     * @return Returns the list of @link {@link ITestResultAdditionPO}.
+     */
+    @OneToMany(cascade = CascadeType.ALL, 
+            targetEntity = TestResultAdditionPO.class, 
+            fetch = FetchType.EAGER)
+    @BatchFetch (size = 1000, value = BatchFetchType.IN)
+    @JoinColumn(name = "FK_TESTRESULT", unique = false)
+    public List<ITestResultAdditionPO> getTestResultAdditions() {
+        return m_additions;
+    }
+    
+    /**
+     * 
+     * @param additions test{@link ITestResultAdditionPO}
+     */
+    private void setTestResultAdditions(List<ITestResultAdditionPO> additions) {
+        m_additions = additions;
+    }
+    
+    /**
+     * this method adds additional information to the {@link TestResultPO}
+     * @param addition a Instance of {@link ITestResultAdditionPO}
+     */
+    public void addAdditon(ITestResultAdditionPO addition) {
+        m_additions.add(addition);
     }
 }

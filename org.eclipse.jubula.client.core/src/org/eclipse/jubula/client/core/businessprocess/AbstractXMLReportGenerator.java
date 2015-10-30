@@ -310,7 +310,10 @@ public abstract class AbstractXMLReportGenerator {
         }
         Element actionEl = insertInto.addElement("action-type"); //$NON-NLS-1$
         actionEl.addText(CompSystemI18n.getString(cap.getActionName(), true));
-        
+        if (StringUtils.isNotBlank(resultNode.getCommandLog())) {
+            Element commandEl = insertInto.addElement("command-log"); //$NON-NLS-1$
+            commandEl.addCDATA(resultNode.getCommandLog());
+        }
         if (resultNode.getStatus() == TestResultNode.ERROR 
                 || resultNode.getStatus() == TestResultNode.RETRYING) {
             

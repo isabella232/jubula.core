@@ -92,8 +92,9 @@ public abstract class AbstractApplicationTester implements ITester {
      *        this value should be <code>false</code>.
      * @param timeout The amount of time (in milliseconds) to wait for the 
      *        execution to finish.
+     * @return the output and error from the command
      */
-    public void rcExecuteExternalCommand(String cmd, int expectedExitCode, 
+    public String rcExecuteExternalCommand(String cmd, int expectedExitCode, 
         boolean local, int timeout) {
 
         if (!local) {
@@ -106,24 +107,29 @@ public abstract class AbstractApplicationTester implements ITester {
                     EventFactory.createActionError(
                         TestErrorEvent.NO_SUCH_COMMAND));
             }
-            
+            String output = mt.getOutput();
             if (mt.hasTimeoutOccurred()) {
+                TestErrorEvent event = EventFactory.createActionError(
+                        TestErrorEvent.CONFIRMATION_TIMEOUT);
+                event.addProp(TestErrorEvent.Property.COMMAND_LOG_KEY, output);
                 throw new StepExecutionException(
                     "Timeout received before completing execution of script.", //$NON-NLS-1$
-                    EventFactory.createActionError(
-                        TestErrorEvent.CONFIRMATION_TIMEOUT));
+                    event);
             }
             
             int actualExitValue = mt.getExitCode();
             if (actualExitValue != expectedExitCode) {
+                TestErrorEvent event = EventFactory.createVerifyFailed(
+                        String.valueOf(expectedExitCode), 
+                        String.valueOf(actualExitValue));
+                event.addProp(TestErrorEvent.Property.COMMAND_LOG_KEY, output);
                 throw new StepExecutionException(
                     "Verification of exit code failed.", //$NON-NLS-1$
-                    EventFactory.createVerifyFailed(
-                        String.valueOf(expectedExitCode), 
-                        String.valueOf(actualExitValue)));
+                    event);
             }
+            return output;
         } 
-        
+        return null;
     }
     
     /**

@@ -1035,6 +1035,14 @@ public class TestExecution {
                 } else {
                     // ErrorEvent has occured
                     TestErrorEvent event = msg.getTestErrorEvent();
+                    if (StringUtils.isEmpty(resultNode.getCommandLog())) {
+                        String commandLogKey = TestErrorEvent.Property
+                                .COMMAND_LOG_KEY;
+                        String commandLog = (String) event.getProps()
+                                .get(commandLogKey);
+                        resultNode.setCommandLog(commandLog);
+                        event.getProps().remove(commandLogKey);
+                    }
                     if (m_trav.getEventHandlerReentry(event.getId()).equals(
                             ReentryProperty.RETRY)) {
                         resultNode.setResult(TestResultNode.RETRYING, event);
@@ -2137,6 +2145,7 @@ public class TestExecution {
                     tdManager.getCell(0, desc);
                 String runLocal = this.getValueForParam(date, m_currentCap, 
                     desc);
+                TestResultNode resultNode = m_resultTreeTracker.getEndNode();
                 if (Boolean.valueOf(runLocal)) {
                     // Execute script
                     desc = 
@@ -2173,7 +2182,7 @@ public class TestExecution {
                         return EventFactory.createActionError(
                                 TestErrorEvent.NO_SUCH_COMMAND);
                     }
-                    
+                    resultNode.setCommandLog(mt.getOutput());
                     if (mt.hasTimeoutOccurred()) {
                         return EventFactory.createActionError(
                                 TestErrorEvent.CONFIRMATION_TIMEOUT);
@@ -2185,7 +2194,10 @@ public class TestExecution {
                                 String.valueOf(expectedExitCode), 
                                 String.valueOf(actualExitValue));
                     }
-
+                } else {
+                    String returnValue =
+                            m_varStore.getValue(LAST_ACTION_RETURN);
+                    resultNode.setCommandLog(returnValue);
                 }
             } catch (IllegalArgumentException e) {
                 throw new JBException("IllegalArgumentException", e, //$NON-NLS-1$
@@ -2194,7 +2206,6 @@ public class TestExecution {
                 throw new JBException("InvalidDataException", e,  // //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } 
-            
             return null;
         }
     }

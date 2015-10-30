@@ -256,6 +256,11 @@ public class TestErrorEvent {
          */
         public static final String ACTUAL_VALUE_KEY = "guidancerActualValue"; //$NON-NLS-1$
         
+        /**
+         * <code>COMMAND_LOG_KEY</code>
+         */
+        public static final String COMMAND_LOG_KEY = "jubulaCommandLog"; //$NON-NLS-1$
+        
         /** to prevent instantiation */
         private Property() {
             // do nothing

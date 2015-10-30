@@ -59,6 +59,9 @@ public class ExternalCommandExecutor {
     
         /** whether the command is valid */
         private boolean m_isCmdValid;
+        
+        /** redirect object */
+        private SysoRedirect m_redirect;
 
         /**
          * The inner thread starts a new process to execute an command. It will
@@ -167,15 +170,19 @@ public class ExternalCommandExecutor {
                     for (int i = 0; i < m_cmdParams.length; ++i) {
                         commandTokens.add(m_cmdParams[i]);
                     }
-                    m_process = runtime.exec(commandTokens
-                            .toArray(new String[commandTokens.size()]), null,
-                            m_dir);
+                    ProcessBuilder pb =
+                            new ProcessBuilder(commandTokens);
+                    pb.directory(m_dir);
+                    pb.redirectErrorStream(true);
+                    
+                    m_process = pb.start();
                     
                     if (m_process != null) {
-                        new SysoRedirect(m_process.getErrorStream(), 
-                                "Command syserr: ").start(); //$NON-NLS-1$
-                        new SysoRedirect(m_process.getInputStream(), 
-                                "Command sysout: ").start(); //$NON-NLS-1$
+
+                        m_redirect = new SysoRedirect(
+                                m_process.getInputStream(),
+                                "Command sysout: "); //$NON-NLS-1$
+                        m_redirect.start();
                         m_process.waitFor();
                     } else {
                         m_isCmdValid = false;
@@ -252,6 +259,17 @@ public class ExternalCommandExecutor {
          */
         public int getExitCode() throws IllegalThreadStateException {
             return m_process.exitValue();
+        }
+        
+        /**
+         * @return the standard output and error
+         * @throws IllegalThreadStateException if the task has not finished.
+         */
+        public String getOutput() {
+            if (m_redirect != null) {
+                return m_redirect.getTruncatedLog();
+            }
+            return StringConstants.EMPTY;
         }
 
         /**

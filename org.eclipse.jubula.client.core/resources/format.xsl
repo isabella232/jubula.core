@@ -434,6 +434,18 @@
 						</th></tr>
 					</xsl:if>
 					<xsl:apply-templates select="parameter"/>
+                    <xsl:choose>
+                        <xsl:when test="command-log != ''">
+                            <tr>
+                            <td>CommandLog</td>
+                            <td>
+                                <xsl:call-template name="LFsToBRs">
+                                    <xsl:with-param name="input" select="command-log"/>
+                                </xsl:call-template>
+                            </td>
+                            </tr>
+                        </xsl:when>
+                    </xsl:choose>
 					<xsl:apply-templates select="error"/>
 					<xsl:if test="timestamp != ''">
 	                   <tr> 
@@ -567,6 +579,23 @@
 		<xsl:if test="comment != ''">
 			<abbr><xsl:attribute name="title"><xsl:value-of select="comment"/></xsl:attribute>*</abbr>
 		</xsl:if>
+	</xsl:template>
+
+	<xsl:template name="LFsToBRs">
+		<xsl:param name="input" />
+		<xsl:choose>
+			<xsl:when test="contains($input, '&#10;')">
+				<xsl:value-of select="substring-before($input, '&#10;')" />
+				<br />
+				<xsl:call-template name="LFsToBRs">
+					<xsl:with-param name="input"
+						select="substring-after($input, '&#10;')" />
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$input" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 </xsl:stylesheet>

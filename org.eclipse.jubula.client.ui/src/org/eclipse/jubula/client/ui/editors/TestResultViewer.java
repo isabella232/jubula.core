@@ -40,6 +40,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
+import org.eclipse.jubula.client.core.model.ITestResultAdditionPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -222,6 +223,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     createdNode.setResult(result.getInternalKeywordStatus(), 
                             generateTestErrorEvent(result));
                     createdNode.setScreenshot(result.getImage());
+                    setAdditionsToTestResultNode(createdNode, result);
                     createdNode.setTimestamp(result.getTimestamp());
                     createdNode.setOmHeuristicEquivalence(result
                             .getOmHeuristicEquivalence());
@@ -232,6 +234,24 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                 }
             } finally {
                 pMonitor.done();
+            }
+        }
+        /**
+         * 
+         * @param createdNode the created {@link TestResultNode}
+         * @param result the {@link ITestResultPO} where we get the data from
+         */
+        private void setAdditionsToTestResultNode(TestResultNode createdNode,
+                ITestResultPO result) {
+            for (ITestResultAdditionPO addition 
+                    : result.getTestResultAdditions()) {
+                if (addition.getType().equals(
+                        ITestResultAdditionPO.TYPE.OUT_AND_ERR)) {
+                    Object data = addition.getData();
+                    if (data instanceof String) {
+                        createdNode.setCommandLog((String) data);
+                    }
+                }
             }
         }
 
