@@ -118,9 +118,10 @@
       </listitem>
     </orderedlist>
     <para>
-      You will find projects in zip-files as a showcase for steps 1-8, which are located in the directory
-      <emphasis role="input">examples/development/extension/src</emphasis>.
-      Each zip-file contains an example for a specific toolkit, e.g. a Swing example extends the <emphasis role="input">JSlider</emphasis> component.
+      You will find projects in the local p2-repository
+      <emphasis role="input">development/org.eclipse.jubula.repo.zip</emphasis>
+      as a showcase for steps 1-8.
+      See <xref linkend="extensionExamples"/> for more information.
     </para>
     <para>
       These example projects can be simply imported into your Eclipse
