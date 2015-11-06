@@ -272,7 +272,14 @@ public class FigureCanvasTester extends WidgetTester {
 
         IFigure figure = FigureCanvasUtil.findFigure(
                 findEditPart(textPath, operator));
-        nullCheckFigure(figure);
+        if (figure == null) {
+            // it might be a ConnectionAnchor
+            getRobot().click(getViewerControl(),
+                    getFigureBoundsChecked(textPath, operator),
+                    ClickOptions.create().setScrollToVisible(false)
+                        .setClickCount(count).setMouseButton(button));
+            return;
+        }
         clickFigure(count, button, figure);
         
     }
@@ -1036,7 +1043,7 @@ public class FigureCanvasTester extends WidgetTester {
     private ConnectionEditPart[] getTargetConnectionEditParts(
             GraphicalEditPart editPart) {
         List<?> targetConnectionList = editPart
-                .getSourceConnections();
+                .getTargetConnections();
         ConnectionEditPart[] targetConnections = targetConnectionList
                 .toArray(new ConnectionEditPart[targetConnectionList
                                                 .size()]);
