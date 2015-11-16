@@ -725,16 +725,9 @@ public class ComponentNamesTableComposite extends Composite implements
                                 null);
                     } catch (PMAlreadyLockedException pme) {
                         setInvalidData(true);
-                        PMExceptionHandler.handlePMAlreadyLockedException(
-                                        pme,
-                                        new String[] {
-                                            Messages.TheComponentName
-                                                    + " \"" //$NON-NLS-1$
-                                                    + secondName
-                                                    + "\" " + Messages.IsAlreadyInUseInDifferentEditor //$NON-NLS-1$
-                                            ,
-                                            Messages
-                                                .PleaseSaveTheseEditorsFirst });
+                        PMExceptionHandler.handlePMAlreadyLockedException(pme,
+                                new String[] { Messages.TheComponentName,
+                                    secondName });
                     } catch (PMException pme) {
                         setInvalidData(true);
                         PMExceptionHandler.handlePMExceptionForEditor(pme,

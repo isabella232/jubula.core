@@ -173,8 +173,10 @@ public class ProjectSettingWizardPage extends WizardPage {
             availableLanguages.remove(userLanguage);
             usedLanguages.add(userLanguage);
         }
-        m_chooseLists = createLanguageChooser(innerComposite, availableLanguages
-                , usedLanguages);
+        m_chooseLists = createLanguageChooser(
+                innerComposite, 
+                availableLanguages,
+                usedLanguages);
         getObjects();
         separator(composite, NUM_COLUMNS_1); 
         createLanguageCombo(createComposite(composite, NUM_COLUMNS_2, 
@@ -437,7 +439,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         Label label = new Label(parent, SWT.NONE);
         label.setText(text);
         GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
-            false , false, 1, 1);
+            false, false, 1, 1);
         label.setLayoutData(labelGrid);
         return label;
     }

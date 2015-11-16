@@ -335,7 +335,7 @@ public class ListElementChooserComposite extends Composite {
         Label label = new Label(parent, SWT.NONE);
         label.setText(text);
         GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
-            false , false, 1, 1);
+            false, false, 1, 1);
         label.setLayoutData(labelGrid);
         return label;
     }

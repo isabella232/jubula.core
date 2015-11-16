@@ -131,7 +131,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                 public Object getProperty() {
                     return m_node.getName();
                 } 
-            } , P_ELEMENT_DISPLAY_STEPNAME);
+            }, P_ELEMENT_DISPLAY_STEPNAME);
         propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
         propDes = new PropertyDescriptor(new PropertyController() {
@@ -151,7 +151,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                     public Object getProperty() {
                         return node.getComment();
                     }
-                } , P_ELEMENT_DISPLAY_CAPCOMMENT);
+                }, P_ELEMENT_DISPLAY_CAPCOMMENT);
             propDes.setCategory(P_TESTSTEP_CAT);
             addPropertyDescriptor(propDes);
         }
@@ -161,7 +161,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                     public Object getProperty() {
                         return m_node.getTaskId();
                     }
-                } , Messages.AbstractGuiNodePropertySourceTaskId);
+                }, Messages.AbstractGuiNodePropertySourceTaskId);
             propDes.setCategory(P_TESTSTEP_CAT);
             addPropertyDescriptor(propDes);
         }
@@ -262,7 +262,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                     }
 
                 }
-            } , P_ELEMENT_DISPLAY_STEPSTATUS);
+            }, P_ELEMENT_DISPLAY_STEPSTATUS);
         propDes.setCategory(P_TESTRESULT_CAT);
         addPropertyDescriptor(propDes);
     }
@@ -284,7 +284,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                         public Object getProperty() {
                             return componentName;
                         }
-                    } , P_ELEMENT_DISPLAY_COMPNAME);
+                    }, P_ELEMENT_DISPLAY_COMPNAME);
             propDes.setCategory(P_CAP_CAT);
             addPropertyDescriptor(propDes);
         }
@@ -296,7 +296,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                         public Object getProperty() {
                             return componentType;
                         }
-                    } , P_ELEMENT_DISPLAY_COMPTYPE);
+                    }, P_ELEMENT_DISPLAY_COMPTYPE);
             propDes.setCategory(P_CAP_CAT);
             addPropertyDescriptor(propDes);
         }
@@ -309,7 +309,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                             return NumberFormat
                                 .getPercentInstance().format(match);
                         }
-                    } , P_ELEMENT_DISPLAY_COMP_MATCH);
+                    }, P_ELEMENT_DISPLAY_COMP_MATCH);
             propDes.setCategory(P_CAP_CAT);
             addPropertyDescriptor(propDes);
         }
@@ -331,7 +331,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                         public Object getProperty() {
                             return actionName;
                         }
-                    } , P_ELEMENT_DISPLAY_ACTIONTYPE);
+                    }, P_ELEMENT_DISPLAY_ACTIONTYPE);
             propDes.setCategory(P_CAP_CAT);
             addPropertyDescriptor(propDes);
         }
@@ -347,7 +347,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                     return I18n.getString(m_node
                         .getEvent().getId());
                 }
-            } , P_ELEMENT_DISPLAY_ERRORTYPE);
+            }, P_ELEMENT_DISPLAY_ERRORTYPE);
         propDes.setCategory(P_TESTERROR_CAT);
         addPropertyDescriptor(propDes);
         final TestErrorEvent event = m_node.getEvent();
@@ -394,7 +394,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                 public Object getProperty() {
                     return I18n.getString(tc.getEventType());
                 }
-            } , Messages.TestResultNodePropertySourceErrorType);
+            }, Messages.TestResultNodePropertySourceErrorType);
         propDes.setCategory(
                 Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);
@@ -403,7 +403,7 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                 public Object getProperty() {
                     return tc.getReentryProp();
                 }
-            } , Messages.TestResultNodeGUIPropertySourceReentry);
+            }, Messages.TestResultNodeGUIPropertySourceReentry);
         propDes.setCategory(
                 Messages.TestResultNodeGUIPropertySourceEventhandler);
         addPropertyDescriptor(propDes);

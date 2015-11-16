@@ -673,10 +673,9 @@ public abstract class AbstractTableTester
         newCol = IndexConverter.toUserIndex(newCol);
         String row = Integer.toString(newRow);
         String col = Integer.toString(newCol);
-        rcSelectCell(row, MatchUtil.DEFAULT_OPERATOR , col, 
-                MatchUtil.DEFAULT_OPERATOR, clickCount, xPos,
-                xUnits, yPos, yUnits, extendSelection, 
-                InteractionMode.primary.rcIntValue());
+        rcSelectCell(row, MatchUtil.DEFAULT_OPERATOR, col,
+                MatchUtil.DEFAULT_OPERATOR, clickCount, xPos, xUnits, yPos,
+                yUnits, extendSelection, InteractionMode.primary.rcIntValue());
     }
     
     /**

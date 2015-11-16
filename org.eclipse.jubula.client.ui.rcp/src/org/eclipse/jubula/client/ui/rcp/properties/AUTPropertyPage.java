@@ -204,8 +204,8 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
     private Label newLabel(Composite parent, String text) {
         Label label = new Label(parent, SWT.NONE);
         label.setText(text);
-        GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
-            false , false, 1, 1);
+        GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER,
+                false, false, 1, 1);
         label.setLayoutData(labelGrid);
         return label;
     }

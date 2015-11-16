@@ -134,11 +134,11 @@ public class AutAgent {
                         // successfully registered.
                         // Let thread execution continue in order to
                         // close the connection.
-                        LOG.error("Error occurred while establishing communication with AUT." , ioe); //$NON-NLS-1$
+                        LOG.error("Error occurred while establishing communication with AUT.", ioe); //$NON-NLS-1$
                     } catch (SecurityException se) {
-                        LOG.error("Error occurred while establishing communication with AUT." , se); //$NON-NLS-1$
+                        LOG.error("Error occurred while establishing communication with AUT.", se); //$NON-NLS-1$
                     } catch (JBVersionException gdve) {
-                        LOG.error("Error occurred while establishing communication with AUT." , gdve); //$NON-NLS-1$
+                        LOG.error("Error occurred while establishing communication with AUT.", gdve); //$NON-NLS-1$
                     }
 
                     // Try to cleanup
@@ -194,7 +194,7 @@ public class AutAgent {
                         // successfully registered.
                         // Let thread execution continue in order to
                         // close the connection.
-                        LOG.error("Error occurred while establishing communication with autrun." , ioe); //$NON-NLS-1$
+                        LOG.error("Error occurred while establishing communication with autrun.", ioe); //$NON-NLS-1$
 
                         // Try to cleanup
                         try {
@@ -204,7 +204,7 @@ public class AutAgent {
                             // Do nothing.
                         }
                     } catch (SecurityException se) {
-                        LOG.error("Error occurred while establishing communication with autrun." , se); //$NON-NLS-1$
+                        LOG.error("Error occurred while establishing communication with autrun.", se); //$NON-NLS-1$
 
                         // Try to cleanup
                         try {

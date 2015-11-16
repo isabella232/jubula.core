@@ -275,7 +275,7 @@ public class TestResultPreferencePage extends PreferencePage
     private Text newTextField(Composite parent) {
         final Text textField = new Text(parent, SWT.BORDER);
         GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, 
-            true , false, 3, 1);
+            true, false, 3, 1);
         textGrid.widthHint = Dialog.convertWidthInCharsToPixels(
                 LayoutUtil.getFontMetrics(textField), LayoutUtil.WIDTH);
         textField.setLayoutData(textGrid);

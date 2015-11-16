@@ -738,8 +738,8 @@ class XmlExporter {
             throw new PMSaveException(
                     Messages.DataBaseErrorUpdatingToolkits
                             + String.valueOf(po.getName())
-                            + Messages.OriginalException + e.toString()
-                    , MessageIDs.E_FILE_IO);
+                            + Messages.OriginalException + e.toString(),
+                    MessageIDs.E_FILE_IO);
         }
         final Set<IUsedToolkitPO> toolkits = toolkitBP.getUsedToolkits();
         for (IUsedToolkitPO toolkit : toolkits) {

@@ -75,7 +75,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TestExecutionContributor
     implements IAUTEventListener, IServerEventListener,
-    IAUTServerEventListener , ITestExecutionEventListener {
+    IAUTServerEventListener, ITestExecutionEventListener {
 
     /** instance of this class */
     private static TestExecutionContributor instance;

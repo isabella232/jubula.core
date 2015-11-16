@@ -257,7 +257,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             Messages.ProjectPropertyPageProjectVersion);
         Label versionLabel = new Label(rightComposite, SWT.WRAP);
         GridData labelGrid = new GridData(GridData.FILL, GridData.CENTER, 
-                true , false, 1, 1);
+                true, false, 1, 1);
         labelGrid.widthHint = 124;
         versionLabel.setLayoutData(labelGrid);
         versionLabel.setText(getProject().getVersionString());

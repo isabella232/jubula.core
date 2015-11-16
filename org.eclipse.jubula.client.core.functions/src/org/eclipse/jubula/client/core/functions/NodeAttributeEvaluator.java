@@ -58,8 +58,8 @@ public class NodeAttributeEvaluator extends AbstractFunctionEvaluator {
             }
         } else {
             throw new InvalidDataException(
-                    "Function is being called without a node context!" //$NON-NLS-1$
-                    , MessageIDs.E_FUNCTION_EVAL_ERROR);
+                    "Function is being called without a node context!", //$NON-NLS-1$
+                    MessageIDs.E_FUNCTION_EVAL_ERROR);
         }
         return attributeValue;
     }

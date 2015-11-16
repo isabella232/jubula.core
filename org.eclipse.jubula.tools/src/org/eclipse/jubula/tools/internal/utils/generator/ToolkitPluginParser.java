@@ -101,7 +101,7 @@ public class ToolkitPluginParser {
         final int minorVersion = configVersion.getMinorVersion().intValue();
         final ToolkitDescriptor descr = new ToolkitDescriptor(
                 toolkitID, toolkitName, includes, depends, level, order, 
-                isUserToolkit, majorVersion , minorVersion);
+                isUserToolkit, majorVersion, minorVersion);
 
         return descr;
     }

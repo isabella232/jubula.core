@@ -673,9 +673,9 @@ public class CompNamePM extends AbstractNamePM {
             tx.commit();
         } catch (PersistenceException e) {
             throw new JBFatalAbortException(
-                Messages.ErrorInitializingComponentNamesLocking
-                + StringConstants.EXCLAMATION_MARK
-                , e, MessageIDs.E_DATABASE_GENERAL);
+                    Messages.ErrorInitializingComponentNamesLocking
+                            + StringConstants.EXCLAMATION_MARK,
+                    e, MessageIDs.E_DATABASE_GENERAL);
         } finally {
             Persistor.instance().dropSessionWithoutLockRelease(sess);
         }
