@@ -23,10 +23,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface SrcNode {
-    /** returns the UUID */
+    /** @return the UUID */
     String UUID();
-    /** returns the node type */
+    /** @return the node type */
     NodeType type();
-    /** returns the task ID */
+    /** @return the task ID */
     String taskId() default "";
 }
