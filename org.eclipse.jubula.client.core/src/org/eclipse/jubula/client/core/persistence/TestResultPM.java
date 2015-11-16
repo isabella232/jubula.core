@@ -167,17 +167,30 @@ public class TestResultPM {
     public static final void executeDeleteTestresultOfSummary(
             EntityManager session, Long resultId) {
         boolean isDeleteAll = resultId == null;
-        
+
         //delete parameter details of test results
         String paramQueryBaseString = 
             "delete from PARAMETER_DETAILS"; //$NON-NLS-1$
+        String queryExtension = " where FK_TESTRESULT in (select ID from TESTRESULT where INTERNAL_TESTRUN_ID = #summaryId)"; //$NON-NLS-1$
         if (isDeleteAll) {
             session.createNativeQuery(paramQueryBaseString).executeUpdate();
         } else {
             Query paramQuery = session.createNativeQuery(
-                    paramQueryBaseString + " where FK_TESTRESULT in (select ID from TESTRESULT where INTERNAL_TESTRUN_ID = #summaryId)"); //$NON-NLS-1$
+                    paramQueryBaseString + queryExtension);
             paramQuery.setParameter("summaryId", resultId); //$NON-NLS-1$
             paramQuery.executeUpdate();
+        }
+        
+        //delete additions of test results
+        String additionsQueryBaseString = 
+            "delete from TESTRESULT_ADDITIONS"; //$NON-NLS-1$
+        if (isDeleteAll) {
+            session.createNativeQuery(additionsQueryBaseString).executeUpdate();
+        } else {
+            Query commentQuery = session.createNativeQuery(
+                    additionsQueryBaseString + queryExtension);
+            commentQuery.setParameter("summaryId", resultId); //$NON-NLS-1$
+            commentQuery.executeUpdate();
         }
 
         //delete test result details
