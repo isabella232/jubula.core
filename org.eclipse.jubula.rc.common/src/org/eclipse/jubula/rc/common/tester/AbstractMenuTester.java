@@ -63,8 +63,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param enabled is the specified menu item enabled?
      */
-    public void verifyEnabled(String menuItem, String operator, boolean enabled)
-    {
+    public void verifyEnabled(String menuItem, String operator, 
+            boolean enabled) {
         verifyEnabled(MenuUtilBase.splitPath(menuItem), operator, enabled);
     }
 
@@ -148,8 +148,8 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param exists should the menu item exist?
      */
-    public void verifyExists(String[] menuItem, String operator, boolean exists)
-    {
+    public void verifyExists(String[] menuItem, String operator, 
+            boolean exists) {
         checkPathLength(menuItem.length);
         final IMenuItemComponent item = navigateToMenuItem(
                 getAndCheckMenu(), menuItem, operator);

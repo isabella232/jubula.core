@@ -133,6 +133,8 @@ public class BasicSearchResult implements ISearchResult {
      *
      * @author BREDEX GmbH
      * @created 07.12.2005
+     * 
+     * @param <DATATYPE> the data type
      */
     public static class SearchResultElement <DATATYPE> {
 
@@ -274,6 +276,8 @@ public class BasicSearchResult implements ISearchResult {
      *
      * @author BREDEX GmbH
      * @created Mar 10, 2009
+     * 
+     * @param <DATATYPE> the data type
      */
     public static interface ISearchResultElementAction <DATATYPE> {
         

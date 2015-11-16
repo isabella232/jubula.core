@@ -1053,6 +1053,9 @@ public class MessageIDs {
      * MessageMap for GUIdancer messages.
      * @author BREDEX GmbH
      * @created 10.05.2006
+     * 
+     * @param <K> the keys type
+     * @param <V> the values type
      */
     private static class MessageMap<K, V> extends HashMap {
 
