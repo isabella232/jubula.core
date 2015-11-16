@@ -312,16 +312,16 @@ public class TestResultTreeView extends ViewPart
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     refreshNode(resultNode);
-                    if (resultNode != null
-                        && (Plugin.getDefault().getPreferenceStore()
-                            .getBoolean(Constants.TRACKRESULTS_KEY) 
-                            || (resultNode.getNode() instanceof ITestSuitePO)))
-                    {
+                    if (resultNode != null && (Plugin.getDefault()
+                            .getPreferenceStore()
+                            .getBoolean(Constants.TRACKRESULTS_KEY)
+                            || (resultNode.getNode() 
+                                    instanceof ITestSuitePO))) {
                         getTreeViewer().reveal(resultNode);
                     }
                 }
             });
-        }    
+        }
     }
 
     /**
