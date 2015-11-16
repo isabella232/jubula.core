@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 public @interface TesterClass {
     
     /**
-     * returns the realized type of a component
+     * @return the realized type of a component
      */
     String testerClass();
 }

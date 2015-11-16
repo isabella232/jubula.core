@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 public @interface RealizedType {
     
     /**
-     * returns the realized type of a component
+     * @return the realized type of a component
      */
     String realizedType();
 }
