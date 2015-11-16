@@ -19,9 +19,6 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.rcp.i18n.messages"; //$NON-NLS-1$
 
-
-
-
     public static String AbstractGuiNodePropertySourceComment;
     public static String Action;
     public static String ActionBuilderExportAll;
@@ -369,7 +366,6 @@ public class Messages extends NLS {
     public static String InputDialogSelectJRE;
     public static String InternalGefError;
     public static String InternalRcpError;
-    public static String IsAlreadyInUseInDifferentEditor;
     public static String LoadDefaultProject;
     public static String LogicalNameErrorEmpty;
     public static String LogicalNameErrorExists;
@@ -512,7 +508,6 @@ public class Messages extends NLS {
     public static String Parameter;
     public static String ParameterValueMustBeAValidID;
     public static String ParameterValueMustBeOfType;
-    public static String PleaseSaveTheseEditorsFirst;
     public static String PluginCantOpenView;
     public static String PluginCTD;
     public static String PluginTC;
@@ -699,7 +694,7 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_matchParameterNames_newParameter;
     public static String ReplaceTCRWizard_matchParameterNames_oldParameter;
     public static String ReplaceTCRWizard_matchParameterNames_information;
-    public static String ReplaceTCRWizard_matchParameterNames_warningUnmatchedParams;
+    public static String ReplaceTCRWizard_matchParameterNames_warnUnmatchedParams;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameType;
     public static String ReplaceTCRWizard_matchParameterNames_warningNoSameTypeDesc;
     public static String ReplaceTCRWizard_matchParameterNames_hintNoMatchingNeeded;

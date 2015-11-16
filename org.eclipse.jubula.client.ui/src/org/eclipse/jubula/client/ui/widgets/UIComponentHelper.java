@@ -92,7 +92,7 @@ public abstract class UIComponentHelper {
     public static Text createTextField(Composite parent, int hSpan) {
         final Text textField = new Text(parent, SWT.BORDER);
         GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, 
-            true , false, hSpan, 1);
+            true, false, hSpan, 1);
         LayoutUtil.addToolTipAndMaxWidth(textGrid, textField); // FIXME al
         textField.setLayoutData(textGrid);
         return textField;
@@ -139,7 +139,7 @@ public abstract class UIComponentHelper {
     public static Button createToggleButton(Composite parent, int hSpan) {
         Button toggle = new Button(parent, SWT.CHECK);
         GridData labelGrid = new GridData(GridData.BEGINNING, GridData.CENTER, 
-            false , false, hSpan, 1);
+            false, false, hSpan, 1);
         toggle.setLayoutData(labelGrid);
         return toggle;
     }
@@ -160,7 +160,7 @@ public abstract class UIComponentHelper {
                 SWT.SINGLE | SWT.BORDER | SWT.READ_ONLY, comboObjects, 
                 comboDispObjects, nullSelectionIsAllowed, false);
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, 
-            true , false, hSpan, 1);
+            true, false, hSpan, 1);
         LayoutUtil.addToolTipAndMaxWidth(comboGrid, combo);
         combo.setLayoutData(comboGrid);
         return combo;

@@ -104,8 +104,8 @@ public class ParameterNamesMatchingWizardPage
                 m_oldNameCombos.add(null); // remember no matching with null
             } else {
                 String message = NLS.bind(Messages
-                    .ReplaceTCRWizard_matchParameterNames_warningUnmatchedParams
-                    , m_replaceExecTestCasesData.getOldSpecTestCase().getName()
+                    .ReplaceTCRWizard_matchParameterNames_warnUnmatchedParams,
+                    m_replaceExecTestCasesData.getOldSpecTestCase().getName()
                 );
                 int selectedIndex = 0;
                 if (oldNames.contains(paramDesc.getName())) {

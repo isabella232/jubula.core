@@ -331,7 +331,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         /** object was modified in master session */
          Renamed,
         /** object was added to master session */
-         Added ,
+         Added,
         /** object was deleted in master session */
          Deleted,
         /** structure of object was modified, including their data*/

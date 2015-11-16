@@ -446,7 +446,7 @@ public abstract class FindComponentBP {
      * @param name String
      * @return boolean
      */
-    private boolean isGeneratedName(String className , String name) {
+    private boolean isGeneratedName(String className, String name) {
         return (name.indexOf(className) != -1);
     }
     

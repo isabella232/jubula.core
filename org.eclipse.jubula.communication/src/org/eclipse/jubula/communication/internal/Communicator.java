@@ -484,7 +484,7 @@ public class Communicator {
             log.debug(se.getLocalizedMessage(), se);
             throw new CommunicationException(
                 "could not send message:" //$NON-NLS-1$
-                + se.getMessage(), se , MessageIDs.E_MESSAGE_NOT_SEND);
+                + se.getMessage(), se, MessageIDs.E_MESSAGE_NOT_SEND);
         } catch (IOException ioe) {
             log.debug(ioe.getLocalizedMessage(), ioe);
             throw new CommunicationException(

@@ -443,9 +443,9 @@ public class ComponentNamesBP
         String projVersQual) throws JBException {
         
         if (compNameParentProjGuid != null) {
-            IComponentNamePO compNamePo = loadCompNamePoImpl(compNameGuid, 
-                compNameParentProjGuid, projMajVers, projMinVers, 
-                projMicVers , projVersQual);
+            IComponentNamePO compNamePo = loadCompNamePoImpl(compNameGuid,
+                    compNameParentProjGuid, projMajVers, projMinVers,
+                    projMicVers, projVersQual);
             if (compNamePo != null) {
                 return compNamePo;
             }

@@ -80,7 +80,7 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
         
         Combo keyboardLayoutCombo = m_keyboardLayoutCombo.getCombo();
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, 
-            true , false, 2, 1);
+            true, false, 2, 1);
         LayoutUtil.addToolTipAndMaxWidth(comboGrid, keyboardLayoutCombo);
         keyboardLayoutCombo.setLayoutData(comboGrid);
         ((GridData)keyboardLayoutCombo.getLayoutData()).widthHint = 

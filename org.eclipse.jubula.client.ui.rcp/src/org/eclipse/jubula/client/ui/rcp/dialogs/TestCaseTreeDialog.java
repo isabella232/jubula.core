@@ -170,7 +170,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      */
     protected void createButtonsForButtonBar(Composite parent) {
         // Add-Button
-        m_addButton = createButton(parent, ADD , m_addButtonText , true);
+        m_addButton = createButton(parent, ADD, m_addButtonText, true);
         m_addButton.setEnabled(false);
         m_addButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {

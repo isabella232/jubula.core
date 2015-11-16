@@ -1420,7 +1420,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         LayoutUtil.setMaxChar(m_autJreTextField,
                 IPersistentObject.MAX_STRING_LENGTH);
         GridData comboGrid = new GridData(GridData.FILL, GridData.CENTER, 
-            true , false, 1, 1);
+            true, false, 1, 1);
         LayoutUtil.addToolTipAndMaxWidth(comboGrid, m_autJreTextField);
         m_autJreTextField.setLayoutData(comboGrid);
         ((GridData)m_autJreTextField.getLayoutData()).widthHint = 

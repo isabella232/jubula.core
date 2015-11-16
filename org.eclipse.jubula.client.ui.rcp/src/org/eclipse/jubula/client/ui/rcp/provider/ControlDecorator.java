@@ -134,7 +134,7 @@ public class ControlDecorator extends ControlDecoration {
     public static ControlDecorator addWarningDecorator(
             Control control, String message) {
         GridData grid = new GridData(GridData.BEGINNING, GridData.CENTER,
-                false , false, 1, 1);
+                false, false, 1, 1);
         //grid.horizontalIndent = 10;
         control.setLayoutData(grid);
         ControlDecorator warningDecoration = ControlDecorator.createWarning(

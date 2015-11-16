@@ -142,7 +142,7 @@ public interface ITableComponent<T> extends ITextComponent {
      * @throws StepExecutionException
      *             If getting the cell rectangle or the scrolling fails.
      */
-    public Rectangle scrollCellToVisible (int row , int col)
+    public Rectangle scrollCellToVisible (int row, int col)
         throws StepExecutionException;
 
     /**
