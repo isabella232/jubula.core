@@ -183,6 +183,9 @@ public class FigureCanvasUtil {
      * Helper class could be deleted and replaced with
      * <code>java.util.AbstractMap.SimpleEntry</code> when using java 1.6 and higher
      * FIXME
+     * 
+     * @param <K> the keys type
+     * @param <V> the values type
      */
     private static class SimpleEntry<K, V> implements Entry<K, V> {
         /** key */
