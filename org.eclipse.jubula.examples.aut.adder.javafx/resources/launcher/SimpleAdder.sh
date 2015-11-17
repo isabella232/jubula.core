@@ -10,4 +10,4 @@
 #*******************************************************************************
 #! /bin/sh
 
-../../../JREs/java8/bin/java -jar SimpleAdder.jar $1
+../../../../jre/bin/java -jar SimpleAdder.jar $1

@@ -31,8 +31,7 @@
 -Duser.language=en
 -Duser.country=US
 #VMARGS_2INSERT
--Xss1m
--XX:MaxPermSize=256m</vmArgs>
+-Xss1m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread 
 -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>

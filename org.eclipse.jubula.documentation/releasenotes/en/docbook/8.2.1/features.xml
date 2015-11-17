@@ -4,6 +4,17 @@
     <title>New Features and Developments</title>
 
     <para>
+        <emphasis role="strong">Jubula runs now on Java 8</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                We updated the bundled JRE which is included in every
+                Jubula installation to Java 1.8.0_66.
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
         <emphasis role="strong">ITE performance improvements</emphasis>
     </para>
     <itemizedlist>
