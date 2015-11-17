@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -37,6 +38,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
@@ -126,6 +128,16 @@ public class OpenProjectHandler extends AbstractProjectHandler {
 
                 } catch (ConfigXmlException ce) {
                     handleCapDataNotFound(ce);
+                }
+                try {
+                    List<ISpecTestCasePO> tcs =
+                            TestCaseBP.fixSpecsWithProjectAsParent();
+                    if (tcs == null || tcs.size() != 0) {
+                        ErrorHandlingUtil.createMessageDialog(
+                                MessageIDs.I_FOUND_SPECS_NO_PARENT);
+                    }
+                } catch (PMException e) {
+                    ErrorHandlingUtil.createMessageDialog(e);
                 }
                 ded.fireProjectLoadedListener(monitor);
                 // re-init the string helper in case of a toolkit change during

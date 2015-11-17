@@ -10,15 +10,20 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.db;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
@@ -183,5 +188,33 @@ public class TestCaseBP  extends NodeBP {
         }
         NodePM.addAndPersistChildNode(parent, specTC, pos);
         return specTC;
+    }
+    
+    /**
+     * this method is recovering missing {@link ISpecTestCasePO} and add them
+     * to {@link ISpecObjContPO#TCB_ROOT_NODE}
+     * see http://bugs.eclipse.org/455483
+     * @return a list of {@link ISpecTestCasePO} which where modified (might be empty)
+     * @throws ProjectDeletedException might occur when calling {@link NodePM#addAndPersistChildNode(INodePO, INodePO, Integer)}
+     * @throws PMException if some {@link PMException} occurs when adding nodes to the root node {@link NodePM#addAndPersistChildNode(INodePO, INodePO, Integer)}
+     */
+    public static List<ISpecTestCasePO> fixSpecsWithProjectAsParent()
+            throws PMException, ProjectDeletedException {
+        List<ISpecTestCasePO> specs = (List<ISpecTestCasePO>) NodeBP
+                .getAllNodesForGivenTypeInCurrentProject(
+                        NodeMaker.getSpecTestCasePOClass());
+        List<ISpecTestCasePO> specsWithProjectAsParent =
+                new ArrayList<ISpecTestCasePO>();
+        for (ISpecTestCasePO spec : specs) {
+            if (spec.getParentNode() == null || spec.getParentNode()
+                    .equals(GeneralStorage.getInstance().getProject())) {
+                specsWithProjectAsParent.add(spec);
+            }
+        }
+        for (ISpecTestCasePO projectAsParent : specsWithProjectAsParent) {
+            NodePM.addAndPersistChildNode(ISpecObjContPO.TCB_ROOT_NODE,
+                    projectAsParent, 0);
+        }
+        return specsWithProjectAsParent;
     }
 }

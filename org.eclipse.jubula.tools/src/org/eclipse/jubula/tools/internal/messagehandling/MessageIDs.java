@@ -625,6 +625,8 @@ public class MessageIDs {
     /** if not all tracked changes could be deleted and the failures are too many to display*/
     public static final Integer I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES_MANY = 
             new Integer(136);
+    /** if specs are found which have no parent */
+    public static final Integer I_FOUND_SPECS_NO_PARENT = new Integer(137);
     
     // ---------------------------------------------------------------------
     /** key = message id, message object */
@@ -1019,6 +1021,7 @@ public class MessageIDs {
         messageMap.put(I_ENOUGH_EVENT_HANDLER, i, "InfoMessage.ENOUGH_EVENT_HANDLER", null); //$NON-NLS-1$
         messageMap.put(I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES, i, "InfoMessage.COULD_NOT_DELETE_ALL_TRACKED_CHANGES", null); //$NON-NLS-1$
         messageMap.put(I_COULD_NOT_DELETE_ALL_TRACKED_CHANGES_MANY, i, "InfoMessage.COULD_NOT_DELETE_ALL_TRACKED_CHANGES_MANY", null); //$NON-NLS-1$
+        messageMap.put(I_FOUND_SPECS_NO_PARENT, i, "InfoMessage.FOUND_SPECS_WITH_NO_PARENT", null); //$NON-NLS-1$
     }
     
     /**
