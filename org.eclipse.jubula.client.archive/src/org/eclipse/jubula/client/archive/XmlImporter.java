@@ -1065,8 +1065,9 @@ class XmlImporter {
                 proj = NodeMaker.createProjectPO(
                         IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
                         minorProjVersion, microProjVersion, postFixProjVersion);
+                m_oldToNewGuids.put(xml.getGUID(), proj.getGuid());
             }
-            ProjectNameBP.getInstance().setName(xml.getGUID(), xml.getName(),
+            ProjectNameBP.getInstance().setName(proj.getGuid(), xml.getName(),
                     false);
         } else {
             proj = NodeMaker.createProjectPO(xml.getName(), IVersion
