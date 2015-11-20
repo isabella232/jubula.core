@@ -11,7 +11,6 @@
 package org.eclipse.jubula.rc.common;
 
 import java.net.URLClassLoader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -145,7 +144,7 @@ public class AUTServerConfiguration {
     /**
      * the complete list of supported components, what actions are supported etc.
      */
-    private List<ConcreteComponent> m_components;
+    private Set<ConcreteComponent> m_components;
 
     /**
      * the set of actually supported component class names
@@ -159,7 +158,7 @@ public class AUTServerConfiguration {
     private AUTServerConfiguration() {
         m_implClassNames = new HashMap<String, String>();
         m_implClassCache = new HashMap();
-        m_components = new ArrayList<ConcreteComponent>();
+        m_components = new HashSet<ConcreteComponent>();
     }
     
     /**
@@ -405,7 +404,7 @@ public class AUTServerConfiguration {
     /**
      * @return Returns the components.
      */
-    public List<ConcreteComponent> getComponents() {
+    public Set<ConcreteComponent> getComponents() {
         return m_components;
     }
     /**
@@ -433,7 +432,7 @@ public class AUTServerConfiguration {
      */
     public Component findComponent(String typeName) {
         Validate.notNull(typeName);
-        List<ConcreteComponent> list = getComponents();
+        Set<ConcreteComponent> list = getComponents();
         for (ConcreteComponent cc : list) {
             if (cc.getComponentClass() != null
                 && cc.getComponentClass().getName().equals(typeName)) {
@@ -454,7 +453,7 @@ public class AUTServerConfiguration {
      */
     public List<ConcreteComponent> findComponents(String typeName) {
         Validate.notNull(typeName);
-        List<ConcreteComponent> list = getComponents();
+        Set<ConcreteComponent> list = getComponents();
 
         List<ConcreteComponent> comps = new LinkedList<ConcreteComponent>();
         for (ConcreteComponent cc : list) {
@@ -707,7 +706,7 @@ public class AUTServerConfiguration {
             return m_supportedComponentTypes;
         }
         m_supportedComponentTypes = new HashSet<ComponentClass>();
-        List<ConcreteComponent> supportedComponents = AUTServerConfiguration
+        Set<ConcreteComponent> supportedComponents = AUTServerConfiguration
                 .getInstance().getComponents();
         Iterator<ConcreteComponent> iterator = supportedComponents.iterator();
         while (iterator.hasNext()) {
