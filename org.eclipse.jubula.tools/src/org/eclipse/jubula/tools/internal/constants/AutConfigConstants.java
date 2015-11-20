@@ -79,6 +79,8 @@ public class AutConfigConstants {
     public static final String BROWSER_PATH = "BROWSER_PATH"; //$NON-NLS-1$
     /** the mode in which the AUT starts**/
     public static final String SINGLE_WINDOW_MODE = "SINGLE_WINDOW_MODE"; //$NON-NLS-1$
+    /** whether selenium uses webdrivers **/
+    public static final String WEBDRIVER_MODE = "WEBDRIVER_MODE"; //$NON-NLS-1$
     /** The URL of the AUT */
     public static final String AUT_URL = "AUT_ARGUMENTS"; //$NON-NLS-1$
     /** The key to set the automatically naming of technical components */
@@ -87,6 +89,8 @@ public class AutConfigConstants {
     public static final String KEYBOARD_LAYOUT = "KEYBOARD_LAYOUT"; //$NON-NLS-1$
     /** The key for allowing class file id collision*/
     public static final String ALLOW_CLASS_FILE_ID_COLLISION = "CLASS_FILE_ID_COLLISION"; //$NON-NLS-1$
+    /** the size of the browser for the AUT */
+    public static final String BROWSER_SIZE = "BROWSER_SIZE"; //$NON-NLS-1$
     
     /** to prevent instantiation */
     private AutConfigConstants() {

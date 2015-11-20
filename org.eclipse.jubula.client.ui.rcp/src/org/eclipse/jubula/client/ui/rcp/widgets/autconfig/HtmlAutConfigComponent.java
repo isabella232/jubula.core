@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.toolkit.html.Browser;
+import org.eclipse.jubula.toolkit.html.BrowserSize;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
@@ -54,10 +55,14 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     private Button m_browserPathButton;
     /** gui checkbox for the singeWindowMode */
     private Button m_singleWindowCheckBox;
+    /** gui checkbox for the using webdriver */
+    private Button m_webdriverCheckBox;
     /** gui component */
     private I18nEnumCombo<Browser> m_browserCombo;
     /** gui component */
     private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
+    /** gui component */
+    private I18nEnumCombo<BrowserSize> m_browserSizeCombo;
     /** the WidgetModifyListener */
     private WidgetModifyListener m_modifyListener;
     /** the the WidgetSelectionListener */
@@ -110,8 +115,20 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         
         createBrowserPathEditor(advancedAreaComposite);
         
+        createWebdriverCheckBox(advancedAreaComposite);
+        
         createSingleModeCheckBox(advancedAreaComposite);
 
+        // browser window size
+        Label browserSizeLabel = UIComponentHelper.createLabel(
+                advancedAreaComposite, "WebAutConfigComponent.BrowserSize"); //$NON-NLS-1$
+        browserSizeLabel.setData(SwtToolkitConstants.WIDGET_NAME,
+                "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserSizeLabel"); //$NON-NLS-1$
+        m_browserSizeCombo = UIComponentHelper.createEnumCombo(
+                advancedAreaComposite, 2, "WebAutConfigComponent.BrowserSize", //$NON-NLS-1$
+                BrowserSize.class);
+        m_browserSizeCombo.setData(SwtToolkitConstants.WIDGET_NAME,
+                "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserSizeCombo"); //$NON-NLS-1$
     }
     
     /**
@@ -182,6 +199,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_browserCombo.addSelectionListener(selectionListener);
         m_activationMethodCombo.addSelectionListener(selectionListener);
         m_singleWindowCheckBox.addSelectionListener(selectionListener);
+        m_webdriverCheckBox.addSelectionListener(selectionListener);
+        m_browserSizeCombo.addSelectionListener(selectionListener);
     }
     
     /**
@@ -201,6 +220,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_browserCombo.removeSelectionListener(selectionListener);
         m_activationMethodCombo.removeSelectionListener(selectionListener);
         m_singleWindowCheckBox.removeSelectionListener(selectionListener);
+        m_webdriverCheckBox.removeSelectionListener(selectionListener);
+        m_browserSizeCombo.removeSelectionListener(selectionListener);
     }
     
     /**
@@ -221,6 +242,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
             
             if (source.equals(m_activationMethodCombo)) {
                 checked = true;
+            } else if (source.equals(m_browserSizeCombo)) {
+                checked = true;
             } else if (source.equals(m_browserCombo)) {
                 internetExplorerSelected();
                 checked = true;
@@ -240,9 +263,11 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                         m_browserTextField.setText(browserFile);
                     }
                 }
-
                 return;
             } else if (source.equals(m_singleWindowCheckBox)) {
+                checked = true;
+            } else if (source.equals(m_webdriverCheckBox)) {
+                handleWebdriverDependentEnablement();
                 checked = true;
             }
             if (checked) {
@@ -251,11 +276,25 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
             }
             Assert.notReached("Event activated by unknown widget(" + source + ")."); //$NON-NLS-1$ //$NON-NLS-2$    
         }
+        
         /**
          * {@inheritDoc}
          */
         public void widgetDefaultSelected(SelectionEvent e) {
             // Do nothing
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void handleWebdriverDependentEnablement() {
+        if (m_webdriverCheckBox.getSelection()) {
+            m_browserSizeCombo.setEnabled(true);
+            m_singleWindowCheckBox.setEnabled(false);
+        } else {
+            m_browserSizeCombo.setEnabled(false);
+            m_singleWindowCheckBox.setEnabled(true);
         }
     }
     
@@ -280,8 +319,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         boolean browseEnabled = enable || isRemoteRequest();
         boolean isIE = m_browserCombo.getSelectedObject().equals(
                 Browser.InternetExplorer);
-        m_browserTextField.setEnabled(!isIE);
-        m_browserPathButton.setEnabled(!isIE && browseEnabled);
+        m_browserPathButton.setEnabled(browseEnabled);
         return isIE;
     }
     
@@ -297,6 +335,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_browserCombo.setEnabled(true);
         m_browserPathButton.setEnabled(true);
         m_browserTextField.setEnabled(true);
+        handleWebdriverDependentEnablement();
         checkLocalhostServer();
         internetExplorerSelected();
         RemoteFileBrowserBP.clearCache(); // avoid all caches
@@ -347,16 +386,6 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         putConfigValue(AutConfigConstants.ACTIVATION_METHOD,
                 ActivationMethod.getRCString(m_activationMethodCombo
                         .getSelectedObject()));
-        return true;
-    }
-    
-    /** 
-     * The action of the browser combo
-     * @return true
-     */
-    boolean handleBrowserComboEvent() {
-        putConfigValue(AutConfigConstants.BROWSER, m_browserCombo
-            .getSelectedObject().toString());
         return true;
     }
 
@@ -425,6 +454,22 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     }
 
     /**
+     * @return <code>null</code> if the new value is valid. Otherwise, returns a
+     *         status parameter indicating the cause of the problem.
+     */
+    DialogStatusParameter modifyBrowserSize() {
+        final BrowserSize browserSize = m_browserSizeCombo.getSelectedObject();
+        if (browserSize == null || BrowserSize.FULLSCREEN == browserSize) {
+            putConfigValue(AutConfigConstants.BROWSER_SIZE,
+                    BrowserSize.FULLSCREEN.toString());
+        } else {
+            putConfigValue(AutConfigConstants.BROWSER_SIZE,
+                    browserSize.toString());
+        }
+        return null;
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected void populateBasicArea(Map<String, String> data) {
@@ -450,6 +495,14 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         if (!isDataNew(data)) {
             m_browserTextField.setText(StringUtils.defaultString(data
                     .get(AutConfigConstants.BROWSER_PATH)));
+
+            String browserSize = data.get(AutConfigConstants.BROWSER_SIZE);
+            if (StringUtils.isEmpty(browserSize)) {
+                m_browserSizeCombo.setSelectedObject(BrowserSize.FULLSCREEN);
+            } else {
+                m_browserSizeCombo.setSelectedObject(BrowserSize
+                        .valueOf(browserSize));
+            }
             String selection = data.get(AutConfigConstants.SINGLE_WINDOW_MODE);
             boolean selected = false;
             if (StringUtils.isEmpty(selection)) {
@@ -458,6 +511,15 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                 selected = Boolean.parseBoolean(selection);
             }
             m_singleWindowCheckBox.setSelection(selected);
+            String webdriverSelection = data.get(
+                    AutConfigConstants.WEBDRIVER_MODE);
+            boolean webdriverSelected = false;
+            if (StringUtils.isEmpty(webdriverSelection)) {
+                webdriverSelected = false;
+            } else {
+                webdriverSelected = Boolean.parseBoolean(webdriverSelection);
+            }
+            m_webdriverCheckBox.setSelection(webdriverSelected);
         } else {
             m_singleWindowCheckBox.setSelection(true);
         }
@@ -518,9 +580,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         addError(paramList, modifyBrowser());
         addError(paramList, modifyBrowserPathTextField());
         addError(paramList, modifySingleWindowCheckBox());
-
+        addError(paramList, modifyWebdriverCheckBox());
+        addError(paramList, modifyBrowserSize());
         handleActivationComboEvent();
-        //handleBrowserComboEvent();
     }
     
     /**
@@ -531,6 +593,19 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         DialogStatusParameter error = null;
         Boolean checked = m_singleWindowCheckBox.getSelection();
         putConfigValue(AutConfigConstants.SINGLE_WINDOW_MODE,
+                checked.toString());
+        
+        return error;
+    }
+    
+    /**
+     * @return <code>null</code> if the new value is valid. Otherwise, returns
+     *         a status parameter indicating the cause of the problem.
+     */
+    DialogStatusParameter modifyWebdriverCheckBox() {
+        DialogStatusParameter error = null;
+        Boolean checked = m_webdriverCheckBox.getSelection();
+        putConfigValue(AutConfigConstants.WEBDRIVER_MODE,
                 checked.toString());
         
         return error;
@@ -546,9 +621,26 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         ControlDecorator.decorateInfo(singleWindowModeLabel,  
                 "ControlDecorator.SingleWindowMode", false); //$NON-NLS-1$
         m_singleWindowCheckBox = UIComponentHelper
-                .createToggleButton(parent, 1);
+                .createToggleButton(parent, 2);
         m_singleWindowCheckBox.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.SingleWindowCheckBox"); //$NON-NLS-1$ 
         
+    }
+
+    /**
+     * Creates checkbox determining whether webdriver should be used
+     * @param parent The parent Composite.
+     */
+    protected void createWebdriverCheckBox(Composite parent) {
+        Label useWebdriverLabel = UIComponentHelper.createLabel(parent,
+                "WebAutConfigComponent.webdriverMode"); //$NON-NLS-1$ 
+        useWebdriverLabel.setData(SwtToolkitConstants.WIDGET_NAME,
+                "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.WebdriverLabel"); //$NON-NLS-1$
+        ControlDecorator.decorateInfo(useWebdriverLabel,  
+                "ControlDecorator.WebdriverMode", false); //$NON-NLS-1$
+        m_webdriverCheckBox = UIComponentHelper
+                .createToggleButton(parent, 2);
+        m_webdriverCheckBox.setData(SwtToolkitConstants.WIDGET_NAME,
+                "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.WebdriverCheckBox"); //$NON-NLS-1$ 
     }
     
 }

@@ -494,8 +494,9 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
             pathBuilder.append(entry).append(PATH_SEPARATOR);
         }
         
-        return pathBuilder.substring(
-                0, pathBuilder.lastIndexOf(PATH_SEPARATOR));
+        return pathBuilder.length() == 0 ? "" //$NON-NLS-1$
+                : pathBuilder.substring(0,
+                        pathBuilder.lastIndexOf(PATH_SEPARATOR));
     }
  
     /**

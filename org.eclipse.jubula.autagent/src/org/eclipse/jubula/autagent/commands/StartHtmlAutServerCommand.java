@@ -14,9 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,6 +32,10 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
      * <code>DEFAULT_AUT_ID_ATTRIBUTE_NAME</code>
      */
     private static final String DEFAULT_AUT_ID_ATTRIBUTE_NAME = "id"; //$NON-NLS-1$
+   
+    /** the logger */
+    private static Logger log = 
+        LoggerFactory.getLogger(StartHtmlAutServerCommand.class);
 
     /** 
      * mapping from browser type (String) to corresponding 
@@ -49,23 +57,31 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
     protected String[] createCmdArray(String baseCmd, Map parameters) {
         Vector<String> commands = new Vector<String>();
         commands.add(baseCmd);
-
         addDebugParams(commands, false);
         
+        Object webdriverMode = parameters.get(
+                AutConfigConstants.WEBDRIVER_MODE);
+        Boolean useWebdriver = (String.valueOf(webdriverMode)
+                .equals(Boolean.TRUE.toString()));
         StringBuilder serverClasspath = new StringBuilder();
-        String [] bundlesToAddToClasspath = getBundlesForClasspath();
+        String [] bundlesToAddToClasspath = getBundlesForClasspath(
+                useWebdriver);
             
         for (String bundleId : bundlesToAddToClasspath) {
-            serverClasspath.append(
-                    AbstractStartToolkitAut.getClasspathForBundleId(bundleId));
-            serverClasspath.append(PATH_SEPARATOR);
+            String classpathForBundleId = AbstractStartToolkitAut
+                    .getClasspathForBundleId(bundleId);
+            if (!StringUtils.isEmpty(classpathForBundleId)) {
+                serverClasspath.append(classpathForBundleId);
+                serverClasspath.append(PATH_SEPARATOR);
+            } else {
+                log.warn("Bundle not found: " + bundleId);  //$NON-NLS-1$
+            }
         }
         
         commands.add("-classpath"); //$NON-NLS-1$
         commands.add(serverClasspath.toString());
 
         commands.add("com.bredexsw.jubula.rc.html.WebAUTServer"); //$NON-NLS-1$
-        
         // connection parameters
         commands.add(String.valueOf(
                 AutStarter.getInstance().getAutCommunicator().getLocalPort()));
@@ -73,10 +89,15 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
                 parameters.get(AutConfigConstants.AUT_ARGUMENTS)));
         commands.add(getBrowserString(
                 parameters.get(AutConfigConstants.BROWSER_PATH), 
-                parameters.get(AutConfigConstants.BROWSER)));
-
-        // place holder
-        commands.add("AUT"); //$NON-NLS-1$
+                parameters.get(AutConfigConstants.BROWSER),
+                useWebdriver));
+        if (useWebdriver) {            
+            commands.add(String.valueOf(
+                    parameters.get(AutConfigConstants.BROWSER_SIZE)));
+        } else {
+            // place holder
+            commands.add("AUT"); //$NON-NLS-1$
+        }
         
         // registration parameters
         commands.add(String.valueOf(
@@ -93,25 +114,29 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
         } else {
             commands.add(DEFAULT_AUT_ID_ATTRIBUTE_NAME);
         }
-        
-        Object singleWindowMode = 
-                parameters.get(AutConfigConstants.SINGLE_WINDOW_MODE);
-        if (singleWindowMode != null) {
-            commands.add(String.valueOf(singleWindowMode));
-        } else {
-            commands.add(String.valueOf(true));
+        if (!useWebdriver) {
+            Object singleWindowMode =
+                    parameters.get(AutConfigConstants.SINGLE_WINDOW_MODE);
+            if (singleWindowMode != null) {
+                commands.add(String.valueOf(singleWindowMode));
+            } else {
+                commands.add(String.valueOf(true));
+            }
         }
-
-
-
         return commands.toArray(new String[commands.size()]);
     }
 
     /**
+     * @param useWebdriver whether to use webdriver
      * @return the bundles to add to the classpath
      */
-    protected String[] getBundlesForClasspath() {
+    protected String[] getBundlesForClasspath(boolean useWebdriver) {
+        String rcHtmlDriverBundleId = useWebdriver
+                ? CommandConstants.RC_HTML_WEBDRIVER_BUNDLE_ID
+                : CommandConstants.RC_HTML_SELENIUM2_BUNDLE_ID;
         return new String[] { CommandConstants.RC_HTML_BUNDLE_ID,
+                              rcHtmlDriverBundleId,
+                              CommandConstants.TOOLKIT_HTML_BUNDLE_ID,
                               CommandConstants.TOOLS_BUNDLE_ID,
                               CommandConstants.COMMUNICATION_BUNDLE_ID,
                               CommandConstants.RC_COMMON_BUNDLE_ID,
@@ -135,24 +160,36 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
      *                    browser type should be used.
      * @param browserType The browser type to start 
      *                    (ex. Firefox, Internet Explorer, Safari).
+     * @param useWebdriver
+     *                    Whether to use Webdriver for test execution
      * @return the command to use when starting Selenium in order to start the
      *         desired browser from the desired path.
      */
-    private String getBrowserString(Object browserPath, Object browserType) {
+    private String getBrowserString(Object browserPath, Object browserType,
+            boolean useWebdriver) {
         String browserString;
         
-        Object browser = BROWSER_TO_CMD_MAP.get(browserType);
-        if (browser == null) {
-            throw new IllegalArgumentException(
-                    "Unsupported browser type: " + browserType); //$NON-NLS-1$
+        if (useWebdriver) {            
+            if (browserType == null) {
+                throw new IllegalArgumentException(
+                        "Unsupported browser type: " + browserType); //$NON-NLS-1$
+            }
+            browserString = String.valueOf(browserType);
+        } else {
+            Object browser = BROWSER_TO_CMD_MAP.get(browserType);
+            if (browser == null) {
+                throw new IllegalArgumentException(
+                        "Unsupported browser type: " + browserType); //$NON-NLS-1$
+            }
+            browserString = String.valueOf(browser);
+
         }
-        browserString = String.valueOf(browser);
 
         if (browserPath != null) {
             browserString += " " + String.valueOf(browserPath); //$NON-NLS-1$
         }
               
-        return browserString;
+        return StringConstants.QUOTE + browserString + StringConstants.QUOTE;
     }
 
 

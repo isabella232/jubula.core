@@ -33,10 +33,10 @@ public abstract class AbstractStartPseudoJavaAUT
             if (exe.isFile() && exe.exists()) {
                 return exe.getCanonicalPath();
             }
-            String errorMsg = jre + " does not point to a valid executable."; //$NON-NLS-1$
-            LOG.error(errorMsg);
-            throw new FileNotFoundException(errorMsg);
         }
-        return jre;
+        
+        String errorMsg = jre + " does not point to a valid executable."; //$NON-NLS-1$
+        LOG.error(errorMsg);
+        throw new FileNotFoundException(errorMsg);
     }
 }

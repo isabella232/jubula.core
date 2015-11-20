@@ -94,6 +94,10 @@ public abstract class CommandConstants {
     public static final String RC_RCP_BUNDLE_ID = "org.eclipse.jubula.rc.rcp.swt"; //$NON-NLS-1$
     /** ID of the HTML RC bundle */
     public static final String RC_HTML_BUNDLE_ID = "com.bredexsw.jubula.rc.html"; //$NON-NLS-1$
+    /** ID of the HTML RC Selenium2 bundle */
+    public static final String RC_HTML_SELENIUM2_BUNDLE_ID = "com.bredexsw.jubula.rc.html.selenium2"; //$NON-NLS-1$
+    /** ID of the HTML RC WebDriver bundle */
+    public static final String RC_HTML_WEBDRIVER_BUNDLE_ID = "com.bredexsw.jubula.rc.html.webdriver"; //$NON-NLS-1$
     /** ID of the Win RC bundle */
     public static final String RC_WIN_BUNDLE_ID = "com.bredexsw.guidancer.rc.win"; //$NON-NLS-1$
     /** ID of the Win native RC bundle */
@@ -259,6 +263,8 @@ public abstract class CommandConstants {
     public static final String AUT_ERRORS_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTErrorsCommand"; //$NON-NLS-1$
     /** command which sets the profile of the AUT Server **/
     public static final String SET_PROFILE_COMMAND = "org.eclipse.jubula.rc.common.commands.SetProfileCommand"; //$NON-NLS-1$
+    /** ID of the Toolkit HTML bundle */
+    public static final String TOOLKIT_HTML_BUNDLE_ID = "org.eclipse.jubula.toolkit.html"; //$NON-NLS-1$
    
     /** to prevent instantiation */
     private CommandConstants() {
