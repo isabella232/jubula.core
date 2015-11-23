@@ -64,12 +64,15 @@
   </setupTask>
   <setupTask
       xsi:type="setup:PreferenceTask"
-      key="org.eclipse.core.resources/refresh.enabled"
+      key="/instance/org.eclipse.core.resources/refresh.enabled"
       value="true"/>
   <setupTask
       xsi:type="setup:PreferenceTask"
-      key="org.eclipse.pde.api.tools/missing_default_api_profile"
-      value="Warning"/>
+      id=""
+      key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile"
+      value="Warning">
+    <description>Warn for missing &quot;Plug-in Development/API Baselines&quot;</description>
+  </setupTask>
   <setupTask
       xsi:type="git:GitCloneTask"
       id="git.clone"
