@@ -29,12 +29,16 @@ import javax.persistence.EntityTransaction;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jubula.client.archive.JsonStorage;
 import org.eclipse.jubula.client.archive.XmlStorage;
 import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.errorhandling.NullProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.i18n.Messages;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
@@ -96,6 +100,12 @@ import org.slf4j.LoggerFactory;
  * @created Jun 4, 2010
  */
 public class FileStorageBP {
+    
+    /** Extension of XML */
+    public static final String XML = ".xml"; //$NON-NLS-1$
+    
+    /** Extension of JUB. It is an zip file which contain a project and a test result json file*/
+    public static final String JUB = ".jub"; //$NON-NLS-1$
 
     /**
      * Reads XML files and parses them into related domain objects.
@@ -158,9 +168,8 @@ public class FileStorageBP {
                 // Nothing to import. Just return.
                 return;
             }
-            SubMonitor subMonitor = SubMonitor.convert(
-                    monitor, Messages.ImportFileBPReading,
-                    m_fileURLs.size());
+            SubMonitor subMonitor = SubMonitor.convert(monitor, Messages
+                    .ImportFileBPReading, m_fileURLs.size());
             String lastFileName = StringConstants.EMPTY;
             try {
                 showStartingImport(m_console);
@@ -172,14 +181,28 @@ public class FileStorageBP {
                         new ComponentNamesDecorator(null);
                     String fileName = fileURL.getFile();
                     lastFileName = fileName;
-                    m_console.writeLine(NLS.bind(Messages
+                    m_console.writeStatus(new Status(IStatus.INFO,
+                            Activator.PLUGIN_ID, NLS.bind(Messages
                                     .ImportFileActionInfoStartingReadingProject,
-                                    fileName));
+                                    fileName)));
                     try {
-                        IProjectPO proj = new XmlStorage().readProject(
-                            fileURL, paramNameMapper, compNameCache, 
-                            !m_isImportWholeProjects, subMonitor.newChild(1),
-                            m_console);
+                        IProjectPO proj = null;
+                        String fileExt = fileName.substring(
+                                fileName.lastIndexOf(StringConstants.DOT),
+                                fileName.length());
+                        if (fileExt.equals(XML)) {
+                            proj = new XmlStorage().readProject(
+                                    fileURL, paramNameMapper, compNameCache, 
+                                    subMonitor.newChild(1), m_console);
+                        } else if (fileExt.equals(JUB)) {
+                            proj = new JsonStorage().readProject(
+                                    fileURL, paramNameMapper, compNameCache,
+                                    !m_isImportWholeProjects, true,
+                                    subMonitor.newChild(1), m_console);
+                        }
+                        if (proj == null) {
+                            throw new InterruptedException();
+                        }
                         List<INameMapper> mapperList = 
                             new ArrayList<INameMapper>();
                         List<IWritableComponentNameMapper> compNameMapperList = 
@@ -191,19 +214,22 @@ public class FileStorageBP {
                         m_projectToCompMapperMap.put(proj, compNameMapperList);
                     } catch (JBVersionException e) {
                         for (Object msg : e.getErrorMsgs()) {
-                            m_console.writeErrorLine((String)msg);
+                            m_console.writeStatus(new Status(IStatus.ERROR,
+                                    Activator.PLUGIN_ID, (String)msg));
                         }
-                        m_console.writeErrorLine(NLS.bind(
-                                Messages.ImportFileActionErrorImportFailed,
-                                fileName));
+                        m_console.writeStatus(new Status(IStatus.ERROR,
+                                Activator.PLUGIN_ID, NLS.bind(Messages.
+                                        ImportFileActionErrorImportFailed,
+                                        fileName)));
                     }
                 }
                 showFinishedReadingProjects(m_console);
             } catch (final PMReadException e) {
-                m_console.writeErrorLine(NLS.bind(
-                        Messages.ImportFileActionErrorImportFailedProject,
-                        lastFileName, StringConstants.TAB
-                                + Messages.InvalidImportFile));
+                m_console.writeStatus(new Status(IStatus.ERROR,
+                        Activator.PLUGIN_ID, NLS.bind(Messages
+                                .ImportFileActionErrorImportFailedProject,
+                                lastFileName, StringConstants.TAB
+                                        + Messages.InvalidImportFile)));
                 handlePMReadException(e, m_fileURLs);
             } catch (final ConfigXmlException ce) {
                 handleCapDataNotFound(ce);
@@ -514,10 +540,11 @@ public class FileStorageBP {
                         || m_isRefreshRequired;
                 }
     
+                monitor.beginTask(StringConstants.EMPTY, getTotalWork(proj));
+                monitor.subTask(Messages.ImportFileBPSaveToDB);
                 // Register Persistence (JPA / EclipseLink) progress listeners
                 ProgressMonitorTracker.getInstance().setProgressMonitor(
                         monitor);
-                monitor.beginTask(StringConstants.EMPTY, getTotalWork(proj));
                 List<INameMapper> mapperList = m_projectToMapperMap.get(proj);
                 List<IWritableComponentNameMapper> compNameBindingList = 
                     m_projectToCompCacheMap.get(proj);
@@ -1358,7 +1385,7 @@ public class FileStorageBP {
     private static final int NUM_HBM_PROGRESS_EVENT_TYPES = 4;
     
     /** the amount of work required to read and parse xml files into related domain objects */
-    private static final int PARSE_FILES_WORK = 15;
+    private static final int PARSE_FILES_WORK = 95;
     
     /** the amount of work required to save and commit domain objects to the db */
     private static final int SAVE_TO_DB_WORK = 
@@ -1409,7 +1436,7 @@ public class FileStorageBP {
             IProjectPO projectToExport = 
                 ProjectPM.loadProjectByIdAndPreLoad(
                     proj.getId(), exportSession);
-            String projectFileName = projectToExport.getDisplayName() + ".xml"; //$NON-NLS-1$
+            String projectFileName = projectToExport.getDisplayName() + JUB;
             final String exportFileName;
             
             if (writeToSystemTempDir) {
@@ -1429,32 +1456,33 @@ public class FileStorageBP {
             if (subMonitor.isCanceled()) {
                 throw new InterruptedException();
             }
-            console.writeLine(
+            console.writeStatus(new Status(IStatus.INFO, Activator.PLUGIN_ID,
                     NLS.bind(Messages.ExportAllBPInfoStartingExportProject, 
-                            new Object [] {projectFileName}));
+                            new Object [] {projectFileName})));
             try {
                 if (subMonitor.isCanceled()) {
                     throw new InterruptedException();
                 }
-                XmlStorage.save(
-                    projectToExport, exportFileName, true,
-                    subMonitor.newChild(
-                        XmlStorage.getWorkToSave(projectToExport)),
-                    writeToSystemTempDir, listOfProjectFiles);
+
+                JsonStorage.save(projectToExport, exportFileName,
+                        true, subMonitor.newChild(1), console);
                 
                 if (subMonitor.isCanceled()) {
                     throw new InterruptedException();
                 }                
 
-                console.writeLine(
-                        NLS.bind(Messages.ExportAllBPInfoFinishedExportProject,
-                                new Object [] {projectFileName}));
+                console.writeStatus(new Status(IStatus.INFO,
+                        Activator.PLUGIN_ID,
+                        NLS.bind(Messages.ExportAllBPInfoFinishedExportProject, 
+                                projectFileName)));
                 
             } catch (final PMSaveException e) {
                 LOG.error(Messages.CouldNotExportProject, e);
-                console.writeErrorLine(
+                console.writeStatus(new Status(IStatus.INFO,
+                        Activator.PLUGIN_ID,
                         NLS.bind(Messages.ExportAllBPErrorExportFailedProject,
-                              new Object [] {projectFileName, e.getMessage()}));
+                                new Object [] {projectFileName,
+                                        e.getMessage()})));
             }
             exportSession.detach(projectToExport);
         }
@@ -1540,8 +1568,7 @@ public class FileStorageBP {
         // Read project files
         ReadFilesOperation readFilesOp = 
             new ReadFilesOperation(elements == 0, fileURLs, console);
-        readFilesOp.run(subMonitor.newChild(
-                PARSE_FILES_WORK));
+        readFilesOp.run(subMonitor.newChild(PARSE_FILES_WORK));
 
         // Import projects
         ImportOperation importOp = new ImportOperation(

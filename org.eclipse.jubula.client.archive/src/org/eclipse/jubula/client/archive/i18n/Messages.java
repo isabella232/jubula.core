@@ -21,6 +21,7 @@ public class Messages extends NLS {
     
     public static String Action;
     public static String CantCloseOOS;
+    public static String CantDeleteFile;
     public static String ClassSerializedCouldntFound;
     public static String Component;
     public static String CouldNotExportProject;
@@ -38,6 +39,7 @@ public class Messages extends NLS {
     public static String ExportAllBPInfoFinishedExportProject;
     public static String ExportAllBPInfoStartingExportProject;
     public static String ExportOperationCanceled;
+    public static String ExportProjectInfo;
     public static String Failed;
     public static String File;
     public static String GeneralIoExeption;
@@ -61,15 +63,25 @@ public class Messages extends NLS {
     public static String ImportFileActionProjTitle;
     public static String ImportFileBPImporting;
     public static String ImportFileBPReading;
+    public static String ImportFileBPSaveToDB;
     public static String ImportFileBPWaitWhileImporting;
     public static String ImportFileComboActionProjMessage;
     public static String ImportFileSingleActionProjMessage;
+    
+    public static String ImportJsonImportReqCheck;
+    public static String ImportJsonImportResult;
+    public static String ImportJsonImportProjectInit;
+    public static String ImportJsonImportProjectLoad;
+    public static String ImportJsonStorageCompress;
+    public static String ImportJsonStoragePreparing;
+    
     public static String ImportOf;
     public static String ImportOfDefaultLanguage;
     public static String ImportWithoutName;
     public static String ImportUnboundModulesJob;
     public static String IncompatibleToolkitVersion;
     public static String InvalidImportFile;
+    public static String JubImporterProjectJUBTooOld;
     public static String MalformedXMLData;
     public static String NoSupportedFileEncoding;
     public static String NotFound;

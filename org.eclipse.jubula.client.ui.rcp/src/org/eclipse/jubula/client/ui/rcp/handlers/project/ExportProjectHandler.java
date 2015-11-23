@@ -17,17 +17,22 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jubula.client.archive.JsonStorage;
 import org.eclipse.jubula.client.archive.XmlStorage;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -43,6 +48,13 @@ import org.slf4j.LoggerFactory;
  * @created 08.11.2004
  */
 public class ExportProjectHandler extends AbstractProjectHandler {
+    
+    /** Extension of XML */
+    public static final String XML = ".xml"; //$NON-NLS-1$
+    
+    /** Extension of JUB. It is an zip file which contain a project and a test result json file*/
+    public static final String JUB = ".jub"; //$NON-NLS-1$
+    
     /**
      * @author BREDEX GmbH
      * @created Jan 22, 2010
@@ -50,14 +62,25 @@ public class ExportProjectHandler extends AbstractProjectHandler {
     private static final class ExportFileOperation implements
             IRunnableWithProgress {
 
-        /** the filename to use for the exported XML file */
+        /** the filename to use for the exported file */
         private final String m_fileName;
+        
+        /** the file extension to use for the exported file */
+        private final String m_fileExt;
+        
+        /** the console to use to display progress and error messages */
+        private IProgressConsole m_console;
 
         /**
-         * @param fileName The filename to use for the exported XML file.
+         * @param fileName The filename to use for the exported file.
+         * @param fileExt extension of file
+         * @param console 
          */
-        private ExportFileOperation(String fileName) {
+        private ExportFileOperation(String fileName, String fileExt,
+                IProgressConsole console) {
             m_fileName = fileName;
+            m_fileExt = fileExt;
+            m_console = console;
         }
 
         /**
@@ -66,6 +89,9 @@ public class ExportProjectHandler extends AbstractProjectHandler {
         public void run(IProgressMonitor monitor) {
             if (m_fileName != null) {
                 try {
+                    m_console.writeStatus(new Status(IStatus.INFO,
+                        Activator.PLUGIN_ID, Messages
+                                .RefreshProjectOperationRefreshing));
                     GeneralStorage gstorage = GeneralStorage.getInstance();
                     gstorage.validateProjectExists(gstorage.getProject());
                     final AtomicReference<IStatus> statusOfRefresh =
@@ -77,17 +103,23 @@ public class ExportProjectHandler extends AbstractProjectHandler {
                             statusOfRefresh.set((IStatus)rph.executeImpl(null));
                         }
                     });
-                    
                     // Only proceed with the export if the refresh was
                     // successful.
                     if (statusOfRefresh.get() != null
                             && statusOfRefresh.get().isOK()) {
+
+                        m_console.writeStatus(new Status(IStatus.INFO,
+                            Activator.PLUGIN_ID, Messages
+                                    .ExportFileActionExporting));
                         SubMonitor subMonitor = SubMonitor.convert(monitor,
-                                Messages.ExportFileActionExporting,
-                                1);
-                        
-                        XmlStorage.save(gstorage.getProject(), m_fileName,
-                            true, subMonitor.newChild(1), false, null);
+                                Messages.ExportFileActionExporting, 1);
+                        if (m_fileExt.equals(XML)) {
+                            XmlStorage.save(gstorage.getProject(), m_fileName,
+                                    true, subMonitor.newChild(1), false, null);
+                        } else if (m_fileExt.equals(JUB)) {
+                            JsonStorage.save(gstorage.getProject(), m_fileName,
+                                    true, subMonitor.newChild(1), m_console);
+                        } 
                     }
                 } catch (final PMException e) {
                     ErrorHandlingUtil.createMessageDialog(e, null, null);
@@ -115,17 +147,23 @@ public class ExportProjectHandler extends AbstractProjectHandler {
         final FileDialog fileDialog = new FileDialog(getActiveShell(), 
             SWT.SAVE | SWT.APPLICATION_MODAL);
         fileDialog.setText(Messages.ActionBuilderSaveAs);
-        fileDialog.setFilterExtensions(new String[]{"*.xml"}); //$NON-NLS-1$
+        String[] filters = new String[]{StringConstants.STAR + JUB,
+            StringConstants.STAR + XML};
+        fileDialog.setFilterExtensions(filters);
         fileDialog.setFilterPath(Utils.getLastDirPath());
         
         StringBuilder sb = new StringBuilder(
             GeneralStorage.getInstance().getProject().getDisplayName());
-        fileDialog.setFileName(sb.append(".xml").toString()); //$NON-NLS-1$
-        final String fileNameTemp = fileDialog.open();
+        fileDialog.setFileName(sb.toString());
+        String fileNameTemp = fileDialog.open();
+        
         if (fileNameTemp == null) { // Cancel pressed
             return;
-        } 
-
+        }
+        String extension = filters[fileDialog.getFilterIndex()]
+                .replace(StringConstants.STAR, StringConstants.EMPTY);
+        fileNameTemp = fileNameTemp.endsWith(extension)
+                ? fileNameTemp : fileNameTemp + extension;
         File file = new File(fileNameTemp);
         if (file.exists()) {
             MessageBox mb = new MessageBox(fileDialog.getParent(),
@@ -143,7 +181,9 @@ public class ExportProjectHandler extends AbstractProjectHandler {
         final String fileName = fileNameTemp;
         Utils.storeLastDirPath(fileDialog.getFilterPath());
 
-        IRunnableWithProgress op = new ExportFileOperation(fileName);
+        IProgressConsole console = Plugin.getDefault();
+        IRunnableWithProgress op = new ExportFileOperation(fileName, extension,
+                console);
 
         try {
             PlatformUI.getWorkbench().getProgressService().busyCursorWhile(op);

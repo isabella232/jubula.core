@@ -11,6 +11,7 @@ Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.client.archive;uses:="org.eclipse.jubula.client.core.model,org.eclipse.core.runtime,org.eclipse.jubula.client.core.businessprocess",
  org.eclipse.jubula.client.archive.businessprocess,
+ org.eclipse.jubula.client.archive.dto,
  org.eclipse.jubula.client.archive.errorhandling,
  org.eclipse.jubula.client.archive.i18n,
  org.eclipse.jubula.client.archive.output
@@ -22,5 +23,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jubula.toolkit.common;bundle-version="[4.0.0,4.1.0)",
- org.eclipse.jubula.client.core;bundle-version="[4.0.0,4.1.0)"
+ org.eclipse.jubula.client.core;bundle-version="[4.0.0,4.1.0)",
+ com.fasterxml.jackson.core.jackson-annotations;bundle-version="2.5.0",
+ com.fasterxml.jackson.core.jackson-core;bundle-version="2.5.0",
+ com.fasterxml.jackson.core.jackson-databind;bundle-version="2.5.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

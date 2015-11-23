@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.project;
 
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +21,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.archive.XmlStorage;
-import org.eclipse.jubula.client.archive.output.NullImportOutput;
+import org.eclipse.jubula.client.archive.JsonStorage;
+import org.eclipse.jubula.client.archive.dto.ProjectDTO;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
@@ -128,21 +127,18 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 new ComponentNamesDecorator(null);
             try {
                 NodePM.getInstance().setUseCache(true);
-                InputStream contentStream = getContentForNewProject(
-                        subMonitor.newChild(WORK_GET_PROJECT_FROM_DB));
+                ProjectDTO dto = JsonStorage.save(GeneralStorage.getInstance()
+                        .getProject(), null, false, subMonitor.newChild(
+                                WORK_GET_PROJECT_FROM_DB), Plugin.getDefault());
+                changeProjectVersion(dto);
                 if (monitor.isCanceled()) {
                     throw new InterruptedException();
                 }
-                if (contentStream != null) {
-                    final IProjectPO duplicatedProject = XmlStorage.load(
-                        contentStream, true,
-                        m_newProjectVersion.getMajorNumber(),
-                        m_newProjectVersion.getMinorNumber(),
-                        m_newProjectVersion.getMicroNumber(),
-                        m_newProjectVersion.getVersionQualifier(),
-                        paramNameMapper, compNameCache,
-                        subMonitor.newChild(WORK_PROJECT_CREATION),
-                        new NullImportOutput(), true);
+                if (dto != null) {
+                    final IProjectPO duplicatedProject = JsonStorage.load(dto,
+                            subMonitor.newChild(WORK_PROJECT_CREATION),
+                            Plugin.getDefault(), true, paramNameMapper,
+                            compNameCache, true);
                     IWritableComponentNameMapper compNameMapper =
                         new ProjectComponentNameMapper(
                             compNameCache, duplicatedProject);
@@ -189,6 +185,17 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 Plugin.stopLongRunning();
                 monitor.done();
             }
+        }
+        
+        /**
+         * @param dto the original project dto
+         */
+        private void changeProjectVersion(ProjectDTO dto) {
+            dto.setMajorProjectVersion(m_newProjectVersion.getMajorNumber());
+            dto.setMinorProjectVersion(m_newProjectVersion.getMinorNumber());
+            dto.setMicroProjectVersion(m_newProjectVersion.getMicroNumber());
+            dto.setProjectVersionQualifier(m_newProjectVersion
+                    .getVersionQualifier());
         }
 
         /**
@@ -319,36 +326,6 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.fireProjectLoadedListener(new NullProgressMonitor());
         ded.fireProjectStateChanged(ProjectState.opened);
-    }
-
-    /**
-     * @param monitor
-     *            The progress monitor for this potentially long-running
-     *            operation.
-     * @return content for new project to create, or <code>null</code> if the
-     *         operation was cancelled.
-     * @throws PMException
-     *             if saving of project as xml file failed
-     * @throws ProjectDeletedException
-     *             if current project is already deleted
-     * @throws InterruptedException
-     *             if the operation was canceled.
-     */
-    private InputStream getContentForNewProject(IProgressMonitor monitor) 
-        throws ProjectDeletedException, InterruptedException, PMException {
-        GeneralStorage.getInstance().validateProjectExists(
-                GeneralStorage.getInstance().getProject());
-        InputStream projectStream = XmlStorage.save(GeneralStorage.getInstance()
-            .getProject(), null, false, monitor, false, null);
-
-        if (monitor.isCanceled()) {
-            throw new InterruptedException();
-        }
-        if (projectStream != null) {
-            return projectStream;
-        }
-        
-        return null;
     }
 
     /**

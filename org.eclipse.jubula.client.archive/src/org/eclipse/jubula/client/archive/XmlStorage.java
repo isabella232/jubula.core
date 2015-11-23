@@ -234,8 +234,6 @@ public class XmlStorage {
      * 
      * @param projectXmlStream
      *            input stream for XML representation of a project
-     * @param assignNewGuid
-     *            Flag for assigning the project a new GUID and version
      * @param majorVersion
      *            Major version number for the created object, or
      *            <code>null</code> if the version from the imported XML should
@@ -273,7 +271,7 @@ public class XmlStorage {
      *             if the operation was canceled.
      */
     public static IProjectPO load(InputStream projectXmlStream,
-        boolean assignNewGuid, Integer majorVersion, Integer minorVersion,
+        Integer majorVersion, Integer minorVersion,
         Integer microVersion, String versionQualifier,
         IParamNameMapper paramNameMapper,
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
@@ -293,12 +291,9 @@ public class XmlStorage {
                     skipTrackingInformation);
             if ((majorVersion != null || versionQualifier != null)) {
                 return xmlImporter.createProject(
-                        projectXml, assignNewGuid, majorVersion, minorVersion,
+                        projectXml, majorVersion, minorVersion,
                         microVersion, versionQualifier, paramNameMapper, 
                         compNameCache);
-            } else if (assignNewGuid) {
-                return xmlImporter.createProject(
-                    projectXml, assignNewGuid, paramNameMapper, compNameCache);
             }
             return xmlImporter.createProject(projectXml, 
                     paramNameMapper, compNameCache);
@@ -533,9 +528,6 @@ public class XmlStorage {
      *            mapper to resolve param names
      * @param compNameCache
      *            cache to resolve component names
-     * @param assignNewGuids
-     *            <code>true</code> if new GUIDs should be created for each PO.
-     *            <code>false</code> if old GUIDs should be used.
      * @param monitor
      *            The progress monitor for this potentially long-running
      *            operation.
@@ -552,10 +544,10 @@ public class XmlStorage {
      */
     public IProjectPO readProject(URL fileURL, 
         IParamNameMapper paramNameMapper, 
-        IWritableComponentNameCache compNameCache, boolean assignNewGuids, 
+        IWritableComponentNameCache compNameCache,
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
         JBVersionException, InterruptedException {
-        return load(openStreamToProjectURL(fileURL), assignNewGuids, null,
+        return load(openStreamToProjectURL(fileURL), null,
                 null, null, null, paramNameMapper, compNameCache, monitor, io,
                 false);
     }

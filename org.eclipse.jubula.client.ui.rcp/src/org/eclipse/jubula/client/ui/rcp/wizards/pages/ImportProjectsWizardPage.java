@@ -23,6 +23,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ImportFileBP.IProjectImportInfoProvider;
+import org.eclipse.jubula.client.ui.rcp.handlers.project.ExportProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -429,8 +430,9 @@ public class ImportProjectsWizardPage extends WizardPage
                         SWT.OPEN | SWT.APPLICATION_MODAL | SWT.MULTI);
                 String file;
                 fileDialog.setText(Messages.ImportProjectDialogFileSelector);
-                String[] extension = new String[1];
-                extension[0] = "*.xml"; //$NON-NLS-1$
+                String[] extension = new String[]{
+                    StringConstants.STAR + ExportProjectHandler.JUB,
+                    StringConstants.STAR + ExportProjectHandler.XML};
                 fileDialog.setFilterExtensions(extension);
                 fileDialog.setFilterPath(Utils.getLastDirPath());
                 file = fileDialog.open();

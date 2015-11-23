@@ -347,8 +347,6 @@ class XmlImporter {
      * 
      * @param xml
      *            Abstraction of the XML element (see Apache XML Beans)
-     * @param assignNewGuid
-     *            if it should be assigned a new guid
      * @param majorVersion
      *            Major version number for the created object.
      * @param minorVersion
@@ -374,7 +372,7 @@ class XmlImporter {
      * @throws InterruptedException
      *             if the operation was canceled.
      */
-    public IProjectPO createProject(Project xml, boolean assignNewGuid,
+    public IProjectPO createProject(Project xml,
         Integer majorVersion, Integer minorVersion,
         Integer microVersion, String versionQualifier,
         IParamNameMapper paramNameMapper, 
@@ -397,7 +395,7 @@ class XmlImporter {
             xml.setNilMicroProjectVersion();
         }
         xml.setProjectVersionQualifier(versionQualifier);
-        return createProject(xml, assignNewGuid, paramNameMapper,
+        return createProject(xml, paramNameMapper,
                 compNameCache);
     }
 

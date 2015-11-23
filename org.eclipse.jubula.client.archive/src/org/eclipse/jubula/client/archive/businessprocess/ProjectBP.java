@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.businessprocess;
 
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,8 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jubula.client.archive.XmlStorage;
+import org.eclipse.jubula.client.archive.JsonStorage;
+import org.eclipse.jubula.client.archive.dto.ProjectDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.output.NullImportOutput;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
@@ -116,33 +116,32 @@ public class ProjectBP {
             try {
                 NodePM.getInstance().setUseCache(true);
                 GeneralStorage.getInstance().validateProjectExists(m_project);
-                InputStream xmlProjectInputStream = XmlStorage.save(m_project,
-                    null, false, subMonitor.newChild(WORK_GET_PROJECT_FROM_DB),
-                    false, null);
+                ProjectDTO dto = JsonStorage.save(m_project, null, false,
+                        subMonitor.newChild(WORK_GET_PROJECT_FROM_DB),
+                        new NullImportOutput());
+                changeProjectVersion(dto);
                 if (monitor.isCanceled()) {
                     throw new InterruptedException();
                 }
-                final IProjectPO duplicatedProject = XmlStorage.load(
-                        xmlProjectInputStream, false,
-                        m_projectVersion.getMajorNumber(),
-                        m_projectVersion.getMinorNumber(),
-                        m_projectVersion.getMicroNumber(),
-                        m_projectVersion.getVersionQualifier(),
-                        paramNameMapper, compNameCache,
-                        subMonitor.newChild(WORK_PROJECT_CREATION),
-                        new NullImportOutput(), true);
-                if (monitor.isCanceled()) {
-                    throw new InterruptedException();
+
+                if (dto != null) {
+                    final IProjectPO duplicatedProject = JsonStorage.load(dto,
+                            subMonitor.newChild(WORK_PROJECT_CREATION),
+                            new NullImportOutput(), false, paramNameMapper,
+                            compNameCache, true);
+                    if (monitor.isCanceled()) {
+                        throw new InterruptedException();
+                    }
+                    IWritableComponentNameMapper compNameMapper =
+                        new ProjectComponentNameMapper(
+                                compNameCache, duplicatedProject);
+                    
+                    duplicatedProject.setClientMetaDataVersion(
+                        IVersion.JB_CLIENT_METADATA_VERSION);
+                    attachProjectWithProgress(
+                            subMonitor.newChild(WORK_PROJECT_SAVE), 
+                            paramNameMapper, compNameMapper, duplicatedProject);
                 }
-                IWritableComponentNameMapper compNameMapper =
-                    new ProjectComponentNameMapper(
-                            compNameCache, duplicatedProject);
-                
-                duplicatedProject.setClientMetaDataVersion(
-                    IVersion.JB_CLIENT_METADATA_VERSION);
-                attachProjectWithProgress(
-                        subMonitor.newChild(WORK_PROJECT_SAVE), 
-                        paramNameMapper, compNameMapper, duplicatedProject);
             } catch (final PMSaveException e) {
                 log.error(Messages.ErrorWhileCreatingNewProjectVersion, e);
                 throw new InvocationTargetException(e);
@@ -204,6 +203,17 @@ public class ProjectBP {
             compNameCacheList.add(compNameMapper);
             ProjectPM.attachProjectToROSession(project, project.getName(), 
                     mapperList, compNameCacheList, monitor);
+        }
+
+        /**
+         * @param dto the original project dto
+         */
+        private void changeProjectVersion(ProjectDTO dto) {
+            dto.setMajorProjectVersion(m_projectVersion.getMajorNumber());
+            dto.setMinorProjectVersion(m_projectVersion.getMinorNumber());
+            dto.setMicroProjectVersion(m_projectVersion.getMicroNumber());
+            dto.setProjectVersionQualifier(m_projectVersion
+                    .getVersionQualifier());
         }
     }
 }

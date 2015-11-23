@@ -125,6 +125,84 @@ public class TestResultSummaryPM {
     }
     
     /**
+     * @param proj the project to search in
+     * @param se the Persistence (JPA / EclipseLink) session to use for query (optional)
+     * @param pageNumber the number of pages
+     * @param pageSize the size of page
+     * 
+     * @return a list of all test result summaries for the given project for all
+     *         available project version
+     * @throws PMException in case of any DB error.
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static final List<ITestResultSummaryPO> getTestResultSummaries(
+            IProjectPO proj, EntityManager se,
+            int pageNumber, int pageSize) throws PMException {
+        List<ITestResultSummaryPO> ltrs = null;
+        EntityManager s = null;
+        try {
+            s = se != null ? se : Persistor.instance().openSession();
+            
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery cQuery = builder.createQuery();
+            Root from = cQuery.from(PoMaker.getTestResultSummaryClass());
+            cQuery.select(from).where(
+                    builder.equal(
+                        from.get(PROPNAME_PROJECT_GUID), 
+                        proj.getGuid()));
+            
+            Query query = s.createQuery(cQuery);
+            query.setFirstResult((pageNumber - 1) * pageSize);
+            query.setMaxResults(pageSize);
+            
+            ltrs = query.getResultList();
+        } catch (PersistenceException e) {
+            OperationCanceledUtil.checkForOperationCanceled(e);
+            PersistenceManager.handleDBExceptionForAnySession(null, e, s);
+        } finally {
+            Persistor.instance().dropSession(s);
+        }
+        return ltrs;
+    }
+
+    /**
+     * @param proj currently project
+     * @param se entity manager if there is one
+     * @return the number of test results
+     * @throws PMException
+     */
+    @SuppressWarnings("unchecked")
+    public static final long countOfTestResultSummaries(
+            IProjectPO proj, EntityManager se) throws PMException {
+        long countOfTestResultSummaries = 0;
+        EntityManager s = null;
+        try {
+            s = se != null ? se : Persistor.instance().openSession();
+            
+            CriteriaBuilder builder = s.getCriteriaBuilder();
+            CriteriaQuery query = builder.createQuery();
+            Root from = query.from(PoMaker.getTestResultSummaryClass());
+            query.select(builder.count(from)).where(
+                    builder.equal(
+                            from.get(PROPNAME_PROJECT_GUID), 
+                            proj.getGuid()));
+    
+            Number count = (Number)s.createQuery(query)
+                    .getSingleResult();
+            
+            countOfTestResultSummaries = count.longValue(); 
+            
+        } catch (PersistenceException e) {
+            OperationCanceledUtil.checkForOperationCanceled(e);
+            PersistenceManager.handleDBExceptionForAnySession(null, e, s);
+        } finally {
+            Persistor.instance().dropSession(s);
+        }
+        return countOfTestResultSummaries;
+    }
+    
+    
+    /**
      * store the testresult summary of test run in database
      * @param summary the testresult summary to store
      */
