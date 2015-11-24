@@ -83,9 +83,6 @@
         <module>../org.eclipse.jubula.launch.rcp.ui</module>
         <module>../org.eclipse.jubula.client.teststyle</module>
         <module>../org.eclipse.jubula.client.teststyle.impl.standard</module>
-        <module>../org.eclipse.jubula.client.analyze</module>
-        <module>../org.eclipse.jubula.client.analyze.ui</module>
-        <module>../org.eclipse.jubula.client.analyze.impl.standard</module>
         <module>../org.eclipse.jubula.client.wiki.ui</module>
         <module>../org.eclipse.jubula.client.core.functions</module>
         <module>../org.eclipse.jubula.version</module>
