@@ -22,6 +22,7 @@ import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.MissingArgumentException;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
@@ -561,7 +562,9 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         // and try it again
         String message = exp.getLocalizedMessage();
         if (message != null && message.length() > 0 && printToConsole) {
-            printlnConsoleError(message);
+            printlnConsoleError(
+                    extendMissingArgumentExceptionMessage(message, exp));
+            printUsage();
         }
         if (message.startsWith(OPT_NO_VAL)) {
             message = printAndGetEndOfMessage(message, 1);
@@ -576,6 +579,36 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         return args;
     }
 
+    /**
+     * Extend parse exception message with the missing parameters
+     * 
+     * @param errorMessage
+     *            extendable message
+     * @param exp
+     *            parse exception
+     * @return extended error message with missing argument if defined, else the
+     *         error message given in method parameter
+     */
+    private String extendMissingArgumentExceptionMessage(String errorMessage,
+            ParseException exp) {
+
+        if (exp instanceof MissingArgumentException) {
+            MissingArgumentException missingArgExp = 
+                    (MissingArgumentException) exp;
+            if (missingArgExp != null) {
+                Option option = missingArgExp.getOption();
+                if (option != null && option.getArgName() != null) {
+                    StringBuilder errorBuilder = new StringBuilder();
+                    appendError(errorBuilder, errorMessage,
+                            option.getArgName());
+                    errorBuilder.append(Messages.ClientReadUserManual);
+                    return errorBuilder.toString();
+                }
+            }
+        }
+
+        return errorMessage;
+    }
 
     /**
      * prints the message and substrings it

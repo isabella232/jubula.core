@@ -24,6 +24,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -286,9 +287,10 @@ public class TestResultSummaryPM {
      * @return set of test result summary ids
      */
     @SuppressWarnings("unchecked")
-    public static final Set<Long> findTestResultSummariesByDate(Date cleanDate,
-            String projGUID, Integer majorVersion, Integer minorVersion,
-            Integer microVersion, String versionQualifier) throws JBException {
+    public static final Set<Long> findTestResultSummariesIfHasTestResultsByDate(
+            Date cleanDate, String projGUID, Integer majorVersion,
+            Integer minorVersion, Integer microVersion, String versionQualifier)
+                    throws JBException {
         EntityManager session = null;
         if (Persistor.instance() == null) {
             log.error("Error while finding test result summaries. Persistor is null."); //$NON-NLS-1$
@@ -336,7 +338,77 @@ public class TestResultSummaryPM {
             Persistor.instance().dropSessionWithoutLockRelease(session);
         }
     }
-    
+
+    /**
+     * get set of test result summary ids, (independently from having test
+     * results or not) older than amount of days
+     * 
+     * @param cleanDate
+     *            Date
+     * @param projGUID
+     *            the project guid, if not set, all projects will be searched
+     * @param versionNrs
+     *            the project versionNrs, if not set, all versions will be
+     *            searched
+     * @return set of test result summary ids
+     */
+    @SuppressWarnings("unchecked")
+    public static final Set<Long> findTestResultSummariesByDate(Date cleanDate,
+            String projGUID, ProjectVersion versionNrs) throws JBException {
+        EntityManager session = null;
+        if (Persistor.instance() == null) {
+            log.error(
+                    "Error while finding test result summaries. Persistor is null."); //$NON-NLS-1$
+            return new HashSet<Long>();
+        }
+        try {
+            session = Persistor.instance().openSession();
+
+            StringBuilder queryString = new StringBuilder(
+                    "select s.id from TestResultSummaryPO as s " + //$NON-NLS-1$
+                            "where s.testsuiteDate < :cleanDate " + //$NON-NLS-1$
+                            (projGUID != null
+                                    ? "and s.internalProjectGuid = :projGUID " //$NON-NLS-1$
+                                    : "") //$NON-NLS-1$
+            );
+            if (versionNrs != null) {
+                addVersionQueryString(PROPNAME_PROJECT_MAJOR_VERSION,
+                        versionNrs.getMajorNumber(), queryString);
+                addVersionQueryString(PROPNAME_PROJECT_MINOR_VERSION,
+                        versionNrs.getMinorNumber(), queryString);
+                addVersionQueryString(PROPNAME_PROJECT_MICRO_VERSION,
+                        versionNrs.getMicroNumber(), queryString);
+                addVersionQueryString(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                        versionNrs.getVersionQualifier(), queryString);
+            }
+
+            Query query = session.createQuery(queryString.toString());
+            query.setParameter("cleanDate", cleanDate); //$NON-NLS-1$
+            if (projGUID != null) {
+                query.setParameter("projGUID", projGUID); //$NON-NLS-1$
+            }
+            if (versionNrs != null) {
+                checkAndBindValue(PROPNAME_PROJECT_MAJOR_VERSION,
+                        versionNrs.getMajorNumber(), query);
+                checkAndBindValue(PROPNAME_PROJECT_MINOR_VERSION,
+                        versionNrs.getMinorNumber(), query);
+                checkAndBindValue(PROPNAME_PROJECT_MICRO_VERSION,
+                        versionNrs.getMicroNumber(), query);
+                checkAndBindValue(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                        versionNrs.getVersionQualifier(), query);
+            }
+            List<Long> metaList = query.getResultList();
+            Set<Long> idSet = new HashSet<Long>(metaList);
+            return idSet;
+        } catch (PersistenceException e) {
+            log.error(Messages.PersistenceLoadFailed, e);
+            throw new JBException(e.getMessage(),
+                    MessageIDs.E_PERSISTENCE_LOAD_FAILED);
+        } finally {
+            Persistor.instance().dropSessionWithoutLockRelease(session);
+        }
+    }
+
     /**
      * delete testruns
      * @param resultIDs array of test result ids 
@@ -409,32 +481,37 @@ public class TestResultSummaryPM {
         try {
             final EntityTransaction tx = Persistor.instance()
                     .getTransaction(session);
-            
+
             StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append("select s from TestResultSummaryPO as s where s.") //$NON-NLS-1$
-                .append(PROPNAME_PROJECT_GUID).append(" = :guid"); //$NON-NLS-1$
-            addVersionQueryString(PROPNAME_PROJECT_MAJOR_VERSION,
-                    version.getMajorNumber(), queryBuilder);
-            addVersionQueryString(PROPNAME_PROJECT_MINOR_VERSION,
-                    version.getMinorNumber(), queryBuilder);
-            addVersionQueryString(PROPNAME_PROJECT_MICRO_VERSION,
-                    version.getMicroNumber(), queryBuilder);
-            addVersionQueryString(PROPNAME_PROJECT_VERSION_QUALIFIER,
-                    version.getVersionQualifier(), queryBuilder);
+            queryBuilder
+                    .append("select s from TestResultSummaryPO as s where s.") //$NON-NLS-1$
+                    .append(PROPNAME_PROJECT_GUID).append(" = :guid"); //$NON-NLS-1$
+            if (version != null) {
+                addVersionQueryString(PROPNAME_PROJECT_MAJOR_VERSION,
+                        version.getMajorNumber(), queryBuilder);
+                addVersionQueryString(PROPNAME_PROJECT_MINOR_VERSION,
+                        version.getMinorNumber(), queryBuilder);
+                addVersionQueryString(PROPNAME_PROJECT_MICRO_VERSION,
+                        version.getMicroNumber(), queryBuilder);
+                addVersionQueryString(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                        version.getVersionQualifier(), queryBuilder);
+            }
 
             Query querySummary = session.createQuery(queryBuilder.toString());
             querySummary.setParameter("guid", guid); //$NON-NLS-1$
-            checkAndBindValue(PROPNAME_PROJECT_MAJOR_VERSION,
-                    version.getMajorNumber(), querySummary);
-            checkAndBindValue(PROPNAME_PROJECT_MINOR_VERSION,
-                    version.getMinorNumber(), querySummary);
-            checkAndBindValue(PROPNAME_PROJECT_MICRO_VERSION,
-                    version.getMicroNumber(), querySummary);
-            checkAndBindValue(PROPNAME_PROJECT_VERSION_QUALIFIER,
-                    version.getVersionQualifier(), querySummary);
-            List <ITestResultSummaryPO> summaryList = 
-                querySummary.getResultList();
-            
+            if (version != null) {
+                checkAndBindValue(PROPNAME_PROJECT_MAJOR_VERSION,
+                        version.getMajorNumber(), querySummary);
+                checkAndBindValue(PROPNAME_PROJECT_MINOR_VERSION,
+                        version.getMinorNumber(), querySummary);
+                checkAndBindValue(PROPNAME_PROJECT_MICRO_VERSION,
+                        version.getMicroNumber(), querySummary);
+                checkAndBindValue(PROPNAME_PROJECT_VERSION_QUALIFIER,
+                        version.getVersionQualifier(), querySummary);
+            }
+            List<ITestResultSummaryPO> summaryList = querySummary
+                    .getResultList();
+
             for (ITestResultSummaryPO summary : summaryList) {
                 TestResultPM.executeDeleteTestresultOfSummary(
                         session, summary.getId());
@@ -506,6 +583,61 @@ public class TestResultSummaryPM {
         } catch (ProjectDeletedException e) {
             throw new JBFatalException(Messages.DeleteAllTestrunSummariesFailed,
                     e, MessageIDs.E_PROJECT_NOT_FOUND);
+        } finally {
+            Persistor.instance().dropSession(session);
+        }
+    }
+
+    /**
+     * Delete test-result summaries older than the given days
+     * 
+     * @param days
+     *            days
+     * @param projGUID
+     *            the project guid
+     * @param versionNrs
+     *            the project version numbers
+     */
+    public static final void cleanTestResultSummaries(int days, String projGUID,
+            ProjectVersion versionNrs) {
+        Date cleanDate = DateUtils.addDays(new Date(), days * -1);
+
+        final EntityManager session = Persistor.instance().openSession();
+
+        try {
+            final EntityTransaction tx = Persistor.instance()
+                    .getTransaction(session);
+
+            Set<Long> summaries = TestResultSummaryPM
+                    .findTestResultSummariesByDate(cleanDate, projGUID,
+                            versionNrs);
+            for (Long summaryId : summaries) {
+                TestResultPM.executeDeleteTestresultOfSummary(session,
+                        summaryId);
+
+                Query querySummary = session.createQuery(
+                        "select s from TestResultSummaryPO as s where s.id = :id"); //$NON-NLS-1$
+                querySummary.setParameter("id", summaryId); //$NON-NLS-1$
+
+                try {
+                    ITestResultSummaryPO meta = (ITestResultSummaryPO) 
+                            querySummary.getSingleResult();
+                    session.remove(meta);
+                } catch (NoResultException nre) {
+                    // No result found. Nothing to delete.
+                }
+            }
+            Persistor.instance().commitTransaction(session, tx);
+        } catch (PMException e) {
+            log.error("Database exception while deleting testresults", e); //$NON-NLS-1$
+            throw new JBFatalException(Messages.DeleteTestrunMetadataFailed, e,
+                    MessageIDs.E_DATABASE_GENERAL);
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.DeleteTestrunMetadataFailed, e,
+                    MessageIDs.E_PROJECT_NOT_FOUND);
+        } catch (JBException e) {
+            throw new JBFatalException(Messages.DeletingTestresultsFailed, e,
+                    MessageIDs.E_DELETE_TESTRESULT);
         } finally {
             Persistor.instance().dropSession(session);
         }

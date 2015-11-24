@@ -28,10 +28,17 @@ public class Messages extends NLS {
     public static String DBToolDeleteFinished;
     public static String DBToolDeleteKeepSummary;
     public static String DBToolDeletingProject;
+    public static String DBToolDeleteDays;
     public static String DBToolDeletingTestResultDetails;
     public static String DBToolDeletingTestResultDetailsFinished;
     public static String DBToolDeletingTestResultSummaries;
     public static String DBToolDeletingTestResultSummariesFinished;
+    public static String DBToolDeletingAllTestResultSummariesOlder;
+    public static String DBToolDeletingAllTestResultSummariesOfProject;
+    public static String DBToolDeletingAllTestResultSummariesVersion;
+    public static String DBToolDeletingAllTestResultSummariesVersionDay;
+    public static String DBToolDeletingAllTestResultSummariesOfProjectOlder;
+    public static String DBToolProjectNameNotDefinedForVersion;
     public static String DBToolDeletingAllProjects;
     public static String DBToolDir;
     public static String DBToolExport;
@@ -42,6 +49,7 @@ public class Messages extends NLS {
     public static String DBToolInvalidVersion;
     public static String DBToolExistingProject;
     public static String DBToolMissingProject;
+    public static String DBToolInvalidDays;
     public static String DBToolName;
     public static String DBToolNonEmptyExportDirectory;
     public static String ExecutionControllerInvalidDBDataError;

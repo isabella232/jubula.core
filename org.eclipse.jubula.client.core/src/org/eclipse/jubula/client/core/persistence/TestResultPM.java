@@ -35,7 +35,6 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * PM to handle all test result related Persistence (JPA / EclipseLink) queries
  * 
@@ -232,8 +231,8 @@ public class TestResultPM {
         Date cleanDate = DateUtils.addDays(new Date(), days * -1);
         try {
             Set<Long> summaries = TestResultSummaryPM
-                    .findTestResultSummariesByDate(cleanDate, projGUID,
-                            majorVersion, minorVersion, microVersion,
+                    .findTestResultSummariesIfHasTestResultsByDate(cleanDate,
+                            projGUID, majorVersion, minorVersion, microVersion,
                             versionQualifier);
             for (Long summaryId : summaries) {
                 deleteTestresultOfSummary(summaryId);

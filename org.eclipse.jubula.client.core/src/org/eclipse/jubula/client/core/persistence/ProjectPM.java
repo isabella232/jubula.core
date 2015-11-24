@@ -1923,6 +1923,66 @@ public class ProjectPM extends PersistenceManager
     }
     
     /**
+     * 
+     * @param name project name
+     * @param versionNrs project version numbers
+     * @return returns project guid, if project is found
+     * @throws JBException if the session cannot be loaded or closed.
+     */
+    public static synchronized String getGuidByProjectName(String name,
+            ProjectVersion versionNrs) throws JBException {
+        
+        EntityManager session = null;
+        try {
+            session = Persistor.instance().openSession();
+            
+            StringBuilder projectGuidQueryBuilder = new StringBuilder("select project.hbmGuid");  //$NON-NLS-1$
+            projectGuidQueryBuilder.append(" from ProjectNamePO as project"); //$NON-NLS-1$
+            projectGuidQueryBuilder.append(" where project.hbmName = :name"); //$NON-NLS-1$
+            
+            Query query = session
+                    .createQuery(projectGuidQueryBuilder.toString());
+            query.setParameter("name", name); //$NON-NLS-1$
+            
+            String projectGuid = (String)query.getSingleResult();
+            if (versionNrs == null) {
+                return projectGuid;
+            }
+            
+            StringBuilder versionedGuidQueryBuilder = new StringBuilder("select project.guid"); //$NON-NLS-1$
+            versionedGuidQueryBuilder.append(" from ProjectPO project"); //$NON-NLS-1$
+            versionedGuidQueryBuilder.append(" inner join fetch project.properties where project.guid = :guid"); //$NON-NLS-1$
+
+            addCompleteVersionString(versionedGuidQueryBuilder,
+                    versionNrs.getMajorNumber(), versionNrs.getMinorNumber(),
+                    versionNrs.getMicroNumber(),
+                    versionNrs.getVersionQualifier());
+
+            final Query versionQuery = session
+                    .createQuery(versionedGuidQueryBuilder.toString());
+
+            versionQuery.setParameter("guid", projectGuid); //$NON-NLS-1$
+
+            attachParameterToVersion(versionQuery, versionNrs.getMajorNumber(),
+                    versionNrs.getMinorNumber(), versionNrs.getMicroNumber(),
+                    versionNrs.getVersionQualifier());
+
+            try {
+                return (String) versionQuery.getSingleResult();
+            } catch (NoResultException nre) {
+                return null;
+            }
+        } catch (PersistenceException e) {
+            log.error(Messages.PersistenceLoadFailed, e);
+            throw new JBException(e.getMessage(),
+                MessageIDs.E_PERSISTENCE_LOAD_FAILED);
+        } finally {
+            Persistor.instance().dropSessionWithoutLockRelease(session);
+        }
+    }
+    
+    
+    /**
      * Checks if a project with a given ID exists in the DB
      * @param projectId Object ID of project
      * @return true if the project exist, fails if not or in case of errors

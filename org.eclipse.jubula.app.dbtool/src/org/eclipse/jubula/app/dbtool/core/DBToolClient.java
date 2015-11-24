@@ -82,6 +82,14 @@ public class DBToolClient extends AbstractCmdlineClient {
     private static final String OPTION_CREATE_VERSION = "createVersion"; //$NON-NLS-1$
     /** version parameter */
     private static final String PAR_CREATE_VERSION = "project-name old-version new-version"; //$NON-NLS-1$
+    /** delete test result summaries */
+    private static final String OPTION_DELETE_TEST_RESULT_SUMMARIES = "deletesummaries"; //$NON-NLS-1$
+    /** days option to delete summaries */
+    private static final String OPTION_DELETE_DAYS = "days"; //$NON-NLS-1$
+    /** days parameter */
+    private static final String PAR_DAYS = "amount-of-days"; //$NON-NLS-1$
+    /** project parameter */
+    private static final String OPTION_PROJECT = "project"; //$NON-NLS-1$
 
     /** singleton instance */
     private static DBToolClient instance;
@@ -148,6 +156,23 @@ public class DBToolClient extends AbstractCmdlineClient {
                 false);
         createVersionOption.setArgs(3);
         opt.addOption(createVersionOption);
+
+        // delete test result summaries
+        opt.addOption(createOption(OPTION_DELETE_TEST_RESULT_SUMMARIES, false,
+                null, Messages.DBToolDeletingTestResultSummaries, false));
+
+        // delete older than days
+        final Option daysOption = createOption(OPTION_DELETE_DAYS, true,
+                PAR_DAYS, Messages.DBToolDeleteDays, false);
+        daysOption.setArgs(1);
+        opt.addOption(daysOption);
+
+        // project reference with project name and version
+        final Option projectOption = createOption(OPTION_PROJECT, true,
+                PAR_PROJECT, Messages.DBToolDeletingTestResultSummaries, false);
+        projectOption.setArgs(2);
+        opt.addOption(projectOption);
+
     }
 
     /**
@@ -166,6 +191,12 @@ public class DBToolClient extends AbstractCmdlineClient {
         args = getCmdLine().getOptionValues(OPTION_CREATE_VERSION);
         if ((args != null) && (args.length != 3)) {
             appendError(errorMsgs, OPTION_CREATE_VERSION, PAR_CREATE_VERSION);
+        }
+        args = getCmdLine().getOptionValues(OPTION_PROJECT);
+        if ((args != null) && (args.length != 1 || args.length != 2)) {
+            // length 2, if the project name and the version is defined too
+            // length 1, if only the project name is defined
+            appendError(errorMsgs, OPTION_PROJECT, PAR_PROJECT);
         }
     }
 
@@ -194,7 +225,11 @@ public class DBToolClient extends AbstractCmdlineClient {
                 if (cmdLine.hasOption(OPTION_DELETE_ALL)) {
                     deleteAllProjects(keepTRSummaries, monitor);
                 }
-                
+
+                if (cmdLine.hasOption(OPTION_DELETE_TEST_RESULT_SUMMARIES)) {
+                    processDeleteTestResultSummariesCommand(monitor, cmdLine);
+                }
+
                 String projectDir = cmdLine.getOptionValue(OPTION_DIR,
                         StringConstants.DOT);
 
@@ -205,7 +240,6 @@ public class DBToolClient extends AbstractCmdlineClient {
                         exportProject(projValues[0], projValues[1], projectDir,
                                 monitor);
                     }
-                    
                 }
                 
                 if (cmdLine.hasOption(OPTION_EXPORT_ALL)) {
@@ -225,7 +259,6 @@ public class DBToolClient extends AbstractCmdlineClient {
                                 projValues[2], monitor);
                     }
                 }
-                
                 return Status.OK_STATUS;
             }
             
@@ -473,14 +506,9 @@ public class DBToolClient extends AbstractCmdlineClient {
                         Messages.DBToolDeleteFinished, pName)));
             }
             if (!keepSummaryOnDelete) {
-                monitor.subTask(Messages.DBToolDeletingTestResultSummaries);
-                TestResultSummaryPM.deleteAllTestresultSummaries();
-                monitor.subTask(
-                        Messages.DBToolDeletingTestResultSummariesFinished);
+                removeAllTestResultSummary(monitor);
             }
-            monitor.subTask(Messages.DBToolDeletingTestResultDetails);
-            TestResultPM.deleteAllTestresultDetails();
-            monitor.subTask(Messages.DBToolDeletingTestResultDetailsFinished);
+            removeAllTestDetails(monitor);
         } catch (JBException e) {
             printlnConsoleError(e.getMessage());
         } catch (InterruptedException e) {
@@ -488,7 +516,241 @@ public class DBToolClient extends AbstractCmdlineClient {
             // interaction
         }
     }
-    
+
+    /**
+     * Delete test-result summaries from the database including test results
+     * 
+     * @param monitor
+     *            the progress monitor to use
+     * @param cmdLine
+     *            command line
+     */
+    private void processDeleteTestResultSummariesCommand(
+            IProgressMonitor monitor, final CommandLine cmdLine) {
+        String projectName = null;
+        String projectVersion = null;
+        final String[] projValues = cmdLine.getOptionValues(OPTION_PROJECT);
+        if (projValues != null) {
+            if (projValues.length == 1) {
+                // in this case, the project name or the version is defined, but
+                // only one of them.
+                try {
+                    ProjectVersion testVersion = VersionStringUtils
+                            .createProjectVersion(projValues[0]);
+                    if (testVersion != null
+                            && (testVersion.getMajorNumber() != null
+                                    || testVersion.getMicroNumber() != null
+                                    || testVersion.getMinorNumber() != null)) {
+                        // the only one argument is a version number.
+                        StringBuilder errorMsgBuilder = new StringBuilder();
+                        errorMsgBuilder.append(
+                                Messages.DBToolProjectNameNotDefinedForVersion);
+                        appendError(errorMsgBuilder, OPTION_PROJECT,
+                                PAR_PROJECT);
+                        printlnConsoleError(errorMsgBuilder.toString());
+                        return;
+                    }
+
+                    projectName = projValues[0];
+                } catch (MalformedVersionException e) {
+                    projectName = projValues[0];
+                }
+            } else if (projValues.length == 2) {
+                // project name and version are defined
+                projectName = projValues[0];
+                projectVersion = projValues[1];
+            }
+        }
+
+        if (cmdLine.hasOption(OPTION_DELETE_DAYS)) {
+            Integer days = getDaysValue(cmdLine);
+            if (days == null) {
+                printlnConsoleError(Messages.DBToolInvalidDays);
+            } else {
+                deleteTestResultSummaries(projectName, projectVersion, days,
+                        monitor);
+            }
+        } else {
+            deleteTestResultSummaries(projectName, projectVersion, null,
+                    monitor);
+        }
+    }
+
+    /**
+     * Delete test result summaries.
+     * 
+     * @param name
+     *            name of the project
+     * @param version
+     *            version of the project
+     * @param days
+     *            older than days will be removed
+     * @param monitor
+     *            the progress monitor to use
+     */
+    private void deleteTestResultSummaries(String name, String version,
+            Integer days, IProgressMonitor monitor) {
+        if (name == null) {
+            // No specific project is defined
+            if (days == null) {
+                // no days defined, need to remove all test result summary and
+                // results
+                removeAllTestResultSummary(monitor);
+                removeAllTestDetails(monitor);
+            } else {
+                // Remove all test summary older than the given days
+                monitor.subTask(NLS.bind(
+                        Messages.DBToolDeletingAllTestResultSummariesOlder,
+                        days));
+                TestResultSummaryPM.cleanTestResultSummaries(days, null, null);
+                monitor.subTask(
+                        Messages.DBToolDeletingTestResultSummariesFinished);
+            }
+        } else {
+            if (version == null) {
+                deleteTestSummariesOfProject(name, days, monitor);
+            } else {
+                deleteTestSummariesWithVersion(name, version, days, monitor);
+            }
+        }
+    }
+
+    /**
+     * Delete test summaries of a specific project version
+     * 
+     * @param name
+     *            name of the project
+     * @param version
+     *            version of the project
+     * @param days
+     *            older than days will be removed
+     * @param monitor
+     *            the progress monitor to use
+     */
+    private void deleteTestSummariesWithVersion(String name, String version,
+            Integer days, IProgressMonitor monitor) {
+        // Delete test result summaries for a given version
+        ProjectVersion versionNrs = buildVersionNrs(name, version);
+        String projectGuid;
+        try {
+            projectGuid = ProjectPM.getGuidByProjectName(name, versionNrs);
+        } catch (JBException e) {
+            reportMissingProject(name, version);
+            return;
+        }
+        if (projectGuid == null) {
+            reportMissingProject(name, version);
+            return;
+        }
+
+        if (days == null) {
+            // delete all test result summary of the given version of
+            // project
+            monitor.subTask(NLS.bind(
+                    Messages.DBToolDeletingAllTestResultSummariesVersion,
+                    name, versionNrs.toString()));
+            TestResultSummaryPM.deleteTestrunsByProject(projectGuid,
+                    versionNrs, false);
+            monitor.subTask(Messages.DBToolDeletingTestResultSummariesFinished);
+        } else {
+            // delete all test result summary older than defined days of
+            // the given version of project
+            monitor.subTask(NLS.bind(
+                    Messages.DBToolDeletingAllTestResultSummariesVersionDay,
+                    new Object[] { name, versionNrs.toString(), days }));
+            TestResultSummaryPM.cleanTestResultSummaries(days,
+                    projectGuid, versionNrs);
+            monitor.subTask(Messages.DBToolDeletingTestResultSummariesFinished);
+        }
+    }
+
+    /**
+     * Delete test summaries without specific version version
+     * 
+     * @param name
+     *             name of the project
+     * @param days
+     *             older than days will be removed
+     * @param monitor
+     *            the progress monitor to use
+     */
+    private void deleteTestSummariesOfProject(String name, Integer days,
+            IProgressMonitor monitor) {
+        // Delete for all version
+        String projectGuid;
+        try {
+            projectGuid = ProjectPM.getGuidByProjectName(name, null);
+        } catch (JBException e) {
+            reportMissingProject(name, ""); //$NON-NLS-1$
+            return;
+        }
+        
+        if (projectGuid == null) {
+            reportMissingProject(name, ""); //$NON-NLS-1$
+            return;
+        }
+
+        if (days == null) {
+            // No days is set to clean up, so need to remove all the
+            // test result summaries.
+            deleteTestSummariesOfProject(monitor, null, projectGuid, name);
+        } else {
+            // clean test result summaries
+            monitor.subTask(NLS.bind(
+                    Messages.DBToolDeletingAllTestResultSummariesOfProjectOlder,
+                    name, days));
+            TestResultSummaryPM.cleanTestResultSummaries(days,
+                    projectGuid, null);
+            monitor.subTask(Messages.DBToolDeletingTestResultSummariesFinished);
+        }
+    }
+
+    /**
+     * Delete summaries of the project.
+     * 
+     * @param monitor
+     *            the progress monitor to use
+     * @param version
+     *            version of project
+      * @param projectGuid
+     *            guid of project
+     * @param name
+     *            project name
+     */
+    private void deleteTestSummariesOfProject(IProgressMonitor monitor,
+            ProjectVersion version, String projectGuid, String name) {
+        monitor.subTask(
+                NLS.bind(Messages.DBToolDeletingAllTestResultSummariesOfProject,
+                        name));
+        TestResultSummaryPM.deleteTestrunsByProject(projectGuid, version,
+                false);
+        monitor.subTask(Messages.DBToolDeletingTestResultSummariesFinished);
+    }
+
+    /**
+     * Delete all of the test details.
+     * 
+     * @param monitor
+     *            monitor the progress monitor to use
+     */
+    private void removeAllTestDetails(IProgressMonitor monitor) {
+        monitor.subTask(Messages.DBToolDeletingTestResultDetails);
+        TestResultPM.deleteAllTestresultDetails();
+        monitor.subTask(Messages.DBToolDeletingTestResultDetailsFinished);
+    }
+
+    /**
+     * Delete all of the test result summaries.
+     * 
+     * @param monitor
+     *            monitor the progress monitor to use
+     */
+    private void removeAllTestResultSummary(IProgressMonitor monitor) {
+        monitor.subTask(Messages.DBToolDeletingTestResultSummaries);
+        TestResultSummaryPM.deleteAllTestresultSummaries();
+        monitor.subTask(Messages.DBToolDeletingTestResultSummariesFinished);
+    }
+
     /**
      * get major/mnir version from string value in major.minir format
      * @param name for error reporting
@@ -614,7 +876,31 @@ public class DBToolClient extends AbstractCmdlineClient {
         msg.append(dirName);
         printlnConsoleError(msg.toString());
     }
-    
+
+    /**
+     * Get days parameter from command line
+     * 
+     * @param cmdLine
+     *            command line
+     * @return days parameter from commandline
+     */
+    private Integer getDaysValue(final CommandLine cmdLine) {
+        String[] dayValues = cmdLine.getOptionValues(OPTION_DELETE_DAYS);
+
+        if (dayValues != null && dayValues.length == 1) {
+            String dayParam = dayValues[0];
+            if (dayParam != null) {
+                try {
+                    return Integer.parseInt(dayParam);
+                } catch (NumberFormatException e) {
+                    return null;
+                }
+            }
+        }
+
+        return null;
+    }
+
     /**
      * @param exportDir directory name
      * @param e error condition
