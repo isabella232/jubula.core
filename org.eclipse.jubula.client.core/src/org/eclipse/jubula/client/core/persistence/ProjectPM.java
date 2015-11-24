@@ -1981,7 +1981,6 @@ public class ProjectPM extends PersistenceManager
         }
     }
     
-    
     /**
      * Checks if a project with a given ID exists in the DB
      * @param projectId Object ID of project

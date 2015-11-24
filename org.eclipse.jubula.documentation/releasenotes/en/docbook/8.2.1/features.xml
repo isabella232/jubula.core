@@ -49,5 +49,16 @@
             </para>
         </listitem>
     </itemizedlist>
+    <para>
+        <emphasis role="strong">New way to delete test result summaries/details with dbtool</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                The dbtool can now delete test result summaries/details. It can be used to delete test results for a specific project/version or all projects.
+                You can define an amount of days to remove test result summaries/details that are older than a specific date. For more information see user manual.
+            </para>
+        </listitem>
+    </itemizedlist>
 
 </section>

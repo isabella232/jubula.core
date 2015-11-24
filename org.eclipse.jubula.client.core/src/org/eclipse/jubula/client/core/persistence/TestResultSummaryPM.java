@@ -597,9 +597,11 @@ public class TestResultSummaryPM {
      *            the project guid
      * @param versionNrs
      *            the project version numbers
+     * @param keepTRSummaries
+     *            if true, test-result-summaries will not be deleted
      */
     public static final void cleanTestResultSummaries(int days, String projGUID,
-            ProjectVersion versionNrs) {
+            ProjectVersion versionNrs, boolean keepTRSummaries) {
         Date cleanDate = DateUtils.addDays(new Date(), days * -1);
 
         final EntityManager session = Persistor.instance().openSession();
@@ -615,16 +617,18 @@ public class TestResultSummaryPM {
                 TestResultPM.executeDeleteTestresultOfSummary(session,
                         summaryId);
 
-                Query querySummary = session.createQuery(
-                        "select s from TestResultSummaryPO as s where s.id = :id"); //$NON-NLS-1$
-                querySummary.setParameter("id", summaryId); //$NON-NLS-1$
+                if (!keepTRSummaries) {
+                    Query querySummary = session.createQuery(
+                            "select s from TestResultSummaryPO as s where s.id = :id"); //$NON-NLS-1$
+                    querySummary.setParameter("id", summaryId); //$NON-NLS-1$
 
-                try {
-                    ITestResultSummaryPO meta = (ITestResultSummaryPO) 
-                            querySummary.getSingleResult();
-                    session.remove(meta);
-                } catch (NoResultException nre) {
-                    // No result found. Nothing to delete.
+                    try {
+                        ITestResultSummaryPO meta = (ITestResultSummaryPO) 
+                                querySummary.getSingleResult();
+                        session.remove(meta);
+                    } catch (NoResultException nre) {
+                        // No result found. Nothing to delete.
+                    }
                 }
             }
             Persistor.instance().commitTransaction(session, tx);

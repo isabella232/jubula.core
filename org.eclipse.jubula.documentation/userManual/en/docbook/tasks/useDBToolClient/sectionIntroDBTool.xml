@@ -14,7 +14,8 @@
   <para>
     You can use the dbtool to import, export and delete Projects from
     the database in without using the ITE. You can also use it to
-    create a new version of a Project in the database.
+    create a new version of a Project in the database, or delete the 
+    test summaries and details.
   </para>
   <para>
     This is particularly useful for automated build and test

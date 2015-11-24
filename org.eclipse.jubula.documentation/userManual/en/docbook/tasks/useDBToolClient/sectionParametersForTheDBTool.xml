@@ -75,6 +75,56 @@
             </entry>
           </row>
           <row>
+            <entry>Delete test result summaries</entry>
+            <entry>
+              <emphasis role="input">-deletesummaries</emphasis><?linebreak?>
+              e.g. <emphasis>-deletesummaries</emphasis><?linebreak?>
+              Delete test result summaries and their details. <?linebreak?>
+              (<xref linkend="delete-test-result-summaries"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Delete test result details</entry>
+            <entry>
+              <emphasis role="input">-deleteresultdetails</emphasis><?linebreak?>
+              e.g. <emphasis>-deleteresultdetails</emphasis><?linebreak?>
+               Delete test results. Test result summaries will not be deleted. <?linebreak?>
+              (<xref linkend="delete-test-result-details"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Days</entry>
+            <entry>
+              <emphasis role="input">-days &lt;days&gt;</emphasis> (optional)<?linebreak?>
+              e.g. <emphasis>-days 5</emphasis><?linebreak?>
+              You can delete the test result summaries or test result details that are 
+              older than the given days.
+              (<xref linkend="delete-test-result-details"/>)<?linebreak?>
+              (<xref linkend="delete-test-result-summaries"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Project</entry>
+            <entry>
+              <emphasis role="input">-project &lt;project-name&gt;</emphasis> (optional)<?linebreak?>
+              Delete test result summaries or details of a project.<?linebreak?>
+              e.g. <emphasis>-project "ExampleProject"</emphasis><?linebreak?>
+              (<xref linkend="delete-test-result-details"/>)<?linebreak?>
+              (<xref linkend="delete-test-result-summaries"/>)
+            </entry>
+          </row>
+          <row>
+            <entry>Version</entry>
+            <entry>
+              <emphasis role="input">-version &lt;project-version&gt;</emphasis> (optional)<?linebreak?>
+              Delete test result summaries or results of a project version.<?linebreak?>
+              If the project version is defined, the project name must be set. <?linebreak?>
+              e.g. <emphasis>-version 1.0</emphasis><?linebreak?>
+              (<xref linkend="delete-test-result-details"/>)<?linebreak?>
+              (<xref linkend="delete-test-result-summaries"/>)
+            </entry>
+          </row>
+          <row>
             <entry>Directory</entry>
             <entry>
               <emphasis role="input">-directory &lt;directory path&gt;</emphasis><?linebreak?>
@@ -178,6 +228,25 @@
        database (for example from the version control system) each
        night. If you do not enter this parameter, the summaries will
        be deleted with the Projects.
+     </para>
+   </section>
+   <section xml:id="delete-test-result-summaries">
+     <title>Deleting test result summaries</title>
+     <para>
+       You can use the parameter <emphasis role="input">-deletesummaries</emphasis> to
+       specify that the test result summaries should be deleted. You can also specify for which
+       project and version the test result summaries will be deleted. Use days parameter
+       to delete test result summaries, that are older than the given days.
+     </para>
+   </section>
+    <section xml:id="delete-test-result-details">
+     <title>Deleting test result details</title>
+     <para>
+       You can use the parameter <emphasis role="input">-deleteresultdetails</emphasis> to
+       specify that the test result details should be deleted. The related test result 
+       summaries will not be deleted. You can specify for which project and version the 
+       test result details will be deleted. Use days parameter to delete only test result details, 
+       that are older than the given days.
      </para>
    </section>
    <section xml:id="creating-new-versions">
