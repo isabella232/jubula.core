@@ -167,6 +167,7 @@ public class CompletenessBP implements IProjectStateListener,
                     job.cancel();
                 }
             }
+            DataEventDispatcher ded = DataEventDispatcher.getInstance();
             
             monitor.beginTask(Messages.CompletenessCheckRunningOperation,
                     IProgressMonitor.UNKNOWN);
@@ -177,13 +178,13 @@ public class CompletenessBP implements IProjectStateListener,
                         .getProject();
                 final Locale wl = WorkingLanguageBP.getInstance()
                         .getWorkingLanguage();
+                ded.fireCompletenessCheckStarted();
                 CompletenessGuard.checkAll(wl, project, monitor);
             } finally {
                 if (monitor.isCanceled()) {
                     status = IStatus.CANCEL;
                 } else {
-                    DataEventDispatcher.getInstance()
-                        .fireCompletenessCheckFinished();
+                    ded.fireCompletenessCheckFinished();
                 }
                 monitor.done();
             }

@@ -1053,4 +1053,9 @@ public class ProblemsBP implements ICompletenessCheckListener,
     public void completenessCheckFinished() {
         doProblemsCheck(true, null);
     }
+    
+    /** {@inheritDoc} */
+    public void completenessCheckStarted() {
+        // currently empty
+    }
 }

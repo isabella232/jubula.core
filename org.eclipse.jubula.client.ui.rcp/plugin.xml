@@ -2602,7 +2602,12 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.StartTestSuiteHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StartTestSuiteCommand">
       <enabledWhen>
-        <reference definitionId="org.eclipse.jubula.client.ui.rcp.expression.canConnectToAut" />
+        <and>
+            <with variable="org.eclipse.jubula.client.ui.rcp.variable.isCCRunning">
+              <equals value="false" />
+            </with>
+            <reference definitionId="org.eclipse.jubula.client.ui.rcp.expression.canConnectToAut" />
+        </and>
       </enabledWhen>
     </handler>
     <handler
@@ -2693,7 +2698,12 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.StartTestJobHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StartTestJobCommand">
       <enabledWhen>
-        <reference definitionId="org.eclipse.jubula.client.ui.rcp.expression.canConnectToAut" />
+        <and>
+            <with variable="org.eclipse.jubula.client.ui.rcp.variable.isCCRunning">
+              <equals value="false" />
+            </with>
+            <reference definitionId="org.eclipse.jubula.client.ui.rcp.expression.canConnectToAut" />
+        </and>
       </enabledWhen>
     </handler>
     <handler
@@ -4076,6 +4086,12 @@
         priorityLevel="workbench" />
       <variable
         name="org.eclipse.jubula.client.ui.rcp.variable.isTestPaused"
+        priorityLevel="workbench" />
+    </sourceProvider>
+    <sourceProvider
+      provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.CompletenessCheckSourceProvider">
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.isCCRunning"
         priorityLevel="workbench" />
     </sourceProvider>
     <sourceProvider

@@ -209,19 +209,15 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     
     /** to notify the clients when the completeness check is finished */
     public interface ICompletenessCheckListener {
-        
-        /**
-         * Will be called when the completeness check is finished
-         */
+        /** will be called when the completeness check is started */
+        public void completenessCheckStarted();
+        /** will be called when the completeness check is finished */
         public void completenessCheckFinished();
     }
     
     /** to notify the clients when the problem propagation is finished */
     public interface IProblemPropagationListener {
-        
-        /**
-         * Will be called when the completeness check is finished
-         */
+        /** will be called when the problem propagation is finished */
         public void problemPropagationFinished();
     }
     
@@ -756,6 +752,15 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
+        }
+    }
+    
+    /**
+     * notifies the Listener that the Completeness Check has started.
+     */
+    public void fireCompletenessCheckStarted() {
+        for (ICompletenessCheckListener l : m_completenessCheckListeners) {
+            l.completenessCheckStarted();
         }
     }
     
