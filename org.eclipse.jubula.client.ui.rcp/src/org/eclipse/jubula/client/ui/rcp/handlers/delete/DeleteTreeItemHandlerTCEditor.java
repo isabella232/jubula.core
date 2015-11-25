@@ -68,6 +68,7 @@ public class DeleteTreeItemHandlerTCEditor
      */
     public static void deleteNodesFromEditor(List<? extends INodePO> nodes,
             AbstractJBEditor editor) {
+        editor.getEditorHelper().getClipboard().clearContents();
         for (INodePO node : nodes) {
             try {
                 node.getParentNode().removeNode(node);

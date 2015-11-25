@@ -131,12 +131,16 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
             return null;
         }
 
-        Object cbContents = m_clipboard.getContents(
-                LocalSelectionClipboardTransfer.getInstance());
-        if (cbContents instanceof IStructuredSelection) {
-            IStructuredSelection sel = (IStructuredSelection)cbContents;
-            if (sel.toList().contains(element)) {
-                image = Plugin.getCutImage(image);
+        LocalSelectionClipboardTransfer transfer =
+                LocalSelectionClipboardTransfer.getInstance();
+        if (transfer.getIsItCut()) {
+            Object cbContents = m_clipboard.getContents(transfer);
+            
+            if (cbContents instanceof IStructuredSelection) {
+                IStructuredSelection sel = (IStructuredSelection)cbContents;
+                if (sel.toList().contains(element)) {
+                    image = Plugin.getCutImage(image);
+                }
             }
         }
         

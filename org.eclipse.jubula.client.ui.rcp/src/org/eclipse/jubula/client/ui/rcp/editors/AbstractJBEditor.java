@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.actions.CutTreeItemActionJBEditor;
-import org.eclipse.jubula.client.ui.rcp.actions.PasteTreeItemActionTCEditor;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.AbstractPartListener;
 import org.eclipse.jubula.client.ui.rcp.events.GuiEventDispatcher;
@@ -61,7 +60,6 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.services.IEvaluationService;
 import org.slf4j.Logger;
@@ -111,10 +109,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /** action to cut TreeItems */
     private CutTreeItemActionJBEditor m_cutTreeItemAction =
         new CutTreeItemActionJBEditor();
-    
-    /** action to paste TreeItems */
-    private PasteTreeItemActionTCEditor m_pasteTreeItemAction = 
-        new PasteTreeItemActionTCEditor();
     
     /** PartListener of this WokbenchPart */
     private PartListener m_partListener = new PartListener();
@@ -634,21 +628,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     protected CutTreeItemActionJBEditor getCutTreeItemAction() {
         return m_cutTreeItemAction;
     }
-
-    /**
-     * @param pasteTreeItemAction the pasteTreeItemAction to set
-     */
-    protected void setPasteTreeItemAction(
-            PasteTreeItemActionTCEditor pasteTreeItemAction) {
-        m_pasteTreeItemAction = pasteTreeItemAction;
-    }
-
-    /**
-     * @return the pasteTreeItemAction
-     */
-    protected PasteTreeItemActionTCEditor getPasteTreeItemAction() {
-        return m_pasteTreeItemAction;
-    }
     
     /**
      * Sets all necessary global action handlers for this editor. This
@@ -657,10 +636,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
      */
     protected void setActionHandlers() {
         getSite().setSelectionProvider(this);
-        getEditorSite().getActionBars().setGlobalActionHandler(
-                ActionFactory.CUT.getId(), getCutTreeItemAction());
-        getEditorSite().getActionBars().setGlobalActionHandler(
-                ActionFactory.PASTE.getId(), getPasteTreeItemAction());
         getEditorSite().getActionBars().updateActionBars();
     }
     
@@ -681,7 +656,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     public EntityManager getEntityManager() {
         return getEditorHelper().getEditSupport().getSession();
     }
-    
+
     /**
      * Refreshes the editors viewer
      */

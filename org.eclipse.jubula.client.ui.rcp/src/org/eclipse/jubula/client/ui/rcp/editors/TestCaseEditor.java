@@ -23,8 +23,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
@@ -34,10 +32,10 @@ import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuar
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.IRecordListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.events.IRecordListener;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -66,8 +64,6 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.EventHandlerDropTargetListener;
-import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
-import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCEditorDndSupport;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AddEventHandlerDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -134,9 +130,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 createContextMenu());
         addDoubleClickListener(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID, 
                 m_eventHandlerTreeViewer);
-        ActionListener actionListener = new ActionListener();
-        getTreeViewer().addSelectionChangedListener(actionListener);
-        getEventHandlerTreeViewer().addSelectionChangedListener(actionListener);
         if (!Plugin.getDefault().anyDirtyStar()) {
             checkAndRemoveUnusedTestData();
         }
@@ -319,86 +312,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             m_selectionProviderDelegate
                     .setSelectionProviderDelegate(m_currentTreeViewer);
         }       
-    }
-
-    /**
-     * SelectionListener to en-/disable delete-action
-     * 
-     * @author BREDEX GmbH
-     * @created 02.03.2006
-     */
-    private class ActionListener implements ISelectionChangedListener {
-        /**
-         * {@inheritDoc}
-         */
-        @SuppressWarnings("unchecked") 
-        public void selectionChanged(SelectionChangedEvent event) {
-            if (!(event.getSelection() instanceof IStructuredSelection)) {
-                return;
-            }
-            IStructuredSelection sel = 
-                (IStructuredSelection)event.getSelection();
-            
-            if (GeneralStorage.getInstance().getProject() == null
-                    || (sel == null || sel.isEmpty())) {
-                getCutTreeItemAction().setEnabled(false);
-                getPasteTreeItemAction().setEnabled(false);
-            } else {
-                List<INodePO> selList = sel.toList();
-                enableCutAction(selList);
-                enablePasteAction(selList);
-            }
-        }
-        
-        /**
-         * en-/disable cut-action
-         * @param selList actual selection 
-         */
-        private void enableCutAction(List<INodePO> selList) {
-            getCutTreeItemAction().setEnabled(true);
-
-            for (INodePO node : selList) {
-                if (!(node instanceof IExecTestCasePO
-                        || node instanceof ICapPO)) {
-                    getCutTreeItemAction().setEnabled(false);
-                    return;
-                }
-            }
-        }
-
-        /**
-         * en-/disable paste-action
-         * @param selList actual selection 
-         */
-        private void enablePasteAction(List<INodePO> selList) {
-            
-            getPasteTreeItemAction().setEnabled(false);
-            LocalSelectionClipboardTransfer transfer = 
-                LocalSelectionClipboardTransfer.getInstance();
-            Object cbContents = 
-                getEditorHelper().getClipboard().getContents(transfer);
-
-            if (cbContents == null) {
-                return;
-            }
-
-            for (INodePO guiNode : selList) {
-                if (guiNode == null
-                        || !(cbContents instanceof StructuredSelection)
-                        || !TCEditorDndSupport.validateDrop(
-                                transfer.getSource(), getTreeViewer(), 
-                                transfer.getSelection(), 
-                                guiNode, false)) {
-                    
-                    getPasteTreeItemAction().setEnabled(false);
-                    return;
-                }
-            }
-
-            getPasteTreeItemAction().setEnabled(true);
-
-        }
-
     }
 
     /**

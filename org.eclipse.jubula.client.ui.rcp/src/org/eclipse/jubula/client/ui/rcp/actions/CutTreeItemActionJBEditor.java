@@ -41,6 +41,6 @@ public class CutTreeItemActionJBEditor extends AbstractCutTreeItemAction {
         jbe.getEditorHelper().getClipboard()
                 .setContents(new Object[] { strucSelection },
                         new Transfer[] { transfer });
-        transfer.setSelection(strucSelection, jbe.getTreeViewer());
+        transfer.setSelection(strucSelection, jbe.getTreeViewer(), true);
     }
 }

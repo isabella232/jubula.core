@@ -151,6 +151,7 @@ public class JBEditorHelper implements ILockedObjects,
      */
     public void dispose() {
         if (m_clipboard != null) {
+            m_clipboard.clearContents();
             m_clipboard.dispose();
         }
         if (getEditSupport() != null) {

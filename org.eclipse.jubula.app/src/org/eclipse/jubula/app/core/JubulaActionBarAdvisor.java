@@ -181,6 +181,8 @@ public class JubulaActionBarAdvisor extends ActionBarAdvisor {
         editMenu.add(m_undo);
         editMenu.add(new Separator()); 
         editMenu.add(getCutItem());
+        CommandHelper.createContributionPushItem(editMenu,
+                IWorkbenchCommandConstants.EDIT_COPY);
         editMenu.add(getPasteItem());
         editMenu.add(new Separator()); 
         editMenu.add(new GroupMarker("JubulaEditSeparator1")); //$NON-NLS-1$

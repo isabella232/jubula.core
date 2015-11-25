@@ -65,7 +65,7 @@ public class RefreshProjectHandler extends AbstractProjectHandler {
                     totalWork);
 
             ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
-            
+            Plugin.clearAllEditorsClipboard();
             try {
                 GeneralStorage.getInstance().reloadMasterSession(
                         monitor);

@@ -212,6 +212,7 @@ public class Messages extends NLS {
     public static String DirtyStarListLabelProviderAlreadySaved;
     public static String DoesNotExist;
     public static String DoubleClickEventWasCreatedByAnUnknownWidget;
+    public static String DoubleEventTypeTitle;
     public static String EditorCanNotBeOpened;
     public static String EditorPreferencePageAddPositionText;
     public static String EditorPreferencePageDescription;
@@ -434,6 +435,10 @@ public class Messages extends NLS {
     public static String NotOfCorrectType;
     public static String NotSupported;
     public static String NotSupportedControl;
+    public static String NotUseReferenceParameterTitle;
+    public static String NotUsePropagatedComponentNameTitle;
+    public static String NotUsePropagatedComponentName;
+    public static String NotUseReferenceParameter;
     public static String ObjectMappingEditorCategory;
     public static String ObjectMappingEditorComponentType;
     public static String ObjectMappingEditorConfigView;
@@ -515,6 +520,8 @@ public class Messages extends NLS {
     public static String PluginTC;
     public static String PluginTJ;
     public static String PluginTS;
+    public static String ParameterConfligtDetectedTitle;
+    public static String ParameterConfligtDetected;
     public static String PrefPageBasicAddNewNode;
     public static String PrefPageBasicAlways;
     public static String PrefPageBasicComponentNamesView;
@@ -770,6 +777,7 @@ public class Messages extends NLS {
     public static String TestCaseEditorCompNameError;
     public static String TestCaseEditorContReference;
     public static String TestCaseEditorDoubleEventTypeErrorDetail;
+    public static String TestCaseEditorDoubleEventTypeErrorDetailOverwrite;
     public static String TestCaseEditorDoubleTsuiteName;
     public static String TestCaseEditorEHAreaHeadline;
     public static String TestCaseEditorEmptyCompName;
