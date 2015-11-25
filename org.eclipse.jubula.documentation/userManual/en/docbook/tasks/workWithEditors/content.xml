@@ -24,6 +24,7 @@
   <xi:include href="sectionAddingDescriptionsToItemsInEditors.xml"/>
   <xi:include href="sectionAddingTaskIDsToItemsInEditors.xml"/>
   <xi:include href="sectionCommentingOutItemsInEditors.xml"/>
+  <xi:include href="sectionCopyAndPasteInEditors.xml"/>
   <xi:include href="sectionExtractingTestCasesFromEditors.xml"/>
   <xi:include href="sectionReplacingTestCasesInEditors.xml"/>
   <xi:include href="sectionSavingTestCasesFromAnEditorAsNewTestCase.xml"/>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2015 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="copy-items-in-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Copy and paste items in editors</title>
+  <para>
+    You can copy one or multiple items (Test Cases, Test Steps Test Suites, Event Handlers) from within editors and paste them into the same editor or another editor.
+  </para>
+    <para>
+        Copy and Paste has some restrictions:
+        <itemizedlist>
+            <listitem>
+                <para>Copying items can only be performed from non-dirty (i.e. saved) editors:
+                save your editor before copying items.</para>
+            </listitem>
+            <listitem>
+                <para>The clipboard of the ITE will be cleared when a project is opened or
+                    refreshed, and when a copied item is deleted</para>
+            </listitem>
+            <listitem>
+                <para>Performing refactor actions will also clean the ITE clipboard
+                </para>
+            </listitem>
+            <listitem>
+                <para>Event Handlers can only be copied from the Event Handler area
+                    to the Event Handler area</para>
+            </listitem>
+        </itemizedlist>
+    </para>
+    <para>
+        You can use the context menu entries to copy and paste items, or you can
+        use the standard platform key combinations to copy and paste.
+    </para>
+    <para>
+        If you require the same items in the same order multiple times, it
+        might be worth creating a reusable module using, e.g. the 
+        <link linkend="extracting-test-cases-from-editors-refactoring">Extract Test Case</link>
+        function. This will make test maintenance easier.
+    </para>
+</section>
