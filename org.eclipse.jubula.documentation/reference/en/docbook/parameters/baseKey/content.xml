@@ -35,10 +35,10 @@
   	<itemizedlist>
   		<listitem><para>Use this parameter to specify which key to "press".</para></listitem>
   		<listitem><para>The various keys have different codes.</para></listitem>
-  		<listitem><para>The most important key codes are:</para></listitem>
+  		<listitem><para>The most important base key codes are:</para></listitem>
   	</itemizedlist>
   	<table>
-  		<title>Key codes</title>
+  		<title>Base key codes</title>
   		<tgroup cols="2" align="left" colsep="1" rowsep="1">
   			<thead>
   				<row>
@@ -52,8 +52,8 @@
   					<entry>Top row keys from 0 to 9</entry>
   				</row>
   				<row>
-  					<entry>A...Z</entry>
-  					<entry>Letters A to Z. For capital letters use "Shift as modifier key.</entry>
+  					<entry>a...z</entry>
+  					<entry>Letters a to z. For capital letters use <emphasis role="strong">shift</emphasis> as modifier key.</entry>
   				</row>
   				<row>
   					<entry>ENTER</entry>
