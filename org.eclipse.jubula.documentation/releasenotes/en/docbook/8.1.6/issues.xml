@@ -3,9 +3,6 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>Known issues and other information</title>
     <para>
-        <emphasis role="strong"></emphasis>
-    </para>
-    <para>
     	Currently it is not possible to use the functions Open Specification and Show Specification when working with Test
     	Result Details in the Reporting Perspective and in the Execution Perspective.
     </para>

@@ -2,20 +2,7 @@
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink">
   <title>Known issues and other information</title>
-    <!--  if adding anything to this file, comment the file back in in the notes.xml-->
   <para>
-    <emphasis role="strong"></emphasis>
+    There are no known issues or additional information for this version.
   </para>
-  <itemizedlist>
-    <listitem>
-      <para>
-     
-      </para>
-    </listitem>
-    <listitem>
-    	<para>
-     
-      </para>
-    </listitem>
-  </itemizedlist>
 </section>
