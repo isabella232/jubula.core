@@ -17,6 +17,7 @@ import java.util.Map;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -71,14 +72,15 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
             if (node instanceof IEventExecTestCasePO) {
                 image = IconConstants.RESULT_EH_IMAGE;
             }
-        }
-        if (node instanceof ICapPO) {
+        } else if (node instanceof ICapPO) {
             TestResultNode parent = resultTest.getParent();
             if (parent.getNode() instanceof IEventExecTestCasePO) {
                 image = IconConstants.EH_CAP_IMAGE;
             } else {
                 image = IconConstants.CAP_IMAGE;
             }
+        } else if (node instanceof ICommentPO) {
+            image = IconConstants.COMMENT_IMAGE;
         }
         return image;
     }

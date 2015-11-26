@@ -14,6 +14,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecorationContext;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IDecorationContext;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 
@@ -23,13 +24,15 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
  * @created 21.10.2004
  */
 public class ResultDecorator extends AbstractLightweightLabelDecorator {
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void decorate(Object element, IDecoration decoration) {
         if (element instanceof TestResultNode) {
             TestResultNode resultNode = 
                 ((TestResultNode)element);
+            if (resultNode.getNode() instanceof ICommentPO) {
+                return;
+            }
+            
             int status = resultNode.getStatus();
             ImageDescriptor image2use = null;
             IDecorationContext context = 

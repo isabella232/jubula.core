@@ -14,6 +14,7 @@ import java.util.Date;
 
 import org.apache.commons.lang.time.DurationFormatUtils;
 import org.eclipse.jface.viewers.IDecoration;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer;
 
@@ -30,13 +31,14 @@ public class TestResultDurationDecorator
      */
     private static final String SUFFIX_SPACER = " - "; //$NON-NLS-1$
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void decorate(Object element, IDecoration decoration) {
         if (element instanceof TestResultNode) {
             TestResultNode testResult = (TestResultNode)element;
+            if (testResult.getNode() instanceof ICommentPO) {
+                return;
+            }
+            
             Object testSuiteEndTimeValue = 
                 decoration.getDecorationContext().getProperty(
                     TestResultViewer.DECORATION_CONTEXT_SUITE_END_TIME_ID);
@@ -52,5 +54,4 @@ public class TestResultDurationDecorator
             }
         }
     }
-
 }
