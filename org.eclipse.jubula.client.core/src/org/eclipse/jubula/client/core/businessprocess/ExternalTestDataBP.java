@@ -144,7 +144,7 @@ public class ExternalTestDataBP {
      * @return a DataTable
      * @throws JBException id data source is not supported
      */
-    public DataTable createDataTable(File dataDir, String filePath) 
+    public DataTable createDataTable(File dataDir, String filePath)
             throws JBException {
         File dataFile = new File(filePath);
         if (!dataFile.isAbsolute()) {

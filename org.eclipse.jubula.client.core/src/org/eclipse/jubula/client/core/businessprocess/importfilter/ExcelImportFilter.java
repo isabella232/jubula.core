@@ -16,12 +16,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.DataReadException;
 
 
@@ -34,7 +35,7 @@ public class ExcelImportFilter implements IDataImportFilter {
     /**
      * supported files extension
      */
-    private static String[] fileExtensions = {"xls"}; //$NON-NLS-1$
+    private static String[] fileExtensions = {"xls", "xlsx"};  //$NON-NLS-1$//$NON-NLS-2$
 
     /**
      * @return a String Array of supported file extensions
@@ -61,10 +62,15 @@ public class ExcelImportFilter implements IDataImportFilter {
         DataTable filledDataTable;
         final FileInputStream inStream = findDataFile(dataDir, file);
         try {
-            POIFSFileSystem fs = new POIFSFileSystem(inStream);
-            HSSFWorkbook wb = new HSSFWorkbook(fs);
-            // first data sheet is the only supported so far
-            HSSFSheet sheet = wb.getSheetAt(0);
+            Workbook wb;
+            if (file.endsWith(".xls")) { //$NON-NLS-1$
+                POIFSFileSystem fs = new POIFSFileSystem(inStream);
+                wb = new HSSFWorkbook(fs);
+            } else {
+                wb = new XSSFWorkbook(inStream);
+            }
+            // Open the first sheet
+            Sheet sheet = wb.getSheetAt(0);
             final int lastRowNum = sheet.getLastRowNum();
             final int firstRowNum = sheet.getFirstRowNum();
             // iterate over rows
@@ -76,13 +82,12 @@ public class ExcelImportFilter implements IDataImportFilter {
                 - sheet.getRow(firstRowNum).getFirstCellNum();
             filledDataTable = new DataTable(height, width);
             for (int rowNum = firstRowNum; rowNum <= lastRowNum; rowNum++) {
-                HSSFRow row = sheet.getRow(rowNum);
+                Row row = sheet.getRow(rowNum);
                 final short lastCellNum = row.getLastCellNum();
                 final short firstCellNum = row.getFirstCellNum();
                 for (int cellNr = firstCellNum; cellNr < lastCellNum; 
                     cellNr++) {
-                    
-                    HSSFCell cell = row.getCell(cellNr);
+                    Cell cell = row.getCell(cellNr);
                     String cellString = getExcelCellString(cell);
                     filledDataTable.updateDataEntry(rowNum, cellNr, cellString);
                 }
@@ -147,7 +152,7 @@ public class ExcelImportFilter implements IDataImportFilter {
      * @return
      *      String
      */
-    private String getExcelCellString(HSSFCell cell) {
+    private String getExcelCellString(Cell cell) {
         if (cell == null) {
             return null;
         }

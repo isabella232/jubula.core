@@ -16,7 +16,11 @@
 <unit id="ch.qos.logback.slf4j" version="1.0.7.v201505121915"/>
 <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
 <unit id="org.slf4j.jcl" version="1.7.2.v20130115-1340"/>
+<unit id="org.dom4j" version="1.6.1.v201312101416"/>
 <unit id="org.apache.poi" version="3.9.0.v201405241750"/>
+<unit id="org.apache.poi.ooxml.schemas" version="3.9.0.v201405241750"/>
+<unit id="org.apache.poi.ooxml" version="3.9.0.v201405241905"/>
+<unit id="org.apache.xmlbeans" version="2.3.0.v201405241900"/>
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20150821153341/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">

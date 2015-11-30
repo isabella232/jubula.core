@@ -67,13 +67,7 @@
     <itemizedlist>
       <listitem>
         <para>
-          The worksheet in Excel must be named with the language
-          code for the language your data are in.
-        </para>
-        <para>
-          For example, if the data of your first sheet are for
-          French, then name the first sheet: <emphasis role="input">fr_FR</emphasis>
-          (<xref linkend="excel"/>).
+          The worksheet in Excel can be named arbitrarily.
         </para>
         <figure xml:id="excel">
           <title>Example Excel Table</title>
@@ -86,10 +80,7 @@
           </mediaobject>
         </figure>
         <para>
-          You can create sheets for every language you need. Make
-          sure that each sheet is named with the language code. The
-          ITE reads the sheet which corresponds to the working
-          language when the test is being executed.
+          Only the first sheet will be used.
         </para>
       </listitem>
       <listitem>

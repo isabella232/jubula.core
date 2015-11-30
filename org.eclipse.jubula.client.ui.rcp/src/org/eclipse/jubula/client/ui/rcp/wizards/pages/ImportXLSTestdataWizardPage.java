@@ -228,16 +228,12 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                     listOfParameters, m_ctde.getEditorHelper()
                     .getEditSupport().getParamMapper(),
                     new ParameterInterfaceBP());
-            
-            // create new data for first locale import - otherwise use
-            // existing data
-            boolean firstLocale = true;
+            // create new data for import
             // disable caching of external test data
             bp.clearExternalData();
             DataTable dt = bp.createDataTable(
                     null, absoluteFilePath);
             bp.parseTable(dt, testdata, true);
-            firstLocale = false;
         }
 
         /**

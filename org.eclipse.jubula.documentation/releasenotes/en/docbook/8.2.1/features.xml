@@ -60,5 +60,14 @@
             </para>
         </listitem>
     </itemizedlist>
-
+	<para>
+        <emphasis role="strong">XLSX support in using excel spreadsheets.</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+             	Now you can import test data from xlsx excel files. Localization is removed, only the first sheet will be used. 
+            </para>
+        </listitem>
+    </itemizedlist>
 </section>

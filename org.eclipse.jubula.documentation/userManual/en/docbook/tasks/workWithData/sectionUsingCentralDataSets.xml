@@ -315,9 +315,6 @@
         <para>
           Click ”<emphasis>Finish</emphasis>” to start the import.
         </para>
-        <para role="warning">
-          Your Excel files must contain the correct amount and type of Project languages.
-        </para>
       </listitem>
     </orderedlist>
   </section>
