@@ -13,6 +13,8 @@ package org.eclipse.jubula.rc.javafx.driver;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javafx.application.Platform;
 
@@ -155,6 +157,41 @@ public class EventThreadQueuerJavaFXImpl implements IEventThreadQueuer {
 
         Validate.notNull(runnable, "runnable must not be null"); //$NON-NLS-1$
         Platform.runLater(runnable);
+    }
+
+    @Override
+    public <V> V invokeAndWait(String name, Callable<V> call, long timeout)
+            throws StepExecutionException, TimeoutException {
+        if (Platform.isFxApplicationThread()) {
+            throw new IllegalStateException("Called from FX-Thread: " //$NON-NLS-1$
+                    + Thread.currentThread().getName());
+        }
+        try {
+            FutureTask<V> task = new FutureTask<>(call);
+            Platform.runLater(task);
+            return task.get(timeout, TimeUnit.MILLISECONDS);
+
+        } catch (InterruptedException ie) {
+            // this (the waiting) thread was interrupted -> error
+            log.error(ie);
+            throw new StepExecutionException(ie);
+        } catch (ExecutionException ee) {
+            // the run() method from IRunnable has thrown an exception
+            // -> log on info
+            // -> throw a StepExecutionException
+            Throwable thrown = ee.getCause();
+            if (thrown instanceof StepExecutionException) {
+                if (log.isInfoEnabled()) {
+                    log.info(ee);
+                }
+                throw (StepExecutionException) thrown;
+            }
+
+            // any other (unchecked) Exception from IRunnable.run()
+            log.error("exception thrown by '" + name //$NON-NLS-1$
+                    + "':", thrown); //$NON-NLS-1$
+            throw new StepExecutionException(thrown);
+        }
     }
 
 }

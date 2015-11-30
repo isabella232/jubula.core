@@ -136,10 +136,10 @@ public class ReflectionUtil {
             Throwable cause = e.getCause();
             if (cause instanceof IllegalStateException) {
                 throw new StepExecutionException(e.toString(),
-                        EventFactory.createVerifyFailed("No exception", //$NON-NLS-1$
-                                e.getLocalizedMessage()));
+                        EventFactory.createVerifyFailed("", //$NON-NLS-1$
+                                cause.toString()));
             }
-            throw new StepExecutionException(e.toString(),
+            throw new StepExecutionException(cause.toString(),
                     EventFactory.createActionError(
                             TestErrorEvent.EXECUTION_ERROR,
                             new String[] {cause.toString()}));

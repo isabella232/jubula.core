@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.lang.StringUtils;
@@ -22,13 +24,14 @@ import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRobotFactory;
-import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.ReflectionUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 /**
  * Implementation of basic functions for a lot of graphics components
@@ -548,16 +551,21 @@ public class WidgetTester extends AbstractUITester {
      * @param signature signature of the method
      * @param args arguments for the method
      * @param argsSplit separator for the Arguments
-     * @return returns null or if the invoked method return
-     *         java.util.Properties, the string representation of the properties
+     * @param timeout the timeout
      */
-    public String rcInvokeMethod(final String fqcn, final String name,
-            final String signature, final String args, final String argsSplit) {
+    public void rcInvokeMethod(final String fqcn, final String name,
+            final String signature, final String args, final String argsSplit,
+            int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
-        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createInvokeRunnable(fqcn, name, signature, args, argsSplit));
-        return null;
+        try {
+            Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name, signature, args, argsSplit),
+                    timeout);
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
     }
 
     /**
@@ -569,17 +577,24 @@ public class WidgetTester extends AbstractUITester {
      * @param signature signature of the method
      * @param args arguments for the method
      * @param argsSplit separator for the Arguments
+     * @param timeout the timeout
      * @return returns the string representation of the return value of the
      *         invoked method
      */
     public String rcInvokeMethodStoreReturn(final String variableName,
             final String fqcn, final String name, final String signature,
-            final String args, final String argsSplit) {
+            final String args, final String argsSplit, int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
-        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createInvokeRunnable(fqcn, name, signature, args, argsSplit));
-        return result.toString();
+        try {
+            Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name, signature, args, argsSplit),
+                    timeout);
+            return result.toString();
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
     }
     
     /**
@@ -591,12 +606,12 @@ public class WidgetTester extends AbstractUITester {
      * @param argsSplit separator for the arguments
      * @return the IRunnable object
      */
-    private IRunnable<Object> createInvokeRunnable(final String fqcn,
+    private Callable<Object> createCallable(final String fqcn,
             final String name, final String signature, final String args,
             final String argsSplit) {
-        return new IRunnable<Object>() {
+        return new Callable<Object>() {
 
-            public Object run() {
+            public Object call() {
                 ClassLoader uiClassloader = Thread.currentThread()
                         .getContextClassLoader();
                 try {
@@ -636,14 +651,21 @@ public class WidgetTester extends AbstractUITester {
      * 
      * @param fqcn Fully qualified class name
      * @param name name of the Method
+     * @param timeout the timeout
      * @return returns null or if the invoked method return
      *         java.util.Properties, the string representation of the properties
      */
-    public String rcInvokeMethod(final String fqcn, final String name) {
+    public String rcInvokeMethod(final String fqcn, final String name,
+            int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
-        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createInvokeRunnable(fqcn, name));
+        try {
+            Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name), timeout);
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
         return null;
     }
 
@@ -653,16 +675,22 @@ public class WidgetTester extends AbstractUITester {
      * @param variableName name of the variable of the cap. This isn't used.
      * @param fqcn Fully qualified class name
      * @param name name of the Method
+     * @param timeout the timeout
      * @return returns the string representation of the return value of the
      *         invoked method
      */
     public String rcInvokeMethodStoreReturn(final String variableName,
-            final String fqcn, final String name) {
+            final String fqcn, final String name, int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
-        Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createInvokeRunnable(fqcn, name));
-        return result.toString();
+        try {
+            Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name), timeout);
+            return result.toString();
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
     }
     
     /**
@@ -671,11 +699,11 @@ public class WidgetTester extends AbstractUITester {
      * @param name method name
      * @return the IRunnable object
      */
-    private IRunnable<Object> createInvokeRunnable(final String fqcn,
+    private Callable<Object> createCallable(final String fqcn,
             final String name) {
-        return new IRunnable<Object>() {
+        return new Callable<Object>() {
 
-            public Object run() {
+            public Object call() {
                 ClassLoader uiClassloader = Thread.currentThread()
                         .getContextClassLoader();
                 try {

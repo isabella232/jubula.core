@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.driver;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 
 /**
@@ -51,6 +54,22 @@ public interface IEventThreadQueuer {
      */
     public <V> V invokeAndWait(String name, IRunnable<V> runnable)
         throws StepExecutionException;
+    
+    /**
+     * Invokes the <code>callable</code> in the toolkit event queue and blocks
+     * until termination of <code>callable</code> or when the timeout is
+     * reached.
+     * 
+     * @param name The name of this invocation
+     * @param callable the callable
+     * @param timeout the time out in ms
+     * @param <V> the result type of method <tt>invokeAndWait</tt>
+     * @return the result of the execution, might be null
+     * @throws StepExecutionException
+     * @throws TimeoutException
+     */
+    public <V> V invokeAndWait(String name, Callable<V> callable, long timeout)
+            throws StepExecutionException, TimeoutException;
     
     
     /**

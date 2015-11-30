@@ -10,10 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeoutException;
+
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
-import org.eclipse.jubula.rc.common.driver.IRunnable;
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
 import org.eclipse.jubula.rc.common.util.ReflectionUtil;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 /**
  * Tester class for the Reflection Component
  * 
@@ -48,14 +53,19 @@ public abstract class JavaReflectionTester implements ITester {
      * @param signature signature of the method
      * @param args arguments for the method
      * @param argsSplit separator for the Arguments
-     * @return returns null or if the invoked method return
-     *         java.util.Properties, the string representation of the properties
+     * @param timeout the timeout
      */
-    public String rcInvokeMethod(final String fqcn, final String name,
-            final String signature, final String args, final String argsSplit) {
-        Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createRunnable(fqcn, name, signature, args, argsSplit));
-        return null;
+    public void rcInvokeMethod(final String fqcn, final String name,
+            final String signature, final String args, final String argsSplit,
+            int timeout) {
+        try {
+            Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name, signature, args, argsSplit),
+                    timeout);
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
     }
 
     /**
@@ -67,15 +77,22 @@ public abstract class JavaReflectionTester implements ITester {
      * @param signature signature of the method
      * @param args arguments for the method
      * @param argsSplit separator for the Arguments
+     * @param timeout the timeout
      * @return returns the string representation of the return value of the
      *         invoked method
      */
     public String rcInvokeMethodStoreReturn(final String variableName,
             final String fqcn, final String name, final String signature,
-            final String args, final String argsSplit) {
-        Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createRunnable(fqcn, name, signature, args, argsSplit));
-        return result.toString();
+            final String args, final String argsSplit, int timeout) {
+        try {
+            Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name, signature, args, argsSplit),
+                    timeout);
+            return result.toString();
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
     }
 
     /**
@@ -87,12 +104,12 @@ public abstract class JavaReflectionTester implements ITester {
      * @param argsSplit separator for the arguments
      * @return the IRunnable object
      */
-    private IRunnable<Object> createRunnable(final String fqcn,
+    private Callable<Object> createCallable(final String fqcn,
             final String name, final String signature, final String args,
             final String argsSplit) {
-        return new IRunnable<Object>() {
+        return new Callable<Object>() {
 
-            public Object run() {
+            public Object call() {
                 ClassLoader uiClassloader = Thread.currentThread()
                         .getContextClassLoader();
                 try {
@@ -111,13 +128,17 @@ public abstract class JavaReflectionTester implements ITester {
      * 
      * @param fqcn Fully qualified class name
      * @param name name of the Method
-     * @return returns null or if the invoked method return
-     *         java.util.Properties, the string representation of the properties
+     * @param timeout the timeout
      */
-    public String rcInvokeMethod(final String fqcn, final String name) {
-        Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createRunnable(fqcn, name));
-        return null;
+    public void rcInvokeMethod(final String fqcn, final String name,
+            int timeout) {
+        try {
+            Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name), timeout);
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
     }
 
     /**
@@ -126,14 +147,20 @@ public abstract class JavaReflectionTester implements ITester {
      * @param variableName name of the variable of the cap. This isn't used.
      * @param fqcn Fully qualified class name
      * @param name name of the Method
+     * @param timeout the timeout
      * @return returns the string representation of the return value of the
      *         invoked method
      */
     public String rcInvokeMethodStoreReturn(final String variableName,
-            final String fqcn, final String name) {
-        Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
-                createRunnable(fqcn, name));
-        return result.toString();
+            final String fqcn, final String name, int timeout) {
+        try {
+            Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
+                    createCallable(fqcn, name), timeout);
+            return result.toString();
+        } catch (TimeoutException e) {
+            throw new StepExecutionException(e.toString(), EventFactory
+                    .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
+        }
     }
 
     /**
@@ -142,11 +169,11 @@ public abstract class JavaReflectionTester implements ITester {
      * @param name method name
      * @return the IRunnable object
      */
-    private IRunnable<Object> createRunnable(final String fqcn,
+    private Callable<Object> createCallable(final String fqcn,
             final String name) {
-        return new IRunnable<Object>() {
+        return new Callable<Object>() {
 
-            public Object run() {
+            public Object call() {
                 ClassLoader uiClassloader = Thread.currentThread()
                         .getContextClassLoader();
                 try {
