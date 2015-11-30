@@ -340,7 +340,7 @@
         <table border="0" width="100%">
             <tr>
                 <td>
-	                <xsl:call-template name="LFsToBRs">
+	                <xsl:call-template name="LFsToBRs_SpaceToNBSP">
 	                    <xsl:with-param name="input" select="name"/>
                     </xsl:call-template>
                 </td>
@@ -609,5 +609,43 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
+	
+	<xsl:template name="LFsToBRs_SpaceToNBSP">
+        <xsl:param name="input" />
+        <xsl:choose>
+            <xsl:when test="contains($input, '&#10;')">
+                <xsl:call-template name="LFsToBRs_SpaceToNBSP">
+                    <xsl:with-param name="input"
+                        select="substring-before($input, '&#10;')" />
+                </xsl:call-template>
+                <br />
+                <xsl:call-template name="LFsToBRs_SpaceToNBSP">
+                    <xsl:with-param name="input"
+                        select="substring-after($input, '&#10;')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($input, '&#32;')">
+                <xsl:call-template name="LFsToBRs_SpaceToNBSP">
+                    <xsl:with-param name="input"
+                        select="substring-before($input, '&#32;')" />
+                </xsl:call-template>&#160;<xsl:call-template name="LFsToBRs_SpaceToNBSP">
+                    <xsl:with-param name="input"
+                        select="substring-after($input, '&#32;')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="contains($input, '&#9;')">
+                <xsl:call-template name="LFsToBRs_SpaceToNBSP">
+                    <xsl:with-param name="input"
+                        select="substring-before($input, '&#9;')" />
+                </xsl:call-template>&#160;&#160;&#160;&#160;<xsl:call-template name="LFsToBRs_SpaceToNBSP">
+                    <xsl:with-param name="input"
+                        select="substring-after($input, '&#9;')" />
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$input" />
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
 	
 </xsl:stylesheet>
