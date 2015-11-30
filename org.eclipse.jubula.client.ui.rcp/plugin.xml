@@ -2519,6 +2519,7 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
             </or>
           </iterate>
         </and>

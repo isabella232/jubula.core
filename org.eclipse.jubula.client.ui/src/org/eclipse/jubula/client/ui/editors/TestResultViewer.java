@@ -30,7 +30,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecorationContext;
 import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.ISelection;
@@ -57,6 +57,7 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
@@ -466,11 +467,13 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             m_session = Persistor.instance().openSession();
         }
         m_viewer = new TreeViewer(parent);
+        ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         m_viewer.setContentProvider(new TestResultTreeViewContentProvider());
-        DecoratingLabelProvider labelProvider = new DecoratingLabelProvider(
-            new TestResultTreeViewLabelProvider(), 
-            PlatformUI.getWorkbench()
-                .getDecoratorManager().getLabelDecorator());
+        DecoratingCellLabelProvider labelProvider =
+                new DecoratingCellLabelProvider(
+                    new TestResultTreeViewLabelProvider(), 
+                    PlatformUI.getWorkbench()
+                        .getDecoratorManager().getLabelDecorator());
         IDecorationContext decorationContext = 
             labelProvider.getDecorationContext();
         if (decorationContext instanceof DecorationContext) {

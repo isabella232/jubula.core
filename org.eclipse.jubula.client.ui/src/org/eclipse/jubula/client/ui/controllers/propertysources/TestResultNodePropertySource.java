@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -111,7 +112,10 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
 
-        final INodePO node = m_node.getNode();        
+        final INodePO node = m_node.getNode();
+        if (node instanceof ICommentPO) {
+            return;
+        }
         PropertyDescriptor propDes = new PropertyDescriptor(
             new PropertyController() {
                 public Object getProperty() {

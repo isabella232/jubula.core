@@ -18,6 +18,7 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.DecorationContext;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -48,6 +49,7 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer;
+import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -130,9 +132,10 @@ public class TestResultTreeView extends ViewPart
         composite.setLayoutData(gridData);
         
         setTreeViewer(new TreeViewer(composite));
+        ColumnViewerToolTipSupport.enableFor(getTreeViewer());
         getTreeViewer().setContentProvider(
                 new TestResultTreeViewContentProvider());
-        getTreeViewer().setLabelProvider(new DecoratingLabelProvider(
+        getTreeViewer().setLabelProvider(new DecoratingCellLabelProvider(
                 new TestResultTreeViewLabelProvider(), Plugin.getDefault()
                     .getWorkbench().getDecoratorManager().getLabelDecorator()));
         

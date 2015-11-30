@@ -15,7 +15,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.CellLabelProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -27,13 +29,15 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 
 
 /**
  * @author BREDEX GmbH
  * @created 18.10.2004
  */
-public class TestResultTreeViewLabelProvider extends LabelProvider {
+public class TestResultTreeViewLabelProvider extends CellLabelProvider
+        implements ILabelProvider {
     /** ImageCache */
     private static Map < ImageDescriptor, Image > imageCache = 
         new HashMap < ImageDescriptor, Image > ();
@@ -120,5 +124,44 @@ public class TestResultTreeViewLabelProvider extends LabelProvider {
     public RuntimeException unknownElement(Object element) {
         return new RuntimeException(Messages.UnknownTypeOfElementInTreeOfType
             + element.getClass().getName());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getToolTipText(Object element) {
+        if (element instanceof TestResultNode) {
+            TestResultNode resultNode = (TestResultNode) element;
+            INodePO node = ((TestResultNode) element).getNode();
+            if (node instanceof ICommentPO) {
+                ICommentPO comment = (ICommentPO)node;
+                return comment.getName();
+            }
+        }
+        return super.getToolTipText(element);
+    }
+    
+
+    /** {@inheritDoc} */
+    public Point getToolTipShift(Object object) {
+        return new Point(5, 5);
+    }
+
+    /** {@inheritDoc} */
+    public int getToolTipDisplayDelayTime(Object object) {
+        return 50;
+    }
+
+    /** {@inheritDoc} */
+    public int getToolTipTimeDisplayed(Object object) {
+        return 5000;
+    }
+
+    /** {@inheritDoc} */
+    public void update(ViewerCell cell) {
+        Object element = cell.getElement();
+        cell.setText(getText(element));
+        Image image = getImage(element);
+        cell.setImage(image);
     }
 }
