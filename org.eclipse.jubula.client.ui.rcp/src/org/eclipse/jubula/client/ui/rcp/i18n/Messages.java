@@ -854,6 +854,7 @@ public class Messages extends NLS {
     public static String TestResultViewPreferencePageInvalidMaxNumberOfDays;
     public static String TestResultViewPreferencePageInvalidNegMaxNumberOfDays;
     public static String TestResultViewPreferencePageMaxNumberOfDaysText;
+    public static String TestResultViewPreferencePageOpenLogView;
     public static String TestResultViewPreferencePageOpenResultView;
     public static String TestResultViewPreferencePagePathEmpty;
     public static String TestResultViewPreferencePagePathInvalid;

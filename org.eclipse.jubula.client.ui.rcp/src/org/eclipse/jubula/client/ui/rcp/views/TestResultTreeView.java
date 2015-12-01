@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IDecorationContext;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.ClientTest;
@@ -56,6 +57,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.client.ui.utils.OpenViewUtils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
@@ -89,6 +91,9 @@ public class TestResultTreeView extends ViewPart
     /** margin height = 2 */
     private static final int MARGIN_HEIGHT = 2;
 
+    /** react on selection to open log view */
+    private ISelectionChangedListener m_selectionListener = 
+            new OpenViewUtils.TestResultNodeSelectionListener();
 
     /** TreeViewer */
     private TreeViewer m_treeViewer;
@@ -160,6 +165,7 @@ public class TestResultTreeView extends ViewPart
         final DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addDataChangedListener(this, true);
         ded.addProjectLoadedListener(this, true);
+        getTreeViewer().addSelectionChangedListener(m_selectionListener);
     }
     
     /**
@@ -191,6 +197,7 @@ public class TestResultTreeView extends ViewPart
         DataEventDispatcher.getInstance().removeDataChangedListener(this);
         getSite().setSelectionProvider(null);
         super.dispose();
+        getTreeViewer().removeSelectionChangedListener(m_selectionListener);
     }
 
     /**

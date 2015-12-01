@@ -61,6 +61,7 @@ import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.provider.contentprovider.TestResultTreeViewContentProvider;
 import org.eclipse.jubula.client.ui.provider.labelprovider.TestResultTreeViewLabelProvider;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.client.ui.utils.OpenViewUtils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
@@ -374,6 +375,10 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
      */
     private TestResultNode m_testResultRootNode;
     
+    /** react on selection to open log view */
+    private ISelectionChangedListener m_selectionListener = 
+            new OpenViewUtils.TestResultNodeSelectionListener();
+    
     /** {@inheritDoc} */
     public void doSave(IProgressMonitor monitor) {
         // "Save" not supported. Do nothing.
@@ -499,6 +504,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             new Label(parent, SWT.NONE).setText(
                     Messages.EditorsOpenEditorOperationCanceled);
         }
+        m_viewer.addSelectionChangedListener(m_selectionListener);
     }
 
     /**
@@ -581,6 +587,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     public void dispose() {
         super.dispose();
         Persistor.instance().dropSession(m_session);
+        removeSelectionChangedListener(m_selectionListener);
     }
 
     /**
@@ -596,4 +603,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     private void setTestResultRootNode(TestResultNode testResultRootNode) {
         m_testResultRootNode = testResultRootNode;
     }
+    
+
 }

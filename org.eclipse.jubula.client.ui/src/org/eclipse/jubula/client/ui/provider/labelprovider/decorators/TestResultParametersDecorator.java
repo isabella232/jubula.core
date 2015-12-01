@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.provider.labelprovider.decorators;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 
 /**
  * @author BREDEX GmbH
@@ -24,6 +26,10 @@ public class TestResultParametersDecorator extends
         if (element instanceof TestResultNode) {
             TestResultNode testResult = (TestResultNode) element;
             decoration.addSuffix(testResult.getParameterDescription());
+            if (StringUtils.isNotBlank(testResult.getCommandLog())) {
+                decoration.addOverlay(
+                        IconConstants.COMMANDLOG_IMAGE_DESCRIPTOR);
+            }
         }
     }
 }

@@ -176,6 +176,9 @@ public interface Constants {
     public static final String TRACKRESULTS_KEY = "TRACKRESULTS_PREF_KEY"; //$NON-NLS-1$
 
     /** Key for auto screenshot function */
+    public static final String OPEN_LOGVIEW_KEY = "OPEN_LOGVIEW_PREF_KEY"; //$NON-NLS-1$
+    
+    /** Key for auto screenshot function */
     public static final String AUTO_SCREENSHOT_KEY = "AUTO_SCREENSHOT_PREF_KEY"; //$NON-NLS-1$
 
     /** Key for auto screenshot function */
@@ -526,12 +529,12 @@ public interface Constants {
     /** ask before test execution = prompt */
     public static final int TEST_EXECUTION_RELEVANT_PROMPT = 2;
     
-    /** test execution is always relevant = yes */
-    public static final int OPEN_DESCRIPTION_VIEW_YES = 1;
-    /** test execution is never relevant = no */
-    public static final int OPEN_DESCRIPTION_VIEW_NO = 2;
-    /** ask before test execution = prompt */
-    public static final int OPEN_DESCRIPTION_VIEW_PROMPT = 0;
+    /** value for YES */
+    public static final int UTILS_YES = 1;
+    /** value for NO */
+    public static final int UTILS_NO = 2;
+    /** value for PROMPT */
+    public static final int UTILS_PROMPT = 0;
     
     // -------------------------------------------------------------
     // Marker for Problem/Task view

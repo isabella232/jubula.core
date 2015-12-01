@@ -146,6 +146,10 @@ public class Messages extends NLS {
     public static String UtilsWarning2;
     public static String WrongElementType;    
     
+    public static String UtilsOpenViewTitle;
+    public static String UtilsViewQuestion;
+    public static String UtilsRemember;
+    
     static {
         // initialize resource bundle
         NLS.initializeMessages(BUNDLE_NAME, Messages.class);

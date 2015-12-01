@@ -35,8 +35,8 @@ import org.eclipse.swt.widgets.Text;
  */
 public class LogView extends ContextBasedView 
     implements IJBPart, ISelectionProvider {
-    
-    
+    /** id of the view must be the same as in the plugin.xml */
+    public static final String VIEW_ID = "org.eclipse.jubula.client.ui.views.Log"; //$NON-NLS-1$
     /**
      * the scrolled composite
      */

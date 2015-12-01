@@ -23,21 +23,25 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.I18nStringCombo;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
@@ -106,6 +110,18 @@ public class TestResultPreferencePage extends PreferencePage
      * <code>m_testExecRememberValue</code>
      */
     private boolean m_testExecRememberValue;
+
+    /** LogView Radio Button for always */
+    private Button m_openLogButton;
+    /** LogView Radio Button for never */
+    private Button m_openLog1Button;
+    /** LogView Radio Button for prompt */
+    private Button m_openLog2Button;
+    /** the value */
+    private int m_openLogValue;
+    /** listener for changes in the open logview settings */
+    private SelectionListener m_logButtonListener = 
+            new WidgetSelectionListener();
     
     /**
      * Default Constructor  
@@ -135,7 +151,9 @@ public class TestResultPreferencePage extends PreferencePage
         compositeGridData(composite);
         // add widgets to composite
         createOpenResultView(composite);
+        createRememberGroup(composite);
         createGenerateReport(composite);
+        
 
         createMaxNumberOfResults(composite);
         // context sensitive help
@@ -153,6 +171,7 @@ public class TestResultPreferencePage extends PreferencePage
                         SWT.DEFAULT));
             }
         });
+        addListener();
         return scrollComposite;
     }
 
@@ -525,6 +544,9 @@ public class TestResultPreferencePage extends PreferencePage
         getPreferenceStore().setValue(
                 Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY,
                 m_testExecRememberValue);
+        getPreferenceStore().setValue(Constants.OPEN_LOGVIEW_KEY,
+                m_openLogValue);
+        removeListener();
         return super.performOk();
     }
 
@@ -575,5 +597,80 @@ public class TestResultPreferencePage extends PreferencePage
      */
     protected void setPath(String path) {
         m_path.setText(path);
+    }
+    
+    /**
+     * @param composite The parent composite.
+     */
+    private void createRememberGroup(Composite composite) {
+        Group group = new Group(composite, SWT.NONE);
+        group.setText(Messages.TestResultViewPreferencePageOpenLogView);
+        RowLayout layout = new RowLayout();
+        group.setLayout(layout);
+        GridData layoutData = new GridData(GridData.FILL_HORIZONTAL);
+        layoutData.grabExcessHorizontalSpace = true;
+        group.setLayoutData(layoutData);
+        m_openLogButton = new Button(group, SWT.RADIO);
+        m_openLogButton.setText(Messages.PrefPageBasicAlways);
+        m_openLog1Button = new Button(group, SWT.RADIO);
+        m_openLog1Button.setText(Messages.PrefPageBasicNever);
+        m_openLog2Button = new Button(group, SWT.RADIO);
+        m_openLog2Button.setText(Messages.PrefPageBasicPrompt);
+        
+        m_openLogValue =
+                getPreferenceStore().getInt(Constants.OPEN_LOGVIEW_KEY);
+        switch (m_openLogValue) {
+            case Constants.UTILS_YES:
+                m_openLogButton.setSelection(true);
+                break;
+            case Constants.UTILS_NO:
+                m_openLog1Button.setSelection(true);
+                break;
+            default:
+                m_openLog2Button.setSelection(true);
+                break;
+        }
+    }
+    /**
+     * adds listeners to widgets
+     */
+    private void addListener() {
+        m_openLogButton.addSelectionListener(m_logButtonListener);
+        m_openLog1Button.addSelectionListener(m_logButtonListener);
+        m_openLog2Button.addSelectionListener(m_logButtonListener);
+    }
+    
+    /**
+     * removes listener from widgets
+     */
+    private void removeListener() {
+        m_openLogButton.removeSelectionListener(m_logButtonListener);
+        m_openLog1Button.removeSelectionListener(m_logButtonListener);
+        m_openLog2Button.removeSelectionListener(m_logButtonListener);
+    }
+    
+    /**
+     * This inner class creates a new SelectionListener.
+     * @author BREDEX GmbH
+     * @created 09.08.2005
+     */
+    private class WidgetSelectionListener extends SelectionAdapter {
+        /** @param e The selection event. */
+        public void widgetSelected(SelectionEvent e) {
+            Object o = e.getSource();
+            if (o == m_openLogButton) {
+                m_openLogValue = Constants.UTILS_YES;
+                return;
+            } else if (o == m_openLog1Button) {
+                m_openLogValue = Constants.UTILS_NO;
+                return;
+            } else if (o == m_openLog2Button) {
+                m_openLogValue = Constants.UTILS_PROMPT;
+                return;
+            }
+            Assert.notReached(Messages.EventActivatedUnknownWidget 
+                    + StringConstants.LEFT_PARENTHESES + o 
+                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
+        }
     }
 }
