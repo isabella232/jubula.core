@@ -55,26 +55,20 @@
         </varlistentry>
         <varlistentry>
           <term>
-            The AUT source directory
+            The AUT source directories
           </term>
           <listitem>
             <para>
-               is the directory where the source files (i.e. the
-              program code) for your AUT are kept. Entering a
+               are the directories where the source files (i.e. the
+              program code) for your AUT are kept. Adding a
               directory for the source files is optional, however,
-              if you do not enter one, then you will not be able to
+              if you don't add one, then you will not be able to
               view your code coverage results at the source file
-              level. The AUT source directory must contain the
+              level. The AUT source directories must contain the
               source files in their Java package structure. The
               class files must have been compiled with debug
               information to make the lines of code executed visible
               in the code coverage report.
-            </para>
-            <para role="tip">
-              You can enter
-              relative paths for the AUT installation and AUT source
-              directories. The paths are relative to the working
-              directory.
             </para>
           </listitem>
         </varlistentry>

@@ -53,7 +53,9 @@ public class MonitoringConstants {
     public static final String RENDER_AS_CHECKBOX = "boolean"; //$NON-NLS-1$ 
     /** a type "filebrowse" (set in the extension point) will be rendered as a Textfield with additional "browse" button */
     public static final String RENDER_AS_FILEBROWSE = "filebrowse"; //$NON-NLS-1$
-    
+    /** a type "multidirbrowse" (set in extension point) will be rendered as a multi directory browser 
+     * with add, edit, remove option.   */
+    public static final String RENDER_AS_MULTIDIR_BROWSE = "multidirbrowse"; //$NON-NLS-1$
     /** key for ConfigMap */
     public static final String AGENT_CLASS = "AGENT_CLASS"; //$NON-NLS-1$   
     /** key for ConfigMap */
@@ -61,7 +63,7 @@ public class MonitoringConstants {
     /** key for ConfigMap */
     public static final String INSTALL_DIR = "INSTALL_DIR"; //$NON-NLS-1$    
     /** key for ConfigMap */
-    public static final String SOURCE_DIR = "SOURCE_DIR"; //$NON-NLS-1$    
+    public static final String SOURCE_DIRS = "SOURCE_DIRS"; //$NON-NLS-1$    
     /** key for ConfigMap */
     public static final String BUNDLE_ID = "BUNDLE_ID"; //$NON-NLS-1$
     

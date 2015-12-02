@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 import java.util.zip.ZipException;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
@@ -64,8 +63,6 @@ import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 /**
  * @author BREDEX GmbH
  * @created 13.02.2006
@@ -95,7 +92,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     /** for check if the executable text field is valid */
     private boolean m_isExecFieldValid = true;
 
-    
     // internally used classes for data handling
     // internally used GUI components
     /** gui component */
@@ -146,7 +142,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     private WidgetSelectionListener m_selectionListener;
     /** the the WidgetKeyListener */
     private WidgetKeyListener m_keyListener;
-    
     /**
      * @param parent {@inheritDoc}
      * @param style {@inheritDoc}

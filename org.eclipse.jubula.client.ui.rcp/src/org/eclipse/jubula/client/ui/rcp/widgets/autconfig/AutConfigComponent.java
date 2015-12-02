@@ -48,6 +48,8 @@ import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.utils.RemoteFileStore;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
+import org.eclipse.jubula.client.ui.rcp.widgets.MultiDirectoryBrowser;
+import org.eclipse.jubula.client.ui.rcp.widgets.MultiDirectoryBrowser.IMultiDirectorySelectionListener;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -193,6 +195,22 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     }
     
     /**
+     * This private inner class contains a new MultiDirectorySelectionListener.
+     * 
+     * @author BREDEX GmbH
+     * @created 03.12.2015
+     */
+    private class MultiDirectorySelectionListener
+            implements IMultiDirectorySelectionListener {
+
+        @Override
+        public void selectedDirectoriesChanged(String keyName, String value) {
+            // Store the config value
+            putConfigValue(keyName, value);
+        }
+    }
+    
+    /**
      * Possible modes for the dialog
      *
      * @author BREDEX GmbH
@@ -229,6 +247,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     private WidgetSelectionListener m_selectionListener;
     /** the WidgetModifyListener */
     private WidgetModifyListener m_modifyListener;
+    
+    /**Listener for multi-directory changes*/
+    private MultiDirectorySelectionListener m_directorySelectionListener;
 
     /** Composite representing the basic area */
     private Composite m_basicAreaComposite;
@@ -1276,6 +1297,19 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     }
 
     /**
+     * 
+     * @return the single instance of the selection listener.
+     */
+    @SuppressWarnings("synthetic-access")
+    private MultiDirectorySelectionListener getMultiDirSelectionListener() {
+        if (m_directorySelectionListener == null) {
+            m_directorySelectionListener = 
+                    new MultiDirectorySelectionListener();
+        }
+        return m_directorySelectionListener;
+    }
+    
+    /**
      * @return the Text component for the Configuration name.
      */
     protected Text getAutConfigNameTextField() {
@@ -1480,26 +1514,28 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             java.util.List<MonitoringAttribute> monitoringAttributeList) {
         
         for (int i = 0; i < monitoringAttributeList.size(); i++) {
-            final MonitoringAttribute attribute = 
-                monitoringAttributeList.get(i);
-            if (attribute.isRender()) { 
-                if (attribute.getType().equalsIgnoreCase(
-                        MonitoringConstants.RENDER_AS_TEXTFIELD)) { 
-                    createMonitoringWidgetLabel(monitoringComposite, attribute);
-                    createMonitoringTextFieldWidget(
-                            monitoringComposite, attribute);
-                }                
-                if (attribute.getType().equalsIgnoreCase(
-                        MonitoringConstants.RENDER_AS_FILEBROWSE)) {
-                    createMonitoringWidgetLabel(monitoringComposite, attribute);
-                    createMonitoringFilebrowse(monitoringComposite, attribute);
-                }
-                if (attribute.getType().equalsIgnoreCase(
-                        MonitoringConstants.RENDER_AS_CHECKBOX)) { 
-                    createMonitoringWidgetLabel(monitoringComposite, attribute);
-                    createMonitoringCheckBoxWidget(
-                            monitoringComposite, attribute);
-                }
+            final MonitoringAttribute attribute =  monitoringAttributeList.
+                    get(i);
+            if (!attribute.isRender()) {
+                continue;
+            }
+            if (attribute.getType().equalsIgnoreCase(
+                    MonitoringConstants.RENDER_AS_TEXTFIELD)) {
+                createMonitoringWidgetLabel(monitoringComposite, attribute);
+                createMonitoringTextFieldWidget(monitoringComposite, attribute);
+            } else if (attribute.getType().equalsIgnoreCase(
+                    MonitoringConstants.RENDER_AS_FILEBROWSE)) {
+                createMonitoringWidgetLabel(monitoringComposite, attribute);
+                createMonitoringFilebrowse(monitoringComposite, attribute);
+            } else if (attribute.getType()
+                    .equalsIgnoreCase(MonitoringConstants.RENDER_AS_CHECKBOX)) {
+                createMonitoringWidgetLabel(monitoringComposite, attribute);
+                createMonitoringCheckBoxWidget(monitoringComposite, attribute);
+            } else if (attribute.getType().equalsIgnoreCase(
+                    MonitoringConstants.RENDER_AS_MULTIDIR_BROWSE)) {
+                createMonitoringWidgetLabel(monitoringComposite, attribute);
+                createMonitoringMultipleDirectoryBrowser(monitoringComposite,
+                      attribute);
             }
         }
     }
@@ -1525,10 +1561,28 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 monitoringBrowseButtonSelected(textField);
             }
         });    
-        
     }
     
-
+    /**
+     * Creates a multiple directory browser component, 
+     * where the directories can be added, edited and removed
+     * @param composite The composite to add the widget on
+     * @param att The current attribute
+     */
+    private void createMonitoringMultipleDirectoryBrowser(Composite composite,
+            MonitoringAttribute att) {
+        
+        Composite c = UIComponentHelper.createLayoutComposite(composite);
+        GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, true,
+                false, 1, 1);
+        c.setLayoutData(textGrid);
+        
+        MultiDirectoryBrowser multiDirectoryBrowser = new MultiDirectoryBrowser(
+                c, att.getId(), getConfigValue(att.getId()));
+        multiDirectoryBrowser
+                .addListModifiedListener(getMultiDirSelectionListener());
+    }
+       
     /**
      * Creates a Checkbox for the given monitoring composite, 
      * which was specified in the extension point.     * 
@@ -1552,8 +1606,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 putConfigValue(att.getId(), 
                         String.valueOf(b.getSelection()));     
             }
-        });
-        
+        });        
     }
     /**
      * creates a Textfield for a given monitoring composite,

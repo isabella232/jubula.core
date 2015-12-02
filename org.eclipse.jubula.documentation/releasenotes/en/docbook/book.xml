@@ -28,6 +28,7 @@
         <link xl:href="http://testing.bredex.de/migration-information.html">http://testing.bredex.de/migration-information.html</link>
       </para>
     </chapter>
+    <xi:include href="8.2.3/notes.xml"/>
     <xi:include href="8.2.2/notes.xml"/>
     <xi:include href="8.2.1/notes.xml"/>
     <xi:include href="8.2.0/notes.xml"/>
