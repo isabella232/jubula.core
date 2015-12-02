@@ -114,8 +114,45 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
 
         final INodePO node = m_node.getNode();
         if (node instanceof ICommentPO) {
+            initCommentPropDescriptor();
             return;
         }
+        initCommonPropDescriptors(node);
+
+        initResultDetailsPropDesc();
+        
+        if (node instanceof IEventExecTestCasePO) {
+            initEventTestCasePropDescriptor(node);
+        }
+
+        if (m_node.getEvent() != null) { 
+            initErrorEventPropDescriptor();
+        }
+
+        initComponentNameDetailsPropDescriptor(m_node);
+        initActionDetailsPropDescriptor(m_node);
+        initParameterDescriptor(m_node);
+    }
+
+    /**
+     * inits property descriptors for a comment
+     */
+    private void initCommentPropDescriptor() {
+        PropertyDescriptor propDes = new PropertyDescriptor(
+                new PropertyController() {
+                    public Object getProperty() {
+                        final TestResultNode cap = m_node;
+                        return m_node.getName();
+                    }
+                }, P_ELEMENT_DISPLAY_CAPCOMMENT);
+        addPropertyDescriptor(propDes);
+    }
+
+    /**
+     * inits common property descriptors for a node
+     * @param node the node
+     */
+    private void initCommonPropDescriptors(final INodePO node) {
         PropertyDescriptor propDes = new PropertyDescriptor(
             new PropertyController() {
                 public Object getProperty() {
@@ -169,20 +206,6 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
             propDes.setCategory(P_TESTSTEP_CAT);
             addPropertyDescriptor(propDes);
         }
-
-        initResultDetailsPropDesc();
-        
-        if (node instanceof IEventExecTestCasePO) {
-            initEventTestCasePropDescriptor(node);
-        }
-
-        if (m_node.getEvent() != null) { 
-            initErrorEventPropDescriptor();
-        }
-
-        initComponentNameDetailsPropDescriptor(m_node);
-        initActionDetailsPropDescriptor(m_node);
-        initParameterDescriptor(m_node);
     }
     
     /**
