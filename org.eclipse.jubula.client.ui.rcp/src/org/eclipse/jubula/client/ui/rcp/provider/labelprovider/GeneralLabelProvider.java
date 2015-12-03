@@ -192,6 +192,13 @@ public class GeneralLabelProvider extends ColumnLabelProvider
 
     /** {@inheritDoc} */
     public int getToolTipTimeDisplayed(Object object) {
+        if (object instanceof ICommentPO) {
+            String comment = ((ICommentPO) object).getName();
+            int linebreaks = comment.split(System.lineSeparator() + "+").length; //$NON-NLS-1$
+            int spaces = comment.split(StringConstants.SPACE + "+").length; //$NON-NLS-1$
+            // estimate 500ms to read per word
+            return (linebreaks + spaces) * 500;
+        }
         return 5000;
     }
     

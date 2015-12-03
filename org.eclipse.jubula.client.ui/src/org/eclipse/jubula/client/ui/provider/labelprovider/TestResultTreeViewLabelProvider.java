@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
@@ -154,6 +155,13 @@ public class TestResultTreeViewLabelProvider extends CellLabelProvider
 
     /** {@inheritDoc} */
     public int getToolTipTimeDisplayed(Object object) {
+        if (object instanceof ICommentPO) {
+            String comment = ((ICommentPO) object).getName();
+            int linebreaks = comment.split(System.lineSeparator() + "+").length; //$NON-NLS-1$
+            int spaces = comment.split(StringConstants.SPACE + "+").length; //$NON-NLS-1$
+            // estimate 500ms to read per word
+            return (linebreaks + spaces) * 500;
+        }
         return 5000;
     }
 
