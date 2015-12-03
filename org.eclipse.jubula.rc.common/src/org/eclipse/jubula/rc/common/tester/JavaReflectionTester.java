@@ -17,6 +17,7 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
 import org.eclipse.jubula.rc.common.util.ReflectionUtil;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 /**
@@ -88,7 +89,7 @@ public abstract class JavaReflectionTester implements ITester {
             Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
                     createCallable(fqcn, name, signature, args, argsSplit),
                     timeout);
-            return result.toString();
+            return result == null ? StringConstants.NULL : result.toString();
         } catch (TimeoutException e) {
             throw new StepExecutionException(e.toString(), EventFactory
                     .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
@@ -156,7 +157,7 @@ public abstract class JavaReflectionTester implements ITester {
         try {
             Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
                     createCallable(fqcn, name), timeout);
-            return result.toString();
+            return result == null ? StringConstants.NULL : result.toString();
         } catch (TimeoutException e) {
             throw new StepExecutionException(e.toString(), EventFactory
                     .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));

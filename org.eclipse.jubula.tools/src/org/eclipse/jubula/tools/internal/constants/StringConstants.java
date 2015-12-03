@@ -151,4 +151,9 @@ public interface StringConstants {
      * <code>PIPE "|"</code>
      */
     public static final String PIPE = "|"; //$NON-NLS-1$
+    
+    /**
+     * <code>NULL</code>
+     */
+    public static final String NULL = "NULL"; //$NON-NLS-1$
 }

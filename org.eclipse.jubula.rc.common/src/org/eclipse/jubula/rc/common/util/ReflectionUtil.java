@@ -17,6 +17,7 @@ import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -26,6 +27,11 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created 27.10.2015
  */
 public class ReflectionUtil {
+    /**
+     * The logging.
+     */
+    private static AutServerLogger log = 
+        new AutServerLogger(ReflectionUtil.class);
     
     /**
      * private constructor, because this is a util class
@@ -143,10 +149,19 @@ public class ReflectionUtil {
                     EventFactory.createActionError(
                             TestErrorEvent.EXECUTION_ERROR,
                             new String[] {cause.toString()}));
-        }  
+        }
+        if (e instanceof NullPointerException) {
+            log.warn("Nullpointer occured trying to invoke a method", e); //$NON-NLS-1$
+            throw new StepExecutionException(e.toString(),
+                    EventFactory.createActionError(
+                            TestErrorEvent.EXECUTION_ERROR,
+                            new String[] {"Invoke method failed. The method might not be static"})); //$NON-NLS-1$
+        
+        }
         throw new StepExecutionException(e.toString(),
                 EventFactory.createActionError(
                         TestErrorEvent.EXECUTION_ERROR,
                         new String[] {e.toString()}));
+
     }
 }

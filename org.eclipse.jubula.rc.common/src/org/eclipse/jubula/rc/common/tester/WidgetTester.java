@@ -30,6 +30,7 @@ import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.ReflectionUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
@@ -590,7 +591,7 @@ public class WidgetTester extends AbstractUITester {
             Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
                     createCallable(fqcn, name, signature, args, argsSplit),
                     timeout);
-            return result.toString();
+            return result == null ? StringConstants.NULL : result.toString();
         } catch (TimeoutException e) {
             throw new StepExecutionException(e.toString(), EventFactory
                     .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
@@ -686,7 +687,7 @@ public class WidgetTester extends AbstractUITester {
         try {
             Object result = queuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
                     createCallable(fqcn, name), timeout);
-            return result.toString();
+            return result == null ? StringConstants.NULL : result.toString();
         } catch (TimeoutException e) {
             throw new StepExecutionException(e.toString(), EventFactory
                     .createActionError(TestErrorEvent.CONFIRMATION_TIMEOUT));
