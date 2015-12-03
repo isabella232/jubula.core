@@ -19,13 +19,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jubula.client.archive.i18n.Messages;
@@ -42,7 +40,6 @@ import org.eclipse.jubula.client.archive.schema.ComponentName;
 import org.eclipse.jubula.client.archive.schema.EventHandler;
 import org.eclipse.jubula.client.archive.schema.EventTestCase;
 import org.eclipse.jubula.client.archive.schema.ExecCategory;
-import org.eclipse.jubula.client.archive.schema.I18NString;
 import org.eclipse.jubula.client.archive.schema.MapEntry;
 import org.eclipse.jubula.client.archive.schema.MonitoringValues;
 import org.eclipse.jubula.client.archive.schema.NamedTestData;
@@ -105,7 +102,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
@@ -132,16 +128,6 @@ import org.slf4j.LoggerFactory;
  * @created 11.01.2006
  */
 class XmlExporter {
-
-    /** compares locales alphabetically according to code */
-    private static final Comparator<Locale> LANG_CODE_ALPHA_COMPARATOR = 
-            new Comparator<Locale>() {
-        public int compare(Locale locale1, Locale locale2) {
-            return ObjectUtils.toString(locale1).compareTo(
-                    ObjectUtils.toString(locale2));
-        }
-    };
-    
     /** Table identifier to make the ID disjunct */
     private static final char TABLE_AUT = 'A';
 
@@ -205,10 +191,6 @@ class XmlExporter {
 
         ObjectMapping om = xml.addNewObjectMapping();
         fillObjectMapping(om, po.getObjMap());
-
-        for (Locale l : po.getLangHelper().getLanguageList()) {
-            xml.addLanguage(l.toString());
-        }
 
         // Sort the list of AUT Configurations alphabetically by name
         List<IAUTConfigPO> sortedAutConfigs = 
@@ -360,13 +342,6 @@ class XmlExporter {
         xml.setAutToolKit(autToolKit);
         // AUT toolkit finished
         m_monitor.worked(1);
-        // project languages
-        xml.setDefaultLanguage(po.getDefaultLanguage().toString());
-        for (Locale l : po.getLangHelper().getLanguageList()) {
-            xml.addProjectLanguage(l.toString());
-            // Project language finished
-            m_monitor.worked(1);
-        }
         // Test Data Cubes
         ITestDataCategoryPO testDataRootCategory = po.getTestDataCubeCont();
         for (ITestDataCategoryPO testDataCategory 
@@ -1139,19 +1114,10 @@ class XmlExporter {
             TestDataRow xmlRow = xml.addNewRow();
             xmlRow.setRowCount(rowCnt++);
             int colCnt = 1;
-            for (ITestDataPO td : row.getList()) {
+            for (String td : row.getColumns()) {
                 TestDataCell xmlCell = xmlRow.addNewData();
                 xmlCell.setColumnCount(colCnt++);
-                List<Locale> sortedLanguageList = 
-                    new ArrayList<Locale>(td.getLanguages());
-                Collections.sort(sortedLanguageList, 
-                        LANG_CODE_ALPHA_COMPARATOR);
-                for (Locale lang : sortedLanguageList) {
-                    String val = td.getValue(lang);
-                    I18NString xmlI18n = xmlCell.addNewData();
-                    xmlI18n.setLanguage(lang.toString());
-                    xmlI18n.setValue(val);
-                }
+                xmlCell.setValue(td);
             }
         }
     }
@@ -1278,9 +1244,6 @@ class XmlExporter {
 
         // (all aut toolkit info=1)
         work++;
-
-        // (language=1)
-        work += project.getLangHelper().getLanguageList().size();
 
         // (component names = 1)
         try {

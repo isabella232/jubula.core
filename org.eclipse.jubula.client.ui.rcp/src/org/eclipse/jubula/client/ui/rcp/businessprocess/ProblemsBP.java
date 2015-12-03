@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.core.resources.IMarker;
@@ -214,7 +213,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
             copyMissingProjectProblems();
         }
         
-        checkReusedProjectLanguages();
         // check AutAgent Connection
         checkServerState(state);
 
@@ -766,68 +764,6 @@ public class ProblemsBP implements ICompletenessCheckListener,
             }
         }
 
-    }
-
-    /**
-     * Checks, if reused projects are missing languages used in this project
-     */
-    private void checkReusedProjectLanguages() {
-        IProjectPO project = GeneralStorage.getInstance().getProject();
-        if (project == null) {
-            return;
-        }
-
-        List<Locale> langList = project.getLangHelper().getLanguageList();
-        
-        for (IReusedProjectPO reused : project.getUsedProjects()) {
-            IProjectPO reusedProject = null;
-            try {
-                reusedProject = ProjectPM.loadProjectFromMaster(reused);
-                if (reusedProject != null) { // not in DB
-                    List<Locale> reusedLangList = reusedProject.getLangHelper()
-                        .getLanguageList();
-
-                    for (Locale lang : langList) {
-                        if (!reusedLangList.contains(lang)) {
-                            if (WorkingLanguageBP.getInstance()
-                                .getWorkingLanguage().equals(lang)) {
-
-                                // Report as error because it may mean that test
-                                // data is missing.
-                                problemReusedProjectMissingLang(lang, reused
-                                    .getName(), IStatus.ERROR);
-                            } else {
-                                problemReusedProjectMissingLang(lang, reused
-                                    .getName(), IStatus.WARNING);
-                            }
-                        }
-                    }
-                }
-            } catch (JBException e) {
-                // Error while loading project; Project does not exist
-                // Do nothing
-            }
-        }
-
-    }
-
-    /**
-     * Creates a problem to indicate that a language is not supported by a 
-     * reused project.
-     * 
-     * @param lang The language that is not suported.
-     * @param name The name of the reused project.
-     * @param severity The severity of the problem.
-     */
-    private void problemReusedProjectMissingLang(
-        Locale lang, String name, int severity) {
-        String message = NLS.bind(
-                Messages.ProblemCheckerReusedProjectMissingLanguage,
-                new String[] { name, lang.getDisplayName() });
-        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
-                new Status(severity, Activator.PLUGIN_ID, message),
-                message, StringConstants.EMPTY,
-                ProblemType.REASON_REUSED_PROJECT_MISSING_LANG));
     }
 
     /**

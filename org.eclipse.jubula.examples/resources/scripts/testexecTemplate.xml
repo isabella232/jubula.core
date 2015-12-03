@@ -20,7 +20,6 @@
     
     <dbuser>YourDatabaseUsername (use sa for the embedded database)</dbuser>
     <dbpw>YourDatabasePassword (leave empty for the embedded database)</dbpw>
-    <language>en_US</language>
     <testsuite>YourTestSuiteName</testsuite>
     
     <!-- or, if you're using Test Jobs

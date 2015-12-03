@@ -46,7 +46,6 @@ public class Messages extends NLS {
     public static String ClientHelpOpt;
     public static String ClientInvalidArgs;
     public static String ClientJobFileError;
-    public static String ClientLanguageOpt;
     public static String ClientMissingArgs;
     public static String ClientMonitoringInfoDialog;
     public static String ClientNoRunOpt;

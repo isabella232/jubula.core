@@ -61,7 +61,7 @@ public interface ITDManager {
      * @throws IllegalArgumentException
      *             If the given Parameter is not supported by the receiver.
      */
-    public abstract ITestDataPO getCell(int dataSetNumber, 
+    public abstract String getCell(int dataSetNumber, 
             IParamDescriptionPO parameter) throws IllegalArgumentException;
     
     /**
@@ -92,7 +92,7 @@ public interface ITDManager {
      * @param column
      *            The column
      */
-    public abstract void updateCell(ITestDataPO testData, int row, int column);
+    public abstract void updateCell(String testData, int row, int column);
 
     /**
      * Updates the test data at the specified row and parameter name. The data
@@ -107,7 +107,7 @@ public interface ITDManager {
      * @param uniqueId
      *            The uniqueId of the parameter
      */
-    public abstract void updateCell(ITestDataPO testData, int row,
+    public abstract void updateCell(String testData, int row,
         String uniqueId);
 
     /**

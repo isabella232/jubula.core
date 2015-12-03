@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.converter;
 
-import java.util.Locale;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 
@@ -30,21 +28,16 @@ public class CTDSInfo {
     /** the default toolkit */
     private IProjectPO m_project;
     
-    /** the project default language */
-    private Locale m_language;
-    
     /**
      * @param className the class name
      * @param packageBasePath the base path of the package
      * @param project the project
-     * @param language the language
      */
     public CTDSInfo (String className, IProjectPO project,
-            String packageBasePath, Locale language) {
+            String packageBasePath) {
         m_className = StringUtils.substringBeforeLast(className, ".java"); //$NON-NLS-1$
         m_packageBasePath = packageBasePath;
         m_project = project;
-        m_language = language;
     }
     
     /**
@@ -67,12 +60,4 @@ public class CTDSInfo {
     public IProjectPO getProject() {
         return m_project;
     }
-    
-    /**
-     * @return The project language
-     */
-    public Locale getLanguage() {
-        return m_language;
-    }
-    
 }

@@ -31,12 +31,12 @@ import org.eclipse.jubula.client.core.events.AUTEvent;
 import org.eclipse.jubula.client.core.events.AUTServerEvent;
 import org.eclipse.jubula.client.core.events.AutAgentEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.events.IAUTEventListener;
 import org.eclipse.jubula.client.core.events.IAUTServerEventListener;
 import org.eclipse.jubula.client.core.events.IServerEventListener;
 import org.eclipse.jubula.client.core.events.ServerEvent;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ServerState;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -47,7 +47,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.jobs.StartAutJob;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabelProvider;
@@ -749,8 +748,7 @@ public class TestExecutionContributor
     public void startTestSuiteAction(ITestSuitePO ts, 
             AutIdentifier autId, boolean autoScreenshot) {
         TimeUtil.delay(TimingConstantsClient.START_TEST_SUITE_DELAY);
-        getClientTest().startTestSuite(ts, WorkingLanguageBP.getInstance()
-            .getWorkingLanguage(), autId, autoScreenshot, null,
+        getClientTest().startTestSuite(ts, autId, autoScreenshot, null,
             TestExecutionConstants.RunSteps.NORMAL.getStepValue(), null);
     }
 

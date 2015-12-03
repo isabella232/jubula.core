@@ -253,16 +253,6 @@ public interface IArchivableTestResultSummary {
     public abstract void setTestsuiteEventHandlerTeststeps(int handlerCaps);
 
     /**
-     * @param language the language to set
-     */
-    public abstract void setTestsuiteLanguage(String language);
-
-    /**
-     * @return the language
-     */
-    public abstract String getTestsuiteLanguage();
-
-    /**
      * @param tsName the tsName to set
      */
     public abstract void setTestsuiteName(String tsName);

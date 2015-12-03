@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views.dataset;
 
-import java.util.Locale;
-
 import org.eclipse.jubula.client.core.businessprocess.ParameterInterfaceBP;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 
@@ -40,8 +38,7 @@ public class TestDataCubeDataSetPage extends AbstractDataSetPage {
     }
 
     /** {@inheritDoc} */
-    protected void setIsEntrySetComplete(IParameterInterfacePO paramNode,
-            Locale locale) {
+    protected void setIsEntrySetComplete(IParameterInterfacePO paramNode) {
         // currently not used
     }
 }

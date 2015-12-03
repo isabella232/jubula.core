@@ -61,7 +61,6 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.EventHandlerDropTargetListener;
@@ -565,8 +564,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         super.runLocalChecks();
         ISpecTestCasePO workVersion = getWorkVersion();
         for (INodePO child : workVersion.getAllEventEventExecTC()) {
-            CompletenessGuard.checkLocalTestData(child, WorkingLanguageBP
-                    .getInstance().getWorkingLanguage());
+            CompletenessGuard.checkLocalTestData(child);
         }
     }
 

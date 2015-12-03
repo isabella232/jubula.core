@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -169,20 +168,6 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         }
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public Locale getDefaultLanguage() {
-        return m_projectProperties.getDefaultLanguage();
-    }
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void setDefaultLanguage(Locale defaultLanguage) {
-        m_projectProperties.setDefaultLanguage(defaultLanguage);
-    }    
     
     /**
      * {@inheritDoc}
@@ -536,16 +521,6 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     @Transient
     public IProjectPropertiesPO getProjectProperties() {
         return getProperties();
-    }
-    
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public LanguageHelper getLangHelper() {
-        return getProjectProperties().getLangHelper();
     }
 
     /**

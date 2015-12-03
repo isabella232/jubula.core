@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -44,7 +43,6 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
@@ -126,9 +124,6 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         /** multi line trigger */
         private SortedSet<String> m_multiLineTrigger;
         
-        /** locale for record */
-        private Locale m_localeForRecord;
-        
         /** editor for current observation */
         private TestCaseEditor m_editor;
         
@@ -150,7 +145,6 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
          * @param dialogOpen boolean
          * @param singleLineTrigger SortedSet of single line trigger
          * @param multiLineTrigger SortedSet of multi line trigger
-         * @param localeForRecord Locale for record
          * @param editor TestCaseEditor
          * @param autId AutIdentifier of connected aut
          */
@@ -160,7 +154,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                 int recordApplKey, int checkModeMods, int checkModeKey,
                 int checkCompMods, int checkCompKey, boolean dialogOpen,
                 SortedSet<String> singleLineTrigger,
-                SortedSet<String> multiLineTrigger, Locale localeForRecord,
+                SortedSet<String> multiLineTrigger,
                 TestCaseEditor editor, AutIdentifier autId) {
             super("Start Observation Mode"); //$NON-NLS-1$
             m_workCopy = workCopy;
@@ -176,7 +170,6 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
             m_dialogOpen = dialogOpen;
             m_singleLineTrigger = singleLineTrigger;
             m_multiLineTrigger = multiLineTrigger;
-            m_localeForRecord = localeForRecord;
             m_editor = editor;
             m_autId = autId;
         }
@@ -208,8 +201,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                             m_recordCompMods, m_recordCompKey, m_recordApplMods,
                             m_recordApplKey, m_checkModeMods, m_checkModeKey,
                             m_checkCompMods, m_checkCompKey, m_dialogOpen,
-                            m_singleLineTrigger, m_multiLineTrigger,
-                            m_localeForRecord);
+                            m_singleLineTrigger, m_multiLineTrigger);
                 }
             } catch (CommunicationException ce) {
                 LOG.error(ce.getMessage());
@@ -358,8 +350,6 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
             e.printStackTrace();
         }
 
-        final Locale localeForRecord = WorkingLanguageBP.getInstance()
-                .getWorkingLanguage();
         final ISpecTestCasePO workCopy = 
             (ISpecTestCasePO)editor.getEditorHelper().getEditSupport()
                 .getWorkVersion();
@@ -371,7 +361,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                 recordCompMods, recordCompKey, recordApplMods,
                 recordApplKey, checkModeMods, checkModeKey,
                 checkCompMods, checkCompKey, dialogOpen,
-                singleLineTrigger, multiLineTrigger, localeForRecord,
+                singleLineTrigger, multiLineTrigger,
                 editor, autId);
         startObservationModeJob.setSystem(true);
         JobUtils.executeJob(startObservationModeJob, null);

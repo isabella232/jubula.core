@@ -16,8 +16,6 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
-import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
 
@@ -26,34 +24,10 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
  * @author BREDEX GmbH
  * @created 21.12.2005
  */
-public class TestDataBP {
-    /** singleton instance */
-    private static TestDataBP instance = null;
+public enum TestDataBP {
+    /** Singleton */
+    INSTANCE;
 
-    /** constructor for singleton */
-    private TestDataBP() {
-    // nothing
-    }
-
-    /**
-     * @return the only instance of this class
-     */
-    public static TestDataBP instance() {
-        if (instance == null) {
-            instance = new TestDataBP();
-        }
-        return instance;
-    }
-
-    /**
-     * Creates a new test data instance without a reference or value set.
-     * 
-     * @return The new test data instance
-     */
-    public ITestDataPO createEmptyTestData() {
-        return PoMaker.createTestDataPO();
-    }
-    
     /**
      * Checks if the given value is a value of the value set of the given CAP
      * of the given parameter description.
@@ -83,7 +57,7 @@ public class TestDataBP {
      * @return the retrieved Test Data, or <code>null</code> if no such Test 
      *         Data exists.
      */
-    public ITestDataPO getTestData(IParamNodePO paramNode, 
+    public String getTestData(IParamNodePO paramNode, 
             ITDManager testDataManager, IParamDescriptionPO paramDesc,
             int dataSetNum) {
         IParameterInterfacePO refDataCube = paramNode.getReferencedDataCube();
@@ -105,7 +79,7 @@ public class TestDataBP {
  
         IDataSetPO dataSet = testDataManager.getDataSet(dataSetNum);
         if (column != -1 && column < dataSet.getColumnCount()) {
-            return dataSet.getColumn(column);
+            return dataSet.getValueAt(column);
         }
         
         return null;

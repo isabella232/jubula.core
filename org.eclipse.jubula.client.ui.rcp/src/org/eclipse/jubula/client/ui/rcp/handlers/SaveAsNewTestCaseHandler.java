@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -34,7 +33,6 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -165,50 +163,45 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
          *            the new param child node
          * @param pMapper
          *            the param name mapper
-         * @param oldToNewGuids
+         * @param oldToNewUuids
          *            the old to new guids map
          */
         private void addParamsToNewParent(ISpecTestCasePO newSpecTC,
             IParamNodePO newParamChildNode, ParamNameBPDecorator pMapper,
-            Map<String, String> oldToNewGuids) {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
+            Map<String, String> oldToNewUuids) {
             TDCell cell = null;
-            List<Locale> langs = proj.getLangHelper().getLanguageList();
-            for (Locale lang : langs) {
-                for (Iterator<TDCell> it = newParamChildNode
-                        .getParamReferencesIterator(lang); it.hasNext();) {
-                    cell = it.next();
-                    String guid = newParamChildNode.getDataManager()
-                            .getUniqueIds().get(cell.getCol());
-                    IParamDescriptionPO childDesc = newParamChildNode
-                            .getParameterForUniqueId(guid);
-                    // The childDesc can be null if the parameter has been
-                    // removed in another session and not yet updated in the 
-                    // current editor session.
-                    if (childDesc != null) {
-                        ModelParamValueConverter conv = 
-                                new ModelParamValueConverter(
-                                cell.getTestData(), newParamChildNode, lang,
-                                childDesc);
-                        List<RefToken> refTokens = conv.getRefTokens();
-                        for (RefToken refToken : refTokens) {
-                            String oldGUID = RefToken.extractCore(refToken
-                                    .getModelString());
-                            String paramName = ParamNameBP.getInstance()
-                                    .getName(oldGUID,
-                                            childDesc.getParentProjectId());
-                            IParamDescriptionPO parentParamDescr = newSpecTC
-                                    .addParameter(childDesc.getType(),
-                                            paramName, false, pMapper);
-                            if (parentParamDescr != null) {
-                                String newGuid = parentParamDescr.getUniqueId();
-                                oldToNewGuids.put(oldGUID, newGuid);
-                            }
-                            // update TestDataPO of child with GUID for reference
-                            conv.replaceGuidsInReferences(oldToNewGuids);
-                            cell.getTestData().setValue(lang,
-                                    conv.getModelString(), proj);
+            for (Iterator<TDCell> it = newParamChildNode
+                    .getParamReferencesIterator(); it.hasNext();) {
+                cell = it.next();
+                String guid = newParamChildNode.getDataManager()
+                        .getUniqueIds().get(cell.getCol());
+                IParamDescriptionPO childDesc = newParamChildNode
+                        .getParameterForUniqueId(guid);
+                // The childDesc can be null if the parameter has been
+                // removed in another session and not yet updated in the 
+                // current editor session.
+                if (childDesc != null) {
+                    ModelParamValueConverter conv = 
+                            new ModelParamValueConverter(
+                            cell.getTestData(), newParamChildNode,
+                            childDesc);
+                    List<RefToken> refTokens = conv.getRefTokens();
+                    for (RefToken refToken : refTokens) {
+                        String oldUuid = RefToken.extractCore(refToken
+                                .getModelString());
+                        String paramName = ParamNameBP.getInstance()
+                                .getName(oldUuid,
+                                        childDesc.getParentProjectId());
+                        IParamDescriptionPO parentParamDescr = newSpecTC
+                                .addParameter(childDesc.getType(),
+                                        paramName, false, pMapper);
+                        if (parentParamDescr != null) {
+                            String newUuid = parentParamDescr.getUniqueId();
+                            oldToNewUuids.put(oldUuid, newUuid);
                         }
+                        // update test data of child with UUID for reference
+                        conv.replaceUuidsInReferences(oldToNewUuids);
+                        cell.setTestData(conv.getModelString());
                     }
                 }
             }

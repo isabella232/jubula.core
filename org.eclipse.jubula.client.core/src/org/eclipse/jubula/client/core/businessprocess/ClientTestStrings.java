@@ -63,8 +63,6 @@ public class ClientTestStrings {
     /** object attribute */
     public static final String RESULTDIR = "resultdir"; //$NON-NLS-1$
     /** object attribute */
-    public static final String LANGUAGE = "language"; //$NON-NLS-1$
-    /** object attribute */
     public static final String DATA_DIR = "datadir"; //$NON-NLS-1$
     /** object attribute */
     public static final String DATA_DIR_EX = "datadir_path"; //$NON-NLS-1$

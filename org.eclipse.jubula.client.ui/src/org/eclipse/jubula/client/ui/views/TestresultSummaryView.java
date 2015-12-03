@@ -200,12 +200,6 @@ public class TestresultSummaryView extends ViewPart implements
         Messages.TestresultSummaryStartTime;
 
     /**
-     * <code>TESTRESULT_SUMMARY_LANGUAGE</code>
-     */
-    private static final String TESTRESULT_SUMMARY_LANGUAGE = 
-        Messages.TestresultSummaryLanguage;
-
-    /**
      * <code>TESTRESULT_SUMMARY_TOOLKIT</code>
      */
     private static final String TESTRESULT_SUMMARY_TOOLKIT = 
@@ -432,7 +426,6 @@ public class TestresultSummaryView extends ViewPart implements
         addAutIdColumn(m_tableViewer);
         addAutNameColumn(m_tableViewer);
         addAutConfColumn(m_tableViewer);
-        addLanguageColumn(m_tableViewer);
         addCmdParamColumn(m_tableViewer);
         addAutOSColumn(m_tableViewer);
         addAutHostnameColumn(m_tableViewer);
@@ -757,7 +750,6 @@ public class TestresultSummaryView extends ViewPart implements
             TESTRESULT_SUMMARY_AUT_AGENT_HOSTNAME,
             TESTRESULT_SUMMARY_AUT_OS,
             TESTRESULT_SUMMARY_TOOLKIT,
-            TESTRESULT_SUMMARY_LANGUAGE,
             TESTRESULT_SUMMARY_START_TIME,
             TESTRESULT_SUMMARY_END_TIME,
             TESTRESULT_SUMMARY_DURATION,
@@ -938,7 +930,6 @@ public class TestresultSummaryView extends ViewPart implements
                     || columnName.equals(TESTRESULT_SUMMARY_EXECUTED_CAPS)
                     || columnName.equals(TESTRESULT_SUMMARY_EXPECTED_CAPS)
                     || columnName.equals(TESTRESULT_SUMMARY_HANDLER_CAPS)
-                    || columnName.equals(TESTRESULT_SUMMARY_LANGUAGE)
                     || columnName.equals(TESTRESULT_SUMMARY_TESTRUN_RELEVANT)
                     || columnName.equals(TESTRESULT_SUMMARY_TOOLKIT)
                     || columnName.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
@@ -1411,33 +1402,6 @@ public class TestresultSummaryView extends ViewPart implements
                 return getCommonsComparator().compare(
                         ((ITestResultSummaryPO)e1).getAutOS(), 
                         ((ITestResultSummaryPO)e2).getAutOS());
-            }
-        };
-    }
-
-    /**
-     * Adds a "Language" column to the given viewer.
-     * @param tableViewer The viewer to which the column will be added.
-     */
-    private void addLanguageColumn(TableViewer tableViewer) {
-        TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(0);
-        column.getColumn().setImage(IconConstants.LANGUAGE_IMAGE);
-        column.getColumn().setText(TESTRESULT_SUMMARY_LANGUAGE);
-        column.getColumn().setMoveable(true);
-        column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
-            public String getText(Object element) {
-                return ObjectUtils.toString(
-                    ((ITestResultSummaryPO)element).getTestsuiteLanguage());
-            }
-        });
-        createMenuItem(m_headerMenu, column.getColumn());
-        new ColumnViewerSorter(tableViewer, column) {
-            @Override
-            protected int doCompare(Viewer viewer, Object e1, Object e2) {
-                return getCommonsComparator().compare(
-                        ((ITestResultSummaryPO)e1).getTestsuiteLanguage(), 
-                        ((ITestResultSummaryPO)e2).getTestsuiteLanguage());
             }
         };
     }
@@ -2067,8 +2031,6 @@ public class TestresultSummaryView extends ViewPart implements
                 metaValue = m.getAutOS();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TOOLKIT)) {
                 metaValue = m.getAutToolkit();
-            } else if (m_filterType.equals(TESTRESULT_SUMMARY_LANGUAGE)) {
-                metaValue = m.getTestsuiteLanguage();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_START_TIME)) {
                 metaValue = DTF_LONG.format(m.getTestsuiteStartTime());
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_END_TIME)) {

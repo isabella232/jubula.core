@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -25,7 +24,6 @@ import org.eclipse.jubula.client.core.model.IModifiableParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
@@ -203,12 +201,8 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
                     .getType(), paramIntObj, mapper);
         }
         // remove
-        final List<Locale> projLangs = GeneralStorage.getInstance()
-                .getProject().getLangHelper().getLanguageList();
         for (IParamDescriptionPO desc : paramsToRemove) {
-            for (Locale locale : projLangs) {
-                paramInterfaceBP.removeParameter(desc, paramIntObj, locale);
-            }
+            paramInterfaceBP.removeParameter(desc, paramIntObj);
         }
         // rename
         for (IParamDescriptionPO desc : paramsToRename.keySet()) {
@@ -217,10 +211,8 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
         }
         // usage changed
         for (IParamDescriptionPO desc : paramsToChangeUsage.keySet()) {
-            for (Locale locale : projLangs) {
-                paramInterfaceBP.changeUsageParameter(paramIntObj,
-                        desc, paramsToChangeUsage.get(desc), locale, mapper);
-            }
+            paramInterfaceBP.changeUsageParameter(paramIntObj,
+                    desc, paramsToChangeUsage.get(desc), mapper);
         }
     }
 
@@ -246,8 +238,8 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
     }
 
     /**
-     * @param paramIntObj The node (ITestDataPO or ISpecTestCasePO) working on.
-     * @return The map of parameter description GUIDs to it parameter description.
+     * @param paramIntObj The node working on.
+     * @return The map of parameter description UUIDs to it parameter description.
      */
     private static Map<String, IParamDescriptionPO> createOldParamsMap(
             IModifiableParameterInterfacePO paramIntObj) {

@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.search.query;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,11 +27,9 @@ import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.search.data.SearchOptions;
 import org.eclipse.jubula.client.ui.rcp.search.data.TypeName;
 
@@ -147,9 +144,6 @@ public class TestDataQuery
      * @return true if value has been found for this node; false otherwise
      */
     private boolean containsTestDataValue(IParameterInterfacePO paramObj) {
-        Locale workingLanguage = WorkingLanguageBP.getInstance()
-                .getWorkingLanguage();
-
         List<IParamDescriptionPO> usedParameters = paramObj.getParameterList();
         IParameterInterfacePO refDataCube = paramObj.getReferencedDataCube();
         ITDManager testDataManager = paramObj.getDataManager();
@@ -169,11 +163,11 @@ public class TestDataQuery
                 }
 
                 if (column != -1 && column < dataSet.getColumnCount()) {
-                    ITestDataPO testData = dataSet.getColumn(column);
+                    String testData = dataSet.getValueAt(column);
                     if (testData != null) {
                         ModelParamValueConverter converter =
                             new ModelParamValueConverter(
-                                testData, paramObj, workingLanguage, null);
+                                testData, paramObj, null);
                         String value = converter.getGuiString();
                         if (value != null && matchSearchString(value)) {
                             return true;

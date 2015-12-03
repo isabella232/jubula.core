@@ -15,7 +15,6 @@ import java.io.PushbackReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -25,7 +24,6 @@ import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserExceptio
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,27 +43,14 @@ public class ModelParamValueConverter extends ParamValueConverter {
      * hint: the string could be null.
      * @param modelString to convert
      * @param currentNode node with parameter for this parameterValue
-     * @param locale current used language
      * @param desc param description associated with current string (parameter value)
      */
     public ModelParamValueConverter(String modelString,
-            IParameterInterfacePO currentNode, Locale locale,
+            IParameterInterfacePO currentNode,
             IParamDescriptionPO desc) {
-        super(currentNode, locale, desc, new NullValidator());
+        super(currentNode, desc, new NullValidator());
         setModelString(modelString);
         createTokens();
-    }
-    
-    /**
-     * @param td testDataObject with model string to convert
-     * @param currentNode node with parameter for this parameterValue
-     * @param locale current used language
-     * @param desc param description associated with current string (parameter value)
-     */
-    public ModelParamValueConverter(ITestDataPO td,
-            IParameterInterfacePO currentNode, Locale locale, 
-            IParamDescriptionPO desc) {
-        this(td.getValue(locale), currentNode, locale, desc);
     }
     
     /**
@@ -166,7 +151,7 @@ public class ModelParamValueConverter extends ParamValueConverter {
      * @param map key: old Guid, value: new Guid
      * @return True, if something has been modified, otherwise false.
      */
-    public boolean replaceGuidsInReferences(Map<String, String> map) {
+    public boolean replaceUuidsInReferences(Map<String, String> map) {
         boolean isModified = false;
         List<RefToken> refTokens = getRefTokens();
         for (RefToken refToken : refTokens) {

@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.AbstractParamValueController;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -91,8 +90,7 @@ public class ParameterValueLabelProvider extends LabelProvider
             }
             
             ParamValueConverter conv = new GuiParamValueConverter(
-                    property, paramNode,
-                    WorkingLanguageBP.getInstance().getWorkingLanguage(), 
+                    property, paramNode, 
                     controller.getParamDesc(), new NullValidator());
             if (conv.containsReferences()) {
                 if (paramNode.getParentNode() instanceof ITestSuitePO) {

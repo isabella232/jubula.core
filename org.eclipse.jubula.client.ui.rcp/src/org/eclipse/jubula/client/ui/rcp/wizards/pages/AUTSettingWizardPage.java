@@ -11,18 +11,12 @@
 package org.eclipse.jubula.client.ui.rcp.wizards.pages;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Locale;
 
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
@@ -30,7 +24,6 @@ import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.widgets.AutIdListComposite;
-import org.eclipse.jubula.client.ui.rcp.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
@@ -46,13 +39,11 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
@@ -69,19 +60,6 @@ public class AUTSettingWizardPage extends WizardPage {
     private static final int NUM_COLUMNS_1 = 1; 
     /** number of columns = 2 */
     private static final int NUM_COLUMNS_2 = 2;  
-
-    /** the text field for the available languages (= project languages)*/
-    private List m_availableLangListField;
-
-    /** the text field for the aut languages */
-    private List m_autLangListField;
-
-    /** the button to add a language from the upper field into the bottom field */
-    private Button m_rightButton;
-
-    /** the button to delete a language from the bottom field */
-    private Button m_leftButton;
-
     /** the AUT name editor */
     private Text m_autNameText;
     
@@ -102,20 +80,8 @@ public class AUTSettingWizardPage extends WizardPage {
     private final WidgetModifyListener m_modifyListener = 
         new WidgetModifyListener();
     
-    /** the composite with 2 ListBoxes */
-    private ListElementChooserComposite m_chooseLists;
-    
-    /** the button to add all languages from the upper field into the bottom field */
-    private Button m_allRightButton;
-    
-    /** the button to delete all languages from the bottom field */
-    private Button m_allLeftButton;
-    
     /***/
     private ScrolledComposite m_scroll;
-    
-    /***/
-    private boolean m_initFirstTime = true;
     
     /** The button to indicate whether names should be generated */
     private Button m_generateNames;
@@ -158,57 +124,10 @@ public class AUTSettingWizardPage extends WizardPage {
         createAutIdList(composite);
         separator(composite);
 
-        Composite innerComposite = new Composite(composite, SWT.NONE);
-        GridLayout compositeLayout = new GridLayout();
-        compositeLayout.numColumns = NUM_COLUMNS_1;
-        compositeLayout.marginHeight = 0;
-        compositeLayout.marginWidth = 0;
-        innerComposite.setLayout(compositeLayout);
-        GridData compositeData = new GridData();
-        compositeData.horizontalSpan = NUM_COLUMNS_2;
-        compositeData.horizontalAlignment = GridData.CENTER;
-        compositeData.grabExcessHorizontalSpace = true;
-        innerComposite.setLayoutData(compositeData);
-        java.util.List<String> leftList = new ArrayList<String>();
-        Iterator<Locale> iter = m_project.getLangHelper().getLangListIterator();
-        while (iter.hasNext()) {
-            leftList.add(Languages.getInstance().getDisplayString(iter.next()));
-        }
-        Label descriptionLabel = new Label(innerComposite, SWT.NONE);
-        descriptionLabel.setText(
-                Messages.AUTSettingWizardPageSelectLanguagesOfTD);
-        ControlDecorator.decorateInfo(descriptionLabel, 
-                "ControlDecorator.NewProjectAUTLanguage", false); //$NON-NLS-1$
-        m_chooseLists = new ListElementChooserComposite(
-            innerComposite, 
-            Messages.AUTSettingWizardPageUpperLabel,
-            leftList,  
-            Messages.AUTSettingWizardPageBottomLabel,
-            new ArrayList(),  
-            15, 
-            new Image[]{
-                IconConstants.RIGHT_ARROW_IMAGE,
-                IconConstants.DOUBLE_RIGHT_ARROW_IMAGE,
-                IconConstants.LEFT_ARROW_IMAGE,
-                IconConstants.DOUBLE_LEFT_ARROW_IMAGE},
-            new Image[] { IconConstants.RIGHT_ARROW_DIS_IMAGE, 
-                IconConstants.DOUBLE_RIGHT_ARROW_DIS_IMAGE, 
-                IconConstants.LEFT_ARROW_DIS_IMAGE, 
-                IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE },
-            new String[]{Messages.AUTSettingWizardPageDownToolTip,
-                Messages.AUTSettingWizardPageAllDownToolTip,
-                Messages.AUTSettingWizardPageUpToolTip,
-                Messages.AUTSettingWizardPageAllUpToolTip},
-            ListElementChooserComposite.VERTICAL);  
-        getObjects();
-
         addListener();
-        
-        resizeLists();
         
         Plugin.getHelpSystem().setHelp(composite, 
             ContextHelpIds.AUT_SETTING_WIZARD_PAGE);
-        checkLanguageButtons();
         
         createNextLabel(composite);
         
@@ -218,18 +137,6 @@ public class AUTSettingWizardPage extends WizardPage {
         m_scroll.setExpandVertical(true);
         setControl(m_scroll);
         
-    }
-    
-    /**
-     * Resizes the two ListBoxes.
-     */
-    private void resizeLists() {
-        ((GridData)m_availableLangListField.getLayoutData()).widthHint = 
-            Dialog.convertHeightInCharsToPixels(
-                LayoutUtil.getFontMetrics(m_availableLangListField), 15);
-        ((GridData)m_autLangListField.getLayoutData()).widthHint = 
-            Dialog.convertHeightInCharsToPixels(
-                LayoutUtil.getFontMetrics(m_autLangListField), 15);
     }
     
     /**
@@ -267,18 +174,6 @@ public class AUTSettingWizardPage extends WizardPage {
         compositeData.grabExcessHorizontalSpace = horizontalSpace;
         composite.setLayoutData(compositeData);
         return composite;       
-    }
- 
-    /**
-     * Gets the listBoxes / Buttons from the ListElementChooserComposite composite
-     */
-    private void getObjects() {
-        m_availableLangListField = m_chooseLists.getListOne();
-        m_autLangListField = m_chooseLists.getListTwo();
-        m_leftButton = m_chooseLists.getSelectionTwoToOneButton();
-        m_rightButton = m_chooseLists.getSelectionOneToTwoButton();
-        m_allLeftButton = m_chooseLists.getAllTwoToOneButton();
-        m_allRightButton = m_chooseLists.getAllOneToTwoButton();
     }
 
     /**
@@ -417,101 +312,18 @@ public class AUTSettingWizardPage extends WizardPage {
         PlatformUI.getWorkbench().getHelpSystem()
             .displayHelp(ContextHelpIds.AUT_SETTING_WIZARD_PAGE);
     }
-    
-    /**
-     * Dis-/Enables the UP-/DownButtons, if the languageLists are empty.
-     */
-    private void checkLanguageButtons() {
-        m_rightButton.setEnabled(true);
-        m_leftButton.setEnabled(false);
-    }
-
-    /**
-     * Fills the lists of languages.
-     */
-    public void fillLanguageLists() {
-        if (m_initFirstTime) {
-            m_autLangListField.removeAll();
-            for (Locale lang : m_project.getLangHelper().getLanguageList()) {
-                m_autLangListField.add(
-                    Languages.getInstance().getDisplayString(lang));
-            }
-            m_initFirstTime = false;
-        }
-        m_availableLangListField.removeAll();
-        if (m_project != null) {
-            Iterator<Locale> iter = 
-                m_project.getLangHelper().getLangListIterator();
-            while (iter.hasNext()) {
-                Locale language = iter.next();
-                String lang = 
-                    Languages.getInstance().getDisplayString(language);
-                m_availableLangListField.add(lang);
-            }
-        } 
-        // delete invalid aut Languages
-        for (int i = 0; i < m_autLangListField.getItemCount(); i++) {
-            java.util.List <String> projectLanguages = 
-                Arrays.asList(m_availableLangListField.getItems());
-            if (!projectLanguages.contains(m_autLangListField.getItem(i))) {
-                m_autLangListField.remove(m_autLangListField.
-                    getItem(i));
-            } 
-        }
-        // remove used aut languages from available languages
-        for (int i = 0; i < m_autLangListField.getItemCount(); i++) {
-            java.util.List <String> projectLanguages = 
-                Arrays.asList(m_availableLangListField.getItems());
-            if (projectLanguages.contains(m_autLangListField.getItem(i))) {
-                m_availableLangListField.remove(m_autLangListField.
-                    getItem(i));
-            } 
-        }
-        confirmNextButton();
-    }
-    
-    /** Removes all items from the language lists. */
-    public void clearLanguageLists() {
-        m_availableLangListField.removeAll();
-        m_autLangListField.removeAll();
-    }
-    
-    /** 
-     * Removes the selected AUT languages 
-     * @param selection The selected AUT languages.
-     */
-    public void removeAUTLanguages(String selection) {
-        for (int i = 0; i < m_autLangListField.getItemCount(); i++) {
-            if (m_autLangListField.getItem(i).equals(selection)) {
-                m_autLangListField.remove(selection);
-            }
-        }
-    }
-
     /**
      * Adds listeners.
      */
     private void addListener() {
-        m_rightButton.addSelectionListener(m_selectionListener);
-        m_leftButton.addSelectionListener(m_selectionListener);
-        m_allRightButton.addSelectionListener(m_selectionListener);
-        m_allLeftButton.addSelectionListener(m_selectionListener);
         m_autNameText.addModifyListener(m_modifyListener);
-        m_autLangListField.addSelectionListener(m_selectionListener);
-        m_availableLangListField.addSelectionListener(m_selectionListener);
     }
 
     /**
      * Removes listeners.
      */
     private void removeListener() {
-        m_rightButton.removeSelectionListener(m_selectionListener);
-        m_leftButton.removeSelectionListener(m_selectionListener);
-        m_allRightButton.removeSelectionListener(m_selectionListener);
-        m_allLeftButton.removeSelectionListener(m_selectionListener);
         m_autNameText.removeModifyListener(m_modifyListener);
-        m_autLangListField.removeSelectionListener(m_selectionListener);
-        m_availableLangListField.removeSelectionListener(m_selectionListener);
     }
 
     /**
@@ -541,19 +353,7 @@ public class AUTSettingWizardPage extends WizardPage {
          */
         private void handleEvent(SelectionEvent e) {
             final Object o = e.getSource();
-            if (o.equals(m_rightButton)
-                || o.equals(m_leftButton)
-                || o.equals(m_allLeftButton)
-                || o.equals(m_allRightButton)) {
-                
-                updateLanguages();
-                checkCompleteness();
-                return;
-            } else if (o.equals(m_autLangListField) 
-                || o.equals(m_availableLangListField)) {
-                
-                return;
-            } else if (o.equals(m_autToolKitComboBox)) {
+            if (o.equals(m_autToolKitComboBox)) {
                 if (CommandConstants.RCP_TOOLKIT.equals(
                         m_autToolKitComboBox.getSelectedObject())) {
                     m_generateNames.setEnabled(true);
@@ -571,17 +371,6 @@ public class AUTSettingWizardPage extends WizardPage {
                 + StringConstants.APOSTROPHE);
         }
     }
-    
-    /**
-     * Updates the aut languages.
-     */
-    private void updateLanguages() {
-        m_autMain.getLangHelper().clearLangList();
-        for (String lang : m_autLangListField.getItems()) {
-            m_autMain.getLangHelper().addLanguageToList(
-                Languages.getInstance().getLocale(lang));
-        }
-    } 
 
     /**
      * This private inner class contains a new ModifyListener.
@@ -613,7 +402,6 @@ public class AUTSettingWizardPage extends WizardPage {
         m_autMain.setToolkit(m_autToolKitComboBox.getSelectedObject());
         m_autMain.setGenerateNames(m_generateNames.getSelection());
         checkToolkit(this.getShell(), m_autMain, oldToolkit);
-        updateLanguages();
     }
     
     /**
@@ -654,7 +442,6 @@ public class AUTSettingWizardPage extends WizardPage {
      * {@inheritDoc}
      */
     public void setVisible(boolean visible) {
-        fillLanguageLists();
         super.setVisible(visible);
         java.util.List<ToolkitDescriptor> toolkits;
         java.util.List<String> values = new ArrayList<String>();
@@ -690,7 +477,6 @@ public class AUTSettingWizardPage extends WizardPage {
         if (visible) {
             m_autNameText.setFocus();
             checkCompleteness();
-            m_chooseLists.checkButtons();
         }
     }
     

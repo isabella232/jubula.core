@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -75,16 +74,6 @@ public interface IProjectPO extends IParamNodePO {
     public abstract void clearUsedProjects();
 
     /**
-     * @return Returns the defaultLanguage.
-     */
-    public abstract Locale getDefaultLanguage();
-
-    /**
-     * @param defaultLanguage The defaultLanguage to set.
-     */
-    public abstract void setDefaultLanguage(Locale defaultLanguage);
-
-    /**
      * @return Returns the markupLanguage.
      */
     public abstract String getMarkupLanguage();
@@ -93,11 +82,6 @@ public interface IProjectPO extends IParamNodePO {
      * @param markupLanguage The markupLanguage to set.
      */
     public abstract void setMarkupLanguage(String markupLanguage);
-
-    /**
-     * @return Returns the langHelper.
-     */
-    public abstract LanguageHelper getLangHelper();
 
     /**
      * @return Returns the specObjCont.

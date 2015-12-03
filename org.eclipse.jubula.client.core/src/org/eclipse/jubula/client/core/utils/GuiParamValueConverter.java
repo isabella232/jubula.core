@@ -15,7 +15,6 @@ import java.io.PushbackReader;
 import java.io.StringReader;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -45,14 +44,13 @@ public class GuiParamValueConverter extends ParamValueConverter {
      * hint: the string could be null.
      * @param guiString to convert
      * @param currentNode node with parameter for this parameterValue
-     * @param locale current used language
      * @param desc param description associated with current string (parameter value)
      * @param validator to use for special validations
      */
     public GuiParamValueConverter(String guiString,
-            IParameterInterfacePO currentNode, Locale locale,
+            IParameterInterfacePO currentNode,
             IParamDescriptionPO desc, IParamValueValidator validator) {
-        super(currentNode, locale, desc, validator);
+        super(currentNode, desc, validator);
         init(guiString);
     }
     

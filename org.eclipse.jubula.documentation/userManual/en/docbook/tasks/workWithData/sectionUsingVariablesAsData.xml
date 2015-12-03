@@ -299,17 +299,6 @@
               </para>
             </listitem>
           </varlistentry>
-          <varlistentry>
-            <term>
-              TEST_LANGUAGE:
-            </term>
-            <listitem>
-              <para>
-                The language the AUT and the test are running in,
-                e.g en_US. 
-              </para>
-            </listitem>
-          </varlistentry>
         </variablelist>
       </listitem>
       <listitem>

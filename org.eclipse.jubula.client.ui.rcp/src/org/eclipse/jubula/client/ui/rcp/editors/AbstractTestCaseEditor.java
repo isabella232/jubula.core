@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -59,7 +58,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -81,7 +79,6 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
@@ -274,8 +271,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         INodePO node = (INodePO) getEditorHelper().getEditSupport()
                 .getWorkVersion();
         for (INodePO child : node.getUnmodifiableNodeList()) {
-            CompletenessGuard.checkLocalTestData(child, WorkingLanguageBP
-                    .getInstance().getWorkingLanguage());
+            CompletenessGuard.checkLocalTestData(child);
         }
     }
 
@@ -595,21 +591,20 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     /**
      * Checks if testdata of the current original testCase contains references.
      * <p>Checks also the propagated compName.
-     * @param testCase the currec testCase
+     * @param testCase the current testCase
      * @return true, if data was not mixed.
      */
     private boolean checkRefsAndCompNames(ISpecTestCasePO testCase) {
         ITDManager mgr = testCase.getDataManager();
-        Locale locale = WorkingLanguageBP.getInstance().getWorkingLanguage();
         for (int row = 0; row < mgr.getDataSetCount(); row++) {
             IDataSetPO row2 = mgr.getDataSet(row);
             for (int col = 0; col < row2.getColumnCount(); col++) {
-                ITestDataPO data = row2.getColumn(col);
+                String data = row2.getValueAt(col);
                 String uniqueId = mgr.getUniqueIds().get(col);
                 IParamDescriptionPO desc = 
                     testCase.getParameterForUniqueId(uniqueId);
                 ParamValueConverter conv = 
-                    new ModelParamValueConverter(data, testCase, locale, desc);
+                    new ModelParamValueConverter(data, testCase, desc);
                 for (String refName : conv.getNamesForReferences()) {
                     ErrorHandlingUtil.createMessageDialog(
                         MessageIDs.E_CANNOT_SAVE_EDITOR_TC_SP, null, 

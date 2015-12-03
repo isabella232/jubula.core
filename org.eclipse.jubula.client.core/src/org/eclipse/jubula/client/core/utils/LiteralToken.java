@@ -12,13 +12,10 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
-
-
 
 
 /**
@@ -64,8 +61,8 @@ class LiteralToken extends AbstractParamValueToken {
      * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getExecutionString(int, org.eclipse.jubula.client.core.utils.Traverser, java.util.Locale)
      */
     @SuppressWarnings("unused")
-    public String getExecutionString(List<ExecObject> stack, 
-        Locale locale) throws InvalidDataException {
+    public String getExecutionString(List<ExecObject> stack) 
+            throws InvalidDataException {
         
         String execString = StringConstants.EMPTY;
         // remove quotes

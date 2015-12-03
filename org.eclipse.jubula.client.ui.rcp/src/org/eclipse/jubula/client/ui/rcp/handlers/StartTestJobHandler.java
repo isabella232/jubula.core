@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 
@@ -69,8 +68,6 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
                     if (prepareOk.get()) {
                         ClientTest.instance().startTestJob(
                                 finalTestJob,
-                                WorkingLanguageBP.getInstance()
-                                        .getWorkingLanguage(),
                                 autoScreenshots, null);
                     }
                     monitor.done();

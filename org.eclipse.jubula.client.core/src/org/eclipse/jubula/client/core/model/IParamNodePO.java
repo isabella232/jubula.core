@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.Iterator;
-import java.util.Locale;
 
 
 /**
@@ -24,28 +23,24 @@ public interface IParamNodePO extends INodePO, IParameterInterfacePO {
      * Gets an iterator over the list of all variable references of type
      * <code>TDCell</code> in all data sets.
      * 
-     * @param locale currently used locale
      * @return The iterator over all references.
      */
-    public Iterator<TDCell> getParamReferencesIterator(Locale locale);
+    public Iterator<TDCell> getParamReferencesIterator();
 
     /**
      * Gets an iterator over the list of all variable references of type
      * <code>TDCell</code> in the data sets with the specified row.
      * @param dataSetRow The data set row
-     * @param locale currently used locale
      * @return The iterator over all references.
      */
-    public Iterator<TDCell> getParamReferencesIterator(
-            int dataSetRow, Locale locale);
+    public Iterator<TDCell> getParamReferencesIterator(int dataSetRow);
 
     /**
      * Checks if the entry sets have complete data.
-     * @param locale The Locale to check
      * @return <code>true</code> if data is complete, 
      *         <code>false</code> otherwise.
      */
-    public boolean isTestDataComplete(Locale locale);
+    public boolean isTestDataComplete();
 
     /**
      * Clears the Test Data for this node.

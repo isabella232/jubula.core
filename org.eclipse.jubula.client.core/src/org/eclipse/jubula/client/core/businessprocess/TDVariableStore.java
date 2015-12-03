@@ -29,9 +29,6 @@ public class TDVariableStore {
     /** Prefix for a pre-defined test variable */
     public static final String PREDEF_VAR_PREFIX = "TEST_"; //$NON-NLS-1$
     
-    /** id for the predefined language variable */
-    public static final String VAR_LANG = PREDEF_VAR_PREFIX + "LANGUAGE"; //$NON-NLS-1$
-
     /** id for the predefined testsuite name variable */
     public static final String VAR_TS = PREDEF_VAR_PREFIX + "TESTSUITE"; //$NON-NLS-1$
     

@@ -13,19 +13,16 @@ package org.eclipse.jubula.client.core.functions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
-import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent.State;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
@@ -124,21 +121,18 @@ public class CentralTestDataSetValueFunctionEvaluator
      *            central test data set that contains keys and columns
      * @param keyColumn
      *            Column where the key is stored
-     * @param lang
-     *            language to get the key value
      * @return a map specific for the column containing the row number for a
      *         given key
      * @throws InvalidDataException
      */
     private static Map<String, Integer> registerUniqueKeyMap(
-            ITestDataCubePO dataSet, IParamDescriptionPO keyColumn, Locale lang)
+            ITestDataCubePO dataSet, IParamDescriptionPO keyColumn)
         throws InvalidDataException {
         Map<String, Integer> keyMap;
         keyMap = new HashMap<String, Integer>();
         ITDManager dataManager = dataSet.getDataManager();
         for (int i = 0; i < dataManager.getDataSetCount(); i++) {
-            ITestDataPO cell = dataManager.getCell(i, keyColumn);
-            String cellValue = cell.getValue(lang);
+            String cellValue = dataManager.getCell(i, keyColumn);
             if (keyMap.get(cellValue) != null) {
                 throw new InvalidDataException("The key '" + cellValue //$NON-NLS-1$
                         + "' for column '" + keyColumn.getName() //$NON-NLS-1$
@@ -155,12 +149,11 @@ public class CentralTestDataSetValueFunctionEvaluator
     public String evaluate(String[] arguments) throws InvalidDataException {
         validateParamCount(arguments, 4);
         ITestDataCubePO dataSet = validateDataSetName(arguments[0]);
-        Locale lang = TestExecution.getInstance().getLocale();
         IParamDescriptionPO keyColumn = validateColumnName(dataSet,
                 arguments[1]);
-        int entryKey = validateEntryKey(dataSet, keyColumn, arguments[2], lang);
+        int entryKey = validateEntryKey(dataSet, keyColumn, arguments[2]);
         IParamDescriptionPO column = validateColumnName(dataSet, arguments[3]);
-        return getDataSetValue(dataSet, entryKey, column, lang);
+        return getDataSetValue(dataSet, entryKey, column);
     }
 
     /**
@@ -172,20 +165,17 @@ public class CentralTestDataSetValueFunctionEvaluator
      *            number of the given row
      * @param column
      *            descriptor for the column
-     * @param lang
-     *            language to get the key value
      * @return value as a string, if it is another function it would be
      *         validated too
      * @throws InvalidDataException
      */
     private static String getDataSetValue(ITestDataCubePO dataSet, int row,
-            IParamDescriptionPO column, Locale lang)
+            IParamDescriptionPO column)
         throws InvalidDataException {
-        String dataSetValue = dataSet.getDataManager().getCell(row, column)
-                .getValue(lang);
-        return new GuiParamValueConverter(dataSetValue, dataSet, lang, null,
+        String dataSetValue = dataSet.getDataManager().getCell(row, column);
+        return new GuiParamValueConverter(dataSetValue, dataSet, null,
                 new NullValidator()).getExecutionString(
-                new ArrayList<ExecObject>(), lang);
+                new ArrayList<ExecObject>());
     }
 
     /**
@@ -228,17 +218,15 @@ public class CentralTestDataSetValueFunctionEvaluator
      *            that contains key
      * @param key
      *            unique key
-     * @param lang
-     *            language for key value
      * @return row number
      * @throws InvalidDataException
      */
     private static int validateEntryKey(ITestDataCubePO dataSet,
-            IParamDescriptionPO keyColumn, String key, Locale lang)
+            IParamDescriptionPO keyColumn, String key)
         throws InvalidDataException {
         Map<String, Integer> keyMap = UNIQUE_KEYS.get(keyColumn);
         if (keyMap == null) {
-            keyMap = registerUniqueKeyMap(dataSet, keyColumn, lang);
+            keyMap = registerUniqueKeyMap(dataSet, keyColumn);
         }
         Integer row = keyMap.get(key);
         if (row != null) {

@@ -10,12 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views.dataset;
 
-import java.util.Locale;
-
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -46,9 +43,8 @@ import org.eclipse.ui.views.properties.PropertySheet;
  * @created 11.02.2005
  */
 public class DataSetView extends PageBookView 
-    implements IProjectLoadedListener, ILanguageChangedListener, 
-               IParamChangedListener, IContributedContentsView, 
-               ISelectionListener {
+    implements IProjectLoadedListener, IParamChangedListener, 
+        IContributedContentsView, ISelectionListener {
 
     /**
      * {@inheritDoc}
@@ -133,7 +129,6 @@ public class DataSetView extends PageBookView
         site.getPage().addSelectionListener(this);
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addParamChangedListener(this, true);
-        ded.addLanguageChangedListener(this, true);
         ded.addProjectLoadedListener(this, true);
         super.init(site);
     }
@@ -145,7 +140,6 @@ public class DataSetView extends PageBookView
         final DataEventDispatcher dispatcher = 
             DataEventDispatcher.getInstance();
         dispatcher.removeParamChangedListener(this);
-        dispatcher.removeLanguageChangedListener(this);
         dispatcher.removeProjectLoadedListener(this);
         super.dispose();
     }
@@ -200,16 +194,6 @@ public class DataSetView extends PageBookView
         IPage curPage = getCurrentPage();
         if (curPage instanceof IProjectLoadedListener) {
             ((IProjectLoadedListener)curPage).handleProjectLoaded();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void handleLanguageChanged(Locale locale) {
-        IPage curPage = getCurrentPage();
-        if (curPage instanceof ILanguageChangedListener) {
-            ((ILanguageChangedListener)curPage).handleLanguageChanged(locale);
         }
     }
 

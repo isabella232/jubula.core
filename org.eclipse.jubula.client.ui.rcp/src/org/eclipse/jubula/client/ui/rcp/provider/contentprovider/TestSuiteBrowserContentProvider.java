@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -23,7 +22,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,10 +69,7 @@ public class TestSuiteBrowserContentProvider extends BrowserContentProvider {
         
         if (parentElement instanceof ITestSuitePO) {
             ITestSuitePO testSuite = (ITestSuitePO) parentElement;
-            WorkingLanguageBP workLangBP = WorkingLanguageBP.getInstance();
-            Locale workLang = workLangBP.getWorkingLanguage();
-            if (testSuite.getAut() != null
-                    && !workLangBP.isTestSuiteLanguage(workLang, testSuite)) {
+            if (testSuite.getAut() != null) {
                 return ArrayUtils.EMPTY_OBJECT_ARRAY;
             }
             // fall through

@@ -20,7 +20,6 @@ import org.eclipse.jubula.client.core.agent.IAutRegistrationListener;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -76,8 +75,7 @@ public class StartAutJob extends Job {
         AutAgentRegistration.getInstance().addListener(l);
         try {
             TestExecutionContributor.getInstance().getClientTest().startAut(
-                    m_aut, m_autConfig, 
-                    WorkingLanguageBP.getInstance().getWorkingLanguage());
+                    m_aut, m_autConfig);
         } catch (ToolkitPluginException e) {
             return new Status(IStatus.ERROR, Plugin.PLUGIN_ID, 
                     e.getLocalizedMessage());

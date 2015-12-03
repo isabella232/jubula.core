@@ -14,7 +14,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -32,7 +31,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IAutStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
@@ -194,20 +192,6 @@ public class StartAutBP {
     };
     
     /**
-     * <code>m_langChangedListener</code> listener for modification of working language
-     */
-    private ILanguageChangedListener m_langChangedListener = 
-        new ILanguageChangedListener() {
-            /**
-             * @param locale the new Locale
-             */
-            @SuppressWarnings("synthetic-access") 
-            public void handleLanguageChanged(Locale locale) {
-                fireAUTButtonStateCouldBeChanged();
-            }
-        };
-
-    /**
      * <code>m_projPropModifyListener</code> listener for modification of project properties
      */
     private IProjectStateListener m_projPropModifyListener =
@@ -256,7 +240,6 @@ public class StartAutBP {
         ded.addDataChangedListener(m_currentProjDeletedListener, true);
         ded.addAutAgentConnectionListener(m_serverConnectListener, true);
         ded.addAutStateListener(m_autStateListener, true);
-        ded.addLanguageChangedListener(m_langChangedListener, true);
         ded.addProjectStateListener(m_projPropModifyListener);
     }
 
@@ -272,26 +255,24 @@ public class StartAutBP {
     }
     
     /**
-     * @return all AUTs for workingLanguage and started server
+     * @return all AUTs for connected aut agent
      */
     public SortedMap<IAUTMainPO, SortedSet<IAUTConfigPO>> getAllAUTs() {
         if (GeneralStorage.getInstance().getProject() != null) {
-            Locale workingLang = WorkingLanguageBP.getInstance()
-                .getWorkingLanguage();
-            Set<IAUTMainPO> autsForLang = getAutsForLang(workingLang);
-            return getAutsForLangAndServer(autsForLang);
+            Set<IAUTMainPO> autsForLang = getAUTs();
+            return getAutsForAutAgent(autsForLang);
         }
         return new TreeMap<IAUTMainPO, SortedSet<IAUTConfigPO>>();
     }
 
     /**
-     * @param autsForLang
-     *            all auts applicable for given language
-     * @return map with all auts applicable for given language and appropriate
+     * @param auts
+     *            all auts
+     * @return map with all auts applicable for given
      *         configurations for started server
      */
     private SortedMap<IAUTMainPO, SortedSet<IAUTConfigPO>> 
-        getAutsForLangAndServer(Set<IAUTMainPO> autsForLang) {
+        getAutsForAutAgent(Set<IAUTMainPO> auts) {
         SortedMap<IAUTMainPO, SortedSet<IAUTConfigPO>> autMap = 
             new TreeMap<IAUTMainPO, SortedSet<IAUTConfigPO>>();
         String agentHostname = resolveAUTAgentHostName();
@@ -309,7 +290,7 @@ public class StartAutBP {
                 validHosts.add(lh.getHostName().toLowerCase());
                 validHosts.add(EnvConstants.LOCALHOST_FQDN.toLowerCase());
             }
-            for (IAUTMainPO autForLang : autsForLang) {
+            for (IAUTMainPO autForLang : auts) {
                 Set<IAUTConfigPO> confs = autForLang.getAutConfigSet();
                 SortedSet<IAUTConfigPO> validConfs = 
                     new TreeSet<IAUTConfigPO>();
@@ -399,17 +380,14 @@ public class StartAutBP {
     }
 
     /**
-     * @param workingLang current used language
-     * @return auts, which support working language
+     * @return AUTs, which support working language
      */
-    private Set<IAUTMainPO> getAutsForLang(final Locale workingLang) {
+    private Set<IAUTMainPO> getAUTs() {
         Set<IAUTMainPO> autsForLang = new HashSet<IAUTMainPO>();
         Set<IAUTMainPO> autsOfProject = GeneralStorage.getInstance()
             .getProject().getAutMainList();
         for (IAUTMainPO aut : autsOfProject) {
-            if (aut.getLangHelper().containsItem(workingLang)) {
-                autsForLang.add(aut);
-            }
+            autsForLang.add(aut);
         }
         return autsForLang;
     }

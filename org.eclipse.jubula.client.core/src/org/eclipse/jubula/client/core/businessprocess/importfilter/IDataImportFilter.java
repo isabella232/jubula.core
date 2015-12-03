@@ -12,10 +12,8 @@ package org.eclipse.jubula.client.core.businessprocess.importfilter;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.DataReadException;
-import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.NoSupportForLocaleException;
 
 
 /**
@@ -37,16 +35,12 @@ public interface IDataImportFilter {
      *      directory for data files
      * @param file
      *      data source File
-     * @param locale
-     *      data source locale
      * @return
      *      filled TestDataManager with new data
      * @throws IOException
-     *      error occured while reading data source
-     * @throws NoSupportForLocaleException
-     *      no support for selected locale
+     *      error occurred while reading data source
      */
-    public abstract DataTable parse(File dataDir, String file, Locale locale) 
-        throws IOException, NoSupportForLocaleException, DataReadException;
+    public abstract DataTable parse(File dataDir, String file) 
+        throws IOException, DataReadException;
 
 }

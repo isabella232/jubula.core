@@ -11,13 +11,11 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
 import java.util.Iterator;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -97,11 +95,8 @@ public abstract class AbstractPropertySource <NODE_TYPE>
      * @param nodePo the node
      */
     protected void checkEntrySets(IParamNodePO nodePo) {
-        final Locale locale = WorkingLanguageBP.getInstance()
-            .getWorkingLanguage();
-        
-        boolean bool = nodePo.isTestDataComplete(locale);
-        CompletenessGuard.setCompletenessTestData(nodePo, locale, bool);
+        boolean bool = nodePo.isTestDataComplete();
+        CompletenessGuard.setCompletenessTestData(nodePo, bool);
     }
     
     /**

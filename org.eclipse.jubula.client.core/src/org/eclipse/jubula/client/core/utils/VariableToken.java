@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -76,7 +75,7 @@ public class VariableToken extends AbstractParamValueToken {
     /** {@inheritDoc}
      * @see org.eclipse.jubula.client.core.utils.IParamValueToken#getExecutionString(int, org.eclipse.jubula.client.core.utils.Traverser, java.util.Locale)
      */
-    public String getExecutionString(List<ExecObject> stack, Locale locale) 
+    public String getExecutionString(List<ExecObject> stack) 
         throws InvalidDataException {
         String  resolvedVar = TestExecution.getInstance()
             .getVariableStore().getValue(m_variableName);

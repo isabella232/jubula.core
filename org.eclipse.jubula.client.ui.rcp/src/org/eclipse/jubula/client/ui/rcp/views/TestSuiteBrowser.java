@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views;
 
-import java.util.Locale;
-
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
@@ -24,7 +22,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -83,8 +80,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("synthetic-access")
 public class TestSuiteBrowser extends AbstractJBTreeView implements
-    ITreeViewerContainer, IJBPart, ILanguageChangedListener, 
-    IProblemPropagationListener {
+    ITreeViewerContainer, IJBPart, IProblemPropagationListener {
 
     /** New-menu */
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$  
@@ -122,7 +118,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             new TestExecDropTargetListener(this));
         
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
-        ded.addLanguageChangedListener(this, true);
         ded.addProblemPropagationListener(this);
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
@@ -216,7 +211,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     public void dispose() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.removeDataChangedListener(this);
-        ded.removeLanguageChangedListener(this);
         ded.removeProblemPropagationListener(this);
         super.dispose();
     }
@@ -338,13 +332,6 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         getTreeViewer().refresh();
         getTreeViewer().expandToLevel(getTreeViewer().getAutoExpandLevel());
         getTreeViewer().setSelection(new StructuredSelection(po), true);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void handleLanguageChanged(Locale locale) {
-        getTreeViewer().refresh();
     }
 
     /**

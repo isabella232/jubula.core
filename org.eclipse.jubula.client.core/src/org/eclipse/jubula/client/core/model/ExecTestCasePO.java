@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -666,12 +665,12 @@ class ExecTestCasePO extends TestCasePO implements
     /**
      * {@inheritDoc}
      */
-    public boolean isTestDataComplete(Locale locale) {
+    public boolean isTestDataComplete() {
         if (getSpecTestCase() == null) { // missing referenced Test Case
             return false;
         }
 
-        return super.isTestDataComplete(locale);
+        return super.isTestDataComplete();
     }
     
     /**

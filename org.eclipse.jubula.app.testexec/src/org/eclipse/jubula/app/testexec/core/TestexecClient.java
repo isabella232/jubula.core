@@ -112,9 +112,6 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.PROJECT_VERSION, true, 
                 ClientTestStrings.PROJECT_VERSION_EX, 
                 Messages.ClientProjectVersionOpt, req));
-        options.addOption(createOption(ClientTestStrings.LANGUAGE, true, 
-                ClientTestStrings.LANGUAGE, 
-                Messages.ClientLanguageOpt, req));
         options.addOption(createOption(ClientTestStrings.RESULTDIR, true, 
                 ClientTestStrings.RESULTDIR, 
                 Messages.ClientResultdirOpt, false));
@@ -199,10 +196,6 @@ public class TestexecClient extends AbstractCmdlineClient {
                     ClientTestStrings.AUT_CONFIG);
             appendError(errorMsgs, ClientTestStrings.AUT_ID, 
                     ClientTestStrings.AUT_ID);
-        }
-        if (job.getLanguage() == null) {
-            appendError(errorMsgs, ClientTestStrings.LANGUAGE, 
-                    ClientTestStrings.LANGUAGE);
         }
         if (job.getTestSuiteNames().isEmpty() && job.getTestJobName() == null) {
             appendError(errorMsgs, ClientTestStrings.TESTSUITE, 

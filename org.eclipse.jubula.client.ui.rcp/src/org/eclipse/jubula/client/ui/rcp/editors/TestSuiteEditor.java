@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.editors;
 
 import java.util.Iterator;
-import java.util.Locale;
 
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
@@ -19,7 +18,6 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -31,7 +29,6 @@ import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TSEditorDropTargetListener;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -91,13 +88,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
     protected boolean checkCompleteness() {
         ITestSuitePO tsWorkVersion = 
             (ITestSuitePO)getEditorHelper().getEditSupport().getWorkVersion();
-        if (!checkWorkingLanguage(tsWorkVersion)) {
-            ErrorHandlingUtil.createMessageDialog(
-                    MessageIDs.E_CANNOT_SAVE_EDITOR, null, 
-                    new String[]{
-                        Messages.TestCaseEditorUnsupportedAUTLanguage});
-            return false;
-        }
         if (tsWorkVersion.getName() == null
                 || StringConstants.EMPTY.equals(tsWorkVersion.getName())) {
             ErrorHandlingUtil.createMessageDialog(
@@ -141,32 +131,6 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
                     return false;
                 }
             }
-        }
-        return true;
-    }
-
-    /**
-     * @param tsWorkVersion the actual workversion
-     * @return true, current working language is supported by the current AUT
-     */
-    private boolean checkWorkingLanguage(ITestSuitePO tsWorkVersion) {
-        Locale workLang = WorkingLanguageBP.getInstance()
-            .getWorkingLanguage();
-        if (tsWorkVersion.getAut() != null) {
-            for (IAUTMainPO aut 
-                : GeneralStorage.getInstance().getProject().getAutMainList()) {
-                
-                if (aut.equals(tsWorkVersion.getAut())) {
-                    for (Locale autLang : aut.getLangHelper()
-                            .getLanguageList()) {
-                        
-                        if (workLang.equals(autLang)) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
         }
         return true;
     }

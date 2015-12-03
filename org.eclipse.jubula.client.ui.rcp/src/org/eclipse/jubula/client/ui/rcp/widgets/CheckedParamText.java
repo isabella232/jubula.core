@@ -14,7 +14,6 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
@@ -77,8 +76,7 @@ public class CheckedParamText extends CheckedText {
             ValidationState state = super.validateInput(e);
             if (state == ValidationState.OK) {
                 GuiParamValueConverter conv = new GuiParamValueConverter(
-                    getNewValue(e), getNode(), WorkingLanguageBP.getInstance().
-                        getWorkingLanguage(), getDesc(), m_dataValidator);
+                    getNewValue(e), getNode(), getDesc(), m_dataValidator);
                 state = setState((Text)e.getSource(), conv);
             }
 

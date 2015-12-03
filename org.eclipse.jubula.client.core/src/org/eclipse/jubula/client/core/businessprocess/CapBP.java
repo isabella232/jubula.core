@@ -12,14 +12,11 @@ package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
-import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
@@ -60,13 +57,8 @@ public class CapBP {
         Action action = getAction(cap);
         for (String paramName : action.getParamNames()) {
             Param parameter = action.findParam(paramName);
-            String defaultValue = parameter.getDefaultValue();
-            
-            ITestDataPO testData = PoMaker.createTestDataPO();
-            for (Locale locale : project.getLangHelper().getLanguageList()) {
-                testData.setValue(locale, defaultValue, project);
-            }
-            cap.getDataManager().updateCell(testData, 0, paramName);
+            cap.getDataManager().updateCell(parameter.getDefaultValue(), 
+                    0, paramName);
         }
         return cap;
     }

@@ -21,20 +21,24 @@ import java.util.List;
  */
 public interface IDataSetPO extends IPersistentObject {
     /**
-     * @return Returns the list.
+     * @return the list of columns
      */
-    public abstract List<ITestDataPO> getList();
+    public abstract List<String> getColumns();
 
-    /**
-     * @return empty string
-     */
+    /** @return empty string */
     public abstract String getName();
 
     /**
-     * @param column The column
-     * @return The test data entry
+     * @param column the column index
+     * @return the value
      */
-    public ITestDataPO getColumn(int column);
+    public String getValueAt(int column);
+
+    /**
+     * @param column change the value at the given index
+     * @param value the new value
+     */
+    public void setValueAt(int column, String value);
 
     /**
      * @return The number of columns
@@ -42,15 +46,15 @@ public interface IDataSetPO extends IPersistentObject {
     public int getColumnCount();
 
     /**
-     * Adds a new test data.
+     * Adds a new test data value as a column.
      * 
      * @param testData
      *            The test data
      */
-    public void addColumn(ITestDataPO testData);
+    public void addColumn(String testData);
 
     /**
-     * Removes the column.
+     * Removes the given value column.
      * 
      * @param column
      *            The column index

@@ -12,11 +12,8 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -90,13 +87,12 @@ class TestDataCubePO implements ITestDataCubePO {
     private String m_dataFile = null;
     
     /**
-     * <code>m_completeTdMap</code>map to manage the information about testdata 
+     * <code>m_completeTd</code>map to manage the information about testdata 
      * completeness for each supported language <br>
      * key: supported languages, Type: string (string presentation of Locale)
      * value: flag to label the completeness of testdata
      */
-    private transient Map<String, Boolean> m_completeTdMap = 
-        new HashMap<String, Boolean>(TestDataPO.DEFAULT_NUMBER_OF_LANGUAGES);
+    private transient boolean m_completeTd = false;
     
     /** the data cube referenced by this node */
     private IParameterInterfacePO m_referencedDataCube;
@@ -311,44 +307,18 @@ class TestDataCubePO implements ITestDataCubePO {
         }
     }
 
-    /**
-     * 
-     * @return Returns the completeTdMap.
-     */
+    /** @return Returns the completeTdMap */
     @Transient
-    private Map<String, Boolean> getCompleteTdMap() {
-        return m_completeTdMap;
+    private boolean getCompleteTdMap() {
+        return m_completeTd;
     }
     
     /**
-     * method to get the CompleteTdFlag for a given Locale
-     * @param loc locale, for which to get the completeTdFlag
-     * @return the state of completeTdFlag
-     */
-    public boolean getCompleteTdFlag(Locale loc) {
-        Boolean value = getCompleteTdMap().get(loc.toString());
-        return (value != null) ? value.booleanValue() : false;
-    }
-    
-    /**
-     * FIXME Katrin This method should not be public!
-     * <b>Only use this for internal purposes</b>
      * method to set the completeTdFlag for a given Locale
-     * @param loc  locale, for which to set the completeTdFlag
      * @param flag the state of completeTdFlag to set
      */
-    public void setCompleteTdFlag(Locale loc, boolean flag) {
-        getCompleteTdMap().put(loc.toString(), Boolean.valueOf(flag));
-    }
-
-    /**
-     * FIXME Katrin This method should not be public!
-     * <b>Only use this for internal purposes!</b>
-     * method to reset complete TD Flags
-     */
-    @Transient
-    public void resetCompleteTdFlag() {
-        getCompleteTdMap().clear();
+    public void setCompleteTdFlag(boolean flag) {
+        m_completeTd = flag;
     }
 
     /**

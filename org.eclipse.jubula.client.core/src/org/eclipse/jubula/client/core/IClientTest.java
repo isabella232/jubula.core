@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
 
@@ -61,12 +60,11 @@ public interface IClientTest {
     /**
      * start the application under test.
      * @param conf AutConf
-     * @param locale the Locale to start AUT with
      * @param aut the IAUTMainPO the AUT.
      * @throws ToolkitPluginException if the toolkit for the AUT cannot be found
      */
-    public abstract void startAut(IAUTMainPO aut, IAUTConfigPO conf, 
-        Locale locale) throws ToolkitPluginException;
+    public abstract void startAut(IAUTMainPO aut, IAUTConfigPO conf) 
+            throws ToolkitPluginException;
 
     /**
      * Stops the Running AUT with the given ID.
@@ -116,7 +114,6 @@ public interface IClientTest {
      * @param dialogOpen boolean
      * @param singleLineTrigger SortedSet
      * @param multiLineTrigger SortedSet
-     * @param locale Locale
      */
     public abstract void startRecordTestCase(ISpecTestCasePO spec,
             IWritableComponentNameMapper compNamesMapper, int recordCompMod,
@@ -124,7 +121,7 @@ public interface IClientTest {
             int checkModeKeyMod, int checkModeKey, int checkCompKeyMod,
             int checkCompKey, boolean dialogOpen,
             SortedSet<String> singleLineTrigger,
-            SortedSet<String> multiLineTrigger, Locale locale);
+            SortedSet<String> multiLineTrigger);
 
     /**
      * Finishes the the object mapping. <br> 
@@ -136,8 +133,6 @@ public interface IClientTest {
      * 
      * @param execTestSuite
      *            The testSuite to be tested
-     * @param locale
-     *            The locale to be tested
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
@@ -151,7 +146,7 @@ public interface IClientTest {
      *            The displayed TS name or null for using of execTestSuite name.
      */
     public abstract void startTestSuite(ITestSuitePO execTestSuite,
-        Locale locale, AutIdentifier autId, boolean autoScreenshot,
+        AutIdentifier autId, boolean autoScreenshot,
         Map<String, String> externalVars, String noRunOptMode,
         String jobDesc);
 
@@ -159,7 +154,6 @@ public interface IClientTest {
      * Starts the given Test Job.
      * 
      * @param testJob The Test Job to start.
-     * @param locale The locale to be tested.
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
@@ -167,7 +161,7 @@ public interface IClientTest {
      * @return list of actually executed test suites
      */
     public abstract List<INodePO> startTestJob(ITestJobPO testJob,
-            Locale locale, boolean autoScreenshot, String noRunOptMode);
+            boolean autoScreenshot, String noRunOptMode);
     
     /**
      * Stops test execution.
@@ -175,7 +169,7 @@ public interface IClientTest {
     public abstract void stopTestExecution();
 
     /**
-     * Pauses test exectuion.
+     * Pauses test execution.
      * 
      * @param pm
      *            the pause mode to use

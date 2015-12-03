@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -28,7 +27,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -71,16 +69,6 @@ class AUTMainPO implements IAUTMainPO {
      */
     private IObjectMappingPO m_objMap = null;
 
-    /**
-     * <code>m_autLanguageSet</code> set of AUT languages
-     */
-    private Set<String> m_autLanguageSet = new TreeSet<String>();
-
-    /**
-     * <code>m_langHelper</code> helper for language management
-     */
-    private LanguageHelper m_langHelper;
-    
     /** The ID of the parent project */
     private Long m_parentProjectId = null;
     
@@ -88,20 +76,14 @@ class AUTMainPO implements IAUTMainPO {
     private boolean m_generateNames;
 
     /**
-     * <code>m_isModified</code> flag to signal modification of language list
-     * by Persistence (JPA / EclipseLink)
-     */
-    private transient boolean m_isModified = true;
-    
-    /**
      * only for Persistence (JPA / EclipseLink)
      */
     AUTMainPO() {
-        m_langHelper = new LanguageHelper(this);
+       // currently empty
     }
 
     /**
-     * The contructor.
+     * The constructor.
      * @param autName The name of this AUT.
      */
     AUTMainPO(String autName) {
@@ -109,7 +91,7 @@ class AUTMainPO implements IAUTMainPO {
     }
 
     /**
-     * The contructor.
+     * The constructor.
      * @param autName The name of this AUT.
      * @param guid The GUID of this AUT.
      */
@@ -117,7 +99,6 @@ class AUTMainPO implements IAUTMainPO {
         m_autName = autName;
         m_objMap = PoMaker.createObjectMappingPO();
         m_objMap.setParentProjectId(getParentProjectId());
-        m_langHelper = new LanguageHelper(this);
         m_guid = guid;
         m_generateNames = false;
     }
@@ -192,41 +173,6 @@ class AUTMainPO implements IAUTMainPO {
     public void removeAutConfig(IAUTConfigPO autConfig) {
         m_autConfigSet.remove(autConfig);
     }
-    /**
-     * only for Persistence (JPA / EclipseLink) !!!
-     * 
-     * @return Returns the languageList.
-     */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "AUT_LANGUAGES", 
-                     joinColumns = @JoinColumn(name = "AUT"))
-    @Column(name = "LANGUAGE")
-    @OrderBy
-    private Set<String> getAUTLanguageList() {
-        return m_autLanguageSet;
-    }
-    
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * @return language set
-     */
-    @Transient
-    public Set<String> getHbmLanguageList() {
-        return getAUTLanguageList();
-    }
-    
-    /**
-     * only for Persistence (JPA / EclipseLink) !!!
-     * set the languagelist
-     * @param langList languageSet from database
-     */
-    @SuppressWarnings("unused")
-    private void setAUTLanguageList(Set<String> langList) {
-        m_autLanguageSet = langList;
-        m_isModified = true;
-    }
-
 
     /**
      * 
@@ -311,69 +257,9 @@ class AUTMainPO implements IAUTMainPO {
         return getGuid().equals(o.getGuid());
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     * @return
-     */
+    /** {@inheritDoc} */
     public int hashCode() {
         return getGuid().hashCode();
-    }
-
-    /**
-     * @return Returns the langHelper.
-     */
-    @Transient
-    public LanguageHelper getLangHelper() {
-        return m_langHelper;
-    }
-
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * {@inheritDoc}
-     * @param lang
-     */
-    public void addLangToList(String lang) {
-        getAUTLanguageList().add(lang);        
-    }
-
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * {@inheritDoc}
-     */
-    public void clearLangList() {
-        getAUTLanguageList().clear();
-    }
-    
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * {@inheritDoc}
-     * @param lang
-     */
-    public void removeLang(String lang) {
-        getAUTLanguageList().remove(lang);
-    }
-
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * @return Returns the isModified.
-     */
-    @Transient
-    public boolean isModified() {
-        return m_isModified;
-    }
-
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * @param isModified The isModified to set.
-     */
-    public void setModified(boolean isModified) {
-        m_isModified = isModified;
     }
 
     /**

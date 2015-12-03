@@ -32,7 +32,6 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -69,7 +68,7 @@ class TDManagerPO implements ITDManager {
     private List<IDataSetPO> m_dataTable = new ArrayList<IDataSetPO>();
     
     /** 
-     * unique id of each parameter to get the assignement between parameter and its testdata
+     * unique id of each parameter to get the assignment between parameter and its testdata
      */
     private List<String> m_uniqueIds = new ArrayList<String>();
     
@@ -236,10 +235,9 @@ class TDManagerPO implements ITDManager {
     private void expandRows(int row) {
         int colCount = getColumnCount();
         while (row >= getDataTable().size()) {
-            List <ITestDataPO> columns =
-                new ArrayList <ITestDataPO> (colCount);
+            List <String> columns = new ArrayList <String> (colCount);
             for (int i = 0; i < colCount; i++) {
-                columns.add(TestDataBP.instance().createEmptyTestData());
+                columns.add(""); //$NON-NLS-1$
             }
             IDataSetPO listW = PoMaker.createListWrapperPO(columns);
             getDataTable().add(listW);
@@ -253,10 +251,9 @@ class TDManagerPO implements ITDManager {
      */
     public void insertDataSet(int position) {
         int colCount = getColumnCount();
-        List <ITestDataPO> columns =
-            new ArrayList <ITestDataPO> (colCount);
+        List <String> columns = new ArrayList <String> (colCount);
         for (int i = 0; i < colCount; i++) {
-            columns.add(TestDataBP.instance().createEmptyTestData());
+            columns.add(""); //$NON-NLS-1$
         }
 
         insertDataSet(PoMaker.createListWrapperPO(columns), position);
@@ -288,7 +285,7 @@ class TDManagerPO implements ITDManager {
     private void expandColumns(int column) {
         while (column >= getColumnCount()) {
             for (IDataSetPO dataSet : getDataSets()) {
-                dataSet.addColumn(TestDataBP.instance().createEmptyTestData());
+                dataSet.addColumn(""); //$NON-NLS-1$
             }
         }
     }
@@ -306,7 +303,7 @@ class TDManagerPO implements ITDManager {
      *             If the parameter with the userdefined name
      *             <code>paramName</code> doesn't exist
      */
-    private ITestDataPO getCell(int dataSetRow, String uniqueId)
+    private String getCell(int dataSetRow, String uniqueId)
         throws IllegalArgumentException {
         int index = getUniqueIds().indexOf(uniqueId);
         if (index == -1) {
@@ -326,14 +323,14 @@ class TDManagerPO implements ITDManager {
      *            The column
      * @return The test data
      */
-    private ITestDataPO getCell(int row, int column) {
-        return getDataSet(row).getColumn(column);
+    private String getCell(int row, int column) {
+        return getDataSet(row).getValueAt(column);
     }
     
     /**
      * {@inheritDoc}
      */
-    public ITestDataPO getCell(int dataSetRow, IParamDescriptionPO parameter)
+    public String getCell(int dataSetRow, IParamDescriptionPO parameter)
         throws IllegalArgumentException {
 
         return getCell(dataSetRow, parameter.getUniqueId());
@@ -376,15 +373,10 @@ class TDManagerPO implements ITDManager {
      * @param column
      *            The column
      */
-    public void updateCell(ITestDataPO testData, int row, int column) {
+    public void updateCell(String testData, int row, int column) {
         expandRows(row);
         expandColumns(column);
-        ITestDataPO td = getCell(row, column);
-        if (testData != null) {
-            td.setData(testData);
-        } else {
-            td.clear();
-        }
+        getDataSet(row).setValueAt(column, testData);
     }
     /**
      * Updates the test data at the specified row and parameter name. The data
@@ -399,7 +391,7 @@ class TDManagerPO implements ITDManager {
      * @param uniqueId
      *            uniqueId of the parameter
      */
-    public void updateCell(ITestDataPO testData, int row, String uniqueId) {
+    public void updateCell(String testData, int row, String uniqueId) {
         int index = getUniqueIds().indexOf(uniqueId);
         if (index > -1) {
             updateCell(testData, row, index);
@@ -422,7 +414,7 @@ class TDManagerPO implements ITDManager {
             List<IDataSetPO> dataTable = getDataTable();
             if (dataTable.size() > 0) {
                 IDataSetPO listW = dataTable.get(0);
-                columns = listW.getList().size();
+                columns = listW.getColumns().size();
             }
         
         } catch (IndexOutOfBoundsException e) { // NOPMD by al on 3/19/07 1:37 PM
@@ -442,10 +434,10 @@ class TDManagerPO implements ITDManager {
         }
         tdMan.clear();
         for (IDataSetPO dataSet : getDataSets()) {
-            List<ITestDataPO> newRow = new ArrayList<ITestDataPO> (
+            List<String> newRow = new ArrayList<String> (
                     dataSet.getColumnCount());
-            for (ITestDataPO testData : dataSet.getList()) {
-                newRow.add(testData.deepCopy());
+            for (String testData : dataSet.getColumns()) {
+                newRow.add(testData);
             }
             tdMan.insertDataSet(PoMaker.createListWrapperPO(newRow), 
                     tdMan.getDataSetCount());

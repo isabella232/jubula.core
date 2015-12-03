@@ -10,14 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.util.Locale;
-
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IModifiableParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.ComboParamValidator;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
@@ -58,11 +54,9 @@ public abstract class AbstractParamInterfaceBP<T> {
      *            The row to remove
      * @param mapper
      *            mapper to resolve param names
-     * @param locale
-     *            currently used language
      */
     public void removeDataSet(IParameterInterfacePO paramNode, int row,
-            IParamNameMapper mapper, Locale locale) {
+            IParamNameMapper mapper) {
 
         int colCount = paramNode.getDataManager().getColumnCount();
         for (int i = 0; i < colCount; i++) {
@@ -72,10 +66,10 @@ public abstract class AbstractParamInterfaceBP<T> {
                     .getParameterForUniqueId(uniqueId);
             if (desc != null) {
                 GuiParamValueConverter conv = new GuiParamValueConverter(null,
-                        paramNode, locale, desc, AbstractParamInterfaceBP
+                        paramNode, desc, AbstractParamInterfaceBP
                                 .createParamValueValidator(
                                         desc.getType(), false));
-                startParameterUpdate(conv, locale, row, mapper);
+                startParameterUpdate(conv, row, mapper);
             }
         }
         paramNode.getDataManager().removeDataSet(row);
@@ -87,15 +81,13 @@ public abstract class AbstractParamInterfaceBP<T> {
      * 
      * @param conv
      *            converter contains value to update
-     * @param locale
-     *            the locale of the test data
      * @param row
      *            The test data row
      * @param mapper
      *            mapper to resolve param names
      */
     public void startParameterUpdate(GuiParamValueConverter conv,
-            Locale locale, int row, IParamNameMapper mapper)  {
+            int row, IParamNameMapper mapper)  {
         IParameterInterfacePO paramNode = conv.getCurrentNode();
         IParamDescriptionPO paramDescription = conv.getDesc();
         String paramGuid = paramDescription.getUniqueId();
@@ -108,9 +100,8 @@ public abstract class AbstractParamInterfaceBP<T> {
         }
         try {
             // do nothing, if parameter value is unchanged
-            ITestDataPO data = 
+            String value = 
                 paramNode.getDataManager().getCell(row, paramDescription);
-            String value = data.getValue(locale);
             final String modelString = conv.getModelString();
             if (modelString != null && modelString.equals(value)) {
                 return;
@@ -118,7 +109,7 @@ public abstract class AbstractParamInterfaceBP<T> {
         } catch (IndexOutOfBoundsException e) { // NOPMD
             // nothing
         }
-        updateParam(conv, locale, mapper, row);
+        updateParam(conv, mapper, row);
     }
 
     /**
@@ -126,12 +117,11 @@ public abstract class AbstractParamInterfaceBP<T> {
      * @param node current node
      * @param desc param description belonging to searched param value
      * @param rowCount datasetNumber - 1
-     * @param locale currently used language
      * @return gui representation of parameter value for given parameter description
      */
     public static String getGuiStringForParamValue(
             final IParameterInterfacePO node, final IParamDescriptionPO desc, 
-            int rowCount, Locale locale) {
+            int rowCount) {
 
         String result = StringConstants.EMPTY;
         IParameterInterfacePO srcNode = node;
@@ -155,10 +145,10 @@ public abstract class AbstractParamInterfaceBP<T> {
         if (col > -1 && srcNode.getDataManager().getDataSetCount() > rowCount) {
             IDataSetPO row = srcNode.getDataManager().getDataSet(rowCount);
             try {
-                ITestDataPO td = row.getColumn(col);
+                String td = row.getValueAt(col);
                 ParamValueConverter conv = 
-                    new ModelParamValueConverter(td.getValue(locale),
-                            srcNode, locale, srcDesc);
+                    new ModelParamValueConverter(td,
+                            srcNode, srcDesc);
                 result = conv.getGuiString();
             } catch (IndexOutOfBoundsException e) {
                 // do nothing
@@ -177,26 +167,23 @@ public abstract class AbstractParamInterfaceBP<T> {
      * is only allowed, when the user calls the change parameters dialog.
      * 
      * @param conv converter containing parameter value to update
-     * @param locale the locale of the test data
-     * description will be removed
      * @param mapper mapper to resolve param names will be added
      * @param row current dataset number
      */
     protected abstract void updateParam(GuiParamValueConverter conv,
-            Locale locale, IParamNameMapper mapper, int row);
+            IParamNameMapper mapper, int row);
 
     /**
      * Updates the test data manager of the passed node by writing the
      * value contained in converter into the appropriate cell.
      * 
      * @param conv converter contains parameter value to write
-     * @param locale the locale of the test data
      * @param dataSetRow The row of the test data manager
      */
     protected void writeTestDataEntry(GuiParamValueConverter conv,
-        Locale locale, int dataSetRow) {
+        int dataSetRow) {
 
-        ITestDataPO oldTd = null;
+        String oldTd = null;
         final IParamDescriptionPO desc = conv.getDesc();
         try {
             oldTd = conv.getCurrentNode().getDataManager().getCell(dataSetRow,
@@ -204,7 +191,7 @@ public abstract class AbstractParamInterfaceBP<T> {
         } catch (IndexOutOfBoundsException e) { // NOPMD by al on 3/19/07 1:23 PM
             // Nothing to be done
         }
-        ITestDataPO td = createOrUpdateTestDataPO(oldTd, conv, locale);
+        String td = createOrUpdateTestData(oldTd, conv);
         conv.getCurrentNode().getDataManager().updateCell(td, dataSetRow,
             desc.getUniqueId());
     }
@@ -216,30 +203,19 @@ public abstract class AbstractParamInterfaceBP<T> {
      * 
      * @param testData The existing test data or <code>null</code>
      * @param conv converter with value to update
-     * @param locale the locale of the test data.
      * @return The (new) test data instance.
      *             If the creation of the Test Data fails
      */
-    private ITestDataPO createOrUpdateTestDataPO(ITestDataPO testData,
-        GuiParamValueConverter conv, Locale locale) {
-
-        ITestDataPO td = null;
-        if (testData != null) {
-            td = testData;
-        } else {
-            td = TestDataBP.instance().createEmptyTestData();            
-        }
-
+    private String createOrUpdateTestData(String testData,
+        GuiParamValueConverter conv) {
         // A new converter is instantiated and used here in order to cover
         // the corner case described in bug http://eclip.se/370718.
         GuiParamValueConverter newConv = new GuiParamValueConverter(
-                conv.getGuiString(), conv.getCurrentNode(), locale, 
+                conv.getGuiString(), conv.getCurrentNode(), 
                 conv.getDesc(), 
                 AbstractParamInterfaceBP.createParamValueValidator(
                         TestDataConstants.STR, false));
-        td.setValue(locale, newConv.getModelString(), 
-            GeneralStorage.getInstance().getProject());
-        return td;
+        return newConv.getModelString();
     }
     
     /**
@@ -262,11 +238,9 @@ public abstract class AbstractParamInterfaceBP<T> {
      *            the param to remove
      * @param paramIntObj
      *            the object to remove the param from
-     * @param locale
-     *            the locale to use
      */
     public abstract void removeParameter(IParamDescriptionPO desc,
-            T paramIntObj, Locale locale);
+            T paramIntObj);
 
     /**
      * @param paramIntObj
@@ -275,12 +249,10 @@ public abstract class AbstractParamInterfaceBP<T> {
      *            The old parameter for changing the usage at.
      * @param guid
      *            The GUID of the new parameter usage.
-     * @param locale
-     *            the locale to use.
      * @param mapper The parameter name mapping.
      */
     public abstract void changeUsageParameter(T paramIntObj,
-            IParamDescriptionPO desc, String guid, Locale locale,
+            IParamDescriptionPO desc, String guid,
             ParamNameBPDecorator mapper);
 
     /**

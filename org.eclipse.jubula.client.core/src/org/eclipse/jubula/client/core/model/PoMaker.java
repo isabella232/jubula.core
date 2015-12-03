@@ -11,8 +11,6 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
@@ -124,7 +122,7 @@ public abstract class PoMaker {
      * @param list list
      * @return DataSetPO
      */
-    public static IDataSetPO createListWrapperPO(List<ITestDataPO> list) {
+    public static IDataSetPO createListWrapperPO(List<String> list) {
         return new DataSetPO(list);
     }
 
@@ -434,24 +432,6 @@ public abstract class PoMaker {
     
     /**
      * factory method to replace constructor
-     * @param initialValues The initial values for the created object.
-     * @return TestDataPO
-     */
-    public static ITestDataPO createTestDataPO(
-            Map<Locale, String> initialValues) {
-        return new TestDataPO(initialValues);
-    }
-   
-    /**
-     * factory method to replace constructor
-     * @return TestDataPO
-     */
-    public static ITestDataPO createTestDataPO() {
-        return new TestDataPO();
-    }
-
-    /**
-     * factory method to replace constructor
      * 
      * @return TestDataCategoryPO
      */
@@ -680,14 +660,6 @@ public abstract class PoMaker {
         return TestCasePO.class;
     }
 
-    /**
-     * get the class instance of the PO (needed by Persistor)
-     * @return the class instance of the PO
-     */
-    public static Class<TestDataPO> getTestDataClass() {
-        return TestDataPO.class;
-    }
-    
     /**
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO

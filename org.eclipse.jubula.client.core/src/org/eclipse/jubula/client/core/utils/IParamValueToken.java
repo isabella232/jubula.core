@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
@@ -42,13 +41,11 @@ public interface IParamValueToken {
      * get the real values for this token, e.g. for testexecution or
      * completeness check
      * 
-     * @param locale
-     *            to use for resolving of this token
      * @param stack current execution stack
      * @return the resolved token for given locale
      */
-    public abstract String getExecutionString(List<ExecObject> stack, 
-        Locale locale) throws InvalidDataException;
+    public abstract String getExecutionString(List<ExecObject> stack) 
+            throws InvalidDataException;
 
     /**
      * @return the current value in gui representation for this token

@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.sourceprovider;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -22,7 +21,6 @@ import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IServerConnectionListener;
@@ -46,10 +44,9 @@ import org.eclipse.ui.ISources;
  * @author BREDEX GmbH
  * @created Apr 29, 2009
  */
-public class AvailableAutSourceProvider extends AbstractJBSourceProvider 
-        implements ILanguageChangedListener, IServerConnectionListener, 
-                   IProjectStateListener, 
-                   IProjectLoadedListener, IDataChangedListener {
+public class AvailableAutSourceProvider extends AbstractJBSourceProvider
+        implements IServerConnectionListener, IProjectStateListener,
+        IProjectLoadedListener, IDataChangedListener {
 
     /** 
      * ID of variable that indicates whether at least one AUT is 
@@ -63,7 +60,6 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
      */
     public AvailableAutSourceProvider() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
-        ded.addLanguageChangedListener(this, true);
         ded.addAutAgentConnectionListener(this, true);
         ded.addProjectStateListener(this);
         ded.addProjectLoadedListener(this, true);
@@ -76,7 +72,6 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
      */
     public void dispose() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
-        ded.removeLanguageChangedListener(this);
         ded.removeAutAgentConnectionListener(this);
         ded.removeProjectStateListener(this);
         ded.removeProjectLoadedListener(this);
@@ -99,13 +94,6 @@ public class AvailableAutSourceProvider extends AbstractJBSourceProvider
      */
     public String[] getProvidedSourceNames() {
         return new String [] {IS_AUT_AVAILABLE};
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void handleLanguageChanged(Locale locale) {
-        fireSourceChanged();
     }
 
     /**

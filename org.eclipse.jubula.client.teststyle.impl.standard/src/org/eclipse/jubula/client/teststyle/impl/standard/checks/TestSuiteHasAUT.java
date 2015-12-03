@@ -10,12 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.teststyle.impl.standard.checks;
 
-import java.util.Locale;
-
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.teststyle.checks.BaseCheck;
 import org.eclipse.jubula.client.teststyle.impl.standard.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 
 /**
  * Check whether each Testsuite has an AUT defined
@@ -31,9 +28,7 @@ public class TestSuiteHasAUT extends BaseCheck {
     public boolean hasError(Object obj) {
         if (obj instanceof ITestSuitePO) {
             ITestSuitePO ts = (ITestSuitePO) obj;
-            WorkingLanguageBP wl = WorkingLanguageBP.getInstance();
-            Locale workLang = wl.getWorkingLanguage();
-            if (ts.getAut() != null && wl.isTestSuiteLanguage(workLang, ts)) {
+            if (ts.getAut() != null) {
                 return false;
             }
         }

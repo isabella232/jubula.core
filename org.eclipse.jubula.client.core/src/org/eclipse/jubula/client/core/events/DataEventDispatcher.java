@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.events;
 
 import java.util.EventListener;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.EntityNotFoundException;
@@ -171,16 +170,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
          * @param isCompNameChanged flag to set true, if compNameChanged
          */
         public void handlePropertyChanged(boolean isCompNameChanged);
-    }
-    
-    /**
-     * to notify if the working language has changed.
-     */
-    public interface ILanguageChangedListener {
-        /**
-         * @param locale the new Locale
-         */
-        public void handleLanguageChanged(Locale locale);
     }
     
     /**
@@ -415,18 +404,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         new HashSet<IDataChangedListener>();
     
     /**
-     * listener of language changed events.
-     */
-    private Set<ILanguageChangedListener> m_langChangedListeners = 
-        new HashSet<ILanguageChangedListener>();
-    /**
-     * listener of language changed events.
-     *  POST-Event for gui updates 
-     */
-    private Set<ILanguageChangedListener> m_langChangedListenersPost = 
-        new HashSet<ILanguageChangedListener>();
-    
-    /**
      * <code>m_partClosedListeners</code> listener for editor close events
      */
     private Set<IPartClosedListener> m_partClosedListeners = 
@@ -628,19 +605,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     }
     
     /**
-     * @param l listener for changed working language.
-     * @param guiMode
-     *      should this listener be called after the model listener 
-     */
-    public void addLanguageChangedListener(ILanguageChangedListener l, 
-        boolean guiMode) {
-        if (guiMode) {
-            m_langChangedListenersPost.add(l);
-        } else {
-            m_langChangedListeners.add(l);
-        }
-    }
-    /**
      * @param l listener for partial changes to the data in the master session 
      */
     public void removeDataChangedListener(IDataChangedListener l) {
@@ -648,14 +612,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         m_dataChangedListenersPost.remove(l);
     }    
 
-    /**
-     * @param l the ILanguageChengedListener to remove.
-     */
-    public void removeLanguageChangedListener(ILanguageChangedListener l) {
-        m_langChangedListeners.remove(l);
-        m_langChangedListenersPost.remove(l);
-    }
-    
     /**
      * @param po
      *            changed persistent object
@@ -886,34 +842,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         for (IPropertyChangedListener l : stableListenersPost) {
             try {
                 l.handlePropertyChanged(isCompNameChanged);
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-    }
-    
-    /**
-     * notifies the Listeners about the changed working language
-     * @param locale the new Locale.
-     */
-    public void fireLanguageChanged(Locale locale) {
-        // model updates
-        final Set<ILanguageChangedListener> langChangedListeners = 
-            new HashSet<ILanguageChangedListener>(m_langChangedListeners);
-        for (ILanguageChangedListener l : langChangedListeners) {
-            try {
-                l.handleLanguageChanged(locale);
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-
-        // gui updates
-        final Set<ILanguageChangedListener> stableListenersPost = 
-            new HashSet<ILanguageChangedListener>(m_langChangedListenersPost);
-        for (ILanguageChangedListener l : stableListenersPost) {
-            try {
-                l.handleLanguageChanged(locale);
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
             }

@@ -20,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -53,7 +52,6 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -83,16 +81,10 @@ public class ConvertProjectHandler extends AbstractHandler {
     /** target package name space */
     private static String genPackage;
     
-    /** the project language */
-    private static Locale language;
-
     /**
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        
-        language = WorkingLanguageBP.getInstance().getWorkingLanguage();
-        
         DirectoryDialog directoryDialog = createDirectoryDialog();
         genPath = directoryDialog.open();
         if (genPath != null) {
@@ -276,7 +268,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                     }
                 }
                 NodeInfo nodeInfo = new NodeInfo(path, node,
-                        genPackage, defaultToolkit, language);
+                        genPackage, defaultToolkit);
                 uuidToNodeInfoMap.put(node.getGuid(), nodeInfo);
                 for (INodePO child : node.getUnmodifiableNodeList()) {
                     determineClassNamesForNode(child, path);
@@ -298,7 +290,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                     }
                 }
                 NodeInfo nodeInfo = new NodeInfo(fileName, node,
-                        genPackage, defaultToolkit, language);
+                        genPackage, defaultToolkit);
                 uuidToNodeInfoMap.put(node.getGuid(), nodeInfo);
             }
         }
@@ -451,7 +443,7 @@ public class ConvertProjectHandler extends AbstractHandler {
                 file.createNewFile();
                 CTDSGenerator gen = new CTDSGenerator();
                 CTDSInfo info = new CTDSInfo(className,
-                        project, genPackage, language);
+                        project, genPackage);
                 String content = gen.generate(info);
                 writeContentToFile(file, content);
             } catch (IOException e) {

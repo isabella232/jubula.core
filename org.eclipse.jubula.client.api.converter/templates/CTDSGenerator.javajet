@@ -19,7 +19,6 @@ Logger log = LoggerFactory.getLogger(CTDSGenerator.class);
 CTDSInfo info = (CTDSInfo)argument;
 String className = info.getClassName();
 IProjectPO project = info.getProject();
-Locale language = info.getLanguage();
 String projectName = null;
 try {
     projectName = Utils.translateToPackageName(project);
@@ -69,7 +68,7 @@ public class <%=className%> {
             while (paramIterator.hasNext()) {%>
                 <%IParamDescriptionPO param = paramIterator.next();
                 String paramValue = ParamUtils.getValueForParam(
-                    testCube, param, row, language);%>
+                    testCube, param, row);%>
                 // Initializing parameter "<%=param.getName()%>"
                 <%=paramValue%>
                 
@@ -82,7 +81,7 @@ public class <%=className%> {
             while (paramIterator.hasNext()) {%>
                 <%IParamDescriptionPO param = paramIterator.next();
                 String paramValue = ParamUtils.getValueForParam(
-                    testCube, param, row, language);
+                    testCube, param, row);
                 String paramName = param.getName();%>
                 <%=objName%>.<%=paramName%> = <%=paramValue%>
                     ;

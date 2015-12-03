@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
@@ -40,7 +39,6 @@ import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
@@ -634,9 +632,7 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
             return Integer.valueOf(0);
         }
         
-        /**
-         * {@inheritDoc}
-         */
+        /** {@inheritDoc} */
         public Image getImage() {
             ICapPO capPO = (ICapPO)getPoNode();
             if (capPO.getMetaAction().isDeprecated()) {
@@ -655,13 +651,11 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
                 if (param.getDefaultValue() != null) {
                     final IParamDescriptionPO desc = 
                         cap.getParameterForUniqueId(param.getName());
-                    final Locale locale = WorkingLanguageBP.getInstance().
-                        getWorkingLanguage();
                     GuiParamValueConverter conv = new GuiParamValueConverter(
-                            param.getDefaultValue(), cap, locale, desc, 
+                            param.getDefaultValue(), cap, desc, 
                             new NullValidator());
                     // default values have no influence to parameter of parent node
-                    getTestCaseParamBP().startParameterUpdate(conv, locale, 
+                    getTestCaseParamBP().startParameterUpdate(conv,
                         0, ParamNameBP.getInstance());
                 }
             }

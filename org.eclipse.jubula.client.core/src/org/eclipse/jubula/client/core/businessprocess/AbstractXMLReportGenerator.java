@@ -148,8 +148,6 @@ public abstract class AbstractXMLReportGenerator {
         
         addStepCountElements(testResult, general);
         
-        general.addElement("language").addText(testResult.getTestLanguage()); //$NON-NLS-1$
-        
         return general;
     }
 

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.IteratorUtils;
@@ -38,7 +37,6 @@ import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IVerifiable;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IParameterPropertyController.ParameterInputType;
@@ -249,9 +247,7 @@ public abstract class AbstractNodePropertySource
         public String getProperty() {
             IParamNodePO paramNode = (IParamNodePO)getPoNode();
             String property = AbstractParamInterfaceBP
-                    .getGuiStringForParamValue(paramNode, m_paramDescr, 0,
-                            WorkingLanguageBP.getInstance()
-                                    .getWorkingLanguage());
+                    .getGuiStringForParamValue(paramNode, m_paramDescr, 0);
             return property == null ? StringConstants.EMPTY : property;
         }
         
@@ -266,14 +262,12 @@ public abstract class AbstractNodePropertySource
 
             if (value instanceof String) {
                 IParamNodePO node = (IParamNodePO)getPoNode();
-                Locale lang = 
-                    WorkingLanguageBP.getInstance().getWorkingLanguage();
                 GuiParamValueConverter conv = new GuiParamValueConverter(
-                    (String)value, node, lang, getParamDesc(), 
+                    (String)value, node, getParamDesc(), 
                     getValidatorForConverter(getParamDesc()));
                 if (conv.getErrors().isEmpty()) {
                     getTestCaseParamBP().startParameterUpdate(
-                        conv, lang, 0, m_paramNameMapper);
+                        conv, 0, m_paramNameMapper);
                     DataEventDispatcher.getInstance().firePropertyChanged(
                             false);
                 }
@@ -287,13 +281,12 @@ public abstract class AbstractNodePropertySource
             IParamNodePO node = (IParamNodePO)getPoNode();
             IParamNameMapper mapper = 
                 (IParamNameMapper)((List)value).get(1);
-            Locale lang = WorkingLanguageBP.getInstance().getWorkingLanguage();
             GuiParamValueConverter conv = new GuiParamValueConverter(
-                (String)val, node, lang, getParamDesc(), 
+                (String)val, node, getParamDesc(), 
                 getValidatorForConverter(getParamDesc()));
             if (conv.getErrors().isEmpty()) {
                 getTestCaseParamBP().startParameterUpdate(
-                    conv, lang, 0, mapper);
+                    conv, 0, mapper);
                 DataEventDispatcher.getInstance().firePropertyChanged(false);
             }
             checkEntrySets(node);

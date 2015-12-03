@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.businessprocess;
 
-import java.util.Locale;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IExecutionListener;
@@ -24,7 +22,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -45,8 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  * @created 12.03.2007
  */
-public class CompletenessBP implements IProjectStateListener,
-    ILanguageChangedListener {
+public class CompletenessBP implements IProjectStateListener {
     /** for log messages */
     private static Logger log = LoggerFactory.getLogger(CompletenessBP.class);
     
@@ -58,7 +54,6 @@ public class CompletenessBP implements IProjectStateListener,
      */
     private CompletenessBP() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
-        ded.addLanguageChangedListener(this, false);
         ded.addProjectStateListener(this);
         ICommandService commandService = (ICommandService) PlatformUI
                 .getWorkbench().getService(ICommandService.class);
@@ -176,10 +171,8 @@ public class CompletenessBP implements IProjectStateListener,
             try {
                 final IProjectPO project = GeneralStorage.getInstance()
                         .getProject();
-                final Locale wl = WorkingLanguageBP.getInstance()
-                        .getWorkingLanguage();
                 ded.fireCompletenessCheckStarted();
-                CompletenessGuard.checkAll(wl, project, monitor);
+                CompletenessGuard.checkAll(project, monitor);
             } finally {
                 if (monitor.isCanceled()) {
                     status = IStatus.CANCEL;
@@ -191,13 +184,4 @@ public class CompletenessBP implements IProjectStateListener,
             return new Status(status, Activator.PLUGIN_ID, getName());
         }
     }
-    
-    /** {@inheritDoc} */
-    public void handleLanguageChanged(Locale locale) {
-        INodePO root = GeneralStorage.getInstance().getProject();
-        Locale wl = WorkingLanguageBP.getInstance().getWorkingLanguage();
-        CompletenessGuard.checkTestData(wl, root);
-        DataEventDispatcher.getInstance().fireCompletenessCheckFinished();
-    }
-    
 }

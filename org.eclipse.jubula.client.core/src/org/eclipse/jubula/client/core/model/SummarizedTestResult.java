@@ -151,12 +151,4 @@ public class SummarizedTestResult extends AbstractTestResult {
     public Date getStartTime() {
         return m_summary.getTestsuiteStartTime();
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getTestLanguage() {
-        return m_summary.getTestsuiteLanguage();
-    }
-
 }

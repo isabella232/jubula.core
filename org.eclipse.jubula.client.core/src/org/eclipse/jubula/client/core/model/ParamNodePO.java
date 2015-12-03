@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -243,7 +242,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * 
      * {@inheritDoc}
      */
-    public boolean isTestDataComplete(Locale locale) {
+    public boolean isTestDataComplete() {
         
         if (StringUtils.isEmpty(getDataFile())) {
             // Excel files are ignored. Other data is checked.
@@ -282,25 +281,18 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                         return false;
                     }
                     
-                    
-                    ITestDataPO testData = TestDataBP.instance().getTestData(
+                    String value = TestDataBP.INSTANCE.getTestData(
                             this, testDataManager, paramDesc, i);
-                    if (testData != null) {
-                        String value = testData.getValue(locale);
-                        if (value != null) {
-                            ModelParamValueConverter mpvc = 
+                    if (value != null) {
+                        ModelParamValueConverter mpvc = 
                                 new ModelParamValueConverter(
-                                    value, this, locale, paramDesc);
-                            List<RefToken> referenceTokens = mpvc
-                                    .getRefTokens();
-                            String uiValue = mpvc.getGuiString();
-                            for (RefToken token : referenceTokens) {
-                                if (uiValue.contains(token.getModelString())) {
-                                    return false;
-                                }
+                                        value, this, paramDesc);
+                        List<RefToken> referenceTokens = mpvc.getRefTokens();
+                        String uiValue = mpvc.getGuiString();
+                        for (RefToken token : referenceTokens) {
+                            if (uiValue.contains(token.getModelString())) {
+                                return false;
                             }
-                        } else {
-                            return false;
                         }
                     } else {
                         return false;
@@ -317,26 +309,23 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * 
      * {@inheritDoc}
      */
-    public Iterator<TDCell> getParamReferencesIterator(Locale locale) {
+    public Iterator<TDCell> getParamReferencesIterator() {
         List <TDCell> references = new ArrayList <TDCell> ();
         int row = 0;
         for (IDataSetPO dataSet : getDataManager().getDataSets()) {
-            addParamReferences(references, dataSet, row, locale);
+            addParamReferences(references, dataSet, row);
             row++;
         }
         return references.iterator();
     }
     
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Iterator<TDCell> getParamReferencesIterator(
-            int dataSetRow, Locale locale) {
+            int dataSetRow) {
         
         IDataSetPO row = getDataManager().getDataSet(dataSetRow);
         List <TDCell> references = new ArrayList <TDCell> ();
-        addParamReferences(references, row, dataSetRow, locale);
+        addParamReferences(references, row, dataSetRow);
         return references.iterator();
     }
 
@@ -347,18 +336,15 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      *            The row representation
      * @param dataSetRow
      *            The row index
-     * @param locale 
-     *            currently used locale
      */
     private void addParamReferences(List <TDCell> references, 
-            IDataSetPO row, int dataSetRow, Locale locale) {
+            IDataSetPO row, int dataSetRow) {
         int col = 0;
-        for (ITestDataPO testData : row.getList()) {
+        for (String testData : row.getColumns()) {
             String uniqueId = getDataManager().getUniqueIds().get(col);
-            IParamDescriptionPO desc = getParameterForUniqueId(
-                    uniqueId);
+            IParamDescriptionPO desc = getParameterForUniqueId(uniqueId);
             ParamValueConverter conv = new ModelParamValueConverter(
-                    testData, this, locale, desc);
+                    testData, this, desc);
             if (conv.containsReferences()) {
                 references.add(new TDCell(testData, dataSetRow, col));
             }

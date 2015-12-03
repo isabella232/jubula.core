@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Date;
 
-
 /**
  * @author BREDEX GmbH
  * @created Aug 13, 2010
@@ -109,13 +108,6 @@ public interface ITestResult {
      * @return the time at which the test ended.
      */
     public Date getEndTime();
-
-    /**
-     * @return the language used for the test. This is a value that can be 
-     *         displayed directly to the user (ex. <em>German (Germany)</em> or 
-     *         <em>English (United States)</em>).
-     */
-    public String getTestLanguage();
 
     /**
      * 

@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -201,23 +200,12 @@ public final class CompletenessGuard {
     private static class CheckTestDataCompleteness extends
             AbstractNonPostOperatingTreeNodeOperation<INodePO> {
 
-        /** The Locale to check */
-        private Locale m_locale;
-
-        /**
-         * @param loc
-         *            The Locale to check
-         */
-        public CheckTestDataCompleteness(Locale loc) {
-            m_locale = loc;
-        }
-
         /**
          * Sets the CompleteTDFlag in all ParamNodePOs. {@inheritDoc}
          */
         public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            checkLocalTestData(node, m_locale);
+            checkLocalTestData(node);
             return !alreadyVisited;
         }
     }
@@ -232,20 +220,17 @@ public final class CompletenessGuard {
     /**
      * checks OM and TD Completeness of all TS
      * 
-     * @param loc
-     *            the Locale to check
      * @param root
      *            INodePO
      * @param monitor
      *            the progress monitor to use
      */
-    public static void checkAll(Locale loc, INodePO root,
-            IProgressMonitor monitor) {
+    public static void checkAll(INodePO root, IProgressMonitor monitor) {
         // Iterate Execution tree
         final TreeTraverser traverser = new TreeTraverser(root);
         traverser.setMonitor(monitor);
         traverser.addOperation(new CheckObjectMappingCompleteness());
-        traverser.addOperation(new CheckTestDataCompleteness(loc));
+        traverser.addOperation(new CheckTestDataCompleteness());
         traverser.addOperation(new CheckMissingTestCaseReferences());
         traverser.addOperation(new InactiveNodesOperation());
         traverser.traverse(true);
@@ -254,15 +239,11 @@ public final class CompletenessGuard {
     /**
      * checks TD Completeness of all TS
      * 
-     * @param loc
-     *            the Locale to check
      * @param root
      *            INodePO
      */
-    public static void checkTestData(Locale loc, INodePO root) {
-        // Iterate Execution tree
-        new TreeTraverser(root, new CheckTestDataCompleteness(loc))
-                .traverse(true);
+    public static void checkTestData(INodePO root) {
+        new TreeTraverser(root, new CheckTestDataCompleteness()).traverse(true);
     }
 
     /**
@@ -313,16 +294,12 @@ public final class CompletenessGuard {
      * 
      * @param node
      *            the node
-     * @param loc
-     *            locale, for which to set the sumTdFlag
      * @param flag
      *            the state of sumTdFlag to set
      */
-    public static void setCompletenessTestData(INodePO node, Locale loc,
-            boolean flag) {
+    public static void setCompletenessTestData(INodePO node, boolean flag) {
         setNodeProblem(node,
-                ProblemFactory.createIncompleteTestDataProblem(
-                        loc, node), flag);
+                ProblemFactory.createIncompleteTestDataProblem(node), flag);
     }
 
     /**
@@ -347,9 +324,8 @@ public final class CompletenessGuard {
     /**
      * @param node
      *            the node to check
-     * @param locale the locale to check
      */
-    public static void checkLocalTestData(INodePO node, Locale locale) {
+    public static void checkLocalTestData(INodePO node) {
         INodePO possibleDataSourceNode = node;
         if (node instanceof IExecTestCasePO) {
             IExecTestCasePO execTc = (IExecTestCasePO) node;
@@ -365,8 +341,8 @@ public final class CompletenessGuard {
             }
             if (nodeToModify != null)  {
                 resetTestDataCompleteness(nodeToModify);
-                setCompletenessTestData(nodeToModify, locale,
-                        dataSourceNode.isTestDataComplete(locale));
+                setCompletenessTestData(nodeToModify,
+                        dataSourceNode.isTestDataComplete());
                 
             }
         }

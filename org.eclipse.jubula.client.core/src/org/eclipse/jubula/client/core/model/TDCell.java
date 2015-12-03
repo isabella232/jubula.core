@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
@@ -38,14 +37,14 @@ public class TDCell {
     /**
      * The test data entry.
      */
-    private ITestDataPO m_testData;
+    private String m_testData;
     /**
      * @param testData The test data entry
      * @param row The row
      * @param col The column
      */
-    public TDCell(ITestDataPO testData, int row, int col) {
-        m_testData = testData;
+    public TDCell(String testData, int row, int col) {
+        setTestData(testData);
         m_row = row;
         m_col = col;
     }
@@ -64,19 +63,24 @@ public class TDCell {
     /**
      * @return Returns the test data entry.
      */
-    public ITestDataPO getTestData() {
+    public String getTestData() {
         return m_testData;
     }
     /**
      * @param node associated node
-     * @param locale currently used locale
      * @return list of reference names contained in value of testdata object
      */
-    public List <String> getReferences(IParamNodePO node, Locale locale) {
+    public List <String> getReferences(IParamNodePO node) {
         String uniqueId = node.getDataManager().getUniqueIds().get(m_col);
         IParamDescriptionPO desc = node.getParameterForUniqueId(uniqueId);
         ParamValueConverter conv = 
-            new ModelParamValueConverter(getTestData(), node, locale, desc);
+            new ModelParamValueConverter(getTestData(), node, desc);
         return conv.getNamesForReferences();
+    }
+    /**
+     * @param testData the testData to set
+     */
+    public void setTestData(String testData) {
+        m_testData = testData;
     }
 }

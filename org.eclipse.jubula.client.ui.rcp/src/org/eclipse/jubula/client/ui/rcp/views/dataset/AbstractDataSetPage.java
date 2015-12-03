@@ -11,9 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.views.dataset;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.IColorProvider;
@@ -30,7 +28,6 @@ import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -41,16 +38,13 @@ import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
-import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.TextControlBP;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
@@ -59,7 +53,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamTextContentAssisted;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
-import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.internal.constants.CharacterConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
@@ -76,17 +69,14 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -105,29 +95,17 @@ import org.eclipse.ui.part.Page;
 @SuppressWarnings("synthetic-access") 
 public abstract class AbstractDataSetPage extends Page 
     implements ISelectionListener, IAdaptable, IParamChangedListener,
-               IProjectLoadedListener, ILanguageChangedListener, 
-               IDataChangedListener {
+               IProjectLoadedListener, IDataChangedListener {
     /** Constant for the width of the DataSet column in the table */
     protected static final int DATASET_NUMBER_COLUMNWIDTH = 20;
-    /** Constant for the default column witdh */ 
+    /** Constant for the default column width */ 
     protected static final int COLUMN_WIDTH = 70;
-    /** The current selected Combo and its selection */
     
-    private ComboSelection m_cActiveCombo = new ComboSelection(null, null);
     /** The current IParameterInterfacePO */
     private IParameterInterfacePO m_paramInterfaceObj;
 
     /** The state of the buttons for the current editor selection */
     private boolean m_buttonEnabled;
-    
-    /** List of DirectCombos which depend on each other */
-    private List<DirectCombo> m_propertyCombos;
-    /** The Combo for selecting a language to display */
-    private DirectCombo<Locale> m_languageCombo;
-    /** The Combo for selecting a data set to display */
-    private DirectCombo<Integer> m_dataSetCombo;
-    /** The Combo for selecting a parameter to display */
-    private DirectCombo<IParamDescriptionPO> m_paramCombo;
     
     /** the primary control for this page */
     private Control m_control;
@@ -178,102 +156,6 @@ public abstract class AbstractDataSetPage extends Page
     public AbstractDataSetPage(AbstractParamInterfaceBP bp) {
         setParamBP(bp);
     }
-    
-    /**
-     * Class to hold the current selected DirectCombo and its selection.
-     * 
-     * @author BREDEX GmbH
-     * @created 04.04.2006
-     */
-    private class ComboSelection {
-        
-        /** The current selected DirecCombo */
-        private DirectCombo m_combo;
-        
-        /** The current selcted value of the current DirectCombo */
-        private Object m_value;
-        
-        /**
-         * Constructor.
-         * @param combo the selcted DirectCombo
-         * @param value the selcted value
-         */
-        public ComboSelection(DirectCombo combo, Object value) {
-            m_combo = combo;
-            m_value = value;
-        }
-
-        /**
-         * @return the current DirectCombo. May be null.
-         */
-        public DirectCombo getCurrentCombo() {
-            if (m_combo == null) {
-                return comboFallback();
-            }
-            return m_combo;
-        }
-
-        /**
-         * @return the current selected value of the current DirectCombo.
-         * @param isDefaultAllowed if true and there is no selection,
-         *  a default value is returned. If false it returns null if there is 
-         *  no selection.
-         */
-        public Object getCurrentSelectedValue(boolean isDefaultAllowed) {
-            if (isDefaultAllowed) {
-                if (m_value == null) {
-                    return valueFallback();
-                }
-                return m_value;
-            } 
-            return m_value;
-        }
-        
-        /**
-         * Sets the current Combo with its selection.
-         * @param combo the current selected DirecCombo
-         */
-        public void setComboSelection(DirectCombo combo) {
-            m_combo = combo;
-            m_value = combo.getSelectedObject();
-        }
-        
-        /**
-         * Sets the default selection.
-         */
-        public void setDefaultComboSelection() {
-            m_combo = getLanguageCombo();
-            m_value = WorkingLanguageBP.getInstance()
-                .getWorkingLanguage();
-        }
-        
-        /**
-         * Fallback if selected value is null;
-         * @return the default value
-         */
-        private Object valueFallback() {
-            Locale defaultLocale = WorkingLanguageBP.getInstance()
-                .getWorkingLanguage();
-            getLanguageCombo().setSelectedObject(defaultLocale);
-            setComboSelection(getLanguageCombo());
-            return m_value;
-        }
-        
-        /**
-         * Fallback if combo is null
-         * @return the default combo
-         */
-        private DirectCombo comboFallback() {
-            Locale defaultLocale =  null;
-            if (GeneralStorage.getInstance().getProject() != null) {
-                defaultLocale = GeneralStorage.getInstance().getProject()
-                    .getDefaultLanguage();
-            }
-            getLanguageCombo().setSelectedObject(defaultLocale);
-            setComboSelection(getLanguageCombo());
-            return getLanguageCombo();
-        }
-    }
 
     /**
      * Abstract class for ContentProviders
@@ -296,30 +178,6 @@ public abstract class AbstractDataSetPage extends Page
         /** {@inheritDoc} */
         public void inputChanged(Viewer viewer, Object oldInput, 
                 Object newInput) {
-        // nothing
-        }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void handleLanguageChanged(Locale locale) {
-        if (getComboTracker().getCurrentCombo() == getLanguageCombo()) {
-            getLanguageCombo().setSelectedObject(locale);
-            getLanguageCombo().notifyListeners(SWT.Selection, new Event());
-        }
-    }
-
-    /**
-     * Base Class
-     * 
-     * @author BREDEX GmbH
-     * @created Jul 13, 2010
-     */
-    private abstract class AbstractSelectionListener 
-        implements SelectionListener {
-        /** {@inheritDoc} */
-        public void widgetDefaultSelected(SelectionEvent e) {
         // nothing
         }
     }
@@ -380,23 +238,6 @@ public abstract class AbstractDataSetPage extends Page
     }
     
     /**
-     * @return the combo selection tracker
-     */
-    private ComboSelection getComboTracker() {
-        return m_cActiveCombo;
-    }
-    
-    /**
-     * @return the zero relative index of the selected data set.
-     */
-    private int getSelectedDataSet() {
-        if (getComboTracker().getCurrentCombo() != getDataSetCombo()) {
-            return getTableViewer().getTable().getSelectionIndex();
-        }
-        return getDataSetCombo().getSelectionIndex() - 1;
-    }
-
-    /**
      * @param tableViewer the tableViewer to set
      */
     private void setTableViewer(TableViewer tableViewer) {
@@ -419,68 +260,13 @@ public abstract class AbstractDataSetPage extends Page
     
     /**
      * checks the combo selection. Call after any button action!
-     * @param action the action of th ebutton
+     * @param action the action of the button
      * @param row the row on which the action was performed
      */    
     private void checkComboSelection(TestDataRowAction action, int row) {
-        if (getComboTracker().getCurrentCombo() == getDataSetCombo()) {
-            switch (action) {
-                case ADDED :
-                    getDataSetCombo().setSelectedObject(
-                        getDataSetCombo().getItemCount() - 1);
-                    break;
-                case INSERTED :
-                    getDataSetCombo().setSelectedObject(row + 1);
-                    break;
-                case DELETED :
-                    if ((row - 1) >= 0) {
-                        getDataSetCombo().setSelectedObject(row);
-                        getTableViewer().refresh();
-                    }
-                    break;
-                case MOVED_DOWN :
-                    getDataSetCombo().setSelectedObject(row + 1);
-                    getTableViewer().refresh();
-                    break;
-                case MOVED_UP :
-                    if ((row - 1) >= 0) {
-                        getDataSetCombo().setSelectedObject(row - 1);
-                        getTableViewer().refresh();
-                    }
-                    break;
-                default :
-                    break;
-            }
-        }
+        getTableViewer().refresh();
     }
 
-    /**
-     * @param dataSetCombo the dataSetCombo to set
-     */
-    private void setDataSetCombo(DirectCombo<Integer> dataSetCombo) {
-        m_dataSetCombo = dataSetCombo;
-    }
-
-    /**
-     * @return the dataSetCombo
-     */
-    private DirectCombo<Integer> getDataSetCombo() {
-        return m_dataSetCombo;
-    }
-
-    /**
-     * @param languageCombo the languageCombo to set
-     */
-    private void setLanguageCombo(DirectCombo<Locale> languageCombo) {
-        m_languageCombo = languageCombo;
-    }
-
-    /**
-     * @return the languageCombo
-     */
-    private DirectCombo<Locale> getLanguageCombo() {
-        return m_languageCombo;
-    }
     
     /**
      * {@inheritDoc}
@@ -502,42 +288,22 @@ public abstract class AbstractDataSetPage extends Page
 
         Composite buttonComp = new Composite(topLevelComposite, SWT.BORDER);
 
-        // Set numColumns to 3 for the buttons
-        layout = new GridLayout(3, false);
-        layout.marginWidth = 3;
-        layout.marginHeight = 3;
+        // Set numColumns to 2 for the buttons
+        layout = new GridLayout(2, false);
+        layout.marginWidth = 1;
+        layout.marginHeight = 1;
         buttonComp.setLayout(layout);
 
         // Create a composite to hold the children
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         buttonComp.setLayoutData(gridData);
         
-        createComboLabels(buttonComp);
-        createCombos(buttonComp);
         initTableViewer(buttonComp); 
         createButtons(buttonComp);
         Plugin.getHelpSystem().setHelp(getTable(),
                 ContextHelpIds.JB_DATASET_VIEW);
     }
 
-    /**
-     * Create the labels of the Combos
-     * @param parent the parent of the labels
-     */
-    private void createComboLabels(Composite parent) {
-        Label paramLabel = new Label(parent, SWT.NONE);
-        paramLabel.setText(Messages.DataSetViewParameter);
-        paramLabel.setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.ParamLabel"); //$NON-NLS-1$
-        
-        Label dataSetLabel = new Label(parent, SWT.NONE);
-        dataSetLabel.setText(Messages.DataSetViewDataSet);
-        dataSetLabel.setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DataSetLabel"); //$NON-NLS-1$
-        
-        Label languageLabel = new Label(parent, SWT.NONE);
-        languageLabel.setText(Messages.DataSetViewLanguage);
-        languageLabel.setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DataSetLabel"); //$NON-NLS-1$
-    }
-    
     /**
      * Add the "Add", "Delete" and "Insert" buttons
      * @param parent the parent composite
@@ -626,8 +392,8 @@ public abstract class AbstractDataSetPage extends Page
         gridData.horizontalSpan = 3;
         table.setLayoutData(gridData);
         getTableViewer().setUseHashlookup(true);
-        getTableViewer().setContentProvider(new LanguageContentProvider());
-        getTableViewer().setLabelProvider(new LanguageLabelProvider());
+        getTableViewer().setContentProvider(new GeneralContentProvider());
+        getTableViewer().setLabelProvider(new GeneralLabelProvider());
         setTableCursor(new DSVTableCursor(getTable(), SWT.NONE));
     }
     
@@ -674,13 +440,20 @@ public abstract class AbstractDataSetPage extends Page
         });
     }
     
+    
+    /**
+     * @return the zero relative index of the selected data set.
+     */
+    private int getSelectedDataSet() {
+        return getTableViewer().getTable().getSelectionIndex();
+    }
+    
     /**
      * Moves a data set one row down
      */
     private void moveDataSetDown() {
         final int row = getSelectedDataSet();
         moveDataSet(row, row + 1);
-        fillDataSetCombo();
     }
     
     /**
@@ -689,7 +462,6 @@ public abstract class AbstractDataSetPage extends Page
     private void moveDataSetUp() {
         final int row = getSelectedDataSet();
         moveDataSet(row, row - 1);
-        fillDataSetCombo();
     }
     
     /**
@@ -735,7 +507,6 @@ public abstract class AbstractDataSetPage extends Page
         final int rowCount = getParamInterfaceObj().getDataManager()
                 .getDataSetCount();
         insertDataSet(rowCount);
-        fillDataSetCombo();
     }
     
     /**
@@ -764,22 +535,13 @@ public abstract class AbstractDataSetPage extends Page
         }
         if (row > -1) {
             getParamBP().addDataSet(getParamInterfaceObj(), row);
-            fillDataSetCombo();
         } else {
             // if first data set is added
             addDataSet();
         }
         editor.getEditorHelper().setDirty(true);
         getTableViewer().refresh();
-        List<Locale> projLangs = GeneralStorage.getInstance().getProject()
-                .getLangHelper().getLanguageList();
-        for (Locale locale : projLangs) {
-            setIsEntrySetComplete(getParamInterfaceObj(), locale);
-        }
         int rowToSelect = row;
-        if (getComboTracker().getCurrentCombo() == getDataSetCombo()) {
-            rowToSelect = 0;
-        }
         if (rowToSelect == -1) {
             rowToSelect = getTable().getItemCount();
         } else {
@@ -974,20 +736,6 @@ public abstract class AbstractDataSetPage extends Page
     }
     
     /**
-     * Inits and creates the column for the paremeters
-     * @return the name of the column
-     */
-    private String initParameterColumn() {
-        clearTableViewer();
-        final Table table = getTable();
-        // create column for data set numer
-        TableColumn paramCol = new TableColumn(table, SWT.NONE);
-        paramCol.setText(Messages.DataSetViewParameter);
-        paramCol.pack();
-        return paramCol.getText();
-    }
-    
-    /**
      * Packs the table.
      */
     private void packTable() {
@@ -1002,190 +750,6 @@ public abstract class AbstractDataSetPage extends Page
             }
         }
     }
-    
-    /**
-     * SelectionListener that ensures only one Combo has a selection.
-     * @author BREDEX GmbH
-     * @created 30.03.2006
-     */
-    @SuppressWarnings("unchecked")  
-    private class ComboSingleSelectionListener 
-        extends AbstractSelectionListener {
-        /** {@inheritDoc} */
-        public void widgetSelected(SelectionEvent e) {
-            Object source = e.getSource();
-            if (((DirectCombo)source).getSelectionIndex() == 0) {
-                return;
-            }
-            for (DirectCombo combo : m_propertyCombos) {
-                if (combo != source) {
-                    combo.setSelectedObject(null);
-                }
-            }
-            getComboTracker().setComboSelection((DirectCombo)source);
-        }
-    }
-    
-    /**
-     * Sets the prior Combo selection. If the prior selection does not fit,
-     * the default selection will be set.
-     */
-    @SuppressWarnings("unchecked") 
-    private void setPriorComboSelection() {
-        final DirectCombo priorCombo = getComboTracker().getCurrentCombo();
-        for (DirectCombo combo : m_propertyCombos) {
-            if (combo == priorCombo) {
-                combo.setSelectedObject(getComboTracker()
-                    .getCurrentSelectedValue(false));
-                if (combo.getSelectedObject() == null) {
-                    getComboTracker().setDefaultComboSelection();
-                    getComboTracker().getCurrentCombo().setSelectedObject(
-                            getComboTracker().getCurrentSelectedValue(false));
-                }
-                break;
-            }
-        }
-    }
-    
-    /**
-     * creates the Combos
-     * @param parent the parent of the combos
-     */
-    private void createCombos(Composite parent) {
-        m_propertyCombos = new ArrayList<DirectCombo>();
-        
-        List<IParamDescriptionPO> a1 = new ArrayList<IParamDescriptionPO>(0);
-        List<String> a2 = new ArrayList<String>(0);
-        m_paramCombo = new DirectCombo<IParamDescriptionPO>(parent, SWT.NONE, 
-            a1, a2, true, false);
-        m_paramCombo.setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.ParamCombo"); //$NON-NLS-1$
-        m_paramCombo.addSelectionListener(new ParameterComboListener());
-        GridData paramComboLayoutData = new GridData ();
-        paramComboLayoutData.horizontalAlignment = GridData.FILL;
-        paramComboLayoutData.grabExcessHorizontalSpace = true;
-        m_paramCombo.setLayoutData (paramComboLayoutData);
-        m_propertyCombos.add(m_paramCombo);
-        
-        List<Integer> b1 = new ArrayList<Integer>(0);
-        List<String> b2 = new ArrayList<String>(0);
-        setDataSetCombo(new DirectCombo<Integer>(parent, SWT.NONE, b1, 
-            b2, true, false));
-        getDataSetCombo().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DataSetCombo"); //$NON-NLS-1$
-        getDataSetCombo().addSelectionListener(new DataSetComboListener());
-        getDataSetCombo().setSize(100, getDataSetCombo().getItemHeight());
-        GridData dataSetComboLayoutData = new GridData ();
-        dataSetComboLayoutData.horizontalAlignment = GridData.FILL;
-        dataSetComboLayoutData.grabExcessHorizontalSpace = true;
-        getDataSetCombo().setLayoutData (dataSetComboLayoutData);
-        m_propertyCombos.add(getDataSetCombo());
-        
-        List<Locale> c1 = new ArrayList<Locale>(0);
-        List<String> c2 = new ArrayList<String>(0);
-        setLanguageCombo(new DirectCombo<Locale>(parent, SWT.NONE, c1, 
-            c2, true, false));
-        getLanguageCombo().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.LanguageCombo"); //$NON-NLS-1$
-        getLanguageCombo().addSelectionListener(new LanguageComboListener());
-        getLanguageCombo().setSize(100, getLanguageCombo().getItemHeight());
-        GridData languageComboLayoutData = new GridData ();
-        languageComboLayoutData.horizontalAlignment = GridData.FILL;
-        languageComboLayoutData.grabExcessHorizontalSpace = true;
-        getLanguageCombo().setLayoutData (languageComboLayoutData);
-        m_propertyCombos.add(getLanguageCombo());
-        
-        SelectionListener comboSelListener = new ComboSingleSelectionListener();
-        m_paramCombo.addSelectionListener(comboSelListener);
-        getDataSetCombo().addSelectionListener(comboSelListener);
-        getLanguageCombo().addSelectionListener(comboSelListener);
-    }
-    
-    /**
-     * Listener of DataSet-Combo
-     * @author BREDEX GmbH
-     * @created 03.04.2006
-     */
-    private class DataSetComboListener 
-        extends AbstractSelectionListener {
-        /** {@inheritDoc} */
-        @SuppressWarnings("unchecked") 
-        public void widgetSelected(SelectionEvent e) {
-            Object source = e.getSource();
-            if (((DirectCombo)source).getSelectionIndex() == 0) {
-                getComboTracker().getCurrentCombo().
-                    setSelectedObject(getComboTracker().
-                        getCurrentSelectedValue(false));
-                return;
-            }
-            if (((DirectCombo)source).getSelectionIndex() != 0) {
-                getUpButton().setEnabled(false);
-                getDownButton().setEnabled(false);
-            }
-            initTableViewerLanguageColumns(false);
-            getTableViewer().setContentProvider(new DataSetContentProvider());
-            getTableViewer().setLabelProvider(new DataSetLabelProvider());
-            getComboTracker().setComboSelection(getDataSetCombo());
-            getTableViewer().refresh();
-        }
-    }
-    
-    /**
-     * Listener of Language-Combo
-     * @author BREDEX GmbH
-     * @created 03.04.2006
-     */
-    private class LanguageComboListener 
-        extends AbstractSelectionListener {
-        /** {@inheritDoc} */
-        @SuppressWarnings("unchecked") 
-        public void widgetSelected(SelectionEvent e) {
-            Object source = e.getSource();
-            if (((DirectCombo)source).getSelectionIndex() == 0) {
-                getComboTracker().getCurrentCombo().
-                    setSelectedObject(getComboTracker().
-                        getCurrentSelectedValue(false));
-                return;
-            }
-            if (m_buttonEnabled && ((DirectCombo)source)
-                    .getSelectionIndex() != 0) {
-                getUpButton().setEnabled(true);
-                getDownButton().setEnabled(true);
-            }
-            getTableViewer().setContentProvider(new LanguageContentProvider());
-            getTableViewer().setLabelProvider(new LanguageLabelProvider());
-            getComboTracker().setComboSelection(getLanguageCombo());
-            initTableViewerParameterColumns();
-            getTableViewer().refresh();
-        }
-    }
-    
-    /**
-     * Listener of Parameter-Combo
-     * @author BREDEX GmbH
-     * @created 03.04.2006
-     */
-    private class ParameterComboListener 
-        extends AbstractSelectionListener {
-        /** {@inheritDoc} */
-        @SuppressWarnings("unchecked")
-        public void widgetSelected(SelectionEvent e) {
-            Object source = e.getSource();
-            if (((DirectCombo)source).getSelectionIndex() == 0) {
-                getComboTracker().getCurrentCombo().
-                    setSelectedObject(getComboTracker().
-                        getCurrentSelectedValue(false));
-                return;
-            }
-            if (((DirectCombo)source).getSelectionIndex() != 0) {
-                getUpButton().setEnabled(true);
-                getDownButton().setEnabled(true);
-            }
-            initTableViewerLanguageColumns(true);
-            getTableViewer().setContentProvider(new ParameterContentProvider());
-            getTableViewer().setLabelProvider(new ParameterLabelProvider());
-            getComboTracker().setComboSelection(m_paramCombo);
-            getTableViewer().refresh();
-        }
-    }
-    
     
     /**
      * creates the TableColumns with Parameter
@@ -1212,50 +776,10 @@ public abstract class AbstractDataSetPage extends Page
     }
     
     /**
-     * creates the TableColumns with languages
-     * @param dataSetNumbers if true, the data set column is created, otherwise
-     * the parameter column.
-     */
-    private void initTableViewerLanguageColumns(boolean dataSetNumbers) {
-        if (getParamInterfaceObj() == null) {
-            return;
-        }
-        List<Locale> locales = WorkingLanguageBP.getInstance()
-                .getDisplayableLanguages();
-        String[] columnProperties = new String[locales.size() + 1];
-        final Table table = getTable();
-        if (dataSetNumbers) {
-            columnProperties[0] = initDataSetColumn();
-        } else {
-            columnProperties[0] = initParameterColumn();
-        }
-        int i = 1;
-        List<String> dispList = new ArrayList<String>();
-        for (Locale locale : locales) {
-            dispList.add(locale.getDisplayName());
-        }
-        String[] dispNames = dispList.toArray(new String[dispList.size()]);
-
-        Arrays.sort(dispNames);
-        for (String lang : dispNames) {
-            TableColumn column = new TableColumn(table, SWT.NONE);
-            column.setText(lang);
-            column.setWidth(COLUMN_WIDTH);
-            column.setData(Languages.getInstance().getLocale(lang));
-            columnProperties[i++] = column.getText();
-        }
-        getTableViewer().setColumnProperties(columnProperties);
-    }
-    
-    /**
      * Updates this view. Causes the view to get and display its data.
      */
     private void updateView() {
         clearTableViewer();
-        fillParamCombo();
-        fillDataSetCombo();
-        fillLanguageCombo();
-        setPriorComboSelection();
         IParameterInterfacePO paramObj = getParamInterfaceObj();
         if (paramObj != null && isNodeValid(paramObj)) {
             getTableViewer().setInput(getInputForTable(paramObj));
@@ -1263,11 +787,12 @@ public abstract class AbstractDataSetPage extends Page
         } else {
             getTableViewer().setInput(null);
         }
+        getTableViewer().refresh();
     }
     
     /**
      * @param cParamInterfaceObj the param interface object to test
-     * @return wether the object is valid
+     * @return whether the object is valid
      */
     protected abstract boolean isNodeValid(
             IParameterInterfacePO cParamInterfaceObj);
@@ -1276,89 +801,17 @@ public abstract class AbstractDataSetPage extends Page
      * Creates the table
      */
     private void createTable() {
-        DirectCombo combo = getComboTracker().getCurrentCombo();
-        Object formerValue = getComboTracker().getCurrentSelectedValue(true);
-        if (combo != null && formerValue != null
-                && formerValue.equals(combo.getSelectedObject())) {
-            combo.notifyListeners(SWT.Selection, new Event());
-        } else {
-            initTableViewerParameterColumns();
-        }
+        initTableViewerParameterColumns();
         packTable();
     }
-    
-    /**
-     * Fills the Parameter-Combo with its values
-     */
-    private void fillParamCombo() {
-        List<IParamDescriptionPO> paramList = 
-            new ArrayList<IParamDescriptionPO>(0);
-        if (getParamInterfaceObj() != null) {
-            paramList = getParamInterfaceObj().getParameterList();
-        }
-        final int listSize = paramList.size(); 
-        List<String> keys = new ArrayList<String>(listSize);
-        List<IParamDescriptionPO> values = 
-            new ArrayList<IParamDescriptionPO>(listSize);
-        for (IParamDescriptionPO descr : paramList) {          
-            keys.add(descr.getName());
-            values.add(descr);
-        }
-        m_paramCombo.setItems(values, keys);
-        m_paramCombo.setSelectedObject(null);
-    }
-    
-    /**
-     * Fills the Language-Combo with its values displayed.
-     */
-    private void fillLanguageCombo() {
-        List<Locale> langList = WorkingLanguageBP.getInstance()
-                .getDisplayableLanguages();
-        List<String> dispList = new ArrayList<String>();
-        for (Locale locale : langList) {
-            dispList.add(locale.getDisplayName());
-        }
-        String[] dispNames = dispList.toArray(new String[dispList.size()]);
 
-        Arrays.sort(dispNames);
-        final int listSize = langList.size();
-        List<String> keys = new ArrayList<String>(listSize);
-        List<Locale> values = new ArrayList<Locale>(listSize);
-        for (String lang : dispNames) {
-            values.add(Languages.getInstance().getLocale(lang));
-            keys.add(lang);
-        }
-        getLanguageCombo().setItems(values, keys);
-    }
-    
-    /**
-     * Fills the DataSet-Combo with its values
-     */
-    private void fillDataSetCombo() {
-        int dataSets = 0;
-        IParameterInterfacePO testDataProvider = getParamInterfaceObj();
-        if (testDataProvider != null) {
-            while (testDataProvider.getReferencedDataCube() != null) {
-                testDataProvider = testDataProvider.getReferencedDataCube();
-            }
-            dataSets = testDataProvider.getDataManager().getDataSetCount();
-        }
-        List<String> keys = new ArrayList<String>(dataSets);
-        List<Integer> values = new ArrayList<Integer>(dataSets);
-        for (int i = 0; i < dataSets; i++) {
-            int value = i + 1;
-            values.add(value);
-            keys.add(StringConstants.EMPTY + value);
-        }
-        getDataSetCombo().setItems(values, keys);
-    }
     
     /**
      * The AbstractContentProvider of the Language-Table.
      * @author BREDEX GmbH
      * @created 03.04.2006
      */
-    private static class LanguageContentProvider 
+    private static class GeneralContentProvider 
         extends AbstractContentProvider {
         /** {@inheritDoc} */
         public Object[] getElements(Object inputElement) {
@@ -1369,69 +822,11 @@ public abstract class AbstractDataSetPage extends Page
     }
     
     /**
-     * AbstractContentProvider for the Parameter-Table
-     * @author BREDEX GmbH
-     * @created 04.04.2006
-     * @see LanguageContentProvider
-     */
-    private static class ParameterContentProvider 
-        extends LanguageContentProvider {
-        // currently empty
-    }
-    
-    /**
-     * AbstractContentProvider for the DataSet-Table
-     * @author BREDEX GmbH
-     * @created 05.04.2006
-     */
-    private class DataSetContentProvider extends AbstractContentProvider {
-        /** {@inheritDoc} */
-        public Object[] getElements(Object inputElement) {
-            return getParamInterfaceObj().getParameterList().toArray();
-        }
-    }
-    
-    /**
-     * The AbstractLabelProvider to display a data set's data
-     * 
-     * @author BREDEX GmbH
-     * @created 05.04.2006
-     */
-    private class DataSetLabelProvider extends AbstractLabelProvider {
-        /** {@inheritDoc} */
-        public String getColumnText(Object element, int columnIndex) {
-            if (!(element instanceof IParamDescriptionPO)) {
-                // this happens when Content-/LabelProvider changes!
-                // see ...ComboListener
-                return StringConstants.EMPTY;
-            }
-            IParamDescriptionPO desc = (IParamDescriptionPO)element;
-            if (columnIndex == 0) {
-                int rowCount = getParamInterfaceObj().getParameterList()
-                        .indexOf(desc);
-                getTable().getItem(rowCount).setBackground(columnIndex,
-                        getTable().getDisplay().getSystemColor(
-                                SWT.COLOR_WIDGET_BACKGROUND));
-                return desc.getName();
-            }
-            Locale locale = (Locale)getTable().getColumn(columnIndex).getData();
-            String value = StringConstants.EMPTY;
-            if (getDataSetCombo().getSelectedObject() != null) {
-                int rowCount = getDataSetCombo().getSelectedObject() - 1;
-                IParameterInterfacePO paramInterface = getParamInterfaceObj();
-                value = getGuiStringForParamValue(paramInterface, desc,
-                        rowCount, locale);
-            }
-            return value;
-        }
-    }
-    
-    /**
-     * The AbstractLabelProvider to display a language's data
+     * The label provider to display the default data
      * @author BREDEX GmbH
      * @created 03.04.2006
      */
-    private class LanguageLabelProvider extends AbstractLabelProvider {
+    private class GeneralLabelProvider extends AbstractLabelProvider {
         /** {@inheritDoc} */
         public String getColumnText(Object element, int columnIndex) {
             if (!(element instanceof IDataSetPO)) {
@@ -1455,7 +850,7 @@ public abstract class AbstractDataSetPage extends Page
                 IParamDescriptionPO desc = paramList.get(columnIndex - 1);
                 IParameterInterfacePO paramInterface = getParamInterfaceObj();
                 value = getGuiStringForParamValue(paramInterface, desc,
-                        rowCount, getLanguageCombo().getSelectedObject());
+                        rowCount);
             }
             return value;
         }
@@ -1468,54 +863,13 @@ public abstract class AbstractDataSetPage extends Page
      *            the ParamDescriptionP
      * @param rowCount
      *            the row count
-     * @param locale
-     *            the selected locale
      * @return a valid string for gui presentation of the given param value
      */
     public static String getGuiStringForParamValue(
             IParameterInterfacePO paramObj, IParamDescriptionPO desc,
-            int rowCount, Locale locale) {
+            int rowCount) {
         return AbstractParamInterfaceBP.getGuiStringForParamValue(paramObj,
-                desc, rowCount, locale);
-    }
-    
-    /**
-     * The AbstractLabelProvider to display a parameter's data
-     * 
-     * @author BREDEX GmbH
-     * @created 04.04.2006
-     */
-    private class ParameterLabelProvider extends AbstractLabelProvider {
-        /** {@inheritDoc} */
-        public String getColumnText(Object element, int columnIndex) {
-            if (!(element instanceof IDataSetPO)) {
-                // this happens when Content-/LabelProvider changes!
-                // see ...ComboListener
-                return StringConstants.EMPTY; 
-            }
-            ITDManager tdMan = (ITDManager)getTableViewer().getInput();
-            IDataSetPO row = (IDataSetPO)element;
-            int rowCount = tdMan.getDataSets().indexOf(row);
-            if (columnIndex == 0) {                
-                getTable().getItem(rowCount).setBackground(
-                    columnIndex, getTable().getDisplay().getSystemColor(
-                            SWT.COLOR_WIDGET_BACKGROUND));
-                return StringConstants.EMPTY + (rowCount + 1); 
-            }
-            String value = StringConstants.EMPTY;
-            if ((columnIndex - 1) < getTable().getColumnCount()) {
-                IParamDescriptionPO desc = m_paramCombo.getSelectedObject();
-                if (desc != null) {
-                    Locale locale = (Locale)getTable()
-                        .getColumn(columnIndex).getData();
-                    IParameterInterfacePO paramInterface = 
-                        getParamInterfaceObj();
-                    value = getGuiStringForParamValue(paramInterface,
-                            desc, rowCount, locale);
-                }
-            }
-            return value;
-        }
+                desc, rowCount);
     }
     
     /** {@inheritDoc} */
@@ -1530,7 +884,6 @@ public abstract class AbstractDataSetPage extends Page
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 getTableViewer().setInput(null);
-                getComboTracker().setDefaultComboSelection();
             }
         });
     }
@@ -1612,7 +965,7 @@ public abstract class AbstractDataSetPage extends Page
         /**
          * Gets the zero based column index of the given column property
          * @param columnProperty the property to get the index of
-         * @return the zero based column index of the given column proerty 
+         * @return the zero based column index of the given column property 
          * or -1 if no column with the given property was found
          */
         private int getColumnIndexOfProperty(String columnProperty) {
@@ -1640,7 +993,6 @@ public abstract class AbstractDataSetPage extends Page
             if (!TextControlBP.isTextValid(editor)) {
                 TextControlBP.setText(m_oldValue, editor);
             }
-            final Combo activeCombo = getComboTracker().getCurrentCombo();
             final String property = getTableViewer().getColumnProperties()
                 [column].toString();
             String value = TextControlBP.getText(editor);
@@ -1650,13 +1002,7 @@ public abstract class AbstractDataSetPage extends Page
             if (value != null && value.equals(StringConstants.EMPTY)) {
                 value = null;
             }
-            if (activeCombo == getLanguageCombo()) {
-                writeLanguageData(property, value, m_tcEditor);
-            } else if (activeCombo == m_paramCombo) {
-                writeParamData(property, value, m_tcEditor);
-            } else if (activeCombo == getDataSetCombo()) {
-                writeDataSetData(property, value, m_tcEditor);
-            }
+            writeDataSetData(property, value, m_tcEditor);
         }
         
         /**
@@ -1668,31 +1014,14 @@ public abstract class AbstractDataSetPage extends Page
         private void writeDataSetData(String property, Object value, 
                 AbstractJBEditor edit) {
             final int langIndex = getColumnIndexOfProperty(property);
-            final Locale locale = (Locale)getTable()
-                .getColumn(langIndex).getData();
-            final int dsNumber = getDataSetCombo().getSelectedObject();
+            final int dsNumber = getSelectedDataSet();
             final int paramIndex = getTable()
                 .getSelectionIndex();
-            setValueToModel(value, edit, paramIndex, dsNumber - 1, locale);
+            setValueToModel(value, edit, paramIndex, dsNumber);
             getTable().getItem(paramIndex).setText(langIndex, 
                 value == null ? StringConstants.EMPTY : (String) value);
         }
         
-        /**
-         * Writes the data to the selected language
-         * @param property the column property
-         * @param value the value to write
-         * @param edit the editor
-         */
-        private void writeLanguageData(String property, Object value, 
-                AbstractJBEditor edit) {
-            final int paramIndex = getColumnIndexOfProperty(property);
-            final int dsNumber = getTable().indexOf(getRow());
-            Locale locale = getLanguageCombo().getSelectedObject();
-            setValueToModel(value, edit, paramIndex - 1, dsNumber, locale);
-            getTable().getItem(dsNumber).setText(paramIndex, 
-                    value == null ? StringConstants.EMPTY : (String) value);
-        }
 
         /**
          * @param value
@@ -1703,33 +1032,30 @@ public abstract class AbstractDataSetPage extends Page
          *            the index of the parameter
          * @param dsNumber
          *            the number of data set.
-         * @param locale
-         *            the locale of the test data
          */
         private void setValueToModel(Object value, AbstractJBEditor editor,
-                int paramIndex, int dsNumber, Locale locale) {
+                int paramIndex, int dsNumber) {
             if (editor.getEditorHelper().requestEditableState() 
                     == JBEditorHelper.EditableState.OK) {
                 ParamNameBPDecorator mapper = editor.getEditorHelper()
                         .getEditSupport().getParamMapper();
                 GuiParamValueConverter conv = getGuiParamValueConverter(
-                        (String)value, getParamInterfaceObj(), locale,
+                        (String)value, getParamInterfaceObj(),
                         getCurrentParamDescription(),
                         ((CheckedParamText)m_editor.getEditor())
                                 .getDataValidator());
                 if (conv.getErrors().isEmpty()) {
-                    getParamBP().startParameterUpdate(conv, locale, dsNumber,
-                            mapper);
-                    setIsEntrySetComplete(getParamInterfaceObj(), locale);
+                    getParamBP().startParameterUpdate(conv, dsNumber, mapper);
+                    setIsEntrySetComplete(getParamInterfaceObj());
                     editor.getEditorHelper().setDirty(true);
                     new IsAliveThread() {
                         public void run() {
                             Plugin.getDisplay().syncExec(new Runnable() {
                                 public void run() {
-                                    DataEventDispatcher.getInstance()
-                                            .firePropertyChanged(false);
-                                    DataEventDispatcher.getInstance()
-                                            .fireParamChangedListener();
+                                    DataEventDispatcher ded = 
+                                            DataEventDispatcher.getInstance();
+                                    ded.firePropertyChanged(false);
+                                    ded.fireParamChangedListener();
                                 }
                             });
                         }
@@ -1738,27 +1064,6 @@ public abstract class AbstractDataSetPage extends Page
             }
         }
         
-        /**
-         * Writes the data to the selected parameter
-         * @param property the column property
-         * @param value the value to write
-         * @param edit the editor
-         */
-        private void writeParamData(String property, Object value, 
-                AbstractJBEditor edit) {
-            final int langIndex = getColumnIndexOfProperty(property);
-            final Locale locale = (Locale)getTable()
-                .getColumn(langIndex).getData();
-            final IParamDescriptionPO desc = m_paramCombo
-                    .getSelectedObject();
-            final int paramIndex = getParamInterfaceObj().getDataManager()
-                .findColumnForParam(desc.getUniqueId());
-            final int dsNumber = getTable()
-                .getSelectionIndex();
-            setValueToModel(value, edit, paramIndex, dsNumber, locale);
-            getTable().getItem(dsNumber).setText(langIndex, 
-                value == null ? StringConstants.EMPTY : (String) value);
-        }
         
         /** {@inheritDoc} */
         public void dispose() {
@@ -1811,17 +1116,7 @@ public abstract class AbstractDataSetPage extends Page
          * @return the current param name
          */
         private String getParamName() {
-            final Combo activeCombo = getComboTracker().getCurrentCombo();
-            String paramName = StringConstants.EMPTY;
-            if (activeCombo == getLanguageCombo()) {
-                paramName = getTable().getColumn(getColumn())
-                    .getText();
-            } else if (activeCombo == m_paramCombo) {
-                paramName = m_paramCombo.getSelectedObject().getName();
-            } else if (activeCombo == getDataSetCombo()) {
-                paramName = getRow().getText(0);
-            }
-            return paramName;
+            return getTableViewer().getTable().getColumn(getColumn()).getText();
         }
         
         /**
@@ -2021,21 +1316,10 @@ public abstract class AbstractDataSetPage extends Page
                         .lockWorkVersion();
                     getParamBP().removeDataSet(getParamInterfaceObj(),
                             row, editor.getEditorHelper().getEditSupport()
-                                    .getParamMapper(),
-                            WorkingLanguageBP.getInstance()
-                                    .getWorkingLanguage());
+                                    .getParamMapper());
                     editor.getEditorHelper().setDirty(true);
                     getTableViewer().refresh();                    
-                    fillDataSetCombo();
-                    List<Locale> projLangs = GeneralStorage.getInstance()
-                        .getProject().getLangHelper().getLanguageList();
-                    for (Locale locale : projLangs) {
-                        setIsEntrySetComplete(getParamInterfaceObj(), locale);
-                    }
-                    if (getComboTracker().getCurrentCombo() 
-                            == getDataSetCombo()) {
-                        row = 0;
-                    }
+                    setIsEntrySetComplete(getParamInterfaceObj());
                     if (getTable().getItemCount() != 0) {
                         if (getTable().getItemCount() <= row
                                 && getTable().getItemCount() > 0) {
@@ -2108,11 +1392,9 @@ public abstract class AbstractDataSetPage extends Page
      * 
      * @param paramNode
      *            teh ParamNodePO to check.
-     * @param locale
-     *            the Locale to check
      */
     protected abstract void setIsEntrySetComplete(
-            IParameterInterfacePO paramNode, Locale locale);
+            IParameterInterfacePO paramNode);
     
     /**
      * Class for En-/Disabling swt.Controls depending of active WorkbenchPart
@@ -2227,8 +1509,6 @@ public abstract class AbstractDataSetPage extends Page
      *            to convert
      * @param paramInterfaceObj
      *            obj with parameter for this parameterValue
-     * @param locale
-     *            current used language
      * @param currentParamDescription
      *            param description associated with current string (parameter
      *            value)
@@ -2237,10 +1517,10 @@ public abstract class AbstractDataSetPage extends Page
      * @return a valid GuiParamValueConverter
      */
     private GuiParamValueConverter getGuiParamValueConverter(String value,
-            IParameterInterfacePO paramInterfaceObj, Locale locale,
+            IParameterInterfacePO paramInterfaceObj,
             IParamDescriptionPO currentParamDescription,
             IParamValueValidator dataValidator) {
-        return new GuiParamValueConverter(value, paramInterfaceObj, locale,
+        return new GuiParamValueConverter(value, paramInterfaceObj,
                 currentParamDescription, dataValidator);
     }
     

@@ -51,7 +51,6 @@ String comment = node.getComment();
 boolean hasComment = StringUtils.isNotBlank(comment);
 String taskId = node.getTaskId();
 boolean hasTaskId = StringUtils.isNotBlank(taskId);
-Locale locale = info.getLanguage();
 Iterator<INodePO> childIterator = node.getNodeListIterator();
 String packageBase = info.getPackageBasePath();
 NameLoader nameLoader = NameLoader.getInstance();
@@ -391,7 +390,7 @@ public class <%=className%> {
                     IParamDescriptionPO param = childParamIterator.next();
                     String paramType = param.getUniqueId();
                     String enumType = nameLoader.getEnumForParam(paramType);
-                    String paramValue = ParamUtils.getValueForParam(cap, param, 0, locale);
+                    String paramValue = ParamUtils.getValueForParam(cap, param, 0);
                     Boolean isEnum = enumType != null;
                     if (isEnum) {
                         enumType = NameLoader.beautifyParamType(enumType);
@@ -470,7 +469,7 @@ public class <%=className%> {
                     <%childParamIterator = exec.getParameterListIter();
                     while (childParamIterator.hasNext()) {
                         IParamDescriptionPO param = childParamIterator.next();
-                        String paramValue = ParamUtils.getValueForParam(exec, param, row, locale);%>
+                        String paramValue = ParamUtils.getValueForParam(exec, param, row);%>
                 
                 <%if (!isActive) {%>//<%}%><%=paramValue%><%if(childParamIterator.hasNext()){%>
                 
@@ -617,7 +616,7 @@ public class <%=className%> {
                             <%childParamIterator = eventTC.getParameterListIter();
                             while (childParamIterator.hasNext()) {
                                 IParamDescriptionPO param = childParamIterator.next();
-                                String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
+                                String paramValue = ParamUtils.getValueForParam(eventTC, param, row);%>
                         //<%=paramValue%>
                         
                         <%if(childParamIterator.hasNext()){%>//,<%}%>
@@ -640,7 +639,7 @@ public class <%=className%> {
                           <%childParamIterator = eventTC.getParameterListIter();
                           while (childParamIterator.hasNext()) {
                               IParamDescriptionPO param = childParamIterator.next();
-                              String paramValue = ParamUtils.getValueForParam(eventTC, param, row, locale);%>
+                              String paramValue = ParamUtils.getValueForParam(eventTC, param, row);%>
         //                <%=paramValue%><%if(childParamIterator.hasNext()){%>,<%}%>
                           <%}%>
                           <%row++;%>

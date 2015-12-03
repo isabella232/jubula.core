@@ -73,9 +73,6 @@ public enum ProblemType {
      */
     REASON_MISSING_SPEC_TC,
     
-    /** Reused project is missing a language used in the current project - repair : nothing*/
-    REASON_REUSED_PROJECT_MISSING_LANG,
-    
     /** An ExecTestase has unused Test Data  */
     REASON_UNUSED_TESTDATA,
     

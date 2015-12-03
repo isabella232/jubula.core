@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -369,19 +368,11 @@ class CapPO extends ParamNodePO implements ICapPO {
      * @param project the project of this CAP
      */
     private void createDefaultValues(IProjectPO project) {
-        
-        if (project.getLangHelper().getLanguageList().isEmpty()) {
-            return;
-        }
         Action action = CapBP.getAction(this);
         for (String paramName : action.getParamNames()) {
             Param parameter = action.findParam(paramName);
-            String defaultValue = parameter.getDefaultValue();
-            ITestDataPO testData = PoMaker.createTestDataPO();
-            for (Locale locale : project.getLangHelper().getLanguageList()) {
-                testData.setValue(locale, defaultValue, project);
-            }
-            getDataManager().updateCell(testData, 0, paramName);
+            getDataManager().updateCell(parameter.getDefaultValue(), 
+                    0, paramName);
         }
     }
 

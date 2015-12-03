@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.converter.utils;
 
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
@@ -53,14 +52,13 @@ public class ParamUtils {
      * @param node the node
      * @param param the parameter
      * @param row the row
-     * @param locale the language
      * @return the value
      */
     public static String getValueForParam(IParameterInterfacePO node,
-            IParamDescriptionPO param, int row, Locale locale) {
+            IParamDescriptionPO param, int row) {
         String paramType = param.getType();
         String value = AbstractDataSetPage.getGuiStringForParamValue(
-                node, param, row, locale);
+                node, param, row);
         //CHECKSTYLE:OFF
         if (value == null) {
             value = "null // TODO: <code>null</code> found as test data - check and fix in ITE"; //$NON-NLS-1$

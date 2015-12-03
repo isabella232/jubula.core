@@ -32,6 +32,8 @@ import org.apache.commons.beanutils.Converter;
 import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.archive.converter.AbstractXmlConverter;
 import org.eclipse.jubula.client.archive.converter.AutIdGenerationConverter;
 import org.eclipse.jubula.client.archive.converter.HTMLTechnicalComponentIndexConverter;
@@ -85,6 +87,7 @@ import org.eclipse.jubula.client.archive.schema.TestSuite.Testsuiteelement;
 import org.eclipse.jubula.client.archive.schema.TestresultSummaries;
 import org.eclipse.jubula.client.archive.schema.TestresultSummary;
 import org.eclipse.jubula.client.archive.schema.UsedToolkit;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
@@ -96,6 +99,7 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPlugi
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICheckConfContPO;
@@ -121,16 +125,14 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.IArchivableTestResultSummary;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
+import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
@@ -282,6 +284,9 @@ class XmlImporter {
 
     /** whether to skip the import of tracked data */
     private boolean m_skipTrackingInformation = false;
+
+    /** the old default language */
+    private Locale m_oldDefaultLanguage = null;
     
     /**
      * Constructor
@@ -807,9 +812,13 @@ class XmlImporter {
             checkCancel();
             proj.addUsedProject(createReusedProject(reusedProj));
         }
-        for (String projLang : xml.getProjectLanguageList()) {
-            proj.getLangHelper().addLanguageToList(
-                    LocaleUtil.convertStrToLocale(projLang));
+        if (xml.isSetDefaultLanguage()) {
+            m_oldDefaultLanguage = LocaleUtil.convertStrToLocale(
+                    xml.getDefaultLanguage());
+            m_io.writeStatus(new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+                    NLS.bind(Messages.ImportOfDefaultLanguage,
+                            m_oldDefaultLanguage)));
+            
         }
         for (Aut autXml : xml.getAutList()) {
             checkCancel();
@@ -872,8 +881,6 @@ class XmlImporter {
             Project xml) {
         proj.setComment(xml.getComment());
         proj.setMarkupLanguage(xml.getMarkupLanguage());
-        proj.setDefaultLanguage(LocaleUtil.convertStrToLocale(xml
-                .getDefaultLanguage()));
         proj.setToolkit(xml.getAutToolKit());
         proj.setIsReusable(xml.getIsReusable());
         proj.setIsProtected(xml.getIsProtected());
@@ -1232,7 +1239,7 @@ class XmlImporter {
     }
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as parameter. The method generates all depended objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param xml Abstraction of the XML element (see Apache XML Beans)
      * @param assignNewGuid <code>true</code> if the AUT Config
@@ -1261,7 +1268,7 @@ class XmlImporter {
     }
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as parameter. The method generates all depended objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param xml Abstraction of the XML element (see Apache XML Beans)
      * @param assignNewGuid <code>true</code> if the AUT and all corresponding 
@@ -1283,10 +1290,6 @@ class XmlImporter {
         aut.setGenerateNames(xml.getGenerateNames());
         m_autRef.put(xml.getId(), aut);
         aut.setObjMap(createOM(xml));
-        for (String lang : xml.getLanguageList()) {
-            aut.getLangHelper().addLanguageToList(
-                LocaleUtil.convertStrToLocale(lang));
-        }
         for (AutConfig confXml : xml.getConfigList()) {
             aut.addAutConfigToSet(createAUTConfig(confXml, assignNewGuid));
         }
@@ -1816,9 +1819,9 @@ class XmlImporter {
                 // for imported Test Steps. 
                 continue;
             }
-            List<ITestDataPO> tdList = null;
+            List<String> tdList = null;
             try {
-                tdList = tdman.getDataSet(tdRow).getList();
+                tdList = tdman.getDataSet(tdRow).getColumns();
             } catch (IndexOutOfBoundsException ioobe) {
                 // Component, Action, and/or Parameter could not be found in config xml
                 // only log and continue -> import of projects with missing plugins
@@ -1847,8 +1850,7 @@ class XmlImporter {
                     .findColumnForParam(uniqueId);
                 if (ownerIndex > -1) {
                     // only relevant for old projects
-                    tdList.set(ownerIndex, 
-                            PoMaker.createTestDataPO(readData(cellXml, owner)));
+                    tdList.set(ownerIndex, readData(cellXml, owner));
                 }
                 tdCell++;
             }
@@ -1866,9 +1868,53 @@ class XmlImporter {
     /**
      * @param cellXml associated cell from import
      * @param owner The owner of the data.
+     * @return the list of test data
+     */
+    private String readData(TestDataCell cellXml, 
+            IParameterInterfacePO owner) {
+        String valueString;
+        if (m_oldDefaultLanguage != null) {
+            valueString = readOldI18nMainData(cellXml, owner);
+        } else {
+            valueString = cellXml.getValue();
+            if (valueString != null) {
+                try {
+                    // Since we are not using the converter for anything other than
+                    // parsing, we can use null for paramDesc
+                    ModelParamValueConverter converter = 
+                            new ModelParamValueConverter(
+                                    valueString, owner, 
+                                    null);
+                    
+                    if (!converter.containsErrors()) {
+                        // Only try to replace reference GUIDs if the 
+                        // string could be successfully parsed.
+                        // Otherwise, the model string will be overwritten with
+                        // the empty string because no tokens were created 
+                        // during parsing. 
+                        converter.replaceUuidsInReferences(m_oldToNewGuids);
+                    } else {
+                        m_unparseableParameters.add(valueString);
+                    }
+                    
+                    valueString = converter.getModelString();
+                } catch (IllegalArgumentException iae) {
+                    // Do nothing.
+                    // The i18nValue uses the old format and can therefore
+                    // not be parsed. This value will be converted in V1M42Converter.
+                }
+            } 
+        }
+        
+        return valueString;
+    }
+    
+    /**
+     * @param cellXml associated cell from import
+     * @param owner The owner of the data.
      * @return the map read from the provided data.
      */
-    private Map<Locale, String> readData(TestDataCell cellXml, 
+    private String readOldI18nMainData(TestDataCell cellXml, 
             IParameterInterfacePO owner) {
         
         Map<Locale, String> localeToValue = new HashMap<Locale, String>(); 
@@ -1884,8 +1930,6 @@ class XmlImporter {
                     ModelParamValueConverter converter = 
                         new ModelParamValueConverter(
                             i18nValString, owner, 
-                            LocaleUtil.convertStrToLocale(
-                                i18nVal.getLanguage()), 
                             null);
 
                     if (!converter.containsErrors()) {
@@ -1894,7 +1938,7 @@ class XmlImporter {
                         // Otherwise, the model string will be overwritten with
                         // the empty string because no tokens were created 
                         // during parsing. 
-                        converter.replaceGuidsInReferences(m_oldToNewGuids);
+                        converter.replaceUuidsInReferences(m_oldToNewGuids);
                     } else {
                         m_unparseableParameters.add(i18nValString);
                     }
@@ -1910,13 +1954,12 @@ class XmlImporter {
                         i18nValString);
             } 
         }
-        
-        return localeToValue;
+        return localeToValue.get(m_oldDefaultLanguage);
     }
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param xml Abstraction of the XML element (see Apache XML Beans).
      * @param assignNewGuids <code>true</code> if the parameters were given
@@ -1946,7 +1989,7 @@ class XmlImporter {
 
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param xml Abstraction of the XML element (see Apache XML Beans).
      * @param assignNewGuids <code>true</code> if the parameters were given
@@ -1981,7 +2024,7 @@ class XmlImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param owner The ParamNode which holds this TDManager
      * @param xml Abstraction of the XML element (see Apache XML Beans)
@@ -2022,10 +2065,10 @@ class XmlImporter {
             tdman = PoMaker.createTDManagerPO(owner, uniqueIds);
         }
         for (TestDataRow rowXml : xml.getRowList()) {
-            final List<ITestDataPO> td = new ArrayList<ITestDataPO>(rowXml
+            final List<String> td = new ArrayList<String>(rowXml
                 .sizeOfDataArray());
             for (TestDataCell cellXml : rowXml.getDataList()) {
-                td.add(PoMaker.createTestDataPO(readData(cellXml, owner)));
+                td.add(readData(cellXml, owner));
             }
             tdman.insertDataSet(PoMaker.createListWrapperPO(td), 
                     tdman.getDataSetCount());
@@ -2034,7 +2077,7 @@ class XmlImporter {
     }
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      * needed by some objects to verify that their data confirms to project
@@ -2109,7 +2152,7 @@ class XmlImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * XML element used as prameter. The method generates all dependend objects
+     * XML element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      * needed by some objects to verify that their data confirms to project

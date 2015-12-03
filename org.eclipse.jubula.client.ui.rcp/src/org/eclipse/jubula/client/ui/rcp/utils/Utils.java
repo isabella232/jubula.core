@@ -84,18 +84,6 @@ public class Utils {
     private Utils() {
         // do nothing
     }
-
-    /**;
-     * @return locale object for default language or default
-     */
-    public static Locale getDefaultLocale() {
-        final IProjectPO project = GeneralStorage.getInstance().getProject();
-        if (project.getDefaultLanguage() != null) {
-            return project
-                .getDefaultLanguage();
-        }
-        return Locale.getDefault();            
-    }
     
     /**
      * @return True, if the server is localhost. False, otherwise.

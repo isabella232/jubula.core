@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
 import org.eclipse.jubula.client.core.i18n.Messages;
@@ -68,7 +67,7 @@ class SimpleValueToken extends AbstractParamValueToken {
      * 
      * {@inheritDoc}
      */
-    public String getExecutionString(List<ExecObject> stack, Locale locale) 
+    public String getExecutionString(List<ExecObject> stack) 
         throws InvalidDataException {
         StringBuilder builder = new StringBuilder();
         int index = 0;

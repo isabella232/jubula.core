@@ -18,7 +18,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.lang.ObjectUtils;
@@ -50,7 +49,6 @@ import org.eclipse.jubula.client.core.preferences.database.MySQLConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.OracleConnectionInfo;
 import org.eclipse.jubula.client.core.preferences.database.PostGreSQLConnectionInfo;
 import org.eclipse.jubula.client.core.utils.FileUtils;
-import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.NetUtil;
@@ -99,8 +97,6 @@ public class JobConfiguration {
     private List<String> m_testSuiteNames = new ArrayList<String>();
     /** the name of the Test Job to execute */
     private String m_testJobName;
-    /** configuration detail */
-    private Locale m_language;
     /** list for Test Suites */
     private List<ITestSuitePO> m_testSuites = new ArrayList<ITestSuitePO>();
     /** the Test Job to execute */
@@ -328,20 +324,6 @@ public class JobConfiguration {
                     Messages.JobConfigurationValidateAutConf, m_autConfigName,
                     aut.getName()));
             }
-
-            // LanguageCheck
-            List <Locale> autLocales = aut.getLangHelper().getLanguageList();
-            Validate.isTrue(autLocales.size() != 0, 
-                Messages.NoLanguageConfiguredInChoosenAUT);
-            if (getLanguage() == null) {
-                if (autLocales.size() == 1) {
-                    setLanguage(autLocales.get(0));
-                } else {
-                    setLanguage(getProject().getDefaultLanguage());
-                }
-            }
-            Validate.isTrue(autLocales.contains(getLanguage()), 
-                Messages.SpecifiedLanguageNotSupported);
         }
     }
 
@@ -447,10 +429,6 @@ public class JobConfiguration {
             if (autIdString != null) {
                 setAutId(new AutIdentifier(autIdString)); 
             }
-        }
-        if (cmd.hasOption(ClientTestStrings.LANGUAGE)) { 
-            setLanguage(LocaleUtil.convertStrToLocale(
-                    cmd.getOptionValue(ClientTestStrings.LANGUAGE))); 
         }
         if (cmd.hasOption(ClientTestStrings.TESTSUITE)) { 
             String tsName = cmd.getOptionValue(ClientTestStrings.TESTSUITE); 
@@ -742,20 +720,6 @@ public class JobConfiguration {
     public ITestJobPO getTestJob() {
         return m_testJob;
     }
-
-    /**
-     * @return Locale
-     */
-    public Locale getLanguage() {
-        return m_language;
-    }
-
-    /**
-     * @param language Locale
-     */
-    private void setLanguage(Locale language) {
-        m_language = language;
-    }
     
     /**
      * Converter class to marshal/unmarshal job to xml
@@ -819,10 +783,6 @@ public class JobConfiguration {
             arg1.startNode(ClientTestStrings.AUT_CONFIG);
             arg1.setValue(job.getAutConfigName());
             arg1.endNode();
-
-            arg1.startNode(ClientTestStrings.LANGUAGE);
-            arg1.setValue(job.getLanguage().toString());
-            arg1.endNode();
             
             arg1.startNode(ClientStrings.NORUN);
             arg1.setValue(TestExecutionConstants.RunSteps.validateRunStep(
@@ -878,10 +838,6 @@ public class JobConfiguration {
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.DB_PW)) {
                     job.setDbpw(arg0.getValue());
-                } else if (arg0.getNodeName().
-                        equals(ClientTestStrings.LANGUAGE)) {
-                    job.setLanguage(LocaleUtil.
-                        convertStrToLocale(arg0.getValue()));
                 } else if (arg0.getNodeName().
                         equals(ClientTestStrings.AUT_CONFIG)) {
                     job.setAutConfigName(arg0.getValue());

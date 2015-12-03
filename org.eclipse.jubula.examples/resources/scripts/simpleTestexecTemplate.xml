@@ -12,6 +12,5 @@
     <dburl>YourDatabaseURL (visible via the preferences)</dburl>
     <dbuser>YourDatabaseUsername (use sa for the embedded database)</dbuser>
     <dbpw>YourDatabasePassword (leave empty for the embedded database)</dbpw>
-    <language>en_US</language>
     <testsuite>TestSuite</testsuite>
 </configuration>

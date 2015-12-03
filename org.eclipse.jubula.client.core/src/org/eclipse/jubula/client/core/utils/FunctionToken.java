@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.functions.AbstractFunctionEvaluator;
 import org.eclipse.jubula.client.core.functions.FunctionContext;
@@ -116,7 +115,7 @@ public class FunctionToken extends AbstractParamValueToken
      * 
      * {@inheritDoc}
      */
-    public String getExecutionString(List<ExecObject> stack, Locale locale) 
+    public String getExecutionString(List<ExecObject> stack) 
         throws InvalidDataException {
         
         FunctionDefinition function = 
@@ -152,7 +151,7 @@ public class FunctionToken extends AbstractParamValueToken
                 argList.add(argBuilder.toString());
                 argBuilder.setLength(0);
             } else {
-                argBuilder.append(argToken.getExecutionString(stack, locale));
+                argBuilder.append(argToken.getExecutionString(stack));
             }
         }
         argList.add(argBuilder.toString());

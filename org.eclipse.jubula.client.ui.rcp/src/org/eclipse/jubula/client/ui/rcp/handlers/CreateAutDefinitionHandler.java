@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -70,10 +69,6 @@ public class CreateAutDefinitionHandler
                     es.lockWorkVersion();
                     IAUTMainPO newAut = PoMaker.createAUTMainPO(autName);
                     newAut.getAutIds().add(autId.getExecutableName());
-                    for (Locale locale : es.getWorkProject()
-                            .getLangHelper().getLanguageList()) {
-                        newAut.getLangHelper().addLanguageToList(locale);
-                    }
                     AUTPropertiesDialog newAutDialog = 
                         new AUTPropertiesDialog(
                             HandlerUtil.getActiveWorkbenchWindow(event)

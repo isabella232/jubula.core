@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.businessprocess;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -26,7 +25,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.AutState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IAutStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IOMStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
@@ -91,20 +89,6 @@ public class ChooseTestSuiteBP {
     /** flag for state of Record Mode */
     private boolean m_isRecordMode = false;
     
-    /**
-     * <code>m_langChangedListener</code> listener for modification of working language
-     */
-    private ILanguageChangedListener m_langChangedListener = 
-        new ILanguageChangedListener() {
-            /**
-             * @param locale the new Locale
-             */
-            @SuppressWarnings("synthetic-access") 
-            public void handleLanguageChanged(Locale locale) {
-                updateTestSuiteButtonState(true);
-            }
-        };
-
     /**
      * <code>m_projPropModifyListener</code> listener for modification of project properties
      */
@@ -328,10 +312,7 @@ public class ChooseTestSuiteBP {
      * @return if testsuite meets general requirements for execution
      */
     private boolean areGeneralRequirementsAchieved(ITestSuitePO ts) {
-        Locale workingLanguage = 
-            WorkingLanguageBP.getInstance().getWorkingLanguage();
-        return workingLanguage != null
-            && AutAgentRegistration.getRunningAuts(
+        return AutAgentRegistration.getRunningAuts(
                     GeneralStorage.getInstance().getProject(), null)
                         .keySet().contains(ts.getAut());
     }
@@ -420,7 +401,6 @@ public class ChooseTestSuiteBP {
         ded.addProjectLoadedListener(m_projLoadedListener, true);
         ded.addDataChangedListener(m_currentProjDeletedListener, true);
         ded.addAutStateListener(m_autStateListener, true);
-        ded.addLanguageChangedListener(m_langChangedListener, true);
         ded.addProjectStateListener(m_projPropModifyListener);
         ded.addTestSuiteStateListener(m_testSuiteStateListener, true);
         ded.addOMStateListener(m_omStateListener, true);

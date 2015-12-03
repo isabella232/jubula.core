@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -55,7 +54,6 @@ import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.ILanguageChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IParamChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPartClosedListener;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -121,8 +119,7 @@ import org.slf4j.LoggerFactory;
  */
 @SuppressWarnings("synthetic-access")
 public class JBPropertiesPage extends Page implements IDataChangedListener,
-    IParamChangedListener, IPartClosedListener, ILanguageChangedListener,
-    IPropertySheetPage, IAdaptable {
+    IParamChangedListener, IPartClosedListener, IPropertySheetPage, IAdaptable {
     
     /** the logger */
     private static final Logger LOG = 
@@ -365,7 +362,6 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         dispatcher.addDataChangedListener(this, true);
         dispatcher.addParamChangedListener(this, true);
         dispatcher.addPartClosedListener(this, true);
-        dispatcher.addLanguageChangedListener(this, true);
         m_treeViewer.getControl().addHelpListener(m_helpListener);
         getSite().getWorkbenchWindow().getSelectionService()
                 .addSelectionListener(this);
@@ -468,7 +464,6 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         dispatcher.removeDataChangedListener(this);
         dispatcher.removeParamChangedListener(this);
         dispatcher.removePartClosedListener(this);
-        dispatcher.removeLanguageChangedListener(this);
         getSite().getWorkbenchWindow()
             .getSelectionService().removeSelectionListener(this);
         getSite().setSelectionProvider(null);
@@ -1118,18 +1113,6 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                 reactOnChange(activePart, (IStructuredSelection)sel);
             }
         }
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void handleLanguageChanged(Locale locale) {
-        Plugin.getDisplay().syncExec(new Runnable() {
-            public void run() {
-                m_treeViewer.refresh();
-            }
-        });
     }
 
     /**

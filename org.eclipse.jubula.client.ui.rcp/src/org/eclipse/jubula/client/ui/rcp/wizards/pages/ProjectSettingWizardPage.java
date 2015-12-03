@@ -10,28 +10,16 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.wizards.pages;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Set;
-
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
-import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
-import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedProjectNameText;
-import org.eclipse.jubula.client.ui.rcp.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
@@ -43,13 +31,11 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
@@ -74,22 +60,6 @@ public class ProjectSettingWizardPage extends WizardPage {
     private boolean m_isProjectReusable = false;
     /** protected status of the new project */
     private boolean m_isProjectProtected = false;
-    /** the list field for the available languages */ 
-    private List m_availableLangList;
-    /** the list field for the project languages */ 
-    private List m_projectLangList;
-    /** the list of the project languages, to save the project languages */
-    private java.util.List<Locale> m_oldLocaleList = new ArrayList<Locale>();
-    /** the button to add a language from the upper field into the bottom field */
-    private Button m_downButton;
-    /** the button to delete a language from the bottom field */
-    private Button m_upButton;
-    /** the button to add all languages from the upper field into the bottom field */
-    private Button m_allDownButton;
-    /** the button to delete all languages from the bottom field */
-    private Button m_allUpButton;
-    /** the combo box for the project default language */
-    private DirectCombo <Locale> m_defaultLangComboBox;
     /** the combo box for the project aut toolkit */
     private DirectCombo<String> m_autToolKitComboBox;
     /** the text field for the project name */
@@ -101,8 +71,6 @@ public class ProjectSettingWizardPage extends WizardPage {
     /** the selectionListener */
     private final WidgetSelectionListener m_selectionListener = 
         new WidgetSelectionListener();
-    /** the composite with 2 ListBoxes */
-    private ListElementChooserComposite m_chooseLists;
     /** the the modifyListener */
     private final WidgetModifyListener m_modifyListener = 
         new WidgetModifyListener();
@@ -148,45 +116,10 @@ public class ProjectSettingWizardPage extends WizardPage {
         separator(projectNameComposite, NUM_COLUMNS_2); 
         createLabel(projectNameComposite, StringConstants.EMPTY);
         createAutToolKit(projectNameComposite);
-        separator(composite, NUM_COLUMNS_1);  
-        ControlDecorator.decorateInfo(createLabel(composite, 
-                Messages.ProjectSettingWizardPageSelectLanguagesOfTD),
-                 "ControlDecorator.NewProjectProjectLanguage", //$NON-NLS-1$ 
-                false); 
-        Composite innerComposite = new Composite(composite, SWT.NONE);
-        GridLayout compositeLayout = new GridLayout();
-        compositeLayout.numColumns = NUM_COLUMNS_1;
-        compositeLayout.marginHeight = 0;
-        compositeLayout.marginWidth = 0;
-        innerComposite.setLayout(compositeLayout);
-        GridData compositeData = new GridData();
-        compositeData.horizontalSpan = NUM_COLUMNS_2;
-        compositeData.horizontalAlignment = GridData.CENTER;
-        compositeData.grabExcessHorizontalSpace = true;
-        innerComposite.setLayoutData(compositeData);
-        java.util.List<String> availableLanguages = 
-            Utils.getAvailableLanguages();
-        java.util.List<String> usedLanguages = new ArrayList<String>();
-        String userLanguage = 
-            Languages.getInstance().getDisplayString(Locale.getDefault());
-        if (userLanguage != null && userLanguage.length() != 0) {
-            availableLanguages.remove(userLanguage);
-            usedLanguages.add(userLanguage);
-        }
-        m_chooseLists = createLanguageChooser(
-                innerComposite, 
-                availableLanguages,
-                usedLanguages);
-        getObjects();
-        separator(composite, NUM_COLUMNS_1); 
-        createLanguageCombo(createComposite(composite, NUM_COLUMNS_2, 
-            GridData.FILL, false));
+        separator(projectNameComposite, NUM_COLUMNS_2); 
         createNextLabel(composite);
-        initFields();
         addListener();
-        enableLangCombo();
         setMessage(Messages.ProjectWizardNewProject, IMessageProvider.NONE);
-        resizeLists();
         Plugin.getHelpSystem().setHelp(composite, ContextHelpIds
             .PROJECT_WIZARD);
         scroll.setContent(composite);
@@ -195,36 +128,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         scroll.setExpandVertical(true);                
         setControl(scroll);
         checkCompleteness(true);
-    }
-    
-    /**
-     * @param innerComposite the inner composite
-     * @param availableLanguages the available languages
-     * @param usedLanguages the used languages
-     * @return the list element chooser
-     */
-    private ListElementChooserComposite createLanguageChooser(
-            Composite innerComposite,
-            java.util.List<String> availableLanguages,
-            java.util.List<String> usedLanguages) {
-        return new ListElementChooserComposite(
-                innerComposite, Messages.ProjectPropertyPageUpperLabel,
-                availableLanguages, 
-                    Messages.ProjectSettingWizardPageBottomLabel,
-                usedLanguages, 15, 
-                new Image[]{IconConstants.RIGHT_ARROW_IMAGE,
-                    IconConstants.DOUBLE_RIGHT_ARROW_IMAGE,
-                    IconConstants.LEFT_ARROW_IMAGE,
-                    IconConstants.DOUBLE_LEFT_ARROW_IMAGE}, 
-                new Image[] { IconConstants.RIGHT_ARROW_DIS_IMAGE, 
-                    IconConstants.DOUBLE_RIGHT_ARROW_DIS_IMAGE, 
-                    IconConstants.LEFT_ARROW_DIS_IMAGE, 
-                    IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE },
-                new String[]{Messages.ProjectPropertyPageDownToolTip,
-                    Messages.ProjectSettingWizardPageAllDownToolTip,
-                    Messages.ProjectPropertyPageUpToolTip,
-                    Messages.ProjectSettingWizardPageAllUpToolTip},
-                ListElementChooserComposite.VERTICAL);
     }
 
     /**
@@ -305,46 +208,6 @@ public class ProjectSettingWizardPage extends WizardPage {
     }
 
     /**
-     * Resizes the two ListBoxes.
-     */
-    private void resizeLists() {
-        ((GridData)m_projectLangList.getLayoutData()).widthHint = 
-            Dialog.convertHeightInCharsToPixels(
-                LayoutUtil.getFontMetrics(m_projectLangList), 15);
-        ((GridData)m_availableLangList.getLayoutData()).widthHint = 
-            Dialog.convertHeightInCharsToPixels(
-                LayoutUtil.getFontMetrics(m_availableLangList), 15);
-    }
-
-    /**
-     * fills the defaultLanguage Combobox
-     * only call this after manipulating project languages is finished
-     */
-    private void fillDefaultLanguageComboBox() {
-        Locale selected = m_defaultLangComboBox.getSelectedObject();
-        java.util.List <Locale> localeObjects = new ArrayList<Locale>();
-        java.util.List <String> localeStrings = new ArrayList<String>();
-        for (String language : m_projectLangList.getItems()) {
-            localeStrings.add(language);
-            localeObjects.add(Languages.getInstance().getLocale(language));
-        }
-        m_defaultLangComboBox.setItems(localeObjects, localeStrings);
-        m_defaultLangComboBox.setSelectedObject(selected);
-    }
-
-    /**
-     * Gets the listBoxes / Buttons from the ListElementChooserComposite composite
-     */
-    private void getObjects() {
-        m_availableLangList = m_chooseLists.getListOne();
-        m_projectLangList = m_chooseLists.getListTwo();
-        m_upButton = m_chooseLists.getSelectionTwoToOneButton();
-        m_downButton = m_chooseLists.getSelectionOneToTwoButton();
-        m_allUpButton = m_chooseLists.getAllTwoToOneButton();
-        m_allDownButton = m_chooseLists.getAllOneToTwoButton();
-    }
-
-    /**
      * Creates a separator line.
      * @param composite The parent composite.
      * @param horSpan The horizonzal span.
@@ -359,18 +222,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         createLabel(composite, StringConstants.EMPTY);
     }
 
-    /**
-     * Inits all swt field in this page.
-     */
-    private void initFields() {
-        m_oldLocaleList.addAll(m_project.getLangHelper().getLanguageList());
-        if (m_project.getDefaultLanguage() != null
-            && !StringConstants.EMPTY.equals(m_project.getDefaultLanguage())) {
-            m_defaultLangComboBox.setSelectedObject(m_project.
-                getDefaultLanguage());
-        }
-    }
-    
     /**
      * Creates the textfield for the project name.
      * @param parent The parent composite.
@@ -398,35 +249,6 @@ public class ProjectSettingWizardPage extends WizardPage {
                 Messages.ProjectSettingWizardPageDefaultProjectName);
         m_projectNameTextField.setSelection(0, m_projectNameTextField.getText()
             .length());
-    }
-    
-    /**
-     * Creates the combobox for the project default language.
-     * @param parent The parent composite.
-     */
-    private void createLanguageCombo(Composite parent) {
-        Composite leftComposite = createComposite(parent, 3, 
-            GridData.BEGINNING, false);
-        Composite middleComposite = createComposite(parent, NUM_COLUMNS_2, 
-            GridData.FILL, true);
-        Composite rightComposite = createComposite(parent, NUM_COLUMNS_1, 
-                GridData.END, true);
-        ControlDecorator.decorateInfo(createLabel(leftComposite, 
-                Messages.ProjectSettingWizardPageLanguageLabel), 
-                "ControlDecorator.NewProjectDefaultLanguage", //$NON-NLS-1$ 
-                false);
-        m_defaultLangComboBox = new DirectCombo<Locale>(middleComposite, 
-                SWT.READ_ONLY, new ArrayList<Locale>(), 
-                new ArrayList<String>(), false, true);
-        createLabel(rightComposite, StringConstants.EMPTY);
-        GridData comboGridData = new GridData();
-        comboGridData.grabExcessHorizontalSpace = true;
-        comboGridData.horizontalAlignment = GridData.FILL;
-        LayoutUtil.addToolTipAndMaxWidth(comboGridData, m_defaultLangComboBox);
-        m_defaultLangComboBox.setLayoutData(comboGridData);
-        /* has to be filled after updating language list,
-         * ok here, because lists are initialized first */
-        fillDefaultLanguageComboBox();
     }
     
     /**
@@ -469,113 +291,10 @@ public class ProjectSettingWizardPage extends WizardPage {
     }
     
     /**
-     * @return The union of all languages of the actual project
-     */
-    private String[] getLanguageList() {
-        Set<Locale> allLangs = new HashSet<Locale>(); 
-        for (int i = 0; i < m_project.getLangHelper().getLanguageList().size(); 
-            i++) {
-            
-            java.util.List<Locale> langList = m_project.getLangHelper().
-                getLanguageList();
-            for (int j = 0; j < langList.size(); j++) {
-                allLangs.add(langList.get(j));
-            }            
-        }   
-        String[] unionLanguages = new String[allLangs.size()];  
-        Iterator<Locale> iter = allLangs.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-            unionLanguages[i] = 
-                Languages.getInstance().getDisplayString(iter.next());
-            i++;
-        }
-        Arrays.sort(unionLanguages);
-        return unionLanguages;
-    }
-    
-    /**
-     * Updates the combo box items of the language combo box
-     */
-    public void updateLangCombo() {
-        if (!m_defaultLangComboBox.isDisposed()) {
-            m_projectLangList.setItems(getLanguageList());
-            fillDefaultLanguageComboBox();
-        }
-    }
-   
-    /**
-     * Handles the selectionEvent of the Down Button.
-     */
-    private void handleDownButtonEvent() {
-        fillDefaultLanguageComboBox();
-        enableLangCombo();
-    }
-    
-    /**
-     * Handles the selectionEvent of the Down Button.
-     */
-    private void handleAllDownButtonEvent() {
-        fillDefaultLanguageComboBox();
-        enableLangCombo();
-    }
-    
-    /**
-     * Handles the selectionEvent of the Down Button.
-     */
-    private void handleAllUpButtonEvent() {
-        ((AUTSettingWizardPage)getNextPage()).clearLanguageLists();
-        fillDefaultLanguageComboBox();
-        enableLangCombo();
-    }
-    
-    /**
-     * Handles the selectionEvent of the UP Button.
-     */
-    private void handleUpButtonEvent() {
-        fillDefaultLanguageComboBox();
-        enableLangCombo();
-    }
-        
-    /**
-     * Dis-/Enables the ComboBox.
-     */
-    private void enableLangCombo() {
-        if (m_projectLangList.getItemCount() == 0
-                || m_defaultLangComboBox.getItemCount() == 0) {  
-            
-            m_defaultLangComboBox.setEnabled(false);
-            setMessage(Messages.ProjectPropertyPageNoProjectLanguage,
-                IMessageProvider.ERROR); 
-        } else {
-            if (StringConstants.EMPTY.equals(m_defaultLangComboBox
-                .getText())) {
-                
-                setMessage(Messages.ProjectPropertyPageNoProjectLanguage,
-                    IMessageProvider.ERROR); 
-                m_defaultLangComboBox.setEnabled(true);
-                return;
-            }
-            m_defaultLangComboBox.setEnabled(true);
-            setMessage(Messages.ProjectWizardNewProject,
-                IMessageProvider.NONE);
-            modifyProjectNameFieldAction(false);
-        }
-    }
-
-    /**
      * Enables/Disables the next button.
      */
     private void confirmNextButton() {
         if (m_project != null) {
-            m_project.setDefaultLanguage(m_defaultLangComboBox.
-                getSelectedObject());
-            m_project.getLangHelper().clearLangList();
-            for (int i = 0; i < m_projectLangList.getItemCount(); i++) {
-                m_project.getLangHelper().addLanguageToList(
-                    Languages.getInstance().getLocale(
-                        m_projectLangList.getItem(i)));
-            }
             m_newProjectName = m_projectNameTextField.getText();
             m_isProjectReusable = m_projectReusabilityCheckbox.getSelection();
             m_isProjectProtected = m_projectProtectionCheckbox.getSelection();
@@ -595,14 +314,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      * Adds necessary listeners.
      */
     private void addListener() {
-        m_projectLangList.addSelectionListener(m_selectionListener);
-        m_availableLangList.addSelectionListener(m_selectionListener);
         m_projectNameTextField.addModifyListener(m_modifyListener);
-        m_upButton.addSelectionListener(m_selectionListener);
-        m_downButton.addSelectionListener(m_selectionListener);
-        m_allUpButton.addSelectionListener(m_selectionListener);
-        m_allDownButton.addSelectionListener(m_selectionListener);
-        m_defaultLangComboBox.addSelectionListener(m_selectionListener);
         m_autToolKitComboBox.addSelectionListener(m_selectionListener);
         m_projectReusabilityCheckbox.addSelectionListener(m_selectionListener);
         m_projectProtectionCheckbox.addSelectionListener(m_selectionListener);
@@ -614,12 +326,6 @@ public class ProjectSettingWizardPage extends WizardPage {
     private void removeListener() {
         if (m_project != null) {
             m_projectNameTextField.removeModifyListener(m_modifyListener);
-            m_downButton.removeSelectionListener(m_selectionListener);
-            m_upButton.removeSelectionListener(m_selectionListener);
-            m_allDownButton.removeSelectionListener(m_selectionListener);
-            m_allUpButton.removeSelectionListener(m_selectionListener);
-            m_availableLangList.removeSelectionListener(m_selectionListener);
-            m_projectLangList.removeSelectionListener(m_selectionListener);
             m_projectReusabilityCheckbox.removeSelectionListener(
                 m_selectionListener);
             m_projectProtectionCheckbox.removeSelectionListener(
@@ -632,10 +338,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      * @param isAUTNameModified True, if the aut name was modified.
      */
     private void checkCompleteness(boolean isAUTNameModified) {
-        if (modifyProjectNameFieldAction(isAUTNameModified) 
-                && m_projectLangList.getItemCount() > 0
-                && !m_defaultLangComboBox.getText()
-                    .equals(StringConstants.EMPTY)) {
+        if (modifyProjectNameFieldAction(isAUTNameModified)) {
             
             setPageComplete(true);
             confirmNextButton();
@@ -665,9 +368,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         }
         if (isCorrect) {
             setMessage(Messages.ProjectWizardNewProject, IMessageProvider.NONE);
-            if (isProjectNameModiyfied) {
-                enableLangCombo();
-            }
             if (ProjectPM.doesProjectNameExist(projectName)
                 && !m_project.getName().equals(projectName)) {
                 
@@ -698,32 +398,7 @@ public class ProjectSettingWizardPage extends WizardPage {
          */
         public void widgetSelected(SelectionEvent e) {
             Object o = e.getSource();
-            if (o.equals(m_downButton)) {
-                handleDownButtonEvent();
-                checkCompleteness(true);
-                return;
-            } else if (o.equals(m_upButton)) {
-                handleUpButtonEvent();
-                checkCompleteness(true);
-                return;
-            } else if (o.equals(m_allUpButton)) {
-                handleAllUpButtonEvent();
-                checkCompleteness(true);
-                return;
-            } else if (o.equals(m_allDownButton)) {
-                handleAllDownButtonEvent();
-                checkCompleteness(true);
-                return;
-            } else if (o.equals(m_defaultLangComboBox)) {
-                handleDefaultLangCombo();
-                return;
-            } else if (o.equals(m_availableLangList)) {
-                enableLangCombo();
-                return;
-            } else if (o.equals(m_projectLangList)) {
-                enableLangCombo();
-                return;
-            } else if (o.equals(m_autToolKitComboBox)) {
+            if (o.equals(m_autToolKitComboBox)) {
                 handleToolkitCombo();
                 return;
             } else if (o.equals(m_projectReusabilityCheckbox)) {
@@ -753,19 +428,8 @@ public class ProjectSettingWizardPage extends WizardPage {
          */
         public void widgetDefaultSelected(SelectionEvent e) {
             Object o = e.getSource();
-            if (o.equals(m_availableLangList)) {
-                handleDownButtonEvent();
-                checkCompleteness(true);
-                return;
-            } else if (o.equals(m_projectLangList)) {
-                handleUpButtonEvent();
-                checkCompleteness(true);
-                return;
-            } else if (o.equals(m_autToolKitComboBox)) {
+            if (o.equals(m_autToolKitComboBox)) {
                 handleToolkitCombo();
-                return;
-            } else if (o.equals(m_defaultLangComboBox)) {
-                handleDefaultLangCombo();
                 return;
             }
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
@@ -774,14 +438,6 @@ public class ProjectSettingWizardPage extends WizardPage {
                     + StringConstants.APOSTROPHE);
         }
 
-
-        /**
-         * 
-         */
-        private void handleDefaultLangCombo() {
-            enableLangCombo();
-            checkCompleteness(false);
-        }
 
         /**
          * 
@@ -815,22 +471,6 @@ public class ProjectSettingWizardPage extends WizardPage {
             }           
         }       
     }
-    
-    /**
-     * @return Returns the AVAILABLE_LANG_LIST.
-     */
-    public List getAvailableLangList() {
-        return m_availableLangList;
-    }
-    
-    /**
-     * @return Returns the projectLangList.
-     */
-    public List getProjectLangList() {
-        return m_projectLangList;
-    }
-    
-    
     
     /**
      * {@inheritDoc}

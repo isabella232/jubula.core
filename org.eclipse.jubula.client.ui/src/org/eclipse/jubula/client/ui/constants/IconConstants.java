@@ -283,8 +283,6 @@ public class IconConstants {
     public static final ImageDescriptor COMMANDLOG_IMAGE_DESCRIPTOR = ImageDescriptor.createFromImage(getImage("dataDecorator.png")); //$NON-NLS-1$
     /** testJob image */
     public static final Image TJ_IMAGE = getImage("testJobNode.gif"); //$NON-NLS-1$
-    /** testSuite image */
-    public static final Image TS_DISABLED_IMAGE = getImage("testSuiteNode_disabled.gif"); //$NON-NLS-1$
     /** test case image */
     public static final Image TC_IMAGE = getImage("testCase.gif"); //$NON-NLS-1$
     /** testCase_disabled image */

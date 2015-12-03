@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.core.utils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -284,11 +283,10 @@ public class RefToken extends AbstractParamValueToken {
     /**
      * gets the real value for a reference
      * @param stack current execution stack
-     * @param locale currently used locale for testexecution
      * @return the real value for this reference token and given dataset number
      * @throws InvalidDataException if given reference is not resolvable
      */
-    public String getExecutionString(List<ExecObject> stack, Locale locale) 
+    public String getExecutionString(List<ExecObject> stack) 
         throws InvalidDataException {
         String refGuid = extractCore(getModelString());
         ListIterator <ExecObject> it = stack.listIterator(stack.size());

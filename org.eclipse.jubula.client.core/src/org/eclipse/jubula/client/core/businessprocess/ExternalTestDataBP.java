@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -24,15 +23,12 @@ import org.eclipse.jubula.client.core.businessprocess.importfilter.DataTable;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.ExcelImportFilter;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.IDataImportFilter;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.DataReadException;
-import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.NoSupportForLocaleException;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.IncompleteDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -105,12 +101,11 @@ public class ExternalTestDataBP {
         }
         
         tdManager = PoMaker.createTDManagerPO(node);
-        Locale locale = TestExecution.getInstance().getLocale();
         // clear TDManager first
         node.clearTestData();
         // fill it again
-        DataTable dataTable = createDataTable(dataDir, file, locale);
-        tdManager = parseTable(dataTable, node, locale);
+        DataTable dataTable = createDataTable(dataDir, file);
+        tdManager = parseTable(dataTable, node);
         m_tdManagerCache.put(node, tdManager);
         return tdManager;
     }
@@ -146,12 +141,11 @@ public class ExternalTestDataBP {
      * @param dataDir
      *      directory for data files
      * @param filePath the path of the data source
-     * @param locale the local of the  data
      * @return a DataTable
      * @throws JBException id data source is not supported
      */
-    public DataTable createDataTable(File dataDir, String filePath, 
-        Locale locale) throws JBException {
+    public DataTable createDataTable(File dataDir, String filePath) 
+            throws JBException {
         File dataFile = new File(filePath);
         if (!dataFile.isAbsolute()) {
             dataFile = new File(dataDir, filePath);
@@ -164,7 +158,7 @@ public class ExternalTestDataBP {
         try {
             IDataImportFilter filter = getFilterFromFileType(filePath);
             if (filter != null) {
-                dataTable = filter.parse(dataDir, filePath, locale);
+                dataTable = filter.parse(dataDir, filePath);
                 m_dataTableCache.put(dataFile, dataTable);
                 return dataTable;
             } 
@@ -194,18 +188,6 @@ public class ExternalTestDataBP {
                 Messages.ErrorMessageDATASOURCE_READ_ERROR,
                 dataFileName), 
                 MessageIDs.E_DATASOURCE_READ_ERROR);
-        } catch (NoSupportForLocaleException e) {
-            if (LOG.isDebugEnabled()) {
-                LOG.debug(Messages.LocaleNotSupported + StringConstants.COLON
-                    + StringConstants.SPACE + String.valueOf(locale)
-                    + StringConstants.SPACE + Messages.InDataSource
-                    + StringConstants.COLON + StringConstants.SPACE 
-                    + dataFileName);                
-            }
-            throw new JBException(NLS.bind(
-                Messages.ErrorMessageDATASOURCE_LOCALE_NOTSUPPORTED,
-                new Object[] {locale.toString(), locale.getDisplayLanguage()}), 
-                MessageIDs.E_DATASOURCE_LOCALE_NOTSUPPORTED);
         }
     }
 
@@ -235,16 +217,14 @@ public class ExternalTestDataBP {
      *      data extracted from File
      * @param paramPo
      *      Parameter po we would like to update
-     * @param locale
-     *      What Locale the TestData should be
      * @return
      *      filled TestDataManager with new data
      * @throws JBException
-     *      error occured while reading data source
+     *      error occurred while reading data source
      */
     private ITDManager parseTable(DataTable filledTable,
-        IParameterInterfacePO paramPo, Locale locale) throws JBException {
-        return parseTable(filledTable, paramPo, locale, false, false);
+        IParameterInterfacePO paramPo) throws JBException {
+        return parseTable(filledTable, paramPo, false);
     }
 
     /**
@@ -254,10 +234,6 @@ public class ExternalTestDataBP {
      *            data extracted from File
      * @param paramPo
      *            Parameter po we would like to update
-     * @param locale
-     *            What Locale the TestData should be
-     * @param updateCellValues
-     *            whether the
      * @param useParamInterfaceTDMan
      *            true to use the original td manager of the passed param po;
      *            falso to create a new one
@@ -266,8 +242,7 @@ public class ExternalTestDataBP {
      *             error occured while reading data source
      */
     public ITDManager parseTable(DataTable filledTable,
-        IParameterInterfacePO paramPo, Locale locale,
-        boolean updateCellValues, boolean useParamInterfaceTDMan)
+        IParameterInterfacePO paramPo, boolean useParamInterfaceTDMan)
         throws JBException {
         ITDManager tdMan;
         if (useParamInterfaceTDMan) {
@@ -293,18 +268,7 @@ public class ExternalTestDataBP {
                             .getParameterForName(paramNamesExcel.get(cellNr));
                     if (desc != null) {
                         int dataSetNo = row - 1;
-                        ITestDataPO testData;
-                        if (updateCellValues) {
-                            testData = tdMan.getCell(dataSetNo, desc);
-                            testData.setValue(locale, cellString,
-                                    GeneralStorage.getInstance().getProject());
-                        } else {
-                            testData = TestDataBP.instance()
-                                    .createEmptyTestData();
-                            testData.setValue(locale, cellString, 
-                                    GeneralStorage.getInstance().getProject());
-                        }
-                        tdMan.updateCell(testData,
+                        tdMan.updateCell(cellString,
                                 dataSetNo, desc.getUniqueId());
                     }
                 }
@@ -367,7 +331,7 @@ public class ExternalTestDataBP {
      * @param paramNode ParamNode
      * @return the usable TDManager
      * @throws JBException
-     *      occuring Exception while creating TDManager
+     *      occurring Exception while creating TDManager
      */
     public ITDManager getExternalCheckedTDManager(IParamNodePO paramNode)
         throws JBException {
@@ -377,8 +341,7 @@ public class ExternalTestDataBP {
             && TestExecution.getInstance().getStartedTestSuite().isStarted()
             && TestExecution.getInstance().getConnectedAut() != null;
         
-        return getExternalCheckedTDManager(paramNode, 
-                TestExecution.getInstance().getLocale(), isTestRunning);
+        return getExternalCheckedTDManager(paramNode, isTestRunning);
     }
     
     /**
@@ -395,10 +358,6 @@ public class ExternalTestDataBP {
      * @param paramNode
      *              The node for which to retrieve / generate a Data Manager.
      *              Must not be <code>null</code>.
-     * @param locale
-     *              The locale for which to retrieve the external test data 
-     *              if external test data is required.
-     *              Must not be <code>null</code>.
      * @param retrieveExternalData 
      *              Flag for forcing retrieval of external test data. If the 
      *              provided node requires external data and this flag is set to 
@@ -410,11 +369,10 @@ public class ExternalTestDataBP {
      *              if an error occurs while reading an external data source.
      */
     public ITDManager getExternalCheckedTDManager(
-            IParamNodePO paramNode, Locale locale, 
+            IParamNodePO paramNode,
             boolean retrieveExternalData) throws JBException {
         
         Validate.notNull(paramNode);
-        Validate.notNull(locale);
         
         boolean usesExternalDataFile = 
             StringUtils.isNotEmpty(paramNode.getDataFile());

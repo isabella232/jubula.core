@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -45,9 +45,9 @@ class DataSetPO implements IDataSetPO {
     private transient Long m_id = null;
     
     /**
-     * <code>m_list</code> list with testdata
+     * <code>m_columns</code> list with testdata
      */
-    private List<ITestDataPO> m_list = new ArrayList<ITestDataPO>();
+    private List<String> m_columns = new ArrayList<String>();
     
     /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
@@ -58,15 +58,11 @@ class DataSetPO implements IDataSetPO {
     /**
      * @param list list to manage from DataSetPO
      */
-    DataSetPO(List<ITestDataPO> list) {
+    DataSetPO(List<String> list) {
         if (list == null) {
-            setList(new ArrayList<ITestDataPO>());
+            setColumns(new ArrayList<String>());
         } else {
-            setList(list);
-        }
-        
-        for (ITestDataPO td : list) {
-            td.setParentProjectId(getParentProjectId());
+            setColumns(list);
         }
     }
     
@@ -109,9 +105,6 @@ class DataSetPO implements IDataSetPO {
      */
     public void setParentProjectId(Long projectId) {
         setHbmParentProjectId(projectId);
-        for (ITestDataPO td : getList()) {
-            td.setParentProjectId(projectId);
-        }
     }
 
     /**
@@ -131,32 +124,9 @@ class DataSetPO implements IDataSetPO {
         m_parentProjectId = projectId;
     }
 
-    /**
-     * 
-     * @return Returns the list.
-     */
-    @OneToMany(cascade = CascadeType.ALL, 
-               fetch = FetchType.EAGER, 
-               targetEntity = TestDataPO.class)
-    @OrderColumn(name = "IDX_TEST_DATA_LIST")
-    @JoinColumn(name = "FK_TEST_DATA_LIST")
-    @BatchFetch(value = BatchFetchType.JOIN)
-    public List<ITestDataPO> getList() {
-        return m_list;
-    }
-    /**
-     * @param list The list to set.
-     */
-    void setList(List<ITestDataPO> list) {
-        m_list = list;
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Version
-    public Integer getVersion() {        
+    public Integer getVersion() {
         return m_version;
     }
 
@@ -167,49 +137,58 @@ class DataSetPO implements IDataSetPO {
     private void setVersion(Integer version) {
         m_version = version;
     }
-    
-    /**
-     * {@inheritDoc}
-     * @return empty string
-     */
+
+    /** {@inheritDoc} */
     @Transient
     public String getName() {
         return StringConstants.EMPTY;
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public ITestDataPO getColumn(int column) {
-        return getList().get(column);
+    /** {@inheritDoc} */
+    public String getValueAt(int column) {
+        return getColumns().get(column);
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    @Transient
-    public int getColumnCount() {
-        return getList().size();
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void addColumn(ITestDataPO testData) {
-        getList().add(testData);
-    }
-
-    /**
-     * 
-     * {@inheritDoc}
-     */
-    public void removeColumn(int column) {
-        if (column < getColumnCount()) {
-            getList().remove(column);
-        }
+    /** {@inheritDoc} */
+    public void setValueAt(int column, String value) {
+        getColumns().set(column, value);
     }
     
+    /** {@inheritDoc} */
+    @Transient
+    public int getColumnCount() {
+        return getColumns().size();
+    }
+
+    /** {@inheritDoc} */
+    public void addColumn(String value) {
+        getColumns().add(value);
+    }
+
+    /** {@inheritDoc} */
+    public void removeColumn(int column) {
+        if (column < getColumnCount()) {
+            getColumns().remove(column);
+        }
+    }
+
+    /**
+     * @return the columns
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "TEST_DATA_VALUES")
+    @Column(name = "DATA_VALUES")
+    @OrderColumn(name = "IDX")
+    @JoinColumn(name = "TEST_DATA_LIST_ID")
+    @BatchFetch(value = BatchFetchType.EXISTS)
+    public List<String> getColumns() {
+        return m_columns;
+    }
+
+    /**
+     * @param columns the columns to set
+     */
+    void setColumns(List<String> columns) {
+        m_columns = columns;
+    }
 }

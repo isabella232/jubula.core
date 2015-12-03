@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
@@ -42,7 +41,6 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.TestResultNode;
@@ -173,11 +171,6 @@ public class Traverser {
      */
     private Stack<EventObject> m_eventStack = new Stack<EventObject>();
 
-    /**
-     * locale for testexecution
-     */
-    private Locale m_locale = null;
-
     /** 
      * mapping from positions in the execution hierarchy to the number of times
      * the test step at that position has been retried
@@ -190,11 +183,9 @@ public class Traverser {
     
     /**
      * @param root root node from tree
-     * @param locale language for testexecution
      */
-    public Traverser(INodePO root, Locale locale) {
+    public Traverser(INodePO root) {
         m_root = root;
-        m_locale  = locale;
         m_externalTestDataBP = new ExternalTestDataBP();
         m_execStack.push(new ExecObject(root, NO_INDEX, 0));
         executeLogging();
@@ -289,14 +280,14 @@ public class Traverser {
         ITDManager tdManager = null;
         tdManager = m_externalTestDataBP.getExternalCheckedTDManager(exTc);
         
-        ITestDataPO td = null;
+        String td = null;
         IDataSetPO dataSet = null;
         
         if (tdManager.getDataSetCount() > 0) {
             dataSet = tdManager.getDataSet(0);
         }
         if (dataSet != null && dataSet.getColumnCount() > 0) {
-            td = dataSet.getColumn(0);
+            td = dataSet.getValueAt(0);
         }
         // own data sets - > always begin at 0
         if (tdManager.getDataSetCount() > 1) {
@@ -308,7 +299,7 @@ public class Traverser {
             String uniqueId = tdManager.getUniqueIds().get(0);
             IParamDescriptionPO desc = exTc.getParameterForUniqueId(uniqueId);
             ParamValueConverter conv = new ModelParamValueConverter(
-                td, exTc, m_locale, desc);
+                td, exTc, desc);
             if (td != null && conv.containsReferences()) {
                 m_execStack.push(new ExecObject(childNode, NO_INDEX,
                     stackObj.getNumberDs()));
@@ -752,13 +743,13 @@ public class Traverser {
         if (mgr.getDataSetCount() > 0) {
             IDataSetPO row = mgr.getDataSet(0);
             for (int col = 0; col < row.getColumnCount(); col++) {
-                ITestDataPO td = row.getColumn(col);
+                String td = row.getValueAt(col);
                 String uniqueId = mgr.getUniqueIds().get(col);
                 IParamDescriptionPO desc = 
                     eventExecTC.getParameterForUniqueId(uniqueId);
                 // if EH uses params of parent, start at the iteration which failed!
                 ParamValueConverter conv = new ModelParamValueConverter(
-                    td, eventExecTC, m_locale, desc);
+                    td, eventExecTC, desc);
                 if (conv.containsReferences()) {
                     startIndex = execObj.getNumberDs();
                     break;
@@ -986,13 +977,11 @@ public class Traverser {
                                 .getName());
                     }
                 }
-                ITestDataPO date = tdManager.getCell(dataSetIndex, desc);
+                String date = tdManager.getCell(dataSetIndex, desc);
                 ParamValueConverter conv = new ModelParamValueConverter(
-                        date.getValue(te.getLocale()), paramNode, 
-                        te.getLocale(), desc);
+                        date, paramNode,  desc);
                 try {
-                    value = conv.getExecutionString(
-                            stackList, te.getLocale());
+                    value = conv.getExecutionString(stackList);
                 } catch (InvalidDataException e) {
                     LOG.info(e.getMessage());
                     value = MessageIDs.getMessageObject(e.getErrorId()).

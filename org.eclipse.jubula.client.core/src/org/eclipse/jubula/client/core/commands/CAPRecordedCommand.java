@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.collections.list.UnmodifiableList;
@@ -32,9 +31,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
-import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -88,9 +85,6 @@ public class CAPRecordedCommand implements ICommand {
      */
     private static IRecordListener recordListener;
 
-    /** language to record data */
-    private static Locale recordLocale;
-    
     /**
      * The message.
      */
@@ -308,14 +302,11 @@ public class CAPRecordedCommand implements ICommand {
             MessageParam msgParam = (MessageParam)msgParamIt.next();
             String value = msgParam.getValue();
             if (value != null && !(value.equals(StringUtils.EMPTY))) {
-                ITestDataPO testData = PoMaker.createTestDataPO();
-                testData.setValue(recordLocale, value, genStorage.getProject());
-                tdManager.updateCell(testData, 0, paramNumber);
+                tdManager.updateCell(value, 0, paramNumber);
             }
             boolean bool = 
                 !(value == null) && !(value.equals(StringUtils.EMPTY));
-            CompletenessGuard.setCompletenessTestData(
-                    recCap, recordLocale, bool);
+            CompletenessGuard.setCompletenessTestData(recCap, bool);
             paramNumber++;
         }
     }
@@ -552,14 +543,7 @@ public class CAPRecordedCommand implements ICommand {
     public static IRecordListener getRecordListener() {
         return recordListener;
     }
-    
-    /**
-     * @param locale
-     *      the locale for testdata in recorded TC
-     */
-    public static void setRecordLocale(Locale locale) {
-        CAPRecordedCommand.recordLocale = locale;
-    }
+
     
     /**
      * Checks if there is a Aut and obseravtion mode running

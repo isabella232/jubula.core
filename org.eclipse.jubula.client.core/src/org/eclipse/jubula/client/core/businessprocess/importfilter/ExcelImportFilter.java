@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -24,7 +23,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.DataReadException;
-import org.eclipse.jubula.client.core.businessprocess.importfilter.exceptions.NoSupportForLocaleException;
 
 
 /**
@@ -52,17 +50,13 @@ public class ExcelImportFilter implements IDataImportFilter {
      *      directory for data files
      * @param file
      *      data source File
-     * @param locale
-     *      data source locale
      * @return
      *      filled TestDataManager with new data
      * @throws IOException
-     *      error occured while reading data source
-     * @throws NoSupportForLocaleException
-     *      no support for selected locale
+     *      error occurred while reading data source
      */
-    public DataTable parse(File dataDir, String file, Locale locale) 
-        throws IOException, NoSupportForLocaleException, DataReadException {
+    public DataTable parse(File dataDir, String file) 
+        throws IOException, DataReadException {
         
         DataTable filledDataTable;
         final FileInputStream inStream = findDataFile(dataDir, file);
@@ -70,11 +64,7 @@ public class ExcelImportFilter implements IDataImportFilter {
             POIFSFileSystem fs = new POIFSFileSystem(inStream);
             HSSFWorkbook wb = new HSSFWorkbook(fs);
             // first data sheet is the only supported so far
-            final int index = wb.getSheetIndex(locale.toString());
-            if (index == -1) {
-                throw new NoSupportForLocaleException();
-            }
-            HSSFSheet sheet = wb.getSheetAt(index);
+            HSSFSheet sheet = wb.getSheetAt(0);
             final int lastRowNum = sheet.getLastRowNum();
             final int firstRowNum = sheet.getFirstRowNum();
             // iterate over rows

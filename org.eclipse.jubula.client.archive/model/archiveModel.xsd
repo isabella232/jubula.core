@@ -32,8 +32,8 @@
     <xs:complexContent>
       <xs:extension base="gd:node">
         <xs:sequence>
-        	<xs:element name="defaultLanguage" type="gd:locale" />
-        	<xs:element name="projectLanguage" type="gd:locale"
+        	<xs:element name="defaultLanguage" type="gd:locale" nillable="true" minOccurs="0" maxOccurs="1"/>
+        	<xs:element name="projectLanguage" type="gd:locale" minOccurs="0" 
         		maxOccurs="unbounded" />
             <xs:element name="testDataCategory" type="gd:testDataCategory" minOccurs="0"
                 maxOccurs="unbounded" />
@@ -422,6 +422,7 @@
       <xs:element name="reference" type="xs:string" />
       <xs:element name="function" type="xs:string" />
       <xs:element name="data" type="gd:i18nString" nillable="true" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="value" type="xs:string" nillable="true" minOccurs="0" maxOccurs="1" />
     </xs:choice>
     <xs:attribute name="columnCount" type="xs:int" use="optional" />
   </xs:complexType>

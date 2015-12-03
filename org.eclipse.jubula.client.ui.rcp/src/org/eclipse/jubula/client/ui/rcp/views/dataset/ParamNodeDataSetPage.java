@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.views.dataset;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
@@ -63,11 +62,10 @@ public class ParamNodeDataSetPage extends AbstractDataSetPage {
      *
      * {@inheritDoc} 
      */    
-    protected void setIsEntrySetComplete(IParameterInterfacePO paramNode, 
-             Locale locale) {
+    protected void setIsEntrySetComplete(IParameterInterfacePO paramNode) {
         IParamNodePO node = getParamNodePO(paramNode);
-        boolean isComplete = node.isTestDataComplete(locale);
-        CompletenessGuard.setCompletenessTestData(node, locale, isComplete);
+        CompletenessGuard.setCompletenessTestData(node, 
+                node.isTestDataComplete());
     }
 
     /** {@inheritDoc} */

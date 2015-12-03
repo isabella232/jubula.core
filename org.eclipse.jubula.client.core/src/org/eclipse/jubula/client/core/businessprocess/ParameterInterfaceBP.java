@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.util.Locale;
-
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
@@ -25,20 +23,20 @@ public class ParameterInterfaceBP
     extends AbstractParamInterfaceBP<ITestDataCubePO> {
 
     /** {@inheritDoc} */
-    public void removeParameter(IParamDescriptionPO desc, ITestDataCubePO tdc,
-            Locale locale) {
+    public void removeParameter(IParamDescriptionPO desc, 
+            ITestDataCubePO tdc) {
         tdc.removeParameter(desc.getUniqueId());
     }
 
     /** {@inheritDoc} */
-    protected void updateParam(GuiParamValueConverter conv, Locale locale,
+    protected void updateParam(GuiParamValueConverter conv,
             IParamNameMapper mapper, int row) {
-        writeTestDataEntry(conv, locale, row);
+        writeTestDataEntry(conv, row);
     }
 
     /** {@inheritDoc} */
     public void changeUsageParameter(ITestDataCubePO paramIntObj,
-            IParamDescriptionPO desc, String guid, Locale locale,
+            IParamDescriptionPO desc, String guid,
             ParamNameBPDecorator mapper) {
         // currently not implemented
     }

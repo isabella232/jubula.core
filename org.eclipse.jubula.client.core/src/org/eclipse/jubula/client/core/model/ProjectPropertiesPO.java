@@ -14,15 +14,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
-import java.util.TreeSet;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,15 +26,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import org.apache.commons.lang.LocaleUtils;
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.persistence.annotations.Index;
 
@@ -62,20 +55,9 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version = null;
 
-    /** the default project language */
-    private String m_defaultLanguage;
-    
     /** Set of reused projects */
     private Set<IReusedProjectPO> m_usedProjects = 
         new HashSet<IReusedProjectPO>();
-    
-    /** set of project languages */
-    private Set<String> m_projectLanguageList = new TreeSet<String>();
-
-    /**
-     * <code>m_langHelper</code> helper for language management
-     */
-    private LanguageHelper m_langHelper;
     
     /** the container containing the configurations for the teststyle checks */
     private ICheckConfContPO m_checkConfCont;    
@@ -172,7 +154,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     ProjectPropertiesPO(String guid, Integer majorNumber, Integer minorNumber,
             Integer microNumber, String version) {
         setGuid(guid);
-        m_langHelper = new LanguageHelper(this);
         setMajorNumber(majorNumber);
         setMinorNumber(minorNumber);
         setMicroNumber(microNumber);
@@ -258,71 +239,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     private void setGuid(String guid) {
         m_guid = guid;
     }
-    
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * {@inheritDoc}
-     * @param lang
-     */
-    public void addLangToList(String lang) {
-        getProjectLanguageList().add(lang);    
-    }
-
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * {@inheritDoc}
-     */
-    public void clearLangList() {
-        getProjectLanguageList().clear();
-    }
-
-    /**
-     * only for Persistence (JPA / EclipseLink) !!!
-     * please use the languageHelper to manage languagelist
-     * 
-     * @return Returns the languageList.
-     */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "PROJ_LANGUAGES")
-    @Column(name = "LANGUAGE")
-    @OrderBy
-    private Set<String> getProjectLanguageList() {
-        return m_projectLanguageList;
-    }
-    
-    /**
-     * @deprecated
-     * only to use by LanguageHelper
-     * @return language set
-     */
-    @Transient
-    public Set<String> getHbmLanguageList() {
-        return getProjectLanguageList();
-    }
-    
-    
-    /**
-     * only for Persistence (JPA / EclipseLink)
-     * set the languagelist
-     * @param langList languageList from database
-     */
-    @SuppressWarnings("unused")
-    private void setProjectLanguageList(Set<String> langList) {
-        m_projectLanguageList = langList;
-        m_isModified = true;
-    }
-    
-    
-    /**
-     * @return Returns the langHelper.
-     */
-    @Transient
-    public LanguageHelper getLangHelper() {
-        return m_langHelper;
-    }
-
 
     /**
      * @deprecated
@@ -456,39 +372,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
         return Collections.unmodifiableSet(getHbmUsedProjects());
     }
 
-    /**
-     * 
-     * @return Returns the defaultLanguage.
-     */
-    @Transient
-    public Locale getDefaultLanguage() {
-        return LocaleUtils.toLocale(getHbmDefaultLanguage());
-    }
-    /**
-     * @param defaultLanguage The defaultLanguage to set.
-     */
-    public void setDefaultLanguage(Locale defaultLanguage) {
-        Validate.notNull(defaultLanguage);
-        setHbmDefaultLanguage(defaultLanguage.toString());
-    }    
-
-    /**
-     * 
-     * @return Returns the defaultLanguage.
-     */
-    @Basic
-    @Column(name = "DEFAULT_LANGUAGE")
-    private String getHbmDefaultLanguage() {
-        return m_defaultLanguage;
-    }
-    /**
-     * @param defaultLanguage The defaultLanguage to set.
-     */
-    private void setHbmDefaultLanguage(String defaultLanguage) {
-        m_defaultLanguage = defaultLanguage;
-    }    
-    
-    
     /**
      * 
      * {@inheritDoc}

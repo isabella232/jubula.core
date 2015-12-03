@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.core.businessprocess;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -24,14 +23,11 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TDCell;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
@@ -149,59 +145,54 @@ public class TreeOpsBP {
      *            The child node
      * @param mapper mapper to resolve param names
      * @param ownerNode the edited node from which to extract
-     * @param oldToNewGuids mapping between old and new paramter GUIDs
+     * @param oldToNewUuids mapping between old and new paramter GUIDs
      */
     private static void addParamsToParent(
             ISpecTestCasePO parent, IParamNodePO child, 
             IParamNameMapper mapper, ISpecTestCasePO ownerNode, 
-            Map<String, String> oldToNewGuids) {
+            Map<String, String> oldToNewUuids) {
         
-        IProjectPO proj = GeneralStorage.getInstance().getProject();
         TDCell cell = null;
-        List<Locale> langs = proj.getLangHelper().getLanguageList();
-        for (Locale lang : langs) {
-            for (Iterator<TDCell> it = child.getParamReferencesIterator(lang); 
-                    it.hasNext();) {
-                cell = it.next();
-                String guid = child.getDataManager().getUniqueIds().get(
-                    cell.getCol());
-                IParamDescriptionPO childDesc = 
-                    child.getParameterForUniqueId(guid);
-                // The childDesc can be null if the parameter has been removed
-                // in another session and not yet updated in the current
-                // editor session.
-                if (childDesc != null) {
-                    ModelParamValueConverter conv = 
-                        new ModelParamValueConverter(
-                            cell.getTestData(), child, lang, childDesc);
-                    List<RefToken> refTokens = conv.getRefTokens();
-                    for (RefToken refToken : refTokens) {
-                        String uiString = RefToken.extractCore(
-                                refToken.getGuiString());
-                        IParamDescriptionPO parentParamDescr = parent
-                                .addParameter(childDesc.getType(), uiString,
-                                        false, mapper);
-                        // get old GUID from owner node
-                        List<IParamDescriptionPO> ownerDescs = 
-                            ownerNode.getParameterList();
-                        String oldGuid = StringConstants.EMPTY;
-                        for (IParamDescriptionPO ownerDesc : ownerDescs) {
-                            if (ownerDesc.getName().equals(uiString)) {
-                                oldGuid = ownerDesc.getUniqueId();
-                                break;
-                            }
+        for (Iterator<TDCell> it = child.getParamReferencesIterator(); 
+                it.hasNext();) {
+            cell = it.next();
+            String guid = child.getDataManager().getUniqueIds().get(
+                cell.getCol());
+            IParamDescriptionPO childDesc = 
+                child.getParameterForUniqueId(guid);
+            // The childDesc can be null if the parameter has been removed
+            // in another session and not yet updated in the current
+            // editor session.
+            if (childDesc != null) {
+                ModelParamValueConverter conv = 
+                    new ModelParamValueConverter(
+                        cell.getTestData(), child, childDesc);
+                List<RefToken> refTokens = conv.getRefTokens();
+                for (RefToken refToken : refTokens) {
+                    String uiString = RefToken.extractCore(
+                            refToken.getGuiString());
+                    IParamDescriptionPO parentParamDescr = parent
+                            .addParameter(childDesc.getType(), uiString,
+                                    false, mapper);
+                    // get old GUID from owner node
+                    List<IParamDescriptionPO> ownerDescs = 
+                        ownerNode.getParameterList();
+                    String oldUuid = StringConstants.EMPTY;
+                    for (IParamDescriptionPO ownerDesc : ownerDescs) {
+                        if (ownerDesc.getName().equals(uiString)) {
+                            oldUuid = ownerDesc.getUniqueId();
+                            break;
                         }
-                        if (parentParamDescr != null) {
-                            String newGuid = parentParamDescr.getUniqueId();
-                            oldToNewGuids.put(oldGuid, newGuid);
-                        }
-                        
                     }
-                    // update TestDataPO of child with GUID for reference
-                    conv.replaceGuidsInReferences(oldToNewGuids);
-                    cell.getTestData().setValue(
-                            lang, conv.getModelString(), proj);
+                    if (parentParamDescr != null) {
+                        String newUuid = parentParamDescr.getUniqueId();
+                        oldToNewUuids.put(oldUuid, newUuid);
+                    }
+                    
                 }
+                // update test data of child with UUID for reference
+                conv.replaceUuidsInReferences(oldToNewUuids);
+                cell.setTestData(conv.getModelString());
             }
         }
     }
@@ -245,9 +236,6 @@ public class TreeOpsBP {
         IParamNodePO ownerNode) {
         
         execTc.resolveTDReference();
-        final IProjectPO proj = GeneralStorage.getInstance().getProject();
-        final List<Locale> languageList = proj.getLangHelper()
-            .getLanguageList();
         final List<IParamDescriptionPO> parameterList = execTc
             .getParameterList();
         final List<IParamDescriptionPO> ownerParamList = ownerNode
@@ -261,14 +249,10 @@ public class TreeOpsBP {
                     break;
                 }
             }            
-            ITestDataPO data = PoMaker.createTestDataPO();
             String value = 
                 TestDataConstants.REFERENCE_CHAR_DEFAULT + builder.toString();
-            for (Locale locale : languageList) {
-                data.setValue(locale, value, proj);
-                execTc.getDataManager().updateCell(
-                    data, 0, descr.getUniqueId());
-            }
+            execTc.getDataManager().updateCell(
+                    value, 0, descr.getUniqueId());
         }
         
     }

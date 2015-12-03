@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.api.converter;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -47,9 +46,6 @@ public class NodeInfo {
     /** the default toolkit */
     private String m_defaultToolkit;
     
-    /** the project default language */
-    private Locale m_language;
-
     /** the fully qualified name */
     private String m_fqName;
 
@@ -70,11 +66,9 @@ public class NodeInfo {
      * @param node the node
      * @param packageBasePath the base path of the package
      * @param defaultToolkit the default toolkit
-     * @param language the project language
      */
     public NodeInfo (String fqFileName, INodePO node,
-            String packageBasePath, String defaultToolkit,
-            Locale language) {
+            String packageBasePath, String defaultToolkit) {
         m_fqFileName = fqFileName;
         m_fileName = StringUtils.substringBeforeLast(m_fqFileName, ".java"); //$NON-NLS-1$
         m_className = StringUtils.substringAfterLast(m_fileName,
@@ -82,7 +76,6 @@ public class NodeInfo {
         m_node = node;
         m_packageBasePath = packageBasePath;
         m_defaultToolkit = defaultToolkit;
-        m_language = language;
         
         Logger log = LoggerFactory.getLogger(NodeInfo.class);
         
@@ -132,13 +125,6 @@ public class NodeInfo {
      */
     public String getDefaultToolkit() {
         return m_defaultToolkit;
-    }
-    
-    /**
-     * @return The project language
-     */
-    public Locale getLanguage() {
-        return m_language;
     }
     
     /**

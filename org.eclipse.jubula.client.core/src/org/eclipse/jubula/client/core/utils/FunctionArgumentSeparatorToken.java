@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -46,7 +45,7 @@ public class FunctionArgumentSeparatorToken extends AbstractParamValueToken {
      * 
      * {@inheritDoc}
      */
-    public String getExecutionString(List<ExecObject> stack, Locale locale) {
+    public String getExecutionString(List<ExecObject> stack) {
         return StringUtils.EMPTY;
     }
 

@@ -237,10 +237,6 @@
 							<td align="left" width="200">&#8623; failed CAPs</td>
 							<td><xsl:value-of select="report/project/numFailedSteps"/></td>
 						</tr>
-						<tr>
-							<td align="left" width="200">Language</td>
-							<td><xsl:value-of select="report/project/language"/></td>
-						</tr>
 						<xsl:if test="report/project/error-message != 0">
 						
 							<tr>

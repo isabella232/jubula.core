@@ -35,7 +35,6 @@
 	<entity class="org.eclipse.jubula.client.core.model.ProjectPropertiesPO" />
 	<entity class="org.eclipse.jubula.client.core.model.TestDataCubePO" />
 	<entity class="org.eclipse.jubula.client.core.model.TDManagerPO" />
-	<entity class="org.eclipse.jubula.client.core.model.TestDataPO" />
 	<entity class="org.eclipse.jubula.client.core.model.DataSetPO" />
 	<entity class="org.eclipse.jubula.client.core.model.CompIdentifierPO" />
 	<entity class="org.eclipse.jubula.client.core.model.ObjectMappingPO" />

@@ -121,7 +121,6 @@ public class Messages extends NLS {
     public static String AUTSettingWizardPageClickNext;
     public static String AUTSettingWizardPageDownToolTip;
     public static String AUTSettingWizardPageEmptyAUTName;
-    public static String AUTSettingWizardPageSelectLanguagesOfTD;
     public static String AUTSettingWizardPageToolkit;
     public static String AUTSettingWizardPageUpperLabel;
     public static String AUTSettingWizardPageUpToolTip;
@@ -304,9 +303,7 @@ public class Messages extends NLS {
     public static String FindDialogTitle;
     public static String FindDialogWrap;
     public static String DataSetViewControllerDataSetNumber;
-    public static String DataSetViewDataSet;
     public static String DataSetViewInsert;
-    public static String DataSetViewLanguage;
     public static String DataSetViewNoDataSetInfo;
     public static String DataSetViewParameter;
     public static String ProblemViewCreateTestSuite;
@@ -556,7 +553,6 @@ public class Messages extends NLS {
     public static String ProblemCheckerNoTestSuite;
     public static String ProblemCheckerProjectDoesNotExist;
     public static String ProblemCheckerProtectedProject;
-    public static String ProblemCheckerReusedProjectMissingLanguage;
     public static String Project;
     public static String ProjectGUIPropertySourceProjectName;
     public static String ProjectPropertyPageALMLabel;
@@ -607,7 +603,6 @@ public class Messages extends NLS {
     public static String ProjectSettingWizardPageDoubleProjectName;
     public static String ProjectSettingWizardPageLanguageLabel;
     public static String ProjectSettingWizardPageProjectName;
-    public static String ProjectSettingWizardPageSelectLanguagesOfTD;
     public static String ProjectWithGUID;
     public static String ProjectWizardAUTData;
     public static String ProjectWizardAutSettings;
@@ -789,7 +784,6 @@ public class Messages extends NLS {
     public static String TestCaseEditorNoTcName;
     public static String TestCaseEditorNoTsuiteName;
     public static String TestCaseEditorRefactor;
-    public static String TestCaseEditorUnsupportedAUTLanguage;
     public static String TestCaseEditorWrongCompName;
     public static String TestCaseEditorWrongCompName2;
     public static String TestCaseEditorWrongEhName;

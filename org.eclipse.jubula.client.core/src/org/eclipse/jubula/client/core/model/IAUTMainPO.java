@@ -17,8 +17,7 @@ import java.util.Set;
  * @author BREDEX GmbH
  * @created 20.12.2005
  */
-public interface IAUTMainPO extends IPersistentObject, ILangSupport, 
-    Comparable {
+public interface IAUTMainPO extends IPersistentObject, Comparable {
     /**
      * @return Returns the GUID.
      */
@@ -67,11 +66,6 @@ public interface IAUTMainPO extends IPersistentObject, ILangSupport,
      * {@inheritDoc}
      */
     public abstract String toString();
-
-    /**
-     * @return Returns the langHelper.
-     */
-    public abstract LanguageHelper getLangHelper();
 
     /**
      * @param toolkit the toolkit.

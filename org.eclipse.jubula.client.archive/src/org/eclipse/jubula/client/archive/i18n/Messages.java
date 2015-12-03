@@ -65,6 +65,7 @@ public class Messages extends NLS {
     public static String ImportFileComboActionProjMessage;
     public static String ImportFileSingleActionProjMessage;
     public static String ImportOf;
+    public static String ImportOfDefaultLanguage;
     public static String ImportWithoutName;
     public static String ImportUnboundModulesJob;
     public static String IncompatibleToolkitVersion;

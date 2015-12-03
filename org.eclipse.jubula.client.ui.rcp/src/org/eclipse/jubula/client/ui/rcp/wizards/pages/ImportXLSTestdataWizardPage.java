@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,9 +42,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.TestDataManagerNameValidator;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
@@ -136,8 +133,6 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             p.writeLine(operationDescription);
             boolean merge = m_selection != null && m_selection.size() == 1
                     && numerOfFilesToImport == 1;
-            List<Locale> ll = GeneralStorage.getInstance().getProject()
-                    .getLangHelper().getLanguageList();
             for (Object o : m_fileSystemObjects) {
                 if (o instanceof File) {
                     File f = (File)o;
@@ -156,7 +151,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                                 ITestDataCubePO tdc = 
                                     (ITestDataCubePO)selectedObject;
                                 tdc.getDataManager().clear();
-                                fillCentralTestDataSet(f, ll, tdc);
+                                fillCentralTestDataSet(f, tdc);
                                 fireDataChangedEvent(tdc, 
                                         DataState.StructureModified,
                                         UpdateState.onlyInEditor);
@@ -179,7 +174,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                             }
                             ITestDataCubePO testdata = PoMaker
                                     .createTestDataCubePO(name);
-                            fillCentralTestDataSet(f, ll, testdata);
+                            fillCentralTestDataSet(f, testdata);
                             cont.addTestData(testdata);
                             p.writeLine(NLS.bind(Messages
                                     .ImportXLSTestDataWizardSuccessfullImport,
@@ -206,22 +201,19 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
         /**
          * @param f
          *            the file to get the data from
-         * @param ll
-         *            the list of locales to fill the data for
          * @param testdata
          *            the test data cube to use
          * @throws JBException
-         *             in case of data retrival problems
+         *             in case of data retrieval problems
          */
-        private void fillCentralTestDataSet(File f, List<Locale> ll,
+        private void fillCentralTestDataSet(File f,
                 ITestDataCubePO testdata) throws JBException {
             ExternalTestDataBP bp = new ExternalTestDataBP();
             String absoluteFilePath = f.getAbsoluteFile()
                     .getAbsolutePath();
             
             DataTable dtParamInterface = bp.createDataTable(
-                    null, absoluteFilePath, WorkingLanguageBP
-                    .getInstance().getWorkingLanguage());
+                    null, absoluteFilePath);
 
             // get all parameters from first data table row
             List<Parameter> listOfParameters = new ArrayList<Parameter>();
@@ -240,14 +232,12 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             // create new data for first locale import - otherwise use
             // existing data
             boolean firstLocale = true;
-            for (Locale loc : ll) {
-                // disable caching of external test data
-                bp.clearExternalData();
-                DataTable dt = bp.createDataTable(
-                        null, absoluteFilePath, loc);
-                bp.parseTable(dt, testdata, loc, !firstLocale, true);
-                firstLocale = false;
-            }
+            // disable caching of external test data
+            bp.clearExternalData();
+            DataTable dt = bp.createDataTable(
+                    null, absoluteFilePath);
+            bp.parseTable(dt, testdata, true);
+            firstLocale = false;
         }
 
         /**

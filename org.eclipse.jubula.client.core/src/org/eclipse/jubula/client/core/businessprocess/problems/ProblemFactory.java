@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.businessprocess.problems;
 
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
@@ -20,7 +19,6 @@ import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.osgi.util.NLS;
 
 /**
@@ -52,19 +50,15 @@ public final class ProblemFactory {
     }
 
     /**
-     * @param loc
-     *            Locale for which the test data are incomplete.
      * @param node
      *            the affected node
      * @return A Problem that is representing missing test data for this local.
      */
-    public static IProblem createIncompleteTestDataProblem(Locale loc,
-            INodePO node) {
+    public static IProblem createIncompleteTestDataProblem(INodePO node) {
         
         return new Problem(NLS.bind(
                 Messages.ProblemIncompleteTestDataMarkerText,
-                new Object[] { Languages.getInstance().getDisplayString(loc),
-                        node.getName() }),
+                node.getName()),
                 new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                         Messages.ProblemIncompleteTestDataTooltip),
                 node, ProblemType.REASON_TD_INCOMPLETE);

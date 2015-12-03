@@ -16,7 +16,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -53,7 +52,6 @@ import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -216,9 +214,6 @@ public class TestExecution {
     /** the CAP, that is actually executed */
     private ICapPO m_currentCap;
 
-    /** <code>m_locale</code> locale (language) for testexecution */
-    private Locale m_executionLanguage;
-
     /**
      * <code>m_trav</code> actual traverser for testexecution tree
      */
@@ -305,8 +300,6 @@ public class TestExecution {
      * 
      * @param testSuite
      *            the TestSuitePO that will be tested
-     * @param locale
-     *            Locale
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
@@ -321,7 +314,7 @@ public class TestExecution {
      * @param noRunOptMode 
      *            The value of no-run option argument if it was specified, null otherwise
      */
-    public void executeTestSuite(ITestSuitePO testSuite, Locale locale,
+    public void executeTestSuite(ITestSuitePO testSuite,
         AutIdentifier autId, boolean autoScreenshot,
         Map<String, String> externalVars, ITestResultSummaryPO summary,
         final IProgressMonitor monitor, String noRunOptMode) {
@@ -330,7 +323,6 @@ public class TestExecution {
         m_autoScreenshot = autoScreenshot;
         setPaused(false);
         Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
-        m_executionLanguage = locale;
         m_externalTestDataBP.clearExternalData();
         if (TestExecution.shouldExecutionStop (noRunOptMode, 
               TestExecutionConstants.RunSteps.PTE)) {
@@ -362,7 +354,7 @@ public class TestExecution {
                     endTestExecution();
                     return;
                 }
-                startTestSuite(testSuite, locale, monitor, noRunOptMode);
+                startTestSuite(testSuite, monitor, noRunOptMode);
                 
                 final AtomicBoolean testSuiteFinished = new AtomicBoolean();
                 ClientTest.instance().addTestExecutionEventListener(
@@ -448,10 +440,6 @@ public class TestExecution {
     private void storePredefinedVariables(TDVariableStore varStore, 
             ITestSuitePO testSuite) {
 
-        // TEST_language
-        varStore.store(TDVariableStore.VAR_LANG, 
-                m_executionLanguage.toString());
-
         // TEST_testsuite
         varStore.store(TDVariableStore.VAR_TS, testSuite.getName());
 
@@ -529,23 +517,22 @@ public class TestExecution {
     
     /**
      * @param testSuite testSuite
-     * @param locale language valid for testexecution
      * @param monitor the progress monitor to use
      * @param noRunOptMode the value of no-run option argument if it was specified, null otherwise
      */
-    private void startTestSuite(ITestSuitePO testSuite, Locale locale,
+    private void startTestSuite(ITestSuitePO testSuite,
         IProgressMonitor monitor, String noRunOptMode) {
         Validate.notNull(testSuite, "No testsuite available"); //$NON-NLS-1$
         ICapPO firstCap = null;
         m_expectedNumberOfSteps = 0;
-        m_trav = new Traverser(testSuite, locale);
+        m_trav = new Traverser(testSuite);
         try {
             // build and show result Tree
             monitor.subTask(Messages.
                     StartingTestSuite_resolvingTestStepsToExecute);
             monitor.subTask(Messages.
                     StartingTestSuite_buildingTestExecutionTree);
-            Traverser copier = new Traverser(testSuite, locale);
+            Traverser copier = new Traverser(testSuite);
             ResultTreeBuilder resultTreeBuilder = new ResultTreeBuilder(copier);
             copier.addExecStackModificationListener(resultTreeBuilder);
             ICapPO iterNode = copier.next();
@@ -931,7 +918,7 @@ public class TestExecution {
                 }
                 MessageParam messageParam = createMessageParam(desc, action);
                 messageCap.addMessageParam(messageParam);
-                ITestDataPO date = 
+                String date = 
                     tdManager.getCell(0, desc);
                 StringBuilder msg = new StringBuilder();
                 msg.append(Messages.NoTestdataAvailableForCAP);
@@ -954,11 +941,10 @@ public class TestExecution {
                     m_varStore.store(CURRENT_DATASET_NUMBER, String.valueOf(
                         dsNumber + 1)); // 1-based for the user!
                     ParamValueConverter conv = new ModelParamValueConverter(
-                        date.getValue(getLocale()), cap,
-                        getLocale(), desc);
+                            date, cap, desc);
                     List <ExecObject> stackList = 
                         new ArrayList<ExecObject>(m_trav.getExecStackAsList());
-                    value = conv.getExecutionString(stackList, getLocale());
+                    value = conv.getExecutionString(stackList);
                 } catch (InvalidDataException e) {
                     if (!runIncomplete) {
                         StringBuilder msgbuild = new StringBuilder();
@@ -1143,7 +1129,6 @@ public class TestExecution {
                     (AbstractPostExecutionCommand) cmd;
             aCmd.setCurrentCap(m_currentCap);
             aCmd.setExternalTestDataBP(m_externalTestDataBP);
-            aCmd.setLocale(getLocale());
             aCmd.setTraverser(m_trav);
         }
         try {
@@ -1378,14 +1363,6 @@ public class TestExecution {
     }
     
     /**
-     * 
-     * @return Locale of Execution
-     */
-    public Locale getLocale() {
-        return m_executionLanguage;
-    }
-
-    /**
      * Traverser for Execution
      * @return Traverser
      */
@@ -1579,8 +1556,7 @@ public class TestExecution {
                 ITDManager tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
                             m_currentCap);
-                ITestDataPO date = 
-                    tdManager.getCell(0, desc);
+                String date = tdManager.getCell(0, desc);
                 String varName = getValueForParam(date, m_currentCap, desc);
                 m_varStore.store(varName, m_varStore.getValue(
                     LAST_ACTION_RETURN));
@@ -1628,7 +1604,7 @@ public class TestExecution {
                 try {
                     ITDManager tdManager = m_externalTestDataBP
                             .getExternalCheckedTDManager(m_currentCap);
-                    ITestDataPO date = tdManager.getCell(0, desc);
+                    String date = tdManager.getCell(0, desc);
                     String varName = getValueForParam(date, m_currentCap, desc);
                     m_varStore.store(varName,
                             m_varStore.getValue(LAST_ACTION_RETURN));
@@ -2193,8 +2169,7 @@ public class TestExecution {
                 ITDManager tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
                             m_currentCap);
-                ITestDataPO date = 
-                    tdManager.getCell(0, desc);
+                String date = tdManager.getCell(0, desc);
                 String runLocal = this.getValueForParam(date, m_currentCap, 
                     desc);
                 TestResultNode resultNode = m_resultTreeTracker.getEndNode();

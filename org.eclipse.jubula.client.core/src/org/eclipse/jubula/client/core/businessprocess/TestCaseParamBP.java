@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,9 +28,7 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.TDCell;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -57,7 +54,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
 
     /** {@inheritDoc} */
     protected void updateParam(GuiParamValueConverter conv, 
-        Locale locale, IParamNameMapper mapper, int row) {
+        IParamNameMapper mapper, int row) {
         
         checkRemoveExternalDataFile(conv.getCurrentNode());
         if (conv.getCurrentNode() instanceof IExecTestCasePO) {
@@ -72,7 +69,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                     conv.getDesc().getType(), parentSpecTc, mapper);
             }
         }
-        writeTestDataEntry(conv, locale, row);
+        writeTestDataEntry(conv, row);
     }
     
     /**
@@ -81,14 +78,13 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * possible group of uses stored in the set.
      * @param node node to check
      * @param paramGUID the parameter to check
-     * @param loc Locale to be used in this search
      * @return a possibly empty set of usage points. 
      */
     public static Set<Param> getValuesForParameter(IParamNodePO node,
-            String paramGUID, Locale loc) {
+            String paramGUID) {
         Set<Param> result = new HashSet<Param>();
         if (paramGUID != null) { // can happen when a dataset is deleted
-            getValuesForParameterImp(node, paramGUID, loc, true, result);
+            getValuesForParameterImp(node, paramGUID, true, result);
         }
         return result;
     }
@@ -99,13 +95,12 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * possible group of uses stored in the set.
      * @param node node to check
      * @param paramGUID the parameter to check
-     * @param loc Locale to be used in this search
      * @param isFirstCall true if called for the first time, false on all 
      * recursive calls
      * @param result storage for results, owned by caller
      */
     private static void getValuesForParameterImp(IParamNodePO node,
-            String paramGUID, Locale loc, boolean isFirstCall, 
+            String paramGUID, boolean isFirstCall, 
             Set<Param> result) {
         if (node instanceof ISpecTestCasePO) {
             Iterator<INodePO> it = node.getNodeListIterator();
@@ -113,7 +108,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                 INodePO next = it.next();
                 if (next instanceof IParamNodePO) {
                     IParamNodePO n = (IParamNodePO) next;
-                    getValuesForParameterImp(n, paramGUID, loc, 
+                    getValuesForParameterImp(n, paramGUID, 
                             false, result);
                 }
             }            
@@ -122,12 +117,12 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             if (execTC.getSpecTestCase() != null) {
                 if (isFirstCall) {
                     getValuesForParameterImp(execTC.getSpecTestCase(),
-                            paramGUID, loc, false, result);
+                            paramGUID, false, result);
                 } else {
-                    Set<String> subst = findSubstitutes(execTC, paramGUID, loc);
+                    Set<String> subst = findSubstitutes(execTC, paramGUID);
                     for (String p : subst) {
                         getValuesForParameterImp(execTC.getSpecTestCase(), p,
-                                loc, false, result);
+                                false, result);
                     }
                 }
             }
@@ -138,7 +133,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             for (IParamDescriptionPO pd : cap.getParameterList()) {
                 try {
                     String pID = 
-                        cap.getDataManager().getCell(0, pd).getValue(loc);
+                        cap.getDataManager().getCell(0, pd);
                     if ((pID != null)  // check for unset data
                             && pID.endsWith(paramGUID)) {
                         Component c = compSystem.findComponent(cap
@@ -159,23 +154,21 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
 
 
     /**
-     * @param node ExecTC from which the data is choosen
+     * @param node ExecTC from which the data is chosen
      * @param paramGUID check in the data set for usage of this GUID
-     * @param loc Locale to check
-     * @return a possibly empty Set of parameter GUIDs which are the paramters 
+     * @return a possibly empty Set of parameter GUIDs which are the parameters 
      * which are substituted by paramGUID
      */
     private static Set<String> findSubstitutes(IExecTestCasePO node,
-            String paramGUID, Locale loc) {
+            String paramGUID) {
         Set<String> result = new HashSet<String>();
 
         for (IParamDescriptionPO paramDesc : node.getParameterList()) {
             for (int rowNum = 0; rowNum < node.getDataManager()
                     .getDataSetCount(); rowNum++) {
                 try {
-                    ITestDataPO cell = node.getDataManager().getCell(rowNum,
+                    String value  = node.getDataManager().getCell(rowNum,
                             paramDesc);
-                    String value = cell.getValue(loc);
                     if ((value != null) && value.endsWith(paramGUID)) {
                         result.add(paramDesc.getUniqueId());
                     }
@@ -203,42 +196,39 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
     /**
      * @param desc of parameter to remove
      * @param specTc with parameter to remove
-     * @param locale currently used language
      */
     public void removeParameter(IParamDescriptionPO desc, 
-            ISpecTestCasePO specTc, Locale locale) {
+            ISpecTestCasePO specTc) {
         specTc.removeParameter(desc.getUniqueId());
-        removeReferencesInChildren(specTc, desc, locale);
+        removeReferencesInChildren(specTc, desc);
     }
 
     /**
      * @param specTc parent
      * @param desc desc of removed parameter of specTc
-     * @param locale currently used language
      */
     private void removeReferencesInChildren(ISpecTestCasePO specTc, 
-        IParamDescriptionPO desc, Locale locale) {
+        IParamDescriptionPO desc) {
         
-        removeReferences(desc, locale, specTc.getNodeListIterator());        
+        removeReferences(desc, specTc.getNodeListIterator());        
         final Collection<IEventExecTestCasePO> eventHandler = 
             specTc.getAllEventEventExecTC();
-        removeReferences(desc, locale, eventHandler.iterator());
+        removeReferences(desc, eventHandler.iterator());
     }
 
 
     /**
      * @param desc desc of removed parameter of specTc
-     * @param locale locale currently used language
      * @param childrenIt the Iterator of the children which References are to 
      * remove.
      */
-    private void removeReferences(IParamDescriptionPO desc, Locale locale,
+    private void removeReferences(IParamDescriptionPO desc,
             Iterator childrenIt) {
         while (childrenIt.hasNext()) {
             final IParamNodePO child = (IParamNodePO)childrenIt.next();
             final ITDManager mgr = child.getDataManager();
             final Iterator<TDCell> refIt = 
-                child.getParamReferencesIterator(locale);
+                child.getParamReferencesIterator();
             while (refIt.hasNext()) {
                 final TDCell cell = refIt.next();
                 final String guid = mgr.getUniqueIds().get(cell.getCol());
@@ -246,14 +236,12 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                     child.getParameterForUniqueId(guid); 
                 final ModelParamValueConverter conv = 
                     new ModelParamValueConverter(cell.getTestData(), child, 
-                            locale, childDesc);
+                            childDesc);
                 if (conv.containsReferences()) {
                     final boolean isModified = conv.removeReference(
                             desc.getUniqueId());
                     if (isModified) {
-                        cell.getTestData().setValue(locale,
-                            conv.getModelString(),
-                            GeneralStorage.getInstance().getProject());
+                        cell.setTestData(conv.getModelString());
                     }
                 }
             }
@@ -267,14 +255,14 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * {@inheritDoc}
      */
     public void changeUsageParameter(ISpecTestCasePO specTc,
-            IParamDescriptionPO desc, String newGuid, Locale locale,
+            IParamDescriptionPO desc, String newGuid,
             ParamNameBPDecorator mapper) {
         changeUsageReferences(
-                specTc.getNodeListIterator(), desc, newGuid, locale, mapper);
+                specTc.getNodeListIterator(), desc, newGuid, mapper);
         final Collection<IEventExecTestCasePO> eventHandler =
             specTc.getAllEventEventExecTC();
         changeUsageReferences(
-                eventHandler.iterator(), desc, newGuid, locale, mapper);
+                eventHandler.iterator(), desc, newGuid, mapper);
     }
 
     /**
@@ -282,34 +270,30 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * remove.
      * @param desc The old parameter description, which have to be changed.
      * @param newGuid The new GUID to change the reference to.
-     * @param locale locale currently used language
      * @param mapper The parameter name mapping used here to persist test data.
      */
     private void changeUsageReferences(Iterator childrenIt,
-            IParamDescriptionPO desc, String newGuid, Locale locale,
+            IParamDescriptionPO desc, String newGuid,
             ParamNameBPDecorator mapper) {
         while (childrenIt.hasNext()) {
             final IParamNodePO child = (IParamNodePO)childrenIt.next();
             final ITDManager mgr = child.getDataManager();
             final Iterator<TDCell> refIt =
-                child.getParamReferencesIterator(locale);
+                child.getParamReferencesIterator();
             while (refIt.hasNext()) {
                 final TDCell cell = refIt.next();
                 final String guid = mgr.getUniqueIds().get(cell.getCol());
                 final IParamDescriptionPO childDesc =
                     child.getParameterForUniqueId(guid);
-                final ITestDataPO testData = cell.getTestData();
+                final String testData = cell.getTestData();
                 final ModelParamValueConverter conv =
                     new ModelParamValueConverter(testData, child,
-                            locale, childDesc);
+                            childDesc);
                 if (conv.containsReferences()) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put(desc.getUniqueId(), newGuid);
-                    if (conv.replaceGuidsInReferences(map)) {
-                        testData.setValue(locale,
-                            conv.getModelString(),
-                            GeneralStorage.getInstance().getProject());
-                        mapper.addTestDataPO(testData);
+                    if (conv.replaceUuidsInReferences(map)) {
+                        cell.setTestData(conv.getModelString());
                     }
                 }
             }

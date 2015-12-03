@@ -12,14 +12,12 @@ package org.eclipse.jubula.client.core.rc.commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
@@ -37,8 +35,6 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
  */
 public abstract class AbstractPostExecutionCommand 
     implements IPostExecutionCommand {
-    /** the locale */
-    private Locale m_locale;
     /** the traverser */
     private Traverser m_traverser;
     /** the current CAP */
@@ -54,7 +50,7 @@ public abstract class AbstractPostExecutionCommand
     /**
      * Method to find the value for a parameter
      * 
-     * @param date
+     * @param modelValue
      *            test data object
      * @param cap
      *            the corresponding cap
@@ -64,17 +60,16 @@ public abstract class AbstractPostExecutionCommand
      * @throws InvalidDataException
      *             in case of missing value for a parameter in a cap
      */
-    protected String getValueForParam(ITestDataPO date, ICapPO cap, 
+    protected String getValueForParam(String modelValue, ICapPO cap, 
         IParamDescriptionPO desc) 
         throws InvalidDataException {
         String value = StringConstants.EMPTY;
-        Locale locale = getLocale();
         ParamValueConverter conv = new ModelParamValueConverter(
-            date.getValue(locale), cap, locale, desc);
+            modelValue, cap, desc);
         try {
             List <ExecObject> stackList = 
                 new ArrayList<ExecObject>(getTraverser().getExecStackAsList());
-            value = conv.getExecutionString(stackList, locale);
+            value = conv.getExecutionString(stackList);
         } catch (InvalidDataException e) {
             throw new InvalidDataException(
                 Messages.NeitherValueNorReferenceForNode
@@ -94,22 +89,8 @@ public abstract class AbstractPostExecutionCommand
         IParamDescriptionPO desc = currentCap.getParameterForUniqueId(paramID);
         ITDManager tdManager = getExternalTestDataBP()
                 .getExternalCheckedTDManager(currentCap);
-        ITestDataPO date = tdManager.getCell(0, desc);
-        return this.getValueForParam(date, currentCap, desc);
-    }
-
-    /**
-     * @return the locale
-     */
-    protected Locale getLocale() {
-        return m_locale;
-    }
-
-    /**
-     * @param locale the locale to set
-     */
-    public void setLocale(Locale locale) {
-        m_locale = locale;
+        String modelValue = tdManager.getCell(0, desc);
+        return this.getValueForParam(modelValue, currentCap, desc);
     }
 
     /**

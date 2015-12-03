@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.collections.map.HashedMap;
@@ -42,7 +41,6 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.TDCell;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -142,8 +140,6 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
     public static boolean copyPaste(AbstractTestCaseEditor targetEditor,
             IStructuredSelection toDrop, INodePO dropTarget) {
         
-        final IProjectPO project = GeneralStorage.getInstance().getProject();
-        
         if (targetEditor.getEditorHelper().requestEditableState() 
                 != JBEditorHelper.EditableState.OK) {
             return false;
@@ -167,7 +163,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
             if (obj instanceof IEventExecTestCasePO) {
                 
                 copyPasteEventExecTestCase(targetEditor,
-                        (IEventExecTestCasePO)obj, targetNode, project);
+                        (IEventExecTestCasePO)obj, targetNode);
             } else if (obj instanceof IExecTestCasePO
                     || obj instanceof ICapPO) {
                 
@@ -175,7 +171,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 isContainsEctOrCap = true;
                 if (!(targetNode.equals(paramNode.getParentNode())
                         || checkParentParameters(targetNode, paramNode, null,
-                                project, false))) {
+                                false))) {
                     return false;
                 }
             } else {
@@ -191,11 +187,11 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 if (obj instanceof IExecTestCasePO) {
                     
                     copyPasteExecTestCase(targetEditor, (IExecTestCasePO)obj,
-                            targetNode, position, project);
+                            targetNode, position);
                 } else if (obj instanceof ICapPO) {
                     
                     copyPasteCap(targetEditor, (ICapPO)obj, targetNode,
-                            position, project);
+                            position);
                 }
             }
         }
@@ -207,14 +203,12 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param targetEditor The editor to which the item is to be dropped/pasted.
      * @param origEvent The item that was dragged/cut.
      * @param targetNode target parent node
-     * @param project currently project
      * @return <code>true</code> if the paste was successful. 
      *         Otherwise <code>false</code>.
      */
     public static boolean copyPasteEventExecTestCase(
             AbstractTestCaseEditor targetEditor,
-            IEventExecTestCasePO origEvent, ISpecTestCasePO targetNode,
-            IProjectPO project) {
+            IEventExecTestCasePO origEvent, ISpecTestCasePO targetNode) {
         
         if (targetNode.getEventExecTcMap()
                 .containsKey(origEvent.getEventType())) {
@@ -239,15 +233,14 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 .getEditSupport().getParamMapper();
         if (targetNode.equals(origEvent.getParentNode())
                 || checkParentParameters(targetNode, origEvent, pMapper,
-                        project, false)) {
+                        false)) {
             
             try {
                 IEventExecTestCasePO newEvent = NodeMaker
                         .createEventExecTestCasePO(origEvent
                         .getSpecTestCase(), targetNode);
                 fillExec(origEvent, newEvent);
-                checkParentParameters(targetNode, newEvent, pMapper, project,
-                        true);
+                checkParentParameters(targetNode, newEvent, pMapper, true);
                 TestCaseBP.addEventHandler(editSupport, targetNode, newEvent);
                 targetEditor.getEditorHelper().setDirty(true);
 
@@ -279,21 +272,19 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      *                     indicate the drop position relative to the drop
      *                     target.
      * @param targetNode target parent node
-     * @param project currently project
      * @return <code>true</code> if the paste was successful. 
      *         Otherwise <code>false</code>.
      */
     public static boolean copyPasteExecTestCase(
         AbstractTestCaseEditor targetEditor, IExecTestCasePO execTestCase,
-        ISpecTestCasePO targetNode, int dropPosition, IProjectPO project) {
+        ISpecTestCasePO targetNode, int dropPosition) {
     
         IExecTestCasePO newExecTestCase = NodeMaker
                 .createExecTestCasePO(execTestCase.getSpecTestCase());
         fillExec(execTestCase, newExecTestCase);
         ParamNameBPDecorator pMapper = targetEditor.getEditorHelper()
                 .getEditSupport().getParamMapper();
-        checkParentParameters(targetNode, newExecTestCase, pMapper, project,
-                true);
+        checkParentParameters(targetNode, newExecTestCase, pMapper, true);
         TestCaseBP.addReferencedTestCase(targetNode, newExecTestCase,
                 dropPosition);
         targetEditor.getEditorHelper().setDirty(true);
@@ -313,13 +304,12 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param dropPosition One of the values defined in ViewerDropAdapter to 
      *                     indicate the drop position relative to the drop
      *                     target.
-     * @param project currently project
      * @return <code>true</code> if the paste was successful. 
      *         Otherwise <code>false</code>.
      */
     public static boolean copyPasteCap(
             AbstractTestCaseEditor targetEditor, ICapPO cap,
-            ISpecTestCasePO targetNode, int dropPosition, IProjectPO project) {
+            ISpecTestCasePO targetNode, int dropPosition) {
         
         ParamNameBPDecorator pMapper = targetEditor.getEditorHelper()
                 .getEditSupport().getParamMapper();
@@ -330,7 +320,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
         fillCap(cap, newCap);
         newCap.setParentNode(targetNode);
         targetNode.addNode(dropPosition, newCap);
-        checkParentParameters(targetNode, newCap, pMapper, project, true);
+        checkParentParameters(targetNode, newCap, pMapper, true);
         targetEditor.getTreeViewer().expandToLevel(targetNode, 1);
         targetEditor.handleParamChanged();
         DataEventDispatcher.getInstance().fireParamChangedListener();
@@ -410,7 +400,6 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param targetNode target node
      * @param paramNode original exec test case node
      * @param pMapper ParamNameBPDecorator
-     * @param project currently project
      * @param create if <code>true</code> the parameter will be created
      * @return <code>false</code> if target parent node has a different parameter type
      *          with same name than the new parameter node .Otherwise <code>true</code>.
@@ -418,63 +407,59 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
     
     private static boolean checkParentParameters(
             ISpecTestCasePO targetNode, IParamNodePO paramNode,
-            ParamNameBPDecorator pMapper, IProjectPO project, boolean create) {
+            ParamNameBPDecorator pMapper, boolean create) {
         
-        List<Locale> langs = project.getLangHelper().getLanguageList();
-        for (Locale lang : langs) {
-            for (Iterator<TDCell> it = paramNode
-                    .getParamReferencesIterator(lang); it.hasNext();) {
-                TDCell cell = it.next();
-                String guid = paramNode.getDataManager()
-                        .getUniqueIds().get(cell.getCol());
-                IParamDescriptionPO childDesc = paramNode
-                        .getParameterForUniqueId(guid);
-                // The childDesc can be null if the parameter has been
-                // removed in another session and not yet updated in the 
-                // current editor session.
-                if (childDesc != null) {
-                    ModelParamValueConverter conv = 
-                            new ModelParamValueConverter(cell.getTestData(),
-                                    paramNode, lang, childDesc);
-                    List<RefToken> refTokens = conv.getRefTokens();
-                    for (RefToken refToken : refTokens) {
-                        String oldGUID = RefToken.extractCore(refToken
-                                .getModelString());
-                        String paramName = ParamNameBP.getInstance().getName(
-                                oldGUID, childDesc.getParentProjectId());
+        for (Iterator<TDCell> it = paramNode
+                .getParamReferencesIterator(); it.hasNext();) {
+            TDCell cell = it.next();
+            String guid = paramNode.getDataManager()
+                    .getUniqueIds().get(cell.getCol());
+            IParamDescriptionPO childDesc = paramNode
+                    .getParameterForUniqueId(guid);
+            // The childDesc can be null if the parameter has been
+            // removed in another session and not yet updated in the 
+            // current editor session.
+            if (childDesc != null) {
+                ModelParamValueConverter conv = 
+                        new ModelParamValueConverter(cell.getTestData(),
+                                paramNode, childDesc);
+                List<RefToken> refTokens = conv.getRefTokens();
+                for (RefToken refToken : refTokens) {
+                    String oldGUID = RefToken.extractCore(refToken
+                            .getModelString());
+                    String paramName = ParamNameBP.getInstance().getName(
+                            oldGUID, childDesc.getParentProjectId());
 
-                        @SuppressWarnings("unchecked")
-                        Map<String, String> oldToNewGuids = new HashedMap();
-                        IParamDescriptionPO parentParamDescr = targetNode
-                                .getParameterForName(paramName);
-                        
-                        if (parentParamDescr == null) {
-                            if (create) {
-                                targetNode.addParameter(childDesc.getType(),
-                                        paramName, pMapper);
-                                parentParamDescr = targetNode
-                                        .getParameterForName(paramName);
-                            }
-                        } else if (!parentParamDescr.getType()
-                                .equals(childDesc.getType())) {
-                            MessageDialog.openInformation(null,
-                                    Messages.ParameterConfligtDetectedTitle,
-                                    NLS.bind(Messages.ParameterConfligtDetected,
-                                    new Object[] {parentParamDescr.getName(),
-                                            targetNode.getName()}));
-                            return false;
-                        }
-                        
+                    @SuppressWarnings("unchecked")
+                    Map<String, String> oldToNewGuids = new HashedMap();
+                    IParamDescriptionPO parentParamDescr = targetNode
+                            .getParameterForName(paramName);
+                    
+                    if (parentParamDescr == null) {
                         if (create) {
-                            if (parentParamDescr != null) {
-                                String newGuid = parentParamDescr.getUniqueId();
-                                oldToNewGuids.put(oldGUID, newGuid);
-                            }
-                            // update TestDataPO of child with GUID for reference
-                            conv.replaceGuidsInReferences(oldToNewGuids);
-                            cell.getTestData().setValue(lang,
-                                    conv.getModelString(), project);
+                            targetNode.addParameter(childDesc.getType(),
+                                    paramName, pMapper);
+                            parentParamDescr = targetNode
+                                    .getParameterForName(paramName);
                         }
+                    } else if (!parentParamDescr.getType()
+                            .equals(childDesc.getType())) {
+                        MessageDialog.openInformation(null,
+                                Messages.ParameterConfligtDetectedTitle,
+                                NLS.bind(Messages.ParameterConfligtDetected,
+                                new Object[] {parentParamDescr.getName(),
+                                        targetNode.getName()}));
+                        return false;
+                    }
+                    
+                    if (create) {
+                        if (parentParamDescr != null) {
+                            String newGuid = parentParamDescr.getUniqueId();
+                            oldToNewGuids.put(oldGUID, newGuid);
+                        }
+                        // update test data of child with UUID for reference
+                        conv.replaceUuidsInReferences(oldToNewGuids);
+                        cell.setTestData(conv.getModelString());
                     }
                 }
             }

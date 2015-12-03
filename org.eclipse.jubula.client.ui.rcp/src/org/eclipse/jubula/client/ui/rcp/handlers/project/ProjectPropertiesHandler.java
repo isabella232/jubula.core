@@ -33,7 +33,6 @@ import org.eclipse.jubula.client.ui.rcp.properties.AbstractProjectPropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectALMPropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectGeneralPropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectGeneralPropertyPage.IOkListener;
-import org.eclipse.jubula.client.ui.rcp.properties.ProjectLanguagePropertyPage;
 import org.eclipse.jubula.client.ui.rcp.properties.ProjectUsedPropertyPage;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils.SizeType;
@@ -135,12 +134,6 @@ public class ProjectPropertiesHandler extends AbstractProjectHandler {
         IPreferenceNode generalNode = new PreferenceNode(
             Constants.PROJECT_PROPERTY_ID, generalPage);
         mgr.addToRoot(generalNode);
-
-        PropertyPage langPage = new ProjectLanguagePropertyPage(es);
-        langPage.setTitle(Messages.PropertiesActionPage2);
-        IPreferenceNode langNode = new PreferenceNode(
-            Constants.PROJECT_PROPERTY_ID, langPage);
-        mgr.addToRoot(langNode);
 
         PropertyPage autPage = new AUTPropertyPage(es);
         autPage.setTitle(Messages.PropertiesActionPage3);

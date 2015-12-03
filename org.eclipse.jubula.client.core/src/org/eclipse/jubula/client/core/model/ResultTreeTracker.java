@@ -266,12 +266,11 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                             .getName());
                 }
             }
-            ITestDataPO date = tdManager.getCell(dataSetIndex, desc);
+            String date = tdManager.getCell(dataSetIndex, desc);
             ParamValueConverter conv = new ModelParamValueConverter(
-                date.getValue(te.getLocale()), testStep, te.getLocale(), desc);
+                date, testStep, desc);
             try {
-                value = conv.getExecutionString(
-                        stackList, te.getLocale());
+                value = conv.getExecutionString(stackList);
             } catch (InvalidDataException e) {
                 log.error(e.getMessage());
                 value = MessageIDs.getMessageObject(e.getErrorId()).

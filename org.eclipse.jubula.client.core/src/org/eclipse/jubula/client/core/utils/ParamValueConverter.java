@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
@@ -80,9 +79,6 @@ public abstract class ParamValueConverter {
      */
     private IParameterInterfacePO m_currentNode;
 
-    /** currently used language */
-    private Locale m_locale;
-
     /** param description associated with current gui- or model string */
     private IParamDescriptionPO m_desc;
     
@@ -106,16 +102,14 @@ public abstract class ParamValueConverter {
     
     /**
      * @param currentNode node with parameter for this parameterValue
-     * @param locale current used language
      * @param desc param description associated with current string (parameter value)
      * @param validator to use for special validations
      */
-    public ParamValueConverter(IParameterInterfacePO currentNode, Locale locale,
+    public ParamValueConverter(IParameterInterfacePO currentNode,
         IParamDescriptionPO desc, IParamValueValidator validator)  {
         Validate.notNull(currentNode, 
             Messages.NodeForGivenParameterValueMustNotBeNull);
         m_currentNode = currentNode;
-        m_locale = locale;
         m_desc = desc;
         m_validator = validator;
     }
@@ -181,17 +175,16 @@ public abstract class ParamValueConverter {
    
     /**
      * @param stack current execution stack
-     * @param locale currently used language for testexecution
      * @return string for testexecution
      * @throws InvalidDataException in case of any problem to resolve the token
      */
-    public String getExecutionString(List<ExecObject> stack, 
-        Locale locale) throws InvalidDataException {
+    public String getExecutionString(List<ExecObject> stack) 
+            throws InvalidDataException {
         
         StringBuilder builder = new StringBuilder();
         for (IParamValueToken token : getTokens()) {
             builder.append(token.getExecutionString(
-                    new ArrayList<ExecObject>(stack), locale));
+                    new ArrayList<ExecObject>(stack)));
         }
         return builder.toString();
     }
@@ -302,13 +295,6 @@ public abstract class ParamValueConverter {
     }
 
     /**
-     * @return Returns the locale.
-     */
-    Locale getLocale() {
-        return m_locale;
-    }
-
-    /**
      * @return Returns the desc.
      */
     public IParamDescriptionPO getDesc() {
@@ -349,13 +335,6 @@ public abstract class ParamValueConverter {
      */
     protected void setErrors(List<TokenError> errors) {
         m_errors = errors;
-    }
-
-    /**
-     * @param locale The locale to set.
-     */
-    protected void setLocale(Locale locale) {
-        m_locale = locale;
     }
 
     /**

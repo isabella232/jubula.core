@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.labelprovider;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -46,7 +45,6 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -284,14 +282,6 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      */
     public static Image getImageImpl(Object element) {
         if (element instanceof ITestSuitePO) {
-            ITestSuitePO testSuite = (ITestSuitePO)element;
-            Locale workLang = WorkingLanguageBP.getInstance()
-                .getWorkingLanguage();
-            if (testSuite.getAut() != null 
-                && !WorkingLanguageBP.getInstance().isTestSuiteLanguage(
-                    workLang, testSuite)) {
-                return IconConstants.TS_DISABLED_IMAGE;
-            }
             return IconConstants.TS_IMAGE;
         }
         

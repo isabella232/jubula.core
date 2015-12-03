@@ -11,11 +11,9 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.Date;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
@@ -175,15 +173,6 @@ public class TestResult extends AbstractTestResult {
      */
     public Date getStartTime() {
         return ClientTest.instance().getTestsuiteStartTime();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getTestLanguage() {
-        Locale testLocale = TestExecution.getInstance().getLocale();
-        return testLocale != null 
-            ? testLocale.getDisplayName() : StringUtils.EMPTY;
     }
 
     /**

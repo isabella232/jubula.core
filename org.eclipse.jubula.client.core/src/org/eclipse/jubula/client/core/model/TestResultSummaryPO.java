@@ -131,9 +131,6 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     /** eventhandler caps */
     private int m_testsuiteEventHandlerTeststeps;
     
-    /** language */
-    private String m_testsuiteLanguage;
-    
     /** Ts name */
     private String m_testsuiteName;
     
@@ -634,22 +631,6 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      */
     public void setAutOS(String autOS) {
         m_autOS = autOS;
-    }
-    
-    /**
-     * @param language the language to set
-     */
-    public void setTestsuiteLanguage(String language) {
-        m_testsuiteLanguage = language;
-    }
-
-    /**
-     * @return the language
-     */
-    @Basic
-    @Column(name = "TS_LANGUAGE")    
-    public String getTestsuiteLanguage() {
-        return m_testsuiteLanguage;
     }
 
     /**

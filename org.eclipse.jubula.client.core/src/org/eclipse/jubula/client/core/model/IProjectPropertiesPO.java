@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import java.util.Locale;
 import java.util.Set;
-
 
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 
@@ -20,7 +18,7 @@ import org.eclipse.jubula.client.core.utils.TrackingUnit;
  * @author BREDEX GmbH
  * @created Jun 11, 2007
  */
-public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport, 
+public interface IProjectPropertiesPO extends IPersistentObject, 
     IALMReportingProperties {
     /**
      * @return <code>true</code> if this project is reusable. Otherwise
@@ -85,16 +83,6 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport,
     public abstract void setToolkit(String toolkit);
 
     /**
-     * @return Returns the defaultLanguage.
-     */
-    public abstract Locale getDefaultLanguage();
-
-    /**
-     * @param defaultLanguage The defaultLanguage to set.
-     */
-    public abstract void setDefaultLanguage(Locale defaultLanguage);
-
-    /**
      * @return the major version number of this project
      */
     public abstract Integer getMajorNumber();
@@ -116,11 +104,6 @@ public interface IProjectPropertiesPO extends IPersistentObject, ILangSupport,
      */
     public String getVersionQualifier();
     
-    /**
-     * @return Returns the langHelper.
-     */
-    public abstract LanguageHelper getLangHelper();
-
     /**
      * Clears the reused projects set.
      */

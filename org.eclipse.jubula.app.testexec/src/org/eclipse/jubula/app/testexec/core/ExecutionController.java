@@ -420,7 +420,6 @@ public class ExecutionController implements IAUTServerEventListener,
                                 ts.getName()));
                 ClientTest.instance().startTestSuite(
                         ts,
-                        m_job.getLanguage(),
                         m_startedAutId != null ? m_startedAutId : m_job
                                 .getAutId(), m_job.isAutoScreenshot(), null,
                         m_job.getNoRunOptMode(), null);
@@ -440,7 +439,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 new Object[] { tjName,
                                 m_job.getTestJob().getNodeListSize()}));
         List<INodePO> executedTestSuites = ClientTest.instance().startTestJob(
-                m_job.getTestJob(), m_job.getLanguage(),
+                m_job.getTestJob(),
                 m_job.isAutoScreenshot(), m_job.getNoRunOptMode());
         sysOut(NLS.bind(Messages.ExecutionControllerTestJobExecutedTestSuites,
                 new Object[] { tjName,
@@ -587,7 +586,7 @@ public class ExecutionController implements IAUTServerEventListener,
                 sysOut(NLS.bind(Messages.ExecutionControllerAUT,
                         NLS.bind(Messages.ExecutionControllerAUTStart,
                                 aut.getName(), autConf.getName())));
-                clientTest.startAut(aut, autConf, m_job.getLanguage());
+                clientTest.startAut(aut, autConf);
                 m_startedAutId = autToStart;
                 while (!asl.autStarted() && !asl.hasAutStartFailed()) {
                     TimeUtil.delay(500);
@@ -761,7 +760,7 @@ public class ExecutionController implements IAUTServerEventListener,
         distinctListOfTs.addAll(m_job.getTestSuites());
         for (ITestSuitePO ts : distinctListOfTs) {
             boolean noError = true;
-            CompletenessGuard.checkAll(m_job.getLanguage(), ts,
+            CompletenessGuard.checkAll(ts,
                     new NullProgressMonitor());
             sysOut(NLS.bind(Messages.ExecutionControllerTestSuiteCompleteness,
                     ts.getName()));

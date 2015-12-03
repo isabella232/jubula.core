@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.dialogs;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,11 +26,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.LanguageHelper;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
@@ -41,7 +36,6 @@ import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.AutIdListComposite;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedRequiredText;
-import org.eclipse.jubula.client.ui.rcp.widgets.ListElementChooserComposite;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.AUTSettingWizardPage;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -62,7 +56,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -91,12 +84,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
 
     /** the quantity of lines in a m_text field = 5 */
     private static final int LINES_5 = 5;
-
-    /** the m_text field for the available languages (= project languages)*/
-    private List m_availableLangList;
-
-    /** the m_text field for the aut languages */
-    private List m_autLangList;
 
     /** the add button */
     private Button m_addButton = null;
@@ -141,9 +128,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
     /** the WidgetVerifyListener */
     private final WidgetVerifyListener m_verifyListener = 
         new WidgetVerifyListener();
-    
-    /** the composite with 2 ListBoxes */
-    private ListElementChooserComposite m_chooseLists;
     
     /** the WidgetStateController */
     private final WidgetModifyListener m_modifyListener = 
@@ -217,11 +201,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         innerCompositeData.horizontalAlignment = GridData.FILL;
         innerCompositeData.grabExcessHorizontalSpace = true;
         innerComposite.setLayoutData(innerCompositeData);
-        createLanguageLists(innerComposite);          
-        getObjects();
         addListener();
-        
-        resizeLists();
         
         if (m_edit) {
             initFields();
@@ -243,7 +223,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
             }
             enableOKButton(false);
         }
-        m_chooseLists.checkButtons();
         Plugin.getHelpSystem().setHelp(parent, 
                 ContextHelpIds.AUT_CONFIGURATION);
         setTitle(Messages.ProjectWizardAutSettings);
@@ -254,51 +233,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         return scroll;
     }
 
-    /**
-     * @param innerComposite The parent composite.
-     */
-    private void createLanguageLists(Composite innerComposite) {
-        Languages langUtil = Languages.getInstance();
-        java.util.List<String> leftList = new ArrayList<String>();
-        java.util.List<String> rightList = new ArrayList<String>();
-        Iterator<Locale> iter = m_project.getLangHelper()
-            .getLangListIterator();
-        if (m_edit) {
-            while (iter.hasNext()) {
-                leftList.add(langUtil.getDisplayString(iter.next()));
-            }
-            iter = m_autMain.getLangHelper().getLangListIterator();
-            while (iter.hasNext()) {
-                rightList.add(langUtil.getDisplayString(iter.next()));
-            } 
-        } else {
-            while (iter.hasNext()) {
-                rightList.add(langUtil.getDisplayString(iter.next()));
-            }
-        }
-        m_chooseLists = new ListElementChooserComposite(
-            innerComposite, 
-            Messages.AUTPropertiesDialogUpperLabel,
-            leftList,  
-            Messages.AUTPropertiesDialogBottomLabel,
-            rightList,  
-            15, 
-            new Image[]{
-                IconConstants.RIGHT_ARROW_IMAGE, 
-                IconConstants.DOUBLE_RIGHT_ARROW_IMAGE,
-                IconConstants.LEFT_ARROW_IMAGE, 
-                IconConstants.DOUBLE_LEFT_ARROW_IMAGE},
-            new Image[] { IconConstants.RIGHT_ARROW_DIS_IMAGE, 
-                IconConstants.DOUBLE_RIGHT_ARROW_DIS_IMAGE, 
-                IconConstants.LEFT_ARROW_DIS_IMAGE, 
-                IconConstants.DOUBLE_LEFT_ARROW_DIS_IMAGE },
-            new String[]{Messages.AUTSettingWizardPageDownToolTip,
-                Messages.AUTSettingWizardPageAllDownToolTip,
-                Messages.AUTSettingWizardPageUpToolTip,
-                Messages.AUTSettingWizardPageAllUpToolTip},
-            ListElementChooserComposite.VERTICAL);
-    }
-    
     /**
      * Checks the values of all fields, en-/dis-abling the OK button and 
      * setting an error message as necessary. 
@@ -389,26 +323,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         if (getButton(IDialogConstants.OK_ID) != null) {
             getButton(IDialogConstants.OK_ID).setEnabled(enabled);
         }
-    }
-
-    /**
-     * Resizes the two ListBoxes.
-     */
-    private void resizeLists() {
-        ((GridData)m_autLangList.getLayoutData()).widthHint = Dialog
-            .convertHeightInCharsToPixels(LayoutUtil
-                .getFontMetrics(m_autLangList), 15);
-        ((GridData)m_availableLangList.getLayoutData()).widthHint = Dialog
-            .convertHeightInCharsToPixels(LayoutUtil
-                .getFontMetrics(m_autLangList), 15);
-    }
-
-    /**
-     * Gets the listBoxes / Buttons from the ListElementChooserComposite composite
-     */
-    private void getObjects() {
-        m_availableLangList = m_chooseLists.getListOne();
-        m_autLangList = m_chooseLists.getListTwo();
     }
 
     /**
@@ -920,13 +834,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
     }
 
     /**
-     * @return Returns the autLangText.
-     */
-    public String[] getAutLangText() {
-        return m_autLangList.getItems();
-    }
-
-    /**
      * 
      */
     private void handleDuplicateButtonEvent() {
@@ -952,14 +859,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
             }
             editNewAUTConfig(newConfig);
         }
-    }
-
-    /**
-     * @param autLangTextItems
-     *            The autLangTextItems to set.
-     */
-    public void setAutLangText(String[] autLangTextItems) {
-        m_autLangList.setItems(autLangTextItems);
     }
 
     /**
@@ -1001,13 +900,6 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         m_autMain.setName(m_autNameText.getText());
         m_autMain.setToolkit(m_autToolKitComboBox.getSelectedObject());
         m_autMain.setGenerateNames(m_generateNames.getSelection());
-        final LanguageHelper langHelper = m_autMain.getLangHelper();
-        langHelper.clearLangList();
-        final int langCount = m_autLangList.getItems().length;
-        for (int i = 0; i < langCount; i++) {
-            langHelper.addLanguageToList(
-                Languages.getInstance().getLocale(m_autLangList.getItem(i)));
-        }
         setAutMain(m_autMain);
         super.okPressed();
     }

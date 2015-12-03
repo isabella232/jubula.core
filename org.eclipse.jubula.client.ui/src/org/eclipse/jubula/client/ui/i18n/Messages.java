@@ -107,7 +107,6 @@ public class Messages extends NLS {
     public static String TestresultSummaryFilterLabel;
     public static String TestresultSummaryForLabel;
     public static String TestresultSummaryHandlerCaps;
-    public static String TestresultSummaryLanguage;
     public static String TestresultSummaryMonitoringDetails;
     public static String TestresultSummaryMonitoringDetailsAvailable;
     public static String TestresultSummaryMonitoringDetailsNotAvailable;

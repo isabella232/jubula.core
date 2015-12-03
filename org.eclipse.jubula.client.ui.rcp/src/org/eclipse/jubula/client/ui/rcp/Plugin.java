@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,6 @@ import org.eclipse.jubula.client.ui.rcp.businessprocess.ComponentNameReuseBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ToolkitBP;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.WorkingLanguageBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
@@ -158,8 +158,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     private static final String CONNECTION_INFO_STATUSLINE_ITEM = "connectionInfo"; //$NON-NLS-1$
     /** <code>AUT_TOOLKIT_STATUSLINE_ITEM</code> */
     private static final String AUT_TOOLKIT_STATUSLINE_ITEM = "autToolKitInfo"; //$NON-NLS-1$
-    /** <code>LANG_STATUSLINE_ITEM</code> */
-    private static final String LANG_STATUSLINE_ITEM = "lang"; //$NON-NLS-1$
     /** Connection console name **/
     private static final String CONNECTION_CONSOLE_NAME = "Connection:"; //$NON-NLS-1$
     /** the client status */
@@ -1208,32 +1206,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     }
 
     /**
-     * displays the working language 
-     */
-    public static void showLangInfo() {
-        Plugin.getDisplay().syncExec(new Runnable() {
-            public void run() {
-                IStatusLineManager manager = getStatusLineManager();
-                StatusLineContributionItem item = 
-                    (StatusLineContributionItem)manager.find(
-                        LANG_STATUSLINE_ITEM);
-                if (item == null) {
-                    return;
-                }
-                if (WorkingLanguageBP.getInstance().getWorkingLanguage() 
-                    != null) {
-                    
-                    item.setText(WorkingLanguageBP.getInstance()
-                        .getWorkingLanguage().getDisplayName());
-                } else {
-                    item.setText(StringConstants.EMPTY);
-                }
-                manager.update(true);
-            }
-        });
-    }
-    
-    /**
      * displays the auttoolkit
      * @param toolkit the aut ToolKit of the actual project.
      */
@@ -1258,13 +1230,11 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             new StatusLineContributionItem(
                 CONNECTION_INFO_STATUSLINE_ITEM);
         manager.insertBefore(StatusLineManager.END_GROUP, connectionItem);
-        StatusLineContributionItem langItem = 
-            new StatusLineContributionItem(LANG_STATUSLINE_ITEM);
-        manager.insertBefore(CONNECTION_INFO_STATUSLINE_ITEM, langItem);
+        manager.insertBefore(CONNECTION_INFO_STATUSLINE_ITEM, connectionItem);
         StatusLineContributionItem autToolKitItem = 
             new StatusLineContributionItem(AUT_TOOLKIT_STATUSLINE_ITEM);
         autToolKitItem.setText(StringConstants.EMPTY);
-        manager.insertBefore(LANG_STATUSLINE_ITEM, autToolKitItem);
+        manager.insertBefore(CONNECTION_INFO_STATUSLINE_ITEM, autToolKitItem);
         manager.update(true);
     }
 
@@ -1424,23 +1394,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     
     @Override
     public void writeStatus(IStatus status) {
-        MessageConsole c = getConsole();
-        boolean activate = false;
-        //Only Activate console if the status is a warning or error
-        if (status.isMultiStatus()) {
-            for (IStatus s : status.getChildren()) {
-                if (s.getSeverity() == IStatus.ERROR
-                        || s.getSeverity() == IStatus.WARNING) {
-                    activate = true;
-                    break;
-                }
-            }
-        }
-        if (status.getSeverity() == IStatus.ERROR
-                || status.getSeverity() == IStatus.WARNING) {
-            activate = true;
-        }
-        printStatus(status, c, activate);
+        writeStatus(status, null);
     }
 
     /**
@@ -1451,33 +1405,31 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      */
     private void printStatus(IStatus status, MessageConsole c,
             boolean activate) {
-        writeLineToConsole(c, StringHelper
-                .getStringOf(status, false), activate);
+        List<IStatus> statuus = new ArrayList<IStatus>();
+        statuus.add(status);
         if (status.isMultiStatus()) {
-            for (IStatus s : status.getChildren()) {
-                writeLineToConsole(c,
-                        StringHelper.getStringOf(s, false), activate);
-            }
+            statuus.addAll(Arrays.asList(status.getChildren()));
+        }
+        for (IStatus message : statuus) {
+            writeLineToConsole(c, StringHelper.getStringOf(
+                    status, false), activate);
         }
     }
     
     @Override
     public void writeStatus(IStatus status, String id) {
-        MessageConsole c = getConsole(id);
+        MessageConsole c = id != null ? getConsole(id) : getConsole();
         boolean activate = false;
-        //Only Activate console if the status is a warning or error
+        //Only activate console if the status is a warning or error
         if (status.isMultiStatus()) {
             for (IStatus s : status.getChildren()) {
-                if (s.getSeverity() == IStatus.ERROR
-                        || s.getSeverity() == IStatus.WARNING) {
+                if (!s.isOK()) {
                     activate = true;
                     break;
                 }
             }
-        }
-        if (status.getSeverity() == IStatus.ERROR
-                || status.getSeverity() == IStatus.WARNING) {
-            activate = true;
+        } else {
+            activate = !status.isOK();
         }
         printStatus(status, c, activate);
     }

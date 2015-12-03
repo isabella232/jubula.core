@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
-import org.eclipse.jubula.client.core.model.ITestDataPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -206,7 +205,7 @@ public class SearchReplaceTCRWizard extends Wizard {
             // iterate over all data sets (rows)
             for (IDataSetPO oldDataSet: oldExec
                     .getDataManager().getDataSets()) {
-                List<ITestDataPO> newRow = new ArrayList<ITestDataPO>(
+                List<String> newRow = new ArrayList<String>(
                         newOldParamMap.size());
                 // iterate over all new parameter descriptions
                 for (IParamDescriptionPO newParam: newOldParamMap.keySet()) {
@@ -216,11 +215,11 @@ public class SearchReplaceTCRWizard extends Wizard {
                         int column = oldExec.getDataManager()
                                 .findColumnForParam(oldParam.getUniqueId());
                         // get column from old test data
-                        ITestDataPO oldTestData = oldDataSet.getColumn(column);
-                        newRow.add(oldTestData.deepCopy());
+                        String oldTestData = oldDataSet.getValueAt(column);
+                        newRow.add(oldTestData);
                     } else {
                         // create empty test data for new Test Case
-                        newRow.add(PoMaker.createTestDataPO());
+                        newRow.add(""); //$NON-NLS-1$
                     }
                 }
                 // add the new row to data set for new Test Case

@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -258,7 +257,7 @@ public class ClientTestImpl implements IClientTest {
     /**
      * {@inheritDoc}
      */
-    public void startAut(IAUTMainPO aut, IAUTConfigPO conf, Locale locale) 
+    public void startAut(IAUTMainPO aut, IAUTConfigPO conf) 
         throws ToolkitPluginException {
 
         final String autToolkit = aut.getToolkit();
@@ -276,7 +275,6 @@ public class ClientTestImpl implements IClientTest {
             Map<String, String> autConfigMap = createAutConfigMap(conf);
             autConfigMap.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS,
                 String.valueOf(aut.isGenerateNames()));
-            autConfigMap.put(AutConfigConstants.AUT_LOCALE, locale.toString());
             StartAUTServerMessage startAUTServerMessage = 
                 new StartAUTServerMessage(autConfigMap, autToolkit);
             AutAgentConnection.getInstance().send(startAUTServerMessage);
@@ -457,7 +455,7 @@ public class ClientTestImpl implements IClientTest {
             int checkCompKeyMod, int checkCompKey,
             boolean dialogOpen,
             SortedSet<String> singleLineTrigger,
-            SortedSet<String> multiLineTrigger, Locale locale) {
+            SortedSet<String> multiLineTrigger) {
         log.info(Messages.StartingRecordModus);
         // put the AUTServer into the mode RECORD_MODE via sending a
         // ChangeAUTModeMessage(RECORD_MODE).
@@ -480,7 +478,6 @@ public class ClientTestImpl implements IClientTest {
             AUTConnection.getInstance().send(message);
             CAPRecordedCommand.setRecSpecTestCase(spec);
             CAPRecordedCommand.setCompNamesMapper(compNamesMapper);
-            CAPRecordedCommand.setRecordLocale(locale);
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
         } catch (NotConnectedException nce) {
@@ -530,7 +527,7 @@ public class ClientTestImpl implements IClientTest {
      * {@inheritDoc}
      */
     public void startTestSuite(final ITestSuitePO execTestSuite,
-            final Locale locale, final AutIdentifier autId,
+            final AutIdentifier autId,
             final boolean autoScreenshot, 
             final Map<String, String> externalVars,
             final String noRunOptMode,
@@ -552,7 +549,7 @@ public class ClientTestImpl implements IClientTest {
                 m_testsuiteStartTime = new Date();
                 setTestresultSummary(PoMaker.createTestResultSummaryPO());
                 TestExecution.getInstance().executeTestSuite(execTestSuite,
-                        locale, autId, autoScreenshot, externalVars,
+                        autId, autoScreenshot, externalVars,
                         getTestresultSummary(), monitor, noRunOptMode);
                 if (monitor.isCanceled()) {
                     return Status.CANCEL_STATUS;
@@ -571,7 +568,7 @@ public class ClientTestImpl implements IClientTest {
     }
 
     /** {@inheritDoc} */
-    public List<INodePO> startTestJob(ITestJobPO testJob, Locale locale,
+    public List<INodePO> startTestJob(ITestJobPO testJob,
             boolean autoScreenshot, String noRunOptMode) {
         TestExecution.getInstance().setStartedTestJob(testJob);
         List<INodePO> executedTestSuites = new ArrayList<INodePO>();
@@ -624,7 +621,7 @@ public class ClientTestImpl implements IClientTest {
                     addTestExecutionEventListener(executionListener);
                     AutIdentifier autId = new AutIdentifier(refTestSuite
                             .getTestSuiteAutID());
-                    startTestSuite(refTestSuite.getTestSuite(), locale, autId,
+                    startTestSuite(refTestSuite.getTestSuite(), autId,
                             autoScreenshot, null, noRunOptMode, 
                             NodeNameUtil.getText(refTestSuite));
                     while (!isTestExecutionFinished.get()) {

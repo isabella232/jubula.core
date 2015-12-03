@@ -238,7 +238,6 @@ public class Messages extends NLS {
     public static String NodeWithReferenceIsNotChildOfParamNode;
     public static String NoEntryFor;
     public static String NoJavaFound;
-    public static String NoLanguageConfiguredInChoosenAUT;
     public static String NoLogicalNameForDefaultMapping;
     public static String NonRecoverableError;
     public static String NoNullValueAllowed;
@@ -306,7 +305,6 @@ public class Messages extends NLS {
     public static String SessionAndTransactionDontMatch;
     public static String SetNameNotSupportedOnProjectPO;
     public static String ShowWhereUsedSearching;
-    public static String SpecifiedLanguageNotSupported;
     public static String StartAUTServerMessageSend;
     public static String StartingObjectMapping;
     public static String StartingRecordModus;
