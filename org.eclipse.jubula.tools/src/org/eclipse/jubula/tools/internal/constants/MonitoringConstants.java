@@ -87,7 +87,11 @@ public class MonitoringConstants {
     public static final String INTEGER_VALUE = "INTEGER"; //$NON-NLS-1$
     /** Monitoring category  */
     public static final String NO_CATEGORY = "NO_CATEGORY"; //$NON-NLS-1$   
+    /** Monitoring-Value type */ 
+    public static final String STRING_VALUE = "STRING"; //$NON-NLS-1$
     
+    /** Monitoring error message */
+    public static final String MONITORING_ERROR = "MONITORING_ERROR"; //$NON-NLS-1$
     
     /** key to identify monitoring widgets */
     public static final String MONITORING_KEY = "MONITORING_KEY"; //$NON-NLS-1$

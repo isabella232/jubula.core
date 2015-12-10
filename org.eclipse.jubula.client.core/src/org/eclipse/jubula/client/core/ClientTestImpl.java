@@ -112,6 +112,7 @@ import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
+import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.MonitoringUtil;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
@@ -583,31 +584,9 @@ public class ClientTestImpl implements IClientTest {
             final AtomicBoolean isTestExecutionFinished = 
                 new AtomicBoolean(false);
             ITestExecutionEventListener executionListener = 
-                new ITestExecutionEventListener() {
-                    /** {@inheritDoc} */
-                    public void stateChanged(TestExecutionEvent event) {
-                        State state = event.getState();
-                        testExecutionState.set(state.ordinal());
-                        if (state == State.TEST_EXEC_FAILED) {
-                            if (event.getException() instanceof JBException) {
-                                JBException e = (JBException)
-                                    event.getException();
-                                testExecutionMessageId.set(e.getErrorId());
-                            }
-                            isTestExecutionFailed.set(true);
-                            testExecutionFinished();
-                        }
-                    }
-                    /** {@inheritDoc} */
-                    public void endTestExecution() {
-                        testExecutionFinished();
-                    }
-                    
-                    private void testExecutionFinished() {
-                        isTestExecutionFinished.set(true);
-                        removeTestExecutionEventListener(this);
-                    }
-                };
+                    createExecutionListener(
+                            isTestExecutionFailed, testExecutionMessageId,
+                            testExecutionState, isTestExecutionFinished);
             List<INodePO> refTestSuiteList = 
                 testJob.getUnmodifiableNodeList();
             
@@ -640,6 +619,54 @@ public class ClientTestImpl implements IClientTest {
             TestExecution.getInstance().setStartedTestJob(null);
         }
         return executedTestSuites;
+    }
+
+    /**
+     * Creates a test execution listener.
+     * @param isTestExecutionFailed flag, which indicates the test is failed
+     * @param testExecutionMessageId message id of test execution
+     * @param testExecutionState state of the test execution
+     * @param isTestExecutionFinished flag, which indicate the test execution is finished
+     * @return test execution listener
+     */
+    private ITestExecutionEventListener createExecutionListener(
+            final AtomicBoolean isTestExecutionFailed,
+            final AtomicInteger testExecutionMessageId,
+            final AtomicInteger testExecutionState,
+            final AtomicBoolean isTestExecutionFinished) {
+        ITestExecutionEventListener executionListener = 
+            new ITestExecutionEventListener() {
+                /** {@inheritDoc} */
+                public void stateChanged(TestExecutionEvent event) {
+                    State state = event.getState();
+                    testExecutionState.set(state.ordinal());
+                    if (state == State.TEST_EXEC_FAILED) {
+                        if (event.getException() instanceof JBException) {
+                            JBException e = (JBException)
+                                event.getException();
+                            testExecutionMessageId.set(e.getErrorId());
+                        }
+                        isTestExecutionFailed.set(true);
+                        testExecutionFinished();
+                    }
+                }
+                /** {@inheritDoc} */
+                public void endTestExecution() {
+                    testExecutionFinished();
+                }
+                
+                private void testExecutionFinished() {
+                    isTestExecutionFinished.set(true);
+                    removeTestExecutionEventListener(this);
+                }
+                @Override
+                public void receiveExecutionNotification(
+                        String notification) {
+                    // nothing
+                    
+                }
+            };
+        return executionListener;
     }
 
 
@@ -921,6 +948,20 @@ public class ClientTestImpl implements IClientTest {
         } 
     }
     
+    /** 
+     * {@inheritDoc}
+     */
+    public void fireReceiveExecutionNotification(String notification) {
+    
+        Object[] listeners = eventListenerList.getListenerList();
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == ITestExecutionEventListener.class) {
+                ((ITestExecutionEventListener)listeners[i + 1])
+                        .receiveExecutionNotification(notification);
+            }
+        } 
+    }
+    
     /**
      * creating the job that is building and writing test data to DB. 
      * @param result The test results  
@@ -1021,6 +1062,18 @@ public class ClientTestImpl implements IClientTest {
                             return Status.CANCEL_STATUS;
                         }
                     }
+                    
+                    if (result.getMonitoringValues().containsKey(
+                            MonitoringConstants.MONITORING_ERROR)) {
+                        MonitoringValue value = (MonitoringValue) result
+                                .getMonitoringValues()
+                                .get(MonitoringConstants.MONITORING_ERROR);
+                        if (value != null) {
+                            fireReceiveExecutionNotification(value.getValue());
+                            return Status.OK_STATUS;
+                        }
+                    }
+                    
                     monitor.setTaskName(Messages.ClientBuildingReport);
                     buildMonitoringReport();
                     while (result.getReportData() == null) {

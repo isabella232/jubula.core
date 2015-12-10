@@ -26,6 +26,12 @@ public interface ITestExecutionEventListener extends EventListener {
     public void stateChanged(TestExecutionEvent event);
     
     /**
+     * This method is called, when an error, warning is received
+     * @param notification the message of the notification
+     */
+    public void receiveExecutionNotification(String notification);
+    
+    /**
      * signals the end of testexecution ( normal or error exit)
      */
     public void endTestExecution();

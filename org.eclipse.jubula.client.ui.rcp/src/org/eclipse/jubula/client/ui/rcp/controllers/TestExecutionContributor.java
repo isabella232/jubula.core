@@ -800,4 +800,10 @@ public class TestExecutionContributor
         }
         setClientMinimized(false);
     }
+
+    @Override
+    public void receiveExecutionNotification(String notification) {
+        ErrorHandlingUtil.createMessageDialog(MessageIDs.E_TEST_EXECUTION_ERROR,
+                null, new String[] { notification });
+    }
 }

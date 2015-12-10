@@ -94,6 +94,15 @@
         when a new Test Suite starts (<xref linkend="resetting-and-accumulating-code-coverage"/>).
       </para>
     </listitem>
+    <listitem>
+      <para>
+        During code coverage class file id collision can happen, if different classes are found with the same name.
+        If you don't want to allow the collision, be sure the 'Allow class file id collision' checkbox is unchecked. It's
+        unchecked by default.
+        If the feature is enabled, you will only get a log entry, if an error is occurred. Bear in mind in case of enabled
+        state, the jacoco monitoring report can be invalid.    
+      </para>
+    </listitem>
   </orderedlist>
   <section xml:id="increasing-the-java-heap">
     <title>Increasing the Java Heap Space for code coverage</title>

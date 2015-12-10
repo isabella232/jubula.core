@@ -280,6 +280,11 @@ public class TestExecution {
                     public void stateChanged(TestExecutionEvent event) {
                         // nothing
                     }
+                    @Override
+                    public void receiveExecutionNotification(
+                            String notification) {
+                        // nothing
+                    }
                 });
     }
 
@@ -371,6 +376,12 @@ public class TestExecution {
                             }
 
                             public void stateChanged(TestExecutionEvent event) {
+                                // Do nothing
+                            }
+
+                            @Override
+                            public void receiveExecutionNotification(
+                                    String notification) {
                                 // Do nothing
                             }
                         });

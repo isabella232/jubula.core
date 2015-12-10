@@ -536,4 +536,10 @@ public class TestResultTreeView extends ViewPart
             }
         }
     }
+
+    @Override
+    public void receiveExecutionNotification(String notification) {
+        // nothing
+        
+    }
 }

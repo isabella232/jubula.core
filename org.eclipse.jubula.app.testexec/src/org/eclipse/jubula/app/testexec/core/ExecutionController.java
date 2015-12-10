@@ -1057,4 +1057,12 @@ public class ExecutionController implements IAUTServerEventListener,
     protected boolean isNoErrorWhileExecution() {
         return m_noErrorWhileExecution;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void receiveExecutionNotification(String notification) {
+        LOG.error(notification);
+        AbstractCmdlineClient.printConsoleLn(notification, true);
+    }
 }

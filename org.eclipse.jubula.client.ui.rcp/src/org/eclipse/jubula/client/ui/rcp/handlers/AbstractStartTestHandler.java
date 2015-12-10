@@ -123,6 +123,12 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                             }
                         });
                     }
+
+                    @Override
+                    public void receiveExecutionNotification(
+                            String notification) {
+                        
+                    }
                 };
                 ClientTest.instance()
                         .addTestExecutionEventListener(l);

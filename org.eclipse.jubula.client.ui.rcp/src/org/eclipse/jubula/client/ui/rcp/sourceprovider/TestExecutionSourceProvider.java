@@ -127,4 +127,11 @@ public class TestExecutionSourceProvider extends AbstractJBSourceProvider
                 m_isTestPaused);
     }
 
+
+    @Override
+    public void receiveExecutionNotification(String notification) {
+        // nothing
+        
+    }
+
 }

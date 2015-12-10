@@ -76,6 +76,11 @@ public class CentralTestDataSetValueFunctionEvaluator
                     PARAM_DESCRIPTIONS.clear();
                     UNIQUE_KEYS.clear();
                 }
+                @Override
+                public void receiveExecutionNotification(String notification) {
+                    // nothing
+                    
+                }
             });
     }
 

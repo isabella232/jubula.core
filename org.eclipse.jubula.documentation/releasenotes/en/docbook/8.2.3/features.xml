@@ -24,4 +24,11 @@
             </para>
         </listitem>
     </itemizedlist>
+    <itemizedlist>
+        <listitem>
+            <para>
+                Optional configuration to allow class file id collision in code coverage.
+            </para>
+        </listitem>
+    </itemizedlist>
 </section>

@@ -85,7 +85,9 @@ public class AutConfigConstants {
     public static final String NAME_TECHNICAL_COMPONENTS = "NAME_TECHNICAL_COMPONENTS"; //$NON-NLS-1$
     /** The keyboard layout of the AUT */
     public static final String KEYBOARD_LAYOUT = "KEYBOARD_LAYOUT"; //$NON-NLS-1$
-
+    /** The key for allowing class file id collision*/
+    public static final String ALLOW_CLASS_FILE_ID_COLLISION = "CLASS_FILE_ID_COLLISION"; //$NON-NLS-1$
+    
     /** to prevent instantiation */
     private AutConfigConstants() {
         // do nothing
