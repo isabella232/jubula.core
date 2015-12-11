@@ -31,4 +31,13 @@
             </para>
         </listitem>
     </itemizedlist>
+	<itemizedlist>
+		<listitem>
+			<para>
+				You can enter multiple regexes to for inclusion. For more information
+				see user manual.
+			</para>
+		</listitem>
+	</itemizedlist>
+	
 </section>

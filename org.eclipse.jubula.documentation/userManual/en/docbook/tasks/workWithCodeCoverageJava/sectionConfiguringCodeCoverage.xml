@@ -76,11 +76,12 @@
     </listitem>
     <listitem>
       <para>
-        To make sure you only monitor your own code, enter a package
-        pattern to specify which packages should be monitored. The
-        pattern must be a valid regular expression. If you do not
-        enter a package pattern, all classes in the virtual machine
-        will be considered for the code coverage value.
+        To make sure you only monitor your own code, enter one or 
+        more package pattern divided by <emphasis role="input">;</emphasis> 
+        to specify which packages should be monitored. The pattern must 
+        be a valid regular expression.
+        If you do not enter a package pattern, all classes in the virtual 
+        machine will be considered for the code coverage value.
       </para>
       <para role="warning">
         Not entering a package pattern can result in extremely large
