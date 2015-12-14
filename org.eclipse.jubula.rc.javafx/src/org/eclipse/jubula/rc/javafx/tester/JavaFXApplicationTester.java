@@ -17,15 +17,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
-import javafx.event.EventHandler;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
+import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.AbstractApplicationTester;
@@ -40,6 +34,13 @@ import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * Tester-Class for the Application as a whole.
@@ -259,22 +260,27 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      * @return the Stage or null
      */
     private Stage getStageByTitle(final String title, final String operator) {
-        Stage result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getStageByTitle", new Callable<Stage>() { //$NON-NLS-1$
+        Stage result = null;
+        try {
+            result = EventThreadQueuerJavaFXImpl
+                    .invokeAndWait("getStageByTitle", new Callable<Stage>() { //$NON-NLS-1$
 
-                    @Override
-                    public Stage call() throws Exception {
-                        List<? extends Stage> stages = ComponentHandler
-                                .getAssignableFrom(Stage.class);
-                        for (final Stage stage : stages) {
-                            if (MatchUtil.getInstance().match(stage.getTitle(),
-                                    title, operator)) {
-                                return stage;
+                        @Override
+                        public Stage call() throws Exception {
+                            List<? extends Stage> stages = ComponentHandler
+                                    .getAssignableFrom(Stage.class);
+                            for (final Stage stage : stages) {
+                                if (MatchUtil.getInstance().match(
+                                        stage.getTitle(), title, operator)) {
+                                    return stage;
+                                }
                             }
+                            return null;
                         }
-                        return null;
-                    }
-                });
+                    });
+        } catch (IllegalStateException e) {
+            // Do nothing, toolkit not initialized
+        }
         return result;
     }
 
@@ -293,8 +299,20 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      */
     public void rcWaitForWindow(final String title, String operator,
             int pTimeout, int delay) {
-        final Stage s = getStageByTitle(title, operator);
-
+        Stage s = null;
+        try {
+            long timeout = pTimeout;
+            long done = System.currentTimeMillis() + timeout;
+            long now;
+            do {
+                s = getStageByTitle(title, operator);
+                now = System.currentTimeMillis();
+                timeout = done - now;
+                Thread.sleep(50);
+            } while (timeout > 0 && s == null);
+        } catch (InterruptedException e) {
+            throw new RobotException(e);
+        }
         if (s == null) {
             log.error("no Window found! In rcWaitForWindowActivation. Title: " //$NON-NLS-1$
                     + title + "operator: " + operator); //$NON-NLS-1$
@@ -302,7 +320,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                     EventFactory
                             .createActionError(TestErrorEvent.COMP_NOT_FOUND));
         }
-
+        final Stage stage = s;
         final CountDownLatch signal = new CountDownLatch(1);
         final EventHandler<WindowEvent> showHandler =
                 new EventHandler<WindowEvent>() {
@@ -318,8 +336,8 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
 
                     @Override
                     public Boolean call() throws Exception {
-                        if (!s.isShowing()) {
-                            s.addEventFilter(WindowEvent.WINDOW_SHOWN,
+                        if (!stage.isShowing()) {
+                            stage.addEventFilter(WindowEvent.WINDOW_SHOWN,
                                     showHandler);
                             return false;
                         }
@@ -336,14 +354,14 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                                 .createActionError(TestErrorEvent.
                                         EXECUTION_ERROR));
             } finally {
-                s.removeEventFilter(WindowEvent.WINDOW_SHOWN, showHandler);
+                stage.removeEventFilter(WindowEvent.WINDOW_SHOWN, showHandler);
             }
             boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                     "rcWaitForWindowConfirm", new Callable<Boolean>() { //$NON-NLS-1$
 
                         @Override
                         public Boolean call() throws Exception {
-                            return s.isShowing();
+                            return stage.isShowing();
                         }
                     });
             if (!result) {
@@ -371,8 +389,20 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      */
     public void rcWaitForWindowActivation(final String title, String operator,
             int pTimeout, int delay) {
-        final Stage s = getStageByTitle(title, operator);
-
+        Stage s = null;
+        try {
+            long timeout = pTimeout;
+            long done = System.currentTimeMillis() + timeout;
+            long now;
+            do {
+                s = getStageByTitle(title, operator);
+                now = System.currentTimeMillis();
+                timeout = done - now;
+                Thread.sleep(50);
+            } while (timeout > 0 && s == null);
+        } catch (InterruptedException e) {
+            throw new RobotException(e);
+        }
         if (s == null) {
             log.error("no Window found! In rcWaitForWindowActivation. Title: " //$NON-NLS-1$
                     + title + "operator: " + operator); //$NON-NLS-1$
@@ -380,7 +410,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                     EventFactory
                             .createActionError(TestErrorEvent.EXECUTION_ERROR));
         }
-
+        final Stage stage = s;
         final CountDownLatch signal = new CountDownLatch(1);
         final ChangeListener<Boolean> focusListener =
                 new ChangeListener<Boolean>() {
@@ -393,14 +423,13 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                     }
                 }
             };
-
         boolean isFocused = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "rcWaitForWindowActivation", new Callable<Boolean>() { //$NON-NLS-1$
 
                     @Override
                     public Boolean call() throws Exception {
-                        if (!s.isFocused()) {
-                            s.focusedProperty().addListener(focusListener);
+                        if (!stage.isFocused()) {
+                            stage.focusedProperty().addListener(focusListener);
                             return false;
                         }
                         return true;
@@ -412,11 +441,10 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
             } catch (InterruptedException e) {
                 throw new StepExecutionException(
                         "Interrupted while waiting for window activation!", //$NON-NLS-1$
-                        EventFactory
-                                .createActionError(TestErrorEvent.
+                        EventFactory.createActionError(TestErrorEvent.
                                         EXECUTION_ERROR));
             } finally {
-                s.focusedProperty().removeListener(focusListener);
+                stage.focusedProperty().removeListener(focusListener);
             }
             boolean result = EventThreadQueuerJavaFXImpl
                     .invokeAndWait(
@@ -424,13 +452,12 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
 
                                 @Override
                                 public Boolean call() throws Exception {
-                                    return s.isFocused();
+                                    return stage.isFocused();
                                 }
                             });
             if (!result) {
                 throw new StepExecutionException("window was not activated", //$NON-NLS-1$
-                        EventFactory
-                                .createActionError(
+                        EventFactory.createActionError(
                                         TestErrorEvent.TIMEOUT_EXPIRED));
             }
         }
