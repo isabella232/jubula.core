@@ -177,7 +177,7 @@ class DataSetPO implements IDataSetPO {
      */
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "TEST_DATA_VALUES")
-    @Column(name = "DATA_VALUES")
+    @Column(name = "DATA_VALUES", length = MAX_STRING_LENGTH)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "TEST_DATA_LIST_ID")
     @BatchFetch(value = BatchFetchType.EXISTS)
