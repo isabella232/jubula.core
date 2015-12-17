@@ -67,14 +67,6 @@ public class TestSuiteBrowserContentProvider extends BrowserContentProvider {
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
         }
         
-        if (parentElement instanceof ITestSuitePO) {
-            ITestSuitePO testSuite = (ITestSuitePO) parentElement;
-            if (testSuite.getAut() != null) {
-                return ArrayUtils.EMPTY_OBJECT_ARRAY;
-            }
-            // fall through
-        }
-        
         if (parentElement instanceof INodePO) {
             List<INodePO> nodes = getChildrenToDisplay((INodePO) parentElement);
             return nodes.toArray();
