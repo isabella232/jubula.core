@@ -16,11 +16,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -35,6 +30,12 @@ import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 /**
  * This context holds the tree and supports access to the Robot. It also
@@ -167,10 +168,20 @@ public class TreeOperationContext
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         tree.layout();
+                        Rectangle treeB = NodeBounds
+                                .getAbsoluteBounds(tree);
                         Rectangle visibleTreeBounds = new Rectangle(0, 0,
-                                Rounding.round(tree.getWidth()), Rounding
-                                        .round(tree.getHeight()));
-                        return rowBounds.intersection(visibleTreeBounds);
+                                Rounding.round(treeB.getWidth()), Rounding
+                                        .round(treeB.getHeight()));
+                        Rectangle intersection = rowBounds
+                                .intersection(visibleTreeBounds);
+                        if (intersection.isEmpty()) {
+                            throw new StepExecutionException(
+                                    "Cell not visible.", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                            TestErrorEvent.NOT_VISIBLE));
+                        }
+                        return intersection;
                     }
                 });
         return result;
@@ -184,8 +195,8 @@ public class TreeOperationContext
 
                     @Override
                     public Void call() throws Exception {
-                        TreeView<?> tree = getTree();
-                        int index = ((TreeView) tree).getRow(node);
+                        TreeView tree = getTree();
+                        int index = tree.getRow(node);
                         tree.scrollTo(index);
                         // Update the layout coordinates otherwise
                         // we would get old position values
@@ -198,7 +209,9 @@ public class TreeOperationContext
     @Override
     public void clickNode(TreeItem<?> node, ClickOptions clickOps) {
         scrollNodeToVisible(node);
+        //Get the local bounds of the cell
         Rectangle rowBounds = getNodeBounds(node);
+        //Calculate which part of the cell is visible in the tree
         Rectangle visibleRowBounds = getVisibleRowBounds(rowBounds);
         getRobot().click(getTree(), visibleRowBounds, clickOps);
     }
@@ -433,15 +446,50 @@ public class TreeOperationContext
                             if (NodeTraverseHelper.isVisible(cell)
                                     && (item != null && item.equals(node))) {
 
-                                Rectangle b = NodeBounds
+                                Rectangle cellBounds = NodeBounds
                                         .getAbsoluteBounds(cell);
-                                Rectangle treeB = NodeBounds
+                                Rectangle treeBounds = NodeBounds
                                         .getAbsoluteBounds(tree);
-                                return new Rectangle(
-                                        Math.abs(treeB.x - b.x),
-                                        Math.abs(treeB.y - b.y),
-                                        Rounding.round(b.getWidth()),
-                                        Rounding.round(b.getHeight()));
+                                
+                                // Determine the x value of the cell bounding
+                                // box which we want to calculate. This is
+                                // either the left side of the cell or the right
+                                // side of the disclosure node
+                                int leftX;
+                                // The cell width depends on the leftX value
+                                // which we calculate. This is either the width
+                                // from the right side of the disclosure node or
+                                // from the left side of the cell.
+                                int cellWidth;
+                                
+                                Node disclosureNode = cell.getDisclosureNode();
+                                if (disclosureNode != null) {
+                                    Rectangle closureNodeBounds = NodeBounds
+                                            .getAbsoluteBounds(disclosureNode);
+                                 // -> Node 1
+                                    // (|->) Node 2
+                                    //  /\
+                                    //  || Disclosure Node
+                                    // closureNodeRightX = x value of the right
+                                    // border, relative to the tree
+                                    leftX = ((int) closureNodeBounds
+                                            .getMaxX()) - treeBounds.x;
+                                    cellWidth = (int) (cellBounds.getMaxX()
+                                            - closureNodeBounds.getMaxX());
+                                } else {
+                                    // x value of the top left corner of the cell
+                                    // relative to the tree
+                                    leftX = cellBounds.x - treeBounds.x;
+                                    cellWidth = cellBounds.width;
+                                }
+                                
+                                // y value of the top left corner of the cell
+                                // relative to the tree
+                                int cellRelativeY = cellBounds.y - treeBounds.y;
+
+                                return new Rectangle(leftX,
+                                        cellRelativeY, cellWidth,
+                                        cellBounds.height);
                             }
                         }
                         return null;
