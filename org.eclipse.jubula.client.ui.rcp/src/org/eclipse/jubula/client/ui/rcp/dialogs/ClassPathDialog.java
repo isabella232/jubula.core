@@ -43,6 +43,10 @@ public class ClassPathDialog extends InputDialog {
         new WidgetSelectionListener();
     /** true, if browse buttons should be enabled */
     private boolean m_buttonsEnabled;
+    /** files with one of the provided extensions will be shown in the dialog. */
+    private String[] m_fileFilterExtensions;
+    /** true, if only file selection is allowed, false if directory selection is allowed too*/
+    private boolean m_fileSelectionAllowed;
 
     /**
      * @param parentShell The parent shell.
@@ -57,15 +61,24 @@ public class ClassPathDialog extends InputDialog {
      * @param maxLength Maximum Length of input
      * @param browseable True, if you want to add a browse button in the dialog.
      * @param browseButtonsEnabled true, if browse buttons should be enabled
+     * @param fileSelectionAllowed true, if only file selection is allowed, 
+     * false if directory selection
+     * @param fileExtensionFilters Only files with one of the 
+     *                         provided extensions will be shown in the dialog.
+     *                         May be <code>null</code>, in which case all 
+     *                         files will be shown.
      */
     public ClassPathDialog(Shell parentShell, String title, String oldName, 
             String message, String label, String wrongNameError, 
             String doubleNameError, String image, String shell, 
-            boolean browseable, int maxLength, boolean browseButtonsEnabled) {
+            boolean browseable, int maxLength, boolean browseButtonsEnabled,
+            String[] fileExtensionFilters, boolean fileSelectionAllowed) {
         
         super(parentShell, title, oldName, message, label, wrongNameError,
                 doubleNameError, image, shell, browseable, maxLength);
         m_buttonsEnabled = browseButtonsEnabled;
+        m_fileFilterExtensions = fileExtensionFilters;
+        m_fileSelectionAllowed = fileSelectionAllowed;
     }
     
     /**
@@ -76,7 +89,10 @@ public class ClassPathDialog extends InputDialog {
      */
     private void installListeners() {
         m_addDirButton.addSelectionListener(m_selectionListener);
-        m_addFileButton.addSelectionListener(m_selectionListener);
+        if (m_addFileButton != null) {
+            m_addFileButton.addSelectionListener(m_selectionListener);
+        }
+      
     }
 
     /**
@@ -84,18 +100,23 @@ public class ClassPathDialog extends InputDialog {
      */
     protected void createAdditionalComponents(Composite parent) {
         new Label(parent, SWT.NONE);
-        m_addFileButton = new Button(parent, SWT.PUSH);
-        m_addFileButton.setText(Messages.ClassPathDialogFile);
-        GridData data = new GridData ();
-        data.horizontalAlignment = GridData.END;
-        data.grabExcessHorizontalSpace = true;
-        m_addFileButton.setLayoutData(data);
-        m_addFileButton.setEnabled(m_buttonsEnabled);
+        GridData data = new GridData();
+        if (m_fileSelectionAllowed) {
+            m_addFileButton = new Button(parent, SWT.PUSH);
+            m_addFileButton.setText(Messages.ClassPathDialogFile);
+            data.horizontalAlignment = GridData.END;
+            data.grabExcessHorizontalSpace = true;
+            m_addFileButton.setLayoutData(data);
+            m_addFileButton.setEnabled(m_buttonsEnabled);
+        }
         
         m_addDirButton = new Button(parent, SWT.PUSH);
         m_addDirButton.setText(Messages.ClassPathDialogDir);
         data = new GridData ();
         data.horizontalAlignment = GridData.END;
+        if (!m_fileSelectionAllowed) {
+            data.grabExcessHorizontalSpace = true;
+        }
         m_addDirButton.setLayoutData(data);
         m_addDirButton.setEnabled(m_buttonsEnabled);
         
@@ -134,6 +155,9 @@ public class ClassPathDialog extends InputDialog {
                 + StringConstants.DOT + StringConstants.STAR});
         fileDialog.setText(Messages.ClassPathDialogFileDialogMessage);
         fileDialog.setFilterPath(Utils.getLastDirPath());
+        if (m_fileFilterExtensions != null) {
+            fileDialog.setFilterExtensions(m_fileFilterExtensions);
+        }
         directory = fileDialog.open();
         if (directory != null) {
             Utils.storeLastDirPath(fileDialog.getFilterPath());

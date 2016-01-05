@@ -45,7 +45,9 @@ public class MonitoringConstants {
     /** the query syntax for the extensions rendering parameter */
     public static final String M_INFO_TEXT = "infoBoobleText"; //$NON-NLS-1$ 
     /** the query syntax for the extensions validator */
-    public static final String M_ATTR_VALIDATOR = "validator"; ////$NON-NLS-1$    
+    public static final String M_ATTR_VALIDATOR = "validator"; ////$NON-NLS-1$
+    /** the query syntax for the extensions filter */
+    public static final String M_ATTR_FILTER = "filter"; ////$NON-NLS-1$   
     
     /** a type "string" (set in the extension point) will be rendered as a Textfield*/
     public static final String RENDER_AS_TEXTFIELD = "string"; //$NON-NLS-1$

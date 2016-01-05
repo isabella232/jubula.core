@@ -38,6 +38,8 @@ public class MonitoringAttribute {
     private boolean m_render; 
     /** the validator */    
     private IValidator m_validator;
+    /** extension filters for file selection */
+    private String[] m_extensionFilters;
     /**
      * default Constructor
      */
@@ -54,10 +56,12 @@ public class MonitoringAttribute {
      * @param render true: the attribute will be rendered, false: no rendering
      * @param infoBoobleText The text to display as info booble
      * @param validator An optional validator
+     * @param extensionFilters extension filters for file selection 
      */
     public MonitoringAttribute(String type, String description, String id,
             String defaultValue, boolean render, String monitoringName,
-            String infoBoobleText, IValidator validator) {
+            String infoBoobleText, IValidator validator,
+            String[] extensionFilters) {
         
         m_type = type;
         m_description = description;
@@ -73,8 +77,7 @@ public class MonitoringAttribute {
             m_defaultValue = StringConstants.EMPTY;
         }
         m_validator = validator;
-        
-        
+        m_extensionFilters = extensionFilters;
     }
     /**
      * @return the type of the attribute
@@ -175,7 +178,11 @@ public class MonitoringAttribute {
         
         return m_validator;
     }
-      
-    
-    
+
+    /**
+     * @return extension filters for file selection 
+     */
+    public String[] getExtensionFilters() {
+        return m_extensionFilters;
+    }
 }

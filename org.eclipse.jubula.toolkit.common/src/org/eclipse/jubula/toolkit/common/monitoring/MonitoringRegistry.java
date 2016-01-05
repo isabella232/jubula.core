@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
 
@@ -148,23 +149,31 @@ public abstract class MonitoringRegistry {
                 } catch (CoreException e) {
                     e.printStackTrace();
                 }
-                
             }         
+            
+            String[] extensionFilters = null;
+            String filterAttribute = elementChildren[j].getAttribute(
+                    MonitoringConstants.M_ATTR_FILTER);
+            if (filterAttribute != null) {
+                extensionFilters = filterAttribute
+                        .split(StringConstants.SEMICOLON);
+            }
           
             list.add(new MonitoringAttribute(
+                    elementChildren[j]
+                            .getAttribute(MonitoringConstants.M_ATTR_TYPE),
                     elementChildren[j].getAttribute(
-                            MonitoringConstants.M_ATTR_TYPE), 
+                            MonitoringConstants.M_ATTR_DESCRIPTION),
+                    elementChildren[j]
+                            .getAttribute(MonitoringConstants.M_ATTR_ID),
                     elementChildren[j].getAttribute(
-                            MonitoringConstants.M_ATTR_DESCRIPTION), 
-                    elementChildren[j].getAttribute(
-                            MonitoringConstants.M_ATTR_ID), 
-                    elementChildren[j].getAttribute(
-                            MonitoringConstants.M_ATTR_DEFAULT_VALUE), 
-                    Boolean.valueOf(elementChildren[j].getAttribute(
-                            MonitoringConstants.M_ATTR_RENDER)), 
-                    element.getAttribute(MonitoringConstants.M_ATTR_NAME), 
-                    elementChildren[j].getAttribute(
-                            MonitoringConstants.M_INFO_TEXT), vali)); 
+                            MonitoringConstants.M_ATTR_DEFAULT_VALUE),
+                    Boolean.valueOf(elementChildren[j]
+                            .getAttribute(MonitoringConstants.M_ATTR_RENDER)),
+                    element.getAttribute(MonitoringConstants.M_ATTR_NAME),
+                    elementChildren[j]
+                            .getAttribute(MonitoringConstants.M_INFO_TEXT),
+                    vali, extensionFilters));
         
         }
         return list;

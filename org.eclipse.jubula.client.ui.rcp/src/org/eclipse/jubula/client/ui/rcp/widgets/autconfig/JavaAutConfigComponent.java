@@ -1102,7 +1102,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                 Messages.AUTConfigComponentWrongInputMessage,
                 StringConstants.EMPTY, IconConstants.CLASS_PATH_STRING,
                 Messages.AUTConfigComponentShellText,
-                false, maxLength, checkLocalhostServer());
+                false, maxLength, checkLocalhostServer(), null, true);
         dialog.setStyle(SWT.APPLICATION_MODAL);
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);

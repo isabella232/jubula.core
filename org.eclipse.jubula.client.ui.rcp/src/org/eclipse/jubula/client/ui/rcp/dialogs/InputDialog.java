@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.dialogs;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -139,7 +140,11 @@ public class InputDialog extends TitleAreaDialog {
     protected Control createDialogArea(Composite parent) {
         setMessage(m_message);
         setTitle(m_title);
-        setTitleImage(IconConstants.getImage(m_image));
+        
+        if (StringUtils.isNotBlank(m_image)) {
+            setTitleImage(IconConstants.getImage(m_image));
+        }
+       
         getShell().setText(m_shell);
         // new Composite as container
         final GridLayout gridLayoutParent = new GridLayout();

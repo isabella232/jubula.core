@@ -48,8 +48,8 @@ import org.eclipse.jubula.client.ui.rcp.utils.AutAgentManager.AutAgent;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.utils.RemoteFileStore;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
-import org.eclipse.jubula.client.ui.rcp.widgets.MultiDirectoryBrowser;
-import org.eclipse.jubula.client.ui.rcp.widgets.MultiDirectoryBrowser.IMultiDirectorySelectionListener;
+import org.eclipse.jubula.client.ui.rcp.widgets.FileDirectoryBrowser;
+import org.eclipse.jubula.client.ui.rcp.widgets.FileDirectoryBrowser.IFileDirectorySelectionListener;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -195,18 +195,23 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     }
     
     /**
-     * This private inner class contains a new MultiDirectorySelectionListener.
+     * This private inner class contains a new FileDirectorySelectionListener.
      * 
      * @author BREDEX GmbH
      * @created 03.12.2015
      */
-    private class MultiDirectorySelectionListener
-            implements IMultiDirectorySelectionListener {
+    private class FileDirectorySelectionListener 
+            implements IFileDirectorySelectionListener {
 
         @Override
-        public void selectedDirectoriesChanged(String keyName, String value) {
-            // Store the config value
+        public void selectedFileDirectoriesChanged(String keyName,
+                String value) {
             putConfigValue(keyName, value);
+        }
+
+        @Override
+        public boolean isBrowseable() {
+            return checkLocalhostServer() || isRemoteRequest();
         }
     }
     
@@ -248,9 +253,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     /** the WidgetModifyListener */
     private WidgetModifyListener m_modifyListener;
     
-    /**Listener for multi-directory changes*/
-    private MultiDirectorySelectionListener m_directorySelectionListener;
-
+    /** Listener for file or directory selection changes */
+    private FileDirectorySelectionListener m_fileDirectorySelectionListener;
     /** Composite representing the basic area */
     private Composite m_basicAreaComposite;
     /** Composite representing the advanced area */
@@ -1298,15 +1302,15 @@ public abstract class AutConfigComponent extends ScrolledComposite {
 
     /**
      * 
-     * @return the single instance of the selection listener.
+     * @return the single instance of the file or directory selection listener.
      */
     @SuppressWarnings("synthetic-access")
-    private MultiDirectorySelectionListener getMultiDirSelectionListener() {
-        if (m_directorySelectionListener == null) {
-            m_directorySelectionListener = 
-                    new MultiDirectorySelectionListener();
+    private FileDirectorySelectionListener getFileDirectorySelectionListener() {
+        if (m_fileDirectorySelectionListener == null) {
+            m_fileDirectorySelectionListener = 
+                    new FileDirectorySelectionListener();
         }
-        return m_directorySelectionListener;
+        return m_fileDirectorySelectionListener;
     }
     
     /**
@@ -1526,7 +1530,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             } else if (attribute.getType().equalsIgnoreCase(
                     MonitoringConstants.RENDER_AS_FILEBROWSE)) {
                 createMonitoringWidgetLabel(monitoringComposite, attribute);
-                createMonitoringFilebrowse(monitoringComposite, attribute);
+                createMonitoringMultiFileDirectoryBrowser(monitoringComposite,
+                        attribute, true);
             } else if (attribute.getType()
                     .equalsIgnoreCase(MonitoringConstants.RENDER_AS_CHECKBOX)) {
                 createMonitoringWidgetLabel(monitoringComposite, attribute);
@@ -1534,53 +1539,38 @@ public abstract class AutConfigComponent extends ScrolledComposite {
             } else if (attribute.getType().equalsIgnoreCase(
                     MonitoringConstants.RENDER_AS_MULTIDIR_BROWSE)) {
                 createMonitoringWidgetLabel(monitoringComposite, attribute);
-                createMonitoringMultipleDirectoryBrowser(monitoringComposite,
-                      attribute);
+                createMonitoringMultiFileDirectoryBrowser(monitoringComposite,
+                        attribute, false);
             }
         }
     }
     
     /**
-     * Creates a text field and a browse button
-     * for the given monitoring composite 
-     * @param composite The composite to add the widget on
-     * @param att The current attribute to render   
+     * Creates a directory and file browser component, where the directories,
+     * and files can be added, edited and removed
+     * 
+     * @param composite
+     *            The composite to add the widget on
+     * @param att
+     *            The current attribute
+     * @param fileSelectionAllowed
+     *            true, if only file selection is allowed, false if directory
+     *            selection
      */
-    private void createMonitoringFilebrowse(Composite composite, 
-            MonitoringAttribute att) {
-        
-        Composite c = UIComponentHelper.createLayoutComposite(composite, 2);
-        final Text textField = createMonitoringTextFieldWidget(c, att);
-        final Button browseButton = new Button(c, SWT.PUSH);
-        browseButton.setText(Messages.AUTConfigComponentBrowse);
-        browseButton.setLayoutData(BUTTON_LAYOUT);
-        browseButton.setData(
-                MonitoringConstants.MONITORING_KEY, att.getId());
-        browseButton.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent event) { 
-                monitoringBrowseButtonSelected(textField);
-            }
-        });    
-    }
-    
-    /**
-     * Creates a multiple directory browser component, 
-     * where the directories can be added, edited and removed
-     * @param composite The composite to add the widget on
-     * @param att The current attribute
-     */
-    private void createMonitoringMultipleDirectoryBrowser(Composite composite,
-            MonitoringAttribute att) {
-        
+    private void createMonitoringMultiFileDirectoryBrowser(Composite composite,
+            MonitoringAttribute att, boolean fileSelectionAllowed) {
+
         Composite c = UIComponentHelper.createLayoutComposite(composite);
         GridData textGrid = new GridData(GridData.FILL, GridData.CENTER, true,
                 false, 1, 1);
         c.setLayoutData(textGrid);
-        
-        MultiDirectoryBrowser multiDirectoryBrowser = new MultiDirectoryBrowser(
-                c, att.getId(), getConfigValue(att.getId()));
-        multiDirectoryBrowser
-                .addListModifiedListener(getMultiDirSelectionListener());
+
+        boolean browseIsEnabled = checkLocalhostServer() || isRemoteRequest();
+        FileDirectoryBrowser fileDirectoryBrowser = new FileDirectoryBrowser(c,
+                att.getDescription(), att.getId(), getConfigValue(att.getId()),
+                att.getExtensionFilters(), fileSelectionAllowed); 
+        fileDirectoryBrowser
+                .addListModifiedListener(getFileDirectorySelectionListener());
     }
        
     /**
@@ -1691,55 +1681,6 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         resize();
         getShell().pack();
     }   
-    
-    /**
-     * Handles a selection of the "Browse" button,
-     * corresponding to the text field in the monitoring area.
-     * @param textField The text field to set the path to.
-     */
-    private void monitoringBrowseButtonSelected(Text textField) {
-        if (isRemoteRequest()) {
-            remoteBrowse(true, 
-                    String.valueOf(textField.getData(
-                            MonitoringConstants.MONITORING_KEY)),
-                    textField,
-                    Messages.AUTConfigComponentSelectDir);
-        } else {
-            DirectoryDialog directoryDialog = new DirectoryDialog(getShell(),
-                    SWT.APPLICATION_MODAL | SWT.ON_TOP);
-            handleBrowseDirButtonEvent(textField, directoryDialog);
-        }
-    }
-    
-    /**
-     * handles the button event, which was thrown by the browse button for
-     * the m_autInstallDirectoryTextField       
-     * @param directoryDialog The DirectoryDialog
-     * @param textField The textField
-     */
-    private void handleBrowseDirButtonEvent(Text textField,
-            DirectoryDialog directoryDialog) {
-        String directory = null;
-        directoryDialog.setMessage(Messages.AUTConfigComponentSelectDir);
-        File path = new File(textField.getText());
-        String filterPath = Utils.getLastDirPath();
-        if (path.exists()) {
-            try {
-                filterPath = path.getCanonicalPath();
-            } catch (IOException e) {
-                //empty
-            }
-        }
-        directoryDialog.setFilterPath(filterPath);
-        directory = directoryDialog.open();
-        if (directory != null) {
-            textField.setText(directory);
-            Utils.storeLastDirPath(directoryDialog.getFilterPath());  
-            putConfigValue(String.valueOf(textField.getData(
-                    MonitoringConstants.MONITORING_KEY)), 
-                    textField.getText());
-        }
-    }
     
     /**
      * Creating an actual monitoring area

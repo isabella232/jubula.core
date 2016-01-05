@@ -42,13 +42,13 @@
       <variablelist>
         <varlistentry>
           <term>
-            The AUT installation directory
+            The AUT installation directories
           </term>
           <listitem>
             <para>
-               is the directory containing the class files (compiled
-              Java files) for your AUT. You must enter this
-              directory to make code coverage possible for your test
+              are the directories containing the class files (compiled
+              Java files) for your AUT. You must select these
+              directories or files (jar or class) to make code coverage possible for your test
               run.
             </para>
           </listitem>
