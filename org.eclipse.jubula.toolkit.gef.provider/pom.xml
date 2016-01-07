@@ -11,30 +11,4 @@
   <artifactId>org.eclipse.jubula.toolkit.gef.provider</artifactId>
   <packaging>eclipse-plugin</packaging>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>target-platform-configuration</artifactId>
-        <version>${tycho-version}</version>
-        <configuration>
-          <dependency-resolution>
-            <extraRequirements>
-              <!-- prefer RCP to RAP for compilation  -->
-              <requirement>
-                <type>eclipse-plugin</type>
-                <id>org.eclipse.swt</id>
-                <versionRange>[3.6,4.0)</versionRange>
-              </requirement>
-              <requirement>
-                <type>eclipse-plugin</type>
-                <id>org.eclipse.ui</id>
-                <versionRange>[3.6,4.0)</versionRange>
-              </requirement>
-            </extraRequirements>
-          </dependency-resolution>  
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

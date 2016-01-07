@@ -36,7 +36,6 @@
   <xi:include href="workWithTestResults/content.xml"/>
   <xi:include href="produceReports/content.xml"/>
   <xi:include href="workWithALM/content.xml"/>
-  <xi:include href="workWithDashboard/content.xml"/>
   <xi:include href="useTestExec/content.xml"/>
   <xi:include href="useDBToolClient/content.xml"/>
   <xi:include href="dealWithErrors/content.xml"/>

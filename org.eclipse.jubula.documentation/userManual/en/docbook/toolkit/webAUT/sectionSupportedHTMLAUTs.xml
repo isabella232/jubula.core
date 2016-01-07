@@ -135,7 +135,7 @@
     <listitem>
       <para>
         You can now manually overwrite launcher options for the
-        launchers for autrun, testexec, dbtool and dashboard.
+        launchers for autrun, testexec and dbtool.
       </para>
     </listitem>
   </itemizedlist>

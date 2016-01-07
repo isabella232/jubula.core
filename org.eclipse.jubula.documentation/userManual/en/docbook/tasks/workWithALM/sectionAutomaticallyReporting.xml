@@ -75,10 +75,7 @@
           You can (optionally) enter the URL of the Dashboard that is configured to use
           the correct database for your test results. If you have configured a Dashboard 
           and enter its URL here, then you will be able to click on test result links from 
-          your task repository to open the test result in the Dashboard automatically. 
-          For more information
-          on configuring and starting the Dashboard, see the
-          documentation (<xref linkend="working-with-dashboard"/>).
+          your task repository to open the test result in the Dashboard automatically.
         </para>
       </listitem>
     </orderedlist>

@@ -497,6 +497,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             setTestResultRootNode(generateTestResult(
                     editorInput.getTestResultSummaryId()));
             m_viewer.setInput(new TestResultNode[] {getTestResultRootNode()});
+            m_viewer.addSelectionChangedListener(m_selectionListener);
         } catch (InterruptedException ie) {
             // Operation was cancelled by user
             m_viewer.getControl().dispose();
@@ -504,7 +505,6 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
             new Label(parent, SWT.NONE).setText(
                     Messages.EditorsOpenEditorOperationCanceled);
         }
-        m_viewer.addSelectionChangedListener(m_selectionListener);
     }
 
     /**
@@ -566,7 +566,9 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
      */
     public void removeSelectionChangedListener(
             ISelectionChangedListener listener) {
-        m_viewer.removeSelectionChangedListener(listener);
+        if (m_viewer != null) {
+            m_viewer.removeSelectionChangedListener(listener);
+        }
     }
 
     /**

@@ -17,34 +17,5 @@
   </parent>
   <artifactId>org.eclipse.jubula.toolkit.common</artifactId>
   <packaging>eclipse-plugin</packaging>
-  
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-maven-plugin</artifactId>
-        <version>${tycho-version}</version>
-        <extensions>true</extensions>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>target-platform-configuration</artifactId>
-        <version>${tycho-version}</version>
-        <configuration>
-          <dependency-resolution>
-            <extraRequirements>
-              <!-- prefer RCP to RAP for compilation  -->
-              <requirement>
-                <type>eclipse-plugin</type>
-                <id>org.eclipse.swt</id>
-                <versionRange>[3.6,4.0)</versionRange>
-              </requirement>
-            </extraRequirements>
-            <optionalDependencies>ignore</optionalDependencies>
-          </dependency-resolution>  
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  
+
 </project>

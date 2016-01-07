@@ -63,18 +63,6 @@
             </para>
           </listitem>
         </varlistentry>
-        <varlistentry>
-          <term>
-            The Dashboard:
-          </term>
-          <listitem>
-            <para>
-              This lets you install and start the Dashboard on a
-              central machine so that users throughout the network can
-              access the test results from the web application. 
-            </para>
-          </listitem>
-        </varlistentry>
       </variablelist>
     </listitem>
   </orderedlist>

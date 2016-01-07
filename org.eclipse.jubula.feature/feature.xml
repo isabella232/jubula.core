@@ -480,13 +480,6 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.ui.compatibility"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.jubula.client.ui"
          download-size="0"
          install-size="0"
@@ -516,6 +509,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
 
    <plugin
          id="org.eclipse.jubula.client.alm.mylyn.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.client.alm.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

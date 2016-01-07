@@ -30,6 +30,7 @@
       <vmArgs>-server
 -Duser.language=en
 -Duser.country=US
+-Dorg.osgi.service.http.port=60002
 #VMARGS_2INSERT
 -Xss1m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread 
@@ -67,6 +68,8 @@
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.jubula.rc.rcp" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.http.jetty" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="4" />
       <property name="osgi.splashPath" value="platform:/base/plugins/org.eclipse.jubula.app" />
       <property name="osgi.instance.area.default" value="@user.home/workspace" />
    </configurations>

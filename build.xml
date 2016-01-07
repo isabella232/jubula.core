@@ -8,14 +8,12 @@
  -->
 <project name="Jubula" default="clean+verify-allComponents">
     <property name="releng.main" value="org.eclipse.jubula.releng" />
-    <property name="releng.dashboard" value="${releng.main}.dashboard" />
     
     <description>
         Main Jubula releng build script
     </description>
 
     <target name="clean+verify-allComponents">
-        <antcall target="clean+verify-dashboard" />
         <antcall target="clean+verify-ite" />
     </target>
 
@@ -27,38 +25,11 @@
     </target>
 
     <target name="clean" description="Clean all locally created artifacts">
-        <invokeMaven dir="${releng.dashboard}">
-            <arg value="clean" />
-        </invokeMaven>
         <invokeMaven dir="${releng.main}">
             <arg value="clean" />
         </invokeMaven>
     </target>
     
-    <target name="clean+verify-dashboard" description="Clean build for the dashboard product">
-        <!-- dynamically / temporarily remove external (optional) dependencies -->
-        <property name="dashboardFeatureLocation" value="org.eclipse.jubula.feature.dashboard/feature.xml" />
-        <copy file="${dashboardFeatureLocation}" tofile="${dashboardFeatureLocation}.tmp" overwrite="yes">
-            <filterchain>
-                <linecontains negate="true">
-                    <contains value="com.bredexsw" />
-                </linecontains>
-            </filterchain>
-        </copy>
-        <move tofile="${dashboardFeatureLocation}" file="${dashboardFeatureLocation}.tmp" overwrite="yes" />
-        
-        <invokeMaven dir="${releng.dashboard}">
-            <arg value="clean" />
-            <arg value="verify" />
-        </invokeMaven>
-
-        <!-- revert the dynamically / temporarily remove external (optional) dependencies -->
-        <exec dir="${basedir}" executable="git">
-            <arg value="checkout" />
-            <arg value="${dashboardFeatureLocation}" />
-        </exec>
-    </target>
-
     <macrodef name="invokeMaven">
         <attribute name="dir"/>
         <element name="arg-elements" implicit="true"/>
@@ -79,10 +50,6 @@
 
         <antcall target="updateVersionNumbers-template">
             <param name="buildBaseDir" value="${releng.main}" />
-        </antcall>
-        
-        <antcall target="updateVersionNumbers-template">
-            <param name="buildBaseDir" value="${releng.dashboard}" />
         </antcall>
     </target>
 
