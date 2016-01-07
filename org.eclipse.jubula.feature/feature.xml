@@ -95,13 +95,6 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.mobile.provider"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.jubula.toolkit.ios.provider"
          download-size="0"
          install-size="0"
@@ -138,20 +131,6 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
 
    <plugin
          id="org.eclipse.jubula.toolkit.swt.provider"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jubula.toolkit.win.provider"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jubula.toolkit.winapps.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"

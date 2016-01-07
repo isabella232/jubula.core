@@ -207,12 +207,6 @@
             <listitem>
                 <para>org.eclipse.jubula.toolkit.ios.IosComponents</para>
             </listitem>
-            <listitem>
-                <para>org.eclipse.jubula.toolkit.winapps.WinappsComponents</para>
-            </listitem>
-            <listitem>
-                <para>org.eclipse.jubula.toolkit.win.WinComponents</para>
-            </listitem>
         </itemizedlist>
         <para>On these UI component placeholder instances you can call methods that will return 
         an executable CAP that, when being executed on the AUT connection, 

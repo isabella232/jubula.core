@@ -38,6 +38,7 @@ import org.eclipse.jubula.client.archive.converter.AbstractXmlConverter;
 import org.eclipse.jubula.client.archive.converter.AutIdGenerationConverter;
 import org.eclipse.jubula.client.archive.converter.HTMLTechnicalComponentIndexConverter;
 import org.eclipse.jubula.client.archive.converter.IXmlConverter;
+import org.eclipse.jubula.client.archive.converter.MobileToolkitIdConverter;
 import org.eclipse.jubula.client.archive.converter.ObjectMappingAssoziationConverter;
 import org.eclipse.jubula.client.archive.converter.RefTSNameConverter;
 import org.eclipse.jubula.client.archive.converter.TreeDirectionConverter;
@@ -444,6 +445,7 @@ class XmlImporter {
         listOfConverter.add(new V4C001());
         listOfConverter.add(new HTMLTechnicalComponentIndexConverter());
         listOfConverter.add(new WinToolkitIdConverter());
+        listOfConverter.add(new MobileToolkitIdConverter());
         listOfConverter.add(new TreeDirectionConverter());
         listOfConverter.add(new RefTSNameConverter());
         listOfConverter.add(new ObjectMappingAssoziationConverter());

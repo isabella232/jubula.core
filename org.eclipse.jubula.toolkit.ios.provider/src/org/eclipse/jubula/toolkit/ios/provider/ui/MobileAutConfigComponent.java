@@ -8,14 +8,14 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.mobile.provider.ui;
+package org.eclipse.jubula.toolkit.ios.provider.ui;
 
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.widgets.autconfig.AutConfigComponent;
-import org.eclipse.jubula.toolkit.mobile.provider.i18n.Messages;
+import org.eclipse.jubula.toolkit.ios.provider.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.swt.events.ModifyEvent;

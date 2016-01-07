@@ -47,7 +47,6 @@
   <xi:include href="workWithProblemsView/content.xml"/>
   <xi:include href="workWithTeststyleGuidelines/content.xml"/>
   <xi:include href="adaptUI/content.xml"/>
-  <xi:include href="useChronon/content.xml"/>
   <xi:include href="launchConfig/content.xml"/>
   <xi:include href="troubleshooting/content.xml"/>
   <xi:include href="specialCharacters/content.xml"/>

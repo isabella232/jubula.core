@@ -238,9 +238,8 @@
       <listitem>
         <para>
           If you want to perform monitoring (code coverage
-          (<xref linkend="working-with-code-coverage-with-java-tests"/>) , Chronon recording
-          (<xref linkend="using-chronon"/>)), then select this from the combo
-          box.
+          (<xref linkend="working-with-code-coverage-with-java-tests"/>) 
+          then select this from the combo box.
         </para>
       </listitem>
     </orderedlist>

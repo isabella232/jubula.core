@@ -8,14 +8,14 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.toolkit.mobile.provider.i18n;
+package org.eclipse.jubula.toolkit.ios.provider.i18n;
 
 import org.eclipse.osgi.util.NLS;
 /**
  * @author BREDEX GmbH
  */
 public class Messages extends NLS {
-    private static final String BUNDLE_NAME = "org.eclipse.jubula.toolkit.mobile.provider.i18n.messages"; //$NON-NLS-1$
+    private static final String BUNDLE_NAME = "org.eclipse.jubula.toolkit.ios.provider.i18n.messages"; //$NON-NLS-1$
 
     public static String autHostnameLabel;
     public static String autPortLabel;

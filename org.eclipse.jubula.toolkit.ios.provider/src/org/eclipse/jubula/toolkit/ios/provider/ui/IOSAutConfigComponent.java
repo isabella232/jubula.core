@@ -13,8 +13,7 @@ package org.eclipse.jubula.toolkit.ios.provider.ui;
 import java.util.Map;
 
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
-import org.eclipse.jubula.toolkit.mobile.provider.i18n.Messages;
-import org.eclipse.jubula.toolkit.mobile.provider.ui.MobileAutConfigComponent;
+import org.eclipse.jubula.toolkit.ios.provider.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
