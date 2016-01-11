@@ -260,23 +260,27 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      * @return the Stage or null
      */
     private Stage getStageByTitle(final String title, final String operator) {
-        Stage result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getStageByTitle", //$NON-NLS-1$
-                new Callable<Stage>() {
+        Stage result = null;
+        try {
+            result = EventThreadQueuerJavaFXImpl
+                    .invokeAndWait("getStageByTitle", new Callable<Stage>() { //$NON-NLS-1$
 
-                    @Override
-                    public Stage call() throws Exception {
-                        List<? extends Stage> stages = ComponentHandler
-                                .getAssignableFrom(Stage.class);
-                        for (final Stage stage : stages) {
-                            if (MatchUtil.getInstance().match(stage.getTitle(),
-                                    title, operator)) {
-                                return stage;
+                        @Override
+                        public Stage call() throws Exception {
+                            List<? extends Stage> stages = ComponentHandler
+                                    .getAssignableFrom(Stage.class);
+                            for (final Stage stage : stages) {
+                                if (MatchUtil.getInstance().match(
+                                        stage.getTitle(), title, operator)) {
+                                    return stage;
+                                }
                             }
+                            return null;
                         }
-                        return null;
-                    }
-                });
+                    });
+        } catch (IllegalStateException e) {
+            // Do nothing, toolkit not initialized
+        }
         return result;
     }
 
@@ -385,14 +389,28 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      */
     public void rcWaitForWindowActivation(final String title, String operator,
             int pTimeout, int delay) {
-        final Stage stage = getStageByTitle(title, operator);
-        if (stage == null) {
+        Stage s = null;
+        try {
+            long timeout = pTimeout;
+            long done = System.currentTimeMillis() + timeout;
+            long now;
+            do {
+                s = getStageByTitle(title, operator);
+                now = System.currentTimeMillis();
+                timeout = done - now;
+                Thread.sleep(50);
+            } while (timeout > 0 && s == null);
+        } catch (InterruptedException e) {
+            throw new RobotException(e);
+        }
+        if (s == null) {
             log.error("no Window found! In rcWaitForWindowActivation. Title: " //$NON-NLS-1$
                     + title + "operator: " + operator); //$NON-NLS-1$
             throw new StepExecutionException("no Window found!", //$NON-NLS-1$
                     EventFactory
                             .createActionError(TestErrorEvent.EXECUTION_ERROR));
         }
+        final Stage stage = s;
         final CountDownLatch signal = new CountDownLatch(1);
         final ChangeListener<Boolean> focusListener =
                 new ChangeListener<Boolean>() {
