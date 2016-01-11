@@ -56,12 +56,6 @@
     </listitem>
     <listitem>
       <para>
-        checked that your current working language is supported by
-        the chosen AUT.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         started the AUT to be mapped (<xref linkend="starting-the-aut"/>)
       </para>
     </listitem>

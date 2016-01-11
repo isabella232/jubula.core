@@ -21,7 +21,6 @@
   <xi:include href="approaches/content.xml"/>
   <xi:include href="testHierarchy/content.xml"/>
   <xi:include href="reusability/content.xml"/>
-  <xi:include href="multiLingualTesting/content.xml"/>
   <xi:include href="objectMapping/content.xml"/>
   <xi:include href="testExec/content.xml"/>
   <xi:include href="observeUserActions/content.xml"/>

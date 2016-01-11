@@ -14,8 +14,7 @@
   <para>
     Tests are organized into Projects. A Project is the top-level
     container. Projects contain runnable tests and the details about
-    the AUTs to be tested (how to start them, in which language
-    etc.).
+    the AUTs to be tested (how to start them, etc.).
   </para>
   <para>
     You can work jointly on Projects using the multi-user database,

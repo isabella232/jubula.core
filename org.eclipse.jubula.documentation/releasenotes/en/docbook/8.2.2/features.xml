@@ -1,0 +1,18 @@
+<section xml:id="new-features-and-developments-8.2.2" version="5.0"
+    xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>New Features and Developments</title>
+
+    
+    <para>
+        <emphasis role="strong">XLSX support in using excel spreadsheets.</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+             	Now you can import test data from xlsx excel files. Localization is removed, only the first sheet will be used. 
+            </para>
+        </listitem>
+    </itemizedlist>
+    
+</section>

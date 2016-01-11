@@ -119,13 +119,6 @@
             </entry>
           </row>
           <row>
-            <entry>Language</entry>
-            <entry>
-              <emphasis role="input">-language &lt;language code&gt;</emphasis><?linebreak?>
-              e.g. <emphasis>-language "en_US"</emphasis>
-            </entry>
-          </row>
-          <row>
             <entry>Test Suite</entry>
             <entry>
               <emphasis role="input">-testsuite &lt;testsuite name&gt;</emphasis><?linebreak?>

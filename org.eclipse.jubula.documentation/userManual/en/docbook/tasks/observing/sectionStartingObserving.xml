@@ -31,12 +31,6 @@
     </listitem>
     <listitem>
       <para>
-        set the working language to the language you want to observe
-        in.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         start the AUT you want to observe from (<xref linkend="starting-the-aut"/>)
         (either via a configuration (<xref linkend="configuringaut"/>) or using
         the <emphasis>autrun</emphasis> command (<xref linkend="starting-java-with-the-command"/>)).

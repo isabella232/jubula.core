@@ -13,8 +13,8 @@
   <?dbhtml dir="statusbar"?>
   <title>The status bar</title>
   <para>
-    The status bar in the lower right-hand corner of the perspective
-    gives important information about the AUT Agent status, working
-    language, AUT and the observation mode and Object Mapping Mode.
+	The status bar in the lower right-hand corner of the perspective
+	gives important information about the AUT Agent status, AUT and the
+	observation mode and Object Mapping Mode.
   </para>
 </section>

@@ -10,7 +10,7 @@
 <section xml:id="using-the-data-sets-view" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                                      xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Using the Data Sets View to enter data loops and to translate data</title>
+  <title>Using the Data Sets View to enter data loops</title>
   <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="using-the-data-sets-view.guidancerDataSetViewContextId" xreflabel="Data Sets View"/>
   <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="using-the-data-sets-view.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
   <para>
@@ -27,12 +27,6 @@
       <para>
         Enter data sets for a central test data set
         (<xref linkend="entering-data-for-central-test-data-sets"/>).
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Translate your parameter values into other languages
-        (<xref linkend="translating-test-data"/>).
       </para>
     </listitem>
   </itemizedlist>
@@ -71,12 +65,6 @@
       </listitem>
       <listitem>
         <para>
-          In the Data Sets View, make sure the language in the combo
-          box on the right is the right language for your data.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
           Select ”<emphasis>Add</emphasis>” to add a row.
         </para>
       </listitem>
@@ -98,21 +86,5 @@
         </para>
       </listitem>
     </orderedlist>
-  </section>
-  <section xml:id="translating-test-data">
-    <title>Data Sets View: translating test data</title>
-    <para>
-      You can add data for other languages supported by your AUT by
-      changing the language in the combo box in the Data Sets View.
-    </para>
-    <para role="tip">
-      You can add supported languages in the Project
-      properties dialog (<xref linkend="projectproperties"/>).
-    </para>
-    <para>
-      The other combo boxes are there to help you see the Data Sets
-      View in different ways. You can see all the data for one
-      parameter, for one data set or for one language.
-    </para>
   </section>
 </section>

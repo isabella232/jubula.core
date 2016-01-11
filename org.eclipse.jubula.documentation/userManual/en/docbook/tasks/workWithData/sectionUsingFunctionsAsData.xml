@@ -400,7 +400,7 @@
     </para>
     
     <para>
-      Results in <emphasis role="input">1.0 + 1</emphasis>, i.e. <emphasis role="input">1.0</emphasis>
+      Results in <emphasis role="input">1.0 + 1</emphasis>, i.e. <emphasis role="input">2.0</emphasis>
     </para>
   </section>
   <section xml:id="useful-examples-for-functions">

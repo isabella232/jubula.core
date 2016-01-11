@@ -285,8 +285,7 @@
       <listitem>
         <para>
           Information pertaining to the active project, including the name (all projects in the
-          database must have unique names), the Project language(s), and the data language for
-          the Project.
+          database must have unique names).
         </para>
       </listitem>
     </varlistentry>

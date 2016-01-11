@@ -62,12 +62,6 @@
     </listitem>
     <listitem>
       <para>
-        checked that your current working language is supported by
-        the chosen AUT.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         connected to the AUT Agent (<xref linkend="connect-aut-agent"/>)
       </para>
     </listitem>

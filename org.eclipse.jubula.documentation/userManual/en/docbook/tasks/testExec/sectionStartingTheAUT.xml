@@ -36,12 +36,6 @@
       </para>
     </listitem>
   </itemizedlist>
-  <para role="tip">
-    You can only start AUTs from the ITE which support the
-    current working language. Change the working language if
-    necessary by selecting a language from the list next to the
-    language button on the toolbar.
-  </para>
   <orderedlist>
     <listitem>
       <para>
@@ -58,11 +52,6 @@
       <para>
         Select an AUT and the configuration to start it with from
         the list.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        The AUT will be started in the current working language.
       </para>
     </listitem>
     <listitem>

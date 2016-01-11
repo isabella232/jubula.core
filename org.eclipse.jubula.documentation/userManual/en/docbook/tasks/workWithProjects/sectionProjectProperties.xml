@@ -40,11 +40,6 @@
     </listitem>
     <listitem>
       <para>
-        the Project languages (<xref linkend="editing-the-languages-for-a-project"/>).
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         the AUTs (<xref linkend="editing-the-auts-in-a-project"/>).
       </para>
     </listitem>
@@ -161,23 +156,6 @@
         </para>
       </listitem>
     </orderedlist>
-  </section>
-  <section xml:id="editing-the-languages-for-a-project">
-    <title>Editing the languages for a Project</title>
-    <anchor role="helpid" condition="projectSettingsPageContextId" xml:id="editing-the-languages-for-a-project.projectSettingsPageContextId" xreflabel="Project Properties"/>
-    <para>
-      To see and edit the Project languages, select ”<emphasis>Project languages</emphasis>”
-      from the tree on the left-hand side of the Project properties
-      dialog.
-    </para>
-    <para>
-      You can add and remove Project languages and change the
-      default language in this screen.
-    </para>
-    <para role="tip">
-      You can’t delete a language which is being used as an
-      AUT language.
-    </para>
   </section>
   <section xml:id="editing-the-auts-in-a-project">
     <title>Editing the AUTs in a Project</title>

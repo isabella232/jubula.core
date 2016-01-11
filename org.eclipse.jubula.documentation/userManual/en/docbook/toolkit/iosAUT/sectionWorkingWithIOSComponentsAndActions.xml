@@ -357,8 +357,7 @@
           <listitem>
             <para>
               Bear in mind that accessibility labels are
-              language-dependent (i.e. you will need to translate
-              the test data), and also sometimes
+              language-dependent, and also sometimes
               orientation-dependent. It is also not necessarily the
               case that the accessibility label is the same as the
               text on the item that is visible in the AUT.

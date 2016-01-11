@@ -13,14 +13,12 @@
   <title>The Data Sets View</title>
   <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="the-data-sets-view.guidancerDataSetViewContextId" xreflabel="Data Sets View"/>
   <para>
-    The Data Sets View is in the lower right-hand corner of the
-    Functional Test Specification Perspective by default. It lets you add, modify,
-    delete and see any data for Test Cases. For each Test Case
-    containing references or for each central test data set, you can
-    add data sets in this view. This is also the view where you can
-    translate your data and overwrite data when you reuse a Test
-    Case. When data in the Data Sets View are uneditable, they are
-    shown in gray. Values in black may be edited.
+	The Data Sets View is in the lower right-hand corner of the
+	Functional Test Specification Perspective by default. It lets you add, modify,
+	delete and see any data for Test Cases. For each Test Case
+	containing references or for each central test data set, you can
+	add data sets in this view. When data in the Data Sets View are
+	uneditable, they are shown in gray. Values in black may be edited.
   </para>
   <para>
     To make entering data easier, pressing

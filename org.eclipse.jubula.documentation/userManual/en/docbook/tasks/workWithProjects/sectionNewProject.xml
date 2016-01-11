@@ -97,25 +97,6 @@
     </listitem>
     <listitem>
       <para>
-        From the list of available languages, select the languages
-        supported by your AUT and move them into the
-        ”<emphasis>project language</emphasis>” box using the arrow
-        button. Use <emphasis role="input">»CTRL«</emphasis> to select
-        multiple languages.
-      </para>
-      <para>
-        You will be able to start the AUT in these languages, and
-        translate test data into these languages.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Select a default language from the combo box. The default
-        language is the language your Project is started in.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         You can now click ”<emphasis>Next</emphasis>” to define an
         AUT for this Project (<xref linkend="define-aut"/>).
       </para>

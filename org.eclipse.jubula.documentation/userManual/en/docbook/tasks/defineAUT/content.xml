@@ -88,23 +88,6 @@
     </listitem>
     <listitem>
       <para>
-        From the list of Project languages, select which languages are
-        supported by the AUT.
-      </para>
-      <para>
-        The languages you select are the languages the AUT can be
-        started in. You will be able to translate the data in your
-        Test Cases into these languages so that a Test Suite will test
-        the AUT in the right language.
-      </para>
-      <para role="warning">
-        If you are editing the AUT and remove an AUT language
-        for which you have already specified data, this will result in
-        the data for that language being lost.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         If you want to start this AUT from the ITE, you can do so in
         the Project properties (<xref linkend="configuringaut"/>).
       </para>

@@ -46,12 +46,6 @@
     </listitem>
     <listitem>
       <para>
-        Set the working language to the language you want to execute
-        the test in.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         Connect to the AUT Agent (<xref linkend="connect-aut-agent"/>).
       </para>
     </listitem>

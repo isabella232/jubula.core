@@ -18,12 +18,6 @@
     To configure a Test Suite, you must first create one
     (<xref linkend="creating-a-test-suite"/>).
   </para>
-  <para role="tip">
-    If you are editing the Test Suite, the working language
-    (which is specified via the globe button on the toolbar) must be
-    set to a language supported by the chosen AUT for the Test
-    Suite. Otherwise the Test Suite will be uneditable.
-  </para>
   <orderedlist>
     <listitem>
       <para>

@@ -32,11 +32,6 @@
         You have not configured an AUT (<xref linkend="configuringaut"/>).
       </para>
     </listitem>
-    <listitem>
-      <para>
-        The AUT does not support the current working language.
-      </para>
-    </listitem>
   </itemizedlist>
   <para>
     <emphasis role="strong">Errors starting the AUT</emphasis>

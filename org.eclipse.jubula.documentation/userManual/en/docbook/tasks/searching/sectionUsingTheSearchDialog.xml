@@ -29,8 +29,7 @@
   </figure>
   <para>
     The search dialog allows you to search the
-    <emphasis role="strong">current Project in the current working
-    language</emphasis> for:
+    <emphasis role="strong">current Project </emphasis> for:
   </para>
   <itemizedlist>
     <listitem>
@@ -113,10 +112,6 @@
       results are shown in the Search Result View
       (<xref linkend="using-the-search-result-view"/>).
     </para>
-    <para role="tip">
-      Only results from the
-      current working language are displayed.
-    </para>
   </section>
   <section xml:id="searching-for-test-data">
     <title>Searching for test data</title>
@@ -161,9 +156,6 @@
       Click ”<emphasis>Search</emphasis>” to start the search. The
       results are shown in the Search Result View
       (<xref linkend="using-the-search-result-view"/>).
-    </para>
-    <para role="tip">
-      Only test data from the current working language is displayed. 
     </para>
   </section>
   <section xml:id="searching-for-files">

@@ -17,7 +17,7 @@
   <itemizedlist>
     <listitem>
       <para>
-        The Test Suite has complete data for the current language.
+        The Test Suite has complete data.
       </para>
       <para role="warning">
         No parameter values can be empty in a Test Suite. If

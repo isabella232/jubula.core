@@ -1,0 +1,47 @@
+<section xml:id="known-issues-and-other-information-8.2.2"
+    version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>Known issues and other information</title>
+
+    <para>
+    	<emphasis role="strong">Removal of multi language support</emphasis>
+    </para>
+    <itemizedlist>
+    	<listitem>
+    		<para>
+    			We removed the support for multi-lingual testing, i.e. it is not possible anymore to specify test data in different languages in one project. The according GUI items and command line tools parameters have been removed. When importing a project which contains multi-lingual test data the default language is the one that will be kept.
+    			The command line tools will also use the default language. AUTs can still be started in different languages using the according AUT arguments.  
+    		</para>
+    	</listitem>
+    </itemizedlist>	
+    <para>
+    	<emphasis role="strong">Removal of .NET and Winapps toolkit support</emphasis>
+    </para>	
+    <itemizedlist>
+    	<listitem>
+    		<para>
+    			We removed the support for .NET and Winapps toolkits. It is no longer possible to create projects and start AUTs using these two toolkits.
+    		</para>
+    	</listitem>
+    </itemizedlist>
+    <para>
+    	<emphasis role="strong">Removal of external Chronon support</emphasis>
+    </para>	
+	<itemizedlist>
+    	<listitem>
+    		<para>
+    			We removed the external support for the Chronon monitoring agent. 
+    		</para>
+    	</listitem>
+    </itemizedlist>
+    <para>
+    	<emphasis role="strong">Removal of mobile toolkit</emphasis>
+    </para>
+    <itemizedlist>
+    	<listitem>
+    		<para>
+    			We removed the mobile toolkit support. Projects using this toolkit will be automatically converted to iOS toolkit. 
+    		</para>
+    	</listitem>
+    </itemizedlist>
+</section>
