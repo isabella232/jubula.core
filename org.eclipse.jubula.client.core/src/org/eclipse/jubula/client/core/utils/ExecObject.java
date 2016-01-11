@@ -38,7 +38,7 @@ public class ExecObject {
     /**
      * <code>m_index</code> index of actual executed child
      */
-    private int m_index = -1;
+    private int m_index = Traverser.NO_INDEX;
     
     /** 
      * the number of times the node for this object has been retried.
@@ -53,40 +53,12 @@ public class ExecObject {
      * constructor
      * 
      * @param node node
-     * @param index
-     *            index of childrenlist of node for actual executed child
-     * @param number
-     *            number of actual executed dataset
-     * @param retryCount
-     *            number of times this node has been retried
-     */
-    public ExecObject(INodePO node, int index, int number, int retryCount) {
-        this(node, index, number);
-        m_retryCount = retryCount;
-    }
-
-    /**
-     * constructor
-     * 
-     * @param node node
-     * @param index
-     *            index of childrenlist of node for actual executed child
      * @param number
      *            number of actual executed dataset
      */
-    public ExecObject(INodePO node, int index, int number) {
+    public ExecObject(INodePO node, int number) {
         m_execNode = node;
-        m_index = index;
         m_numberDs = number;
-    }
-    
-    /**
-     * constructor to use for node objects without consideration of datasets
-     * @param node see above
-     * @param index see above
-     */
-    public ExecObject(INodePO node, int index) {
-        this(node, index, Traverser.NO_DATASET);
     }
     
     /**
@@ -122,13 +94,6 @@ public class ExecObject {
      */
     public void incrementDataSetNumber() {
         ++m_numberDs;
-    }
-    
-    /**
-     * decrement dataset number
-     */
-    public void decrementDataSetNumber() {
-        --m_numberDs;
     }
     
     /**

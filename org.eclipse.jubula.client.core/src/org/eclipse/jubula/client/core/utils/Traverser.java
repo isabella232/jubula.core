@@ -187,7 +187,7 @@ public class Traverser {
     public Traverser(INodePO root) {
         m_root = root;
         m_externalTestDataBP = new ExternalTestDataBP();
-        m_execStack.push(new ExecObject(root, NO_INDEX, 0));
+        m_execStack.push(new ExecObject(root, 0));
         executeLogging();
     }
 
@@ -235,8 +235,7 @@ public class Traverser {
                     return next();
                 }
                 if (childNode instanceof ICommentPO) {
-                    m_execStack.push(new ExecObject(childNode, NO_INDEX,
-                            NO_DATASET));
+                    m_execStack.push(new ExecObject(childNode, NO_DATASET));
                     fireExecStackIncremented(childNode);
                     return next();
                 }
@@ -269,51 +268,53 @@ public class Traverser {
     /**
      * processes a childnode which is an ExecTestCasePO
      * @param stackObj the stack object
-     * @param childNode the child node
+     * @param exec the child node
      * @throws JBException an exception.
      */
     private void processExecTestCase(ExecObject stackObj,
-        IExecTestCasePO childNode) 
+        final IExecTestCasePO exec) 
         throws JBException {
         
-        IExecTestCasePO exTc = childNode;
-        ITDManager tdManager = null;
-        tdManager = m_externalTestDataBP.getExternalCheckedTDManager(exTc);
+        final ITDManager tdManager = m_externalTestDataBP
+                .getExternalCheckedTDManager(exec);
         
-        String td = null;
         IDataSetPO dataSet = null;
         
-        if (tdManager.getDataSetCount() > 0) {
+        int dataSetSize = tdManager.getDataSetCount();
+        if (dataSetSize > 0) {
             dataSet = tdManager.getDataSet(0);
         }
+
+        String modelValue = null;
         if (dataSet != null && dataSet.getColumnCount() > 0) {
-            td = dataSet.getValueAt(0);
+            modelValue = dataSet.getValueAt(0);
         }
         // own data sets - > always begin at 0
-        if (tdManager.getDataSetCount() > 1) {
-            m_execStack.push(new ExecObject(childNode, NO_INDEX, 
-                getFirstDataSetNumber(childNode)));
-        } else if (tdManager.getDataSetCount() == 1) {
+        if (dataSetSize > 1) {
+            m_execStack.push(new ExecObject(exec, 
+                getFirstDataSetNumber(exec)));
+        } else if (dataSetSize == 1) {
             // exact one dataset with a reference -> 
             // begin at data set index of parent
             String uniqueId = tdManager.getUniqueIds().get(0);
-            IParamDescriptionPO desc = exTc.getParameterForUniqueId(uniqueId);
+            IParamDescriptionPO desc = exec.getParameterForUniqueId(
+                    uniqueId);
             ParamValueConverter conv = new ModelParamValueConverter(
-                td, exTc, desc);
-            if (td != null && conv.containsReferences()) {
-                m_execStack.push(new ExecObject(childNode, NO_INDEX,
-                    stackObj.getNumberDs()));
+                modelValue, exec, desc);
+            if (modelValue != null && conv.containsReferences()) {
+                m_execStack.push(new ExecObject(exec, 
+                        stackObj.getNumberDs()));
             // exact one dataset with a value or no value in runIncomplete-mode
             // always use dataset number 0
-            } else if (td != null) {
-                m_execStack.push(new ExecObject(childNode, NO_INDEX, 0));
+            } else if (modelValue != null) {
+                m_execStack.push(new ExecObject(exec, 0));
             }
         // no data sets or fixed value
         } else {
-            m_execStack.push(new ExecObject(childNode, NO_INDEX, NO_DATASET));
+            m_execStack.push(new ExecObject(exec, NO_DATASET));
         }
         executeLogging();
-        fireExecStackIncremented(childNode);
+        fireExecStackIncremented(exec);
     }
 
     /**
@@ -738,7 +739,7 @@ public class Traverser {
         EventObject eventObj = getEventObject(eventType, true);
         IEventExecTestCasePO eventExecTC = eventObj.getEventExecTc();
         
-        int startIndex = 0;
+        int dataSetIndex = 0;
         final ITDManager mgr = eventExecTC.getDataManager();
         if (mgr.getDataSetCount() > 0) {
             IDataSetPO row = mgr.getDataSet(0);
@@ -751,13 +752,13 @@ public class Traverser {
                 ParamValueConverter conv = new ModelParamValueConverter(
                     td, eventExecTC, desc);
                 if (conv.containsReferences()) {
-                    startIndex = execObj.getNumberDs();
+                    dataSetIndex = execObj.getNumberDs();
                     break;
                 }
             }
         }
      
-        m_execStack.push(new ExecObject(eventExecTC, NO_INDEX, startIndex));
+        m_execStack.push(new ExecObject(eventExecTC, dataSetIndex));
         m_eventStack.push(eventObj);
         fireEventStackIncremented();
         fireExecStackIncremented(eventExecTC);
