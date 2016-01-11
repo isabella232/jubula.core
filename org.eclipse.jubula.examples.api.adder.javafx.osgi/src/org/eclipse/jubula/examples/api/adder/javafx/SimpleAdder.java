@@ -82,7 +82,7 @@ public class SimpleAdder {
         AUTConfiguration config = new JavaFXAUTConfiguration(
                 "api.aut.conf.simple.adder.javafx", //$NON-NLS-1$
                 autID,
-                "..\\examples\\JREs\\java8\\bin\\java.exe", //$NON-NLS-1$
+                "..\\jre\\bin\\java.exe", //$NON-NLS-1$
                 "..\\examples\\AUTs\\SimpleAdder\\javafx", //$NON-NLS-1$ 
                 new String[]{"-jar", "SimpleAdder.jar"}, //$NON-NLS-1$ //$NON-NLS-2$
                 Locale.getDefault());
