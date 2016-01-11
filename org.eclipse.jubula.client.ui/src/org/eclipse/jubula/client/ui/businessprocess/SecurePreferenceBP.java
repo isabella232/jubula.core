@@ -15,20 +15,20 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnection;
 import org.eclipse.jubula.client.core.preferences.database.DatabaseConnectionConverter;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
@@ -108,9 +108,9 @@ public class SecurePreferenceBP {
      */
     public boolean isSaveCredentialsActive(String profileName) {
         boolean saveProfile = false;
-        HashSet<String> setProfiles = new HashSet<String>();
+        Set<String> setProfiles = new HashSet<String>();
         setProfiles.clear();
-        setProfiles = (HashSet<String>) splitProfileString(
+        setProfiles = splitProfileString(
                 Constants.SAVE_PROFILE_NAMES_KEY);
 
         if (!setProfiles.isEmpty()) {
@@ -136,9 +136,9 @@ public class SecurePreferenceBP {
      */
     public void setSaveCredentialStatus(String profileName, boolean status) {
         IPreferenceStore store = Plugin.getDefault().getPreferenceStore();
-        HashSet<String> setProfiles = new HashSet<String>();
+        Set<String> setProfiles = new HashSet<String>();
         setProfiles.clear();
-        setProfiles = (HashSet<String>) splitProfileString(
+        setProfiles = splitProfileString(
                 Constants.SAVE_PROFILE_NAMES_KEY);
         StringBuffer bufferProfiles = new StringBuffer();
         if (status) {
@@ -175,7 +175,7 @@ public class SecurePreferenceBP {
         String profileNames = store.getString(preferenceKey);
         String[] arrayProfiles = profileNames.split(StringConstants.SEMICOLON);
 
-        HashSet<String> setProfiles = new HashSet<String>();
+        Set<String> setProfiles = new HashSet<String>();
         for (String profile : arrayProfiles) {
             setProfiles.add(profile);
         }

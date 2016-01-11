@@ -62,7 +62,7 @@ public class EditAttributeDialog extends TrayDialog {
     /** Attributes which will be changed and saved */
     private Map<String, String> m_attributes;
     /** descriptions of the attributes */
-    private HashMap<String, String> m_descriptions;
+    private Map<String, String> m_descriptions;
     
     // GUI-Components
     /** TableViewer of the dialog */
