@@ -69,4 +69,14 @@
             </para>
         </listitem>
     </itemizedlist>
+    <para>
+        <emphasis role="strong">New features in report generation</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                Now you are able generate monitoring report automatically.
+            </para>
+        </listitem>
+    </itemizedlist>
 </section>

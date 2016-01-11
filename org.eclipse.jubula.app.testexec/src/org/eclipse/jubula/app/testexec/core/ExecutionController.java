@@ -317,6 +317,9 @@ public class ExecutionController implements IAUTServerEventListener,
                 TestExecutionConstants.RunSteps.CAA)) {
             return true;
         }
+        // set monitoring report generation
+        clientTest.setGenerateMonitoringReport(
+                m_job.isGenerateMonitoringReport());
         clientTest.setScreenshotXMLFlag(m_job.isXMLScreenshot());
         //prepare connection to the DB
         prepareDBConnection();

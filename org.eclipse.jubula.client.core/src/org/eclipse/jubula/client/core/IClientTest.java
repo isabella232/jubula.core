@@ -317,6 +317,11 @@ public interface IClientTest {
     public void setLogPath(String logPath);
     
     /**
+     * @param generateMonitoringReport the monitoring report generation flag to set
+     */
+    public void setGenerateMonitoringReport(Boolean generateMonitoringReport);
+    
+    /**
      * @param logStyle <code>String</code> representing the style the log
      *                 use (for example, Complete or Errors only)
      */

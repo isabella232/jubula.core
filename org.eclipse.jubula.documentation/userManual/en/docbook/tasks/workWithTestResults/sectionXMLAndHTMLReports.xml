@@ -10,7 +10,7 @@
 <section xml:id="xml-and-html-reports" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>XML and HTML reports</title>
+  <title>XML/HTML and monitoring reports</title>
   <anchor role="helpid" condition="prefPageTestResultContextId" xml:id="xml-and-html-reports.prefPageTestResultContextId" xreflabel="Test Result Preferences"/>
   <para>
     You can create XML and HTML reports for your tests in one of two ways:
@@ -33,6 +33,20 @@
             from the Test Result Summary View, as this does not
             involve defining any external files for your test
             environment.
+          </para>
+        </listitem>
+      </itemizedlist>
+    </listitem>
+    <listitem>
+     <para>
+        You can specify that monitoring reports should be created
+        when a test runs in the preferences (<xref linkend="test-result-preferences"/>).
+      </para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            We recommend using the option to export monitoring reports automatically
+            to the specified folder.
           </para>
         </listitem>
       </itemizedlist>

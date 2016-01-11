@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
@@ -116,6 +118,7 @@ import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.MonitoringUtil;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.eclipse.jubula.tools.internal.utils.ZipUtil;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -176,6 +179,11 @@ public class ClientTestImpl implements IClientTest {
     /** log style (for example, Complete or Errors only) */
     private String m_logStyle = null;
 
+    /**
+     * flag, which indicates monitoring reports will be exported automatically.
+     */
+    private boolean m_generateMonitoringReport;
+    
     /**
      * log path for results
      */
@@ -1087,6 +1095,13 @@ public class ClientTestImpl implements IClientTest {
                         }
                     }
                     writeMonitoringResults(result);
+                    if (m_logPath != null && m_generateMonitoringReport) {
+                        writeMonitoringReportToFile(result);
+                    }
+               
+                    //set the monitoring report in result to null, 
+                    //so it can be garbage collected
+                    result.setReportData(null);
                     monitor.done();
                     return Status.OK_STATUS;
                 } catch (Throwable t) {
@@ -1125,10 +1140,58 @@ public class ClientTestImpl implements IClientTest {
         }
         summary = TestResultSummaryPM.mergeTestResultSummaryInDB(summary); 
         setTestresultSummary(summary);
-        //set the monitoring report in result to null, 
-        //so it can be garbage collected
-        result.setReportData(null);
     }
+    
+    /**
+     * Write Jacoco Monitoring report to file
+     * @param result result to create the monitoring report for
+     */ 
+    public void writeMonitoringReportToFile(TestResult result) {
+
+        byte[] reportData = result.getReportData();
+        if (reportData == null || reportData 
+                == (MonitoringConstants.EMPTY_REPORT)) {
+            return;
+        }
+        
+        final ITestResultSummaryPO testResultSummary = 
+                                        getTestresultSummary();
+        String theProjName = testResultSummary
+                .getTestsuiteName() + "-" //$NON-NLS-1$
+                + testResultSummary.getInternalMonitoringId()
+                + "-" //$NON-NLS-1$
+                + testResultSummary.getId().toString();
+        BufferedOutputStream bos = null;
+        File tmpZip = null;
+        try {
+           
+            tmpZip = File.createTempFile("tmpReport", ".zip"); //$NON-NLS-1$ //$NON-NLS-2$
+            bos = new BufferedOutputStream(new FileOutputStream(tmpZip));
+            bos.write(reportData);
+
+            String targetDirName = m_logPath + File.separator
+                    + "JaCoCo Reports" + File.separator //$NON-NLS-1$
+                    + theProjName;
+
+            ZipUtil.unzip(tmpZip, new File(targetDirName));
+
+        } catch (IOException e) {
+            log.error(e.toString());   
+        } finally {
+            try {
+                if (bos != null) {
+                    bos.close();
+                }
+                if (tmpZip != null) {
+                    tmpZip.delete();
+                }
+            } catch (IOException e) {
+                log.error("Error while writing zip file to tmp dir", e); //$NON-NLS-1$                        
+            }
+        }
+      
+    }
+    
     /**
      * find the significant monitoring value
      * @param map The map containing monitoring values
@@ -1331,6 +1394,11 @@ public class ClientTestImpl implements IClientTest {
     public void setLogStyle(String logStyle) {
         m_logStyle = logStyle;
     }
+    
+    @Override
+    public void setGenerateMonitoringReport(Boolean generateMonitoringReport) {
+        this.m_generateMonitoringReport = generateMonitoringReport;
+    }
 
     /**
      * @return the Test Result Summary for the current test execution, or for
@@ -1480,4 +1548,6 @@ public class ClientTestImpl implements IClientTest {
     public boolean isReportingRunning() {
         return m_isReportRunning.get();
     }
+
+   
 }

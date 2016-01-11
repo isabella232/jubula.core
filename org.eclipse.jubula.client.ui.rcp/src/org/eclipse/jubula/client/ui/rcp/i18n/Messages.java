@@ -852,6 +852,7 @@ public class Messages extends NLS {
     public static String TestResultViewPreferencePageDescription;
     public static String TestResultViewPreferencePageDirSelector;
     public static String TestResultViewPreferencePageGenerateReport;
+    public static String TestResultViewPreferencePageGenerateMonitoringReport;
     public static String TestResultViewPreferencePageInvalidMaxNumberOfDays;
     public static String TestResultViewPreferencePageInvalidNegMaxNumberOfDays;
     public static String TestResultViewPreferencePageMaxNumberOfDaysText;

@@ -58,6 +58,8 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                         MessageIDs.E_FILE_NOT_FOUND));
                 return false;
             }
+            clientTest.setGenerateMonitoringReport(preferenceStore
+                    .getBoolean(Constants.GENERATE_MONITORING_REPORT_KEY));
             clientTest.setLogPath(preferenceStore
                 .getString(Constants.RESULTPATH_KEY));
             clientTest.setLogStyle(preferenceStore

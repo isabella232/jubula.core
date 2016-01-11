@@ -188,6 +188,14 @@
 		You cannot write file names containing path information.
           	</entry>
           </row>
+           <row>
+            <entry>Generate Monitoring reports (optional)</entry>
+            <entry>
+              <emphasis role="input">-generate_monitoring_report</emphasis>
+              <?linebreak?>Use when you want monitoring reports to be produced by the testexec.<?linebreak?>
+              Reports will be written to the result directory.
+            </entry>
+          </row>
           <row>
             <entry>No run option (optional)</entry>
             <entry>

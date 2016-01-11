@@ -67,6 +67,7 @@ public class Messages extends NLS {
     public static String ClientWorkspaceOpt;
     public static String ClientWritingReport;
     public static String ClientWritingReportToDB;
+    public static String ClientGenerateMonitoringReport;
     public static String ConnectionToAutUnexpectedly;
     public static String ErrorWhileShuttingDownDisconnecting;
     public static String ErrorWhileShuttingDownStopping;

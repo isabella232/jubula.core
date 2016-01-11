@@ -96,6 +96,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
             IPreferenceStore prefStore) {
         prefStore.setDefault(Constants.GENERATEREPORT_KEY,
                 Constants.GENERATEREPORT_KEY_DEFAULT);
+        prefStore.setDefault(Constants.GENERATE_MONITORING_REPORT_KEY,
+                Constants.GENERATE_MONITORING_REPORT_KEY_DEFAULT);
         prefStore.setDefault(Constants.REPORTGENERATORSTYLE_KEY,
             Constants.REPORTGENERATORSTYLE_KEY_DEFAULT);
         prefStore.setDefault(Constants.OPENRESULTVIEW_KEY,

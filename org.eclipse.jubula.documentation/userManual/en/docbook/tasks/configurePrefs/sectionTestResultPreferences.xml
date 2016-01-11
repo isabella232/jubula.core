@@ -73,6 +73,12 @@
         shown. Enter a directory for the reports.
       </para>
     </listitem>
+     <listitem>
+      <para>
+        Choose whether you want to create Monitoring reports for
+        each execution. Reports will be created in the report directory.
+      </para>
+    </listitem>
     <listitem>
       <para>
         Enter the amount of days that test result summaries should

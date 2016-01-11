@@ -202,6 +202,9 @@ public interface Constants {
     /** Key for m_text value to be stored as a resource property */
     public static final String GENERATEREPORT_KEY = "GENERATEREPORT_KEY"; //$NON-NLS-1$
 
+    /** Key for m_generateReport value to be stored as a resource property */
+    public static final String GENERATE_MONITORING_REPORT_KEY = "GENERATE_MONITORING_REPORT_KEY"; //$NON-NLS-1$
+    
     /** Key for report generator style to be stored as a resource property */
     public static final String REPORTGENERATORSTYLE_KEY = "REPORTGENERATORSTYLE_KEY"; //$NON-NLS-1$
     
@@ -359,6 +362,9 @@ public interface Constants {
 
     /** Key for boolean value to be stored as a resource property */
     public static final boolean GENERATEREPORT_KEY_DEFAULT = false;
+    
+    /** Key for m_generateMonitoringReport value to be stored as a resource property */
+    public static final boolean GENERATE_MONITORING_REPORT_KEY_DEFAULT = false;
 
     /** Key for m_text value to be stored as a resource property */
     public static final boolean TEST_EXECUTION_RELEVANT_REMEMBER_KEY_DEFAULT = 

@@ -160,6 +160,11 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.TIMEOUT, true,
                 ClientTestStrings.TIMEOUT, Messages.ClientTimeout, 
                     false));  
+        
+        options.addOption(
+                createOption(ClientTestStrings.GENERATE_MONITORING_REPORT,
+                        false, StringConstants.EMPTY,
+                        Messages.ClientGenerateMonitoringReport, false));
     }
     
     /**

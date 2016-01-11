@@ -121,6 +121,8 @@ public class JobConfiguration {
     private boolean m_xmlScreenshot = true;
     /** file name for the xml and html document */
     private String m_fileName;
+    /** flag to generate monitoring report */
+    private boolean m_generateMonitoringReport;
     
     /**
      * constructor
@@ -271,6 +273,19 @@ public class JobConfiguration {
         return m_server;
     }
     
+    /**
+     * @return true, if the monitoring report should be generated, else false
+     */
+    public boolean isGenerateMonitoringReport() {
+        return m_generateMonitoringReport;
+    }
+
+    /** 
+     * @param generateMonitoringReport to set
+     */
+    public void setGenerateMonitoringReport(boolean generateMonitoringReport) {
+        this.m_generateMonitoringReport = generateMonitoringReport;
+    }
 
     /**
      * initializes the job configuration object after loading project
@@ -460,6 +475,9 @@ public class JobConfiguration {
         }
         if (cmd.hasOption(ClientStrings.RESULT_NAME)) {
             setFileName(cmd.getOptionValue(ClientStrings.RESULT_NAME));
+        }
+        if (cmd.hasOption(ClientTestStrings.GENERATE_MONITORING_REPORT)) { 
+            setGenerateMonitoringReport(true); 
         }
     }
 

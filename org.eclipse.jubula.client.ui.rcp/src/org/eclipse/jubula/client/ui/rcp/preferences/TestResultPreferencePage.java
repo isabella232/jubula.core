@@ -93,6 +93,9 @@ public class TestResultPreferencePage extends PreferencePage
     
     /** Checkbox to decide Report Generation */
     private Button m_generateReport = null;
+    
+    /** Checkbox to decide Monitoring Report Generation */
+    private Button m_generateMonitoringReport = null;
 
     /** ComboBox to decide Report Generation style */
     private Combo m_reportStyle = null;
@@ -346,6 +349,7 @@ public class TestResultPreferencePage extends PreferencePage
         m_generateReport.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
                 enableReportStyleCombo();
+                enableMonitoringReportGeneration();
                 enableLogFileBrowser();
                 checkCompleteness();
             }
@@ -354,6 +358,8 @@ public class TestResultPreferencePage extends PreferencePage
                 // nothing here
             }
         });
+        
+        createMonitoringReportButton(parent);
         
         createReportStyleCombo(parent);
         Label label = new Label(parent, SWT.NONE);
@@ -406,6 +412,21 @@ public class TestResultPreferencePage extends PreferencePage
             }
         });
     }
+
+    /**
+     * Create view to decide automatic monitoring report generation.
+     * @param parent The parent <code>Composite</code>
+     */
+    private void createMonitoringReportButton(Composite parent) {
+        GridData gridData;
+        m_generateMonitoringReport = new Button(parent, SWT.CHECK);
+        m_generateMonitoringReport.setText(Messages
+                .TestResultViewPreferencePageGenerateMonitoringReport);
+        gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.horizontalSpan = 4;
+        gridData.grabExcessHorizontalSpace = true;
+        m_generateMonitoringReport.setLayoutData(gridData);
+    }
     
 
     /**
@@ -452,6 +473,8 @@ public class TestResultPreferencePage extends PreferencePage
             OPENRESULTVIEW_KEY));
         m_generateReport.setSelection(getDefaultPrefsBool(
             Constants.GENERATEREPORT_KEY));
+        m_generateMonitoringReport.setSelection(
+                getDefaultPrefsBool(Constants.GENERATE_MONITORING_REPORT_KEY));
         m_trackResults.setSelection(getDefaultPrefsBool(
             Constants.TRACKRESULTS_KEY));
         m_autoScreenshots.setSelection(getDefaultPrefsBool(
@@ -462,6 +485,7 @@ public class TestResultPreferencePage extends PreferencePage
             Constants.REPORTGENERATORSTYLE_KEY));
         m_reportStyle.setEnabled(m_generateReport.getSelection());
         m_path.setText(getDefaultPrefsString(Constants.RESULTPATH_KEY));
+        m_generateMonitoringReport.setEnabled(m_generateReport.getSelection());
         m_path.setEnabled(m_generateReport.getSelection());
         m_numberOfDays.setText(getDefaultPrefsString(
                 Constants.MAX_NUMBER_OF_DAYS_KEY));
@@ -490,6 +514,8 @@ public class TestResultPreferencePage extends PreferencePage
             Constants.OPENRESULTVIEW_KEY));
         m_generateReport.setSelection(getPreferenceStore().getBoolean(
             Constants.GENERATEREPORT_KEY));
+        m_generateMonitoringReport.setSelection(getPreferenceStore()
+                .getBoolean(Constants.GENERATE_MONITORING_REPORT_KEY));
         m_trackResults.setSelection(getPreferenceStore().getBoolean(
                 Constants.TRACKRESULTS_KEY));
         m_autoScreenshots.setSelection(getPreferenceStore().getBoolean(
@@ -502,6 +528,7 @@ public class TestResultPreferencePage extends PreferencePage
                 Constants.MAX_NUMBER_OF_DAYS_KEY));
         enableReportStyleCombo();
         enableLogFileBrowser();
+        enableMonitoringReportGeneration();
 
     }
 
@@ -524,6 +551,8 @@ public class TestResultPreferencePage extends PreferencePage
         // set preferences in store
         boolean openResult = m_openResultView.getSelection();
         boolean generateReport = m_generateReport.getSelection();
+        boolean generateMonitoringReport = m_generateMonitoringReport
+                .getSelection();
         boolean trackResults = m_trackResults.getSelection();
         boolean autoScreenshots = m_autoScreenshots.getSelection();
         // set preferences in store
@@ -531,6 +560,8 @@ public class TestResultPreferencePage extends PreferencePage
             Constants.OPENRESULTVIEW_KEY, openResult);
         getPreferenceStore().setValue(
             Constants.GENERATEREPORT_KEY, generateReport);
+        getPreferenceStore().setValue(Constants.GENERATE_MONITORING_REPORT_KEY,
+                generateMonitoringReport);
         getPreferenceStore().setValue(
             Constants.TRACKRESULTS_KEY, trackResults);
         getPreferenceStore().setValue(
@@ -570,6 +601,15 @@ public class TestResultPreferencePage extends PreferencePage
         performOk();
     }
 
+    /**
+     * Set the same enabled state to monitoring report generation like the
+     * html/xml generation.
+     */
+    protected void enableMonitoringReportGeneration() {
+        m_generateMonitoringReport
+                .setEnabled(m_generateReport.getSelection());
+    }
+        
     /**
      * 
      */

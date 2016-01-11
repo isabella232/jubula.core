@@ -53,7 +53,8 @@ public class ClientTestStrings {
     public static final String TESTJOB = "testjob"; //$NON-NLS-1$
     /** object attribute */
     public static final String TIMEOUT = "timeout"; //$NON-NLS-1$
-    
+    /** constant string */
+    public static final String GENERATE_MONITORING_REPORT = "generate_monitoring_report"; //$NON-NLS-1$
     /** object attribute */
     public static final String ENTRY = "entry"; //$NON-NLS-1$
     /** object attribute */
