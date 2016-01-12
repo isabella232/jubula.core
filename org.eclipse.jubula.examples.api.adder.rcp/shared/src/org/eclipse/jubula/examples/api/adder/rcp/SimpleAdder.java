@@ -95,7 +95,8 @@ public class SimpleAdder {
                 "api.aut.conf.simple.adder.rcp", //$NON-NLS-1$
                 autID, "SimpleAdder.exe", //$NON-NLS-1$
                 "..\\examples\\AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\", //$NON-NLS-1$ 
-                null, Locale.getDefault(), Locale.getDefault());
+                null, 
+                Locale.getDefault());
 
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {

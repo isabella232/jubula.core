@@ -62,7 +62,6 @@ public class GroupTest {
                 "AUTs\\SimpleAdder\\rcp\\win32\\win32\\x86\\SimpleAdder.exe", //$NON-NLS-1$
                 "..\\examples\\", //$NON-NLS-1$ 
                 null, 
-                Locale.getDefault(),
                 Locale.getDefault());
 
         AUTIdentifier id = m_agent.startAUT(config);

@@ -40,8 +40,6 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
      *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the arguments
-     * @param locale
-     *            the AUT locale to use
      * @param keyboardLayout
      *            the keyboard layout to use
      */
@@ -51,9 +49,8 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
         @NonNull String command, 
         @NonNull String workingDir, 
         @Nullable String[] args,
-        @NonNull Locale locale, 
         @NonNull Locale keyboardLayout) {
-        super(name, autID, command, workingDir, args, locale, keyboardLayout);
+        super(name, autID, command, workingDir, args, keyboardLayout);
         
         // Toolkit specific information
         add(ToolkitConstants.ATTR_TOOLKITID, CommandConstants.RCP_TOOLKIT);

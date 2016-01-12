@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.javafx.config;
 
-import java.util.Locale;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.toolkit.base.config.AbstractOSProcessAUTConfiguration;
@@ -39,17 +37,14 @@ public class JavaFXAUTConfiguration extends AbstractOSProcessAUTConfiguration {
      *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the arguments
-     * @param locale
-     *            the AUT locale to use
      */
     public JavaFXAUTConfiguration(
             @Nullable String name, 
             @NonNull String autID,
             @NonNull String command, 
             @NonNull String workingDir,
-            @Nullable String[] args, 
-            @NonNull Locale locale) {
-        super(name, autID, command, workingDir, args, locale);
+            @Nullable String[] args) {
+        super(name, autID, command, workingDir, args);
         
         // Toolkit specific information
         add(ToolkitConstants.ATTR_TOOLKITID, CommandConstants.JAVAFX_TOOLKIT);

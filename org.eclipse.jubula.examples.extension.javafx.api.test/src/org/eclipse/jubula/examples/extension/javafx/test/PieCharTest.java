@@ -78,8 +78,7 @@ public class PieCharTest {
                 new String[]{
                         "-jar", //$NON-NLS-1$
                         "development\\extension\\AUT\\PieChart.jar" //$NON-NLS-1$
-                }, 
-                Locale.getDefault());
+                });
 
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {

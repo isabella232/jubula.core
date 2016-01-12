@@ -45,8 +45,6 @@ public class SWTAUTConfiguration extends
      *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the arguments
-     * @param locale
-     *            the AUT locale to use
      * @param keyboardLayout
      *            the keyboard layout to use
      */
@@ -56,9 +54,8 @@ public class SWTAUTConfiguration extends
         @NonNull String command, 
         @NonNull String workingDir, 
         @Nullable String[] args, 
-        @NonNull Locale locale,
         @NonNull Locale keyboardLayout) {
-        super(name, autID, command, workingDir, args, locale);
+        super(name, autID, command, workingDir, args);
         
         Validate.notNull(keyboardLayout, "The keyboard layout must not be null"); //$NON-NLS-1$
         m_keyboardLayout = keyboardLayout;

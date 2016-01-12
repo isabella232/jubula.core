@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.toolkit.base.config;
 
-import java.util.Locale;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
@@ -29,8 +27,6 @@ public abstract class AbstractOSProcessAUTConfiguration extends
     @NonNull private String m_command;
     /** the args */
     @Nullable private String[] m_args;
-    /** the locale */
-    @NonNull private Locale m_locale;
 
     /**
      * Constructor
@@ -48,16 +44,13 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the commands arguments
-     * @param locale
-     *            the locale to use for the AUT process
      */
     public AbstractOSProcessAUTConfiguration(
         @Nullable String name, 
         @NonNull String autID,
         @NonNull String command, 
         @NonNull String workingDir, 
-        @Nullable String[] args, 
-        @NonNull Locale locale) {
+        @Nullable String[] args) {
         super(name, autID, workingDir);
         
         Validate.notEmpty(command, "The given command must not be empty"); //$NON-NLS-1$
@@ -65,15 +58,11 @@ public abstract class AbstractOSProcessAUTConfiguration extends
         
         m_args = args;
 
-        Validate.notNull(locale, "The locale must not be null"); //$NON-NLS-1$
-        m_locale = locale;
-
         add(AutConfigConstants.EXECUTABLE, getCommand());
         add(AutConfigConstants.WORKING_DIR, getWorkingDir());
         add(AutConfigConstants.AUT_ARGUMENTS,
                 StringUtils.defaultString(StringUtils.join(getArgs(),
                         StringConstants.SPACE)));
-        add(AutConfigConstants.AUT_LOCALE, getLocale().toString());
     }
 
     /**
@@ -88,12 +77,5 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      */
     @Nullable public String[] getArgs() {
         return m_args;
-    }
-
-    /**
-     * @return the locale
-     */
-    @NonNull public Locale getLocale() {
-        return m_locale;
     }
 }

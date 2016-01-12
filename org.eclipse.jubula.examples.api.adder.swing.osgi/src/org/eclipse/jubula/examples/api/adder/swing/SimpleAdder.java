@@ -12,7 +12,6 @@ package org.eclipse.jubula.examples.api.adder.swing;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
@@ -84,8 +83,8 @@ public class SimpleAdder {
                 autID,
                 "..\\jre\\bin\\java.exe", //$NON-NLS-1$
                 "..\\examples\\AUTs\\SimpleAdder\\swing", //$NON-NLS-1$ 
-                new String[]{"-jar", "SimpleAdder.jar"}, //$NON-NLS-1$ //$NON-NLS-2$
-                Locale.getDefault());
+                new String[]{"-jar", "SimpleAdder.jar"} //$NON-NLS-1$ //$NON-NLS-2$
+                );
 
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {
