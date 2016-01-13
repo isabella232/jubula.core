@@ -73,8 +73,8 @@ public class TowersOfHanoi {
                 autID,
                 "//path/to/JRE", //$NON-NLS-1$
                 "//aut/working/dir", //$NON-NLS-1$ 
-                new String[]{"-jar", "hanoi.jar"}, //$NON-NLS-1$ //$NON-NLS-2$
-                Locale.getDefault());
+                new String[]{"-jar", "hanoi.jar"} //$NON-NLS-1$ //$NON-NLS-2$
+                );
 
         AUTIdentifier id = m_agent.startAUT(config);
         if (id != null) {

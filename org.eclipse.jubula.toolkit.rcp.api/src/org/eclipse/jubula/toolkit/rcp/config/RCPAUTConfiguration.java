@@ -42,6 +42,7 @@ public class RCPAUTConfiguration extends SWTAUTConfiguration {
      *            the arguments
      * @param keyboardLayout
      *            the keyboard layout to use
+     * @since 4.0
      */
     public RCPAUTConfiguration(
         @Nullable String name, 

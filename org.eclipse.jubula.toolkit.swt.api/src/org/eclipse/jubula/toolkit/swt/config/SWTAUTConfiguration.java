@@ -47,6 +47,7 @@ public class SWTAUTConfiguration extends
      *            the arguments
      * @param keyboardLayout
      *            the keyboard layout to use
+     * @since 4.0
      */
     public SWTAUTConfiguration(
         @Nullable String name, 

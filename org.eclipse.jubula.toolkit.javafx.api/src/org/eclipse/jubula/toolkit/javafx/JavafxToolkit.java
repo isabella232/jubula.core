@@ -18,7 +18,7 @@ import org.eclipse.jubula.toolkit.javafx.internal.JavafxToolkitInfo;
  * JavaFX toolkit information
  * 
  * @noextend This class is not intended to be extended by clients.
- * @since 3.2
+ * @since 4.0
  */
 public class JavafxToolkit {
     /** Constructor */
@@ -31,7 +31,7 @@ public class JavafxToolkit {
      * want to modify the toolkit by adding tester classes.
      * 
      * @return a toolkit information
-     * @since 3.2
+     * @since 4.0
      */
     @NonNull
     public static ToolkitInfo createToolkitInformation() {

@@ -37,6 +37,7 @@ public class JavaFXAUTConfiguration extends AbstractOSProcessAUTConfiguration {
      *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the arguments
+     * @since 4.0
      */
     public JavaFXAUTConfiguration(
             @Nullable String name, 

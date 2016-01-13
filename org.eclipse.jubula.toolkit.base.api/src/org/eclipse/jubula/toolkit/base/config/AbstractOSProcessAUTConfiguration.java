@@ -44,6 +44,7 @@ public abstract class AbstractOSProcessAUTConfiguration extends
      *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the commands arguments
+     * @since 4.0
      */
     public AbstractOSProcessAUTConfiguration(
         @Nullable String name, 

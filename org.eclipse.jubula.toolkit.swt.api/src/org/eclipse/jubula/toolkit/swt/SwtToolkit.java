@@ -18,7 +18,7 @@ import org.eclipse.jubula.toolkit.swt.internal.SwtToolkitInfo;
  * SWT toolkit information
  * 
  * @noextend This class is not intended to be extended by clients.
- * @since 3.2
+ * @since 4.0
  */
 public class SwtToolkit {
     /** Constructor */
@@ -31,7 +31,7 @@ public class SwtToolkit {
      * want to modify the toolkit by adding tester classes.
      * 
      * @return a toolkit information
-     * @since 3.2
+     * @since 4.0
      */
     @NonNull
     public static ToolkitInfo createToolkitInformation() {

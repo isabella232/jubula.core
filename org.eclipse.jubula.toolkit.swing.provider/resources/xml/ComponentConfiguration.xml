@@ -14,7 +14,7 @@
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
 		<testerClass>org.eclipse.jubula.rc.swing.tester.SwingApplicationTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autserver.swing.implclasses.GraphicApplication" />
-	</toolkitComponent>		<toolkitComponent        type="org.eclipse.jubula.SwingReflectionComponent" visible="false" hasDefaultMapping="true" since="3.2">        <realizes>guidancer.concrete.JavaReflection</realizes>        <testerClass>org.eclipse.jubula.rc.swing.tester.SwingReflectionTester</testerClass>        <componentClass name="org.eclipse.jubula.SwingReflectionComponent"></componentClass>    </toolkitComponent>
+	</toolkitComponent>		<toolkitComponent        type="org.eclipse.jubula.SwingReflectionComponent" visible="false" hasDefaultMapping="true" since="4.0">        <realizes>guidancer.concrete.JavaReflection</realizes>        <testerClass>org.eclipse.jubula.rc.swing.tester.SwingReflectionTester</testerClass>        <componentClass name="org.eclipse.jubula.SwingReflectionComponent"></componentClass>    </toolkitComponent>
 	
 	<toolkitComponent type="javax.swing.AbstractButton" visible="false">
 		<realizes>guidancer.concrete.Button</realizes>

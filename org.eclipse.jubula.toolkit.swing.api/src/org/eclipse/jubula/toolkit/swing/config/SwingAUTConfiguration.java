@@ -37,6 +37,7 @@ public class SwingAUTConfiguration extends AbstractOSProcessAUTConfiguration {
      *            {@link org.eclipse.jubula.client.AUTAgent AUTAgent}
      * @param args
      *            the arguments
+     * @since 4.0
      */
     public SwingAUTConfiguration(
             @Nullable String name, 
