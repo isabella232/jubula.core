@@ -180,7 +180,7 @@ class DataSetPO implements IDataSetPO {
     @Column(name = "DATA_VALUES", length = MAX_STRING_LENGTH)
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "TEST_DATA_LIST_ID")
-    @BatchFetch(value = BatchFetchType.JOIN)
+    @BatchFetch(value = BatchFetchType.EXISTS)
     public List<String> getColumns() {
         return m_columns;
     }
