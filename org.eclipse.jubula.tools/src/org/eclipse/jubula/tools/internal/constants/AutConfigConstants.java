@@ -91,6 +91,8 @@ public class AutConfigConstants {
     public static final String ALLOW_CLASS_FILE_ID_COLLISION = "CLASS_FILE_ID_COLLISION"; //$NON-NLS-1$
     /** the size of the browser for the AUT */
     public static final String BROWSER_SIZE = "BROWSER_SIZE"; //$NON-NLS-1$
+    /** Path where monitoring data will be saved.*/
+    public static final String EXTERNAL_MONITORING_REPORT_PATH = "EXTERNAL_MONITORING_REPORT_PATH"; //$NON-NLS-1$
     
     /** to prevent instantiation */
     private AutConfigConstants() {

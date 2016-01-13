@@ -45,13 +45,16 @@ public class GetMonitoringDataCommand implements ICommand {
      */
     public Message execute() {
         
-        MonitoringDataStore cm = MonitoringDataStore.getInstance();        
+        MonitoringDataStore cm = MonitoringDataStore.getInstance();   
         IMonitoring agent = cm.getMonitoringAgent(m_message.getAutId());
+        cm.getConfigMap(m_message.getAutId()).put(
+                AutConfigConstants.EXTERNAL_MONITORING_REPORT_PATH,
+                m_message.getReportPath());
         Map<String, IMonitoringValue> monitoringValues = 
             agent.getMonitoringData();        
         String monitoringId = cm.getConfigValue(m_message.getAutId(), 
                 AutConfigConstants.MONITORING_AGENT_ID);
-        
+     
         GetMonitoringDataResponseMessage message = 
             new GetMonitoringDataResponseMessage();
         message.setMonitoringId(monitoringId);

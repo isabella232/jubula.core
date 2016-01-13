@@ -874,9 +874,12 @@ public class ClientTestImpl implements IClientTest {
      * is send to the AutAgent to collect the data.
      */
     public void getMonitoringData() {
+
+        String externalMonitoringDirectory = m_generateMonitoringReport
+                ? getMonitoringDirectory() : null;
         GetMonitoringDataMessage message = new GetMonitoringDataMessage(
                 TestExecution.getInstance().getConnectedAutId()
-                .getExecutableName());
+                .getExecutableName(), externalMonitoringDirectory);
         try {
             AutAgentConnection.getInstance().send(message);
         } catch (NotConnectedException nce) {
@@ -1169,8 +1172,7 @@ public class ClientTestImpl implements IClientTest {
             bos = new BufferedOutputStream(new FileOutputStream(tmpZip));
             bos.write(reportData);
 
-            String targetDirName = m_logPath + File.separator
-                    + "JaCoCo Reports" + File.separator //$NON-NLS-1$
+            String targetDirName = getMonitoringDirectory() + File.separator 
                     + theProjName;
 
             ZipUtil.unzip(tmpZip, new File(targetDirName));
@@ -1190,6 +1192,15 @@ public class ClientTestImpl implements IClientTest {
             }
         }
       
+    }
+    
+    /**
+     * @return directory path, where the monitoring reports will be exported.
+     */
+    private String getMonitoringDirectory() {
+        String monitoringDirectory = m_logPath + File.separator
+                + "JaCoCo Reports"; //$NON-NLS-1$
+        return monitoringDirectory;
     }
     
     /**

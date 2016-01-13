@@ -20,6 +20,9 @@ public class GetMonitoringDataMessage extends Message {
 
     /** the audId */
     private String m_autId;
+    
+    /** path of monitoring report */
+    private String m_reportPath;
 
     /** Constructor */
     public GetMonitoringDataMessage() {
@@ -31,9 +34,12 @@ public class GetMonitoringDataMessage extends Message {
      * 
      * @param autId
      *            The autId
+     * @param reportPath 
+     *            path of monitoring report
      */
-    public GetMonitoringDataMessage(String autId) {
+    public GetMonitoringDataMessage(String autId, String reportPath) {
         this.m_autId = autId;
+        this.m_reportPath = reportPath;
     }
 
     /** {@inheritDoc} */
@@ -53,4 +59,11 @@ public class GetMonitoringDataMessage extends Message {
     public void setAutId(String autId) {
         m_autId = autId;
     }
+
+    /** @return path of monitoring report */
+    public String getReportPath() {
+        return m_reportPath;
+    }
+    
+    
 }

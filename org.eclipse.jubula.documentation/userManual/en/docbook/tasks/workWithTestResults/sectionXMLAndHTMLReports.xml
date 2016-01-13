@@ -49,6 +49,12 @@
             to the specified folder.
           </para>
         </listitem>
+        <listitem>
+          <para>
+            If monitoring execution data is available, it will be stored in the 
+            specified folder next to monitoring reports.
+          </para>
+        </listitem>
       </itemizedlist>
     </listitem>
   </orderedlist>
