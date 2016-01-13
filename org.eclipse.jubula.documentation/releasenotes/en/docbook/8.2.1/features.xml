@@ -60,5 +60,12 @@
             </para>
         </listitem>
     </itemizedlist>
-	
+    <itemizedlist>
+        <listitem>
+            <para>
+             	It is now possible to copy and paste Test Cases and Test Suites in Test Case Editors, Test Suite Editors and Test Job Editors. To do so you have to select the according items and select "Copy" from the context menu or press CTRL+C, switch to the editor in which you want to paste these items and select "Paste"
+             	from the context menu or press CTRL+V. The copied items will be pasted in the exact same order as the originals. Test Data and component names will be adopted accordingly. 
+            </para>
+        </listitem>
+    </itemizedlist>
 </section>
