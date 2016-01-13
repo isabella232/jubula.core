@@ -82,8 +82,8 @@ public class SimpleAdder {
                 "api.aut.conf.simple.adder.javafx", //$NON-NLS-1$
                 autID,
                 "..\\jre\\bin\\java.exe", //$NON-NLS-1$
-                "..\\examples\\AUTs\\SimpleAdder\\javafx", //$NON-NLS-1$ 
-                new String[]{"-jar", "SimpleAdder.jar"} //$NON-NLS-1$ //$NON-NLS-2$
+                "..\\examples\\", //$NON-NLS-1$ 
+                new String[]{"-jar", "AUTs\\SimpleAdder\\javafx\\SimpleAdder.jar"} //$NON-NLS-1$ //$NON-NLS-2$
                 );
 
         AUTIdentifier id = m_agent.startAUT(config);

@@ -34,7 +34,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
-public class PieCharTest {
+public class PieChartTest {
     /** the default number of pies within the AUT */
     public static final int DEFAULT_NO_OF_SLICES = 5;
     
@@ -73,7 +73,7 @@ public class PieCharTest {
         AUTConfiguration config = new JavaFXAUTConfiguration(
                 "api.aut.conf.javafx.extension", //$NON-NLS-1$
                 autID, 
-                "JREs\\java8\\bin\\java.exe", //$NON-NLS-1$
+                "..\\jre\\bin\\java.exe", //$NON-NLS-1$
                 "..\\examples\\", //$NON-NLS-1$ 
                 new String[]{
                         "-jar", //$NON-NLS-1$
