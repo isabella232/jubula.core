@@ -20,7 +20,6 @@
 	<property name="SimpleAdder.Swing"	value="org.eclipse.jubula.examples.aut.adder.swing"/>
 	<property name="SimpleAdder.JavaFX"	value="org.eclipse.jubula.examples.aut.adder.javafx"/>
 	<property name="SimpleAdder.SWT"	value="org.eclipse.jubula.examples.aut.adder.swt"/>
-	<property name="SimpleAdder.RCP"	value="org.eclipse.jubula.examples.aut.adder.rcp.releng"/>
 	<property name="SimpleAdder.Web"	value="org.eclipse.jubula.examples.aut.adder.html"/>
 	<property name="DvdTool"			value="org.eclipse.jubula.examples.aut.dvdtool"/>
 
@@ -110,7 +109,6 @@
 	</target>
 
 	<target name="releaseSimpleAdderRCP">
-		<ant dir="../${SimpleAdder.RCP}" antfile="buildScript.xml" inheritAll="false" />
 		<mkdir dir="${examples.aut.simpleAdder.dir}/rcp"/>
 		<move todir="${examples.aut.simpleAdder.dir}/rcp">
 			<fileset dir="../org.eclipse.jubula.examples.aut.adder.rcp.product/target/products/org.eclipse.jubula.product.examples.aut.adder.rcp/"/>
@@ -142,7 +140,6 @@
 		<ant dir="../${SimpleAdder.Swing}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${SimpleAdder.JavaFX}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${SimpleAdder.SWT}" antfile="buildScript.xml" target="clean" inheritAll="false" />
-		<ant dir="../${SimpleAdder.RCP}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 		<ant dir="../${DvdTool}" antfile="buildScript.xml" target="clean" inheritAll="false" />
 	</target>
 

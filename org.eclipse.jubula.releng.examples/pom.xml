@@ -16,6 +16,8 @@
         <module>../org.eclipse.jubula.examples.aut.adder.javafx</module>
         <module>../org.eclipse.jubula.examples.aut.adder.swing</module>
         <module>../org.eclipse.jubula.examples.aut.adder.swt</module>
+        <module>../org.eclipse.jubula.examples.aut.adder.rcp</module>
+        <module>../org.eclipse.jubula.examples.aut.adder.rcp.product</module>
         <module>../org.eclipse.jubula.examples.aut.dvdtool</module>
         <module>../org.eclipse.jubula.examples.extension.releng</module>
     </modules>
