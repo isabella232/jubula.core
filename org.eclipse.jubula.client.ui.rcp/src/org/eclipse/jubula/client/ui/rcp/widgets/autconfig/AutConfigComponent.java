@@ -1543,6 +1543,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         final Button b = 
             UIComponentHelper.createToggleButton(composite, 1);
         b.setData(MonitoringConstants.MONITORING_KEY, att.getId());
+        if (Boolean.parseBoolean(getConfigValue(att.getId()))) {
+            b.setSelection(true);
+        }
         b.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent event) {
                 showMonitoringInfoDialog(autId); 
