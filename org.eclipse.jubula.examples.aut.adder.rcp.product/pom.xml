@@ -4,10 +4,10 @@
     xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>org.eclipse.jubula.releng.examples</artifactId>
-        <groupId>org.eclipse.jubula</groupId>
+        <groupId>org.eclipse.jubula.examples</groupId>
+        <artifactId>aut.adder.rcp.releng</artifactId>
         <version>4.0.0-SNAPSHOT</version>
-        <relativePath>../org.eclipse.jubula.releng.examples</relativePath>
+        <relativePath>../org.eclipse.jubula.examples.aut.adder.rcp.releng</relativePath>
     </parent>
     <artifactId>org.eclipse.jubula.examples.aut.adder.rcp.product</artifactId>
     <packaging>eclipse-repository</packaging>
@@ -39,11 +39,9 @@
                         <phase>post-integration-test</phase>
                         <configuration>
                             <target>
-                                <delete
-                                    dir="${project.build.directory}/repository" />
+                                <delete dir="${project.build.directory}/repository"/>
                                 <delete>
-                                    <fileset
-                                        dir="${project.build.directory}/">
+                                    <fileset dir="${project.build.directory}/">
                                         <include name="*.zip" />
                                     </fileset>
                                 </delete>
