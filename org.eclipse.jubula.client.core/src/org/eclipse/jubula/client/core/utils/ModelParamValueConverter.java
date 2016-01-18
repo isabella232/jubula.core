@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
@@ -174,10 +175,20 @@ public class ModelParamValueConverter extends ParamValueConverter {
      */
     private void updateModelString() {
         StringBuilder builder = new StringBuilder();
+        String oldModelString = getModelString();
         for (IParamValueToken token : getTokens()) {
             builder.append(token.getModelString());
         }
         setModelString(builder.toString());
+        for (IDataSetPO dataSet : getCurrentNode().getDataManager()
+                .getDataSets()) {
+            for (int i = 0; i < dataSet.getColumnCount(); i++) {
+                if (dataSet.getValueAt(i).equals(oldModelString)) {
+                    dataSet.setValueAt(i, getModelString());
+                    return;
+                }
+            }
+        }
     }
 
     /**
