@@ -233,10 +233,12 @@ public class ErrorHandlingUtil {
     private static String[] lineFeed(String[] strArray) {
         List<String> strList = new ArrayList<String>();
         for (String str : strArray) {
-            StringTokenizer tok = new StringTokenizer(str, 
-                    StringConstants.NEWLINE);
-            while (tok.hasMoreElements()) {
-                strList.add(tok.nextToken());
+            if (str != null) {
+                StringTokenizer tok = new StringTokenizer(str, 
+                        StringConstants.NEWLINE);
+                while (tok.hasMoreElements()) {
+                    strList.add(tok.nextToken());
+                }
             }
         }
         return strList.toArray(new String[strList.size()]);
