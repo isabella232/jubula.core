@@ -15,15 +15,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.SendServerLogMessage;
 import org.eclipse.jubula.communication.internal.message.ServerLogResponseMessage;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import ch.qos.logback.core.FileAppender;
@@ -48,11 +49,17 @@ public class SendServerLogCommand implements ICommand {
 
         ServerLogResponseMessage response = new ServerLogResponseMessage();
         // Get location of log file
-        Logger logger = (Logger)LoggerFactory.getLogger(
-                org.slf4j.Logger.ROOT_LOGGER_NAME);
-        Iterator<Appender<ILoggingEvent>> appenders = logger
-                .iteratorForAppenders();
+        Iterator<Appender<ILoggingEvent>> appenders =
+                new ArrayList<Appender<ILoggingEvent>>().iterator();
         FileAppender fileAppender = null;
+        Logger logger = LoggerFactory.getLogger(
+                org.slf4j.Logger.ROOT_LOGGER_NAME);
+        
+        if (logger instanceof ch.qos.logback.classic.Logger) {
+            appenders = ((ch.qos.logback.classic.Logger)logger)
+                    .iteratorForAppenders();
+        }
+
         while (appenders.hasNext() && fileAppender == null) {
             Object enumElement = appenders.next();
             if (enumElement instanceof FileAppender) {
