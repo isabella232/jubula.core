@@ -375,10 +375,38 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
+         id="org.dom4j"
+         download-size="0"
+         install-size="0"
+         version="1.6.1.v201312101416"
+         unpack="false"/>
+
+   <plugin
          id="org.apache.poi"
          download-size="0"
          install-size="0"
          version="3.9.0.v201405241750"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.poi.ooxml.schemas"
+         download-size="0"
+         install-size="0"
+         version="3.9.0.v201405241750"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.poi.ooxml"
+         download-size="0"
+         install-size="0"
+         version="3.9.0.v201405241905"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.xmlbeans"
+         download-size="0"
+         install-size="0"
+         version="2.3.0.v201405241900"
          unpack="false"/>
 
    <plugin
