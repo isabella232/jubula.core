@@ -1491,6 +1491,7 @@ public class ProjectPM extends PersistenceManager
                     + StringConstants.DOT,
                     MessageIDs.E_DELETED_OBJECT);
             }
+            preloadData(deleteSess, proj);
             persistor.lockPO(deleteSess, p);
             deleteProjectIndependentDBObjects(deleteSess, p);
 
@@ -1866,6 +1867,28 @@ public class ProjectPM extends PersistenceManager
             throw new JBException(e.getMessage(),
                 MessageIDs.E_PERSISTENCE_LOAD_FAILED);
         }
+        
+    }
+    
+    /**
+     * this methods is also pre-loading most of the project data
+     * @return The project for the given (database) ID
+     * @param projectId
+     *            (database) ID of the project to load
+     * @param session
+     *      The session to use for loading. The returned project will be 
+     *      attached to this session. It is the responsibility of the
+     *      caller to close the session.
+     * @throws JBException
+     *             if the session cannot be loaded.
+     */
+    public static synchronized IProjectPO loadProjectByIdAndPreLoad(
+            Long projectId, EntityManager session) throws JBException {
+        IProjectPO project = loadProjectById(projectId, session);
+        if (project != null) {
+            preloadData(session, project);
+        }
+        return project;
     }
 
     /**

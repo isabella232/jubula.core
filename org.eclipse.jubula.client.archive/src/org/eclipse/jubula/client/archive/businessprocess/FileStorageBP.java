@@ -1407,7 +1407,7 @@ public class FileStorageBP {
                 throw new InterruptedException();
             }
             IProjectPO projectToExport = 
-                ProjectPM.loadProjectById(
+                ProjectPM.loadProjectByIdAndPreLoad(
                     proj.getId(), exportSession);
             String projectFileName = projectToExport.getDisplayName() + ".xml"; //$NON-NLS-1$
             final String exportFileName;
