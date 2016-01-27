@@ -84,12 +84,25 @@ public class AUTImpl implements AUT {
 
     /** {@inheritDoc} */
     public void connect() throws CommunicationException {
+        connect(0);
+    }
+    
+    /** {@inheritDoc} */
+    public void connect(int timeOut) throws CommunicationException {
+        connectImpl(timeOut);
+    }
+    
+    /** 
+     * @param timeOut if 0 then the BaseAUTConnection.CONNECT_TO_AUT_TIMEOUT will be used
+     * @throws CommunicationException 
+     */
+    private void connectImpl(int timeOut) throws CommunicationException {
         if (!isConnected()) {
             final Map<ComponentClass, String> typeMapping = 
                 getInformation().getTypeMapping();
             try {
                 m_instance = AUTConnection.getInstance();
-                m_instance.connectToAut(m_autID, typeMapping);
+                m_instance.connectToAut(m_autID, typeMapping, timeOut);
                 if (!isConnected()) {
                     throw new CommunicationException(
                         new ConnectException(

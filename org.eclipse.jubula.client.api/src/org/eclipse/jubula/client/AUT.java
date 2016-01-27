@@ -31,6 +31,20 @@ import org.eclipse.jubula.tools.Profile;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface AUT extends Remote {
+
+    /**
+     * connect to the remote side - note: currently the underlying
+     * implementation only supports <b>ONE</b> connection at a time to the
+     * remote side; multiple connections may only be established sequentially by
+     * calling {@link #disconnect()} on this instance first!
+     * 
+     * @param timeOut 
+     * @throws CommunicationException
+     *             in case of communication problems with the remote side
+     * @since 3.2
+     */
+    void connect(int timeOut) throws CommunicationException;
+    
     /**
      * @return the identifier for this AUT
      */

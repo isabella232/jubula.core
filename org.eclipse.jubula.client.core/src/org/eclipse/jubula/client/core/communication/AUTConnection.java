@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.communication;
 
 import java.net.InetAddress;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -134,15 +135,74 @@ public class AUTConnection extends BaseAUTConnection {
     }
 
     /**
+     * @param autId AutIdentifier of AUT
+     * @param monitor 
+     * @return <code>true</code> if a connection to the AUT could be
+     *         established. Otherwise <code>false</code>.
+     */
+    public IStatus connectToAut(AutIdentifier autId, 
+            IProgressMonitor monitor) {
+        
+        int timeOut = CONNECT_TO_AUT_TIMEOUT;
+        
+        IAUTMainPO autMain = getAUTMain(autId);
+        if (autMain != null) {
+            try {
+                String propValue = getAUTProperty(autMain,
+                        IAUTMainPO.Property.TIME_OUT.getValue());
+                timeOut = Integer.parseInt(propValue);
+            } catch (Exception e) {
+                //Do nothing. Default time out value will be used
+            }
+        }
+        
+        return connectToAutImpl(autId, monitor, timeOut);
+    }
+    
+    /**
+     * @param autId AutIdentifier of AUT
+     * @return IAUTMainPO 
+     */
+    public IAUTMainPO getAUTMain(AutIdentifier autId) {
+        Iterator<IAUTMainPO> auts = GeneralStorage.getInstance()
+                .getProject().getAutMainList().iterator();
+        while (auts.hasNext()) {
+            IAUTMainPO aut = auts.next();
+            if (aut.getName().equals(autId.getExecutableName())) {
+                return aut;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * @param autMain the AUT which properties will be checked 
+     * @param propName the name of parameter
+     * @return value of property which name is equal with param propSrt
+     */
+    public String getAUTProperty(IAUTMainPO autMain, String propName) {
+        Iterator<String> props = autMain.getPropertyKeys().iterator();
+        
+        while (props.hasNext()) {
+            String prop = props.next();
+            if (prop.toLowerCase().equals(propName.toLowerCase())) {
+                return autMain.getPropertyMap().get(prop);
+            }
+        }
+        return null;
+    }
+
+    /**
      * Establishes a connection to the Running AUT with the given ID. 
      * 
      * @param autId The ID of the Running AUT to connect to.
      * @param monitor The progress monitor.
+     * @param timeOut 
      * @return <code>true</code> if a connection to the AUT could be 
      *         established. Otherwise <code>false</code>.
      */
-    public IStatus connectToAut(AutIdentifier autId,
-            IProgressMonitor monitor) {
+    private IStatus connectToAutImpl(AutIdentifier autId,
+            IProgressMonitor monitor, int timeOut) {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         TimeMultiStatus status;
         IProgressConsole pc = ProgressConsoleRegistry.INSTANCE.getConsole();
@@ -157,7 +217,7 @@ public class AUTConnection extends BaseAUTConnection {
                 while (!monitor.isCanceled()
                         && !isConnected()
                         && AutAgentConnection.getInstance().isConnected()
-                        && startTime + CONNECT_TO_AUT_TIMEOUT > System
+                        && startTime + timeOut > System
                                 .currentTimeMillis()) {
                     TimeUtil.delay(200);
                 }

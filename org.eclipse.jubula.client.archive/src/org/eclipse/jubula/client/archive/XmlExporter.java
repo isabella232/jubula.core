@@ -210,7 +210,17 @@ class XmlExporter {
         for (String autId : po.getAutIds()) {
             xml.addAutId(autId);
         }
-
+        
+        // Sort the list of AUT properties alphabetically by name
+        List<String> propertyKeys = 
+                new ArrayList<String>(po.getPropertyKeys());
+        Collections.sort(propertyKeys);
+        
+        for (String prop : propertyKeys) {
+            final MapEntry entry = xml.addNewProperties();
+            entry.setKey(prop);
+            entry.setValue(po.getPropertyMap().get(prop));
+        }
     }
 
     /**

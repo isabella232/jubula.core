@@ -128,6 +128,8 @@
       		nillable="true" />
         <xs:element name="generateNames" type="xs:boolean" minOccurs="0" nillable="false" default="false" />
         <xs:element name="autId" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="properties" type="gd:mapEntry" nillable="true"
+            minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
     <xs:attribute name="id" type="xs:ID" use="optional" />
   </xs:complexType>

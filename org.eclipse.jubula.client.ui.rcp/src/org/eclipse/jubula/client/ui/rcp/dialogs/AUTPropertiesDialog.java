@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.dialogs;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,6 +23,20 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerEditor;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
+import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
+import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.TableViewerEditor;
+import org.eclipse.jface.viewers.TableViewerFocusCellManager;
+import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -33,6 +48,8 @@ import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
+import org.eclipse.jubula.client.ui.rcp.utils.AutPropertyManager;
+import org.eclipse.jubula.client.ui.rcp.utils.AutPropertyManager.AutProperty;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.AutIdListComposite;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedRequiredText;
@@ -64,6 +81,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 
@@ -90,6 +108,12 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
 
     /** the delete button */
     private Button m_removeButton = null;
+
+    /** the add button */
+    private Button m_propAddButton = null;
+
+    /** the delete button */
+    private Button m_propRemoveButton = null;
 
     /** the edit button */
     private Button m_editButton = null;
@@ -135,6 +159,15 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
     
     /** the Project to which the AUT Definition belongs */
     private IProjectPO m_project;
+
+    /** label advertising the comment writing property*/ 
+    private Label m_propLabel;
+
+    /** table viewer containing aut properties*/ 
+    private TableViewer m_propTableViewer;
+    
+    /** view model help to handling the properties */
+    private java.util.List<AutProperty> m_viewModel;
 
     /**
      * The contructor.
@@ -185,6 +218,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         separator(leftComposite);
         createAutIdList(leftComposite);
         separator(leftComposite);
+        createProperty(leftComposite);
         
         newLabel(leftComposite, StringConstants.EMPTY);
         newLabel(leftComposite, StringConstants.EMPTY);
@@ -234,6 +268,174 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
     }
 
     /**
+     * @param parent the parent to use
+     */
+    private void createProperty(Composite parent) {
+        Composite composite = createComposite(parent, NUM_COLUMNS_2,
+                GridData.FILL, true);
+        
+
+        m_propLabel = new Label(composite, SWT.NONE);
+        m_propLabel.setText(Messages.AUTPropertyTitle);
+        GridData data = new GridData(SWT.BEGINNING, SWT.FILL, false, false);
+        data.horizontalSpan = 1;
+        m_propLabel.setLayoutData(data);  
+        // Created to keep layout consistent
+        new Label(composite, SWT.NONE).setVisible(false);   
+         
+        m_propTableViewer = new TableViewer(composite, SWT.MULTI
+                | SWT.V_SCROLL | SWT.H_SCROLL | SWT.FULL_SELECTION
+                | SWT.BORDER);
+        m_propAddButton = new Button(composite, SWT.PUSH);
+        m_propRemoveButton = new Button(composite, SWT.PUSH);
+        createPropertyTable(composite, m_propAddButton, m_propRemoveButton,
+                m_propTableViewer);
+    }
+
+    /**
+     * @param parent 
+     * @param numColumns 
+     * @param alignment 
+     * @param horizontalSpace 
+     * @return Composite 
+     */
+    protected Composite createComposite(Composite parent, int numColumns, 
+            int alignment, boolean horizontalSpace) {
+        
+        Composite composite = new Composite(parent, SWT.NONE);
+        GridLayout compositeLayout = new GridLayout();
+        compositeLayout.numColumns = numColumns;
+        compositeLayout.marginHeight = 0;
+        compositeLayout.marginWidth = 0;
+        composite.setLayout(compositeLayout);
+        GridData compositeData = new GridData();
+        compositeData.horizontalAlignment = alignment;
+        compositeData.grabExcessHorizontalSpace = horizontalSpace;
+        composite.setLayoutData(compositeData);
+        return composite;       
+    }
+    
+    /**
+     * @param parent 
+     * @param addButton 
+     * @param removeButton 
+     * @param tableViewer 
+     */
+    private void createPropertyTable(Composite parent, Button addButton,
+            Button removeButton, TableViewer tableViewer) {
+        
+        tableViewer.setContentProvider(new AutPropertyManager
+                .AutPropertiesContentProvider());
+        
+        createTableContent(tableViewer);
+        m_viewModel = new LinkedList<AutProperty>();
+        m_viewModel.addAll(AutPropertyManager.convertProprtyMapToList(
+                m_autMain.getPropertyMap()));
+        tableViewer.setInput(m_viewModel);
+        final Table table = tableViewer.getTable();
+        
+        table.setHeaderVisible(true);
+        table.setLinesVisible(true);
+        GridData layoutData = new GridData(SWT.FILL, SWT.FILL, false, false);
+        layoutData.heightHint = 80;
+        table.setLayoutData(layoutData);
+        
+        Composite rightPart = new Composite(parent, SWT.NONE);
+        GridLayout compositeLayout = new GridLayout();
+        compositeLayout.numColumns = NUM_COLUMNS_1;
+        rightPart.setLayout(compositeLayout);
+        GridData compositeData = new GridData(
+                SWT.FILL, SWT.BOTTOM, false, false);
+        rightPart.setLayoutData(compositeData);
+        
+        addButton.setParent(rightPart);
+        addButton.setText(Messages.AUTPropertyAdd);
+        addButton.setLayoutData(buttonGrid());
+        addButton.addSelectionListener(m_selectionListener);
+
+        removeButton.setParent(rightPart);
+        removeButton.setText(Messages.AUTPropertyRemove);
+        removeButton.setLayoutData(buttonGrid());
+        removeButton.addSelectionListener(m_selectionListener);
+    }
+
+    /** creates the content of the table 
+     * @param tableViewer the associated table viewer
+     */
+    private void createTableContent(final TableViewer tableViewer) {
+        TableViewerColumn nameColumn =
+                new TableViewerColumn(tableViewer, SWT.LEFT);
+        nameColumn.getColumn().setText(Messages.AUTPropertyName);
+        nameColumn.getColumn().setWidth(200);
+        nameColumn.setLabelProvider(new ColumnLabelProvider() {
+            public String getText(Object element) {
+                return ((AutProperty)element).getName();
+            }
+        });
+        nameColumn.setEditingSupport(
+                new PropertyNameEditingSupport(tableViewer));
+        
+        TableViewerColumn valueColumn =
+                new TableViewerColumn(tableViewer, SWT.LEFT);
+        valueColumn.getColumn().setText(Messages.AUTPropertyValue);
+        valueColumn.getColumn().setWidth(200);
+        valueColumn.setLabelProvider(new ColumnLabelProvider() {
+            public String getText(Object element) {
+                return ((AutProperty)element).getValue();
+            }
+        });
+        valueColumn.setEditingSupport(
+                new PropertyValueEditingSupport(tableViewer));
+        
+        TableViewerFocusCellManager focusCellManager = 
+                new TableViewerFocusCellManager(tableViewer,
+                        new FocusCellOwnerDrawHighlighter(tableViewer));
+        ColumnViewerEditorActivationStrategy actSupport = 
+            new ColumnViewerEditorActivationStrategy(tableViewer) {
+                protected boolean isEditorActivationEvent(
+                        ColumnViewerEditorActivationEvent event) {
+                    return event.eventType 
+                            == ColumnViewerEditorActivationEvent.TRAVERSAL
+                        || event.eventType 
+                            == ColumnViewerEditorActivationEvent.
+                                MOUSE_DOUBLE_CLICK_SELECTION
+                        || (event.eventType 
+                                == ColumnViewerEditorActivationEvent.KEY_PRESSED
+                            && event.keyCode == SWT.CR)
+                        || event.eventType 
+                            == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+                }
+            };
+            
+        TableViewerEditor.create(tableViewer, focusCellManager, 
+                actSupport, ColumnViewerEditor.TABBING_HORIZONTAL
+                    | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+                    | ColumnViewerEditor.TABBING_VERTICAL 
+                    | ColumnViewerEditor.KEYBOARD_ACTIVATION);
+    }
+    
+    /** add a new AUT property*/
+    private void handlePropAddButtonEvent() {
+        AutProperty prop = new AutProperty();
+        m_viewModel.add(prop);
+        m_propTableViewer.refresh();
+        m_propTableViewer.editElement(prop, 0);
+    }
+    
+    /** remove the selected properties*/
+    private void handlePropRemoveButtonEvent() {
+        IStructuredSelection sel = (IStructuredSelection) m_propTableViewer
+                .getSelection();
+        
+        Iterator itr = sel.iterator();
+        while (itr.hasNext()) {
+            m_viewModel.remove(itr.next());
+        }
+        m_propTableViewer.refresh();
+        checkForErrors();
+    }
+
+    /**
      * Checks the values of all fields, en-/dis-abling the OK button and 
      * setting an error message as necessary. 
      */
@@ -242,6 +444,9 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         error |= modifyAUTNameFieldAction();
         if (!error) {
             error |= modifyAUTToolkitComboAction();
+        }
+        if (!error) {
+            error |= modifyAUTPropertiesAction();
         }
         
         if (error) {
@@ -311,6 +516,46 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
             setMessage(Messages.AUTPropertiesDialogNoToolkitSelected,
                 IMessageProvider.ERROR);
             return true;
+        }
+        return false;
+    }
+    
+    /**
+     * @return false if there is no mistake else true
+     */
+    private boolean modifyAUTPropertiesAction() {
+        Iterator<AutProperty> props = m_viewModel.iterator();
+        
+        while (props.hasNext()) {
+            AutProperty prop = props.next();
+            if (prop.getName().isEmpty()) {
+                setMessage(Messages.AUTPropertyNameIsEmpty,
+                        IMessageProvider.ERROR);
+                return true;
+            }
+            if (isAUTContainsDuplicatePropertyName(prop)) {
+                setMessage(Messages.AUTPropertyDuplicated,
+                        IMessageProvider.ERROR);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * @param selectedProp an AUT property what we need to compare
+     * @return true if contains a property name more times else return false 
+     */
+    private boolean isAUTContainsDuplicatePropertyName(
+            AutProperty selectedProp) {
+        Iterator<AutProperty> props = m_viewModel.iterator();
+        
+        while (props.hasNext()) {
+            AutProperty prop = props.next();
+            if (prop != selectedProp && prop.getName().toLowerCase()
+                    .equals(selectedProp.getName().toLowerCase())) {
+                return true;
+            }
         }
         return false;
     }
@@ -772,6 +1017,12 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
             } else if (o.equals(m_autToolKitComboBox)) {
                 handleAutToolKitComboBoxEvent();
                 return;
+            } else if (o.equals(m_propAddButton)) {
+                handlePropAddButtonEvent();
+                return;
+            } else if (o.equals(m_propRemoveButton)) {
+                handlePropRemoveButtonEvent();
+                return;
             }
 
             Assert.notReached(Messages.EventActivatedUnknownWidget 
@@ -900,6 +1151,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         m_autMain.setName(m_autNameText.getText());
         m_autMain.setToolkit(m_autToolKitComboBox.getSelectedObject());
         m_autMain.setGenerateNames(m_generateNames.getSelection());
+        m_autMain.setPropertyMap(AutPropertyManager.convertPropertyListToMap(
+                m_viewModel));
         setAutMain(m_autMain);
         super.okPressed();
     }
@@ -978,5 +1231,93 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         compositeData.grabExcessHorizontalSpace = true;
         autIdComposite.setLayoutData(compositeData);
     }
+
+    /** @author BREDEX GmbH */
+    private abstract static class PropertyEditingSupport
+            extends EditingSupport {
+
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer
+        */
+        public PropertyEditingSupport(ColumnViewer viewer) {
+            super(viewer);
+        }
     
+        /**
+         * {@inheritDoc}
+         */
+        protected boolean canEdit(Object element) {
+            return true;
+        }
+    
+        /**
+         * {@inheritDoc}
+         */
+        protected CellEditor getCellEditor(Object element) {
+            return new TextCellEditor((Composite)getViewer().getControl());
+        }
+    }
+    
+    /** @author BREDEX GmbH */
+    private class PropertyNameEditingSupport
+            extends PropertyEditingSupport {
+        
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer
+        */
+        public PropertyNameEditingSupport(ColumnViewer viewer) {
+            super(viewer);
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected Object getValue(Object element) {
+            return ((AutProperty)element).getName();
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        protected void setValue(Object element, Object name) {
+            AutProperty prop = (AutProperty) element;
+            prop.setName((String)name);
+            getViewer().update(element, null);
+            checkForErrors();
+        }
+    }
+   
+    /** @author BREDEX GmbH */
+    private class PropertyValueEditingSupport
+            extends PropertyEditingSupport {
+      
+        /**
+         * Constructor
+         * 
+         * @param viewer The viewer
+        */
+        public PropertyValueEditingSupport(ColumnViewer viewer) {
+            super(viewer);
+        }
+      
+        /**
+         * {@inheritDoc}
+         */
+        protected Object getValue(Object element) {
+            return ((AutProperty)element).getValue();
+        }
+      
+        /**
+         * {@inheritDoc}
+         */
+        protected void setValue(Object element, Object value) {
+            AutProperty prop = (AutProperty) element;
+            prop.setValue((String)value);
+            getViewer().update(element, null);
+        }
+    }
 }

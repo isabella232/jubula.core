@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -18,6 +19,38 @@ import java.util.Set;
  * @created 20.12.2005
  */
 public interface IAUTMainPO extends IPersistentObject, Comparable {
+    
+    /** AUT possible properties*/
+    public static enum Property {
+        /** connection time*/
+        TIME_OUT("timeout"); //$NON-NLS-1$
+        
+        /** value of property */
+        private final String m_value;
+        
+        /**
+         * @param value set on the value of property
+         */
+        private Property(String value) {
+            this.m_value = value;
+        }
+        
+        /**
+         * @return value of property
+         */
+        public String getValue() {
+            return m_value;
+        }
+        
+        /**
+         * @return value of property
+         */
+        @Override
+        public String toString() {
+            return m_value;
+        }
+    }
+    
     /**
      * @return Returns the GUID.
      */
@@ -91,4 +124,19 @@ public interface IAUTMainPO extends IPersistentObject, Comparable {
      * @return the AUT IDs associated with this AUT.
      */
     public List<String> getAutIds();
+
+    /**
+     * @return a Set of all keys of the property.
+     */
+    public Set<String> getPropertyKeys();
+    
+    /**
+     * @return get AUT property key - value pars 
+     */
+    public abstract Map<String, String> getPropertyMap();
+    
+    /**
+     * @param properties AUT property key - value pars 
+     */
+    public void setPropertyMap(Map<String, String> properties);
 }

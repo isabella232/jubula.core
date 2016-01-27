@@ -107,6 +107,13 @@ public class Messages extends NLS {
     public static String AUTPropertiesDialogNoToolkitSelected;
     public static String AUTPropertiesDialogToolkit;
     public static String AUTPropertiesDialogUpperLabel;
+    public static String AUTPropertyAdd;
+    public static String AUTPropertyDuplicated;
+    public static String AUTPropertyName;
+    public static String AUTPropertyNameIsEmpty;
+    public static String AUTPropertyRemove;
+    public static String AUTPropertyTitle;
+    public static String AUTPropertyValue;
     public static String AUTPropertyPageAdd;
     public static String AUTPropertyPageAUTConfig;
     public static String AUTPropertyPageAUTList;

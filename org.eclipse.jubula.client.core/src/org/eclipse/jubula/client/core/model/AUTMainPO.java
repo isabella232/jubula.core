@@ -11,8 +11,10 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -25,6 +27,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -74,6 +77,11 @@ class AUTMainPO implements IAUTMainPO {
     
     /** flag to indicate that for this AUT some names should be generated */
     private boolean m_generateNames;
+    
+    /** @return get AUT property key - value pars */
+    private Map<String, String> m_properties = new HashMap<String, String>();
+
+    
 
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -400,5 +408,49 @@ class AUTMainPO implements IAUTMainPO {
     @SuppressWarnings("unused")
     private void setAutIds(List<String> autIds) {
         m_autIDs = autIds;
+    }
+    
+    /**
+     * only for Persistence (JPA / EclipseLink)!
+     * 
+     * @return the property
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "AUT_PROPERTY", 
+                     joinColumns = @JoinColumn(name = "AUT"))
+    @MapKeyColumn(name = "PROP_KEY")
+    @Column(name = "PROP_VALUE", length = MAX_STRING_LENGTH)
+    Map<String, String> getHbmPropertyMap() {
+        return m_properties;
+    }
+
+    /**
+     * @return the Map<String, String> of the aut configuration
+     */
+    @Transient
+    public Map<String, String> getPropertyMap() {
+        return getHbmPropertyMap();
+    }
+    
+    /**
+     * @param config the Map<String, String> of the aut configuration
+     */
+    public void setPropertyMap(Map<String, String> config) {
+        setHbmPropertyMap(config);
+    }
+    
+    /**
+     * @return a Set of all keys of the AutConfig.
+     */
+    @Transient
+    public Set<String> getPropertyKeys() {
+        return getHbmPropertyMap().keySet();
+    }
+    
+    /**
+     * @param properties AUT property key - value pars 
+     */
+    void setHbmPropertyMap(Map<String, String> properties) {
+        m_properties = properties;
     }
 }

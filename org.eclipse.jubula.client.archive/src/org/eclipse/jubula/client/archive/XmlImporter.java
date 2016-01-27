@@ -1269,6 +1269,7 @@ class XmlImporter {
         }
         return conf;
     }
+    
     /**
      * Creates the instance of the persistent object which is defined by the
      * XML element used as parameter. The method generates all dependent objects
@@ -1298,6 +1299,11 @@ class XmlImporter {
         }
         for (String autId : xml.getAutIdList()) {
             aut.getAutIds().add(autId);
+        }
+        
+        final List<MapEntry> props = xml.getPropertiesList();
+        for (MapEntry prop : props) {
+            aut.getPropertyMap().put(prop.getKey(), prop.getValue());
         }
         
         return aut;

@@ -87,17 +87,44 @@ public class AUTConnection extends BaseAUTConnection {
     }
 
     /**
+     * @param autId AutIdentifier of AUT
+     * @param typeMapping 
+     * @return <code>true</code> if a connection to the AUT could be
+     *         established. Otherwise <code>false</code>.
+     */
+    public boolean connectToAut(AutIdentifier autId, 
+            Map<ComponentClass, String> typeMapping) {
+        
+        return connectToAutImpl(autId, typeMapping, CONNECT_TO_AUT_TIMEOUT);
+    }
+    
+    /**
+     * @param autId AutIdentifier of AUT
+     * @param typeMapping 
+     * @param timeOut the time out value
+     * @return <code>true</code> if a connection to the AUT could be
+     *         established. Otherwise <code>false</code>.
+     */
+    public boolean connectToAut(AutIdentifier autId, 
+            Map<ComponentClass, String> typeMapping, int timeOut) {
+        
+        return timeOut <= 0 ? connectToAut(autId, typeMapping)
+                : connectToAutImpl(autId, typeMapping, timeOut);
+    }
+
+    /**
      * Establishes a connection to the Running AUT with the given ID.
      * 
      * @param autId
      *            The ID of the Running AUT to connect to.
      * @param typeMapping
      *            the type mapping to use
+     * @param timeOut until this time wait for connecting to the AUT
      * @return <code>true</code> if a connection to the AUT could be
      *         established. Otherwise <code>false</code>.
      */
-    public boolean connectToAut(AutIdentifier autId, 
-        Map<ComponentClass, String> typeMapping) {
+    private boolean connectToAutImpl(AutIdentifier autId, 
+        Map<ComponentClass, String> typeMapping, int timeOut) {
         if (!isConnected()) {
             try {
                 LOGGER.info("Establishing connection to AUT..."); //$NON-NLS-1$
@@ -113,7 +140,7 @@ public class AUTConnection extends BaseAUTConnection {
                 long startTime = System.currentTimeMillis();
                 while (!isConnected()
                     && autAgent.isConnected()
-                    && startTime + CONNECT_TO_AUT_TIMEOUT > System
+                    && startTime + timeOut > System
                         .currentTimeMillis()) {
                     TimeUtil.delay(200);
                 }
