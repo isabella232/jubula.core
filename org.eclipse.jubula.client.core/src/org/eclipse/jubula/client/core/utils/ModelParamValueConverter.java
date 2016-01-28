@@ -183,7 +183,8 @@ public class ModelParamValueConverter extends ParamValueConverter {
         for (IDataSetPO dataSet : getCurrentNode().getDataManager()
                 .getDataSets()) {
             for (int i = 0; i < dataSet.getColumnCount(); i++) {
-                if (dataSet.getValueAt(i).equals(oldModelString)) {
+                String data = dataSet.getValueAt(i);
+                if (data != null && data.equals(oldModelString)) {
                     dataSet.setValueAt(i, getModelString());
                     return;
                 }
