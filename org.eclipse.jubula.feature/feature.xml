@@ -293,7 +293,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.collections"
          download-size="0"
          install-size="0"
-         version="3.2.0.v2013030210310"
+         version="3.2.2.v201511171945"
          unpack="false"/>
 
    <plugin
@@ -314,7 +314,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.io"
          download-size="0"
          install-size="0"
-         version="2.0.1.v201105210651"
+         version="2.2.0.v201405211200"
          unpack="false"/>
 
    <plugin
