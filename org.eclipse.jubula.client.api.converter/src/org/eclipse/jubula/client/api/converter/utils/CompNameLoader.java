@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
+import org.eclipse.jubula.client.api.converter.exceptions.MinorConversionException;
+
 
 /**
  * Loads an component name information file.
@@ -41,8 +43,12 @@ public class CompNameLoader {
             URL resourceURL = CompNameLoader.class.getClassLoader()
                 .getResource(BASE_PATH + componentName + ENDING);
             
-            m_properties.load(resourceURL.openStream());
-            
+            if (resourceURL != null) {
+                m_properties.load(resourceURL.openStream());
+            } else {
+                throw new MinorConversionException("Unable to retrieve information about " //$NON-NLS-1$
+                        + componentName);
+            }
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }

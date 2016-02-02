@@ -37,7 +37,8 @@ import org.eclipse.jubula.client.api.converter.CTDSInfo;
 import org.eclipse.jubula.client.api.converter.NodeGenerator;
 import org.eclipse.jubula.client.api.converter.NodeInfo;
 import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
-import org.eclipse.jubula.client.api.converter.ui.exceptions.StopConversionException;
+import org.eclipse.jubula.client.api.converter.exceptions.MinorConversionException;
+import org.eclipse.jubula.client.api.converter.exceptions.StopConversionException;
 import org.eclipse.jubula.client.api.converter.ui.i18n.Messages;
 import org.eclipse.jubula.client.api.converter.utils.Utils;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
@@ -180,6 +181,11 @@ public class ConvertProjectHandler extends AbstractHandler {
                     }
                 } catch (StopConversionException e) {
                     progressMonitor.setCanceled(true);
+                    if (!e.wasManuallyTriggered()) {
+                        ErrorHandlingUtil.createMessageDialog(
+                                new JBException(e.getMessage(), e,
+                                        MessageIDs.E_CONVERSION_ABORTED_ERROR));
+                    }
                     return;
                 }
             }
@@ -350,7 +356,7 @@ public class ConvertProjectHandler extends AbstractHandler {
          */
         private void handleNode(INodePO node) throws StopConversionException {
             if (progressMonitor.isCanceled()) {
-                throw new StopConversionException();
+                throw new StopConversionException(true);
             }
             progressMonitor.worked(1);
             NodeInfo info = uuidToNodeInfoMap.get(node.getGuid());
@@ -365,8 +371,17 @@ public class ConvertProjectHandler extends AbstractHandler {
                     file.getParentFile().mkdirs();
                     file.createNewFile();
                     NodeGenerator gen = new NodeGenerator();
-                    String content = gen.generate(info);
-                    writeContentToFile(file, content);
+                    try {
+                        String content = gen.generate(info);
+                        writeContentToFile(file, content);
+                    } catch (MinorConversionException e) {
+                        Plugin.getDefault().writeLineToConsole(
+                                NLS.bind(Messages.InvalidNode,
+                                        new String[] { node.getName(),
+                                                       e.getMessage() }),
+                                true);
+                        file.delete();
+                    }
                 } catch (IOException e) {
                     ErrorHandlingUtil.createMessageDialog(
                             new JBException(e.getMessage(), e,

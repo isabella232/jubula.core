@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 BREDEX GmbH.
+ * Copyright (c) 2016 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,16 +8,20 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.api.converter.ui.exceptions;
+package org.eclipse.jubula.client.api.converter.exceptions;
 
 /**
- * Exception for the case that the conversion needs to stop
- * @created 26.11.2014
+ * Exception for the case that the conversion had a noteworthy issue
+ * @created 02.02.2016
  */
-public class StopConversionException extends Exception {
+public class MinorConversionException extends RuntimeException {
 
-    /** Constructor */
-    public StopConversionException() {
-        //empty
+    /** 
+     * MinorConversionException
+     * @param message the message 
+     */
+    public MinorConversionException(String message) {
+        super(message);
     }
+
 }

@@ -24,6 +24,7 @@ public class Messages extends NLS {
     public static String ErrorWhileConverting;
     public static String InputDialogName;
     public static String InputDialogMessage;
+    public static String InvalidNode;
     public static String InvalidNodeName;
     public static String InvalidPackageName;
     public static String NoAutInProject;

@@ -203,6 +203,8 @@ public class MessageIDs {
     public static final Integer E_NO_AUT_IN_PROJECT = new Integer(3022);
     /** if problems did occur during component system build of toolkit plugin */
     public static final Integer E_TOOLKIT_COMPSYS_ERROR = new Integer(3023);
+    /** if problems did occur during conversion of a project */
+    public static final Integer E_CONVERSION_ABORTED_ERROR = new Integer(3024);
     // -- DATAMODEL ERROR IDs ----------------------------------------------   
     /** if a parameter does not exist */
     public static final Integer E_NO_PARAMETER = new Integer(4000);
@@ -759,7 +761,8 @@ public class MessageIDs {
         messageMap.put(E_INVALID_NODE_NAME, e, "ErrorMessage.INVALID_NODE_NAME", null); //$NON-NLS-1$
         messageMap.put(E_NO_AUT_IN_PROJECT, e, "ErrorMessage.NO_AUT_IN_PROJECT", null); //$NON-NLS-1$
         messageMap.put(E_TOOLKIT_COMPSYS_ERROR, e, "ErrorMessage.TOOLKIT_COMPSYS_ERROR", null); //$NON-NLS-1$
-
+        messageMap.put(E_CONVERSION_ABORTED_ERROR, e, "ErrorMessage.CONVERSION_ABORTED_ERROR", null); //$NON-NLS-1$
+        
     }
     
     /**
