@@ -115,6 +115,7 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
                         Messages.NotUseReferenceParameterTitle,
                         NLS.bind(Messages.NotUseReferenceParameter,
                             new Object[]{((IParamNodePO)obj).getName()}));
+                return false;
             }
             boolean modifyPropCompName =
                     !checkCompName((IParamNodePO)obj, false);
