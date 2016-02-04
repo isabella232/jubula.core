@@ -13,7 +13,23 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
 
-     <para>
+    <para>
+        <emphasis role="strong">Removal of Dashboard</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                In the course of some cleanup efforts the dashboard was removed from Jubula.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                If you connected your tests to an ALM system, the link to the results opens 
+                them in a Jubula instance now, instead of the dashboard.
+            </para>
+        </listitem>
+    </itemizedlist>
+    <para>
         <emphasis role="strong">New features in Jacoco monitoring agent</emphasis>
     </para>
     <itemizedlist>
