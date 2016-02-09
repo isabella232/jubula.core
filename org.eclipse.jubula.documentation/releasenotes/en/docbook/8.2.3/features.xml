@@ -30,6 +30,27 @@
  </listitem>
  </itemizedlist>
  <para>
+  <emphasis role="strong">You can use Selenium Webdriver for HTML tests</emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    We added the possibility to use Selenium Webdriver for test execution
+    in the HTML toolkit in an experimental mode.
+   </para>
+  </listitem>
+  <listitem>
+  <para>
+   You can try it out for <emphasis>Firefox</emphasis> and <emphasis>Chrome</emphasis>.
+   If you choose <emphasis>Chrome</emphasis> you will have to 
+   <link xl:href="https://sites.google.com/a/chromium.org/chromedriver/downloads">
+   download</link> the driver explicitly. Testing with the 
+   <emphasis>Internet Explorer</emphasis> does not yet work
+   at this point in time.
+  </para>
+ </listitem>
+ </itemizedlist>
+ <para>
   <emphasis role="strong">Removal of Dashboard</emphasis>
  </para>
  <itemizedlist>
