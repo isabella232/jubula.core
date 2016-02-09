@@ -12,71 +12,94 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
-
-    <para>
-        <emphasis role="strong">Removal of Dashboard</emphasis>
-    </para>
-    <itemizedlist>
-        <listitem>
-            <para>
-                In the course of some cleanup efforts the dashboard was removed from Jubula.
-            </para>
-        </listitem>
-        <listitem>
-            <para>
-                If you connected your tests to an ALM system, the link to the results opens 
-                them in a Jubula instance now, instead of the dashboard.
-            </para>
-        </listitem>
-    </itemizedlist>
-    <para>
-        <emphasis role="strong">New features in Jacoco monitoring agent</emphasis>
-    </para>
-    <itemizedlist>
-        <listitem>
-            <para>
-                Now you are able to add multiple source directories in Jacoco code coverage. The added source directories can be edited and 
-                removed. 
-            </para>
-        </listitem>
-    </itemizedlist>
-    <itemizedlist>
-        <listitem>
-            <para>
-                Optional configuration to allow class file id collision in code coverage.
-            </para>
-        </listitem>
-    </itemizedlist>
-	<itemizedlist>
-		<listitem>
-			<para>
-				You can enter multiple regexes to for inclusion. For more information
-				see user manual.
-			</para>
-		</listitem>
-	</itemizedlist>
-	<itemizedlist>
-        <listitem>
-            <para>
-                Optional configuration to allow class file id collision in code coverage.
-            </para>
-        </listitem>
-    </itemizedlist>
-    <itemizedlist>
-        <listitem>
-            <para>
-                You can add multiple directories and jar files in installation path.
-            </para>
-        </listitem>
-    </itemizedlist>
-    <para>
-        <emphasis role="strong">New features in report generation</emphasis>
-    </para>
-    <itemizedlist>
-        <listitem>
-            <para>
-                Now you are able generate monitoring report automatically.
-            </para>
-        </listitem>
-    </itemizedlist>
+ <para>
+  <emphasis role="strong">New way to export and import projects</emphasis>
+ </para>
+ <itemizedlist>
+ <listitem>
+  <para>
+   We changed our xml-based project export mechanism to a custom way
+   which uses the json format.
+  </para>
+ </listitem>
+ <listitem>
+  <para>
+   The new files consume much less disc space and the export and
+   import process runs faster now.
+  </para>
+ </listitem>
+ </itemizedlist>
+ <para>
+  <emphasis role="strong">Removal of Dashboard</emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    In the course of some cleanup efforts the dashboard was removed
+    from Jubula.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    If you connected your tests to an ALM system, the link to the
+    results opens them in a Jubula instance now, instead of the
+    dashboard.
+   </para>
+  </listitem>
+ </itemizedlist>
+ <para>
+  <emphasis role="strong">New features in Jacoco monitoring agent
+  </emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    Now you are able to add multiple source directories in Jacoco
+    code coverage. The added source directories can be edited and
+    removed.
+   </para>
+  </listitem>
+ </itemizedlist>
+ <itemizedlist>
+  <listitem>
+   <para>
+    Optional configuration to allow class file id collision in code
+    coverage.
+   </para>
+  </listitem>
+ </itemizedlist>
+ <itemizedlist>
+  <listitem>
+   <para>
+    You can enter multiple regexes to for inclusion. For more
+    information see user manual.
+   </para>
+  </listitem>
+ </itemizedlist>
+ <itemizedlist>
+  <listitem>
+   <para>
+    Optional configuration to allow class file id collision in code
+    coverage.
+   </para>
+  </listitem>
+ </itemizedlist>
+ <itemizedlist>
+  <listitem>
+   <para>
+    You can add multiple directories and jar files in installation
+    path.
+   </para>
+  </listitem>
+ </itemizedlist>
+ <para>
+  <emphasis role="strong">New features in report generation</emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    Now you are able generate monitoring report automatically.
+   </para>
+  </listitem>
+ </itemizedlist>
 </section>
