@@ -102,4 +102,17 @@
    </para>
   </listitem>
  </itemizedlist>
+ <para>
+  <emphasis role="strong">Timeout to connect to AUT now configurable
+  </emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    You can now configure the timeout for connecting to an AUT as a
+    property for the AUT, so that performance problems in your
+    environment won't prevent connecting to your AUT.
+   </para>
+  </listitem>
+ </itemizedlist>
 </section>

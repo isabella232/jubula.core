@@ -92,6 +92,12 @@
         the Project properties (<xref linkend="configuringaut"/>).
       </para>
     </listitem>
+    <listitem>
+      <para>
+        If you need to configure how your AUT is handled by Jubula, you can add properties to the AUT property table.
+        For example you can use <emphasis>timeout</emphasis> to specify a timeout (in milliseconds) for connecting to your AUT. 
+      </para>
+    </listitem>
   </orderedlist>
   <para>
     If you do not require an AUT configuration, because you will be
