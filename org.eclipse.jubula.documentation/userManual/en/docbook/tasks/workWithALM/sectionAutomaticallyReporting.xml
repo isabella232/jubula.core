@@ -15,7 +15,7 @@
   <para>
     You can automatically update tasks in an external repository when a test has run. 
     You can report the test results by writing a comment on a task in the external repository 
-    with a link to the test result in the dasboard. 
+    with a link to the test result in the ITE. 
     You can also update fields / attributes on tasks based on information 
     you specify in your Project.
   </para>
@@ -47,7 +47,7 @@
       <listitem>
         <para>
           View the test results for the relevant item in the
-          dashboard as a link from the task repository.
+          ITE as a link from the task repository.
         </para>
       </listitem>
     </itemizedlist>
@@ -72,10 +72,10 @@
       </listitem>
       <listitem>
         <para>
-          You can (optionally) enter the URL of the Dashboard that is configured to use
-          the correct database for your test results. If you have configured a Dashboard 
-          and enter its URL here, then you will be able to click on test result links from 
-          your task repository to open the test result in the Dashboard automatically.
+          You can (optionally) enter the URL of the ITE that is configured to use
+          the correct database for your test results. If you enter its URL here, then 
+          you will be able to click on test result links from 
+          your task repository to open the test result in the ITE automatically.
         </para>
       </listitem>
     </orderedlist>
@@ -137,8 +137,7 @@
 			You can activate the checkbox to add a comment to each linked task. 
 			The comment contains information about the test run (date, status) 
 			and also a link to the test results. 
-			The test results can be seen in the specified 
-			dashboard (<xref linkend="configuring-a-task-repository"/>).
+			The test results can be seen in the specified ITE (<xref linkend="configuring-a-task-repository"/>).
 			</para>
 			</listitem>
 			<listitem>
@@ -182,7 +181,7 @@
 					</para>
 					<para>
 					Use the $node_url parameter to receive the URL that will 
-					link to this node (Test Case or Test Suite) in the dashboard 
+					link to this node (Test Case or Test Suite) in the ITE 
 					(x<xref linkend="automatically-reporting-to-external-repositories-after-test-runs"/>). 
 					</para>
 					</listitem>
@@ -366,8 +365,8 @@
         <para>
        	 Once reporting has been done, you can see the changes in the external repository. 
        	 If you added a comment, you can click on the link provided to open the test result
-       	  report in the \dash{} that you specified for your Project. 
-       	  The dashboard must be already running for this action to succeed. 
+       	  report in the ITE that you specified for your Project. 
+       	  The ITE must be already running for this action to succeed. 
        	  The test results must also still be present in  
           the database (<xref linkend="re-opening-the-test-result-view-for-a-test-run"/>).
         </para>
