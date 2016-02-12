@@ -29,6 +29,8 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 
 
@@ -81,6 +83,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                targetEntity = TestDataCubePO.class, 
                fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_PARAM_INTERFACE", unique = true)
+    @BatchFetch(value = BatchFetchType.JOIN)
     private TestDataCubePO getParameterInterface() {
         return m_parameterInterface;
     }

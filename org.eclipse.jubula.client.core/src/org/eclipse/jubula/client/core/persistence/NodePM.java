@@ -30,6 +30,7 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -619,6 +620,36 @@ public class NodePM extends PersistenceManager {
 
         return getExecTestCasesFor(specTcGuid, parentProjectIds, 
             GeneralStorage.getInstance().getMasterSession());
+    }
+    
+    /**
+     * Returns test cases that reference the test case given information. Only
+     * returns test cases that are in the same project as the given test case
+     * including test cases from reused projects. These test cases are loaded in
+     * the Master Session. Warning: the fetched ExecTestCases have no parent,
+     * because the database doesn't know the parent.
+     * 
+     * @param specTcGuid
+     *            GUID of the test case being reused.
+     * @param parentProjectIds
+     *            IDs of the parent projects of the test case being reused.
+     * @param session
+     *            The session into which the test cases will be loaded.
+     * @return all test cases that reference the test case with the given
+     *         information, provided that the cases are also in the same
+     *         project or reused projects.
+     * @see getAllExecTestCases
+     * @see getExternalExecTestCases
+     * @see getInternalExecTestCases
+     */
+    @Nullable
+    public static List<IExecTestCasePO> getExecTestCases(String specTcGuid,
+            List<Long> parentProjectIds, EntityManager session) {
+        // a SpecTC with guid == null can't be reused
+        if (specTcGuid == null) {
+            return null;
+        }
+        return getExecTestCasesFor(specTcGuid, parentProjectIds, session);
     }
     
     /**
