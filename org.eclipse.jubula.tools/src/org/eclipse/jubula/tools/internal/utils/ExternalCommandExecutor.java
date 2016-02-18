@@ -29,6 +29,7 @@ import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
  * @author BREDEX GmbH
  * @created Sep 11, 2007
  */
+@Deprecated
 public class ExternalCommandExecutor {
     /** Constant for command for executing commands under DOS */
     private static final String [] DOS_CMD = {"command.com", "/c"}; //$NON-NLS-1$ //$NON-NLS-2$

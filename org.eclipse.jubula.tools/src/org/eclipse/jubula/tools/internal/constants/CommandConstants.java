@@ -68,6 +68,10 @@ public abstract class CommandConstants {
     public static final String COMMONS_LANG_BUNDLE_ID = "org.apache.commons.lang"; //$NON-NLS-1$
     /** ID of the Apache ORO bundle */
     public static final String APACHE_ORO_BUNDLE_ID = "org.apache.oro"; //$NON-NLS-1$
+    /** ID of the Apache IO bundle */
+    public static final String APACHE_IO_BUNDLE_ID = "org.apache.commons.io"; //$NON-NLS-1$
+    /** ID of the Apache exec bundle */
+    public static final String APACHE_EXEC_BUNDLE_ID = "org.apache.commons.exec"; //$NON-NLS-1$
     /** ID of the Apache Commons Bean Utils bundle */
     public static final String COMMONS_BEAN_UTILS_BUNDLE_ID = "org.apache.commons.beanutils"; //$NON-NLS-1$
     /** ID of the Apache Commons Collections bundle */
@@ -76,6 +80,8 @@ public abstract class CommandConstants {
     public static final String COMMONS_CODEC_BUNDLE_ID = "org.apache.commons.codec"; //$NON-NLS-1$
     /** ID of the Tools bundle */
     public static final String TOOLS_BUNDLE_ID = "org.eclipse.jubula.tools"; //$NON-NLS-1$
+    /** ID of the exec tools bundle */
+    public static final String TOOLS_EXEC_BUNDLE_ID = "org.eclipse.jubula.tools.exec"; //$NON-NLS-1$
     /** ID of the Communication bundle */
     public static final String COMMUNICATION_BUNDLE_ID = "org.eclipse.jubula.communication"; //$NON-NLS-1$
     /** ID of the common RC bundle */

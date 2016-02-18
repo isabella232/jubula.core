@@ -11,15 +11,20 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.IllegalCharsetNameException;
+import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -90,6 +95,9 @@ import org.eclipse.jubula.communication.internal.message.RestartAutMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.toolkit.internal.CSConstants;
+import org.eclipse.jubula.tools.exec.CommandExecutor;
+import org.eclipse.jubula.tools.exec.CommandExecutor.Result;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -127,8 +135,6 @@ import org.slf4j.LoggerFactory;
  * @created 03.09.2004
  */
 public class TestExecution {
-    /** the component system timeout key */
-    public static final String COMP_SYSTEM_TIMEOUT = "CompSystem.Timeout"; //$NON-NLS-1$
     /** <code>EXIT_CODE_ERROR</code> */
     protected static final int EXIT_CODE_NORUN_OK = 100;
     /** <code>EXIT_CODE_OK</code> */
@@ -685,8 +691,8 @@ public class TestExecution {
      */
     private int calculateRequestTimeout(MessageCap messageCap) {
         List<Integer> timeOuts = new ArrayList<Integer>();
-        IParamDescriptionPO desc1 = 
-            m_currentCap.getParameterForUniqueId(COMP_SYSTEM_TIMEOUT);
+        IParamDescriptionPO desc1 =  m_currentCap.getParameterForUniqueId(
+                    CSConstants.TIMEOUT);
         timeOuts.add(m_currentCap.getParameterList().indexOf(desc1));
         desc1 = m_currentCap.getParameterForUniqueId("CompSystem.TimeMillSec"); //$NON-NLS-1$
         timeOuts.add(m_currentCap.getParameterList().indexOf(desc1));
@@ -1625,7 +1631,7 @@ public class TestExecution {
 
         /** @return the timer name */
         protected String getTimerName() throws JBException {
-            return getValueForParam("CompSystem.TimerName"); //$NON-NLS-1$
+            return getValueForParam(CSConstants.TIMER_NAME);
         }
     }
     
@@ -1644,7 +1650,7 @@ public class TestExecution {
             try {
                 String timerName = getTimerName();
                 String variableName = getValueForParam(
-                        "CompSystem.VariableToStoreAbsoluteStartTime"); //$NON-NLS-1$
+                        CSConstants.VARIABLE_TO_STORE_ABSOLUTE_START_TIME);
                 
                 Long curTimeInMillisecs = 
                     new Long(System.currentTimeMillis());
@@ -1677,7 +1683,7 @@ public class TestExecution {
             try {
                 String timerName = getTimerName();
                 String variableName = getValueForParam(
-                        "CompSystem.VariableToStoreTimeDeltaSinceTimerStart"); //$NON-NLS-1$
+                    CSConstants.VARIABLE_TO_STORE_TIME_DELTA_SINCE_TIMER_START);
                 Long timerTimeInMillisecs = getTimerStore().get(timerName);
                 if (timerTimeInMillisecs == null) {
                     return EventFactory.createActionError(
@@ -1720,11 +1726,11 @@ public class TestExecution {
         public TestErrorEvent execute() throws JBException {
             try {
                 String actionToPerform = 
-                    getValueForParam("CompSystem.ActionToPerfom"); //$NON-NLS-1$
+                    getValueForParam(CSConstants.ACTION_TO_PERFOM);
                 String expectedBehavior = 
-                    getValueForParam("CompSystem.ExpectedBehavior"); //$NON-NLS-1$
+                    getValueForParam(CSConstants.EXPECTED_BEHAVIOR);
                 int timeout = Integer.parseInt(
-                    getValueForParam(COMP_SYSTEM_TIMEOUT));
+                    getValueForParam(CSConstants.TIMEOUT));
                 
                 Message message = new DisplayManualTestStepMessage(
                         actionToPerform, expectedBehavior, timeout);
@@ -1875,7 +1881,7 @@ public class TestExecution {
     public class SyncShutdownAndRestartCmd extends AbstractRestartCmd {
         @Override
         protected int getTerminationTimeout() throws JBException {
-            String timeout = getValueForParam(COMP_SYSTEM_TIMEOUT);
+            String timeout = getValueForParam(CSConstants.TIMEOUT);
             int parseInt = 0;
             try {
                 parseInt = Integer.parseInt(timeout);
@@ -2141,6 +2147,7 @@ public class TestExecution {
      * @author BREDEX GmbH
      * @created Sep 11, 2007
      */
+    @Deprecated
     public class CommandExecutorCmd extends AbstractPostExecutionCommand {
         
         /**
@@ -2155,7 +2162,7 @@ public class TestExecution {
          */
         public TestErrorEvent execute() throws JBException {
             IParamDescriptionPO desc = 
-                m_currentCap.getParameterForUniqueId("CompSystem.RunLocal"); //$NON-NLS-1$
+                m_currentCap.getParameterForUniqueId(CSConstants.RUN_LOCAL);
             try {
                 ITDManager tdManager = 
                     m_externalTestDataBP.getExternalCheckedTDManager(
@@ -2166,15 +2173,14 @@ public class TestExecution {
                 TestResultNode resultNode = m_resultTreeTracker.getEndNode();
                 if (Boolean.valueOf(runLocal)) {
                     // Execute script
-                    desc = 
-                        m_currentCap.getParameterForUniqueId("CompSystem.Command"); //$NON-NLS-1$
-                    date = 
-                        tdManager.getCell(0, desc);
-                    String cmd = this.getValueForParam(date, m_currentCap, 
-                        desc);
+                    desc = m_currentCap.getParameterForUniqueId(
+                            CSConstants.COMMAND);
+                    date = tdManager.getCell(0, desc);
+                    String cmd = this.getValueForParam(date, m_currentCap,
+                            desc);
                     
                     desc = m_currentCap
-                            .getParameterForUniqueId(COMP_SYSTEM_TIMEOUT);
+                            .getParameterForUniqueId(CSConstants.TIMEOUT);
                     date = 
                         tdManager.getCell(0, desc);
                     int timeout = Integer.parseInt(
@@ -2182,7 +2188,8 @@ public class TestExecution {
                             desc));
                     
                     desc = 
-                        m_currentCap.getParameterForUniqueId("CompSystem.ExpectedExitCode"); //$NON-NLS-1$
+                        m_currentCap.getParameterForUniqueId(
+                                CSConstants.EXPECTED_EXIT_CODE);
                     date = 
                         tdManager.getCell(0, desc);
                     int expectedExitCode = Integer.parseInt(
@@ -2213,17 +2220,98 @@ public class TestExecution {
                                 String.valueOf(actualExitValue));
                     }
                 } else {
-                    String returnValue =
+                    String sysOutAndErr =
                             m_varStore.getValue(LAST_ACTION_RETURN);
-                    resultNode.setCommandLog(returnValue);
+                    resultNode.setCommandLog(sysOutAndErr);
                 }
             } catch (IllegalArgumentException e) {
                 throw new JBException("IllegalArgumentException", e, //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } catch (InvalidDataException e) {
-                throw new JBException("InvalidDataException", e,  // //$NON-NLS-1$
+                throw new JBException("InvalidDataException", e, //$NON-NLS-1$
                     MessageIDs.E_STEP_EXEC);
             } 
+            return null;
+        }
+    }
+    
+    /**
+     * IPostExecutionCommand to execute an external command 
+     * if execution environment is ITE.
+     *
+     * @author BREDEX GmbH
+     */
+    public class CommandExecCmd extends AbstractPostExecutionCommand {
+        
+        /** Constructor */
+        public CommandExecCmd() {
+            super();
+        }
+        
+        /** {@inheritDoc} */
+        public TestErrorEvent execute() throws JBException {
+            try {
+                String runLocal = getValueForParam(CSConstants.EXEC_CONTEXT);
+                TestResultNode resultNode = m_resultTreeTracker.getEndNode();
+                if (CSConstants.EXEC_CONTEXT_ITE.equals(runLocal)) {
+                    String exec = getValueForParam(CSConstants.EXECUTABLE);
+                    String args = getValueForParam(CSConstants.EXEC_RAW_ARGS);
+                    boolean newEnvironment = Boolean.valueOf(
+                            getValueForParam(CSConstants.NEW_ENVIRONMENT));
+                    String splitChar = getValueForParam(
+                            CSConstants.RAW_ARG_SPLIT_CHAR);
+                    String encoding = getValueForParam(
+                            CSConstants.OUTPUT_ENCODING);
+                    String dir = getValueForParam(CSConstants.DIR);
+
+                    long timeout = Long.parseLong(getValueForParam(
+                            CSConstants.TIMEOUT));
+                    int expectedExitCode = Integer.parseInt(getValueForParam(
+                            CSConstants.EXPECTED_EXIT_CODE));
+                    Result result = CommandExecutor.exec(
+                            dir,
+                            exec, args, splitChar.charAt(0), 
+                            timeout,  encoding, newEnvironment);
+                    resultNode.setCommandLog(result.getCombinedOutput());
+
+                    int exitCode = result.getReturnValue();
+                    if (exitCode != expectedExitCode) {
+                        TestErrorEvent event = EventFactory.createVerifyFailed(
+                                String.valueOf(expectedExitCode), 
+                                String.valueOf(exitCode));
+                        event.addProp(
+                                TestErrorEvent.Property.COMMAND_LOG_KEY, 
+                                result.getCombinedOutput());
+                        return event;
+                    }
+                } else {
+                    String sysOutAndErr = m_varStore
+                            .getValue(LAST_ACTION_RETURN);
+                    resultNode.setCommandLog(sysOutAndErr);
+                }
+            } catch (IllegalCharsetNameException e) {
+                return EventFactory.createActionError();
+            } catch (UnsupportedCharsetException e) {
+                return EventFactory.createActionError();
+            } catch (ExecuteException e) {
+                return EventFactory.createActionError();
+            } catch (IOException e) {
+                return EventFactory.createActionError();
+            } catch (InterruptedException e) {
+                return EventFactory.createActionError();
+            } catch (TimeoutException e) {
+                TestErrorEvent event = EventFactory.createActionError(
+                        TestErrorEvent.CONFIRMATION_TIMEOUT);
+                event.addProp(TestErrorEvent.Property.COMMAND_LOG_KEY, 
+                        e.getMessage());
+                return event; 
+            } catch (IllegalArgumentException e) {
+                throw new JBException("IllegalArgumentException", e, //$NON-NLS-1$
+                        MessageIDs.E_STEP_EXEC);
+            } catch (InvalidDataException e) {
+                throw new JBException("InvalidDataException", e, //$NON-NLS-1$
+                        MessageIDs.E_STEP_EXEC);
+            }
             return null;
         }
     }

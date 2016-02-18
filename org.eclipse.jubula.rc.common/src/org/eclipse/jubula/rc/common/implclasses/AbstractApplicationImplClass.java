@@ -124,7 +124,7 @@ public abstract class AbstractApplicationImplClass implements ITester {
      * {@inheritDoc}
      */
     public void setComponent(Object graphicsComponent) {
-        // Do nothing; Application has no correspaonding component
+        // Do nothing; Application has no corresponding component
     }
 
     /**

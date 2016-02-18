@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Jubula - Tools - Exec
+Bundle-SymbolicName: org.eclipse.jubula.tools.exec
+Bundle-Vendor: Eclipse Jubula
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-Localization: plugin
+Bundle-Version: 4.0.0.qualifier
+Require-Bundle: org.apache.commons.exec;bundle-version="[1.1.0,2.0.0)",
+ org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
+ org.apache.commons.io;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.jdt.annotation;bundle-version="[1.1.0,2.0.0)";resolution:=optional
+Export-Package: org.eclipse.jubula.tools.exec

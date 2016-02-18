@@ -474,4 +474,13 @@
             <method>rcCloseDialog</method>
         </action>
 	</toolkitComponent>
+    
+    <toolkitComponent type="org.eclipse.jubula.html.os.component" 
+                      visible="false" 
+                      hasDefaultMapping="true" 
+                      since="4.0">
+        <realizes>guidancer.concrete.os.component</realizes>
+        <testerClass>org.eclipse.jubula.rc.common.tester.OperatingSystemTester</testerClass>
+        <componentClass name="org.eclipse.jubula.html.os.component" />
+    </toolkitComponent>
 </compSystem>

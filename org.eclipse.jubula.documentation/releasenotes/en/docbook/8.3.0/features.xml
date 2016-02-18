@@ -130,7 +130,7 @@
  <itemizedlist>
   <listitem>
    <para>
-    Now you are able generate monitoring report automatically.
+   	It is now possible to automatically generate a monitoring report.
    </para>
   </listitem>
  </itemizedlist>
@@ -194,6 +194,29 @@
 	you can easily add support for a custom component that you created. 
 	You just have to create an extension containing the adapter for your component. 
  </para>
+</listitem>
+</itemizedlist>
+<para>
+	<emphasis role="strong">Two new actions to execute external commands</emphasis>
+ </para>
+ <itemizedlist>
+ <listitem>
+ 	<para>
+ 		We introduced a new CAP for executing external commands:
+ 		<itemizedlist>
+ 			<listitem>
+ 				<para>
+ 					Execute External Command
+ 				</para>
+ 			</listitem>
+ 		</itemizedlist>
+ 	</para>
+</listitem>
+<listitem>
+	<para>
+		Among other things it is now possible to specify a parameter split character, the encoding type and 
+		to specify the directory and the executable file separately.
+	</para>	
 </listitem>
 </itemizedlist>
 </section>

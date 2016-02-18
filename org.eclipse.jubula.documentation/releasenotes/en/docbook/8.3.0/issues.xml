@@ -22,5 +22,11 @@
                 Bugzilla and Trac you will have to use the commercially available Tasktop Dev connectors.    
             </para>
         </listitem>
+        <listitem>
+        	<para>
+        		There is currently a known issue that reporting Jira as ALM fails for task IDs which include a 
+        		'-'. https://bugzilla.bredex.de/1769
+        	</para>
+        </listitem>
     </itemizedlist>
 </section>

@@ -106,12 +106,15 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
 
         String [] bundlesToAddToClasspath = {
             CommandConstants.TOOLS_BUNDLE_ID, 
+            CommandConstants.TOOLS_EXEC_BUNDLE_ID,
             CommandConstants.COMMUNICATION_BUNDLE_ID, 
             CommandConstants.RC_COMMON_BUNDLE_ID,
             CommandConstants.TOOLKIT_API_BUNDLE_ID,
             CommandConstants.SLF4J_JCL_BUNDLE_ID,
             CommandConstants.SLF4J_API_BUNDLE_ID,
             CommandConstants.COMMONS_LANG_BUNDLE_ID,
+            CommandConstants.APACHE_IO_BUNDLE_ID,
+            CommandConstants.APACHE_EXEC_BUNDLE_ID,
             CommandConstants.APACHE_ORO_BUNDLE_ID,
             CommandConstants.COMMONS_BEAN_UTILS_BUNDLE_ID,
             CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID,

@@ -1,0 +1,43 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="directory" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                             xmlns:xi="http://www.w3.org/2001/XInclude"
+                                             xmlns:xl="http://www.w3.org/1999/xlink" >
+  	<title>Directory</title>
+  
+  	<table>
+  		<title>DIRECTORY</title>
+  		<tgroup cols="4" align="left" colsep="1" rowsep="1">
+  			<thead>
+  				<row>
+  					<entry align="center">Parameter Name</entry>
+  					<entry align="center">Data Type</entry>
+  					<entry align="center">Possible Values</entry>
+  					<entry align="center">Default</entry>	
+  				</row>
+  			</thead>
+  			<tbody>
+  				<row>
+  					<entry>DIRECTORY</entry>
+  					<entry>String</entry>
+  					<entry></entry>
+  					<entry></entry>
+  				</row>
+  			</tbody>
+  		</tgroup>
+  	</table>
+  	<itemizedlist>
+  		<listitem><para>Give the path to the command, either on the local machine or on the remote machine, 
+  		as defined in the <emphasis>environment</emphasis> parameter</para></listitem>
+  		<listitem><para>Relative paths can be written simply with the white spaces included. You will need
+  		to use quotes (") around the path or command if you are using path fragments (e.g ./ or ../)
+  		for the relative path.</para></listitem>
+  		<listitem><para>Please bear in mind that strings within quotes are not checked for validity.</para></listitem>
+  	</itemizedlist>
+</section>

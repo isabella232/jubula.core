@@ -159,6 +159,7 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
                               rcHtmlDriverBundleId,
                               CommandConstants.TOOLKIT_HTML_BUNDLE_ID,
                               CommandConstants.TOOLS_BUNDLE_ID,
+                              CommandConstants.TOOLS_EXEC_BUNDLE_ID,
                               CommandConstants.COMMUNICATION_BUNDLE_ID,
                               CommandConstants.RC_COMMON_BUNDLE_ID,
                               CommandConstants.TOOLKIT_API_BUNDLE_ID,
@@ -170,6 +171,8 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
                               CommandConstants.LOGBACK_CORE_BUNDLE_ID,
                               CommandConstants.LOGBACK_SLF4J_BUNDLE_ID,
                               CommandConstants.COMMONS_LANG_BUNDLE_ID,
+                              CommandConstants.APACHE_IO_BUNDLE_ID,
+                              CommandConstants.APACHE_EXEC_BUNDLE_ID,
                               CommandConstants.APACHE_ORO_BUNDLE_ID,
                               CommandConstants.COMMONS_COLLECTIONS_BUNDLE_ID };
     }

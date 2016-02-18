@@ -47,6 +47,12 @@
       </fileset>
       <mergemapper to="org.eclipse.jubula.tools.jar"/>
     </copy>
+      <copy todir="lib">
+        <fileset dir="../org.eclipse.jubula.tools.exec/target">
+          <include name="org.eclipse.jubula.tools*SNAPSHOT.jar" />
+        </fileset>
+        <mergemapper to="org.eclipse.jubula.tools.exec.jar"/>
+      </copy>
     <copy todir="lib">
       <fileset dir="../org.eclipse.jubula.communication/target">
         <include name="org.eclipse.jubula.communication*SNAPSHOT.jar" />

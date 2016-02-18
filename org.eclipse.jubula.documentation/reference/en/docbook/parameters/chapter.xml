@@ -16,6 +16,8 @@
   <xi:include href="activateKey/content.xml"/>
   <xi:include href="activationMethod/content.xml"/>
   <xi:include href="anchorType/content.xml"/>
+  <xi:include href="arguments/content.xml"/>
+  <xi:include href="argumentSplitCharacter/content.xml"/>
   <xi:include href="baseKey/content.xml"/>
   <xi:include href="column/content.xml"/>
   <xi:include href="columnOperator/content.xml"/>
@@ -30,8 +32,12 @@
   <xi:include href="delayBeforeDrop/content.xml"/>
   <xi:include href="destination/content.xml"/>
   <xi:include href="direction/content.xml"/>
+  <xi:include href="directory/content.xml"/>
   <xi:include href="editable/content.xml"/>
   <xi:include href="enabled/content.xml"/>
+  <xi:include href="encoding/content.xml"/>
+  <xi:include href="environment/content.xml"/>
+  <xi:include href="executable/content.xml"/>
   <xi:include href="exists/content.xml"/>
   <xi:include href="expectedBehavior/content.xml"/>
   <xi:include href="expectedExitCode/content.xml"/>
@@ -90,6 +96,7 @@
   <xi:include href="title/content.xml"/>
   <xi:include href="type/content.xml"/>
   <xi:include href="url/content.xml"/>
+  <xi:include href="useNewEnvironment/content.xml"/>
   <xi:include href="value/content.xml"/>
   <xi:include href="value1/content.xml"/>
   <xi:include href="value2/content.xml"/>

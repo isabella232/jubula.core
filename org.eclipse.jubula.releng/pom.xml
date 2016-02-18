@@ -14,6 +14,7 @@
     <tycho-version>0.22.0</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java8.jdk.base.path>${java.home}/../../java8</java8.jdk.base.path>
     
     <java8.jdk.base.path.eclipse>/opt/public/common/jdk1.8.0_x64-latest</java8.jdk.base.path.eclipse>
@@ -147,10 +148,33 @@
         </plugins>
       </build>
     </profile>
+    <profile>
+		<id>linux-exec-tests</id>
+		<activation>
+			<os>
+				<name>linux</name>
+			</os>
+		</activation>
+		<modules>
+			    <module>../org.eclipse.jubula.tools.exec.tests.lin</module>
+		</modules>
+	</profile>
+	<profile>
+		<id>windows-exec-tests</id>
+		<activation>
+			<os>
+				<name>win32</name>
+			</os>
+		</activation>
+		<modules>
+			    <module>../org.eclipse.jubula.tools.exec.tests.win</module>
+		</modules>
+	</profile>
   </profiles>
   
   <modules>
     <module>../org.eclipse.jubula.tools</module>
+    <module>../org.eclipse.jubula.tools.exec</module>
     <module>../org.eclipse.jubula.communication</module>
     <module>../org.eclipse.jubula.logging</module>
     <module>../org.eclipse.jubula.releng.server</module>

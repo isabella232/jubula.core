@@ -15,6 +15,12 @@
   <para>
     <itemizedlist>
       <listitem>
+      	<para>
+      		<emphasis role="strong">This CAP has been set to DEPRECATED and is replaced by the new
+      		CAP <emphasis>Execute External Command</emphasis>.</emphasis>
+      	</para>
+      </listitem>	
+      <listitem>
         <para>
           Use this action to run an external script or command during your test.
         </para>

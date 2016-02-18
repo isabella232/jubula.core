@@ -1,0 +1,85 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionExecuteExternalCommandOperatingSystem" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="executeExternalCommandOperatingSystem"?>
+  <title>Execute external command</title>
+  
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to run an external script or command during your test.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To do so you have to specify the directory in which the external command can be found/shall be executed, 
+          the name of the executable, the timeout for the command to be executed, optional arguments, optional 
+          argument split characters, the expected exit code, the environment in which the command shall be 
+          executed, the encoding of the command line and if the executable should use a new environment or not.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+          	<listitem>
+              <para>
+                <xref linkend="argument_split_character" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="arguments" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="directory" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="encoding" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="environment" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="executable" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="expected_exit_code" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="use_new_environment" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>
