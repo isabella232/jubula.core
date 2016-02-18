@@ -188,13 +188,16 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
         List<Long> parentProjectIds = new ArrayList<Long>();
         parentProjectIds.add(workVersion.getParentProjectId());
-        List<IExecTestCasePO> execTcRefs = 
-            NodePM.getExecTestCases(workVersion.getGuid(), parentProjectIds);
-        Set<INodePO> lockedNodePOs = 
-            new HashSet<INodePO>();
         
-        EntityManager editorSession = 
+        EntityManager editorSession =
             getEditorHelper().getEditSupport().getSession();
+        List<IExecTestCasePO> execTcRefs = 
+                NodePM.getExecTestCases(workVersion.getGuid(),
+                        parentProjectIds, editorSession);
+        if (execTcRefs == null) {
+            return;
+        }
+        Set<INodePO> lockedNodePOs = new HashSet<INodePO>();
         for (IExecTestCasePO execTc : execTcRefs) {
             try {
                 INodePO parentNode = execTc.getParentNode();
