@@ -22,7 +22,8 @@
 
    <launcherArgs>
       <programArgs>-clean
--name Jubula</programArgs>
+-name Jubula
+#PARGS_2INSERT</programArgs>
       <programArgsLin>-vm
 ../jre/bin/java</programArgsLin>
       <programArgsWin>-vm

@@ -6,7 +6,7 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <project name="org.eclipse.jubula.client.core" default="weaveMaven">
-	<property name="currentPluginDir" value="/projects/guidancer/Workspace/hu_snapshot/current/platforms/lin.gtk.x86/jubula/plugins" />
+	<property name="currentPluginDir" value="/projects/guidancer/Workspace/hu_snapshot/current/platforms/lin.gtk.x86/ite/plugins" />
 	<property name="weaving.log.level" value="WARNING" />
     
 	<path id="eclipselink.weaving.classpath">

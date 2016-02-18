@@ -1335,7 +1335,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 File dir = new File(m_autWorkingDirectoryTextField.getText());
                 if (!dir.isAbsolute()) {
                     // Start from server dir, rather than client dir
-                    dir = new File("../server/" +  //$NON-NLS-1$
+                    dir = new File("./" +  //$NON-NLS-1$
                         m_autWorkingDirectoryTextField.getText());
                 }
                 if (!dir.isDirectory()) {

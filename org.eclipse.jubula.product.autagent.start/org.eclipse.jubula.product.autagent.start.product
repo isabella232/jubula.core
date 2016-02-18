@@ -8,6 +8,7 @@
 
    <launcherArgs>
       <programArgs>-consolelog
+#PARGS_2INSERT
 --launcher.suppressErrors</programArgs>
       <programArgsLin>-vm
 ../jre/bin/java</programArgsLin>

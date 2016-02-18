@@ -8,6 +8,7 @@
 
    <launcherArgs>
       <programArgs>-consolelog
+#PARGS_2INSERT
 -stop localhost
 --launcher.suppressErrors</programArgs>
       <programArgsLin>-vm
