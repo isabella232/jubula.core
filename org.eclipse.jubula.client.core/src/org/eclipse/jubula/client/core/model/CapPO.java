@@ -353,10 +353,10 @@ class CapPO extends ParamNodePO implements ICapPO {
      */
     private void initParameterList() {
         clearParameterList();
-        List paramList = getMetaAction().getParams();
-        Iterator it = paramList.iterator();
+        List<Param> paramList = getMetaAction().getParams();
+        Iterator<Param> it = paramList.iterator();
         while (it.hasNext()) {
-            Param par = ((Param)it.next());
+            Param par = it.next();
             IParamDescriptionPO desc = PoMaker.createCapParamDescriptionPO(
                 par.getType(), par.getName());
             addParameter(desc);

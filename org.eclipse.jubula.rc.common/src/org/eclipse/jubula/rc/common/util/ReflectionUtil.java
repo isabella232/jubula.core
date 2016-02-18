@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -51,11 +52,18 @@ public class ReflectionUtil {
      * @throws InvocationTargetException
      * @throws InstantiationException
      */
-    public static Object[] getParameterValues(String args, String argsSplit,
+    public static Object[] getParameterValues(
+            String args, 
+            @Nullable String argsSplit,
             Class<?>[] parameterClasses)
                     throws NoSuchMethodException, IllegalAccessException,
                     InvocationTargetException, InstantiationException {
-        String[] argValues = args.split(argsSplit);
+        String[] argValues;
+        if (!StringUtils.isEmpty(argsSplit)) {
+            argValues = args.split(argsSplit);
+        } else {
+            argValues = new String[] { args };
+        }
         if (argValues.length != parameterClasses.length) {
             throw new StepExecutionException("Invalid number of parameters", //$NON-NLS-1$
                     EventFactory
@@ -98,8 +106,12 @@ public class ReflectionUtil {
      * @throws Throwable
      * @throws StepVerifyFailedException
      */
-    public static Object invokeMethod(final String fqcn, final String name,
-            final String signature, final String args, final String argsSplit,
+    public static Object invokeMethod(
+            final String fqcn, 
+            final String name,
+            @Nullable final String signature, 
+            @Nullable final String args, 
+            @Nullable final String argsSplit,
             ClassLoader uiClassLoader)
                     throws Throwable, StepVerifyFailedException {
         Class<?> clazz = Class.forName(fqcn, true, uiClassLoader);

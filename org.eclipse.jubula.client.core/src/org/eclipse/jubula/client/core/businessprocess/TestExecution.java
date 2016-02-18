@@ -929,24 +929,16 @@ public class TestExecution {
                 }
                 MessageParam messageParam = createMessageParam(desc, action);
                 messageCap.addMessageParam(messageParam);
-                String date = 
-                    tdManager.getCell(0, desc);
-                StringBuilder msg = new StringBuilder();
-                msg.append(Messages.NoTestdataAvailableForCAP);
-                msg.append(StringConstants.COLON);
-                msg.append(StringConstants.SPACE);
-                msg.append(cap.getName());
-                msg.append(StringConstants.COMMA);
-                msg.append(StringConstants.SPACE);
-                msg.append(Messages.Parameter);
-                msg.append(StringConstants.COLON);
-                msg.append(StringConstants.SPACE);
-                msg.append(desc.getName());
-                msg.append(StringConstants.COMMA);
-                msg.append(StringConstants.SPACE);
-                msg.append(Messages.AndDatasetNumberZero);
-                Validate.notNull(date, msg.toString());
+                String date = tdManager.getCell(0, desc);
                 String value = null;
+                boolean isMandatoryParameter = !ParamNameBP
+                        .isOptionalParameter(cap, desc.getUniqueId());
+                
+                if (isMandatoryParameter) {
+                    Validate.notEmpty(date, 
+                            NLS.bind(Messages.NoTestdataAvailableForCAP, 
+                                new String[]{cap.getName(), desc.getName()}));
+                }
                 try {
                     final int dsNumber = m_trav.getDataSetNumber();
                     m_varStore.store(CURRENT_DATASET_NUMBER, String.valueOf(
@@ -957,7 +949,7 @@ public class TestExecution {
                         new ArrayList<ExecObject>(m_trav.getExecStackAsList());
                     value = conv.getExecutionString(stackList);
                 } catch (InvalidDataException e) {
-                    if (!runIncomplete) {
+                    if (!runIncomplete || !isMandatoryParameter) {
                         StringBuilder msgbuild = new StringBuilder();
                         msgbuild.append(Messages.NoValueAvailableForParameter);
                         msgbuild.append(StringConstants.COLON);

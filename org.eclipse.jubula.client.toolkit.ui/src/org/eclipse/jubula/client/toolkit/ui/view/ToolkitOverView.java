@@ -62,8 +62,7 @@ public class ToolkitOverView extends ViewPart {
                     final ToolkitDescriptor parentDescriptor = COMP_SYSTEM
                         .getToolkitDescriptor(parent);
                     if (parentDescriptor != null) {
-                        sb.append(" --> "); //$NON-NLS-1$
-                        sb.append(parentDescriptor.getName());
+                        sb.append(" --> ").append(parentDescriptor.getName()); //$NON-NLS-1$
                     }
                 }
                 return sb.toString();
@@ -100,8 +99,10 @@ public class ToolkitOverView extends ViewPart {
             } else if (element instanceof Param) {
                 Param param = (Param) element;
                 StringBuilder sb = new StringBuilder();
-                sb.append(CompSystemI18n.getString(param.getType()));
-                sb.append(" : "); //$NON-NLS-1$
+                if (param.isOptional()) {
+                    sb.append("optional: "); //$NON-NLS-1$
+                }
+                sb.append(CompSystemI18n.getString(param.getType())).append(" : "); //$NON-NLS-1$;
                 sb.append(sh.get(param.getName(), true));
                 if (param.hasValueSet()) {
                     sb.append(" ["); //$NON-NLS-1$
@@ -121,7 +122,6 @@ public class ToolkitOverView extends ViewPart {
                     sb.append(" (" + CompSystemI18n.getString(description) + ")"); //$NON-NLS-1$ //$NON-NLS-2$
                 }
                 return sb.toString();
-                
             }
             return super.getText(element);
         }

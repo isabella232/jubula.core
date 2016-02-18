@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
+import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.utils.ExecObject;
@@ -220,9 +221,19 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                     TestExecution.getInstance().getTrav().getExecStackAsList();
             ExecObject currentExecObj = execList.get(execList.size() - 1);
             
-            resultNode.addParameter(new TestResultParameter(
-                    desc.getName(), CompSystemI18n.getString(desc.getType()), 
-                    currentExecObj.getParameterValue(desc.getUniqueId())));
+            boolean shouldAddParameter = true;
+            
+            String value = currentExecObj.getParameterValue(desc.getUniqueId());
+            if (paramNode instanceof ICapPO) {
+                ICapPO cap = (ICapPO) paramNode;
+                shouldAddParameter = !(ParamNameBP.isOptionalParameter(cap,
+                        desc.getUniqueId()) && StringUtils.isEmpty(value));
+            }
+
+            if (shouldAddParameter) {
+                resultNode.addParameter(new TestResultParameter(desc.getName(),
+                        CompSystemI18n.getString(desc.getType()), value));
+            }
         }
     }
 
@@ -276,11 +287,13 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                 value = MessageIDs.getMessageObject(e.getErrorId()).
                         getMessage(new String[] {e.getLocalizedMessage()});
             }
-
-            resultNode.addParameter(new TestResultParameter(
-                    CompSystemI18n.getString(desc.getUniqueId()), 
-                    CompSystemI18n.getString(desc.getType()), 
-                    StringUtils.defaultString(value)));
+            if (!(ParamNameBP.isOptionalParameter(testStep, desc.getUniqueId())
+                    && StringUtils.isEmpty(value))) {
+                resultNode.addParameter(new TestResultParameter(
+                        CompSystemI18n.getString(desc.getUniqueId()), 
+                        CompSystemI18n.getString(desc.getType()), 
+                        StringUtils.defaultString(value)));
+            }
         }
     }
 

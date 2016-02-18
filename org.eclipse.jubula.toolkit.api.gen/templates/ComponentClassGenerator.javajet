@@ -97,6 +97,7 @@ if (specInfo instanceof ComponentGenInfo) {
 package <%=packageName%>;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.toolkit.CapBuilder;
 import org.eclipse.jubula.toolkit.enums.ValueSets.*;
@@ -236,6 +237,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         Iterator<Param> paramIterator = params.iterator();
         while (paramIterator.hasNext()) {
             Param param = paramIterator.next();
+            boolean isOptional = param.isOptional();
             boolean hasCombineableValueSet = param.hasValueSet() && param.getValueSet().isCombinable();
             String type = param.getType();
             String name = param.getName();
@@ -246,17 +248,20 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             paramMap.put(name, fqParamType);
             paramTypeMap.put(name, fixedType);
             %>
-            @NonNull <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+            <%if (isOptional) {%>@Nullable<%} else {%>@NonNull<%}%> <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
         <%}%>
         ) <%if (!params.isEmpty()) {%>throws IllegalArgumentException<%} if (genInterface) {%>;<%} else {%> {
             <%for (Param parameter : params) {
+            boolean isOptional = parameter.isOptional();
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
+            <%if (!isOptional) {%>
             Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
+            <%}%>
                 <%String paramEnumType = paramMap.get(paramName);%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
-                    <%if (hasCombineableValueSet) {%>
+                    <%if (hasCombineableValueSet && !isOptional) {%>
             Validate.noNullElements(<%=translatedParamName%>, "Elements of argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
                     <%}%>
                 <%}%>
@@ -270,6 +275,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
                         .setComponentIdentifier(getPseudoComponentIdentifier())
             <%}%>
             <%for (Param parameter : params) {
+            boolean isOptional = parameter.isOptional();
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
@@ -278,15 +284,15 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
                         <%if (fqParamType.contains("Integer")) {%>
-                        .addParameter(<%=translatedParamName%>.rcIntValue())
+                        .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>.rcIntValue())
                         <%} else {%>
-                        .addParameter(<%=translatedParamName%>.rcValue())
+                        .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>.rcValue())
                         <%}%>
                     <%} else {%>
-                        .addParameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
+                        .add<%if(isOptional){%>Optional<%}%>Parameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
                     <%}%>
                 <%} else {%>
-                        .addParameter(<%=translatedParamName%>)
+                        .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>)
                 <%}%>
             <%}%>
                         .build();

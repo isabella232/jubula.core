@@ -15,7 +15,11 @@
   <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="special-parameters-empty-strings-and-the-escape-character.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
   <para>
     <emphasis role="strong">Entering empty strings as parameters</emphasis><?linebreak?>
-    If you want the parameter you enter to be an <emphasis>empty string</emphasis> (i.e. nothing), use two single quote marks: ”
+    For certain test steps it is allowed to leave a parameter value empty if it is not necessary for the execution of the test step.
+  </para>
+  <para>
+    If you want the parameter you enter to be an <emphasis>empty string</emphasis> (i.e. nothing), use two single quote marks: ” <?linebreak?>
+    This works for test steps as well as for test cases.
   </para>
   <para>
     You can use this with the <emphasis>equals</emphasis>, <emphasis>matches</emphasis> or

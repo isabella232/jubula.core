@@ -25,11 +25,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
-
 
 
 /**
@@ -240,12 +240,8 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
         getParameterInterface().setReferencedDataCube(dataCube);
     }
 
-    /**
-     * 
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public boolean isTestDataComplete() {
-        
         if (StringUtils.isEmpty(getDataFile())) {
             // Excel files are ignored. Other data is checked.
             final int paramListSize = getParameterListSize();
@@ -268,7 +264,6 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                     int column = 
                         testDataManager.findColumnForParam(
                                 paramDesc.getUniqueId());
-                    
                     if (refDataCube != null) {
                         IParamDescriptionPO dataCubeParam = 
                             refDataCube.getParameterForName(
@@ -297,13 +292,19 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                             }
                         }
                     } else {
-                        return false;
+                        if (this instanceof ICapPO) {
+                            ICapPO cap = (ICapPO) this;
+                            if (!ParamNameBP.isOptionalParameter(
+                                    cap, paramDesc.getUniqueId())) {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
                     }
                 }
             }
-                
         }
-
         return true;
     }
 

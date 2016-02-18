@@ -142,6 +142,8 @@ public class IconConstants {
     public static final Image READ_ONLY_IMAGE = getImage("readonly.gif"); //$NON-NLS-1$
     /** incomplete data image */
     public static final Image INCOMPLETE_DATA_IMAGE = getImage("StepNotOK.gif"); //$NON-NLS-1$
+    /** incomplete data image */
+    public static final Image OPTIONAL_DATA_IMAGE = getImage("optionalData.gif"); //$NON-NLS-1$
     /** original data image */
     public static final Image ORIGINAL_DATA_IMAGE = getImage("orginalData.gif"); //$NON-NLS-1$
     /** overwritten data image */
@@ -231,8 +233,6 @@ public class IconConstants {
     public static final Image GLOBAL_NAME_IMAGE = getImage("globalName.gif"); //$NON-NLS-1$
     /** global name_disabled image */
     public static final Image GLOBAL_NAME_DISABLED_IMAGE = getImage("globalName_disabled.gif"); //$NON-NLS-1$
-    /** language image */
-    public static final Image LANGUAGE_IMAGE = getImage("globe.gif"); //$NON-NLS-1$
     /** local name image */
     public static final Image LOCAL_NAME_IMAGE = getImage("localName.gif"); //$NON-NLS-1$
     /** local name_disabled image */

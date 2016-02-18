@@ -45,11 +45,13 @@ public interface IParameterDetailsPO {
     /**
      * @return the internal parameter type.
      */
+    @Deprecated
     public abstract String getInternalParameterType();
 
     /**
      * @param parameterType the internal parameter type to set.
      */
+    @Deprecated
     public abstract void setInternalParameterType(String parameterType);
     
     /**

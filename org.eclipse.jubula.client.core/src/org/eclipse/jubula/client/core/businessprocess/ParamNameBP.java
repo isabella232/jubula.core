@@ -14,7 +14,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -25,6 +27,7 @@ import org.eclipse.jubula.client.core.persistence.ParamNamePM;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -201,6 +204,25 @@ public class ParamNameBP extends AbstractNameBP<IParamNamePO>
         return getNamePO(uniqueId);
     }
 
-
-
+    /**
+     * @param cap
+     *            the cap to search for the parameter for
+     * @param uniqueId
+     *            the id of the parameter
+     * @return whether its optional or not
+     */
+    public static boolean isOptionalParameter(
+            @NonNull final ICapPO cap,
+            @NonNull final String uniqueId) {
+        boolean isOptionalParameter = false;
+        for (Param p : cap.getMetaAction().getParams()) {
+            if (p.getName().equals(uniqueId)) {
+                if (p.isOptional()) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return false;
+    }
 }

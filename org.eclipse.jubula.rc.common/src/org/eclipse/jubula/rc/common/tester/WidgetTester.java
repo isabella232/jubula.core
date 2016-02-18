@@ -19,6 +19,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.ClickOptions.ClickModifier;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -554,8 +555,12 @@ public class WidgetTester extends AbstractUITester {
      * @param argsSplit separator for the Arguments
      * @param timeout the timeout
      */
-    public void rcInvokeMethod(final String fqcn, final String name,
-            final String signature, final String args, final String argsSplit,
+    public void rcInvokeMethod(
+            final String fqcn, 
+            final String name,
+            @Nullable final String signature, 
+            @Nullable final String args, 
+            @Nullable final String argsSplit,
             int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
@@ -582,9 +587,14 @@ public class WidgetTester extends AbstractUITester {
      * @return returns the string representation of the return value of the
      *         invoked method
      */
-    public String rcInvokeMethodStoreReturn(final String variableName,
-            final String fqcn, final String name, final String signature,
-            final String args, final String argsSplit, int timeout) {
+    public String rcInvokeMethodStoreReturn(
+            final String variableName,
+            final String fqcn, 
+            final String name, 
+            @Nullable final String signature,
+            @Nullable final String args, 
+            @Nullable final String argsSplit, 
+            int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
         try {
@@ -607,9 +617,12 @@ public class WidgetTester extends AbstractUITester {
      * @param argsSplit separator for the arguments
      * @return the IRunnable object
      */
-    private Callable<Object> createCallable(final String fqcn,
-            final String name, final String signature, final String args,
-            final String argsSplit) {
+    private Callable<Object> createCallable(
+            final String fqcn,
+            final String name, 
+            @Nullable final String signature, 
+            @Nullable final String args,
+            @Nullable final String argsSplit) {
         return new Callable<Object>() {
 
             public Object call() {
@@ -656,7 +669,9 @@ public class WidgetTester extends AbstractUITester {
      * @return returns null or if the invoked method return
      *         java.util.Properties, the string representation of the properties
      */
-    public String rcInvokeMethod(final String fqcn, final String name,
+    public String rcInvokeMethod(
+            final String fqcn, 
+            final String name,
             int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
@@ -680,8 +695,11 @@ public class WidgetTester extends AbstractUITester {
      * @return returns the string representation of the return value of the
      *         invoked method
      */
-    public String rcInvokeMethodStoreReturn(final String variableName,
-            final String fqcn, final String name, int timeout) {
+    public String rcInvokeMethodStoreReturn(
+            final String variableName,
+            final String fqcn, 
+            final String name, 
+            int timeout) {
         IRobotFactory factory = getComponent().getRobotFactory();
         IEventThreadQueuer queuer = factory.getEventThreadQueuer();
         try {
