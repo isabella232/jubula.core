@@ -102,9 +102,6 @@ public interface RCPCommandIDs {
     /** the ID of the "open project" command */
     public static final String OPEN_PROJECT = "org.eclipse.jubula.client.ui.rcp.commands.OpenProject"; //$NON-NLS-1$
     
-    /** the ID of the "open test case" command */
-    public static final String OPEN_TESTCASE = "org.eclipse.jubula.client.ui.rcp.commands.OpenTestCase"; //$NON-NLS-1$
-
     /** the ID of the "open test case editor" command */
     public static final String OPEN_TESTCASE_EDITOR = "org.eclipse.jubula.client.ui.rcp.commands.OpenTestcaseEditor"; //$NON-NLS-1$
     
@@ -113,6 +110,9 @@ public interface RCPCommandIDs {
     
     /** the ID of the "open test suite editor" command */
     public static final String OPEN_TESTSUITE_EDITOR = "org.eclipse.jubula.client.ui.rcp.commands.OpenTestsuiteEditor"; //$NON-NLS-1$
+    
+    /** the ID of the "open specification" command */
+    public static final String OPEN_SPECIFICATION = "org.eclipse.jubula.client.ui.commands.OpenSpecification"; //$NON-NLS-1$
     
     /** the ID of the "Pause Test Suite" command */
     public static final String PAUSE_TEST_SUITE = "org.eclipse.jubula.client.ui.rcp.commands.PauseTestSuiteCommand"; //$NON-NLS-1$

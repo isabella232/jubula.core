@@ -153,15 +153,10 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 Object firstElement = selection.getFirstElement();
                 if (firstElement instanceof ITestSuitePO) {
                     runCommand(RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
-                } else if (firstElement instanceof IExecTestCasePO) {
-                    IExecTestCasePO exec = (IExecTestCasePO) firstElement;
-                    if (exec.getParentNode() instanceof ITestSuitePO) {
-                        runCommand(RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
-                    } else {
-                        runCommand(RCPCommandIDs.OPEN_TESTCASE_EDITOR);
-                    }
-                } else if (firstElement instanceof ITestJobPO 
+                } else if (firstElement instanceof IExecTestCasePO
                         || firstElement instanceof IRefTestSuitePO) {
+                    runCommand(RCPCommandIDs.OPEN_SPECIFICATION);
+                } else if (firstElement instanceof ITestJobPO) {
                     runCommand(RCPCommandIDs.OPEN_TESTJOB_EDITOR);
                 } else if (firstElement instanceof IExecObjContPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE);

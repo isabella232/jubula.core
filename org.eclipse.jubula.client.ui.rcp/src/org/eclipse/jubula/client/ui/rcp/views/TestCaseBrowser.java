@@ -250,6 +250,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
             if (firstElement instanceof ISpecObjContPO
                     || firstElement instanceof ICategoryPO) {
                 commandId = RCPCommandIDs.NEW_TESTCASE;
+            } else if (firstElement instanceof IExecTestCasePO) {
+                commandId = RCPCommandIDs.OPEN_SPECIFICATION;
             } else {
                 commandId = RCPCommandIDs.OPEN_TESTCASE_EDITOR;
             }
