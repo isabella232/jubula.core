@@ -265,5 +265,18 @@
             type="string">
       </varArg>
    </function>
+   <function
+         class="org.eclipse.jubula.client.core.functions.OSGiVersionRangeIncludesFunctionEvaluator"
+         evaluator="local"
+         name="osgi_versionRange_includes">
+      <parameter
+            name="versionRange"
+            type="string">
+      </parameter>
+      <parameter
+            name="version"
+            type="string">
+      </parameter>
+   </function>
    </extension>
 </plugin>
