@@ -21,5 +21,5 @@ public enum ReportRuleType {
     ONSUCCESS,
     
     /** on failure */
-    ONFAILURE;
+    ONFAILURE
 }

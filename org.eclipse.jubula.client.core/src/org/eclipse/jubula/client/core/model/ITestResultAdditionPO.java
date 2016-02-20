@@ -21,7 +21,7 @@ public interface ITestResultAdditionPO {
      */
     public static enum TYPE {
         /** output and error log */
-        OUT_AND_ERR;
+        OUT_AND_ERR
     }
     /**
      * only for Persistence (JPA / EclipseLink)

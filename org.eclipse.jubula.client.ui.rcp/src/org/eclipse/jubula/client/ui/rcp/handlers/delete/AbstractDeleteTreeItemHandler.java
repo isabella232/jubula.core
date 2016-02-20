@@ -88,10 +88,7 @@ public abstract class AbstractDeleteTreeItemHandler
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.open();
-        if (dialog.getReturnCode() != 0) { //1= the NO button was pressed
-            return false;
-        }
-        return true;
+        return dialog.getReturnCode() == 0;
     }
 
     /**

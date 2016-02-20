@@ -373,10 +373,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
      * @return <code>true</code>.
      */
     public boolean isPasteEnabled() {
-        if (m_popupText == null || m_popupText.isDisposed()) {
-            return false;
-        }
-        return true;
+        return !(m_popupText == null || m_popupText.isDisposed());
     }
 
     /**
@@ -385,10 +382,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
      * @return <code>true</code>.
      */
     public boolean isSaveAllEnabled() {
-        if (m_popupText == null || m_popupText.isDisposed()) {
-            return false;
-        }
-        return true;
+        return !(m_popupText == null || m_popupText.isDisposed());
     }
 
     /**

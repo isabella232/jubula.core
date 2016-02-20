@@ -1082,7 +1082,7 @@ public class FigureCanvasTester extends WidgetTester {
      */
     private String getPropertyFromFigure(final String propertyName,
             final IFigure figure) {
-        Object prop = getEventThreadQueuer().<Object>invokeAndWait("getProperty",  //$NON-NLS-1$
+        Object prop = getEventThreadQueuer().invokeAndWait("getProperty",  //$NON-NLS-1$
             new IRunnable<Object>() {
 
                 public Object run() throws StepExecutionException {

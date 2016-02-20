@@ -56,7 +56,7 @@ public class DeleteTreeItemHandlerTCBrowser
         for (IExecTestCasePO node : reusesSet) {
             INodePO parent = null;
             if (node instanceof IEventExecTestCasePO) {
-                parent = ((IEventExecTestCasePO) node).getParentNode();
+                parent = node.getParentNode();
             } else {
                 parent = node.getParentNode();
             }

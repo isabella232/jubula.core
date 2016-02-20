@@ -120,10 +120,7 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public boolean isExisting() {
-        if (m_menuItem != null) {
-            return true;
-        }
-        return false;
+        return m_menuItem != null;
     }
 
     /**
@@ -152,19 +149,13 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
      * {@inheritDoc}
      */
     public boolean hasSubMenu() {
-        if (m_menuItem.getSubElements().length > 0) {
-            return true;
-        }
-        return false;
+        return m_menuItem.getSubElements().length > 0;
     }
     /**
      * {@inheritDoc}
      */
     public boolean isSeparator() {
-        if (m_menuItem == null) {
-            return true;
-        }
-        return false;
+        return m_menuItem == null;
     }
     
     /**

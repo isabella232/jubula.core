@@ -507,7 +507,7 @@ public class XmlStorage {
         for (String encoding : SUPPORTED_CHAR_ENCODINGS) {
             try (InputStream xmlProjectStream = xmlProjectURL.openStream();
                 BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(xmlProjectStream, encoding));) {
+                    new InputStreamReader(xmlProjectStream, encoding))) {
                 final String firstLine = reader.readLine();
                 if (firstLine != null && firstLine.contains(encoding)) {
                     return encoding;

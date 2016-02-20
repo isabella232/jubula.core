@@ -1149,7 +1149,7 @@ public class MultipleNodePM  extends PersistenceManager {
         for (IExecTestCasePO execTc : execTestCases) {
             INodePO parent;
             if (execTc instanceof IEventExecTestCasePO) {
-                parent = ((IEventExecTestCasePO) execTc).getParentNode();
+                parent = execTc.getParentNode();
             } else {
                 parent = execTc.getParentNode();
             }

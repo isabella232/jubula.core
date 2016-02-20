@@ -103,10 +103,7 @@ public class MenuItemAdapter<M extends MenuItem>
 
     @Override
     public boolean isExisting() {
-        if (getRealComponent() != null) {
-            return true;
-        }
-        return false;
+        return getRealComponent() != null;
     }
 
     @Override
@@ -145,10 +142,7 @@ public class MenuItemAdapter<M extends MenuItem>
 
                     @Override
                     public Boolean call() throws Exception {
-                        if (item instanceof SeparatorMenuItem) {
-                            return true;
-                        }
-                        return false;
+                        return item instanceof SeparatorMenuItem;
                     }
                 });
     }

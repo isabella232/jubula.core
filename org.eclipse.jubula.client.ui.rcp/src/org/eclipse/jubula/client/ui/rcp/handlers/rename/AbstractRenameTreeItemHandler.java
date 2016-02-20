@@ -84,12 +84,9 @@ public abstract class AbstractRenameTreeItemHandler
                 false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();
-                if (!node.getName().equals(newName)
+                return !(!node.getName().equals(newName)
                         && ProjectPM
-                                .doesTestJobExists(project.getId(), newName)) {
-                    return false;
-                }
-                return true;
+                        .doesTestJobExists(project.getId(), newName));
             }
         };
     }
@@ -148,12 +145,9 @@ public abstract class AbstractRenameTreeItemHandler
             false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();
-                if (!node.getName().equals(newName)
-                    && ProjectPM.doesTestSuiteExists(project.getId(), 
-                        newName)) {
-                    return false;
-                }
-                return true;
+                return !(!node.getName().equals(newName)
+                        && ProjectPM.doesTestSuiteExists(project.getId(),
+                        newName));
             }
         };
     }

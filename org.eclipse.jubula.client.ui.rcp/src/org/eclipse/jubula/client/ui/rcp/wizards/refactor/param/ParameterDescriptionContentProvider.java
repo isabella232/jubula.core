@@ -46,10 +46,7 @@ public class ParameterDescriptionContentProvider
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
-        if (element instanceof IParamDescriptionPO) {
-            return true;
-        }
-        return false;
+        return element instanceof IParamDescriptionPO;
     }
 
     /**

@@ -1083,12 +1083,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      */
     private boolean checkTextInput(boolean emptyAllowed, int textLength, 
         String text) {
-        
-        if ((textLength == 0 && !emptyAllowed) 
-            || (text.startsWith(" ") || text.endsWith(" "))) { //$NON-NLS-1$ //$NON-NLS-2$     
-            return false;
-        }
-        return true;
+
+        return !((textLength == 0 && !emptyAllowed)
+                || (text.startsWith(" ") || text.endsWith(" ")));
     }
     
     /**

@@ -105,12 +105,8 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
             IAUTMainPO aut = AutAgentRegistration.getAutForId(identifier,
                     project);
             String toolkit = aut.getToolkit();
-            if (toolkit
-                    .equalsIgnoreCase(CommandConstants.HTML_TOOLKIT)) {
-                m_isHTMLAut = true;
-            } else {
-                m_isHTMLAut = false;
-            }
+            m_isHTMLAut = toolkit
+                    .equalsIgnoreCase(CommandConstants.HTML_TOOLKIT);
         } else {
             m_isHTMLAut = false;
         }

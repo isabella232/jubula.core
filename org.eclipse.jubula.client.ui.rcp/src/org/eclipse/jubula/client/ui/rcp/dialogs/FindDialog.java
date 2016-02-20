@@ -438,12 +438,9 @@ public class FindDialog <NODE> implements DisposeListener {
      *         Otherwise, <code>false</code>.
      */
     private boolean isValidPart(ITreeViewerContainer treeViewerContainer) {
-        if (treeViewerContainer == null 
+        return !(treeViewerContainer == null
                 || treeViewerContainer.getTreeViewer() == null
-                || treeViewerContainer.getTreeViewer().getTree().isDisposed()) {
-            return false;
-        }
-        return true;
+                || treeViewerContainer.getTreeViewer().getTree().isDisposed());
     }
 
     /**

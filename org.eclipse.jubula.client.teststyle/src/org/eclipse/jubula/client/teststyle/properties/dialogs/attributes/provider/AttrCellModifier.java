@@ -45,10 +45,7 @@ public class AttrCellModifier implements ICellModifier {
      * {@inheritDoc}
      */
     public boolean canModify(Object element, String property) {
-        if (property.equals(EditAttributeDialog.VALUE_COLUMN)) {
-            return true;
-        }
-        return false;
+        return property.equals(EditAttributeDialog.VALUE_COLUMN);
     }
 
     /**

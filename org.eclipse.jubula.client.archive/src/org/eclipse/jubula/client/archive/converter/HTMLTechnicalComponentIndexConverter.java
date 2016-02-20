@@ -42,10 +42,7 @@ public class HTMLTechnicalComponentIndexConverter extends AbstractXmlConverter {
      * {@inheritDoc}
      */
     protected boolean conversionIsNecessary(Project xml) {
-        if (xml.getMetaDataVersion() < REQUIRED_METADATA_VERSION_NUMBER) {
-            return true;
-        }
-        return false;
+        return xml.getMetaDataVersion() < REQUIRED_METADATA_VERSION_NUMBER;
     }
 
     /**

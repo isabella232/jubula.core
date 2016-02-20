@@ -191,12 +191,9 @@ public abstract class AbstractComponentNameMapper implements
             compNamePo.setComponentType(newType);
         }
 
-        if (newType.equals(ComponentNamesBP.UNKNOWN_COMPONENT_TYPE) 
-                && typeOfReuse != null) {
-            return false;
-        }
-        
-        return true;
+        return !(newType.equals(ComponentNamesBP.UNKNOWN_COMPONENT_TYPE)
+                && typeOfReuse != null);
+
     }
 
     /**

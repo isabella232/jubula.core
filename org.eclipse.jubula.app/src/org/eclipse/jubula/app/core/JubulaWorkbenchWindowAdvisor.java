@@ -42,7 +42,6 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.WorkbenchException;
@@ -216,7 +215,7 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         }
         
         Plugin.createStatusLineItems();
-        Plugin.showStatusLine((IWorkbenchPart)null);
+        Plugin.showStatusLine(null);
         addMainWindowTitleUpdater();
         checkAndPerformStartupHooks();
     }
@@ -266,7 +265,7 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
      */
     public void postWindowRestore() throws WorkbenchException {
         super.postWindowRestore();
-        Plugin.showStatusLine((IWorkbenchPart)null);
+        Plugin.showStatusLine(null);
     }
     
     /**

@@ -76,11 +76,8 @@ public class DvdFileChooser extends JFileChooser {
                 return true;
             }
             String extension = getExtension(f);
-            
-            if (Constants.SUFFIX.equals(extension)) {
-                return true;
-            }
-            return false;
+
+            return Constants.SUFFIX.equals(extension);
         }
         
         /**

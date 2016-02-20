@@ -19,5 +19,5 @@ public enum Severity {
     /** ordinal() -> 1 */
     WARNING,
     /** ordinal() -> 2 */
-    ERROR;
+    ERROR
 }

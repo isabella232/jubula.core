@@ -124,12 +124,9 @@ public class NewProjectHandler extends AbstractProjectHandler {
      * @return true if swing or swt toolkit is selected
      */
     private boolean isSwingOrSwtPlugin(String selectedToolkit) {
-        if (selectedToolkit.equals(CommandConstants.SWING_TOOLKIT)
+        return selectedToolkit.equals(CommandConstants.SWING_TOOLKIT)
                 || selectedToolkit.equals(
-                        CommandConstants.SWT_TOOLKIT)) {
-            return true;
-        }
-        return false;
+                CommandConstants.SWT_TOOLKIT);
     }
 
     /**

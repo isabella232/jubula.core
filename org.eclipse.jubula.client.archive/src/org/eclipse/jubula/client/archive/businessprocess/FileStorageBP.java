@@ -1355,7 +1355,7 @@ public class FileStorageBP {
                 if (node instanceof ICategoryPO && (node).getName().
                     startsWith(standardName)) {
     
-                    usedNames.add(((INodePO)node).getName());
+                    usedNames.add(node.getName());
                 }
             }
             while (usedNames.contains(newName)) {

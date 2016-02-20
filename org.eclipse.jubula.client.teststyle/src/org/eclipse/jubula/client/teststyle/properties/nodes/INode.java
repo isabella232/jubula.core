@@ -25,7 +25,7 @@ public interface INode extends Comparable<INode> {
         /** checkbox with a horizontal line */
         GRAYED,
         /** Fully checked checkbox */
-        CHECKED;
+        CHECKED
     }
     
     /** @return All children of this node. */

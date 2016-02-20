@@ -213,11 +213,8 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
         if (m_provider.isLabelProperty(element, property)) {
             return true;
         }
-        if (m_decorator != null 
-                && m_decorator.isLabelProperty(element, property)) {
-            return true;
-        }
-        return false;
+        return m_decorator != null
+                && m_decorator.isLabelProperty(element, property);
     }
 
     /**

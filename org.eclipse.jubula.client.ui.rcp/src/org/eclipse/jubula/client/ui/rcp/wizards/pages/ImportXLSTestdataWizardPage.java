@@ -720,10 +720,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             }
 
             public boolean hasChildren(Object o) {
-                if (o instanceof MinimizedFileSystemElement) {
-                    return true;
-                }
-                return false;
+                return o instanceof MinimizedFileSystemElement;
             }
         };
     }

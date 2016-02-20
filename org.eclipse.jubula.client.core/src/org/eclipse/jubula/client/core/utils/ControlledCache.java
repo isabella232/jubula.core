@@ -29,7 +29,7 @@ public class ControlledCache<TKey, TValue> implements IDataChangedListener,
         /** project was (re)loaded */
         PROJECT_LOADED, 
         /** some data changed */
-        DATA_CHANGED;
+        DATA_CHANGED
     }
     
     /** cache storage */

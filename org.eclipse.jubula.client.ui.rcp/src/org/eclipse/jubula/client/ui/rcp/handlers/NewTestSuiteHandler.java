@@ -124,10 +124,7 @@ public class NewTestSuiteHandler extends AbstractNewHandler {
                 false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();
-                if (ProjectPM.doesTestSuiteExists(project.getId(), newName)) {
-                    return false;
-                }
-                return true;
+                return !ProjectPM.doesTestSuiteExists(project.getId(), newName);
             }
         };
         // set help link

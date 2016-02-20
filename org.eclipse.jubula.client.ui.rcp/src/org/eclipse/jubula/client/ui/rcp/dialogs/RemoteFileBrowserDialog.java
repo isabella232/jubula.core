@@ -114,10 +114,7 @@ public class RemoteFileBrowserDialog extends ElementTreeSelectionDialog {
                     if (!file.fetchInfo().exists()) {
                         return false;
                     }
-                    if (!file.fetchInfo().isDirectory() && !showFiles) {
-                        return false;
-                    }
-                    return true;
+                    return !(!file.fetchInfo().isDirectory() && !showFiles);
                 }
             };
         }

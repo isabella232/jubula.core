@@ -103,10 +103,7 @@ public class InspectableAutSourceProvider extends AbstractJBSourceProvider
      *         Otherwise, <code>false</code>.
      */
     private boolean isInspectable(IAUTMainPO aut) {
-        if (CommandConstants.RCP_TOOLKIT.equals(aut.getToolkit())) {
-            return true;
-        }
-        return false;
+        return CommandConstants.RCP_TOOLKIT.equals(aut.getToolkit());
     }
 
     /**

@@ -45,10 +45,7 @@ public class EditorContextStructureBridge
 
     /** {@inheritDoc} */
     public boolean acceptsObject(Object object) {
-        if (object instanceof AbstractJBEditor) {
-            return true;
-        }
-        return false;
+        return object instanceof AbstractJBEditor;
     }
 
     /** {@inheritDoc} */

@@ -36,12 +36,9 @@ public class AUTAgentDisconnectHandler extends AbstractHandler {
      * @return true if jobs are running, or false if no monitoring job is running
      */
     private boolean isJobRunning() {
-        Job[] jobs = m_jobManager.find(m_jobFamily);        
-        if (jobs.length > 0) {
-            return true;
-        }
-        return false;
-        
+        Job[] jobs = m_jobManager.find(m_jobFamily);
+        return jobs.length > 0;
+
     }
     /**
      * @return a confirm Dialog, if monitoring job is still running.

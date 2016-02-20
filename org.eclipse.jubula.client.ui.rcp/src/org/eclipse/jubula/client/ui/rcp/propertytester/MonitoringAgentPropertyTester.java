@@ -28,9 +28,6 @@ public class MonitoringAgentPropertyTester extends PropertyTester {
             Object expectedValue) {
         
         ITestResultSummaryPO summary = (ITestResultSummaryPO)receiver;
-        if (summary.getInternalMonitoringId().equals(expectedValue)) {
-            return true;
-        }
-        return false;
+        return summary.getInternalMonitoringId().equals(expectedValue);
     }
 }

@@ -1072,10 +1072,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
             classPath = classPath.concat(m_classPathListField.getItem(i) + ";"); //$NON-NLS-1$
         }
         classPath = classPath.concat(elementToAdd + ";"); //$NON-NLS-1$
-        if (classPath.length() <= IPersistentObject.MAX_STRING_LENGTH) {
-            return true;
-        }
-        return false;
+        return classPath.length() <= IPersistentObject.MAX_STRING_LENGTH;
     }
 
     /**

@@ -763,13 +763,8 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
          * {@inheritDoc}
          */
         public boolean hasChildren(Object element) {
-            if (element instanceof String) {
-                // category. assume that it has child elements (because 
-                // otherwise we wouldn't have added the category).
-                return true;
-            }
+            return element instanceof String;
 
-            return false;
         }
 
         /**

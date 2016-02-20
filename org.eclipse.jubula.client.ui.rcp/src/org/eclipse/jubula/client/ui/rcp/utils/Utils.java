@@ -93,12 +93,9 @@ public class Utils {
         String serverPort = 
                 prefStore.getString(Constants.AUT_AGENT_SETTINGS_KEY);
         String server = serverPort.split(StringConstants.COLON)[0];
-        if (server.equals(Messages.UtilsLocalhost1)
-            || server.equals(Messages.UtilsLocalhost3)
-            || server.startsWith(Messages.UtilsLocalhost2)) {
-            return true;
-        }           
-        return false;
+        return server.equals(Messages.UtilsLocalhost1)
+                || server.equals(Messages.UtilsLocalhost3)
+                || server.startsWith(Messages.UtilsLocalhost2);
     }
     
     /**

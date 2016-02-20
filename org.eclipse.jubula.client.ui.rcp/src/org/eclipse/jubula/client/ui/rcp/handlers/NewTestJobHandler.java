@@ -93,10 +93,7 @@ public class NewTestJobHandler extends AbstractNewHandler {
                 false) {
             protected boolean isInputAllowed() {
                 String newName = getInputFieldText();
-                if (ProjectPM.doesTestJobExists(project.getId(), newName)) {
-                    return false;
-                }
-                return true;
+                return !ProjectPM.doesTestJobExists(project.getId(), newName);
             }
         };
         // set help link

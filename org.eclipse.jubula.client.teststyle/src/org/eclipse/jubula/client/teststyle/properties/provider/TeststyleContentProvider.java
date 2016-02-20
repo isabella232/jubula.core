@@ -68,10 +68,7 @@ public class TeststyleContentProvider implements ITreeContentProvider {
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
-        if (element instanceof CategoryNode) {
-            return true;
-        }
-        return false;
+        return element instanceof CategoryNode;
     }
 
     /**

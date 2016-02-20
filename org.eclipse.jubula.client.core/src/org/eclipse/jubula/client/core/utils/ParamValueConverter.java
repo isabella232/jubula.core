@@ -142,7 +142,7 @@ public abstract class ParamValueConverter {
         List<String> variables = new ArrayList<String>();
         for (IParamValueToken token : getAllTokens()) {
             if (token instanceof VariableToken) {
-                variables.add(((VariableToken)token).getGuiString());
+                variables.add(token.getGuiString());
             }
         }
         return variables;

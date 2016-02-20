@@ -36,9 +36,6 @@ public class SemanticVersionUtil {
         if (v1.getMajor() != v2.getMajor()) {
             return false;
         }
-        if (v1.getMinor() > v2.getMinor()) {
-            return false;
-        }
-        return true;
+        return v1.getMinor() <= v2.getMinor();
     }
 }

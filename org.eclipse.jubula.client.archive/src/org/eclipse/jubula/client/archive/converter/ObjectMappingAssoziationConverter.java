@@ -35,10 +35,7 @@ public class ObjectMappingAssoziationConverter extends AbstractXmlConverter {
      * {@inheritDoc}
      */
     protected boolean conversionIsNecessary(Project xml) {
-        if (xml.getMetaDataVersion() <= HIGHEST_META_DATA_VERSION_NUMBER) {
-            return true;
-        }
-        return false;
+        return xml.getMetaDataVersion() <= HIGHEST_META_DATA_VERSION_NUMBER;
     }
 
     /**

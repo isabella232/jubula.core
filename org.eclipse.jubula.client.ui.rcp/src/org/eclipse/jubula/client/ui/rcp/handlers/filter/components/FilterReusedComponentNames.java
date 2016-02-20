@@ -25,9 +25,6 @@ public class FilterReusedComponentNames extends ViewerFilter {
      * {@inheritDoc}
      */
     public boolean select(Viewer viewer, Object parentElement, Object element) {
-        if (element instanceof ReusedCompnamesCategory) {
-            return false;
-        }
-        return true;
+        return !(element instanceof ReusedCompnamesCategory);
     }
 }

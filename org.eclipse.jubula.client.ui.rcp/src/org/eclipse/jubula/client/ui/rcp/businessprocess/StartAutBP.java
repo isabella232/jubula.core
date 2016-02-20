@@ -335,11 +335,8 @@ public class StartAutBP {
         final String hostName = localhost.getHostName().toLowerCase();
         final String fqHostName = localhost.getCanonicalHostName()
                 .toLowerCase();
-        if (hostAddress.equals(agentIp) || hostName.equals(agentHostname)
-                || fqHostName.equals(agentHostname)) {
-            return true;
-        }
-        return false;
+        return hostAddress.equals(agentIp) || hostName.equals(agentHostname)
+                || fqHostName.equals(agentHostname);
     }
 
     /**

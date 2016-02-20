@@ -241,10 +241,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                     @Override
                     public Boolean call() throws Exception {
                         Stage stage = getStageByTitle(title, operator);
-                        if (stage != null) {
-                            return true;
-                        }
-                        return false;
+                        return stage != null;
                     }
                 });
         return result;
@@ -527,10 +524,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                         public Boolean call() throws Exception {
                             final Stage tmpS = getStageByTitle(title, operator);
 
-                            if (tmpS == null) {
-                                return true;
-                            }
-                            return false;
+                            return tmpS == null;
                         }
                     });
             if (!result) {

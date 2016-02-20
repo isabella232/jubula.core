@@ -103,11 +103,8 @@ public class StopAutHandler extends AbstractHandler {
      */
     private boolean isJobRunning() {
                 
-        Job[] jobs = m_jobManager.find(m_jobFamily);        
-        if (jobs.length > 0) {
-            return true;
-        }
-        return false;
-        
+        Job[] jobs = m_jobManager.find(m_jobFamily);
+        return jobs.length > 0;
+
     }
 }

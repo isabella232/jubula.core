@@ -284,7 +284,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      */
     private static void setStatusLineText(String text) {
         statusLineText = text;
-        showStatusLine((IWorkbenchPart)null);
+        showStatusLine(null);
     }
 
     /**
@@ -706,7 +706,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      */
     private static void setConnectionStatusIcon(int aS) {
         connectionStatusIcon = aS;
-        showStatusLine((IWorkbenchPart)null);
+        showStatusLine(null);
     }
 
     
@@ -732,10 +732,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * @return a <code>boolean</code> value.
      */
     public static boolean isViewOpen(String id) {
-        if (getView(id) != null) {
-            return true;
-        }
-        return false;
+        return getView(id) != null;
     }
 
     /**

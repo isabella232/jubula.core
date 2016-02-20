@@ -690,10 +690,7 @@ public class ClientTestImpl implements IClientTest {
                 || messageID == MessageIDs.E_TIMEOUT_CONNECTION.intValue()) {
             return false;
         }
-        if (testExecutionState.get() == State.TEST_EXEC_STOP.ordinal()) {
-            return false;
-        }
-        return true;
+        return testExecutionState.get() != State.TEST_EXEC_STOP.ordinal();
     }
 
     /**
