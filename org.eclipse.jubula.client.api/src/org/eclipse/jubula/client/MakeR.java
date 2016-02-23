@@ -22,7 +22,6 @@ import org.eclipse.jubula.tools.ComponentIdentifier;
 
 /**
  * @author BREDEX GmbH
- * @noextend This class is not intended to be extended by clients.
  */
 public final class MakeR {
     /** Constructor */

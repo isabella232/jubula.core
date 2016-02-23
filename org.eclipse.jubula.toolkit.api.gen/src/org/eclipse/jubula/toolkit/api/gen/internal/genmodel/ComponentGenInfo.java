@@ -120,7 +120,7 @@ public class ComponentGenInfo {
      * Returns the class name
      * @return the class name
      */
-    private String getClassName() {
+    public String getClassName() {
         return m_className;
     }
 

@@ -5,13 +5,12 @@ imports="java.util.*
          org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo 
          org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
          org.eclipse.jubula.toolkit.api.gen.internal.utils.GenerateUtil
-         org.eclipse.jubula.toolkit.enums.LiteralProvider
          org.eclipse.jubula.tools.internal.xml.businessmodell.Action
          org.eclipse.jubula.tools.internal.xml.businessmodell.Component
          org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
          org.eclipse.jubula.tools.internal.xml.businessmodell.Param
          org.eclipse.jubula.tools.internal.i18n.CompSystemI18n" 
-class="ClassGenerator"%>
+class="ActionHandlerGenerator"%>
 <%
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // 
@@ -43,7 +42,9 @@ if (specInfo instanceof ComponentGenInfo) {
         packageName = genInfo.getClassPackageName();
         compNameMap.put("implClassPackageName", packageName);
     }
-    String implementedTypeFqn = compGenInfo.getFqInterfaceName();
+    String implementedTypeFqn = compGenInfo.getInterfacePackageName() 
+                                + ".handler." 
+                                + compGenInfo.getClassName();
     
     NameLoader nameLoader = NameLoader.getInstance();
     List<Action> actions = new ArrayList<>(component.getActions());
@@ -62,10 +63,14 @@ if (specInfo instanceof ComponentGenInfo) {
             ComponentGenInfo superCompGenInfo = new ComponentGenInfo(
                 realizedComponent, true, superInfo.getToolkitPackageName(),
                 superInfo.getClassName(), null);
-            realizedTypeFqn = superCompGenInfo.getFqInterfaceName();
+            realizedTypeFqn = superCompGenInfo.getInterfacePackageName() 
+                                + ".handler." 
+                                + superCompGenInfo.getClassName();
             compNameMap.put("superComp", realizedComponent.getType());
         } else {
-            realizedTypeFqn = superInfo.getFqClassName();
+            realizedTypeFqn = superInfo.getClassPackageName() 
+                                + ".handler." 
+                                + superInfo.getClassName();
         }
     }
     String testerClass = "";
@@ -79,14 +84,16 @@ if (specInfo instanceof ComponentGenInfo) {
             hasComponentClass = true;
         }
     }
-    String sinceC = "";
+    String sinceC = "@since ";
     String sinceCVersion = component.getSince();
     if (sinceCVersion != null && !sinceCVersion.isEmpty()) {
-        sinceC = "@since " + sinceCVersion;
+        sinceC += sinceCVersion;
+    } else {
+        sinceC += "4.0";
     }
     %>
 /*******************************************************************************
- * Copyright (c) 2014 BREDEX GmbH.
+ * Copyright (c) 2016 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -95,11 +102,15 @@ if (specInfo instanceof ComponentGenInfo) {
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package <%=packageName%>;
+package <%=packageName%>.handler;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jubula.client.AUTRegistry;
+import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.toolkit.CapBuilder;
+import org.eclipse.jubula.toolkit.annotations.Beta;
 import org.eclipse.jubula.toolkit.enums.ValueSets.*;
 import javax.annotation.Generated;
 
@@ -117,8 +128,11 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 <%}%>
 
 /**
- * <%if (genInterface) {%>Interface<%} else {%>Class<%}%> representing the <%if (!hasDefaultMapping && hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=className%><%}%> component from the <%=toolkitName%> toolkit.
-<%if (genInterface) {%> 
+ * An ActionHandler directly executes the remote controlling commands for a
+ * registered AUT - see {@link org.eclipse.jubula.client.AUTRegistry}
+ *
+ * <%if (genInterface) {%>Interface<%} else {%>Class<%}%> representing the <%if (!hasDefaultMapping && hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=className%>ActionHandler<%}%> component from the <%=toolkitName%> toolkit.
+<%if (genInterface) {%>
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
 <%}%>
@@ -132,28 +146,29 @@ import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
 <%}%>
 @Generated(value = "<%=fqnGeneratorClassName%>", 
            date =  "<%=GenerateUtil.getISO8601Timestamp()%>")
-public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
-    <%if (hasRealizedType) {%> extends <%=realizedTypeFqn%><%}%>
-    <%if (!genInterface) {%> implements <%=implementedTypeFqn%><%}%> {
+@Beta
+public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>ActionHandler
+    <%if (hasRealizedType) {%> extends <%=realizedTypeFqn%>ActionHandler<%}%>
+    <%if (!genInterface) {%> implements <%=implementedTypeFqn%>ActionHandler<%}%> {
     <%// generate constructor only for implementation classes%>
     <%if (!genInterface) {%>
         <%/* check whether constructor should call super
         and whether constructor needs an object mapping */%>
         <%if (hasRealizedType) {%>
             <%if (hasDefaultMapping) {%>
-            public <%=className%>() {
+            public <%=className%>ActionHandler() {
                 super();
             }<%} else {%>
-            public <%=className%>(@NonNull ComponentIdentifier componentIdentifier) {
+            public <%=className%>ActionHandler(@NonNull ComponentIdentifier componentIdentifier) {
                 super(componentIdentifier);
             }<%}%>
         <%} else {%>
             <%if (hasDefaultMapping) {%>
-            public <%=className%>() {
+            public <%=className%>ActionHandler() {
                 super();
             }<%} else {%>
             @NonNull protected IComponentIdentifier m_componentIdentifier;
-            public <%=className%>(@NonNull ComponentIdentifier componentIdentifier) {
+            public <%=className%>ActionHandler(@NonNull ComponentIdentifier componentIdentifier) {
                 super();
                 Validate.isTrue(componentIdentifier instanceof IComponentIdentifier);
                 m_componentIdentifier = (IComponentIdentifier) componentIdentifier;
@@ -227,11 +242,10 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
          
        <%
          }
-         %>* @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
-         * <%=sinceA%>
+         %>* <%=sinceA%>
          */<%}%>
         <%if (action.isDeprecated()) {%>@Deprecated<%}%>
-        @NonNull public CAP <%=methodName%>(
+        public void <%=methodName%>(
         <%    
         // add parameters to method signature
         Iterator<Param> paramIterator = params.iterator();
@@ -247,28 +261,22 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             paramMap.put(name, fqParamType);
             paramTypeMap.put(name, fixedType);
             %>
-            @NonNull <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+            @Nullable <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
         <%}%>
-        ) <%if (!params.isEmpty()) {%>throws IllegalArgumentException<%} if (genInterface) {%>;<%} else {%> {
+        ) <%if (genInterface) {%>;<%} else {%> {
             <%for (Param parameter : params) {
-            boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
-            Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
-                <%String paramEnumType = paramMap.get(paramName);%>
-                <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
-                    <%if (hasCombineableValueSet) {%>
-            Validate.noNullElements(<%=translatedParamName%>, "Elements of argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
-                    <%}%>
-                <%}%>
-            <%}%>
+            if (<%=translatedParamName%> == null) return;
             
-            return new CapBuilder("<%=action.getMethod()%>")
-                        .setDefaultMapping(<%=hasDefaultMapping%>)
+            <%}%>
+            AUTRegistry.INSTANCE.get().execute(
+                new CapBuilder("<%=action.getMethod()%>")
+                            .setDefaultMapping(<%=hasDefaultMapping%>)
             <%if (!hasDefaultMapping) {%>
-                        .setComponentIdentifier(m_componentIdentifier)
+                            .setComponentIdentifier(m_componentIdentifier)
             <%} else {%>
-                        .setComponentIdentifier(getPseudoComponentIdentifier())
+                            .setComponentIdentifier(getPseudoComponentIdentifier())
             <%}%>
             <%for (Param parameter : params) {
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
@@ -279,18 +287,18 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
                         <%if (fqParamType.contains("Integer")) {%>
-                        .addParameter(<%=translatedParamName%>.rcIntValue())
+                            .addParameter(<%=translatedParamName%>.rcIntValue())
                         <%} else {%>
-                        .addParameter(<%=translatedParamName%>.rcValue())
+                            .addParameter(<%=translatedParamName%>.rcValue())
                         <%}%>
                     <%} else {%>
-                        .addParameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
+                            .addParameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
                     <%}%>
                 <%} else {%>
-                        .addParameter(<%=translatedParamName%>)
+                            .addParameter(<%=translatedParamName%>)
                 <%}%>
             <%}%>
-                        .build();
+                            .build(), null);
         }<%}%>
         
     <%}%>

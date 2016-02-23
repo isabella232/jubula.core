@@ -12,13 +12,13 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 public class CompInfoForFactoryGen {
     
     /** the class name */
-    private String m_fqClassName;
+    private String m_packageName;
 
     /** Whether an interface should be generated */
     private Boolean m_hasDefaultMapping;
 
     /** name of the component */
-    private String m_componentName;
+    private String m_className;
     
     /** the most specific visible super type of a component */
     private String m_mostSpecificVisibleSuperTypeName;
@@ -31,36 +31,28 @@ public class CompInfoForFactoryGen {
     
     /**
      * Contains all necessary information of a component for factory generation
-     * @param componentName the component name
-     * @param fqClassName the class name
+     * @param className the class name
+     * @param packageName the package name
      * @param componentClass the real component class
      * @param hasDefaultMapping true if and only if component has default mapping
      * @param mostSpecificVisibleSuperTypeName most specific visible super type of a component
      */
-    public CompInfoForFactoryGen(String componentName, String fqClassName,
+    public CompInfoForFactoryGen(String className, String packageName,
             ComponentClass componentClass, boolean hasDefaultMapping,
             String mostSpecificVisibleSuperTypeName) {
-        m_componentName = componentName;
-        m_fqClassName = fqClassName;
+        m_className = className;
+        setPackageName(packageName);
         setComponentClass(componentClass);
         m_hasDefaultMapping = hasDefaultMapping;
         m_mostSpecificVisibleSuperTypeName = mostSpecificVisibleSuperTypeName;
     }
     
     /**
-     * Returns the class name
-     * @return the class name
-     */
-    public String getClassName() {
-        return m_fqClassName;
-    }
-    
-    /**
      * Returns the component name
      * @return the component name
      */
-    public String getComponentName() {
-        return m_componentName;
+    public String getClassName() {
+        return m_className;
     }
     
     /**
@@ -105,5 +97,19 @@ public class CompInfoForFactoryGen {
      */
     public void setSince(String since) {
         m_since = since;
+    }
+
+    /**
+     * @return the packageName
+     */
+    public String getPackageName() {
+        return m_packageName;
+    }
+
+    /**
+     * @param packageName the packageName to set
+     */
+    private void setPackageName(String packageName) {
+        m_packageName = packageName;
     }
 }

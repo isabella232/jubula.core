@@ -36,6 +36,7 @@ import javax.annotation.Generated;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.eclipse.jubula.toolkit.annotations.Beta;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
 
 <%if (toolkitInfoFqName != null) {%>import <%=toolkitInfoFqName%>;<%}%>
@@ -46,7 +47,7 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
  */
 @Generated(value = "<%=fqnGeneratorClassName%>", 
            date =  "<%=GenerateUtil.getISO8601Timestamp()%>")
-public final class <%=factoryName%> {
+public class <%=factoryName%> {
     
     <%if (toolkitInfoName != null) {%>
     @NonNull private final static ToolkitInfo TOOLKIT_INFORMATION = <%=toolkitInfoName%>Toolkit.createToolkitInformation();<%}%>
@@ -64,8 +65,10 @@ public final class <%=factoryName%> {
     }<%}%>
 
 <%for (CompInfoForFactoryGen compInfo : compInfoList) {
-    String componentName = compInfo.getComponentName();
-    String implClassName = compInfo.getClassName();
+    String componentName = compInfo.getClassName();
+    String componentPackageName = compInfo.getPackageName();
+    String fqClassName = componentPackageName + "." + componentName;
+    String fqClassNameActionHandler = componentPackageName + ".handler." + componentName + "ActionHandler";
     ComponentClass componentClass = compInfo.getComponentClass();
     String componentClassName = "";
     boolean hasComponentClass = false;
@@ -74,6 +77,7 @@ public final class <%=factoryName%> {
         hasComponentClass = true;
     }
     String returnType = compInfo.getMostSpecificVisibleSuperTypeName();
+    String returnTypeActionHandler = returnType.replaceAll("^(.*\\.)*(.*?)$","$1handler.$2ActionHandler");
     Boolean hasDefaultMapping = compInfo.hasDefaultMapping();
     
     String sinceC = "";
@@ -86,14 +90,31 @@ public final class <%=factoryName%> {
      * <%=sinceC%>
      */
     @NonNull public static <%=returnType%> create<%=componentName%> () {
-        return new <%=implClassName%>();
+        return new <%=fqClassName%>();
     }<%} else {%>
     /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.
      * <%=sinceC%>
      */
     @NonNull public static <%=returnType%> create<%=componentName%> (@NonNull ComponentIdentifier<? extends <%=returnType%>> componentIdentifier) {
         Validate.notNull(componentIdentifier);
-        return new <%=implClassName%>(componentIdentifier);
+        return new <%=fqClassName%>(componentIdentifier);
+    }<%}%>
+    
+    <%if (hasDefaultMapping) {%>
+    /** create a new instance of <%=componentName%>ActionHandler 
+     * @since 4.0
+     */
+    @Beta
+    @NonNull public static <%=returnTypeActionHandler%> create<%=componentName%>ActionHandler () {
+        return new <%=fqClassNameActionHandler%>();
+    }<%} else {%>
+    /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.
+     * @since 4.0
+     */
+    @Beta
+    @NonNull public static <%=returnTypeActionHandler%> create<%=componentName%>ActionHandler (@NonNull ComponentIdentifier<? extends <%=returnType%>> componentIdentifier) {
+        Validate.notNull(componentIdentifier);
+        return new <%=fqClassNameActionHandler%>(componentIdentifier);
     }<%}%>
 <%}%>
 }

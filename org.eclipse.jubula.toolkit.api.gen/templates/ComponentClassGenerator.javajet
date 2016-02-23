@@ -1,0 +1,297 @@
+<%@ jet 
+package="org.eclipse.jubula.toolkit.api.gen" 
+imports="java.util.*
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.ComponentGenInfo
+         org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo 
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.NameLoader
+         org.eclipse.jubula.toolkit.api.gen.internal.utils.GenerateUtil
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Action
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Component
+         org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent
+         org.eclipse.jubula.tools.internal.xml.businessmodell.Param
+         org.eclipse.jubula.tools.internal.i18n.CompSystemI18n" 
+class="ComponentClassGenerator"%>
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// Gathering information whether to generate an implementation class or an interface
+// and what super class to inherit from
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+CommonGenInfo genInfo = (CommonGenInfo)argument;
+Object specInfo = genInfo.getSpecificInformation();
+String fqnGeneratorClassName = this.getClass().getName();
+if (specInfo instanceof ComponentGenInfo) {
+    ComponentGenInfo compGenInfo = (ComponentGenInfo) specInfo;
+    String toolkitName = genInfo.getToolkitPackageName();
+    String className = genInfo.getClassName();
+    Component component = compGenInfo.getComponent();
+    Boolean genInterface = compGenInfo.generatesInterface();
+    Boolean hasDefaultMapping = compGenInfo.hasDefaultMapping();
+    Map<String, String> compNameMap = compGenInfo.getCompNameMap();
+    String packageName = null;
+    if (genInterface) {
+        packageName = compGenInfo.getInterfacePackageName();
+        compNameMap.put("interfacePackageName", packageName);
+        compNameMap.put("componentTypeName", className);
+        compNameMap.put("hasDefaultMapping", hasDefaultMapping.toString());
+        CommonGenInfo faketory =
+                    new CommonGenInfo(component.getToolkitDesriptor(), false);
+        compNameMap.put("factoryName", faketory.getFqClassName());
+    } else {
+        packageName = genInfo.getClassPackageName();
+        compNameMap.put("implClassPackageName", packageName);
+    }
+    String implementedTypeFqn = compGenInfo.getFqInterfaceName();
+    
+    NameLoader nameLoader = NameLoader.getInstance();
+    List<Action> actions = new ArrayList<>(component.getActions());
+    List<Component> realized = component.getRealized();
+    Component realizedComponent = realized.size() > 0 ? realized.get(0) : null;
+    Boolean hasRealizedType = (realizedComponent != null);
+    String realizedType = null;
+    CommonGenInfo superInfo = null;
+    List<Action> superActions = null;
+    String realizedTypeFqn = null;
+    if (hasRealizedType) {
+        realizedType = realizedComponent.getType();
+        superInfo = new CommonGenInfo(realizedComponent);
+        superActions = realizedComponent.getActions();
+        if (genInterface) {
+            ComponentGenInfo superCompGenInfo = new ComponentGenInfo(
+                realizedComponent, true, superInfo.getToolkitPackageName(),
+                superInfo.getClassName(), null);
+            realizedTypeFqn = superCompGenInfo.getFqInterfaceName();
+            compNameMap.put("superComp", realizedComponent.getType());
+        } else {
+            realizedTypeFqn = superInfo.getFqClassName();
+        }
+    }
+    String testerClass = "";
+    String componentClassName = "";
+    Boolean hasComponentClass = false;
+    if (component instanceof ConcreteComponent) {
+        ConcreteComponent concreteComponent = (ConcreteComponent)component;
+        testerClass = concreteComponent.getTesterClass();
+        componentClassName = concreteComponent.getComponentClass().getName();
+        if (!componentClassName.isEmpty()) {
+            hasComponentClass = true;
+        }
+    }
+    String sinceC = "";
+    String sinceCVersion = component.getSince();
+    if (sinceCVersion != null && !sinceCVersion.isEmpty()) {
+        sinceC = "@since " + sinceCVersion;
+    }
+    %>
+/*******************************************************************************
+ * Copyright (c) 2014 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+package <%=packageName%>;
+
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.toolkit.CapBuilder;
+import org.eclipse.jubula.toolkit.enums.ValueSets.*;
+import javax.annotation.Generated;
+
+<%if (!genInterface) {%>
+import org.apache.commons.lang.Validate;
+import org.apache.commons.lang.StringUtils;
+
+import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.MessageParam;
+import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.toolkit.internal.annotations.RealizedType;
+import org.eclipse.jubula.toolkit.internal.annotations.TesterClass;
+<%}%>
+
+/**
+ * <%if (genInterface) {%>Interface<%} else {%>Class<%}%> representing the <%if (!hasDefaultMapping && hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=className%><%}%> component from the <%=toolkitName%> toolkit.
+<%if (genInterface) {%> 
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+<%}%>
+ * <%=sinceC%>
+ */
+<%if (!genInterface) {%>
+<%if (realizedType != null && !realizedType.isEmpty()) {%>
+@RealizedType(realizedType="<%=realizedType%>")<%}%>
+<%if (testerClass != null && !testerClass.isEmpty()) {%>
+@TesterClass(testerClass="<%=testerClass%>")<%}%>
+<%}%>
+@Generated(value = "<%=fqnGeneratorClassName%>", 
+           date =  "<%=GenerateUtil.getISO8601Timestamp()%>")
+public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
+    <%if (hasRealizedType) {%> extends <%=realizedTypeFqn%><%}%>
+    <%if (!genInterface) {%> implements <%=implementedTypeFqn%><%}%> {
+    <%// generate constructor only for implementation classes%>
+    <%if (!genInterface) {%>
+        <%/* check whether constructor should call super
+        and whether constructor needs an object mapping */%>
+        <%if (hasRealizedType) {%>
+            <%if (hasDefaultMapping) {%>
+            public <%=className%>() {
+                super();
+            }<%} else {%>
+            public <%=className%>(@NonNull ComponentIdentifier componentIdentifier) {
+                super(componentIdentifier);
+            }<%}%>
+        <%} else {%>
+            <%if (hasDefaultMapping) {%>
+            public <%=className%>() {
+                super();
+            }<%} else {%>
+            @NonNull protected IComponentIdentifier m_componentIdentifier;
+            public <%=className%>(@NonNull ComponentIdentifier componentIdentifier) {
+                super();
+                Validate.isTrue(componentIdentifier instanceof IComponentIdentifier);
+                m_componentIdentifier = (IComponentIdentifier) componentIdentifier;
+            }<%}%>
+        <%}%>
+    <%}%>
+    
+    <%if (!genInterface && hasDefaultMapping) {
+    // Generate pseudo component identifiers for implementation classes with default mapping%>
+    protected IComponentIdentifier getPseudoComponentIdentifier() {
+        <%if (hasComponentClass) {%>
+        org.eclipse.jubula.tools.internal.objects.ComponentIdentifier pseudoIdentifier =
+            new org.eclipse.jubula.tools.internal.objects.ComponentIdentifier();
+        pseudoIdentifier.setComponentClassName("<%=componentClassName%>"); //$NON-NLS-1$
+        return pseudoIdentifier;
+        <%} else {%>
+        return null;
+        <%}%>
+    }<%}%>
+    
+<%
+/////////////////////////////////////////////////////////////////////////////////////////////////
+// 
+// // generate method for each of the components non-inherited actions
+// 
+/////////////////////////////////////////////////////////////////////////////////////////////////
+    if (superActions != null) {
+        // generate only methods for non-inherited actions
+        actions.removeAll(superActions);
+    }
+    Iterator<Action> actionsIterator = actions.iterator();
+    while (actionsIterator.hasNext()) {    
+        Action action = actionsIterator.next();
+        
+        String sinceA = "";
+        String sinceAVersion = action.getSince();
+        if (sinceAVersion != null && !sinceAVersion.isEmpty()) {
+            sinceA = "@since " + sinceAVersion;
+        }
+        if (action.isITEInvolved()) {
+            continue;
+        }
+        String methodName = nameLoader.translateFromCompSystem(action.getName());
+        String actionDescription = "";
+        String actionDescrKey = action.getDescriptionKey();
+        if (actionDescrKey != null) {
+        	actionDescription = CompSystemI18n.getString(actionDescrKey);
+        }
+        compNameMap.put(action.getName(), methodName);
+        List<Param> params = action.getParams();
+        Map<String, String> paramMap = new HashMap<String, String>();// with enums
+        Map<String, String> paramTypeMap = new HashMap<String, String>();// only "simple" types
+        if (!params.isEmpty()) {
+            Iterator<Param> paramIterator = params.iterator();
+            // add parameters description to javadoc
+        %>
+        /**
+         * <%=actionDescription%>
+         
+        <%
+        while (paramIterator.hasNext()) {
+            Param param = paramIterator.next();
+            String paramName = nameLoader.translateFromCompSystem(param.getName());
+            String paramDescription = "";
+            String paramDescrKey = param.getDescriptionKey();
+            if (paramDescrKey != null) {
+                paramDescription = CompSystemI18n.getString(paramDescrKey);
+            }
+       %>* @param <%=paramName%> 
+         *        <%=paramDescription%>
+         
+       <%
+         }
+         %>* @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
+         * <%=sinceA%>
+         */<%}%>
+        <%if (action.isDeprecated()) {%>@Deprecated<%}%>
+        @NonNull public CAP <%=methodName%>(
+        <%    
+        // add parameters to method signature
+        Iterator<Param> paramIterator = params.iterator();
+        while (paramIterator.hasNext()) {
+            Param param = paramIterator.next();
+            boolean hasCombineableValueSet = param.hasValueSet() && param.getValueSet().isCombinable();
+            String type = param.getType();
+            String name = param.getName();
+            String fqParamType = nameLoader.findTypeForParameter(type, name);
+            String paramType = NameLoader.beautifyParamType(fqParamType);
+            String paramName = nameLoader.translateFromCompSystem(name);
+            String fixedType = nameLoader.getRealTypeForParameter(type, name);
+            paramMap.put(name, fqParamType);
+            paramTypeMap.put(name, fixedType);
+            %>
+            @NonNull <%=paramType%><%if (hasCombineableValueSet) {%>[]<%}%> <%=paramName%><%if(paramIterator.hasNext()){%>,<%}%>
+        <%}%>
+        ) <%if (!params.isEmpty()) {%>throws IllegalArgumentException<%} if (genInterface) {%>;<%} else {%> {
+            <%for (Param parameter : params) {
+            boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
+            String paramName = parameter.getName();%>
+            <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
+            Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
+                <%String paramEnumType = paramMap.get(paramName);%>
+                <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
+                    <%if (hasCombineableValueSet) {%>
+            Validate.noNullElements(<%=translatedParamName%>, "Elements of argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
+                    <%}%>
+                <%}%>
+            <%}%>
+            
+            return new CapBuilder("<%=action.getMethod()%>")
+                        .setDefaultMapping(<%=hasDefaultMapping%>)
+            <%if (!hasDefaultMapping) {%>
+                        .setComponentIdentifier(m_componentIdentifier)
+            <%} else {%>
+                        .setComponentIdentifier(getPseudoComponentIdentifier())
+            <%}%>
+            <%for (Param parameter : params) {
+            boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
+            String paramName = parameter.getName();%>
+            <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
+                <%String paramEnumType = paramMap.get(paramName);
+                String fqParamType = paramTypeMap.get(paramName);%>
+                <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
+                    <%if (!hasCombineableValueSet) {%>
+                        <%if (fqParamType.contains("Integer")) {%>
+                        .addParameter(<%=translatedParamName%>.rcIntValue())
+                        <%} else {%>
+                        .addParameter(<%=translatedParamName%>.rcValue())
+                        <%}%>
+                    <%} else {%>
+                        .addParameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
+                    <%}%>
+                <%} else {%>
+                        .addParameter(<%=translatedParamName%>)
+                <%}%>
+            <%}%>
+                        .build();
+        }<%}%>
+        
+    <%}%>
+}
+<%}%> 

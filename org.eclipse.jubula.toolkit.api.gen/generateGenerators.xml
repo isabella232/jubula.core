@@ -7,7 +7,9 @@
  -->
 <project name="org.eclipse.jubula.toolkit.api.gen" default="generateGenerators">
     <target name="generateGenerators">
-        <emf.JETCompiler templateFile="./templates/ClassGenerator.javajet"
+        <emf.JETCompiler templateFile="./templates/ComponentClassGenerator.javajet"
+          sourceDirectory="src-gen"/>
+        <emf.JETCompiler templateFile="./templates/ActionHandlerGenerator.javajet"
           sourceDirectory="src-gen"/>
         <emf.JETCompiler templateFile="./templates/FactoryGenerator.javajet"
           sourceDirectory="src-gen"/>

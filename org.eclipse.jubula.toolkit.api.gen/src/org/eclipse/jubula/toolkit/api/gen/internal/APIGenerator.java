@@ -21,7 +21,8 @@ import java.util.TreeMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.toolkit.api.gen.ClassGenerator;
+import org.eclipse.jubula.toolkit.api.gen.ActionHandlerGenerator;
+import org.eclipse.jubula.toolkit.api.gen.ComponentClassGenerator;
 import org.eclipse.jubula.toolkit.api.gen.FactoryGenerator;
 import org.eclipse.jubula.toolkit.api.gen.ToolkitInfoGenerator;
 import org.eclipse.jubula.toolkit.api.gen.internal.genmodel.CommonGenInfo;
@@ -48,8 +49,12 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 public class APIGenerator {
     
     /** class generator */
-    private static ClassGenerator classGenerator =
-            new ClassGenerator();
+    private static ComponentClassGenerator componentClassGenerator =
+            new ComponentClassGenerator();
+
+    /** action handler class generator */
+    private static ActionHandlerGenerator actionHandlerGenerator = 
+            new ActionHandlerGenerator();
     
     /** factory generator */
     private static FactoryGenerator factoryGenerator =
@@ -221,7 +226,7 @@ public class APIGenerator {
         if (generateInterface) {
             path = compInfo.getInterfaceDirectoryPath();
         } else {
-            path = genInfo.getClassDirectoryPath();            
+            path = genInfo.getClassDirectoryPath();
         }
         String className = genInfo.getClassName();
         String generationBaseDir = MessageFormat.format(
@@ -229,8 +234,13 @@ public class APIGenerator {
                 new Object[] {genInfo.getToolkitPackageName()});
         File dir = new File(generationBaseDir + path);
         File file = new File(dir, className + ".java"); //$NON-NLS-1$
-        String content = classGenerator.generate(genInfo);
+        String content = componentClassGenerator.generate(genInfo);
 
+        createFile(dir, file, content);
+
+        dir = new File(generationBaseDir + path + "/handler"); //$NON-NLS-1$
+        file = new File(dir, className + "ActionHandler.java"); //$NON-NLS-1$
+        content = actionHandlerGenerator.generate(genInfo);
         createFile(dir, file, content);
         
         /* After generating an impl class, add component information
@@ -254,7 +264,7 @@ public class APIGenerator {
                 CompInfoForFactoryGen compInfoForFactory = 
                     new CompInfoForFactoryGen(
                         genInfo.getClassName(),
-                        genInfo.getFqClassName(),
+                        genInfo.getClassPackageName(),
                         componentClass,
                         compInfo.hasDefaultMapping(),
                         compInfo.getMostSpecificVisibleSuperTypeName());
