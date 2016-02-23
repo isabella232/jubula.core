@@ -28,6 +28,17 @@
    import process runs faster now.
   </para>
  </listitem>
+<listitem>
+    <para>
+        Due to that we're about to discontinue the support for the old XML
+        interchange format. Which is why exporting projects is now
+        only possible with the new *.jub interchange format.
+    </para>
+    <para>
+        We will however support the importing of the old XML
+        format for a couple of versions.
+    </para>
+</listitem>
  </itemizedlist>
  <para>
   <emphasis role="strong">You can use Selenium Webdriver for HTML tests</emphasis>

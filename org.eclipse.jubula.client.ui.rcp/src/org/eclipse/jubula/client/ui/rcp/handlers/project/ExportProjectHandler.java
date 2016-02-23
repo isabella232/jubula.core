@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.archive.JsonStorage;
-import org.eclipse.jubula.client.archive.XmlStorage;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -113,13 +112,9 @@ public class ExportProjectHandler extends AbstractProjectHandler {
                                     .ExportFileActionExporting));
                         SubMonitor subMonitor = SubMonitor.convert(monitor,
                                 Messages.ExportFileActionExporting, 1);
-                        if (m_fileExt.equals(XML)) {
-                            XmlStorage.save(gstorage.getProject(), m_fileName,
-                                    true, subMonitor.newChild(1), false, null);
-                        } else if (m_fileExt.equals(JUB)) {
-                            JsonStorage.save(gstorage.getProject(), m_fileName,
-                                    true, subMonitor.newChild(1), m_console);
-                        } 
+                        
+                        JsonStorage.save(gstorage.getProject(), m_fileName,
+                                true, subMonitor.newChild(1), m_console);
                     }
                 } catch (final PMException e) {
                     ErrorHandlingUtil.createMessageDialog(e, null, null);
@@ -147,8 +142,7 @@ public class ExportProjectHandler extends AbstractProjectHandler {
         final FileDialog fileDialog = new FileDialog(getActiveShell(), 
             SWT.SAVE | SWT.APPLICATION_MODAL);
         fileDialog.setText(Messages.ActionBuilderSaveAs);
-        String[] filters = new String[]{StringConstants.STAR + JUB,
-            StringConstants.STAR + XML};
+        String[] filters = new String[]{StringConstants.STAR + JUB};
         fileDialog.setFilterExtensions(filters);
         fileDialog.setFilterPath(Utils.getLastDirPath());
         

@@ -30,6 +30,10 @@
         In the dialog which appears (<xref linkend="Import"/>), enter or
         browse to the Projects you want to import.
       </para>
+      <para role="tip">
+        Note that the <emphasis>*.jub</emphasis> interchange format is now the default.
+        If you want to import older XML project simply switch the import file type to XML.
+      </para>
     </listitem>
     <listitem>
       <para>

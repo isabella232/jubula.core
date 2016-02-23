@@ -14,8 +14,8 @@
   <para>
     You can choose to export the currently opened Project
     (<xref linkend="exportsingle"/>) or all of the Projects in the database
-    (<xref linkend="exportall"/>). Projects are exported in .xml format so that
-    they can be added to e.g. version control systems.
+    (<xref linkend="exportall"/>). Projects are exported in .jub format so that
+    they can be added to e.g. version control systems. However note that the interchange format is binary.
   </para>
   <para role="tip">
     Projects are exported along with all their test result
@@ -54,7 +54,7 @@
         <para>
           The Project (including the test result summaries
           (<xref linkend="working-with-the-test-result-summary-view"/>)) will first be refreshed and then
-          exported. It is saved as an .xml file.
+          exported. It is saved as an .jub file.
         </para>
         <para role="tip">
           When you export a single Project, only the
@@ -89,7 +89,7 @@
       <listitem>
         <para>
           The Projects (including the test result summaries
-          (<xref linkend="working-with-the-test-result-summary-view"/>)) will be saved as .xml files.
+          (<xref linkend="working-with-the-test-result-summary-view"/>)) will be saved as .jub files.
         </para>
         <para role="tip">
           When you export all Projects, all versions of each
