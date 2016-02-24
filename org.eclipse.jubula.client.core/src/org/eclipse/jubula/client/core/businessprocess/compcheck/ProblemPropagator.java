@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.businessprocess.compcheck;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
@@ -21,6 +22,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.rules.SingleJobRule;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
@@ -33,6 +35,9 @@ import org.eclipse.jubula.client.core.utils.TreeTraverser;
 public enum ProblemPropagator {
     /** Singleton */
     INSTANCE;
+    
+    /** the rule for the propagation Job */
+    private static final ISchedulingRule PROPAGATIONRULE = new SingleJobRule();
 
     /** {@inheritDoc} */
     public void propagate() {
@@ -40,7 +45,14 @@ public enum ProblemPropagator {
         if (project != null) {
             Job pp = new ProblemPropagationJob(
                     Messages.ProblemPropagationJobName, project);
+            pp.setRule(PROPAGATIONRULE);
             pp.schedule(1000);
+            
+            for (Job job : Job.getJobManager().find(pp)) {
+                if (job != pp) {
+                    job.cancel();
+                }
+            }
         }
     }
     
@@ -70,12 +82,6 @@ public enum ProblemPropagator {
         
         /** {@inheritDoc} */
         protected IStatus run(IProgressMonitor monitor) {
-            for (Job job : getJobManager().find(this)) {
-                if (job != this) {
-                    job.cancel();
-                }
-            }
-            
             int status = IStatus.OK;
             try {
                 TreeTraverser treeTraverser = new TreeTraverser(m_project,
