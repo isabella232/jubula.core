@@ -1133,11 +1133,11 @@ class XmlExporter {
         for (IDataSetPO row : po.getDataSets()) {
             TestDataRow xmlRow = xml.addNewRow();
             xmlRow.setRowCount(rowCnt++);
-            int colCnt = 1;
-            for (String td : row.getColumns()) {
+
+            for (int col = 0; col < row.getColumnCount(); col++) {
                 TestDataCell xmlCell = xmlRow.addNewData();
-                xmlCell.setColumnCount(colCnt++);
-                xmlCell.setValue(td);
+                xmlCell.setColumnCount(col + 1);
+                xmlCell.setValue(row.getValueAt(col));
             }
         }
     }

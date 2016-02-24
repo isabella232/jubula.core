@@ -156,4 +156,9 @@ public interface StringConstants {
      * <code>NULL</code>
      */
     public static final String NULL = "NULL"; //$NON-NLS-1$
+    
+    /**
+     * <code>NULL</code>
+     */
+    public static final String UNICODE_NULL = "\u0000"; //$NON-NLS-1$
 }
