@@ -414,7 +414,7 @@ class TDManagerPO implements ITDManager {
             List<IDataSetPO> dataTable = getDataTable();
             if (dataTable.size() > 0) {
                 IDataSetPO listW = dataTable.get(0);
-                columns = listW.getColumns().size();
+                columns = listW.getColumnCount();
             }
         
         } catch (IndexOutOfBoundsException e) { // NOPMD by al on 3/19/07 1:37 PM
@@ -434,10 +434,10 @@ class TDManagerPO implements ITDManager {
         }
         tdMan.clear();
         for (IDataSetPO dataSet : getDataSets()) {
-            List<String> newRow = new ArrayList<String> (
-                    dataSet.getColumnCount());
-            for (String testData : dataSet.getColumns()) {
-                newRow.add(testData);
+            int columncount = dataSet.getColumnCount();
+            List<String> newRow = new ArrayList<String> (columncount);
+            for (int i = 0; i < columncount; i++) {
+                newRow.add(dataSet.getValueAt(i));
             }
             tdMan.insertDataSet(PoMaker.createListWrapperPO(newRow), 
                     tdMan.getDataSetCount());
