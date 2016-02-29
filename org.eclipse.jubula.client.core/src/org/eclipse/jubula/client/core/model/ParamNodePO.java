@@ -342,8 +342,8 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      */
     private void addParamReferences(List <TDCell> references, 
             IDataSetPO row, int dataSetRow) {
-        int col = 0;
-        for (String testData : row.getColumns()) {
+        for (int col = 0; col < row.getColumnCount(); col++) {
+            String testData = row.getValueAt(col);
             String uniqueId = getDataManager().getUniqueIds().get(col);
             IParamDescriptionPO desc = getParameterForUniqueId(uniqueId);
             ParamValueConverter conv = new ModelParamValueConverter(
