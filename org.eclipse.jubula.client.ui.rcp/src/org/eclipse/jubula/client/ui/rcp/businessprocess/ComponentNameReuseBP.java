@@ -11,7 +11,9 @@
 package org.eclipse.jubula.client.ui.rcp.businessprocess;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
@@ -79,6 +81,73 @@ public class ComponentNameReuseBP
         }
         
         return false;
+    }
+    
+    /**
+     * 
+     * @param searchedCompNameGuids The GUIDs of the Component Names to check.
+     * @return the reused GUIDs of the used component names
+     */
+    public Set<String> getUsedCompNames(Set<String> searchedCompNameGuids) {
+        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
+        Set<String> usedComponents = new HashSet<>();
+        if (currentProject != null) {
+            List<ISpecPersistable> specsToSearch = currentProject
+                    .getSpecObjCont().getSpecObjList();
+            Collection<IAUTMainPO> autsToSearch = currentProject
+                    .getAutMainList();
+
+            boolean isAllSearchedCompNameCached = true;
+            for (String compNameGuid : searchedCompNameGuids) {
+                
+                // Check the component name in the exists
+                if (m_compNameGuidToIsReusedMap.get(compNameGuid) != null) {
+                    if (m_compNameGuidToIsReusedMap.get(compNameGuid)
+                            .booleanValue()) {
+                        usedComponents.add(compNameGuid);
+                        continue;
+                    }
+                } else {
+                    // There is a searched component name, which indicates
+                    // a new search is necessary
+                    isAllSearchedCompNameCached = false;
+                }
+
+                // Check associations of the component names
+                if (!ComponentNamesBP.getInstance()
+                        .findAssocsOfReuse(autsToSearch, compNameGuid)
+                        .isEmpty()) {
+                    usedComponents.add(compNameGuid);
+                }
+            }
+            
+            if (isAllSearchedCompNameCached) {
+                // All searched component is in the cache, no need 
+                // to complete a new traversing on the tree
+                for (String compNameGuid : m_compNameGuidToIsReusedMap
+                        .getKeySet()) {
+                    if (m_compNameGuidToIsReusedMap.get(compNameGuid)
+                            .booleanValue()) {
+                        usedComponents.add(compNameGuid);
+                    }
+                }
+                return usedComponents;
+            }
+            
+            usedComponents
+                    .addAll(ComponentNamesBP.getInstance()
+                            .getReusedCompNames(specsToSearch, TestSuiteBP
+                                    .getListOfTestSuites(currentProject),
+                            searchedCompNameGuids));
+            
+            // Put the checked component names to the cache
+            for (String searchedCompNameGuid : searchedCompNameGuids) {
+                m_compNameGuidToIsReusedMap.add(searchedCompNameGuid,
+                        usedComponents.contains(searchedCompNameGuid));
+            }
+        }
+
+        return usedComponents;
     }
 
     /** {@inheritDoc} */

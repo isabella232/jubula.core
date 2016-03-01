@@ -5,6 +5,7 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -81,6 +82,13 @@ public class ControlledCache<TKey, TValue> implements IDataChangedListener,
      */
     public TValue remove(TKey key) {
         return m_cache.remove(key);
+    }
+    
+    /**
+     * @return keyset of the cache
+     */
+    public Set<TKey> getKeySet() {
+        return m_cache.keySet();
     }
     
     /**

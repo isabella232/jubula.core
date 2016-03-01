@@ -24,6 +24,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.CheckIfComponentNameIsReusedOp;
+import org.eclipse.jubula.client.core.businessprocess.treeoperations.CheckReusedComponentNamesOp;
 import org.eclipse.jubula.client.core.businessprocess.treeoperations.FindNodesForComponentNameOp;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
@@ -901,6 +902,41 @@ public class ComponentNamesBP
 
         return false;
     }
+    
+    /**
+     * 
+     * @param specsToSearch The Test Cases and Categories to search 
+     *                      (recursively).
+     * @param suitesToSearch The Test Suites to search.
+     * @param compNameGuids The GUID of the Component Name for which to find 
+     *                     whether it is reused.
+     * @return GUIDs of the used component names
+     */
+    public Set<String> getReusedCompNames(
+            Collection<ISpecPersistable> specsToSearch,
+            Collection<ITestSuitePO> suitesToSearch,
+            Set<String> compNameGuids) {
+
+        Set<String> usedComponentNames = new HashSet<String>();
+        
+        for (ISpecPersistable node : specsToSearch) {
+            CheckReusedComponentNamesOp op = 
+                new CheckReusedComponentNamesOp(compNameGuids);
+            TreeTraverser traverser = new TreeTraverser(node, op);
+            traverser.traverse(true);
+            usedComponentNames.addAll(op.getUsedCompNameGuids());
+        }
+
+        for (ITestSuitePO ts : suitesToSearch) {
+            CheckReusedComponentNamesOp op = 
+                new CheckReusedComponentNamesOp(compNameGuids);
+            TreeTraverser traverser = new TreeTraverser(ts, op);
+            traverser.traverse(true);
+            usedComponentNames.addAll(op.getUsedCompNameGuids());
+        }
+
+        return usedComponentNames;
+    }
 
     /**
      * Finds all instances of reuse of a Component Name within the given 
@@ -980,6 +1016,7 @@ public class ComponentNamesBP
         
         return reuse;
     }
+    
 
     /**
      * Lock the TC if it is reused for the first time. This prevents deletion of
