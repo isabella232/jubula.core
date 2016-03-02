@@ -15,54 +15,55 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author BREDEX GmbH
  */
-public class SummaryAttributeDTO {
-
+public class DefaultEventHandlerDTO {
     /** */
-    private String m_key, m_value, m_type;
-    
+    private String m_event, m_reentryProperty;
+    /** */
+    private int m_maxRetries;
     
     /**
-     * @return key
+     * @return event
      */
-    @JsonProperty("key")
-    public String getKey() {
-        return m_key;
+    @JsonProperty("event")
+    public String getEvent() {
+        return m_event;
     }
     
     /**
-     * @param key key
+     * @param event 
      */
-    public void setKey(String key) {
-        this.m_key = key;
+    public void setEvent(String event) {
+        this.m_event = event;
     }
     
     /**
-     * @return value
+     * @return reentryProperty
      */
-    @JsonProperty("value")
-    public String getValue() {
-        return m_value;
+    @JsonProperty("reentryProperty")
+    public String getReentryProperty() {
+        return m_reentryProperty;
     }
     
     /**
-     * @param value 
+     * @param reentryProperty 
      */
-    public void setValue(String value) {
-        this.m_value = value;
+    public void setReentryProperty(String reentryProperty) {
+        this.m_reentryProperty = reentryProperty;
     }
     
     /**
-     * @return type
+     * @return maxRetries
      */
-    @JsonProperty("type")
-    public String getType() {
-        return m_type;
+    @JsonProperty("maxRetries")
+    public int getMaxRetries() {
+        return m_maxRetries;
     }
     
     /**
-     * @param type 
+     * @param maxRetries 
      */
-    public void setType(String type) {
-        this.m_type = type;
+    public void setMaxRetries(int maxRetries) {
+        this.m_maxRetries = maxRetries;
     }
 }
+    

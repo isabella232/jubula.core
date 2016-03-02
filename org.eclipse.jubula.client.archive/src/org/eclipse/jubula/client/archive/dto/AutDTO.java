@@ -19,9 +19,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class AutDTO {
-
     /** */
-    private String m_id, m_name, m_guid, m_autToolkit;
+    private String m_id, m_name, m_uuid, m_toolkit;
     /** */
     private List<AutConfigDTO> m_configs = new ArrayList<AutConfigDTO>();
     /** */
@@ -62,33 +61,33 @@ public class AutDTO {
     }
     
     /**
-     * @return guid
+     * @return uuid
      */
-    @JsonProperty("guid")
-    public String getGuid() {
-        return m_guid;
+    @JsonProperty("uuid")
+    public String getUuid() {
+        return m_uuid;
     }
     
     /**
-     * @param guid 
+     * @param uuid 
      */
-    public void setGuid(String guid) {
-        this.m_guid = guid;
+    public void setUuid(String uuid) {
+        this.m_uuid = uuid;
     }
     
     /**
-     * @return autToolkit
+     * @return toolkit
      */
-    @JsonProperty("autToolkit")
-    public String getAutToolkit() {
-        return m_autToolkit;
+    @JsonProperty("toolkit")
+    public String getToolkit() {
+        return m_toolkit;
     }
     
     /**
-     * @param autToolkit 
+     * @param toolkit 
      */
-    public void setAutToolkit(String autToolkit) {
-        this.m_autToolkit = autToolkit;
+    public void setToolkit(String toolkit) {
+        this.m_toolkit = toolkit;
     }
     
     /**

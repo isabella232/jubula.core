@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author BREDEX GmbH
  */
-public class DataSetDTO {
+public class DataRowDTO {
     
     /** */
     private List<String> m_columns = new ArrayList<String>();
@@ -36,12 +36,5 @@ public class DataSetDTO {
      */
     public void setColumns(List<String> columns) {
         this.m_columns = columns;
-    }
-
-    /**
-     * @param column 
-     */
-    public void addColumn(String column) {
-        this.m_columns.add(column);
     }
 }

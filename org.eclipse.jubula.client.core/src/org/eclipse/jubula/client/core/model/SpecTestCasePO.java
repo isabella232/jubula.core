@@ -262,7 +262,7 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
             + this.getName());
         
         IParamDescriptionPO desc = PoMaker.createTcParamDescriptionPO(type,
-            name, PersistenceUtil.generateGuid(), mapper);
+            name, PersistenceUtil.generateUUID(), mapper);
         super.addParameter(desc);
         return desc;
     }

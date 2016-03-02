@@ -25,7 +25,7 @@ public class EventTestCaseDTO extends RefTestCaseDTO {
     private Integer m_maxRetries;
 
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public EventTestCaseDTO() { }
     
     /**

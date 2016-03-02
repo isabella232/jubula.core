@@ -349,7 +349,7 @@ class XmlExporter {
         throws ProjectDeletedException, PMException, 
             OperationCanceledException {
         fillNode(xml, po);
-        checkForCancel();
+        ImportExportUtil.checkCancel(m_monitor);
         IProjectPropertiesPO projectProperties = po.getProjectProperties();
         fillCheckConfiguration(xml, projectProperties.getCheckConfCont());
         // used toolkits
@@ -388,12 +388,12 @@ class XmlExporter {
         
         // reused projects
         handleReusedProjects(xml, po);
-        checkForCancel();
+        ImportExportUtil.checkCancel(m_monitor);
         // testresult summaries
         if (includeTestResultSummaries) {
             fillTestResultSummary(xml, po);
         }
-        checkForCancel();
+        ImportExportUtil.checkCancel(m_monitor);
         setProjectVersions(xml, po);
         xml.setIsReusable(po.getIsReusable());
         xml.setIsProtected(po.getIsProtected());
@@ -440,7 +440,7 @@ class XmlExporter {
         
         for (IALMReportingRulePO rule : projectProperties
                 .getALMReportingRules()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             ReportingRule xmlRule = xml.addNewReportingRules();
             fillReportingRule(xmlRule, rule);
         }
@@ -474,7 +474,7 @@ class XmlExporter {
         for (IExecPersistable tsOrTjOrCat : po.getExecObjCont()
                 .getExecObjList()) {
             ExecCategory execCat = xml.addNewExecCategories();
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (tsOrTjOrCat instanceof ICategoryPO) {
                 ExecCategory cat = execCat.addNewCategory();
                 fillCategory(cat, (ICategoryPO) tsOrTjOrCat);
@@ -497,7 +497,7 @@ class XmlExporter {
      */
     private void handleSpecPersistables(Project xml, IProjectPO po) {
         for (ISpecPersistable tcOrCat : po.getSpecObjCont().getSpecObjList()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (tcOrCat instanceof ICategoryPO) {
                 Category cat = xml.addNewCategory();
                 fillCategory(cat, (ICategoryPO)tcOrCat);
@@ -519,7 +519,7 @@ class XmlExporter {
     private void fillCheckConfiguration(Project xml,
             ICheckConfContPO checkConfCont) { 
         for (String chkId : checkConfCont.getConfMap().keySet()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             ICheckConfPO chkConf = checkConfCont.getConfMap().get(chkId);
             CheckConfiguration xmlChkConf = xml.addNewCheckConfiguration();
             
@@ -540,7 +540,7 @@ class XmlExporter {
     private void fillCheckContext(CheckConfiguration xmlChkConf,
             Map<String, Boolean> contexts) {
         for (Entry<String, Boolean> e : contexts.entrySet()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             CheckActivatedContext c = xmlChkConf.addNewActiveContext();
             c.setClass1(e.getKey());
             Object obj = e.getValue();
@@ -562,7 +562,7 @@ class XmlExporter {
     private void fillCheckAttribute(CheckConfiguration xmlChkConf,
             Map<String, String> attr) {
         for (Entry<String, String> e : attr.entrySet()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             CheckAttribute chkAttr = xmlChkConf.addNewCheckAttribute();
             chkAttr.setName(e.getKey());
             chkAttr.setValue(e.getValue());
@@ -603,7 +603,7 @@ class XmlExporter {
                 TestResultSummaryPM.getAllTestResultSummaries(po, null);
         TestresultSummaries xmlSummaryList = xml.addNewTestresultSummaries();
         for (ITestResultSummaryPO poSummary : poSummaryList) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (!poSummary.isTestsuiteRelevant()) {
                 continue;
             }
@@ -686,7 +686,7 @@ class XmlExporter {
      */
     private void handleReusedProjects(Project xml, IProjectPO po) {
         for (IReusedProjectPO reusedProject : po.getUsedProjects()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             ReusedProject xmlReused = xml.addNewReusedProjects();
             fillReusedProject(xmlReused, reusedProject);
             m_monitor.worked(1);
@@ -808,7 +808,7 @@ class XmlExporter {
      *            The persistent object which contains the information
      */
     private void fillNode(Node xml, INodePO po) {
-        checkForCancel();
+        ImportExportUtil.checkCancel(m_monitor);
      // name will be rewritten afterwards if necessary
         xml.setName(po.getName());
         xml.setComment(po.getComment());
@@ -841,7 +841,7 @@ class XmlExporter {
     private void fillTestsuite(TestSuite xml, ITestSuitePO po) {
         fillNode(xml, po);
 
-        checkForCancel();
+        ImportExportUtil.checkCancel(m_monitor);
 
         if (po.getAut() != null) {
             xml.setSelectedAut(i2id(TABLE_AUT, po.getAut().getId()));
@@ -850,7 +850,6 @@ class XmlExporter {
         }
         xml.setStepDelay(po.getStepDelay());
         xml.setRelevant(po.getRelevant());
-        xml.setCommandLineParameter(po.getCmdLineParameter());
 
         for (Object o : po.getUnmodifiableNodeList()) {
             if (o instanceof IExecTestCasePO) {
@@ -895,7 +894,7 @@ class XmlExporter {
     private void fillRefTestCase(RefTestCase xml, IExecTestCasePO po) {
         fillNode(xml, po);
 
-        checkForCancel();
+        ImportExportUtil.checkCancel(m_monitor);
 
         String execName = po.getRealName();
         if (execName == null) {
@@ -982,7 +981,7 @@ class XmlExporter {
     private void fillTestCase(TestCase xml, ISpecTestCasePO po) {
         fillNode(xml, po);
 
-        checkForCancel();
+        ImportExportUtil.checkCancel(m_monitor);
 
         for (Object o : po.getUnmodifiableNodeList()) {
             Teststep stepXml = xml.addNewTeststep();
@@ -1153,7 +1152,7 @@ class XmlExporter {
     private void fillCategory(Category xml, ICategoryPO po) {
         fillNode(xml, po);
         for (Object o : po.getUnmodifiableNodeList()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (o instanceof ISpecPersistable) {
                 ISpecPersistable tcOrCat = (ISpecPersistable)o;
                 if (tcOrCat instanceof ICategoryPO) {
@@ -1190,7 +1189,7 @@ class XmlExporter {
     private void fillCategory(ExecCategory xml, ICategoryPO po) {
         fillNode(xml, po);
         for (Object o : po.getUnmodifiableNodeList()) {
-            checkForCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (o instanceof IExecPersistable) {
                 IExecPersistable tcOrCat = (IExecPersistable)o;
                 if (tcOrCat instanceof ICategoryPO) {
@@ -1210,30 +1209,6 @@ class XmlExporter {
     }
 
     /**
-     * Converts a Long to a String
-     * 
-     * @param l
-     *            Long
-     * @return null if l==null, String represntation of l otherwise
-     */
-    private String i2str(Long l) {
-        if (l == null) {
-            return null;
-        }
-        return l.toString();
-    }
-
-    /**
-     * 
-     * @throws OperationCanceledException if the operation was canceled.
-     */
-    private void checkForCancel() throws OperationCanceledException {
-        if (m_monitor.isCanceled()) {
-            throw new OperationCanceledException();
-        }
-    }
-
-    /**
      * Converts a Long (an OID) to a ID suitable as an XML ID.
      * 
      * @param table
@@ -1244,7 +1219,7 @@ class XmlExporter {
      */
     private String i2id(char table, Long l) {
         return "ID" + StringConstants.UNDERSCORE + table  //$NON-NLS-1$
-            + StringConstants.UNDERSCORE + i2str(l);
+            + StringConstants.UNDERSCORE + ImportExportUtil.i2str(l);
     }
 
     /**

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AutConfigDTO {
 
     /** */
-    private String m_name, m_guid;
+    private String m_name, m_uuid;
     /** */
     private List<MapEntryDTO> m_confAttrMapEntrys =
             new ArrayList<MapEntryDTO>();
@@ -42,18 +42,18 @@ public class AutConfigDTO {
     }
 
     /**
-     * @return guid
+     * @return uuid
      */
-    @JsonProperty("guid")
-    public String getGuid() {
-        return m_guid;
+    @JsonProperty("uuid")
+    public String getUuid() {
+        return m_uuid;
     }
 
     /**
-     * @param guid 
+     * @param uuid 
      */
-    public void setGuid(String guid) {
-        this.m_guid = guid;
+    public void setUuid(String uuid) {
+        this.m_uuid = uuid;
     }
 
     /**

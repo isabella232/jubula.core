@@ -220,7 +220,7 @@
           <xs:element name="selectedAutConfig" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded" />
           <xs:element name="stepDelay" type="xs:int" default="0" />
           <xs:element name="language" type="gd:locale" minOccurs="0" />
-          <xs:element name="commandLineParameter" type="xs:string" nillable="true" default="" />
+          <xs:element name="commandLineParameter" type="xs:string" minOccurs="0" nillable="true" default="" />
           <xs:element name="usedTestcase" type="gd:refTestCase" minOccurs="0" maxOccurs="unbounded" />
           <xs:element name="testsuiteelement" minOccurs="0" maxOccurs="unbounded">
               <xs:complexType>

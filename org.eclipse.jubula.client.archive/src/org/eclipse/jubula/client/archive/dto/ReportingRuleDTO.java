@@ -16,10 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class ReportingRuleDTO {
-    
     /** */
     private String m_name, m_fieldID, m_value, m_type;
-
 
     /**
      * @return name

@@ -95,7 +95,7 @@ class AUTMainPO implements IAUTMainPO {
      * @param autName The name of this AUT.
      */
     AUTMainPO(String autName) {
-        this(autName, PersistenceUtil.generateGuid());
+        this(autName, PersistenceUtil.generateUUID());
     }
 
     /**

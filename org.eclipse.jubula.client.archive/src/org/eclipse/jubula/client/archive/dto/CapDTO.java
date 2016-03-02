@@ -23,7 +23,7 @@ public class CapDTO extends ParameterDTO {
     private String m_actionName, m_componentName, m_componentType;
     
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public CapDTO() { }
 
     /**

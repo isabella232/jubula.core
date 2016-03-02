@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class TestresultSummaryDTO {
-
     /** */
     private List<MonitoringValuesDTO> m_monitoringValues =
             new ArrayList<MonitoringValuesDTO>();
@@ -34,10 +33,10 @@ public class TestresultSummaryDTO {
     /** AUT server */
     private String m_autAgentName;
 
-    /** cmd param */
+    /** commandline parameter */
     private String m_autCmdParameter;
     
-    /** AUT conf */
+    /** AUT configuration name */
     private String m_autConfigName;
     
     /** AUT hostname */
@@ -55,35 +54,44 @@ public class TestresultSummaryDTO {
     /** information about the used Toolkit */
     private String m_autToolkit;
     
-    /** AUT conf guid */
-    private String m_autConfigGuid;
+    /** AUT conf uuid */
+    private String m_autConfigUuid;
     
-    /** AUT Guid */
-    private String m_autGuid;
+    /** AUT Uuid */
+    private String m_autUuid;
 
-    /** the GUID */
-    private String m_guid;
+    /** the Uuid */
+    private String m_uuid;
     
     /** used coverage tooling for this summary */
     private String m_monitoringId;
     
-    /** project guid */
-    private String m_projectGuid;
+    /** project uuid */
+    private String m_projectUuid;
     
     /** project id */
     private Long m_projectID;
     
-    /** Ts guid */
-    private String m_testsuiteGuid;
+    /** Ts uuid */
+    private String m_testsuiteUuid;
 
     /** monitoring value type */
     private String m_monitoringValueType;
+
+    /** monitoring value */
+    private String m_monitoringValue;
     
     /** project Major Version */
     private Integer m_projectMajorVersion;
     
     /** project Minor Version */
     private Integer m_projectMinorVersion;
+    
+    /** project Micro Version */
+    private Integer m_projectMicroVersion;
+    
+    /** project version qualifier */
+    private String m_projectVersionQualifier;
     
     /** project name */
     private String m_projectName;
@@ -118,6 +126,12 @@ public class TestresultSummaryDTO {
     /** Ts name */
     private String m_testsuiteName;
 
+    /** Tj name */
+    private String m_testJobName;
+
+    /** Tj uuid */
+    private String m_testJobUuid;
+
     /** Tj Start time **/
     private Date m_testJobStartTime;
 
@@ -126,8 +140,14 @@ public class TestresultSummaryDTO {
 
     /** Ts status */
     private int m_testsuiteStatus;
+    
+    /** Comment detail */
+    private String m_commentDetail;
+    
+    /** Comment title */
+    private String m_commentTitle;
 
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public TestresultSummaryDTO() { }
     
     /**
@@ -143,16 +163,18 @@ public class TestresultSummaryDTO {
         m_autName = trs.getAutName();
         m_autOS = trs.getAutOS();
         m_autToolkit = trs.getAutToolkit();
-        m_autConfigGuid = trs.getInternalAutConfigGuid();
-        m_autGuid = trs.getInternalAutGuid();
-        m_guid = trs.getInternalGuid();
+        m_autConfigUuid = trs.getInternalAutConfigGuid();
+        m_autUuid = trs.getInternalAutGuid();
+        m_uuid = trs.getInternalGuid();
         m_monitoringId = trs.getInternalMonitoringId();
-        m_projectGuid = trs.getInternalProjectGuid();
+        m_projectUuid = trs.getInternalProjectGuid();
         m_projectID = trs.getInternalProjectID();
-        m_testsuiteGuid = trs.getInternalTestsuiteGuid();
+        m_testsuiteUuid = trs.getInternalTestsuiteGuid();
         m_monitoringValueType = trs.getMonitoringValueType();
+        m_monitoringValue = trs.getMonitoringValue();
         m_projectMajorVersion = trs.getProjectMajorVersion();
         m_projectMinorVersion = trs.getProjectMinorVersion();
+        m_projectMicroVersion = trs.getProjectMicroVersion();
         m_projectName = trs.getProjectName();
         m_blobWritten = trs.isReportWritten();
         m_testsuiteDate = trs.getTestsuiteDate();
@@ -164,9 +186,13 @@ public class TestresultSummaryDTO {
         m_testsuiteExpectedTeststeps = trs.getTestsuiteExpectedTeststeps();
         m_testsuiteFailedTeststeps = trs.getTestsuiteFailedTeststeps();
         m_testsuiteName = trs.getTestsuiteName();
+        m_testJobName = trs.getTestJobName();
         m_testJobStartTime = trs.getTestJobStartTime();
+        m_testJobUuid = trs.getInternalTestJobGuid();
         m_testsuiteStartTime = trs.getTestsuiteStartTime();
         m_testsuiteStatus = trs.getTestsuiteStatus();
+        m_commentDetail = trs.getCommentDetail();
+        m_commentTitle = trs.getCommentTitle();
     }
     
     
@@ -320,48 +346,48 @@ public class TestresultSummaryDTO {
     }
     
     /**
-     * @return autConfigGuid
+     * @return autConfigUuid
      */
-    @JsonProperty("autConfigGuid")
-    public String getAutConfigGuid() {
-        return m_autConfigGuid;
+    @JsonProperty("autConfigUuid")
+    public String getAutConfigUuid() {
+        return m_autConfigUuid;
     }
     
     /**
-     * @param autConfigGuid 
+     * @param autConfigUuid 
      */
-    public void setAutConfigGuid(String autConfigGuid) {
-        this.m_autConfigGuid = autConfigGuid;
+    public void setAutConfigUuid(String autConfigUuid) {
+        this.m_autConfigUuid = autConfigUuid;
     }
     
     /**
-     * @return autGuid
+     * @return autUuid
      */
-    @JsonProperty("autGuid")
-    public String getAutGuid() {
-        return m_autGuid;
+    @JsonProperty("autUuid")
+    public String getAutUuid() {
+        return m_autUuid;
     }
     
     /**
-     * @param autGuid 
+     * @param autUuid 
      */
-    public void setAutGuid(String autGuid) {
-        this.m_autGuid = autGuid;
+    public void setAutUuid(String autUuid) {
+        this.m_autUuid = autUuid;
     }
     
     /**
-     * @return guid
+     * @return uuid
      */
-    @JsonProperty("guid")
-    public String getGuid() {
-        return m_guid;
+    @JsonProperty("uuid")
+    public String getUuid() {
+        return m_uuid;
     }
     
     /**
-     * @param guid 
+     * @param uuid 
      */
-    public void setGuid(String guid) {
-        this.m_guid = guid;
+    public void setUuid(String uuid) {
+        this.m_uuid = uuid;
     }
     
     /**
@@ -380,18 +406,18 @@ public class TestresultSummaryDTO {
     }
     
     /**
-     * @return projectGuid
+     * @return projectUuid
      */
-    @JsonProperty("projectGuid")
-    public String getProjectGuid() {
-        return m_projectGuid;
+    @JsonProperty("projectUuid")
+    public String getProjectUuid() {
+        return m_projectUuid;
     }
     
     /**
-     * @param projectGuid 
+     * @param projectUuid 
      */
-    public void setProjectGuid(String projectGuid) {
-        this.m_projectGuid = projectGuid;
+    public void setProjectUuid(String projectUuid) {
+        this.m_projectUuid = projectUuid;
     }
     
     /**
@@ -410,18 +436,18 @@ public class TestresultSummaryDTO {
     }
     
     /**
-     * @return testsuiteGuid
+     * @return testsuiteUuid
      */
-    @JsonProperty("testsuiteGuid")
-    public String getTestsuiteGuid() {
-        return m_testsuiteGuid;
+    @JsonProperty("testsuiteUuid")
+    public String getTestsuiteUuid() {
+        return m_testsuiteUuid;
     }
     
     /**
-     * @param testsuiteGuid 
+     * @param testsuiteUuid 
      */
-    public void setTestsuiteGuid(String testsuiteGuid) {
-        this.m_testsuiteGuid = testsuiteGuid;
+    public void setTestsuiteUuid(String testsuiteUuid) {
+        this.m_testsuiteUuid = testsuiteUuid;
     }
     
     /**
@@ -438,7 +464,22 @@ public class TestresultSummaryDTO {
     public void setMonitoringValueType(String monitoringValueType) {
         this.m_monitoringValueType = monitoringValueType;
     }
-    
+
+    /**
+     * @return monitoringValue 
+     */
+    @JsonProperty("monitoringValue")
+    public String getMonitoringValue() {
+        return m_monitoringValue;
+    }
+
+    /**
+     * @param monitoringValue 
+     */
+    public void setMonitoringValue(String monitoringValue) {
+        this.m_monitoringValue = monitoringValue;
+    }
+
     /**
      * @return projectMajorVersion
      */
@@ -467,6 +508,21 @@ public class TestresultSummaryDTO {
      */
     public void setProjectMinorVersion(Integer projectMinorVersion) {
         this.m_projectMinorVersion = projectMinorVersion;
+    }
+    
+    /**
+     * @return projectMicroVersion
+     */
+    @JsonProperty("projectMicroVersion")
+    public Integer getProjectMicroVersion() {
+        return m_projectMicroVersion;
+    }
+    
+    /**
+     * @param projectMicroVersion 
+     */
+    public void setProjectMicroVersion(Integer projectMicroVersion) {
+        this.m_projectMicroVersion = projectMicroVersion;
     }
     
     /**
@@ -636,6 +692,21 @@ public class TestresultSummaryDTO {
     }
     
     /**
+     * @return testJobName
+     */
+    @JsonProperty("testJobName")
+    public String getTestJobName() {
+        return m_testJobName;
+    }
+
+    /**
+     * @param testJobName 
+     */
+    public void setTestJobName(String testJobName) {
+        this.m_testJobName = testJobName;
+    }
+
+    /**
      * @return testJobStartTime
      */
     @JsonProperty("testJobStartTime")
@@ -650,6 +721,21 @@ public class TestresultSummaryDTO {
         this.m_testJobStartTime = testJobStartTime;
     }
     
+    /**
+     * @return testJobUuid 
+     */
+    @JsonProperty("testJobUuid")
+    public String getTestJobUuid() {
+        return m_testJobUuid;
+    }
+
+    /**
+     * @param testJobUuid 
+     */
+    public void setTestJobUuid(String testJobUuid) {
+        this.m_testJobUuid = testJobUuid;
+    }
+
     /**
      * @return testsuiteStartTime
      */
@@ -678,5 +764,50 @@ public class TestresultSummaryDTO {
      */
     public void setTestsuiteStatus(int testsuiteStatus) {
         this.m_testsuiteStatus = testsuiteStatus;
+    }
+
+    /**
+     * @return Comment Derail
+     */
+    @JsonProperty("commentDetail")
+    public String getCommentDetail() {
+        return m_commentDetail;
+    }
+
+    /**
+     * @param commentDetail 
+     */
+    public void setCommentDetail(String commentDetail) {
+        this.m_commentDetail = commentDetail;
+    }
+
+    /**
+     * @return Comment title
+     */
+    @JsonProperty("commentTitle")
+    public String getCommentTitle() {
+        return m_commentTitle;
+    }
+
+    /**
+     * @param commentTitle 
+     */
+    public void setCommentTitle(String commentTitle) {
+        this.m_commentTitle = commentTitle;
+    }
+
+    /**
+     * @return the projectVersionQualifier
+     */
+    @JsonProperty("projectVersionQualifier")
+    public String getProjectVersionQualifier() {
+        return m_projectVersionQualifier;
+    }
+
+    /**
+     * @param projectVersionQualifier the projectVersionQualifier to set
+     */
+    public void setProjectVersionQualifier(String projectVersionQualifier) {
+        m_projectVersionQualifier = projectVersionQualifier;
     }
 }

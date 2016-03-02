@@ -53,12 +53,6 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     /** the name of the AUT of this test suite */
     private IAUTMainPO m_aut;
 
-    /** the command line parameter */
-    private String m_cmdLineParameter;
-    
-    /** the aut config */
-    private IAUTConfigPO m_autConfig;
-    
     /** is the testSuite started */
     private transient boolean m_isStarted = false;
     
@@ -190,42 +184,6 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
      */
     public void setStarted(boolean isStarted) {
         m_isStarted = isStarted;
-    }
-
-    /**
-     * 
-     * @return Returns the cmdLineParameter.
-     */
-    @Basic
-    @Column(name = "CMD_LINE_PAR")
-    public String getCmdLineParameter() {
-        return m_cmdLineParameter;
-    }
-
-    /**
-     * @param cmdLineParameter The cmdLineParameter to set.
-     */
-    public void setCmdLineParameter(String cmdLineParameter) {
-        m_cmdLineParameter = cmdLineParameter;
-    }
-
-    /**
-     * 
-     * @return Returns the autConf.
-     */
-    @ManyToOne(fetch = FetchType.EAGER, targetEntity = AUTConfigPO.class)
-    @JoinColumn(name = "AUTCONF")
-    @BatchFetch(value = BatchFetchType.JOIN)
-    public IAUTConfigPO getAutConfig() {
-        return m_autConfig;
-        
-    }
-
-    /**
-     * @param autConf The autConf to set.
-     */
-    public void setAutConfig(IAUTConfigPO autConf) {
-        m_autConfig = autConf;
     }
 
     /**

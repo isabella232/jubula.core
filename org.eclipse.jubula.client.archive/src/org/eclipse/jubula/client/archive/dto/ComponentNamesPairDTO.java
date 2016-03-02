@@ -15,12 +15,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * @author BREDEX GmbH
  */
-public class CompNamesDTO {
-    
+public class ComponentNamesPairDTO {
     /** */
     private boolean m_propagated;
     /** */
-    private String m_originalName, m_newName, m_type;
+    private String m_originalName, m_newName;
     
     /**
      * @return propagated
@@ -65,20 +64,5 @@ public class CompNamesDTO {
      */
     public void setNewName(String newName) {
         this.m_newName = newName;
-    }
-
-    /**
-     * @return type
-     */
-    @JsonProperty("type")
-    public String getType() {
-        return m_type;
-    }
-    
-    /**
-     * @param type 
-     */
-    public void setType(String type) {
-        this.m_type = type;
     }
 }

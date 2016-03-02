@@ -23,7 +23,7 @@ public class TDManagerDTO {
     /** */
     private List<String> m_uniqueIds = new ArrayList<String>();
     /** */
-    private List<DataSetDTO> m_dataSets = new ArrayList<DataSetDTO>();
+    private List<DataRowDTO> m_dataSets = new ArrayList<DataRowDTO>();
 
     
     /**
@@ -52,21 +52,21 @@ public class TDManagerDTO {
      * @return dataSets
      */
     @JsonProperty("dataSets")
-    public List<DataSetDTO> getDataSets() {
+    public List<DataRowDTO> getDataSets() {
         return m_dataSets;
     }
 
     /**
      * @param dataSets 
      */
-    public void setDataSets(List<DataSetDTO> dataSets) {
+    public void setDataSets(List<DataRowDTO> dataSets) {
         this.m_dataSets = dataSets;
     }
 
     /**
      * @param dataSet 
      */
-    public void addDataSet(DataSetDTO dataSet) {
+    public void addDataSet(DataRowDTO dataSet) {
         this.m_dataSets.add(dataSet);
     }
 }

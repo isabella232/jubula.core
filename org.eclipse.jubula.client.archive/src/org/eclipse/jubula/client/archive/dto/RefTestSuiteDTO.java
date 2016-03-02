@@ -20,10 +20,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RefTestSuiteDTO extends NodeDTO {
 
     /** */
-    private String m_tsGuid, m_autId;
+    private String m_tsUuid, m_autId;
 
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public RefTestSuiteDTO() { }
     
     /**
@@ -31,23 +31,23 @@ public class RefTestSuiteDTO extends NodeDTO {
      */
     public RefTestSuiteDTO(IRefTestSuitePO node) {
         super(node);
-        this.m_tsGuid = node.getTestSuiteGuid();
+        this.m_tsUuid = node.getTestSuiteGuid();
         this.m_autId = node.getTestSuiteAutID();
     }
 
     /**
-     * @return tsGuid
+     * @return tsUuid
      */
-    @JsonProperty("tsGuid")
-    public String getTsGuid() {
-        return m_tsGuid;
+    @JsonProperty("tsUuid")
+    public String getTsUuid() {
+        return m_tsUuid;
     }
 
     /**
-     * @param tsGuid 
+     * @param tsUuid 
      */
-    public void setTsGuid(String tsGuid) {
-        this.m_tsGuid = tsGuid;
+    public void setTsUuid(String tsUuid) {
+        this.m_tsUuid = tsUuid;
     }
 
     /**

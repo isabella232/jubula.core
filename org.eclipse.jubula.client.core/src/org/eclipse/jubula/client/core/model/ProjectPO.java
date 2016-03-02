@@ -90,7 +90,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      */
     ProjectPO(String name, Integer metadataVersion, boolean isGenerated) { 
         this(metadataVersion, 1, 0, null, null,
-                PersistenceUtil.generateGuid(), isGenerated);
+                PersistenceUtil.generateUUID(), isGenerated);
         ProjectNameBP.getInstance().setName(this.getGuid(), name, false);
     }
 

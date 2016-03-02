@@ -28,10 +28,10 @@ import org.eclipse.jubula.client.archive.dto.AutDTO;
 import org.eclipse.jubula.client.archive.dto.CapDTO;
 import org.eclipse.jubula.client.archive.dto.CategoryDTO;
 import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
-import org.eclipse.jubula.client.archive.dto.CompNamesDTO;
+import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
-import org.eclipse.jubula.client.archive.dto.DataSetDTO;
-import org.eclipse.jubula.client.archive.dto.EventHandlerDTO;
+import org.eclipse.jubula.client.archive.dto.DataRowDTO;
+import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.ExecCategoryDTO;
 import org.eclipse.jubula.client.archive.dto.MapEntryDTO;
@@ -74,6 +74,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
@@ -112,9 +113,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * @author BREDEX GmbH
  */
 public class JsonExporter {
-    
-    /** offset of test result selection */
-    public static final int PAGE_SIZE = 1000;
     
     /** the main DTO wat we need to export */
     private ProjectDTO m_projectDTO;
@@ -196,25 +194,29 @@ public class JsonExporter {
         fWriter.append(StringConstants.LEFT_BRACKET); // [
         float size = TestResultSummaryPM.countOfTestResultSummaries(
                 m_project, null);
-        long to = (long) Math.ceil(size / PAGE_SIZE);
+        long lastPage = (long) Math.ceil(size / ImportExportUtil.PAGE_SIZE);
 
         int pos = 0;
-        for (int i = 1; i <= to; i++) {
-            checkCancel();
+        for (int countOfPage = 1; countOfPage <= lastPage; countOfPage++) {
+            ImportExportUtil.checkCancel(m_monitor);
             List<ITestResultSummaryPO> summaries = 
                     TestResultSummaryPM.getTestResultSummaries(
-                            m_project, null, i, PAGE_SIZE);
-            int k = 1;
-            for (TestresultSummaryDTO dto
-                    : getTestResultSummary(summaries)) {
+                            m_project, null, countOfPage,
+                            ImportExportUtil.PAGE_SIZE);
+            
+            List<TestresultSummaryDTO> summaryDTOs =
+                    getTestResultSummaryDTOs(summaries);
+            for (int countOfItemInPage = 0; countOfItemInPage
+                    < summaryDTOs.size(); countOfItemInPage++) {
                 pos++;
+                TestresultSummaryDTO dto = summaryDTOs.get(countOfItemInPage);
                 StringBuffer buffer = new StringBuffer();
                 buffer.append(mapper.writeValueAsString(dto));
-                if (!(i == to && k == summaries.size())) {
+                if (!(countOfPage == lastPage
+                        && countOfItemInPage == summaryDTOs.size() - 1)) {
                     buffer.append(StringConstants.COMMA); // ,
                 }
                 fWriter.append(buffer);
-                k++;
                 m_monitor.worked(1);
             }
             m_monitor.subTask(Messages.ImportJsonImportResult + pos
@@ -222,6 +224,7 @@ public class JsonExporter {
         }
 
         fWriter.append(StringConstants.RIGHT_BRACKET); // ]
+        fWriter.close();
     }
     
     /**
@@ -231,7 +234,7 @@ public class JsonExporter {
      */
     private void fillCheckConfiguration(ICheckConfContPO checkConfCont)
             throws OperationCanceledException {
-        checkCancel();
+        ImportExportUtil.checkCancel(m_monitor);
         for (String chkId : checkConfCont.getConfMap().keySet()) {
             ICheckConfPO chkConf = checkConfCont.getConfMap().get(chkId);
             CheckConfigurationDTO chkDTO = new CheckConfigurationDTO(chkConf);
@@ -276,17 +279,17 @@ public class JsonExporter {
      * @throws OperationCanceledExceptiondException */
     private void fillComponentNames()
             throws PMException, OperationCanceledException {
-        checkCancel();
+        ImportExportUtil.checkCancel(m_monitor);
         final Collection<IComponentNamePO> allCompNamePOs = ComponentNamesBP
                 .getInstance().getAllComponentNamePOs(m_project.getId());
         for (IComponentNamePO compName : allCompNamePOs) {
             ComponentNameDTO compNameDTO = new ComponentNameDTO();
-            compNameDTO.setGuid(compName.getGuid());
+            compNameDTO.setUuid(compName.getGuid());
             compNameDTO.setCompType(compName.getComponentType());
             compNameDTO.setCompName(compName.getName());
             compNameDTO.setCreationContext(compName.getCreationContext()
                     .toString());
-            compNameDTO.setRefGuid(compName.getReferencedGuid());
+            compNameDTO.setRefUuid(compName.getReferencedGuid());
             m_projectDTO.addComponentName(compNameDTO);
         }
         m_monitor.worked(1);
@@ -295,7 +298,7 @@ public class JsonExporter {
     /** fill the user tool kits 
      * @throws OperationCanceledException */
     private void fillTestDataCategories() throws OperationCanceledException {
-        checkCancel();
+        ImportExportUtil.checkCancel(m_monitor);
         for (ITestDataCategoryPO testDataCategory 
                 : m_project.getTestDataCubeCont().getCategoryChildren()) {
             TestDataCategoryDTO tdcDTO = new TestDataCategoryDTO(); 
@@ -318,7 +321,7 @@ public class JsonExporter {
             tdcDTO.addTestDataCategorie(childTdcDTO);
         }
         for (ITestDataCubePO testData : tdc.getTestDataChildren()) {
-            fillNamedTestData(testData);
+            tdcDTO.addNamedTestData(fillNamedTestData(testData));
         }
     }
 
@@ -326,15 +329,16 @@ public class JsonExporter {
     private void fillNamedTestData() {
         for (IParameterInterfacePO testDataCube 
                 : m_project.getTestDataCubeCont().getTestDataChildren()) {
-            fillNamedTestData(testDataCube);
+            m_projectDTO.addNamedTestData(fillNamedTestData(testDataCube));
         }
     }
 
     /**
      *  fill the name test data 
      *  @param testData   
+     *  @return NamedTestDataDTO
      */
-    private void fillNamedTestData(IParameterInterfacePO testData) {
+    private NamedTestDataDTO fillNamedTestData(IParameterInterfacePO testData) {
         NamedTestDataDTO ntdDTO = new NamedTestDataDTO();
         ntdDTO.setName(testData.getName());
         for (IParamDescriptionPO paramDesc : testData.getParameterList()) {
@@ -347,7 +351,7 @@ public class JsonExporter {
             fillTDManager(tdmDTO, testData.getDataManager());
             ntdDTO.setTDManager(tdmDTO);
         }
-        m_projectDTO.addNamedTestData(ntdDTO);
+        return ntdDTO;
     }
 
     /**
@@ -363,7 +367,7 @@ public class JsonExporter {
             pdDTO.setName(po.getName());
         }
         pdDTO.setType(po.getType());
-        pdDTO.setUniqueId(po.getUniqueId());
+        pdDTO.setUuid(po.getUniqueId());
     }
     
     /**
@@ -373,7 +377,7 @@ public class JsonExporter {
     private void fillTDManager(TDManagerDTO dto, ITDManager po) {
         dto.setUniqueIds(po.getUniqueIds());
         for (IDataSetPO dataSet : po.getDataSets()) {
-            DataSetDTO dsDTO = new DataSetDTO();
+            DataRowDTO dsDTO = new DataRowDTO();
             dsDTO.setColumns(dataSet.getColumnStringValues());
             dto.addDataSet(dsDTO);
         }
@@ -393,9 +397,10 @@ public class JsonExporter {
      */
     private void fillAUT(IAUTMainPO po) {
         AutDTO autDTO = new AutDTO();
-        autDTO.setId(i2str(po.getId()));
+        autDTO.setId(ImportExportUtil.i2str(po.getId()));
         autDTO.setName(po.getName());
-        autDTO.setAutToolkit(po.getToolkit());
+        autDTO.setToolkit(po.getToolkit());
+        autDTO.setUuid(po.getGuid());
         autDTO.setGenerateNames(po.isGenerateNames());
 
         ObjectMappingDTO omDTO = new ObjectMappingDTO();
@@ -558,7 +563,7 @@ public class JsonExporter {
         for (ISpecPersistable tcOrCat : m_project.getSpecObjCont()
                 .getSpecObjList()) {
             
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (tcOrCat instanceof ICategoryPO) {
                 CategoryDTO catDTO = new CategoryDTO(tcOrCat);
                 fillCategory(catDTO, (ICategoryPO)tcOrCat);
@@ -577,9 +582,9 @@ public class JsonExporter {
      * @param po category object
      */
     private void fillCategory(CategoryDTO categoryDTO, ICategoryPO po) {
-        for (Object o : po.getUnmodifiableNodeList()) {
-            if (o instanceof ISpecPersistable) {
-                ISpecPersistable tcOrCat = (ISpecPersistable)o;
+        for (INodePO node : po.getUnmodifiableNodeList()) {
+            if (node instanceof ISpecPersistable) {
+                ISpecPersistable tcOrCat = (ISpecPersistable)node;
                 if (tcOrCat instanceof ICategoryPO) {
                     CategoryDTO catDTO = new CategoryDTO(tcOrCat);
                     fillCategory(catDTO, (ICategoryPO)tcOrCat);
@@ -685,14 +690,14 @@ public class JsonExporter {
             rtcDTO.setName(execName);
         }
         
-        rtcDTO.setTestcaseGuid(po.getSpecTestCaseGuid());
+        rtcDTO.setTestcaseUuid(po.getSpecTestCaseGuid());
 
         // A Project GUID value of null indicates that the Test Case Reference
         // and the referenced Test Case are in the same Project. If they are
         // *not* in the same Project, then the exported file needs to contain
         // information about the Reused Project (i.e. Project GUID).
         if (po.getProjectGuid() != null) {
-            rtcDTO.setProjectGuid(po.getProjectGuid());
+            rtcDTO.setProjectUuid(po.getProjectGuid());
         }
         rtcDTO.setHasOwnTestdata(!po.getHasReferencedTD());
         rtcDTO.setDatafile(po.getDataFile());
@@ -715,7 +720,7 @@ public class JsonExporter {
         }
 
         for (ICompNamesPairPO name : po.getCompNamesPairs()) {
-            CompNamesDTO compNameDTO = new CompNamesDTO();
+            ComponentNamesPairDTO compNameDTO = new ComponentNamesPairDTO();
             compNameDTO.setOriginalName(name.getFirstName());
             compNameDTO.setNewName(name.getSecondName());
             compNameDTO.setPropagated(name.isPropagated());
@@ -749,7 +754,7 @@ public class JsonExporter {
         for (IExecPersistable tsOrTjOrCat : m_project.getExecObjCont()
                 .getExecObjList()) {
 
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (tsOrTjOrCat instanceof ICategoryPO) {
                 ExecCategoryDTO eCatDTO = new ExecCategoryDTO(tsOrTjOrCat);
                 fillCategory(eCatDTO, (ICategoryPO) tsOrTjOrCat);
@@ -800,15 +805,14 @@ public class JsonExporter {
      */
     private void fillTestsuite(TestSuiteDTO tsDTO, ITestSuitePO po) {
         if (po.getAut() != null) {
-            tsDTO.setSelectedAut(i2str(po.getAut().getId()));
+            tsDTO.setSelectedAut(ImportExportUtil.i2str(po.getAut().getId()));
         } else {
             tsDTO.setSelectedAut(null);
         }
         tsDTO.setStepDelay(po.getStepDelay());
         tsDTO.setRelevant(po.getRelevant());
-        tsDTO.setCommandLineParameter(po.getCmdLineParameter());
 
-        for (Object o : po.getUnmodifiableNodeList()) {
+        for (INodePO o : po.getUnmodifiableNodeList()) {
             if (o instanceof IExecTestCasePO) {
                 IExecTestCasePO tc = (IExecTestCasePO)o;
                 RefTestCaseDTO rtcDTO = new RefTestCaseDTO(tc);
@@ -821,7 +825,7 @@ public class JsonExporter {
             Integer evProp = po.getDefaultEventHandler().get(eventType);
             ReentryProperty.Enum reentryProperty = ReentryProperty.Enum
                     .forInt(evProp);
-            EventHandlerDTO ehDTO = new EventHandlerDTO();
+            DefaultEventHandlerDTO ehDTO = new DefaultEventHandlerDTO();
             ehDTO.setEvent(eventType);
             ehDTO.setReentryProperty(reentryProperty.toString());
 
@@ -846,8 +850,8 @@ public class JsonExporter {
                 IRefTestSuitePO rts = (IRefTestSuitePO)child;
                 RefTestSuiteDTO rtsDTO = new RefTestSuiteDTO(rts);
                 rtsDTO.setName(rts.getRealName());
-                rtsDTO.setGuid(rts.getGuid());
-                rtsDTO.setTsGuid(rts.getTestSuiteGuid());
+                rtsDTO.setUuid(rts.getGuid());
+                rtsDTO.setTsUuid(rts.getTestSuiteGuid());
                 rtsDTO.setAutId(rts.getTestSuiteAutID());
                 tjDTO.addRefTestSuite(rtsDTO);
             }
@@ -873,7 +877,7 @@ public class JsonExporter {
             IReusedProjectPO po) {
         rpDTO.setProjectName(ProjectNameBP.getInstance().getName(
                 po.getProjectGuid()));
-        rpDTO.setProjectGUID(po.getProjectGuid());
+        rpDTO.setProjectUuid(po.getProjectGuid());
         if (po.getMajorNumber() != null) {
             rpDTO.setMajorProjectVersion(po.getMajorNumber());
         }
@@ -891,7 +895,7 @@ public class JsonExporter {
      * @param poSummaryList the list of original test result summary objects
      * @return test result summary dto list
      */
-    private List<TestresultSummaryDTO> getTestResultSummary(
+    private List<TestresultSummaryDTO> getTestResultSummaryDTOs(
             List<ITestResultSummaryPO> poSummaryList) {
 
         List<TestresultSummaryDTO> resultDTO =
@@ -953,7 +957,7 @@ public class JsonExporter {
      */
     private void fillALM(IProjectPropertiesPO projectProperties)
             throws OperationCanceledException {
-        checkCancel();
+        ImportExportUtil.checkCancel(m_monitor);
         m_projectDTO.setAlmRepositoryName(
                 projectProperties.getALMRepositoryName());
         
@@ -1016,17 +1020,6 @@ public class JsonExporter {
     }
     
     /**
-     * @param l long number
-     * @return string of l or null if l is null
-     */
-    private String i2str(Long l) {
-        if (l != null) {
-            return l.toString();
-        }
-        return StringConstants.EMPTY;
-    }
-    
-    /**
      * @param project The project for which the work is predicted.
      * @param includeTestResultSummaries true if the project contains test result summaries
      * @return The predicted amount of work required to save a project.
@@ -1063,17 +1056,5 @@ public class JsonExporter {
         work++;
 
         return work;
-    }
-    
-    /**
-     * Checks whether the operation has been canceled. If the operation has been
-     * canceled, an <code>OperationCanceledException</code> will be thrown.
-     * 
-     * @throws OperationCanceledException if the operation has been canceled.
-     */
-    private void checkCancel() throws OperationCanceledException {
-        if (m_monitor.isCanceled()) {
-            throw new OperationCanceledException();
-        }
     }
 }

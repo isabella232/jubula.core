@@ -21,11 +21,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class CategoryDTO extends NodeDTO {
-
     /** */
     private List<NodeDTO> m_nodes = new ArrayList<NodeDTO>();
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public CategoryDTO() { }
     
     /**

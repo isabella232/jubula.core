@@ -84,7 +84,7 @@ public class PersistenceUtil {
      * @return a Globally Unique Identifier that is a 32-character 
      *         hexadecimal string.
      */
-    public static String generateGuid() {
+    public static String generateUUID() {
         return UUID.randomUUID().toString().replaceAll(StringConstants.MINUS, 
                 StringConstants.EMPTY);
     }

@@ -38,15 +38,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public class NodeDTO {
     
     /** */
-    private String m_name, m_comment, m_guid, m_taskId, m_description;
+    private String m_name, m_comment, m_uuid, m_taskId, m_description;
     /** */
     private boolean m_generated, m_active;
     /** */
     private SortedMap<Long, String> m_trackedModifications =
             new TreeMap<Long, String>();
     
-    
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public NodeDTO() { }
     
     /**
@@ -56,7 +55,7 @@ public class NodeDTO {
         this.setName(node.getName());
         this.setComment(node.getComment());
         this.setDescription(node.getDescription());
-        this.setGuid(node.getGuid());
+        this.setUuid(node.getGuid());
         this.setGenerated(node.isGenerated());
         this.setActive(node.isActive());
         this.setTaskId(node.getTaskId());
@@ -94,18 +93,18 @@ public class NodeDTO {
     }
 
     /**
-     * @return guid
+     * @return uuid
      */
-    @JsonProperty("guid")
-    public String getGuid() {
-        return m_guid;
+    @JsonProperty("uuid")
+    public String getUuid() {
+        return m_uuid;
     }
 
     /**
-     * @param guid 
+     * @param uuid 
      */
-    public void setGuid(String guid) {
-        this.m_guid = guid;
+    public void setUuid(String uuid) {
+        this.m_uuid = uuid;
     }
 
     /**

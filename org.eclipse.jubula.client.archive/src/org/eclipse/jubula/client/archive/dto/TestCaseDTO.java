@@ -21,17 +21,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class TestCaseDTO extends ParameterDTO {
-
     /** it could contain CAP or RefTestCase */
     private List<NodeDTO> m_testSteps = new ArrayList<NodeDTO>();
     /** */
     private List<EventTestCaseDTO> m_eventTestcases =
-            new ArrayList<EventTestCaseDTO>();
+            new ArrayList<EventTestCaseDTO>(4);
     /** */
     private boolean m_interfaceLocked = false;
     
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public TestCaseDTO() { }
     
     /**
@@ -90,5 +89,4 @@ public class TestCaseDTO extends ParameterDTO {
     public void setInterfaceLocked(boolean interfaceLocked) {
         this.m_interfaceLocked = interfaceLocked;
     }
-    
 }

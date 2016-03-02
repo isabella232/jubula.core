@@ -21,13 +21,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class TestJobDTO extends NodeDTO {
-
     /** */
     private List<RefTestSuiteDTO> m_refTestSuites =
             new ArrayList<RefTestSuiteDTO>();
 
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public TestJobDTO() { }
     
     /**

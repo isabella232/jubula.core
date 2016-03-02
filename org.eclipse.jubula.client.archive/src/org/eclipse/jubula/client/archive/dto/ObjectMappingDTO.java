@@ -21,8 +21,6 @@ public class ObjectMappingDTO {
     private ObjectMappingProfileDTO m_profile;
     /** */
     private OmCategoryDTO m_mapped, m_unmappedComponent, m_unmappedTechnical;
-    /** */
-    private OmEntryDTO m_entry;
     
     /**
      * @return profile
@@ -82,20 +80,5 @@ public class ObjectMappingDTO {
      */
     public void setUnmappedTechnical(OmCategoryDTO unmappedTechnical) {
         this.m_unmappedTechnical = unmappedTechnical;
-    }
-    
-    /**
-     * @return entry
-     */
-    @JsonProperty("entry")
-    public OmEntryDTO getEntry() {
-        return m_entry;
-    }
-    
-    /**
-     * @param entry 
-     */
-    public void setEntry(OmEntryDTO entry) {
-        this.m_entry = entry;
     }
 }

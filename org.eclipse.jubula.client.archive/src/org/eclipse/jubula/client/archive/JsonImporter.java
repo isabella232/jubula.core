@@ -31,10 +31,10 @@ import org.eclipse.jubula.client.archive.dto.CategoryDTO;
 import org.eclipse.jubula.client.archive.dto.CheckActivatedContextDTO;
 import org.eclipse.jubula.client.archive.dto.CheckAttributeDTO;
 import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
-import org.eclipse.jubula.client.archive.dto.CompNamesDTO;
+import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
-import org.eclipse.jubula.client.archive.dto.DataSetDTO;
-import org.eclipse.jubula.client.archive.dto.EventHandlerDTO;
+import org.eclipse.jubula.client.archive.dto.DataRowDTO;
+import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.ExecCategoryDTO;
 import org.eclipse.jubula.client.archive.dto.MapEntryDTO;
@@ -105,17 +105,13 @@ import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
-import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
-import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -132,17 +128,12 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /** @author BREDEX GmbH */
 public class JsonImporter {
     
     /** number of characters of a GUID */
     private static final int GUID_LENGTH = 32; 
-    
-    /** standard logging */
-    private static Logger log = LoggerFactory.getLogger(JsonImporter.class);
 
     /** Remember which instance belongs to the id used in the DTO element */
     private Map<String, IAUTMainPO> m_autRef = 
@@ -218,19 +209,11 @@ public class JsonImporter {
     private IProjectPO initProject(ProjectDTO dto, boolean assignNewGuid) {
         m_monitor.subTask(Messages.ImportJsonImportProjectInit);
         IProjectPO proj = null;
-        if (dto.getGuid() != null) {
-            Integer majorProjVersion = null;
-            if (dto.getMajorProjectVersion() != null
-                    || dto.getMajorNumber() != null) {
-                majorProjVersion = dto.getMajorNumber() != null
-                        ? dto.getMajorNumber() : dto.getMajorProjectVersion();
-            }
-            Integer minorProjVersion = null;
-            if (dto.getMinorProjectVersion() != null
-                    || dto.getMinorNumber() != null) {
-                minorProjVersion = dto.getMinorNumber() != null
-                        ? dto.getMinorNumber() : dto.getMinorProjectVersion();
-            }
+        if (dto.getUuid() != null) {
+            Integer majorProjVersion = dto.getMajorProjectVersion() == null
+                    ? null : dto.getMajorProjectVersion();
+            Integer minorProjVersion = dto.getMinorProjectVersion() == null
+                    ? null : dto.getMinorProjectVersion();
             Integer microProjVersion = dto.getMicroProjectVersion() == null
                     ? null : dto.getMicroProjectVersion();
             String postFixProjVersion = dto.getProjectVersionQualifier() == null
@@ -239,12 +222,12 @@ public class JsonImporter {
                 proj = NodeMaker.createProjectPO(
                         IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
                         minorProjVersion, microProjVersion, postFixProjVersion,
-                        dto.getGuid());
+                        dto.getUuid());
             } else {
                 proj = NodeMaker.createProjectPO(
                         IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
                         minorProjVersion, microProjVersion, postFixProjVersion);
-                m_oldToNewGuids.put(dto.getGuid(), proj.getGuid());
+                m_oldToNewGuids.put(dto.getUuid(), proj.getGuid());
             }
             ProjectNameBP.getInstance().setName(proj.getGuid(), dto.getName(),
                     false);
@@ -252,7 +235,7 @@ public class JsonImporter {
             proj = NodeMaker.createProjectPO(dto.getName(), IVersion
                 .JB_CLIENT_METADATA_VERSION);
             if (assignNewGuid) {
-                m_oldToNewGuids.put(dto.getGuid(), proj.getGuid());
+                m_oldToNewGuids.put(dto.getUuid(), proj.getGuid());
             }
         }
         return proj;
@@ -302,19 +285,19 @@ public class JsonImporter {
         m_monitor.worked(1);
         for (TestDataCategoryDTO testDataCategory 
                 : dto.getTestDataCategories()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.getTestDataCubeCont().addCategory(createTestDataCategory(
                     testDataCategory, assignNewGuid, mapper));
         }
         m_monitor.worked(1);
         for (NamedTestDataDTO testDataCube : dto.getNamedTestDatas()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.getTestDataCubeCont().addTestData(createTestDataCube(
                     testDataCube, assignNewGuid, mapper));
         }
         for (NodeDTO node : dto.getCategories()) {
             m_monitor.worked(1);
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             if (node instanceof CategoryDTO) {
                 proj.getSpecObjCont().addSpecObject(createCategory(proj,
                         (CategoryDTO)node, assignNewGuid, mapper));
@@ -337,9 +320,9 @@ public class JsonImporter {
     }
     
     /**
-     * @param nodes stest cases or steps
+     * @param nodes test cases or steps
      * @param proj currently projectPO
-     * @param assignNewGuid need we a new Guid or not
+     * @param assignNewGuid need we a new Uuid or not
      * @throws InvalidDataException
      */
     private void generateRefTestCase(List<NodeDTO> nodes, IProjectPO proj,
@@ -369,7 +352,7 @@ public class JsonImporter {
 
         try {
             ISpecTestCasePO tc = !assignNewGuid && stcPo != null ? stcPo
-                    : m_tcRef.get(m_oldToNewGuids.get(dto.getGuid()));
+                    : m_tcRef.get(m_oldToNewGuids.get(dto.getUuid()));
             for (NodeDTO stepDto : dto.getTestSteps()) {
                 if (stepDto instanceof CapDTO) {
                     tc.addNode(createCap(proj, (CapDTO)stepDto, assignNewGuid));
@@ -409,9 +392,9 @@ public class JsonImporter {
         Set<IComponentNamePO> createdCompNames = 
             new HashSet<IComponentNamePO>();
         for (ComponentNameDTO compName : componentNamesList) {
-            String guid = compName.getGuid();
+            String guid = compName.getUuid();
             if (assignNewGuid) {
-                final String newGuid = PersistenceUtil.generateGuid();
+                final String newGuid = PersistenceUtil.generateUUID();
                 oldToNewGUID.put(guid, newGuid);
                 guid = newGuid;
             }
@@ -424,7 +407,7 @@ public class JsonImporter {
                     .forName(creationContext);
                 final IComponentNamePO componentNamePO = PoMaker
                     .createComponentNamePO(guid, name, type, ctx, proj.getId());
-                componentNamePO.setReferencedGuid(compName.getRefGuid());
+                componentNamePO.setReferencedGuid(compName.getRefUuid());
                 createdCompNames.add(componentNamePO);
                 compNameCache.addComponentNamePO(
                         componentNamePO);
@@ -439,80 +422,7 @@ public class JsonImporter {
                     createdName.setReferencedGuid(newGuid);
                 }
             }
-            switchCompNamesGuids(proj, oldToNewGUID);
-        }
-    }
-    
-    /**
-     * @param proj the IProjectPO
-     * @param oldToNewGUID a Map with old to new GUID.
-     */
-    private void switchCompNamesGuids(IProjectPO proj, 
-            final Map<String, String> oldToNewGUID) {
-        /** */
-        class SwitchCompNamesGuidsOp 
-            extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
-            /** {@inheritDoc} */
-            public boolean operate(ITreeTraverserContext<INodePO> ctx, 
-                    INodePO parent, INodePO node, boolean alreadyVisited) {
-                if (node instanceof ICapPO) {
-                    switchCapCompNameGuids((ICapPO)node);
-                } else if (node instanceof IExecTestCasePO) {
-                    switchExecTcCompNameGuids((IExecTestCasePO)node);
-                }
-                return true;
-            }
-            /**
-             * @param execTc an IExecTestCasePO
-             */
-            private void switchExecTcCompNameGuids(IExecTestCasePO execTc) {
-                for (ICompNamesPairPO pair : new ArrayList<ICompNamesPairPO>(
-                        execTc.getCompNamesPairs())) {
-                    final String oldGuid = pair.getFirstName();
-                    final String newGuid = oldToNewGUID.get(oldGuid);
-                    if (newGuid != null) {
-                        pair.setFirstName(newGuid);
-                        execTc.removeCompNamesPair(oldGuid);
-                        execTc.addCompNamesPair(pair);
-                    }
-                    final String oldSecGuid = pair.getSecondName();
-                    final String newSecGuid = oldToNewGUID.get(oldSecGuid);
-                    if (newSecGuid != null) {
-                        pair.setSecondName(newSecGuid);
-                    }
-                }
-            }
-            /**
-             * @param cap an IcapPO
-             */
-            private void switchCapCompNameGuids(ICapPO cap) {
-                final String oldGuid = cap.getComponentName();
-                final String newGuid = oldToNewGUID.get(oldGuid);
-                if (newGuid != null) {
-                    cap.setComponentName(newGuid);
-                }
-            }
-        }
-        final SwitchCompNamesGuidsOp switchGuidOp = 
-            new SwitchCompNamesGuidsOp();
-        TreeTraverser ttv = new TreeTraverser(proj, switchGuidOp, true);
-        ttv.traverse(true);
-        ttv = new TreeTraverser(proj, switchGuidOp, false);
-        ttv.traverse(true);
-        for (IAUTMainPO autMain : proj.getAutMainList()) {
-            final IObjectMappingPO objMap = autMain.getObjMap();
-            for (IObjectMappingAssoziationPO oma : objMap.getMappings()) {
-                List<String> namesToUpdate = new ArrayList<String>();
-                for (String oldLogicName : oma.getLogicalNames()) {
-                    if (oldToNewGUID.containsKey(oldLogicName)) {
-                        namesToUpdate.add(oldLogicName);
-                    }
-                }
-                for (String oldLogicName : namesToUpdate) {
-                    oma.removeLogicalName(oldLogicName);
-                    oma.addLogicalName(oldToNewGUID.get(oldLogicName));
-                }
-            }
+            ImportExportUtil.switchCompNamesGuids(proj, oldToNewGUID);
         }
     }
     
@@ -539,19 +449,19 @@ public class JsonImporter {
     public void initTestResultSummaries(IProgressMonitor monitor,
             List<TestresultSummaryDTO> trsListDtos, IProjectPO proj)
                     throws InterruptedException {
-        
         monitor.beginTask(Messages.ImportFileBPImporting, trsListDtos.size());
-        
-        int i = 0;
+        List<ITestResultSummaryPO> summaries =
+                new ArrayList<ITestResultSummaryPO>(ImportExportUtil.PAGE_SIZE);
+        int countOfTestResult = 0;
         for (TestresultSummaryDTO dto : trsListDtos) {
-            checkCancel();
-            i++;
+            ImportExportUtil.checkCancel(m_monitor);
+            countOfTestResult++;
             monitor.worked(1);
-            monitor.subTask(Messages.ImportJsonImportResult
-                    + i + StringConstants.SLASH + trsListDtos.size());
+            monitor.subTask(Messages.ImportJsonImportResult + countOfTestResult
+                    + StringConstants.SLASH + trsListDtos.size());
             
             ITestResultSummaryPO summary =
-                    PoMaker.createTestResultSummaryPO(dto.getGuid());
+                    PoMaker.createTestResultSummaryPO(dto.getUuid());
             summary.setInternalProjectGuid(proj.getGuid());
             
             fillTestresultSummary(summary, dto);
@@ -559,8 +469,9 @@ public class JsonImporter {
             List<MonitoringValuesDTO> tmpList = dto.getMonitoringValues();
             Map<String, IMonitoringValue> tmpMap = 
                 new HashMap<String, IMonitoringValue>();            
-            for (int k = 0; k < tmpList.size(); k++) {
-                MonitoringValuesDTO tmpMon = tmpList.get(k);
+            for (int countOfValue = 0; countOfValue
+                    < tmpList.size(); countOfValue++) {
+                MonitoringValuesDTO tmpMon = tmpList.get(countOfValue);
                 MonitoringValue tmp = new MonitoringValue();
                 tmp.setCategory(tmpMon.getCategory());
                 tmp.setSignificant(tmpMon.isSignificant());
@@ -569,11 +480,19 @@ public class JsonImporter {
                 tmpMap.put(tmpMon.getKey(), tmp);                
                 
             }            
-            summary.setMonitoringValues(tmpMap);            
-            
+            summary.setMonitoringValues(tmpMap);
             if (!TestResultSummaryPM.doesTestResultSummaryExist(summary)) {
-                TestResultSummaryPM.storeTestResultSummaryInDB(summary);
+                summaries.add(summary);
             }
+            
+            if (summaries.size() == ImportExportUtil.PAGE_SIZE) {
+                TestResultSummaryPM.storeTestResultSummariesInDB(summaries);
+                summaries.clear();
+            }
+        }
+        
+        if (!summaries.isEmpty()) {
+            TestResultSummaryPM.storeTestResultSummariesInDB(summaries);
         }
     }
     
@@ -592,17 +511,25 @@ public class JsonImporter {
         po.setAutName(dto.getAutName());
         po.setAutOS(dto.getAutOS());
         po.setAutToolkit(dto.getAutToolkit());
-        po.setInternalAutConfigGuid(dto.getAutConfigGuid());
-        po.setInternalAutGuid(dto.getAutGuid());
+        po.setCommentDetail(dto.getCommentDetail());
+        po.setCommentTitle(dto.getCommentTitle());
+        po.setInternalAutConfigGuid(dto.getAutConfigUuid());
+        po.setInternalAutGuid(dto.getAutUuid());
         po.setInternalMonitoringId(dto.getMonitoringId());
-        po.setInternalProjectGuid(dto.getProjectGuid());
+        po.setInternalProjectGuid(dto.getProjectUuid());
         po.setInternalProjectID(dto.getProjectID());
-        po.setInternalTestsuiteGuid(dto.getTestsuiteGuid());
+        po.setInternalTestJobGuid(dto.getTestJobUuid());
+        po.setInternalTestsuiteGuid(dto.getTestsuiteUuid());
+        po.setMonitoringValue(dto.getMonitoringValue());
         po.setMonitoringValueType(dto.getMonitoringValueType());
         po.setProjectMajorVersion(dto.getProjectMajorVersion());
         po.setProjectMinorVersion(dto.getProjectMinorVersion());
+        po.setProjectMicroVersion(dto.getProjectMicroVersion());
         po.setProjectName(dto.getProjectName());
+        po.setProjectVersionQualifier(dto.getProjectVersionQualifier());
         po.setReportWritten(dto.isBlobWritten());
+        po.setTestJobName(dto.getTestJobName());
+        po.setTestJobStartTime(dto.getTestJobStartTime());
         po.setTestsuiteDate(dto.getTestsuiteDate());
         po.setTestsuiteDuration(dto.getTestsuiteDuration());
         po.setTestsuiteEndTime(dto.getTestsuiteEndTime());
@@ -612,7 +539,6 @@ public class JsonImporter {
         po.setTestsuiteExpectedTeststeps(dto.getTestsuiteExpectedTeststeps());
         po.setTestsuiteFailedTeststeps(dto.getTestsuiteFailedTeststeps());
         po.setTestsuiteName(dto.getTestsuiteName());
-        po.setTestJobStartTime(dto.getTestJobStartTime());
         po.setTestsuiteStartTime(dto.getTestsuiteStartTime());
         po.setTestsuiteStatus(dto.getTestsuiteStatus());
     }
@@ -636,7 +562,7 @@ public class JsonImporter {
         for (CheckActivatedContextDTO dtoCxt
                 : dtoConf.getCheckActivatedContextes()) {
             boolean active = dtoCxt.isActive();
-            chkConf.getContexts().put(dtoCxt.getClass1(), active);
+            chkConf.getContexts().put(dtoCxt.getClazz(), active);
         }
         
         checkConfCont.addCheckConf(dtoConf.getCheckId(), chkConf);
@@ -644,7 +570,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      *              needed by some objects to verify that their data confirms
@@ -664,8 +590,8 @@ public class JsonImporter {
             boolean assignNewGuid, IParamNameMapper mapper)
                 throws InvalidDataException {
         ICategoryPO cat;
-        if (dto.getGuid() != null && !assignNewGuid) {
-            cat = NodeMaker.createCategoryPO(dto.getName(), dto.getGuid());
+        if (dto.getUuid() != null && !assignNewGuid) {
+            cat = NodeMaker.createCategoryPO(dto.getName(), dto.getUuid());
         } else {
             cat = NodeMaker.createCategoryPO(dto.getName());
         }
@@ -674,6 +600,7 @@ public class JsonImporter {
         cat.setTaskId(dto.getTaskId());
         
         for (NodeDTO node : dto.getNodes()) {
+            ImportExportUtil.checkCancel(m_monitor);
             if (node instanceof CategoryDTO) {
                 cat.addNode(createCategory(proj, (CategoryDTO)node,
                         assignNewGuid, mapper));
@@ -687,7 +614,7 @@ public class JsonImporter {
 
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      *              needed by some objects to verify that their data confirms
@@ -707,10 +634,10 @@ public class JsonImporter {
         if (assignNewGuid) {
             tc = NodeMaker.createSpecTestCasePO(dto.getName());
             m_tcRef.put(tc.getGuid(), tc);
-            m_oldToNewGuids.put(dto.getGuid(), tc.getGuid());
+            m_oldToNewGuids.put(dto.getUuid(), tc.getGuid());
         } else {
-            tc = NodeMaker.createSpecTestCasePO(dto.getName(), dto.getGuid());
-            m_tcRef.put(dto.getGuid(), tc);
+            tc = NodeMaker.createSpecTestCasePO(dto.getName(), dto.getUuid());
+            m_tcRef.put(dto.getUuid(), tc);
         }
         tc.setComment(dto.getComment());
         tc.setDescription(dto.getDescription());
@@ -731,7 +658,7 @@ public class JsonImporter {
             }
         }
         for (ParamDescriptionDTO pdDto : dto.getParameterDescription()) {
-            String uniqueId = pdDto.getUniqueId();
+            String uniqueId = pdDto.getUuid();
 
             if (assignNewGuid) {
                 IParamDescriptionPO paramDesc = 
@@ -763,7 +690,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      *              needed by some objects to verify that their data confirms
@@ -784,28 +711,24 @@ public class JsonImporter {
         throws InvalidDataException {
 
         IEventExecTestCasePO evTc;
-        ISpecTestCasePO refTc;
-        if (dto.getTestcaseRef() != null) {
-            refTc = findReferencedTC(dto.getTestcaseRef());
-        } else {
-            refTc = findReferencedTCByGuid(dto.getTestcaseGuid(), 
-                dto.getProjectGuid(), proj, assignNewGuid);
-        }
+        ISpecTestCasePO refTc = ImportExportUtil.findReferencedTCByGuid(
+            dto.getTestcaseUuid(), dto.getProjectUuid(),
+            proj, assignNewGuid, m_oldToNewGuids, m_tcRef);
 
         if (refTc == null) {
             // SpectTC is not yet available in this DB
             if (assignNewGuid) {
                 evTc = NodeMaker.createEventExecTestCasePO(
-                    dto.getTestcaseGuid(), dto.getProjectGuid(), tc);
+                    dto.getTestcaseUuid(), dto.getProjectUuid(), tc);
             } else {
                 evTc = NodeMaker.createEventExecTestCasePO(
-                    dto.getTestcaseGuid(), dto.getProjectGuid(), 
-                    tc, dto.getGuid());
+                    dto.getTestcaseUuid(), dto.getProjectUuid(), 
+                    tc, dto.getUuid());
             }
         } else {
-            if (dto.getGuid() != null && !assignNewGuid) {
+            if (dto.getUuid() != null && !assignNewGuid) {
                 evTc = NodeMaker.createEventExecTestCasePO(
-                    refTc, tc, dto.getGuid());
+                    refTc, tc, dto.getUuid());
             } else {
                 evTc = NodeMaker.createEventExecTestCasePO(
                     refTc, tc);
@@ -829,7 +752,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      *              needed by some objects to verify that their data confirms
@@ -848,11 +771,11 @@ public class JsonImporter {
         if (componentHasDefaultMapping(dto.getComponentType())) {
             componentname = null;
         }
-        if (dto.getGuid() != null && !assignNewGuid) {
+        if (dto.getUuid() != null && !assignNewGuid) {
             // GUID is available
             cap = NodeMaker.createCapPO(
                 dto.getName(), componentname, dto.getComponentType(), 
-                dto.getActionName(), proj, dto.getGuid());
+                dto.getActionName(), proj, dto.getUuid());
         } else {
             cap = NodeMaker.createCapPO(dto.getName(), 
                 componentname, dto.getComponentType(), 
@@ -883,7 +806,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
      * @param assignNewGuids <code>true</code> if the parameters were given
@@ -903,11 +826,11 @@ public class JsonImporter {
                 IParamDescriptionPO paramDesc = 
                     testDataCube.addParameter(dtoParamDesc.getType(), 
                             dtoParamDesc.getName(), mapper);
-                m_oldToNewGuids.put(dtoParamDesc.getUniqueId(), 
+                m_oldToNewGuids.put(dtoParamDesc.getUuid(), 
                         paramDesc.getUniqueId());
             } else {
                 testDataCube.addParameter(dtoParamDesc.getType(), dtoParamDesc
-                        .getName(), dtoParamDesc.getUniqueId(), mapper);
+                        .getName(), dtoParamDesc.getUuid(), mapper);
             }
         }
         testDataCube.setDataManager(createTDManager(testDataCube,
@@ -917,7 +840,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
      * @param assignNewGuids <code>true</code> if the parameters were given
@@ -947,28 +870,26 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
      * @return a persistent object generated from the information in the DTO
      *              element
      */
     private IReusedProjectPO createReusedProject(ReusedProjectDTO dto) {
-        Integer majorProjVersion = dto.getMajorProjectVersion() != null
-                ? dto.getMajorProjectVersion() : dto.getMajorNumber();
-        Integer minorProjVersion = dto.getMinorProjectVersion() != null
-                ? dto.getMinorProjectVersion() : dto.getMinorNumber();
+        Integer majorProjVersion = dto.getMajorProjectVersion();
+        Integer minorProjVersion = dto.getMinorProjectVersion();
         Integer microProjVersion = dto.getMicroProjectVersion();
         String versionQualifier = dto.getProjectVersionQualifier();
         IReusedProjectPO reusedProject = PoMaker.createReusedProjectPO(
-                dto.getProjectGUID(), majorProjVersion, minorProjVersion,
+                dto.getProjectUuid(), majorProjVersion, minorProjVersion,
                 microProjVersion, versionQualifier);
         return reusedProject;
     }
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as parameter. The method generates all depended objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
      * @param assignNewGuid <code>true</code> if the AUT and all corresponding 
@@ -979,14 +900,14 @@ public class JsonImporter {
      */
     private IAUTMainPO createAUTMain(AutDTO dto, boolean assignNewGuid) {
         IAUTMainPO aut = null;
-        if (dto.getGuid() != null && !assignNewGuid) {
-            // GUID is available
-            aut = PoMaker.createAUTMainPO(dto.getName(), dto.getGuid());
+        if (dto.getUuid() != null && !assignNewGuid) {
+            // UUID is available
+            aut = PoMaker.createAUTMainPO(dto.getName(), dto.getUuid());
         } else {
             aut = PoMaker.createAUTMainPO(dto.getName());
         }
 
-        aut.setToolkit(dto.getAutToolkit());
+        aut.setToolkit(dto.getToolkit());
         aut.setGenerateNames(dto.isGenerateNames());
         m_autRef.put(dto.getId(), aut);
         aut.setObjMap(createOM(dto));
@@ -1002,7 +923,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as parameter. The method generates all depended objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
      * @param assignNewGuid <code>true</code> if the AUT Config
@@ -1013,9 +934,9 @@ public class JsonImporter {
     private IAUTConfigPO createAUTConfig(AutConfigDTO dto,
             boolean assignNewGuid) {
         IAUTConfigPO conf = null;
-        if (dto.getGuid() != null && !assignNewGuid) {
+        if (dto.getUuid() != null && !assignNewGuid) {
             // GUID is available
-            conf = PoMaker.createAUTConfigPO(dto.getGuid());
+            conf = PoMaker.createAUTConfigPO(dto.getUuid());
         } else {
             conf = PoMaker.createAUTConfigPO();
         }
@@ -1031,7 +952,7 @@ public class JsonImporter {
 
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as parameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
      * @return a persistent object generated from the information in the DTO
@@ -1199,7 +1120,7 @@ public class JsonImporter {
             InvalidDataException {
         
         for (NodeDTO node : dto.getExecCategories()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.getExecObjCont().addExecObject(
                     createTestSuitesOrTestJobsOrCategories(proj, node,
                             assignNewGuid));
@@ -1231,7 +1152,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
      * @param assignNewGuid <code>true</code> if the test suite
@@ -1247,8 +1168,8 @@ public class JsonImporter {
             boolean assignNewGuid) throws InvalidDataException {
         
         ITestJobPO tj;
-        if (dto.getGuid() != null && !assignNewGuid) {
-            tj = NodeMaker.createTestJobPO(dto.getName(), dto.getGuid());
+        if (dto.getUuid() != null && !assignNewGuid) {
+            tj = NodeMaker.createTestJobPO(dto.getName(), dto.getUuid());
         } else {
             tj = NodeMaker.createTestJobPO(dto.getName());
         }
@@ -1265,17 +1186,17 @@ public class JsonImporter {
                 // initialized (so they have already been entered into the 
                 // old to new GUID map). This is why we can simply directly use 
                 // the old to new GUID map.
-                String testSuiteGuid = m_oldToNewGuids.get(dtoRts.getTsGuid());
+                String testSuiteGuid = m_oldToNewGuids.get(dtoRts.getTsUuid());
                 if (testSuiteGuid == null) {
                     throw new InvalidDataException(
-                            "Test Suite Reference: No new GUID found for Test Suite with old GUID: " + dtoRts.getTsGuid(),  //$NON-NLS-1$ 
+                            "Test Suite Reference: No new GUID found for Test Suite with old GUID: " + dtoRts.getTsUuid(),  //$NON-NLS-1$ 
                             MessageIDs.E_IMPORT_PROJECT_XML_FAILED);
                 }
                 rts = NodeMaker.createRefTestSuitePO(dtoRts.getName(), 
                         testSuiteGuid, dtoRts.getAutId());
             } else {
                 rts = NodeMaker.createRefTestSuitePO(dtoRts.getName(), dtoRts
-                        .getGuid(), dtoRts.getTsGuid(), dtoRts.getAutId());
+                       .getUuid(), dtoRts.getTsUuid(), dtoRts.getAutId());
 
             }
             rts.setComment(dtoRts.getComment());
@@ -1287,7 +1208,7 @@ public class JsonImporter {
 
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as parameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      *              needed by some objects to verify that their data confirms
@@ -1307,8 +1228,8 @@ public class JsonImporter {
         
         ICategoryPO cat;
         
-        if (dto.getGuid() != null && !assignNewGuid) {
-            cat = NodeMaker.createCategoryPO(dto.getName(), dto.getGuid());
+        if (dto.getUuid() != null && !assignNewGuid) {
+            cat = NodeMaker.createCategoryPO(dto.getName(), dto.getUuid());
         } else {
             cat = NodeMaker.createCategoryPO(dto.getName());
         }
@@ -1328,7 +1249,7 @@ public class JsonImporter {
 
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      *              needed by some objects to verify that their data confirms
@@ -1343,21 +1264,20 @@ public class JsonImporter {
         boolean assignNewGuid) {
         
         ITestSuitePO ts;
-        if (dto.getGuid() != null && !assignNewGuid) {
-            ts = NodeMaker.createTestSuitePO(dto.getName(), dto.getGuid());
+        if (dto.getUuid() != null && !assignNewGuid) {
+            ts = NodeMaker.createTestSuitePO(dto.getName(), dto.getUuid());
         } else {
             ts = NodeMaker.createTestSuitePO(dto.getName());
         }
         
         if (assignNewGuid) {
-            m_oldToNewGuids.put(dto.getGuid(), ts.getGuid());
+            m_oldToNewGuids.put(dto.getUuid(), ts.getGuid());
         }
         
         ts.setComment(dto.getComment());
         ts.setDescription(dto.getDescription());
         ts.setTaskId(dto.getTaskId());
         ts.setTrackedChangesMap(dto.getTrackedModifications());
-        ts.setCmdLineParameter(dto.getCommandLineParameter());
         if (dto.getSelectedAut() != null) {
             ts.setAut(m_autRef.get(dto.getSelectedAut()));
         }
@@ -1367,20 +1287,20 @@ public class JsonImporter {
         
         Map<String, Integer> defaultEventHandler = 
             new HashMap<String, Integer>();
-        for (EventHandlerDTO evh : dto.getEventHandlers()) {
+        for (DefaultEventHandlerDTO evh : dto.getEventHandlers()) {
             defaultEventHandler.put(evh.getEvent(),
                     org.eclipse.jubula.client.archive.schema.ReentryProperty
                     .Enum.forString(evh.getReentryProperty()).intValue());
         }
         ts.setDefaultEventHandler(defaultEventHandler);
         ts.setStepDelay(dto.getStepDelay());
-        ts.setRelevant(true);
+        ts.setRelevant(dto.isRelevant());
         return ts;
     }
 
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param proj The IProjectPO which is currently build. The instance is
      *              needed by some objects to verify that their data confirms
@@ -1395,27 +1315,23 @@ public class JsonImporter {
         RefTestCaseDTO dto, boolean assignNewGuid) {
         
         IExecTestCasePO exec;
-        ISpecTestCasePO refTc;
-        if (dto.getTestcaseRef() != null) {
-            refTc = findReferencedTC(dto.getTestcaseRef());
-        } else {
-            refTc = findReferencedTCByGuid(dto.getTestcaseGuid(), 
-                dto.getProjectGuid(), proj, assignNewGuid);
-        }
+        ISpecTestCasePO refTc = ImportExportUtil.findReferencedTCByGuid(
+                dto.getTestcaseUuid(), dto.getProjectUuid(),
+                proj, assignNewGuid, m_oldToNewGuids, m_tcRef);
         
         if (refTc == null) {
             // SpectTC is not yet available in this DB
             if (!assignNewGuid) {
                 exec = NodeMaker.createExecTestCasePO(
-                    dto.getTestcaseGuid(), dto.getProjectGuid(), dto.getGuid());
+                    dto.getTestcaseUuid(), dto.getProjectUuid(), dto.getUuid());
             } else {
                 exec = NodeMaker.createExecTestCasePO(
-                    dto.getTestcaseGuid(), dto.getProjectGuid());
+                    dto.getTestcaseUuid(), dto.getProjectUuid());
             }
         } else {
-            if (dto.getGuid() != null && !assignNewGuid) {
+            if (dto.getUuid() != null && !assignNewGuid) {
                 // GUID is available
-                exec = NodeMaker.createExecTestCasePO(refTc, dto.getGuid());
+                exec = NodeMaker.createExecTestCasePO(refTc, dto.getUuid());
             } else {
                 exec = NodeMaker.createExecTestCasePO(refTc);
             }
@@ -1467,7 +1383,7 @@ public class JsonImporter {
             exec.setDataManager(createTDManager(exec, dto.getTDManager(),
                     assignNewGuid));
         }
-        for (CompNamesDTO overridden : dto.getOverriddenNames()) {
+        for (ComponentNamesPairDTO overridden : dto.getOverriddenNames()) {
             final ICompNamesPairPO compName = PoMaker.createCompNamesPairPO(
                     overridden.getOriginalName(),
                     overridden.getNewName(), null);
@@ -1478,7 +1394,7 @@ public class JsonImporter {
     
     /**
      * Creates the instance of the persistent object which is defined by the
-     * DTO element used as prameter. The method generates all dependend objects
+     * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param owner The ParamNode which holds this TDManager
      * @param dto Abstraction of the DTO element
@@ -1521,7 +1437,7 @@ public class JsonImporter {
         } else {
             tdman = PoMaker.createTDManagerPO(owner, uniqueIds);
         }
-        for (DataSetDTO row : dto.getDataSets()) {
+        for (DataRowDTO row : dto.getDataSets()) {
             final List<String> td = new ArrayList<String>(row.getColumns()
                     .size());
             for (String column : row.getColumns()) {
@@ -1578,35 +1494,6 @@ public class JsonImporter {
     }
     
     /**
-     * Find a persistent object which has a GUID.
-     * @param usedTestcaseGuid The GUID used to identify this instance
-     * @param projectGuid The GUID of the spec testcase's parent project
-     * @param parentProject The parent project of the exec testcase
-     * @param assignNewGuid <code>true</code> if elements are being assigned new 
-     *              GUIDs. Otherwise <code>false</code>.
-     * @return the object build while reading the XML element, or 
-     *              <code>null</code> if the object cannot be found
-     */
-    private ISpecTestCasePO findReferencedTCByGuid(String usedTestcaseGuid, 
-        String projectGuid, IProjectPO parentProject, boolean assignNewGuid) {
-        
-        String actualProjectGuid = assignNewGuid 
-            ? m_oldToNewGuids.get(projectGuid) : projectGuid;
-        if (projectGuid == null
-            || parentProject.getGuid().equals(actualProjectGuid)) {
-            // Referenced TC is in same project
-            if (assignNewGuid) {
-                return m_tcRef.get(m_oldToNewGuids.get(usedTestcaseGuid));
-            }
-            return m_tcRef.get(usedTestcaseGuid);
-        }
-        
-        // Referenced TC is in different project
-        return NodePM.getSpecTestCase(parentProject.getUsedProjects(), 
-            projectGuid, usedTestcaseGuid);
-    }
-
-    /**
      * @param dto the datasource to get additional information from
      */
     private void documentRequiredProjects(ProjectDTO dto) {
@@ -1630,7 +1517,7 @@ public class JsonImporter {
                     ? NLS.bind(Messages.XmlImporterRequiredProject,
                             new Object[] { rp.getProjectName(), version})
                     : NLS.bind(Messages.XmlImporterRequiredProjectWithoutName,
-                            new Object[] { rp.getProjectGUID(), version});
+                            new Object[] { rp.getProjectUuid(), version});
             }
             Status s = new Status(IStatus.INFO, Activator.PLUGIN_ID, msg);
             m_io.writeStatus(s);
@@ -1716,17 +1603,6 @@ public class JsonImporter {
             }
         }
         return loadProject;
-    }
-
-    /**
-     * Checks whether the operation has been canceled. If the operation has been
-     * canceled, an <code>InterruptedException</code> will be thrown.
-     * @throws InterruptedException if the operation has been canceled.
-     */
-    private void checkCancel() throws InterruptedException {
-        if (m_monitor.isCanceled()) {
-            throw new InterruptedException();
-        }
     }
 
     /**

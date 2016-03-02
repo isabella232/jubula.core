@@ -16,11 +16,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class ReusedProjectDTO {
-
     /** */
-    private String m_projectName, m_projectGUID, m_projectVersionQualifier;
+    private String m_projectName, m_projectUuid, m_projectVersionQualifier;
     /** */
-    private Integer m_majorNumber, m_majorProjectVersion, m_minorNumber,
+    private Integer m_majorProjectVersion, 
         m_minorProjectVersion, m_microProjectVersion;
     
     
@@ -40,18 +39,18 @@ public class ReusedProjectDTO {
     }
     
     /**
-     * @return projectGUID
+     * @return projectUuid
      */
-    @JsonProperty("projectGUID")
-    public String getProjectGUID() {
-        return m_projectGUID;
+    @JsonProperty("projectUuid")
+    public String getProjectUuid() {
+        return m_projectUuid;
     }
     
     /**
-     * @param projectGUID 
+     * @param projectUuid 
      */
-    public void setProjectGUID(String projectGUID) {
-        this.m_projectGUID = projectGUID;
+    public void setProjectUuid(String projectUuid) {
+        this.m_projectUuid = projectUuid;
     }
     
     /**
@@ -70,21 +69,6 @@ public class ReusedProjectDTO {
     }
     
     /**
-     * @return majorNumber
-     */
-    @JsonProperty("majorNumber")
-    public Integer getMajorNumber() {
-        return m_majorNumber;
-    }
-    
-    /**
-     * @param majorNumber 
-     */
-    public void setMajorNumber(Integer majorNumber) {
-        this.m_majorNumber = majorNumber;
-    }
-    
-    /**
      * @return majorProjectVersion
      */
     @JsonProperty("majorProjectVersion")
@@ -97,21 +81,6 @@ public class ReusedProjectDTO {
      */
     public void setMajorProjectVersion(Integer majorProjectVersion) {
         this.m_majorProjectVersion = majorProjectVersion;
-    }
-    
-    /**
-     * @return minorNumber
-     */
-    @JsonProperty("minorNumber")
-    public Integer getMinorNumber() {
-        return m_minorNumber;
-    }
-    
-    /**
-     * @param minorNumber 
-     */
-    public void setMinorNumber(Integer minorNumber) {
-        this.m_minorNumber = minorNumber;
     }
     
     /**

@@ -15,10 +15,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -68,18 +68,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class JsonStorage {
     
     /** Encoding definition */
-    public static final String RECOMMENDED_CHAR_ENCODING = "UTF-8"; //$NON-NLS-1$
-    
+    public static final String UTF_8_CHAR_ENCODING = "UTF-8"; //$NON-NLS-1$
+
     /** Encoding definition */
-    public static final String UTF_16_CHAR_ENCODING = "UTF-16"; //$NON-NLS-1$
-    
-    /** Supported encodings */
-    public static final String[] SUPPORTED_CHAR_ENCODINGS = 
-            new String[]{RECOMMENDED_CHAR_ENCODING, UTF_16_CHAR_ENCODING};
-    
-    /** Date formatter */
-    public static final SimpleDateFormat FORMATTER =
-            new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.S"); //$NON-NLS-1$
+    public static final String RECOMMENDED_CHAR_ENCODING = UTF_8_CHAR_ENCODING;
     
     /** Extension of project file */
     public static final String PJT = "pjt"; //$NON-NLS-1$
@@ -96,8 +88,10 @@ public class JsonStorage {
     /** Standard logging */
     private static Logger log = LoggerFactory.getLogger(JsonStorage.class);
     
-    
     /**
+     * Save a project as JUB to a file or return the serialized project as
+     * an ProjectDTO, if fileName == null!
+     * 
      * @param proj original project object
      * @param fileName Jubula file name
      * @param includeTestResultSummaries true if project contain test result summaries
@@ -113,7 +107,7 @@ public class JsonStorage {
             IProgressConsole console)
                     throws PMException, ProjectDeletedException {
         
-        monitor.beginTask(Messages.XmlStorageSavingProject, 
+        monitor.beginTask(Messages.GatheringProjectData, 
                 getWorkToSave(proj, includeTestResultSummaries));
         monitor.subTask(Messages.ImportJsonStoragePreparing);
         Validate.notNull(proj);
@@ -158,7 +152,9 @@ public class JsonStorage {
         return null;
     }
     
-    /**
+    /** Save a project as JUB witch contains an info file about exportation, a project file
+     *  and a result file
+     *  
      * @param proj original project object
      * @param monitor loader monitor
      * @param fileName Jubula file name
@@ -177,40 +173,38 @@ public class JsonStorage {
         String infoFileName = dir + NFO;
         String projectFileName = dir + PJT;
         String testResultFileName = dir + RST;
-
-        FileWriterWithEncoding infoFileWriter = new FileWriterWithEncoding(
-                infoFileName, RECOMMENDED_CHAR_ENCODING);
-        FileWriterWithEncoding projectFileWriter = new FileWriterWithEncoding(
-                projectFileName, RECOMMENDED_CHAR_ENCODING);
-        FileWriterWithEncoding resultFileWriter = new FileWriterWithEncoding(
-                testResultFileName, RECOMMENDED_CHAR_ENCODING);
         
         ArrayList<String> fileList = new ArrayList<String>();
         ObjectMapper mapper = new ObjectMapper(); 
         mapper.setSerializationInclusion(Include.NON_EMPTY);
 
         ExportInfoDTO exportDTO = new ExportInfoDTO();
-        exportDTO.setDate(FORMATTER.format(new Date()));
+        exportDTO.setQualifier(
+                ImportExportUtil.DATE_FORMATTER.format(
+                        new Date()));
         exportDTO.setEncoding(RECOMMENDED_CHAR_ENCODING);
         exportDTO.setVersion(JsonVersion.CURRENTLY_JSON_VERSION);
         
-        try {
-            mapper.writeValue(infoFileWriter, exportDTO);
+        try (
+            FileWriterWithEncoding infoWriter = new FileWriterWithEncoding(
+                    infoFileName, UTF_8_CHAR_ENCODING);
+            FileWriterWithEncoding projectWriter = new FileWriterWithEncoding(
+                    projectFileName, RECOMMENDED_CHAR_ENCODING);
+            FileWriterWithEncoding resultWriter = new FileWriterWithEncoding(
+                    testResultFileName, RECOMMENDED_CHAR_ENCODING)) {
+            
+            mapper.writeValue(infoWriter, exportDTO);
             fileList.add(infoFileName);
             JsonExporter exporter = new JsonExporter(proj, monitor);
             ProjectDTO projectDTO = exporter.getProjectDTO();
 
-            File testResultFile = new File(testResultFileName);
-            mapper.writeValue(projectFileWriter, projectDTO);
+            mapper.writeValue(projectWriter, projectDTO);
             fileList.add(projectFileName);
             if (includeTestResultSummaries) {
-                exporter.writeTestResultSummariesToFile(resultFileWriter);
+                exporter.writeTestResultSummariesToFile(resultWriter);
                 fileList.add(testResultFileName);
             }
             monitor.subTask(Messages.ImportJsonStorageCompress);
-            fileWriterClose(infoFileWriter);
-            fileWriterClose(projectFileWriter);
-            fileWriterClose(resultFileWriter);
             
             zipIt(fileName, fileList);
         } catch (Exception e) {
@@ -219,20 +213,6 @@ public class JsonStorage {
         } finally {
             fileList.add(dir);
             deleteFiles(fileList);
-        }
-    }
-    
-    /**
-     * @param fileWriter what we need to close
-     */
-    private static void fileWriterClose(
-            FileWriterWithEncoding fileWriter) {
-        if (fileWriter != null) {
-            try {
-                fileWriter.close();
-            } catch (IOException e) {
-                log.warn(Messages.CantCloseOOS + fileWriter.toString());
-            }
         }
     }
     
@@ -298,12 +278,10 @@ public class JsonStorage {
 
         SubMonitor subMonitor = SubMonitor.convert(monitor, Messages
                 .ImportFileBPReading, testResultNeeded ? 2 : 1);
-        
         IProjectPO projectPO = null;
         String folderSrc = null;
         try {
             monitor.subTask(Messages.ImportJsonStoragePreparing);
-            
             folderSrc = Files.createTempDirectory(IMPORT_FOLDER_NAME)
                     .toString();
             String fileName = url.getPath().substring(
@@ -313,32 +291,35 @@ public class JsonStorage {
             String path = URLDecoder.decode(url.getPath(),
                     RECOMMENDED_CHAR_ENCODING);
             unZipIt(path, folderSrc);
-
-            File infoFile = new File(folderSrc + File.separatorChar + NFO);
-            File projectFile = new File(folderSrc + File.separatorChar + PJT);
-            File resultFile = new File(folderSrc + File.separatorChar + RST);
             ObjectMapper mapper = new ObjectMapper();
+            String infoPath = folderSrc + File.separatorChar + NFO;
+            String projectPath = folderSrc + File.separatorChar + PJT;
+            InputStreamReader inforReader = new InputStreamReader(
+                    new FileInputStream(infoPath), UTF_8_CHAR_ENCODING);
             
-            ExportInfoDTO exportDTO = mapper.readValue(infoFile,
+            ExportInfoDTO exportDTO = mapper.readValue(inforReader,
                     ExportInfoDTO.class);
-            
             checkMinimumRequiredJSONVersion(exportDTO);
+            InputStreamReader projectReader = new InputStreamReader(
+                    new FileInputStream(projectPath), exportDTO.getEncoding());
             
-            ProjectDTO projectDTO = mapper.readValue(projectFile,
+            ProjectDTO projectDTO = mapper.readValue(projectReader,
                     ProjectDTO.class);
-            
             if (projectExists(projectDTO)) {
                 existProjectHandling(io, projectDTO);
                 return null;
             }
-            
             projectPO = load(projectDTO, subMonitor.newChild(1), io,
                     assignNewGuid, paramNameMapper, compNameCache, false);
 
             if (testResultNeeded) {
-                JsonImporter importer = new JsonImporter(monitor, io, false);
+                String resultPath = folderSrc + File.separatorChar + RST;
+                InputStreamReader resultReader = new InputStreamReader(
+                      new FileInputStream(resultPath), exportDTO.getEncoding());
+                JsonImporter importer =
+                        new JsonImporter(monitor, io, false);
                 ArrayList<TestresultSummaryDTO> resultDTOs =
-                        mapper.readValue(resultFile, new TypeReference
+                        mapper.readValue(resultReader, new TypeReference
                         <ArrayList<TestresultSummaryDTO>>() { });
                 
                 importer.initTestResultSummaries(subMonitor.newChild(1),
@@ -405,7 +386,7 @@ public class JsonStorage {
         
         String msg = NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED,
                 new String [] {ProjectNameBP.getInstance().getName(
-                        projectDTO.getGuid(), false)})
+                        projectDTO.getUuid(), false)})
             + StringConstants.NEWLINE
             + NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING,
                 new String [] {projectDTO.getName(),
@@ -507,7 +488,7 @@ public class JsonStorage {
      */
     private boolean projectExists(ProjectDTO dto) {
         
-        return ProjectPM.doesProjectVersionExist(dto.getGuid(),
+        return ProjectPM.doesProjectVersionExist(dto.getUuid(),
                 dto.getMajorProjectVersion(), dto.getMinorProjectVersion(),
                 dto.getMicroProjectVersion(), dto.getProjectVersionQualifier());
     }

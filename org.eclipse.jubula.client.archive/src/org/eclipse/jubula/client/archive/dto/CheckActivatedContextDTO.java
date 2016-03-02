@@ -16,25 +16,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class CheckActivatedContextDTO {
-
     /** */
-    private String m_class;
+    private String m_clazz;
     /** */
     private boolean m_active;
     
     /**
      * @return class
      */
-    @JsonProperty("class")
-    public String getClass1() {
-        return m_class;
+    @JsonProperty("clazz")
+    public String getClazz() {
+        return m_clazz;
     }
     
     /**
-     * @param class1 
+     * @param clazz 
      */
-    public void setClass1(String class1) {
-        this.m_class = class1;
+    public void setClazz(String clazz) {
+        this.m_clazz = clazz;
     }
     
     /**

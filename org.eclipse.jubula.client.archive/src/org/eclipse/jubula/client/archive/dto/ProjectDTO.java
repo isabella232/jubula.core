@@ -23,7 +23,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class ProjectDTO extends NodeDTO {
-
     /** */
     private List<TestDataCategoryDTO> m_testDataCategories =
             new ArrayList<TestDataCategoryDTO>();
@@ -38,7 +37,7 @@ public class ProjectDTO extends NodeDTO {
     private List<NodeDTO> m_execCategories = new ArrayList<NodeDTO>();
     /** */
     private Integer m_majorProjectVersion, m_minorProjectVersion,
-        m_trackingSpan, m_microProjectVersion, m_majorNumber, m_minorNumber,
+        m_trackingSpan, m_microProjectVersion,
         m_metaDataVersion, m_testResultDetailsCleanupInterval;
     /** */
     private boolean m_isReusable = false;
@@ -75,7 +74,7 @@ public class ProjectDTO extends NodeDTO {
     private List<ReportingRuleDTO> m_reportingRules =
             new ArrayList<ReportingRuleDTO>();
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public ProjectDTO() { }
     
     /**
@@ -251,36 +250,6 @@ public class ProjectDTO extends NodeDTO {
      */
     public void setTrackingSpan(Integer trackingSpan) {
         this.m_trackingSpan = trackingSpan;
-    }
-
-    /**
-     * @return majorNumber
-     */
-    @JsonProperty("majorNumber")
-    public Integer getMajorNumber() {
-        return m_majorNumber;
-    }
-
-    /**
-     * @param majorNumber 
-     */
-    public void setMajorNumber(Integer majorNumber) {
-        this.m_majorNumber = majorNumber;
-    }
-
-    /**
-     * @return minorNumber
-     */
-    @JsonProperty("minorNumber")
-    public Integer getMinorNumber() {
-        return m_minorNumber;
-    }
-
-    /**
-     * @param minorNumber 
-     */
-    public void setMinorNumber(Integer minorNumber) {
-        this.m_minorNumber = minorNumber;
     }
 
     /**

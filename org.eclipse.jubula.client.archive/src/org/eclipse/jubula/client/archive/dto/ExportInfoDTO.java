@@ -23,10 +23,10 @@ public class ExportInfoDTO {
     /** */
     private int m_majorVersion, m_minorVersion, m_microVersion;
     /** */
-    private String m_date;
+    private String m_qualifier;
     
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public ExportInfoDTO() { }
     
     /**
@@ -45,11 +45,15 @@ public class ExportInfoDTO {
     }
     
     /**
-     * @return version of json export
+     * @return version of JSON export
      */
     @JsonIgnore
     public Version getVersion() {
-        return new Version(m_majorVersion, m_minorVersion, m_microVersion);
+        return new Version(
+                getMajorVersion(), 
+                getMinorVersion(), 
+                getMicroVersion(), 
+                getQualifier());
     }
     
     /**
@@ -101,23 +105,24 @@ public class ExportInfoDTO {
      * @param version 
      */
     public void setVersion(Version version) {
-        this.m_majorVersion = version.getMajor();
-        this.m_minorVersion = version.getMinor();
-        this.m_microVersion = version.getMicro();
+        setMajorVersion(version.getMajor());
+        setMinorVersion(version.getMinor());
+        setMicroVersion(version.getMicro());
+        setQualifier(version.getQualifier());
     }
     
     /**
-     * @return date
+     * @return qualifier
      */
-    @JsonProperty("date")
-    public String getDate() {
-        return m_date;
+    @JsonProperty("qualifier")
+    public String getQualifier() {
+        return m_qualifier;
     }
     
     /**
-     * @param date 
+     * @param qualifier 
      */
-    public void setDate(String date) {
-        this.m_date = date;
+    public void setQualifier(String qualifier) {
+        this.m_qualifier = qualifier;
     }
 }

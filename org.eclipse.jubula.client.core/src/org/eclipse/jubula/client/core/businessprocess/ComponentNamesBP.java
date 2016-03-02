@@ -373,7 +373,7 @@ public class ComponentNamesBP
         
         String nameGuid = guid;
         if (guid == null) {
-            nameGuid = PersistenceUtil.generateGuid();
+            nameGuid = PersistenceUtil.generateUUID();
         }
         final IComponentNamePO newComponentNamePO = PoMaker
             .createComponentNamePO(nameGuid, name, type, ctx, 

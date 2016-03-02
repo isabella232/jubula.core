@@ -137,18 +137,14 @@ import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
-import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
-import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -593,7 +589,7 @@ class XmlImporter {
         for (ComponentName compName : componentNamesList) {
             String guid = compName.getGUID();
             if (assignNewGuid) {
-                final String newGuid = PersistenceUtil.generateGuid();
+                final String newGuid = PersistenceUtil.generateUUID();
                 oldToNewGUID.put(guid, newGuid);
                 guid = newGuid;
             }
@@ -621,83 +617,10 @@ class XmlImporter {
                     createdName.setReferencedGuid(newGuid);
                 }
             }
-            switchCompNamesGuids(proj, oldToNewGUID);
+            ImportExportUtil.switchCompNamesGuids(proj, oldToNewGUID);
         }
     }
     
-    /**
-     * @param proj the IProjectPO
-     * @param oldToNewGUID a Map with old to new GUID.
-     */
-    private void switchCompNamesGuids(IProjectPO proj, 
-            final Map<String, String> oldToNewGUID) {
-        /** */
-        class SwitchCompNamesGuidsOp 
-            extends AbstractNonPostOperatingTreeNodeOperation<INodePO> {
-            /** {@inheritDoc} */
-            public boolean operate(ITreeTraverserContext<INodePO> ctx, 
-                    INodePO parent, INodePO node, boolean alreadyVisited) {
-                if (node instanceof ICapPO) {
-                    switchCapCompNameGuids((ICapPO)node);
-                } else if (node instanceof IExecTestCasePO) {
-                    switchExecTcCompNameGuids((IExecTestCasePO)node);
-                }
-                return true;
-            }
-            /**
-             * @param execTc an IExecTestCasePO
-             */
-            private void switchExecTcCompNameGuids(IExecTestCasePO execTc) {
-                for (ICompNamesPairPO pair : new ArrayList<ICompNamesPairPO>(
-                        execTc.getCompNamesPairs())) {
-                    final String oldGuid = pair.getFirstName();
-                    final String newGuid = oldToNewGUID.get(oldGuid);
-                    if (newGuid != null) {
-                        pair.setFirstName(newGuid);
-                        execTc.removeCompNamesPair(oldGuid);
-                        execTc.addCompNamesPair(pair);
-                    }
-                    final String oldSecGuid = pair.getSecondName();
-                    final String newSecGuid = oldToNewGUID.get(oldSecGuid);
-                    if (newSecGuid != null) {
-                        pair.setSecondName(newSecGuid);
-                    }
-                }
-            }
-            /**
-             * @param cap an IcapPO
-             */
-            private void switchCapCompNameGuids(ICapPO cap) {
-                final String oldGuid = cap.getComponentName();
-                final String newGuid = oldToNewGUID.get(oldGuid);
-                if (newGuid != null) {
-                    cap.setComponentName(newGuid);
-                }
-            }
-        }
-        final SwitchCompNamesGuidsOp switchGuidOp = 
-            new SwitchCompNamesGuidsOp();
-        TreeTraverser ttv = new TreeTraverser(proj, switchGuidOp, true);
-        ttv.traverse(true);
-        ttv = new TreeTraverser(proj, switchGuidOp, false);
-        ttv.traverse(true);
-        for (IAUTMainPO autMain : proj.getAutMainList()) {
-            final IObjectMappingPO objMap = autMain.getObjMap();
-            for (IObjectMappingAssoziationPO oma : objMap.getMappings()) {
-                List<String> namesToUpdate = new ArrayList<String>();
-                for (String oldLogicName : oma.getLogicalNames()) {
-                    if (oldToNewGUID.containsKey(oldLogicName)) {
-                        namesToUpdate.add(oldLogicName);
-                    }
-                }
-                for (String oldLogicName : namesToUpdate) {
-                    oma.removeLogicalName(oldLogicName);
-                    oma.addLogicalName(oldToNewGUID.get(oldLogicName));
-                }
-            }
-        }
-    }
-
     /**
      * @param usedTK toolkits used from project to import
      * @param projName name of project to import
@@ -810,7 +733,7 @@ class XmlImporter {
             proj.setTestResultCleanupInterval(IProjectPO.CLEANUP_DEFAULT);
         }
         for (ReusedProject reusedProj : xml.getReusedProjectsList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.addUsedProject(createReusedProject(reusedProj));
         }
         if (xml.isSetDefaultLanguage()) {
@@ -822,36 +745,36 @@ class XmlImporter {
             
         }
         for (Aut autXml : xml.getAutList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.addAUTMain(createAUTMain(autXml, assignNewGuid));
         }
         for (TestDataCategory testDataCategory 
                 : xml.getTestDataCategoryList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.getTestDataCubeCont().addCategory(createTestDataCategory(
                     testDataCategory, assignNewGuid, mapper));
         }
         for (NamedTestData testDataCube : xml.getNamedTestDataList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.getTestDataCubeCont().addTestData(createTestDataCube(
                     testDataCube, assignNewGuid, mapper));
         }
         for (Category catXml : xml.getCategoryList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             proj.getSpecObjCont().addSpecObject(
                     createCategory(proj, catXml, assignNewGuid, mapper));
         }
         for (TestCase tcXml : xml.getTestcaseList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             initTestCase(assignNewGuid, mapper, proj, tcXml);
         }
 
         for (Category catXml : xml.getCategoryList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             rerunCategories(proj, catXml, assignNewGuid, attrDescSession);
         }
         for (TestCase tcXml : xml.getTestcaseList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             completeTestCase(proj, tcXml, assignNewGuid, attrDescSession);
         }
         // BEGIN - pre 1.2 xml data model handling
@@ -861,7 +784,7 @@ class XmlImporter {
         handleTestSuitesAndTestJobsAndCategories(proj, xml, assignNewGuid);
         
         for (CheckConfiguration xmlConf : xml.getCheckConfigurationList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             initCheckConf(
                 xmlConf, projectProperties.getCheckConfCont());
         }
@@ -949,7 +872,7 @@ class XmlImporter {
             Project xml, boolean assignNewGuid) throws InterruptedException,
             InvalidDataException {
         for (ExecCategory catXml : xml.getExecCategoriesList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             List<IExecPersistable> tsAndCats = 
                     createListOfCategoriesAndTestsuites(
                     proj, catXml, assignNewGuid);
@@ -958,7 +881,7 @@ class XmlImporter {
             }
         }
         for (ExecCategory catXml : xml.getExecCategoriesList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             List<IExecPersistable> tjs = createListOfTestJobs(catXml,
                     assignNewGuid);
             for (IExecPersistable exec : tjs) {
@@ -992,7 +915,7 @@ class XmlImporter {
         if (!xml.getTestsuiteList().isEmpty()) {
             ICategoryPO catTS = NodeMaker.createCategoryPO("Test Suites"); //$NON-NLS-1$
             for (TestSuite tsXml : xml.getTestsuiteList()) {
-                checkCancel();
+                ImportExportUtil.checkCancel(m_monitor);
                 ITestSuitePO tsPO = createTestSuite(proj, tsXml, assignNewGuid);
                 catTS.addNode(tsPO);
             }
@@ -1001,7 +924,7 @@ class XmlImporter {
         if (!xml.getTestsuiteList().isEmpty()) {
             ICategoryPO catTJ = NodeMaker.createCategoryPO("Test Jobs"); //$NON-NLS-1$
             for (TestJobs tjXml : xml.getTestJobsList()) {
-                checkCancel();
+                ImportExportUtil.checkCancel(m_monitor);
                 catTJ.addNode(createTestJob(tjXml, assignNewGuid));
             }
             proj.getExecObjCont().addExecObject(catTJ);
@@ -1175,19 +1098,6 @@ class XmlImporter {
             createTestCaseBase(proj, tcXml, assignNewGuid, mapper);
         proj.getSpecObjCont().addSpecObject(tcPO);
     }
-
-    /**
-     * Checks whether the operation has been canceled. If the operation has been
-     * canceled, an <code>InterruptedException</code> will be thrown.
-     * 
-     * @throws InterruptedException if the operation has been canceled.
-     */
-    private void checkCancel() throws InterruptedException {
-        if (m_monitor.isCanceled()) {
-            throw new InterruptedException();
-        }
-    }
-    
     
     /**
      * Creates the instance of the persistent object which is defined by the
@@ -1622,8 +1532,9 @@ class XmlImporter {
         if (xml.getTestcaseRef() != null) {
             refTc = findReferencedTC(xml.getTestcaseRef());
         } else {
-            refTc = findReferencedTCByGuid(xml.getTestcaseGuid(), 
-                xml.getProjectGuid(), proj, assignNewGuid);
+            refTc = ImportExportUtil.findReferencedTCByGuid(
+                    xml.getTestcaseGuid(), xml.getProjectGuid(),
+                    proj, assignNewGuid, m_oldToNewGuids, m_tcRef);
         }
         
         if (refTc == null) {
@@ -1681,8 +1592,9 @@ class XmlImporter {
         if (xml.getTestcaseRef() != null) {
             refTc = findReferencedTC(xml.getTestcaseRef());
         } else {
-            refTc = findReferencedTCByGuid(xml.getTestcaseGuid(), 
-                xml.getProjectGuid(), proj, assignNewGuid);
+            refTc = ImportExportUtil.findReferencedTCByGuid(
+                    xml.getTestcaseGuid(), xml.getProjectGuid(),
+                    proj, assignNewGuid, m_oldToNewGuids, m_tcRef);
         }
         
         if (refTc == null) {
@@ -2199,7 +2111,6 @@ class XmlImporter {
         
         fillTrackedChangesInformation(ts, xml);
         
-        ts.setCmdLineParameter(xml.getCommandLineParameter());
         if (xml.getSelectedAut() != null) {
             ts.setAut(findReferencedAut(xml.getSelectedAut()));
         }
@@ -2420,34 +2331,7 @@ class XmlImporter {
     private ISpecTestCasePO findReferencedTC(String usedTestcase) {        
         return m_tcRef.get(usedTestcase);
     }
-    /**
-     * Find a persistent object which has a GUID.
-     * 
-     * @param usedTestcaseGuid The GUID used to identify this instance
-     * @param projectGuid The GUID of the spec testcase's parent project
-     * @param parentProject The parent project of the exec testcase
-     * @param assignNewGuid <code>true</code> if elements are being assigned new 
-     *                      GUIDs. Otherwise <code>false</code>.
-     * @return the object build while reading the XML element, or 
-     *         <code>null</code> if the object cannot be found
-     */
-    private ISpecTestCasePO findReferencedTCByGuid(String usedTestcaseGuid, 
-        String projectGuid, IProjectPO parentProject, boolean assignNewGuid) {
-        String actualProjectGuid = assignNewGuid 
-            ? m_oldToNewGuids.get(projectGuid) : projectGuid;
-        if (projectGuid == null
-            || parentProject.getGuid().equals(actualProjectGuid)) {
-            // Referenced TC is in same project
-            if (assignNewGuid) {
-                return m_tcRef.get(m_oldToNewGuids.get(usedTestcaseGuid));
-            }
-            return m_tcRef.get(usedTestcaseGuid);
-        }
-        
-        // Referenced TC is in different project
-        return NodePM.getSpecTestCase(parentProject.getUsedProjects(), 
-            projectGuid, usedTestcaseGuid);
-    }
+
     /**
      * This is the second run on categories. The first time the categories were
      * created and the contained TestCases were initialized. In this run all
@@ -2471,12 +2355,12 @@ class XmlImporter {
         throws InvalidDataException, InterruptedException {
         
         for (Category catXml  : xml.getCategoryList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             rerunCategories(proj, catXml, assignNewGuid, attrDescSession);
         }
         
         for (TestCase tcXml : xml.getTestcaseList()) {
-            checkCancel();
+            ImportExportUtil.checkCancel(m_monitor);
             completeTestCase(proj, tcXml, assignNewGuid, attrDescSession);
         }
     }
@@ -2496,5 +2380,4 @@ class XmlImporter {
         }        
         return false;
     }
-
 }

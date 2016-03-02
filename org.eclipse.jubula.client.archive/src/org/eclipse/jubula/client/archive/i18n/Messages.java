@@ -109,7 +109,7 @@ public class Messages extends NLS {
     public static String XmlImporterToolkitVersionConflict3a;
     public static String XmlImporterToolkitVersionConflict3b;
     public static String XmlImporterToolkitVersionConversion;
-    public static String XmlStorageSavingProject;
+    public static String GatheringProjectData;
     
     static {
         // initialize resource bundle

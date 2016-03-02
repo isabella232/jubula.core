@@ -27,7 +27,7 @@ public class ExecCategoryDTO extends NodeDTO {
             new ArrayList<NodeDTO>();
 
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public ExecCategoryDTO() { }
     
     /**

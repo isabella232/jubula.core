@@ -68,26 +68,6 @@ public interface ITestSuitePO extends INodePO, IExecPersistable, Comparable {
     public abstract void setStarted(boolean isStarted);
 
     /**
-     * @return Returns the cmdLineParameter.
-     */
-    public abstract String getCmdLineParameter();
-
-    /**
-     * @param cmdLineParameter The cmdLineParameter to set.
-     */
-    public abstract void setCmdLineParameter(String cmdLineParameter);
-
-    /**
-     * @return Returns the autConf.
-     */
-    public abstract IAUTConfigPO getAutConfig();
-
-    /**
-     * @param autConf The autConf to set.
-     */
-    public abstract void setAutConfig(IAUTConfigPO autConf);
-
-    /**
      * @return Returns the defaultEventHandler.
      */
     public abstract Map<String, Integer> getDefaultEventHandler();

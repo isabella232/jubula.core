@@ -386,7 +386,7 @@ public class XmlStorage {
             List<File> listOfProjectFiles)
         throws ProjectDeletedException, PMException {
 
-        monitor.beginTask(Messages.XmlStorageSavingProject, 
+        monitor.beginTask(Messages.GatheringProjectData, 
             getWorkToSave(proj));
                 
         Validate.notNull(proj);

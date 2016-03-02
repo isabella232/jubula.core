@@ -36,7 +36,7 @@ public class CheckConfigurationDTO {
     private List<CheckActivatedContextDTO> m_checkActivatedContextes =
             new ArrayList<CheckActivatedContextDTO>();
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public CheckConfigurationDTO() { }
 
     /**
@@ -143,7 +143,7 @@ public class CheckConfigurationDTO {
     private void fillCheckContext(Map<String, Boolean> contexts) {
         for (Entry<String, Boolean> e : contexts.entrySet()) {
             CheckActivatedContextDTO chkConf = new CheckActivatedContextDTO();
-            chkConf.setClass1(e.getKey());
+            chkConf.setClazz(e.getKey());
             Object obj = e.getValue();
             if (obj instanceof BigDecimal) {
                 BigDecimal bd = (BigDecimal)obj;
@@ -151,6 +151,7 @@ public class CheckConfigurationDTO {
             } else {
                 chkConf.setActive(e.getValue());
             }
+            m_checkActivatedContextes.add(chkConf);
         }
     }
 }

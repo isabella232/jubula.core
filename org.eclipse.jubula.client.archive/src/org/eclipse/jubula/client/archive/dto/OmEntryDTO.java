@@ -29,7 +29,6 @@ public class OmEntryDTO {
     /** */
     private List<String> m_categorys = new ArrayList<String>();
     
-    
     /**
      * @return technicalName
      */

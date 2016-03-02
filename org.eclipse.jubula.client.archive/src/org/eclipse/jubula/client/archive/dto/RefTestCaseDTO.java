@@ -21,17 +21,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class RefTestCaseDTO extends ParameterDTO {
-
     /** */
-    private String m_testcaseRef, m_testcaseGuid, m_projectGuid;
+    private String m_testcaseUuid, m_projectUuid;
     /** */
     private boolean m_hasOwnTestdata;
     /** */
-    private List<CompNamesDTO> m_overriddenNames =
-            new ArrayList<CompNamesDTO>();
+    private List<ComponentNamesPairDTO> m_overriddenNames =
+            new ArrayList<ComponentNamesPairDTO>();
 
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public RefTestCaseDTO() { }
     
     /**
@@ -42,48 +41,33 @@ public class RefTestCaseDTO extends ParameterDTO {
     }
 
     /**
-     * @return testcaseRef
+     * @return testcaseUuid
      */
-    @JsonProperty("testcaseRef")
-    public String getTestcaseRef() {
-        return m_testcaseRef;
+    @JsonProperty("testcaseUuid")
+    public String getTestcaseUuid() {
+        return m_testcaseUuid;
     }
 
     /**
-     * @param testcaseRef 
+     * @param testcaseUuid 
      */
-    public void setTestcaseRef(String testcaseRef) {
-        this.m_testcaseRef = testcaseRef;
+    public void setTestcaseUuid(String testcaseUuid) {
+        this.m_testcaseUuid = testcaseUuid;
     }
 
     /**
-     * @return testcaseGuid
+     * @return projectUuid
      */
-    @JsonProperty("testcaseGuid")
-    public String getTestcaseGuid() {
-        return m_testcaseGuid;
+    @JsonProperty("projectUuid")
+    public String getProjectUuid() {
+        return m_projectUuid;
     }
 
     /**
-     * @param testcaseGuid 
+     * @param projectUuid 
      */
-    public void setTestcaseGuid(String testcaseGuid) {
-        this.m_testcaseGuid = testcaseGuid;
-    }
-
-    /**
-     * @return projectGuid
-     */
-    @JsonProperty("projectGuid")
-    public String getProjectGuid() {
-        return m_projectGuid;
-    }
-
-    /**
-     * @param projectGuid 
-     */
-    public void setProjectGuid(String projectGuid) {
-        this.m_projectGuid = projectGuid;
+    public void setProjectUuid(String projectUuid) {
+        this.m_projectUuid = projectUuid;
     }
 
     /**
@@ -105,14 +89,14 @@ public class RefTestCaseDTO extends ParameterDTO {
      * @return overriddenNames
      */
     @JsonProperty("overriddenNames")
-    public List<CompNamesDTO> getOverriddenNames() {
+    public List<ComponentNamesPairDTO> getOverriddenNames() {
         return m_overriddenNames;
     }
 
     /**
      * @param overriddenName 
      */
-    public void addOverriddenNames(CompNamesDTO overriddenName) {
+    public void addOverriddenNames(ComponentNamesPairDTO overriddenName) {
         m_overriddenNames.add(overriddenName);
     }
 }

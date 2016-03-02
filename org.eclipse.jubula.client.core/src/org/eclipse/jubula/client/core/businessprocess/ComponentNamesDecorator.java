@@ -211,7 +211,7 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
         
         String nameGuid = guid;
         if (guid == null) {
-            nameGuid = PersistenceUtil.generateGuid();
+            nameGuid = PersistenceUtil.generateUUID();
         }
 
         final IComponentNamePO newComponentNamePO = 

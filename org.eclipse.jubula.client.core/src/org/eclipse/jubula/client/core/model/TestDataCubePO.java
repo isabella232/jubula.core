@@ -487,7 +487,7 @@ class TestDataCubePO implements ITestDataCubePO {
     /** {@inheritDoc} */
     public IParamDescriptionPO addParameter(String type, String name,
             IParamNameMapper mapper) {
-        return addParameter(type, name, PersistenceUtil.generateGuid(), mapper);
+        return addParameter(type, name, PersistenceUtil.generateUUID(), mapper);
     }
 
     /** {@inheritDoc} */

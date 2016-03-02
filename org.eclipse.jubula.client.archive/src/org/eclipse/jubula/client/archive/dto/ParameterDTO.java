@@ -32,7 +32,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
     @Type(value = TestCaseDTO.class, name = "tc"),
     @Type(value = RefTestCaseDTO.class, name = "rtc") })
 public class ParameterDTO extends NodeDTO {
-
     /** */
     private List<ParamDescriptionDTO> m_parameterDescriptions =
             new ArrayList<ParamDescriptionDTO>();
@@ -42,7 +41,7 @@ public class ParameterDTO extends NodeDTO {
     private String m_datafile, m_referencedTestData;
     
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public ParameterDTO() { }
     
     /**

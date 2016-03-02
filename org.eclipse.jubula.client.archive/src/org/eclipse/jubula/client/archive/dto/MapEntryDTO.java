@@ -21,7 +21,7 @@ public class MapEntryDTO {
     private String m_key, m_value;
     
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public MapEntryDTO() { }
     
     /**

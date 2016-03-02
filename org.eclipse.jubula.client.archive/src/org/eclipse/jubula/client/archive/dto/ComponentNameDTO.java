@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ComponentNameDTO {
 
     /** */
-    private String m_compType, m_guid, m_creationContext, m_refGuid, m_compName;
+    private String m_compType, m_uuid, m_creationContext, m_refUuid, m_compName;
 
     /**
      * @return compType
@@ -36,18 +36,18 @@ public class ComponentNameDTO {
     }
 
     /**
-     * @return guid
+     * @return uuid
      */
-    @JsonProperty("guid")
-    public String getGuid() {
-        return m_guid;
+    @JsonProperty("uuid")
+    public String getUuid() {
+        return m_uuid;
     }
 
     /**
-     * @param guid 
+     * @param uuid 
      */
-    public void setGuid(String guid) {
-        this.m_guid = guid;
+    public void setUuid(String uuid) {
+        this.m_uuid = uuid;
     }
 
     /**
@@ -66,18 +66,18 @@ public class ComponentNameDTO {
     }
 
     /**
-     * @return refGuid
+     * @return refUuid
      */
-    @JsonProperty("refGuid")
-    public String getRefGuid() {
-        return m_refGuid;
+    @JsonProperty("refUuid")
+    public String getRefUuid() {
+        return m_refUuid;
     }
 
     /**
-     * @param refGuid 
+     * @param refUuid 
      */
-    public void setRefGuid(String refGuid) {
-        this.m_refGuid = refGuid;
+    public void setRefUuid(String refUuid) {
+        this.m_refUuid = refUuid;
     }
 
     /**

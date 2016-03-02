@@ -67,7 +67,7 @@ class AUTConfigPO implements IAUTConfigPO {
      * @param orig the original value 
      */
     AUTConfigPO(IAUTConfigPO orig) {
-        this(PersistenceUtil.generateGuid());
+        this(PersistenceUtil.generateUUID());
         
         duplicateFrom(orig);
     }

@@ -21,8 +21,7 @@ public class ObjectMappingProfileDTO {
     private String m_name;
     /** */
     private double m_contextFactor, m_nameFactor, m_pathFactor,
-        m_generatedNamePenalty, m_threshold;
-    
+        m_threshold;
     
     /**
      * @return name
@@ -82,21 +81,6 @@ public class ObjectMappingProfileDTO {
      */
     public void setPathFactor(double pathFactor) {
         this.m_pathFactor = pathFactor;
-    }
-    
-    /**
-     * @return generatedNamePenalty
-     */
-    @JsonProperty("generatedNamePenalty")
-    public double getGeneratedNamePenalty() {
-        return m_generatedNamePenalty;
-    }
-    
-    /**
-     * @param generatedNamePenalty 
-     */
-    public void setGeneratedNamePenalty(double generatedNamePenalty) {
-        this.m_generatedNamePenalty = generatedNamePenalty;
     }
     
     /**

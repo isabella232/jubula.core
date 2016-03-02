@@ -237,7 +237,7 @@ public abstract class NodeMaker {
 
         return new ProjectPO(metadataVersion, majorNumber, minorNumber,
                 microNumber, versionQualifier, 
-                PersistenceUtil.generateGuid(), false);
+                PersistenceUtil.generateUUID(), false);
     }
     /**
      * factory method to replace constructor

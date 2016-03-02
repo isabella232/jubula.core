@@ -176,7 +176,7 @@ abstract class NodePO implements INodePO {
      * @param isGenerated indicates whether this node has been generated
      */
     protected NodePO(String name, boolean isGenerated) {
-        this(name, PersistenceUtil.generateGuid(), isGenerated);
+        this(name, PersistenceUtil.generateUUID(), isGenerated);
     }
 
     /**

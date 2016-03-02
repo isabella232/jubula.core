@@ -201,7 +201,6 @@ public class TestResultSummaryPM {
         return countOfTestResultSummaries;
     }
     
-    
     /**
      * store the testresult summary of test run in database
      * @param summary the testresult summary to store
@@ -213,6 +212,31 @@ public class TestResultSummaryPM {
             final EntityTransaction tx = 
                 Persistor.instance().getTransaction(sess);
             sess.persist(summary);
+            Persistor.instance().commitTransaction(sess, tx);
+        } catch (PMException e) {
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                    MessageIDs.E_DATABASE_GENERAL);
+        } catch (ProjectDeletedException e) {
+            throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
+                    MessageIDs.E_PROJECT_NOT_FOUND);
+        } finally {
+            Persistor.instance().dropSession(sess);
+        }
+    }
+    
+    /**
+     * store the all of testresult summaries of test run in database
+     * @param summaries the testresult summaries to store
+     */
+    public static void storeTestResultSummariesInDB(
+        List<ITestResultSummaryPO> summaries) {
+        final EntityManager sess = Persistor.instance().openSession();
+        try {            
+            final EntityTransaction tx = 
+                Persistor.instance().getTransaction(sess);
+            for (ITestResultSummaryPO summary : summaries) {
+                sess.persist(summary);
+            }
             Persistor.instance().commitTransaction(sess, tx);
         } catch (PMException e) {
             throw new JBFatalException(Messages.StoringOfMetadataFailed, e,

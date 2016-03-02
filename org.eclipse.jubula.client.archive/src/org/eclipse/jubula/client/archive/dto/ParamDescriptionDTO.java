@@ -16,10 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class ParamDescriptionDTO {
-
     /** */
-    private String m_name, m_type, m_uniqueId;
-
+    private String m_name, m_type, m_uuid;
     
     /**
      * @return name
@@ -52,17 +50,17 @@ public class ParamDescriptionDTO {
     }
     
     /**
-     * @return uniqueId
+     * @return uuid
      */
-    @JsonProperty("uniqueId")
-    public String getUniqueId() {
-        return m_uniqueId;
+    @JsonProperty("uuid")
+    public String getUuid() {
+        return m_uuid;
     }
 
     /**
-     * @param uniqueId 
+     * @param uuid 
      */
-    public void setUniqueId(String uniqueId) {
-        this.m_uniqueId = uniqueId;
+    public void setUuid(String uuid) {
+        this.m_uuid = uuid;
     }
 }

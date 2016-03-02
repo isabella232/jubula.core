@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class TestDataCategoryDTO {
-
     /** */
     private String m_name;
     /** */

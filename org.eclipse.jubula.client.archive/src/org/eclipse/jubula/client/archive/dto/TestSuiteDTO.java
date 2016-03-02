@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -26,22 +25,18 @@ public class TestSuiteDTO extends NodeDTO {
     /** */
     private String m_selectedAut;
     /** */
-    private String m_commandLineParameter = StringConstants.EMPTY;
-    /** */
-    private List<String> m_selectedAutConfigs = new ArrayList<String>();
-    /** */
     private int m_stepDelay = 0;
     /** */
     private List<RefTestCaseDTO> m_usedTestcases =
             new ArrayList<RefTestCaseDTO>();
     /** */
-    private List<EventHandlerDTO> m_eventHandlers =
-            new ArrayList<EventHandlerDTO>();
+    private List<DefaultEventHandlerDTO> m_eventHandlers =
+            new ArrayList<DefaultEventHandlerDTO>(4);
     /** */
     private boolean m_relevant;
     
     
-    /** needed because json mapping */
+    /** needed because JSON mapping */
     public TestSuiteDTO() { }
     
     /**
@@ -64,36 +59,6 @@ public class TestSuiteDTO extends NodeDTO {
      */
     public void setSelectedAut(String selectedAut) {
         this.m_selectedAut = selectedAut;
-    }
-
-    /**
-     * @return commandLineParameter
-     */
-    @JsonProperty("commandLineParameter")
-    public String getCommandLineParameter() {
-        return m_commandLineParameter;
-    }
-
-    /**
-     * @param commandLineParameter 
-     */
-    public void setCommandLineParameter(String commandLineParameter) {
-        this.m_commandLineParameter = commandLineParameter;
-    }
-
-    /**
-     * @return selectedAutConfigs
-     */
-    @JsonProperty("selectedAutConfigs")
-    public List<String> getSelectedAutConfigs() {
-        return m_selectedAutConfigs;
-    }
-
-    /**
-     * @param selectedAutConfig 
-     */
-    public void addSelectedAutConfig(String selectedAutConfig) {
-        this.m_selectedAutConfigs.add(selectedAutConfig);
     }
 
     /**
@@ -130,14 +95,14 @@ public class TestSuiteDTO extends NodeDTO {
      * @return eventHandlers
      */
     @JsonProperty("eventHandlers")
-    public List<EventHandlerDTO> getEventHandlers() {
+    public List<DefaultEventHandlerDTO> getEventHandlers() {
         return m_eventHandlers;
     }
 
     /**
      * @param eventHandler 
      */
-    public void addEventHandler(EventHandlerDTO eventHandler) {
+    public void addEventHandler(DefaultEventHandlerDTO eventHandler) {
         this.m_eventHandlers.add(eventHandler);
     }
 

@@ -39,7 +39,7 @@ public abstract class PoMaker {
      * @return AUTConfigPO
      */
     public static IAUTConfigPO createAUTConfigPO() {
-        return createAUTConfigPO(PersistenceUtil.generateGuid());
+        return createAUTConfigPO(PersistenceUtil.generateUUID());
     }
     
     /**
@@ -293,7 +293,7 @@ public abstract class PoMaker {
      * @return TestResultSummaryPO
      */
     public static ITestResultSummaryPO createTestResultSummaryPO() {
-        return createTestResultSummaryPO(PersistenceUtil.generateGuid());
+        return createTestResultSummaryPO(PersistenceUtil.generateUUID());
     }
 
     /**
