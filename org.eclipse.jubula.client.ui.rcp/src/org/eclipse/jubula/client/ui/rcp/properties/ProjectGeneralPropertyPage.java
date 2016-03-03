@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.properties;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
@@ -730,6 +732,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
      */
     public boolean performOk() {
         try {
+           
             if (!m_oldProjectName.equals(m_newProjectName)) {
                 if (ProjectPM.doesProjectNameExist(m_newProjectName)) {
 
@@ -757,8 +760,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             newReused.removeAll(origReused);
             getEditSupport().saveWorkVersion();
             refreshAutMainList();
-            DataEventDispatcher ded = DataEventDispatcher.getInstance();
-            ded.fireProjectStateChanged(ProjectState.prop_modified);
+            
             for (IReusedProjectPO reused : newReused) {
                 try {
                     IProjectPO reusedProject = 
@@ -775,14 +777,21 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                             .ErrorWhileRetrievingReusedProjectInformation, e);
                 }
             }
+            DataEventDispatcher ded = DataEventDispatcher.getInstance();
+            ded.fireProjectStateChanged(ProjectState.prop_modified);
+            
+            List<DataChangedEvent> events = 
+                    new ArrayList<DataChangedEvent>();
             // FIXME zeb This updates the Test Case Browser. Once we have separate
             //           EditSupports for each property page, then we can use 
             //           "real" ReusedProjectPOs instead of a placeholder.
-            ded.fireDataChangedListener(
+            events.add(new DataChangedEvent(
                     PoMaker.createReusedProjectPO("1", 1, 1, null, null), //$NON-NLS-1$
-                    DataState.ReuseChanged, UpdateState.notInEditor);
-            ded.fireDataChangedListener(GeneralStorage.getInstance()
-                    .getProject(), DataState.Renamed, UpdateState.notInEditor);
+                    DataState.ReuseChanged, UpdateState.notInEditor));
+            events.add(new DataChangedEvent(GeneralStorage.getInstance()
+                    .getProject(), DataState.Renamed, UpdateState.notInEditor));
+            ded.fireDataChangedListener(
+                    events.toArray(new DataChangedEvent[0]));
             CompletenessBP.getInstance().completeProjectCheck();
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialog(e, null, null);
