@@ -374,7 +374,7 @@ public class JsonExporter {
         dto.setUniqueIds(po.getUniqueIds());
         for (IDataSetPO dataSet : po.getDataSets()) {
             DataSetDTO dsDTO = new DataSetDTO();
-            dsDTO.setColumns(dataSet.getColumnsCopy());
+            dsDTO.setColumns(dataSet.getColumnStringValues());
             dto.addDataSet(dsDTO);
         }
     }
