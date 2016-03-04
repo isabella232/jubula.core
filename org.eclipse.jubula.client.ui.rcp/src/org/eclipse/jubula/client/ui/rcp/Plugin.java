@@ -1230,7 +1230,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             new StatusLineContributionItem(
                 CONNECTION_INFO_STATUSLINE_ITEM);
         manager.insertBefore(StatusLineManager.END_GROUP, connectionItem);
-        manager.insertBefore(CONNECTION_INFO_STATUSLINE_ITEM, connectionItem);
         StatusLineContributionItem autToolKitItem = 
             new StatusLineContributionItem(AUT_TOOLKIT_STATUSLINE_ITEM);
         autToolKitItem.setText(StringConstants.EMPTY);
