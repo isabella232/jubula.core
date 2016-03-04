@@ -55,5 +55,6 @@
 	<entity class="org.eclipse.jubula.client.core.model.CheckConfPO" />
 	<entity class="org.eclipse.jubula.client.core.model.MonitoringReportPO" />
 	<entity class="org.eclipse.jubula.client.core.model.TestResultAdditionPO" />
+	<entity class="org.eclipse.jubula.client.core.model.DataCellPO" />
 	<embeddable class="org.eclipse.jubula.client.core.model.MonitoringValuePO" />
 </entity-mappings>

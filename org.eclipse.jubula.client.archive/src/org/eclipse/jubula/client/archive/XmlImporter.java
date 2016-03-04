@@ -1831,7 +1831,7 @@ class XmlImporter {
             }
             List<String> tdList = null;
             try {
-                tdList = tdman.getDataSet(tdRow).getColumnsCopy();
+                tdList = tdman.getDataSet(tdRow).getColumnStringValues();
             } catch (IndexOutOfBoundsException ioobe) {
                 // Component, Action, and/or Parameter could not be found in config xml
                 // only log and continue -> import of projects with missing plugins
