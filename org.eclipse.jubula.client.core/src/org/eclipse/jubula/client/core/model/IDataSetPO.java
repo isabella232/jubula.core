@@ -21,9 +21,9 @@ import java.util.List;
  */
 public interface IDataSetPO extends IPersistentObject {
     /**
-     * @return the list of column entries as strings
+     * @return a copy of the list of columns
      */
-    public abstract List<String> getColumnStringValues();
+    public abstract List<String> getColumnsCopy();
 
     /** @return empty string */
     public abstract String getName();
