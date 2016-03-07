@@ -163,6 +163,17 @@ public class AUTJavaFXHierarchy extends AUTHierarchy<EventTarget> {
             }
         }
     }
+    
+    /**
+     * @param comp the component to check, whether it's disappeared or not
+     * @return true, if the component disappeared
+     */
+    public boolean isComponentInHierarchy(EventTarget comp) {
+        if (comp != null) {
+            return getHierarchyContainer(comp) != null;
+        }
+        return false;
+    }
 
     /**
      * Removes a container from the hierarchy. This means that the following

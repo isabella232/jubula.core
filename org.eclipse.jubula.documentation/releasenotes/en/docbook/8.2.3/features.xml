@@ -159,4 +159,17 @@
   </para>
  </listitem>
  </itemizedlist>
+ <para>
+	<emphasis role="strong">New way to check component appearance and disappearance.</emphasis>
+ </para>
+ <itemizedlist>
+ <listitem>
+ <para>
+ 	We approved the check component existence with a timeout property.
+	With this value you can set a time limit, while the test execution will
+	wait for the component appearing or disappearing. For more information
+	check the Reference Manual.
+ </para>
+</listitem>
+</itemizedlist>
 </section>

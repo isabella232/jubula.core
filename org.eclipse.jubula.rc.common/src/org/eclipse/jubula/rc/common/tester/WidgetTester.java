@@ -59,10 +59,16 @@ public class WidgetTester extends AbstractUITester {
     /**
      * Verifies that the component exists and is visible.
      *
-     * @param exists  <code>True</code> if the component is expected to exist
-     *            and be visible, otherwise <code>false</code>.
+     * @param exists
+     *            <code>True</code> if the component is expected to exist and be
+     *            visible, otherwise <code>false</code>.
+     * @param timeout
+     *            the maximum amount of time to wait for the component in
+     *            milliseconds
      */
-    public void rcVerifyExists(boolean exists) {
+    public void rcVerifyExists(boolean exists, int timeout) {
+        // main implementation is in class CAPTestCommand.getImplClass
+        // because this action needs a special implementation!
         Verifier.equals(exists, getWidgetAdapter().isShowing());
     }
 

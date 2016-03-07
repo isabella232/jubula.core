@@ -425,7 +425,7 @@ public class TestComponentFactories {
         
         CAP cap1 = textField.checkEnablement(true);
         Assert.assertNotNull(cap1);
-        CAP cap6 = textField.checkExistence(false);
+        CAP cap6 = textField.checkExistence(false, 0);
         Assert.assertNotNull(cap6);
         CAP cap11 = textField.checkFocus(true);
         Assert.assertNotNull(cap11);

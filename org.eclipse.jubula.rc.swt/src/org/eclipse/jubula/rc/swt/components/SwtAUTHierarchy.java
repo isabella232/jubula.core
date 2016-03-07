@@ -761,6 +761,19 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
     }
     
     /**
+     * @param widget the component to check, whether it's disappeared or not
+     * @return true, if the component disappeared
+     */
+    public boolean isComponentInHierarchy(Widget widget) {
+        
+        if (widget == null) {
+            return false;
+        }
+        
+        return getHierarchyContainer(widget) != null;
+    }
+    
+    /**
      * Names the given hierarchy container. <br> 
      * If the managed component has a unique name, this name is used. Otherwise
      * a name (unique for the hierarchy level) is created. 

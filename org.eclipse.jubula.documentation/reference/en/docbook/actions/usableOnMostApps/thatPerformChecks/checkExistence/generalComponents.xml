@@ -19,6 +19,12 @@
           Use this action to check the existence of a component within the application.
         </para>
       </listitem>
+       <listitem>
+        <para>
+          If timeout is set, the test waits until the component 
+          is present/invisible in the given time before continuing with the next Test Step. 
+        </para>
+      </listitem>
       <listitem>
         <para>
           Parameters:
@@ -27,6 +33,11 @@
             <listitem>
               <para>
                 <xref linkend="exists" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+             <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

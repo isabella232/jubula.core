@@ -36,6 +36,7 @@ import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 
 
 /**
@@ -173,6 +174,56 @@ public class ComponentHandler extends BaseAWTEventListener
                     ide.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
         }
     }
+    
+    /**
+     * Checks the component in the AUT, which belongs to the given
+     * <code>componentIdentifier</code> is disappeared or nor.
+     * 
+     * @param componentIdentifier
+     *            the identifier of the component to search for
+     * @param timeout
+     *      timeout for retry
+     * @throws ComponentNotFoundException
+     *             if no component is found for the given identifier.
+     * @throws IllegalArgumentException
+     *             if the identifier is null or contains invalid data
+     * {@inheritDoc}
+     * @return true if the component is disappeared else false
+     */
+    public static boolean isComponentDisappeared(
+        IComponentIdentifier componentIdentifier, int timeout)
+        throws ComponentNotFoundException, IllegalArgumentException {
+
+        long start = System.currentTimeMillis();
+
+        try {
+            Component component = autHierarchy
+                    .findComponent(componentIdentifier);
+
+            while (System.currentTimeMillis() - start < timeout) {
+
+                TimeUtil.delay(
+                        TimingConstantsServer.POLLING_DELAY_FIND_COMPONENT);
+
+                boolean isComponentDisappeared = !autHierarchy
+                        .isComponentInHierarchy(component);
+                if (isComponentDisappeared) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (ComponentNotManagedException cnme) {
+            logStacktrace();
+            return true;
+        } catch (IllegalArgumentException iae) {
+            log.error(iae);
+            throw iae;
+        } catch (InvalidDataException ide) {
+            log.error(ide);
+            throw new ComponentNotFoundException(
+                    ide.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -187,7 +238,6 @@ public class ComponentHandler extends BaseAWTEventListener
      * {@inheritDoc}
      */
     public void eventDispatched(AWTEvent event) {
-        
         final ClassLoader originalCL = Thread.currentThread()
             .getContextClassLoader();
         Thread.currentThread().setContextClassLoader(this.getClass()

@@ -132,4 +132,13 @@ public class JavaFXAUTServer extends AUTServer {
         throws ComponentNotFoundException, IllegalArgumentException {
         return ComponentHandler.findComponent(ci, true, timeout);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isComponentDisappeared(IComponentIdentifier ci, int timeout)
+            throws ComponentNotFoundException, IllegalArgumentException {
+        return ComponentHandler.isComponentDisappeared(ci, timeout);
+    }
 }

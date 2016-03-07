@@ -260,7 +260,15 @@ public class SwingAUTServer extends AUTServer {
      */
     public Object findComponent(IComponentIdentifier ci, int timeout) 
         throws ComponentNotFoundException, IllegalArgumentException {
-        
         return ComponentHandler.findComponent(ci, true, timeout);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isComponentDisappeared(IComponentIdentifier ci, int timeout)
+            throws ComponentNotFoundException, IllegalArgumentException {
+        return ComponentHandler.isComponentDisappeared(ci, timeout);
     }
 }

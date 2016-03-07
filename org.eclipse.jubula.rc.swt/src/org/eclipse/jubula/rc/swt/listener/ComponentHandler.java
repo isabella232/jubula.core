@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.listener;
 
+
 import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
@@ -177,6 +179,63 @@ public class ComponentHandler extends BaseSwtEventListener
             }
             throw new ComponentNotFoundException(
                         cnme.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
+        } catch (IllegalArgumentException iae) {
+            log.error(iae.getLocalizedMessage(), iae);
+            throw iae;
+        } catch (InvalidDataException ide) {
+            log.error(ide.getLocalizedMessage(), ide);
+            throw new ComponentNotFoundException(
+                    ide.getMessage(), MessageIDs.E_COMPONENT_NOT_FOUND);
+        }
+    }
+    
+    /**
+     * Checks the component in the AUT, which belongs to the given
+     * <code>componentIdentifier</code> is disappeared or nor.
+     * 
+     * @param componentIdentifier
+     *            the identifier of the component to search for
+     * @param timeout
+     *      timeout for retry
+     * @throws ComponentNotFoundException
+     *             if no component is found for the given identifier.
+     * @throws IllegalArgumentException
+     *             if the identifier is null or contains invalid data
+     * {@inheritDoc}
+     * @return true if the component is disappeared else false
+     */
+    public static boolean isComponentDisappeared(
+        IComponentIdentifier componentIdentifier, int timeout)
+        throws ComponentNotFoundException, IllegalArgumentException {
+
+        long start = System.currentTimeMillis();
+
+        try {
+            final Widget component = autHierarchy
+                    .findComponent(componentIdentifier);
+
+            while (System.currentTimeMillis() - start < timeout) {
+
+                TimeUtil.delay(
+                        TimingConstantsServer.POLLING_DELAY_FIND_COMPONENT);
+                IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
+                boolean isComponentDisappeared = queuer.invokeAndWait(
+                        "isComponentInHierarchy", new IRunnable<Boolean>() { //$NON-NLS-1$
+
+                            public Boolean run() throws StepExecutionException {
+                                return !autHierarchy
+                                        .isComponentInHierarchy(component);
+
+                            }
+                        });
+
+                if (isComponentDisappeared) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (ComponentNotManagedException cnme) {
+            return true;
         } catch (IllegalArgumentException iae) {
             log.error(iae.getLocalizedMessage(), iae);
             throw iae;

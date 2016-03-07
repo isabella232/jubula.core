@@ -33,6 +33,7 @@ import org.eclipse.jubula.rc.common.tester.WidgetTester;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -117,43 +118,37 @@ public class CapTestCommand implements ICommand {
             if (!messageCap.hasDefaultMapping()) {
                 Validate.notNull(ci);
             }
+            int timeout = 0;
             // FIXME : Extra handling for waitForComponent and verifyExists
-            int timeout = TimingConstantsServer.DEFAULT_FIND_COMPONENT_TIMEOUT;
             boolean isWaitForComponent = 
                     WidgetTester.RC_METHOD_NAME_WAIT_FOR_COMPONENT
                         .equals(messageCap.getMethod());
+            boolean isCheckExistenceComponent = 
+                    WidgetTester.RC_METHOD_NAME_CHECK_EXISTENCE
+                        .equals(messageCap.getMethod());
             if (isWaitForComponent) { 
-                MessageParam timeoutParam = messageCap.
-                        getMessageParams().get(0);
-                try {
-                    timeout = Integer.parseInt(timeoutParam.getValue());
-                } catch (NumberFormatException e) {
-                    LOG.warn("Error while parsing timeout parameter. " //$NON-NLS-1$
-                        + "Using default value.", e); //$NON-NLS-1$
-                }
+                timeout = getTimeoutParameter(messageCap, 0,
+                        TimingConstantsServer.DEFAULT_FIND_COMPONENT_TIMEOUT);
             }
             final AUTServerConfiguration rcConfig = AUTServerConfiguration
                 .getInstance();
             if (!messageCap.hasDefaultMapping()) {
-                Object component = AUTServer.getInstance().findComponent(ci,
-                        timeout);
-                implClass = rcConfig.prepareImplementationClass(component,
-                    component.getClass());
+                if (isCheckExistenceComponent) {
+                    implClass = handleCheckComponentExistenceAction(messageCap,
+                            ci, rcConfig);
+                } else {
+                    Object component = AUTServer.getInstance().findComponent(ci,
+                            timeout);
+                    implClass = rcConfig.prepareImplementationClass(component,
+                            component.getClass());
+                }
+             
             } else {
                 implClass = rcConfig.getImplementationClass(ci
                     .getComponentClassName());
             }
             if (isWaitForComponent) {
-                MessageParam delayParam = messageCap.
-                        getMessageParams().get(1);
-                try {
-                    int delay = Integer.parseInt(delayParam.getValue());
-                    TimeUtil.delay(delay);
-                } catch (IllegalArgumentException iae) {
-                    handleInvalidInput("Invalid input: " //$NON-NLS-1$
-                        + CompSystemI18n.getString("CompSystem.DelayAfterVisibility") //$NON-NLS-1$
-                        + " must be a non-negative integer."); //$NON-NLS-1$
-                }
+                delayWaitingForComponent(messageCap);
             }
         } catch (IllegalArgumentException e) {
             handleComponentNotFound(response, e);
@@ -179,6 +174,105 @@ public class CapTestCommand implements ICommand {
                     EventFactory.createImplClassErrorEvent());
         } 
         return implClass;
+    }
+    
+    /**
+     * Delay action on waiting for component
+     * @param messageCap the CAP message data.
+     */
+    private void delayWaitingForComponent(final MessageCap messageCap) {
+        MessageParam delayParam = messageCap.
+                getMessageParams().get(1);
+        try {
+            int delay = Integer.parseInt(delayParam.getValue());
+            TimeUtil.delay(delay);
+        } catch (IllegalArgumentException iae) {
+            handleInvalidInput("Invalid input: " //$NON-NLS-1$
+                + CompSystemI18n.getString("CompSystem.DelayAfterVisibility") //$NON-NLS-1$
+                + " must be a non-negative integer."); //$NON-NLS-1$
+        }
+    }
+    
+    /**
+     * Handle the component exist action.
+     * 
+     * @param messageCap
+     *            the CAP message data
+     * @param ci
+     *            the component identifier
+     * @param rcConfig
+     *            AUT server configuration
+     * @return the implementation class or null if an error occurs.
+     * @throws UnsupportedComponentException
+     *             when an implementation class is requested, which was not configured
+     * @throws ComponentNotFoundException
+     *             when the component not found
+     */
+    private Object handleCheckComponentExistenceAction(
+            final MessageCap messageCap, IComponentIdentifier ci, 
+            final AUTServerConfiguration rcConfig) throws
+                    UnsupportedComponentException, ComponentNotFoundException {
+        Object implClass;
+        // Get the expected existence
+        MessageParam isVisibleParam = 
+                messageCap.getMessageParams().get(0);
+        boolean shouldBeVisible = Boolean.valueOf(isVisibleParam.getValue());
+        // Get the timeout parameter
+        int timeout = getTimeoutParameter(messageCap, 1, 0);
+        
+        Object component = null;
+        try {
+            // To check whether the component is disappeared, the timeout is not
+            // used,
+            // because have to know the fact immediately
+            component = AUTServer.getInstance().findComponent(ci,
+                    shouldBeVisible ? timeout : 0);
+            if (!shouldBeVisible && component != null) {
+                // This is the case, when the component is still not
+                // disappeared, but it's expected
+                // and to start a poll is necessary
+                if (AUTServer.getInstance().isComponentDisappeared(ci,
+                        timeout)) {
+                    // This is the case, when the component successfully gone
+                    throw new ComponentNotFoundException(
+                            "Component disappeared", //$NON-NLS-1$
+                            MessageIDs.E_COMPONENT_NOT_FOUND);
+                }
+            }
+        } catch (ComponentNotFoundException e) {
+            // The searched component is not found, throw exception
+            // manage in common way
+            throw e;
+        }
+
+        implClass = rcConfig.prepareImplementationClass(component,
+            component.getClass());
+        return implClass;
+    }
+    
+    /**
+     * 
+     * @param messageCap
+     *            the CAP message data
+     * @param indexOfParameter
+     *            index of the timeout parameter in the message data
+     * @param defaultValue
+     *            which will be set, if the message data does not contain
+     *            timeout parameter
+     * @return timeout parameter
+     */
+    private int getTimeoutParameter(final MessageCap messageCap,
+            int indexOfParameter, int defaultValue) {
+        MessageParam timeoutParam = messageCap.getMessageParams()
+                .get(indexOfParameter);
+        int timeout = defaultValue;
+        try {
+            timeout = Integer.parseInt(timeoutParam.getValue());
+        } catch (NumberFormatException e) {
+            LOG.warn("Error while parsing timeout parameter. " //$NON-NLS-1$
+                    + "Using default value.", e); //$NON-NLS-1$
+        }
+        return timeout;
     }
     
     /**

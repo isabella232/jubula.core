@@ -1115,6 +1115,21 @@ public abstract class AUTServer {
         IllegalArgumentException;
     
     /**
+     * @param ci
+     *            the component identifier
+     * @param timeout
+     *            the timeout
+     * @return the found component
+     * @throws IllegalArgumentException
+     *             if error occurred
+     * @throws ComponentNotFoundException
+     *             if component could not found in compHierarchy
+     */
+    public abstract boolean isComponentDisappeared(IComponentIdentifier ci, 
+        int timeout) throws ComponentNotFoundException, 
+        IllegalArgumentException;
+    
+    /**
      * Starts an Inspector that allows data for the next component clicked to 
      * be sent to the client.
      * 

@@ -53,6 +53,7 @@ import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 
 /**
@@ -567,6 +568,63 @@ public class ComponentHandler implements ListChangeListener<Stage>,
             }
             throw new ComponentNotFoundException(cnme.getMessage(),
                     MessageIDs.E_COMPONENT_NOT_FOUND);
+        } catch (IllegalArgumentException iae) {
+            log.error(iae);
+            throw iae;
+        } catch (InvalidDataException ide) {
+            log.error(ide);
+            throw new ComponentNotFoundException(ide.getMessage(),
+                    MessageIDs.E_COMPONENT_NOT_FOUND);
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+
+        }
+    }
+    /**
+     * Checks the component in the AUT, which belongs to the given
+     * <code>componentIdentifier</code> is disappeared or nor.
+     * 
+     * @param componentIdentifier
+     *            the identifier of the component to search for
+     * @param timeout
+     *      timeout for retry
+     * @throws ComponentNotFoundException
+     *             if no component is found for the given identifier.
+     * @throws IllegalArgumentException
+     *             if the identifier is null or contains invalid data
+     * {@inheritDoc}
+     * @return true if the component is disappeared else false
+     */
+    public static boolean isComponentDisappeared(
+            IComponentIdentifier componentIdentifier, int timeout)
+                    throws ComponentNotFoundException,
+                    IllegalArgumentException {
+        long start = System.currentTimeMillis();
+        try {
+            lock.lock();
+            EventTarget component = (EventTarget) hierarchy
+                    .findComponent(componentIdentifier);
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+            while (System.currentTimeMillis() - start < timeout) {
+                lock.lock();
+                TimeUtil.delay(
+                        TimingConstantsServer.POLLING_DELAY_FIND_COMPONENT);
+                boolean isComponentDisappeared = !hierarchy
+                        .isComponentInHierarchy(component);
+                if (lock.isHeldByCurrentThread()) {
+                    lock.unlock();
+                }
+                if (isComponentDisappeared) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (ComponentNotManagedException cnme) {
+            return true;
         } catch (IllegalArgumentException iae) {
             log.error(iae);
             throw iae;

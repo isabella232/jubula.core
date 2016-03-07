@@ -345,6 +345,19 @@ public class AUTSwingHierarchy extends AUTHierarchy<Component>
                 + componentIdentifier.toString() + "'.", //$NON-NLS-1$ 
                 MessageIDs.E_COMPONENT_NOT_MANAGED); 
     }
+    
+    /**
+     * @param comp the component to check, whether it's disappeared or not
+     * @return true, if the component disappeared
+     */
+    public boolean isComponentInHierarchy(Component comp) {
+        
+        if (comp == null) {
+            return false;
+        }
+        
+        return getHierarchyContainer(comp) != null;
+    }
 
     /**
      * Returns the path from the given component to root. The List contains
@@ -979,7 +992,7 @@ public class AUTSwingHierarchy extends AUTHierarchy<Component>
             removeComponent(component, component.getParent());
         }
     }
-
+    
     /**
      * {@inheritDoc}
      */
