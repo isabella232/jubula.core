@@ -21,6 +21,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
@@ -188,6 +189,7 @@ class DataSetPO implements IDataSetPO {
             orphanRemoval = true,
             targetEntity = DataCellPO.class)
     @OrderColumn(name = "IDX")
+    @JoinColumn(name = "FK_DATASET_ID")
     @BatchFetch(value = BatchFetchType.JOIN)
     private List<IDataCellPO> getColumns() {
         return m_columns;

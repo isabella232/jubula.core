@@ -13,7 +13,7 @@ import javax.persistence.Version;
  * Representing data values, see http://bugs.eclipse.org/488218
  */
 @Entity
-@Table(name = "DATA_CELL")
+@Table(name = "TEST_DATA_CELL")
 class DataCellPO implements IDataCellPO {
 
     /** the value */
