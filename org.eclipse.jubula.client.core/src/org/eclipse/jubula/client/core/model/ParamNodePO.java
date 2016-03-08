@@ -286,7 +286,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                     
                     String value = TestDataBP.INSTANCE.getTestData(
                             this, testDataManager, paramDesc, i);
-                    if (value != null) {
+                    if (StringUtils.isNotEmpty(value)) {
                         ModelParamValueConverter mpvc = 
                                 new ModelParamValueConverter(
                                         value, this, paramDesc);
