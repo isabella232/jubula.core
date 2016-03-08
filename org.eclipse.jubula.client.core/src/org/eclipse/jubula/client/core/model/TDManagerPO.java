@@ -489,7 +489,7 @@ class TDManagerPO implements ITDManager {
     @Column(name = "UNIQUE_ID")
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_TD_MANAGER")
-    @BatchFetch(value = BatchFetchType.JOIN)
+    @BatchFetch(value = BatchFetchType.EXISTS)
     public List<String> getUniqueIds() {
         return m_uniqueIds;
     }
