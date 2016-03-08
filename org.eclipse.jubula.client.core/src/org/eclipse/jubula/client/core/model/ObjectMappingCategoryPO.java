@@ -135,7 +135,6 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
     @ManyToOne(targetEntity = ObjectMappingCategoryPO.class)
     @JoinColumn(name = "FK_PARENT", insertable = false, 
                 updatable = false)
-    @BatchFetch(value = BatchFetchType.JOIN)
     public IObjectMappingCategoryPO getParent() {
         return m_parent;
     }
