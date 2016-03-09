@@ -711,6 +711,13 @@ public abstract class PoMaker {
     /**
      * @return the class instance of the PO
      */
+    public static Class<ExecTestCasePO> getExectestCaseClass() {
+        return ExecTestCasePO.class;
+    }
+    
+    /**
+     * @return the class instance of the PO
+     */
     public static Class<ComponentNamePO> getComponentNameClass() {
         return ComponentNamePO.class;
     }

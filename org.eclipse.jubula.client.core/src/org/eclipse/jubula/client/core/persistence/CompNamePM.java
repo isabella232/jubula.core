@@ -142,6 +142,14 @@ public class CompNamePM extends AbstractNamePM {
         + " and cap.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
 
     /**
+     * Query to find the types of reuse of a component name by test steps.
+     */
+    private static final String Q_REUSE_TYPE_CAPS_COUNT = 
+        "select count (cap.componentType) from CapPO as cap" //$NON-NLS-1$
+        + " where cap.componentName = :" + P_COMP_NAME_GUID //$NON-NLS-1$
+        + " and cap.hbmParentProjectId = :" + P_PARENT_PROJECT_ID; //$NON-NLS-1$
+    
+    /**
      * Sub-Query to ignore certain object mapping associations.
      */
     private static final Object SQ_REUSE_TYPE_CAPS_IGNORE = 
@@ -206,7 +214,17 @@ public class CompNamePM extends AbstractNamePM {
         "select execTc from ExecTestCasePO execTc" //$NON-NLS-1$
         + " left outer join execTc.hbmCompNamesMap as compNamesMap" //$NON-NLS-1$
         + " where compNamesMap.id in :" + P_PAIR_LIST; //$NON-NLS-1$
+    
 
+    /**
+     * Query to find all Test Case References id that make use of certain 
+     * Component Name Pairs.
+     */
+    private static final String Q_EXEC_TCS_WITH_PAIR_IDS = 
+        "select execTc.id from ExecTestCasePO execTc" //$NON-NLS-1$
+        + " left outer join execTc.hbmCompNamesMap as compNamesMap" //$NON-NLS-1$
+        + " where compNamesMap.id in :" + P_PAIR_LIST; //$NON-NLS-1$
+   
     /** GUIDs of Component Names to delete from the DB */
     private static final String P_COMP_NAME_REMOVAL_LIST = "compNameRemovalList"; //$NON-NLS-1$
 
@@ -724,20 +742,27 @@ public class CompNamePM extends AbstractNamePM {
 
     /**
      * 
-     * @param sess The session used to retrieve the number of reuse instances.
-     * @param parentProjectId The ID of the parent Project of the Component Name
-     *                        for which to find instances of reuse.
-     * @param compNameGuid The GUID of the Component Name for which to find
-     *                     instances of reuse.
+     * @param sess
+     *            The session used to retrieve the number of reuse instances.
+     * @param parentProjectId
+     *            The ID of the parent Project of the Component Name for which
+     *            to find instances of reuse.
+     * @param compNameGuid
+     *            The GUID of the Component Name for which to find instances of
+     *            reuse.
+     * @param minReferenceNumber
+     *            number of the referencing cases. If the reusage number is
+     *            higher than the <code>minReferenceNumber</code>, it will
+     *            return immediately with the current usage number
      * @return the number of instances of reuse for the Component Name with the
      *         given GUID and parent Project.
      */
-    public static synchronized int getNumReuseInstances(EntityManager sess, 
-            Long parentProjectId, String compNameGuid) {
+    public static synchronized long getNumReuseInstances(EntityManager sess, 
+            Long parentProjectId, String compNameGuid, int minReferenceNumber) {
         Set<Long> emptySet = Collections.emptySet();
-        return fillComponentNameTypeReuseCollection(sess, 
+        return getNumberOfNameTypeReuse(sess, 
                 parentProjectId, compNameGuid, emptySet, 
-                emptySet, emptySet, new ArrayList<String>()).size();
+                emptySet, emptySet, minReferenceNumber);
     }
     
     /**
@@ -774,7 +799,7 @@ public class CompNamePM extends AbstractNamePM {
      * Fills the given collection with all current types of reuse for the 
      * Component Name with the given GUID.
      * 
-     * @param s The session in which to execute the various queries required to
+     * @param session The session in which to execute the various queries required to
      *          find the types of reuse.
      * @param parentProjectId The id of the active project. Only reuses and 
      *                        component names belonging to the project with this
@@ -791,74 +816,249 @@ public class CompNamePM extends AbstractNamePM {
     @SuppressWarnings("unchecked")
     private static synchronized Collection<String> 
         fillComponentNameTypeReuseCollection(
-            EntityManager s, Long parentProjectId, 
+            EntityManager session, Long parentProjectId, 
             String compNameGuid, Set<Long> ignoreNamePairIds, 
             Set<Long> ignoreCapIds, Set<Long> ignoreAutIds,
             Collection<String> toFill) {
  
-        boolean shouldIgnoreCaps = !ignoreCapIds.isEmpty();
-
-        FlushModeType flushMode = s.getFlushMode();
+        FlushModeType flushMode = session.getFlushMode();
         // Disable automatic flushing during this read-only operation because
         // a flush may cause database-level locks to be acquired.
-        s.setFlushMode(FlushModeType.COMMIT);
+        session.setFlushMode(FlushModeType.COMMIT);
         
         try {
             toFill.addAll(getPairReuseTypes(
-                    compNameGuid, parentProjectId, ignoreNamePairIds, s));
+                    compNameGuid, parentProjectId, ignoreNamePairIds, session));
+           
+            Collection<String> reusedCaps = getReusedCap(session,
+                    parentProjectId, compNameGuid, ignoreCapIds);
+            toFill.addAll(reusedCaps);
             
+            List<String> assocCompTypes = getAutAssociations(session,
+                    parentProjectId, compNameGuid, ignoreAutIds);
+            
+            toFill.addAll(assocCompTypes);
+        } finally {
+            session.setFlushMode(flushMode);
+        }
+        return toFill;
+    }
+    
+    /**
+     * Get the number of all current types of reuse for the
+     * Component Name with the given GUID.
+     * 
+     * @param session
+     *            The session in which to execute the various queries required
+     *            to find the types of reuse.
+     * @param parentProjectId
+     *            The id of the active project. Only reuses and component names
+     *            belonging to the project with this id will be considered
+     *            during the check.
+     * @param compNameGuid
+     *            The guid of the component name to check.
+     * @param ignoreNamePairIds
+     *            Ids of all component name pairs to ignore during the check.
+     * @param ignoreCapIds
+     *            Ids of all test steps to ignore during the check.
+     * @param ignoreAutIds
+     *            Ids of all AUTs to ignore during the check.
+     * @param minReferenceNumber
+     *            in some case, there is no need to fetch all usage. (e.g.
+     *            decide the first usage, if the usage count is higher than the
+     *            given limit, no need to check more usage)
+     * @return number of the reusage.
+     */
+    @SuppressWarnings("unchecked")
+    private static synchronized long 
+        getNumberOfNameTypeReuse(
+            EntityManager session, Long parentProjectId, 
+            String compNameGuid, Set<Long> ignoreNamePairIds, 
+            Set<Long> ignoreCapIds, Set<Long> ignoreAutIds,
+            Integer minReferenceNumber) {
+ 
+        // Number of references of the given component name
+        long referenceCount = 0;
+      
+        FlushModeType flushMode = session.getFlushMode();
+        // Disable automatic flushing during this read-only operation because
+        // a flush may cause database-level locks to be acquired.
+        session.setFlushMode(FlushModeType.COMMIT);
+        
+        try {
+            referenceCount += countOfReusedCompnameTypesInCaps(session,
+                    parentProjectId, compNameGuid, ignoreCapIds);
+            
+            if (hasMoreUsageThanLimit(minReferenceNumber, referenceCount)) {
+                return referenceCount;
+            }
+      
             List<String> assocCompTypes = new ArrayList<String>();
             CompSystem compSystem = 
                 ComponentBuilder.getInstance().getCompSystem();
-
             // Find the toolkit corresponding to each Association. This allows
             // us to perform the necessary mapping from Component Class to
             // Component Type.
-            IProjectPO inSessionProject = 
-                    s.find(NodeMaker.getProjectPOClass(), parentProjectId);
+            IProjectPO inSessionProject = session
+                    .find(NodeMaker.getProjectPOClass(), parentProjectId);
             
-            Collection<IAUTMainPO> allAutsForProject = 
-                    inSessionProject.getAutMainList();
+            
+            referenceCount += getAutAssociations(session, parentProjectId,
+                    compNameGuid, ignoreAutIds).size();
+            
+            if (hasMoreUsageThanLimit(minReferenceNumber, referenceCount)) {
+                return referenceCount;
+            }
+            
+            referenceCount += getPairReuseTypes(compNameGuid, parentProjectId,
+                    ignoreNamePairIds, session).size();
+            
+        } finally {
+            session.setFlushMode(flushMode);
+        }
+        return referenceCount;
+    }
 
-            for (IAUTMainPO aut : allAutsForProject) {
-                if (!ignoreAutIds.contains(aut.getId())) {
-                    for (IObjectMappingAssoziationPO assoc 
-                            : aut.getObjMap().getMappings()) {
-                        IComponentIdentifier technicalName = 
-                                assoc.getTechnicalName();
-                        if (technicalName != null) {
-                            if (assoc.getLogicalNames().contains(
-                                    compNameGuid)) {
-                                List<Component> availableComponents = 
-                                        compSystem.getComponents(
-                                                aut.getToolkit(), true);
-                                assocCompTypes.add(CompSystem.getComponentType(
-                                        technicalName.getSupportedClassName(), 
-                                        availableComponents));
-                            }
-                        }
-                    }
+    /**
+     * Condition to check the reference count is higher than a limit or not
+     * 
+     * @param limitToImmediateReturn
+     *            number of reusage, which is used to get partial result
+     *            immediately, if the reference number reached the limit
+     * @param count
+     *            the current referencing count, as a partial result
+     * @return true, if the current reference number is higher than the given
+     *         limit
+     */
+    private static boolean hasMoreUsageThanLimit(Integer limitToImmediateReturn,
+            long count) {
+        return (limitToImmediateReturn != null
+                && count > limitToImmediateReturn);
+
+    } 
+
+    /**
+     * Get associated component types
+     * 
+     * @param session
+     *            The session in which to execute the various queries required
+     *            to find the types of reuse.
+     * @param parentProjectId
+     *            The id of the active project. Only reuses and component names
+     *            belonging to the project with this id will be considered
+     *            during the check.
+     * @param compNameGuid
+     *            compNameGuid The guid of the component name to check.
+     * @param ignoreAutIds
+     *            Ids of all AUTs to ignore during the check.
+     * @param assocCompTypes
+     * @param compSystem
+     * @param allAutsForProject
+     * @return associated component types
+     */
+    private static List<String> getAutAssociations(EntityManager session,
+            Long parentProjectId, String compNameGuid, Set<Long> ignoreAutIds) {
+
+        CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
+
+        // Find the toolkit corresponding to each Association. This allows
+        // us to perform the necessary mapping from Component Class to
+        // Component Type.
+        IProjectPO inSessionProject = session
+                .find(NodeMaker.getProjectPOClass(), parentProjectId);
+
+        Collection<IAUTMainPO> allAutsForProject = inSessionProject
+                .getAutMainList();
+
+        List<String> assocCompTypes = new ArrayList<>();
+        for (IAUTMainPO aut : allAutsForProject) {
+            if (ignoreAutIds.contains(aut.getId())) {
+                continue;
+            }
+            for (IObjectMappingAssoziationPO assoc : aut.getObjMap()
+                    .getMappings()) {
+                IComponentIdentifier technicalName = assoc.getTechnicalName();
+                if (technicalName == null) {
+                    continue;
+                }
+
+                if (assoc.getLogicalNames().contains(compNameGuid)) {
+                    List<Component> availableComponents = compSystem
+                            .getComponents(aut.getToolkit(), true);
+                    assocCompTypes.add(CompSystem.getComponentType(
+                            technicalName.getSupportedClassName(),
+                            availableComponents));
                 }
             }
-            
-            toFill.addAll(assocCompTypes);
-    
-            StringBuilder capQuerySb = 
-                new StringBuilder(Q_REUSE_TYPE_CAPS);
-            if (shouldIgnoreCaps) {
-                capQuerySb.append(SQ_REUSE_TYPE_CAPS_IGNORE);
-            }
-            final Query capQuery = s.createQuery(capQuerySb.toString());
-            capQuery.setParameter(P_PARENT_PROJECT_ID, parentProjectId);
-            capQuery.setParameter(P_COMP_NAME_GUID, compNameGuid);
-            if (shouldIgnoreCaps) {
-                capQuery.setParameter(P_IGNORE_CAPS, ignoreCapIds);
-            }
-            toFill.addAll(capQuery.getResultList());
-        } finally {
-            s.setFlushMode(flushMode);
         }
-        return toFill;
+        return assocCompTypes;
+    }
+
+    /**
+     * 
+     * @param session
+     *            The session in which to execute the various queries required
+     *            to find the types of reuse.
+     * @param parentProjectId
+     *            The id of the active project. Only reuses and component names
+     *            belonging to the project with this id will be considered
+     *            during the check.
+     * @param compNameGuid
+     *            The guid of the component name to check.
+     * @param ignoreCapIds
+     *            Ids of all test steps to ignore during the check.
+     * @return the types of reuse of a component name by test steps.
+     */
+    @SuppressWarnings("unchecked")
+    private static Collection<String> getReusedCap(EntityManager session,
+            Long parentProjectId, String compNameGuid, Set<Long> ignoreCapIds) {
+
+        boolean shouldIgnoreCaps = !ignoreCapIds.isEmpty();
+
+        StringBuilder capQuerySb = new StringBuilder(Q_REUSE_TYPE_CAPS);
+        if (shouldIgnoreCaps) {
+            capQuerySb.append(SQ_REUSE_TYPE_CAPS_IGNORE);
+        }
+
+        final Query capQuery = session.createQuery(capQuerySb.toString());
+        capQuery.setParameter(P_PARENT_PROJECT_ID, parentProjectId);
+        capQuery.setParameter(P_COMP_NAME_GUID, compNameGuid);
+        if (shouldIgnoreCaps) {
+            capQuery.setParameter(P_IGNORE_CAPS, ignoreCapIds);
+        }
+        return capQuery.getResultList();
+    }
+    
+    /**
+     * @param session
+     *            the entity manager session
+     * @param parentProjectId
+     *            The id of the active project. Only reuses and component names
+     *            belonging to the project with this id will be considered
+     *            during the check.
+     * @param compNameGuid
+     *            The guid of the component name to check.
+     * @param ignoreCapIds
+     *            Ids of all test steps to ignore during the check.
+     * @return number of the types of reuse of a component name by test steps
+     */
+    private static long countOfReusedCompnameTypesInCaps(EntityManager session,
+            Long parentProjectId, String compNameGuid, Set<Long> ignoreCapIds) {
+
+        boolean shouldIgnoreCaps = !ignoreCapIds.isEmpty();
+
+        StringBuilder capQuerySb = new StringBuilder(Q_REUSE_TYPE_CAPS_COUNT);
+        if (shouldIgnoreCaps) {
+            capQuerySb.append(SQ_REUSE_TYPE_CAPS_IGNORE);
+        }
+
+        final Query capQuery = session.createQuery(capQuerySb.toString());
+        capQuery.setParameter(P_PARENT_PROJECT_ID, parentProjectId);
+        capQuery.setParameter(P_COMP_NAME_GUID, compNameGuid);
+        if (shouldIgnoreCaps) {
+            capQuery.setParameter(P_IGNORE_CAPS, ignoreCapIds);
+        }
+        return (long) capQuery.getSingleResult();
     }
     
     /**
@@ -874,22 +1074,9 @@ public class CompNamePM extends AbstractNamePM {
     private static Collection<String> getPairReuseTypes(String compNameGuid,
             Long parentProjectId, Set<Long> ignoreNamePairIds, 
             EntityManager s) {
-
         Set<String> returnSet = new HashSet<String>();
-        boolean shouldIgnorePairs = !ignoreNamePairIds.isEmpty();
-        StringBuilder reuseQuerySb = 
-            new StringBuilder(Q_REUSE_TYPE_PAIRS);
-        if (shouldIgnorePairs) {
-            reuseQuerySb.append(SQ_REUSE_TYPE_PAIRS_IGNORE);
-        }
-        final Query reuseQuery = s.createQuery(reuseQuerySb.toString());
-        reuseQuery.setParameter(P_PARENT_PROJECT_ID, parentProjectId);
-        if (shouldIgnorePairs) {
-            reuseQuery.setParameter(P_IGNORE_PAIRS, ignoreNamePairIds);
-        }
-        reuseQuery.setParameter(P_COMP_NAME_GUID, compNameGuid);
-        Collection<ICompNamesPairPO> compNamePairs = 
-            new HashSet<ICompNamesPairPO>(reuseQuery.getResultList());
+        Collection<ICompNamesPairPO> compNamePairs = getReusedComponentNames(
+                compNameGuid, parentProjectId, ignoreNamePairIds, s);
         
         Collection<Long> compNamePairIds = new HashSet<Long>();
         for (ICompNamesPairPO pair : compNamePairs) {
@@ -897,44 +1084,47 @@ public class CompNamePM extends AbstractNamePM {
         }
         
         if (!compNamePairs.isEmpty()) {
-            Query execTcQuery;
+            Query execTcIdsQuery = null;
             if (compNamePairs.size() <= MAX_DB_EXPRESSIONS) {
-                execTcQuery = s.createQuery(Q_EXEC_TCS_WITH_PAIR);
-                execTcQuery.setParameter(P_PAIR_LIST, compNamePairIds);
+                execTcIdsQuery = s.createQuery(Q_EXEC_TCS_WITH_PAIR_IDS);
+                execTcIdsQuery.setParameter(P_PAIR_LIST, compNamePairIds);
             } else {
                 // FIXME zeb The code in this "else" block is a quick-fix for the
                 //           "ORA-01795: maximum number of expressions in a list is 1000".
                 StringBuilder sb = new StringBuilder();
-                sb.append("select execTc from ExecTestCasePO execTc" //$NON-NLS-1$
+                sb.append("select execTc.id from ExecTestCasePO execTc" //$NON-NLS-1$
                         + " left outer join execTc.hbmCompNamesMap as compNamesMap " //$NON-NLS-1$
                         + "where"); //$NON-NLS-1$
-                Object [] compNamePairArray = compNamePairIds.toArray();
-                int numLists = 
-                    (compNamePairArray.length / MAX_DB_EXPRESSIONS) + 1;
+                Object[] compNamePairArray = compNamePairIds.toArray();
+                int numLists = (compNamePairArray.length / MAX_DB_EXPRESSIONS)
+                        + 1;
                 for (int i = 0; i < numLists; i++) {
                     if (i != 0) {
                         sb.append(" or"); //$NON-NLS-1$
                     }
                     sb.append(" compNamesMap.id in :" + P_PAIR_LIST + i); //$NON-NLS-1$
                 }
-                execTcQuery = s.createQuery(sb.toString());
+                execTcIdsQuery = s.createQuery(sb.toString());
                 for (int i = 0; i < numLists; i++) {
-                    Object [] subArray = 
-                        new Object[Math.min((i + 1) * MAX_DB_EXPRESSIONS, 
-                                compNamePairArray.length)
+                    Long[] subArray = new Long[Math.min(
+                            (i + 1) * MAX_DB_EXPRESSIONS,
+                            compNamePairArray.length)
                             - (i * MAX_DB_EXPRESSIONS)];
-                    System.arraycopy(
-                            compNamePairArray, (i * MAX_DB_EXPRESSIONS), 
-                            subArray, 0, subArray.length);
-                    execTcQuery.setParameter(P_PAIR_LIST + i, subArray);
+                    System.arraycopy(compNamePairArray,
+                            (i * MAX_DB_EXPRESSIONS), subArray, 0,
+                            subArray.length);
+                    execTcIdsQuery.setParameter(P_PAIR_LIST + i, subArray);
                 }
             }
-
-            List<IExecTestCasePO> list = execTcQuery.getResultList();
-            for (IExecTestCasePO execTc : list) {
-                for (ICompNamesPairPO pair : execTc.getCompNamesPairs()) {
-                    if (compNamePairs.contains(pair)) {
-                        CompNamesBP.searchCompType(pair, execTc);
+            List<Long> ids = execTcIdsQuery.getResultList();
+            for (Long id : ids) {
+                IExecTestCasePO execTc = s.find(PoMaker.getExectestCaseClass(),
+                        id);
+                if (execTc != null) {
+                    for (ICompNamesPairPO pair : execTc.getCompNamesPairs()) {
+                        if (compNamePairs.contains(pair)) {
+                            CompNamesBP.searchCompType(pair, execTc);
+                        } 
                     }
                 }
             }
@@ -943,8 +1133,40 @@ public class CompNamePM extends AbstractNamePM {
                 returnSet.add(pair.getType());
             }
         }
-        
+  
         return returnSet;
+    }
+    
+    /**
+     * Get reused component names.
+     * @param compNameGuid The guid of the component name to check.
+     * @param parentProjectId The id of the active project. Only reuses and 
+     *                        component names belonging to the project with this
+     *                        id will be considered during the check.
+     * @param ignoreNamePairIds Ids of all component name pairs to 
+     *                          ignore during the check.
+     * @param session The session in which to execute the various queries required to
+     *          find the types of reuse.
+     * @return reused component names
+     */
+    private static Collection<ICompNamesPairPO> getReusedComponentNames(
+            String compNameGuid, Long parentProjectId,
+            Set<Long> ignoreNamePairIds, EntityManager session) {
+        boolean shouldIgnorePairs = !ignoreNamePairIds.isEmpty();
+        StringBuilder reuseQuerySb = 
+            new StringBuilder(Q_REUSE_TYPE_PAIRS);
+        if (shouldIgnorePairs) {
+            reuseQuerySb.append(SQ_REUSE_TYPE_PAIRS_IGNORE);
+        }
+        final Query reuseQuery = session.createQuery(reuseQuerySb.toString());
+        reuseQuery.setParameter(P_PARENT_PROJECT_ID, parentProjectId);
+        if (shouldIgnorePairs) {
+            reuseQuery.setParameter(P_IGNORE_PAIRS, ignoreNamePairIds);
+        }
+        reuseQuery.setParameter(P_COMP_NAME_GUID, compNameGuid);
+        Collection<ICompNamesPairPO> compNamePairs = 
+            new HashSet<ICompNamesPairPO>(reuseQuery.getResultList());
+        return compNamePairs;
     }
     
     /**

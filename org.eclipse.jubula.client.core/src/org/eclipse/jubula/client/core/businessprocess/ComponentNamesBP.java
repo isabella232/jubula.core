@@ -1016,7 +1016,7 @@ public class ComponentNamesBP
             if (CompNamePM.getNumReuseInstances(
                     sess, 
                     GeneralStorage.getInstance().getProject().getId(), 
-                    name.getGuid()) <= minSize) {
+                    name.getGuid(), minSize) <= minSize) {
                 
                 final EntityManager lockSession = sess;
                 // make sure there is no old version
