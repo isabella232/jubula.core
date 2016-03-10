@@ -821,8 +821,15 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                             .getCompMapper().getCompNameCache());
                 
                 editSupport.saveWorkVersion();
-                fireRenamedEvents(renamedCompNames);
-                fireReuseChangedEvents(reuseChangedCompNames);
+                
+                List<DataChangedEvent> events = 
+                                new ArrayList<DataChangedEvent>();
+                events.addAll(getRenamedEvents(renamedCompNames));
+                events.addAll(getReuseChangedEvents(reuseChangedCompNames));
+                
+                DataEventDispatcher.getInstance().fireDataChangedListener(
+                        events.toArray(new DataChangedEvent[0]));
+                
                 if (getAut().equals(
                         TestExecution.getInstance().getConnectedAut())
                     && !workProfile.equals(origProfile)) {
@@ -877,35 +884,37 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     }
 
     /**
-     * Fires "ReuseChanged" data changed events for each given Component Name.
+     * Get "ReuseChanged" data changed events for each given Component Name.
      * 
      * @param reuseChangedCompNames The Component Names for which to fire 
      *                              the events.
+     * @return "ReuseChanged" data changed events                        
      */
-    private void fireReuseChangedEvents(
+    private List<DataChangedEvent> getReuseChangedEvents(
             Set<IComponentNamePO> reuseChangedCompNames) {
-        ArrayList<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
+        List<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
         for (IComponentNamePO compName : reuseChangedCompNames) {
             events.add(new DataChangedEvent(compName, DataState.ReuseChanged,
                     UpdateState.all));
         }
-        DataEventDispatcher.getInstance().fireDataChangedListener(
-                events.toArray(new DataChangedEvent[0]));
+        return events;
     }
 
     /**
-     * Fires "Renamed" data changed events for each given Component Name.
+     * Get "Renamed" data changed events for each given Component Name.
      * 
-     * @param renamedCompNames The Component Names for which to fire the events.
+     * @param renamedCompNames
+     *            The Component Names for which to fire the events.
+     * @return "Renamed" data changed events
      */
-    private void fireRenamedEvents(Set<IComponentNamePO> renamedCompNames) {
-        ArrayList<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
+    private List<DataChangedEvent> getRenamedEvents(
+            Set<IComponentNamePO> renamedCompNames) {
+        List<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
         for (IComponentNamePO compName : renamedCompNames) {
             events.add(new DataChangedEvent(compName, DataState.Renamed,
                     UpdateState.all));
         }
-        DataEventDispatcher.getInstance().fireDataChangedListener(
-                events.toArray(new DataChangedEvent[0]));
+        return events;
     }
 
     /**
