@@ -722,6 +722,11 @@ public abstract class AbstractDataSetPage extends Page
         for (TableColumn column : getTable().getColumns()) {
             column.dispose();
         }
+        DSVTableCursor tableCursor = getTableCursor();
+        if (tableCursor != null && !tableCursor.isDisposed()) {
+            tableCursor.dispose();
+            setTableCursor(new DSVTableCursor(getTable(), SWT.NONE));
+        }
     }
     
     
@@ -1073,7 +1078,11 @@ public abstract class AbstractDataSetPage extends Page
         public void dispose() {
             removeSelectionListener(m_cursorListener);
             removeMouseListener(m_mouseListener);
-            m_editor.getEditor().removeFocusListener(m_focusListener);
+            Control editor = m_editor.getEditor();
+            if (editor != null && !editor.isDisposed()) {
+                editor.removeFocusListener(m_focusListener);
+                editor.dispose();
+            }
             super.dispose();
         }
         
