@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 /**
  * Representing data values, see http://bugs.eclipse.org/488218
@@ -26,9 +25,6 @@ class DataCellPO implements IDataCellPO {
      * <code>m_parentProjectId</code>id of associated project
      */
     private Long m_parentProjectId = null;
-
-    /** Persistence (JPA / EclipseLink) version id */
-    private transient Integer m_version;
 
     /**
      * Constructor for JPA
@@ -76,17 +72,13 @@ class DataCellPO implements IDataCellPO {
         this.m_id = id;
     }
     
-    /** {@inheritDoc} */
-    @Version
-    public Integer getVersion() {
-        return m_version;
-    }
-
-    /** 
-     * @param version the version
+    /**
+     * Version is not used for optimistic locking for this class.
+     * @return <code>0</code>
      */
-    void setVersion(Integer version) {
-        m_version = version;
+    @Transient
+    public Integer getVersion() {
+        return 0;
     }
 
     /** {@inheritDoc} */

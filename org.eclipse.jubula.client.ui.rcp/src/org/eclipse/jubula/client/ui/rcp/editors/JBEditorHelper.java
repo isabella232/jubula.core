@@ -100,6 +100,8 @@ public class JBEditorHelper implements ILockedObjects,
     }
     
     /**
+     * Requests the editable state and displays a message when
+     * the state is not {@link EditableState#OK}
      * @return the editable state
      */
     public EditableState requestEditableState() {
