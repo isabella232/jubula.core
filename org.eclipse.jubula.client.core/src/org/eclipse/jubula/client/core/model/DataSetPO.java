@@ -15,20 +15,19 @@ import java.util.List;
 import java.util.ListIterator;
 
 import javax.persistence.Basic;
-import javax.persistence.CollectionTable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
@@ -49,7 +48,7 @@ class DataSetPO implements IDataSetPO {
     /**
      * <code>m_columns</code> list with testdata
      */
-    private List<String> m_columns = new ArrayList<String>();
+    private List<IDataCellPO> m_columns = new ArrayList<IDataCellPO>();
     
     /** Persistence (JPA / EclipseLink) version id */
     private transient Integer m_version;
@@ -62,16 +61,17 @@ class DataSetPO implements IDataSetPO {
      */
     DataSetPO(List<String> list) {
         if (list == null) {
-            setColumns(new ArrayList<String>());
+            setColumns(new ArrayList<IDataCellPO>());
         } else {
-            // this is a workaround for null/or empty Strings in the list
+            List<IDataCellPO> dataValueList = new ArrayList<IDataCellPO>(
+                    list.size());
             for (ListIterator<String> iterator = list.listIterator(); iterator
                     .hasNext();) {
-                String string = iterator.next();
-                iterator.set(StringUtils.defaultIfEmpty(string,
-                        StringConstants.UNICODE_NULL));
+                dataValueList.add(new DataCellPO(iterator.next(),
+                        getParentProjectId()));
+                
             }
-            setColumns(list);
+            setColumns(dataValueList);
         }
     }
     
@@ -155,17 +155,12 @@ class DataSetPO implements IDataSetPO {
 
     /** {@inheritDoc} */
     public String getValueAt(int column) {
-        String value = getColumns().get(column);
-        if (StringConstants.UNICODE_NULL.equals(value)) {
-            return null;
-        }
-        return value;
+        return getColumns().get(column).getDataValue();
     }
 
     /** {@inheritDoc} */
     public void setValueAt(int column, String value) {
-        getColumns().set(column, StringUtils.defaultIfEmpty(value,
-                StringConstants.UNICODE_NULL));
+        getColumns().set(column, new DataCellPO(value, getParentProjectId()));
     }
     
     /** {@inheritDoc} */
@@ -176,8 +171,7 @@ class DataSetPO implements IDataSetPO {
 
     /** {@inheritDoc} */
     public void addColumn(String value) {
-        getColumns().add(StringUtils.defaultIfEmpty(value,
-                StringConstants.UNICODE_NULL));
+        getColumns().add(new DataCellPO(value, getParentProjectId()));
     }
 
     /** {@inheritDoc} */
@@ -190,33 +184,30 @@ class DataSetPO implements IDataSetPO {
     /**
      * @return the columns
      */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "TEST_DATA_VALUES")
-    @Column(name = "DATA_VALUES", length = MAX_STRING_LENGTH)
+    @OneToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            targetEntity = DataCellPO.class)
     @OrderColumn(name = "IDX")
-    @JoinColumn(name = "TEST_DATA_LIST_ID")
+    @JoinColumn(name = "FK_DATASET_ID")
     @BatchFetch(value = BatchFetchType.JOIN)
-    private List<String> getColumns() {
+    private List<IDataCellPO> getColumns() {
         return m_columns;
     }
 
     /**
      * @param columns the columns to set
      */
-    void setColumns(List<String> columns) {
+    void setColumns(List<IDataCellPO> columns) {
         m_columns = columns;
     }
     
     /** {@inheritDoc} */
     @Transient
-    public List<String> getColumnsCopy() {
+    public List<String> getColumnStringValues() {
         List<String> list = new ArrayList<String>(getColumnCount());
-        for (String string : getColumns()) {
-            if (StringConstants.UNICODE_NULL.equals(string)) {
-                list.add(null);
-            } else {
-                list.add(string);
-            }
+        for (IDataCellPO dataValue : getColumns()) {
+            list.add(dataValue.getDataValue());
         }
         return list;
     }
