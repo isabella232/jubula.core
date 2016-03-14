@@ -473,30 +473,32 @@ public abstract class AbstractDataSetPage extends Page
         final int rowCount = getParamInterfaceObj().getDataManager()
                 .getDataSetCount();
         final AbstractJBEditor editor = (AbstractJBEditor)m_currentPart;
-        editor.getEditorHelper().requestEditableState();
-        if (getParamInterfaceObj() instanceof IExecTestCasePO) {
-            ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
-                    .resolveTDReference();
-            if (!man.equals(getTableViewer().getInput())) {
-                getTableViewer().setInput(man);
+        if (editor.getEditorHelper().requestEditableState()
+                == JBEditorHelper.EditableState.OK) {
+            if (getParamInterfaceObj() instanceof IExecTestCasePO) {
+                ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
+                        .resolveTDReference();
+                if (!man.equals(getTableViewer().getInput())) {
+                    getTableViewer().setInput(man);
+                }
             }
-        }
-        ITDManager tdman = getParamInterfaceObj().getDataManager();
-        if (fromIndex >= 0 && fromIndex < rowCount 
-                && toIndex >= 0 && toIndex < rowCount) {
-            IDataSetPO selectedDataSet = tdman.getDataSet(fromIndex);
-            if (fromIndex > toIndex) {
-                tdman.insertDataSet(selectedDataSet, toIndex);
-                tdman.removeDataSet(fromIndex + 1);
-            } else {
-                tdman.insertDataSet(selectedDataSet, toIndex + 1);
-                tdman.removeDataSet(fromIndex);
+            ITDManager tdman = getParamInterfaceObj().getDataManager();
+            if (fromIndex >= 0 && fromIndex < rowCount
+                    && toIndex >= 0 && toIndex < rowCount) {
+                IDataSetPO selectedDataSet = tdman.getDataSet(fromIndex);
+                if (fromIndex > toIndex) {
+                    tdman.insertDataSet(selectedDataSet, toIndex);
+                    tdman.removeDataSet(fromIndex + 1);
+                } else {
+                    tdman.insertDataSet(selectedDataSet, toIndex + 1);
+                    tdman.removeDataSet(fromIndex);
+                }
+                getTableCursor().setSelection(toIndex,
+                        getTableCursor().getColumn());
+                getTableViewer().refresh();
+                DataEventDispatcher.getInstance().fireParamChangedListener();
+                editor.getEditorHelper().setDirty(true);
             }
-            getTableCursor().setSelection(toIndex, 
-                    getTableCursor().getColumn());
-            getTableViewer().refresh();
-            DataEventDispatcher.getInstance().fireParamChangedListener();
-            editor.getEditorHelper().setDirty(true);
         }
     }
     
@@ -525,31 +527,33 @@ public abstract class AbstractDataSetPage extends Page
      */
     private void insertDataSet(int row) {
         final AbstractJBEditor editor = (AbstractJBEditor)m_currentPart;
-        editor.getEditorHelper().requestEditableState();
-        if (getParamInterfaceObj() instanceof IExecTestCasePO) {
-            ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
-                    .resolveTDReference();
-            if (!man.equals(getTableViewer().getInput())) {
-                getTableViewer().setInput(man);
+        if (editor.getEditorHelper().requestEditableState()
+                == JBEditorHelper.EditableState.OK) {
+            if (getParamInterfaceObj() instanceof IExecTestCasePO) {
+                ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
+                        .resolveTDReference();
+                if (!man.equals(getTableViewer().getInput())) {
+                    getTableViewer().setInput(man);
+                }
             }
+            if (row > -1) {
+                getParamBP().addDataSet(getParamInterfaceObj(), row);
+            } else {
+                // if first data set is added
+                addDataSet();
+            }
+            editor.getEditorHelper().setDirty(true);
+            getTableViewer().refresh();
+            int rowToSelect = row;
+            if (rowToSelect == -1) {
+                rowToSelect = getTable().getItemCount();
+            } else {
+                getTableCursor().setSelection(rowToSelect, 1);
+                setFocus();
+            }
+            getTable().setSelection(rowToSelect);
+            DataEventDispatcher.getInstance().fireParamChangedListener();
         }
-        if (row > -1) {
-            getParamBP().addDataSet(getParamInterfaceObj(), row);
-        } else {
-            // if first data set is added
-            addDataSet();
-        }
-        editor.getEditorHelper().setDirty(true);
-        getTableViewer().refresh();
-        int rowToSelect = row;
-        if (rowToSelect == -1) {
-            rowToSelect = getTable().getItemCount();
-        } else {
-            getTableCursor().setSelection(rowToSelect, 1);
-            setFocus();
-        }
-        getTable().setSelection(rowToSelect);
-        DataEventDispatcher.getInstance().fireParamChangedListener();
     }
     
     /**
@@ -1035,7 +1039,7 @@ public abstract class AbstractDataSetPage extends Page
          */
         private void setValueToModel(Object value, AbstractJBEditor editor,
                 int paramIndex, int dsNumber) {
-            if (editor.getEditorHelper().requestEditableState() 
+            if (editor.getEditorHelper().requestEditableState()
                     == JBEditorHelper.EditableState.OK) {
                 ParamNameBPDecorator mapper = editor.getEditorHelper()
                         .getEditSupport().getParamMapper();
@@ -1295,7 +1299,7 @@ public abstract class AbstractDataSetPage extends Page
         if (editor == null) {
             return;
         }
-        if (editor.getEditorHelper().requestEditableState() 
+        if (editor.getEditorHelper().requestEditableState()
                 == JBEditorHelper.EditableState.OK) {
             if (getParamInterfaceObj() instanceof IExecTestCasePO) {
                 ITDManager man = ((IExecTestCasePO)getParamInterfaceObj())
