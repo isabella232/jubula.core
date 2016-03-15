@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
@@ -37,6 +38,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
@@ -403,8 +405,15 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
                     TestDataControlFactory.createValuePropertyDescriptor(
                             paramCtrl, getParameterNameDescr(desc), 
                             valArray, param.getValueSet().isCombinable());
-                descr.setLabelProvider(
-                        new ParameterValueLabelProvider(INCOMPL_DATA_IMAGE));
+                ILabelProvider labelProvider;
+                if (param.isOptional()) {
+                    labelProvider = new ParameterValueLabelProvider(
+                            IconConstants.OPTIONAL_DATA_IMAGE);
+                } else {
+                    labelProvider = new ParameterValueLabelProvider(
+                            INCOMPL_DATA_IMAGE);
+                }
+                descr.setLabelProvider(labelProvider);
                 descr.setCategory(P_PARAMETER_CAT);                
                 m_initializedParamDescriptors.add(descr);
             }
@@ -432,7 +441,7 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
     }
     
     /**
-     * Updates the Parameters depending on the choosed action
+     * Updates the Parameters depending on the chosen action
      */
     void updateParameters() {
         m_initializedParamDescriptors.clear();

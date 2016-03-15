@@ -17,8 +17,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
- * This class represents the params which belongs to an action.
- * A param has a name and a type.
+ * This class represents the parameter which belongs to an action.
+ * A parameter has a name and a type.
  *
  * @author BREDEX GmbH
  * @created 06.07.2004
@@ -38,6 +38,9 @@ public class Param {
     
     /** a description key for this parameter */
     private String m_descriptionKey;
+    
+    /** whether this parameter is optional */
+    private boolean m_optional = false;
 
     /**
      * Default constructor of param. Do nothing.
@@ -176,5 +179,19 @@ public class Param {
      */
     public void setDescriptionKey(String descriptionKey) {
         m_descriptionKey = descriptionKey;
+    }
+
+    /**
+     * @return the optional
+     */
+    public boolean isOptional() {
+        return m_optional;
+    }
+
+    /**
+     * @param optional the optional to set
+     */
+    public void setOptional(boolean optional) {
+        m_optional = optional;
     }
 }

@@ -30,7 +30,6 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -50,7 +49,6 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
@@ -271,7 +269,6 @@ public class TestresultSummaryBP {
         }
 
         if (node instanceof IParameterInterfacePO) {
-            //set parameters
             addParameterListToResult(keyword, resultNode, 
                     (IParameterInterfacePO)node);
         }
@@ -313,35 +310,19 @@ public class TestresultSummaryBP {
     }
     
     /**
-     * get a list of parameters for cap
      * @param node TestResultNode
      * @param parameterInterface Source for Parameter information.
      * @param keyword ITestResultPO
-     * @return result mit parameter
+     * @return result with parameter
      */
     private ITestResultPO addParameterListToResult(ITestResultPO keyword,
             TestResultNode node, IParameterInterfacePO parameterInterface) {
-        
-        int index = 0;
-        for (IParamDescriptionPO param 
-                : parameterInterface.getParameterList()) {
+        for (TestResultParameter param : node.getParameters()) {
             IParameterDetailsPO parameter = PoMaker.createParameterDetailsPO();
-            
             parameter.setParameterName(param.getName());
-            parameter.setInternalParameterType(param.getType());
-            parameter.setParameterType(CompSystemI18n.getString(
-                    param.getType(), true));
-            
-            String paramValue = StringConstants.EMPTY;
-            //parameter-value
-            List<TestResultParameter> parameters = node.getParameters();
-            if (parameters.size() >= index + 1) {
-                final String value = parameters.get(index).getValue();
-                paramValue = StringUtils.defaultString(value);
-            }
-            parameter.setParameterValue(paramValue);
+            parameter.setParameterType(param.getType());
+            parameter.setParameterValue(param.getValue());
             keyword.addParameter(parameter);
-            index++;
         }
         
         return keyword;

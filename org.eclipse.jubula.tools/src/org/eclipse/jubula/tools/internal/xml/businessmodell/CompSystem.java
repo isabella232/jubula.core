@@ -418,25 +418,6 @@ public class CompSystem {
     }
     
     /**
-     * @return a set of all action parameters.
-     */
-    public Set<Param> getAllParameter() {
-        if (m_parameter != null && !m_parameter.isEmpty()) {
-            return m_parameter;
-        }
-        m_parameter = new HashSet<Param>();
-        final List<Component> components = getComponents();
-        for (Component component : components) {
-            for (Action action : component.getActions()) {
-                for (Param param : action.getParams()) {
-                    m_parameter.add(param);
-                }
-            }
-        }
-        return m_parameter;
-    }
-    
-    /**
      * Returns the component with the specified typeName.
      * 
      * @param typeName

@@ -102,6 +102,7 @@ public class XStreamGenerator {
         stream.aliasField("type", Param.class, "m_type"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("defaultValue", Param.class, "m_defaultValue"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("valueSet", Param.class, "m_valueSet"); //$NON-NLS-1$ //$NON-NLS-2$
+        stream.aliasField("optional", Param.class, "m_optional"); //$NON-NLS-1$ //$NON-NLS-2$
         
         stream.alias("valueSet", ParamValueSet.class); //$NON-NLS-1$
         stream.aliasField("valueSet", ParamValueSet.class, "m_valueSet"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -133,7 +134,7 @@ public class XStreamGenerator {
         
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Param.class, 
-            new String[] {"m_name", "m_descriptionKey"})); //$NON-NLS-1$ //$NON-NLS-2$
+            new String[] {"m_name", "m_descriptionKey", "m_optional"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
                 ParamValueSet.class, "m_isCombinable")); //$NON-NLS-1$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,

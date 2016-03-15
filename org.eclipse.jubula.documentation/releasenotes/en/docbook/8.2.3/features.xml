@@ -136,4 +136,16 @@
    </para>
   </listitem>
  </itemizedlist>
+ <para>
+  <emphasis role="strong">Empty parameters allowed</emphasis>
+ </para>
+ <itemizedlist>
+ <listitem>
+  <para>
+   Now you can leave parameter fields in test steps empty. This might be 
+   helpful, if you use for example the <emphasis>invoke method</emphasis>
+   action and don't need a certain parameter.
+  </para>
+ </listitem>
+ </itemizedlist>
 </section>

@@ -265,9 +265,12 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
         <%}%>
         ) <%if (genInterface) {%>;<%} else {%> {
             <%for (Param parameter : params) {
+            boolean isOptional = parameter.isOptional();
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
+            <%if (!isOptional) {%>
             if (<%=translatedParamName%> == null) return;
+            <%}%>
             
             <%}%>
             AUTRegistry.INSTANCE.get().execute(
@@ -279,6 +282,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
                             .setComponentIdentifier(getPseudoComponentIdentifier())
             <%}%>
             <%for (Param parameter : params) {
+            boolean isOptional = parameter.isOptional();
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
             String paramName = parameter.getName();%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
@@ -287,15 +291,15 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
                 <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
                         <%if (fqParamType.contains("Integer")) {%>
-                            .addParameter(<%=translatedParamName%>.rcIntValue())
+                            .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>.rcIntValue())
                         <%} else {%>
-                            .addParameter(<%=translatedParamName%>.rcValue())
+                            .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>.rcValue())
                         <%}%>
                     <%} else {%>
-                            .addParameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
+                            .add<%if(isOptional){%>Optional<%}%>Parameter(StringUtils.join(<%=translatedParamName%>, TestDataConstants.COMBI_VALUE_SEPARATOR))
                     <%}%>
                 <%} else {%>
-                            .addParameter(<%=translatedParamName%>)
+                            .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>)
                 <%}%>
             <%}%>
                             .build(), null);

@@ -25,7 +25,6 @@ public class Messages extends NLS {
     public static String AddingIAUTEventListener;
     public static String AfterBackslashIn;
     public static String AlreadyLockedCurrentlyLockAttemptFailed;
-    public static String AndDatasetNumberZero;
     public static String AndGUID;
     public static String AndName;
     public static String ApplicationID;
@@ -258,7 +257,6 @@ public class Messages extends NLS {
     public static String OrginalTestcaseLocked;
     public static String OriginalObjectForCreatingOfWorkversionIsNull;
     public static String Param;
-    public static String Parameter;
     public static String ParameterParsingErrorOccurred;
     public static String parametersAreNotValid;
     public static String ParameterWithUniqueId;

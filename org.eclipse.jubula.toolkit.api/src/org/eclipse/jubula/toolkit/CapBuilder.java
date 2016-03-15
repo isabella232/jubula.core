@@ -69,6 +69,15 @@ public class CapBuilder {
      */
     public CapBuilder addParameter(@NonNull String value) {
         Validate.notNull(value);
+        return addOptionalParameter(value);
+    }
+
+    /**
+     * @param value
+     *            the value of the string parameter
+     * @return the modified builder
+     */
+    public CapBuilder addOptionalParameter(@Nullable String value) {
         m_params.add(
                 new MessageParam(String.valueOf(value), STRING_IDENTIFIER));
         return this;
@@ -79,11 +88,20 @@ public class CapBuilder {
      *            the value of the integer parameter
      * @return the modified builder
      */
-    public CapBuilder addParameter(@NonNull Integer value) {
-        Validate.notNull(value);
+    public CapBuilder addOptionalParameter(@Nullable Integer value) {
         m_params.add(
                 new MessageParam(String.valueOf(value), INTEGER_IDENTIFIER));
         return this;
+    }
+
+    /**
+     * @param value
+     *            the value of the integer parameter
+     * @return the modified builder
+     */
+    public CapBuilder addParameter(@NonNull Integer value) {
+        Validate.notNull(value);
+        return addOptionalParameter(value);
     }
 
     /**
@@ -93,6 +111,15 @@ public class CapBuilder {
      */
     public CapBuilder addParameter(@NonNull Boolean value) {
         Validate.notNull(value);
+        return addOptionalParameter(value);
+    }
+
+    /**
+     * @param value
+     *            the value of the boolean parameter
+     * @return the modified builder
+     */
+    public CapBuilder addOptionalParameter(@Nullable Boolean value) {
         m_params.add(
                 new MessageParam(String.valueOf(value), BOOLEAN_IDENTIFIER));
         return this;

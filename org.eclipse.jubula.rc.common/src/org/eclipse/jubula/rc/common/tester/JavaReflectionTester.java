@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.common.tester;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
 
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.interfaces.ITester;
@@ -56,8 +57,12 @@ public abstract class JavaReflectionTester implements ITester {
      * @param argsSplit separator for the Arguments
      * @param timeout the timeout
      */
-    public void rcInvokeMethod(final String fqcn, final String name,
-            final String signature, final String args, final String argsSplit,
+    public void rcInvokeMethod(
+            final String fqcn, 
+            final String name,
+            @Nullable final String signature, 
+            @Nullable final String args, 
+            @Nullable final String argsSplit,
             int timeout) {
         try {
             Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
@@ -82,9 +87,14 @@ public abstract class JavaReflectionTester implements ITester {
      * @return returns the string representation of the return value of the
      *         invoked method
      */
-    public String rcInvokeMethodStoreReturn(final String variableName,
-            final String fqcn, final String name, final String signature,
-            final String args, final String argsSplit, int timeout) {
+    public String rcInvokeMethodStoreReturn(
+            final String variableName,
+            final String fqcn, 
+            final String name, 
+            @Nullable final String signature,
+            @Nullable final String args, 
+            @Nullable final String argsSplit, 
+            int timeout) {
         try {
             Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
                     createCallable(fqcn, name, signature, args, argsSplit),
@@ -105,9 +115,12 @@ public abstract class JavaReflectionTester implements ITester {
      * @param argsSplit separator for the arguments
      * @return the IRunnable object
      */
-    private Callable<Object> createCallable(final String fqcn,
-            final String name, final String signature, final String args,
-            final String argsSplit) {
+    private Callable<Object> createCallable(
+            final String fqcn,
+            final String name, 
+            @Nullable final String signature, 
+            @Nullable final String args,
+            @Nullable final String argsSplit) {
         return new Callable<Object>() {
 
             public Object call() {
@@ -131,7 +144,9 @@ public abstract class JavaReflectionTester implements ITester {
      * @param name name of the Method
      * @param timeout the timeout
      */
-    public void rcInvokeMethod(final String fqcn, final String name,
+    public void rcInvokeMethod(
+            final String fqcn, 
+            final String name,
             int timeout) {
         try {
             Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
@@ -152,8 +167,11 @@ public abstract class JavaReflectionTester implements ITester {
      * @return returns the string representation of the return value of the
      *         invoked method
      */
-    public String rcInvokeMethodStoreReturn(final String variableName,
-            final String fqcn, final String name, int timeout) {
+    public String rcInvokeMethodStoreReturn(
+            final String variableName,
+            final String fqcn, 
+            final String name, 
+            int timeout) {
         try {
             Object result = m_threadQueuer.invokeAndWait("invokeMethod", //$NON-NLS-1$
                     createCallable(fqcn, name), timeout);
