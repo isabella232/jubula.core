@@ -27,7 +27,7 @@
       <programArgsLin>-vm
 ../jre/bin/java</programArgsLin>
       <programArgsWin>-vm
-../jre/bin/javaw</programArgsWin>
+../jre/bin/javaw.exe</programArgsWin>
       <vmArgs>-server
 -Duser.language=en
 -Duser.country=US
