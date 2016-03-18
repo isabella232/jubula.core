@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.extension.swing.test;
 
-import java.util.Locale;
-
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.MakeR;
