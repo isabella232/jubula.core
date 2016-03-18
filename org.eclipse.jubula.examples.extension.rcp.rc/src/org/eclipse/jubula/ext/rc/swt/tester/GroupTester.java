@@ -48,9 +48,9 @@ public class GroupTester extends WidgetTester {
     public void rcVerifyText(String text, String operator)
         throws StepExecutionException {
         final Group group = getGroup();
-        String groupLabelText = (String)getEventThreadQueuer()
-                .invokeAndWait("getText", new IRunnable() { //$NON-NLS-1$
-                    public Object run() {
+        String groupLabelText = getEventThreadQueuer()
+                .invokeAndWait("getText", new IRunnable<String>() { //$NON-NLS-1$
+                    public String run() {
                         return SwtUtils.removeMnemonics(group.getText());
                     }
                 });

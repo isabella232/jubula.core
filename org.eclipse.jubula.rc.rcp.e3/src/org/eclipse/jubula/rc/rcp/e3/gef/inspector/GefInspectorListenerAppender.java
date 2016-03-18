@@ -244,7 +244,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
                 EditPart primaryEditPart = FigureCanvasUtil.getPrimaryEditPart(
                         editPart, viewer.getRootEditPart());
                 List<String> idStringList = Collections.EMPTY_LIST;
-                Map properties = null;
+                Map<String, String> properties = null;
 
                 if (primaryEditPart != null) {
                     idStringList = getPathToRoot(viewer.getRootEditPart(),
@@ -426,7 +426,7 @@ public class GefInspectorListenerAppender implements IAutListenerAppender {
          *         generated.
          */
         private IComponentIdentifier createCompId(List<String> idStringList,
-                Map properties) {
+                Map<String, String> properties) {
             IComponentIdentifier compId = null;
             if (!idStringList.isEmpty()) {
                 Collections.reverse(idStringList);

@@ -58,7 +58,8 @@ public abstract class RcpSwtComponentNamer implements Listener {
             SwtToolkitConstants.RCP_NAME;
 
     /** map for naming dialog buttons */
-    private static Map componentNAMES = new HashMap();
+    private static Map<Integer, String> componentNAMES = 
+            new HashMap<Integer, String>();
 
     /** is name generation enabled */
     private static boolean generateNames = false;
@@ -213,9 +214,9 @@ public abstract class RcpSwtComponentNamer implements Listener {
                     "getButton", new Class[] { int.class }); //$NON-NLS-1$
             getButtonMethod.setAccessible(true);
 
-            Iterator components = componentNAMES.keySet().iterator();
+            Iterator<Integer> components = componentNAMES.keySet().iterator();
             while (components.hasNext()) {
-                Integer componentID = (Integer) components.next();
+                Integer componentID = components.next();
                 invokeNameSetting(dialog, getButtonMethod, componentID,
                         componentNAMES.get(componentID));
             }

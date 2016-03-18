@@ -247,8 +247,8 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
     private void initActionTypes() {
         List <String> tmpList = new ArrayList <String> ();
         List <String> tmpSubList = new ArrayList <String> ();
-        Map map = StringHelper.getInstance().getMap();
-        Map <String, String> helpMap = new HashMap <String, String> ();
+        Map<String, String> map = StringHelper.getInstance().getMap();
+        Map<String, String> helpMap = new HashMap <String, String> ();
         CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
         String compType = ((ICapPO)getPoNode()).getComponentType();
         final Component component = compSystem.findComponent(compType);
@@ -256,7 +256,7 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
         for (Action action : actions) {
             // insert deprecated actions, too
             // because maybe you can find deprecated actions in older projects
-            String actionName = String.valueOf(map.get(action.getName()));
+            String actionName = map.get(action.getName());
             tmpList.add(actionName);
             helpMap.put(actionName, action.getName());
         }

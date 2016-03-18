@@ -304,7 +304,7 @@ public class NewCAPDialog extends TitleAreaDialog {
             m_actionCombo.removeAll();
             return;
         }
-        Map map = StringHelper.getInstance().getMap();
+        Map<String, String> map = StringHelper.getInstance().getMap();
         Component component = ComponentBuilder.getInstance().getCompSystem()
             .findComponent(m_componentCombo.getSelectedObject());
         // If this is a concrete component with default object
@@ -328,12 +328,12 @@ public class NewCAPDialog extends TitleAreaDialog {
         
         final int actionSize = actions.size();
         String[] actionNamesSorted = new String[actionSize];
-        Map <String, String> helpMap = new HashMap <String, String> ();
+        Map<String, String> helpMap = new HashMap <String, String> ();
         for (int i = 0; i < actionSize; i++) {
             Action action = actions.get(i);
             if (!action.isDeprecated()) {
                 String actionName = action.getName();
-                actionNamesSorted[i] = map.get(actionName).toString();
+                actionNamesSorted[i] = map.get(actionName);
                 helpMap.put(actionNamesSorted[i], actionName);
             }
         }

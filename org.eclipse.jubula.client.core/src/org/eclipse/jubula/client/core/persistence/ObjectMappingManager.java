@@ -34,7 +34,7 @@ import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 public class ObjectMappingManager {
 
     /** mapping from AUTs to Object Maps */
-    private Map<IAUTMainPO, Map <IComponentIdentifier, String>> 
+    private Map<IAUTMainPO, Map<IComponentIdentifier, String>> 
         m_objectMappings = 
         new HashMap<IAUTMainPO, Map<IComponentIdentifier, String>>();
 

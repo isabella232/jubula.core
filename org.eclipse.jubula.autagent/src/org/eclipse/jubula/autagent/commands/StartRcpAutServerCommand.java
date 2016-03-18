@@ -88,9 +88,8 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
      * @param parameters The startup parameters for the AUT.
      */
     private void createDirectAutExeCallParameter(List<String> cmds, 
-        Map parameters) { 
-        final String autArgs = 
-            (String)parameters.get(AutConfigConstants.AUT_ARGUMENTS);
+        Map<String, String> parameters) { 
+        final String autArgs = parameters.get(AutConfigConstants.AUT_ARGUMENTS);
         if (autArgs != null) {
             StringTokenizer args = new StringTokenizer(autArgs, 
                 WHITESPACE_DELIMITER);

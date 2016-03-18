@@ -64,7 +64,7 @@ public class AUTServerConfiguration {
      * A cache for implementation class instances
      * key = implementation class name value = implementation class instance
      */
-    private Map m_implClassCache;
+    private Map<String, Object> m_implClassCache;
     
     /**
      * profile for fuzzy logic
@@ -157,7 +157,7 @@ public class AUTServerConfiguration {
      */
     private AUTServerConfiguration() {
         m_implClassNames = new HashMap<String, String>();
-        m_implClassCache = new HashMap();
+        m_implClassCache = new HashMap<String, Object>();
         m_components = new HashSet<ConcreteComponent>();
     }
     

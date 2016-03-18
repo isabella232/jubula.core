@@ -20,7 +20,7 @@ import org.eclipse.jubula.communication.internal.message.GetMonitoringDataRespon
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
+import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +48,7 @@ public class GetMonitoringDataResponseCommand implements ICommand {
         } else {
             result.setMonitoringId(m_message.getMonitoringId());
         }           
-        Map<String, MonitoringValue> monitoringValue = 
+        Map<String, IMonitoringValue> monitoringValue = 
             m_message.getMonitoringValues();      
         if (monitoringValue == null) {
             result.setMonitoringValues(null);

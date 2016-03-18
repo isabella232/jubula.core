@@ -87,7 +87,8 @@ public class SwtRobot {
         { '\t', KeyEvent.VK_TAB, 0 } };
     
     /** a mapping from unicode characters (non-letter,non-digit) to keycodes for US keyboards */
-    private static Map keycodes = new HashMap();
+    private static Map<Character, CharCode> keycodes = 
+           new HashMap<Character, CharCode>();
 
     /** the display associated with this robot */
     private Display m_displayProperty;
@@ -118,12 +119,12 @@ public class SwtRobot {
 
     /**
      * Constructs a <code>Robot</code> object in the coordinate system of the primary screen.
-     * @throws SWTException throwd AWT-Exception
+     * @throws SWTException throw AWT-Exception
      */
     public SwtRobot() throws SWTException {
         try {
             m_robot = new java.awt.Robot();
-            keycodes = new HashMap();
+            keycodes = new HashMap<Character, CharCode>();
             for (int i = 0; i < mappings.length; i++) {
                 keycodes.put(new Character((char)mappings[i][0]), new CharCode(
                         mappings[i][1], mappings[i][2]));
@@ -452,8 +453,7 @@ public class SwtRobot {
                 res[MODIFIER_COUNT + 1] = Character.getNumericValue(
                         Character.toLowerCase((char)keyCode));
             } else { // all other chars on US keyboard
-                CharCode cc = (CharCode)keycodes.get(new Character(
-                        (char)keyCode));
+                CharCode cc = keycodes.get(new Character((char) keyCode));
                 if (cc == null) {
                     res[MODIFIER_COUNT + 1] = KeyEvent.VK_UNDEFINED;
                 } else {
