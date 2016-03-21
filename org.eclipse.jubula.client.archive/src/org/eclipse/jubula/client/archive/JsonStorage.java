@@ -15,14 +15,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.net.URL;
-import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -61,18 +62,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /** @author BREDEX GmbH */
 public class JsonStorage {
-    
-    /** Encoding definition */
-    public static final String UTF_8_CHAR_ENCODING = "UTF-8"; //$NON-NLS-1$
-
-    /** Encoding definition */
-    public static final String RECOMMENDED_CHAR_ENCODING = UTF_8_CHAR_ENCODING;
-    
     /** Extension of project file */
     public static final String PJT = "pjt"; //$NON-NLS-1$
     
@@ -182,16 +177,16 @@ public class JsonStorage {
         exportDTO.setQualifier(
                 ImportExportUtil.DATE_FORMATTER.format(
                         new Date()));
-        exportDTO.setEncoding(RECOMMENDED_CHAR_ENCODING);
+        exportDTO.setEncoding(StandardCharsets.UTF_8.name());
         exportDTO.setVersion(JsonVersion.CURRENTLY_JSON_VERSION);
         
         try (
             FileWriterWithEncoding infoWriter = new FileWriterWithEncoding(
-                    infoFileName, UTF_8_CHAR_ENCODING);
+                    infoFileName, StandardCharsets.UTF_8);
             FileWriterWithEncoding projectWriter = new FileWriterWithEncoding(
-                    projectFileName, RECOMMENDED_CHAR_ENCODING);
+                    projectFileName, StandardCharsets.UTF_8);
             FileWriterWithEncoding resultWriter = new FileWriterWithEncoding(
-                    testResultFileName, RECOMMENDED_CHAR_ENCODING)) {
+                    testResultFileName, StandardCharsets.UTF_8)) {
             
             mapper.writeValue(infoWriter, exportDTO);
             fileList.add(infoFileName);
@@ -260,7 +255,6 @@ public class JsonStorage {
      * @param paramNameMapper 
      * @param compNameCache 
      * @param assignNewGuid 
-     * @param testResultNeeded 
      * @param monitor 
      * @param io console
      * @return IProjectPO new project object 
@@ -271,40 +265,43 @@ public class JsonStorage {
      */
     public IProjectPO readProject(URL url, ParamNameBPDecorator paramNameMapper,
             final IWritableComponentNameCache compNameCache,
-            boolean assignNewGuid, boolean testResultNeeded,
+            boolean assignNewGuid,
             IProgressMonitor monitor, IProgressConsole io)
                     throws JBVersionException, PMReadException,
                     InterruptedException {
 
         SubMonitor subMonitor = SubMonitor.convert(monitor, Messages
-                .ImportFileBPReading, testResultNeeded ? 2 : 1);
+                .ImportFileBPReading, 2);
         IProjectPO projectPO = null;
-        String folderSrc = null;
-        try {
-            monitor.subTask(Messages.ImportJsonStoragePreparing);
-            folderSrc = Files.createTempDirectory(IMPORT_FOLDER_NAME)
-                    .toString();
-            String fileName = url.getPath().substring(
-                    url.getPath().lastIndexOf(File.separatorChar) + 1,
-                    url.getPath().lastIndexOf(StringConstants.DOT));
-            fileName = URLDecoder.decode(fileName, RECOMMENDED_CHAR_ENCODING);
-            String path = URLDecoder.decode(url.getPath(),
-                    RECOMMENDED_CHAR_ENCODING);
-            unZipIt(path, folderSrc);
+        monitor.subTask(Messages.ImportJsonStoragePreparing);
+        try (InputStream urlInputStream = url.openStream();
+             ZipInputStream zipInputStream = new ZipInputStream(
+                     urlInputStream,
+                     StandardCharsets.UTF_8);) {
             ObjectMapper mapper = new ObjectMapper();
-            String infoPath = folderSrc + File.separatorChar + NFO;
-            String projectPath = folderSrc + File.separatorChar + PJT;
-            InputStreamReader inforReader = new InputStreamReader(
-                    new FileInputStream(infoPath), UTF_8_CHAR_ENCODING);
+            mapper.disable(JsonParser.Feature.AUTO_CLOSE_SOURCE);
             
-            ExportInfoDTO exportDTO = mapper.readValue(inforReader,
-                    ExportInfoDTO.class);
+            Map<String, Class> fileTypeMapping = new HashMap<>();
+            fileTypeMapping.put(NFO, ExportInfoDTO.class);
+            fileTypeMapping.put(PJT, ProjectDTO.class);
+            TypeReference tr = new TypeReference<ArrayList<
+                    TestresultSummaryDTO>>() { /* anonymous inner type */ };
+            
+            Map<String, Object> allDTOs = new HashMap<>();
+            for (int i = 0; i < 3; i++) {
+                ZipEntry entry = zipInputStream.getNextEntry();
+                String entryName = entry.getName();
+                Class entryTypeMapping = fileTypeMapping.get(entryName);
+                allDTOs.put(entryName, entryTypeMapping != null
+                        ? mapper.readValue(zipInputStream, entryTypeMapping)
+                                : mapper.readValue(zipInputStream, tr));
+            }
+            
+            ExportInfoDTO exportDTO = (ExportInfoDTO) allDTOs.get(NFO);
             checkMinimumRequiredJSONVersion(exportDTO);
-            InputStreamReader projectReader = new InputStreamReader(
-                    new FileInputStream(projectPath), exportDTO.getEncoding());
+
+            ProjectDTO projectDTO = (ProjectDTO) allDTOs.get(PJT);
             
-            ProjectDTO projectDTO = mapper.readValue(projectReader,
-                    ProjectDTO.class);
             if (projectExists(projectDTO)) {
                 existProjectHandling(io, projectDTO);
                 return null;
@@ -312,19 +309,12 @@ public class JsonStorage {
             projectPO = load(projectDTO, subMonitor.newChild(1), io,
                     assignNewGuid, paramNameMapper, compNameCache, false);
 
-            if (testResultNeeded) {
-                String resultPath = folderSrc + File.separatorChar + RST;
-                InputStreamReader resultReader = new InputStreamReader(
-                      new FileInputStream(resultPath), exportDTO.getEncoding());
-                JsonImporter importer =
-                        new JsonImporter(monitor, io, false);
-                ArrayList<TestresultSummaryDTO> resultDTOs =
-                        mapper.readValue(resultReader, new TypeReference
-                        <ArrayList<TestresultSummaryDTO>>() { });
-                
-                importer.initTestResultSummaries(subMonitor.newChild(1),
-                        resultDTOs, projectPO);
-            }
+            JsonImporter importer = new JsonImporter(monitor, io, false);
+            List<TestresultSummaryDTO> summaryDTOs = 
+                    (List<TestresultSummaryDTO>) allDTOs.get(RST);
+            
+            importer.initTestResultSummaries(subMonitor.newChild(1),
+                    summaryDTOs, projectPO);
         } catch (IOException e) {
             // If the operation has been canceled, then this is just
             // a result of canceling the IO.
@@ -332,10 +322,6 @@ public class JsonStorage {
                 log.info(Messages.GeneralIoExeption);
                 throw new PMReadException(Messages.InvalidImportFile,
                         MessageIDs.E_IO_EXCEPTION);
-            }
-        } finally {
-            if (folderSrc != null) {
-                deleteFiles(Arrays.asList(folderSrc));
             }
         }
 
@@ -444,40 +430,6 @@ public class JsonStorage {
         }
         zos.closeEntry();
         zos.close();
-    }
-    
-    /**
-     * Unzip it
-     * @param zipFile input zip file
-     * @param folderSrc where will be the unziped files  
-     * @throws IOException 
-     */
-    private static void unZipIt(String zipFile, String folderSrc)
-            throws IOException {
-        
-        byte[] buffer = new byte[1024];
-        File folder = new File(folderSrc);
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
-        ZipEntry ze = zis.getNextEntry();
-            
-        while (ze != null) {
-            String fileName = ze.getName();
-            File newFile = new File(folderSrc + File.separator + fileName);
-            new File(newFile.getParent()).mkdirs();
-            FileOutputStream fos = new FileOutputStream(newFile);
-            int len;
-            
-            while ((len = zis.read(buffer)) > 0) {
-                fos.write(buffer, 0, len);
-            }
-            fos.close();   
-            ze = zis.getNextEntry();
-        }
-        zis.closeEntry();
-        zis.close();
     }
     
     /**

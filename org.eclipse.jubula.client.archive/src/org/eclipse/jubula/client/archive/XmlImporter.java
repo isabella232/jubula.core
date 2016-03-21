@@ -245,9 +245,6 @@ class XmlImporter {
         convertUtils.register(converter, Date.class);
     }
     
-    /** number of characters of a GUID */
-    private static final int GUID_LENGTH = 32; 
-    
     /** standard logging */
     private static Logger log = LoggerFactory.getLogger(XmlImporter.class);
     
@@ -337,7 +334,7 @@ class XmlImporter {
 
     /**
      * Creates the instance of the persistent object which is defined by the XML
-     * element used as parameter. The method generates all dependend objects as
+     * element used as parameter. The method generates all dependent objects as
      * well. This method also assigns a new version number to the persistent
      * object.
      * 
@@ -1972,7 +1969,7 @@ class XmlImporter {
             List<String> newUniqueIds = new ArrayList<String>();
             for (String id : uniqueIds) {
                 if (Pattern.matches(
-                    "[0-9a-fA-F]{" + GUID_LENGTH + "}", id) //$NON-NLS-1$ //$NON-NLS-2$
+                    "[0-9a-fA-F]{" + ImportExportUtil.UUID_LENGTH + "}", id) //$NON-NLS-1$ //$NON-NLS-2$
                         && m_oldToNewGuids.containsKey(id)) {
                     // Use new GUID
                     newUniqueIds.add(m_oldToNewGuids.get(id));
@@ -2060,7 +2057,7 @@ class XmlImporter {
             } else {
                 if (uniqueId != null
                     && Pattern.matches(
-                        "[0-9a-fA-F]{" + GUID_LENGTH + "}", uniqueId)) { //$NON-NLS-1$ //$NON-NLS-2$
+                        "[0-9a-fA-F]{" + ImportExportUtil.UUID_LENGTH + "}", uniqueId)) { //$NON-NLS-1$ //$NON-NLS-2$
                     // use the existent guid for parameter
                     tc.addParameter(pdXml.getType(), pdXml.getName(), uniqueId,
                         mapper);

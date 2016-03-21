@@ -25,7 +25,9 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 /**
  * @author BREDEX GmbH
  */
-public class ImportExportUtil {
+public class ImportExportUtil {    
+    /** number of characters of a UUID */
+    public static final int UUID_LENGTH = 32; 
     
     /** offset of test result selection */
     public static final int PAGE_SIZE = 1000;

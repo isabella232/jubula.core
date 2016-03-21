@@ -156,7 +156,7 @@ public interface INodePO extends ITimestampPO {
     public abstract void setToolkitLevel(String toolkitLevel);
     
     /**
-     * Returns the valis staus of the node.<br>
+     * Returns the valid status of the node.<br>
      * Normally all Nodes are valid. only CapPOs with an InvalidComponent
      * should return false.
      * @return true if the Node is valid, false otherwise. 

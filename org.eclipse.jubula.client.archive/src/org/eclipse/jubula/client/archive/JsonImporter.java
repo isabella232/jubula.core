@@ -131,10 +131,6 @@ import org.eclipse.osgi.util.NLS;
 
 /** @author BREDEX GmbH */
 public class JsonImporter {
-    
-    /** number of characters of a GUID */
-    private static final int GUID_LENGTH = 32; 
-
     /** Remember which instance belongs to the id used in the DTO element */
     private Map<String, IAUTMainPO> m_autRef = 
         new HashMap<String, IAUTMainPO>();
@@ -667,7 +663,7 @@ public class JsonImporter {
             } else {
                 if (uniqueId != null
                     && Pattern.matches(
-                        "[0-9a-fA-F]{" + GUID_LENGTH + "}", uniqueId)) { //$NON-NLS-1$ //$NON-NLS-2$
+                        "[0-9a-fA-F]{" + ImportExportUtil.UUID_LENGTH + "}", uniqueId)) { //$NON-NLS-1$ //$NON-NLS-2$
                     // use the existent guid for parameter
                     tc.addParameter(pdDto.getType(), pdDto.getName(), uniqueId,
                         mapper);
@@ -1420,7 +1416,7 @@ public class JsonImporter {
             List<String> newUniqueIds = new ArrayList<String>();
             for (String id : uniqueIds) {
                 if (Pattern.matches(
-                    "[0-9a-fA-F]{" + GUID_LENGTH + "}", id) //$NON-NLS-1$ //$NON-NLS-2$
+                    "[0-9a-fA-F]{" + ImportExportUtil.UUID_LENGTH + "}", id) //$NON-NLS-1$ //$NON-NLS-2$
                         && m_oldToNewGuids.containsKey(id)) {
                     // Use new GUID
                     newUniqueIds.add(m_oldToNewGuids.get(id));
