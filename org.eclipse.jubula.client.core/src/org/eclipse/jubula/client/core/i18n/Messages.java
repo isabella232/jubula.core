@@ -147,6 +147,7 @@ public class Messages extends NLS {
     public static String ErrorReadingFile;
     public static String ErrorSavingChangedComponentName;
     public static String ErrorSavingChangedComponentNameType;
+    public static String ErrorWhenBuildingTestExecutionTree;
     public static String ErrorWhileGettingListOfRegisteredAUTs;
     public static String ErrorWhileNotifyingListeners;
     public static String ErrorWritingComponentNamesToDBOfProjectID;

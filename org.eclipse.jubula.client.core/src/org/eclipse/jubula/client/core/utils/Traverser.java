@@ -50,6 +50,7 @@ import org.eclipse.jubula.tools.internal.exception.IncompleteDataException;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -308,6 +309,11 @@ public class Traverser {
             // always use dataset number 0
             } else if (modelValue != null) {
                 m_execStack.push(new ExecObject(exec, 0));
+            } else {
+                throw new IncompleteDataException(
+                    NLS.bind(Messages.ErrorWhenBuildingTestExecutionTree, 
+                            exec.getParentNode().getName()),
+                    MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA);
             }
         // no data sets or fixed value
         } else {
