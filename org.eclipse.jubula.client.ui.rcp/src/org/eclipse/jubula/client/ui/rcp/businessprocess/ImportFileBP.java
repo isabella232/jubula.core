@@ -222,7 +222,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                 public void run() {
                     Bundle b = Platform.getBundle(Plugin.PLUGIN_ID);
                     Enumeration e = b.findEntries(
-                            "resources/library/", "*.xml", false); //$NON-NLS-1$//$NON-NLS-2$
+                            "resources/library/", "*.jub", false); //$NON-NLS-1$//$NON-NLS-2$
                     List<URL> unboundModuleURLs = new ArrayList<URL>();
 
                     while (e.hasMoreElements()) {
