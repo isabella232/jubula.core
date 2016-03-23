@@ -29,7 +29,7 @@
 <unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.5.0.v201504151636"/>
 <unit id="com.fasterxml.jackson.core.jackson-core" version="2.5.0.v201504151636"/>
 <unit id="com.fasterxml.jackson.core.jackson-databind" version="2.5.0.v201504151636"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20151221205849/repository"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20160308060251/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.core.runtime.compatibility" version="0.0.0"/>
