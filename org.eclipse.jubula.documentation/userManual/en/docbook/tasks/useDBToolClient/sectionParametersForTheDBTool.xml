@@ -162,8 +162,8 @@
           <row>
             <entry>Create Version</entry>
             <entry>
-              <emphasis role="input">-createversion &lt;project-name&gt; &lt;old-version&gt; &lt;new-version&gt;</emphasis><?linebreak?>
-              e.g. <emphasis>-createversion "MyProject" "1.0" "1.1"</emphasis><?linebreak?>
+              <emphasis role="input">-createVersion &lt;project-name&gt; &lt;old-version&gt; &lt;new-version&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-createVersion "MyProject" "1.0" "1.1"</emphasis><?linebreak?>
               For information on versioning projects, see: <xref linkend="creating-new-versions"/><?linebreak?>
               For information on how to enter version numbers, see the section below 
               (<xref linkend="dbtool-working-with-versions"/>).
