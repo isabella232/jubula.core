@@ -20,6 +20,13 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
  *
  */
 public class SingleJobRule implements ISchedulingRule {
+
+    /** the rule for the ui completeness Job */
+    public static final ISchedulingRule COMPLETENESSRULE = new SingleJobRule();
+
+    /** the rule for the teststyle Job */
+    public static final ISchedulingRule TESTSTYLERULE = new SingleJobRule();
+
     /**
      * {@inheritDoc}
      */

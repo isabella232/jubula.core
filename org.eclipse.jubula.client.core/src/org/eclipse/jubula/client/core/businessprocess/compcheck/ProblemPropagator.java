@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -45,7 +46,11 @@ public enum ProblemPropagator {
         if (project != null) {
             Job pp = new ProblemPropagationJob(
                     Messages.ProblemPropagationJobName, project);
-            pp.setRule(PROPAGATIONRULE);
+            pp.setRule(
+                new MultiRule(new ISchedulingRule[]{
+                    SingleJobRule.COMPLETENESSRULE,
+                    ProblemPropagator.PROPAGATIONRULE,
+                    SingleJobRule.TESTSTYLERULE}));
             pp.schedule(1000);
             
             for (Job job : Job.getJobManager().find(pp)) {

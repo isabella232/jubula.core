@@ -14,6 +14,10 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -33,6 +37,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.rules.SingleJobRule;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.teststyle.checks.BaseCheck;
@@ -41,6 +46,8 @@ import org.eclipse.jubula.client.teststyle.checks.contexts.BaseContext;
 import org.eclipse.jubula.client.teststyle.gui.TeststyleProblemAdder;
 import org.eclipse.jubula.client.teststyle.gui.decoration.DecoratorHandler;
 import org.eclipse.jubula.client.teststyle.problems.ProblemCont;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.JobUtils;
 
 
 /**
@@ -52,6 +59,60 @@ import org.eclipse.jubula.client.teststyle.problems.ProblemCont;
 public final class TeststyleHandler implements IDataChangedListener,
         IProjectLoadedListener, IProjectStateListener {
 
+    /**
+     * Job which is updating the teststyle problems in the nodes
+     * @author BREDEX GmbH
+     *
+     */
+    class TestStyleJob extends Job {
+
+        /** the data changed events to process */
+        private DataChangedEvent[] m_events;
+
+        /**
+         * 
+         * @param name the name of the Job
+         * @param events the {@link DataChangedEvent} to process
+         */
+        public TestStyleJob(String name, DataChangedEvent... events) {
+            super(name);
+            this.m_events = events;
+        }
+        /** {@inheritDoc} */
+        public boolean belongsTo(Object family) {
+            if (family instanceof TestStyleJob) {
+                return true;
+            }
+            return super.belongsTo(family);
+        }
+        @Override
+        protected IStatus run(IProgressMonitor monitor) {
+            if (monitor.isCanceled()) {
+                return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
+                        getName());
+            }
+            monitor.beginTask(Messages.CompletenessCheckRunningOperation,
+                    IProgressMonitor.UNKNOWN);
+            for (DataChangedEvent e : m_events) {
+                handleChangedPo(e.getPo(), e.getDataState(),
+                        e.getUpdateState());
+            }
+            if (monitor.isCanceled()) {
+                return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
+                        getName());
+            }
+            refresh();
+            if (monitor.isCanceled()) {
+                return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
+                        getName());
+            }
+            addTeststyleProblems(monitor);
+            ProblemPropagator.INSTANCE.propagate();
+            monitor.done();
+            return new Status(IStatus.OK, Activator.PLUGIN_ID, getName());
+        }
+
+    }
     /** singleton */
     private static TeststyleHandler instance;
 
@@ -82,6 +143,7 @@ public final class TeststyleHandler implements IDataChangedListener,
         }
         ExtensionHelper.initCheckConfiguration();
         checkEverything();
+        ProblemPropagator.INSTANCE.propagate();
     }
 
     /** {@inheritDoc} */
@@ -89,18 +151,20 @@ public final class TeststyleHandler implements IDataChangedListener,
         if (!isEnabled()) {
             return;
         }
+        
         boolean isUpdateInEditor = true;
         for (DataChangedEvent e : events) {
             if (e.getUpdateState() != UpdateState.onlyInEditor) {
-                handleChangedPo(e.getPo(), e.getDataState(),
-                        e.getUpdateState());
-                isUpdateInEditor = false;
+                TestStyleJob tj = new TestStyleJob("Teststyle", events); //$NON-NLS-1$
+                tj.setRule(SingleJobRule.TESTSTYLERULE);
+                JobUtils.executeJob(tj, null);
+                for (Job job : Job.getJobManager().find(tj)) {
+                    if (job != tj) {
+                        job.cancel();
+                    }
+                }
+                return;
             }
-        }
-        if (!isUpdateInEditor) {
-            refresh();
-            addTeststyleProblems();
-            ProblemPropagator.INSTANCE.propagate();
         }
     }
     
@@ -195,14 +259,20 @@ public final class TeststyleHandler implements IDataChangedListener,
         }
         
         refresh();
-        addTeststyleProblems();
+        addTeststyleProblems(null);
     }
 
-    /** */
-    private void addTeststyleProblems() {
+    /**
+     * 
+     * @param monitor a monitor or null<code>null</code>
+     */
+    private void addTeststyleProblems(IProgressMonitor monitor) {
         IProjectPO project = GeneralStorage.getInstance().getProject();
         final ITreeNodeOperation<INodePO> op = new TeststyleProblemAdder();
         final TreeTraverser traverser = new TreeTraverser(project, op);
+        if (monitor != null) {
+            traverser.setMonitor(monitor);
+        }
         traverser.traverse(true);
     }
 

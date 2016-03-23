@@ -63,6 +63,7 @@ public class Messages extends NLS {
     public static String QuickfixOpenCTDEditor;
     public static String QuickfixSelectCategory;
     public static String QuickfixOpenTestJob;
+    public static String TestStyleRunningOperation;
 
     
 

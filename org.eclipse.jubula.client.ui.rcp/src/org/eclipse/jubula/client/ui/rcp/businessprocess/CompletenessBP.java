@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.rules.SingleJobRule;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
@@ -127,7 +128,13 @@ public class CompletenessBP implements IProjectStateListener {
                 workbench.getDecoratorManager().setEnabled(
                         Constants.CC_DECORATOR_ID, false);
                 Job cc = new UICompletenessCheckOperation("Completeness Check"); //$NON-NLS-1$
+                cc.setRule(SingleJobRule.COMPLETENESSRULE);
                 JobUtils.executeJob(cc, null);
+                for (Job job : Job.getJobManager().find(cc)) {
+                    if (job != cc) {
+                        job.cancel();
+                    }
+                }
             } catch (CoreException e) {
                 log.error(e.getLocalizedMessage(), e);
             }
@@ -157,11 +164,6 @@ public class CompletenessBP implements IProjectStateListener {
         
         /** {@inheritDoc} */
         public IStatus run(IProgressMonitor monitor) {
-            for (Job job : getJobManager().find(this)) {
-                if (job != this) {
-                    job.cancel();
-                }
-            }
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             
             monitor.beginTask(Messages.CompletenessCheckRunningOperation,
