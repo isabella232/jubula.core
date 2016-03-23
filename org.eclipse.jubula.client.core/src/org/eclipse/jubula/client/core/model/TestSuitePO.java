@@ -95,12 +95,12 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
      *
      */
     private void init() {
-        Map map = ComponentBuilder.getInstance().getCompSystem()
-            .getEventTypes();
+        Map<String, Integer> map = ComponentBuilder.getInstance()
+                .getCompSystem().getEventTypes();
         Set mapKeySet = map.keySet();
         for (Object object : mapKeySet) {
             String key = (String)object;
-            getDefaultEventHandler().put(key, (Integer)map.get(key));
+            getDefaultEventHandler().put(key, map.get(key));
         }            
     }
     
@@ -196,15 +196,16 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     @Column(name = "REENTRY")
     // No @BatchFetch(value = BatchFetchType.JOIN) here, as it was causing
     // an NPE when deleting (with dbtool) a Project that contains Test Suites.
-    public Map < String, Integer > getDefaultEventHandler() {
+    public Map<String, Integer> getDefaultEventHandler() {
         return m_defaultEventHandler;
     }
 
     /**
-     * @param defaultEventHandler The defaultEventHandler to set.
+     * @param defaultEventHandler
+     *            The defaultEventHandler to set.
      */
     public void setDefaultEventHandler(
-        Map < String, Integer > defaultEventHandler) {
+            Map<String, Integer> defaultEventHandler) {
         // only for conversion of old projects
         if (defaultEventHandler != null) {
             m_defaultEventHandler = defaultEventHandler;

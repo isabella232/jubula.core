@@ -40,8 +40,8 @@ import org.eclipse.swt.graphics.Point;
 public class TestResultTreeViewLabelProvider extends CellLabelProvider
         implements ILabelProvider {
     /** ImageCache */
-    private static Map < ImageDescriptor, Image > imageCache = 
-        new HashMap < ImageDescriptor, Image > ();
+    private static Map<ImageDescriptor, Image> imageCache = 
+           new HashMap<ImageDescriptor, Image>();
 
     /**
      *  

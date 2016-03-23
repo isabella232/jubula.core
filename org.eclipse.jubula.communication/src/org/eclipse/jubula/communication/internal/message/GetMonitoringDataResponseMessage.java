@@ -13,6 +13,7 @@ package org.eclipse.jubula.communication.internal.message;
 import java.util.Map;
 
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
+import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 
 /**
  * @author BREDEX GmbH
@@ -22,8 +23,8 @@ public class GetMonitoringDataResponseMessage extends Message {
     /** The profiling agent id */
     private String m_monitoringId;
 
-    /** Additonal Monitoring Values */
-    private Map m_monitoringValues;
+    /** Additional Monitoring Values */
+    private Map<String, IMonitoringValue> m_monitoringValues;
 
     /** {@inheritDoc} */
     public String getCommandClass() {
@@ -43,8 +44,8 @@ public class GetMonitoringDataResponseMessage extends Message {
         m_monitoringId = monitoringId;
     }
 
-    /** @return Map containing additonal Monitroing values */
-    public Map getMonitoringValues() {
+    /** @return Map containing additional Monitoring values */
+    public Map<String, IMonitoringValue> getMonitoringValues() {
         return m_monitoringValues;
     }
 
@@ -52,7 +53,7 @@ public class GetMonitoringDataResponseMessage extends Message {
      * @param map
      *            The map to set
      */
-    public void setMonitoringValues(Map map) {
+    public void setMonitoringValues(Map<String, IMonitoringValue> map) {
         this.m_monitoringValues = map;
     }
 }

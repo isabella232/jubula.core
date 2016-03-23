@@ -559,12 +559,4 @@ public class CheckListener extends AbstractAutSwtEventListener {
         //addFocExistEnbl(valueMap, hasFocus, exists, enabled);
         return map;
     }
-    
-    /**
-     * @param widget Widget
-     * @return MenuItem values to check
-     */
-    /*protected Map getMenuItemValues(Widget widget) {
-        // checks on menuitems not yet realized
-    }*/
 }

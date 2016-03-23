@@ -54,7 +54,8 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
     /**
      * {@inheritDoc}
      */
-    protected String[] createCmdArray(String baseCmd, Map parameters) {
+    protected String[] createCmdArray(String baseCmd, 
+            Map<String, String> parameters) {
         Vector<String> commands = new Vector<String>();
         commands.add(baseCmd);
         addDebugParams(commands, false);

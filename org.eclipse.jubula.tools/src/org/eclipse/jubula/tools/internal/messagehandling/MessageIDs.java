@@ -632,7 +632,7 @@ public class MessageIDs {
     
     // ---------------------------------------------------------------------
     /** key = message id, message object */
-    private static MessageMap<Integer, Message> messageMap = null;
+    private static MessageMap messageMap = null;
     
     /**
      * Private constructor.
@@ -650,7 +650,7 @@ public class MessageIDs {
         if (id == null) {
             return I18n.getString("ErrorMessage.generalInternalError"); //$NON-NLS-1$
         }
-        return ((Message)messageMap.get(id)).getMessage(null);  
+        return messageMap.get(id).getMessage(null);  
     }
 
     /**
@@ -658,7 +658,7 @@ public class MessageIDs {
      */
     private static void initErrorMap() {
         if (messageMap == null) {
-            messageMap = new MessageMap<Integer, Message>();
+            messageMap = new MessageMap();
             createIOErrorMessages(); 
             createDatabaseErrorMessages(); 
             createGeneralErrorMessages();            
@@ -1043,27 +1043,23 @@ public class MessageIDs {
      * @return the message object
      */
     public static Message getMessageObject(Integer id) {
-        initErrorMap();
-        return (Message)messageMap.get(id);
+        return getMessageMap().get(id);
     }
     
     /**
      * @return the message map
      */
-    public static Map getMessageMap() {
+    public static Map<Integer, Message> getMessageMap() {
         initErrorMap();
         return messageMap;
     }
     
     /**
-     * MessageMap for GUIdancer messages.
+     * MessageMap for ITE messages.
      * @author BREDEX GmbH
      * @created 10.05.2006
-     * 
-     * @param <K> the keys type
-     * @param <V> the values type
      */
-    private static class MessageMap<K, V> extends HashMap {
+    private static class MessageMap extends HashMap<Integer, Message> {
 
         /**
          * @param id The id of the message.
@@ -1073,19 +1069,10 @@ public class MessageIDs {
          * @param details The details text or null (if you don't need details).
          * @return see: HashMap.put(Object key, Object value);
          */
-        public Object put(Integer id, int severity, String message, 
+        public Message put(Integer id, int severity, String message,
                 String[] details) {
             Message value = new Message(id, severity, message, details);
             return super.put(id, value);
-        }
-
-        /**
-         * {@inheritDoc}
-         * @deprecated use put(Integer id, int severity, String message, 
-                String details) instead
-         */
-        public Object put(Object key, Object value) {
-            return super.put(key, value);
         }
     }
 }

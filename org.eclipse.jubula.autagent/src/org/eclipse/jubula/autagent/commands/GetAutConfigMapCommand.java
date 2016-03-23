@@ -23,50 +23,54 @@ import org.slf4j.LoggerFactory;
 /**
  * @author BREDEX GmbH
  * @created 05.08.2010
- * */
+ */
 public class GetAutConfigMapCommand implements ICommand {
 
     /** the logger */
     private static final Logger LOG = LoggerFactory
-            .getLogger(GetAutConfigMapCommand.class);    
-   
+            .getLogger(GetAutConfigMapCommand.class);
+
     /** The GetAutConfigMapMessage */
     private GetAutConfigMapMessage m_message;
-      
+
     /** The autConfigMap to return */
-    private Map m_autConfigMap;
-    
+    private Map<String, String> m_autConfigMap;
+
     /**
      * {@inheritDoc}
      */
     public Message execute() {
-       
+
         MonitoringDataStore cm = MonitoringDataStore.getInstance();
         m_autConfigMap = cm.getConfigMap(m_message.getAutId());
-        GetAutConfigMapResponseMessage message = new 
-                            GetAutConfigMapResponseMessage(m_autConfigMap);    
+        GetAutConfigMapResponseMessage message = 
+                new GetAutConfigMapResponseMessage(
+                        m_autConfigMap);
         return message;
     }
+
     /**
      * {@inheritDoc}
      */
     public Message getMessage() {
-       
+
         return m_message;
     }
+
     /**
      * {@inheritDoc}
      */
     public void setMessage(Message message) {
-        
-        m_message = (GetAutConfigMapMessage)message;
+
+        m_message = (GetAutConfigMapMessage) message;
 
     }
+
     /**
      * {@inheritDoc}
      */
     public void timeout() {
-        
+
         LOG.error(this.getClass().getName() + ".timeout() called"); //$NON-NLS-1$
 
     }

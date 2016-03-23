@@ -53,7 +53,7 @@ public class StringHelper {
     /**
      * Comment for <code>m_map</code>
      */
-    private Map < String, String > m_map = null;
+    private Map<String, String> m_map = null;
     
     
 
@@ -165,7 +165,7 @@ public class StringHelper {
     /**
      * @return Returns the m_map.
      */
-    public Map < String, String > getMap() {
+    public Map<String, String> getMap() {
         return m_map;
     }
     /**

@@ -28,8 +28,8 @@ import org.eclipse.ui.PlatformUI;
  */
 public class IconConstants {
     /** m_imageCache */
-    public static final Map < ImageDescriptor, Image > CACHE = 
-        new HashMap < ImageDescriptor, Image > ();
+    public static final Map<ImageDescriptor, Image> 
+        CACHE = new HashMap<ImageDescriptor, Image>();
     /** error image */
     public static final Image ERROR_IMAGE = getImage("error.gif"); //$NON-NLS-1$
     /** warning image */

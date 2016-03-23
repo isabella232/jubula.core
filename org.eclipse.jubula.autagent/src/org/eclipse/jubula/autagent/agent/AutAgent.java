@@ -655,18 +655,15 @@ public class AutAgent {
      * @param message The startup information.
      */
     public void setStartAutMessage(StartAUTServerMessage message) {
-        Map autConfig = message.getAutConfiguration();
-        Object autIdObj = autConfig.get(AutConfigConstants.AUT_ID);
-        if (autIdObj instanceof String) {
-            AutIdentifier autId = new AutIdentifier((String)autIdObj);
-            synchronized (m_auts) {
-                if (!m_auts.containsKey(autId)) {
-                    m_autIdToRestartHandler.put(
-                        autId, new RestartAutConfiguration(autId, message));
-                }
+        Map<String, String> autConfig = message.getAutConfiguration();
+        String autExecName = autConfig.get(AutConfigConstants.AUT_ID);
+        AutIdentifier autId = new AutIdentifier(autExecName);
+        synchronized (m_auts) {
+            if (!m_auts.containsKey(autId)) {
+                m_autIdToRestartHandler.put(
+                    autId, new RestartAutConfiguration(autId, message));
             }
         }
-        
     }
     
     /**

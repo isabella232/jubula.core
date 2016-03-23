@@ -38,8 +38,8 @@ public final class DefaultEventHandler {
      * <code>handlerMap</code><br>
      * Map with defaultEventHandler for each eventType (key)
      */
-    private static Map < String, IEventExecTestCasePO > handlerMap = 
-        new HashMap < String, IEventExecTestCasePO > ();
+    private static Map<String, IEventExecTestCasePO> handlerMap = 
+           new HashMap<String, IEventExecTestCasePO>();
     
     /**
      * private constructor
@@ -73,8 +73,8 @@ public final class DefaultEventHandler {
         handlerMap = new HashMap < String, IEventExecTestCasePO > ();
         if (rootNode instanceof ITestSuitePO) {
             ITestSuitePO testSuite = (ITestSuitePO)rootNode;
-            Map < String, Integer > map = testSuite.getDefaultEventHandler();
-            Set < String > mapKeySet = map.keySet();
+            Map<String, Integer> map = testSuite.getDefaultEventHandler();
+            Set<String> mapKeySet = map.keySet();
             for (String key : mapKeySet) {
                 try {
                     handlerMap.put(key, createHandler(key, 

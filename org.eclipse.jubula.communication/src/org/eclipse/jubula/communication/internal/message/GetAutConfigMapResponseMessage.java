@@ -20,7 +20,7 @@ import org.eclipse.jubula.tools.internal.constants.CommandConstants;
  */
 public class GetAutConfigMapResponseMessage extends Message {
     /** The returned AutConfigMap from the agent */
-    private Map m_autConfigMap;
+    private Map<String, String> m_autConfigMap;
 
     /**
      * default constructor
@@ -35,7 +35,7 @@ public class GetAutConfigMapResponseMessage extends Message {
      * @param autConfigMap
      *            The autConfigMap
      */
-    public GetAutConfigMapResponseMessage(Map autConfigMap) {
+    public GetAutConfigMapResponseMessage(Map<String, String> autConfigMap) {
         m_autConfigMap = autConfigMap;
     }
 
@@ -45,7 +45,7 @@ public class GetAutConfigMapResponseMessage extends Message {
     }
 
     /** @return The autConfigMap form the Agent */
-    public Map getAutConfigMap() {
+    public Map<String, String> getAutConfigMap() {
         return m_autConfigMap;
     }
 
@@ -53,7 +53,7 @@ public class GetAutConfigMapResponseMessage extends Message {
      * @param autConfigMap
      *            the autConfigMap, set by the agent
      */
-    public void setAutConfigMap(Map autConfigMap) {
+    public void setAutConfigMap(Map<String, String> autConfigMap) {
         this.m_autConfigMap = autConfigMap;
     }
 }
