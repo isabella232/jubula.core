@@ -78,7 +78,7 @@ public class JsonStorage {
     public static final String NFO = "nfo"; //$NON-NLS-1$
     
     /** */
-    private static final String IMPORT_FOLDER_NAME = "JubImportTemp"; //$NON-NLS-1$
+    private static final String TMP_EXCHANGE_FOLDER_NAME = "JubArchiveTemp"; //$NON-NLS-1$
     
     /** Standard logging */
     private static Logger log = LoggerFactory.getLogger(JsonStorage.class);
@@ -163,8 +163,8 @@ public class JsonStorage {
             String fileName, boolean includeTestResultSummaries)
                     throws ProjectDeletedException, PMException, IOException {
         
-        String dir = Files.createTempDirectory(IMPORT_FOLDER_NAME).toString()
-                + File.separatorChar;
+        String dir = Files.createTempDirectory(TMP_EXCHANGE_FOLDER_NAME)
+                .toString() + File.separatorChar;
         String infoFileName = dir + NFO;
         String projectFileName = dir + PJT;
         String testResultFileName = dir + RST;
@@ -370,15 +370,15 @@ public class JsonStorage {
     private void existProjectHandling(IProgressConsole io,
             ProjectDTO projectDTO) {
         
-        String msg = NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED,
+        String msg = NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_FAILED,
                 new String [] {ProjectNameBP.getInstance().getName(
                         projectDTO.getUuid(), false)})
             + StringConstants.NEWLINE
-            + NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING,
+            + NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_FAILED_EXISTING,
                 new String [] {projectDTO.getName(),
                         projectDTO.getProjectVersion().toString()});
         
-        io.writeStatus(new Status(IStatus.INFO, Activator.PLUGIN_ID, msg));
+        io.writeStatus(new Status(IStatus.WARNING, Activator.PLUGIN_ID, msg));
     }
 
     /**

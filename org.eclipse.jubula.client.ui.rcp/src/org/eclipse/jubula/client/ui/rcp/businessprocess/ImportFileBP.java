@@ -25,7 +25,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.archive.businessprocess.FileStorageBP;
 import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResolver;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.AbstractRunnableWithProgress;
@@ -36,13 +35,11 @@ import org.eclipse.jubula.client.core.utils.IDatabaseStateListener;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.ComboBoxDialog;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.OpenProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.OpenProjectHandler.OpenProjectOperation;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
@@ -102,17 +99,15 @@ public class ImportFileBP implements IProjectNameConflictResolver,
     }     
 
     /**
-     * Imports a choosed project from a file.
-     * 
-     * @param elements
-     *            What to import ? 0 = all >0 = elements
+     * Imports a chosen project from a file.
      * @param fileURLs
      *            The URLs of the files to import.
      * @param openProject
      *            Flag indicating whether the imported project should be 
      *            immediately opened after import.
      */
-    public void importProject(final int elements, final List<URL> fileURLs, 
+    public void importProject(
+            final List<URL> fileURLs, 
             final boolean openProject) {
         try {
             if (fileURLs == null) {
@@ -125,19 +120,11 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                         throws InterruptedException {
                         monitor.setTaskName(Messages.
                                 ImportFileBPWaitWhileImporting);
-                        try {
-                            setResult(FileStorageBP.importProject(
-                                elements, fileURLs, 
-                                monitor, Plugin.getDefault(), openProject));
-                            Persistor.instance().updateDbStatistics();
-                            ProjectPM.clearCaches();
-                        } catch (PMException pme) {
-                            PMExceptionHandler
-                                .handlePMExceptionForMasterSession(pme);
-                        } catch (ProjectDeletedException gdpde) {
-                            PMExceptionHandler
-                                .handleProjectDeletedException();
-                        }
+                        setResult(FileStorageBP.importProject(
+                            fileURLs, monitor, 
+                            Plugin.getDefault(), openProject));
+                        Persistor.instance().updateDbStatistics();
+                        ProjectPM.clearCaches();
                     }
                 
                 };
@@ -186,16 +173,8 @@ public class ImportFileBP implements IProjectNameConflictResolver,
         List<URL> fileURLs = importInfo.getFileURLs();
         boolean openProject = importInfo.getIsOpenProject();
 
-        try {
-            FileStorageBP.importProject(0, fileURLs, monitor, 
-                    Plugin.getDefault(), openProject);
-        } catch (PMException pme) {
-            PMExceptionHandler
-                .handlePMExceptionForMasterSession(pme);
-        } catch (ProjectDeletedException gdpde) {
-            PMExceptionHandler
-                .handleProjectDeletedException();
-        }
+        FileStorageBP.importProject(fileURLs, monitor, Plugin.getDefault(), 
+                openProject);
     }
     
     /**
@@ -229,7 +208,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                         unboundModuleURLs.add((URL)e.nextElement());
                     }
                     // load all elements;
-                    importProject(0, unboundModuleURLs, false);
+                    importProject(unboundModuleURLs, false);
                 }
             });
             return Status.OK_STATUS;
@@ -279,7 +258,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
      * Report to the user that the import operation was cancelled.
      * 
      * @param console
-     *              The console to use to display pogress and 
+     *              The console to use to display progress and 
      *              error messages.
      */
     private void showCancelImport(IProgressConsole console) {

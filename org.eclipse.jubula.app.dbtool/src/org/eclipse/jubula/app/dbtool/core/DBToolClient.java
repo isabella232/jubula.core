@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.cmd.utils.VersionStringUtils;
 import org.eclipse.jubula.client.cmd.utils.VersionStringUtils.MalformedVersionException;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
@@ -43,7 +42,6 @@ import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
@@ -329,10 +327,6 @@ public class DBToolClient extends AbstractCmdlineClient {
             List<URL> fileURLs = new ArrayList<URL>(1);
             fileURLs.add(impFile.toURI().toURL());
             FileStorageBP.importFiles(fileURLs, monitor, this, false);
-        } catch (PMException pme) {
-            writeErrorLine(pme.getLocalizedMessage());
-        } catch (ProjectDeletedException gdpde) {
-            writeErrorLine(gdpde.getLocalizedMessage());
         } catch (MalformedURLException e) {
             writeErrorLine(e.getLocalizedMessage());
         }

@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.archive.businessprocess;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,10 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import org.apache.commons.lang.Validate;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -39,9 +36,7 @@ import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResol
 import org.eclipse.jubula.client.archive.errorhandling.NullProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
@@ -53,23 +48,15 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.ICategoryPO;
-import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
-import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
@@ -77,10 +64,6 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
-import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
-import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
-import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -88,8 +71,6 @@ import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.version.IVersion;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,10 +95,6 @@ public class FileStorageBP {
      * @created Jan 9, 2008
      */
     private static class ReadFilesOperation implements IRunnableWithProgress {
-    
-        /** indicates what part(s) of the project(s) will be imported */
-        private boolean m_isImportWholeProjects;
-    
         /** 
          * mapping: projects to import => corresponding param name mapper 
          */
@@ -138,19 +115,14 @@ public class FileStorageBP {
         /**
          * Constructor
          * 
-         * @param isImportWholeProjects 
-         *              <code>true</code> if entire projects are being imported.
-         *              <code>false</code> if only components (TCs, AUTs, etc.)
-         *              are being imported.
          * @param fileURLs
          *              URLs of the project files to read.
          * @param console
          *              The console to use to display progress and 
          *              error messages.
          */
-        public ReadFilesOperation(boolean isImportWholeProjects, 
+        public ReadFilesOperation(
                 List<URL> fileURLs, IProgressConsole console) {
-            m_isImportWholeProjects = isImportWholeProjects;
             m_fileURLs = fileURLs;
             m_projectToMapperMap = 
                 new LinkedHashMap<IProjectPO, List<INameMapper>>();
@@ -197,11 +169,11 @@ public class FileStorageBP {
                         } else if (fileExt.equals(JUB)) {
                             proj = new JsonStorage().readProject(
                                     fileURL, paramNameMapper, compNameCache,
-                                    !m_isImportWholeProjects,
+                                    false,
                                     subMonitor.newChild(1), m_console);
                         }
                         if (proj == null) {
-                            throw new InterruptedException();
+                            continue;
                         }
                         List<INameMapper> mapperList = 
                             new ArrayList<INameMapper>();
@@ -543,8 +515,9 @@ public class FileStorageBP {
                 monitor.beginTask(StringConstants.EMPTY, getTotalWork(proj));
                 monitor.subTask(Messages.ImportFileBPSaveToDB);
                 // Register Persistence (JPA / EclipseLink) progress listeners
-                ProgressMonitorTracker.getInstance().setProgressMonitor(
-                        monitor);
+                ProgressMonitorTracker tracker = 
+                        ProgressMonitorTracker.getInstance();
+                tracker.setProgressMonitor(monitor);
                 List<INameMapper> mapperList = m_projectToMapperMap.get(proj);
                 List<IWritableComponentNameMapper> compNameBindingList = 
                     m_projectToCompCacheMap.get(proj);
@@ -553,8 +526,7 @@ public class FileStorageBP {
                             mapperList, compNameBindingList);
                 } finally {
                     // Remove JPA progress listeners
-                    ProgressMonitorTracker.getInstance().setProgressMonitor(
-                            null);
+                    tracker.setProgressMonitor(null);
                 }
                 UsedToolkitBP.getInstance().refreshToolkitInfo(proj);
                 return true;
@@ -856,10 +828,10 @@ public class FileStorageBP {
                 ProjectVersion version) {
             
             console.writeErrorLine(
-                    NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED,
-                            new String [] {importName}));
+                    NLS.bind(Messages.ErrorMessageIMPORT_PROJECT_FAILED,
+                            importName));
             console.writeErrorLine(NLS.bind(
-                    Messages.ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING,
+                    Messages.ErrorMessageIMPORT_PROJECT_FAILED_EXISTING,
                     new String[] { existingName, version.toString() }));
         }
     
@@ -873,10 +845,6 @@ public class FileStorageBP {
      * @created Jan 9, 2008
      */
     private static class ImportOperation implements IRunnableWithProgress {
-    
-        /** indicates what part(s) of the project(s) will be imported */
-        private int m_elements;
-    
         /** mapping: projects to import => corresponding name mapper List */
         private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
     
@@ -895,9 +863,6 @@ public class FileStorageBP {
         
         /**
          * Constructor
-         * 
-         * @param elements
-         *            What to import ? 0 = all >0 = elements
          * @param projectToMapperMap
          *            Mapping from projects to import to corresponding param
          *            name mappers.
@@ -911,13 +876,12 @@ public class FileStorageBP {
          *            Flag indicating whether the imported project should be 
          *            immediately opened after import.
          */
-        public ImportOperation(int elements, 
-                Map<IProjectPO, List<INameMapper>> projectToMapperMap, 
+        public ImportOperation(Map<IProjectPO, 
+                List<INameMapper>> projectToMapperMap, 
                 Map<IProjectPO, List<IWritableComponentNameMapper>> 
-                projectToCompCacheMap, IProgressConsole console, 
-                boolean openProject) {
+                projectToCompCacheMap, 
+                IProgressConsole console, boolean openProject) {
             
-            m_elements = elements;
             m_projectToMapperMap = projectToMapperMap;
             m_projectToCompCacheMap = projectToCompCacheMap;
             m_console = console;
@@ -935,31 +899,24 @@ public class FileStorageBP {
         /**
          * {@inheritDoc}
          */
-        public void run(IProgressMonitor monitor) throws InterruptedException, 
-                InvocationTargetException {
+        public void run(IProgressMonitor monitor) throws InterruptedException {
             try {
                 // run() is used directly here rather than 
                 // starting a new monitor. We want the operation to run 
                 // within this monitor.
                 NodePM.getInstance().setUseCache(true);
     
-                if (m_elements == FileStorageBP.IMPORT_ALL) {
-                    CompleteImportOperation op = new CompleteImportOperation(
-                            m_projectToMapperMap, m_projectToCompCacheMap, 
-                            m_console);
-                    op.run(monitor);
-                    if (op.wasImportSuccessful() && m_isOpenProject) {
-                        for (IProjectPO project 
-                                : m_projectToMapperMap.keySet()) {
-                            
-                            m_projectToOpen = project;
-                            break;
-                        }
+                CompleteImportOperation op = new CompleteImportOperation(
+                        m_projectToMapperMap, m_projectToCompCacheMap, 
+                        m_console);
+                op.run(monitor);
+                if (op.wasImportSuccessful() && m_isOpenProject) {
+                    for (IProjectPO project 
+                            : m_projectToMapperMap.keySet()) {
+                        
+                        m_projectToOpen = project;
+                        break;
                     }
-                } else {
-                    new PartsImportOperation(m_projectToMapperMap, 
-                            m_projectToCompCacheMap, m_elements, m_console)
-                        .run(monitor);
                 }
             } catch (final ConfigXmlException ce) {
                 handleCapDataNotFound(ce);
@@ -970,412 +927,10 @@ public class FileStorageBP {
         }
     }
 
-    /**
-     * merge parts of loaded project into active project
-     * @author BREDEX GmbH
-     */
-    private static class PartsImportOperation implements IRunnableWithProgress {
-    
-        /** elements to import */
-        private int m_elements;
-    
-        /** mapping: projects to import => corresponding param name mapper */
-        private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
-        
-        /** mapping: projects to import => corresponding comp name cache List */
-        private Map<IProjectPO, List<IWritableComponentNameMapper>> 
-            m_projectToCompCacheMap;
-
-        /** the console to use for reporting progress and errors */
-        private IProgressConsole m_console;
-        
-        /**
-         * constructor
-         * 
-         * @param projectToMapperMap
-         *            Mapping from projects to import to corresponding param
-         *            name mappers.
-         * @param projectToCompMapperMap
-         *            Mapping from projects to import to corresponding 
-         *            Component Name mappers.
-         * @param elements elements
-         * @param console
-         *              The console to use to display progress and 
-         *              error messages.
-         */
-        public PartsImportOperation(
-                Map<IProjectPO, List<INameMapper>> projectToMapperMap, 
-                Map<IProjectPO, List<IWritableComponentNameMapper>> 
-                projectToCompMapperMap, 
-                int elements, IProgressConsole console) {
-            
-            m_projectToMapperMap = projectToMapperMap;
-            m_projectToCompCacheMap = projectToCompMapperMap;
-            m_elements = elements;
-            m_console = console;
-        }
-    
-        /**
-         * 
-         * {@inheritDoc}
-         */
-        public void run(IProgressMonitor monitor) throws InterruptedException, 
-                InvocationTargetException {
-            SubMonitor subMonitor = SubMonitor.convert(
-                    monitor, Messages.ImportFileBPImporting,
-                    m_projectToMapperMap.size());
-            try {
-                for (IProjectPO proj : m_projectToMapperMap.keySet()) {
-                    if (subMonitor.isCanceled()) {
-                        throw new InterruptedException();
-                    }
-                    if ((m_elements & FileStorageBP.IMPORT_TESTCASES) 
-                        == FileStorageBP.IMPORT_TESTCASES) {
-                        
-                        List<INameMapper> mapperList = 
-                            m_projectToMapperMap.get(proj);
-                        List<IWritableComponentNameMapper> compMapperList =
-                            m_projectToCompCacheMap.get(proj);
-                        String projectName = proj.getDisplayName();
-                        showStartingImport(m_console, projectName);
-                        // removes reuse in TestSuites
-                        List<ISpecPersistable> specObjList = 
-                            proj.getSpecObjCont().getSpecObjList();
-                        IProjectPO project = 
-                            GeneralStorage.getInstance().getProject();
-                        String importedToolkit = proj.getToolkit();
-                        try {
-                            String importedLevel = 
-                                ToolkitSupportBP.getToolkitLevel(
-                                    importedToolkit);
-                            String currentToolkit = project.getToolkit();
-                            String currentLevel = project.getToolkitLevel();
-    
-                            tryImport(subMonitor, mapperList, compMapperList,
-                                    projectName, specObjList, project, 
-                                    importedToolkit, importedLevel, 
-                                    currentToolkit, currentLevel);
-                        } catch (ToolkitPluginException e) {
-                            showErrorDuringImport(m_console, 
-                                    proj.getDisplayName(), e);
-                        } catch (IncompatibleTypeException ite) {
-                            ErrorMessagePresenter.getPresenter()
-                                .showErrorMessage(
-                                    ite, ite.getErrorMessageParams(), null);
-                        }
-                    }
-                }
-            } catch (PMException e) {
-                showAbortImport(m_console, e);
-                throw new InvocationTargetException(e);
-            } catch (ProjectDeletedException e) {
-                showAbortImport(m_console, e);
-                throw new InvocationTargetException(e);
-            } finally {
-                // drop cache generated by importer
-                ProjectNameBP.getInstance().clearCache();
-            }                       
-            showFinishedImport(m_console);
-        }
-    
-        /**
-         * Tries to perform the import, and displays an error message if not
-         * successful. This method was created because of checkstyle's method
-         * length restrictions. As such, there are a lot of arguments, and none
-         * of them are well documented.
-         * 
-         * @param subMonitor
-         *            The progress monitor.
-         * @param mapperList
-         *            This is responsible for mapping Parameter names from the
-         *            imported test cases into the given project.
-         * @param compMapperList
-         *            Responsible for mapping Component Names from the imported
-         *            test cases into the given project.
-         * @param projectName
-         *            The project name.
-         * @param specObjList
-         *            The specObjList.
-         * @param project
-         *            The project.
-         * @param importedToolkit
-         *            The imported toolkit.
-         * @param importedLevel
-         *            The imported level.
-         * @param currentToolkit
-         *            The current toolkit.
-         * @param currentLevel
-         *            The current level.
-         * @throws PMException
-         *             if a Persistence (JPA / EclipseLink) exception occurs.
-         * @throws ProjectDeletedException
-         *             if the the project was already deleted.
-         * @throws InterruptedException
-         *             if the operation is canceled by the user.
-         * @throws IncompatibleTypeException
-         * @throws ToolkitPluginException
-         *             If a toolkit error occurs.
-         */
-        private void tryImport(SubMonitor subMonitor,
-                List<INameMapper> mapperList, 
-                List<IWritableComponentNameMapper> compMapperList, 
-                String projectName,
-                List<ISpecPersistable> specObjList, IProjectPO project,
-                String importedToolkit, String importedLevel,
-                String currentToolkit, String currentLevel) throws PMException,
-                ProjectDeletedException, InterruptedException,
-                IncompatibleTypeException, ToolkitPluginException {
-           
-            // Perform the import if the project toolkits are 
-            // compatible...
-            if (isToolkitCompatible(
-                importedToolkit, importedLevel, 
-                currentToolkit, currentLevel)) {
-                
-                for (IWritableComponentNameMapper compMapper : compMapperList) {
-                    for (IComponentNamePO added 
-                            : compMapper.getCompNameCache().getNewNames()) {
-                        // NOTE: there is no need to check for Component Names 
-                        //       with the same GUID because we always generate 
-                        //       new GUIDs when importing parts of a project.
-                        
-                        // Check whether a Component Name with the same name 
-                        // exists in current project. If so, append a number to
-                        // make the name unique within the Project.
-                        boolean nameExists = 
-                            ComponentNamesBP.getInstance().getGuidForName(
-                                    added.getName(), project.getId()) != null;
-                        int counter = 0;
-                        while (nameExists) {
-                            counter++;
-                            nameExists = 
-                                ComponentNamesBP.getInstance().getGuidForName(
-                                        added.getName() + counter, 
-                                        project.getId()) != null;
-                        }
-                        
-                        if (counter != 0) {
-                            added.setName(added.getName() + counter);
-                        }
-                    }
-                }
-                importTestCases(mapperList, compMapperList, specObjList, 
-                        project, subMonitor.newChild(1));
-                showFinishedImport(m_console, projectName);
-            } else {
-                // Otherwise, show the user what went wrong and
-                // continue with the next project
-                String currentToolkitName = 
-                    getToolkitName(currentToolkit);
-                String importedToolkitName =
-                    getToolkitName(importedToolkit);
-                showIncompatibleToolkit(m_console, 
-                    projectName, currentToolkitName, 
-                    importedToolkitName);
-            }
-        }
-    
-        /**
-         * 
-         * @param toolkitId A toolkit plugin ID.
-         * @return The name associated with the given ID.
-         */
-        private String getToolkitName(String toolkitId) 
-            throws ToolkitPluginException {
-            
-            CompSystem compSys = 
-                ComponentBuilder.getInstance().getCompSystem();
-            ToolkitDescriptor desc = 
-                compSys.getToolkitDescriptor(
-                    toolkitId);
-            if (desc == null) {
-                throw new ToolkitPluginException(NLS.bind(
-                        Messages.ToolkitSupportToolkitNotFound, 
-                        new String [] {toolkitId}));
-            }
-            return desc.getName();
-        }
-    
-        /**
-         * Imports the given test cases into the given project.
-         * 
-         * @param mapperList
-         *            This is responsible for mapping Parameter names from the
-         *            imported test cases into the given project.
-         * @param compMapperList
-         *            Responsible for mapping Component Names from the imported
-         *            test cases into the given project.
-         * @param specObjList
-         *            List of test cases to import.
-         * @param project
-         *            The project into which the test cases will be imported.
-         * @param monitor
-         *            The progress monitor for this potentially long-running
-         *            operation.
-         * @return <code>true</code> if the test cases were imported
-         *         successfully. Otherwise, <code>false</code>.
-         * @throws PMException
-         *             if a database error occurs.
-         * @throws ProjectDeletedException
-         *             if the current project has been deleted.
-         */
-        private boolean importTestCases(List<INameMapper> mapperList, 
-            List<IWritableComponentNameMapper> compMapperList,
-            List<ISpecPersistable> specObjList, IProjectPO project, 
-            IProgressMonitor monitor) 
-            throws PMException, ProjectDeletedException, 
-            InterruptedException, IncompatibleTypeException {
-            
-            String newName = createCategoryName(
-                project.getSpecObjCont().getSpecObjList());
-            final ICategoryPO category = 
-                NodeMaker.createCategoryPO(newName);
-            if (monitor.isCanceled()) {
-                throw new InterruptedException();
-            }
-    
-            // Register JPA progress listeners
-            ProgressMonitorTracker.getInstance().setProgressMonitor(
-                    monitor);
-            
-            monitor.beginTask(StringConstants.EMPTY, getTotalWork(specObjList));
-            try {
-                NodePM.addImportedTestCases(category, specObjList);
-            } finally {
-                // Remove JPA progress listeners
-                ProgressMonitorTracker.getInstance().setProgressMonitor(
-                        null);
-            }
-            EntityManager compNameSession = 
-                Persistor.instance().openSession();
-            EntityTransaction tx = 
-                Persistor.instance().getTransaction(compNameSession);
-            for (INameMapper mapper : mapperList) {
-                mapper.persist(compNameSession,  
-                        project.getId());
-            }
-            for (IWritableComponentNameMapper compMapper : compMapperList) {
-                CompNamePM.flushCompNames(
-                        compNameSession, project.getId(), compMapper);
-            }
-    
-            Persistor.instance().commitTransaction(compNameSession, tx);
-    
-            for (IComponentNameMapper compMapper : compMapperList) {
-                compMapper.getCompNameCache()
-                    .updateStandardMapperAndCleanup(project.getId());
-            }
-    
-            UsedToolkitBP.getInstance().refreshToolkitInfo(project);
-
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    category, DataState.Added, UpdateState.all);
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    category, DataState.StructureModified, UpdateState.all);
-
-            UsedToolkitBP.getInstance().refreshToolkitInfo(
-                GeneralStorage.getInstance().getProject());
-
-            return true;
-        }
-    
-        /**
-         * @param specObjList The list for which to find the total required
-         *                    work.
-         * @return the amount of work required to save the given list to the
-         *         database.
-         */
-        private int getTotalWork(List<ISpecPersistable> specObjList) {
-            int totalWork = 0;
-    
-            for (ISpecPersistable spec : specObjList) {
-                
-                totalWork += getWorkForNode(spec);
-            }
-    
-            // 1 for each progress event type except postUpdate
-            totalWork *= NUM_HBM_PROGRESS_EVENT_TYPES - 1;
-    
-            return totalWork;
-        }
-    
-        /**
-         * Recursively determines the amount of work involved in saving the
-         * given node to the database.
-         * 
-         * @param node The node for which to determine the amount of work.
-         * @return the amount of work required to save the given node to the 
-         *         database.
-         */
-        private int getWorkForNode(INodePO node) {
-            int work = 1;
-            if (!(node instanceof IExecTestCasePO)) {
-                Iterator<INodePO> childIter = node.getNodeListIterator();
-                while (childIter.hasNext()) {
-                    work += getWorkForNode(childIter.next());
-                }
-            }
-            
-            if (node instanceof ISpecTestCasePO) {
-                work += ((ISpecTestCasePO)node).getAllEventEventExecTC().size();
-            }
-            
-            return work;
-        }
-    
-        /**
-         * @param importedToolkit The toolkit ID for the imported project.
-         * @param importedLevel The toolkit level for the imported project.
-         * @param currentToolkit The toolkit ID for the current project.
-         * @param currentLevel The toolkit level for the current project.
-         * @return <code>true</code> if the imported toolkit/level is compatible
-         *         with the current toolkit/level. Otherwise <code>false</code>.
-         */
-        private boolean isToolkitCompatible(String importedToolkit, 
-            String importedLevel, String currentToolkit, String currentLevel) {
-            
-            return importedToolkit.equals(currentToolkit) 
-                || ToolkitUtils.doesToolkitInclude(
-                    currentToolkit, importedToolkit)
-                || ToolkitUtils.isToolkitMoreConcrete(
-                    currentLevel, importedLevel);
-        }
-    
-        /**
-         * @param specObjList The list into which the new category will be 
-         *                    added.
-         * @return a suitable name for a new category in the given list.
-         */
-        private String createCategoryName(List<ISpecPersistable> specObjList) {
-            String standardName = Messages.TreeOpsBPImportedCat;
-            int postfix = 1;
-            String newName = standardName + postfix;
-            final Set<String> usedNames = new HashSet<String>();
-            for (ISpecPersistable node : specObjList) {
-                if (node instanceof ICategoryPO && (node).getName().
-                    startsWith(standardName)) {
-    
-                    usedNames.add(node.getName());
-                }
-            }
-            while (usedNames.contains(newName)) {
-                postfix++;
-                newName = standardName + postfix;
-            }
-            return newName;
-        }
-    
-    }
-
     /** the logger */
     public static final Logger LOG = 
         LoggerFactory.getLogger(FileStorageBP.class);
     
-    /** Bit set for importing all */
-    public static final int IMPORT_ALL = 0;
-    /** Bit set for importing testcases */
-    public static final int IMPORT_TESTCASES = 1; 
-
     /** the total amount of work for an import operation */
     private static final int TOTAL_IMPORT_WORK = 100;
 
@@ -1458,7 +1013,7 @@ public class FileStorageBP {
             }
             console.writeStatus(new Status(IStatus.INFO, Activator.PLUGIN_ID,
                     NLS.bind(Messages.ExportAllBPInfoStartingExportProject, 
-                            new Object [] {projectFileName})));
+                            projectFileName)));
             try {
                 if (subMonitor.isCanceled()) {
                     throw new InterruptedException();
@@ -1502,10 +1057,10 @@ public class FileStorageBP {
      */
     public static void importFiles(List<URL> importProjectURLs, 
             IProgressMonitor monitor, IProgressConsole console, 
-            boolean openProject) throws PMException, ProjectDeletedException {
+            boolean openProject) {
         // import all data from projects
         try {
-            doImport(IMPORT_ALL, importProjectURLs, 
+            doImport(importProjectURLs, 
                     SubMonitor.convert(monitor), console, openProject);
         } catch (InterruptedException e) {
             // Operation was canceled. Do nothing.
@@ -1514,9 +1069,6 @@ public class FileStorageBP {
     
     /**
      * Imports a chosen project from a file.
-     * 
-     * @param elements
-     *            What to import ? 0 = all >0 = elements
      * @param fileURLs
      *            The URLs of the files to import.
      * @param monitor 
@@ -1533,19 +1085,18 @@ public class FileStorageBP {
      * @throws InterruptedException if the operation was canceled or the thread
      *                              was interrupted.
      */
-    public static IProjectPO importProject(final int elements,
-            final List<URL> fileURLs, IProgressMonitor monitor,
-            IProgressConsole console, boolean openProject)
-        throws InterruptedException, PMException, ProjectDeletedException {
+    public static IProjectPO importProject(final List<URL> fileURLs,
+            IProgressMonitor monitor, IProgressConsole console,
+            boolean openProject)
+        throws InterruptedException {
 
         SubMonitor subMonitor = SubMonitor.convert(monitor,
                 Messages.ImportFileBPImporting, TOTAL_IMPORT_WORK);
-        return doImport(elements, fileURLs, subMonitor, console, openProject);
+        return doImport(fileURLs, subMonitor, console, openProject);
     }
 
     /**
      * actually do the import work. Separated to only batch calls
-     * @param elements @see #importProject(int)
      * @param fileURLs
      *            The URLs of the files to import.
      * @param subMonitor @see #importProject(int)
@@ -1555,54 +1106,28 @@ public class FileStorageBP {
      * @param openProject
      *            Flag indicating whether the imported project should be 
      *            immediately opened after import.
-     *              
      * @return the project to open immediately after import, or 
      *         <code>null</code> if no project should be opened.
      * @throws InterruptedException @see #importProject(int)
      */
-    private static IProjectPO doImport(final int elements, List<URL> fileURLs, 
-            SubMonitor subMonitor, IProgressConsole console, 
+    private static IProjectPO doImport(List<URL> fileURLs,
+            SubMonitor subMonitor, IProgressConsole console,
             boolean openProject) 
-        throws InterruptedException, PMException, ProjectDeletedException {
+        throws InterruptedException {
         
         // Read project files
         ReadFilesOperation readFilesOp = 
-            new ReadFilesOperation(elements == 0, fileURLs, console);
+            new ReadFilesOperation(fileURLs, console);
         readFilesOp.run(subMonitor.newChild(PARSE_FILES_WORK));
 
         // Import projects
         ImportOperation importOp = new ImportOperation(
-            elements, readFilesOp.getProjectToMapperMap(), 
-            readFilesOp.getProjectToCompCacheMap(), console, openProject);
+            readFilesOp.getProjectToMapperMap(), 
+            readFilesOp.getProjectToCompCacheMap(), 
+            console, openProject);
         
-        try {
-            importOp.run(subMonitor.newChild(SAVE_TO_DB_WORK));
-        } catch (InvocationTargetException ite) {
-            Throwable cause = ExceptionUtils.getRootCause(ite);
-            if (cause instanceof PMException) {
-                throw (PMException)cause;
-            } else if (cause instanceof ProjectDeletedException) {
-                throw (ProjectDeletedException)cause;
-            } else {
-                throw new RuntimeException(ite);
-            }
-        }
+        importOp.run(subMonitor.newChild(SAVE_TO_DB_WORK));
         return importOp.getProjectToOpen();
-    }
-
-    /**
-     * Report to the user that the import operation was aborted due to an
-     * error.
-     * 
-     * @param console
-     *              The console to use to display progress and 
-     *              error messages.
-     * @param e The error that caused the import operation to abort.
-     */
-    private static void showAbortImport(IProgressConsole console, Exception e) {
-        console.writeErrorLine(
-                NLS.bind(Messages.ImportFileActionErrorImportFailed, 
-                        new Object [] {e.getMessage()}));
     }
 
     /**
@@ -1647,7 +1172,7 @@ public class FileStorageBP {
             String projectFileName) {
         console.writeLine(
                 NLS.bind(Messages.ImportFileActionInfoFinishedImportProject, 
-                        new Object [] {projectFileName}));
+                        projectFileName));
     }
 
     /**
@@ -1660,27 +1185,6 @@ public class FileStorageBP {
     private static void showFinishedReadingProjects(IProgressConsole console) {
         console.writeLine(
             Messages.ImportFileActionInfoFinishedReadingProjects);
-    }
-
-    /**
-     * Report to the user that the import of a project failed because the
-     * toolkit for the imported project was not compatible with the toolkit
-     * of the current project.
-     * 
-     * @param console
-     *              The console to use to display progress and 
-     *              error messages.
-     * @param projectName Name of the project to import.
-     * @param currentToolkit Toolkit of the current project.
-     * @param importedToolkit Toolkit of the imported project.
-     */
-    private static void showIncompatibleToolkit(IProgressConsole console, 
-            String projectName, String currentToolkit, String importedToolkit) {
-        
-        console.writeErrorLine(
-                NLS.bind(Messages.ImportFileActionErrorIncompatibleToolkits,
-                        new Object [] {projectName, importedToolkit, 
-                            currentToolkit}));
     }
 
     /**
@@ -1707,7 +1211,7 @@ public class FileStorageBP {
             String projectFileName) {
         console.writeLine(
                 NLS.bind(Messages.ImportFileActionInfoStartingImportProject,
-                        new Object [] {projectFileName}));
+                        projectFileName));
     }
 
     /**
@@ -1758,5 +1262,4 @@ public class FileStorageBP {
                 MessageIDs.E_IMPORT_PROJECT_CONFIG_CONFLICT, 
                 null, new String[] {ce.getMessage()});
     }
-
 }

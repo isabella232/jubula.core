@@ -28,8 +28,8 @@ public class Messages extends NLS {
     public static String CouldNotInitializeProxy;
     public static String CreateNewProjectVersionOperationCreatingNewVersion;
     public static String DataBaseErrorUpdatingToolkits;
-    public static String ErrorMessageIMPORT_PROJECT_XML_FAILED;
-    public static String ErrorMessageIMPORT_PROJECT_XML_FAILED_EXISTING;
+    public static String ErrorMessageIMPORT_PROJECT_FAILED;
+    public static String ErrorMessageIMPORT_PROJECT_FAILED_EXISTING;
     public static String ErrorMessagePROJ_CIRC_DEPEND;
     public static String ErrorWhileCreatingNewProjectVersion;
     public static String ErrorWhileCloseOS;

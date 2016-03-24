@@ -74,6 +74,6 @@ public class ImportProjectHandler extends AbstractProjectHandler {
     public void importProjects(IProjectImportInfoProvider importInfo) {
         List<URL> fileURLs = importInfo.getFileURLs();
         boolean openProject = importInfo.getIsOpenProject();
-        ImportFileBP.getInstance().importProject(0, fileURLs, openProject);
+        ImportFileBP.getInstance().importProject(fileURLs, openProject);
     }
 }
