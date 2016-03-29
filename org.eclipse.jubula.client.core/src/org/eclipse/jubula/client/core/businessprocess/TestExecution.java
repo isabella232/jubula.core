@@ -606,18 +606,6 @@ public class TestExecution {
         m_trav.addEventStackModificationListener(m_stepCounter);
         m_trav.addExecStackModificationListener(m_stepCounter);
     }
-
-    /**
-     * @return the toolkit of the AUT
-     */
-    private String getAutToolkit() {
-        String autToolKit = StringConstants.EMPTY;
-        final IAUTMainPO connectedAut =  getConnectedAut();
-        if (connectedAut != null) {
-            autToolKit = connectedAut.getToolkit();            
-        }
-        return autToolKit;
-    }
     
     /**
      * Invokes the next step

@@ -1480,16 +1480,6 @@ public class JsonImporter {
     }
 
     /**
-     * Find a persistent object which has an XML id.
-     * @param usedTestcase The XML id used to identify this instance
-     * @return the object build while reading the XML element, or 
-     *              <code>null</code> if the object cannot be found
-     */
-    private ISpecTestCasePO findReferencedTC(String usedTestcase) {        
-        return m_tcRef.get(usedTestcase);
-    }
-    
-    /**
      * @param dto the datasource to get additional information from
      */
     private void documentRequiredProjects(ProjectDTO dto) {

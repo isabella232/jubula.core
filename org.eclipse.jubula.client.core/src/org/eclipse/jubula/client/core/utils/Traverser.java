@@ -646,7 +646,7 @@ public class Traverser {
         
         popEventStack();
 
-        // Remove all events that occured higher on the execution stack
+        // Remove all events that occurred higher on the execution stack
         // than the currently processed event
         while (!m_eventStack.isEmpty() 
                 && m_eventStack.peek().getStackPos() >= stackPos) {
