@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.autagent.commands;
 
+import java.util.AbstractList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -88,10 +89,15 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
                 AutStarter.getInstance().getAutCommunicator().getLocalPort()));
         commands.add(String.valueOf(
                 parameters.get(AutConfigConstants.AUT_ARGUMENTS)));
-        commands.add(getBrowserString(
-                parameters.get(AutConfigConstants.BROWSER_PATH), 
-                parameters.get(AutConfigConstants.BROWSER),
-                useWebdriver));
+        if (useWebdriver) {
+            commands.add(String.valueOf(parameters.get(
+                    AutConfigConstants.BROWSER)));
+        } else {
+            commands.add(getBrowserString(
+                    parameters.get(AutConfigConstants.BROWSER_PATH), 
+                    parameters.get(AutConfigConstants.BROWSER),
+                    useWebdriver));
+        }
         if (useWebdriver) {            
             commands.add(String.valueOf(
                     parameters.get(AutConfigConstants.BROWSER_SIZE)));
@@ -100,13 +106,7 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
             commands.add("AUT"); //$NON-NLS-1$
         }
         
-        // registration parameters
-        commands.add(String.valueOf(
-                parameters.get(AutConfigConstants.AUT_AGENT_HOST)));
-        commands.add(String.valueOf(
-                parameters.get(AutConfigConstants.AUT_AGENT_PORT)));
-        commands.add(String.valueOf(
-                parameters.get(AutConfigConstants.AUT_ID)));
+        fillRegistrationParameters(parameters, commands);
         
         // additional parameters
         Object idAttribute = parameters.get(AutConfigConstants.WEB_ID_TAG);
@@ -115,7 +115,12 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
         } else {
             commands.add(DEFAULT_AUT_ID_ATTRIBUTE_NAME);
         }
-        if (!useWebdriver) {
+        if (useWebdriver) {
+            commands.add(String.valueOf(parameters.get(
+                    AutConfigConstants.BROWSER_PATH)));
+            commands.add(String.valueOf(parameters.get(
+                    AutConfigConstants.DRIVER_PATH)));
+        } else {
             Object singleWindowMode =
                     parameters.get(AutConfigConstants.SINGLE_WINDOW_MODE);
             if (singleWindowMode != null) {
@@ -125,6 +130,21 @@ public class StartHtmlAutServerCommand extends AbstractStartPseudoJavaAUT {
             }
         }
         return commands.toArray(new String[commands.size()]);
+    }
+
+    /**
+     * add host/port parameters to commands
+     * @param parameters the parameters
+     * @param commands the commands
+     */
+    private void fillRegistrationParameters(Map parameters,
+            AbstractList<String> commands) {
+        commands.add(String.valueOf(
+                parameters.get(AutConfigConstants.AUT_AGENT_HOST)));
+        commands.add(String.valueOf(
+                parameters.get(AutConfigConstants.AUT_AGENT_PORT)));
+        commands.add(String.valueOf(
+                parameters.get(AutConfigConstants.AUT_ID)));
     }
 
     /**

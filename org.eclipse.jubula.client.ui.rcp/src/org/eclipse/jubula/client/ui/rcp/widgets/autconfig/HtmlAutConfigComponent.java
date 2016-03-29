@@ -49,10 +49,14 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     private Text m_autUrlTextField;
     /** gui field for browser */
     private Text m_browserTextField;
+    /** gui field for driver */
+    private Text m_driverTextField;
     /** gui field for aut id attribute text field */
     private Text m_autIdAttibuteTextField;
     /** gui button for browser path */
     private Button m_browserPathButton;
+    /** gui button for driver path */
+    private Button m_driverPathButton;
     /** gui checkbox for the singeWindowMode */
     private Button m_singleWindowCheckBox;
     /** gui checkbox for the using webdriver */
@@ -113,7 +117,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     protected void createAdvancedArea(Composite advancedAreaComposite) {
         super.createAdvancedArea(advancedAreaComposite);
         
-        createBrowserPathEditor(advancedAreaComposite);
+        createBrowserAndDriverPathEditor(advancedAreaComposite);
         
         createWebdriverCheckBox(advancedAreaComposite);
         
@@ -164,7 +168,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * 
      * @param parent The parent Composite.
      */
-    protected void createBrowserPathEditor(Composite parent) {
+    protected void createBrowserAndDriverPathEditor(Composite parent) {
         
         Label browserPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.browserPath"); //$NON-NLS-1$ 
         browserPathLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
@@ -180,6 +184,22 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_browserPathButton.setText(I18n.getString("AUTConfigComponent.browse"));  //$NON-NLS-1$
         m_browserPathButton.setLayoutData(BUTTON_LAYOUT);
         m_browserPathButton.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathButton"); //$NON-NLS-1$
+        
+        
+        Label driverPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.driverPath"); //$NON-NLS-1$ 
+        driverPathLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.driverPathLabel"); //$NON-NLS-1$
+        ControlDecorator.decorateInfo(driverPathLabel,  
+                "ControlDecorator.WebDriverPath", false); //$NON-NLS-1$
+        
+        m_driverTextField = UIComponentHelper.createTextField(
+            parent, 1);
+        m_driverTextField.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.DriverTextField"); //$NON-NLS-1$
+        
+        m_driverPathButton = new Button(UIComponentHelper
+                .createLayoutComposite(parent), SWT.PUSH);
+        m_driverPathButton.setText(I18n.getString("AUTConfigComponent.browse"));  //$NON-NLS-1$
+        m_driverPathButton.setLayoutData(BUTTON_LAYOUT);
+        m_driverPathButton.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.driverPathButton"); //$NON-NLS-1$
     }
 
     /**
@@ -195,7 +215,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_autUrlTextField.addModifyListener(modifyListener);
         m_autIdAttibuteTextField.addModifyListener(modifyListener);
         m_browserTextField.addModifyListener(modifyListener);
+        m_driverTextField.addModifyListener(modifyListener);
         m_browserPathButton.addSelectionListener(selectionListener);
+        m_driverPathButton.addSelectionListener(selectionListener);
         m_browserCombo.addSelectionListener(selectionListener);
         m_activationMethodCombo.addSelectionListener(selectionListener);
         m_singleWindowCheckBox.addSelectionListener(selectionListener);
@@ -216,7 +238,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_autUrlTextField.removeModifyListener(modifyListener);
         m_autIdAttibuteTextField.removeModifyListener(modifyListener);
         m_browserTextField.removeModifyListener(modifyListener);
+        m_driverTextField.removeModifyListener(modifyListener);
         m_browserPathButton.removeSelectionListener(selectionListener);
+        m_driverPathButton.removeSelectionListener(selectionListener);
         m_browserCombo.removeSelectionListener(selectionListener);
         m_activationMethodCombo.removeSelectionListener(selectionListener);
         m_singleWindowCheckBox.removeSelectionListener(selectionListener);
@@ -245,7 +269,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
             } else if (source.equals(m_browserSizeCombo)) {
                 checked = true;
             } else if (source.equals(m_browserCombo)) {
-                internetExplorerSelected();
+                handleBrowserDependentEnablement();
                 checked = true;
             } else if (source.equals(m_browserPathButton)) {
                 if (isRemoteRequest()) {
@@ -263,6 +287,25 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                         m_browserTextField.setText(browserFile);
                     }
                 }
+                handleBrowserDependentEnablement();
+                return;
+            } else if (source.equals(m_driverPathButton)) {
+                if (isRemoteRequest()) {
+                    remoteBrowse(false, AutConfigConstants.DRIVER_PATH,
+                            m_driverTextField,
+                            I18n.getString("WebAutConfigComponent.SelectDriverPath")); //$NON-NLS-1$
+                } else {
+                    FileDialog fileDialog = new FileDialog(getShell(),
+                            SWT.APPLICATION_MODAL | SWT.ON_TOP);
+                    //handleBrowserPathButtonEvent(fileDialog);
+                    
+                    fileDialog.setText(I18n.getString("WebAutConfigComponent.SelectDriverPath")); //$NON-NLS-1$
+                    String browserFile = fileDialog.open();
+                    if (browserFile != null) {
+                        m_driverTextField.setText(browserFile);
+                    }
+                }
+                handleBrowserDependentEnablement();
                 return;
             } else if (source.equals(m_singleWindowCheckBox)) {
                 checked = true;
@@ -292,10 +335,15 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         if (m_webdriverCheckBox.getSelection()) {
             m_browserSizeCombo.setEnabled(true);
             m_singleWindowCheckBox.setEnabled(false);
+            m_driverPathButton.setEnabled(true);
+            m_driverTextField.setEnabled(true);
         } else {
             m_browserSizeCombo.setEnabled(false);
             m_singleWindowCheckBox.setEnabled(true);
+            m_driverPathButton.setEnabled(false);
+            m_driverTextField.setEnabled(false);
         }
+        handleBrowserDependentEnablement();
     }
     
     /**
@@ -314,12 +362,25 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * 
      * {@inheritDoc}
      */
-    protected boolean internetExplorerSelected() {
+    protected boolean handleBrowserDependentEnablement() {
         boolean enable = super.checkLocalhostServer();
         boolean browseEnabled = enable || isRemoteRequest();
         boolean isIE = m_browserCombo.getSelectedObject().equals(
                 Browser.InternetExplorer);
-        m_browserPathButton.setEnabled(browseEnabled);
+        boolean isFF = m_browserCombo.getSelectedObject().equals(
+                Browser.Firefox);
+        m_browserPathButton.setEnabled(!isIE && browseEnabled);
+        m_browserTextField.setEnabled(!isIE && browseEnabled);
+        boolean isWebDriver = m_webdriverCheckBox.getSelection();
+        if (isWebDriver) {
+            if (isFF) {
+                m_driverPathButton.setEnabled(false);
+                m_driverTextField.setEnabled(false);
+            } else {
+                m_driverPathButton.setEnabled(browseEnabled);
+                m_driverTextField.setEnabled(browseEnabled);
+            }
+        }
         return isIE;
     }
     
@@ -335,9 +396,11 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         m_browserCombo.setEnabled(true);
         m_browserPathButton.setEnabled(true);
         m_browserTextField.setEnabled(true);
+        m_driverPathButton.setEnabled(false);
+        m_driverTextField.setEnabled(false);
         handleWebdriverDependentEnablement();
         checkLocalhostServer();
-        internetExplorerSelected();
+        handleBrowserDependentEnablement();
         RemoteFileBrowserBP.clearCache(); // avoid all caches
     }
 
@@ -360,13 +423,15 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                 checked = true;
             } else if (source.equals(m_browserTextField)) {
                 checked = true;
+            } else if (source.equals(m_driverTextField)) {
+                checked = true;
             } else if (source.equals(m_autIdAttibuteTextField)) {
                 checked = true;
             } else if (source.equals(getAUTAgentHostNameCombo())) {
                 checkLocalhostServer();
                 checked = true;
             } else if (source.equals(m_browserCombo)) {
-                internetExplorerSelected();
+                handleBrowserDependentEnablement();
                 checked = true;
             }
             if (checked) {
@@ -444,6 +509,19 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
      * @return <code>null</code> if the new value is valid. Otherwise, returns
      *         a status parameter indicating the cause of the problem.
      */
+    DialogStatusParameter modifyDriverPathTextField() {
+        DialogStatusParameter error = null;
+        String txt = m_driverTextField.getText();
+
+        putConfigValue(AutConfigConstants.DRIVER_PATH, txt);
+        
+        return error;
+    }
+    
+    /**
+     * @return <code>null</code> if the new value is valid. Otherwise, returns
+     *         a status parameter indicating the cause of the problem.
+     */
     DialogStatusParameter modifyBrowser() {
         final Browser browser = m_browserCombo.getSelectedObject();
         if (browser != null) {
@@ -495,6 +573,9 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         if (!isDataNew(data)) {
             m_browserTextField.setText(StringUtils.defaultString(data
                     .get(AutConfigConstants.BROWSER_PATH)));
+            
+            m_driverTextField.setText(StringUtils.defaultString(data
+                    .get(AutConfigConstants.DRIVER_PATH)));
 
             String browserSize = data.get(AutConfigConstants.BROWSER_SIZE);
             if (StringUtils.isEmpty(browserSize)) {
@@ -579,6 +660,7 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         addError(paramList, modifyIDAttributeTextField());
         addError(paramList, modifyBrowser());
         addError(paramList, modifyBrowserPathTextField());
+        addError(paramList, modifyDriverPathTextField());
         addError(paramList, modifySingleWindowCheckBox());
         addError(paramList, modifyWebdriverCheckBox());
         addError(paramList, modifyBrowserSize());
