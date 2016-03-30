@@ -38,7 +38,7 @@ public class InsertProgressListener {
     @PostUpdate
     public void handleEntity(Object entity) {
         IProgressMonitor monitor = 
-            ProgressMonitorTracker.getInstance().getProgressMonitor();
+            ProgressMonitorTracker.SINGLETON.getProgressMonitor();
         if (monitor != null && entity instanceof INodePO) {
             if (monitor.isCanceled()) {
                 throw new OperationCanceledException();

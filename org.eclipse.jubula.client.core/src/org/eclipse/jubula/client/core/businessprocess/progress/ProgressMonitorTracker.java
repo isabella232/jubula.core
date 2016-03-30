@@ -10,49 +10,25 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.progress;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author BREDEX GmbH
  * @created Nov 26, 2010
  */
-public class ProgressMonitorTracker {
-
-    /** the single instance */
-    private static ProgressMonitorTracker instance = null;
+public enum ProgressMonitorTracker {
+    /** Singleton */
+    SINGLETON;
     
     /** The monitor to which the interceptor reports progress */
     private IProgressMonitor m_monitor;
-
-    /** 
-     * set of Persistence (JPA / EclipseLink) IDs for elements that have already been reported
-     * as flushed
-     */
-    private Set<Serializable> m_collectionOwnerIds;
 
     /**
      * Private constructor
      */
     private ProgressMonitorTracker() {
-        m_collectionOwnerIds = new HashSet<Serializable>();
     }
     
-    /**
-     * 
-     * @return the single instance.
-     */
-    public static ProgressMonitorTracker getInstance() {
-        if (instance == null) {
-            instance = new ProgressMonitorTracker();
-        }
-        
-        return instance;
-    }
-
     /**
      * 
      * @param monitor The new progress monitor for database access. A value of
@@ -61,9 +37,6 @@ public class ProgressMonitorTracker {
      */
     public void setProgressMonitor(IProgressMonitor monitor) {
         m_monitor = monitor;
-        if (monitor == null) {
-            m_collectionOwnerIds.clear();
-        }
     }
 
     /**

@@ -516,7 +516,7 @@ public class FileStorageBP {
                 monitor.subTask(Messages.ImportFileBPSaveToDB);
                 // Register Persistence (JPA / EclipseLink) progress listeners
                 ProgressMonitorTracker tracker = 
-                        ProgressMonitorTracker.getInstance();
+                        ProgressMonitorTracker.SINGLETON;
                 tracker.setProgressMonitor(monitor);
                 List<INameMapper> mapperList = m_projectToMapperMap.get(proj);
                 List<IWritableComponentNameMapper> compNameBindingList = 

@@ -155,7 +155,8 @@ public class MoveTestCaseHandler extends AbstractHandler {
                     Messages.RefreshProjectOperationRefreshing,
                     IProgressMonitor.UNKNOWN);
         
-            ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
+            ProgressMonitorTracker instance = ProgressMonitorTracker.SINGLETON;
+            instance.setProgressMonitor(monitor);
             try {
                 IProjectPO referencedProject = ProjectPM
                         .loadReusedProjectInMasterSession(m_selectedProject);
@@ -170,7 +171,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
             } catch (JBException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
             } finally {
-                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
+                instance.setProgressMonitor(null);
                 monitor.done();
             }
         }

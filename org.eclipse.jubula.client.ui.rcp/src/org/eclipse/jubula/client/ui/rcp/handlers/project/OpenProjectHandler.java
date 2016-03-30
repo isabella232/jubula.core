@@ -106,7 +106,8 @@ public class OpenProjectHandler extends AbstractProjectHandler {
             Utils.clearClient();
 
             int totalWork = getTotalWork();
-            ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
+            ProgressMonitorTracker instance = ProgressMonitorTracker.SINGLETON;
+            instance.setProgressMonitor(monitor);
 
             monitor.beginTask(NLS.bind(
                     Messages.OpenProjectOperationOpeningProject,
@@ -156,7 +157,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     }
                 });
             } finally {
-                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
+                instance.setProgressMonitor(null);
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
             }

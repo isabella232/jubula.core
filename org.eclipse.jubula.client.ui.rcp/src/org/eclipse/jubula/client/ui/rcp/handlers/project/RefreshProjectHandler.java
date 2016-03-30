@@ -64,7 +64,8 @@ public class RefreshProjectHandler extends AbstractProjectHandler {
                     Messages.RefreshProjectOperationRefreshing,
                     totalWork);
 
-            ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
+            ProgressMonitorTracker instance = ProgressMonitorTracker.SINGLETON;
+            instance.setProgressMonitor(monitor);
             Plugin.clearAllEditorsClipboard();
             try {
                 GeneralStorage.getInstance().reloadMasterSession(
@@ -72,7 +73,7 @@ public class RefreshProjectHandler extends AbstractProjectHandler {
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleProjectDeletedException();
             } finally {
-                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
+                instance.setProgressMonitor(null);
                 monitor.done();
             }
         }

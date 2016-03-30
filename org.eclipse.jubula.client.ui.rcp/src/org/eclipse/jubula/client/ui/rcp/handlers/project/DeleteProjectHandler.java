@@ -108,6 +108,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
             final ProjectVersion version = m_project.getProjectVersion();
             monitor.beginTask(NLS.bind(Messages.DeleteProjectActionDeleting, 
                 new Object[] { m_project.getName(), version}), getTotalWork());
+            ProgressMonitorTracker instance = ProgressMonitorTracker.SINGLETON;
             try {
                 boolean isRefreshRequired = false;
                 final String guid = m_project.getGuid();
@@ -123,8 +124,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 }
                 
                 // Register Persistence (JPA / EclipseLink) progress listeners
-                ProgressMonitorTracker.getInstance().setProgressMonitor(
-                        monitor);
+                instance.setProgressMonitor(monitor);
                 ProjectPM.deleteProject(m_project, m_deleteCurrentProject);
                 final String jobName = Messages.UIJobDeletingTestResultDetails;
                 final DataEventDispatcher ded = DataEventDispatcher
@@ -132,13 +132,8 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 Job job = new Job(jobName) {
                     public IStatus run(IProgressMonitor mon) {
                         mon.beginTask(jobName, IProgressMonitor.UNKNOWN);
-                        if (m_keepTestresultSummary) {
-                            TestResultSummaryPM.deleteTestrunsByProject(guid,
-                                    version, true);
-                        } else {
-                            TestResultSummaryPM.deleteTestrunsByProject(guid,
-                                    version, false);
-                        }
+                        TestResultSummaryPM.deleteTestrunsByProject(guid,
+                                version, m_keepTestresultSummary);
                         mon.done();
                         ded.fireTestresultChanged(TestresultState.Refresh);
                         return Status.OK_STATUS;
@@ -164,7 +159,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
             } finally {
                 // Remove JPA progress listeners
-                ProgressMonitorTracker.getInstance().setProgressMonitor(null);
+                instance.setProgressMonitor(null);
                 monitor.done();
                 Plugin.stopLongRunning();
             }

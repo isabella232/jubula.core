@@ -23,14 +23,11 @@ import org.eclipse.core.runtime.OperationCanceledException;
  * @created 24.01.2008
  */
 public class ElementLoadedProgressListener {
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @PostLoad
     public void elementLoaded(Object entity) throws OperationCanceledException {
         IProgressMonitor monitor = 
-            ProgressMonitorTracker.getInstance().getProgressMonitor();
+            ProgressMonitorTracker.SINGLETON.getProgressMonitor();
         if (monitor != null) {
             if (monitor.isCanceled()) {
                 throw new OperationCanceledException();

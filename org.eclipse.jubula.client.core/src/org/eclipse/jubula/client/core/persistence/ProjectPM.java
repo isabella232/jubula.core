@@ -1119,7 +1119,7 @@ public class ProjectPM extends PersistenceManager
      *                the monitor.
      */
     private static void setHbmProgressMonitor(IProgressMonitor monitor) {
-        ProgressMonitorTracker.getInstance().setProgressMonitor(monitor);
+        ProgressMonitorTracker.SINGLETON.setProgressMonitor(monitor);
     }
 
     /**
