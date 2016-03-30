@@ -18,20 +18,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTablePosition;
-import javafx.scene.control.TreeTableRow;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.layout.Pane;
-
 import org.apache.commons.lang.ObjectUtils;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -40,6 +28,8 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
@@ -55,6 +45,18 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
+
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTablePosition;
+import javafx.scene.control.TreeTableRow;
+import javafx.scene.control.TreeTableView;
+import javafx.scene.layout.Pane;
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on the tree inside a TreeTableView.
@@ -148,7 +150,7 @@ public class TreeTableOperationContext extends
     public String getRenderedText(final Object node)
         throws StepExecutionException {
         int indexOfTreeColumn = getIndexOfTreeColumn();
-        return getRenderedTextFromCell(node, indexOfTreeColumn);
+        return getTextFromNode(node, indexOfTreeColumn);
     }
 
     /**
@@ -172,7 +174,7 @@ public class TreeTableOperationContext extends
      */
     public String getRenderedTextOfColumn(final Object node)
         throws StepExecutionException {
-        return getRenderedTextFromCell(node, m_column);
+        return getTextFromNode(node, m_column);
     }
 
     /**
@@ -185,7 +187,7 @@ public class TreeTableOperationContext extends
      *            to get the rendered text from
      * @return the rendered text
      */
-    private String getRenderedTextFromCell(final Object node, final int col) {
+    private String getTextFromNode(final Object node, final int col) {
         if (node instanceof TreeItem<?>) {
             scrollNodeToVisible(node);
         }
@@ -197,7 +199,7 @@ public class TreeTableOperationContext extends
                         if (node instanceof TreeTableCell) {
                             TreeTableCell<?, ?> cell = 
                                     (TreeTableCell<?, ?>) node;
-                            return cell.getText();
+                            return getRenderedCellText(cell);
                         } else if (node instanceof TreeItem) {
                             TreeItem<?> item = (TreeItem<?>) node;
                             TreeTableView<?> treeTable = getTree();
@@ -220,7 +222,7 @@ public class TreeTableOperationContext extends
                                         && treeTable.getVisibleLeafColumns()
                                         .indexOf(cell.getTableColumn()) 
                                         == col) {
-                                    return cell.getText();
+                                    return getRenderedCellText(cell);
                                 }
                             }
                         }
@@ -230,6 +232,21 @@ public class TreeTableOperationContext extends
         return result;
     }
 
+    /**
+     * gets the rendered text of the cell or from components within the cell
+     * @param cell the cell
+     * @return String containing the text or null if no text was found
+     */
+    private String getRenderedCellText(TreeTableCell<?, ?> cell) {
+        IComponent adapter = (IComponent) 
+                AdapterFactoryRegistry.getInstance()
+                .getAdapter(IComponent.class, cell);
+        if (adapter != null
+                && adapter instanceof ITextComponent) {
+            return ((ITextComponent) adapter).getText();
+        }
+        return null;
+    }
 
     @Override
     public boolean isVisible(final Object node) {
@@ -1149,16 +1166,7 @@ public class TreeTableOperationContext extends
                                     && cell.getTableColumn() == col
                                     && cell.getTreeTableView() == table
                                     && NodeTraverseHelper.isVisible(cell)) {
-                                String txt = cell.getText();
-                                if (txt == null && cell.isEditing()) {
-                                    // The cell is in its editing state,
-                                    // therefore its text property is empty.
-                                    // We have to check the TextField for the
-                                    // text.
-                                    TextField f = (TextField) cell.getGraphic();
-                                    txt = f.getText();
-                                }
-                                return txt;
+                                return getRenderedCellText(cell);
                             }
                         }
                         return null;

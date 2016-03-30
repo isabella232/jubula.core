@@ -13,6 +13,10 @@ package org.eclipse.jubula.rc.javafx.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
+
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
@@ -109,6 +113,27 @@ public class NodeTraverseHelper {
             tmp = tmp.getParent();
         }
         return true;
+    }
+    
+    /**
+     * Find and collect strings under the given parent. This is done by looking
+     * for a ITextComponent Adapter for each child and then call getText.
+     * 
+     * @param parent the parent
+     * @return List containing the strings
+     */
+    public static List<String> findStrings(Parent parent) {
+        ArrayList<String> renderedStrings = new ArrayList<>();
+        List<? extends Node> textChildren = NodeTraverseHelper
+                .getInstancesOf(parent, Node.class);
+        for (Node n : textChildren) {
+            IComponent adapter = (IComponent) AdapterFactoryRegistry
+                    .getInstance().getAdapter(IComponent.class, n);
+            if (adapter != null && adapter instanceof ITextComponent) {
+                renderedStrings.add(((ITextComponent) adapter).getText());
+            }
+        }
+        return renderedStrings;
     }
     
 }

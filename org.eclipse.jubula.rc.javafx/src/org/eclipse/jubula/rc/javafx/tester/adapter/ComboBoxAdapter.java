@@ -14,21 +14,24 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
+import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
+import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+
+import com.sun.javafx.scene.control.skin.ComboBoxBaseSkin;
+import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Skin;
-
-import org.eclipse.jubula.rc.common.driver.ClickOptions;
-import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
-import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
-
-import com.sun.javafx.scene.control.skin.ComboBoxBaseSkin;
-import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 
 /**
  * ComboBox Adapter
@@ -63,14 +66,16 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
                     public String call() throws Exception {
                         ObservableList<Node> children = getRealComponent()
                                 .getChildrenUnmodifiable();
-                        ListCell<?> text = null;
                         for (Node node : children) {
                             if (node instanceof ListCell) {
-                                text = (ListCell<?>) node;
+                                IComponent adapter = (IComponent) 
+                                        AdapterFactoryRegistry.getInstance()
+                                        .getAdapter(IComponent.class, node);
+                                if (adapter != null
+                                        && adapter instanceof ITextComponent) {
+                                    return ((ITextComponent) adapter).getText();
+                                }
                             }
-                        }
-                        if (text != null) {
-                            return text.getText();
                         }
                         return null;
                     }

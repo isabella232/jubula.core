@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.common.adapter;
 
 import javafx.scene.control.Accordion;
 import javafx.scene.control.ButtonBase;
+import javafx.scene.control.Cell;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
@@ -38,6 +39,7 @@ import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.javafx.tester.adapter.AccordionAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ButtonBaseAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.CellAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ChoiceBoxAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ComboBoxAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ContextMenuAdapter;
@@ -83,7 +85,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ImageView.class, Text.class, TitledPane.class, ListView.class,
         ComboBox.class, TabPane.class, ChoiceBox.class, Accordion.class,
         ScrollPane.class, SplitPane.class, ToolBar.class,
-        TreeTableView.class, MenuButton.class, Labeled.class, DatePicker.class
+        TreeTableView.class, MenuButton.class, Labeled.class, DatePicker.class,
+        Cell.class
         };
 
     @Override
@@ -138,6 +141,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof TreeTableView) {
                 returnvalue = new TreeTableViewAdapter(
                         (TreeTableView<?>) objectToAdapt);
+            } else if (objectToAdapt instanceof Cell) {
+                returnvalue = new CellAdapter((Cell) objectToAdapt);
             }
         }
         if (returnvalue == null

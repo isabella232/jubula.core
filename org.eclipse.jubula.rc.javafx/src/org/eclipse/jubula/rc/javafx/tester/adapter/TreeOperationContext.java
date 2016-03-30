@@ -22,12 +22,15 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
 import org.apache.commons.lang.ObjectUtils;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
@@ -130,7 +133,13 @@ public class TreeOperationContext
                             TreeItem<?> item = cell.getTreeItem();
                             if (NodeTraverseHelper.isVisible(cell)
                                     && item != null && item.equals(node)) {
-                                return cell.getText();
+                                IComponent adapter = (IComponent) 
+                                        AdapterFactoryRegistry.getInstance()
+                                        .getAdapter(IComponent.class, cell);
+                                if (adapter != null
+                                        && adapter instanceof ITextComponent) {
+                                    return ((ITextComponent) adapter).getText();
+                                }
                             }
                         }
                         return null;

@@ -16,10 +16,13 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
@@ -155,7 +158,7 @@ public class ListViewAdapter<T extends ListView<?>> extends
                         for (ListCell<?> cell : lCells) {
                             if (cell.getIndex() == index
                                 && cell.getListView() == listView) {
-                                selectedValues.add(cell.getText());
+                                selectedValues.add(getCellText(cell));
                                 break;
                             }
                         }
@@ -183,7 +186,7 @@ public class ListViewAdapter<T extends ListView<?>> extends
                         for (ListCell<?> cell : lCells) {
                             if (cell.getIndex() == i
                                 && cell.getListView() == listView) {
-                                values.add(cell.getText());
+                                values.add(getCellText(cell));
                                 break;
                             }
                         }
@@ -203,16 +206,36 @@ public class ListViewAdapter<T extends ListView<?>> extends
                     @Override
                     public String call() throws Exception {
                         try {
-                            return getRobot().getPropertyValue(cell, name);
+                            IComponent adapter = (IComponent) 
+                                    AdapterFactoryRegistry.getInstance()
+                                    .getAdapter(IComponent.class, cell);
+                            if (adapter != null) {
+                                return ((ITextComponent) adapter)
+                                        .getPropteryValue(name);
+                            }
+                            return null;
                         } catch (RobotException e) {
-                            throw new StepExecutionException(
-                                    e.getMessage(),
-                                    EventFactory
-                                            .createActionError(TestErrorEvent.
-                                                    PROPERTY_NOT_ACCESSABLE));
+                            throw new StepExecutionException(e.getMessage(),
+                                    EventFactory.createActionError(
+                                            TestErrorEvent
+                                            .PROPERTY_NOT_ACCESSABLE));
                         }
                     }
                 });
         return String.valueOf(prop);
+    }
+    
+    /**
+     * Get the rendered cell text
+     * @param cell the cell
+     * @return the rendered text
+     */
+    private String getCellText(ListCell<?> cell) {
+        IComponent adapter = (IComponent) AdapterFactoryRegistry
+                .getInstance().getAdapter(IComponent.class, cell);
+        if (adapter != null && adapter instanceof ITextComponent) {
+            return ((ITextComponent) adapter).getText();
+        }
+        return null;
     }
 }

@@ -17,22 +17,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.Pane;
-
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -47,6 +38,16 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
+
+import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 
 /**
  * Adapter for a TableView(Table)
@@ -141,8 +142,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
 
     @Override
     public String getCellText(final int row, final int column) {
-        String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getCellText", new Callable<String>() { //$NON-NLS-1$
+        String result = EventThreadQueuerJavaFXImpl.invokeAndWait("getCellText", //$NON-NLS-1$
+                new Callable<String>() {
 
                     @Override
                     public String call() throws Exception {
@@ -163,18 +164,13 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                                     && cell.getTableColumn() == col
                                     && cell.getTableView() == table
                                     && NodeTraverseHelper.isVisible(cell)) {
-                                String txt = cell.getText();
-                                if (txt == null
-                                        && cell instanceof TextFieldTableCell
-                                        && cell.isEditing()) {
-                                    // The cell is in its editing state,
-                                    // therefore its text property is empty.
-                                    // We have to check the TextField for the
-                                    // text.
-                                    TextField f = (TextField) cell.getGraphic();
-                                    txt = f.getText();
+                                IComponent adapter = (IComponent) 
+                                        AdapterFactoryRegistry.getInstance()
+                                        .getAdapter(IComponent.class, cell);
+                                if (adapter != null
+                                        && adapter instanceof ITextComponent) {
+                                    return ((ITextComponent) adapter).getText();
                                 }
-                                return txt;
                             }
                         }
                         return null;
@@ -585,13 +581,19 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public String call() throws Exception {
                         try {
-                            return getRobot().getPropertyValue(cell, name);
+                            IComponent adapter = (IComponent) 
+                                    AdapterFactoryRegistry.getInstance()
+                                    .getAdapter(IComponent.class, cell);
+                            if (adapter != null) {
+                                return ((ITextComponent) adapter)
+                                        .getPropteryValue(name);
+                            }
+                            return null;
                         } catch (RobotException e) {
-                            throw new StepExecutionException(
-                                    e.getMessage(),
-                                    EventFactory
-                                            .createActionError(TestErrorEvent.
-                                                    PROPERTY_NOT_ACCESSABLE));
+                            throw new StepExecutionException(e.getMessage(),
+                                    EventFactory.createActionError(
+                                            TestErrorEvent
+                                            .PROPERTY_NOT_ACCESSABLE));
                         }
                     }
                 });

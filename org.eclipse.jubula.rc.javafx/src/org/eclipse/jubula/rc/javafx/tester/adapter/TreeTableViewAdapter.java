@@ -12,9 +12,12 @@ package org.eclipse.jubula.rc.javafx.tester.adapter;
 
 import java.util.concurrent.Callable;
 
+import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -86,13 +89,19 @@ public class TreeTableViewAdapter
                     @Override
                     public String call() throws Exception {
                         try {
-                            return getRobot().getPropertyValue(cell, name);
+                            IComponent adapter = (IComponent) 
+                                    AdapterFactoryRegistry.getInstance()
+                                    .getAdapter(IComponent.class, cell);
+                            if (adapter != null) {
+                                return ((ITextComponent) adapter)
+                                        .getPropteryValue(name);
+                            }
+                            return null;
                         } catch (RobotException e) {
-                            throw new StepExecutionException(
-                                    e.getMessage(),
-                                    EventFactory
-                                            .createActionError(TestErrorEvent.
-                                                    PROPERTY_NOT_ACCESSABLE));
+                            throw new StepExecutionException(e.getMessage(),
+                                    EventFactory.createActionError(
+                                            TestErrorEvent
+                                            .PROPERTY_NOT_ACCESSABLE));
                         }
                     }
                 });
