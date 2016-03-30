@@ -13,8 +13,10 @@ package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
@@ -236,12 +238,20 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         try {
             Collection<IComponentNamePO> cn = ComponentNamesBP.getInstance()
                     .getAllNonRefCompNamePOs(pe.getParentProjectID());
+            
+            Set<String> nonRefCompNameGuids = new HashSet<String>();
+            for (IComponentNamePO iComponentNamePO : cn) {
+                nonRefCompNameGuids.add(iComponentNamePO.getGuid());
+            }
+            
+            final Set<String> usedCompNames = ComponentNameReuseBP.getInstance()
+                    .getUsedCompNames(nonRefCompNameGuids);
+            
             CollectionUtils.filter(cn, new Predicate() {
                 public boolean evaluate(Object element) {
                     if (element instanceof IComponentNamePO) {
                         IComponentNamePO compName = (IComponentNamePO)element;
-                        if (ComponentNameReuseBP.getInstance().isCompNameReused(
-                                compName.getGuid())) {
+                        if (usedCompNames.contains(compName.getGuid())) {
                             return false;
                         }
                     }
@@ -265,12 +275,21 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         try {
             Collection<IComponentNamePO> cn = ComponentNamesBP.getInstance()
                     .getAllNonRefCompNamePOs(pe.getParentProjectID());
+            
+            Set<String> nonRefCompNameGuids = new HashSet<String>();
+            for (IComponentNamePO iComponentNamePO : cn) {
+                nonRefCompNameGuids.add(iComponentNamePO.getGuid());
+            }
+            
+            final Set<String> usedCompNames = ComponentNameReuseBP.getInstance()
+                    .getUsedCompNames(nonRefCompNameGuids);
+            
             CollectionUtils.filter(cn, new Predicate() {
                 public boolean evaluate(Object element) {
                     if (element instanceof IComponentNamePO) {
                         IComponentNamePO compName = (IComponentNamePO)element;
-                        if (ComponentNameReuseBP.getInstance().isCompNameReused(
-                                compName.getGuid())) {
+                        
+                        if (usedCompNames.contains(compName.getGuid())) {
                             return true;
                         }
                     }
