@@ -159,4 +159,13 @@ public interface ITDManager {
      */
     public int findColumnForParam(String uniqueId);
 
+    /**
+     * @param parentProjectId id of parent project
+     */
+    public void setParentProjectId(Long parentProjectId);
+    
+    /**
+     * @return the parent project id
+     */
+    public Long getParentProjectId();
 }

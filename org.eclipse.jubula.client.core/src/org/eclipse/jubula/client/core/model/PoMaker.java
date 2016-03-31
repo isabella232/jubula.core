@@ -427,7 +427,12 @@ public abstract class PoMaker {
      * @return the created Test Data Manager.
      */
     public static ITestDataCubePO createTestDataCubePO(String name) {
-        return new TestDataCubePO(name);
+        ITestDataCubePO dataCube = new TestDataCubePO(name);
+        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
+        if (currentProject != null) {
+            dataCube.setParentProjectId(currentProject.getId());
+        }
+        return dataCube;
     }
     
     /**
@@ -436,7 +441,12 @@ public abstract class PoMaker {
      * @return TestDataCategoryPO
      */
     public static ITestDataCategoryPO createTestDataCategoryPO() {
-        return new TestDataCategoryPO();
+        ITestDataCategoryPO testDataCategory = new TestDataCategoryPO();
+        IProjectPO currentProject = GeneralStorage.getInstance().getProject();
+        if (currentProject != null) {
+            testDataCategory.setParentProjectId(currentProject.getId());
+        }
+        return testDataCategory;
     }
 
     /**
@@ -447,7 +457,7 @@ public abstract class PoMaker {
      * @return TestDataCategoryPO
      */
     public static ITestDataCategoryPO createTestDataCategoryPO(String name) {
-        ITestDataCategoryPO testDataCategory = new TestDataCategoryPO();
+        ITestDataCategoryPO testDataCategory = createTestDataCategoryPO();
         testDataCategory.setName(name);
         return testDataCategory;
     }

@@ -359,6 +359,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      */
     public void setParentProjectId(Long projectId) {
         super.setParentProjectId(projectId);
+        getDataManager().setParentProjectId(projectId);
         if (getParameterInterface() != null) {
             getParameterInterface().setParentProjectId(projectId);
         }

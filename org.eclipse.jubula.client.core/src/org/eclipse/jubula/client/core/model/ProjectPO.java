@@ -578,6 +578,7 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * {@inheritDoc}
      */
     public void setParentProjectId(Long projectId) {
+        getDataManager().setParentProjectId(projectId);
         if (getProjectProperties() != null) {
             getProjectProperties().setParentProjectId(projectId);
         }

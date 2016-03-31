@@ -114,6 +114,9 @@ class DataSetPO implements IDataSetPO {
      */
     public void setParentProjectId(Long projectId) {
         setHbmParentProjectId(projectId);
+        for (IDataCellPO cell : getColumns()) {
+            cell.setParentProjectId(projectId);
+        }
     }
 
     /**

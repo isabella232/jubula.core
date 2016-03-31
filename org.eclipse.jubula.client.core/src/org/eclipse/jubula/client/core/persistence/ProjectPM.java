@@ -807,7 +807,6 @@ public class ProjectPM extends PersistenceManager
         findReusedProjects(projectIds,
                 key.getProjectProperties().getUsedProjects());
 
-        preloadDataForClass(s, projectIds, "DataCellPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "CompNamesPairPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "CompIdentifierPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "AUTConfigPO"); //$NON-NLS-1$
@@ -817,7 +816,6 @@ public class ProjectPM extends PersistenceManager
         preloadDataForClass(s, projectIds, "AUTContPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "ParamDescriptionPO"); //$NON-NLS-1$
 
-        preloadDataForClass(s, projectIds, "TDManagerPO"); //$NON-NLS-1$
         // Special pre-load due to http://eclip.se/432394
         preloadDistinctDataForClass(s, projectIds, "TestDataCubePO"); //$NON-NLS-1$
 

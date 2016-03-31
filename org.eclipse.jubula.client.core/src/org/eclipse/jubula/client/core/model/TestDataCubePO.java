@@ -305,6 +305,7 @@ class TestDataCubePO implements ITestDataCubePO {
         for (IParamDescriptionPO paramDesc : getHbmParameterList()) {
             paramDesc.setParentProjectId(projectId);
         }
+        getDataManager().setParentProjectId(projectId);
     }
 
     /** @return Returns the completeTdMap */
