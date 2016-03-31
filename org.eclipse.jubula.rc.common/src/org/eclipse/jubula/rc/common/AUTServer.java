@@ -425,12 +425,7 @@ public abstract class AUTServer {
                 } catch (InterruptedException e) { /* Do nothing */ }
             }
             if (autReg != null) {
-                try {
-                    autReg.register();
-                } catch (IOException ioe) {
-                    log.error("Exception during AUT registration", ioe); //$NON-NLS-1$
-                    System.exit(AUTServerExitConstants.AUT_START_ERROR);
-                }
+                registerAutinAgent(autReg);
             }
         } catch (IllegalArgumentException iae) {
             log.error("Exception in start()", iae); //$NON-NLS-1$
@@ -456,6 +451,21 @@ public abstract class AUTServer {
             sendExitReason(ve, 
                     AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION);
             System.exit(AUTServerExitConstants.EXIT_UNKNOWN_ITE_CLIENT);
+        }
+    }
+
+    /**
+     * Register AUT at Agent
+     * @param autReg the information needed to register 
+     * @throws JBVersionException
+     */
+    protected void registerAutinAgent(IRegisterAut autReg)
+            throws JBVersionException {
+        try {
+            autReg.register();
+        } catch (IOException ioe) {
+            log.error("Exception during AUT registration", ioe); //$NON-NLS-1$
+            System.exit(AUTServerExitConstants.AUT_START_ERROR);
         }
     }
     

@@ -258,26 +258,24 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      */
     private Stage getStageByTitle(final String title, final String operator) {
         Stage result = null;
-        try {
-            result = EventThreadQueuerJavaFXImpl
-                    .invokeAndWait("getStageByTitle", new Callable<Stage>() { //$NON-NLS-1$
+        
+        result = EventThreadQueuerJavaFXImpl.invokeAndWait("getStageByTitle", //$NON-NLS-1$
+                new Callable<Stage>() {
 
-                        @Override
-                        public Stage call() throws Exception {
-                            List<? extends Stage> stages = ComponentHandler
-                                    .getAssignableFrom(Stage.class);
-                            for (final Stage stage : stages) {
-                                if (MatchUtil.getInstance().match(
-                                        stage.getTitle(), title, operator)) {
-                                    return stage;
-                                }
+                    @Override
+                    public Stage call() throws Exception {
+                        List<? extends Stage> stages = ComponentHandler
+                                .getAssignableFrom(Stage.class);
+                        for (final Stage stage : stages) {
+                            if (MatchUtil.getInstance().match(stage.getTitle(),
+                                    title, operator)) {
+                                return stage;
                             }
-                            return null;
                         }
-                    });
-        } catch (IllegalStateException e) {
-            // Do nothing, toolkit not initialized
-        }
+                        return null;
+                    }
+                });
+
         return result;
     }
 

@@ -13,21 +13,30 @@ package org.eclipse.jubula.rc.javafx;
 import java.awt.Rectangle;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
-import javafx.stage.Stage;
-
+import org.eclipse.jubula.communication.internal.message.AUTServerStateMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.listener.DisabledCheckListener;
 import org.eclipse.jubula.rc.common.listener.DisabledRecordListener;
+import org.eclipse.jubula.rc.common.registration.IRegisterAut;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
+import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.driver.RobotFactoryJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.AbstractFXAUTEventHandler;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 import org.eclipse.jubula.rc.javafx.listener.MappingListener;
+import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javafx.stage.Stage;
 
 /**
  * The AutServer controlling the AUT. <br>
@@ -53,6 +62,8 @@ import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
  * @created 24.09.2013
  */
 public class JavaFXAUTServer extends AUTServer {
+    /** the logger */
+    private static Logger log = LoggerFactory.getLogger(AUTServer.class);
     /**
      * constructor instantiates the listeners
      */
@@ -132,6 +143,8 @@ public class JavaFXAUTServer extends AUTServer {
         throws ComponentNotFoundException, IllegalArgumentException {
         return ComponentHandler.findComponent(ci, true, timeout);
     }
+    
+    
 
     /**
      * {@inheritDoc}
@@ -141,4 +154,68 @@ public class JavaFXAUTServer extends AUTServer {
             throws ComponentNotFoundException, IllegalArgumentException {
         return ComponentHandler.isComponentDisappeared(ci, timeout);
     }
+    
+    /**
+     * Tries to schedule an empty runnable in the JavaFX-Thread
+     * 
+     * @return true if scheduling was successful and the toolkit is therefore
+     *         initialized, false otherwise
+     */
+    private boolean checkInitialization() {
+        try {
+            return EventThreadQueuerJavaFXImpl.invokeAndWait("getStageByTitle", //$NON-NLS-1$
+                    new Callable<Boolean>() {
+
+                        @Override
+                        public Boolean call() throws Exception {
+                            // Do nothing, we are just checking if an Exception
+                            // is thrown when the task is scheduled
+                            return true;
+                        }
+                    });
+        } catch (IllegalStateException e) {
+            // Do nothing, toolkit not initialized
+            return false;
+        }
+    }
+
+    @Override
+    protected void registerAutinAgent(IRegisterAut autReg)
+            throws JBVersionException {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                do {
+                    TimeUtil.delay(100);
+                    // do nothing, wait to get the toolkit initialized
+                } while (!checkInitialization());
+                try {
+                    JavaFXAUTServer.super.registerAutinAgent(autReg);
+                } catch (JBVersionException e) {
+                    sendExitReason(e,
+                            AUTServerStateMessage.EXIT_AUT_WRONG_CLASS_VERSION);
+                    System.exit(AUTServerExitConstants.EXIT_UNKNOWN_ITE_CLIENT);
+                }
+            }
+        }).start();
+    }
+
+    @Override
+    protected void connectToITE() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                do {
+                    TimeUtil.delay(100);
+                    // do nothing, wait to get the toolkit initialized
+                } while (!checkInitialization());
+                JavaFXAUTServer.super.connectToITE();
+            }
+        }).start();
+    }
+    
+    
+
 }
