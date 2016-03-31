@@ -439,7 +439,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExists" since="4.0">
+		<action name="CompSystem.VerifyExists">
 			<method>rcVerifyExists</method>
 			<param name="CompSystem.IsExisting"
                    descriptionKey="CompSystem.IsExisting.descr" >
@@ -449,11 +449,6 @@
 					<element name="CompSystem.True" value="true"/>
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
-			</param>
-			<param name="CompSystem.Timeout"
-                   descriptionKey="CompSystem.Timeout.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>0</defaultValue>
 			</param>
 		</action>
 		<action name="CompSystem.InputTextDirect">
