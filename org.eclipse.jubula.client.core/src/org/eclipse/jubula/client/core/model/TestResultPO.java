@@ -149,7 +149,8 @@ class TestResultPO implements ITestResultPO {
     private int m_noOfSimilarComponents = -1;
     
     /** additional details for a testresultNode */
-    private List<ITestResultAdditionPO> m_additions;
+    private List<ITestResultAdditionPO> m_additions =
+            new ArrayList<ITestResultAdditionPO>(2);
     
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -164,7 +165,6 @@ class TestResultPO implements ITestResultPO {
      */
     TestResultPO(List<IParameterDetailsPO> parameterList) {
         m_parameterList = parameterList;
-        setTestResultAdditions(new ArrayList<ITestResultAdditionPO>(4));
     }
 
     /**
