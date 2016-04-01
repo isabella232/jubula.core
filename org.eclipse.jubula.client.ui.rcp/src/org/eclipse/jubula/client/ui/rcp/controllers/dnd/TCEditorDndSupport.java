@@ -239,7 +239,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 IEventExecTestCasePO newEvent = NodeMaker
                         .createEventExecTestCasePO(origEvent
                         .getSpecTestCase(), targetNode);
-                fillExec(origEvent, newEvent);
+                fillExec(origEvent, newEvent, false);
                 checkParentParameters(targetNode, newEvent, pMapper, true);
                 TestCaseBP.addEventHandler(editSupport, targetNode, newEvent);
                 targetEditor.getEditorHelper().setDirty(true);
@@ -281,7 +281,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
     
         IExecTestCasePO newExecTestCase = NodeMaker
                 .createExecTestCasePO(execTestCase.getSpecTestCase());
-        fillExec(execTestCase, newExecTestCase);
+        fillExec(execTestCase, newExecTestCase, false);
         ParamNameBPDecorator pMapper = targetEditor.getEditorHelper()
                 .getEditSupport().getParamMapper();
         checkParentParameters(targetNode, newExecTestCase, pMapper, true);

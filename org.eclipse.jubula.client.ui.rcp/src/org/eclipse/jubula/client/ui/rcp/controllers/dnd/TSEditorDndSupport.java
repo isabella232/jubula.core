@@ -16,10 +16,7 @@ import java.util.List;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -29,13 +26,11 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
-import org.eclipse.jubula.client.core.model.TDCell;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
-import org.eclipse.osgi.util.NLS;
 
 
 /**
@@ -104,60 +99,29 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
         for (Object obj : selectedElements.toArray()) {
             position++;
             
-            if (!(obj instanceof IParamNodePO)) {
+            if (!(obj instanceof IExecTestCasePO)) {
                 return false;
             }
-            boolean modifyRefParam = !checkRefParam((IParamNodePO)obj,
-                    false);
-            if (needRefParamMessage && modifyRefParam) {
-                needRefParamMessage = false;
+            IExecTestCasePO etc = (IExecTestCasePO) obj;
+            boolean hasRefParam = etc.getParamReferencesIterator().hasNext();
+            if (needRefParamMessage && hasRefParam) {
                 MessageDialog.openInformation(null,
                         Messages.NotUseReferenceParameterTitle,
-                        NLS.bind(Messages.NotUseReferenceParameter,
-                            new Object[]{((IParamNodePO)obj).getName()}));
-                return false;
+                        Messages.NotUseReferenceParameter);
+                needRefParamMessage = false;
             }
             boolean modifyPropCompName =
                     !checkCompName((IParamNodePO)obj, false);
             if (needPropCompNameMessage && modifyPropCompName) {
                 MessageDialog.openInformation(null,
                         Messages.NotUsePropagatedComponentNameTitle,
-                        NLS.bind(Messages.NotUsePropagatedComponentName,
-                                new Object[]{((IParamNodePO)obj).getName()}));
+                        Messages.NotUsePropagatedComponentName);
                 needPropCompNameMessage = false;
             }
             
-            if (obj instanceof IExecTestCasePO) {
-                
-                copyPasteExecTestCase(targetEditor, (IExecTestCasePO)obj,
-                        targetNode, position, modifyRefParam,
-                        modifyPropCompName);
-            } else if (obj instanceof ICapPO) {
-                
-                copyPasteCap(targetEditor, (ICapPO)obj, targetNode,
-                        position, modifyRefParam, modifyPropCompName);
-            }
-        }
-        return true;
-    }
-    
-    /**
-     * 
-     * @param paramNode original exec test case node
-     * @param modifiy if <code>true</code> then delete all references parameter.
-     * @return <code>false</code> if paramNodePO contain references parameter
-     *              and the modify is false. Otherwise return <code>true</code>. 
-     */
-    private static boolean checkRefParam(
-            IParamNodePO paramNode, boolean modifiy) {
-        
-        Iterator<TDCell> it = paramNode.getParamReferencesIterator();
-        while (it.hasNext()) {
-            if (modifiy) {
-                it.next().setTestData(""); //$NON-NLS-1$
-            } else {
-                return false;
-            }
+            copyPasteExecTestCase(targetEditor, etc,
+                    targetNode, position, hasRefParam,
+                    modifyPropCompName);
         }
         return true;
     }
@@ -207,13 +171,9 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
             ITestSuitePO targetNode, int dropPosition, boolean modifyRefParam,
             boolean modifyPropCompName) {
         
-        ISpecTestCasePO specTestCase = execTestCase.getSpecTestCase();
         IExecTestCasePO newExecTestCase = NodeMaker.createExecTestCasePO(
-                specTestCase);
-        fillExec(execTestCase, newExecTestCase);
-        if (modifyRefParam) {
-            checkRefParam(newExecTestCase, true);
-        }
+                execTestCase.getSpecTestCase());
+        fillExec(execTestCase, newExecTestCase, true);
         if (modifyPropCompName) {
             checkCompName(newExecTestCase, true);
         }
@@ -221,46 +181,6 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
                 dropPosition);
         targetEditor.getEditorHelper().setDirty(true);
         postDropAction(newExecTestCase, targetEditor);
-        
-        return true;
-    }
-    
-    /**
-     * 
-     * @param targetEditor The editor to which the item is to be dropped/pasted.
-     * @param cap The item that was dragged/cut.
-     * @param targetNode The target parent node.
-     * @param dropPosition One of the values defined in ViewerDropAdapter to 
-     *                     indicate the drop position relative to the drop
-     *                     target.
-     * @param modifyRefParam <code>true</code> if necessary to the reference parameters
-     *              delete from the new exec test node.
-     * @param modifyPropCompName <code>true</code> if necessary to set component names
-     *              propagation to false.
-     * @return <code>true</code> if the paste was successful. 
-     *         Otherwise <code>false</code>.
-     */
-    public static boolean copyPasteCap(
-            AbstractTestCaseEditor targetEditor, ICapPO cap,
-            ITestSuitePO targetNode, int dropPosition, boolean modifyRefParam,
-            boolean modifyPropCompName) {
-        
-        ICapPO newCap = CapBP.createCapWithDefaultParams(cap.getName(),
-                cap.getComponentName(), cap.getComponentType(),
-                cap.getActionName());
-        fillCap(cap, newCap);
-        if (modifyRefParam) {
-            checkRefParam(newCap, true);
-        }
-        if (modifyPropCompName) {
-            checkCompName(newCap, true);
-        }
-        newCap.setParentNode(targetNode);
-        targetNode.addNode(dropPosition, newCap);
-        targetEditor.getTreeViewer().expandToLevel(targetNode, 1);
-        targetEditor.handleParamChanged();
-        DataEventDispatcher.getInstance().fireParamChangedListener();
-        postDropAction(newCap, targetEditor);
         
         return true;
     }

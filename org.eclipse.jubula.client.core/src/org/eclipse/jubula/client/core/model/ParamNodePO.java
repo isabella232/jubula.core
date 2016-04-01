@@ -351,7 +351,6 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
             if (conv.containsReferences()) {
                 references.add(new TDCell(testData, dataSetRow, col));
             }
-            col++;
         }
     }
     

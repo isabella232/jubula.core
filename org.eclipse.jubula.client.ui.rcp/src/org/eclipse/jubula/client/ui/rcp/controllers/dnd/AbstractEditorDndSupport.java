@@ -1,5 +1,8 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -7,10 +10,14 @@ import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
+import org.eclipse.jubula.client.core.model.TDCell;
+import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
+import org.eclipse.jubula.client.core.utils.RefToken;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 
 /**
@@ -53,9 +60,10 @@ public abstract class AbstractEditorDndSupport {
      * 
      * @param origExec  The original exec test case
      * @param newExec   The new exec test case
+     * @param deleteRefDatas are referenced data deleting needed or not
      */
     protected static void fillExec(IExecTestCasePO origExec, 
-        IExecTestCasePO newExec) {
+        IExecTestCasePO newExec, boolean deleteRefDatas) {
         fillParamNode(origExec, newExec);
         newExec.setName(origExec.getRealName());
         ISpecTestCasePO origSpecTC = origExec.getSpecTestCase();
@@ -69,6 +77,10 @@ public abstract class AbstractEditorDndSupport {
             }
         } else {
             newExec.setHasReferencedTD(true);
+        }
+        
+        if (deleteRefDatas) {
+            deleteRefDatas(newExec);
         }
         
         for (ICompNamesPairPO origPair : origExec.getCompNamesPairs()) {
@@ -90,6 +102,37 @@ public abstract class AbstractEditorDndSupport {
         }
     }
 
+    /**
+     * Delete the referenced test data tokens
+     * 
+     * @param paramNode parameter node
+     */
+    protected static void deleteRefDatas(IParamNodePO paramNode) {
+        for (Iterator<TDCell> it = paramNode
+                .getParamReferencesIterator(); it.hasNext();) {
+            TDCell cell = it.next();
+            String guid = paramNode.getDataManager()
+                    .getUniqueIds().get(cell.getCol());
+            IParamDescriptionPO childDesc = paramNode
+                    .getParameterForUniqueId(guid);
+            // The childDesc can be null if the parameter has been
+            // removed in another session and not yet updated in the 
+            // current editor session.
+            if (childDesc != null) {
+                ModelParamValueConverter conv = 
+                        new ModelParamValueConverter(cell.getTestData(),
+                                paramNode, childDesc);
+                List<RefToken> refTokens = conv.getRefTokens();
+                for (RefToken refToken : refTokens) {
+                    String oldGUID = RefToken.extractCore(refToken
+                            .getModelString());
+                    conv.removeReference(oldGUID);
+                    cell.setTestData(conv.getModelString());
+                }
+            }
+        }
+    }
+    
     /**
      * Copy the parameters from the old Test step to the new Test step.
      * 
