@@ -46,8 +46,10 @@ import org.eclipse.jubula.client.teststyle.checks.contexts.BaseContext;
 import org.eclipse.jubula.client.teststyle.gui.TeststyleProblemAdder;
 import org.eclipse.jubula.client.teststyle.gui.decoration.DecoratorHandler;
 import org.eclipse.jubula.client.teststyle.problems.ProblemCont;
-import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.teststyle.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -91,7 +93,7 @@ public final class TeststyleHandler implements IDataChangedListener,
                 return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
                         getName());
             }
-            monitor.beginTask(Messages.CompletenessCheckRunningOperation,
+            monitor.beginTask(Messages.TestStyleRunningOperation,
                     IProgressMonitor.UNKNOWN);
             for (DataChangedEvent e : m_events) {
                 handleChangedPo(e.getPo(), e.getDataState(),
@@ -113,8 +115,43 @@ public final class TeststyleHandler implements IDataChangedListener,
         }
 
     }
+
+    /**
+     * Job which is cleaning up and doing a complete teststyle check
+     * @author BREDEX GmbH
+     */
+    class CompleteTestStyleCheckJob extends Job {
+        /**
+         * @param name the name of the job
+         */
+        public CompleteTestStyleCheckJob(String name) {
+            super(name);
+        }
+        /**
+         * {@inheritDoc}
+         */
+        protected IStatus run(IProgressMonitor monitor) {
+            ProblemCont.instance.clear();
+            if (isEnabled()) {
+                // Check'em all!
+                for (BaseContext context : CheckCont.getContexts()) {
+                    for (Object obj : context.getAll()) {
+                        check(obj);
+                    }
+                }
+            }
+            refresh();
+            addTeststyleProblems(monitor);
+            return new Status(IStatus.OK, Activator.PLUGIN_ID, getName());
+        }
+    }
+    
     /** singleton */
     private static TeststyleHandler instance;
+
+    /** the logger */
+    private static final Logger LOG = LoggerFactory
+            .getLogger(TeststyleHandler.class);
 
     /**
      * Private constructor of the singleton
@@ -142,7 +179,7 @@ public final class TeststyleHandler implements IDataChangedListener,
             return; // if there is no project, don't proceed
         }
         ExtensionHelper.initCheckConfiguration();
-        checkEverything();
+        doCompleteCheck();
         ProblemPropagator.INSTANCE.propagate();
     }
 
@@ -245,21 +282,16 @@ public final class TeststyleHandler implements IDataChangedListener,
     /**
      * Checks every element with checks of the project for CheckStyle errors.
      */
-    public void checkEverything() {
-        // Clean up
-        ProblemCont.instance.clear();
-        
-        if (isEnabled()) {
-            // Check'em all!
-            for (BaseContext context : CheckCont.getContexts()) {
-                for (Object obj : context.getAll()) {
-                    check(obj);
-                }  
-            }
+    public void doCompleteCheck() {
+        Job checkEverythingJob =
+                new CompleteTestStyleCheckJob("TestStyle"); //$NON-NLS-1$
+        checkEverythingJob.setRule(SingleJobRule.TESTSTYLERULE);
+        JobUtils.executeJob(checkEverythingJob, null);
+        try {
+            checkEverythingJob.join();
+        } catch (InterruptedException e) {
+            LOG.warn("Error waiting for Job TestStyle job", e); //$NON-NLS-1$
         }
-        
-        refresh();
-        addTeststyleProblems(null);
     }
 
     /**
@@ -341,7 +373,7 @@ public final class TeststyleHandler implements IDataChangedListener,
     public void handleProjectStateChanged(ProjectState state) {
         switch (state) {
             case prop_modified:
-                checkEverything();
+                doCompleteCheck();
                 break;
             case closed:
                 ProblemCont.instance.clear();
