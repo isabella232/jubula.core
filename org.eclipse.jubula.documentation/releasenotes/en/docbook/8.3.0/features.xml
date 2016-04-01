@@ -172,4 +172,28 @@
  </para>
 </listitem>
 </itemizedlist>
+<para>
+    <emphasis role="strong">Check the text/properties of customized cells in JavaFX</emphasis>
+ </para>
+ <itemizedlist>
+ <listitem>
+	<para>
+	It is now possible to check the text of customized cells in JavaFX. In
+	this case customized means that there are child components within the
+	cell that are used to display the text of the cell. In this case the
+	old mechanism to get the text of a cell would not be able to retrieve
+	the displayed text. With the new approach we are checking for every
+	child component of the cell if there exists an adapter which can
+	retrieve the text.
+	
+	This also applies for check property at mouse position. First of all it is
+	checked if the cell contains the wanted property, if this is not the
+	case we are checking all child components which are under the mouse.
+	
+	Because both mechanisms try to find a fitting adapter for the child components,
+	you can easily add support for a custom component that you created. 
+	You just have to create an extension containing the adapter for your component. 
+ </para>
+</listitem>
+</itemizedlist>
 </section>
