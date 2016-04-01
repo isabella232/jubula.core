@@ -101,6 +101,9 @@ public abstract class FindComponentBP {
                 if (equivalence > bestMatchPercentage) {
                     bestMatch = current;
                     bestMatchPercentage = equivalence;
+                } else if (equivalence == bestMatchPercentage
+                        && hierarchy.isInActiveWindow(currComp)) {
+                    bestMatch = current;
                 }
             }
         }

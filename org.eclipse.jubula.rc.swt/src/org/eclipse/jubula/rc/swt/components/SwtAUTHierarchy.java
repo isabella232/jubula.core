@@ -83,6 +83,9 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
     private Map<Shell, ShellClosingListener> m_shellToListenerMap = 
         new HashMap<Shell, ShellClosingListener>();
     
+    /** The current active window */
+    private Shell m_activeWindow;
+    
     // methods operating on meta data, parameters are from the AUT
     /**
      * Adds the complete hierarchy of the given <code>window</code> to the
@@ -986,6 +989,7 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
                 AUTServer.getInstance().getClass().getClassLoader());
             try {
                 Shell window = (Shell)e.widget; 
+                m_activeWindow = window;
                 if (isShellVisible(window)
                     && getHierarchyContainer(window) == null) {
                     add(window);
@@ -994,6 +998,32 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
                 Thread.currentThread().setContextClassLoader(originalCL);
             }
         }
+    }
+    
+    @Override
+    public boolean isInActiveWindow(Widget component) {
+
+        if (component == null) {
+            return false;
+        }
+        
+        boolean searchTopParentComponent = true;
+        Widget componentToCheck = component;
+        while (searchTopParentComponent) {
+            Widget parent = SwtUtils.getWidgetParent(componentToCheck);
+            if (parent == null) {
+                searchTopParentComponent = false;
+            } else {
+                componentToCheck = parent;
+            }
+        }
+        if (componentToCheck != null && m_activeWindow != null
+                && componentToCheck.equals(m_activeWindow)) {
+            return true;
+        }
+
+        return false;
+
     }
 
 }

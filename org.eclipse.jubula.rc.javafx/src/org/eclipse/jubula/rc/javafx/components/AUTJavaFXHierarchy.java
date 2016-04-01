@@ -20,8 +20,10 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javafx.event.EventTarget;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -548,5 +550,24 @@ public class AUTJavaFXHierarchy extends AUTHierarchy<EventTarget> {
      */
     public static ReentrantLock getLock() {
         return lock;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isInActiveWindow(EventTarget component) {
+
+        if (component != null && component instanceof Node) {
+            Node node = (Node) component;
+            Scene scene = node.getScene();
+            if (scene != null) {
+                Window window = scene.getWindow();
+                if (window != null) {
+                    return window.isFocused();
+                }
+            }
+        }
+
+        return false;
     }
 }

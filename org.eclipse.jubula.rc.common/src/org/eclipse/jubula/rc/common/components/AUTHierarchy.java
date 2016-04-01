@@ -290,4 +290,13 @@ public abstract class AUTHierarchy<COMPONENT_TYPE> {
         return displayName;
     }
 
+    /**
+     * @param component
+     *            The component to check.
+     * @return true if the component is in the active window.
+     */
+    public boolean isInActiveWindow(COMPONENT_TYPE component) {
+        return false;
+    }
+
 }

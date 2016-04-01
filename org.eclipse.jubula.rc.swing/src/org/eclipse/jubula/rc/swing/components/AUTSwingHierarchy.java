@@ -1034,4 +1034,17 @@ public class AUTSwingHierarchy extends AUTHierarchy<Component>
             }
         }
     }
+    
+    @Override
+    public boolean isInActiveWindow(Component component) {
+       
+        if (component == null) {
+            return false;
+        }
+        
+        Window windowAncestor = SwingUtilities
+                .getWindowAncestor(component);
+        return (windowAncestor != null && windowAncestor.isActive());
+        
+    }
 }
