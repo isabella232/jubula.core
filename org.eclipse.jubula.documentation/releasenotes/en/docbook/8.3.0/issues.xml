@@ -8,19 +8,19 @@
   Contributors:
       BREDEX GmbH - initial API and implementation and/or initial documentation
 -->
-<section xml:id="known-issues-and-other-information-8.2.4"
+<section xml:id="known-issues-and-other-information-8.3.0"
     version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>Known issues and other information</title>
   <para>
-    	<emphasis role="strong">Removal of Atlassian connectors</emphasis>
+        <emphasis role="strong">Removal of Atlassian connectors</emphasis>
   </para>
   <itemizedlist>
-    	<listitem>
-    		<para>
-    			We removed the Atlassian connector since it is deprecated. If you want to connect Jubula to another ALM besides to
-    			Bugzilla and Trac you will have to use the commercially available Tasktop Dev connectors.    
-    		</para>
-    	</listitem>
+        <listitem>
+            <para>
+                We removed the Atlassian connector since it is deprecated. If you want to connect Jubula to another ALM besides to
+                Bugzilla and Trac you will have to use the commercially available Tasktop Dev connectors.    
+            </para>
+        </listitem>
     </itemizedlist>
 </section>
