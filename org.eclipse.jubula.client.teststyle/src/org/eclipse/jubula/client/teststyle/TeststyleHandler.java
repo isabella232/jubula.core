@@ -48,6 +48,8 @@ import org.eclipse.jubula.client.teststyle.gui.decoration.DecoratorHandler;
 import org.eclipse.jubula.client.teststyle.problems.ProblemCont;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
+import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,7 +110,13 @@ public final class TeststyleHandler implements IDataChangedListener,
                 return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
                         getName());
             }
-            addTeststyleProblems(monitor);
+            try {
+                addTeststyleProblems(monitor);
+            } catch (JBException e1) {
+             // this might occur during create new version
+                return new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+                        getName());
+            }
             ProblemPropagator.INSTANCE.propagate();
             monitor.done();
             return new Status(IStatus.OK, Activator.PLUGIN_ID, getName());
@@ -127,6 +135,15 @@ public final class TeststyleHandler implements IDataChangedListener,
         public CompleteTestStyleCheckJob(String name) {
             super(name);
         }
+
+        /** {@inheritDoc} */
+        public boolean belongsTo(Object family) {
+            if (family instanceof CompleteTestStyleCheckJob) {
+                return true;
+            }
+            return super.belongsTo(family);
+        }
+
         /**
          * {@inheritDoc}
          */
@@ -141,7 +158,13 @@ public final class TeststyleHandler implements IDataChangedListener,
                 }
             }
             refresh();
-            addTeststyleProblems(monitor);
+            try {
+                addTeststyleProblems(monitor);
+            } catch (JBException e1) {
+                // this might occur during create new version
+                return new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+                        getName());
+            }
             return new Status(IStatus.OK, Activator.PLUGIN_ID, getName());
         }
     }
@@ -284,7 +307,7 @@ public final class TeststyleHandler implements IDataChangedListener,
      */
     public void doCompleteCheck() {
         Job checkEverythingJob =
-                new CompleteTestStyleCheckJob("TestStyle"); //$NON-NLS-1$
+                new CompleteTestStyleCheckJob("TestStyle - complete"); //$NON-NLS-1$
         checkEverythingJob.setRule(SingleJobRule.TESTSTYLERULE);
         JobUtils.executeJob(checkEverythingJob, null);
         try {
@@ -297,9 +320,16 @@ public final class TeststyleHandler implements IDataChangedListener,
     /**
      * 
      * @param monitor a monitor or null<code>null</code>
+     * @throws {@link JBException} if the project is 
+     *         null in the {@link GeneralStorage}
      */
-    private void addTeststyleProblems(IProgressMonitor monitor) {
+    private void addTeststyleProblems(IProgressMonitor monitor) 
+            throws JBException {
         IProjectPO project = GeneralStorage.getInstance().getProject();
+        if (project == null) {
+            throw new JBException("Project is null", //$NON-NLS-1$
+                    MessageIDs.E_PROJECT_NOT_FOUND);
+        }
         final ITreeNodeOperation<INodePO> op = new TeststyleProblemAdder();
         final TreeTraverser traverser = new TreeTraverser(project, op);
         if (monitor != null) {
