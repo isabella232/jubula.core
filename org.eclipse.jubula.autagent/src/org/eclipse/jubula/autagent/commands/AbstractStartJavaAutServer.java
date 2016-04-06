@@ -212,20 +212,47 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
             return Arrays.asList(StringUtils.split(joinedAutRunArgs,
                 AutConfigConstants.AUT_RUN_AUT_ARGUMENTS_SEPARATOR_CHAR));
         }
+        processAutRunArguments(parameters, argsList);
+
+        return argsList;
+    }
+
+    /**
+     * Process the aut arguments for creating aut arguments
+     * @param parameters argument parameter map
+     * @param argsList argument lists, which contains the parameters
+     */
+    private void processAutRunArguments(Map<String, String> parameters,
+            List<String> argsList) {
         String autArguments = parameters.get(AutConfigConstants.AUT_ARGUMENTS);
 
         if (autArguments == null) {
             autArguments = StringConstants.EMPTY;
         }
 
+        String delimiterString = "%_"; //$NON-NLS-1$
+
+        String[] quotedParts = StringUtils.substringsBetween(autArguments, "\"", //$NON-NLS-1$
+                "\""); //$NON-NLS-1$
+        if (quotedParts != null) {
+            for (String quotedPart : quotedParts) {
+                String escapedQuotePart = new String(quotedPart);
+                escapedQuotePart = escapedQuotePart.replaceAll("\\s+", //$NON-NLS-1$
+                        delimiterString);
+                autArguments = autArguments.replace(quotedPart,
+                        escapedQuotePart);
+            }
+        }
         StringTokenizer args = new StringTokenizer(autArguments,
             WHITESPACE_DELIMITER);
         while (args.hasMoreTokens()) {
             String arg = args.nextToken();
+            if (arg.contains(delimiterString)) {
+                arg = arg.replaceAll(delimiterString, " ").replaceAll("\"", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            }
+            
             argsList.add(arg);
         }
-
-        return argsList;
     }
     
     /**
