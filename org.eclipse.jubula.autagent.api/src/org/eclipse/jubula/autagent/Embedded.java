@@ -20,37 +20,31 @@ import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.utils.NetUtil;
 
-/**
- * @author BREDEX GmbH
- */
-public class EmbeddedAUTAgent {
-    /** the embedded AUT Agent instance */
-    private static AutStarter embedded = null;
-
-    /** Constructor */
-    private EmbeddedAUTAgent() {
-        // hide
-    }
+/** @author BREDEX GmbH */
+public enum Embedded {
+    /** Singleton */
+    INSTANCE;
+    /** the agent */
+    private AUTAgent m_agent = null;
 
     /**
-     * @return a sharable instance of an embedded AUTAgent
+     * @return a sharable, already connected instance of an AUTAgent
      * @throws CommunicationException
      */
-    public static AUTAgent instance() throws CommunicationException {
-        int port = -1;
-        if (embedded == null) {
-            port = NetUtil.getFreePort();
-            embedded = AutStarter.getInstance();
+    public AUTAgent agent() throws CommunicationException {
+        if (m_agent == null) {
+            int port = NetUtil.getFreePort();
+            AutStarter starter = AutStarter.getInstance();
             try {
-                embedded.start(port, false, Verbosity.QUIET, false);
+                starter.start(port, false, Verbosity.QUIET, false);
+                m_agent = MakeR.createAUTAgent(EnvConstants.LOCALHOST_ALIAS,
+                        port);
+                m_agent.connect();
             } catch (JBVersionException | IOException e) {
                 throw new CommunicationException(e);
             }
-        } else {
-            port = embedded.getAgent().getPort();
         }
-        AUTAgent agent = MakeR.createAUTAgent(EnvConstants.LOCALHOST_ALIAS,
-                port);
-        return agent;
+
+        return m_agent;
     }
 }

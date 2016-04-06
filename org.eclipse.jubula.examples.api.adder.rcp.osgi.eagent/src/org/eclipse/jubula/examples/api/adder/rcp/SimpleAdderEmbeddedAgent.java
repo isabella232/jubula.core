@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.api.adder.rcp;
 
-import org.eclipse.jubula.autagent.EmbeddedAUTAgent;
+import org.eclipse.jubula.autagent.Embedded;
 import org.eclipse.jubula.client.AUTAgent;
 
 /** @author BREDEX GmbH */
 public class SimpleAdderEmbeddedAgent extends SimpleAdder {
     @Override
     protected AUTAgent getAUTAgentInstance() {
-        return EmbeddedAUTAgent.instance();
+        return Embedded.INSTANCE.agent();
     }
 }

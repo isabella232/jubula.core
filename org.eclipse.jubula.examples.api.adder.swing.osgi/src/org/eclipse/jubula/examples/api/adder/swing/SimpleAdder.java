@@ -10,12 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.examples.api.adder.swing;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.autagent.Embedded;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
-import org.eclipse.jubula.client.MakeR;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.CheckFailedException;
 import org.eclipse.jubula.client.launch.AUTConfiguration;
@@ -37,10 +38,6 @@ import org.junit.Test;
 
 /** @author BREDEX GmbH */
 public class SimpleAdder {
-    /** AUT-Agent host name to use */
-    public static final String AGENT_HOST = "localhost"; //$NON-NLS-1$
-    /** AUT-Agent port to use */
-    public static final int AGENT_PORT = 60000;
     /** the value1 */
     private static TextInputComponent value1;
     /** the value2 */
@@ -49,8 +46,6 @@ public class SimpleAdder {
     private static GraphicsComponent button;
     /** the result */
     private static TextComponent result;
-    /** the AUT-Agent */
-    private AUTAgent m_agent;
     /** the AUT */
     private AUT m_aut;
 
@@ -72,23 +67,29 @@ public class SimpleAdder {
     /** prepare */
     @Before
     public void setUp() throws Exception {
-        /* Connecting to external Jubula AUT Agent which
-        must be started manually BEFORE test execution! */
-        m_agent = getAUTAgentInstance();
-        m_agent.connect();
-
+        AUTAgent agent = Embedded.INSTANCE.agent();
         final String autID = "SimpleAdder_swing"; //$NON-NLS-1$
         AUTConfiguration config = new SwingAUTConfiguration(
                 "api.aut.conf.simple.adder.swing", //$NON-NLS-1$
                 autID,
-                "..\\jre\\bin\\java.exe", //$NON-NLS-1$
-                "..\\examples\\AUTs\\SimpleAdder\\swing", //$NON-NLS-1$ 
-                new String[]{"-jar", "SimpleAdder.jar"} //$NON-NLS-1$ //$NON-NLS-2$
-                );
+                "java", //$NON-NLS-1$
+                new StringBuilder()
+                    .append("..") //$NON-NLS-1$
+                    .append(File.separatorChar)
+                    .append("examples") //$NON-NLS-1$
+                    .append(File.separatorChar)
+                    .append("AUTs") //$NON-NLS-1$
+                    .append(File.separatorChar)
+                    .append("SimpleAdder") //$NON-NLS-1$
+                    .append(File.separatorChar)
+                    .append("swing") //$NON-NLS-1$
+                    .append(File.separatorChar)
+                    .toString(),
+                new String[]{"-jar", "SimpleAdder.jar"}); //$NON-NLS-1$ //$NON-NLS-2$
 
-        AUTIdentifier id = m_agent.startAUT(config);
+        AUTIdentifier id = agent.startAUT(config);
         if (id != null) {
-            m_aut = m_agent.getAUT(id, SwingComponents.getToolkitInformation());
+            m_aut = agent.getAUT(id, SwingComponents.getToolkitInformation());
             m_aut.connect();
         } else {
             Assert.fail("AUT start has failed!"); //$NON-NLS-1$
@@ -124,15 +125,11 @@ public class SimpleAdder {
     /** cleanup */
     @After
     public void tearDown() throws Exception {
-        m_aut.disconnect();
-        m_agent.stopAUT(m_aut.getIdentifier());
-        m_agent.disconnect();
-    }
-
-    /**
-     * @return an AUT-Agent instance
-     */
-    protected AUTAgent getAUTAgentInstance() {
-        return MakeR.createAUTAgent(AGENT_HOST, AGENT_PORT);
+        AUTAgent agent = Embedded.INSTANCE.agent();
+        if (m_aut != null) {
+            m_aut.disconnect();
+            agent.stopAUT(m_aut.getIdentifier());
+        }
+        agent.disconnect();
     }
 }
