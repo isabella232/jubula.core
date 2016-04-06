@@ -456,8 +456,7 @@ public class JsonImporter {
             monitor.subTask(Messages.ImportJsonImportResult + countOfTestResult
                     + StringConstants.SLASH + trsListDtos.size());
             
-            ITestResultSummaryPO summary =
-                    PoMaker.createTestResultSummaryPO(dto.getUuid());
+            ITestResultSummaryPO summary = PoMaker.createTestResultSummaryPO();
             summary.setInternalProjectGuid(proj.getGuid());
             
             fillTestresultSummary(summary, dto);
