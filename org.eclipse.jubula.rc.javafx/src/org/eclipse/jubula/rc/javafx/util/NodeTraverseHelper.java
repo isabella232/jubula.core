@@ -17,6 +17,7 @@ import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 
+import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
@@ -117,20 +118,32 @@ public class NodeTraverseHelper {
     
     /**
      * Find and collect strings under the given parent. This is done by looking
-     * for a ITextComponent Adapter for each child and then call getText.
+     * for a ITextComponent Adapter for each child and then call getText. <br>
+     * <b>1. Commandment:</b> <br> Thou shall not call this method from a child for its parent.
      * 
-     * @param parent the parent
+     * This would lead to an endless recursion and doom mankind to an endless
+     * struggle with debugging.
+     * 
+     * @param parent
+     *            the parent
      * @return List containing the strings
      */
     public static List<String> findStrings(Parent parent) {
         ArrayList<String> renderedStrings = new ArrayList<>();
-        List<? extends Node> textChildren = NodeTraverseHelper
-                .getInstancesOf(parent, Node.class);
-        for (Node n : textChildren) {
+        List<Node> children = new SortedList<>(parent.getChildrenUnmodifiable(),
+                new NodePositionComparator());
+        for (Node n : children) {
             IComponent adapter = (IComponent) AdapterFactoryRegistry
                     .getInstance().getAdapter(IComponent.class, n);
             if (adapter != null && adapter instanceof ITextComponent) {
-                renderedStrings.add(((ITextComponent) adapter).getText());
+                String text = ((ITextComponent) adapter).getText();
+                if (text != null) {
+                    renderedStrings.add(text);
+                } else if (text == null && n instanceof Parent) {
+                    renderedStrings.addAll(findStrings((Parent) n));
+                }
+            } else if (n instanceof Parent) {
+                renderedStrings.addAll(findStrings((Parent) n));
             }
         }
         return renderedStrings;

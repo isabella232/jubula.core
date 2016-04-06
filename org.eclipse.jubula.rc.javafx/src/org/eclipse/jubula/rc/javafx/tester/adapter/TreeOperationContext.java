@@ -122,24 +122,14 @@ public class TreeOperationContext
 
                     @Override
                     public String call() throws Exception {
-                        scrollNodeToVisible(node);
-                        TreeView<?> tree = getTree();
-                        // Update the layout coordinates otherwise
-                        // we would get old position values
-                        tree.layout();
-                        List<? extends TreeCell> tCells = NodeTraverseHelper
-                                .getInstancesOf(tree, TreeCell.class);
-                        for (TreeCell<?> cell : tCells) {
-                            TreeItem<?> item = cell.getTreeItem();
-                            if (NodeTraverseHelper.isVisible(cell)
-                                    && item != null && item.equals(node)) {
-                                IComponent adapter = (IComponent) 
-                                        AdapterFactoryRegistry.getInstance()
-                                        .getAdapter(IComponent.class, cell);
-                                if (adapter != null
-                                        && adapter instanceof ITextComponent) {
-                                    return ((ITextComponent) adapter).getText();
-                                }
+                        TreeCell cell = getCellForNode(node);
+                        if (cell != null) {
+                            IComponent adapter = (IComponent) 
+                                    AdapterFactoryRegistry.getInstance()
+                                    .getAdapter(IComponent.class, cell);
+                            if (adapter != null
+                                    && adapter instanceof ITextComponent) {
+                                return ((ITextComponent) adapter).getText();
                             }
                         }
                         return null;
@@ -147,6 +137,29 @@ public class TreeOperationContext
                 });
 
         return result;
+    }
+    
+    /**
+     * Get the actual TreeCell for a given TreeItem
+     * @param node the item
+     * @return the cell or null if no cell was found
+     */
+    public TreeCell getCellForNode(final TreeItem<?> node) {
+        scrollNodeToVisible(node);
+        TreeView<?> tree = getTree();
+        // Update the layout coordinates otherwise
+        // we would get old position values
+        tree.layout();
+        List<? extends TreeCell> tCells = NodeTraverseHelper
+                .getInstancesOf(tree, TreeCell.class);
+        for (TreeCell<?> cell : tCells) {
+            TreeItem<?> item = cell.getTreeItem();
+            if (NodeTraverseHelper.isVisible(cell) && item != null
+                    && item.equals(node)) {
+                return cell;
+            }
+        }
+        return null;
     }
 
     @Override

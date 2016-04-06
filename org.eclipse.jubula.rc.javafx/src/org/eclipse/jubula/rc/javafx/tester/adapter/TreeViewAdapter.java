@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -20,6 +24,8 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -79,21 +85,53 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
     /**
      * {@inheritDoc}
      */
-    public String getPropertyValueOfCell(String name, TreeItem<?> cell) {
+    public String getPropertyValueOfCell(String name, TreeItem<?> item) {
         Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
                 new Callable<String>() {
 
                     @Override
                     public String call() throws Exception {
+                        RobotException originalException;
                         try {
-                            return getRobot().getPropertyValue(cell, name);
+                            return getRobot().getPropertyValue(
+                                    item, name);
                         } catch (RobotException e) {
-                            throw new StepExecutionException(
-                                    e.getMessage(),
-                                    EventFactory
-                                            .createActionError(TestErrorEvent.
-                                                    PROPERTY_NOT_ACCESSABLE));
+                            // Do nothing here. We are trying to check if
+                            // there is a component within the cell and
+                            // under the mouse which has that property
+                            originalException = e;
                         }
+                        AbstractTreeOperationContext<TreeView<?>, TreeItem<?>> 
+                            context = getContext();
+                        if (context instanceof TreeOperationContext) {
+                            TreeCell cell = ((TreeOperationContext) context)
+                                    .getCellForNode(item);
+                            List<Node> childNodes = NodeTraverseHelper
+                                    .getInstancesOf(cell, Node.class);
+                            Point2D mousePos = new Point2D(
+                                    getRobot().getCurrentMousePosition().getX(),
+                                    getRobot().getCurrentMousePosition()
+                                            .getY());
+                            for (Node n : childNodes) {
+                                if (NodeBounds.checkIfContains(mousePos, n)) {
+                                    try {
+                                        return getRobot().getPropertyValue(n,
+                                                name);
+                                    } catch (RobotException e) {
+                                        // Do nothing here. Just check more
+                                        // components
+                                    }
+                                }
+
+                            }
+                        }
+                        // We haven't found the Property in the cell or a
+                        // subcomponent, therefore this exception is thrown
+                        throw new StepExecutionException(
+                                originalException.getMessage(),
+                                EventFactory.createActionError(
+                                        TestErrorEvent
+                                        .PROPERTY_NOT_ACCESSABLE));
                     }
                 });
         return String.valueOf(prop);
