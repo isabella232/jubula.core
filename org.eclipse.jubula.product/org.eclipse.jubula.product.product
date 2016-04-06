@@ -58,7 +58,6 @@
    </plugins>
 
    <features>
-      <feature id="com.bredexsw.guidancer.feature" version="8.2.0.qualifier"/>
       <feature id="com.bredexsw.jubula.feature" version="4.0.0.qualifier"/>
    </features>
    
