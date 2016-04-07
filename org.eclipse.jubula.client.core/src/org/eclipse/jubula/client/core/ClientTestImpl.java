@@ -1195,8 +1195,8 @@ public class ClientTestImpl implements IClientTest {
      * @return directory path, where the monitoring reports will be exported.
      */
     private String getMonitoringDirectory() {
-        String monitoringDirectory = m_logPath + File.separator
-                + "JaCoCo Reports"; //$NON-NLS-1$
+        String monitoringDirectory = StringUtils.isNotBlank(m_logPath)
+                ? m_logPath + File.separator + "JaCoCo Reports" : null; //$NON-NLS-1$
         return monitoringDirectory;
     }
     
