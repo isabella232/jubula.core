@@ -21,6 +21,7 @@ import org.eclipse.jubula.rc.swt.tester.adapter.LabelAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.ListAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.MenuAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.MenuItemAdapter;
+import org.eclipse.jubula.rc.swt.tester.adapter.SliderAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TabFolderAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
@@ -114,7 +115,7 @@ public class SWTAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof Spinner) {
                 returnvalue = new ControlAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof Slider) {
-                returnvalue = new ControlAdapter(objectToAdapt);
+                returnvalue = new SliderAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof Scale) {
                 returnvalue = new ControlAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof DateTime) {
