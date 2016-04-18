@@ -22,6 +22,7 @@ import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.adaptor.EclipseStarter;
@@ -294,7 +295,12 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         Bundle mainBundle = getBundleForID(bundleId);
         ArrayList<Bundle> bundleAndFragmentList = new ArrayList<>();        
         bundleAndFragmentList.add(mainBundle);
-        bundleAndFragmentList.addAll(getFragmentsForBundleId(bundleId));
+        // Checks if the bundles are from us, so we only add fragments
+        // from our bundles and not from others (like slf4j)
+        if (StringUtils.containsIgnoreCase(bundleId, "jubula") //$NON-NLS-1$
+                || StringUtils.containsIgnoreCase(bundleId, "guidancer")) { //$NON-NLS-1$
+            bundleAndFragmentList.addAll(getFragmentsForBundleId(bundleId));
+        }
         List<String> classpathEntries = new ArrayList<String>();
         for (Bundle bundle : bundleAndFragmentList) {
             classpathEntries.addAll(getPathforBundle(bundle));

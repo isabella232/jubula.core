@@ -113,8 +113,12 @@ public final class ALMAccess {
                 return succeeded;
             }
             
-            ITask task = MylynAccess
-                    .getTaskByID(repo, taskData.getTaskId(), monitor);
+            String connectorKind = repo.getConnectorKind();
+            AbstractRepositoryConnector connector = TasksUi
+                .getRepositoryConnector(connectorKind);
+            
+            ITask task = MylynAccess.getTaskByID(repo, taskData.getTaskId(),
+                    monitor);
             if (task != null) {
                 ITaskDataManager taskDataManager = TasksUi.getTaskDataManager();
                 ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
@@ -122,11 +126,6 @@ public final class ALMAccess {
                 TaskDataModel taskModel = new TaskDataModel(repo, task,
                     taskWorkingCopy);
                 
-                String connectorKind = repo.getConnectorKind();
-                AbstractRepositoryConnector connector = TasksUi
-                    .getRepositoryConnector(connectorKind);
-                AbstractTaskDataHandler taskDataHandler = connector
-                    .getTaskDataHandler();
                 TaskAttribute rootData = taskModel.getTaskData()
                     .getRoot();
                 CONNECTOR handle = determineConnectorHandling(connectorKind);
@@ -143,9 +142,9 @@ public final class ALMAccess {
                 if (change == null) {
                     return succeeded;
                 }
-
-                taskModel.attributeChanged(change);
                 
+                AbstractTaskDataHandler taskDataHandler = connector
+                        .getTaskDataHandler();
                 RepositoryResponse response = taskDataHandler.postTaskData(
                     taskModel.getTaskRepository(), taskModel.getTaskData(),
                     taskModel.getChangedOldAttributes(), monitor);

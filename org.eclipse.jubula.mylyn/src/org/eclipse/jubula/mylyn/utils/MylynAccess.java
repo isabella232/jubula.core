@@ -46,6 +46,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  */
 public final class MylynAccess {
+
     /**
      * @author BREDEX GmbH
      */
@@ -53,7 +54,9 @@ public final class MylynAccess {
         /** default handling type */
         DEFAULT, 
         /** custom handling type */
-        HP_ALM
+        HP_ALM,
+        /** tasktop connector */
+        TASKTOP;
     }
 
     /** the logger */
@@ -101,7 +104,7 @@ public final class MylynAccess {
      *             in case of a problem
      */
     public static ITask getTaskByID(TaskRepository repo, String taskId,
-        IProgressMonitor monitor) throws CoreException {
+            IProgressMonitor monitor) throws CoreException {
         ITask task = null;
         if (validRepository(repo)) {
             IRepositoryModel repositoryModel = TasksUi.getRepositoryModel();
@@ -109,6 +112,7 @@ public final class MylynAccess {
             if (task == null) {
                 task = repositoryModel.createTask(repo, taskId);
             }
+
         }
         return task;
     }
@@ -136,10 +140,29 @@ public final class MylynAccess {
     public static TaskData getTaskDataByID(TaskRepository repo, String taskId,
             IProgressMonitor monitor) throws CoreException {
         TaskData taskData = null;
+        
+        
         if (validRepository(repo)) {
             AbstractRepositoryConnector connector = TasksUi
                     .getRepositoryConnector(repo.getConnectorKind());
-            taskData = connector.getTaskData(repo, taskId, monitor);
+
+            if (connector.getConnectorKind().toLowerCase()
+                    .contains(CONNECTOR.TASKTOP.name().toLowerCase())) {
+                // In Tasktop connector using dash in id is not allowed, so need 
+                // to search by task key
+                if (connector.supportsSearchByTaskKey(repo)) {
+                    // Fetch partial data to get the task id
+                    TaskData partialTaskData = connector.searchByTaskKey(repo,
+                            taskId, monitor);
+                    if (partialTaskData != null) {
+                        // need to fetch the full task data to modify
+                        taskData = connector.getTaskData(repo,
+                                partialTaskData.getTaskId(), monitor);
+                    }
+                }
+            } else {
+                taskData = connector.getTaskData(repo, taskId, monitor);
+            }
         }
         return taskData;
     }
@@ -205,7 +228,8 @@ public final class MylynAccess {
         try {
             TaskData taskData = getTaskDataByID(repo, taskId, monitor);
             if (taskData != null) {
-                ITask task = getTaskByID(repo, taskData.getTaskId(), monitor);
+                ITask task = getTaskByID(repo, taskData.getTaskId(),
+                        monitor);
                 if (task != null) {
                     String connectorKind = repo.getConnectorKind();
                     AbstractRepositoryConnector connector = TasksUi
@@ -214,12 +238,10 @@ public final class MylynAccess {
                             .getTaskDataHandler();
                     ITaskDataManager taskDataManager = 
                             TasksUi.getTaskDataManager();
-
                     ITaskDataWorkingCopy taskWorkingCopy = taskDataManager
                             .createWorkingCopy(task, taskData);
                     TaskDataModel taskModel = new TaskDataModel(repo, task,
                             taskWorkingCopy);
-                    
                     TaskAttribute rootData = taskModel.getTaskData()
                             .getRoot();
                     for (Map<String, String> udpate : attributeUpdates) {
