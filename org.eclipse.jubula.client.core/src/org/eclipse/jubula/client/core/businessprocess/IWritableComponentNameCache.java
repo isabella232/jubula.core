@@ -101,7 +101,8 @@ public interface IWritableComponentNameCache extends IComponentNameCache {
     /**
      * For performance reasons we want to preload cache
      * @param guids IComponentNamePO
+     * @param projectId the parent project id
      */
-    public void initCache(Set<String> guids);
+    public void initCache(Set<String> guids, Long projectId);
     
 }

@@ -32,6 +32,8 @@ import org.apache.commons.collections.MapUtils;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 
 
 
@@ -242,6 +244,7 @@ class AUTConfigPO implements IAUTConfigPO {
                      joinColumns = @JoinColumn(name = "AUT_CONF"))
     @MapKeyColumn(name = "ATTR_KEY")
     @Column(name = "ATTR_VALUE", length = MAX_STRING_LENGTH)
+    @BatchFetch(value = BatchFetchType.JOIN)
     Map<String, String> getHbmConfigMap() {
         return m_config;
     }

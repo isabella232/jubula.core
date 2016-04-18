@@ -42,6 +42,7 @@ import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IObjectMappingObserver;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.ObjectMappingComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
@@ -350,6 +351,9 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /** selection provider for the split pane view */
     private SelectionProviderIntermediate m_splitPaneSelectionProvider;
     
+    /** component mapper */
+    private IWritableComponentNameMapper m_compMapper; 
+    
     /**
      * {@inheritDoc}
      */
@@ -363,7 +367,12 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             objMap = PoMaker.createObjectMappingPO();
             getAut().setObjMap(objMap);
         }
+        
         checkMasterSessionUpToDate();
+        
+        m_compMapper = 
+                getEditorHelper().getEditSupport()
+                    .getCompMapper();
 
         // Create menu manager.
         MenuManager menuMgr = createContextMenu();
@@ -373,10 +382,15 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         getEditorHelper().addListeners();
         getOmEditorBP().collectNewLogicalComponentNames();
         
+        ObjectMappingComponentNameMapper mapper;
+        mapper =  (ObjectMappingComponentNameMapper) getEditorHelper()
+                .getEditSupport().getCompMapper();
+        mapper.initCompNameCache(getAut());
+        
         int splitPaneViewIndex = addPage(
                 createSplitPanePageControl(getContainer(), menuMgr));
         int configViewIndex = addPage(createConfigPageControl(getContainer()));
-
+      
         setPageText(
                 splitPaneViewIndex, 
                 Messages.ObjectMappingEditorSplitPaneView);
@@ -394,9 +408,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 m_pageToSelectionProvider.get(getActivePage()));
         getSite().setSelectionProvider(m_selectionProvider);
         getEditorSite().registerContextMenu(menuMgr, m_selectionProvider);
-
+        
         ObjectMappingEventDispatcher.addObserver(this);
-
         checkAndFixInconsistentData();
         OpenOMETracker.INSTANCE.addOME(this);
     }
@@ -419,12 +432,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         boolean isChanged = false;
         
         IObjectMappingPO objMap = getAut().getObjMap();
-        IComponentNameCache compNameCache = 
-            getEditorHelper().getEditSupport()
-                .getCompMapper().getCompNameCache();
+
         
-        isChanged |= fixCompNameReferences(objMap, compNameCache);
-        isChanged |= removeDeletedCompNames(objMap, compNameCache);
+        isChanged |= fixCompNameReferences(objMap,
+                m_compMapper.getCompNameCache());
+        isChanged |= removeDeletedCompNames(objMap,
+                m_compMapper.getCompNameCache());
+        
         
         if (isChanged) {
             try {
@@ -494,6 +508,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * @return the base control of the profile configuration page.
      */
     private Control createConfigPageControl(Composite parent) {
+     
         GridLayout layout = new GridLayout();
         layout.numColumns = 1;
         layout.verticalSpacing = 3;
@@ -540,7 +555,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         parent.setLayout(layout);
         SashForm mainSash = new SashForm(parent, SWT.VERTICAL);
         SashForm topSash = new SashForm(mainSash, SWT.HORIZONTAL);
-        
+    
         m_compNameTreeViewer = createSplitPaneViewer(topSash, 
                 "ObjectMappingEditor.UnAssignedLogic", //$NON-NLS-1$
                 getAut().getObjMap().getUnmappedLogicalCategory(),
@@ -548,12 +563,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         m_splitPaneSelectionProvider.setSelectionProviderDelegate(
                 m_compNameTreeViewer);
-        
         m_uiElementTreeViewer = createSplitPaneViewer(topSash, 
                 "ObjectMappingEditor.UnAssignedTech", //$NON-NLS-1$
                 getAut().getObjMap().getUnmappedTechnicalCategory(),
                 contextMenuMgr);
-
         m_mappedComponentTreeViewer = createMappedSplitPaneViewer(mainSash,
                 "ObjectMappingEditor.Assigned", //$NON-NLS-1$
                 getAut().getObjMap().getMappedCategory(),
@@ -810,6 +823,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
                 IWritableComponentNameCache compNameCache = 
                     editSupport.getCompMapper().getCompNameCache();
+                
                 Set<IComponentNamePO> renamedCompNames =  
                     new HashSet<IComponentNamePO>(
                             compNameCache.getRenamedNames());
@@ -1279,6 +1293,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             getEditorHelper().setDirty(true);
         }
         if (!isDirty()) {
+            
             try {
                 getEditorHelper().getEditSupport().reinitializeEditSupport();
                 getEditorHelper().resetEditableState();
@@ -1395,7 +1410,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * @return the editor's component name mapper.
      */
     private IWritableComponentNameMapper getCompMapper() {
-        return getEditorHelper().getEditSupport().getCompMapper();
+        return m_compMapper;
     }
 
     /**

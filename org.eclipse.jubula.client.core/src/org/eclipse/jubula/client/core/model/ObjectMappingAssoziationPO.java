@@ -177,7 +177,7 @@ public class ObjectMappingAssoziationPO
      * @return Returns the technicalName.
      */
     @OneToOne(cascade = CascadeType.ALL, targetEntity = CompIdentifierPO.class,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     @BatchFetch(value = BatchFetchType.JOIN)
     public ICompIdentifierPO getTechnicalName() {
         return m_technicalName;
@@ -187,7 +187,7 @@ public class ObjectMappingAssoziationPO
      *         
      * {@inheritDoc}
      */
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "LOGICAL_NAME",
         uniqueConstraints = {@UniqueConstraint(columnNames = 
                 {"LOGICAL_NAME", ID_COLUMN_NAME})})
@@ -220,12 +220,12 @@ public class ObjectMappingAssoziationPO
     }
     
     /**
-     *         
+     * 
      * @return Returns the category.
      */
-    @ManyToOne(targetEntity = ObjectMappingCategoryPO.class)
-    @JoinColumn(name = "FK_CATEGORY", insertable = false, 
-                updatable = false)
+    @ManyToOne(targetEntity = ObjectMappingCategoryPO.class, 
+               fetch = FetchType.LAZY)
+    @JoinColumn(name = "FK_CATEGORY", insertable = false, updatable = false)
     public IObjectMappingCategoryPO getHbmCategory() {
         return m_category;
     }

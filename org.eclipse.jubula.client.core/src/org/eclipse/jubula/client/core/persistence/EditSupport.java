@@ -477,14 +477,13 @@ public class EditSupport {
     public EntityManager getSession() {
         return m_session;
     }
-    
+   
     /**
      * attachs the detached workVersion to a new session
      * to use for postprocessing of Persistence (JPA / EclipseLink) exceptions without refresh of objects 
      * @throws PMException in case of any db error
      */
-    public void reinitializeEditSupport()
-        throws PMException {
+    public void reinitializeEditSupport() throws PMException {
         try {
             IPersistentObject workVersion = m_workVersion;
             close();

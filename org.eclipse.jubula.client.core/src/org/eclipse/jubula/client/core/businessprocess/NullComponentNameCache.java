@@ -176,7 +176,7 @@ public class NullComponentNameCache implements IWritableComponentNameCache {
     /**
      * {@inheritDoc}
      */
-    public void initCache(Set<String> guids) {
+    public void initCache(Set<String> guids, Long parentProjectId) {
         // Do nothing
     }
 

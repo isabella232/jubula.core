@@ -153,6 +153,7 @@ class AUTMainPO implements IAUTMainPO {
      */
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, 
                targetEntity = AUTConfigPO.class, orphanRemoval = true)
+    @BatchFetch(value = BatchFetchType.JOIN)
     public Set<IAUTConfigPO> getAutConfigSet() {
         return m_autConfigSet;
     }

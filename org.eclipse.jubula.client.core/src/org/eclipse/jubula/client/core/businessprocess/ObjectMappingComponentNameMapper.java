@@ -44,13 +44,22 @@ public class ObjectMappingComponentNameMapper
             IWritableComponentNameCache componentNameCache, IAUTMainPO aut) {
         super(componentNameCache, aut);
         // Get list of all GUIDs, which have ComponentNames
+        initCompNameCache(aut);
+    }
+
+    /**
+     * Get list of all GUIDs, which have ComponentNames
+     * @param aut aut
+     */
+    public void initCompNameCache(IAUTMainPO aut) {
         Set <String> guids = new HashSet<String>();
+        Long projectId = aut.getParentProjectId();
         Set <IObjectMappingAssoziationPO> links = aut.getObjMap().getMappings();
         for (IObjectMappingAssoziationPO link : links) {
             guids.addAll(link.getLogicalNames());
         }
         // this might not be the best place to - do the preload.
-        getCompNameCache().initCache(guids);
+        getCompNameCache().initCache(guids, aut.getParentProjectId());
     }
 
     /**

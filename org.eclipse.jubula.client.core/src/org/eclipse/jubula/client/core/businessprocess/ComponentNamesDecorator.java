@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,16 +29,20 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IComponentNameData;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
+import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.utils.ValueListIterator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -45,6 +50,10 @@ import org.eclipse.jubula.tools.internal.utils.ValueListIterator;
  * @created Apr 21, 2008
  */
 public class ComponentNamesDecorator implements IWritableComponentNameCache {
+
+    /** the logger */
+    private static final Logger LOG =
+        LoggerFactory.getLogger(ComponentNamesDecorator.class);
 
     /** the session used for caching and persisting Component Names */
     private EntityManager m_session;
@@ -84,7 +93,6 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
      * @param s The session associated with this mapper.
      */
     public ComponentNamesDecorator(EntityManager s) {
-        
         m_session = s;
     }
 
@@ -436,7 +444,9 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
     /**
      * {@inheritDoc}
      */
-    public void initCache(Set<String> guids) {
+    public void initCache(Set<String> guids, Long parentProjectId) {
+       
+        
         Set<Long> ids = new HashSet<Long>();
         // Collect ids
         for (String guid : guids) {
@@ -445,22 +455,35 @@ public class ComponentNamesDecorator implements IWritableComponentNameCache {
             if (cnPo != null) {
                 ids.add(cnPo.getId());
             }
+            // It makes sense the put null values to avoid re-trying loading from databse 
+            m_cached.put(guid, null);
         }
-        
+        List<Long> projectIDs = new LinkedList<Long>();
+        projectIDs.add(parentProjectId);
+        try {
+            List<IReusedProjectPO> reusedProjects = ProjectPM
+                    .getReusedProjectsForProject(parentProjectId);
+            for (IReusedProjectPO iReusedProjectPO : reusedProjects) {
+                projectIDs.add(iReusedProjectPO.getParentProjectId());
+            }
+        } catch (PMException e) {
+            LOG.warn("Failed to get reused projects", e); //$NON-NLS-1$
+        }
         // load batch by id in packs of 1000
         Query q = m_session.createQuery(
-                "select compName from ComponentNamePO as compName where compName.id in :ids"); //$NON-NLS-1$
-        
+                "select compName from ComponentNamePO" //$NON-NLS-1$
+                + " as compName where compName.id in :ids or " //$NON-NLS-1$
+                + "compName.hbmParentProjectId in :parentProjIds"); //$NON-NLS-1$
+
         for (ValueListIterator iter = new ValueListIterator(
             new ArrayList<Long>(ids)); iter.hasNext();) {
             q.setParameter("ids", iter.nextList()); //$NON-NLS-1$
+            q.setParameter("parentProjIds", projectIDs); //$NON-NLS-1$
             List <IComponentNamePO> list = q.getResultList();
             for (IComponentNamePO cn : list) {
                 m_cached.put(cn.getGuid(), cn);
             }
-            
         }
-        
     }
     
 }

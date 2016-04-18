@@ -284,7 +284,7 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
     @OneToMany(cascade = CascadeType.ALL, 
                orphanRemoval = true, 
                targetEntity = ObjectMappingCategoryPO.class,
-               fetch = FetchType.EAGER)
+               fetch = FetchType.LAZY)
     @JoinColumn(name = "FK_PARENT")
     @OrderColumn(name = "IDX")
     @BatchFetch(value = BatchFetchType.JOIN)
