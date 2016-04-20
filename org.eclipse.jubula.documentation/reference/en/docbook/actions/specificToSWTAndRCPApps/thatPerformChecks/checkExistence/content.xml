@@ -84,4 +84,39 @@
       </listitem>
     </itemizedlist>
   </para>
+  <para><emphasis>Check Existence of Column</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+            Use this action to check whether a specific column exist, respectively
+            does not exist. Columns count as not existent if their with is equal or
+            smaller than 0
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="column" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="exists" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
 </section>

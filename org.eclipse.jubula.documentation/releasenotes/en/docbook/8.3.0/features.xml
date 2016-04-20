@@ -43,6 +43,27 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+    <emphasis role="strong">Added move action for Tree Tables in JavaFX</emphasis>
+   </para>
+   <itemizedlist>
+     <listitem>
+       <para>
+         It is now possible to move in a Tree Table similar to moving in Tables.
+       </para>
+     </listitem>
+   </itemizedlist>
+ <para>
+     <emphasis role="strong">New Action - check existence of column for Tables and Tree Tables</emphasis>
+ </para>
+ <itemizedlist>
+ <listitem>
+  <para>
+    A new action was added. It is now possible to check if a specific
+    column exists, respectively does not exist, in a Table/Tree Table.
+  </para>
+ </listitem>
+ </itemizedlist>
 <para><emphasis role="strong">Since M1</emphasis></para>
  <para>
   <emphasis role="strong">New way to export and import projects</emphasis>

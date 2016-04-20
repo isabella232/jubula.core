@@ -18,13 +18,17 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
 
@@ -151,6 +155,91 @@ public class TableTreeOperationContext extends TreeOperationContext {
         
         getRobot().scrollToVisible(parent, 
                 SwtPointUtil.toSwtRectangle(nodeBoundsRelativeToParent));
+    }
+    
+    /**
+     * gets the column index based on the given string
+     * @param col the column
+     * @param operator the operator
+     * @return the index or -2 if no column was found
+     */
+    public int getColumnFromString(final String col, final String operator) {
+        int column = -2;
+        try {
+            int usrIdxCol = Integer.parseInt(col);
+            if (usrIdxCol == 0) {
+                usrIdxCol = usrIdxCol + 1;
+            }
+            column = IndexConverter.toImplementationIndex(usrIdxCol);
+        } catch (NumberFormatException nfe) {
+            try {
+                Boolean isVisible = getQueuer().invokeAndWait(
+                        "getColumnFromString", //$NON-NLS-1$
+                        new IRunnable<Boolean>() {
+                            public Boolean run() {
+                                return getTree().getHeaderVisible();
+                            }
+                        });
+                if (!(isVisible.booleanValue())) {
+                    throw new StepExecutionException("No Header", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                    TestErrorEvent.NO_HEADER));
+                }
+
+                Integer implCol = getQueuer().invokeAndWait(
+                        "getColumnFromString", new IRunnable<Integer>() { //$NON-NLS-1$
+                            public Integer run() throws StepExecutionException {
+                                for (int i = 0; i < getTree()
+                                        .getColumnCount(); i++) {
+                                    String colHeader = getColumnHeaderText(i);
+                                    if (MatchUtil.getInstance().match(colHeader,
+                                            col, operator)) {
+                                        return i;
+                                    }
+                                }
+                                return -2;
+                            }
+                        });
+                column = implCol.intValue();
+            } catch (IllegalArgumentException iae) {
+                // do nothing here
+            }
+        }
+        return column;
+    }
+    
+    /**
+     * get the text in the header of a column
+     * @param colIdx the column index
+     * @return the header text
+     */
+    public String getColumnHeaderText(final int colIdx) {
+        return getQueuer().invokeAndWait("getColumnName", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
+                        final TreeColumn column = getTree().getColumn(colIdx);
+                        return CAPUtil.getWidgetText(column, column.getText());
+                    }
+                });
+    }
+    
+    /**
+     * get the bounds of the header of a column
+     * @param col the column index
+     * @return the header bounds
+     */
+    public Rectangle getHeaderBounds(final int col) {
+        return getQueuer().invokeAndWait("getHeaderBounds", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() throws StepExecutionException {
+                        Tree tree = getTree();
+                        org.eclipse.swt.graphics.Rectangle rect = tree
+                                .getItem(0).getBounds(col);
+                        rect.y = tree.getClientArea().y;
+                        return new Rectangle(rect.x, rect.y, rect.width,
+                                rect.height);
+                    }
+                });
     }
 
     /**

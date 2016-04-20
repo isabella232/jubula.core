@@ -605,6 +605,37 @@ public class TreeTester extends AbstractTreeTester {
             super.rcMove(direction, distance, clickCount);
         }
     }
+    
+    /**
+     * Checks if a given column exists, respectively does not exist
+     * @param column the column
+     * @param columnOperator the operator to find the column
+     * @param exists true when the column should be found
+     */
+    public void rcCheckExistenceOfColumn(String column, String columnOperator,
+            boolean exists) {
+        TableTreeOperationContext context;
+        int mouseColumn = getMouseColumn();
+        if (mouseColumn == -1) {
+            context = 
+                new TableTreeOperationContext(
+                    getEventThreadQueuer(), getRobot(), getTree());
+        } else {
+            context = 
+                new TableTreeOperationContext(
+                    getEventThreadQueuer(), getRobot(), getTree(), 
+                    mouseColumn);
+        }
+        
+        int index = context.getColumnFromString(column, columnOperator);
+        if (index >= 0) {
+            java.awt.Rectangle bounds = context.getHeaderBounds(index);
+            if (bounds == null || bounds.getWidth() <= 0) {
+                index = -2;
+            }
+        }
+        Verifier.equals(exists, index >= 0);
+    }
 
     /**
      * Runs in the GUI thread.

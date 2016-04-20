@@ -14,5 +14,6 @@
   
   <xi:include href="checkSelection/content.xml"/>
   <xi:include href="checkEditability/content.xml"/>
+    <xi:include href="checkExistence/content.xml"/>
   <xi:include href="checkText/content.xml"/>
 </section>

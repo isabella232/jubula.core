@@ -14,7 +14,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
@@ -38,11 +37,9 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
@@ -214,9 +211,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         TableColumn<?, ?> column = determineColumn(colPath, op,
                                 table, path); 
                         if (column == null) {
-                            throw new StepExecutionException("Column not found", //$NON-NLS-1$
-                                    EventFactory.createActionError(
-                                                    TestErrorEvent.NOT_FOUND));
+                            return -2;
                         }
                         if (table.getVisibleLeafColumns().contains(column)) {
                             return table.getVisibleLeafColumns().
@@ -377,28 +372,26 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
-                        Parent headerRow = (Parent) table
-                                .lookup("TableHeaderRow"); //$NON-NLS-1$
-                        Set<Node> columnHeaders = headerRow
-                                .lookupAll("column-header"); //$NON-NLS-1$
-                        Point2D parentPos = table.localToScreen(0, 0);
-
-                        for (Node n : columnHeaders) {
-                            //DEPENDENCY TO INTERNAL API
-                            TableColumnHeader colH = (TableColumnHeader) n;
-                            if (colH.getTableColumn().equals(col)) {
-                                Rectangle b = NodeBounds
-                                        .getAbsoluteBounds(n);
-                                Rectangle tableB = NodeBounds
-                                        .getAbsoluteBounds(table);
-                                return new Rectangle(
-                                        Math.abs(tableB.x - b.x),
-                                        Math.abs(tableB.y - b.y),
-                                        Rounding.round(b.getWidth()),
-                                        Rounding.round(b.getHeight()));
+                     // DEPENDENCY TO INTERNAL API
+                        // This should only be one node, but who knows what
+                        // people do
+                        List<? extends TableHeaderRow> headerRow = 
+                                NodeTraverseHelper.getInstancesOf(table,
+                                        TableHeaderRow.class);
+                        TableColumnHeader colH = null;
+                        for (TableHeaderRow tableHeaderRow : headerRow) {
+                            colH = tableHeaderRow.getColumnHeaderFor(col);
+                            if (colH != null) {
+                                break;
                             }
                         }
-                        return null;
+                        Rectangle b = NodeBounds.getAbsoluteBounds(colH);
+                        Rectangle tableB = NodeBounds
+                                .getAbsoluteBounds(table);
+                        return new Rectangle(Math.abs(tableB.x - b.x),
+                                Math.abs(tableB.y - b.y),
+                                Rounding.round(b.getWidth()),
+                                Rounding.round(b.getHeight()));
                     }
                 });
         return result;
