@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -45,11 +44,9 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
+import com.sun.javafx.scene.control.skin.TableHeaderRow;
 
 import javafx.collections.ObservableList;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
@@ -660,6 +657,14 @@ public class TreeTableOperationContext extends
                             rowInt = IndexConverter
                                     .toImplementationIndex(Integer
                                             .parseInt(row));
+                            if (rowInt != -1
+                                    && treetable.getTreeItem(rowInt) == null) {
+                                throw new StepExecutionException(
+                                        "Row not found", //$NON-NLS-1$
+                                        EventFactory.createActionError(
+                                                        TestErrorEvent.
+                                                        NOT_FOUND));
+                            }
                         } catch (NumberFormatException nfe) {
                             TreeTableColumn<?, ?> firstColumn =
                                     treetable.getColumns().get(0);
@@ -849,26 +854,26 @@ public class TreeTableOperationContext extends
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         treeTable.layout();
-                        Parent headerRow = (Parent) treeTable
-                                .lookup("TableHeaderRow"); //$NON-NLS-1$
-                        Set<Node> columnHeaders = headerRow
-                                .lookupAll("column-header"); //$NON-NLS-1$
-                        Point2D parentPos = treeTable.localToScreen(0, 0);
-
-                        for (Node n : columnHeaders) {
-                            // DEPENDENCY TO INTERNAL API
-                            TableColumnHeader colH = (TableColumnHeader) n;
-                            if (colH.getTableColumn().equals(col)) {
-                                Rectangle b = NodeBounds.getAbsoluteBounds(n);
-                                Rectangle tableB = NodeBounds
-                                        .getAbsoluteBounds(treeTable);
-                                return new Rectangle(Math.abs(tableB.x - b.x),
-                                        Math.abs(tableB.y - b.y), Rounding
-                                                .round(b.getWidth()), Rounding
-                                                .round(b.getHeight()));
+                        // DEPENDENCY TO INTERNAL API
+                        // This should only be one node, but who knows what
+                        // people do
+                        List<? extends TableHeaderRow> headerRow = 
+                                NodeTraverseHelper.getInstancesOf(treeTable,
+                                        TableHeaderRow.class);
+                        TableColumnHeader colH = null;
+                        for (TableHeaderRow tableHeaderRow : headerRow) {
+                            colH = tableHeaderRow.getColumnHeaderFor(col);
+                            if (colH != null) {
+                                break;
                             }
                         }
-                        return null;
+                        Rectangle b = NodeBounds.getAbsoluteBounds(colH);
+                        Rectangle tableB = NodeBounds
+                                .getAbsoluteBounds(treeTable);
+                        return new Rectangle(Math.abs(tableB.x - b.x),
+                                Math.abs(tableB.y - b.y),
+                                Rounding.round(b.getWidth()),
+                                Rounding.round(b.getHeight()));
                     }
                 });
         return result;
