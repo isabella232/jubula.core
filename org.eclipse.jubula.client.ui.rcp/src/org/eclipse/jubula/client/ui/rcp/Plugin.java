@@ -111,6 +111,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,6 +125,9 @@ import org.slf4j.LoggerFactory;
 public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     /** plugin id */
     public static final String PLUGIN_ID = "org.eclipse.jubula.client.ui.rcp"; //$NON-NLS-1$
+    
+    /** test style plugin id */
+    public static final String TEST_STYLE_PLUGIN_ID = "org.eclipse.jubula.client.teststyle"; //$NON-NLS-1$
 
     /** maps images to their "generated" (green-tinted) counterparts */
     public static final Map<Image, Image> GENERATED_IMAGES = 
@@ -1200,6 +1204,12 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         
         // register service for toolkit
         ToolkitBP.getInstance();
+        
+        try {
+            Platform.getBundle(TEST_STYLE_PLUGIN_ID).start();
+        } catch (BundleException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
