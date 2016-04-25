@@ -366,6 +366,34 @@ public final class ValueSets {
         }
     }
     
+    /** @author BREDEX GmbH */
+    public enum Measure implements LiteralProvider {
+        /** unit value */
+        value("value"), //$NON-NLS-1$
+        /** unit value */
+        percent("percent"); //$NON-NLS-1$
+
+        /** holds the value necessary for the RC side */
+        private final String m_rcValue;
+
+        /**
+         * Constructor
+         * 
+         * @param rcValue
+         *            the remote control side value
+         */
+        private Measure(String rcValue) {
+            this.m_rcValue = rcValue;
+        }
+
+        /**
+         * @return the value
+         */
+        public String rcValue() {
+            return m_rcValue;
+        }
+    }
+    
     /** @author BREDEX GmbH 
      * The InteractionMode is e.g. used to define which mouse button is used.
      */

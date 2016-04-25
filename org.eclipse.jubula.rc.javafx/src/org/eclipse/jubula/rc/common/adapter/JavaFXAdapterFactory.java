@@ -24,6 +24,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
@@ -52,6 +53,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.ListViewAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuBarAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.MenuButtonAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ScrollPaneAdapter;
+import org.eclipse.jubula.rc.javafx.tester.adapter.SliderAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.SplitPaneAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TabPaneAdapter;
 import org.eclipse.jubula.rc.javafx.tester.adapter.TableAdapter;
@@ -86,7 +88,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ComboBox.class, TabPane.class, ChoiceBox.class, Accordion.class,
         ScrollPane.class, SplitPane.class, ToolBar.class,
         TreeTableView.class, MenuButton.class, Labeled.class, DatePicker.class,
-        Cell.class
+        Cell.class, Slider.class
         };
 
     @Override
@@ -143,6 +145,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                         (TreeTableView<?>) objectToAdapt);
             } else if (objectToAdapt instanceof Cell) {
                 returnvalue = new CellAdapter((Cell) objectToAdapt);
+            } else if (objectToAdapt instanceof Slider) {
+                returnvalue = new SliderAdapter((Slider) objectToAdapt);
             }
         }
         if (returnvalue == null
