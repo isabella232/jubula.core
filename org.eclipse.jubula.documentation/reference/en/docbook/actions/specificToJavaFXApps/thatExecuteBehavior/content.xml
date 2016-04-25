@@ -12,6 +12,7 @@
   <?dbhtml dir="thatExecuteBehavior"?>
   <title>Actions that execute behavior - JavaFX toolkit</title>
   
-  <xi:include href="select/content.xml"/>
+  <xi:include href="move/content.xml"/>
+  <xi:include href="select/content.xml"/> 
   
 </section>

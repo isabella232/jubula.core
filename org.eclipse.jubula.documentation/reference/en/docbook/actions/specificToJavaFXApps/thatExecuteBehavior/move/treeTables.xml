@@ -1,0 +1,126 @@
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionMoveJavaFXTreeTables" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Move in Tree Tables</title>
+  
+  <para><emphasis>Move</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to move from a currently selected cell, or the mouse position, to another cell.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You specify in which direction you want to move, and how far (number of cells).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          You also specify how many clicks should be made on the new cell, if any.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This action is useful for navigating in a tree table.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          This is achieved by:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                searching for the cell to move to
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                placing the cursor on this cell at the position you specify
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                clicking the amount of times you specify
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          The movement is carried out relative to the cell where the cursor is.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If the cursor is, for any reason, not currently over a cell, the movement is carried out relative to the selected cell.
+        </para>
+      </listitem>
+      <listitem>
+		<para>
+			If the cursor is, for any reason, over the header of the tree table an
+			error is thrown, because move actions are not possible on the header. 
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="direction" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_cells" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="number_of_clicks" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_position" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="x_units" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_position" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="y_units" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="extend_selection" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>

@@ -12,6 +12,7 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
+<para><emphasis role="strong">Since M1</emphasis></para>
  <para>
   <emphasis role="strong">New way to export and import projects</emphasis>
  </para>
@@ -219,6 +220,7 @@
 	</para>	
 </listitem>
 </itemizedlist>
+<para><emphasis role="strong">Since M2</emphasis></para>
 <para>
     <emphasis role="strong">Selenium version updated</emphasis>
    </para>
@@ -226,6 +228,16 @@
      <listitem>
        <para>
          The version of Selenium used by Jubula to execute HTML tests has been updated to version 2.53.0.
+       </para>
+     </listitem>
+   </itemizedlist>
+   <para>
+    <emphasis role="strong">Added move action for Tree Tables in JavaFX</emphasis>
+   </para>
+   <itemizedlist>
+     <listitem>
+       <para>
+         It is now possible to move in a Tree Table similar to moving in Tables.
        </para>
      </listitem>
    </itemizedlist>

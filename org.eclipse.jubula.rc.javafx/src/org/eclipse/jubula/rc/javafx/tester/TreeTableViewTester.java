@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableCell;
@@ -43,6 +44,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.TreeTableOperationContext;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -927,5 +929,112 @@ public class TreeTableViewTester extends TreeViewTester {
         
         selectCell(userIdxRow, MatchUtil.EQUALS, userIdxCol, colOperator, co,
                 extendSelection);
+    }
+    
+    /**
+     * Selects a cell relative to the cell at the current mouse position.
+     * If the mouse is not at any cell, the current selected cell is used.
+     * @param direction the direction to move.
+     * @param cellCount the amount of cells to move
+     * @param clickCount the click count to select the new cell.
+     * @param xPos what x position
+     * @param xUnits should x position be pixel or percent values
+     * @param yPos what y position
+     * @param yUnits should y position be pixel or percent values
+     * @param extendSelection Should this selection be part of a multiple selection
+     * @throws StepExecutionException if any error occurs
+     */
+    public void rcMove(String direction, int cellCount, int clickCount,
+            final int xPos, final String xUnits, final int yPos,
+            final String yUnits, final String extendSelection)
+            throws StepExecutionException {
+        if (mouseOnHeader()) {
+            throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
+        }
+        Cell currCell = null;
+        try {
+            TreeTableCell<?, ?> cell = (TreeTableCell<?, ?>) 
+                    getNodeAtMousePosition();
+
+            currCell = new Cell(getRowFromCell(cell), getColumnFromCell(cell));
+        } catch (StepExecutionException e) {
+            currCell = getContext().getSelectedCell();
+        }
+        int newCol = currCell.getCol();
+        int newRow = currCell.getRow();
+        if (ValueSets.Direction.up.rcValue().equalsIgnoreCase(direction)) {
+            newRow -= cellCount;
+        } else if (ValueSets.Direction.down.rcValue()
+                .equalsIgnoreCase(direction)) {
+            newRow += cellCount;
+        } else if (ValueSets.Direction.left.rcValue()
+                .equalsIgnoreCase(direction)) {
+            newCol -= cellCount;
+        } else if (ValueSets.Direction.right.rcValue()
+                .equalsIgnoreCase(direction)) {
+            newCol += cellCount;
+        }
+        newRow = IndexConverter.toUserIndex(newRow);
+        newCol = IndexConverter.toUserIndex(newCol);
+        String row = Integer.toString(newRow);
+        String col = Integer.toString(newCol);
+        rcSelectCell(row, MatchUtil.DEFAULT_OPERATOR, col,
+                MatchUtil.DEFAULT_OPERATOR, clickCount, xPos, xUnits, yPos,
+                yUnits, extendSelection, InteractionMode.primary.rcIntValue());
+    }
+    
+    /**
+     * get the row index from a given cell
+     * @param cell the cell
+     * @return the row index or -1 if the cell is not in a tree table
+     */
+    private int getRowFromCell(TreeTableCell<?, ?> cell) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("get row", //$NON-NLS-1$
+                new Callable<Integer>() {
+
+                    @Override
+                    public Integer call() throws Exception {
+                        return cell.getTreeTableRow().getIndex();
+                    }
+                });
+    }
+    
+    /**
+     * get the column index from a given cell
+     * @param cell the cell
+     * @return the column index or -1 if the cell is not in a tree table
+     */
+    private int getColumnFromCell(TreeTableCell<?, ?> cell) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("get row", //$NON-NLS-1$
+                new Callable<Integer>() {
+
+                    @Override
+                    public Integer call() throws Exception {
+                        return ((TreeTableView<?>) getRealComponent())
+                        .getVisibleLeafColumns()
+                        .indexOf(cell.getTableColumn());
+                    }
+                });
+    }
+
+    /**
+     * check if the mouse is on the tree table header
+     * @return true if the mouse is on the header, false otherwise
+     */
+    private boolean mouseOnHeader() {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("mouse on header", //$NON-NLS-1$
+                new Callable<Boolean>() {
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        Point awtPoint = getRobot().getCurrentMousePosition();
+                        final Point2D point = new Point2D(awtPoint.x,
+                                awtPoint.y);
+                        return NodeBounds.checkIfContains(point,
+                                (Node) getContext().getTableHeader());
+                    }
+                });
     }
 }
