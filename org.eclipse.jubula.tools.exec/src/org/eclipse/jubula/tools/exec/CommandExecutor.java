@@ -75,11 +75,7 @@ public class CommandExecutor {
             String executable = command.getExecutable();
             File commandFile = new File(dir.getCanonicalFile(), executable);
             boolean doesCommandExist = commandFile.exists();
-            if (OS.isFamilyWindows() 
-                    && (!FilenameUtils.equalsNormalizedOnSystem(
-                            CURRENT_VM_WORKING_DIR_ABS_PATH, 
-                            cmdWorkingDirAbsolutePath) 
-                     || !doesCommandExist)) {
+            if (OS.isFamilyWindows()) {
                 return m_windowsCommandLauncher.exec(command, env, dir);
             }
             return super.launch(command, env, dir);
