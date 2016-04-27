@@ -19,7 +19,6 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
-
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
@@ -320,7 +319,7 @@ public class CommandExecutor {
         if (newEnvironment != null && newEnvironment) {
             environment = new HashMap(0);
         }
-        
+        removeJavaOptions(environment);
         executor.execute(cmdLine, environment, resultHandler);
         
         resultHandler.waitFor();
@@ -333,5 +332,18 @@ public class CommandExecutor {
         }
         r.setReturnValue(exitValue);
         return r;
+    }
+
+    /**
+     * removes our javaagent from the environment map
+     * @param environment the environment map
+     */
+    private static void removeJavaOptions(Map environment) {
+        final String javaOptionsKey = "_JAVA_OPTIONS"; //$NON-NLS-1$
+        String javaOptions = (String) environment.get(javaOptionsKey);
+        if (StringUtils.isNotBlank(javaOptions)
+                && StringUtils.contains(javaOptions, "-javaagent")) { //$NON-NLS-1$)
+            environment.remove(javaOptionsKey);
+        }
     }
 }

@@ -29,6 +29,12 @@
       </listitem>
       <listitem>
         <para>
+          Since we are using the environment "_JAVA_OPTIONS" for starting the AUT, these key and value is
+          removed from the environment of the process which should be executed.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
           Parameters:
           
           <itemizedlist>

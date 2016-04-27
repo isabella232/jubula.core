@@ -15,6 +15,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/org.apache.commons.beanutils.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.jubula.communication.jar" sourcepath="/org.eclipse.jubula.communication/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.jubula.tools.jar" sourcepath="/org.eclipse.jubula.tools/src"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.jubula.tools.exec.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.jubula.rc.common.jar" sourcepath="/org.eclipse.jubula.rc.common/src"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.jubula.toolkit.api.jar" sourcepath="/org.eclipse.jubula.toolkit.api/src"/>
 	<classpathentry exported="true" kind="lib" path="resources" sourcepath="resources"/>
