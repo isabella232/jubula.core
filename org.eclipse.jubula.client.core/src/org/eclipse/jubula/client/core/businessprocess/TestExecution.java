@@ -2258,8 +2258,12 @@ public class TestExecution {
                     String args = getValueForParam(CSConstants.EXEC_RAW_ARGS);
                     boolean newEnvironment = Boolean.valueOf(
                             getValueForParam(CSConstants.NEW_ENVIRONMENT));
-                    String splitChar = getValueForParam(
+                    String splitCharValue = getValueForParam(
                             CSConstants.RAW_ARG_SPLIT_CHAR);
+                    splitCharValue = StringUtils
+                            .defaultIfEmpty(splitCharValue, null);
+                    char splitChar = (splitCharValue == null)
+                            ? null : splitCharValue.charAt(0);
                     String encoding = getValueForParam(
                             CSConstants.OUTPUT_ENCODING);
                     String dir = getValueForParam(CSConstants.DIR);
@@ -2269,8 +2273,7 @@ public class TestExecution {
                     int expectedExitCode = Integer.parseInt(getValueForParam(
                             CSConstants.EXPECTED_EXIT_CODE));
                     Result result = CommandExecutor.exec(
-                            dir,
-                            exec, args, splitChar.charAt(0), 
+                            dir, exec, args, splitChar,
                             timeout,  encoding, newEnvironment);
                     resultNode.setCommandLog(result.getCombinedOutput());
 
