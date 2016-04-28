@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.tester.adapter;
 
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 
 import javax.swing.JLabel;
 import javax.swing.JSlider;
@@ -89,59 +87,112 @@ public class JSliderAdapter extends JComponentAdapter implements
                         Integer value = null;
                         Dictionary<Integer, ?> labelTable =
                                 m_slider.getLabelTable();
-                        if (labelTable != null) {
-                            Enumeration<Integer> keys = labelTable.keys();
-                            MatchUtil matcher = MatchUtil.getInstance();
-                            for (Integer k : Collections.list(keys)) {
-                                Object o = labelTable.get(k);
-                                String stringToMatch;
-                                if (o instanceof JLabel) {
-                                    stringToMatch = ((JLabel) o).getText();
-                                } else {
-                                    stringToMatch = String.valueOf(position);
+                        
+                        String prefPos = getPreferredPosition(position, units);
+                        
+                        String possiblePos = getPossiblePosition(prefPos);
+                        
+                        int min = m_slider.getMinimum();
+                        int max = m_slider.getMaximum();
+                        int incr = getSliderIncrement();
+                        MatchUtil matcher = MatchUtil.getInstance();
+                        for (int val = min; val <= max; val += incr) {
+                            if (labelTable != null) {
+                                Object label = labelTable.get(val);
+                                if (label != null && label instanceof JLabel) {
+                                    if (matcher.match(
+                                            ((JLabel) label).getText(),
+                                            possiblePos, operator)) {
+                                        value = val;
+                                        break;
+                                    }
                                 }
-                                if (matcher.match(stringToMatch,
-                                        position, operator)) {
-                                    value = k;
-                                    break;
-                                }
-                            }
-                            if (value == null) {
-                                throw new StepExecutionException("Value not found", //$NON-NLS-1$
-                                        EventFactory.createActionError(
-                                                TestErrorEvent.NOT_FOUND));
-                            }
-                        } else {
-                            try {
-                                value = Integer.valueOf(position);
-                            } catch (NumberFormatException nfe) {
-                                throwInvalidInputMessage();
+                            } 
+                            if (matcher.match(String.valueOf(val), possiblePos,
+                                    operator)) {
+                                value = val;
+                                break;
                             }
                         }
-                        setValueProgrammatically(units, value);
+                        if (value == null) {
+                            throw new StepExecutionException("Value not found", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                            TestErrorEvent.NOT_FOUND));
+                        }
+                        m_slider.setValue(value);
                         return null;
                     }
                 });
     }
-    
+
     /**
-     * @param units the units
-     * @param value the value
+     * @return the possible increment of the slider
      */
-    private void setValueProgrammatically(final String units,
-            int value) {
-        final int valueToSet;
-        if (units.equalsIgnoreCase(
-                ValueSets.Measure.percent.rcValue())) {
-            if (value < 0 || 100 < value) {
-                throwInvalidInputMessage();
-            }
-            valueToSet = (int) (m_slider.getMinimum() + value
-                    * ((m_slider.getMaximum() - m_slider.getMinimum())) * 0.01);
+    private int getSliderIncrement() {
+        int incr;
+        if (m_slider.getSnapToTicks()) {
+            int minorTickSpacing =
+                    m_slider.getMinorTickSpacing();
+            incr = minorTickSpacing != 0
+                    ? minorTickSpacing
+                    : m_slider.getMajorTickSpacing();
         } else {
-            valueToSet = value;
+            incr = 1;
         }
-        m_slider.setValue(valueToSet);
+        return incr;
+    }
+
+    /**
+     * @param prefPos the preferred position
+     * @return the possible position of the slider which can be set
+     * (due to snapping to ticks, ...)
+     */
+    private String getPossiblePosition(String prefPos) {
+        try {
+            Integer pos = Integer.valueOf(prefPos);
+            final int valueToSet;
+            if (m_slider.getSnapToTicks()) {
+                int val = m_slider.getMinimum();
+                int minorTickSpacing = m_slider.getMinorTickSpacing();
+                int incr = minorTickSpacing > 0
+                        ? minorTickSpacing
+                        : m_slider.getMajorTickSpacing();
+                while (val < pos) {
+                    val += incr;
+                }
+                valueToSet = (val - pos) <= (pos - (val - incr))
+                        ? val : val - incr;
+            } else {
+                valueToSet = pos;
+            }
+            return String.valueOf(valueToSet);
+        } catch (NumberFormatException nfe) {
+            return prefPos;
+        }
+    }
+    
+    /** 
+     * @param position the given position
+     * @param units "percent" or "value"
+     * @return the calculated preferred position of the slider
+     */
+    private String getPreferredPosition(String position, String units) {
+        String returnVal = position;
+        
+        if (ValueSets.Measure.percent.rcValue().equals(units)) {
+            try {
+                Double pos = Double.valueOf(position);
+                if (pos < 0 || 100 < pos) {
+                    throwInvalidInputMessage();
+                }
+                returnVal = String.valueOf(Math.round(
+                        m_slider.getMinimum() + pos * 0.01
+                        * (m_slider.getMaximum() - m_slider.getMinimum())));
+            } catch (NumberFormatException e) {
+                // ignore
+            }
+        }
+        return returnVal;
     }
     
     /** throws invalid input message */
