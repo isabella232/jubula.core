@@ -31,7 +31,8 @@ import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
  */
 public class MyToolkitProvider extends AbstractToolkitProvider {
     /** the bundle location */
-    public static final String BUNDLE = "org.eclipse.jubula.examples.extension.swing.toolkit.i18n.i18n"; //$NON-NLS-1$
+    public static final String BUNDLE = 
+            "org.eclipse.jubula.examples.extension.swing.toolkit.i18n.i18n"; //$NON-NLS-1$
 
     /** {@inheritDoc} */
     public URL getComponentConfigurationFileURL() {

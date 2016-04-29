@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
-    Copyright (c) 2004, 2010 BREDEX GmbH.
+    Copyright (c) 2004, 2016 BREDEX GmbH.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
@@ -21,47 +21,46 @@
 		org.eclipse.jubula.toolkit.provider.base/concrete <testerClass> defines the 
 		class which should be called <componentClass> defines the class of the component, 
 		this is the full qualified class name of the component. -->
-	<toolkitComponent type="javax.swing.JSlider" visible="true">
+	<toolkitComponent type="javax.swing.JSpinner" visible="true">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<testerClass>org.eclipse.jubula.ext.rc.swing.tester.JSliderTester</testerClass>
-		<componentClass name="javax.swing.JSlider" />
+		<testerClass>org.eclipse.jubula.ext.rc.swing.tester.JSpinnerTester</testerClass>
+		<componentClass name="javax.swing.JSpinner" />
 	<!-- <action> tag defines the action name, method and parameter -->
-		<action name="CompSystem.VerifyLabelsExists">
+		<action name="CompSystem.ClickIncrement">
 			<!-- <method> tag defines the methodname in the java class -->
-			<method>rcVerifyLabelsExists</method>
+			<method>rcClickIncrement</method>
 			<!-- <param> tag defines the parameter, name is name of the Parameters -->
-			<param name="CompSystem.IsExisting">
+			<param name="CompSystem.Number">
 				<!-- <type> java class primitive types (the object ) -->
-				<type>java.lang.Boolean</type>
-				<defaultValue>true</defaultValue>
-				<!-- <ValueSet> defines a value set which data could only be inserted 
-					<defaultValue> defines a default value -->
+				<type>java.lang.Integer</type>
+			</param>
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
 				<valueSet>
-					<element name="CompSystem.True" value="true" />
-					<element name="CompSystem.False" value="false" />
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
 		</action>
-	</toolkitComponent>
-	<toolkitComponent type="JTextField.Extension" visible="true">
-		<!-- <extends> is extending an existing component with new actions there 
-			is no need to define a ComponentClass since this is defined by the extended 
-			component -->
-		<extends>javax.swing.text.JTextComponent</extends>
-		<testerClass>org.eclipse.jubula.ext.rc.swing.tester.JTextComponentExtensionTester</testerClass>
-		<action name="CompSystem.VerifyTooltipText">
-			<method>rcVerifyToolTip</method>
-			<param name="CompSystem.Text">
-				<type>java.lang.String</type>
+		<action name="CompSystem.ClickDecrement">
+			<!-- <method> tag defines the methodname in the java class -->
+			<method>rcClickDecrement</method>
+			<!-- <param> tag defines the parameter, name is name of the Parameters -->
+			<param name="CompSystem.Number">
+				<!-- <type> java class primitive types (the object ) -->
+				<type>java.lang.Integer</type>
 			</param>
-			<param name="CompSystem.Operator">
-				<type>java.lang.String</type>
-				<defaultValue>equals</defaultValue>
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
 				<valueSet>
-					<element name="CompSystem.Equals" value="equals" />
-					<element name="CompSystem.NotEquals" value="not equals" />
-					<element name="CompSystem.MatchesRegExp" value="matches" />
-					<element name="CompSystem.SimpleMatch" value="simple match" />
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
 		</action>
