@@ -151,8 +151,13 @@ public class ReplaceTCRWizard extends Wizard {
             InteractionEventDispatcher.getDefault()
                     .fireProgammableSelectionEvent(
                             new StructuredSelection(specTcToInsert));
+            TestCaseBP.handleFirstReference(
+                    m_editor.getEditorHelper().getEditSupport(),
+                    m_choosePage.getChoosenTestCase(), false);
+            
             eh.getEditSupport().lockWorkVersion();
             eh.setDirty(true);
+           
             m_editor.setSelection(new StructuredSelection(
                     replacementTCReference));
         } catch (PMException e) {
