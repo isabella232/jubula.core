@@ -203,6 +203,11 @@ public abstract class E3Startup implements IStartup {
      * {@inheritDoc}
      */
     public void earlyStartup() {
+        String env = EnvironmentUtils.getProcessOrSystemProperty(
+                SimpleStartup.JUBULA_ACCESSOR_SIMPLE);
+        if (env != null) {
+            return;
+        }
         if (EnvironmentUtils.getProcessOrSystemProperty(
                 AutConfigConstants.AUT_AGENT_HOST) != null) {
             final IWorkbench workbench = PlatformUI.getWorkbench();
