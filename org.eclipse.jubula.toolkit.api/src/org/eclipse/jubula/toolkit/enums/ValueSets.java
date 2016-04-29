@@ -366,7 +366,10 @@ public final class ValueSets {
         }
     }
     
-    /** @author BREDEX GmbH */
+    /**
+     * @author BREDEX GmbH 
+     * @since 4.0
+     */
     public enum Measure implements LiteralProvider {
         /** unit value */
         value("value"), //$NON-NLS-1$
