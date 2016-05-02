@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>../org.eclipse.jubula.feature.examples</module>
         <module>../org.eclipse.jubula.examples.aut.adder.javafx</module>
         <module>../org.eclipse.jubula.examples.aut.adder.swing</module>
         <module>../org.eclipse.jubula.examples.aut.adder.swt</module>
