@@ -1,0 +1,47 @@
+<!-- 
+  Copyright (c) 2016 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="actionSetPositionSlider" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Set Position (Slider Components)</title>
+  
+  <para><emphasis>Set Position</emphasis></para>
+  <para>
+    <itemizedlist>
+      <listitem>
+        <para>
+          Use this action to set a slider value to a certain position.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Parameters:
+          
+          <itemizedlist>
+            <listitem>
+              <para>
+                <xref linkend="position" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="measure" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+          </itemizedlist>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+</section>

@@ -24,6 +24,7 @@
   <xi:include href="moveInTablesAndTrees/content.xml"/>
   <xi:include href="pauseTestExecution/content.xml"/>
   <xi:include href="select/content.xml"/>
+  <xi:include href="setPosition/content.xml"/>
   <xi:include href="showText/content.xml"/>
   <xi:include href="stopwatch/content.xml"/>
   <xi:include href="takeScreenshot/content.xml"/>

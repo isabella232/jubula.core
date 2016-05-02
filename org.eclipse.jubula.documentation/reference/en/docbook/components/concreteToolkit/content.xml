@@ -23,6 +23,7 @@
   <xi:include href="listComponent/content.xml"/>
   <xi:include href="menuBarComponent/content.xml"/>
   <xi:include href="operatingSystemComponent/content.xml"/>
+  <xi:include href="sliderComponent/content.xml"/>
   <xi:include href="tabbedComponent/content.xml"/>
   <xi:include href="tableComponent/content.xml"/>
   <xi:include href="textComponent/content.xml"/>

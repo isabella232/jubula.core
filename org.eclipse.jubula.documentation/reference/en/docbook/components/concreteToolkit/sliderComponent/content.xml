@@ -1,0 +1,36 @@
+<!-- 
+  Copyright (c) 2016 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="ConcreteToolkitSliderComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
+  <?dbhtml dir="sliderComponent"?>
+  <title>Concrete toolkit slider component</title>
+  <para>
+  	A <emphasis>slider</emphasis> component is a component in which a data value can be chosen
+  	within a certain range.
+  </para>
+  <para>
+  	The format of a slider component is a one-dimensional bar together with a knob which
+  	represents the chosen value.
+  </para>
+  <para><emphasis role="strong">Available Actions</emphasis></para>
+  <itemizedlist>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionCheckPositionSlider" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+  	<listitem>
+  		<para>
+  			<xref linkend="actionSetPositionSlider" xrefstyle="template:%t"/>
+  		</para>
+  	</listitem>
+ </itemizedlist>
+  
+</section>

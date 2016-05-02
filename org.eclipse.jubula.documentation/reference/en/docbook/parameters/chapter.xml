@@ -59,6 +59,7 @@
   <xi:include href="marginLeft/content.xml"/>
   <xi:include href="marginRight/content.xml"/>
   <xi:include href="marginTop/content.xml"/>
+  <xi:include href="measure/content.xml"/>
   <xi:include href="methodArguments/content.xml"/>
   <xi:include href="methodArgumentSeparator/content.xml"/>
   <xi:include href="methodName/content.xml"/>
@@ -70,6 +71,7 @@
   <xi:include href="numberOfClicks/content.xml"/>
   <xi:include href="numberOfNodes/content.xml"/>
   <xi:include href="operator/content.xml"/>
+  <xi:include href="position/content.xml"/>
   <xi:include href="pathType/content.xml"/>
   <xi:include href="pattern/content.xml"/>
   <xi:include href="preAscend/content.xml"/>

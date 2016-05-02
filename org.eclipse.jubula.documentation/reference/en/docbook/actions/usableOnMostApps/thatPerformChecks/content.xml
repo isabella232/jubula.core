@@ -16,6 +16,7 @@
   <xi:include href="checkEnablement/content.xml"/>
   <xi:include href="checkExistence/content.xml"/>
   <xi:include href="checkFocus/content.xml"/>
+  <xi:include href="checkPosition/content.xml"/>
   <xi:include href="checkProperty/content.xml"/>
   <xi:include href="checkSelection/content.xml"/>
   <xi:include href="checkText/content.xml"/>
