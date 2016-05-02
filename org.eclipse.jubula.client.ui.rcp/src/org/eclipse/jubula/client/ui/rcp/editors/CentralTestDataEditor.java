@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.editors;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -62,7 +60,6 @@ import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.CentralTestDataContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.CentralTestDataLabelProvider;
-import org.eclipse.jubula.client.ui.rcp.wizards.ImportTestDataSetsWizard;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.swt.SWT;
@@ -312,13 +309,8 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 null, Messages.FindContextMenu,
                 CommandContributionItem.STYLE_PUSH));
         mgr.add(new Separator());
-        Map<String, String> params = new HashMap<String, String>();
-        params.put(RCPCommandIDs.IMPORT_WIZARD_PARAM_ID, 
-                ImportTestDataSetsWizard.ID);
-        mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.ECLIPSE_RCP_FILE_IMPORT, 
-                params, null,
-                CommandContributionItem.STYLE_PUSH));
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.IMPORT_TEST_DATA_SET);
     }
 
     /** {@inheritDoc} */

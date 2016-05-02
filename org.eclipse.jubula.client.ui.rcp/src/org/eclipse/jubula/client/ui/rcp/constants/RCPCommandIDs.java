@@ -141,6 +141,9 @@ public interface RCPCommandIDs {
     /** the ID of the "show where used" command */
     public static final String SHOW_WHERE_USED = "org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"; //$NON-NLS-1$
     
+    /** the ID of the "import test data sets" command */
+    public static final String IMPORT_TEST_DATA_SET = "org.eclipse.jubula.client.ui.rcp.commands.ImportTestDataSets"; //$NON-NLS-1$
+    
     /** the ID of the "choose/start AUT" command */
     public static final String START_AUT = "org.eclipse.jubula.client.ui.rcp.commands.ChooseAutCommand"; //$NON-NLS-1$
     

@@ -963,6 +963,10 @@
       name="%Import" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.ImportTestDataSets"
+      name="%ImportTestDataSets" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.DeleteProject"
       name="%DeleteProject" />
     <command
@@ -2872,6 +2876,9 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.project.ImportProjectHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportProject" />
     <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.ImportTestDataSetsHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportTestDataSets" />
+    <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.CreateNewProjectVersionHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewProjectVersion">
       <activeWhen>
@@ -3155,6 +3162,9 @@
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportProject"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/import_disabled.gif"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/import.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportTestDataSets"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/centralTestData.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.DeleteProject"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/deleteProject_disabled.gif"
@@ -4231,17 +4241,6 @@
       class="org.eclipse.jubula.client.ui.rcp.search.SearchResultPage"
       id="org.eclipse.jubula.client.ui.rcp.search.searchResultPage"
       searchResultClass="org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult" />
-  </extension>
-  <extension point="org.eclipse.ui.importWizards">
-    <wizard
-      category="org.eclipse.jubula.client.ui.rcp.test"
-      class="org.eclipse.jubula.client.ui.rcp.wizards.ImportTestDataSetsWizard"
-      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/centralTestData.gif"
-      id="org.eclipse.jubula.client.ui.rcp.importWizard.ImportTestDataSetsWizard"
-      name="Central Test Data Sets" />
-    <category
-      id="org.eclipse.jubula.client.ui.rcp.test"
-      name="%FunctionalTestCategory.name" />
   </extension>
   <extension point="org.eclipse.ui.activities">
     <activity

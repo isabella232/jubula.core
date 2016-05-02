@@ -18,8 +18,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.ImportXLSTestdataWizardPage;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IImportWizard;
-import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
 
 
 /**
@@ -28,7 +27,7 @@ import org.eclipse.ui.IWorkbench;
  * @author BREDEX GmbH
  * @created Jun 25, 2010
  */
-public class ImportTestDataSetsWizard extends Wizard implements IImportWizard {
+public class ImportTestDataSetsWizard extends Wizard {
     /**
      * <code>WIZARD_ID</code>
      */
@@ -51,6 +50,20 @@ public class ImportTestDataSetsWizard extends Wizard implements IImportWizard {
      * <code>m_ctde</code>
      */
     private CentralTestDataEditor m_ctde;
+    
+    /**
+     * @param activeWorkbenchWindow activeWorkbenchWindow
+     */
+    public ImportTestDataSetsWizard(IWorkbenchWindow activeWorkbenchWindow) {
+        super();
+        setNeedsProgressMonitor(true);
+        setWindowTitle(Messages.ImportTestDataSetsWizardWindowTitle);
+        IEditorPart activeEditor = activeWorkbenchWindow
+                .getActivePage().getActiveEditor();
+        if (activeEditor instanceof CentralTestDataEditor) {
+            m_ctde = (CentralTestDataEditor)activeEditor;
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -80,22 +93,6 @@ public class ImportTestDataSetsWizard extends Wizard implements IImportWizard {
                 PMExceptionHandler.handlePMExceptionForEditor(e, m_ctde);
             }
         }
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public void init(IWorkbench workbench, IStructuredSelection selection) {
-        setNeedsProgressMonitor(true);
-        setWindowTitle(Messages.ImportTestDataSetsWizardWindowTitle);
-        IEditorPart activeEditor = workbench.getActiveWorkbenchWindow()
-                .getActivePage().getActiveEditor();
-        if (activeEditor instanceof CentralTestDataEditor) {
-            m_ctde = (CentralTestDataEditor)activeEditor;
-            m_ctde.getEditorHelper().requestEditableState();
-            // FIXME MT: cancel opening wizard
-        }
-        m_selection = selection;
     }
 
 }
