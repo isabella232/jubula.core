@@ -986,6 +986,37 @@ public class TreeTableViewTester extends TreeViewTester {
     }
     
     /**
+     * Checks if a given column exists, respectively does not exist
+     * @param column the column
+     * @param columnOperator the operator to find the column
+     * @param exists true when the column should be found
+     */
+    public void rcCheckExistenceOfColumn(String column, String columnOperator,
+            boolean exists) {
+        int index = -2;
+        try {
+            index = getContext().getColumnFromString(
+                    column, columnOperator, true);
+        } catch (StepExecutionException see) {
+            // If a column can not be found, an exception is thrown. Because
+            // this is a valid outcome for this method, in this context, we
+            // catch the exception.
+            // If the cause of the exception was not that a column could not be
+            // found, we will throw the exception again.
+            if (!see.getEvent().equals(
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND))) {
+                throw see;
+            }
+        }
+        if (index >= 0) {
+            Rectangle bounds = getContext().getHeaderBounds(index);
+            if (bounds.getWidth() <= 0) {
+                index = -2;
+            }
+        }
+        Verifier.equals(exists, index >= 0);
+    }
+    /**
      * get the row index from a given cell
      * @param cell the cell
      * @return the row index or -1 if the cell is not in a tree table

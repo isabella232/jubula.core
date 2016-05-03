@@ -1103,5 +1103,24 @@ public abstract class AbstractTableTester
         final String propToStr = bean.getPropertyValueOfCell(name, cell);
         Verifier.match(propToStr, value, operator);
     }
+    
+    /**
+     * Checks if a given column exists, respectively does not exist
+     * @param column the column
+     * @param columnOperator the operator to find the column
+     * @param exists true when the column should be found
+     */
+    public void rcCheckExistenceOfColumn(String column, String columnOperator,
+            boolean exists) {
+        int index = getTableAdapter().getColumnFromString(column,
+                columnOperator);
+        if (index >= 0) {
+            Rectangle bounds = getTableAdapter().getHeaderBounds(index);
+            if (bounds == null || bounds.getWidth() <= 0) {
+                index = -2;
+            }
+        }
+        Verifier.equals(exists, index >= 0);
+    }
 
 }
