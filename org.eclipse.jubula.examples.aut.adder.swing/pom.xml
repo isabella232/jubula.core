@@ -15,5 +15,4 @@
     </parent>
     <artifactId>org.eclipse.jubula.examples.aut.adder.swing</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <version>4.0.0</version>
 </project>

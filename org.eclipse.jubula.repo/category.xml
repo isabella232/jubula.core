@@ -28,29 +28,26 @@
       <category name="org.eclipse.test"/>
    </feature>
    <feature url="features/org.eclipse.jubula.examples.extension.swing.feature_4.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.source_4.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.swing.feature.source" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_4.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature.source_4.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature.source" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <feature url="features/org.eclipse.jubula.examples.extension.rcp.feature_4.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.rcp.feature" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <feature url="features/org.eclipse.jubula.examples.extension.rcp.feature.source_4.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.rcp.feature.source" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <bundle id="org.eclipse.jubula.examples.extension.rcp.aut" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
+      <category name="org.eclipse.jubula.examples.extension.repo"/>
    </bundle>
-   <feature url="features/org.eclipse.jubula.feature.examples_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.examples" version="4.0.0.qualifier">
-      <category name="org.eclipse.jubula.examples"/>
-   </feature>
    <category-def name="org.eclipse.test" label="Testing"/>
-   <category-def name="org.eclipse.jubula.examples" label="Jubula - Examples"/>
+   <category-def name="org.eclipse.jubula.examples.extension.repo" label="Jubula - Examples"/>
 </site>
