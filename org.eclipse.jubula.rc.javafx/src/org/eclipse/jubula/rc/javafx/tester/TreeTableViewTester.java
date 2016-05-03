@@ -999,12 +999,10 @@ public class TreeTableViewTester extends TreeViewTester {
                     column, columnOperator, true);
         } catch (StepExecutionException see) {
             // If a column can not be found, an exception is thrown. Because
-            // this is a valid outcome for this method, in this context, we
+            // this is a valid outcome for this method in this context, we
             // catch the exception.
-            // If the cause of the exception was not that a column could not be
-            // found, we will throw the exception again.
-            if (!see.getEvent().equals(
-                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND))) {
+            
+            if (exists) {
                 throw see;
             }
         }
