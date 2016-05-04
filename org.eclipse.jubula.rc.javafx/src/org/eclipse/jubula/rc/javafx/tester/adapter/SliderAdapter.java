@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.awt.Rectangle;
 import java.lang.reflect.Field;
 import java.util.concurrent.Callable;
 
@@ -94,45 +95,66 @@ public class SliderAdapter extends
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         int mouseButton = ValueSets.InteractionMode.primary.rcIntValue();
         dndHelper.setMouseButton(mouseButton);
-        final IRobot robot = getRobot();
+        final IRobot<Rectangle> robot = getRobot();
         boolean horizontal = slider.getOrientation().equals(
                 Orientation.HORIZONTAL);
         if (horizontal) {
-            getRobot().click(
-                    getTrack(),
-                    null,
-                    ClickOptions.create().setClickCount(0)
-                    .setMouseButton(mouseButton),
-                    (int)Math.round(currentRelPos), false, 50, false);
+            moveHorizontal(currentRelPos, mouseButton);
         } else {
-            getRobot().click(
-                    getTrack(),
-                    null,
-                    ClickOptions.create().setClickCount(0)
-                    .setMouseButton(mouseButton),
-                    50, false, 100 - (int)Math.round(currentRelPos), false);
+            moveVertical(currentRelPos, mouseButton);
         }
         robot.mousePress(null, null, mouseButton);
         try {
             if (horizontal) {
-                getRobot().click(
-                        getTrack(),
-                        null,
-                        ClickOptions.create().setClickCount(0)
-                        .setMouseButton(mouseButton),
-                        (int)Math.round(futureRelPos), false, 50, false);
+                // This is a workaround for problems which lead to leaving behind the button
+                moveHorizontal(futureRelPos - 2.0, mouseButton);
+                TimeUtil.delay(200);
+                moveHorizontal(futureRelPos, mouseButton);
+                TimeUtil.delay(200);
+                moveHorizontal(futureRelPos + 2.0, mouseButton);
+                TimeUtil.delay(200);
+                moveHorizontal(futureRelPos, mouseButton);
             } else {
-                getRobot().click(
-                        getTrack(),
-                        null,
-                        ClickOptions.create().setClickCount(0)
-                        .setMouseButton(mouseButton),
-                        50, false, 100 - (int)Math.round(futureRelPos), false);
+                moveVertical(futureRelPos - 2.0, mouseButton);
+                TimeUtil.delay(200);
+                moveVertical(futureRelPos, mouseButton);
+                TimeUtil.delay(200);
+                moveVertical(futureRelPos + 2.0, mouseButton);
+                TimeUtil.delay(200);
+                moveVertical(futureRelPos, mouseButton);
             }
             TimeUtil.delay(200);
         } finally {
             getRobot().mouseRelease(null, null, mouseButton);
         }
+    }
+
+    /**
+     * 
+     * @param targetPos target position
+     * @param mouseButton mouse Button
+     */
+    private void moveHorizontal(double targetPos, int mouseButton) {
+        getRobot().click(
+                getTrack(),
+                null,
+                ClickOptions.create().setClickCount(0)
+                .setMouseButton(mouseButton),
+                (int)Math.round(targetPos), false, 50, false);
+    }
+
+    /**
+     * 
+     * @param targetPos target position
+     * @param mouseButton mouse Button
+     */
+    private void moveVertical(double targetPos, int mouseButton) {
+        getRobot().click(
+                getTrack(),
+                null,
+                ClickOptions.create().setClickCount(0)
+                .setMouseButton(mouseButton),
+                50, false, 100 - (int)Math.round(targetPos), false);
     }
 
     /**
