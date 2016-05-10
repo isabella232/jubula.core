@@ -376,22 +376,17 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         // This should only be one node, but who knows what
                         // people do
                         List<? extends TableHeaderRow> headerRow = 
-                                NodeTraverseHelper.getInstancesOf(table,
-                                        TableHeaderRow.class);
+                                NodeTraverseHelper.getInstancesOf(
+                                        table, TableHeaderRow.class);
                         TableColumnHeader colH = null;
                         for (TableHeaderRow tableHeaderRow : headerRow) {
                             colH = tableHeaderRow.getColumnHeaderFor(col);
                             if (colH != null) {
-                                break;
+                                return NodeBounds.getRelativeBounds(colH,
+                                        tableHeaderRow);
                             }
                         }
-                        Rectangle b = NodeBounds.getAbsoluteBounds(colH);
-                        Rectangle tableB = NodeBounds
-                                .getAbsoluteBounds(table);
-                        return new Rectangle(Math.abs(tableB.x - b.x),
-                                Math.abs(tableB.y - b.y),
-                                Rounding.round(b.getWidth()),
-                                Rounding.round(b.getHeight()));
+                        return null;
                     }
                 });
         return result;
