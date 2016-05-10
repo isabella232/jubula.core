@@ -26,6 +26,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
+
 /**
  * @author BREDEX GmbH
  * @created Jun 11, 2007
@@ -83,6 +86,7 @@ class AUTContPO implements IAUTContPO {
                fetch = FetchType.EAGER, 
                targetEntity = AUTMainPO.class)
     @JoinColumn(name = "FK_AUT_CONT")
+    @BatchFetch(value = BatchFetchType.JOIN)
     public Set<IAUTMainPO> getAutMainList() {
         return m_autMainList;
     }
