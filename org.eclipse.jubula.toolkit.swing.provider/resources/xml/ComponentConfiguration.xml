@@ -1,20 +1,30 @@
-<?xml version="1.0" encoding="ISO-8859-1"?><!--
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
     Copyright (c) 2004, 2010 BREDEX GmbH.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">	<configVersion>
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
+	<configVersion>
 		<majorVersion>4</majorVersion>
 		<minorVersion>0</minorVersion>
 	</configVersion>
-		<toolkitComponent
+	
+	<toolkitComponent
 		type="com.bredexsw.guidancer.server.implclasses.GraphicApplication" visible="false" hasDefaultMapping="true">
 		<realizes>guidancer.concrete.GraphicApplication</realizes>
 		<testerClass>org.eclipse.jubula.rc.swing.tester.SwingApplicationTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autserver.swing.implclasses.GraphicApplication" />
-	</toolkitComponent>		<toolkitComponent        type="org.eclipse.jubula.SwingReflectionComponent" visible="false" hasDefaultMapping="true" since="4.0">        <realizes>guidancer.concrete.JavaReflection</realizes>        <testerClass>org.eclipse.jubula.rc.swing.tester.SwingReflectionTester</testerClass>        <componentClass name="org.eclipse.jubula.SwingReflectionComponent"></componentClass>    </toolkitComponent>
+	</toolkitComponent>
+	
+	<toolkitComponent
+        type="org.eclipse.jubula.SwingReflectionComponent" visible="false" hasDefaultMapping="true" since="4.0">
+        <realizes>guidancer.concrete.JavaReflection</realizes>
+        <testerClass>org.eclipse.jubula.rc.swing.tester.SwingReflectionTester</testerClass>
+        <componentClass name="org.eclipse.jubula.SwingReflectionComponent"></componentClass>
+    </toolkitComponent>
 	
 	<toolkitComponent type="javax.swing.AbstractButton" visible="false">
 		<realizes>guidancer.concrete.Button</realizes>
@@ -69,5 +79,31 @@
 		<testerClass>org.eclipse.jubula.rc.swing.tester.JTreeTester</testerClass>
 		<componentClass name="javax.swing.JTree" />
 	</toolkitComponent>
-		<toolkitComponent type="javax.swing.JProgressBar" visible="false">		<realizes>guidancer.abstract.Widget</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>		<componentClass name="javax.swing.JProgressBar" />	</toolkitComponent>        <toolkitComponent type="javax.swing.JToolTip" visible="false" hasDefaultMapping="true" supported="false">        <realizes>guidancer.concrete.Tooltip</realizes>        <testerClass>org.eclipse.jubula.rc.swing.tester.JToolTipTester</testerClass>        <componentClass name="javax.swing.JToolTip" />    </toolkitComponent>	    <toolkitComponent type="org.eclipse.jubula.swing.os.component"                       visible="false"                       hasDefaultMapping="true"                       since="4.0">        <realizes>guidancer.concrete.os.component</realizes>        <testerClass>org.eclipse.jubula.rc.common.tester.OperatingSystemTester</testerClass>        <componentClass name="org.eclipse.jubula.swing.os.component" />    </toolkitComponent>    <toolkitComponent type="javax.swing.JSlider" visible="false" since="4.0">        <realizes>guidancer.concrete.Slider</realizes>        <testerClass>org.eclipse.jubula.rc.common.tester.SliderTester</testerClass>        <componentClass name="javax.swing.JSlider" />    </toolkitComponent>
+	
+	<toolkitComponent type="javax.swing.JProgressBar" visible="false">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>
+		<componentClass name="javax.swing.JProgressBar" />
+	</toolkitComponent>
+    
+    <toolkitComponent type="javax.swing.JToolTip" visible="false" hasDefaultMapping="true" supported="false">
+        <realizes>guidancer.concrete.Tooltip</realizes>
+        <testerClass>org.eclipse.jubula.rc.swing.tester.JToolTipTester</testerClass>
+        <componentClass name="javax.swing.JToolTip" />
+    </toolkitComponent>
+	
+    <toolkitComponent type="org.eclipse.jubula.swing.os.component" 
+                      visible="false" 
+                      hasDefaultMapping="true" 
+                      since="4.0">
+        <realizes>guidancer.concrete.os.component</realizes>
+        <testerClass>org.eclipse.jubula.rc.common.tester.OperatingSystemTester</testerClass>
+        <componentClass name="org.eclipse.jubula.swing.os.component" />
+    </toolkitComponent>
+
+    <toolkitComponent type="javax.swing.JSlider" visible="false" since="4.0">
+        <realizes>guidancer.concrete.Slider</realizes>
+        <testerClass>org.eclipse.jubula.rc.common.tester.SliderTester</testerClass>
+        <componentClass name="javax.swing.JSlider" />
+    </toolkitComponent>
 </compSystem>

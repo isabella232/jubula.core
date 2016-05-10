@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="ISO-8859-1"?><!--
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
     Copyright (c) 2004, 2010 BREDEX GmbH.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">	<configVersion>
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
+	<configVersion>
 		<majorVersion>4</majorVersion>
 		<minorVersion>6</minorVersion>
 	</configVersion>
 	
 	<concreteComponent type="guidancer.concrete.GraphicApplication" hasDefaultMapping="true" descriptionKey="guidancer.concrete.GraphicApplication.descr">
-		<action name="CompSystem.ClickInActiveWindow" descriptionKey="CompSystem.ClickInActiveWindow.descr">			<method>rcClickDirect</method>
+		<action name="CompSystem.ClickInActiveWindow" descriptionKey="CompSystem.ClickInActiveWindow.descr">
+			<method>rcClickDirect</method>
 			<param name="CompSystem.ClickCount"
                    descriptionKey="CompSystem.ClickCount.descr" >
 				<type>java.lang.Integer</type>
@@ -69,7 +72,8 @@
 					<element name="CompSystem.MethodNorthWest" value="NW"/>
 					<element name="CompSystem.MethodNorthEast" value="NE"/>
 					<element name="CompSystem.MethodSouthWest" value="SW"/>
-					<element name="CompSystem.MethodSouthEast" value="SE"/>					<element name="CompSystem.MethodCenter"    value="CENTER"/>
+					<element name="CompSystem.MethodSouthEast" value="SE"/>
+					<element name="CompSystem.MethodCenter"    value="CENTER"/>
 				</valueSet>
 			</param>
 		</action>
@@ -228,8 +232,22 @@
 			<method>rcRestart</method>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$RestartCmd</postExecutionCommand>
 		</action>
-		<action name="CompSystem.PrepareForShutdown" clientAction="true">			<method>rcPrepareForShutdown</method>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PrepareForShutdownCmd</postExecutionCommand>		</action>		<action name="CompSystem.SyncShutdownAndRestart" clientAction="true">			<method>rcSyncShutdownAndRestart</method>			<param name="CompSystem.Timeout"
-                   descriptionKey="CompSystem.Timeout.descr" >				<type>java.lang.Integer</type>				<defaultValue>10000</defaultValue>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$SyncShutdownAndRestartCmd</postExecutionCommand>		</action>
+
+		<action name="CompSystem.PrepareForShutdown" clientAction="true">
+			<method>rcPrepareForShutdown</method>
+			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PrepareForShutdownCmd</postExecutionCommand>
+		</action>
+
+		<action name="CompSystem.SyncShutdownAndRestart" clientAction="true">
+			<method>rcSyncShutdownAndRestart</method>
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>10000</defaultValue>
+			</param>
+			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$SyncShutdownAndRestartCmd</postExecutionCommand>
+		</action>
+
 		<action name="CompSystem.TakeScreenshot">
 			<method>rcTakeScreenshot</method>
 			<param name="CompSystem.Destination"
@@ -266,7 +284,9 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.ExecuteCommand"                descriptionKey="CompSystem.ExecuteCommand.descr"                deprecated="true">
+		<action name="CompSystem.ExecuteCommand"
+                descriptionKey="CompSystem.ExecuteCommand.descr"
+                deprecated="true">
 			<method>rcExecuteExternalCommand</method>
 			<param name="CompSystem.Command"
                    descriptionKey="CompSystem.Command.descr" >
@@ -509,7 +529,8 @@
 				<defaultValue>900000</defaultValue>
 			</param>
 		<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$ManualTestStepCmd</postExecutionCommand>
-		</action>	</concreteComponent>
+		</action>
+	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.Button">
 		<realizes>guidancer.abstract.ButtonComp</realizes>
@@ -864,8 +885,12 @@
 					<element name="CompSystem.MouseButtonMiddle" value="2"/>
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
-			</param>			<param name="CompSystem.ClickCount"
-                   descriptionKey="CompSystem.ClickCount.descr" >				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
+			</param>
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
 		</action>
 		<action name="CompSystem.SelectValues">
 			<method>rcSelectValue</method>
@@ -911,8 +936,12 @@
 					<element name="CompSystem.MouseButtonMiddle" value="2"/>
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
-			</param>			<param name="CompSystem.ClickCount"
-                   descriptionKey="CompSystem.ClickCount.descr" >				<type>java.lang.Integer</type>				<defaultValue>1</defaultValue>			</param>
+			</param>
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
 		</action>
 		<action name="CompSystem.DragByValue">
 			<method>rcDragValue</method>
@@ -1039,7 +1068,29 @@
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
-		</action>		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>
+		</action>
+		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">
+            <method>rcCheckPropertyAtMousePosition</method>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.PropertyValue"
+                   descriptionKey="CompSystem.PropertyValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+        </action>
 	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.Label">
@@ -1810,7 +1861,8 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
-		</action>  
+		</action>
+  
 		<action name="CompSystem.ReadTableCellValueNew">
 			<method>rcReadValue</method>
 			<param name="CompSystem.Variable"
@@ -2240,9 +2292,91 @@
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
-		</action>				<action name="CompSystem.VerifyCheckboxInSelectedRow">			<method>rcVerifyCheckboxInSelectedRow</method>			<param name="CompSystem.Checked"
-                   descriptionKey="CompSystem.Checked.descr" >				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.VerifyCheckboxOfRowAtMousePosition">			<method>rcVerifyCheckboxInRowAtMousePosition</method>			<param name="CompSystem.Checked"
-                   descriptionKey="CompSystem.Checked.descr" >				<type>java.lang.Boolean</type>				<defaultValue>true</defaultValue>				<valueSet>					<element name="CompSystem.True" value="true"/>					<element name="CompSystem.False" value="false"/>				</valueSet>			</param>		</action>				<action name="CompSystem.ToggleCheckboxInSelectedRow">			<method>rcToggleCheckboxInSelectedRow</method>		</action>				<action name="CompSystem.ToggleCheckboxOfRowAtMousePosition">			<method>rcToggleCheckboxInRowAtMousePosition</method>		</action>		        <action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>        <action name="CompSystem.CheckExistenceOfColumn" since="4.0">            <method>rcCheckExistenceOfColumn</method>            <param name="CompSystem.Column"                   descriptionKey="CompSystem.Column.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.ColumnOperator"                   descriptionKey="CompSystem.ColumnOperator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>            <param name="CompSystem.Exists"                   descriptionKey="CompSystem.Exists.descr" >                <type>java.lang.Boolean</type>                <defaultValue>true</defaultValue>                <valueSet>                    <element name="CompSystem.True" value="true"/>                    <element name="CompSystem.False" value="false"/>                </valueSet>            </param>        </action>   		
+		</action>
+		
+		<action name="CompSystem.VerifyCheckboxInSelectedRow">
+			<method>rcVerifyCheckboxInSelectedRow</method>
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		
+		<action name="CompSystem.VerifyCheckboxOfRowAtMousePosition">
+			<method>rcVerifyCheckboxInRowAtMousePosition</method>
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+		</action>
+		
+		<action name="CompSystem.ToggleCheckboxInSelectedRow">
+			<method>rcToggleCheckboxInSelectedRow</method>
+		</action>
+		
+		<action name="CompSystem.ToggleCheckboxOfRowAtMousePosition">
+			<method>rcToggleCheckboxInRowAtMousePosition</method>
+		</action>
+		
+        <action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">
+            <method>rcCheckPropertyAtMousePosition</method>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.PropertyValue"
+                   descriptionKey="CompSystem.PropertyValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+        </action>
+        <action name="CompSystem.CheckExistenceOfColumn" since="4.0">
+            <method>rcCheckExistenceOfColumn</method>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Exists"
+                   descriptionKey="CompSystem.Exists.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>true</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+        </action>   		
 	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.TextComponent">
@@ -2836,9 +2970,284 @@
 				<type>guidancer.datatype.Variable</type>
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
-		</action>		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>
+		</action>
+		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">
+            <method>rcCheckPropertyAtMousePosition</method>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.PropertyValue"
+                   descriptionKey="CompSystem.PropertyValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+        </action>
 	</concreteComponent>
 
-	<concreteComponent type="guidancer.concrete.Tooltip" hasDefaultMapping="true" since="4.0">        <action name="CompSystem.CheckTooltipText">            <method>rcCheckTooltipText</method>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>            <param name="CompSystem.Text"                   descriptionKey="CompSystem.Text.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>    </concreteComponent>
-		<concreteComponent type="guidancer.concrete.JavaReflection" 	                   hasDefaultMapping="true"	                   descriptionKey="guidancer.concrete.JavaReflection.descr" since="4.0">        <action name="CompSystem.InvokeMethodStoreReturn" since="4.0">            <method>rcInvokeMethodStoreReturn</method>            <param name="CompSystem.Variable"                   descriptionKey="CompSystem.Variable.descr" >                <type>guidancer.datatype.Variable</type>            </param>            <param name="CompSystem.FQCN"                   descriptionKey="CompSystem.FQCN.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodName"                   descriptionKey="CompSystem.MethodName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodSignature"                   descriptionKey="CompSystem.MethodSignature.descr"                    optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodArgs"                   descriptionKey="CompSystem.Args.descr"                    optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodArgsSplit"                   descriptionKey="CompSystem.ArgsSplit.descr"                    optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>        </action>        <action name="CompSystem.InvokeMethod" since="4.0">            <method>rcInvokeMethod</method>            <param name="CompSystem.FQCN"                    descriptionKey="CompSystem.FQCN.descr">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodName"                   descriptionKey="CompSystem.MethodName.descr">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodSignature"                   descriptionKey="CompSystem.MethodSignature.descr"                    optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodArgs"                    descriptionKey="CompSystem.Args.descr"                   optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodArgsSplit"                    descriptionKey="CompSystem.ArgsSplit.descr"                   optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>        </action>    </concreteComponent>        <concreteComponent type="guidancer.concrete.os.component"                       descriptionKey="guidancer.concrete.os.component.descr"                      hasDefaultMapping="true"                      since="4.0">    <action name="CompSystem.ExecuteCommand"            descriptionKey="CompSystem.ExecuteCommand.descr">            <method>rcExec</method>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>5000</defaultValue>            </param>            <param name="CompSystem.Dir"                   descriptionKey="CompSystem.Dir.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Executable"                   descriptionKey="CompSystem.Executable.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.rawArgs"                   descriptionKey="CompSystem.rawArgs.descr"                    optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.rawArgs.splitChar"                   descriptionKey="CompSystem.rawArgs.splitChar.descr"                    optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.ExpectedExitCode"                   descriptionKey="CompSystem.ExpectedExitCode.descr" >                <type>java.lang.Integer</type>                <defaultValue>0</defaultValue>            </param>            <param name="CompSystem.env"                   descriptionKey="CompSystem.env.descr" >                <type>java.lang.String</type>                <defaultValue>AUT</defaultValue>                <valueSet>                    <element name="CompSystem.AUT" value="AUT"/>                    <element name="CompSystem.ITE" value="ITE"/>                </valueSet>            </param>            <param name="CompSystem.OutputEncoding"                   descriptionKey="CompSystem.OutputEncoding.descr" >                <type>java.lang.String</type>                <defaultValue>UTF-8</defaultValue>            </param>            <param name="CompSystem.NewEnvironment"                   descriptionKey="CompSystem.NewEnvironment.descr" >                <type>java.lang.Boolean</type>                <defaultValue>false</defaultValue>            </param>            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$CommandExecCmd</postExecutionCommand>            </action>    <action name="CompSystem.ExecuteExecutable"            descriptionKey="CompSystem.ExecuteExecutable.descr">            <method>rcExec</method>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>5000</defaultValue>            </param>            <param name="CompSystem.Dir"                   descriptionKey="CompSystem.Dir.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Executable"                   descriptionKey="CompSystem.Executable.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.rawArgs"                   descriptionKey="CompSystem.rawArgs.descr"                     optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.rawArgs.splitChar"                   descriptionKey="CompSystem.rawArgs.splitChar.descr"                     optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.ExpectedExitCode"                   descriptionKey="CompSystem.ExpectedExitCode.descr" >                <type>java.lang.Integer</type>                <defaultValue>0</defaultValue>            </param>            <param name="CompSystem.OutputEncoding"                   descriptionKey="CompSystem.OutputEncoding.descr" >                <type>java.lang.String</type>                <defaultValue>UTF-8</defaultValue>            </param>            <param name="CompSystem.NewEnvironment"                   descriptionKey="CompSystem.NewEnvironment.descr" >                <type>java.lang.Boolean</type>                <defaultValue>false</defaultValue>            </param>        </action>    </concreteComponent>        <concreteComponent type="guidancer.concrete.Slider" since="4.0">        <realizes>guidancer.abstract.Widget</realizes>        <action name="CompSystem.VerifyPosition">            <method>rcVerifyPosition</method>            <param name="CompSystem.Position"                   descriptionKey="CompSystem.Position.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>            <param name="CompSystem.Measure"                   descriptionKey="CompSystem.Measure.descr" >                <type>java.lang.String</type>                <defaultValue>value</defaultValue>                <valueSet>                    <element name="CompSystem.Percent" value="percent"/>                    <element name="CompSystem.Value" value="value"/>                </valueSet>            </param>        </action>        <action name="CompSystem.SelectPosition">            <method>rcSelectPosition</method>            <param name="CompSystem.Position"                   descriptionKey="CompSystem.Position.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>            <param name="CompSystem.Measure"                   descriptionKey="CompSystem.Measure.descr" >                <type>java.lang.String</type>                <defaultValue>value</defaultValue>                <valueSet>                    <element name="CompSystem.Percent" value="percent"/>                    <element name="CompSystem.Value" value="value"/>                </valueSet>            </param>        </action>    </concreteComponent>
+	<concreteComponent type="guidancer.concrete.Tooltip" hasDefaultMapping="true" since="4.0">
+        <action name="CompSystem.CheckTooltipText">
+            <method>rcCheckTooltipText</method>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+            <param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+        </action>
+    </concreteComponent>
+	
+	<concreteComponent type="guidancer.concrete.JavaReflection" 
+	                   hasDefaultMapping="true"
+	                   descriptionKey="guidancer.concrete.JavaReflection.descr" since="4.0">
+        <action name="CompSystem.InvokeMethodStoreReturn" since="4.0">
+            <method>rcInvokeMethodStoreReturn</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <param name="CompSystem.FQCN"
+                   descriptionKey="CompSystem.FQCN.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodName"
+                   descriptionKey="CompSystem.MethodName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodSignature"
+                   descriptionKey="CompSystem.MethodSignature.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgs"
+                   descriptionKey="CompSystem.Args.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgsSplit"
+                   descriptionKey="CompSystem.ArgsSplit.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>
+        </action>
+        <action name="CompSystem.InvokeMethod" since="4.0">
+            <method>rcInvokeMethod</method>
+            <param name="CompSystem.FQCN" 
+                   descriptionKey="CompSystem.FQCN.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodName"
+                   descriptionKey="CompSystem.MethodName.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodSignature"
+                   descriptionKey="CompSystem.MethodSignature.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgs" 
+                   descriptionKey="CompSystem.Args.descr"
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgsSplit" 
+                   descriptionKey="CompSystem.ArgsSplit.descr"
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+        </action>
+    </concreteComponent>
+    
+    <concreteComponent type="guidancer.concrete.os.component" 
+                      descriptionKey="guidancer.concrete.os.component.descr"
+                      hasDefaultMapping="true"
+                      since="4.0">
+    <action name="CompSystem.ExecuteCommand"
+            descriptionKey="CompSystem.ExecuteCommand.descr">
+            <method>rcExec</method>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>5000</defaultValue>
+            </param>
+            <param name="CompSystem.Dir"
+                   descriptionKey="CompSystem.Dir.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Executable"
+                   descriptionKey="CompSystem.Executable.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.rawArgs"
+                   descriptionKey="CompSystem.rawArgs.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.rawArgs.splitChar"
+                   descriptionKey="CompSystem.rawArgs.splitChar.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ExpectedExitCode"
+                   descriptionKey="CompSystem.ExpectedExitCode.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+            <param name="CompSystem.env"
+                   descriptionKey="CompSystem.env.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>AUT</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.AUT" value="AUT"/>
+                    <element name="CompSystem.ITE" value="ITE"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.OutputEncoding"
+                   descriptionKey="CompSystem.OutputEncoding.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>UTF-8</defaultValue>
+            </param>
+            <param name="CompSystem.NewEnvironment"
+                   descriptionKey="CompSystem.NewEnvironment.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>false</defaultValue>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$CommandExecCmd</postExecutionCommand>    
+        </action>
+    <action name="CompSystem.ExecuteExecutable"
+            descriptionKey="CompSystem.ExecuteExecutable.descr">
+            <method>rcExec</method>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>5000</defaultValue>
+            </param>
+            <param name="CompSystem.Dir"
+                   descriptionKey="CompSystem.Dir.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Executable"
+                   descriptionKey="CompSystem.Executable.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.rawArgs"
+                   descriptionKey="CompSystem.rawArgs.descr"  
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.rawArgs.splitChar"
+                   descriptionKey="CompSystem.rawArgs.splitChar.descr"  
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ExpectedExitCode"
+                   descriptionKey="CompSystem.ExpectedExitCode.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+            <param name="CompSystem.OutputEncoding"
+                   descriptionKey="CompSystem.OutputEncoding.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>UTF-8</defaultValue>
+            </param>
+            <param name="CompSystem.NewEnvironment"
+                   descriptionKey="CompSystem.NewEnvironment.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>false</defaultValue>
+            </param>
+        </action>
+    </concreteComponent>
+    
+    <concreteComponent type="guidancer.concrete.Slider" since="4.0">
+        <realizes>guidancer.abstract.Widget</realizes>
+        <action name="CompSystem.VerifyPosition">
+            <method>rcVerifyPosition</method>
+            <param name="CompSystem.Position"
+                   descriptionKey="CompSystem.Position.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Measure"
+                   descriptionKey="CompSystem.Measure.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>value</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Percent" value="percent"/>
+                    <element name="CompSystem.Value" value="value"/>
+                </valueSet>
+            </param>
+        </action>
+        <action name="CompSystem.SelectPosition">
+            <method>rcSelectPosition</method>
+            <param name="CompSystem.Position"
+                   descriptionKey="CompSystem.Position.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Measure"
+                   descriptionKey="CompSystem.Measure.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>value</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Percent" value="percent"/>
+                    <element name="CompSystem.Value" value="value"/>
+                </valueSet>
+            </param>
+        </action>
+    </concreteComponent>
 </compSystem>

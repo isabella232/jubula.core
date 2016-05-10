@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1"?><!--
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
     Copyright (c) 2004, 2010 BREDEX GmbH.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
@@ -6,7 +7,8 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 <compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
-	<configVersion>		<majorVersion>4</majorVersion>
+	<configVersion>
+		<majorVersion>4</majorVersion>
 		<minorVersion>0</minorVersion>
 	</configVersion>
 	
@@ -43,7 +45,12 @@
 					<element name="CompSystem.True" value="true"/>
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
-			</param>			<param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >				<type>java.lang.Integer</type>				<defaultValue>0</defaultValue>			</param>
+			</param>
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
 		</action>
 		<action name="CompSystem.VerifyEnabled">
 			<method>rcVerifyEnabled</method>
@@ -78,9 +85,19 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
-		</action>		<action name="CompSystem.StorePropertyValue">			<method>rcStorePropertyValue</method>			<param name="CompSystem.Variable"
-                   descriptionKey="CompSystem.Variable.descr" >				<type>guidancer.datatype.Variable</type>			</param>			<param name="CompSystem.PropertyName"
-                   descriptionKey="CompSystem.PropertyName.descr" >				<type>java.lang.String</type>			</param>			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>		</action>
+		</action>
+		<action name="CompSystem.StorePropertyValue">
+			<method>rcStorePropertyValue</method>
+			<param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+				<type>guidancer.datatype.Variable</type>
+			</param>
+			<param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+				<type>java.lang.String</type>
+			</param>
+			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>
+		</action>
 		<action name="CompSystem.VerifyFocus">
 			<method>rcVerifyFocus</method>
 			<param name="CompSystem.HasFocus"
@@ -953,7 +970,76 @@
 				<type>java.lang.Integer</type>
 				<defaultValue>100</defaultValue>
 			</param>
-		</action>		<action name="CompSystem.InvokeMethodStoreReturn"		        descriptionKey="CompSystem.InvokeMethodStoreReturn.descr" since="4.0">            <method>rcInvokeMethodStoreReturn</method>            <param name="CompSystem.Variable"                   descriptionKey="CompSystem.Variable.descr" >                <type>guidancer.datatype.Variable</type>            </param>            <param name="CompSystem.FQCN"                    descriptionKey="CompSystem.FQCN.descr">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodName"                   descriptionKey="CompSystem.MethodName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodSignature"                   descriptionKey="CompSystem.MethodSignature.descr"                   optional="true" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodArgs"                   descriptionKey="CompSystem.Args.descr"                   optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.MethodArgsSplit"                   descriptionKey="CompSystem.ArgsSplit.descr"                   optional="true">                <type>java.lang.String</type>            </param>            <param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>        </action>		<action name="CompSystem.InvokeMethod"		        descriptionKey="CompSystem.InvokeMethod.descr" since="4.0">			<method>rcInvokeMethod</method>			<param name="CompSystem.FQCN"                    descriptionKey="CompSystem.FQCN.descr">                <type>java.lang.String</type>            </param>			<param name="CompSystem.MethodName"			       descriptionKey="CompSystem.MethodName.descr">				<type>java.lang.String</type>			</param>			<param name="CompSystem.MethodSignature"			       descriptionKey="CompSystem.MethodSignature.descr"                   optional="true">				<type>java.lang.String</type>			</param>			<param name="CompSystem.MethodArgs" 			       descriptionKey="CompSystem.Args.descr"                   optional="true">				<type>java.lang.String</type>			</param>			<param name="CompSystem.MethodArgsSplit" 			       descriptionKey="CompSystem.ArgsSplit.descr"                   optional="true">				<type>java.lang.String</type>			</param>			<param name="CompSystem.Timeout"                   descriptionKey="CompSystem.Timeout.descr" >                <type>java.lang.Integer</type>                <defaultValue>3000</defaultValue>            </param>		</action>
+		</action>
+		<action name="CompSystem.InvokeMethodStoreReturn"
+		        descriptionKey="CompSystem.InvokeMethodStoreReturn.descr" since="4.0">
+            <method>rcInvokeMethodStoreReturn</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <param name="CompSystem.FQCN" 
+                   descriptionKey="CompSystem.FQCN.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodName"
+                   descriptionKey="CompSystem.MethodName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodSignature"
+                   descriptionKey="CompSystem.MethodSignature.descr"
+                   optional="true" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgs"
+                   descriptionKey="CompSystem.Args.descr"
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgsSplit"
+                   descriptionKey="CompSystem.ArgsSplit.descr"
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>
+        </action>
+		<action name="CompSystem.InvokeMethod"
+		        descriptionKey="CompSystem.InvokeMethod.descr" since="4.0">
+			<method>rcInvokeMethod</method>
+			<param name="CompSystem.FQCN" 
+                   descriptionKey="CompSystem.FQCN.descr">
+                <type>java.lang.String</type>
+            </param>
+			<param name="CompSystem.MethodName"
+			       descriptionKey="CompSystem.MethodName.descr">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.MethodSignature"
+			       descriptionKey="CompSystem.MethodSignature.descr"
+                   optional="true">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.MethodArgs" 
+			       descriptionKey="CompSystem.Args.descr"
+                   optional="true">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.MethodArgsSplit" 
+			       descriptionKey="CompSystem.ArgsSplit.descr"
+                   optional="true">
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+		</action>
 	</abstractComponent>
 	
 	<abstractComponent type="guidancer.abstract.TextInputSupport">

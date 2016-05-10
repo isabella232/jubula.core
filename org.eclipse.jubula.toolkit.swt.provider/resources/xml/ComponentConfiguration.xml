@@ -1,15 +1,18 @@
-<?xml version="1.0" encoding="ISO-8859-1"?><!--
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
     Copyright (c) 2004, 2010 BREDEX GmbH.
     All rights reserved. This program and the accompanying materials
     are made available under the terms of the Eclipse Public License v1.0
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">	<configVersion>
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
+	<configVersion>
 		<majorVersion>4</majorVersion>
 		<minorVersion>1</minorVersion>
 	</configVersion>
-    	<toolkitComponent type="org.eclipse.swt.widgets.ToolItem">
+    
+	<toolkitComponent type="org.eclipse.swt.widgets.ToolItem">
 		<realizes>guidancer.abstract.SwtItem</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.ToolItemTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.ToolItem" />
@@ -167,7 +170,14 @@
 				</valueSet>
 			</param>
 		</action>
-	</toolkitComponent>		<toolkitComponent        type="org.eclipse.jubula.SWTReflectionComponent" visible="false" hasDefaultMapping="true" since="4.0">        <realizes>guidancer.concrete.JavaReflection</realizes>        <testerClass>org.eclipse.jubula.rc.swt.tester.SwtReflectionTester</testerClass>        <componentClass name="org.eclipse.jubula.SWTReflectionComponent"></componentClass>    </toolkitComponent>
+	</toolkitComponent>
+	
+	<toolkitComponent
+        type="org.eclipse.jubula.SWTReflectionComponent" visible="false" hasDefaultMapping="true" since="4.0">
+        <realizes>guidancer.concrete.JavaReflection</realizes>
+        <testerClass>org.eclipse.jubula.rc.swt.tester.SwtReflectionTester</testerClass>
+        <componentClass name="org.eclipse.jubula.SWTReflectionComponent"></componentClass>
+    </toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Label" visible="false">
 		<realizes>guidancer.abstract.SwtLabel</realizes>
@@ -209,7 +219,13 @@
 		<realizes>guidancer.concrete.MenuBar</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.MenuTester</testerClass>
 		<componentClass name="com.bredexsw.guidancer.autswtserver.implclasses.MenuDefaultMapping" />
-	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.ToolTip" visible="false" hasDefaultMapping="true" supported="false">        <realizes>guidancer.concrete.Tooltip</realizes>        <testerClass>org.eclipse.jubula.rc.swt.tester.TooltipTester</testerClass>        <componentClass name="org.eclipse.swt.widgets.ToolTip" />    </toolkitComponent>
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.ToolTip" visible="false" hasDefaultMapping="true" supported="false">
+        <realizes>guidancer.concrete.Tooltip</realizes>
+        <testerClass>org.eclipse.jubula.rc.swt.tester.TooltipTester</testerClass>
+        <componentClass name="org.eclipse.swt.widgets.ToolTip" />
+    </toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Combo" visible="false">
 		<realizes>guidancer.abstract.SwtCombo</realizes>
@@ -386,13 +402,62 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
-		</action>        <action name="CompSystem.CheckPropertyAtMousePosition">            <method>rcCheckPropertyAtMousePosition</method>            <param name="CompSystem.PropertyName"                   descriptionKey="CompSystem.PropertyName.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.PropertyValue"                   descriptionKey="CompSystem.PropertyValue.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.Operator"                   descriptionKey="CompSystem.Operator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>        </action>  
+		</action>
+        <action name="CompSystem.CheckPropertyAtMousePosition">
+            <method>rcCheckPropertyAtMousePosition</method>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.PropertyValue"
+                   descriptionKey="CompSystem.PropertyValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+        </action>  
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
 		<realizes>org.eclipse.swt.widgets.Tree</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
-		<componentClass name="org.eclipse.swt.widgets.Tree" />		<action name="CompSystem.CheckExistenceOfColumn" since="4.0">            <method>rcCheckExistenceOfColumn</method>            <param name="CompSystem.Column"                   descriptionKey="CompSystem.Column.descr" >                <type>java.lang.String</type>            </param>            <param name="CompSystem.ColumnOperator"                   descriptionKey="CompSystem.ColumnOperator.descr" >                <type>java.lang.String</type>                <defaultValue>equals</defaultValue>                <valueSet>                    <element name="CompSystem.Equals" value="equals"/>                    <element name="CompSystem.NotEquals" value="not equals"/>                    <element name="CompSystem.MatchesRegExp" value="matches"/>                    <element name="CompSystem.SimpleMatch" value="simple match"/>                </valueSet>            </param>            <param name="CompSystem.Exists"                   descriptionKey="CompSystem.Exists.descr" >                <type>java.lang.Boolean</type>                <defaultValue>true</defaultValue>                <valueSet>                    <element name="CompSystem.True" value="true"/>                    <element name="CompSystem.False" value="false"/>                </valueSet>            </param>        </action>
+		<componentClass name="org.eclipse.swt.widgets.Tree" />
+		<action name="CompSystem.CheckExistenceOfColumn" since="4.0">
+            <method>rcCheckExistenceOfColumn</method>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Exists"
+                   descriptionKey="CompSystem.Exists.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>true</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+        </action>
 		<action name="CompSystem.SelectByTextPathAtColumn">
 			<method>rcSelect</method>
 			<param name="CompSystem.PathType"
@@ -535,4 +600,55 @@
 	<abstractComponent type="guidancer.abstract.SwtButton" visible="false">
 		<realizes>guidancer.concrete.Button</realizes>
 	</abstractComponent>
-		<toolkitComponent type="org.eclipse.swt.widgets.DateTime" visible="false">		<realizes>guidancer.abstract.Widget</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>		<componentClass name="org.eclipse.swt.widgets.DateTime" />	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.Scale" visible="false">		<realizes>guidancer.abstract.Widget</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>		<componentClass name="org.eclipse.swt.widgets.Scale" />	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.Slider" visible="false" since="4.0">		<realizes>guidancer.concrete.Slider</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.SliderTester</testerClass>		<componentClass name="org.eclipse.swt.widgets.Slider" />	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.Spinner" visible="false">		<realizes>guidancer.abstract.Widget</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>		<componentClass name="org.eclipse.swt.widgets.Spinner" />	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.Link" visible="false">		<realizes>guidancer.abstract.Widget</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>		<componentClass name="org.eclipse.swt.widgets.Link" />	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.ProgressBar" visible="false">		<realizes>guidancer.abstract.Widget</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>		<componentClass name="org.eclipse.swt.widgets.ProgressBar" />	</toolkitComponent>		<toolkitComponent type="org.eclipse.swt.widgets.Canvas" visible="false">		<realizes>guidancer.abstract.Widget</realizes>		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>		<componentClass name="org.eclipse.swt.widgets.Canvas" />	</toolkitComponent>        <toolkitComponent type="org.eclipse.jubula.swt.os.component"                       visible="false"                       hasDefaultMapping="true"                       since="4.0">        <realizes>guidancer.concrete.os.component</realizes>        <testerClass>org.eclipse.jubula.rc.common.tester.OperatingSystemTester</testerClass>        <componentClass name="org.eclipse.jubula.swt.os.component" />    </toolkitComponent></compSystem>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.DateTime" visible="false">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.DateTime" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Scale" visible="false">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Scale" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Slider" visible="false" since="4.0">
+		<realizes>guidancer.concrete.Slider</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.SliderTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Slider" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Spinner" visible="false">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Spinner" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Link" visible="false">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Link" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.ProgressBar" visible="false">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.ProgressBar" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.Canvas" visible="false">
+		<realizes>guidancer.abstract.Widget</realizes>
+		<testerClass>org.eclipse.jubula.rc.common.tester.WidgetTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Canvas" />
+	</toolkitComponent>
+    
+    <toolkitComponent type="org.eclipse.jubula.swt.os.component" 
+                      visible="false" 
+                      hasDefaultMapping="true" 
+                      since="4.0">
+        <realizes>guidancer.concrete.os.component</realizes>
+        <testerClass>org.eclipse.jubula.rc.common.tester.OperatingSystemTester</testerClass>
+        <componentClass name="org.eclipse.jubula.swt.os.component" />
+    </toolkitComponent>
+</compSystem>
