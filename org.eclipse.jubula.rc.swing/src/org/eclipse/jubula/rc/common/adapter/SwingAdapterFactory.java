@@ -15,6 +15,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuBar;
@@ -64,7 +65,8 @@ public class SwingAdapterFactory implements IAdapterFactory {
         JCheckBox.class, JRadioButton.class, JTable.class,
         JPopupMenu.class, JSlider.class,
         JList.class, JTextComponent.class, JComboBox.class,
-        JLabel.class, JTabbedPane.class, JProgressBar.class };
+        JLabel.class, JTabbedPane.class, JProgressBar.class,
+        JComponent.class};
    
     /** {@inheritDoc} */
     public Class[] getSupportedClasses() {
@@ -109,7 +111,10 @@ public class SwingAdapterFactory implements IAdapterFactory {
                 returnvalue = new AbstractButtonAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof JProgressBar) {
                 returnvalue = new JComponentAdapter(objectToAdapt);
-            }
+            // FALLBACK! Leave at the end
+            } else if (objectToAdapt instanceof JComponent) {
+                returnvalue = new JComponentAdapter(objectToAdapt);
+            } 
             
             return returnvalue;
         }

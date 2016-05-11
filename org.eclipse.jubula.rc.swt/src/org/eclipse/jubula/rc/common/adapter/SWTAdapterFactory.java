@@ -17,6 +17,7 @@ import org.eclipse.jubula.rc.swt.tester.adapter.CComboAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.CLabelAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.CTabFolderAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.ComboAdapter;
+import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.LabelAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.ListAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.MenuAdapter;
@@ -28,7 +29,6 @@ import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.ToolItemAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TreeAdapter;
-import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.custom.CTabFolder;
@@ -36,6 +36,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -66,7 +67,7 @@ public class SWTAdapterFactory implements IAdapterFactory {
                 Combo.class, CCombo.class, Label.class, CLabel.class, 
                 TabFolder.class, CTabFolder.class, ToolItem.class,
                 DateTime.class, Scale.class, Slider.class, Spinner.class,
-                Link.class, ProgressBar.class, Canvas.class };
+                Link.class, ProgressBar.class, Canvas.class, Control.class };
     
     
     /**
@@ -125,6 +126,9 @@ public class SWTAdapterFactory implements IAdapterFactory {
             } else if (objectToAdapt instanceof ProgressBar) {
                 returnvalue = new ControlAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof Canvas) {
+                returnvalue = new ControlAdapter(objectToAdapt);
+            // FALLBACK! Leave at the end
+            } else if (objectToAdapt instanceof Control) {
                 returnvalue = new ControlAdapter(objectToAdapt);
             }
             return returnvalue;
