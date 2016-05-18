@@ -439,9 +439,9 @@ public class AUTConnection extends BaseAUTConnection {
                 ToolkitDescriptor toolkitDescriptor =
                         ToolkitSupportBP.getToolkitDescriptor(autToolkitId);
                 String supportedClasses = connectedAut.getPropertyMap().get(
-                        "SimpleExtensions");
+                        "SimpleExtensions"); //$NON-NLS-1$
                 compSystem.addSimpleExtensions(supportedClasses != null
-                            ? Arrays.asList(supportedClasses.split(","))
+                            ? Arrays.asList(supportedClasses.split(",")) //$NON-NLS-1$
                             : new ArrayList<String>(),
                         toolkitDescriptor);
             } catch (ToolkitPluginException e) {
