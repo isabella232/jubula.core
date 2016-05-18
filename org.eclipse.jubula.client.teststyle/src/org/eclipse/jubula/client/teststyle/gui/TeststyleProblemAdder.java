@@ -15,9 +15,9 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -37,7 +37,6 @@ public class TeststyleProblemAdder
     /** {@inheritDoc} */
     public boolean operate(ITreeTraverserContext<INodePO> ctx, INodePO parent,
             INodePO node, boolean alreadyVisited) {
-        
         clearNodeFromTeststyleProblem(node);
 
         for (BaseCheck chk : ProblemCont.instance.getChecksFor(node)) {
@@ -52,6 +51,7 @@ public class TeststyleProblemAdder
             IExecTestCasePO execTestCase = (IExecTestCasePO) node;
             handleExecTestCase(execTestCase);
         }
+        
         return true;
     }
 
@@ -74,10 +74,29 @@ public class TeststyleProblemAdder
      */
     private void handleExecTestCase(IExecTestCasePO execTestCase) {
         ISpecTestCasePO specTestCase = execTestCase.getSpecTestCase();
-        int worstSeverity =
-                getWorstSeverity(ProblemCont.instance.getChecksFor(
-                        specTestCase));
-        ProblemPropagator.setProblem(execTestCase, worstSeverity);
+        int worstSeverity = getWorstSeverity(
+                ProblemCont.instance.getChecksFor(specTestCase));
+        IProblem problem;
+        Status status = null;
+        switch (worstSeverity) {
+           
+            case IStatus.ERROR:
+                status = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                        Messages.TooltipErrorInChildren);
+                break;
+            case IStatus.WARNING:
+                status = new Status(IStatus.WARNING, Activator.PLUGIN_ID,
+                        Messages.TooltipErrorInChildren);
+                break;
+            case IStatus.INFO:
+            default:
+                break;
+        }
+        
+        if (status != null) {
+            problem = ProblemFactory.createProblem(status);
+            execTestCase.addProblem(problem);
+        }
     }
     
     /**

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -17,9 +20,11 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -90,9 +95,7 @@ public enum ProblemPropagator {
             int status = IStatus.OK;
             try {
                 TreeTraverser treeTraverser = new TreeTraverser(m_project,
-                        new ProblemCleanupOperation(), false, true);
-                treeTraverser.addOperation(
-                        new ProblemPropagationOperation());
+                        new ProblemPropagationOperation(), false, true);
                 treeTraverser.setMonitor(monitor);
                 treeTraverser.traverse(true);
                 
@@ -118,14 +121,28 @@ public enum ProblemPropagator {
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
             INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (alreadyVisited) {
-                return false;
+         
+            if (node instanceof IExecTestCasePO) {
+                
+                Set<IProblem> copy = new HashSet<IProblem>(node.getProblems());
+                for (IProblem problem : copy) {
+
+                    if (!problem.getStatus().getPlugin()
+                            .contains("teststyle")) { //$NON-NLS-1$
+                        node.removeProblem(problem);
+                    }
+                }
+
+                return true;
             }
+            
             boolean hasHadProblems = false;
+            
             hasHadProblems |= node.removeProblem(
                     ProblemFactory.ERROR_IN_CHILD);
             hasHadProblems |= node.removeProblem(
                     ProblemFactory.WARNING_IN_CHILD);
+            
             return hasHadProblems;
         }
     }
