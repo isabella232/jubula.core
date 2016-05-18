@@ -18,13 +18,6 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javafx.event.EventTarget;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.MenuItem;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
@@ -38,6 +31,12 @@ import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+
+import javafx.event.EventTarget;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.MenuItem;
+import javafx.stage.Window;
 
 /**
  * This class holds a hierarchy of the components of the AUT. <br>
@@ -435,11 +434,11 @@ public class AUTJavaFXHierarchy extends AUTHierarchy<EventTarget> {
         // Because stages don't have a list of children we can't include the
         // relationship between stages in the hierarchy. Therefore this
         // workaround is necessary to create a unique name for a stage container.
-        if (realComponent instanceof Stage) {
-            List<Stage> stages = CurrentStages.getStageList();
+        if (realComponent instanceof Window) {
+            List<Window> windows = CurrentStages.getStageList();
             ArrayList<String> names = new ArrayList<>();
-            for (Stage stage : stages) {
-                JavaFXHierarchyContainer c = getHierarchyContainer(stage);
+            for (Window win : windows) {
+                JavaFXHierarchyContainer c = getHierarchyContainer(win);
                 if (c != null && c != hierarchyContainer) {
                     names.add(c.getName());
                 }

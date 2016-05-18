@@ -13,22 +13,22 @@ package org.eclipse.jubula.rc.javafx.listener;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
-import javafx.scene.Node;
-import javafx.stage.Stage;
-
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.HighlightNode;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
+import javafx.scene.Node;
+import javafx.stage.Window;
 
 /**
  * @author BREDEX GmbH
  * @created 15.10.2013
  */
 public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
-    ListChangeListener<Stage> {
+    ListChangeListener<Window> {
 
     /** The current Node **/
     private Node m_currentNode;
@@ -92,7 +92,7 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
      * @param s
      *            the Stage
      */
-    public abstract void addHandler(Stage s);
+    public abstract void addHandler(Window s);
 
     /**
      * Removes a <code>MouseHandler</code> from the given stage
@@ -100,7 +100,7 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
      * @param s
      *            the Stage
      */
-    public abstract void removeHandler(Stage s);
+    public abstract void removeHandler(Window s);
         
     @Override
     public void cleanUp() {
@@ -138,15 +138,15 @@ public abstract class AbstractFXAUTEventHandler implements AUTEventListener,
     }
     
     @Override
-    public void onChanged(ListChangeListener.Change<? extends Stage> change) {
+    public void onChanged(ListChangeListener.Change<? extends Window> change) {
         change.next();
-        List<? extends Stage> changedStages = change.getAddedSubList();
-        for (final Stage stage : changedStages) {
-            addHandler(stage);
+        List<? extends Window> changedWindows = change.getAddedSubList();
+        for (final Window win : changedWindows) {
+            addHandler(win);
         }
-        changedStages = change.getRemoved();
-        for (final Stage stage : changedStages) {
-            removeHandler(stage);
+        changedWindows = change.getRemoved();
+        for (final Window win : changedWindows) {
+            removeHandler(win);
         }
     }
 }

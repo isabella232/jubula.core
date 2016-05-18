@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * The AutServer controlling the AUT. <br>
@@ -87,10 +88,10 @@ public class JavaFXAUTServer extends AUTServer {
      *            the handler
      */
     private void addToolkitEventListener(AbstractFXAUTEventHandler handler) {
-        List<? extends Stage> stages = 
-                ComponentHandler.getAssignableFrom(Stage.class);
-        for (final Stage stage : stages) {
-            handler.addHandler(stage);
+        List<? extends Window> windows = 
+                ComponentHandler.getAssignableFrom(Window.class);
+        for (final Window win : windows) {
+            handler.addHandler(win);
         }
         CurrentStages.addStagesListener(handler);
     }
