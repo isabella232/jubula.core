@@ -11,7 +11,9 @@
 package org.eclipse.jubula.client.archive.dto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -29,6 +31,8 @@ public class AutDTO {
     private boolean m_generateNames = false;
     /** */
     private List<String> m_autIds = new ArrayList<String>();
+    /** */
+    private Map<String, String> m_autProperties = new HashMap<String, String>();
     
     /**
      * @return autId
@@ -148,5 +152,21 @@ public class AutDTO {
      */
     public void addAutId(String autId) {
         this.m_autIds.add(autId);
+    }
+    
+    /**
+     * @return AUT properties map
+     */
+    @JsonProperty("autProperties")
+    public Map<String, String> getPropertyMap() {
+        return m_autProperties;
+    }
+
+    /**
+     * @param key key
+     * @param value value
+     */
+    public void addToPropertyMap(String key, String value) {
+        m_autProperties.put(key, value);
     }
 }

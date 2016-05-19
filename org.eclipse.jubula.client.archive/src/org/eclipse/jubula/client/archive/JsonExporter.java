@@ -417,6 +417,10 @@ public class JsonExporter {
                 return autConfig1.getName().compareTo(autConfig2.getName());
             }
         });
+        Map<String, String> propertyMap = po.getPropertyMap();
+        for (String key : po.getPropertyKeys()) {
+            autDTO.addToPropertyMap(key, propertyMap.get(key));
+        }
         for (IAUTConfigPO conf : sortedAutConfigs) {
             fillAUTConfig(autDTO, conf);
         }
