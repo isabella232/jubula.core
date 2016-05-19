@@ -912,7 +912,10 @@ public class JsonImporter {
         for (String autId : dto.getAutIds()) {
             aut.getAutIds().add(autId);
         }
-        
+        Map<String, String> propertyMap = dto.getPropertyMap();
+        for (String key : propertyMap.keySet()) {
+            aut.getPropertyMap().put(key, propertyMap.get(key));
+        }
         return aut;
     }
     
