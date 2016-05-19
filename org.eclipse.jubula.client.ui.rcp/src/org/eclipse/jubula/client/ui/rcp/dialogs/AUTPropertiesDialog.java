@@ -528,8 +528,13 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         
         while (props.hasNext()) {
             AutProperty prop = props.next();
-            if (prop.getName().isEmpty()) {
+            if (StringUtils.isEmpty(prop.getName())) {
                 setMessage(Messages.AUTPropertyNameIsEmpty,
+                        IMessageProvider.ERROR);
+                return true;
+            }
+            if (StringUtils.isEmpty(prop.getValue())) {
+                setMessage(Messages.AUTPropertyValueIsEmpty,
                         IMessageProvider.ERROR);
                 return true;
             }
@@ -1318,6 +1323,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
             AutProperty prop = (AutProperty) element;
             prop.setValue((String)value);
             getViewer().update(element, null);
+            checkForErrors();
         }
     }
 }
