@@ -114,6 +114,7 @@ public class Messages extends NLS {
     public static String AUTPropertyRemove;
     public static String AUTPropertyTitle;
     public static String AUTPropertyValue;
+    public static String AUTPropertyValueIsEmpty;
     public static String AUTPropertyPageAdd;
     public static String AUTPropertyPageAUTConfig;
     public static String AUTPropertyPageAUTList;
