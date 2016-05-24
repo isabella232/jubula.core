@@ -110,6 +110,10 @@ public class SysoRedirect extends IsAliveThread {
      * @return the content of the {@link StringBuffer}
      */
     public String getTruncatedLog() {
+        while (this.isAlive()) {
+            TimeUtil.delay(10);
+            // wait here
+        }
         if (m_removedLines) {
             return "..." + StringConstants.NEWLINE //$NON-NLS-1$
                     + m_stringBuffer.toString();

@@ -28,7 +28,12 @@ public class Messages extends NLS {
     public static String EventHandler;
     public static String ExecutionControllerAbort;
     public static String ExecutionControllerAUT;
+    public static String ExecutionControllerAUTIsPossiblyStarted;
     public static String ExecutionControllerAUTStart;
+    public static String ExecutionControllerAUTStartUnknownHost;
+    public static String ExecutionControllerAUTStartVersionConflict;
+    public static String ExecutionControllerAUTStartFailed;
+    public static String ExecutionControllerCouldNotConnectToAUTWithAutrun;
     public static String ExecutionControllerAUTConnectionEstablished;
     public static String ExecutionControllerAUTStartError;
     public static String ExecutionControllerAUTConnectionLost;
@@ -42,6 +47,7 @@ public class Messages extends NLS {
     public static String ExecutionControllerInvalidDBschemeError;
     public static String ExecutionControllerInvalidJarError;
     public static String ExecutionControllerInvalidJREError;
+    public static String ExecutionControllerInvalidJDKError;
     public static String ExecutionControllerInvalidMainError;
     public static String ExecutionControllerLoadingProject;
     public static String ExecutionControllerLogPathError;

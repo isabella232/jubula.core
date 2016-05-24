@@ -41,6 +41,7 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
@@ -139,16 +140,22 @@ public class AUTAgentImpl implements AUTAgent {
                         Thread.currentThread()));
                 m_agent.run();
                 if (!isConnected()) {
+                    printlnConsoleError("Could not connect to AUT-Agent: " //$NON-NLS-1$
+                                + m_hostname + ":" + m_port);
                     throw new CommunicationException(
                         new ConnectException(
                             "Could not connect to AUT-Agent: " //$NON-NLS-1$
                                 + m_hostname + ":" + m_port)); //$NON-NLS-1$
                 }
             } catch (ConnectionException e) {
+                printlnConsoleError("The connection to the AUTServer could not initialized."); //$NON-NLS-1$
                 throw new CommunicationException(e);
             } catch (AlreadyConnectedException e) {
+                printlnConsoleError("This connection is already connected"); //$NON-NLS-1$
                 throw new CommunicationException(e);
             } catch (JBVersionException e) {
+                printlnConsoleError("There is a version conflict between the client and " //$NON-NLS-1$
+                        + "the AUT agent."); //$NON-NLS-1$
                 log.error(e.getLocalizedMessage(), e);
                 throw new CommunicationException(e);
             }
@@ -205,12 +212,15 @@ public class AUTAgentImpl implements AUTAgent {
             log.error("Unexpected start response code received: " //$NON-NLS-1$
                 + String.valueOf(genericStartResponse));
         } catch (NotConnectedException e) {
+            printlnConsoleError(e.getLocalizedMessage());
             throw new CommunicationException(e);
         } catch (org.eclipse.jubula.tools.internal.
                 exception.CommunicationException e) {
+            printlnConsoleError(e.getLocalizedMessage());
             log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         } catch (InterruptedException e) {
+            printlnConsoleError(e.getLocalizedMessage());
             log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
         }
@@ -234,15 +244,77 @@ public class AUTAgentImpl implements AUTAgent {
                 }
                 log.error("Unexpected AUT identifier received: " //$NON-NLS-1$
                     + String.valueOf(autIdentifier));
+                if (autIdentifier instanceof Integer) {
+                    int autStartResponseCode = (Integer) autIdentifier;
+                    handleErrorResponse(autStartResponseCode);
+                }
+               
             } catch (InterruptedException e) {
                 log.error(e.getLocalizedMessage(), e);
                 throw new CommunicationException(e);
             }
+        } else {
+            handleErrorResponse(startResponse);
         }
 
         return null;
     }
     
+    /**
+     * Process the AUT start error codes
+     * @param startResponse response code of the AUT start
+     */
+    private void handleErrorResponse(int startResponse) {
+        switch (startResponse) {
+            case AUTStartResponse.IO:
+                printlnConsoleError("No Java found");
+                break;
+            case AUTStartResponse.DATA:
+            case AUTStartResponse.EXECUTION:
+            case AUTStartResponse.SECURITY:
+            case AUTStartResponse.ERROR:
+            case AUTStartResponse.COMMUNICATION:
+                printlnConsoleError("AUTServer could not start.");
+                break;
+            case AUTStartResponse.INVALID_ARGUMENTS:
+                printlnConsoleError("AUTServer could not start, "
+                        + " because parameters are invalid.");
+                break;
+            case AUTStartResponse.AUT_MAIN_NOT_DISTINCT_IN_JAR:
+                printlnConsoleError(
+                        "AUTServer could not start, because main is not distinct in jar."); //$NON-NLS-1$
+                break;
+            case AUTStartResponse.AUT_MAIN_NOT_FOUND_IN_JAR:
+                printlnConsoleError(
+                        "AUTServer could not start," 
+                        + " because no main class found in the jar.");
+                break;
+            case AUTStartResponse.NO_JAR_AS_CLASSPATH:
+            case AUTStartResponse.SCANNING_JAR_FAILED:
+                printlnConsoleError(
+                        "AUTServer could not start, " 
+                        + " because the given jar is invalid.");
+                break;
+            case AUTStartResponse.NO_SERVER_CLASS:
+                printlnConsoleError(
+                        "AUT server could not be instantiated");
+                break;
+            case AUTStartResponse.DOTNET_INSTALL_INVALID:
+                printlnConsoleError(
+                        "The .NET runtime is not properly installed");
+                break;
+            case AUTStartResponse.JDK_INVALID:
+                printlnConsoleError(
+                        "the JDK used by the AUT is probably older than 1.5,"
+                                + " or javaagent is unknown ");
+                break;
+            default:
+                break;
+        }
+        
+       
+        
+    }
 
     /** {@inheritDoc} */
     public void stopAUT(
@@ -317,5 +389,17 @@ public class AUTAgentImpl implements AUTAgent {
         if (!side.isConnected()) {
             throw new IllegalStateException("There is currently no connection established to the remote side - call connect() first!"); //$NON-NLS-1$
         }
+    }
+    
+
+    /**
+     * writes an output to console
+     * @param text
+     *      the message to log and println to sys.err
+     */
+    public static void printlnConsoleError(String text) {
+        System.err.println("An error ocurred: " + StringConstants.NEWLINE
+                + StringConstants.TAB
+                + text); 
     }
 }

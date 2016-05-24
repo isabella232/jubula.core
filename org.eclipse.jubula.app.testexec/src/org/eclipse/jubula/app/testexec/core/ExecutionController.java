@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.rmi.UnknownHostException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -80,6 +81,7 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
@@ -396,9 +398,21 @@ public class ExecutionController implements IAUTServerEventListener,
                 autAgentInstance.start(
                         port, false, Verbosity.QUIET, false);
                 return true;
-            } catch (Exception e) {
+            } catch (UnknownHostException uhe) {
+                LOG.error(uhe.getLocalizedMessage(), uhe);
+                sysErr(StringConstants.TAB + NLS.bind(
+                        Messages.ExecutionControllerAUTStartUnknownHost,
+                        uhe.getLocalizedMessage()));
+            } catch (JBVersionException e) {
                 LOG.error(e.getLocalizedMessage(), e);
-                return false;
+                sysErr(StringConstants.TAB + NLS.bind(
+                        Messages.ExecutionControllerAUTStartVersionConflict,
+                        e.getErrorMessagesString()));
+            } catch (IOException e) {
+                LOG.error(e.getLocalizedMessage(), e);
+                sysErr(StringConstants.TAB + NLS.bind(
+                        Messages.ExecutionControllerAUTStartFailed,
+                        e.getMessage()));
             }
         }
         return false;
@@ -591,12 +605,15 @@ public class ExecutionController implements IAUTServerEventListener,
                                 aut.getName(), autConf.getName())));
                 clientTest.startAut(aut, autConf);
                 m_startedAutId = autToStart;
+           
                 while (!asl.autStarted() && !asl.hasAutStartFailed()) {
                     TimeUtil.delay(500);
                 }
+                
                 waitExternalTime();
             }
         } else {
+            sysOut(Messages.ExecutionControllerAUTIsPossiblyStarted);
             // assume that the AUT has already been started via e.g. autrun
             m_idle = false;
             m_isFirstAutStart = false;
@@ -814,6 +831,10 @@ public class ExecutionController implements IAUTServerEventListener,
                 m_idle = false;
                 break;
             case AUTServerEvent.COMMUNICATION:
+                sysErr(event.toStringWithAdditionalInformation());
+                stopProcessing();
+                m_idle = false;
+                break;
             case AUTServerEvent.COULD_NOT_ACCEPTING:
                 sysErr(Messages.ExecutionControllerAUTStartError);
                 stopProcessing();
@@ -827,8 +848,10 @@ public class ExecutionController implements IAUTServerEventListener,
                 sysErr(Messages.ExecutionControllerDotNetInstallProblem);
                 stopProcessing();
                 m_idle = false;
+                break;       
+            case AUTServerEvent.JDK_INVALID:
+                sysErr(Messages.ExecutionControllerInvalidJDKError);
                 break;
-                
             default:
                 break;
         }
@@ -913,8 +936,19 @@ public class ExecutionController implements IAUTServerEventListener,
     public void stateChanged(TestExecutionEvent event) {
         Exception exception = event.getException();
         if (exception instanceof JBException) {
-            String errorMsg = exception.getMessage();
-            sysErr(errorMsg);
+            StringBuilder errorMsgBuilder = new StringBuilder(
+                    exception.getMessage());
+            if (((JBException) exception)
+                    .getErrorId() == MessageIDs.E_NO_AUT_CONNECTION_ERROR
+                    && m_job.getAutConfig() == null) {
+                errorMsgBuilder.append(StringConstants.NEWLINE);
+                errorMsgBuilder.append(StringConstants.TAB);
+                errorMsgBuilder.append(
+                        Messages.
+                            ExecutionControllerCouldNotConnectToAUTWithAutrun);
+            }
+
+            sysErr(errorMsgBuilder.toString());
             TestExecution.getInstance().stopExecution();
             stopProcessing();
         }

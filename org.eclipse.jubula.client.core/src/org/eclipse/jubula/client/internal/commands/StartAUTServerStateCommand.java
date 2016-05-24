@@ -77,8 +77,11 @@ public class StartAUTServerStateCommand implements APICommand {
                 log.error(Messages.AUTServerCouldNotStart 
                         + StringConstants.COLON + StringConstants.SPACE
                         + m_message.getDescription());
-                clientTest.fireAUTServerStateChanged(
-                        new AUTServerEvent(AUTServerEvent.COMMUNICATION));
+                clientTest.fireAUTServerStateChanged(new AUTServerEvent(
+                        AUTServerEvent.COMMUNICATION,
+                        Messages.AUTServerCouldNotStart + StringConstants.COLON
+                                + StringConstants.SPACE
+                                + m_message.getDescription()));
                 break;
             case AUTStartResponse.AUT_MAIN_NOT_DISTINCT_IN_JAR:
             case AUTStartResponse.AUT_MAIN_NOT_FOUND_IN_JAR:
@@ -117,7 +120,6 @@ public class StartAUTServerStateCommand implements APICommand {
                 clientTest.fireAUTServerStateChanged(
                     new AUTServerEvent(AUTServerEvent.JDK_INVALID));
                 break;
-                
             default:
                 log.error(Messages.UnknownState + StringConstants.SPACE  
                     + String.valueOf(state) 

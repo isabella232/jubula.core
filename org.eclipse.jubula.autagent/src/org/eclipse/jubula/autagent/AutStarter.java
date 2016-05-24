@@ -25,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.agent.AutAgent;
 import org.eclipse.jubula.autagent.remote.dialogs.ChooseCheckModeDialogBP;
 import org.eclipse.jubula.autagent.remote.dialogs.ObservationConsoleBP;
@@ -42,8 +43,8 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
-import org.eclipse.jubula.tools.internal.utils.SysoRedirect;
 import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
+import org.eclipse.jubula.tools.internal.utils.SysoRedirect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -445,7 +446,10 @@ public class AutStarter {
         private int m_autExitValue;
 
         /** used to pick up the 'Unrecognized option' error stream */
-        private String m_errorStream;
+        private String m_errorMessage;
+        
+        /** base error message of the process execution */
+        private String m_errorLog;
 
         /**
          * whether the server is expecting the AUT server to stop. Used for
@@ -482,8 +486,7 @@ public class AutStarter {
         private void handleStoppedAUTServer() {
             if (log.isInfoEnabled()) {
                 log.info("trying to send message with AUTServer exitcode '" //$NON-NLS-1$
-                        + String.valueOf(m_autExitValue)
-                        + "' to client"); //$NON-NLS-1$
+                        + String.valueOf(m_autExitValue) + "' to client"); //$NON-NLS-1$
             }
             StartAUTServerStateMessage message = null;
             ChooseCheckModeDialogBP.getInstance().closeDialog();
@@ -497,15 +500,13 @@ public class AutStarter {
                         AUTStartResponse.ERROR, "Error while starting AUT!"); //$NON-NLS-1$
                     break;
                 case AUTServerExitConstants.EXIT_INVALID_ARGS:
-                    if (m_isAgentSet && (m_errorStream != null)) {
+                    if (m_isAgentSet && (m_errorMessage != null)) {
                         message = new StartAUTServerStateMessage(
                             AUTStartResponse.JDK_INVALID,
                                 "JDK 1.5 or higher is required to start your AUT" + //$NON-NLS-1$
                                 " via executable file."); //$NON-NLS-1$
                     } else {
-                        message = new StartAUTServerStateMessage(
-                            AUTStartResponse.INVALID_ARGUMENTS,
-                                "invalid arguments"); //$NON-NLS-1$
+                        message = createInvalidArgumentMessage();
                     }
                     break;
                 case AUTServerExitConstants.EXIT_INVALID_NUMBER_OF_ARGS:
@@ -533,23 +534,70 @@ public class AutStarter {
                         AUTStartResponse.SECURITY,
                             "security violation"); //$NON-NLS-1$
                     break;
-                case AUTServerExitConstants.EXIT_AUT_NOT_FOUND:
-                case AUTServerExitConstants.EXIT_AUT_WRONG_CLASS_VERSION:
+                case AUTServerExitConstants.EXIT_AUT_NOT_FOUND:               
                 case AUTServerExitConstants.EXIT_MISSING_AGENT_INFO:
                     // do nothing : AUTServer sent already a message
+                    break;
+                case AUTServerExitConstants.EXIT_AUT_WRONG_CLASS_VERSION:
+                    message = new StartAUTServerStateMessage(
+                            AUTStartResponse.UNSUPPORTED_CLASS,
+                                "Java version is not supported."); 
                     break;
                 case AUTServerExitConstants.RESTART:
                     message = m_messenger.handleAutRestart();
                     break;
-                default:
-                    log.error("unknown AUTServer exit code: " //$NON-NLS-1$
-                            + m_autExitValue + "'"); //$NON-NLS-1$
+                case AUTServerExitConstants.AUT_START_ADDRESS_ALREADY_IN_USE:
                     message = new StartAUTServerStateMessage(
-                        AUTStartResponse.ERROR,
-                        "unknown AUTServer exit code: '" //$NON-NLS-1$
-                        + m_autExitValue + "'"); //$NON-NLS-1$
+                     AUTStartResponse.COMMUNICATION, "Address already in use");
+                    break;
+                default:
+                    message = handleGlobalError();
             }
+            appendErrorLog(message);
             m_messenger.sendStoppedAUTServerMessage(message);
+        }
+
+        /**
+         * Append the error log to the aut server state message, the
+         * error log is availabe
+         * @param message message to hold the error log
+         */
+        private void appendErrorLog(StartAUTServerStateMessage message) {
+            if (StringUtils.isNotBlank(m_errorLog)) {
+                StringBuilder builder = new StringBuilder(
+                        message.getDescription());
+                builder.append(StringConstants.NEWLINE);
+                builder.append(StringConstants.SPACE);
+                builder.append(m_errorLog);
+                message.setDescription(builder.toString());
+            }
+        }
+        
+        /**
+         * Create an aut server state message with the details of error
+         * @return message
+         */
+        private StartAUTServerStateMessage createInvalidArgumentMessage() {
+            StartAUTServerStateMessage message;
+            message = new StartAUTServerStateMessage(
+                    AUTStartResponse.INVALID_ARGUMENTS,
+                    "invalid arguments. ");
+            return message;
+        }
+
+        /**
+         * Handle global error
+         * @return aut server state message
+         */
+        private StartAUTServerStateMessage handleGlobalError() {
+            StartAUTServerStateMessage message;
+            log.error("unknown AUTServer exit code: " //$NON-NLS-1$
+                    + m_autExitValue + "'"); //$NON-NLS-1$
+            message = new StartAUTServerStateMessage(
+                AUTStartResponse.ERROR,
+                "unknown AUTServer exit code: '" //$NON-NLS-1$
+                + m_autExitValue + "'"); //$NON-NLS-1$
+            return message;
         }
 
         /**
@@ -563,14 +611,16 @@ public class AutStarter {
                     dn = new SysoRedirect(m_autProcess.getErrorStream(),
                             "AUTs syserr: "); //$NON-NLS-1$
                     dn.start();
+                    
                     new SysoRedirect(m_autProcess.getInputStream(),
                             "AUTs sysout: ").start(); //$NON-NLS-1$
                 }
                 // don't synchronized, catching NullPointerException which is
-                // raised if the process has already terminated
+                // raised if the process has alreainputdy terminated
                 m_autExitValue = m_autProcess.waitFor();
                 // picking up the 'Unrecognized option' error stream
-                m_errorStream = dn.getLine();
+                m_errorMessage = dn.getLine();
+                m_errorLog = dn.getTruncatedLog();
 
                 synchronized (m_autServerLock) {
                     m_autProcess = null;
