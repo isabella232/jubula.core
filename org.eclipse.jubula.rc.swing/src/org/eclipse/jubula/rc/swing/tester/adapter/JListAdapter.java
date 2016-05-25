@@ -18,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -97,21 +98,34 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
                 "List index '" + i + "' is not visible", //$NON-NLS-1$ //$NON-NLS-2$
                 EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
         }
-        
         // if possible adjust height and width for items
         getRobotFactory().getEventThreadQueuer().invokeAndWait("setItemSize", new IRunnable<Void>() { //$NON-NLS-1$
             public Void run() throws StepExecutionException {
                 ListCellRenderer lcr = m_list.getCellRenderer();
                 if (lcr != null) {
-                    Component listItem = lcr.getListCellRendererComponent(
-                        m_list, model.getElementAt(index), index, false, false);
-                    Dimension preferredSize = listItem.getPreferredSize();
-                    r.setSize(preferredSize);
+                    String text = (String) model.getElementAt(index);
+                    if (StringUtils.isNotBlank(text)) {
+                        Component listItem = lcr.getListCellRendererComponent(
+                                             m_list, model.getElementAt(index), 
+                                             index, false, false);
+                        Dimension preferredSize = listItem.getPreferredSize();
+                        r.setSize(preferredSize);
+                    }
                 }                
                 return null;
             }
         });     
         
+      
+        // If list visible width is less than the cell width, need to adjust the to
+        // clickable rectangle to the visible part
+        double listVisibleWidth = m_list.getVisibleRect().getWidth();
+        if (listVisibleWidth < r.getWidth())  {
+            Dimension d = new Dimension();
+            d.setSize(listVisibleWidth, r.getHeight());
+            r.setSize(d);
+        }
+            
         if (maxWidth != JComboBoxAdapter.NO_MAX_WIDTH
                 && r.getWidth() > maxWidth) {
             Dimension d = new Dimension();
