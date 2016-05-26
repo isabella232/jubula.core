@@ -27,6 +27,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * This class handles the receiving of children from different components from a
@@ -61,8 +62,8 @@ public class ChildrenGetter {
             } else {
                 result.addAll(getFrom((Parent) o));
             }
-        } else if (o instanceof Stage) {
-            add(result, getFrom((Stage) o).getValue());
+        } else if (o instanceof Window) {
+            add(result, getFrom((Window) o).getValue());
         } else if (o instanceof Scene) {
             add(result, getFrom((Scene) o).getValue());
         } else if (o instanceof ContextMenu) {
@@ -145,12 +146,12 @@ public class ChildrenGetter {
     /**
      * Returns the Child Property of a Stage, the Scene Property.
      *
-     * @param stage
-     *            the stage
+     * @param window
+     *            the window
      * @return the Scene Property
      */
-    public static ReadOnlyObjectProperty<Scene> getFrom(Stage stage) {
-        return stage.sceneProperty();
+    public static ReadOnlyObjectProperty<Scene> getFrom(Window window) {
+        return window.sceneProperty();
     }
 
     /**

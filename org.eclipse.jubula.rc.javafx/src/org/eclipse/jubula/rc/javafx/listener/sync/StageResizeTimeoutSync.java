@@ -14,13 +14,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.util.concurrent.JBExecutors;
+
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
-
-import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.concurrent.JBExecutors;
+import javafx.stage.Window;
 
 /**
  * "Synchronizes" by waiting a set amount of time. Even if the Stage resizes 
@@ -92,14 +93,18 @@ class StageResizeTimeoutSync implements IStageResizeSync {
     private Locker m_locker = new Locker();
     
     @Override
-    public void register(Stage stage) {
-        stage.maximizedProperty().addListener(m_locker);
-        m_locker.lock();
+    public void register(Window win) {
+        if (win instanceof Stage) {
+            ((Stage) win).maximizedProperty().addListener(m_locker);
+            m_locker.lock();
+        }
     }
 
     @Override
-    public void deregister(Stage stage) {
-        stage.maximizedProperty().removeListener(m_locker);
+    public void deregister(Window win) {
+        if (win instanceof Stage) {
+            ((Stage) win).maximizedProperty().removeListener(m_locker);
+        }
     }
     
     @Override

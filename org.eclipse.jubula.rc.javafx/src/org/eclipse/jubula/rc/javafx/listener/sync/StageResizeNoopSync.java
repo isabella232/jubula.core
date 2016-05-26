@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener.sync;
 
-import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * Performs no synchronization whatsoever. This concrete implementation can be
@@ -20,12 +20,12 @@ import javafx.stage.Stage;
 final class StageResizeNoopSync implements IStageResizeSync {
 
     @Override
-    public void register(Stage stage) {
+    public void register(Window win) {
         // intentionally empty
     }
 
     @Override
-    public void deregister(Stage stage) {
+    public void deregister(Window win) {
         // intentionally empty
     }
 

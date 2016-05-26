@@ -12,6 +12,17 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
+<para><emphasis role="strong">Since M3</emphasis></para>
+<para>
+ <emphasis role="strong">Support for javafx.stage.Popup</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      The JavaFX toolkit now allows mapping in Popups.
+    </para>
+  </listitem>
+</itemizedlist>
 <para><emphasis role="strong">Since M2</emphasis></para>
 <para>
  <emphasis role="strong">Simple Extensions</emphasis>

@@ -12,6 +12,14 @@ package org.eclipse.jubula.rc.javafx.listener;
 
 import java.util.Map;
 
+import org.eclipse.jubula.communication.internal.message.ObjectMappedMessage;
+import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
+import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.PropertyUtil;
+import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -20,15 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-
-import org.eclipse.jubula.communication.internal.message.ObjectMappedMessage;
-import org.eclipse.jubula.rc.common.AUTServer;
-import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
-import org.eclipse.jubula.rc.common.logger.AutServerLogger;
-import org.eclipse.jubula.rc.common.util.PropertyUtil;
-import org.eclipse.jubula.tools.internal.exception.CommunicationException;
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import javafx.stage.Window;
 
 /**
  * Realizes Object-Mapping.
@@ -60,19 +60,18 @@ public class MappingListener extends AbstractFXAUTEventHandler {
     private InputMappingHandler m_iHandler = new InputMappingHandler();
 
     @Override
-    public void addHandler(Stage s) {
+    public void addHandler(Window s) {
         s.addEventFilter(MouseEvent.MOUSE_CLICKED, m_iHandler);
         s.addEventFilter(MouseEvent.MOUSE_MOVED, m_mHandler);
-        s.addEventFilter(KeyEvent.KEY_PRESSED, m_iHandler);
-
+        s.addEventFilter(KeyEvent.ANY, m_iHandler);
         m_mHandler.addMoveDoneHandler(m_hHandler);
     }
 
     @Override
-    public void removeHandler(Stage s) {
+    public void removeHandler(Window s) {
         s.removeEventFilter(MouseEvent.MOUSE_MOVED, m_mHandler);
         s.removeEventFilter(MouseEvent.MOUSE_CLICKED, m_iHandler);
-        s.removeEventFilter(KeyEvent.KEY_PRESSED, m_iHandler);
+        s.removeEventFilter(KeyEvent.ANY, m_iHandler);
 
         m_mHandler.removeMoveDoneHandler(m_hHandler);
     }
@@ -91,7 +90,7 @@ public class MappingListener extends AbstractFXAUTEventHandler {
             if (currNode != newNode) {
                 if (currNode != null) {
                     lowlightCurrentNode();
-                    setCurrentNode(null);
+                    setCurrentNode(null);                
                 }
                 if (newNode != null) {
                     setCurrentNode(newNode);
