@@ -14,6 +14,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -287,7 +288,8 @@ public class ProjectWizard extends Wizard implements INewWizard {
 
         while (desc != null) {
             try {
-                String moduleName = LIBRARY_PREFIX + desc.getName();
+                String moduleName = LIBRARY_PREFIX + StringUtils.lowerCase(
+                        desc.getName());
                 IProjectPO ubmProject = 
                     ProjectPM.loadLatestVersionOfProjectByName(moduleName);
                 if (ubmProject != null) {
