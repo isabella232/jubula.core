@@ -117,17 +117,11 @@ public class ListViewAdapter<T extends ListView<?>> extends
                                         .getAbsoluteBounds(cell);
                                 Rectangle tableB = NodeBounds
                                         .getAbsoluteBounds(listView);
-
                                 double widthOfClickableRectangle = b.getWidth();
                                 double prefWidth = cell
                                         .prefWidth(cell.getHeight());
-                                // If the content is less than whole cell width
-                                // adjust the clickable rect width
-                                if (prefWidth < widthOfClickableRectangle) {
-                                    widthOfClickableRectangle = prefWidth;
-                                }
-                                // If the clickable rectangle wider than the
-                                // listview, then the width of the clickable
+                                
+                                // If the clickable rectangle wider than the  listview, then the width of the clickable
                                 // rectangle will be the width of the listview
                                 if (widthOfClickableRectangle > listView
                                         .getWidth()) {
@@ -135,7 +129,7 @@ public class ListViewAdapter<T extends ListView<?>> extends
                                             .getWidth();
                                 }
                                 if (StringUtils.isBlank(cell.getText())) {
-                                    widthOfClickableRectangle = tableB.width;
+                                    widthOfClickableRectangle = b.getWidth();
                                 }
                                 return new Rectangle(Math.abs(tableB.x - b.x),
                                         Math.abs(tableB.y - b.y),
