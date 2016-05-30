@@ -35,11 +35,9 @@ import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMEditorDn
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.utils.KeyConverter;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -305,12 +303,6 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
             int mappingWPType = preferenceStore
                     .getInt(Constants.MAPPING_WITH_PARENTS_TRIGGER_TYPE_KEY);
             final String toolkit = editor.getAut().getToolkit();
-            if (toolkit.equals(CommandConstants.SWT_TOOLKIT)
-                    || toolkit.equals(CommandConstants.RCP_TOOLKIT)) {
-
-                mappingMod = KeyConverter.convertSwingStateMask(mappingMod);
-                mappingKey = KeyConverter.convertSwingToSwt(mappingKey);
-            }
 
             Job startObjectMappingModeJob = new StartObjectMappingModeJob(
                     editor, autId, mappingMod, mappingKey, category,

@@ -14,7 +14,6 @@ package org.eclipse.jubula.client.core.commands;
 import java.util.Iterator;
 
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
-import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.Message;
@@ -100,10 +99,8 @@ public class ObjectMappedCommand implements ICommand {
                 }
             }
         }
-        if (TestExecution.getInstance().getConnectedAut() != null) {
-            ObjectMappingEventDispatcher.notifyObjectMappedObserver(
-                componentIdentifiers);
-        }
+        ObjectMappingEventDispatcher
+                .notifyObjectMappedObserver(componentIdentifiers);
     }
 
     /**

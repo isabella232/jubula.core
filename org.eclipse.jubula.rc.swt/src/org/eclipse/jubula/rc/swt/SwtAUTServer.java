@@ -13,6 +13,7 @@ package org.eclipse.jubula.rc.swt;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.ComponentNotFoundException;
 import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.rc.swt.listener.FocusTracker;
 import org.eclipse.jubula.rc.swt.listener.MappingListener;
 import org.eclipse.jubula.rc.swt.listener.RecordListener;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
+import org.eclipse.jubula.rc.swt.utils.KeyConverter;
 import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.widgets.Display;
@@ -261,5 +263,35 @@ public class SwtAUTServer extends AUTServer {
     public boolean isComponentDisappeared(IComponentIdentifier ci, int timeout)
             throws ComponentNotFoundException, IllegalArgumentException {
         return ComponentHandler.isComponentDisappeared(ci, timeout);
+    }
+    /** {@inheritDoc} */
+    public void setMode(int newMode) {
+        convertMappingKeys();
+        super.setMode(newMode);
+    }
+
+    /**
+     * This methods converts the mapping keys from swing to SWT
+     */
+    private void convertMappingKeys() {
+        /* for mapping mode */
+        AUTServerConfiguration config = AUTServerConfiguration.getInstance();
+        int mappingKey = config.getMappingKey();
+        config.setMappingKey(KeyConverter.convertSwingToSwt(mappingKey));
+        int mappingMod = config.getMappingKeyMod();
+        config.setMappingKeyMod(KeyConverter.convertSwingStateMask(mappingMod));
+
+        /* for observation mode */
+        int checkModeKey = config.getCheckModeKey();
+        config.setCheckModeKey(KeyConverter.convertSwingToSwt(checkModeKey));
+        int checkModeMod = config.getCheckModeKeyMod();
+        config.setCheckModeKeyMod(
+                KeyConverter.convertSwingStateMask(checkModeMod));
+
+        int checkCompKey = config.getCheckCompKey();
+        config.setCheckCompKey(KeyConverter.convertSwingToSwt(checkCompKey));
+        int checkCompKeyMod = config.getCheckCompKeyMod();
+        config.setCheckModeKeyMod(
+                KeyConverter.convertSwingStateMask(checkCompKeyMod));
     }
 }

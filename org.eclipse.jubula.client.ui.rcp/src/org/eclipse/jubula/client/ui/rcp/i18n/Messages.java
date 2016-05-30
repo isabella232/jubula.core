@@ -457,9 +457,6 @@ public class Messages extends NLS {
     public static String ObjectMappingPreferencePageContextFactor;
     public static String ObjectMappingPreferencePageDescription;
     public static String ObjectMappingPreferencePageLock;
-    public static String ObjectMappingPreferencePageMouseButton1;
-    public static String ObjectMappingPreferencePageMouseButton2;
-    public static String ObjectMappingPreferencePageMouseButton3;
     public static String ObjectMappingPreferencePageNameFactor;
     public static String ObjectMappingPreferencePagePathFactor;
     public static String ObjectMappingPreferencePageProfile;

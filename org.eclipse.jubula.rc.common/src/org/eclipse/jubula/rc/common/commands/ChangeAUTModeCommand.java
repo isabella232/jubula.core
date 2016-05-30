@@ -59,6 +59,7 @@ public class ChangeAUTModeCommand implements ICommand {
         switch (m_message.getMode()) {
             case ChangeAUTModeMessage.CHECK_MODE :
             case ChangeAUTModeMessage.RECORD_MODE :
+            case ChangeAUTModeMessage.AGENT_OBJECT_MAPPING :
             case ChangeAUTModeMessage.OBJECT_MAPPING :
                 autServerConfig.setMappingKeyMod(m_message
                         .getMappingKeyModifier());

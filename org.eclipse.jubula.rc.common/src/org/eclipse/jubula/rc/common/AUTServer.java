@@ -118,6 +118,8 @@ public abstract class AUTServer {
    
     /** the args for the AUT */
     private String[] m_autArgs;
+    /** is the object mapping used from the Agent? */
+    private boolean m_isAgentObjectMapping = false;
     
     /**
      * the mode the AUTserver is in, see constants in ChangeAUTModeMessage, the
@@ -240,6 +242,9 @@ public abstract class AUTServer {
      * @return Returns the communicator.
      */
     public synchronized Communicator getCommunicator() {
+        if (m_isAgentObjectMapping) {
+            return m_autAgentCommunicator;
+        }
         return m_iteCommunicator;
     }
 
@@ -863,7 +868,12 @@ public abstract class AUTServer {
             switch (newMode) {
                 // => (remove TestAWTEventListener),
                 // install a MappingAWTEventListener
+                case ChangeAUTModeMessage.AGENT_OBJECT_MAPPING:
+                    setMappingModeAgent(true);
                 case ChangeAUTModeMessage.OBJECT_MAPPING:
+                    if (newMode == ChangeAUTModeMessage.OBJECT_MAPPING) {
+                        setMappingModeAgent(false);
+                    }
                     removeToolkitEventListener(m_mappingListener);
                     removeToolkitEventListener(m_recordListener);
                     removeToolkitEventListener(m_checkListener);
@@ -871,6 +881,7 @@ public abstract class AUTServer {
                     addToolkitEventListener(m_mappingListener);
                     break;
                 case ChangeAUTModeMessage.RECORD_MODE:
+                    setMappingModeAgent(false);
                     removeToolkitEventListener(m_mappingListener);
                     removeToolkitEventListener(m_recordListener);
                     removeToolkitEventListener(m_checkListener);
@@ -881,6 +892,7 @@ public abstract class AUTServer {
                     }
                     break;
                 case ChangeAUTModeMessage.CHECK_MODE:
+                    setMappingModeAgent(false);
                     removeToolkitEventListener(m_mappingListener);
                     removeToolkitEventListener(m_recordListener);
                     removeToolkitEventListener(m_checkListener);
@@ -888,6 +900,7 @@ public abstract class AUTServer {
                     addToolkitEventListener(m_checkListener);
                     break;
                 case ChangeAUTModeMessage.TESTING:
+                    setMappingModeAgent(false);
                     // => remove MappingAWTEventListener
                     removeToolkitEventListener(m_mappingListener);
                     removeToolkitEventListener(m_recordListener);
@@ -901,6 +914,14 @@ public abstract class AUTServer {
                     m_mode = oldMode;
             }
         }
+    }
+
+    /**
+     * @param agentMapping true if the agent is mapping
+     */
+    private void setMappingModeAgent(boolean agentMapping) {
+        m_isAgentObjectMapping = agentMapping;
+        
     }
 
     /**

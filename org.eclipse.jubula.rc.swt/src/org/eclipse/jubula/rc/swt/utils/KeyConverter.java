@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.client.ui.rcp.utils;
+package org.eclipse.jubula.rc.swt.utils;
 
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;

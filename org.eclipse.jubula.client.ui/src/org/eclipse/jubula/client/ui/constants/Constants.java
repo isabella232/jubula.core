@@ -385,23 +385,11 @@ public interface Constants {
     public static final int CLEAN_DAYS_KEY_DEFAULT = 5;
     
     /** Key for int value to be stored as a resource property */
-    public static final int MAPPINGMOD1_KEY_DEFAULT = 
-        InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK;
-    
+    public static final int MAPPING_WP_TRIGGER_DEFAULT = KeyEvent.VK_A;
     /** Key for int value to be stored as a resource property */
     public static final int MAPPING_WP_MOD1_KEY_DEFAULT = 
         InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK;
     
-    /** Key for int value to be stored as a resource property */
-    public static final int MAPPING_TRIGGER_DEFAULT = KeyEvent.VK_Q;
-
-    /** Key for int value to be stored as a resource property */
-    public static final int MAPPING_WP_TRIGGER_DEFAULT = KeyEvent.VK_A;
-    
-    /** Default value for Object Mapping trigger type */
-    public static final int MAPPING_TRIGGER_TYPE_DEFAULT = 
-        InputConstants.TYPE_KEY_PRESS;
-
     /** Default value for Object Mapping trigger type */
     public static final int MAPPING_WP_TRIGGER_TYPE_DEFAULT = 
         InputConstants.TYPE_KEY_PRESS;
