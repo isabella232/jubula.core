@@ -157,8 +157,8 @@ public class LogView extends ContextBasedView
                                         .getFirstElement())) {
                     return;
                 }
-                provider = (LogProvider)Platform.getAdapterManager()
-                            .getAdapter(object, LogProvider.class);
+                provider = Platform.getAdapterManager().getAdapter(
+                        object, LogProvider.class);
             }
         }
         

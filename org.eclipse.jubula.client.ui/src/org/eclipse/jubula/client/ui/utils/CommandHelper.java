@@ -71,8 +71,7 @@ public abstract class CommandHelper {
         IWorkbenchPartSite site) {
         IHandlerService handlerService;
         if (site != null) {
-            handlerService = (IHandlerService)site
-                    .getService(IHandlerService.class);
+            handlerService = site.getService(IHandlerService.class);
         } else {
             handlerService = getHandlerService();
         }
@@ -116,16 +115,14 @@ public abstract class CommandHelper {
      * @return the handler service
      */
     public static IHandlerService getHandlerService() {
-        return (IHandlerService)PlatformUI.getWorkbench().getService(
-                IHandlerService.class);
+        return PlatformUI.getWorkbench().getService(IHandlerService.class);
     }
     
     /**
      * @return the command service
      */
     public static ICommandService getCommandService() {
-        return (ICommandService)PlatformUI.getWorkbench().getService(
-                ICommandService.class);
+        return PlatformUI.getWorkbench().getService(ICommandService.class);
     }
     
     /**

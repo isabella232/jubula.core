@@ -89,7 +89,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
      * @return true if init has been successful
      */
     private boolean initPauseTestExecutionState(ExecutionEvent event) {
-        ICommandService cmdService = (ICommandService) HandlerUtil
+        ICommandService cmdService = HandlerUtil
             .getActiveWorkbenchWindow(event).getService(
                 ICommandService.class);
         if (cmdService != null) {

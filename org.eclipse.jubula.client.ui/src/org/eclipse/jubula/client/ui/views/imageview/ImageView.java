@@ -104,15 +104,15 @@ public class ImageView extends ContextBasedView
                 m_currSelection = ss;
                 // First, if the object is adaptable, ask it to get an adapter.
                 if (object instanceof IAdaptable) {
-                    provider = (ImageProvider)((IAdaptable)object)
-                            .getAdapter(ImageProvider.class);
+                    provider = ((IAdaptable)object).getAdapter(
+                            ImageProvider.class);
                 }
 
                 // If we haven't found an adapter yet, try asking the
                 // AdapterManager.
                 if (provider == null) {
-                    provider = (ImageProvider)Platform.getAdapterManager()
-                            .getAdapter(object, ImageProvider.class);
+                    provider = Platform.getAdapterManager().getAdapter(
+                            object, ImageProvider.class);
                 }
             }
         }

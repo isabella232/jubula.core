@@ -80,7 +80,7 @@ public class FilterProfileHandler extends AbstractHandler
 
     @Override
     public void updateElement(UIElement element, Map parameters) {
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench()
+        ICommandService service = PlatformUI.getWorkbench()
                 .getService(ICommandService.class);
         Command command = service.getCommand(RCPCommandIDs.FILTER_PROFILE);
         State state = command.getState(FILTER_PROFILE_STATE); // $NON-NLS-1$
@@ -148,9 +148,8 @@ public class FilterProfileHandler extends AbstractHandler
         }
         // Refresh elements to change the force the call of updateElement
         // This is necessary to change the toolbar icon
-        ICommandService commandService = (ICommandService) PlatformUI
-                .getWorkbench().getActiveWorkbenchWindow()
-                .getService(ICommandService.class);
+        ICommandService commandService = PlatformUI.getWorkbench()
+                .getActiveWorkbenchWindow().getService(ICommandService.class);
         if (commandService != null) {
             commandService.refreshElements(command.getId(), null);
         }
@@ -176,7 +175,7 @@ public class FilterProfileHandler extends AbstractHandler
      * @param views the views to check
      */
     private void checkFilter(List<TreeViewer> views) {
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench()
+        ICommandService service = PlatformUI.getWorkbench()
                 .getService(ICommandService.class);
         Command command = service.getCommand(RCPCommandIDs.FILTER_PROFILE);
         State filterActive = command.getState(RegistryToggleState.STATE_ID);
@@ -205,7 +204,7 @@ public class FilterProfileHandler extends AbstractHandler
      * resets the states of the command to the default value, which is no filtering
      */
     private void resetCommand() {
-        ICommandService service = (ICommandService) PlatformUI.getWorkbench()
+        ICommandService service = PlatformUI.getWorkbench()
                 .getService(ICommandService.class);
         Command command = service.getCommand(RCPCommandIDs.FILTER_PROFILE);
         State filterActive = command.getState(RegistryToggleState.STATE_ID);

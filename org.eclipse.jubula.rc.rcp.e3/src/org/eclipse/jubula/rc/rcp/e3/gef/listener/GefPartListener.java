@@ -100,8 +100,7 @@ public class GefPartListener implements IPartListener2 {
 
         if (part != null
                 && partRef instanceof WorkbenchPartReference) {
-            GraphicalViewer viewer =
-                (GraphicalViewer)part.getAdapter(
+            GraphicalViewer viewer = part.getAdapter(
                         GraphicalViewer.class);
             registerGraphicalViewer(viewer, partRef);
         }

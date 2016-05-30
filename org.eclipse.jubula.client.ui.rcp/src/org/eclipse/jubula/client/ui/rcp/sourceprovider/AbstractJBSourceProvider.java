@@ -110,8 +110,7 @@ public abstract class AbstractJBSourceProvider extends AbstractSourceProvider {
         } else {
             ww = HandlerUtil.getActiveWorkbenchWindow(event);
         }
-        ISourceProviderService s = (ISourceProviderService) ww
-                .getService(ISourceProviderService.class);
+        ISourceProviderService s = ww.getService(ISourceProviderService.class);
         if (s != null) {
             return s.getSourceProvider(sourceProviderID);
         }

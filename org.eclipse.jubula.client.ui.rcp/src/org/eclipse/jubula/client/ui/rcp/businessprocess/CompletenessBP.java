@@ -58,8 +58,8 @@ public class CompletenessBP implements IProjectStateListener {
     private CompletenessBP() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectStateListener(this);
-        ICommandService commandService = (ICommandService) PlatformUI
-                .getWorkbench().getService(ICommandService.class);
+        ICommandService commandService = PlatformUI.getWorkbench().getService(
+                ICommandService.class);
 
         IExecutionListener saveListener = new IExecutionListener() {
             /** {@inheritDoc} */

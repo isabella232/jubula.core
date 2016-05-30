@@ -55,8 +55,7 @@ public class ActivateInspectorResponseCommand implements ICommand {
      * {@inheritDoc}
      */
     public Message execute() {
-        ISourceProviderService service = 
-            (ISourceProviderService)PlatformUI.getWorkbench().getService(
+        ISourceProviderService service = PlatformUI.getWorkbench().getService(
                     ISourceProviderService.class);
         InspectorStateProvider sourceProvider = 
             (InspectorStateProvider)service.getSourceProvider(

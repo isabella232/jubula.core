@@ -658,8 +658,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         DialogUtils.setWidgetName(viewer.getTree(), title);
         
-        IFocusService focusService = 
-            (IFocusService)getSite().getService(IFocusService.class);
+        IFocusService focusService = getSite().getService(IFocusService.class);
         
         focusService.addFocusTracker(viewer.getTree(), title);
         viewer.getTree().addFocusListener(new FocusAdapter() {
@@ -718,8 +717,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         DialogUtils.setWidgetName(viewer.getTree(), i18nTitleKey);
         
-        IFocusService focusService = 
-            (IFocusService)getSite().getService(IFocusService.class);
+        IFocusService focusService = getSite().getService(IFocusService.class);
         
         focusService.addFocusTracker(viewer.getTree(), i18nTitleKey);
         viewer.getTree().addFocusListener(new FocusAdapter() {
@@ -1249,8 +1247,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             IJBEditor gdEditor, boolean isDirty) {
         
         if (gdEditor == this) {
-            IEvaluationService service = (IEvaluationService) getSite()
-                    .getService(IEvaluationService.class);
+            IEvaluationService service = getSite().getService(
+                    IEvaluationService.class);
             service.requestEvaluation(EditorPartPropertyTester.FQN_IS_DIRTY);
         }
     }

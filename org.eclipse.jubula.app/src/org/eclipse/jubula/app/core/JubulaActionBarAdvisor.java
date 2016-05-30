@@ -416,8 +416,7 @@ public class JubulaActionBarAdvisor extends ActionBarAdvisor {
         IWorkbenchWindow window = m_window;
         ISharedImages sharedImages = window.getWorkbench().getSharedImages();
 
-        IActionCommandMappingService acms = 
-                (IActionCommandMappingService) window
+        IActionCommandMappingService acms = window
                 .getService(IActionCommandMappingService.class);
         acms.map(actionId, commandId);
 

@@ -1327,8 +1327,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         }
         IComponentNameMapper mapper = null;
         if (activePart != null) {
-            mapper = (IComponentNameMapper)activePart
-                    .getAdapter(IComponentNameMapper.class);
+            mapper = activePart.getAdapter(IComponentNameMapper.class);
         }
         if (mapper != null) {
             return mapper;

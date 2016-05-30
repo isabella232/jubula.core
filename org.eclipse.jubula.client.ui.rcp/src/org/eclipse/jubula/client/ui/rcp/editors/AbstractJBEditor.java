@@ -626,8 +626,8 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
             IJBEditor gdEditor, boolean isDirty) {
         
         if (gdEditor == this) {
-            IEvaluationService service = (IEvaluationService) getSite()
-                    .getService(IEvaluationService.class);
+            IEvaluationService service = getSite().getService(
+                    IEvaluationService.class);
             service.requestEvaluation(EditorPartPropertyTester.FQN_IS_DIRTY);
         }
     }
