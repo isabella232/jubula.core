@@ -1,0 +1,39 @@
+/*******************************************************************************
+ * Copyright (c) 2016 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+RobotTask {
+    projects = {
+        SimpleProject "org.eclipse.jubula.examples.extension.releng" {
+            resources = {
+                Folder "targetDefiniton" {
+                    children = {
+                        DataFile "extension.target" {
+                            content =
+'<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="extension" sequenceNumber="15">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.platform.ide" version="0.0.0"/>
+<repository location="http://download.eclipse.org/eclipse/updates/4.5"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.jubula.feature.rc.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.jubula.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/jubula/nightly/repo"/>
+</location>
+</locations>
+</target>'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,339 @@
+/*******************************************************************************
+ * Copyright (c) 2016 BREDEX GmbH.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BREDEX GmbH - initial API and implementation and/or initial documentation
+ *******************************************************************************/
+RobotTask {
+    variables = {
+        ## Name of the project
+        STRING "BundleProject_projectName" default "",
+        ## Symbolic id of the bundle
+        STRING "BundleProject_ID" default "",
+        ## Name of the bundle
+        STRING "BundleProject_name" default "",
+        ## Vendor of the bundle
+        STRING "BundleProject_vendor" default "",
+        ## Bundle version
+        STRING "BundleProject_version" default "",
+        ## Execution Environment
+        STRING "BundleProject_executionEnvironment" default "",
+        ## The name of the component's class
+        STRING "ComponentName" default "",
+        ## The component's fully qualified name
+        STRING "ComponentQualifier" default "",
+        ## The component type's class
+        STRING "ComponentTypeName" default "",
+        ## The component type's qualifier
+        STRING "ComponentTypeQualifier" default "",
+        ## The super class
+        STRING "SuperClassQualifier" default "",
+        ## The super class name
+        STRING "SuperClassName" default "",
+        ## The realizer
+        STRING "Realizer" default "guidancer.abstract.Widget",
+        ## The tester class
+        STRING "TesterClassName" default "",
+        ## Tester Class methods
+        STRING "Methods" default "",
+        ## i18n.properties content
+        STRING "i18n" default "",
+        ## ComponentConfiguration.xml actions
+        STRING "Actions" default "",
+        ## The type of the toolkitComponent within the ComponentConfiguration.xml
+        STRING "ToolkitComponentType" default "",
+        ## The dependency of the toolkit
+        STRING "ToolkitDependency" default "",
+        ## The toolkit expansion's name
+        STRING "ToolkitExtensionName" default "",
+        ## The fragment host
+        STRING "FragmentHost" default "",
+        ## The toolkit's name
+        STRING "ToolkitName" default "",
+        ## The new adapter statement
+        STRING "Adapter" default "",
+        ## The adapter's package
+        STRING "AdapterPackage" default "",
+        ## Additional Imports for e. g. JavaFX
+        STRING "AdditionalImports" default ""
+    }
+    projects = {
+        BundleProject "${BundleProject_projectName}.toolkit" {
+            manifest = lazy singleton ManifestFile "${BundleProject_ID}.toolkit" "${BundleProject_version}" "${BundleProject_executionEnvironment}" {
+                bundlename = "${BundleProject_name} - Toolkit\nBundle-Activator: ${BundleProject_ID}.toolkit.Activator"
+                vendor = "${BundleProject_vendor}"
+                requiredBundles = {
+                    'org.eclipse.core.runtime',
+                    'org.eclipse.jubula.tools',
+                    'org.eclipse.jubula.toolkit.common',
+                    'org.eclipse.swt'
+                }
+            }
+            build = BuildProperties {
+                binIncludes = {
+                    "resources"
+                }
+            }
+            pluginxml = PluginXMLFile {
+                extensions = {
+                    "org.eclipse.jubula.toolkit.common.toolkitsupport" {
+                        elements = {
+                            "toolkit" {
+                                attributes = {
+                                    {"IToolkitProvider", "${BundleProject_ID}.toolkit.provider.MyToolkitProvider"},
+                                    {"depends", "${ToolkitDependency}"},
+                                    {"includes", "null"},
+                                    {"isUserToolkit", "true"},
+                                    {"level", "toolkit"},
+                                    {"name", "${ToolkitExtensionName}"},
+                                    {"order", "20"},
+                                    {"toolkitID", "${BundleProject_ID}.toolkit"}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            resources = {
+                Folder "resources" {
+                    children = {
+                        Folder "xml" {
+                            children = {
+                                DataFile "ComponentConfiguration.xml" {
+                                    content =
+'<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
+    <configVersion>
+        <majorVersion>1</majorVersion>
+        <minorVersion>36</minorVersion>
+    </configVersion>
+    <toolkitComponent type="${ToolkitComponentType}" visible="true">
+        <realizes>${Realizer}</realizes>
+        <testerClass>${BundleProject_ID}.rc.${ToolkitName}.tester.${TesterClassName}</testerClass>
+        <componentClass name="${ComponentQualifier}" />
+${Actions}
+    </toolkitComponent>
+</compSystem>'
+                                }
+                            }
+                        }
+                    }
+                },
+                Folder "src"
+            }
+            rootfragments = {
+                fragment "fragment name" "src"
+            }
+            compilation-units = {
+                "${BundleProject_ID}.toolkit.i18n" in "fragment name" {
+                    DataFile "i18n.properties" {
+                        content = 
+'${i18n}'
+                    }
+                },
+                "${BundleProject_ID}.toolkit.provider" in "fragment name" {
+                    DataFile "MyToolkitProvider.java" {
+                        content = 
+'package ${BundleProject_ID}.toolkit.provider;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+import ${BundleProject_ID}.toolkit.Activator;
+import org.eclipse.jubula.toolkit.common.AbstractToolkitProvider;
+import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
+
+public class MyToolkitProvider extends AbstractToolkitProvider {
+    /** the bundle location */
+    public static final String BUNDLE = "${BundleProject_ID}.toolkit.i18n.i18n"; //$NON-NLS-1$
+
+    /** {@inheritDoc} */
+    public URL getComponentConfigurationFileURL() {
+        return ToolkitUtils.getURL(Activator.getDefault().getBundle(),
+                COMP_CONFIG_PATH);
+    }
+    
+    /** {@inheritDoc} */
+    public ResourceBundle getResourceBundle() {
+        return ResourceBundle.getBundle(BUNDLE);
+    }
+}'
+                    }
+                },
+                "${BundleProject_ID}.toolkit" in "fragment name" {
+                    DataFile "Activator.java" {
+                        content =
+'package ${BundleProject_ID}.toolkit;
+
+import org.eclipse.core.runtime.Plugin;
+import org.osgi.framework.BundleContext;
+
+/**
+ * The activator class controls the plug-in life cycle
+ */
+public class Activator extends Plugin {
+
+    /** The plug-in ID */
+    public static final String PLUGIN_ID = "${BundleProject_ID}.toolkit"; //$NON-NLS-1$
+
+    /** The shared instance */
+    private static Activator plugin;
+
+    /**
+     * The constructor
+     */
+    public Activator() {
+        plugin = this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
+
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static Activator getDefault() {
+        return plugin;
+    }
+
+}'
+                    }
+                }
+            }
+        },
+        BundleProject "${BundleProject_projectName}.rc" {
+            manifest =
+                ManifestFile "${BundleProject_ID}" "${BundleProject_version}" "${BundleProject_executionEnvironment}" {
+                    /* Da RRobot die Angabe des Fragment-Host nicht erlaubt, wurde die 
+                     * Definition mittels Zeilenumbruch an den Bundlenamen angehangen. */
+                    bundlename = "${BundleProject_name} - RC\nFragment-Host: ${FragmentHost}"
+                    vendor = "${BundleProject_vendor}"
+                }
+            build = BuildProperties {
+            }
+            resources = {
+                Folder "src"
+            }
+            rootfragments = {
+                fragment "source fragment" "src"
+            }
+            compilation-units = {
+                "${BundleProject_ID}.rc.${ToolkitName}.tester" in "source fragment" {
+                    DataFile "${TesterClassName}.java" {
+                        content =
+'package ${BundleProject_ID}.rc.${ToolkitName}.tester;
+
+import ${ComponentQualifier};
+import ${SuperClassQualifier};
+
+/**
+ * Tester Class for the AUT-Agent. This class realizes the technical access to
+ * provide testability for the selected component type.<br/>
+ * The following methods / classes can be quite handy for your actions:<br/>
+ * - <code>getRobot()</code> returns the Robot that offers several methods for 
+ *              mouse interactions
+ * - <code>Verifier</code> handles comparisons for expected and actual values 
+ *            and automatically gives the result to Jubula, so your method
+ *            does not need a return value<br/><br/>
+ * For further information about these methods / classes have a look at their
+ * javaDoc documentation and at the provided extension examples for each toolkit
+ */
+public class ${TesterClassName} extends ${SuperClassName} {
+    /**
+     * @return the casted instance
+     */
+    protected ${ComponentName} get${ComponentName}() {
+        return (${ComponentName}) getRealComponent();
+    }
+
+${Methods}
+}'
+                    }
+                },
+                "${BundleProject_ID}.rc.common.adapter" in "source fragment" {
+                    DataFile "${ToolkitName}ExtensionAdapterFactory.java" {
+                        content =
+'package ${BundleProject_ID}.rc.common.adapter;
+
+${AdditionalImports}
+import ${ComponentQualifier};
+
+import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import ${AdapterPackage};
+
+
+/**
+ * Adapter Factory for new adapters. This class makes your new adapters usable
+ * for testing. One factory could be used for all adapters implemented.
+ * You usually do not have to modify this class at all.
+ */
+public class ${ToolkitName}ExtensionAdapterFactory implements IAdapterFactory {
+    /** {@inheritDoc} */
+    public Class[] getSupportedClasses() {
+        return new Class[] { ${ComponentName}.class };
+    }
+
+    /** {@inheritDoc} */
+    public Object getAdapter(Class targetedClass, Object objectToAdapt) {
+        if (targetedClass.isAssignableFrom(IComponent.class)) {
+            if (objectToAdapt instanceof ${ComponentName}) {
+                return new ${Adapter};
+            }
+        }
+        return null;
+    }
+}'
+                    }
+                }
+            }
+        },
+        FeatureProject "${BundleProject_projectName}.feature" {
+            feature = FeatureFile "${BundleProject_ID}.feature" {
+                featurename = "${BundleProject_name} - Toolkit"
+                version = "${BundleProject_version}"
+                vendor = "${BundleProject_vendor}"
+                description = LinkedString "" {
+                    "Jubula Toolkit Extension - ${ToolkitName}"
+                }
+                
+                copyright = LinkedString "http://copyrightlink" {
+                    "CopyrightText"
+                }
+                
+                license = LinkedString "http://licenselink" {
+                    "LicenseText"
+                }
+                plugins = {
+                    fragment "${BundleProject_ID}",
+                    "${BundleProject_ID}.toolkit"
+                }
+            }
+            resources = {
+                DataFile "build.properties" {
+                    content = "bin.includes = feature.xml"
+                }
+            }
+        }
+    }
+}
+

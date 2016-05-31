@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Copyright (c) 2016 BREDEX GmbH. All rights reserved. This program 
+    and the accompanying materials are made available under the terms of the 
+    Eclipse Public License v1.0 which accompanies this distribution, and is available 
+    at http://www.eclipse.org/legal/epl-v10.html -->
+<toolkits>
+    <toolkit>
+        <name>JavaFX</name>
+        <id>org.eclipse.jubula.JavaFXToolkitPlugin</id>
+        <description>Choosing this toolkit will create all necessary projects and files for a Jubula JavaFX extension.</description>
+        <robotUri>/org.eclipse.jubula.extensions.wizard/resources/rrobot/extension.rtask</robotUri>
+        <toolkitDependency>org.eclipse.jubula.JavaFXToolkitPlugin</toolkitDependency>
+        <toolkitExtensionName>javaFXToolkitExtension</toolkitExtensionName>
+        <adapter>JavaFXComponentAdapter&lt;Node&gt;((Node) objectToAdapt)</adapter>
+        <adapterPackage>org.eclipse.jubula.rc.javafx.tester.adapter.JavaFXComponentAdapter</adapterPackage>
+        <additionalImports>import javafx.scene.Node;</additionalImports>
+        <fragmentHost>org.eclipse.jubula.rc.javafx</fragmentHost>
+    </toolkit>
+    <toolkit>
+        <name>Swing</name>
+        <id>com.bredexsw.guidancer.SwingToolkitPlugin</id>
+        <description>Choosing this toolkit will create all necessary projects and files for a Jubula Swing extension.</description>
+        <robotUri>/org.eclipse.jubula.extensions.wizard/resources/rrobot/extension.rtask</robotUri>
+        <toolkitDependency>com.bredexsw.guidancer.SwingToolkitPlugin</toolkitDependency>
+        <toolkitExtensionName>swingToolkitExtension</toolkitExtensionName>
+        <adapter>JComponentAdapter(objectToAdapt)</adapter>
+        <adapterPackage>org.eclipse.jubula.rc.swing.tester.adapter.JComponentAdapter</adapterPackage>
+        <additionalImports></additionalImports>
+        <fragmentHost>org.eclipse.jubula.rc.swing</fragmentHost>
+    </toolkit>
+    <toolkit>
+        <name>RCP</name>
+        <id>com.bredexsw.guidancer.RcpToolkitPlugin</id>
+        <description>Choosing this toolkit will create all necessary projects and files for a Jubula RCP extension.</description>
+        <robotUri>/org.eclipse.jubula.extensions.wizard/resources/rrobot/extension.rtask</robotUri>
+        <toolkitDependency>com.bredexsw.guidancer.RcpToolkitPlugin</toolkitDependency>
+        <toolkitExtensionName>rcpToolkitExtension</toolkitExtensionName>
+        <adapter>WidgetAdapter(objectToAdapt)</adapter>
+        <adapterPackage>org.eclipse.jubula.rc.swt.tester.adapter.WidgetAdapter</adapterPackage>
+        <additionalImports></additionalImports>
+        <fragmentHost>org.eclipse.jubula.rc.rcp.swt</fragmentHost>
+    </toolkit>
+</toolkits>
