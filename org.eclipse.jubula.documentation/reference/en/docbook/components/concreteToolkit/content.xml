@@ -13,7 +13,7 @@
   <title>Concrete toolkit component overview</title>
   <para>
   	The concrete toolkit contains components and actions which are available in all other supported toolkits. An
-  	action from the concrete toolkit can therefore be used in a test for Swing, SWT, RCP, HTML, JavaFX and iOS 
+  	action from the concrete toolkit can therefore be used in a test for Swing, SWT, RCP, HTML and JavaFX 
   	applications.
   </para>
   

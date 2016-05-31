@@ -85,7 +85,7 @@
       </para>
       <para>
         Choose another toolkit if you want to write Test Cases just
-        for a Swing, SWT, RCP, iOS, Windows or HTML application.
+        for a Swing, SWT, RCP or HTML application.
       </para>
       <para>
         The choice of toolkit you make here will determine what

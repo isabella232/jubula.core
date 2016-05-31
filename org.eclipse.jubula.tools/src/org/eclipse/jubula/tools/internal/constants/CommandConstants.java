@@ -46,12 +46,6 @@ public abstract class CommandConstants {
     public static final String RCP_TOOLKIT = "com.bredexsw.guidancer.RcpToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Html" */
     public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
-    /** constant: "Win" */
-    public static final String WIN_TOOLKIT = "ui.toolkit.WinToolkitPlugin"; //$NON-NLS-1$
-    /** constant: "WinApps" */
-    public static final String WIN__APPS_TOOLKIT = "ui.toolkit.WinAppsToolkitPlugin"; //$NON-NLS-1$
-    /** constant: "iOS" */
-    public static final String IOS_TOOLKIT = "ui.toolkit.mobile.IOSToolkitPlugin"; //$NON-NLS-1$
     /** ID of the SLF4J API bundle */
     public static final String SLF4J_API_BUNDLE_ID = "org.slf4j.api"; //$NON-NLS-1$
     /** ID of the SLF4J JCL bundle */
@@ -105,10 +99,6 @@ public abstract class CommandConstants {
     /** ID of the HTML RC WebDriver bundle */
     public static final String RC_HTML_WEBDRIVER_BUNDLE_ID = "com.bredexsw.jubula.rc.html.webdriver"; //$NON-NLS-1$
     /** ID of the Win RC bundle */
-    public static final String RC_WIN_BUNDLE_ID = "com.bredexsw.guidancer.rc.win"; //$NON-NLS-1$
-    /** ID of the Win native RC bundle */
-    public static final String RC_WIN_NATIVE_BUNDLE_ID = "com.bredexsw.guidancer.rc.win.nativ"; //$NON-NLS-1$
-    /** /** constant: "./lib/extImplClasses" - path name to external ImplClasses */
     public static final String EXT_IMPLCLASSES_PATH = "./lib/extImplClasses"; //$NON-NLS-1$
     /** constant: "./lib/ext" - path name for extension jars like monitoring */
     public static final String EXT_JARS_PATH = "./lib/ext/"; ////$NON-NLS-1$    

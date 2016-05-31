@@ -43,9 +43,6 @@
   		<listitem><para>Use this parameter to define the direction you want to move/swipe in.</para></listitem>
   		<listitem><para>Combined with the cell/node count you can move any number of cells/nodes in any
   		direction.</para></listitem>
-  		<listitem><para>For iOS applications you can define the direction you want a swipe to be performed on the
-  		desired component. Direction means the direction in which the finger would swipe, e.g. 
-  		<emphasis>left</emphasis> means that the swipe is performed from right to left on the component.</para></listitem>
   	</itemizedlist>
   
   

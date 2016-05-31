@@ -30,4 +30,15 @@
         	</para>
         </listitem>
     </itemizedlist>
+    <para><emphasis role="strong">Since M2</emphasis></para>
+    <para>
+        <emphasis role="strong">Removal of iOS toolkit support</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                We removed the support for iOS toolkit. It is no longer possible to create projects and start AUTs using these two toolkits.
+            </para>
+        </listitem>
+    </itemizedlist>
 </section>

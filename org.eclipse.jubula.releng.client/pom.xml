@@ -52,8 +52,6 @@
         <module>../org.eclipse.jubula.toolkit.html</module>
         <module>../org.eclipse.jubula.toolkit.html.api</module>
         <module>../org.eclipse.jubula.toolkit.html.provider</module>
-        <module>../org.eclipse.jubula.toolkit.ios.api</module>
-        <module>../org.eclipse.jubula.toolkit.ios.provider</module>
         <module>../org.eclipse.jubula.toolkit.javafx.api</module>
         <module>../org.eclipse.jubula.toolkit.javafx.provider</module>
         <module>../org.eclipse.jubula.toolkit.rcp.api</module>

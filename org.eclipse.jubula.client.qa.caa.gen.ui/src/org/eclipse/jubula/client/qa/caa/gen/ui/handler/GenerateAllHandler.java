@@ -40,6 +40,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 
 /**
+ * This is a handler which is generating a specific test structure
  * @author BREDEX GmbH
  */
 public class GenerateAllHandler extends AbstractHandler {
