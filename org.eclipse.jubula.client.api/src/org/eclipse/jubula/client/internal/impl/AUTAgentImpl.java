@@ -141,7 +141,7 @@ public class AUTAgentImpl implements AUTAgent {
                 m_agent.run();
                 if (!isConnected()) {
                     printlnConsoleError("Could not connect to AUT-Agent: " //$NON-NLS-1$
-                                + m_hostname + ":" + m_port);
+                                + m_hostname + ":" + m_port); //$NON-NLS-1$
                     throw new CommunicationException(
                         new ConnectException(
                             "Could not connect to AUT-Agent: " //$NON-NLS-1$
@@ -267,18 +267,18 @@ public class AUTAgentImpl implements AUTAgent {
     private void handleErrorResponse(int startResponse) {
         switch (startResponse) {
             case AUTStartResponse.IO:
-                printlnConsoleError("No Java found");
+                printlnConsoleError("No Java found"); //$NON-NLS-1$
                 break;
             case AUTStartResponse.DATA:
             case AUTStartResponse.EXECUTION:
             case AUTStartResponse.SECURITY:
             case AUTStartResponse.ERROR:
             case AUTStartResponse.COMMUNICATION:
-                printlnConsoleError("AUTServer could not start.");
+                printlnConsoleError("AUTServer could not start."); //$NON-NLS-1$
                 break;
             case AUTStartResponse.INVALID_ARGUMENTS:
-                printlnConsoleError("AUTServer could not start, "
-                        + " because parameters are invalid.");
+                printlnConsoleError("AUTServer could not start, " //$NON-NLS-1$
+                        + " because parameters are invalid."); //$NON-NLS-1$
                 break;
             case AUTStartResponse.AUT_MAIN_NOT_DISTINCT_IN_JAR:
                 printlnConsoleError(
@@ -286,27 +286,27 @@ public class AUTAgentImpl implements AUTAgent {
                 break;
             case AUTStartResponse.AUT_MAIN_NOT_FOUND_IN_JAR:
                 printlnConsoleError(
-                        "AUTServer could not start," 
-                        + " because no main class found in the jar.");
+                        "AUTServer could not start,"  //$NON-NLS-1$
+                        + " because no main class found in the jar."); //$NON-NLS-1$
                 break;
             case AUTStartResponse.NO_JAR_AS_CLASSPATH:
             case AUTStartResponse.SCANNING_JAR_FAILED:
                 printlnConsoleError(
-                        "AUTServer could not start, " 
-                        + " because the given jar is invalid.");
+                        "AUTServer could not start, "  //$NON-NLS-1$
+                        + " because the given jar is invalid."); //$NON-NLS-1$
                 break;
             case AUTStartResponse.NO_SERVER_CLASS:
                 printlnConsoleError(
-                        "AUT server could not be instantiated");
+                        "AUT server could not be instantiated"); //$NON-NLS-1$
                 break;
             case AUTStartResponse.DOTNET_INSTALL_INVALID:
                 printlnConsoleError(
-                        "The .NET runtime is not properly installed");
+                        "The .NET runtime is not properly installed"); //$NON-NLS-1$
                 break;
             case AUTStartResponse.JDK_INVALID:
                 printlnConsoleError(
-                        "the JDK used by the AUT is probably older than 1.5,"
-                                + " or javaagent is unknown ");
+                        "the JDK used by the AUT is probably older than 1.5," //$NON-NLS-1$
+                                + " or javaagent is unknown "); //$NON-NLS-1$
                 break;
             default:
                 break;
@@ -398,7 +398,7 @@ public class AUTAgentImpl implements AUTAgent {
      *      the message to log and println to sys.err
      */
     public static void printlnConsoleError(String text) {
-        System.err.println("An error ocurred: " + StringConstants.NEWLINE
+        System.err.println("An error ocurred: " + StringConstants.NEWLINE //$NON-NLS-1$
                 + StringConstants.TAB
                 + text); 
     }
