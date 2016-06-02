@@ -6,9 +6,9 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 
-<project name="JSlider" default="build" basedir=".">
+<project name="JSpinner" default="build" basedir=".">
 
-  	<property name="app.name"      	value="JSlider"/>
+  	<property name="app.name"      	value="JSpinner"/>
 	<property name="src" 			value="src"/>
 	<property name="build.dir"		value="build"/>
 	<property name="classes"		value="build/classes"/>
@@ -38,7 +38,7 @@
 	<target name="build" depends="compile">
 		<jar basedir="${classes}" destfile="${jars}/${app.name}.jar">
 			<manifest>
-				  <attribute name="Main-Class" value="org.eclipse.jubula.examples.extension.swing.aut.JSliderExampleAUT"/>  
+				  <attribute name="Main-Class" value="org.eclipse.jubula.examples.extension.swing.aut.JSpinnerExampleAUT"/>  
 		    </manifest>
 		</jar>
 	</target>
