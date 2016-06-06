@@ -604,13 +604,16 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageUpToolTip;
     public static String ProjectSettingWizardPageAllDownToolTip;
     public static String ProjectSettingWizardPageAllUpToolTip;
+    public static String ProjectSettingWizardPageProjectToolKitLabel;
     public static String ProjectSettingWizardPageAutToolKitLabel;
     public static String ProjectSettingWizardPageBottomLabel;
-    public static String ProjectSettingWizardPageClickNext;
+    public static String ProjectSettingWizardPageClickFinish;
     public static String ProjectSettingWizardPageDefaultProjectName;
     public static String ProjectSettingWizardPageDoubleProjectName;
     public static String ProjectSettingWizardPageLanguageLabel;
     public static String ProjectSettingWizardPageProjectName;
+    public static String ProjectSettingWizardAUTExecutableCommand;
+    public static String ProjectSettingWizardAUTUrl;
     public static String ProjectWithGUID;
     public static String ProjectWizardAUTData;
     public static String ProjectWizardAutSettings;

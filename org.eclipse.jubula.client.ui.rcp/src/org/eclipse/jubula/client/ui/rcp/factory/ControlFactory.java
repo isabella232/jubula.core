@@ -26,6 +26,7 @@ import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
@@ -88,10 +89,37 @@ public class ControlFactory {
     public static DirectCombo<String> createAutToolkitCombo(Composite parent, 
         IProjectPO project, String currentValue) throws ToolkitPluginException {
         
+        return createAutToolkitCombo(parent, project, currentValue, false);
+    }
+    
+    /**
+     * Creates a Combo for AUT-Toolkit depending on the Project-Toolkit.
+     * @param parent the parent of the Combo
+     * @param project the depending project.
+     * @param currentValue the value to select by default. If this value is not 
+     *                     found within the toolkit plugins, it will be added to
+     *                     the combo box anyway, but it will not be 
+     *                     internationalized. If this parameter is 
+     *                     <code>null</code>, it will be ignored.
+     * @param needDefaultNull if <code>true</code>then the first value will be null.
+     *                      otherwise will not contain null.
+     * @return a Combo with toolkits depending on the Project-Toolkit.
+     * @throws ToolkitPluginException if the toolkit for the given project 
+     *         cannot be found.
+     */
+    public static DirectCombo<String> createAutToolkitCombo(Composite parent, 
+        IProjectPO project, String currentValue, boolean needDefaultNull)
+                throws ToolkitPluginException {
+        
         final List<ToolkitDescriptor> toolkits = getAutToolkits(project);
 
         List<String> values = new ArrayList<String>();
         List<String> displayValues = new ArrayList<String>();
+        if (needDefaultNull) {
+            values.add(null);
+            displayValues.add(StringConstants.EMPTY);
+        }
+        
         for (ToolkitDescriptor desc : toolkits) {
             values.add(desc.getToolkitID());
             displayValues.add(desc.getName());

@@ -193,11 +193,13 @@ public abstract class UIComponentHelper {
      * @param fieldName The internationalized name of the text input field for 
      *                  which to create a label.
      * @param style the SWT style for the label.
+     * @return the new label
      */
-    public static void createLabel(
+    public static Label createLabel(
             Composite parent, String fieldName, int style) {
         Label label = new Label(parent, style);
         label.setText(fieldName + LABEL_TERMINATOR);
+        return label;
     }
 
     /**

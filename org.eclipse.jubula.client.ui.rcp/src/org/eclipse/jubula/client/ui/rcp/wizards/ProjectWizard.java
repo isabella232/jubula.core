@@ -41,8 +41,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.wizards.pages.AUTSettingWizardPage;
-import org.eclipse.jubula.client.ui.rcp.wizards.pages.AutConfigSettingWizardPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectSettingWizardPage;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -70,14 +68,6 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private static final String PROJECT_SETTING_WP = 
         "org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectSettingWizardPage"; //$NON-NLS-1$
     
-    /** the ID for the AUTSettingWizardPage */
-    private static final String AUT_SETTING_WP = 
-        "org.eclipse.jubula.client.ui.rcp.wizards.pages.AUTSettingWizardPage"; //$NON-NLS-1$
-    
-    /** the ID for the AutConfigSettingWizardPage */
-    private static final String AUT_CONFIG_SETTING_WP = 
-        "org.eclipse.jubula.client.ui.rcp.wizards.pages.AutConfigSettingWizardPage"; //$NON-NLS-1$
-    
     /**
      * Prefix for unbound modules project names
      */
@@ -94,30 +84,12 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private IAUTConfigPO m_autConfig;
     /** dialog to get the new project name from */
     private ProjectSettingWizardPage m_projectSettingWizardPage;
-    /** the wizard page for the aut settings */
-    private AUTSettingWizardPage m_autSettingWizardPage;
-    /** the wizard page for the aut configuration settings */
-    private AutConfigSettingWizardPage m_autConfigSettingWizardPage;
 
     /**
      * @return the wizard page for the project settings
      */
     public ProjectSettingWizardPage getProjectSettingWizardPage() {
         return m_projectSettingWizardPage;
-    }
-    
-    /**
-     * @return the wizard page for the AUT settings
-     */
-    public AUTSettingWizardPage getAutSettingWizardPage() {
-        return m_autSettingWizardPage;
-    }
-
-    /**
-     * @return the key of the wizard page for the AUT configuration settings
-     */
-    public String getAutConfigSettingWpID() {
-        return AUT_CONFIG_SETTING_WP;
     }
     
     /**
@@ -194,29 +166,12 @@ public class ProjectWizard extends Wizard implements INewWizard {
         IValidator autIdValidator = 
             new AutIdValidator(m_newProject, null, m_autConfig);
         m_projectSettingWizardPage = new ProjectSettingWizardPage(
-                PROJECT_SETTING_WP, m_newProject);
+                PROJECT_SETTING_WP, m_newProject, m_autMain, m_autConfig);
         m_projectSettingWizardPage.setTitle(Messages
                 .ProjectWizardProjectSettings);
         m_projectSettingWizardPage.setDescription(Messages
                 .ProjectWizardNewProject);
-        addPage(m_projectSettingWizardPage);            
-        
-        m_autSettingWizardPage = new AUTSettingWizardPage(
-                AUT_SETTING_WP, m_newProject, m_autMain);
-        m_autSettingWizardPage.setTitle(Messages.ProjectWizardAutSettings);
-        m_autSettingWizardPage.setDescription(Messages.ProjectWizardNewAUT);
-        m_autSettingWizardPage.setPageComplete(true);
-        addPage(m_autSettingWizardPage);
-        
-        m_autConfigSettingWizardPage = 
-            new AutConfigSettingWizardPage(AUT_CONFIG_SETTING_WP, 
-                    m_autConfig, autIdValidator); 
-        m_autConfigSettingWizardPage.setTitle(
-                Messages.ProjectWizardAutSettings);
-        m_autConfigSettingWizardPage.setDescription(
-                Messages.ProjectWizardAUTData);
-        m_autConfigSettingWizardPage.setPageComplete(true);
-        addPage(m_autConfigSettingWizardPage);  
+        addPage(m_projectSettingWizardPage); 
         
         Plugin.stopLongRunning();
     }
@@ -232,12 +187,9 @@ public class ProjectWizard extends Wizard implements INewWizard {
         IProgressMonitor monitor) throws InterruptedException {          
         
         Plugin.closeAllOpenedJubulaEditors(false);
-        m_newProject.setIsReusable(
-            m_projectSettingWizardPage.isProjectReusable());
-        m_newProject.setIsProtected(
-                m_projectSettingWizardPage.isProjectProtected());
         if (m_autMain.getName() == null
-                || StringConstants.EMPTY.equals(m_autMain.getName())) {
+                || StringConstants.EMPTY.equals(m_autMain.getName())
+                || m_autMain.getToolkit() == null) {
             m_newProject.removeAUTMain(m_autMain);
         }
         if (m_autConfig.getName() == null
