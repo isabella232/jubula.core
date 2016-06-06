@@ -435,7 +435,7 @@ public class AUTJavaFXHierarchy extends AUTHierarchy<EventTarget> {
         // relationship between stages in the hierarchy. Therefore this
         // workaround is necessary to create a unique name for a stage container.
         if (realComponent instanceof Window) {
-            List<Window> windows = CurrentStages.getStageList();
+            List<Window> windows = CurrentStages.getWindowList();
             ArrayList<String> names = new ArrayList<>();
             for (Window win : windows) {
                 JavaFXHierarchyContainer c = getHierarchyContainer(win);

@@ -61,7 +61,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      */
     public JavaFXApplicationTester() {
       //Add scene graphs to the event confirmer
-        for (Window w : CurrentStages.getStageList()) {
+        for (Window w : CurrentStages.getWindowList()) {
             ((RobotJavaFXImpl) getRobot()).getInterceptor().addSceneGraph(
                     w.getScene().windowProperty());
         }

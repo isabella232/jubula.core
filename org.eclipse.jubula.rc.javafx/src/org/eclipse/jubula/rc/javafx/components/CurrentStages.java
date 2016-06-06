@@ -25,6 +25,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
@@ -106,7 +107,12 @@ public class CurrentStages {
      * @return the Window
      */
     public static Window getfirstStage() {
-        return windows.get(0);
+        for (Window window : windows) {
+            if (window instanceof Stage) {
+                return window;
+            }
+        }
+        return null;
     }
 
     /**
@@ -114,7 +120,7 @@ public class CurrentStages {
      * 
      * @return the Window list
      */
-    public static List<Window> getStageList() {
+    public static List<Window> getWindowList() {
         return windows;
     }
 
@@ -126,7 +132,7 @@ public class CurrentStages {
     public static Window getfocusStage() {
         Window fStage = null;
         for (Window win : windows) {
-            if (win.isFocused()) {
+            if (win.isFocused() && win instanceof Stage) {
                 fStage = win;
             }
         }
