@@ -63,6 +63,7 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 /**
@@ -89,7 +90,7 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         ComboBox.class, TabPane.class, ChoiceBox.class, Accordion.class,
         ScrollPane.class, SplitPane.class, ToolBar.class,
         TreeTableView.class, MenuButton.class, Labeled.class, DatePicker.class,
-        Cell.class, Slider.class, Node.class
+        Cell.class, Slider.class, Shape.class, Node.class
         };
 
     @Override
@@ -191,6 +192,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
             return new CellAdapter((Cell<?>) objectToAdapt);
         } else if (objectToAdapt instanceof Slider) {
             return new SliderAdapter((Slider) objectToAdapt);
+        } else if (objectToAdapt instanceof Shape) {
+            return new JavaFXComponentAdapter<Shape>((Shape) objectToAdapt);
         } 
         return null;
     }

@@ -23,6 +23,17 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+ <emphasis role="strong">Support for javafx.scene.shape.Shape</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      Jubula now supports Shapes (e.g. Circles or Rectangles) in the
+      JavaFX toolkit on a graphics component level.
+    </para>
+  </listitem>
+</itemizedlist>
 <para><emphasis role="strong">Since M2</emphasis></para>
 <para>
  <emphasis role="strong">Simple Extensions</emphasis>
