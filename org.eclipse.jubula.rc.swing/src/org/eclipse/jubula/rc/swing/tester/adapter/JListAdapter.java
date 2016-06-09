@@ -98,6 +98,11 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
                 "List index '" + i + "' is not visible", //$NON-NLS-1$ //$NON-NLS-2$
                 EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
         }
+        
+        if (co.isScrollToVisible()) {
+            getRobot().scrollToVisible(m_list, r);
+        }
+        
         // if possible adjust height and width for items
         getRobotFactory().getEventThreadQueuer().invokeAndWait("setItemSize", new IRunnable<Void>() { //$NON-NLS-1$
             public Void run() throws StepExecutionException {
@@ -119,10 +124,14 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
       
         // If list visible width is less than the cell width, need to adjust the to
         // clickable rectangle to the visible part
+      
         double listVisibleWidth = m_list.getVisibleRect().getWidth();
         if (listVisibleWidth < r.getWidth())  {
+            double listVisibleX = m_list.getVisibleRect().getX();
             Dimension d = new Dimension();
             d.setSize(listVisibleWidth, r.getHeight());
+            r.setBounds((int) listVisibleX, (int) r.getY(), (int) r.getWidth(),
+                    (int) r.getHeight());
             r.setSize(d);
         }
             
@@ -132,7 +141,7 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
             d.setSize(maxWidth, r.getHeight());
             r.setSize(d);
         }
-
+     
         getRobot().click(m_list, r,
                 co.setClickType(ClickOptions.ClickType.RELEASED));
     }
