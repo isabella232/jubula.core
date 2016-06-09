@@ -12,7 +12,38 @@
     version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>Known issues and other information</title>
+    
+     <para><emphasis role="strong">Since M2</emphasis></para>
+    <para>
+        <emphasis role="strong">Removal of iOS toolkit support</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                We removed the support for iOS toolkit. It is no longer possible to create projects and start AUTs using these two toolkits.
+            </para>
+        </listitem>
+    </itemizedlist>
+    
     <para><emphasis role="strong">Since M1</emphasis></para>
+    <para>
+        <emphasis role="strong">'jubula' and 'server' directories merged in installation</emphasis>
+  </para>
+  <itemizedlist>
+        <listitem>
+            <para>
+             Instead of having two separate directories in the installation 
+             folder for the ITE tools (Jubula, testexec, dbtool) and the AUT Agent tools
+             (AUT Agent, autrun), there is now only one folder, 'ite'.  
+            </para>
+        </listitem>
+        <listitem>
+        	<para>
+ 			You will need to adapt your continuous integration scripts to reflect this change.
+        	</para>
+        </listitem>
+    </itemizedlist>
+   
   <para>
         <emphasis role="strong">Removal of Atlassian connectors</emphasis>
   </para>
@@ -30,15 +61,5 @@
         	</para>
         </listitem>
     </itemizedlist>
-    <para><emphasis role="strong">Since M2</emphasis></para>
-    <para>
-        <emphasis role="strong">Removal of iOS toolkit support</emphasis>
-    </para>
-    <itemizedlist>
-        <listitem>
-            <para>
-                We removed the support for iOS toolkit. It is no longer possible to create projects and start AUTs using these two toolkits.
-            </para>
-        </listitem>
-    </itemizedlist>
+   
 </section>
