@@ -97,6 +97,7 @@ public class Messages extends NLS {
     public static String Reading;
     public static String SaveOf;
     public static String ToolkitSupportToolkitNotFound;
+    public static String UnsupportedToolkits;
     public static String TKVersionCreatingNewProjectVersion;
     public static String TreeOpsBPImportedCat;
     public static String UnknownErrorType;

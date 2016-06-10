@@ -143,8 +143,11 @@ import org.eclipse.jubula.client.core.utils.LocaleUtil;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
@@ -321,12 +324,13 @@ class XmlImporter {
      *             project and the installed Toolkit Plugins
      * @throws InterruptedException
      *             if the operation was canceled.
+     * @throws ToolkitPluginException 
      */
     public IProjectPO createProject(Project xml, 
             IParamNameMapper paramNameMapper, 
             IWritableComponentNameCache compNameCache) 
-        throws InvalidDataException, JBVersionException, InterruptedException {
-        
+                    throws InvalidDataException, JBVersionException,
+                    InterruptedException, ToolkitPluginException {
         return createProject(xml, false, paramNameMapper, compNameCache);
     }
 
@@ -362,13 +366,16 @@ class XmlImporter {
      *             project and the installed Toolkit Plugins
      * @throws InterruptedException
      *             if the operation was canceled.
+     * @throws ToolkitPluginException 
+     *             in case of the toolkit of the project is not supported
      */
     public IProjectPO createProject(Project xml,
         Integer majorVersion, Integer minorVersion,
         Integer microVersion, String versionQualifier,
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache) 
-        throws InvalidDataException, JBVersionException, InterruptedException {
+                    throws InvalidDataException, JBVersionException,
+                    InterruptedException, ToolkitPluginException {
         
         if (majorVersion != null) {
             xml.setMajorProjectVersion(majorVersion);
@@ -416,16 +423,21 @@ class XmlImporter {
      * @throws JBVersionException
      *             in case of version conflict between used toolkits of imported
      *             project and the installed Toolkit Plugins
+     * @throws ToolkitPluginException 
+     *             in case of the toolkit of the project is not supported
      */
     public IProjectPO createProject(Project xml, boolean assignNewGuid,
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache) 
         throws InvalidDataException, 
-        InterruptedException, JBVersionException {
+        InterruptedException, JBVersionException, ToolkitPluginException {
         
         checkMinimumRequiredXMLVersion(xml);
         documentRequiredProjects(xml);
         checkUsedToolkits(xml);
+        
+        checkSupportedToolkits(xml.getUsedToolkitList());
+        
         
         List<AbstractXmlConverter> listOfConverter = 
             new LinkedList<AbstractXmlConverter>();
@@ -455,6 +467,37 @@ class XmlImporter {
         }
         
         return proj;
+    }
+
+    /**
+     * Check, whether the supported toolkits are supported.
+     * @param usedToolkits collection of the used toolkits
+     * @throws ToolkitPluginException if an unsupported toolkit is referenced
+     */
+    private void checkSupportedToolkits(
+            List<UsedToolkit> usedToolkits) throws ToolkitPluginException {
+        List<String> toolkitIds = ComponentBuilder.getInstance()
+                .getLevelToolkitIds();
+        
+        StringBuilder errorMsg = new StringBuilder();
+        for (UsedToolkit usedToolkit : usedToolkits) {
+         
+            if (!ComponentBuilder.getInstance().getLevelToolkitIds()
+                    .contains(usedToolkit.getName())) {
+                try {
+                    ToolkitConstants.LEVEL_TOOLKIT.equals(ToolkitSupportBP
+                                .getToolkitLevel(usedToolkit.getName()));
+                } catch (ToolkitPluginException e) {
+                    errorMsg.append(StringConstants.NEWLINE);
+                    errorMsg.append(StringConstants.TAB);
+                    errorMsg.append(usedToolkit.getName());
+                }
+            }
+        }
+        if (StringUtils.isNotBlank(errorMsg.toString())) {
+            throw new ToolkitPluginException(NLS
+                    .bind(Messages.UnsupportedToolkits, errorMsg.toString()));
+        }
     }
 
     /**

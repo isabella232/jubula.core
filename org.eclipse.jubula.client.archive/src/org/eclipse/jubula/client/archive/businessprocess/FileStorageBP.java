@@ -64,6 +64,7 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ConfigXmlException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -158,20 +159,8 @@ public class FileStorageBP {
                                     .ImportFileActionInfoStartingReadingProject,
                                     fileName)));
                     try {
-                        IProjectPO proj = null;
-                        String fileExt = fileName.substring(
-                                fileName.lastIndexOf(StringConstants.DOT),
-                                fileName.length());
-                        if (fileExt.equals(XML)) {
-                            proj = new XmlStorage().readProject(
-                                    fileURL, paramNameMapper, compNameCache, 
-                                    subMonitor.newChild(1), m_console);
-                        } else if (fileExt.equals(JUB)) {
-                            proj = new JsonStorage().readProject(
-                                    fileURL, paramNameMapper, compNameCache,
-                                    false,
-                                    subMonitor.newChild(1), m_console);
-                        }
+                        IProjectPO proj = readProject(subMonitor, fileURL,
+                                paramNameMapper, compNameCache, fileName);
                         if (proj == null) {
                             continue;
                         }
@@ -193,6 +182,10 @@ public class FileStorageBP {
                                 Activator.PLUGIN_ID, NLS.bind(Messages.
                                         ImportFileActionErrorImportFailed,
                                         fileName)));
+                    } catch (ToolkitPluginException e) {
+                        m_console.writeStatus(new Status(IStatus.ERROR,
+                                Activator.PLUGIN_ID, e.getMessage()));
+                        handleUnsupportedToolkits(e.getMessage());
                     }
                 }
                 showFinishedReadingProjects(m_console);
@@ -208,6 +201,51 @@ public class FileStorageBP {
             } finally {
                 monitor.done();
             }
+        }
+
+        /**
+         * 
+         * @param subMonitor
+         *            The progress monitor for this potentially long-running
+         *            operation.
+         * @param fileURL
+         *            URL of the project file to read
+         * @param paramNameMapper
+         *            mapper to resolve param names
+         * @param compNameCache
+         *            cache to resolve component names
+         * @param fileName
+         *             name of the project file
+         * @return the persisted object
+         * @throws PMReadException
+         *             in case of error
+         * @throws JBVersionException
+         *             in case of version conflict between used toolkits of
+         *             imported project and the installed Toolkit Plugins
+         * @throws InterruptedException
+         *             if the operation was canceled.
+         * @throws ToolkitPluginException
+         *             in case of the toolkit of the project is not supported
+         */
+        private IProjectPO readProject(SubMonitor subMonitor, URL fileURL,
+                ParamNameBPDecorator paramNameMapper,
+                final IWritableComponentNameCache compNameCache,
+                String fileName) throws PMReadException, JBVersionException,
+                        InterruptedException, ToolkitPluginException {
+            String fileExt = fileName.substring(
+                    fileName.lastIndexOf(StringConstants.DOT),
+                    fileName.length());
+            IProjectPO proj = null;
+            if (fileExt.equals(XML)) {
+                proj = new XmlStorage().readProject(fileURL, paramNameMapper,
+                        compNameCache, subMonitor.newChild(1), m_console);
+
+            } else if (fileExt.equals(JUB)) {
+                proj = new JsonStorage().readProject(fileURL, paramNameMapper,
+                        compNameCache, false, subMonitor.newChild(1),
+                        m_console);
+            }
+            return proj;
         }
     
         /**
@@ -1261,5 +1299,15 @@ public class FileStorageBP {
         ErrorMessagePresenter.getPresenter().showErrorMessage(
                 MessageIDs.E_IMPORT_PROJECT_CONFIG_CONFLICT, 
                 null, new String[] {ce.getMessage()});
+    }
+    
+    /**
+     * Create an error dialog 
+     * @param errorMessage msg to show
+     */
+    private static void handleUnsupportedToolkits(String errorMessage) {
+        ErrorMessagePresenter.getPresenter().showErrorMessage(
+                MessageIDs.E_UNSUPPORTED_TOOLKIT, 
+                null, new String[] {errorMessage});
     }
 }

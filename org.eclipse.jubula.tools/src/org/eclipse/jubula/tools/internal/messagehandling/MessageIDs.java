@@ -762,6 +762,7 @@ public class MessageIDs {
         messageMap.put(E_NO_AUT_IN_PROJECT, e, "ErrorMessage.NO_AUT_IN_PROJECT", null); //$NON-NLS-1$
         messageMap.put(E_TOOLKIT_COMPSYS_ERROR, e, "ErrorMessage.TOOLKIT_COMPSYS_ERROR", null); //$NON-NLS-1$
         messageMap.put(E_CONVERSION_ABORTED_ERROR, e, "ErrorMessage.CONVERSION_ABORTED_ERROR", null); //$NON-NLS-1$
+        messageMap.put(E_UNSUPPORTED_TOOLKIT, e,  "ErrorMessage.UNSUPPORTED_TOOLKIT", null); //$NON-NLS-1$
         
     }
     

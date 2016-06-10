@@ -46,6 +46,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
@@ -229,8 +230,8 @@ public class XmlStorage {
     }
     
     /**
-     * Takes the supplied input stream and parses it. According to the content an
-     * instance of IProjetPO along with its associated components is created.
+     * Takes the supplied input stream and parses it. According to the content
+     * an instance of IProjetPO along with its associated components is created.
      * 
      * @param projectXmlStream
      *            input stream for XML representation of a project
@@ -269,6 +270,8 @@ public class XmlStorage {
      *             project and the installed toolkit plug-ins
      * @throws InterruptedException
      *             if the operation was canceled.
+     * @throws ToolkitPluginException
+     *             in case of the toolkit of the project is not supported
      */
     public static IProjectPO load(InputStream projectXmlStream,
         Integer majorVersion, Integer minorVersion,
@@ -276,7 +279,8 @@ public class XmlStorage {
         IParamNameMapper paramNameMapper,
         IWritableComponentNameCache compNameCache, IProgressMonitor monitor,
         IProgressConsole io, boolean skipTrackingInformation)
-        throws PMReadException, JBVersionException, InterruptedException {
+                    throws PMReadException, JBVersionException,
+                    InterruptedException, ToolkitPluginException {
         ContentDocument contentDoc;
         try {
             contentDoc = getContent(projectXmlStream);
@@ -541,12 +545,14 @@ public class XmlStorage {
      *             project and the installed Toolkit Plugins
      * @throws InterruptedException
      *             if the operation was canceled.
+     * @throws ToolkitPluginException
+     *             in case of the toolkit of the project is not supported
      */
     public IProjectPO readProject(URL fileURL, 
         IParamNameMapper paramNameMapper, 
         IWritableComponentNameCache compNameCache,
         IProgressMonitor monitor, IProgressConsole io) throws PMReadException, 
-        JBVersionException, InterruptedException {
+        JBVersionException, InterruptedException, ToolkitPluginException {
         return load(openStreamToProjectURL(fileURL), null,
                 null, null, null, paramNameMapper, compNameCache, monitor, io,
                 false);

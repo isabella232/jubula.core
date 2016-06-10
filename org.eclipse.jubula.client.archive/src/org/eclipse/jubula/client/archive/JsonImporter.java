@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -31,8 +32,8 @@ import org.eclipse.jubula.client.archive.dto.CategoryDTO;
 import org.eclipse.jubula.client.archive.dto.CheckActivatedContextDTO;
 import org.eclipse.jubula.client.archive.dto.CheckAttributeDTO;
 import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
-import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
+import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.DataRowDTO;
 import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
@@ -112,8 +113,11 @@ import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
@@ -173,16 +177,19 @@ public class JsonImporter {
      * @throws InvalidDataException
      * @throws InterruptedException
      * @throws JBVersionException 
+     * @throws ToolkitPluginException 
      */
     public IProjectPO createProject(ProjectDTO projectDTO,
             boolean assignNewGuid, IParamNameMapper paramNameMapper, 
             IWritableComponentNameCache compNameCache)
                     throws InvalidDataException, InterruptedException,
-                    JBVersionException {
+                    JBVersionException, ToolkitPluginException {
 
         m_monitor.subTask(Messages.ImportJsonImportReqCheck);
         documentRequiredProjects(projectDTO);
+        checkSupportedToolkits(projectDTO.getUsedToolkits());
         checkUsedToolkits(projectDTO);
+       
         
         IProjectPO proj = initProject(projectDTO, assignNewGuid);
         EntityManager attrDescSession = Persistor.instance().openSession();
@@ -193,6 +200,37 @@ public class JsonImporter {
             Persistor.instance().dropSession(attrDescSession);
         }
         return proj;
+    }
+    
+    /**
+     * Check, whether the supported toolkits are supported.
+     * @param usedToolkits collection of the used toolkits
+     * @throws ToolkitPluginException if an unsupported toolkit is referenced
+     */
+    private void checkSupportedToolkits(
+            List<UsedToolkitDTO> usedToolkits) throws ToolkitPluginException {
+        List<String> toolkitIds = ComponentBuilder.getInstance()
+                .getLevelToolkitIds();
+        
+        StringBuilder errorMsg = new StringBuilder();
+        for (UsedToolkitDTO usedToolkit : usedToolkits) {
+         
+            if (!ComponentBuilder.getInstance().getLevelToolkitIds()
+                    .contains(usedToolkit.getName())) {
+                try {
+                    ToolkitConstants.LEVEL_TOOLKIT.equals(ToolkitSupportBP
+                                .getToolkitLevel(usedToolkit.getName()));
+                } catch (ToolkitPluginException e) {
+                    errorMsg.append(StringConstants.NEWLINE);
+                    errorMsg.append(StringConstants.TAB);
+                    errorMsg.append(usedToolkit.getName());
+                }
+            }
+        }
+        if (StringUtils.isNotBlank(errorMsg.toString())) {
+            throw new ToolkitPluginException(NLS
+                    .bind(Messages.UnsupportedToolkits, errorMsg.toString()));
+        }
     }
     
     /**

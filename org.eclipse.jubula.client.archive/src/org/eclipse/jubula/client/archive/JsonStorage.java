@@ -52,6 +52,7 @@ import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
@@ -261,6 +262,7 @@ public class JsonStorage {
      * @throws JBVersionException 
      * @throws PMReadException 
      * @throws InterruptedException 
+     * @throws ToolkitPluginException 
      * @throws PMSaveException 
      */
     public IProjectPO readProject(URL url, ParamNameBPDecorator paramNameMapper,
@@ -268,7 +270,7 @@ public class JsonStorage {
             boolean assignNewGuid,
             IProgressMonitor monitor, IProgressConsole io)
                     throws JBVersionException, PMReadException,
-                    InterruptedException {
+                    InterruptedException, ToolkitPluginException {
 
         SubMonitor subMonitor = SubMonitor.convert(monitor, Messages
                 .ImportFileBPReading, 2);
@@ -340,6 +342,7 @@ public class JsonStorage {
      * @throws JBVersionException
      * @throws InterruptedException
      * @throws PMReadException 
+     * @throws ToolkitPluginException 
      */
     public static IProjectPO load(ProjectDTO dto, IProgressMonitor monitor,
             IProgressConsole io, boolean assignNewGuid, 
@@ -347,7 +350,7 @@ public class JsonStorage {
             IWritableComponentNameCache compNameCache,
             boolean skipTrackingInformation)
                     throws JBVersionException, InterruptedException,
-                    PMReadException {
+                    PMReadException, ToolkitPluginException {
 
         IProjectPO projectPO = null;
         try {

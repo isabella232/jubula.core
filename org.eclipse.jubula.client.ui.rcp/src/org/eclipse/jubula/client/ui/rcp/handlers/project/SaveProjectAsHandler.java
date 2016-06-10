@@ -52,6 +52,7 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -119,8 +120,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 .getProject().getName();
             SubMonitor subMonitor = SubMonitor.convert(monitor,
                     NLS.bind(Messages.SaveProjectAsOperationSavingProject,
-                    new Object[] {cProjectName,
-                                  m_newProjectName}), TOTAL_WORK);
+                    new Object[] {cProjectName, m_newProjectName}), TOTAL_WORK);
             final ParamNameBPDecorator paramNameMapper = 
                 new ParamNameBPDecorator(ParamNameBP.getInstance());
             final IWritableComponentNameCache compNameCache = 
@@ -135,10 +135,15 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                     throw new InterruptedException();
                 }
                 if (dto != null) {
-                    final IProjectPO duplicatedProject = JsonStorage.load(dto,
-                            subMonitor.newChild(WORK_PROJECT_CREATION),
-                            Plugin.getDefault(), true, paramNameMapper,
-                            compNameCache, true);
+                    IProjectPO duplicatedProject = null;
+                    try {
+                        duplicatedProject = JsonStorage.load(dto,
+                                subMonitor.newChild(WORK_PROJECT_CREATION),
+                                Plugin.getDefault(), true, paramNameMapper,
+                                compNameCache, true);
+                    } catch (ToolkitPluginException e1) { 
+                        log.error(e1.getMessage()); // This should not be occur
+                    }
                     IWritableComponentNameMapper compNameMapper =
                         new ProjectComponentNameMapper(
                             compNameCache, duplicatedProject);
@@ -176,8 +181,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 Plugin.stopLongRunning();
                 PMExceptionHandler.handleProjectDeletedException();    
             } catch (JBVersionException e) {
-                // should not be occur, that a used toolkit of current project
-                // has a version conflict with installed Toolkit Plugin.
+                // should not be occur, that a used toolkit of current project // has a version conflict with installed Toolkit Plugin.
                 log.error(Messages.
                         ToolkitVersionConflictWhileSaveProjectAsAction);
             } finally {
