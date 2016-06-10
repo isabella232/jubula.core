@@ -270,7 +270,8 @@ public class ControlFactory {
         IProjectPO project) throws ToolkitPluginException {
         
         CompSystem compSys = ComponentBuilder.getInstance().getCompSystem();
-        final String projToolkit = project.getToolkit();
+        final String projToolkit = project != null
+                ? project.getToolkit() : null;
         if (projToolkit == null) {
             return compSys.getIndependentToolkitDescriptors(
                     ToolkitConstants.LEVEL_TOOLKIT);

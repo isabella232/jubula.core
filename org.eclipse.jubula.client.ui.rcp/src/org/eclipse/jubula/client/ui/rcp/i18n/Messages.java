@@ -626,6 +626,8 @@ public class Messages extends NLS {
     public static String ProjectWizardNotValidAUT;
     public static String ProjectWizardNotValidProject;
     public static String ProjectWizardProjectSettings;
+    public static String ProjectWizardProjectTemplate;
+    public static String ProjectWizardProjectTemplateInfo;
     public static String PropertiesActionPage1;
     public static String PropertiesActionPage2;
     public static String PropertiesActionPage3;

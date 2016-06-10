@@ -23,7 +23,6 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -47,7 +46,6 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -67,57 +65,45 @@ import org.eclipse.ui.PlatformUI;
  * @created 18.05.2005
  */
 public class ProjectSettingWizardPage extends WizardPage {
+    /** */
+    private static final String EMPTY = StringConstants.EMPTY;
     /** number of columns = 2 */
     private static final int NUM_COLUMNS_2 = 2;
-    /** Width of text fields */
-    private static final int WIDTH_TF = 500;
     /** Toolkit that is selected by default */
     private static final String DEFAULT_TOOLKIT =
             CommandConstants.CONCRETE_TOOLKIT;
     /** main container */
-    private Composite m_mainComposite;
+    private Composite m_mainComp;
     /** top container */
     private Composite m_topComposite;
-    /** the project that owns these properties */
-    private IProjectPO m_project = null;
     /** new name for the project */
     private String m_newProjectName = null;
     /** the combo box for the project toolkit */
     private DirectCombo<String> m_projectToolKitComboBox;
     /** the text field for the project name */
-    private Text m_projectNameTextField;
-    /** Aut executable label container */
-    private Composite m_autExecutableLabel;
-    /** Aut executable textField container */
-    private Composite m_autExecutableValue;
+    private Text m_projectNameTF;
+    /** Aut executable container */
+    private Composite m_autExecutable;
     /** the text field for AUT executable command*/
-    private Text m_autExecutableTextField;
+    private Text m_autExecutableTF;
     /** browse button for the executable */
-    private Button m_execButton;
+    private Button m_autExecButton;
     /** Aut URL label container */
-    private Composite m_autUrlLabel;
-    /** Aut URL textField container */
-    private Composite m_autUrlValue;
+    private Composite m_autUrl;
     /** the text field for AUT executable command*/
-    private Text m_autUrlTextField;
+    private Text m_autUrlTF;
     /** Aut toolkit label container */
-    private Composite m_autToolkitLabel;
-    /** Aut toolkit comboBox container*/
-    private Composite m_autToolkitValue;
+    private Composite m_autToolkit;
     /** the combo box for the aut toolkit */
     private DirectCombo<String> m_autToolKitComboBox;
     /** Browser label container */
-    private Composite m_browserLabel;
-    /** Browser comboBox container*/
-    private Composite m_browserValue;
+    private Composite m_browser;
     /** the combo box for browser */
     private I18nEnumCombo<Browser> m_browserComboBox;
     /** Browser path label container */
-    private Composite m_browserPathLabel;
-    /** Browser path textField container */
-    private Composite m_browserPathValue;
+    private Composite m_browserPath;
     /** the text field for browser path*/
-    private Text m_browserPathTextField;
+    private Text m_browserPathTF;
     /** browse button for the executable */
     private Button m_browserPathButton;
     /** the selectionListener */
@@ -130,19 +116,19 @@ public class ProjectSettingWizardPage extends WizardPage {
     private IAUTMainPO m_autMain;
     /** the name of the selected aut configuration */
     private IAUTConfigPO m_autConfig;
-   
+    /** project template check box */
+    private Button m_projectTemplate;
+    
+    
     /**
      * @param pageName The name of the wizard page.
-     * @param newProject The new project to create.
      * @param autMain 
      * @param autConfig 
      */
-    public ProjectSettingWizardPage(String pageName, IProjectPO newProject,
-            IAUTMainPO autMain, IAUTConfigPO autConfig) {
+    public ProjectSettingWizardPage(String pageName, IAUTMainPO autMain,
+            IAUTConfigPO autConfig) {
         super(pageName);
         setPageComplete(false);
-        m_project = newProject;  
-        m_newProjectName = m_project.getName();
         m_autMain = autMain;
         m_autConfig = autConfig;
     }
@@ -151,340 +137,162 @@ public class ProjectSettingWizardPage extends WizardPage {
      * {@inheritDoc}
      */
     public void createControl(Composite parent) {
-        ScrolledComposite scroll =
-                new ScrolledComposite(parent, SWT.V_SCROLL | SWT.H_SCROLL);
-        m_mainComposite = UIComponentHelper.createLayoutComposite(scroll);
-        ((GridLayout)m_mainComposite.getLayout()).marginLeft = 10;
-        m_topComposite = UIComponentHelper.createLayoutComposite(
-                m_mainComposite, NUM_COLUMNS_2);
+        m_mainComp = UIComponentHelper.createLayoutComposite(parent);
+        ((GridLayout)m_mainComp.getLayout()).marginWidth = 10;
+        m_topComposite = UIComponentHelper.createLayoutComposite(m_mainComp);
+        Composite bottomComp = UIComponentHelper.createLayoutComposite(
+                m_mainComp);
+        GridData data = new GridData();
+        data.grabExcessVerticalSpace = true;
+        data.verticalAlignment = GridData.END;
+        bottomComp.setLayoutData(data);
+        setMargin((GridLayout)bottomComp.getLayout());
         UIComponentHelper.createSeparator(m_topComposite, NUM_COLUMNS_2);
-        createProjectNameField(m_topComposite); 
-        createProjectToolKit(m_topComposite);
         setMessage(Messages.ProjectWizardNewProject);
-        Plugin.getHelpSystem().setHelp(m_mainComposite, ContextHelpIds
+        createProjectNameField(); 
+        createProjectToolKit();
+        Plugin.getHelpSystem().setHelp(m_mainComp, ContextHelpIds
             .PROJECT_WIZARD);
         createAutToolKit();
         createExecutableCommandField();
         createBrowserCombo();
         createBrowserPathField();
-        try {
-            modifyProjectNameField();
-            validation();
-        } catch (DialogValidationException ex) {
-            ex.errorMessageHandling();
-        }
-        
-        createNextLabel(m_mainComposite);
-        
-        scroll.setContent(m_mainComposite);
-        scroll.setMinSize(m_mainComposite.computeSize(SWT.DEFAULT,
-                SWT.DEFAULT));
-        scroll.setExpandHorizontal(true);
-        scroll.setExpandVertical(true);
-        setControl(m_mainComposite);
+        validation();
+        createProjectTemplateCheckBox(bottomComp);
+        createNextLabel(bottomComp);
+        setControl(m_mainComp);
         handleProjectToolkitCombo();
     }
 
     /**
-     * Creates the textfield for the project name.
-     * @param parent The parent composite.
+     * Creates the text field for the project name.
      */
-    private void createProjectNameField(Composite parent) {
-        Composite leftComposite = UIComponentHelper.createLayoutComposite(
-                parent);
-        Composite rightComposite = UIComponentHelper.createLayoutComposite(
-                parent);
-        setMargin((GridLayout)leftComposite.getLayout());
-        setMargin((GridLayout)rightComposite.getLayout());
-        ((GridData)rightComposite.getLayoutData())
-            .grabExcessHorizontalSpace = true;
-        UIComponentHelper.createLabelWithText(leftComposite,
+    private void createProjectNameField() {
+        Composite line = createLineComposite();
+        Composite leftComp = createLeftComposite(line,
                 Messages.ProjectSettingWizardPageProjectName);
-        m_projectNameTextField = new CheckedProjectNameText(rightComposite,
-                SWT.BORDER);
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = true;
-        textGridData.horizontalAlignment = SWT.LEFT;
-        textGridData.widthHint = WIDTH_TF;
-        m_projectNameTextField.setLayoutData(textGridData);
-        LayoutUtil.setMaxChar(m_projectNameTextField);
-        m_projectNameTextField.setText(
-                Messages.ProjectSettingWizardPageDefaultProjectName);
-        m_projectNameTextField.setSelection(0, m_projectNameTextField.getText()
-            .length());
-        m_projectNameTextField.addModifyListener(m_modifyListener);
+        Composite rightComp = createRightComposite(line);
+        m_projectNameTF = createTextField(rightComp, Messages
+                .ProjectSettingWizardPageDefaultProjectName, true);
+        m_projectNameTF.setSelection(0, m_projectNameTF.getText().length());
+        m_projectNameTF.addModifyListener(m_modifyListener);
     }
 
     /**
      * Creates the AUT executable command line.
      */
     private void createExecutableCommandField() {
-        if (m_autExecutableLabel != null) {
-            return;
-        }
-        m_autExecutableLabel = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        m_autExecutableValue = UIComponentHelper.createLayoutComposite(
-                m_topComposite, NUM_COLUMNS_2);
-        setMargin((GridLayout)m_autExecutableLabel.getLayout());
-        setMargin((GridLayout)m_autExecutableValue.getLayout());
-        ((GridData)m_autExecutableValue.getLayoutData())
-            .grabExcessHorizontalSpace = true;
-        UIComponentHelper.createLabelWithText(m_autExecutableLabel,
+        m_autExecutable = createLineComposite();
+        Composite leftComp = createLeftComposite(m_autExecutable,
                 Messages.ProjectSettingWizardAUTExecutableCommand);
-        m_autExecutableTextField = new Text(m_autExecutableValue, SWT.BORDER);
-        LayoutUtil.setMaxChar(m_autExecutableTextField);
-        m_execButton = new Button(m_autExecutableValue, SWT.PUSH);
-        m_execButton.setText(Messages.AUTConfigComponentBrowse);
-        m_execButton.addSelectionListener(m_selectionListener);
-        m_autExecutableTextField.addModifyListener(m_modifyListener);
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = true;
-        textGridData.horizontalAlignment = SWT.LEFT;
-        textGridData.widthHint = WIDTH_TF - m_execButton
-                .computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
-        m_autExecutableTextField.setLayoutData(textGridData);
-        m_mainComposite.layout(true, true);
+        Composite rightComp = createRightComposite(m_autExecutable,
+                NUM_COLUMNS_2);
+        m_autExecutableTF = createTextField(rightComp, null, false);
+        m_autExecutableTF.addModifyListener(m_modifyListener);
+        m_autExecButton = createBrowseButton(rightComp);
+        refresh();
     }
 
     /**
      * Creates the text field for the AUT url.
      */
     private void createUrlField() {
-        if (m_autUrlLabel != null) {
-            return;
-        }
-        m_autUrlLabel = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        m_autUrlValue = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        setMargin((GridLayout)m_autUrlLabel.getLayout());
-        setMargin((GridLayout)m_autUrlValue.getLayout());
-        ((GridData)m_autUrlValue.getLayoutData())
-            .grabExcessHorizontalSpace = true;
-        UIComponentHelper.createLabelWithText(m_autUrlLabel,
+        m_autUrl = createLineComposite();
+        Composite leftComp = createLeftComposite(m_autUrl,
                 Messages.ProjectSettingWizardAUTUrl);
-        m_autUrlTextField = new Text(m_autUrlValue, SWT.BORDER);
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = true;
-        textGridData.horizontalAlignment = SWT.LEFT;
-        textGridData.widthHint = WIDTH_TF;
-        m_autUrlTextField.setLayoutData(textGridData);
-        LayoutUtil.setMaxChar(m_autUrlTextField);
-        m_autUrlTextField.addModifyListener(m_modifyListener);
-        m_mainComposite.layout(true, true);
+        Composite rightComp = createRightComposite(m_autUrl);
+        m_autUrlTF = createTextField(rightComp, null, false);
+        m_autUrlTF.addModifyListener(m_modifyListener);
+        refresh();
     }
 
     /**
      * Creates the project toolkit line
-     * @param parent the parent composite
      */
-    private void createProjectToolKit(Composite parent) {
-        Composite leftComposite = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        Composite rightComposite = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        setMargin((GridLayout)leftComposite.getLayout());
-        setMargin((GridLayout)rightComposite.getLayout());
-        ((GridLayout)leftComposite.getLayout()).marginRight = 10;
-        ((GridData)rightComposite.getLayoutData())
-            .grabExcessHorizontalSpace = true;
-        Label label = UIComponentHelper.createLabelWithText(leftComposite,
-                Messages.ProjectSettingWizardPageProjectToolKitLabel);
-        ControlDecorator.createInfo(label,
-                I18n.getString("ControlDecorator.NewProjectToolkit"), false); //$NON-NLS-1$
-        m_projectToolKitComboBox = ControlFactory.createToolkitCombo(
-            rightComposite);
+    private void createProjectToolKit() {
+        Composite line = createLineComposite();
+        Composite leftComp = createLeftComposite(line,
+                Messages.ProjectSettingWizardPageProjectToolKitLabel,
+                I18n.getString("ControlDecorator.NewProjectToolkit")); //$NON-NLS-1$
+        Composite rightComp = createRightComposite(line);
+        m_projectToolKitComboBox = ControlFactory.createToolkitCombo(rightComp);
         GridData comboGridData = new GridData();
         comboGridData.grabExcessHorizontalSpace = true;
         LayoutUtil.addToolTipAndMaxWidth(comboGridData,
                 m_projectToolKitComboBox);
         m_projectToolKitComboBox.setLayoutData(comboGridData);
-        String projectToolkit = m_project.getToolkit();
-        if (projectToolkit != null && projectToolkit.length() > 0) {
-            m_projectToolKitComboBox.setSelectedObject(projectToolkit);
-        } else {
-            m_projectToolKitComboBox.setSelectedObject(DEFAULT_TOOLKIT);
-        }
-        m_projectToolKitComboBox.addModifyListener(m_modifyListener);
+        m_projectToolKitComboBox.setSelectedObject(DEFAULT_TOOLKIT);
+        m_projectToolKitComboBox.addSelectionListener(m_selectionListener);
     }
 
     /** Creates the aut toolkit line */
     private void createAutToolKit() {
-        if (m_autToolkitLabel != null) {
-            return;
-        }
-        m_autToolkitLabel = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        m_autToolkitValue = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        setMargin((GridLayout)m_autToolkitLabel.getLayout());
-        setMargin((GridLayout)m_autToolkitValue.getLayout());
-        ((GridData)m_autToolkitValue.getLayoutData())
-            .grabExcessHorizontalSpace = true;
-        Label label = UIComponentHelper.createLabelWithText(m_autToolkitLabel,
-                Messages.ProjectSettingWizardPageAutToolKitLabel);
-        ControlDecorator.createInfo(label,
-                I18n.getString("ControlDecorator.NewProjectAUTToolkit"), false); //$NON-NLS-1$
+        m_autToolkit = createLineComposite();
+        Composite leftComp = createLeftComposite(m_autToolkit,
+                Messages.ProjectSettingWizardPageAutToolKitLabel,
+                I18n.getString("ControlDecorator.NewProjectAUTToolkit")); //$NON-NLS-1$
+        Composite rightComp = createRightComposite(m_autToolkit);
         try {
             m_autToolKitComboBox = ControlFactory.createAutToolkitCombo(
-                    m_autToolkitValue, m_project, null, true);
+                    rightComp, null, null, true);
+            GridData comboGridData = new GridData();
+            comboGridData.grabExcessHorizontalSpace = true;
+            LayoutUtil.addToolTipAndMaxWidth(comboGridData,
+                    m_autToolKitComboBox);
+            m_autToolKitComboBox.setLayoutData(comboGridData);
+            m_autToolKitComboBox.addSelectionListener(m_selectionListener);
         } catch (ToolkitPluginException e) {
             e.printStackTrace();
+            removeAutToolKit();
         } 
-        GridData comboGridData = new GridData();
-        comboGridData.grabExcessHorizontalSpace = true;
-        LayoutUtil.addToolTipAndMaxWidth(comboGridData, m_autToolKitComboBox);
-        m_autToolKitComboBox.setLayoutData(comboGridData);
-        m_autToolKitComboBox.addModifyListener(m_modifyListener);
-        m_mainComposite.layout(true, true);
+        refresh();
     }
 
     /** Creates the browser combo line */
     private void createBrowserCombo() {
-        if (m_browserLabel != null) {
-            return;
-        }
-        m_browserLabel = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        m_browserValue = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        setMargin((GridLayout)m_browserLabel.getLayout());
-        setMargin((GridLayout)m_browserValue.getLayout());
-        ((GridData)m_browserValue.getLayoutData())
-            .grabExcessHorizontalSpace = true;
-        UIComponentHelper.createLabelWithText(m_browserLabel,
+        m_browser = createLineComposite();
+        Composite leftComp = createLeftComposite(m_browser,
                 I18n.getString("WebAutConfigComponent.browser")); //$NON-NLS-1$
-        m_browserComboBox = UIComponentHelper.createEnumCombo(
-                m_browserValue, 2, "WebAutConfigComponent.Browser", //$NON-NLS-1$
-                    Browser.class);
-        m_browserComboBox.deselectAll();
-        m_browserComboBox.clearSelection();
+        Composite rightComp = createRightComposite(m_browser);
+        m_browserComboBox = UIComponentHelper.createEnumCombo(rightComp, 2,
+                "WebAutConfigComponent.Browser", Browser.class); //$NON-NLS-1$
         GridData comboGridData = new GridData();
         comboGridData.grabExcessHorizontalSpace = true;
         LayoutUtil.addToolTipAndMaxWidth(comboGridData, m_browserComboBox);
         m_browserComboBox.setLayoutData(comboGridData);
-        m_browserComboBox.addModifyListener(m_modifyListener);
-        m_mainComposite.layout(true, true);
+        m_browserComboBox.addSelectionListener(m_selectionListener);
+        refresh();
     }
 
     /** Creates the browser path line */
     private void createBrowserPathField() {
-        if (m_browserPathLabel != null) {
-            return;
-        }
-        m_browserPathLabel = UIComponentHelper.createLayoutComposite(
-                m_topComposite);
-        m_browserPathValue = UIComponentHelper.createLayoutComposite(
-                m_topComposite, NUM_COLUMNS_2);
-        setMargin((GridLayout)m_browserPathLabel.getLayout());
-        setMargin((GridLayout)m_browserPathValue.getLayout());
-        ((GridData)m_browserPathValue.getLayoutData())
-            .grabExcessHorizontalSpace = true;
-        Label label = UIComponentHelper.createLabelWithText(m_browserPathLabel,
+        m_browserPath = createLineComposite();
+        Composite leftComp = createLeftComposite(m_browserPath,
                 I18n.getString("WebAutConfigComponent.browserPath")); //$NON-NLS-1$
-        ControlDecorator.createInfo(label,
-                I18n.getString("ControlDecorator.WebBrowserPath"), false); //$NON-NLS-1$
-        m_browserPathTextField = new Text(m_browserPathValue, SWT.BORDER);
-        m_browserPathTextField.addModifyListener(m_modifyListener);
-        LayoutUtil.setMaxChar(m_browserPathTextField);
-        m_browserPathButton = new Button(m_browserPathValue, SWT.PUSH);
-        m_browserPathButton.setText(I18n.getString("AUTConfigComponent.browse")); //$NON-NLS-1$
-        m_browserPathButton.addSelectionListener(m_selectionListener);
-        GridData textGridData = new GridData();
-        textGridData.grabExcessHorizontalSpace = true;
-        textGridData.horizontalAlignment = GridData.FILL;
-        textGridData.horizontalAlignment = SWT.LEFT;
-        textGridData.widthHint = WIDTH_TF - m_browserPathButton
-                .computeSize(SWT.DEFAULT, SWT.DEFAULT).x;
-        m_browserPathTextField.setLayoutData(textGridData);
-        m_mainComposite.layout(true, true);
-        
+        Composite rightComp = createRightComposite(m_browserPath,
+                NUM_COLUMNS_2);
+        m_browserPathTF = createTextField(rightComp, null, false);
+        m_browserPathTF.addModifyListener(m_modifyListener);
+        m_browserPathButton = createBrowseButton(rightComp);
+        refresh();
     }
-    
-    /**
-     * remove the aut toolkit line
+
+    /** Creates the project template check box
+     * @param parent 
      */
-    private void removeAutToolKit() {
-        if (m_autToolkitLabel != null) {
-            m_autToolkitLabel.dispose();
-            m_autToolkitLabel = null;
-        }
-        if (m_autToolkitValue != null) {
-            m_autToolkitValue.dispose();
-            m_autToolkitValue = null;
-        }
-        m_autToolKitComboBox = null;
-        m_mainComposite.layout(true, true);
-    }
-    
-    /**
-     * remove the aut executable line
-     */
-    private void removeAutExecutable() {
-        if (m_autExecutableLabel != null) {
-            m_autExecutableLabel.dispose();
-            m_autExecutableLabel = null;
-        }
-        if (m_autExecutableValue != null) {
-            m_autExecutableValue.dispose();
-            m_autExecutableValue = null;
-        }
-        m_autExecutableTextField = null;
-        putConfigValue(AutConfigConstants.EXECUTABLE, StringConstants.EMPTY);
-        putConfigValue(AutConfigConstants.WORKING_DIR, StringConstants.EMPTY);
-        m_mainComposite.layout(true, true);
-    }
-    
-    /**
-     * remove the aut executable line
-     */
-    private void removeAutUrl() {
-        if (m_autUrlLabel != null) {
-            m_autUrlLabel.dispose();
-            m_autUrlLabel = null;
-        }
-        if (m_autUrlValue != null) {
-            m_autUrlValue.dispose();
-            m_autUrlValue = null;
-        }
-        m_autUrlTextField = null;
-        putConfigValue(AutConfigConstants.AUT_URL, StringConstants.EMPTY);
-        m_mainComposite.layout(true, true);
-    }
-    
-    /**
-     * remove the aut browser combo line
-     */
-    private void removeBrowserCombo() {
-        if (m_browserLabel != null) {
-            m_browserLabel.dispose();
-            m_browserLabel = null;
-        }
-        if (m_browserValue != null) {
-            m_browserValue.dispose();
-            m_browserValue = null;
-        }
-        m_browserComboBox = null;
-        putConfigValue(AutConfigConstants.BROWSER, StringConstants.EMPTY);
-        m_mainComposite.layout(true, true);
-    }
-    
-    /**
-     * remove the aut browser path line
-     */
-    private void removeBrowserPathField() {
-        if (m_browserPathLabel != null) {
-            m_browserPathLabel.dispose();
-            m_browserPathLabel = null;
-        }
-        if (m_browserPathValue != null) {
-            m_browserPathValue.dispose();
-            m_browserPathValue = null;
-        }
-        m_browserPathTextField = null;
-        putConfigValue(AutConfigConstants.BROWSER_PATH, StringConstants.EMPTY);
-        m_mainComposite.layout(true, true);
+    private void createProjectTemplateCheckBox(Composite parent) {
+        m_projectTemplate = new Button(parent, SWT.CHECK);
+        m_projectTemplate.setText(Messages.ProjectWizardProjectTemplate);
+        m_projectTemplate.setSelection(true);
+        m_projectTemplate.addSelectionListener(m_selectionListener);
+        ControlDecorator.createInfo(m_projectTemplate,
+                Messages.ProjectWizardProjectTemplateInfo, false);
+        GridData data = new GridData();
+        data.grabExcessVerticalSpace = true;
+        data.verticalAlignment = GridData.END;
+        m_projectTemplate.setLayoutData(data);
+        refresh();
+        createLeftComposite(parent, null);
     }
     
     /**
@@ -495,14 +303,166 @@ public class ProjectSettingWizardPage extends WizardPage {
         Label nextLabel = UIComponentHelper.createLabelWithText(parent,
                 Messages.ProjectSettingWizardPageClickFinish);
         GridData data = new GridData();
-        data.horizontalSpan = NUM_COLUMNS_2;
         data.grabExcessVerticalSpace = true;
         data.verticalAlignment = GridData.END;
         nextLabel.setLayoutData(data);
-        m_mainComposite.layout(true, true);
+        refresh();
     }
     
-    /** Handle aut config*/
+    /**
+     * @param parent component
+     * @return a button
+     */
+    private Button createBrowseButton(Composite parent) {
+        Button button = new Button(parent, SWT.PUSH);
+        button.setText(Messages.AUTConfigComponentBrowse);
+        button.addSelectionListener(m_selectionListener);
+        GridData buttonGridData = new GridData();
+        buttonGridData.grabExcessHorizontalSpace = false;
+        buttonGridData.horizontalAlignment = SWT.RIGHT;
+        button.setLayoutData(buttonGridData);
+        return button;
+    }
+    
+    /**
+     * @return a composite line containing two columns
+     */
+    private Composite createLineComposite() {
+        return UIComponentHelper.createLayoutComposite(m_topComposite,
+                NUM_COLUMNS_2);
+    }
+    
+    /**
+     * @param parent parent composite
+     * @param text label text
+     * @return a composite containing a label
+     */
+    private Composite createLeftComposite(Composite parent, String text) {
+        return createLeftComposite(parent, text, null);
+    }
+    
+    /**
+     * @param parent parent composite
+     * @param text label text
+     * @param info info text
+     * @return a composite containing a label and info decoration
+     */
+    private Composite createLeftComposite(Composite parent, String text,
+            String info) {
+        Composite comp = UIComponentHelper.createLayoutComposite(parent);
+        setMargin((GridLayout)comp.getLayout());
+        GridData rightGridData = (GridData)comp.getLayoutData();
+        rightGridData.grabExcessHorizontalSpace = true;
+        rightGridData.widthHint = 120;
+        Label label = text != null ? UIComponentHelper
+                .createLabelWithText(comp, text) : null;
+        if (info != null && label != null) {
+            ControlDecorator.createInfo(label, info, false);
+        }
+        return comp;
+    }
+    
+    /**
+     * @param parent parent composite
+     * @return a composite line containing a column
+     */
+    private Composite createRightComposite(Composite parent) {
+        return createRightComposite(parent, 1); 
+    }
+    
+    /**
+     * @param parent parent composite
+     * @param column number of columns
+     * @return a composite line may containing one or more column(s)
+     */
+    private Composite createRightComposite(Composite parent, int column) {
+        Composite comp = UIComponentHelper
+                .createLayoutComposite(parent, column);
+        setMargin((GridLayout)comp.getLayout());
+        GridData rightGridData = (GridData)comp.getLayoutData();
+        rightGridData.grabExcessHorizontalSpace = true;
+        rightGridData.widthHint = 500;
+        return comp;
+    }
+    
+    /**
+     * @param parent parent composite
+     * @param text of text field
+     * @param checked if <code>true</code> then the return text field will be
+     *                  an CheckedProjectNameText.
+     * @return a text field
+     */
+    private Text createTextField(Composite parent, String text,
+            boolean checked) {
+        Text textField = checked ? new CheckedProjectNameText(
+                parent, SWT.BORDER) :  new Text(parent, SWT.BORDER);
+        GridData textGridData = new GridData();
+        textGridData.grabExcessHorizontalSpace = true;
+        textGridData.horizontalAlignment = SWT.FILL;
+        textField.setLayoutData(textGridData);
+        LayoutUtil.setMaxChar(textField);
+        if (text != null) {
+            textField.setText(text);
+        }
+        return textField;
+    }
+    
+    /** remove the aut toolkit line */
+    private void removeAutToolKit() {
+        if (m_autToolkit != null) {
+            m_autToolkit.dispose();
+            m_autToolkit = null;
+        }
+        m_autToolKitComboBox = null;
+        refresh();
+    }
+    
+    /** remove the aut executable line */
+    private void removeAutExecutable() {
+        if (m_autExecutable != null) {
+            m_autExecutable.dispose();
+            m_autExecutable = null;
+        }
+        m_autExecutableTF = null;
+        putConfigValue(AutConfigConstants.EXECUTABLE, EMPTY);
+        putConfigValue(AutConfigConstants.WORKING_DIR, EMPTY);
+        refresh();
+    }
+    
+    /** remove the aut url line */
+    private void removeAutUrl() {
+        if (m_autUrl != null) {
+            m_autUrl.dispose();
+            m_autUrl = null;
+        }
+        m_autUrlTF = null;
+        putConfigValue(AutConfigConstants.AUT_URL, EMPTY);
+        refresh();
+    }
+    
+    /** remove the aut browser combo line */
+    private void removeBrowserCombo() {
+        if (m_browser != null) {
+            m_browser.dispose();
+            m_browser = null;
+        }
+        m_browserComboBox = null;
+        putConfigValue(AutConfigConstants.BROWSER, EMPTY);
+        refresh();
+    }
+    
+    /** remove the aut browser path line */
+    private void removeBrowserPathField() {
+        if (m_browserPath != null) {
+            m_browserPath.dispose();
+            m_browserPath = null;
+        }
+        m_browserPathTF = null;
+        putConfigValue(AutConfigConstants.BROWSER_PATH, EMPTY);
+        refresh();
+    }
+    
+    /** Handle aut config */
     private void handleAutConfig() {
         String projectToolkit = m_projectToolKitComboBox.getSelectedObject();
         String autToolkit = m_autToolKitComboBox == null ? null
@@ -517,44 +477,22 @@ public class ProjectSettingWizardPage extends WizardPage {
     
     /** Clear the default aut configs */
     private void cleanAutConfig() {
-        m_autMain.setName(StringConstants.EMPTY);
-        putConfigValue(AutConfigConstants.AUT_CONFIG_NAME,
-                StringConstants.EMPTY);
-        putConfigValue(AutConfigConstants.AUT_ID, StringConstants.EMPTY);
-        putConfigValue(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME,
-                StringConstants.EMPTY);
+        m_autMain.setName(EMPTY);
+        putConfigValue(AutConfigConstants.AUT_CONFIG_NAME, EMPTY);
+        putConfigValue(AutConfigConstants.AUT_ID, EMPTY);
+        putConfigValue(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME, EMPTY);
     }
     
     /** Fill the default aut configs */
     private void fillAutConfig() {
         m_autMain.setName(m_newProjectName);
+        String localhost = EnvConstants.LOCALHOST_ALIAS;
+        String[] strings = new String [] {m_newProjectName, localhost};
         String configName = NLS.bind(
-                Messages.AUTConfigComponentDefaultAUTConfigName, 
-                        new String [] {
-                            m_newProjectName, 
-                            EnvConstants.LOCALHOST_ALIAS
-                        });
+                Messages.AUTConfigComponentDefaultAUTConfigName, strings);
         putConfigValue(AutConfigConstants.AUT_CONFIG_NAME, configName);
         putConfigValue(AutConfigConstants.AUT_ID, m_newProjectName);
-        putConfigValue(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME,
-                EnvConstants.LOCALHOST_ALIAS);
-    }
-       
-    /**
-     * {@inheritDoc}
-     */
-    public void dispose() {
-        removeListener();
-        super.dispose();
-    }
-    
-    /**
-     * Removes all listeners.
-     */
-    private void removeListener() {
-        if (m_project != null) {
-            m_projectNameTextField.removeModifyListener(m_modifyListener);
-        }
+        putConfigValue(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME, localhost);
     }
     
     /** 
@@ -564,7 +502,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      */
     private void modifyProjectNameField() throws DialogValidationException {
         boolean isCorrect = true;
-        String projectName = m_projectNameTextField.getText();
+        String projectName = m_projectNameTF.getText();
         int projectNameLength = projectName.length();
         if ((projectNameLength == 0) || (projectName.startsWith(" ")) //$NON-NLS-1$
             || (projectName.charAt(projectNameLength - 1) == ' ')) {
@@ -572,9 +510,7 @@ public class ProjectSettingWizardPage extends WizardPage {
             isCorrect = false;
         }
         if (isCorrect) {
-            if (ProjectPM.doesProjectNameExist(projectName)
-                && !m_project.getName().equals(projectName)) {
-                
+            if (ProjectPM.doesProjectNameExist(projectName)) {
                 throw new DialogValidationException(
                         Messages.ProjectSettingWizardPageDoubleProjectName);
             }
@@ -591,9 +527,10 @@ public class ProjectSettingWizardPage extends WizardPage {
      * Handles the file browser button event.
      * @param title The file dialog title.
      * @param text texField
+     * @param extension extension
      * @return directory
      */
-    private String fileBrowser(String title, Text text) {
+    private String fileBrowser(String title, Text text, String[] extension) {
         FileDialog fileDialog = new FileDialog(getShell(),
                 SWT.APPLICATION_MODAL | SWT.ON_TOP);
         fileDialog.setText(title);
@@ -611,6 +548,7 @@ public class ProjectSettingWizardPage extends WizardPage {
         } catch (IOException e) {
             // Just use the default filter path which is already set
         }
+        fileDialog.setFilterExtensions(extension);
         fileDialog.setFilterPath(filterPath);
         directory = fileDialog.open();
         if (directory != null) {
@@ -622,10 +560,9 @@ public class ProjectSettingWizardPage extends WizardPage {
     /** Handle the executable path button */
     private void handleExecButtonEvent() {
         String directory = fileBrowser(Messages
-                .AUTConfigComponentSelectExecutable, m_autExecutableTextField);
-
+                .AUTConfigComponentSelectExecutable, m_autExecutableTF, null);
         if (directory != null) {
-            m_autExecutableTextField.setText(directory);
+            m_autExecutableTF.setText(directory);
             setWorkingDirToExecFilePath(directory);
             validation();
         }
@@ -635,9 +572,9 @@ public class ProjectSettingWizardPage extends WizardPage {
     private void handleBrowserPathButtonEvent() {
         String directory = fileBrowser(
                 I18n.getString("WebAutConfigComponent.SelectBrowserPath"), //$NON-NLS-1$
-                m_browserPathTextField);
+                m_browserPathTF, null);
         if (directory != null) {
-            m_browserPathTextField.setText(directory);
+            m_browserPathTF.setText(directory);
             validation();
         }
     }
@@ -647,7 +584,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      * @param file The dir path of the executable file as string.
      */
     private void setWorkingDirToExecFilePath(String file) {
-        String execPath = StringConstants.EMPTY;
+        String execPath = EMPTY;
         File wd = new File(file);
         if (wd.isAbsolute() && wd.getParentFile() != null) {
             execPath = wd.getParentFile().getAbsolutePath();
@@ -657,10 +594,10 @@ public class ProjectSettingWizardPage extends WizardPage {
 
     /** Check and modify the executable path */
     private void modifyExecutableTextField() {
-        String executable = StringConstants.EMPTY;
-        if (m_autExecutableTextField != null
-                && !m_autExecutableTextField.getText().isEmpty()) {
-            executable =  m_autExecutableTextField.getText();
+        String executable = EMPTY;
+        if (m_autExecutableTF != null
+                && !m_autExecutableTF.getText().isEmpty()) {
+            executable =  m_autExecutableTF.getText();
             try {
                 File file = new File(executable);
                 if (!file.exists()) {
@@ -681,15 +618,16 @@ public class ProjectSettingWizardPage extends WizardPage {
      * @throws DialogValidationException
      */
     private void modifyUrlTextField() throws DialogValidationException {
-        String urlText = StringConstants.EMPTY;
-        if (m_autUrlTextField != null
-                && !m_autUrlTextField.getText().isEmpty()) {
+        String urlText = EMPTY;
+        if (m_autUrlTF != null
+                && !m_autUrlTF.getText().isEmpty()) {
             try {
-                new URL(m_autUrlTextField.getText());
-                urlText = m_autUrlTextField.getText();
+                new URL(m_autUrlTF.getText());
+                urlText = m_autUrlTF.getText();
             } catch (MalformedURLException e) {
                 throw new DialogValidationException(I18n.getString(
-                        "WebAutConfigComponent.wrongUrl") + StringConstants.NEWLINE + e.getMessage()); //$NON-NLS-1$
+                        "WebAutConfigComponent.wrongUrl") //$NON-NLS-1$
+                        + StringConstants.NEWLINE + e.getMessage());
             }
         }
         putConfigValue(AutConfigConstants.AUT_URL, urlText);
@@ -698,17 +636,16 @@ public class ProjectSettingWizardPage extends WizardPage {
     /** Modify the browser */
     private void modifyBrowser() {
         final String browser = (m_browserComboBox == null || m_browserComboBox
-                .getSelectedObject() == null ? StringConstants.EMPTY
+                .getSelectedObject() == null ? EMPTY
                         : m_browserComboBox.getSelectedObject().toString());
         putConfigValue(AutConfigConstants.BROWSER, browser);
     }
     
     /** Check and modify the browser path */
     private void modifyBrowserPathTextField() {
-        String txt = StringConstants.EMPTY;
-        if (m_browserPathTextField != null
-                && m_browserPathTextField.getText().length() > 0) {
-            txt = m_browserPathTextField.getText();
+        String txt = EMPTY;
+        if (m_browserPathTF != null && !m_browserPathTF.getText().isEmpty()) {
+            txt = m_browserPathTF.getText();
             try {
                 File file = new File(txt);
                 if (!file.exists()) {
@@ -722,7 +659,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         }
         putConfigValue(AutConfigConstants.BROWSER_PATH, txt);
     }
-    
     
     /** set default message */
     private void noMessage() {
@@ -749,15 +685,20 @@ public class ProjectSettingWizardPage extends WizardPage {
         setMessage(warningMessage, IMessageProvider.WARNING);
     }
     
-    /**
-     * Checks validity of all fields.
-     */
+    /** Checks validity of all fields. */
     protected void validation() {
         noMessage();
-        modifyExecutableTextField();
-        modifyBrowser();
-        modifyBrowserPathTextField();
-        setPageComplete(true);
+        setPageComplete(false);
+        try {
+            modifyProjectNameField();
+            modifyUrlTextField();
+            modifyExecutableTextField();
+            modifyBrowser();
+            modifyBrowserPathTextField();
+            setPageComplete(true);
+        } catch (DialogValidationException e) {
+            e.errorMessageHandling();
+        }
     }
     
     /**
@@ -778,15 +719,11 @@ public class ProjectSettingWizardPage extends WizardPage {
         return (!areBothEmpty) || !value.equals(previousValue);
     }
     
-    /**
-     * Handle the combobox of project toolkit
-     */
+    /** Handle the combobox of project toolkit */
     private void handleProjectToolkitCombo() {
         String toolkit = m_projectToolKitComboBox.getSelectedObject();
-        m_project.setToolkit(toolkit);
         removeAutToolKit();
-        putConfigValue(AutConfigConstants.KEYBOARD_LAYOUT,
-                StringConstants.EMPTY);
+        putConfigValue(AutConfigConstants.KEYBOARD_LAYOUT, EMPTY);
         handleAutToolkitCombo(toolkit);
     }
     
@@ -803,7 +740,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         if (toolkit == null) {
             return;
         }
-        
         switch (toolkit) {
             case CommandConstants.RCP_TOOLKIT:
             case CommandConstants.SWT_TOOLKIT:
@@ -821,20 +757,14 @@ public class ProjectSettingWizardPage extends WizardPage {
                 createAutToolKit();
                 break;
         }
-        
-        handleAutConfig();
+        validation();
     }
     
     /** Handle the combobox of browser */
     private void handleBrowserCombo() {
-        if (m_browserComboBox == null
-                || m_browserComboBox.getSelectedObject() == null) {
-            return;
-        }
         Browser browser = m_browserComboBox.getSelectedObject();
-        if (browser.equals(Browser.InternetExplorer)) {
-            removeBrowserPathField();
-        } else {
+        removeBrowserPathField();
+        if (!browser.equals(Browser.InternetExplorer)) {
             createBrowserPathField();
         }
     }
@@ -865,10 +795,20 @@ public class ProjectSettingWizardPage extends WizardPage {
          */
         public void widgetSelected(SelectionEvent e) {
             Object o = e.getSource();
-            if (o.equals(m_execButton)) {
+            if (o.equals(m_autExecButton)) {
                 handleExecButtonEvent();
             } else if (o.equals(m_browserPathButton)) {
                 handleBrowserPathButtonEvent();
+            } else if (o.equals(m_projectToolKitComboBox)) {
+                handleProjectToolkitCombo();
+                validation();
+            } else if (o.equals(m_autToolKitComboBox)) {
+                handleAutToolkitCombo(m_autToolKitComboBox
+                        .getSelectedObject());
+                validation();
+            } else if (o.equals(m_browserComboBox)) {
+                handleBrowserCombo();
+                validation();
             }
         }
         
@@ -889,28 +829,7 @@ public class ProjectSettingWizardPage extends WizardPage {
          * {@inheritDoc}
          */
         public void modifyText(ModifyEvent e) {
-            Object o = e.getSource();
-            try {
-                if (o.equals(m_projectToolKitComboBox)) {
-                    handleProjectToolkitCombo();
-                } else if (o.equals(m_autToolKitComboBox)) {
-                    handleAutToolkitCombo(m_autToolKitComboBox
-                            .getSelectedObject());
-                } else if (o.equals(m_browserComboBox)) {
-                    handleBrowserCombo();
-                } else if (o.equals(m_projectNameTextField)) {
-                    modifyProjectNameField();
-                    validation();
-                } else if (o.equals(m_autUrlTextField)) {
-                    modifyUrlTextField();
-                    validation();
-                } else if (o.equals(m_autExecutableTextField)
-                        || o.equals(m_browserPathTextField)) {
-                    validation();
-                }
-            } catch (DialogValidationException ex) {
-                ex.errorMessageHandling();
-            }
+            validation();
         }       
     }
     
@@ -958,7 +877,7 @@ public class ProjectSettingWizardPage extends WizardPage {
      * @return the toolkit of project
      */
     public String getProjectToolkit() {
-        return m_project.getToolkit();
+        return m_projectToolKitComboBox.getSelectedObject();
     }
 
     /**
@@ -966,5 +885,19 @@ public class ProjectSettingWizardPage extends WizardPage {
      */
     public String getAutToolkit() {
         return m_autMain.getToolkit();
+    }
+
+    /**
+     * @return need project template
+     */
+    public boolean needProjectTamplet() {
+        return m_projectTemplate.getSelection();
+    }
+    
+    /** resize the wizard */
+    private void refresh() {
+        if (m_projectNameTF.isVisible()) {
+            getShell().pack(true);
+        }
     }
 }

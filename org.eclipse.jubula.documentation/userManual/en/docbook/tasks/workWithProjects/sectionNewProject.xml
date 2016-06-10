@@ -82,8 +82,17 @@
       </para>
     </listitem>
     <listitem>
+      <para>
         In the <emphasis>AUT executable</emphasis> field, enter the path to
         the application you want to test.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you check the <emphasis>project template</emphasis> checkbox,
+        the project will be created with a basic structure which might
+        help you organize your project.
+      </para>
     </listitem>
   </orderedlist>
   <para>

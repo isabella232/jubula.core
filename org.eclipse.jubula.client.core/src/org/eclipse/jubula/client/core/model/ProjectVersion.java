@@ -146,4 +146,36 @@ public class ProjectVersion {
         }
         return sb.toString();
     }
+    
+    /**
+     * @param version is a project version
+     * @return return  less then 0 if this version is older then the argument version,
+     *                 0 if this version is equal with argument version,
+     *                 greater then 0 if this version is newer then the argument version.
+     */
+    public int compareTo(ProjectVersion version) {
+        int result = 0;
+        if (m_majorNumber != null && version.m_majorNumber != null) {
+            result = m_majorNumber.compareTo(version.m_majorNumber);
+            if (result != 0) {
+                return result;
+            }
+        }
+        if (m_microNumber != null && version.m_microNumber != null) {
+            result = m_microNumber.compareTo(version.m_microNumber);
+            if (result != 0) {
+                return result;
+            }
+        }
+        if (m_minorNumber != null && version.m_minorNumber != null) {
+            result = m_minorNumber.compareTo(version.m_minorNumber);
+            if (result != 0) {
+                return result;
+            }
+        }
+        if (m_qualifier != null && version.m_qualifier != null) {
+            result = m_qualifier.compareTo(version.m_qualifier);
+        }
+        return result;
+    }
 }

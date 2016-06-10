@@ -214,6 +214,16 @@ public class ImportFileBP implements IProjectNameConflictResolver,
             return Status.OK_STATUS;
         }
     }
+    
+    /**
+     * @return URL of project template if is exist otherwise null
+     */
+    public URL getProjectTemplateUrl() {
+        Bundle b = Platform.getBundle(Plugin.PLUGIN_ID);
+        Enumeration e = b.findEntries(
+                "resources/template", "*.jub", false); //$NON-NLS-1$//$NON-NLS-2$
+        return e.hasMoreElements() ? (URL)e.nextElement() : null;
+    }
 
     /**
      * {@inheritDoc}

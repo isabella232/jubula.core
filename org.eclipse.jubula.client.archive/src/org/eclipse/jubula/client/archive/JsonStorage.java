@@ -304,7 +304,7 @@ public class JsonStorage {
 
             ProjectDTO projectDTO = (ProjectDTO) allDTOs.get(PJT);
             
-            if (projectExists(projectDTO)) {
+            if (!assignNewGuid && projectExists(projectDTO)) {
                 existProjectHandling(io, projectDTO);
                 return null;
             }
