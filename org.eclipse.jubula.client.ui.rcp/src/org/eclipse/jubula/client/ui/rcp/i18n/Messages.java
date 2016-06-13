@@ -597,6 +597,8 @@ public class Messages extends NLS {
     public static String ProjectPropertyPageReusableProjectsUpperLabel;
     public static String ProjectPropertyPageReusableProjectsUpToolTip;
     public static String ProjectPropertyPageSelectReusedProjects;
+    public static String ProjectPropertyPageSearchForDeprProjModuleTitle;
+    public static String ProjectPropertyPageSearchForDeprProjModuleMsg;
     public static String ProjectPropertyPageShellTitle;
     public static String ProjectPropertyPageUpperLabel;
     public static String ProjectPropertyPageUpToolTip;
@@ -891,6 +893,7 @@ public class Messages extends NLS {
     public static String UIJobSearchingTestCases;
     public static String UIJobSearchingTestDataCube;
     public static String UIJobSearchingTestSuites;
+    public static String UIJobSearchingDeprecatedModules;
     public static String UIJobStartTestJob;
     public static String UnexpectedDialogReturnCode;
     public static String UnexpectedError;

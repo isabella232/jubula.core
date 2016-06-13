@@ -88,6 +88,14 @@ public abstract class AbstractQuery implements ISearchQuery {
     public String getTimestamp() {
         return m_timestamp;
     }
+    
+    
+    /**
+     * @return Get the result set node.
+     */
+    public Set<INodePO> getResultNodeSet() {
+        return m_resultNodeSet;
+    }
 
     /**
      * @param monitor The process monitor.

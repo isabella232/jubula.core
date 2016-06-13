@@ -16,15 +16,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -50,8 +51,10 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
+import org.eclipse.jubula.client.ui.rcp.handlers.project.RefreshProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
+import org.eclipse.jubula.client.ui.rcp.search.query.DeprecatedModulesQuery;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedProjectNameText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedSignatureText;
@@ -66,6 +69,7 @@ import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.search.ui.NewSearchUI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -732,7 +736,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
      */
     public boolean performOk() {
         try {
-           
+            Plugin.startLongRunning(Messages
+                    .RefreshTSBrowserActionProgressMessage);
             if (!m_oldProjectName.equals(m_newProjectName)) {
                 if (ProjectPM.doesProjectNameExist(m_newProjectName)) {
 
@@ -752,7 +757,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             }
             fireOkPressed();
             Set<IReusedProjectPO> origReused = 
-                ((IProjectPropertiesPO)getEditSupport().getOriginal())
+                    ((IProjectPropertiesPO)getEditSupport().getOriginal())
                     .getUsedProjects();
             Set<IReusedProjectPO> newReused = new HashSet<IReusedProjectPO>(
                 ((IProjectPropertiesPO)getEditSupport().getWorkVersion())
@@ -760,23 +765,8 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             newReused.removeAll(origReused);
             getEditSupport().saveWorkVersion();
             refreshAutMainList();
-            
-            for (IReusedProjectPO reused : newReused) {
-                try {
-                    IProjectPO reusedProject = 
-                        ProjectPM.loadReusedProject(reused);
-                    if (reusedProject != null) { 
-                        // incomplete database, see https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=854
-                        ComponentNamesBP.getInstance().refreshNames(
-                                reusedProject.getId());
-                    }
-                } catch (JBException e) {
-                    // Could not refresh Component Name information for 
-                    // reused project. Log the exception.
-                    log.error(Messages
-                            .ErrorWhileRetrievingReusedProjectInformation, e);
-                }
-            }
+            boolean doSearchQuery = false;
+            doSearchQuery = handleReusedChanged(newReused);
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.fireProjectStateChanged(ProjectState.prop_modified);
             
@@ -793,6 +783,10 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             ded.fireDataChangedListener(
                     events.toArray(new DataChangedEvent[0]));
             CompletenessBP.getInstance().completeProjectCheck();
+            if (doSearchQuery) {
+                NewSearchUI.runQueryInBackground(new DeprecatedModulesQuery());
+            }
+        
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialog(e, null, null);
         } catch (ProjectDeletedException e) {
@@ -800,8 +794,74 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         } catch (IncompatibleTypeException ite) {
             ErrorHandlingUtil.createMessageDialog(
                     ite, ite.getErrorMessageParams(), null);
+        } catch (InterruptedException e) {
+            ErrorHandlingUtil.createMessageDialog(
+                    new JBException(Messages.UnexpectedError, e,
+                            MessageIDs.E_UNEXPECTED_EXCEPTION));
+        } catch (InvocationTargetException e) {
+            ErrorHandlingUtil.createMessageDialog(
+                    new JBException(Messages.UnexpectedError, e,
+                            MessageIDs.E_UNEXPECTED_EXCEPTION));
         }
+        Plugin.stopLongRunning();
         return true;
+    }
+
+    /**
+     * this method asks if it should be searched for used deprecated
+     * modules {@link DeprecatedModulesQuery} and also refreshes the master
+     * session if there was a change in the reused of projects.
+     * @param newReused the list of new {@link IReusedProjectPO}
+     * @return boolean which states if the search query should be done
+     * @throws InvocationTargetException might occur during refresh
+     * @throws InterruptedException might occur during refresh
+     */
+    private boolean handleReusedChanged(Set<IReusedProjectPO> newReused)
+            throws InvocationTargetException, InterruptedException {
+        boolean doSearchQuery = false;
+        if (newReused.size() > 0) {
+            doSearchQuery = openSearchForDeprecatedDialog();
+            PlatformUI.getWorkbench().getProgressService().run(false, false,
+                    new RefreshProjectHandler.RefreshProjectOperation());
+        }
+        for (IReusedProjectPO reused : newReused) {
+            try {
+                IProjectPO reusedProject =
+                    ProjectPM.loadReusedProject(reused);
+                if (reusedProject != null) {
+                    // incomplete database, see https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=854
+                    ComponentNamesBP.getInstance().refreshNames(
+                            reusedProject.getId());
+                }
+            } catch (JBException e) {
+                // Could not refresh Component Name information for
+                // reused project. Log the exception.
+                log.error(Messages
+                        .ErrorWhileRetrievingReusedProjectInformation, e);
+            }
+        }
+        return doSearchQuery;
+    }
+
+    /**
+     * creates and opens a dialog if a search for the deprecated Modules
+     * should be done
+     * @return the boolean if the search should be done
+     */
+    private boolean openSearchForDeprecatedDialog() {
+        MessageDialog mdiag = new MessageDialog(
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                Messages.ProjectPropertyPageSearchForDeprProjModuleTitle, null,
+                Messages.ProjectPropertyPageSearchForDeprProjModuleMsg,
+                MessageDialog.QUESTION,
+                new String[] { IDialogConstants.YES_LABEL,
+                               IDialogConstants.NO_LABEL },
+                0);
+        mdiag.create();
+        Plugin.getHelpSystem().setHelp(
+                PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                ContextHelpIds.SEARCH_FOR_DEPRECATED_MODULES_DIALOG);
+        return (mdiag.open() == Window.OK);
     }
 
     /**

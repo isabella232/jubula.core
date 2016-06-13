@@ -367,7 +367,11 @@ public interface ContextHelpIds {
     /** for the used project page in the settings dialog */
     public static final String PROJECT_USED_PROPERTY_PAGE = PRAEFIX
         + "projectUsedPropertyPageContextId"; //$NON-NLS-1$
-
+    
+    /** for the searching deprecated modules dialog */
+    public static final String SEARCH_FOR_DEPRECATED_MODULES_DIALOG = PRAEFIX
+        + "projectSearchForDeprecatedModulesPageContextId"; //$NON-NLS-1$
+    
     /** for the used toolkit page in the settings dialog */
     public static final String TOOLKIT_PROPERTY_PAGE = PRAEFIX
         + "toolkitPropertyPageContextId"; //$NON-NLS-1$
