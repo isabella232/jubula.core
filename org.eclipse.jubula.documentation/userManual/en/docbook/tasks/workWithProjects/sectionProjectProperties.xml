@@ -95,14 +95,22 @@
       <listitem>
         <para>
           Edit whether the Project can be referenced (reused) in
-          other Projects.
+          other Projects. This will let you use the Test Cases in
+          this Project as the basis or library for other Projects
+          (see the section later for more details on this
+          (<xref linkend="reuseproject"/>)).
         </para>
       </listitem>
       <listitem>
         <para>
-          Edit the protected status of the Project. A protected
-          Project does not allow deletion of Test Cases or editing
-          of parameters.
+          Edit the protected status of the Project. In a
+          protected Projects, you cannot delete Test Cases, edit
+          parameters for Test Cases, or make any changes to the column
+          usage of central test data sets. This is only necessary if
+          the Project is reused in another Project – the protection
+          ensures that irreversible changes cannot be made to the
+          reused Project that would adversely affect its dependent
+          Projects.
         </para>
       </listitem>
       <listitem>
