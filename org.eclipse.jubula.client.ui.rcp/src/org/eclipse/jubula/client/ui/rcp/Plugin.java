@@ -1441,17 +1441,22 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
     
     @Override
     public void closeConsole() {
-        IConsole[] cons = ConsolePlugin.getDefault().getConsoleManager()
-                .getConsoles();
-        ArrayList<IConsole> toRemove = new ArrayList<IConsole>();
-        for (IConsole c : cons) {
-            if (c.getName().contains(CONNECTION_CONSOLE_NAME)
-                    && c instanceof MessageConsole) {
-                toRemove.add(c);
+        ConsolePlugin consolePlugin = ConsolePlugin.getDefault();
+        if (consolePlugin != null
+                && consolePlugin.getConsoleManager() != null) {
+
+            IConsole[] cons = ConsolePlugin.getDefault().getConsoleManager()
+                    .getConsoles();
+            ArrayList<IConsole> toRemove = new ArrayList<IConsole>();
+            for (IConsole c : cons) {
+                if (c.getName().contains(CONNECTION_CONSOLE_NAME)
+                        && c instanceof MessageConsole) {
+                    toRemove.add(c);
+                }
             }
+            ConsolePlugin.getDefault().getConsoleManager().removeConsoles(
+                    toRemove.toArray(new IConsole[toRemove.size()]));
         }
-        ConsolePlugin.getDefault().getConsoleManager()
-        .removeConsoles(toRemove.toArray(new IConsole[toRemove.size()]));
     }
 
     /**
