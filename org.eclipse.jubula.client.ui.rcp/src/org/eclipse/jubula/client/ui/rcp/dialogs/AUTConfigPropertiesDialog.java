@@ -28,8 +28,6 @@ import org.eclipse.jubula.client.ui.rcp.widgets.autconfig.AutConfigComponent;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
-import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
-import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.UnexpectedGenericTypeException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -135,37 +133,10 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
     /**
      * {@inheritDoc}
      */
-    protected void okPressed() {
-        if (canExecFileGetUsed()) {
-            NagDialog.runNagDialog(this.getShell(),
-                    "InfoNagger.DefineSwingOrSwtExecutable", //$NON-NLS-1$
-                    ContextHelpIds.AUT_CONFIG_SETTING_WIZARD_PAGE); 
-        }
-        super.okPressed();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
     public boolean close() {
         DataEventDispatcher.getInstance().getDialogStatusListenerMgr()
             .removeListener(this);
         return super.close();
-    }
-
-    /**
-     * @return true if Swing or SWT should be used and an executable file is declared
-     */
-    private boolean canExecFileGetUsed() {
-        if (m_autConfig.getValue(AutConfigConstants.EXECUTABLE, null) != null) {
-            if (m_toolkit.equals(CommandConstants.SWT_TOOLKIT)
-                    || m_toolkit.equals(
-                            CommandConstants.SWING_TOOLKIT)) {
-                return true;
-            }
-        }
-        // else
-        return false;
     }
     
     /**
