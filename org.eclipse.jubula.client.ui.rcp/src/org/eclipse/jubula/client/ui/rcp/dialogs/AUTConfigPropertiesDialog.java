@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDialogStatusLi
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutConfigNameValidator;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.widgets.autconfig.AutConfigComponent;
@@ -63,6 +64,12 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
     /** validator for the AUT ID text field */
     private IValidator m_autIdValidator;
     
+    /** Validator for the AUT Configuration Name text field */
+    private IValidator m_autConfigNameValidator;
+
+    /** The AUT Config component */
+    private AutConfigComponent m_autConfigComponent = null;
+    
     /**
      * The contructor.
      * @param parentShell The shell.
@@ -70,16 +77,19 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
      * @param toolkit the toolkit.
      * @param autName The name of the AUT that will be using this configuration.
      * @param autIdValidator The validator for the AUT ID text field.
+     * @param autConfigNameValidator The validator for the AUT Config Name
      */
     public AUTConfigPropertiesDialog(Shell parentShell, 
             IAUTConfigPO autConfig, String toolkit, String autName, 
-            IValidator autIdValidator) {
+            IValidator autIdValidator, 
+            AutConfigNameValidator autConfigNameValidator) {
         
         super(parentShell);
         m_autConfig = autConfig;
         m_toolkit = toolkit;
         m_autName = autName;
         m_autIdValidator = autIdValidator;
+        m_autConfigNameValidator = autConfigNameValidator;
     }
 
     /**
@@ -115,8 +125,12 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
             //           the validator should be set in the constructor, rather than
             //           in a separate setter method.
             if (autConfigComposite instanceof AutConfigComponent) {
-                ((AutConfigComponent)autConfigComposite).setAutIdValidator(
+                m_autConfigComponent = 
+                        ((AutConfigComponent) autConfigComposite);
+                m_autConfigComponent.setAutIdValidator(
                         m_autIdValidator);
+                m_autConfigComponent
+                    .setAutConfignameValidator(m_autConfigNameValidator);
             }
             
         } catch (ToolkitPluginException e) {
@@ -128,6 +142,16 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
         }
 
         return parent;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public int open() {
+        if (m_autConfigComponent != null) {
+            m_autConfigComponent.checkAll();
+        }
+        return super.open();
     }
     
     /**

@@ -519,8 +519,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                 try {
                     if (!file.exists()) {
                         error = createWarningStatus(
-                            NLS.bind(Messages.AUTConfigComponentFileNotFound,
-                                    file.getCanonicalPath()));
+                            Messages.AUTConfigComponentFileNotFound);
                     } else {
                         jarFile = new JarFile(file);
                         Manifest jarManifest = jarFile.getManifest();
@@ -949,9 +948,8 @@ public class JavaAutConfigComponent extends AutConfigComponent {
 
                 try {
                     if (!file.isFile()) {
-                        error = createWarningStatus(NLS.bind(
-                            Messages.AUTConfigComponentFileNotFound,
-                                file.getCanonicalPath()));
+                        error = createWarningStatus(
+                            Messages.AUTConfigComponentFileNotFound);
                     } else {
                         // Make sure that the user has not entered an executable
                         // JAR file in the wrong field.

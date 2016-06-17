@@ -615,15 +615,10 @@ public class ProjectSettingWizardPage extends WizardPage {
         if (m_autExecutableTF != null
                 && !m_autExecutableTF.getText().isEmpty()) {
             executable =  m_autExecutableTF.getText();
-            try {
-                File file = new File(executable);
-                if (!file.exists()) {
-                    warningMessage(NLS.bind(
-                            Messages.AUTConfigComponentFileNotFound,
-                            file.getCanonicalPath()));
-                }
-            } catch (IOException e) {
-                //do nothing
+            File file = new File(executable);
+            if (!file.exists()) {
+                warningMessage(
+                        Messages.AUTConfigComponentFileNotFound);
             }
         }
         putConfigValue(AutConfigConstants.EXECUTABLE, executable);
@@ -663,15 +658,9 @@ public class ProjectSettingWizardPage extends WizardPage {
         String txt = EMPTY;
         if (m_browserPathTF != null && !m_browserPathTF.getText().isEmpty()) {
             txt = m_browserPathTF.getText();
-            try {
-                File file = new File(txt);
-                if (!file.exists()) {
-                    warningMessage(NLS.bind(
-                            Messages.AUTConfigComponentFileNotFound,
-                            file.getCanonicalPath()));
-                }
-            } catch (IOException e) {
-                //do nothing
+            File file = new File(txt);
+            if (!file.exists()) {
+                warningMessage(Messages.AUTConfigComponentFileNotFound);
             }
         }
         putConfigValue(AutConfigConstants.BROWSER_PATH, txt);

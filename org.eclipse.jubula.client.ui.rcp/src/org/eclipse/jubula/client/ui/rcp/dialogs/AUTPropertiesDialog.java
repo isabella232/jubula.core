@@ -44,6 +44,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutConfigNameValidator;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.rcp.factory.ControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -756,7 +757,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         AUTConfigPropertiesDialog dialog = new AUTConfigPropertiesDialog(
                 m_addButton.getShell(), autConfig, getAutToolkit(), autName, 
                 new AutIdValidator(m_project, m_autMain, 
-                        autConfig));
+                        autConfig), 
+                new AutConfigNameValidator(m_autMain, autConfig));
         dialog.create();
         DialogUtils.setWidgetNameForModalDialog(dialog);
         dialog.getShell().setText(Messages.AUTPropertiesDialogAUTConfigTitle);
@@ -796,7 +798,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 m_editButton.getShell(), autConfig, getAutToolkit(), 
                 m_autMain.getName(), 
                 new AutIdValidator(m_project, m_autMain, 
-                        autConfig));
+                        autConfig),
+                new AutConfigNameValidator(m_autMain, autConfig));
             dialog.create();
             DialogUtils.setWidgetNameForModalDialog(dialog);
             dialog.getShell().setText(

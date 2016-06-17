@@ -54,6 +54,7 @@ public class Messages extends NLS {
     public static String AUTConfigComponentBrowse;
     public static String AUTConfigComponentClassPathDialogTitle;
     public static String AUTConfigComponentDefaultAUTConfigName;
+    public static String AUTConfigComponentDuplicateAUTConfigName;
     public static String AUTConfigComponentEdit;
     public static String AUTConfigComponentElement;
     public static String AUTConfigComponentEmptyAUTConfigName;
