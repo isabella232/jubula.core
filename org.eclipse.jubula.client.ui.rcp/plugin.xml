@@ -2274,9 +2274,6 @@
               <test
                 property="org.eclipse.jubula.client.core.model.ObjectMappingCategory.isTopLevel"
                 value="false" />
-              <test
-                property="org.eclipse.jubula.client.core.model.ObjectMappingCategory.isEmpty"
-                value="true" />
             </iterate>
             <iterate
               ifEmpty="false"

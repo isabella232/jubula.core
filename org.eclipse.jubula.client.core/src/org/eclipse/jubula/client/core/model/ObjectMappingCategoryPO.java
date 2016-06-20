@@ -167,7 +167,6 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
      * {@inheritDoc}
      */
     public void removeCategory(IObjectMappingCategoryPO category) {
-        category.setParent(null);
         getHbmCategoryList().remove(category);
     }
 
