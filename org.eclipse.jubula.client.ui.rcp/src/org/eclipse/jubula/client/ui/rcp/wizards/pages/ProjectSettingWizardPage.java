@@ -43,6 +43,7 @@ import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -176,6 +177,8 @@ public class ProjectSettingWizardPage extends WizardPage {
                 .ProjectSettingWizardPageDefaultProjectName, true);
         m_projectNameTF.setSelection(0, m_projectNameTF.getText().length());
         m_projectNameTF.addModifyListener(m_modifyListener);
+        m_projectNameTF.setData(SwtToolkitConstants.WIDGET_NAME,
+                "NewProjectWizard.ProjectNameTextField"); //$NON-NLS-1$
     }
 
     /**
@@ -189,6 +192,8 @@ public class ProjectSettingWizardPage extends WizardPage {
                 NUM_COLUMNS_2);
         m_autExecutableTF = createTextField(rightComp, null, false);
         m_autExecutableTF.addModifyListener(m_modifyListener);
+        m_autExecutableTF.setData(SwtToolkitConstants.WIDGET_NAME,
+                "NewProjectWizard.ExecutablePathField"); //$NON-NLS-1$
         m_autExecButton = createBrowseButton(rightComp);
         refresh();
     }
@@ -203,6 +208,8 @@ public class ProjectSettingWizardPage extends WizardPage {
         Composite rightComp = createRightComposite(m_autUrl);
         m_autUrlTF = createTextField(rightComp, null, false);
         m_autUrlTF.addModifyListener(m_modifyListener);
+        m_autUrlTF.setData(SwtToolkitConstants.WIDGET_NAME,
+                "NewProjectWizard.BrowserURLField"); //$NON-NLS-1$
         refresh();
     }
 
@@ -223,6 +230,8 @@ public class ProjectSettingWizardPage extends WizardPage {
         m_projectToolKitComboBox.setLayoutData(comboGridData);
         m_projectToolKitComboBox.setSelectedObject(DEFAULT_TOOLKIT);
         m_projectToolKitComboBox.addSelectionListener(m_selectionListener);
+        m_projectToolKitComboBox.setData(SwtToolkitConstants.WIDGET_NAME,
+                "NewProjectWizard.ProjectToolkit"); //$NON-NLS-1$
     }
 
     /** Creates the aut toolkit line */
@@ -241,6 +250,8 @@ public class ProjectSettingWizardPage extends WizardPage {
                     m_autToolKitComboBox);
             m_autToolKitComboBox.setLayoutData(comboGridData);
             m_autToolKitComboBox.addSelectionListener(m_selectionListener);
+            m_autToolKitComboBox.setData(SwtToolkitConstants.WIDGET_NAME,
+                    "NewProjectWizard.AutToolkit"); //$NON-NLS-1$
         } catch (ToolkitPluginException e) {
             e.printStackTrace();
             removeAutToolKit();
@@ -261,6 +272,8 @@ public class ProjectSettingWizardPage extends WizardPage {
         LayoutUtil.addToolTipAndMaxWidth(comboGridData, m_browserComboBox);
         m_browserComboBox.setLayoutData(comboGridData);
         m_browserComboBox.addSelectionListener(m_selectionListener);
+        m_browserComboBox.setData(SwtToolkitConstants.WIDGET_NAME,
+                "NewProjectWizard.BrowserComboBox"); //$NON-NLS-1$
         refresh();
     }
 
@@ -274,6 +287,8 @@ public class ProjectSettingWizardPage extends WizardPage {
         m_browserPathTF = createTextField(rightComp, null, false);
         m_browserPathTF.addModifyListener(m_modifyListener);
         m_browserPathButton = createBrowseButton(rightComp);
+        m_browserPathTF.setData(SwtToolkitConstants.WIDGET_NAME,
+                "NewProjectWizard.BrowserPathField"); //$NON-NLS-1$
         refresh();
     }
 
@@ -287,6 +302,8 @@ public class ProjectSettingWizardPage extends WizardPage {
         m_projectTemplate.addSelectionListener(m_selectionListener);
         ControlDecorator.createInfo(m_projectTemplate,
                 Messages.ProjectWizardProjectTemplateInfo, false);
+        m_projectTemplate.setData(SwtToolkitConstants.WIDGET_NAME,
+                "NewProjectWizard.ProjectTemplateCheckBox"); //$NON-NLS-1$
         GridData data = new GridData();
         data.grabExcessVerticalSpace = true;
         data.verticalAlignment = GridData.END;
