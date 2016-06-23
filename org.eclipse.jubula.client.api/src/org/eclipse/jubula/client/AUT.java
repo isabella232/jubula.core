@@ -92,5 +92,12 @@ public interface AUT extends Remote {
      */
     void setProfile(Profile profile) throws IllegalArgumentException,
             IllegalStateException, CommunicationException;
-    
+    /**
+     * if set to <code>true<code> the name of the method and the parameters
+     * from the CAP which will be executed are written to the console (standard out).
+     * Also if there is an exception the name will be printed.
+     * @param logCapToConsole <code>true</code> if there should be logging to the console
+     * @since 3.2
+     */
+    void setCAPtoConsoleLogging(boolean logCapToConsole);
 }
