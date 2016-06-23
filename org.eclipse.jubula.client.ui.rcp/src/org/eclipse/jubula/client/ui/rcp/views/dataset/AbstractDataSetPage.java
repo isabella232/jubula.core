@@ -97,9 +97,9 @@ public abstract class AbstractDataSetPage extends Page
     implements ISelectionListener, IAdaptable, IParamChangedListener,
                IProjectLoadedListener, IDataChangedListener {
     /** Constant for the width of the DataSet column in the table */
-    protected static final int DATASET_NUMBER_COLUMNWIDTH = 20;
+    protected static final int DATASET_NUMBER_COLUMNWIDTH = 30;
     /** Constant for the default column width */ 
-    protected static final int COLUMN_WIDTH = 70;
+    protected static final int COLUMN_WIDTH = 140;
     
     /** The current IParameterInterfacePO */
     private IParameterInterfacePO m_paramInterfaceObj;
@@ -134,6 +134,11 @@ public abstract class AbstractDataSetPage extends Page
     private IWorkbenchPart m_currentPart;
     /** The current selection */
     private IStructuredSelection m_currentSelection;
+    
+    /** The current param's id */
+    private Long m_paramId;
+    /** The column's widths */
+    private int[] m_columnWidths;
     
     /** Constants for the button actions */
     private enum TestDataRowAction { 
@@ -754,9 +759,8 @@ public abstract class AbstractDataSetPage extends Page
         for (int i = 1; i < columnCount; i++) {
             final TableColumn column = columns[i];
             column.pack();
-            if (column.getWidth() < COLUMN_WIDTH) {
-                column.setWidth(COLUMN_WIDTH);
-            }
+            column.setWidth(m_columnWidths != null ? m_columnWidths[i] 
+                    : COLUMN_WIDTH);
         }
     }
     
@@ -768,6 +772,22 @@ public abstract class AbstractDataSetPage extends Page
             return;
         }
         final Table table = getTable();
+        
+        if (m_paramId == getParamInterfaceObj().getId()) {
+            TableColumn[] tableColumns = table.getColumns();
+            if (tableColumns != null && tableColumns.length != 0) {
+                m_columnWidths = new int[tableColumns.length];
+                int i = 0;
+                for (TableColumn column : tableColumns) {
+                    m_columnWidths[i++] = column.getWidth();
+                }
+            }
+        } else {
+            m_paramId = getParamInterfaceObj().getId();
+            m_columnWidths = null;
+        }
+        
+        
         String[] columnProperties = new String[getParamInterfaceObj()
                 .getParameterList().size() + 1];
         columnProperties[0] = initDataSetColumn();
@@ -779,7 +799,13 @@ public abstract class AbstractDataSetPage extends Page
             String columnName = descr.getName();
             column.setText(columnName);
             columnProperties[i++] = columnName;
-            column.setWidth(COLUMN_WIDTH);
+            if (m_columnWidths == null) {
+                if (column.getWidth() < COLUMN_WIDTH) {
+                    column.setWidth(COLUMN_WIDTH);
+                }
+            } else {
+                column.setWidth(m_columnWidths[i - 1]);
+            }
         }
         getTableViewer().setColumnProperties(columnProperties);
     }
