@@ -36,6 +36,7 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -278,6 +279,20 @@ public class ProjectWizard extends Wizard implements INewWizard {
                 IProjectPO ubmProject = 
                     ProjectPM.loadLatestVersionOfProjectByName(moduleName);
                 if (ubmProject != null) {
+                    IReusedProjectPO[] reusedProj = new IReusedProjectPO
+                            [newProject.getUsedProjects().size()];
+                    newProject.getUsedProjects().toArray(reusedProj);
+                    for (int i = 0; i < reusedProj.length; i++) {
+                        IReusedProjectPO oldReusedProject = reusedProj[i];
+                        if (oldReusedProject != null
+                                && oldReusedProject.getName()
+                                        .equals(ubmProject.getName())
+                                && oldReusedProject.getProjectVersion()
+                                        .compareTo(ubmProject
+                                                .getProjectVersion()) <= 0) {
+                            newProject.removeUsedProject(oldReusedProject);
+                        }
+                    }
                     newProject.addUsedProject(
                             PoMaker.createReusedProjectPO(ubmProject));
                 } else {

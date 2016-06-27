@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -426,15 +425,6 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      * {@inheritDoc}
      */
     public void addUsedProject(IReusedProjectPO reusedProject) {
-        Iterator it = getUsedProjects().iterator();
-        while (it.hasNext()) {
-            IReusedProjectPO oldReusedProject = (IReusedProjectPO)it.next();
-            if (oldReusedProject.getName().equals(reusedProject.getName())
-                    && oldReusedProject.getProjectVersion()
-                        .compareTo(reusedProject.getProjectVersion()) <= 0) {
-                removeUsedProject(oldReusedProject);
-            }
-        }
         getProjectProperties().addUsedProject(reusedProject);
     }
 
