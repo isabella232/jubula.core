@@ -76,8 +76,10 @@ import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.Traverser;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
+import org.eclipse.jubula.client.internal.BaseConnection;
 import org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand;
 import org.eclipse.jubula.client.internal.commands.TakeScreenshotResponseCommand;
+import org.eclipse.jubula.client.internal.commands.TakeScreenshotAUTAgentResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
@@ -93,6 +95,7 @@ import org.eclipse.jubula.communication.internal.message.PrepareForShutdownMessa
 import org.eclipse.jubula.communication.internal.message.ResetMonitoringDataMessage;
 import org.eclipse.jubula.communication.internal.message.RestartAutMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
+import org.eclipse.jubula.communication.internal.message.TakeScreenshotAUTAgentMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.toolkit.internal.CSConstants;
@@ -262,6 +265,9 @@ public class TestExecution {
      *        test steps are executed)
      */
     private int m_expectedNumberOfSteps;
+    
+    /** The last TestResultNode */
+    private TestResultNode m_testResultNode = null;
 
     /**
      * Default constructor
@@ -999,14 +1005,13 @@ public class TestExecution {
                 ICapPO nextCap = null;
                 processPostExecution(msg);
                 TestResultNode resultNode = m_resultTreeTracker.getEndNode();
+                m_testResultNode = resultNode;
                 MessageCap mc = msg.getMessageCap();
-                resultNode.setComponentName(
-                    ComponentNamesBP.getInstance().getName(
-                            mc.getResolvedLogicalName(), 
+                resultNode.setComponentName(ComponentNamesBP.getInstance().
+                        getName(mc.getResolvedLogicalName(), 
                         GeneralStorage.getInstance().getProject().getId()));
                 IComponentIdentifier ci = mc.getCi();
-                resultNode.setOmHeuristicEquivalence(
-                        ci.getMatchPercentage());
+                resultNode.setOmHeuristicEquivalence(ci.getMatchPercentage());
                 resultNode.setNoOfSimilarComponents(
                         ci.getNumberOfOtherMatchingComponents());
                 final boolean testOk = !msg.hasTestErrorEvent();
@@ -1033,7 +1038,7 @@ public class TestExecution {
                         m_stepCounter.incrementNumberOfFailedSteps();
                         resultNode.setResult(TestResultNode.ERROR, event);
                         if (m_autoScreenshot) {
-                            addScreenshot(resultNode);
+                            addScreenshotThroughAgent(false);
                         }
                         if (ClientTest.instance()
                                 .isPauseTestExecutionOnError()) {
@@ -1068,17 +1073,42 @@ public class TestExecution {
         };
         t.start();
     }
+    
 
     /**
-     * @param resultNode the result node to add the screenshot for
+     * asks the AUT Agent or the AUT to take a screenshot
+     * @param agent true if we send the request to the AUT Agent, false if to the AUT
      */
-    private void addScreenshot(TestResultNode resultNode) {
-        // Send request to AUT and wait for response
-        ICommand command = new TakeScreenshotResponseCommand(resultNode);
-        Message message = new TakeScreenshotMessage();
+    private void addScreenshotThroughAgent(boolean agent) {
+        ICommand command;
+        Message message;
+        BaseConnection connect;
+        
+        if (agent) {
+            TestResultNode newNode = m_resultTreeTracker.getEndNode();
+            if (newNode != m_testResultNode && newNode != null) {
+                m_testResultNode = newNode;
+            }
+            if (m_testResultNode == null) {
+                return;
+            }
+            
+            command = new TakeScreenshotAUTAgentResponseCommand(
+                    m_testResultNode);
+            message = new TakeScreenshotAUTAgentMessage();
+        } else {
+            command = new TakeScreenshotResponseCommand(m_testResultNode);
+            message = new TakeScreenshotMessage();
+        }
+        
+        // Send request to AUT (or AUTAgent) and wait for response
         try {
-            AUTConnection.getInstance().request(
-                    message, command, 
+            if (agent) {
+                connect = AutAgentConnection.getInstance();
+            } else {
+                connect = AUTConnection.getInstance();
+            }
+            connect.request(message, command, 
                     TimeoutConstants.CLIENT_SERVER_TIMEOUT_TAKE_SCREENSHOT);
         } catch (NotConnectedException nce) {
             if (LOG.isErrorEnabled()) {
@@ -1090,7 +1120,7 @@ public class TestExecution {
             }
         }
     }
-
+    
     /**
      * Processes the post execution of an action
      * @param msg the CAPTestResponseMessage.
@@ -1347,6 +1377,9 @@ public class TestExecution {
      * timeout()
      */
     public void timeout() {
+        if (m_autoScreenshot) {
+            addScreenshotThroughAgent(true);
+        }
         m_resultTreeTracker.getEndNode().setResult(TestResultNode.ABORT, null);
         fireError(new JBException(MessageIDs.getMessage(MessageIDs.
                 E_TIMEOUT_CONNECTION), MessageIDs.E_TIMEOUT_CONNECTION));

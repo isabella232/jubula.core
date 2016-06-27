@@ -221,6 +221,13 @@ public abstract class CommandConstants {
     /** AUT Agent - display the manual test step to perform */
     public static final String DISPLAY_MANUAL_TEST_STEP_COMMAND = "org.eclipse.jubula.autagent.commands.DisplayManualTestStepCommand"; //$NON-NLS-1$
     
+    /** AUT Agent - take a screenshot */
+    public static final String TAKE_SCREENSHOT_AUTAGENT_COMMAND = "org.eclipse.jubula.autagent.commands.TakeScreenshotAUTAgentCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.client.internal.commands.TakeScreenshotAUTAgentResponseCommand"  */
+    public static final String TAKE_SCREENSHOT_AUTAGENT_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.TakeScreenshotAUTAgentResponseCommand"; //$NON-NLS-1$
+
+    
+    
     /** client-side handling for the result of an attempt to display the manual test step to perform */
     public static final String DISPLAY_MANUAL_TEST_STEP_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.DisplayManualTestStepResponseCommand"; //$NON-NLS-1$
     /** client-side handling of incoming monitoring value */

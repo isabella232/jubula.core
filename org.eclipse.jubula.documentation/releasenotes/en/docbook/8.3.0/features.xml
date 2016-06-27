@@ -319,4 +319,15 @@
 	</para>	
 </listitem>
 </itemizedlist>
+<para>
+	<emphasis role="strong">An automatic screenshot is taken after timeouts.</emphasis>
+ </para>
+ <itemizedlist>
+<listitem>
+	<para>
+		When connection to the AUT is lost during test execution, and the Automatic Screenshots preference is ON,
+		the AUT Agent attempts to take a final screenshot, which is then saved to the Database. 
+	</para>	
+</listitem>
+</itemizedlist>
 </section>
