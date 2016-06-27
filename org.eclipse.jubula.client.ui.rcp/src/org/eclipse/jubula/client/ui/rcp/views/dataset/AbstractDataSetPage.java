@@ -11,9 +11,14 @@
 package org.eclipse.jubula.client.ui.rcp.views.dataset;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -49,6 +54,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
+import org.eclipse.jubula.client.ui.rcp.filter.DataSetFilter;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamTextContentAssisted;
@@ -65,6 +71,8 @@ import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -81,9 +89,12 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.part.Page;
+import org.eclipse.ui.progress.WorkbenchJob;
 
 
 /**
@@ -100,6 +111,18 @@ public abstract class AbstractDataSetPage extends Page
     protected static final int DATASET_NUMBER_COLUMNWIDTH = 30;
     /** Constant for the default column width */ 
     protected static final int COLUMN_WIDTH = 140;
+    
+    /** Search delay in millisecond */
+    private static final long SEARCH_DELAY = 200;
+
+    /** The data set filter */
+    private DataSetFilter m_filter;
+    
+    /** Filter text field */
+    private Text m_searchText;
+    
+    /** The main table view */
+    private TableViewer m_viewer;
     
     /** The current IParameterInterfacePO */
     private IParameterInterfacePO m_paramInterfaceObj;
@@ -386,8 +409,37 @@ public abstract class AbstractDataSetPage extends Page
      * @param parent the parent of the m_tableViewer
      */
     private void initTableViewer(Composite parent) {
-        setTableViewer(new TableViewer(parent, 
-                SWT.SINGLE | SWT.FULL_SELECTION));
+        m_filter = new DataSetFilter();
+        GridLayout layout = new GridLayout(2, false);
+        parent.setLayout(layout);
+        m_searchText = new Text(parent, SWT.SINGLE | SWT.BORDER
+                | SWT.SEARCH | SWT.ICON_CANCEL);
+        m_searchText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL
+            | GridData.HORIZONTAL_ALIGN_FILL));
+        m_viewer = new TableViewer(parent, 
+                SWT.SINGLE | SWT.FULL_SELECTION);
+        final Job searchJob = createSearchJob();
+        m_searchText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(ModifyEvent e) {
+                if (m_currentPart instanceof AbstractJBEditor) {
+                    if (m_searchText.getText().isEmpty()) {
+                        m_addButton.setEnabled(true);
+                        m_insertButton.setEnabled(true);
+                        m_deleteButton.setEnabled(true);
+                    } else {
+                        m_addButton.setEnabled(false);
+                        m_insertButton.setEnabled(false);
+                        m_deleteButton.setEnabled(false);
+                    }
+                }
+                searchJob.cancel();
+                searchJob.schedule(SEARCH_DELAY);
+            }
+        });
+        final String initialText = WorkbenchMessages.FilteredTree_FilterMessage;
+        
+        setTableViewer(m_viewer);
         Table table = getTable();
         table.setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DataTable"); //$NON-NLS-1$
         table.setLinesVisible(true);
@@ -399,7 +451,24 @@ public abstract class AbstractDataSetPage extends Page
         getTableViewer().setUseHashlookup(true);
         getTableViewer().setContentProvider(new GeneralContentProvider());
         getTableViewer().setLabelProvider(new GeneralLabelProvider());
+        getTableViewer().addFilter(m_filter);
         setTableCursor(new DSVTableCursor(getTable(), SWT.NONE));
+    }
+    
+    /**
+     * @return an search job
+     */
+    protected WorkbenchJob createSearchJob() {
+        WorkbenchJob job = new WorkbenchJob("Refresh Filter") { //$NON-NLS-1$
+            @Override
+            public IStatus runInUIThread(IProgressMonitor monitor) {
+                m_filter.setSearchText(m_searchText.getText());
+                m_viewer.refresh();
+                return Status.OK_STATUS;
+            }
+        };
+        job.setSystem(true);
+        return job;
     }
     
     /**
@@ -873,9 +942,14 @@ public abstract class AbstractDataSetPage extends Page
             IDataSetPO row = (IDataSetPO)element;
             int rowCount = tdMan.getDataSets().indexOf(row);
             if (columnIndex == 0) {
-                getTable().getItem(rowCount).setBackground(
-                    columnIndex, getTable().getDisplay().getSystemColor(
-                            SWT.COLOR_WIDGET_BACKGROUND));
+                for (TableItem i : Arrays.asList(getTable().getItems())) {
+                    if (i instanceof IDataSetPO && ((IDataSetPO)i)
+                            .equals(element)) {
+                        i.setBackground(columnIndex, getTable().getDisplay()
+                                .getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+                        break;
+                    }
+                }
                 return StringConstants.EMPTY + (rowCount + 1); 
             }
             List <IParamDescriptionPO>paramList = 
