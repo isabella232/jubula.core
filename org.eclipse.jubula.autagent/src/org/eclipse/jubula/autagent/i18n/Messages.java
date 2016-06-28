@@ -22,6 +22,7 @@ public class Messages extends NLS {
     public static String AcceptedConnectionFrom;
     public static String AcceptingFailed;
     public static String AddressAlreadyInUse;
+    public static String AutConnectionError;
     public static String AutStartError;
     public static String AutsSysError;
     public static String AutsSysOut;

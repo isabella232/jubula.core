@@ -33,6 +33,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.commands.AbstractStartToolkitAut;
 import org.eclipse.jubula.autagent.commands.IStartAut;
+import org.eclipse.jubula.autagent.i18n.Messages;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.IConnectionInitializer;
 import org.eclipse.jubula.communication.internal.connection.ConnectionState;
@@ -695,9 +696,9 @@ public class AutAgent {
         synchronized (m_auts) {
             Communicator autSocket = m_auts.get(autId);
             if (autSocket == null) {
-                String errorMsg = "Could not send connect message to AUT. The associated communicator is null."; //$NON-NLS-1$
-                LOG.error(errorMsg);
-                return new ConnectToAutResponseMessage(errorMsg);
+                LOG.error(Messages.AutConnectionError);
+                return new ConnectToAutResponseMessage(
+                        Messages.AutConnectionError);
             }
 
             try {
