@@ -121,9 +121,6 @@ public abstract class AbstractDataSetPage extends Page
     /** Filter text field */
     private Text m_searchText;
     
-    /** The main table view */
-    private TableViewer m_viewer;
-    
     /** The current IParameterInterfacePO */
     private IParameterInterfacePO m_paramInterfaceObj;
 
@@ -416,8 +413,9 @@ public abstract class AbstractDataSetPage extends Page
                 | SWT.SEARCH | SWT.ICON_CANCEL);
         m_searchText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL
             | GridData.HORIZONTAL_ALIGN_FILL));
-        m_viewer = new TableViewer(parent, 
+        TableViewer viewer = new TableViewer(parent, 
                 SWT.SINGLE | SWT.FULL_SELECTION);
+        m_searchText.setMessage(WorkbenchMessages.FilteredTree_FilterMessage);
         final Job searchJob = createSearchJob();
         m_searchText.addModifyListener(new ModifyListener() {
             @Override
@@ -437,9 +435,8 @@ public abstract class AbstractDataSetPage extends Page
                 searchJob.schedule(SEARCH_DELAY);
             }
         });
-        final String initialText = WorkbenchMessages.FilteredTree_FilterMessage;
         
-        setTableViewer(m_viewer);
+        setTableViewer(viewer);
         Table table = getTable();
         table.setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DataTable"); //$NON-NLS-1$
         table.setLinesVisible(true);
@@ -463,7 +460,7 @@ public abstract class AbstractDataSetPage extends Page
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
                 m_filter.setSearchText(m_searchText.getText());
-                m_viewer.refresh();
+                getTableViewer().refresh();
                 return Status.OK_STATUS;
             }
         };
@@ -814,7 +811,8 @@ public abstract class AbstractDataSetPage extends Page
         // create column for data set numer
         TableColumn dataSetNumberCol = new TableColumn(table, SWT.NONE);
         dataSetNumberCol.setText(Messages.DataSetViewControllerDataSetNumber);
-        dataSetNumberCol.setWidth(DATASET_NUMBER_COLUMNWIDTH);
+        dataSetNumberCol.setWidth((m_columnWidths != null && m_columnWidths
+                .length > 0)  ? m_columnWidths[0] : DATASET_NUMBER_COLUMNWIDTH);
         return dataSetNumberCol.getText();
     }
     
@@ -825,11 +823,13 @@ public abstract class AbstractDataSetPage extends Page
         final Table table = getTable();
         final TableColumn[] columns = table.getColumns();
         final int columnCount = columns.length;
+        columns[0].setWidth((m_columnWidths != null && m_columnWidths.length
+                > 0) ? m_columnWidths[0] : DATASET_NUMBER_COLUMNWIDTH);
         for (int i = 1; i < columnCount; i++) {
             final TableColumn column = columns[i];
             column.pack();
-            column.setWidth(m_columnWidths != null ? m_columnWidths[i] 
-                    : COLUMN_WIDTH);
+            column.setWidth((m_columnWidths != null && m_columnWidths.length
+                    > i) ? m_columnWidths[i] : COLUMN_WIDTH);
         }
     }
     
@@ -867,14 +867,15 @@ public abstract class AbstractDataSetPage extends Page
             TableColumn column = new TableColumn(table, SWT.NONE);
             String columnName = descr.getName();
             column.setText(columnName);
-            columnProperties[i++] = columnName;
-            if (m_columnWidths == null) {
+            columnProperties[i] = columnName;
+            if (m_columnWidths == null || m_columnWidths.length <= i) {
                 if (column.getWidth() < COLUMN_WIDTH) {
                     column.setWidth(COLUMN_WIDTH);
                 }
             } else {
-                column.setWidth(m_columnWidths[i - 1]);
+                column.setWidth(m_columnWidths[i]);
             }
+            i++;
         }
         getTableViewer().setColumnProperties(columnProperties);
     }
