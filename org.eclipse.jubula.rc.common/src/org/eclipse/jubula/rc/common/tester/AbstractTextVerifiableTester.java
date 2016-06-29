@@ -32,7 +32,15 @@ public abstract class AbstractTextVerifiableTester extends WidgetTester {
     public String rcReadValue(String variable) {
         return ((ITextComponent)getComponent()).getText();
     }
-
+    
+    /**
+     * @see {@link AbstractTextVerifiableTester#rcReadValue(String)}
+     * @return the text value
+     */
+    public String rcReadValue() {
+        return rcReadValue(null);
+    }
+    
     /**
      * Verifies the rendered text inside the currently component.<br>
      * If it is a complex component, it is always the selected object.

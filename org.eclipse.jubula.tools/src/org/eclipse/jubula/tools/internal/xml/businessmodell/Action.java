@@ -63,6 +63,12 @@ public class Action {
     private boolean m_clientAction = false;
     
     /**
+     *  Whether this action should only be used in the API
+     *  (default = Actions is for UI and API(false))
+     */
+    private boolean m_apiAction = false;
+    
+    /**
      * The version of the bundle (important for semantic versions) that's
      * initially been present for that new component
      */
@@ -245,6 +251,20 @@ public class Action {
     }
     
     /**
+     * @return Returns Whether this action is used for the client and for the API
+     *  (default = client and api).
+     */
+    public boolean isApiAction() {
+        return m_apiAction;
+    }
+
+    /**
+     * @param apiAction true if action is only to be generated for the API,
+     */
+    public void setApiAction(boolean apiAction) {
+        m_apiAction = apiAction;
+    }
+        /**
      * @return whether the ITE is involved when executing this action
      */
     public boolean isITEInvolved() {

@@ -330,4 +330,15 @@
 	</para>	
 </listitem>
 </itemizedlist>
+<para>
+	<emphasis role="strong">Possibility to store text values into variables in the API</emphasis>
+ </para>
+ <itemizedlist>
+ <listitem>
+ 	<para>
+ 		From now on it is possible to get a text value of a Component (like Label, TextInputComponent, etc)
+ 		in the API. 
+ 	</para>
+</listitem>
+</itemizedlist>
 </section>

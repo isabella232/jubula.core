@@ -130,7 +130,7 @@ public class XStreamGenerator {
             new String[] {"m_type", "m_descriptionKey", "m_visible", "m_observable", "m_deprecated", "m_hasDefaultMapping", "m_since", "m_isSupported"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Action.class, 
-            new String[] {"m_name", "m_descriptionKey", "m_clientAction", "m_deprecated", "m_since"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+            new String[] {"m_name", "m_descriptionKey", "m_clientAction", "m_apiAction", "m_deprecated", "m_since"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
         
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Param.class, 
@@ -159,6 +159,7 @@ public class XStreamGenerator {
         stream.aliasField("deprecated", Action.class, "m_deprecated"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("postExecutionCommand", Action.class, "m_postExecutionCommand"); //$NON-NLS-1$ //$NON-NLS-2$           
         stream.aliasField("clientAction", Action.class, "m_clientAction"); //$NON-NLS-1$ //$NON-NLS-2$
+        stream.aliasField("apiAction", Action.class, "m_apiAction"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("since", Action.class, "m_since"); //$NON-NLS-1$ //$NON-NLS-2$
     }
     

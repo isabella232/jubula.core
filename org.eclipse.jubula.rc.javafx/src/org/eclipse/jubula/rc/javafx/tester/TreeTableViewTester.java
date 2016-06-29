@@ -667,6 +667,19 @@ public class TreeTableViewTester extends TreeViewTester {
         adapter.scrollCellToVisible(implRow, implCol);
         return getCellText(implRow, implCol);
     }
+    
+    /**
+     * @see {@link TreeTableViewTester#rcReadValue(String, String, String, String, String)}
+     * @param row the row to select
+     * @param rowOperator the row header operator
+     * @param col the column to select
+     * @param colOperator the column header operator
+     * @return the text value.
+     */
+    public String rcReadValue(String row, String rowOperator,
+            String col, String colOperator) {
+        return rcReadValue(null, row, rowOperator, col, colOperator);
+    }
 
     /**
     * Read the value of the cell under the mouse and
@@ -685,6 +698,15 @@ public class TreeTableViewTester extends TreeViewTester {
                     }
                 });
     }
+
+    /**
+    * @see {@link TreeTableViewTester#rcReadValueAtMousePosition(String)}
+    * @return the text value.
+    */
+    public String rcReadValueAtMousePosition() {
+        return rcReadValueAtMousePosition(null);
+    }
+
     /**
      * Store the string representation of the value of the property of the given Node
      * @param variableName the name of the variable

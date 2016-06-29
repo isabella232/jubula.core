@@ -1100,6 +1100,11 @@
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
+		<action name="CompSystem.readValueApi" apiAction="true" since="4.0"
+		          descriptionKey="CompSystem.readValueApi.descr">
+			<method>rcReadValue</method>
+		</action>
+		
 	</abstractComponent>
 	
 	<abstractComponent type="guidancer.abstract.ButtonComp">

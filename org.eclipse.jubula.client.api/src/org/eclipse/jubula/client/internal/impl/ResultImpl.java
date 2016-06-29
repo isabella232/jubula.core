@@ -32,6 +32,9 @@ public class ResultImpl<T> implements Result<T> {
     private boolean m_isOK = false;
     /** the exception */
     private ExecutionException m_exception;
+    
+    /** the return value to store variables for the API */
+    private String m_returnValue;
 
     /**
      * Constructor
@@ -84,5 +87,19 @@ public class ResultImpl<T> implements Result<T> {
      */
     void setException(ExecutionException exception) {
         m_exception = exception;
+    }
+    
+    /**
+     * @return the stored variable value
+     */
+    public String getReturnValue() {
+        return m_returnValue;
+    }
+    
+    /**
+     * @param value the value to store
+     */
+    public void setReturnValue(String value) {
+        m_returnValue = value;
     }
 }

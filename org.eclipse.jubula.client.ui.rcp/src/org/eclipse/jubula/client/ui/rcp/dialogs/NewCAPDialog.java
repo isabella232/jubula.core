@@ -321,7 +321,7 @@ public class NewCAPDialog extends TitleAreaDialog {
             new ArrayList<Action>(component.getActions().size());
         for (Object obj : component.getActions()) {
             Action action = (Action)obj;
-            if (!action.isDeprecated()) {
+            if (!action.isDeprecated() && !action.isApiAction()) {
                 actions.add(action);
             }
         }
