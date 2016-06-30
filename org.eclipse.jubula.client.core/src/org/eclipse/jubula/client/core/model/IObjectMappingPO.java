@@ -41,6 +41,11 @@ public interface IObjectMappingPO extends ITimestampPO {
      */
     public abstract IObjectMappingAssoziationPO addObjectMappingAssoziation(
         String logic, IComponentIdentifier technical);
+    /**
+     * removes an association from the cache
+     * @param assoc the association to remove
+     */
+    public void removeAssociationFromCache(IObjectMappingAssoziationPO assoc);
 
     /**
      * Creates a new technical Name, unassigned
