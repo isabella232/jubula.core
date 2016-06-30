@@ -14,7 +14,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
-
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -26,6 +25,8 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 
 /**
  * Implementation of the MenuItem interface for adapting <code>JMenuItem</code>.
@@ -192,6 +193,9 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
      * @param item  the menu item
      */
     private void clickMenuItem(IRobot robot, JMenuItem item) {
+        if (EnvironmentUtils.isMacOS()) {
+            TimeUtil.delay(300);
+        }
         if (!item.isEnabled()) {
             throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
                     EventFactory.createActionError(
@@ -200,12 +204,19 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
         if (item.getParent() instanceof JPopupMenu 
                 && ((JPopupMenu)item.getParent())
                 .getInvoker().getParent() instanceof JMenuBar) {
-            
-            robot.click(item, null, ClickOptions.create().setClickType(
+            if (!EnvironmentUtils.isMacOS()) {
+                robot.click(item, null, ClickOptions.create().setClickType(
                     ClickOptions.ClickType.RELEASED).setFirstHorizontal(false));
+            } else {
+                item.doClick(100);
+            }
         } else {
-            robot.click(item, null, ClickOptions.create().setClickType(
+            if (!EnvironmentUtils.isMacOS()) {
+                robot.click(item, null, ClickOptions.create().setClickType(
                     ClickOptions.ClickType.RELEASED));
+            } else {
+                item.doClick(100);
+            }
         }
     }
 }
