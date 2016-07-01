@@ -86,6 +86,8 @@ public class PrefPageBasic extends PreferencePage implements
     private Button m_showTransientChildrenCheckBox;
     /** checkbox to decide if load most recent project is active or not */
     private Button m_loadDefaultProjectCheckBox;
+    /** Update reused project */
+    private Button m_updateReusedProject;
     /** widgets used in preference page to define preference values private */
     private Button m_perspChange0Button;
     /** widgets used in preference page to define preference values private */
@@ -171,6 +173,7 @@ public class PrefPageBasic extends PreferencePage implements
         createShowCAPInfosCheckbox(composite);
         createShowTransientChildrensCheckbox(composite);
         createDefaultProjectCheckbox(composite);
+        createUpdateReusedProjectsCheckbox(composite);
         createSeparator(composite, 3);
         createComponentNamesViewSettings(composite);
         createSeparator(composite, 3);
@@ -234,6 +237,17 @@ public class PrefPageBasic extends PreferencePage implements
                 Messages.LoadDefaultProject);
         m_loadDefaultProjectCheckBox.setSelection(m_store.getBoolean(
                         Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
+    }
+    
+    /**
+     * @param composite parent composite
+     */
+    private void createUpdateReusedProjectsCheckbox(Composite composite) {
+        m_updateReusedProject = new Button(composite, SWT.CHECK);
+        m_updateReusedProject.setText(
+                Messages.UpdateReusedProjectsLabel);
+        m_updateReusedProject.setSelection(m_store.getBoolean(
+                        Constants.UPDATE_REUSED_PROJECT_KEY));
     }
     
     /**
@@ -539,12 +553,12 @@ public class PrefPageBasic extends PreferencePage implements
                 .getDefaultBoolean(Constants.SHOWCAPINFO_KEY));
         m_showTransientChildrenCheckBox.setSelection(m_store
                 .getDefaultBoolean(Constants.SHOW_TRANSIENT_CHILDREN_KEY));
-        m_compNamesContentAssistTime.setText(m_store
-                .getDefaultString(
-                        Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL));
-        m_loadDefaultProjectCheckBox.setSelection(m_store
-                .getDefaultBoolean(
-                        Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
+        m_compNamesContentAssistTime.setText(m_store.getDefaultString(
+                Constants.MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL));
+        m_loadDefaultProjectCheckBox.setSelection(m_store.getDefaultBoolean(
+                Constants.PERFORM_AUTO_PROJECT_LOAD_KEY));
+        m_updateReusedProject.setSelection(m_store.getDefaultBoolean(
+                Constants.UPDATE_REUSED_PROJECT_KEY));
         m_perspChangeValue = m_store.getDefaultInt(Constants.PERSP_CHANGE_KEY);
         m_rememberValue = m_store.getDefaultBoolean(Constants.REMEMBER_KEY);
         setRadioSelection();
@@ -586,6 +600,8 @@ public class PrefPageBasic extends PreferencePage implements
                 m_showTransientChildrenCheckBox.getSelection());
         getPreferenceStore().setValue(Constants.PERFORM_AUTO_PROJECT_LOAD_KEY, 
                 m_loadDefaultProjectCheckBox.getSelection());
+        getPreferenceStore().setValue(Constants.UPDATE_REUSED_PROJECT_KEY, 
+                m_updateReusedProject.getSelection());
         removeListener();
         return super.performOk();
     }

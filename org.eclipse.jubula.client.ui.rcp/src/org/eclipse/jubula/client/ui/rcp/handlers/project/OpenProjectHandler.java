@@ -47,6 +47,7 @@ import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
@@ -70,6 +71,7 @@ import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -160,6 +162,33 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 instance.setProgressMonitor(null);
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
+            }
+
+            if (Plugin.getDefault().getPreferenceStore().getBoolean(
+                    Constants.UPDATE_REUSED_PROJECT_KEY)) {
+                return;
+            }
+            final UpdateReusedProjectHandler oldReusedProjectHandler =
+                    new UpdateReusedProjectHandler();
+            if (oldReusedProjectHandler.isThereOldReusedProject()) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        updateReusedProjects(oldReusedProjectHandler);
+                    }
+                });
+            }
+        }
+        
+        /**
+         * @param handler the UpdateReusedProjectHandler
+         */
+        private void updateReusedProjects(UpdateReusedProjectHandler handler) {
+            int wouldNeedUpdate = handler.showUpdateReusedProjectDialog();
+            if (wouldNeedUpdate == Window.OK) {
+                Shell shell = Plugin.getActiveWorkbenchWindowShell();
+                ExportDialog.showExportDialog(shell);
+                String pageId = Constants.REUSED_PROJECT_PROPERTY_ID;
+                ProjectPropertyDialog.showPropertyDialog(shell, pageId, null);
             }
         }
 

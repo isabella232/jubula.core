@@ -203,6 +203,8 @@ public class Messages extends NLS {
     public static String DatabaseMigrationAssistantIntroPageDescription;
     public static String DatabaseMigrationAssistantIntroPageText;
     public static String DatabaseMigrationAssistantIntroPageTitle;
+    public static String DatabaseMigrationWebsiteLinkLabel;
+    public static String DatabaseMigrationWebsiteLink;
     public static String DeleteProjectActionCaption;
     public static String DeleteProjectActionDeleting;
     public static String DeleteProjectActionKeepTestresultSummaryCheckbox;
@@ -909,6 +911,11 @@ public class Messages extends NLS {
     public static String UnknownTestExecutionEvent;
     public static String UnsupportedObjectMappingState;
     public static String UnsupportedRecordModeState;
+    public static String UpdateReusedProjectsButtonMessage;
+    public static String UpdateReusedProjectsMessage;
+    public static String UpdateReusedProjectsWidgetName;
+    public static String UpdateReusedProjectsTitle;
+    public static String UpdateReusedProjectsLabel;
     public static String UsingFallbackFailed;
     public static String UtilsConfirmation;
     public static String UtilsExecPerspective;

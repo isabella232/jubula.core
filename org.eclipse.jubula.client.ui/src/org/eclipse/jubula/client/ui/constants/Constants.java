@@ -324,6 +324,8 @@ public interface Constants {
     public static final String PERFORM_AUTO_PROJECT_LOAD_KEY = "PERFORM_AUTO_PROJECT_LOAD_KEY"; //$NON-NLS-1$
     /** Key for content assist of component names view to be stored as a resource property */
     public static final String MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL = "MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL"; //$NON-NLS-1$
+    /** Key for show the update reused project dialog */
+    public static final String UPDATE_REUSED_PROJECT_KEY = "UPDATE_REUSED_PROJECT_KEY"; //$NON-NLS-1$
     
     
     // -------------------------------------------------------------
@@ -481,9 +483,10 @@ public interface Constants {
      * closing the viewer) 
      */
     public static final boolean PREF_DEFAULT_CACHE_TEST_RESULTS = false;
-
     /** default value for loading the default project */
     public static final boolean LOAD_DEFAULT_PROJECT_KEY_DEFAULT = false;
+    /** default value of show update reused projects dialog */
+    public static final boolean UPDATE_REUSED_PROJECTS_KEY_DEFAULT = false;
 
     // --------------------------------------------------------------------
     

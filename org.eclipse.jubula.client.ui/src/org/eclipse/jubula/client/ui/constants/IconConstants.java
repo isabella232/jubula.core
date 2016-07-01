@@ -287,7 +287,7 @@ public class IconConstants {
     /** comment image */
     public static final Image COMMENT_IMAGE = getImage("file_obj.png"); //$NON-NLS-1$
     /** comment image */
-    public static final ImageDescriptor COMMANDLOG_IMAGE_DESCRIPTOR = ImageDescriptor.createFromImage(getImage("dataDecorator.png")); //$NON-NLS-1$
+    public static final ImageDescriptor COMMANDLOG_IMAGE_DESCRIPTOR = getImageDescriptor("dataDecorator.png"); //$NON-NLS-1$
     /** testJob image */
     public static final Image TJ_IMAGE = getImage("testJobNode.gif"); //$NON-NLS-1$
     /** test case image */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2016 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,11 +13,9 @@ package org.eclipse.jubula.client.ui.rcp.handlers.project;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
@@ -26,36 +24,34 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * @author BREDEX GmbH
- * @created 08.11.2004
+ * @created 01.07.2016
  */
-public class ExportProjectHandler extends AbstractProjectHandler {
-    
-    /** Extension of XML */
-    public static final String XML = ".xml"; //$NON-NLS-1$
-    
-    /** Extension of JUB. It is an zip file which contain a project and a test result json file*/
-    public static final String JUB = ".jub"; //$NON-NLS-1$
+public class ExportDialog {
 
     /** the logger */
-    private static Logger log = 
-        LoggerFactory.getLogger(ExportProjectHandler.class);
+    private static Logger log = LoggerFactory.getLogger(ExportDialog.class);
+    
+    /** Constructor */
+    private ExportDialog() {
+        // nothing
+    }
 
     /**
-     * 
+     * @param activeShell 
      */
-    @SuppressWarnings("synthetic-access")
-    public void showExportDialog() {
-        final FileDialog fileDialog = new FileDialog(getActiveShell(), 
+    public static final void showExportDialog(Shell activeShell) {
+        final FileDialog fileDialog = new FileDialog(activeShell, 
             SWT.SAVE | SWT.APPLICATION_MODAL);
         fileDialog.setText(Messages.ActionBuilderSaveAs);
-        String[] filters = new String[]{StringConstants.STAR + JUB};
+        String[] filters = new String[]{StringConstants.STAR
+                + ExportProjectHandler.JUB};
         fileDialog.setFilterExtensions(filters);
         fileDialog.setFilterPath(Utils.getLastDirPath());
         
@@ -100,16 +96,5 @@ public class ExportProjectHandler extends AbstractProjectHandler {
             // Operation canceled. 
             // Do nothing.
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Object executeImpl(ExecutionEvent event) {
-        if (Plugin.getDefault().showSaveEditorDialog(getActiveShell())) {
-            ExportDialog.showExportDialog(getActiveShell());
-        }
-        Plugin.stopLongRunning();
-        return null;
     }
 }
