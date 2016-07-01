@@ -294,6 +294,12 @@ public class TestresultSummaryBP {
                 keyword.addAdditon(
                         NodeMaker.createTestResultAddtionPO(commandlog));
             }
+            
+            //add screenshot if exists
+            if (resultNode.getScreenshot() != null) {
+                keyword.setImage(resultNode.getScreenshot());
+            }
+            
             //add error details
             addErrorDetails(keyword, resultNode);
             keyword.setNoOfSimilarComponents(
@@ -368,10 +374,6 @@ public class TestresultSummaryBP {
                 String value = String.valueOf(eventProps
                         .get(TestErrorEvent.Property.ACTUAL_VALUE_KEY));
                 keyword.setActualValue(value);
-            }
-
-            if (node.getScreenshot() != null) {
-                keyword.setImage(node.getScreenshot());
             }
         }
     }
