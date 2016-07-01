@@ -1026,6 +1026,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         getEditorHelper().setDirty(false);
         getEditorHelper().getEditSupport().close();
         PersistableEditorInput input = new PersistableEditorInput(obj);
+        m_compMapper = input.getEditSupport().getCompMapper();
         try {
             init(getEditorSite(), input);
             // MultiPageEditorPart sets the selection provider to a 
