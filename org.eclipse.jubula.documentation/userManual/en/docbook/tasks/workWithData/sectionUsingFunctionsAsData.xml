@@ -387,6 +387,26 @@
           </para>
         </listitem>
       </varlistentry>
+      <varlistentry>
+        <term>
+          urlEncode(string)
+        </term>
+        <listitem>
+          <para>
+            This function encodes (using UTF-8) a string for further usage within URLs.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          urlDecode(string)
+        </term>
+        <listitem>
+          <para>
+            This function decodes (using UTF-8) a string from a URL.
+          </para>
+        </listitem>
+      </varlistentry>
     </variablelist>
   </section>
   <section xml:id="embedding-functions-in-other-functions">
