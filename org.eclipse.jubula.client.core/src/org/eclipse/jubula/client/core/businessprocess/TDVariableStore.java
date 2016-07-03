@@ -49,6 +49,9 @@ public class TDVariableStore {
     
     /** id for the predefined AUT configuration name variable */
     public static final String VAR_AUTCONFIG = PREDEF_VAR_PREFIX + "AUTCONFIG"; //$NON-NLS-1$
+    
+    /** id for the predefined AUT arguments variable */
+    public static final String VAR_AUT_ARGUMENTS = PREDEF_VAR_PREFIX + "AUT_ARGUMENTS"; //$NON-NLS-1$
 
     /** id for the predefined Jubula client version variable */
     public static final String VAR_CLIENTVERSION = PREDEF_VAR_PREFIX + "CLIENTVERSION"; //$NON-NLS-1$

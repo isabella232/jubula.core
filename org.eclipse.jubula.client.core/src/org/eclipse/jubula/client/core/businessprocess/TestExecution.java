@@ -510,6 +510,11 @@ public class TestExecution {
             varStore.store(TDVariableStore.VAR_AUTCONFIG, MapUtils.getString(
                     autConfigMap, AutConfigConstants.AUT_CONFIG_NAME, 
                     TestresultSummaryBP.AUTRUN));
+
+            varStore.store(TDVariableStore.VAR_AUT_ARGUMENTS, 
+                    MapUtils.getString(
+                         autConfigMap, AutConfigConstants.AUT_ARGUMENTS, 
+                         StringConstants.EMPTY));
         } else {
             // write constant for AUTs which has been started via autrun
             varStore.store(TDVariableStore.VAR_AUTCONFIG, 

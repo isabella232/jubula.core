@@ -291,6 +291,16 @@
           </varlistentry>
           <varlistentry>
             <term>
+              TEST_AUT_ARGUMENTS:
+            </term>
+            <listitem>
+              <para>
+                The arguments passed to the AUT.
+              </para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
               TEST_CLIENTVERSION:
             </term>
             <listitem>
