@@ -175,6 +175,7 @@ public class OMEditorBP {
 
         IObjectMappingCategoryPO parent = toDelete.getCategory();
         parent.removeAssociation(toDelete);
+        getEditor().getAut().getObjMap().removeAssociationFromCache(toDelete);
         DataEventDispatcher.getInstance().fireDataChangedListener(
                 parent, DataState.StructureModified, 
                 UpdateState.onlyInEditor);
