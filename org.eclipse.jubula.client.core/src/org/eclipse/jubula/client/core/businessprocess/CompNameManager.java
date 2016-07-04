@@ -260,9 +260,9 @@ public class CompNameManager implements IComponentNameCache {
     }
     
     /**
-     * Returns the array of used Component Names
+     * Returns the array of unused Component Names
      * @param projId The Project Id
-     * @return the used Component Names
+     * @return the unused Component Names
      */
     public Object[] getUnusedCompNames(Long projId) {
         ArrayList<IComponentNamePO> res = new ArrayList<>(m_compNames.size());

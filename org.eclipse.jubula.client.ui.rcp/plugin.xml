@@ -702,6 +702,23 @@
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.ShowInOME"
+      name="%ShowInObjectMappingEditor">
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.ShowInOME.parameter.jumpId"
+        name="Jump ID"
+        optional="false" />
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.ShowInOME.parameter.jumpAction"
+        name="Jump Action"
+        optional="true" />
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.ShowInOME.parameter.jumpAutName"
+        name="Jump AUT"
+        optional="true" />
+    </command>
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
       name="%ChooseAUTWindow">
       <commandParameter
@@ -1364,9 +1381,29 @@
       <command
         commandId="org.eclipse.ui.edit.delete"
         style="push" />
+      <separator 
+        name="separator" 
+        visible="true" />
       <command
         commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
         style="push" />
+      <menu
+        label="%ShowInObjectMappingEditor">
+        <dynamic
+          class="org.eclipse.jubula.client.ui.rcp.contributionitems.ShowInOMEContributionItem"
+          id="menu:org.eclipse.jubula.client.ui.rcp.menu.ComponentNameBrowser.ShowInOME.dropdown">
+          <visibleWhen>
+            <and>
+              <count value="1" />
+              <iterate
+                ifEmpty="false"
+                operator="and">
+                <instanceof value="org.eclipse.jubula.client.core.model.IComponentNamePO" />
+              </iterate>
+            </and>
+          </visibleWhen>
+        </dynamic>
+      </menu>
     </menuContribution>
     <menuContribution
       locationURI="popup:org.eclipse.jubula.client.ui.rcp.views.RunningAuts?after=additions">
@@ -1873,7 +1910,7 @@
              commandId="org.eclipse.jubula.client.ui.rcp.commands.CopyID"
              style="push">
        </command>
-      <command
+       <command
              commandId="org.eclipse.jubula.client.ui.commands.AddComment"
              style="push">
        </command>
@@ -2619,7 +2656,10 @@
         </and>
       </enabledWhen>
     </handler>
-    
+   <handler
+     class="org.eclipse.jubula.client.ui.rcp.handlers.ShowInOMEHandler"
+     commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowInOME">
+   </handler>
    <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.html.OMChooseWindow"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow">

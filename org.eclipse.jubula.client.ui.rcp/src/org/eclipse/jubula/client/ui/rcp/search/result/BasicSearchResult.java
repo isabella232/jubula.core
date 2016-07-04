@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.search.result;
 
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -47,12 +48,14 @@ import org.eclipse.ui.IEditorPart;
 /**
  * @author BREDEX GmbH
  * @created Jul 26, 2010
+ * 
+ * @param <DATATYPE> the data type
  */
-public class BasicSearchResult implements ISearchResult {
+public class BasicSearchResult<DATATYPE> implements ISearchResult {
     /**
      * <code>resultList</code>
      */
-    private List m_resultList = ListUtils.EMPTY_LIST;
+    private List<DATATYPE> m_resultList = Collections.emptyList();
     
     /**
      * <code>m_searchQuery</code>
@@ -84,14 +87,14 @@ public class BasicSearchResult implements ISearchResult {
     /**
      * @param resultList the resultList to set
      */
-    public void setResultList(List resultList) {
+    public void setResultList(List<DATATYPE> resultList) {
         this.m_resultList = resultList;
     }
 
     /**
      * @return the resultList
      */
-    public List getResultList() {
+    public List<DATATYPE> getResultList() {
         return m_resultList;
     }
     
@@ -217,6 +220,13 @@ public class BasicSearchResult implements ISearchResult {
         }
         
         /**
+         * @return the action of this search result element
+         */
+        public ISearchResultElementAction<DATATYPE> getAction() {
+            return m_action;
+        }
+        
+        /**
          * @return the name of this search result element
          */
         public String getName() {
@@ -258,7 +268,7 @@ public class BasicSearchResult implements ISearchResult {
         /**
          * @return the view id
          */
-        private String getViewId() {
+        public String getViewId() {
             return m_viewId;
         }
     }
@@ -296,7 +306,7 @@ public class BasicSearchResult implements ISearchResult {
      * @created Mar 10, 2009
      */
     public static class ObjectMappingSearchResultElementAction 
-            implements ISearchResultElementAction <Long> {
+            implements ISearchResultElementAction <Long>, Serializable {
         /**
          * {@inheritDoc}
          */
