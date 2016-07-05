@@ -137,7 +137,9 @@ class ObjectMappingPO implements IObjectMappingPO {
      * @param assoc the association to remove
      */
     public void removeAssociationFromCache(IObjectMappingAssoziationPO assoc) {
-        m_mappings.remove(assoc);
+        if (m_mappings != null) {
+            m_mappings.remove(assoc);
+        }
         for (String logicalName : assoc.getLogicalNames()) {
             m_logicalNameToAssoc.remove(logicalName);
         }

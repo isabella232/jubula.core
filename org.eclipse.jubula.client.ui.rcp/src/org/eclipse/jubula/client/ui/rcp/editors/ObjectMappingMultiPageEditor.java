@@ -841,6 +841,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 
                 DataEventDispatcher.getInstance().fireDataChangedListener(
                         events.toArray(new DataChangedEvent[0]));
+                DataEventDispatcher.getInstance().fireDataChangedListener(
+                        this.getAut().getObjMap(), 
+                        DataState.StructureModified, 
+                        UpdateState.all);
                 
                 if (getAut().equals(
                         TestExecution.getInstance().getConnectedAut())
