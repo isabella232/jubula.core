@@ -111,6 +111,7 @@ public class DeleteTreeItemHandlerOMEditor
         }
         if (toDelete.length > 0) {
             editor.getEditorHelper().setDirty(true);
+            editor.cleanupNames();
         }
         return lastParent;
     }
@@ -138,6 +139,7 @@ public class DeleteTreeItemHandlerOMEditor
                 lastParent = editor.getOmEditorBP().deleteAssociation(
                         (IObjectMappingAssoziationPO)toDelete);
                 editor.getEditorHelper().setDirty(true);
+                editor.cleanupNames();
             }
         } else if (toDelete instanceof IComponentNamePO) {
             delete = MessageDialog.openConfirm(getActiveShell(),
@@ -147,6 +149,7 @@ public class DeleteTreeItemHandlerOMEditor
                 lastParent = editor.getOmEditorBP().deleteCompName(
                         (IComponentNamePO)toDelete);
                 editor.getEditorHelper().setDirty(true);
+                editor.cleanupNames();
             }
         } else if (toDelete instanceof IObjectMappingCategoryPO) {
             delete = MessageDialog.openConfirm(getActiveShell(),
@@ -156,6 +159,7 @@ public class DeleteTreeItemHandlerOMEditor
                 lastParent = editor.getOmEditorBP().deleteCategory(
                         (IObjectMappingCategoryPO)toDelete);
                 editor.getEditorHelper().setDirty(true);
+                editor.cleanupNames();
             }
         }
         return lastParent;

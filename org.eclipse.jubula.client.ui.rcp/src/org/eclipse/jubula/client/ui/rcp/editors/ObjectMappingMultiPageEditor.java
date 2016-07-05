@@ -1212,6 +1212,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     
     /**
      * call refresh() for all the different viewers in this editor
+     * not really, the unmapped component names viewer is unaffected!
      */
     private void refreshAllViewer() {
         m_uiElementTreeViewer.refresh();
@@ -1229,7 +1230,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         switch (event) {
             case IObjectMappingObserver.EVENT_STEP_RECORDED :
                 IAUTMainPO aut = (IAUTMainPO)obj;
-                if (getAut() == aut) {
+                if (getAut().equals(aut)) {
                     cleanupNames();
                 }
                 break;
@@ -1278,8 +1279,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     public int cleanupNames() {
         int addedItems = 0;
-        Set<IObjectMappingAssoziationPO> addedNodes = 
-            new HashSet<IObjectMappingAssoziationPO>();
         for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites()) {
             if (ts.getAut() == null) {
                 continue;
@@ -1289,7 +1288,9 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 TreeTraverser traverser = new TreeTraverser(ts, op);
                 traverser.traverse(true);
                 addedItems += op.getAddedNodeCount();
-                addedNodes.addAll(op.getAddedNodes());
+                if (m_compNameTreeViewer != null) {
+                    m_compNameTreeViewer.refresh();
+                }
             }
         }
         if (addedItems > 0) {
@@ -1305,6 +1306,14 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             }
         }
         return addedItems;
+    }
+    
+    /**
+     * adding new component names to the OMEditor, if present
+     * @return number of new comp names
+     */
+    public int addNewCompNames() {
+        return 0;
     }
 
     /**

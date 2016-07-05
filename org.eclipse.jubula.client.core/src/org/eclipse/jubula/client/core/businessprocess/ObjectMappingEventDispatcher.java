@@ -56,12 +56,19 @@ public class ObjectMappingEventDispatcher {
      *      The tc that was updated
      */
     public static synchronized void notifyRecordObserver(ISpecTestCasePO tc) {
+        notifyRecordObserverTS(getTestSuitesOfSpecTestCase(tc));
+    }
+    /**
+     * 
+     * @param testSuites the testSuites
+     */
+    public static synchronized void notifyRecordObserverTS(
+            ITestSuitePO... testSuites) {
         List <IObjectMappingObserver> obs = 
-            Collections.unmodifiableList(observer);
+                Collections.unmodifiableList(observer);
         if (obs.isEmpty()) {
             return;
         }
-        ITestSuitePO[] testSuites = getTestSuitesOfSpecTestCase(tc);
         Set < IAUTMainPO > autList = new HashSet < IAUTMainPO > ();
         for (ITestSuitePO ts : testSuites) {
             autList.add(ts.getAut());
@@ -77,6 +84,7 @@ public class ObjectMappingEventDispatcher {
             }
         }
     }
+    
     /**
      * adds a technical name to any open editor registered here with listener
      * 
