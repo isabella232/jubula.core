@@ -1387,6 +1387,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public void handleDataChanged(IPersistentObject po, DataState dataState) {
 
         getEditorHelper().handleDataChanged(po, dataState);
+        
+        // required when deleting component names through the Comp Names Browser
+        // the names are correctly removed without this fix,
+        // but if we create a new name, they reappear :-)
+        if (po instanceof IComponentNamePO && dataState == DataState.Deleted) {
+            getOmEditorBP().deleteCompName((IComponentNamePO) po);
+        }
         if (m_treeViewerUpdater != null) {
             m_treeViewerUpdater.handleDataChanged(po, dataState);
         }

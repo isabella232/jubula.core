@@ -416,6 +416,7 @@ public class EditSupport {
             IPersistentObject original = getOriginal();
             if (original != null) {
                 masterSession.refresh(masterSession.merge(getWorkVersion()));
+                Persistor.instance().getTransaction(masterSession).commit();
                 GeneralStorage.getInstance().fireDataModified(original);
             }
         } catch (PersistenceException e) {
