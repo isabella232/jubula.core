@@ -14,6 +14,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.MenuElement;
+import javax.swing.MenuSelectionManager;
+
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
@@ -201,21 +204,31 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
                     EventFactory.createActionError(
                             TestErrorEvent.MENU_ITEM_NOT_ENABLED));
         }
-        if (item.getParent() instanceof JPopupMenu 
-                && ((JPopupMenu)item.getParent())
-                .getInvoker().getParent() instanceof JMenuBar) {
-            if (!EnvironmentUtils.isMacOS()) {
-                robot.click(item, null, ClickOptions.create().setClickType(
-                    ClickOptions.ClickType.RELEASED).setFirstHorizontal(false));
+        MenuSelectionManager selectionmanager = MenuSelectionManager
+                .defaultManager();
+        MenuElement[] menus = new MenuElement[0];
+        if (selectionmanager != null) {
+            menus = MenuSelectionManager.defaultManager().getSelectedPath();
+        }
+        if (item.getParent() instanceof JPopupMenu
+                && ((JPopupMenu) item.getParent()).getInvoker()
+                        .getParent() instanceof JMenuBar) {
+            if (!EnvironmentUtils.isMacOS()
+                    || (menus.length > 0 && menus[0] instanceof JPopupMenu)) {
+                robot.click(item, null,
+                        ClickOptions.create()
+                                .setClickType(ClickOptions.ClickType.RELEASED)
+                                .setFirstHorizontal(false));
             } else {
-                item.doClick(100);
+                item.doClick();
             }
         } else {
-            if (!EnvironmentUtils.isMacOS()) {
-                robot.click(item, null, ClickOptions.create().setClickType(
-                    ClickOptions.ClickType.RELEASED));
+            if (!EnvironmentUtils.isMacOS()
+                    || (menus.length > 0 && menus[0] instanceof JPopupMenu)) {
+                robot.click(item, null, ClickOptions.create()
+                        .setClickType(ClickOptions.ClickType.RELEASED));
             } else {
-                item.doClick(100);
+                item.doClick();
             }
         }
     }
