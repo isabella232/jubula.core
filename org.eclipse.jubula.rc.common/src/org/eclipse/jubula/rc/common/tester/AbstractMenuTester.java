@@ -13,8 +13,6 @@ package org.eclipse.jubula.rc.common.tester;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.MenuSelectionManager;
-
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -268,7 +266,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
             
             item.selectMenuItem();
             if (EnvironmentUtils.isMacOS() && item.isShowing()) {
-                MenuSelectionManager.defaultManager().clearSelectedPath();
+                closeMenu(getAndCheckMenu(), indexItems);
             }
         } catch (StepExecutionException e) {
             try {
@@ -310,7 +308,7 @@ public abstract class AbstractMenuTester extends AbstractUITester {
         }
         item.selectMenuItem();
         if (EnvironmentUtils.isMacOS() && item.isShowing()) {
-            MenuSelectionManager.defaultManager().clearSelectedPath();
+            closeMenu(getAndCheckMenu(), menuItems, operator);
         }
     }
     
