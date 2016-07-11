@@ -294,6 +294,8 @@ public class AUTImpl implements AUT {
                 exception = new CheckFailedException(
                     result, description, actualValue);
             }
+        } else {
+            result.setReturnValue(response.getReturnValue());
         }
         
         result.setException(exception);

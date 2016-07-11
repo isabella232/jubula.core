@@ -449,6 +449,10 @@
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand> 
         </action>
+        <action name="CompSystem.ReadTableCellValueAtMousePositionAPI" 
+                descriptionKey="CompSystem.ReadTableCellValueAtMousePosition.descr" since="4.0">
+            <method>rcReadValueAtMousePosition</method>
+        </action>
         <action name="CompSystem.VerifyTableCellEditable" since="4.0">
             <method>rcVerifyEditable</method>
             <param name="CompSystem.IsEditable"
@@ -705,6 +709,41 @@
                 </valueSet>
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand> 
+        </action>
+        
+        <action name="CompSystem.ReadTableCellValueAPI"
+                descriptionKey="CompSystem.ReadTableCellValue.descr" since="4.0">
+            <method>rcReadValue</method>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
         </action>
         
         <action name="CompSystem.SelectCell" since="4.0">
