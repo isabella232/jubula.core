@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import javax.persistence.EntityManager;
+
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -149,6 +151,10 @@ public class OMEditorBP {
                         .remove(parent);
                 }
             }
+            
+            EntityManager sess = getEditor().getEditorHelper().
+                    getEditSupport().getSession();
+            sess.detach(sess.find(toDelete.getClass(), toDelete.getId()));
 
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     getEditor().getAut().getObjMap(), 

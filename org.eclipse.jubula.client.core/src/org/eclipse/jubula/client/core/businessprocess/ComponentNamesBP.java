@@ -794,8 +794,7 @@ public class ComponentNamesBP
         throws IncompatibleTypeException, PMException {
 
         
-        String oldName = capPo.getComponentName();
-        String oldGuid = compMapper.getCompNameCache().getGuidForName(oldName);
+        String oldGuid = capPo.getComponentName();
 
         if (StringUtils.isBlank(compName)) {
             compMapper.changeReuse(capPo, oldGuid, null);
