@@ -10,17 +10,25 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PersistenceManager;
 import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
@@ -28,6 +36,8 @@ import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -36,6 +46,11 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class DeleteTreeItemHandlerTCEditor 
         extends AbstractDeleteTreeItemHandler {
+    /**
+     * <code>log</code> logger for class
+     */
+    private static Logger log = LoggerFactory.getLogger(
+            DeleteTreeItemHandlerTCEditor.class);
     
     /**
      * {@inheritDoc}
@@ -72,10 +87,18 @@ public class DeleteTreeItemHandlerTCEditor
         for (INodePO node : nodes) {
             try {
                 node.getParentNode().removeNode(node);
+                if (node instanceof IExecTestCasePO) {
+                    IExecTestCasePO po = (IExecTestCasePO) node;
+                    Collection<ICompNamesPairPO> col = po.getCompNamesPairs();
+                    for (ICompNamesPairPO iCompNamesPairPO : col) {
+                        iCompNamesPairPO.getSecondName();
+                    }
+                }
                 if (node.getId() != null) {
                     editor.getEditorHelper().getEditSupport().getSession()
                             .remove(node);
                 }
+                createReuseEvents(editor, node);
                 editor.getEditorHelper().setDirty(true);
                 DataEventDispatcher.getInstance().fireDataChangedListener(node,
                         DataState.Deleted, UpdateState.onlyInEditor);
@@ -85,6 +108,34 @@ public class DeleteTreeItemHandlerTCEditor
                             editor.getEditorHelper().getEditSupport());
                 } catch (PMException pme) {
                     PMExceptionHandler.handlePMExceptionForMasterSession(pme);
+                }
+            }
+        }
+    }
+
+    /**
+     * changes the component names back to the first name so correct events are generated
+     * @param editor the editor from which we need the EditSupport
+     * @param node the node to generate the component name change events from
+     */
+    private static void createReuseEvents(AbstractJBEditor editor,
+            INodePO node) {
+        if (node instanceof IExecTestCasePO) {
+            IWritableComponentNameMapper mapper =
+                    editor.getEditorHelper().getEditSupport().getCompMapper();
+            IWritableComponentNameCache cache = mapper.getCompNameCache();
+            IExecTestCasePO exec = (IExecTestCasePO) node;
+            Collection<ICompNamesPairPO> compNamesPairs =
+                    exec.getCompNamesPairs();
+            for (ICompNamesPairPO iCompNamesPairPO : compNamesPairs) {
+                IComponentNamePO compName =
+                        cache.getCompNamePo(iCompNamesPairPO.getFirstName());
+                try {
+                    new CompNamesBP().updateCompNamesPair(exec,
+                            iCompNamesPairPO, compName.getName(), mapper);
+                } catch (IncompatibleTypeException | PMException e) {
+                    log.warn("error occured during update of component " //$NON-NLS-1$
+                            + "names from deleted node", e); //$NON-NLS-1$
                 }
             }
         }
