@@ -341,4 +341,7 @@
  	</para>
 </listitem>
 </itemizedlist>
+  <para>
+    <emphasis role="strong">A list of changes which happened in the API since version 8.2.0 is located <link xl:href="../api-comparison/changes/8.2.0_to_8.3.0.html">here</link>.</emphasis>
+  </para>
 </section>
