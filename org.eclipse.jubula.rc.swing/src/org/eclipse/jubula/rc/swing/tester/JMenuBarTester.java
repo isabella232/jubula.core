@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.swing.tester;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
@@ -183,10 +185,16 @@ public class JMenuBarTester extends AbstractMenuTester {
      */
     private boolean closMacMenus() {
         if (EnvironmentUtils.isMacOS()) {
-            MenuSelectionManager manager = MenuSelectionManager
+            final MenuSelectionManager manager = MenuSelectionManager
                     .defaultManager();
             if (manager != null) {
-                manager.clearSelectedPath();
+                getEventThreadQueuer().invokeAndWait("closeMac Menus", //$NON-NLS-1$
+                        new IRunnable<Object>() {
+                            public Rectangle run() {
+                                manager.clearSelectedPath();
+                                return null;
+                            }
+                        });
                 return true;
             }
         }
