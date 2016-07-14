@@ -114,7 +114,10 @@ public class OMEditorBP {
             originalCategory = category;
 
             if (parent.getLogicalNames().isEmpty()) {
-                originalCategory.removeAssociation(parent);
+                if (originalCategory != null) {
+                    // this happens when the Component Name was never in the database
+                    originalCategory.removeAssociation(parent);
+                }
                 
                 if (parent.getTechnicalName() != null) {
                     // Move association to appropriate section/category
