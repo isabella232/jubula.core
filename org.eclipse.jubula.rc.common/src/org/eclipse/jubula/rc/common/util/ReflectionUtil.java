@@ -60,7 +60,7 @@ public class ReflectionUtil {
                     InvocationTargetException, InstantiationException {
         String[] argValues;
         if (!StringUtils.isEmpty(argsSplit)) {
-            argValues = args.split(argsSplit);
+            argValues = StringUtils.splitPreserveAllTokens(args, argsSplit);
         } else {
             argValues = new String[] { args };
         }
