@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Jubula" uid="org.eclipse.jubula.performance.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="4.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="icons/about.png"/>
+      <text>
+         %aboutText
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-clean
+-name Jubula
+#PARGS_2INSERT
+      </programArgs>
+      <programArgsLin>-vm
+../jre/bin/java
+      </programArgsLin>
+      <programArgsWin>-vm
+../jre/bin/javaw.exe
+      </programArgsWin>
+      <vmArgs>-server
+-Duser.language=en
+-Duser.country=US
+-Dorg.osgi.service.http.port=60002
+#VMARGS_2INSERT
+-Xss1m
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread 
+-Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+   <splash
+      location="org.eclipse.jubula.app" />
+   <launcher name="jubula">
+      <linux icon="icons/jubula.xpm"/>
+      <macosx icon="icons/jubula.icns"/>
+      <solaris/>
+      <win useIco="true">
+         <ico path="icons/jubula.ico"/>
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="com.bredexsw.jubula.feature" version="4.0.0.qualifier" installMode="root"/>
+      <feature id="com.bredexsw.jubula.performance.feature" version="4.0.0.qualifier"/>
+      <feature id="org.aspectj" version="1.8.9.201604061446"/>
+      <feature id="org.eclipse.equinox.weaving.sdk" version="1.1.100.v20150430-1834"/>
+   </features>
+
+   <configurations>
+      <plugin id="com.bredexsw.jubula.performance.aspect" autoStart="true" startLevel="3" />
+      <plugin id="org.aspectj.runtime" autoStart="true" startLevel="2" />
+      <plugin id="org.aspectj.weaver" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.http.jetty" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.weaving.aspectj" autoStart="false" startLevel="4" />
+      <plugin id="org.eclipse.jubula.rc.rcp" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
+      <property name="eclipse.vm" value="Dosgi.framework.extensions=org.eclipse.equinox.weaving.hook" />
+      <property name="osgi.debug" value="/projects/guidancer/Workspace/users/MarcelHein/repos/com.bredexsw.jubula.core/com.bredexsw.jubula.performance.aspect/.options" />
+      <property name="osgi.instance.area.default" value="@user.home/workspace" />
+      <property name="osgi.splashPath" value="platform:/base/plugins/org.eclipse.jubula.app" />
+   </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
+
+</product>
