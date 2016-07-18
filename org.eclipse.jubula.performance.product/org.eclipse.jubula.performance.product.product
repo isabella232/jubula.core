@@ -73,11 +73,11 @@
       <plugin id="org.eclipse.equinox.http.jetty" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
-      <plugin id="org.eclipse.equinox.weaving.aspectj" autoStart="false" startLevel="4" />
+      <plugin id="org.eclipse.equinox.weaving.aspectj" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.jubula.rc.rcp" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
-      <property name="eclipse.vm" value="Dosgi.framework.extensions=org.eclipse.equinox.weaving.hook" />
-      <property name="osgi.debug" value="/projects/guidancer/Workspace/users/MarcelHein/repos/com.bredexsw.jubula.core/com.bredexsw.jubula.performance.aspect/.options" />
+      <property name="osgi.debug" value=".options" />
+      <property name="osgi.framework.extensions" value="org.eclipse.equinox.weaving.hook" />
       <property name="osgi.instance.area.default" value="@user.home/workspace" />
       <property name="osgi.splashPath" value="platform:/base/plugins/org.eclipse.jubula.app" />
    </configurations>
