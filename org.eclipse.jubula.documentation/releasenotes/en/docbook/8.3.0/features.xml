@@ -34,6 +34,43 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+    <emphasis role="strong">An automatic screenshot is taken after timeouts.</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        When connection to the AUT is lost during test execution, and the Automatic Screenshots preference is ON,
+        the AUT Agent attempts to take a final screenshot, which is then saved to the Database. 
+    </para> 
+  </listitem>
+</itemizedlist>
+<para>
+    <emphasis role="strong">Possibility to get text values from a componentin the API</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        From now on it is possible to get a text value of a Component (like Label, TextInputComponent, etc)
+        in the API. 
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
+    <emphasis role="strong">Wizard for creating an extension</emphasis>
+</para>
+<itemizedlist>
+ <listitem>
+    <para>
+        We have created a wizard for eclipse which makes it easier to write a extension for not supported components.
+        See the developer manual for more information.
+    </para> 
+ </listitem>
+</itemizedlist>
+<para>
+    <emphasis role="strong">A list of changes which happened in the API since version 8.2.0 is located <link xl:href="../api-comparison/changes/8.2.0_to_8.3.0.html">here</link>.</emphasis>
+</para>
+
 <para><emphasis role="strong">Since M2</emphasis></para>
 <para>
  <emphasis role="strong">Simple Extensions</emphasis>
@@ -319,29 +356,4 @@
 	</para>	
 </listitem>
 </itemizedlist>
-<para>
-	<emphasis role="strong">An automatic screenshot is taken after timeouts.</emphasis>
- </para>
- <itemizedlist>
-<listitem>
-	<para>
-		When connection to the AUT is lost during test execution, and the Automatic Screenshots preference is ON,
-		the AUT Agent attempts to take a final screenshot, which is then saved to the Database. 
-	</para>	
-</listitem>
-</itemizedlist>
-<para>
-	<emphasis role="strong">Possibility to store text values into variables in the API</emphasis>
- </para>
- <itemizedlist>
- <listitem>
- 	<para>
- 		From now on it is possible to get a text value of a Component (like Label, TextInputComponent, etc)
- 		in the API. 
- 	</para>
-</listitem>
-</itemizedlist>
-  <para>
-    <emphasis role="strong">A list of changes which happened in the API since version 8.2.0 is located <link xl:href="../api-comparison/changes/8.2.0_to_8.3.0.html">here</link>.</emphasis>
-  </para>
 </section>

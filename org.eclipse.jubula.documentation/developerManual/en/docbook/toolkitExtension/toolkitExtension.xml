@@ -67,6 +67,24 @@
     In this chapter all used directory names are located in the
     installation directory as long as nothing else is specified.
   </para>
+  
+  <para>
+    <emphasis role="strong">Wizard for creating an extension</emphasis>
+  </para>
+    <para>
+    Making it simpler to create the plugins for the extension,
+    you can also use the Extension Wizard we provide for eclipse.
+    This wizard is leading you through the generation process for one component so you 
+    just have to implement the testing logic.
+
+    To install the wizard use 
+    <emphasis role="input">""development/org.eclipse.jubula.extensions.wizard.repo.zip"</emphasis>
+    as a software site and install the <emphasis role="strong">Jubula Extension Wizard</emphasis>. After you have installed
+    the wizard you can just create a new <emphasis role="strong">Jubula extension project</emphasis>.
+    Follow the instructions from the wizard and you will get the complete structure of the 
+    needed plugins,classes and component configuration.
+  </para>
+  
 
   <xi:include href="sectionRequirements.xml"/>
   <xi:include href="sectionITEExtension.xml"/>
