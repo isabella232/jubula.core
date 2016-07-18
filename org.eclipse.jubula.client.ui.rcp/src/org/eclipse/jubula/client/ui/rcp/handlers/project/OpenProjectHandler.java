@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTr
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -104,7 +105,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) throws InterruptedException {
-
             Utils.clearClient();
 
             int totalWork = getTotalWork();
@@ -128,7 +128,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     if (monitor.isCanceled()) {
                         throw new InterruptedException();
                     }
-
                 } catch (ConfigXmlException ce) {
                     handleCapDataNotFound(ce);
                 }
@@ -177,6 +176,22 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     }
                 });
             }
+            
+            refreshTestResultsView(ded);
+        }
+
+        /**
+         * this method sends a {@link TestresultState#Refresh} 
+         * with {@link DataEventDispatcher#fireTestresultChanged(TestresultState)}
+         * to refresh some views
+         * @param ded the {@link DataEventDispatcher} to be used
+         */
+        private void refreshTestResultsView(final DataEventDispatcher ded) {
+            Plugin.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    ded.fireTestresultChanged(TestresultState.Refresh);
+                }
+            });
         }
         
         /**
