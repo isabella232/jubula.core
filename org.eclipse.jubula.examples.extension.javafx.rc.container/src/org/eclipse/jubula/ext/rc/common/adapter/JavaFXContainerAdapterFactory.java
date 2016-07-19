@@ -31,7 +31,7 @@ public class JavaFXContainerAdapterFactory implements IAdapterFactory {
 
     /** {@inheritDoc} */
     public Object getAdapter(Class targetedClass, Object objectToAdapt) {
-        if (targetedClass.isAssignableFrom(IContainerAdapter.class)) {
+        if (targetedClass == IContainerAdapter.class) {
             if (objectToAdapt instanceof ListCell) {
                 return new CustomContainerAdapter((ListCell<?>) objectToAdapt);
             }

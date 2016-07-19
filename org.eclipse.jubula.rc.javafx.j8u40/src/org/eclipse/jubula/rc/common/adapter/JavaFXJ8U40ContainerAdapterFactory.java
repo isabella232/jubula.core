@@ -30,7 +30,7 @@ public class JavaFXJ8U40ContainerAdapterFactory implements IAdapterFactory {
 
     /** {@inheritDoc} */
     public Object getAdapter(Class targetedClass, Object objectToAdapt) {
-        if (targetedClass.isAssignableFrom(IContainerAdapter.class)) {
+        if (targetedClass == IContainerAdapter.class) {
             if (objectToAdapt instanceof ButtonBar) {
                 return new ButtonBarContainerAdapter<ButtonBar>(
                         (ButtonBar) objectToAdapt);
