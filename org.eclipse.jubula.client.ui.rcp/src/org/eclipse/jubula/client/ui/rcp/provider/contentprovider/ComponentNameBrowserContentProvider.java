@@ -85,7 +85,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
     public ComponentNameBrowserContentProvider() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectLoadedListener(this, true);
-        ded.addDataChangedListener(this, true);
+        ded.addDataChangedListener(this, false);
 
     }
     /**
