@@ -2300,7 +2300,7 @@ public class TestExecution {
                             CSConstants.RAW_ARG_SPLIT_CHAR);
                     splitCharValue = StringUtils
                             .defaultIfEmpty(splitCharValue, null);
-                    char splitChar = (splitCharValue == null)
+                    Character splitChar = (splitCharValue == null)
                             ? null : splitCharValue.charAt(0);
                     String encoding = getValueForParam(
                             CSConstants.OUTPUT_ENCODING);
