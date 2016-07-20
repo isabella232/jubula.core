@@ -227,7 +227,8 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
             GeneralStorage.getInstance().getProject().getToolkit());
         for (String currComponent : toolkitComponents) {
             final String compType = map.get(currComponent);
-            if (compSystem.findComponent(currComponent).isVisible()) {
+            if (compSystem.findComponent(currComponent).isVisible() 
+                    && compType != null) {
                 tmpList.add(compType);
                 helpMap.put(compType, currComponent);
             }
