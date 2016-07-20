@@ -120,7 +120,6 @@ public class OMEditorBP {
                     // this happens when the Component Name was never in the database
                     originalCategory.removeAssociation(parent);
                 }
-                
                 if (parent.getTechnicalName() != null) {
                     // Move association to appropriate section/category
                     Stack<String> catPath = new Stack<String>();
@@ -143,7 +142,6 @@ public class OMEditorBP {
                         }
                         newCategory = subcategory;
                     }
-                    
                     newCategory.addAssociation(parent);
                 } else {
                     // Delete empty association from session
@@ -154,8 +152,14 @@ public class OMEditorBP {
             
             EntityManager sess = getEditor().getEditorHelper().
                     getEditSupport().getSession();
-            sess.detach(sess.find(toDelete.getClass(), toDelete.getId()));
-
+            if (toDelete.getId() != null) {
+                IComponentNamePO toRem = sess.find(toDelete.getClass(),
+                        toDelete.getId());
+                if (toRem != null) {
+                    sess.detach(toRem);
+                }
+            }
+            
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     getEditor().getAut().getObjMap(), 
                     DataState.StructureModified, 

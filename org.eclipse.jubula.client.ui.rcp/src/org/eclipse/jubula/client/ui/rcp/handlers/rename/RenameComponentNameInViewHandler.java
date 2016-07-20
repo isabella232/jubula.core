@@ -44,7 +44,7 @@ public class RenameComponentNameInViewHandler extends
         IComponentNamePO compName = getSelectedComponentName();
         if (compName != null) {
             EntityManager renameSession = 
-                    GeneralStorage.getInstance().getMasterSession();
+                    Persistor.instance().openSession();
             try {
                 ProjectComponentNameMapper compNameMapper =
                     new ProjectComponentNameMapper(
@@ -67,11 +67,21 @@ public class RenameComponentNameInViewHandler extends
                                 compName.getGuid());
                     DataEventDispatcher.getInstance().fireDataChangedListener(
                             eventCompName, DataState.Renamed, UpdateState.all);
+                    EntityManager masterRO = GeneralStorage.getInstance().
+                            getMasterSession();
+                    IComponentNamePO refreshCN;
+                    refreshCN = masterRO.find(compName.getClass(),
+                            compName.getId());
+                    if (refreshCN != null) {
+                        masterRO.refresh(refreshCN);
+                    }
                 }
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleProjectDeletedException();
+            } finally {
+                Persistor.instance().dropSession(renameSession);
             }
         }
         
