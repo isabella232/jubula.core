@@ -104,8 +104,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         if (targetAdapterClass.isAssignableFrom(IComponent.class)) {
             returnvalue = getComponentAdapter(objectToAdapt);
         }
-        if (returnvalue == null
-                && targetAdapterClass == IContainerAdapter.class) {
+        if (returnvalue == null && targetAdapterClass.isAssignableFrom(
+                IContainerAdapter.class)) {
             returnvalue = getContainerAdapter(objectToAdapt);
         }
         // FALLBACK! Leave at the end

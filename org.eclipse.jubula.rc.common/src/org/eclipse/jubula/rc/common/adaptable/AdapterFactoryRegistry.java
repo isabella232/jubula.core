@@ -128,42 +128,24 @@ public class AdapterFactoryRegistry {
         }
         Collection<IAdapterFactory> registeredFactories = null;
         Class superClass = objectToAdapt.getClass();
-        registeredFactories = findAdapterFactories(objectToAdapt, superClass);
-        
-        while (registeredFactories != null && superClass != Object.class) {
-            for (Iterator<IAdapterFactory> iterator = registeredFactories
-                    .iterator(); iterator.hasNext();) {
-                IAdapterFactory adapterFactory = iterator.next();
-                Object object = adapterFactory.getAdapter(targetAdapterClass,
-                        objectToAdapt);
-
-                if (object != null) {
-                    return object;
-                }
-            }
-            // This is a fallback. We only consider super-types if a direct
-            // implementation for the type is not found.
+        while (registeredFactories == null && superClass != Object.class) {
+            registeredFactories = m_registrationMap.get(superClass);
             superClass = superClass.getSuperclass();
-            registeredFactories = findAdapterFactories(objectToAdapt,
-                    superClass);
+        }
+        if (registeredFactories == null) {
+            return null;
+        }
+        for (Iterator<IAdapterFactory> iterator = registeredFactories
+            .iterator(); iterator.hasNext();) {
+            IAdapterFactory adapterFactory = iterator.next();
+            Object object = adapterFactory.getAdapter(targetAdapterClass,
+                objectToAdapt);
+
+            if (object != null) {
+                return object;
+            }
         }
         return null;
-    }
-
-    /**
-     * @param objectToAdapt the object to adapt
-     * @param superClass the type to lookup an adapter for 
-     * @return the list of factories or null
-     */
-    private Collection<IAdapterFactory> findAdapterFactories(
-            Object objectToAdapt, Class superClass) {
-        Collection<IAdapterFactory> registeredFactories = null;
-        Class sc = superClass;
-        while (registeredFactories == null && sc != Object.class) {
-            registeredFactories = m_registrationMap.get(sc);
-            sc = sc.getSuperclass();
-        }
-        return registeredFactories;
     }
 
     /**
