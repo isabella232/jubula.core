@@ -28,6 +28,10 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created 27.10.2015
  */
 public class ReflectionUtil {
+    /** 
+     * Defines which string should be replaced with null
+     */
+    private static final String JUBULA_NULL = "jb_null"; //$NON-NLS-1$
     /**
      * The logging.
      */
@@ -71,8 +75,12 @@ public class ReflectionUtil {
         }
         Object[] argObjects = new Object[argValues.length];
         for (int i = 0; i < argValues.length; i++) {
-            argObjects[i] = ConstructorUtils
+            if (JUBULA_NULL.equalsIgnoreCase(argValues[i])) {
+                argObjects[i] = null;
+            } else {
+                argObjects[i] = ConstructorUtils
                     .invokeExactConstructor(parameterClasses[i], argValues[i]);
+            }
         }
         return argObjects;
     }
