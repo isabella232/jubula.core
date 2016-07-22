@@ -34,5 +34,8 @@
     </table>
     <itemizedlist>
         <listitem><para>Enter the arguments for the method.</para></listitem>
+        <listitem><para>If null should be given to the method,
+         you must use the String "<emphasis role="strong">jb_null</emphasis>" 
+         as paramater value</para></listitem>
     </itemizedlist>
 </section>

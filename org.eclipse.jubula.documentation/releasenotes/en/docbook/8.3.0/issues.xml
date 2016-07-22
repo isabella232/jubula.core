@@ -12,6 +12,19 @@
     version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>Known issues and other information</title>
+    <para><emphasis role="strong">Since M3</emphasis></para>
+    <para>
+        <emphasis role="strong">jb_null can be used to invoke a method with a null "value"</emphasis>
+    </para>
+    <itemizedlist>
+        <listitem>
+            <para>
+                There is now the possibility to use the string <emphasis role="strong">jb_null</emphasis> 
+                as a method argument for the invoke method action. This string will then be converted to a 
+                <emphasis role="strong">null</emphasis> when calling the method.
+            </para>
+        </listitem>
+    </itemizedlist>
     
      <para><emphasis role="strong">Since M2</emphasis></para>
     <para>
