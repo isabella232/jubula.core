@@ -25,6 +25,7 @@ import org.eclipse.jdt.internal.ui.dialogs.FilteredTypesSelectionDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jubula.extensions.wizard.NewJubulaExtensionWizard;
 import org.eclipse.jubula.extensions.wizard.i18n.Messages;
 import org.eclipse.jubula.extensions.wizard.model.Storage;
 import org.eclipse.jubula.extensions.wizard.utils.Status;
@@ -646,7 +647,11 @@ public final class NewJubulaExtensionWizardPageThree extends WizardPage {
                 types.forEach(new Consumer<String>() {
                     @Override
                     public void accept(String c) {
-                        m_componentType.add(c);
+                        if ((NewJubulaExtensionWizard.resolveTesterClass(c) 
+                                != null) || NewJubulaExtensionWizard
+                                    .lookupTesterClassInMap(c) != null) {
+                            m_componentType.add(c);
+                        }
                     }
                 });
                 

@@ -198,8 +198,53 @@ public final class NewJubulaExtensionWizard extends Wizard
         }
     }
 
-    //CHECKSTYLE:OFF
+    /**
+     * Resolves the tester class qualifier of the component's type
+     * @param componentTypeQualifier the component's type qualifier
+     * @return the tester class qualifier or <code>null</code> if it could not
+     * be found
+     */
+    public static String resolveTesterClass(
+            final String componentTypeQualifier) {
+        
+        CompSystem compSystem = ComponentBuilder.getInstance().getCompSystem();
+        Component typeComponent = compSystem
+                .findComponent(componentTypeQualifier);
+        
+        if (typeComponent instanceof ConcreteComponent) {
+            return ((ConcreteComponent) typeComponent)
+                    .getTesterClass();
+        }
+        
+        return null;
+    }
     
+    /**
+     * Looks up the tester class for abstract and concrete components in the
+     * tester class map
+     * @param componentTypeQualifier the component type's qualifier
+     * @return the looked up tester class qualifier or <code>null</code> if it
+     * could not be found
+     */
+    public static String lookupTesterClassInMap(
+            final String componentTypeQualifier) {
+        
+        Properties prop = new Properties();
+        
+        try (InputStream input = NewJubulaExtensionWizard.class
+                .getResourceAsStream(
+                    Messages.TesterClassMapProperties)) {
+            
+            prop.load(input);
+            return prop.getProperty(componentTypeQualifier);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    //CHECKSTYLE:OFF
+
     /**
      * Initializes the robot values
      * @param task the RobotTask to initialize
@@ -238,30 +283,14 @@ public final class NewJubulaExtensionWizard extends Wizard
         } else {
             Component typeComponent = compSystem
                     .findComponent(componentTypeQualifier);
-            String testerClass;
-            if (typeComponent instanceof ConcreteComponent) {
-                testerClass = ((ConcreteComponent) typeComponent)
-                        .getTesterClass();
-            } else {
-                testerClass = null;
-            }
+            String testerClass = resolveTesterClass(componentTypeQualifier);
             if (testerClass != null) {
                 superClassQualifier = testerClass;
                 superClassName = superClassQualifier
                         .substring(superClassQualifier.lastIndexOf('.') + 1);
             } else {
-                Properties prop = new Properties();
-                
-                try (InputStream input = this.getClass()
-                        .getResourceAsStream(
-                            Messages.TesterClassMapProperties)) {
-                    prop.load(input);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                
                 String testerClassQualifier = 
-                        prop.getProperty(componentTypeQualifier);
+                        lookupTesterClassInMap(componentTypeQualifier);
                 
                 if (testerClassQualifier != null) {
                     superClassQualifier = testerClassQualifier;
@@ -434,6 +463,8 @@ public final class NewJubulaExtensionWizard extends Wizard
             }
         });
     }
+
+    
     
     //CHECKSTYLE:ON
     

@@ -250,7 +250,7 @@ import ${SuperClassQualifier};
  * provide testability for the selected component type.<br/>
  * The following methods / classes can be quite handy for your actions:<br/>
  * - <code>getRobot()</code> returns the Robot that offers several methods for 
- *              mouse interactions
+ *              mouse interactions<br/>
  * - <code>Verifier</code> handles comparisons for expected and actual values 
  *            and automatically gives the result to Jubula, so your method
  *            does not need a return value<br/><br/>
