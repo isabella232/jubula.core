@@ -194,6 +194,10 @@ public class CompSystem {
         cleanPreviousSimpleExtension(graphicsComponent);
         for (String componentName : componentNames) {
             String cleanName = componentName.trim();
+            if (m_componentsByType.containsKey(cleanName)) {
+                // if the Component is already supported, we do not add it to the list
+                continue;
+            }
             ConcreteComponent myComponent = new ConcreteComponent();
             myComponent.setType(cleanName); 
             myComponent.setTesterClass(

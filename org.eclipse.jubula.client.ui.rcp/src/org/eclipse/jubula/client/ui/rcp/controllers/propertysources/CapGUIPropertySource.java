@@ -281,7 +281,10 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
             cbpd.setLabelProvider(new LabelProvider() {
                 public String getText(Object element) {
                     if (element instanceof Integer) {
-                        return m_actionTypes[((Integer)element).intValue()];
+                        int temp = ((Integer) element).intValue();
+                        if (temp < m_actionTypes.length) {
+                            return m_actionTypes[temp];
+                        }
                     }
                     Assert.notReached(Messages.WrongElementType
                             + StringConstants.DOT);
