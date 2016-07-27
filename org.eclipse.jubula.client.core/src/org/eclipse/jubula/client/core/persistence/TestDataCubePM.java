@@ -52,8 +52,9 @@ public class TestDataCubePM {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery query = builder.createQuery();
         Root from = query.from(PoMaker.getTestDataCubeClass());
-        query.select(from).where(
-                builder.isNotNull(from.get("hbmReferencedDataCube"))); //$NON-NLS-1$
+        query.select(from).where(builder.and(
+                builder.isNotNull(from.get("hbmReferencedDataCube")), //$NON-NLS-1$
+                builder.equal(from.get("hbmParentProjectId"), tdc.getParentProjectId()))); //$NON-NLS-1$
         
         List<ITestDataCubePO> queryResult = 
             session.createQuery(query).getResultList();
