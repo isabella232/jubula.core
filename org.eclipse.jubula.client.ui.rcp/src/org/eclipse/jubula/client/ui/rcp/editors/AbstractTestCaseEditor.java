@@ -930,7 +930,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     private void updateTDManagerOfExecTestCases(INodePO root) {
         Iterator<INodePO> it = root.getNodeListIterator();
         while (it.hasNext()) {
-            IParamNodePO child = (IParamNodePO)it.next();
+            INodePO child = it.next();
             if (child instanceof IExecTestCasePO) {
                 ((IExecTestCasePO)child).synchronizeParameterIDs();
             }
