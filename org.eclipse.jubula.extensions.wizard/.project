@@ -26,10 +26,10 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-            <name>net.sf.eclipsecs.core.CheckstyleBuilder</name>
-            <arguments>
-            </arguments>
-        </buildCommand>
+			<name>net.sf.eclipsecs.core.CheckstyleBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.pde.PluginNature</nature>
@@ -38,10 +38,10 @@
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
 	</natures>
 	<linkedResources>
-        <link>
-            <name>.settings</name>
-            <type>2</type>
-            <locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.7</locationURI>
-        </link>
-    </linkedResources>
+		<link>
+			<name>.settings</name>
+			<type>2</type>
+			<locationURI>PARENT-1-PROJECT_LOC/org.eclipse.jubula.project.configuration/settings/1.7</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.extensions.wizard.feature"
       label="Jubula Extension Wizard"
-      version="4.0.0.qualifier"
+      version="5.0.0.qualifier"
       provider-name="Eclipse Jubula"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
@@ -61,27 +61,27 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.toolkit.common"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.tools"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.toolkit.base.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>     
+         unpack="false"/>
 
    <plugin
          id="org.eclipse.jubula.toolkit.concrete.provider"
@@ -89,39 +89,40 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.toolkit.javafx.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.toolkit.rcp.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.toolkit.swing.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>   
-            
+         unpack="false"/>
+
    <plugin
          id="org.eclipse.jubula.toolkit.swt.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>  
-         
+         unpack="false"/>
+
    <plugin
          id="org.eclipse.jubula.toolkit.gef.provider"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>  
+         unpack="false"/>
+
 </feature>

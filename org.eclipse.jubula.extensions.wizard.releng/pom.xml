@@ -11,17 +11,46 @@
 	<parent>
 		<artifactId>org.eclipse.jubula.releng</artifactId>
 		<groupId>org.eclipse.jubula</groupId>
-		<version>4.0.0-SNAPSHOT</version>
+		<version>5.0.0-SNAPSHOT</version>
 		<relativePath>../org.eclipse.jubula.releng</relativePath>
 	</parent>
 	<artifactId>org.eclipse.jubula.extensions.wizard.releng</artifactId>
 	<packaging>pom</packaging>
 
-	<modules>
-		<module>../org.eclipse.jubula.extensions.wizard</module>
-		<module>../org.eclipse.jubula.extensions.wizard.feature</module>
-		<module>../org.eclipse.jubula.extensions.wizard.repo</module>
-	</modules>
+    <properties>
+        <target-platform-base-path>../org.eclipse.jubula.extensions.wizard.releng/targetDefinition/</target-platform-base-path>
+    </properties>
+    
+    <profiles>
+        <profile>
+            <id>jubula-remote-fetch</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+		    <modules>
+		        <module>../org.eclipse.jubula.extensions.wizard</module>
+		        <module>../org.eclipse.jubula.extensions.wizard.feature</module>
+		        <module>../org.eclipse.jubula.extensions.wizard.repo</module>
+		    </modules>
+            <properties>
+                <target-platform-path>${target-platform-base-path}extension</target-platform-path>
+            </properties>
+        </profile>
+        <profile>
+            <id>jubula-local-build</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+		   <modules>
+		       <module>../org.eclipse.jubula.extensions.wizard</module>
+		       <module>../org.eclipse.jubula.extensions.wizard.feature</module>
+		       <module>../org.eclipse.jubula.extensions.wizard.repo</module>
+		   </modules>
+            <properties>
+                <target-platform-path>${target-platform-base-path}extension-local</target-platform-path>
+            </properties>
+        </profile>
+    </profiles>
 
 	<build>
 		<plugins>
@@ -60,7 +89,7 @@
 							<groupId>${project.groupId}</groupId>
 							<artifactId>${project.artifactId}</artifactId>
 							<version>${project.version}</version>
-							<classifier>../org.eclipse.jubula.extensions.wizard.releng/targetDefinition/extension</classifier>
+							<classifier>${target-platform-path}</classifier>
 						</artifact>
 					</target>
 					<environments>

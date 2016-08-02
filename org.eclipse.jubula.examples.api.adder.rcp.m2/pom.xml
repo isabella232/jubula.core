@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<artifactId>org.eclipse.jubula.examples.api</artifactId>
@@ -10,19 +9,19 @@
 		<relativePath>../org.eclipse.jubula.examples.api.configuration/m2</relativePath>
 	</parent>
 	<artifactId>org.eclipse.jubula.examples.api.adder.rcp.m2</artifactId>
-	<packaging>jar</packaging>
+    <packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>p2.eclipse-plugin</groupId>
 			<artifactId>org.eclipse.jubula.toolkit.swt.api</artifactId>
-			<version>[3.1.0,3.1.0)</version>
+			<version>[3.1.0,3.2.0)</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>p2.eclipse-plugin</groupId>
 			<artifactId>org.eclipse.jubula.toolkit.rcp.api</artifactId>
-			<version>[3.1.0,3.1.0)</version>
+			<version>[3.1.0,3.2.0)</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
