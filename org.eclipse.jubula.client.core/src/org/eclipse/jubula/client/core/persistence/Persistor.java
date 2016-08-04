@@ -618,19 +618,10 @@ public class Persistor {
                 final String errorMessage = NLS.bind(
                     Messages.DBVersionProblem, new Object[] { dbMajorVersion,
                         dbMinorVersion, cDBMajorVersion, cDBMinorVersion });
-                if (cDBMajorVersion > dbMajorVersion
-                    || (cDBMajorVersion.equals(dbMajorVersion) 
-                        && cDBMinorVersion > dbMinorVersion)) {
-                    // Client is newer than database schema
-                    if (!handleDatabaseVersionConflict(e)) {
-                        throw new PMDatabaseConfException(
+                if (!handleDatabaseVersionConflict(e)) {
+                    throw new PMDatabaseConfException(
                             errorMessage,
                             MessageIDs.E_INVALID_DB_VERSION);
-                    }
-                } else {
-                    // Client is older than database schema
-                    throw new PMDatabaseConfException(errorMessage,
-                        MessageIDs.E_INVALID_DB_VERSION);
                 }
             }
 
