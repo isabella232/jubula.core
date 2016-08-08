@@ -1232,6 +1232,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 IAUTMainPO aut = (IAUTMainPO)obj;
                 if (getAut().equals(aut)) {
                     cleanupNames();
+                    synchronizeViewers();
                 }
                 break;
             case IObjectMappingObserver.EVENT_COMPONENT_MAPPED :
@@ -1244,6 +1245,16 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 break;
             default:
         }
+    }
+    
+    /**
+     * Synchronizes the Viewers with the Edit Support after the latter changes
+     */
+    public void synchronizeViewers() {
+        final IObjectMappingPO om = getAut().getObjMap();
+        m_compNameTreeViewer.setInput(om.getUnmappedLogicalCategory());
+        m_uiElementTreeViewer.setInput(om.getUnmappedTechnicalCategory());
+        m_mappedComponentTreeViewer.setInput(om.getMappedCategory());
     }
 
     /**
