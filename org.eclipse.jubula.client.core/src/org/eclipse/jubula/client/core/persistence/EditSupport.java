@@ -490,8 +490,8 @@ public class EditSupport {
             m_workVersion = workVersion;
             m_compMapper.setCompNameCache(
                     new ComponentNamesDecorator(getSession()));
-            m_compMapper.setContext(m_workVersion);
             m_workVersion = m_session.merge(m_workVersion);
+            m_compMapper.setContext(m_workVersion);
         } catch (PersistenceException e) {
             final String msg = Messages.ReinitOfSessionFailed;
             log.error(msg);
