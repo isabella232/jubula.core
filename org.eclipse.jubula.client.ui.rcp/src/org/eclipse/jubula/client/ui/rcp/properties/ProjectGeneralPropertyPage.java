@@ -261,13 +261,15 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         
         createLabel(leftComposite, 
             Messages.ProjectPropertyPageProjectVersion);
-        Label versionLabel = new Label(rightComposite, SWT.WRAP);
+        
+        Text versionText = new Text(rightComposite, SWT.WRAP);
         GridData labelGrid = new GridData(GridData.FILL, GridData.CENTER, 
                 true, false, 1, 1);
         labelGrid.widthHint = 124;
-        versionLabel.setLayoutData(labelGrid);
-        versionLabel.setText(getProject().getVersionString());
-
+        versionText.setLayoutData(labelGrid);
+        versionText.setText(getProject().getVersionString());
+        versionText.setEditable(false);
+        versionText.setBackground(rightComposite.getBackground());
     }
 
     /**
@@ -283,14 +285,14 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             Messages.ProjectPropertyPageProjectGuid), 
             "ControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
         
-        Label projectGuid = new Label(rightComposite, SWT.NONE);
-        projectGuid.setText(getProject().getGuid());
-        Label l = createLabel(rightComposite, StringConstants.EMPTY);
-        GridData layoutData = new GridData();
-        layoutData.grabExcessHorizontalSpace = true;
-        layoutData.horizontalAlignment = GridData.FILL;
-        l.setLayoutData(layoutData);
-
+        Text guidText = new Text(rightComposite, SWT.WRAP);
+        GridData labelGrid = new GridData(GridData.FILL, GridData.CENTER, 
+                true, false, 1, 1);
+        labelGrid.widthHint = 124;
+        guidText.setLayoutData(labelGrid);
+        guidText.setText(getProject().getGuid());
+        guidText.setEditable(false);
+        guidText.setBackground(rightComposite.getBackground());
     }
 
     /**
