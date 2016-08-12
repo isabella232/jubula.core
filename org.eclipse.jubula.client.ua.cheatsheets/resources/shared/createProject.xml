@@ -9,12 +9,11 @@
 <cheatsheet title="Create a Project">
    <intro>
       <description>
-         This cheat sheet shows you how to create a Project.
+         This cheat sheet shows you how to create a Project with an AUT.
       </description>
    </intro>
-   <item title="Creating a Project" dialog="true" skip="false">
-      <description>
-         Select: 
+   <item title="Creating a Project with an AUT" dialog="true" skip="false">
+      <descriptioSelect: 
 <br/>
 <b>Test &gt; New</b>
 <br/>
@@ -22,7 +21,24 @@ If you are not using the embedded database, you will need to log in.
  <br/>
  Enter <b>SimpleAdder</b> as the Project Name.
  <br/>
- Click <b>Finish</b>.
+Choose <b>Swing</b> or <b>JavaFX</b> as the AUT toolkit, depending on which AUT you want to start (they are both functionally the same). 
+<br/>
+<br/>
+Enter or browse to the executable file: 
+<br/><br/>
+To use the Swing Simple Adder on Windows, use:
+<br/><br/>
+<b>InstallationDirectory\examples\AUTs\SimpleAdder\swing\SimpleAdder.cmd</b>
+<br/><br/>
+To use the JavaFX Simple Adder on Windows, use:
+<br/><br/>
+<b>InstallationDirectory\examples\AUTs\SimpleAdder\javafx\SimpleAdder.cmd</b>
+<br/><br/>
+To start the Swing Simple Adder on Unix, select <b>SimpleAdder.sh</b>. To be able to start the JavaFX Simple Adder on Unix, consult the Samples chapter of the documentation for information on adapting the AUT configuration.
+<br/><br/>
+Deactivate the checkbox for loading a project template (we recommend this for your own projects later though).
+<br/><br/>
+Click <b>Finish</b>.>Finish</b>.
       </description>
    </item>
 </cheatsheet>
