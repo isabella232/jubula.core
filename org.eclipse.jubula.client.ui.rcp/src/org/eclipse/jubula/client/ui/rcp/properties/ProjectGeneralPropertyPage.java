@@ -515,6 +515,12 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                             UIComponentHelper.setEnabledRecursive(
                                     m_trackChangesSignatureSelection, 
                                     m_isTrackingActivatedButton.getSelection());
+                            
+                            if (!m_isTrackingActivatedButton.getSelection()) {
+                                m_trackChangesSpan.setBackground(null);
+                            } else {
+                                m_trackChangesSpan.validate();
+                            }
                         }
                         checkCompleteness();
                     }
@@ -601,6 +607,7 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                     m_trackChangesTimespanSelection, 
                     m_isTrackingActivatedButton.getSelection());
         }
+        m_trackChangesSpan.setBackground(null);
     }
     
     /**

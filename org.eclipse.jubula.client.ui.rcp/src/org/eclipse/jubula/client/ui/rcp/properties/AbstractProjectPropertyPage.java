@@ -20,6 +20,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
@@ -139,6 +140,14 @@ public abstract class AbstractProjectPropertyPage extends PropertyPage {
         Control widgetToEnable) {
         if (buttonToSyncTo.isEnabled()) {
             widgetToEnable.setEnabled(buttonToSyncTo.getSelection());
+            
+            if (widgetToEnable instanceof CheckedIntText) {
+                if (buttonToSyncTo.getSelection()) {
+                    ((CheckedIntText) widgetToEnable).validate();
+                } else {
+                    widgetToEnable.setBackground(null);
+                }
+            }
         } else {
             widgetToEnable.setEnabled(false);
         }

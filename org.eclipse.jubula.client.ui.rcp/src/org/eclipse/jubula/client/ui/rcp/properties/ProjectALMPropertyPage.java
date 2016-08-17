@@ -506,6 +506,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage
                 m_connectionTest.setImage(IconConstants.STEP_TESTING_IMAGE);
                 if (m_almRepoCombo.getSelectedObject() == null) {
                     m_dashboardURL.setEnabled(false);
+                    m_dashboardURL.setBackground(null);
                     setEnabledRecursive(m_onSuccessGroup, false);
                     setEnabledRecursive(m_onFailureGroup, false);
                     m_onSuccessTableViewer.setSelection(null);
@@ -514,6 +515,7 @@ public class ProjectALMPropertyPage extends AbstractProjectPropertyPage
                     m_onFailureTableViewer.getTable().setEnabled(false);
                 } else {
                     m_dashboardURL.setEnabled(true);
+                    m_dashboardURL.validate();
                     setEnabledRecursive(m_onSuccessGroup, true);
                     setEnabledRecursive(m_onFailureGroup, true);
                     m_onSuccessTableViewer.getTable().setEnabled(true);
