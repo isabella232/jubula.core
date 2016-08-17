@@ -24,7 +24,7 @@ import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -114,6 +114,7 @@ public enum ProblemPropagator {
     }
 
     /**
+     * removing all non-teststyle problems from all nodes
      * @author BREDEX GmbH
      */
     public static class ProblemCleanupOperation 
@@ -122,28 +123,17 @@ public enum ProblemPropagator {
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
             INodePO parent, INodePO node, boolean alreadyVisited) {
          
-            if (node instanceof IExecTestCasePO) {
-                
-                Set<IProblem> copy = new HashSet<IProblem>(node.getProblems());
-                for (IProblem problem : copy) {
-
-                    if (!problem.getStatus().getPlugin()
-                            .contains("teststyle")) { //$NON-NLS-1$
-                        node.removeProblem(problem);
-                    }
-                }
-
-                return true;
+            if (alreadyVisited) {
+                return false;
             }
-            
-            boolean hasHadProblems = false;
-            
-            hasHadProblems |= node.removeProblem(
-                    ProblemFactory.ERROR_IN_CHILD);
-            hasHadProblems |= node.removeProblem(
-                    ProblemFactory.WARNING_IN_CHILD);
-            
-            return hasHadProblems;
+            Set<IProblem> copy = new HashSet<IProblem>(node.getProblems());
+            for (IProblem problem : copy) {
+                if (!problem.getStatus().getPlugin()
+                        .contains("teststyle")) { //$NON-NLS-1$
+                    node.removeProblem(problem);
+                }
+            }
+            return true;
         }
     }
     
@@ -161,12 +151,19 @@ public enum ProblemPropagator {
         /** {@inheritDoc} */
         public void postOperate(ITreeTraverserContext<INodePO> ctx, 
             INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (ProblemFactory.hasProblem(node)) {
-                setProblem(parent, ProblemFactory.getWorstProblem(
-                        node.getProblems()).getStatus().getSeverity());
+            if (parent instanceof ICategoryPO) {
+                if (ProblemFactory.hasProblem(node)) {
+                    setProblem(parent, ProblemFactory.getWorstProblem(
+                            node.getProblems()).getStatus().getSeverity());
+                }
+            } else {
+                if (ProblemFactory.hasNoOMIProblem(node)) {
+                    setProblem(parent, ProblemFactory.
+                            getWorstNoOMIncompleteProblem(
+                            node.getProblems()).getStatus().getSeverity());
+                }
             }
         }
-
     }
     /**
      * @param node

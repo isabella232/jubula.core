@@ -144,6 +144,28 @@ public final class ProblemFactory {
     }
     
     /**
+     * Gets the worst non-Object Mapping Incomplete problem
+     * @param problems the problems
+     * @return the worst
+     */
+    public static IProblem getWorstNoOMIncompleteProblem(
+            Set<IProblem> problems) {
+        IProblem worstProblem = null;
+        for (IProblem problem : problems) {
+            if (problem.getProblemType().equals(
+                    ProblemType.REASON_OM_INCOMPLETE)) {
+                continue;
+            }
+            if (worstProblem == null
+                    || worstProblem.getStatus().getSeverity() 
+                        < problem.getStatus().getSeverity()) {
+                worstProblem = problem;
+            }
+        }
+        return worstProblem;
+    }
+    
+    /**
      * @param problems
      *            The list of problems which should be searched for the worst
      *            problem.
@@ -170,5 +192,20 @@ public final class ProblemFactory {
      */
     public static boolean hasProblem(INodePO node) {
         return node.getProblems().size() > 0;
+    }
+    
+    /**
+     * Checks whether the node has a non-Object Mapping Incomplete problem
+     * @param node the Node
+     * @return the result
+     */
+    public static boolean hasNoOMIProblem(INodePO node) {
+        for (IProblem problem : node.getProblems()) {
+            if (!problem.getProblemType().equals(
+                    ProblemType.REASON_OM_INCOMPLETE)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

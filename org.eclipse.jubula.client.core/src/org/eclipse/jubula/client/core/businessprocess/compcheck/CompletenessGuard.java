@@ -11,33 +11,21 @@
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
-import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.model.LogicComponentNotManagedException;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
-import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
-import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
-import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 
 /**
  * @author BREDEX GmbH
@@ -83,115 +71,6 @@ public final class CompletenessGuard {
     }
 
     /**
-     * Updates the flags for the object mapping (complete or not?) in all nodes
-     * down to the test step.
-     */
-    private static class CheckObjectMappingCompleteness implements
-            ITreeNodeOperation<INodePO> {
-        /**
-         * The business process that performs component name operations.
-         */
-        private final CompNamesBP m_compNamesBP = new CompNamesBP();
-        /**
-         * The AUT
-         */
-        private IAUTMainPO m_aut;
-
-        /**
-         * Operates on the test step by setting its object mapping flag. The
-         * node that is responsible for a component name is also updated.
-         * 
-         * @param ctx
-         *            The tree traverser context
-         * @param cap
-         *            The test step
-         * @return <code>true</code> if the component name of the test step is
-         *         mapped, <code>false</code> otherwise
-         */
-        private boolean handleCap(ITreeTraverserContext<INodePO> ctx, 
-            ICapPO cap) {
-            IObjectMappingPO objMap = m_aut.getObjMap();
-            String compName = cap.getComponentName();
-            IComponentNamePO compNamePo = ComponentNamesBP.getInstance()
-                    .getCompNamePo(compName);
-            if (compNamePo != null) {
-                compName = compNamePo.getGuid();
-            }
-
-            final Component metaComponentType = cap.getMetaComponentType();
-            if (metaComponentType instanceof ConcreteComponent
-                    && ((ConcreteComponent) metaComponentType)
-                            .hasDefaultMapping()) {
-                setCompletenessObjectMapping(cap, m_aut, true);
-                return true;
-            }
-
-            if (compName != null && objMap != null) {
-                IComponentIdentifier id = null;
-                List<INodePO> currentTreePath = ctx.getCurrentTreePath();
-                CompNameResult result = m_compNamesBP.findCompName(
-                        currentTreePath, cap, cap.getComponentName(),
-                        ComponentNamesBP.getInstance());
-                try {
-                    id = objMap.getTechnicalName(result.getCompName());
-                } catch (LogicComponentNotManagedException e) {
-                    // ok
-                }
-                if (id == null) {
-                    INodePO rNode = result.getResponsibleNode();
-                    if (rNode instanceof ICapPO) {
-                        // this is a workaround for issue 
-                        // http://bugzilla.bredex.de/289#c4
-                        int responsibleNodeIdx = currentTreePath
-                                .lastIndexOf(rNode) - 1;
-                        if (responsibleNodeIdx > -1) {
-                            rNode = currentTreePath.get(responsibleNodeIdx);
-                        }
-                    }
-                    setCompletenessObjectMapping(rNode, m_aut, false);
-                } else {
-                    setCompletenessObjectMapping(cap, m_aut, true);
-                }
-            }
-            boolean hasCompleteOM = !cap.getProblems().contains(
-                    ProblemFactory.createIncompleteObjectMappingProblem(m_aut));
-            return hasCompleteOM;
-        }
-
-        /**
-         * Sets the object mapping flag of the passed node to <code>true</code>
-         * 
-         * {@inheritDoc}
-         */
-        public boolean operate(ITreeTraverserContext<INodePO> ctx,
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (node instanceof ITestSuitePO) {
-                ITestSuitePO ts = (ITestSuitePO) node;
-                m_aut = ts.getAut();
-            }
-            if (m_aut != null) {
-                setCompletenessObjectMapping(node, m_aut, true);
-            }
-            return true;
-        }
-
-        /**
-         * Updates the object mapping flags of the passed node and its parent.
-         * 
-         * {@inheritDoc}
-         */
-        public void postOperate(ITreeTraverserContext<INodePO> ctx,
-                INodePO parent, INodePO node, boolean alreadyVisited) {
-
-            if (m_aut != null) {
-                if (node instanceof ICapPO) {
-                    handleCap(ctx, (ICapPO) node);
-                }
-            }
-        }
-    }
-
-    /**
      * Operation to set the CompleteTestData flag at TDManager.
      * 
      * @author BREDEX GmbH
@@ -227,13 +106,16 @@ public final class CompletenessGuard {
      */
     public static void checkAll(INodePO root, IProgressMonitor monitor) {
         // Iterate Execution tree
-        final TreeTraverser traverser = new TreeTraverser(root);
+        TreeTraverser traverser = new TreeTraverser(root);
         traverser.setMonitor(monitor);
-        traverser.addOperation(new CheckObjectMappingCompleteness());
         traverser.addOperation(new CheckTestDataCompleteness());
         traverser.addOperation(new CheckMissingTestCaseReferences());
         traverser.addOperation(new InactiveNodesOperation());
         traverser.traverse(true);
+        
+        CompCheck check = new CompCheck(TestSuiteBP.getListOfTestSuites());
+        check.traverse();
+        check.addProblems();
     }
 
     /**

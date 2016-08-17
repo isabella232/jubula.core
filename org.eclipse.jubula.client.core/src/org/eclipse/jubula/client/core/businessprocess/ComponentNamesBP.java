@@ -1087,5 +1087,18 @@ public class ComponentNamesBP
             }
         }
     }
+    
+    /**
+     * Returns the resolved guid
+     * @param guid the guid
+     * @return the resolved guid
+     */
+    public String resolveGuid(String guid) {
+        IComponentNamePO comp = getCompNamePo(guid);
+        if (comp != null) {
+            return comp.getGuid();
+        }
+        return guid;
+    }
 
 }
