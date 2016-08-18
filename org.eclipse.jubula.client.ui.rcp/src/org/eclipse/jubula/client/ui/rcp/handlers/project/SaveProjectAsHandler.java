@@ -139,8 +139,8 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                     try {
                         duplicatedProject = JsonStorage.load(dto,
                                 subMonitor.newChild(WORK_PROJECT_CREATION),
-                                Plugin.getDefault(), true, paramNameMapper,
-                                compNameCache, true);
+                                Plugin.getDefault(), true, false,
+                                paramNameMapper, compNameCache, true);
                     } catch (ToolkitPluginException e1) { 
                         log.error(e1.getMessage()); // This should not be occur
                     }

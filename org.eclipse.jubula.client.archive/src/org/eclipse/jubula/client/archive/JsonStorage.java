@@ -255,7 +255,12 @@ public class JsonStorage {
      * @param url of import file
      * @param paramNameMapper 
      * @param compNameCache 
-     * @param assignNewGuid 
+     * @param assignNewGuid <code>true</code> if the project and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @param assignNewVersion if <code>true</code> the project will have
+     *                      a new project version number, otherwise it will
+     *                      have the stored project version from the dto.
      * @param monitor 
      * @param io console
      * @return IProjectPO new project object 
@@ -267,7 +272,7 @@ public class JsonStorage {
      */
     public IProjectPO readProject(URL url, ParamNameBPDecorator paramNameMapper,
             final IWritableComponentNameCache compNameCache,
-            boolean assignNewGuid,
+            boolean assignNewGuid, boolean assignNewVersion,
             IProgressMonitor monitor, IProgressConsole io)
                     throws JBVersionException, PMReadException,
                     InterruptedException, ToolkitPluginException {
@@ -309,7 +314,8 @@ public class JsonStorage {
                 return null;
             }
             projectPO = load(projectDTO, subMonitor.newChild(1), io,
-                    assignNewGuid, paramNameMapper, compNameCache, false);
+                    assignNewGuid, assignNewVersion, paramNameMapper,
+                    compNameCache, false);
 
             JsonImporter importer = new JsonImporter(monitor, io, false);
             List<TestresultSummaryDTO> summaryDTOs = 
@@ -331,10 +337,15 @@ public class JsonStorage {
     }
     
     /**
-     * @param dto project dto
+     * @param dto storage of the project
      * @param monitor 
      * @param io console
-     * @param assignNewGuid need it a new guid or not 
+     * @param assignNewGuid <code>true</code> if the project and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @param assignNewVersion if <code>true</code> the project will have
+     *                      a new project version number, otherwise it will
+     *                      have the stored project version from the dto.
      * @param paramNameMapper 
      * @param compNameCache 
      * @param skipTrackingInformation  
@@ -345,8 +356,8 @@ public class JsonStorage {
      * @throws ToolkitPluginException 
      */
     public static IProjectPO load(ProjectDTO dto, IProgressMonitor monitor,
-            IProgressConsole io, boolean assignNewGuid, 
-            IParamNameMapper paramNameMapper,
+            IProgressConsole io, boolean assignNewGuid,
+            boolean assignNewVersion, IParamNameMapper paramNameMapper,
             IWritableComponentNameCache compNameCache,
             boolean skipTrackingInformation)
                     throws JBVersionException, InterruptedException,
@@ -357,7 +368,7 @@ public class JsonStorage {
             JsonImporter importer = new JsonImporter(monitor, io,
                     skipTrackingInformation);
             projectPO = importer.createProject(dto, assignNewGuid,
-                    paramNameMapper, compNameCache);
+                    assignNewVersion, paramNameMapper, compNameCache);
         } catch (InvalidDataException e) {
             throw new PMReadException(Messages.InvalidImportFile,
                 e.getErrorId());

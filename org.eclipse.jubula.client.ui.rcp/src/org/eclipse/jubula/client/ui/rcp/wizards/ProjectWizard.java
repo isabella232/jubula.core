@@ -214,7 +214,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
                 URL templateUrl = ImportFileBP.getInstance()
                         .getProjectTemplateUrl();
                 project = new JsonStorage().readProject(templateUrl,
-                        paramNameMapper, compNameCache, true, monitor,
+                        paramNameMapper, compNameCache, true, true, monitor,
                         Plugin.getDefault());
             } catch (PMReadException | JBVersionException e) {
                 e.printStackTrace();

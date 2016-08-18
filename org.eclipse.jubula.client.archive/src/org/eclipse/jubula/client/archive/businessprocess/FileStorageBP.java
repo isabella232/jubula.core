@@ -242,7 +242,7 @@ public class FileStorageBP {
 
             } else if (fileExt.equals(JUB)) {
                 proj = new JsonStorage().readProject(fileURL, paramNameMapper,
-                        compNameCache, false, subMonitor.newChild(1),
+                        compNameCache, false, false, subMonitor.newChild(1),
                         m_console);
             }
             return proj;

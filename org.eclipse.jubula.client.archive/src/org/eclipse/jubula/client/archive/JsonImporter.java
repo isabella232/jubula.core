@@ -169,8 +169,13 @@ public class JsonImporter {
     }
     
     /**
-     * @param projectDTO 
-     * @param assignNewGuid 
+     * @param projectDTO storage of the project
+     * @param assignNewGuid <code>true</code> if the project and all subnodes
+     *                      should be assigned new GUIDs. Otherwise 
+     *                      <code>false</code>.
+     * @param assignNewVersion if <code>true</code> the project will have
+     *                      a new project version number, otherwise it will
+     *                      have the stored project version from the dto.
      * @param paramNameMapper 
      * @param compNameCache 
      * @return IProjectPO 
@@ -180,7 +185,8 @@ public class JsonImporter {
      * @throws ToolkitPluginException 
      */
     public IProjectPO createProject(ProjectDTO projectDTO,
-            boolean assignNewGuid, IParamNameMapper paramNameMapper, 
+            boolean assignNewGuid, boolean assignNewVersion,
+            IParamNameMapper paramNameMapper, 
             IWritableComponentNameCache compNameCache)
                     throws InvalidDataException, InterruptedException,
                     JBVersionException, ToolkitPluginException {
@@ -191,7 +197,8 @@ public class JsonImporter {
         checkUsedToolkits(projectDTO);
        
         
-        IProjectPO proj = initProject(projectDTO, assignNewGuid);
+        IProjectPO proj = initProject(projectDTO, assignNewGuid,
+                assignNewVersion);
         EntityManager attrDescSession = Persistor.instance().openSession();
         try {
             fillProject(proj, projectDTO, attrDescSession, assignNewGuid,
@@ -234,43 +241,51 @@ public class JsonImporter {
     }
     
     /**
-     * @param dto ProjectDTO storage for the project
+     * @param dto ProjectDTO storage of the project
      * @param assignNewGuid <code>true</code> if the project and all subnodes
      *                      should be assigned new GUIDs. Otherwise 
      *                      <code>false</code>.
+     * @param assignNewVersion if <code>true</code> the project will have
+     *                      a new project version number, otherwise it will
+     *                      have the stored project version from the dto.
      * @return a new IProjectPO
      */
-    private IProjectPO initProject(ProjectDTO dto, boolean assignNewGuid) {
+    private IProjectPO initProject(ProjectDTO dto, boolean assignNewGuid,
+            boolean assignNewVersion) {
         m_monitor.subTask(Messages.ImportJsonImportProjectInit);
         IProjectPO proj = null;
         if (dto.getUuid() != null) {
-            Integer majorProjVersion = dto.getMajorProjectVersion() == null
-                    ? null : dto.getMajorProjectVersion();
-            Integer minorProjVersion = dto.getMinorProjectVersion() == null
-                    ? null : dto.getMinorProjectVersion();
-            Integer microProjVersion = dto.getMicroProjectVersion() == null
-                    ? null : dto.getMicroProjectVersion();
-            String postFixProjVersion = dto.getProjectVersionQualifier() == null
-                    ? null : dto.getProjectVersionQualifier();
-            if (!assignNewGuid) {
+            
+            Integer majorProjVersion = 1;
+            Integer minorProjVersion = 0;
+            Integer microProjVersion = null;
+            String postFixProjVersion = null;
+            
+            if (!assignNewVersion) {
+                majorProjVersion = dto.getMajorProjectVersion();
+                minorProjVersion = dto.getMinorProjectVersion();
+                microProjVersion = dto.getMicroProjectVersion();
+                postFixProjVersion = dto.getProjectVersionQualifier();
+            }
+            
+            if (assignNewGuid) {
+                proj = NodeMaker.createProjectPO(
+                        IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
+                        minorProjVersion, microProjVersion, postFixProjVersion);
+            } else {
                 proj = NodeMaker.createProjectPO(
                         IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
                         minorProjVersion, microProjVersion, postFixProjVersion,
                         dto.getUuid());
-            } else {
-                proj = NodeMaker.createProjectPO(
-                        IVersion.JB_CLIENT_METADATA_VERSION, majorProjVersion,
-                        minorProjVersion, microProjVersion, postFixProjVersion);
-                m_oldToNewGuids.put(dto.getUuid(), proj.getGuid());
             }
             ProjectNameBP.getInstance().setName(proj.getGuid(), dto.getName(),
                     false);
         } else {
             proj = NodeMaker.createProjectPO(dto.getName(), IVersion
                 .JB_CLIENT_METADATA_VERSION);
-            if (assignNewGuid) {
-                m_oldToNewGuids.put(dto.getUuid(), proj.getGuid());
-            }
+        }
+        if (assignNewGuid) {
+            m_oldToNewGuids.put(dto.getUuid(), proj.getGuid());
         }
         return proj;
     }
