@@ -31,9 +31,6 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -1213,11 +1210,11 @@ public class NodePM extends PersistenceManager {
      * Deletes all tracked changes of a project
      * @param monitor the monitor
      * @param project the project
-     * @return the list of nodes for which tracked changes could not be deleted
+     * @return the map from changed nodes to whether they were locked (for which tracked changes could not be deleted)
      * @throws ProjectDeletedException 
      * @throws PMException
      */
-    public static List<INodePO> cleanupTrackedChanges(
+    public static Map<INodePO, Boolean> cleanupTrackedChanges(
             IProgressMonitor monitor, final IProjectPO project) 
         throws PMException, ProjectDeletedException {
         
@@ -1231,8 +1228,9 @@ public class NodePM extends PersistenceManager {
         List<INodePO> listOfNodesWithTrackedChanges = 
                 treeNodeOp.getListOfNodesWithTrackedChanges();
         
-        List<INodePO> listOfLockedNodes = new ArrayList<INodePO>();
-                
+        Map<INodePO, Boolean> nodeToWasLockedMap = new HashMap<>(
+                listOfNodesWithTrackedChanges.size());
+        
         monitor.beginTask(Messages.DeleteTrackedChangesActionDialog, 
                 listOfNodesWithTrackedChanges.size());
 
@@ -1246,9 +1244,10 @@ public class NodePM extends PersistenceManager {
             try {
                 persistor.lockPO(session, node);
                 node.deleteTrackedChanges();
+                nodeToWasLockedMap.put(node, new Boolean(false));
             } catch (PMException e) {
                 // can not delete tracked changes of this node
-                listOfLockedNodes.add(node);
+                nodeToWasLockedMap.put(node, new Boolean(true));
             }
             monitor.worked(1);
         }
@@ -1256,12 +1255,7 @@ public class NodePM extends PersistenceManager {
         persistor.commitTransaction(session, tx);
         LockManager.instance().unlockPOs(session);
         
-        for (INodePO node: listOfNodesWithTrackedChanges) {
-            DataEventDispatcher.getInstance().fireDataChangedListener(node,
-                    DataState.StructureModified, UpdateState.all);
-        }
-        
         monitor.done();
-        return listOfLockedNodes;
+        return nodeToWasLockedMap;
     }
 }

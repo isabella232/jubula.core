@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.EntityNotFoundException;
 
@@ -83,6 +84,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -1148,11 +1150,24 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         public void run(IProgressMonitor monitor) {
             final IProjectPO project = 
                     GeneralStorage.getInstance().getProject();
-            List<INodePO> listOfLockedNodes;
+            final Map<INodePO, Boolean> nodeToWasLockedMap;
             try {
-                listOfLockedNodes = 
+                nodeToWasLockedMap = 
                         NodePM.cleanupTrackedChanges(monitor, project);
 
+                List<INodePO> listOfLockedNodes = new ArrayList<>(
+                        nodeToWasLockedMap.size());
+                for (INodePO node: nodeToWasLockedMap.keySet()) {
+                    if (nodeToWasLockedMap.get(node).booleanValue()) {
+                        listOfLockedNodes.add(node);
+                    }
+                }
+                
+                Display d = Plugin.getDisplay();
+                if (d != null && !d.isDisposed()) {
+                    fireDataChangedListeners(d, nodeToWasLockedMap);
+                }
+                
                 if (!listOfLockedNodes.isEmpty()) {
                     Object[] details = listOfLockedNodes.toArray();
                     String[] namesOfLockedNodes;
@@ -1192,5 +1207,27 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 ErrorHandlingUtil.createMessageDialog(e);
             }
         }
+    }
+    
+    /**
+     * Fires data state listeners for those nodes which were not locked
+     * @param d the active Display
+     * @param nodeToWasLockedMap the map indicating which nodes were locked
+     */
+    private void fireDataChangedListeners(Display d,
+            final Map<INodePO, Boolean> nodeToWasLockedMap) {
+        d.syncExec(new Runnable() {
+            public void run() {
+                for (INodePO node : nodeToWasLockedMap.keySet()) {
+                    if (!nodeToWasLockedMap.get(node).
+                            booleanValue()) {
+                        DataEventDispatcher.getInstance().
+                            fireDataChangedListener(node,
+                                DataState.StructureModified,
+                                UpdateState.all);
+                    }
+                }
+            }
+        });
     }
 }
