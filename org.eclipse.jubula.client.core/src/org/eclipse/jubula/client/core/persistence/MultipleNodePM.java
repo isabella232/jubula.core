@@ -138,8 +138,6 @@ public class MultipleNodePM  extends PersistenceManager {
                 proj.getExecObjCont().removeExecObject(m_execNode);  
             }
             
-            PersistenceUtil.removeChildNodes(m_execNode, sess);
-            
             sess.remove(m_execNode);
             return null;
         }
@@ -798,8 +796,6 @@ public class MultipleNodePM  extends PersistenceManager {
             }
             registerParamNamesForDeletion(m_testCase);
             
-            PersistenceUtil.removeChildNodes(m_testCase, sess);
-            
             sess.remove(m_testCase);
             
             return null;
@@ -904,8 +900,6 @@ public class MultipleNodePM  extends PersistenceManager {
                 }
             }
 
-            PersistenceUtil.removeChildNodes(m_category, sess);
-            
             sess.remove(m_category);
             
             return null;
@@ -944,7 +938,6 @@ public class MultipleNodePM  extends PersistenceManager {
             if (isNestedNode(m_execNode)) {
                 m_execNode.getParentNode().removeNode(m_execNode);
             }            
-            PersistenceUtil.removeChildNodes(m_execNode, sess);
             
             sess.remove(m_execNode);
             return null;

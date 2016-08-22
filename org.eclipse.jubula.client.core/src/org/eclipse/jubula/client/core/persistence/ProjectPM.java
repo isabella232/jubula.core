@@ -1505,12 +1505,10 @@ public class ProjectPM extends PersistenceManager
                 new ArrayList<IExecPersistable>(
                         p.getExecObjCont().getExecObjList());
             for (ISpecPersistable po : specObjList) {
-                PersistenceUtil.removeChildNodes(po, deleteSess);
                 p.getSpecObjCont().removeSpecObject(po);
                 persistor.deletePO(deleteSess, po);
             }
             for (IExecPersistable po : execObjList) {
-                PersistenceUtil.removeChildNodes(po, deleteSess);
                 p.getExecObjCont().removeExecObject(po);
                 persistor.deletePO(deleteSess, po);
             }
