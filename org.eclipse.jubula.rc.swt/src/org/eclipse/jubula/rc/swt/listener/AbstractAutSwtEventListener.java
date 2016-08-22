@@ -136,7 +136,7 @@ public abstract class AbstractAutSwtEventListener extends BaseSwtEventListener
     public void cleanUp() {
         final Display d = ((SwtAUTServer)AUTServer.getInstance())
             .getAutDisplay();
-        if (d != null) {
+        if (d != null && !d.isDisposed()) {
             d.syncExec(new Runnable() {
                 public void run() {
                     if (m_borderShell != null) {
