@@ -151,53 +151,59 @@ public class OMEditorDndSupport {
             List<IComponentNamePO> compNamesToMove, 
             IObjectMappingCategoryPO target, 
             ObjectMappingMultiPageEditor editor) {
-        
-        IObjectMappingCategoryPO unmappedComponentNames =
+
+        IObjectMappingCategoryPO unmappedCat =
             editor.getAut().getObjMap().getUnmappedLogicalCategory();
         IObjectMappingCategoryPO targetSection = getSection(target);
-        if (unmappedComponentNames.equals(targetSection)) {
-            IWritableComponentNameMapper compMapper = 
-                editor.getEditorHelper().getEditSupport().getCompMapper();
-            for (IComponentNamePO compName : compNamesToMove) {
-                String compNameGuid = compName.getGuid();
-                IObjectMappingAssoziationPO oldAssoc =
-                    editor.getOmEditorBP().getAssociation(compNameGuid);
-                try {
-                    IObjectMappingAssoziationPO newAssoc = 
-                        PoMaker.createObjectMappingAssoziationPO(
-                                null, new HashSet<String>());
-                    compMapper.changeReuse(newAssoc, null, compNameGuid);
-                    compMapper.changeReuse(oldAssoc, compNameGuid, null);
-                    target.addAssociation(newAssoc);
-                    if (oldAssoc != null) {
-                        if (oldAssoc.getLogicalNames().isEmpty()) {
-                            // Change section to unmapped tech, creating new 
-                            // categories if necessary.
-                            IObjectMappingCategoryPO unmappedTech =
-                                editor.getAut().getObjMap()
-                                .getUnmappedTechnicalCategory();
-                            IObjectMappingCategoryPO newCategory = 
-                                editor.getOmEditorBP().createCategory(
-                                        unmappedTech, oldAssoc.getCategory());
-                            oldAssoc.getCategory().removeAssociation(oldAssoc);
-                            newCategory.addAssociation(oldAssoc);
-                        }
-                    }
-                } catch (IncompatibleTypeException e) {
-                    ErrorHandlingUtil.createMessageDialog(
-                            e, e.getErrorMessageParams(), null);
-                } catch (PMException pme) {
-                    PMExceptionHandler.handlePMExceptionForEditor(pme, editor);
-                }
-            }
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    editor.getAut().getObjMap(), 
-                    DataState.StructureModified, 
-                    UpdateState.onlyInEditor);
-            
-            editor.getTreeViewer().refresh(target);
-            editor.getTreeViewer().setExpandedState(target, true);
+        if (!unmappedCat.equals(targetSection)) {
+            return;
         }
+        IWritableComponentNameMapper compMapper = 
+            editor.getEditorHelper().getEditSupport().getCompMapper();
+        for (IComponentNamePO compName : compNamesToMove) {
+            String compNameGuid = compName.getGuid();
+            IObjectMappingAssoziationPO oldAssoc =
+                editor.getOmEditorBP().getAssociation(compNameGuid);
+            if (oldAssoc.getTechnicalName() == null) {
+                oldAssoc.getCategory().removeAssociation(oldAssoc);
+                target.addAssociation(oldAssoc);
+                continue;
+            }
+            try {
+                IObjectMappingAssoziationPO newAssoc = 
+                    PoMaker.createObjectMappingAssoziationPO(
+                            null, new HashSet<String>());
+                compMapper.changeReuse(newAssoc, null, compNameGuid);
+                compMapper.changeReuse(oldAssoc, compNameGuid, null);
+                target.addAssociation(newAssoc);
+                if (oldAssoc != null) {
+                    if (oldAssoc.getLogicalNames().isEmpty()) {
+                        // Change section to unmapped tech, creating new 
+                        // categories if necessary.
+                        IObjectMappingCategoryPO unmappedTech =
+                            editor.getAut().getObjMap()
+                            .getUnmappedTechnicalCategory();
+                        IObjectMappingCategoryPO newCategory = 
+                            editor.getOmEditorBP().createCategory(
+                                    unmappedTech, oldAssoc.getCategory());
+                        oldAssoc.getCategory().removeAssociation(oldAssoc);
+                        newCategory.addAssociation(oldAssoc);
+                    }
+                }
+            } catch (IncompatibleTypeException e) {
+                ErrorHandlingUtil.createMessageDialog(
+                        e, e.getErrorMessageParams(), null);
+            } catch (PMException pme) {
+                PMExceptionHandler.handlePMExceptionForEditor(pme, editor);
+            }
+        }
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                editor.getAut().getObjMap(), 
+                DataState.StructureModified, 
+                UpdateState.onlyInEditor);
+        
+        editor.getTreeViewer().refresh(target);
+        editor.getTreeViewer().setExpandedState(target, true);
     }
 
     /**
@@ -222,6 +228,7 @@ public class OMEditorDndSupport {
                 IObjectMappingCategoryPO fromCategory = assoc.getCategory();
                 fromCategory.removeAssociation(assoc);
                 target.addAssociation(assoc);
+                continue;
             } else if (unmappedTechNames.equals(newSection)) {
                 IObjectMappingCategoryPO unmappedCompNames = 
                     editor.getAut().getObjMap().getUnmappedLogicalCategory();
