@@ -93,6 +93,10 @@ public class DeleteTreeItemHandlerTCEditor
                     for (ICompNamesPairPO iCompNamesPairPO : col) {
                         iCompNamesPairPO.getSecondName();
                     }
+                    for (int i = po.getDataManager().getDataSetCount() - 1;
+                            i >= 0; i--) {
+                        po.getDataManager().removeDataSet(i);
+                    }
                 }
                 if (node.getId() != null) {
                     editor.getEditorHelper().getEditSupport().getSession()
