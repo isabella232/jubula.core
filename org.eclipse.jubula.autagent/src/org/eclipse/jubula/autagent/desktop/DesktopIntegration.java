@@ -38,6 +38,7 @@ import org.eclipse.jubula.autagent.gui.ObjectMappingFrame;
 import org.eclipse.jubula.autagent.i18n.Messages;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.Communicator.ConnectionManager;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.version.Vn;
@@ -183,6 +184,8 @@ public class DesktopIntegration implements PropertyChangeListener {
     public static void setObjectMappingAUT(AutIdentifier autID) {
         AutIdentifier id = omAut;
         omAut = autID;
+        ObjectMappingFrame.INSTANCE
+            .setOMAutName(autID != null ? autID.getID() : null);
         propertyChangedSupport.firePropertyChange(PROP_OBJECT_MAPPING_AUT,
                 id, omAut);
     }
@@ -198,7 +201,7 @@ public class DesktopIntegration implements PropertyChangeListener {
         m_startOMMMenu.setEnabled(false);
         m_stopOMMMenu = new MenuItem(Messages.StopMenu);
         m_stopOMMMenu.setEnabled(false);
-        MenuItem settings = new MenuItem(Messages.ObjectMappingMenu);
+        MenuItem settings = new MenuItem(Messages.ObjectMappingOpen);
         settings.addActionListener(new ActionListener() {
             /** show the object mapping windows*/
             public void actionPerformed(ActionEvent e) {
@@ -224,23 +227,29 @@ public class DesktopIntegration implements PropertyChangeListener {
      */
     private String buildToolTip() {
         StringBuilder tt = new StringBuilder(
-                "AUT Agent " + Vn.getDefault().getVersion() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+                "AUT Agent " + Vn.getDefault().getVersion());  //$NON-NLS-1$
+        tt.append(StringConstants.NEWLINE);
         tt.append(" Port used: "); //$NON-NLS-1$
         tt.append(m_port);
         if (!m_auts.isEmpty()) {
-            tt.append('\n');
-            tt.append(' ');
+            tt.append(StringConstants.NEWLINE);
+            tt.append(StringConstants.SPACE);
             tt.append(m_auts.size());
             tt.append(" running AUT"); //$NON-NLS-1$
-            if (m_auts.size() == 1) {
-                tt.append(':');
-            } else {
-                tt.append("s:"); //$NON-NLS-1$
+            if (m_auts.size() > 1) {
+                tt.append('s');
             }
+            tt.append(StringConstants.COLON);
+            
+            String omAutId = omAut != null ? omAut.getID() : null;
             for (String aut : m_auts) {
-                tt.append('\n');
-                tt.append(' ');
+                tt.append(StringConstants.NEWLINE);
+                tt.append(StringConstants.SPACE);
                 tt.append(aut);
+                if (omAutId != null && aut.equals(omAutId)) {
+                    tt.append(StringConstants.SPACE);
+                    tt.append("[OM]"); //$NON-NLS-1$
+                }
             }
         }
         
