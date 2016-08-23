@@ -9,7 +9,7 @@
 <unit id="org.eclipse.jubula.feature.api.core.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.jubula.feature.rc.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.jubula.feature.api.source.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/jubula/release/mars"/>
+<repository location="http://download.eclipse.org/jubula/release/neon"/>
 </location>
 </locations>
 </target>
