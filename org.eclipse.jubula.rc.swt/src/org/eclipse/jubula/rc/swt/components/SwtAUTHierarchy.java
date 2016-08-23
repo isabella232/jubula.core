@@ -699,6 +699,9 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
         Collection<Widget> collection = getComponents(container);
         for (Iterator<Widget> iter = collection.iterator(); iter.hasNext();) {
             Widget comp = iter.next();
+            if (comp == null) {
+                continue;
+            }
             if (getHierarchyContainer(comp) != null) {
                 return;
             }
@@ -733,8 +736,12 @@ public class SwtAUTHierarchy extends AUTHierarchy<Widget> {
         removeFromHierachyMap(container);
         if (!autComp.isDisposed()) {
             Collection<Widget> childs = getComponents(autComp);
+            Widget widget;
             for (Iterator<Widget> iter = childs.iterator(); iter.hasNext();) {
-                removeFromHierarchy(getHierarchyContainer(iter.next()));
+                widget = iter.next();
+                if (widget != null) {
+                    removeFromHierarchy(getHierarchyContainer(widget));
+                }
             }
         }
     }
