@@ -108,10 +108,11 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
             public Void run() throws StepExecutionException {
                 ListCellRenderer lcr = m_list.getCellRenderer();
                 if (lcr != null) {
-                    String text = (String) model.getElementAt(index);
-                    if (StringUtils.isNotBlank(text)) {
+                    Object modelObject =  model.getElementAt(index);
+                    if (modelObject != null
+                            && StringUtils.isNotBlank(modelObject.toString())) {
                         Component listItem = lcr.getListCellRendererComponent(
-                                             m_list, model.getElementAt(index), 
+                                             m_list, model.getElementAt(index),
                                              index, false, false);
                         Dimension preferredSize = listItem.getPreferredSize();
                         r.setSize(preferredSize);
