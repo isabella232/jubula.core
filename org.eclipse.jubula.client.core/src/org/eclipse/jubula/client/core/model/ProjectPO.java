@@ -144,7 +144,17 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
      */
     @Transient
     public Set<IAUTMainPO> getAutMainList() {
-        return Collections.unmodifiableSet(getHbmAutCont().getAutMainList());
+        AUTContPO autCont = getHbmAutCont();
+        if (autCont != null)  {
+            Set<IAUTMainPO> autMainList = autCont.getAutMainList();
+            if (autMainList != null) {
+                return Collections.unmodifiableSet(autMainList);
+            }
+            log.error("The AUT main list unexpectedly returned null!"); //$NON-NLS-1$
+        } else {
+            log.error("The AUT Cont was unexpectedly null!"); //$NON-NLS-1$
+        }
+        return null;
     }
 
     /**

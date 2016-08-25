@@ -380,13 +380,7 @@ public class StartAutBP {
      * @return AUTs, which support working language
      */
     private Set<IAUTMainPO> getAUTs() {
-        Set<IAUTMainPO> autsForLang = new HashSet<IAUTMainPO>();
-        Set<IAUTMainPO> autsOfProject = GeneralStorage.getInstance()
-            .getProject().getAutMainList();
-        for (IAUTMainPO aut : autsOfProject) {
-            autsForLang.add(aut);
-        }
-        return autsForLang;
+        return GeneralStorage.getInstance().getProject().getAutMainList();
     }
 
     /**
