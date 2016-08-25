@@ -27,7 +27,6 @@ import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.IOption
 import org.eclipse.jubula.client.ui.rcp.widgets.ModifiableListObservable.ISelectionChangedListener;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -95,7 +94,7 @@ public class ModifiableTriggerList extends Composite implements
     /**
      * @param parent see Composite
      * @param style see Composite
-     * @param headerKey I18n id
+     * @param headerText the text to display
      * and change operations
      * @param values initial values to display
      * @param emptyListAllowed allows, that the list is empty or not
@@ -103,7 +102,7 @@ public class ModifiableTriggerList extends Composite implements
     public ModifiableTriggerList(
         Composite parent, 
         int style, 
-        String headerKey,
+        String headerText,
         java.util.Set<String> values,
         boolean emptyListAllowed) {
         super(parent, style);
@@ -115,7 +114,7 @@ public class ModifiableTriggerList extends Composite implements
         }
         m_observable = new ModifiableListObservable();
         m_isEmptyListAllowed = emptyListAllowed;
-        initControls(headerKey, values);
+        initControls(headerText, values);
         enableButtons();
         addListeners();
     }
@@ -618,17 +617,17 @@ public class ModifiableTriggerList extends Composite implements
     
     /**
      * create all controls for this component
-     * @param headerKey I18n id
+     * @param headerText the text to display
      * @param values initial values to display
      */
-    private void initControls(String headerKey, Set <String> values) {
+    private void initControls(String headerText, Set <String> values) {
         FormLayout layout = new FormLayout();
         layout.marginHeight = 5;
         layout.marginWidth = 10;
         this.setLayout(layout);
         
         Label header = new Label(this, SWT.NONE);
-        header.setText(I18n.getString(headerKey));
+        header.setText(headerText);
         FormData headerData = new FormData();
         headerData.left = new FormAttachment(0, 0);
         headerData.top = new FormAttachment(0, 0);
