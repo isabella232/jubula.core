@@ -11,6 +11,7 @@
 package org.eclipse.jubula.autagent.commands;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.internal.ICommand;
@@ -18,6 +19,8 @@ import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerStateMessage;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -91,6 +94,9 @@ public class StartAUTServerCommand implements ICommand {
      */
     public Message execute() {
         log.debug("execute() called"); //$NON-NLS-1$
+        StartAUTServerStateMessage result = new StartAUTServerStateMessage();
+        Map<String, String> conf = m_message.getAutConfiguration();
+        result.setAutId(new AutIdentifier(conf.get(AutConfigConstants.AUT_ID)));
         try {
             AutStarter.getInstance().getAgent().setStartAutMessage(m_message);
             String autToolkit = m_message.getAutToolKit();
@@ -101,44 +107,38 @@ public class StartAUTServerCommand implements ICommand {
                 + toolkitName + "AutServerCommand"; //$NON-NLS-1$
             Class autServerClass = Class.forName(className);
             IStartAut autStarter = (IStartAut)autServerClass.newInstance();
-            return autStarter.startAut(m_message.getAutConfiguration());
+            return autStarter.startAut(conf);
             
         } catch (IllegalArgumentException iae) {
             log.error(iae.getLocalizedMessage(), iae);
-            return new StartAUTServerStateMessage(
-                AUTStartResponse.EXECUTION,
-                iae.getMessage());
+            result.setReason(AUTStartResponse.EXECUTION);
+            result.setDescription(iae.getMessage());
         } catch (NullPointerException npe) {
             log.error(npe.getLocalizedMessage(), npe);
-            return new StartAUTServerStateMessage(
-                AUTStartResponse.DATA,
-                npe.getMessage());
+            result.setReason(AUTStartResponse.DATA);
+            result.setDescription(npe.getMessage());
         } catch (SecurityException se) {
             log.error(se.getLocalizedMessage(), se);
-            return new StartAUTServerStateMessage(
-                AUTStartResponse.SECURITY,
-                "security violation:" + se.getMessage()); //$NON-NLS-1$
+            result.setReason(AUTStartResponse.SECURITY);
+            result.setDescription("security violation:" + se.getMessage()); //$NON-NLS-1$
         } catch (IOException ioe) {
             log.error("Could not start AUTServer", ioe); //$NON-NLS-1$
-            return new StartAUTServerStateMessage(
-                AUTStartResponse.IO,
-                ioe.getMessage());
+            result.setReason(AUTStartResponse.IO);
+            result.setDescription(ioe.getMessage());
         } catch (ClassNotFoundException cnfe) {
             log.error("Could not find class for AUTServer", cnfe); //$NON-NLS-1$
-            return new StartAUTServerStateMessage(
-                AUTStartResponse.NO_SERVER_CLASS,
-                cnfe.getMessage());
+            result.setReason(AUTStartResponse.NO_SERVER_CLASS);
+            result.setDescription(cnfe.getMessage());
         } catch (InstantiationException ie) {
             log.error("could not instantiate class for AUTServer", ie); //$NON-NLS-1$
-            return new StartAUTServerStateMessage(
-                AUTStartResponse.NO_SERVER_CLASS,
-                ie.getMessage());
+            result.setReason(AUTStartResponse.NO_SERVER_CLASS);
+            result.setDescription(ie.getMessage());
         } catch (IllegalAccessException iae) {
             log.error("could not instantiate class for AUTServer", iae); //$NON-NLS-1$
-            return new StartAUTServerStateMessage(
-                AUTStartResponse.NO_SERVER_CLASS,
-                iae.getMessage());
+            result.setReason(AUTStartResponse.NO_SERVER_CLASS);
+            result.setDescription(iae.getMessage());
         }
+        return result;
     }
 
 

@@ -133,6 +133,17 @@ class ObjectMappingPO implements IObjectMappingPO {
         oma.setParentProjectId(getParentProjectId());
         return oma;
     }    
+    /**
+     * @param assoc the association to remove
+     */
+    public void removeAssociationFromCache(IObjectMappingAssoziationPO assoc) {
+        if (m_mappings != null) {
+            m_mappings.remove(assoc);
+        }
+        for (String logicalName : assoc.getLogicalNames()) {
+            m_logicalNameToAssoc.remove(logicalName);
+        }
+    }
 
     /**
      * Creates a new technical Name, unassigned

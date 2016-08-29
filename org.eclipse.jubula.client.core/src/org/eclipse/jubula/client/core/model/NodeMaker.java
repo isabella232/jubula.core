@@ -339,7 +339,7 @@ public abstract class NodeMaker {
      */
     public static IRefTestSuitePO createRefTestSuitePO(ITestSuitePO ts, 
             String autId) {        
-        return new RefTestSuitePO(ts.getName(), ts.getGuid(), autId);
+        return new RefTestSuitePO(null, ts.getGuid(), autId);
     }
     
     /**

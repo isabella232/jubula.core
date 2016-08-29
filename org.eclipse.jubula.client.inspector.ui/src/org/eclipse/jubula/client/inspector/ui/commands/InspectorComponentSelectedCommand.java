@@ -88,8 +88,7 @@ public class InspectorComponentSelectedCommand implements ICommand {
         InspectedComponent.getInstance().setCompId(
                 m_message.getComponentIdentifier());
         
-        ISourceProviderService service = 
-            (ISourceProviderService)PlatformUI.getWorkbench().getService(
+        ISourceProviderService service = PlatformUI.getWorkbench().getService(
                     ISourceProviderService.class);
         InspectorStateProvider sourceProvider = 
             (InspectorStateProvider)service.getSourceProvider(

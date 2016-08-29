@@ -25,7 +25,9 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.agent.AutAgent;
+import org.eclipse.jubula.autagent.i18n.Messages;
 import org.eclipse.jubula.autagent.remote.dialogs.ChooseCheckModeDialogBP;
 import org.eclipse.jubula.autagent.remote.dialogs.ObservationConsoleBP;
 import org.eclipse.jubula.communication.internal.Communicator;
@@ -42,8 +44,9 @@ import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
-import org.eclipse.jubula.tools.internal.utils.SysoRedirect;
 import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
+import org.eclipse.jubula.tools.internal.utils.SysoRedirect;
+import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,7 +143,7 @@ public class AutStarter {
                                         (AutIdentifier)oldValue, false));
                             }
                         } catch (CommunicationException ce) {
-                            log.error("Error occurred while sending AUT Registration Message.", ce); //$NON-NLS-1$
+                            log.error(Messages.RegistationSendingError, ce);
                         }
                     }
 
@@ -154,20 +157,20 @@ public class AutStarter {
      * starts watching the given process <br>
      * @param process the process representing an AUT, must not be null
      * @param isAgentSet true if executable file and agent are set.
+     * @param autId is the id of AUT
      * @throws IllegalArgumentException if the given process is null
      * @return false when no more server can watched (it's only one),
      *         true otherwise
      */
-    public boolean watchAUT(Process process, boolean isAgentSet)
-        throws IllegalArgumentException {
+    public boolean watchAUT(Process process, boolean isAgentSet,
+            AutIdentifier autId) throws IllegalArgumentException {
         // check parameter
         if (process == null) {
-            throw new IllegalArgumentException(
-                    "process must not be null"); //$NON-NLS-1$
+            throw new IllegalArgumentException(Messages.ProcessMustNotBeNull);
         }
 
         // start thread waiting for termination
-        new AUTWatcher(process, isAgentSet, m_messenger).start();
+        new AUTWatcher(process, isAgentSet, m_messenger, autId).start();
         return true;
     }
 
@@ -267,7 +270,7 @@ public class AutStarter {
             initAutConnectionSocket();
             if (m_verbosity.compareTo(Verbosity.VERBOSE) >= 0) {
                 infoMessage = I18n.getString("AUTAgent.StartSuccessText") + //$NON-NLS-1$
-                    getCommunicator().getLocalPort() + "."; //$NON-NLS-1$
+                    getCommunicator().getLocalPort() + StringConstants.DOT;
             } else {
                 infoMessage = StringConstants.EMPTY;
             }
@@ -281,7 +284,7 @@ public class AutStarter {
                 try {
                     clientSocketThread.join();
                 } catch (InterruptedException e) {
-                    log.warn("Primary Thread was interrupted unexpectedly while waiting for client socket Thread to finish. Resuming execution of Primary Thread.", e); //$NON-NLS-1$
+                    log.warn(Messages.InterruptedThread, e);
                 }
             }
         }
@@ -313,7 +316,6 @@ public class AutStarter {
                 new IConnectionInitializer() {
                     public void initConnection(Socket socket, 
                             BufferedReader reader) {
-                        System.out.println("Shutdown requested. Shutting down..."); //$NON-NLS-1$
                         Thread.currentThread().interrupt();
                     }
                 });
@@ -396,9 +398,8 @@ public class AutStarter {
      */
     private void logRunning() {
         if (log.isInfoEnabled()) {
-            String message = "running VM with JRE version: " //$NON-NLS-1$
-                    + System.getProperty("java.version"); //$NON-NLS-1$
-            log.info(message);
+            log.info(NLS.bind(Messages.RunningVM,
+                    System.getProperty("java.version"))); //$NON-NLS-1$
         }
     }
 
@@ -409,9 +410,8 @@ public class AutStarter {
     private void logStartListening() {
 
         if (log.isInfoEnabled()) {
-            String message = "listening to port " //$NON-NLS-1$
-                    + getCommunicator().getLocalPort();
-            log.info(message);
+            log.info(NLS.bind(Messages.ListeningToPort,
+                    getCommunicator().getLocalPort()));
         }
     }
 
@@ -445,7 +445,10 @@ public class AutStarter {
         private int m_autExitValue;
 
         /** used to pick up the 'Unrecognized option' error stream */
-        private String m_errorStream;
+        private String m_errorMessage;
+        
+        /** base error message of the process execution */
+        private String m_errorLog;
 
         /**
          * whether the server is expecting the AUT server to stop. Used for
@@ -459,6 +462,9 @@ public class AutStarter {
         /** sends messages concerning the AUT Server */
         private CommunicationHelper m_messenger;
         
+        /** Id of AUT */
+        private AutIdentifier m_autId;
+        
         /**
          * Constructor
          * 
@@ -466,14 +472,16 @@ public class AutStarter {
          *                         are running.
          * @param isAgentSet Whether the AUT was started using the Java agent 
          *                   mechanism.
+         * @param autId the id of AUT
          * @param messenger Sends messages concerning the AUT Server.
          */
         public AUTWatcher(Process autProcess, boolean isAgentSet, 
-                CommunicationHelper messenger) {
+                CommunicationHelper messenger, AutIdentifier autId) {
             super("AUTWatcher"); //$NON-NLS-1$
             m_autProcess = autProcess;
             m_isAgentSet = isAgentSet;
             m_messenger = messenger;
+            m_autId = autId;
         }
 
         /**
@@ -481,47 +489,39 @@ public class AutStarter {
          */
         private void handleStoppedAUTServer() {
             if (log.isInfoEnabled()) {
-                log.info("trying to send message with AUTServer exitcode '" //$NON-NLS-1$
-                        + String.valueOf(m_autExitValue)
-                        + "' to client"); //$NON-NLS-1$
+                log.info(NLS.bind(Messages.SendMessageToClient,
+                        m_autExitValue));
             }
             StartAUTServerStateMessage message = null;
             ChooseCheckModeDialogBP.getInstance().closeDialog();
             ObservationConsoleBP.getInstance().closeShell();
             switch (m_autExitValue) {
                 case AUTServerExitConstants.EXIT_OK:
-                    log.info("regular termination of AUTServer"); //$NON-NLS-1$
+                    log.info(Messages.RegularTermination);
                     break;
                 case AUTServerExitConstants.AUT_START_ERROR:
                     message = new StartAUTServerStateMessage(
-                        AUTStartResponse.ERROR, "Error while starting AUT!"); //$NON-NLS-1$
+                        AUTStartResponse.ERROR, Messages.AutStartError);
                     break;
                 case AUTServerExitConstants.EXIT_INVALID_ARGS:
-                    if (m_isAgentSet && (m_errorStream != null)) {
+                    if (m_isAgentSet && (m_errorMessage != null)) {
                         message = new StartAUTServerStateMessage(
-                            AUTStartResponse.JDK_INVALID,
-                                "JDK 1.5 or higher is required to start your AUT" + //$NON-NLS-1$
-                                " via executable file."); //$NON-NLS-1$
+                            AUTStartResponse.JDK_INVALID, Messages.InvalidJDK);
                     } else {
-                        message = new StartAUTServerStateMessage(
-                            AUTStartResponse.INVALID_ARGUMENTS,
-                                "invalid arguments"); //$NON-NLS-1$
+                        message = createInvalidArgumentMessage();
                     }
                     break;
                 case AUTServerExitConstants.EXIT_INVALID_NUMBER_OF_ARGS:
-                    message = new StartAUTServerStateMessage(
-                        AUTStartResponse.INVALID_ARGUMENTS,
-                            "invalid number of arguments"); //$NON-NLS-1$
+                    message = new StartAUTServerStateMessage(AUTStartResponse
+                            .INVALID_ARGUMENTS, Messages.InvalidNumOfArguments);
                     break;
                 case AUTServerExitConstants.EXIT_UNKNOWN_ITE_CLIENT:
-                    message = new StartAUTServerStateMessage(
-                        AUTStartResponse.COMMUNICATION,
-                            "establishing communication failed: invalid client"); //$NON-NLS-1$
+                    message = new StartAUTServerStateMessage(AUTStartResponse
+                            .COMMUNICATION, Messages.UnknowIteClient);
                     break;
                 case AUTServerExitConstants.EXIT_COMMUNICATION_ERROR:
-                    message = new StartAUTServerStateMessage(
-                        AUTStartResponse.COMMUNICATION,
-                            "establishing communication failed"); //$NON-NLS-1$
+                    message = new StartAUTServerStateMessage(AUTStartResponse.
+                            COMMUNICATION, Messages.CommunicationError);
                     break;
                 case AUTServerExitConstants
                     .EXIT_SECURITY_VIOLATION_AWT_EVENT_LISTENER:
@@ -529,27 +529,66 @@ public class AutStarter {
                     .EXIT_SECURITY_VIOLATION_COMMUNICATION:
                 case AUTServerExitConstants.EXIT_SECURITY_VIOLATION_REFLECTION:
                 case AUTServerExitConstants.EXIT_SECURITY_VIOLATION_SHUTDOWN:
-                    message = new StartAUTServerStateMessage(
-                        AUTStartResponse.SECURITY,
-                            "security violation"); //$NON-NLS-1$
+                    message = new StartAUTServerStateMessage(AUTStartResponse
+                            .SECURITY, Messages.SecuritiViolation);
                     break;
-                case AUTServerExitConstants.EXIT_AUT_NOT_FOUND:
-                case AUTServerExitConstants.EXIT_AUT_WRONG_CLASS_VERSION:
+                case AUTServerExitConstants.EXIT_AUT_NOT_FOUND:               
                 case AUTServerExitConstants.EXIT_MISSING_AGENT_INFO:
                     // do nothing : AUTServer sent already a message
+                    break;
+                case AUTServerExitConstants.EXIT_AUT_WRONG_CLASS_VERSION:
+                    message = new StartAUTServerStateMessage(AUTStartResponse.
+                            UNSUPPORTED_CLASS, Messages.UnsupportedClass);
                     break;
                 case AUTServerExitConstants.RESTART:
                     message = m_messenger.handleAutRestart();
                     break;
+                case AUTServerExitConstants.AUT_START_ADDRESS_ALREADY_IN_USE:
+                    message = new StartAUTServerStateMessage(AUTStartResponse
+                            .COMMUNICATION, Messages.AddressAlreadyInUse);
+                    break;
                 default:
-                    log.error("unknown AUTServer exit code: " //$NON-NLS-1$
-                            + m_autExitValue + "'"); //$NON-NLS-1$
-                    message = new StartAUTServerStateMessage(
-                        AUTStartResponse.ERROR,
-                        "unknown AUTServer exit code: '" //$NON-NLS-1$
-                        + m_autExitValue + "'"); //$NON-NLS-1$
+                    message = handleGlobalError();
             }
+            message.setAutId(m_autId);
+            appendErrorLog(message);
             m_messenger.sendStoppedAUTServerMessage(message);
+        }
+
+        /**
+         * Append the error log to the aut server state message, the
+         * error log is availabe
+         * @param message message to hold the error log
+         */
+        private void appendErrorLog(StartAUTServerStateMessage message) {
+            if (StringUtils.isNotBlank(m_errorLog)) {
+                StringBuilder builder = new StringBuilder(
+                        message.getDescription());
+                builder.append(StringConstants.NEWLINE);
+                builder.append(StringConstants.SPACE);
+                builder.append(m_errorLog);
+                message.setDescription(builder.toString());
+            }
+        }
+        
+        /**
+         * Create an aut server state message with the details of error
+         * @return message
+         */
+        private StartAUTServerStateMessage createInvalidArgumentMessage() {
+            return new StartAUTServerStateMessage(AUTStartResponse
+                    .INVALID_ARGUMENTS, Messages.InvalidArguments);
+        }
+
+        /**
+         * Handle global error
+         * @return aut server state message
+         */
+        private StartAUTServerStateMessage handleGlobalError() {
+            String message = NLS.bind(Messages.UnknowExitCode, m_autExitValue);
+            log.error(message);
+            return new StartAUTServerStateMessage(
+                AUTStartResponse.ERROR, message);
         }
 
         /**
@@ -561,24 +600,25 @@ public class AutStarter {
                 // clear the streams of the autServerVM
                 synchronized (m_autServerLock) {
                     dn = new SysoRedirect(m_autProcess.getErrorStream(),
-                            "AUTs syserr: "); //$NON-NLS-1$
+                            Messages.AutsSysError);
                     dn.start();
+                    
                     new SysoRedirect(m_autProcess.getInputStream(),
-                            "AUTs sysout: ").start(); //$NON-NLS-1$
+                            Messages.AutsSysOut).start();
                 }
                 // don't synchronized, catching NullPointerException which is
-                // raised if the process has already terminated
+                // raised if the process has already input terminated
                 m_autExitValue = m_autProcess.waitFor();
                 // picking up the 'Unrecognized option' error stream
-                m_errorStream = dn.getLine();
+                m_errorMessage = dn.getLine();
+                m_errorLog = dn.getTruncatedLog();
 
                 synchronized (m_autServerLock) {
                     m_autProcess = null;
                 }
 
                 if (log.isInfoEnabled()) {
-                    log.info("VM stopped with exitValue " //$NON-NLS-1$
-                        + String.valueOf(m_autExitValue));
+                    log.info(NLS.bind(Messages.VmStopped, m_autExitValue));
                 }
 
                 if (!m_isExpectingAUTServerStop) {
@@ -588,9 +628,9 @@ public class AutStarter {
                 m_isExpectingAUTServerStop = false;
 
             } catch (InterruptedException ie) {
-                log.info("thread observing autserver process interrupted", ie); //$NON-NLS-1$
+                log.info(Messages.ObservingInterrupted, ie);
             } catch (NullPointerException npe) {
-                log.debug("autserver process already terminated", npe); //$NON-NLS-1$
+                log.debug(Messages.TerminatedProcess, npe);
             }
         }
     }
@@ -632,13 +672,11 @@ public class AutStarter {
             try {
                 initAutConnectionSocket();
             } catch (JBVersionException e) {
-                message = new StartAUTServerStateMessage(
-                    AUTStartResponse.COMMUNICATION,
-                    "version exception while restart AUT"); //$NON-NLS-1$
+                message = new StartAUTServerStateMessage(AUTStartResponse.
+                        COMMUNICATION, Messages.VersionException);
             } catch (IOException e) {
-                message = new StartAUTServerStateMessage(
-                    AUTStartResponse.COMMUNICATION,
-                    "io exception while restart AUT"); //$NON-NLS-1$
+                message = new StartAUTServerStateMessage(AUTStartResponse
+                        .COMMUNICATION, Messages.IoException);
             }
             return message;
         }
@@ -658,7 +696,7 @@ public class AutStarter {
          * {@inheritDoc}
          */
         public void connectingFailed(InetAddress inetAddress, int port) {
-            log.error("connectingFailed() called although this is a server"); //$NON-NLS-1$
+            log.error(Messages.ConnectionErrorInServer);
         }
         /**
          * {@inheritDoc}
@@ -666,12 +704,10 @@ public class AutStarter {
         public void connectionGained(InetAddress inetAddress, int port) {
             if (log.isInfoEnabled()) {
                 try {
-                    String message = "accepted connection from " + //$NON-NLS-1$
-                        inetAddress.getHostName()
-                        + ":" + String.valueOf(port); //$NON-NLS-1$
-                    log.info(message);
+                    log.info(NLS.bind(Messages.AcceptedConnectionFrom,
+                            new Object[]{inetAddress.getHostName(), port}));
                 } catch (SecurityException se) {
-                    log.warn("security violation while getting the host name from ip address", //$NON-NLS-1$
+                    log.warn(Messages.SecuritiViolationWhileGettingHostName,
                             se);
                 }
             }
@@ -680,21 +716,21 @@ public class AutStarter {
          * {@inheritDoc}
          */
         public void acceptingFailed(int port) {
-            log.error("accepting failed on port: " + String.valueOf(port)); //$NON-NLS-1$
+            log.error(NLS.bind(Messages.AcceptingFailed, port));
         }
 
         /**
          * {@inheritDoc}
          */
         public void sendFailed(Message message) {
-            log.warn("sending message failed: " + String.valueOf(message)); //$NON-NLS-1$
+            log.warn(NLS.bind(Messages.SendingMessageFailed, message));
         }
 
         /**
          * {@inheritDoc}
          */
         public void shutDown() {
-            log.info("connection closed"); //$NON-NLS-1$
+            log.info(Messages.ConnectionClosed);
         }
     }
 }

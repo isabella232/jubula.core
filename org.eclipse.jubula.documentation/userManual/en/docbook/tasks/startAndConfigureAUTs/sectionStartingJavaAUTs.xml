@@ -256,7 +256,7 @@
     </para>
     <para role="warning">
       The <emphasis>autrun</emphasis> command cannot be used
-      for HTML, iOS or pure SWT AUTs.
+      for HTML or pure SWT AUTs.
     </para>
     <para>
       The command allows you to start your AUT independently, on a

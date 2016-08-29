@@ -14,6 +14,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.MenuElement;
+import javax.swing.MenuSelectionManager;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
@@ -26,6 +28,8 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 
 /**
  * Implementation of the MenuItem interface for adapting <code>JMenuItem</code>.
@@ -192,20 +196,40 @@ public class JMenuItemAdapter extends AbstractComponentAdapter
      * @param item  the menu item
      */
     private void clickMenuItem(IRobot robot, JMenuItem item) {
+        if (EnvironmentUtils.isMacOS()) {
+            TimeUtil.delay(300);
+        }
         if (!item.isEnabled()) {
             throw new StepExecutionException("menu item not enabled", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.MENU_ITEM_NOT_ENABLED));
         }
-        if (item.getParent() instanceof JPopupMenu 
-                && ((JPopupMenu)item.getParent())
-                .getInvoker().getParent() instanceof JMenuBar) {
-            
-            robot.click(item, null, ClickOptions.create().setClickType(
-                    ClickOptions.ClickType.RELEASED).setFirstHorizontal(false));
+        MenuSelectionManager selectionmanager = MenuSelectionManager
+                .defaultManager();
+        MenuElement[] menus = new MenuElement[0];
+        if (selectionmanager != null) {
+            menus = MenuSelectionManager.defaultManager().getSelectedPath();
+        }
+        if (item.getParent() instanceof JPopupMenu
+                && ((JPopupMenu) item.getParent()).getInvoker()
+                        .getParent() instanceof JMenuBar) {
+            if (!EnvironmentUtils.isMacOS()
+                    || (menus.length > 0 && menus[0] instanceof JPopupMenu)) {
+                robot.click(item, null,
+                        ClickOptions.create()
+                                .setClickType(ClickOptions.ClickType.RELEASED)
+                                .setFirstHorizontal(false));
+            } else {
+                item.doClick();
+            }
         } else {
-            robot.click(item, null, ClickOptions.create().setClickType(
-                    ClickOptions.ClickType.RELEASED));
+            if (!EnvironmentUtils.isMacOS()
+                    || (menus.length > 0 && menus[0] instanceof JPopupMenu)) {
+                robot.click(item, null, ClickOptions.create()
+                        .setClickType(ClickOptions.ClickType.RELEASED));
+            } else {
+                item.doClick();
+            }
         }
     }
 }

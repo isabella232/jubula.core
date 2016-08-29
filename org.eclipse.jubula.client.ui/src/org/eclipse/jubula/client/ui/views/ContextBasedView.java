@@ -66,8 +66,8 @@ public abstract class ContextBasedView extends ViewPart implements IJBPart {
      * @param active  the status to set
      */
     protected void setStatusOfContext(boolean active) {
-        IContextService cs = (IContextService) getSite().getWorkbenchWindow()
-                .getService(IContextService.class);
+        IContextService cs = getSite().getWorkbenchWindow().getService(
+                IContextService.class);
         if (cs != null) {
             if (active) {
                 m_contextActivation = cs.activateContext(m_contextID);

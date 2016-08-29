@@ -25,12 +25,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.commands.AbstractStartToolkitAut;
 import org.eclipse.jubula.autagent.commands.IStartAut;
+import org.eclipse.jubula.autagent.i18n.Messages;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.IConnectionInitializer;
 import org.eclipse.jubula.communication.internal.connection.ConnectionState;
@@ -40,6 +43,7 @@ import org.eclipse.jubula.communication.internal.message.ConnectToClientMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.communication.internal.message.StartAUTServerMessage;
+import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
@@ -352,6 +356,14 @@ public class AutAgent {
     private Map<String, IConnectionInitializer> m_connectionInitializers =
         new HashMap<String, IConnectionInitializer>();
     
+    /** Cache for {@link AutIdentifier} to toolkit */
+    private Map<AutIdentifier, String> m_autToolkits =
+        new LinkedHashMap<AutIdentifier, String>(5) {
+        protected boolean removeEldestEntry(
+                Map.Entry<AutIdentifier, String> eldest) {
+            return size() > 10; // caching only 10 autIdentifiers
+        }
+    };
     /**
      * Constructor
      * 
@@ -658,6 +670,7 @@ public class AutAgent {
         Map<String, String> autConfig = message.getAutConfiguration();
         String autExecName = autConfig.get(AutConfigConstants.AUT_ID);
         AutIdentifier autId = new AutIdentifier(autExecName);
+        m_autToolkits.put(autId, message.getAutToolKit());
         synchronized (m_auts) {
             if (!m_auts.containsKey(autId)) {
                 m_autIdToRestartHandler.put(
@@ -683,9 +696,9 @@ public class AutAgent {
         synchronized (m_auts) {
             Communicator autSocket = m_auts.get(autId);
             if (autSocket == null) {
-                String errorMsg = "Could not send connect message to AUT. The associated communicator is null."; //$NON-NLS-1$
-                LOG.error(errorMsg);
-                return new ConnectToAutResponseMessage(errorMsg);
+                LOG.error(Messages.AutConnectionError);
+                return new ConnectToAutResponseMessage(
+                        Messages.AutConnectionError);
             }
 
             try {
@@ -701,11 +714,11 @@ public class AutAgent {
                             .newInstance();
                     String rcBundleID = autStarter.getRcBundleId();
                     //Only for Java Toolkits
-                    if (rcBundleID.equals(CommandConstants.RC_JAVAFX_BUNDLE_ID)
-                            || rcBundleID.equals(
-                                    CommandConstants.RC_SWING_BUNDLE_ID)
-                            || rcBundleID.equals(
-                                    CommandConstants.RC_SWT_BUNDLE_ID)) {
+                    if (CommandConstants.RC_JAVAFX_BUNDLE_ID.equals(rcBundleID)
+                            || CommandConstants.RC_SWING_BUNDLE_ID.equals(
+                                    rcBundleID)
+                            || CommandConstants.RC_SWT_BUNDLE_ID.equals(
+                                    rcBundleID)) {
                         List<Bundle> fragments = new ArrayList<Bundle>();
                         fragments = AbstractStartToolkitAut
                                 .getFragmentsForBundleId(rcBundleID);
@@ -774,5 +787,53 @@ public class AutAgent {
      */
     public boolean isKillDuplicateAuts() {
         return m_killDuplicateAuts;
+    }
+
+    /**
+     * 
+     * @param id the {@link AUTIdentifier}
+     * @return the {@link Communicator} from the AUTagent to the AUT
+     */
+    public Communicator getAutCommunicator(AUTIdentifier id) {
+        return m_auts.get(id);
+    }
+
+    /**
+     * This method is using a cache which is saving the {@link AutIdentifier} to ToolkitName
+     * @param connectedAutId the {@link AutIdentifier to check}
+     * @return the ToolkitName if it is in the Cache
+     */
+    public String getToolkitForAutID(AutIdentifier connectedAutId) {
+        String toolkit =  m_autToolkits.get(connectedAutId);
+        if (StringUtils.isBlank(toolkit)) {
+            return getToolkitFromRestartHandler(connectedAutId);
+        }
+        return toolkit;
+    }
+    
+    /**
+     * 
+     * @param autIdentifier the {@link AutIdentifier} from which you want to know the Toolkit
+     * @return the toolkit string or <code>null</code>
+     */
+    private String getToolkitFromRestartHandler(AutIdentifier autIdentifier) {
+        IRestartAutHandler iRestartAutHandler = m_autIdToRestartHandler
+                .get(autIdentifier);
+        if (iRestartAutHandler != null) {
+            String startCommand = iRestartAutHandler
+                    .getAUTStartClass();
+            if (StringUtils.containsIgnoreCase(startCommand, "swing")) { //$NON-NLS-1$
+                return CommandConstants.SWING_TOOLKIT;
+            } else if (StringUtils.containsIgnoreCase(startCommand, "swt")) { //$NON-NLS-1$
+                return CommandConstants.SWT_TOOLKIT;
+            } else if (StringUtils.containsIgnoreCase(startCommand, "rcp")) { //$NON-NLS-1$
+                return CommandConstants.RCP_TOOLKIT;
+            } else if (StringUtils.containsIgnoreCase(startCommand, "javafx")) { //$NON-NLS-1$
+                return CommandConstants.JAVAFX_TOOLKIT;
+            } else if (StringUtils.containsIgnoreCase(startCommand, "html")) { //$NON-NLS-1$
+                return CommandConstants.HTML_TOOLKIT;
+            }
+        }
+        return null;
     }
 }

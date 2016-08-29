@@ -92,7 +92,7 @@
             <property name="selector" value="input[type=text]" />
         </componentClass>
     </toolkitComponent>
-    <toolkitComponent type="html.forms.input.Email" visible="false">
+    <toolkitComponent type="html.forms.input.Email" visible="false" since="4.0">
         <realizes>abstract.html.Textfield</realizes>
         <testerClass>com.bredexsw.jubula.rc.html.web.implclasses.forms.input.TextImplClass</testerClass>
         <componentClass name="html.forms.input.Email">

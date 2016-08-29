@@ -11,19 +11,17 @@
 package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 
@@ -56,15 +54,33 @@ public class ObjectMappingEventDispatcher {
      *      The tc that was updated
      */
     public static synchronized void notifyRecordObserver(ISpecTestCasePO tc) {
+        //FIXME if there is a fast way to get the TS where the tc is used
+        notifyRecordObserverTS();
+    }
+    /**
+     * 
+     * @param testSuites the testSuites
+     */
+    public static synchronized void notifyRecordObserverTS(
+            ITestSuitePO... testSuites) {
         List <IObjectMappingObserver> obs = 
-            Collections.unmodifiableList(observer);
+                Collections.unmodifiableList(observer);
         if (obs.isEmpty()) {
             return;
         }
-        ITestSuitePO[] testSuites = getTestSuitesOfSpecTestCase(tc);
-        Set < IAUTMainPO > autList = new HashSet < IAUTMainPO > ();
+
+        Set<IAUTMainPO> autList = new HashSet<IAUTMainPO>(1);
+        if (testSuites.length == 0) {
+            IProjectPO project = GeneralStorage.getInstance().getProject();
+            if (project != null) {
+                autList = project.getAutMainList();
+            }
+        }
         for (ITestSuitePO ts : testSuites) {
-            autList.add(ts.getAut());
+            IAUTMainPO aut = ts.getAut();
+            if (aut != null) {
+                autList.add(aut);
+            }
         }
         for (IAUTMainPO aut : autList) {
             for (IObjectMappingObserver obsvr : obs) {
@@ -77,6 +93,7 @@ public class ObjectMappingEventDispatcher {
             }
         }
     }
+    
     /**
      * adds a technical name to any open editor registered here with listener
      * 
@@ -96,36 +113,6 @@ public class ObjectMappingEventDispatcher {
         }
     }
 
-    /**
-     * FIXME : Andreas Candidate for util class
-     * Gets all TestSuites where the SpecTestCase is used.
-     * @param specTc the SpecTestCase
-     * @return an Array of TestSuites.
-     */
-    private static ITestSuitePO[] getTestSuitesOfSpecTestCase(
-        ISpecTestCasePO specTc) {
-        
-        // This method is very(!) inperformant if the given SpecTc has many
-        // locations of use.
-        List <INodePO> testSuiteList = new ArrayList <INodePO> ();
-        // many expansive DB-accesses (this method is recursive!)
-        List <IExecTestCasePO> execTestCases = 
-            NodePM.getInternalExecTestCases(specTc.getGuid(), 
-                specTc.getParentProjectId());
-        for (IExecTestCasePO execTc : execTestCases) {
-            final INodePO execTcParent = execTc.getParentNode();
-            if ((execTcParent instanceof ITestSuitePO)) {
-                if (!testSuiteList.contains(execTcParent)) {
-                    testSuiteList.add(execTcParent);
-                }
-            } else if (execTcParent instanceof ISpecTestCasePO) {
-                
-                testSuiteList.addAll(Arrays.asList(getTestSuitesOfSpecTestCase(
-                        (ISpecTestCasePO)execTcParent)));
-            }
-        }
-        return testSuiteList.toArray(new ITestSuitePO[testSuiteList.size()]);
-    }
     
     /**
      * adds an Observer to List

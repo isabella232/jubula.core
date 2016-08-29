@@ -333,8 +333,8 @@ public class Utils {
         for (IEditorReference editorRef : Plugin.getAllEditors()) {
             PersistableEditorInput pei = null;
             try {
-                pei = (PersistableEditorInput)editorRef.getEditorInput()
-                    .getAdapter(PersistableEditorInput.class);
+                pei = editorRef.getEditorInput().getAdapter(
+                        PersistableEditorInput.class);
             } catch (PartInitException e) {
                 // do nothing here
             }

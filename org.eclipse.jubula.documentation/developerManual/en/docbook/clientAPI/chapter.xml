@@ -36,7 +36,7 @@
             <listitem>
                 <para>an API for all toolkits: the client API is available for all
                     toolkits supported by the ITE like JavaFX, AWT/Swing,
-                    SWT/RCP/GEF, iOS, HTML, Win and WinApps.
+                    SWT/RCP/GEF, HTML.
                 </para>
             </listitem>
             <listitem>
@@ -203,9 +203,6 @@
             </listitem>
             <listitem>
                 <para>org.eclipse.jubula.toolkit.swt.SwtComponents</para>
-            </listitem>
-            <listitem>
-                <para>org.eclipse.jubula.toolkit.ios.IosComponents</para>
             </listitem>
         </itemizedlist>
         <para>On these UI component placeholder instances you can call methods that will return 

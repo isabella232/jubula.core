@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTr
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
@@ -47,6 +48,7 @@ import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.utils.StringHelper;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
@@ -70,6 +72,7 @@ import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -102,7 +105,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) throws InterruptedException {
-
             Utils.clearClient();
 
             int totalWork = getTotalWork();
@@ -126,7 +128,6 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     if (monitor.isCanceled()) {
                         throw new InterruptedException();
                     }
-
                 } catch (ConfigXmlException ce) {
                     handleCapDataNotFound(ce);
                 }
@@ -160,6 +161,49 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 instance.setProgressMonitor(null);
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();
+            }
+
+            if (Plugin.getDefault().getPreferenceStore().getBoolean(
+                    Constants.UPDATE_REUSED_PROJECT_KEY)) {
+                return;
+            }
+            final UpdateReusedProjectHandler oldReusedProjectHandler =
+                    new UpdateReusedProjectHandler();
+            if (oldReusedProjectHandler.isThereOldReusedProject()) {
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        updateReusedProjects(oldReusedProjectHandler);
+                    }
+                });
+            }
+            
+            refreshTestResultsView(ded);
+        }
+
+        /**
+         * this method sends a {@link TestresultState#Refresh} 
+         * with {@link DataEventDispatcher#fireTestresultChanged(TestresultState)}
+         * to refresh some views
+         * @param ded the {@link DataEventDispatcher} to be used
+         */
+        private void refreshTestResultsView(final DataEventDispatcher ded) {
+            Plugin.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    ded.fireTestresultChanged(TestresultState.Refresh);
+                }
+            });
+        }
+        
+        /**
+         * @param handler the UpdateReusedProjectHandler
+         */
+        private void updateReusedProjects(UpdateReusedProjectHandler handler) {
+            int wouldNeedUpdate = handler.showUpdateReusedProjectDialog();
+            if (wouldNeedUpdate == Window.OK) {
+                Shell shell = Plugin.getActiveWorkbenchWindowShell();
+                ExportDialog.showExportDialog(shell);
+                String pageId = Constants.REUSED_PROJECT_PROPERTY_ID;
+                ProjectPropertyDialog.showPropertyDialog(shell, pageId, null);
             }
         }
 

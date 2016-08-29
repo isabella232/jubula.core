@@ -24,7 +24,6 @@ import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
-import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -357,17 +356,9 @@ public class WinAutConfigComponent extends AutConfigComponent {
                     }
                 }
 
-                try {
-                    if (!file.isFile()) {
-                        error = createWarningStatus(NLS.bind(
-                            Messages.AUTConfigComponentFileNotFound,
-                                file.getCanonicalPath()));
-                    }
-                } catch (IOException e) {
-                    // could not find file
-                    error = createWarningStatus(NLS.bind(
-                        Messages.AUTConfigComponentFileNotFound,
-                            filename));
+                if (!file.isFile()) {
+                    error = createWarningStatus(
+                        Messages.AUTConfigComponentFileNotFound);
                 }
             }
         } else if (!isExecFieldEmpty) {

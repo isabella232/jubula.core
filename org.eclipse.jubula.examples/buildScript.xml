@@ -39,6 +39,7 @@
 									releaseDvdTool,
                                     releaseProjects,
 									releaseLibrary,
+		                            releaseTemplate,
 									releaseScripts,
 									releaseWorkspace,
 									releaseDevelopment">
@@ -183,6 +184,13 @@
 			<fileset dir="../org.eclipse.jubula.client.ui.rcp/resources/library"/>
 		</copy>
 	</target>
+
+    <target name="releaseTemplate">
+        <mkdir dir="${examples.projects.dir}/template"/>
+        <copy todir="${examples.projects.dir}/template">
+            <fileset dir="../org.eclipse.jubula.client.ui.rcp/resources/template"/>
+        </copy>
+    </target>
 
 	<target name="releaseScripts">
 		<copy todir="${examples.scripts.dir}">

@@ -159,22 +159,28 @@ public class ConnectionState {
         boolean success = false;
         while (!success && (waitTime <= waitForServer)) {
             if (inputStream.available() > 0) {
-                String line = inputReader.readLine();
+                String clientVersionLine = inputReader.readLine();
                 success = true;
-                final int version = Integer.parseInt(String.valueOf(
+                final int protocolVersion = Integer.parseInt(String.valueOf(
                         IVersion.JB_PROTOCOL_MAJOR_VERSION.intValue())); 
-                if (ConnectionState.parseVersion(line) != version) {
+                int clientVersion = ConnectionState
+                        .parseVersion(clientVersionLine);
+                if (clientVersion != protocolVersion) {
                     throw new JBVersionException(
-                            "Version error between Client and Server!", //$NON-NLS-1$ 
+                            "Version error between Client and Server! Client version: " //$NON-NLS-1$
+                                    + clientVersion + " Server Version: " //$NON-NLS-1$
+                                    + protocolVersion,
                             MessageIDs.E_VERSION_ERROR);
                 }
 
-                if (line != null) {
-                    line = line.substring(0, 
-                            line.indexOf(ConnectionState.SEPARATOR));
+                if (clientVersionLine != null) {
+                    clientVersionLine = clientVersionLine.substring(0,
+                            clientVersionLine
+                                    .indexOf(ConnectionState.SEPARATOR));
                 }
 
-                if (ConnectionState.CLIENT_TYPE_REQUEST.equals(line)) {
+                if (ConnectionState.CLIENT_TYPE_REQUEST
+                        .equals(clientVersionLine)) {
                     LOG.debug("sending response: " + response); //$NON-NLS-1$
                     outputStream.println(response);
                     outputStream.flush();
@@ -183,7 +189,7 @@ public class ConnectionState {
                         StringBuffer errBuf = new StringBuffer();
                         errBuf.append("Received invalid request from server. Expected '") //$NON-NLS-1$
                             .append(ConnectionState.CLIENT_TYPE_REQUEST)
-                            .append("' but received '").append(line) //$NON-NLS-1$
+                            .append("' but received '").append(clientVersionLine) //$NON-NLS-1$
                             .append("'."); //$NON-NLS-1$
                         LOG.warn(errBuf.toString());
                     }

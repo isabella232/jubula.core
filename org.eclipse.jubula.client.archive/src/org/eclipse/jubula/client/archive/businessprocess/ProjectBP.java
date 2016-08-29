@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.version.IVersion;
@@ -154,6 +155,8 @@ public class ProjectBP {
                 throw new InvocationTargetException(e);
             } catch (JBVersionException e) {
                 log.error(Messages.TKVersionCreatingNewProjectVersion);
+            } catch (ToolkitPluginException e) {
+                log.error(e.getMessage()); // Should not occur
             } finally {
                 NodePM.getInstance().setUseCache(false);
                 monitor.done();

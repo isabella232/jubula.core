@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
@@ -106,47 +105,15 @@ public class DeleteTreeItemHandlerOMEditor
                 lastParent = editor.getOmEditorBP().deleteAssociation(
                         (IObjectMappingAssoziationPO)node);
             } else if (node instanceof IObjectMappingCategoryPO) {
-                if (!willAncestorBeDeleted(
-                        (IObjectMappingCategoryPO)node, toDelete)) {
-                    lastParent = editor.getOmEditorBP().deleteCategory(
-                            (IObjectMappingCategoryPO)node);
-                }
+                lastParent = editor.getOmEditorBP().deleteCategory(
+                        (IObjectMappingCategoryPO)node);
             }
         }
         if (toDelete.length > 0) {
             editor.getEditorHelper().setDirty(true);
+            editor.cleanupNames();
         }
         return lastParent;
-    }
-
-    /**
-     * Workaround method for an error that occurs when deleting multiple tiers
-     * of an Object Mapping Category hierarchy (selecting parent *before* child
-     * seems to be important). I believe that The fix for EclipseLink's
-     * http://eclip.se/328040 makes this workaround superfluous, so try removing
-     * it when moving to EclipseLink 2.3.0 or higher.
-     * 
-     * @param category
-     *            The child to check. May be <code>null</code>, in which case
-     *            <code>false</code> will be returned.
-     * @param toDelete
-     *            Objects that are marked for deletion.
-     * @return <code>true</code> if <code>toDelete</code> contains an ancestor
-     *         of <code>category</code>. Otherwise <code>false</code>.
-     */
-    public static boolean willAncestorBeDeleted(
-            IObjectMappingCategoryPO category, Object[] toDelete) {
-        IObjectMappingCategoryPO ancestor = category;
-        while (ancestor != null) {
-            ancestor = ancestor.getParent();
-            for (Object possibleAncestor : toDelete) {
-                if (ObjectUtils.equals(ancestor, possibleAncestor)) {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
     }
     
     /**
@@ -172,6 +139,7 @@ public class DeleteTreeItemHandlerOMEditor
                 lastParent = editor.getOmEditorBP().deleteAssociation(
                         (IObjectMappingAssoziationPO)toDelete);
                 editor.getEditorHelper().setDirty(true);
+                editor.cleanupNames();
             }
         } else if (toDelete instanceof IComponentNamePO) {
             delete = MessageDialog.openConfirm(getActiveShell(),
@@ -181,6 +149,7 @@ public class DeleteTreeItemHandlerOMEditor
                 lastParent = editor.getOmEditorBP().deleteCompName(
                         (IComponentNamePO)toDelete);
                 editor.getEditorHelper().setDirty(true);
+                editor.cleanupNames();
             }
         } else if (toDelete instanceof IObjectMappingCategoryPO) {
             delete = MessageDialog.openConfirm(getActiveShell(),
@@ -190,6 +159,7 @@ public class DeleteTreeItemHandlerOMEditor
                 lastParent = editor.getOmEditorBP().deleteCategory(
                         (IObjectMappingCategoryPO)toDelete);
                 editor.getEditorHelper().setDirty(true);
+                editor.cleanupNames();
             }
         }
         return lastParent;

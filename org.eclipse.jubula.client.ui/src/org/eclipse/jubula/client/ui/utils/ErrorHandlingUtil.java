@@ -32,7 +32,6 @@ import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.internal.messagehandling.Message;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
@@ -185,7 +184,7 @@ public class ErrorHandlingUtil {
             dlg = new MessageDialog(parent, title, null, messageBuilder
                     .toString(), imageID, labels, 0);
         } else {
-            dlg = new ErrorDialog(new Shell(SWT.ON_TOP), title,
+            dlg = new ErrorDialog(parent, title,
                     message, new MultiStatus(Constants.PLUGIN_ID, IStatus.OK,
                             status, msg.getMessage(params), null), IStatus.OK
                             | IStatus.INFO | IStatus.WARNING | IStatus.ERROR);

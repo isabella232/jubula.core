@@ -338,11 +338,21 @@ public class ComponentNamesBP
      * @param projId a Project ID
      * @return all IComponentNamePOs of the project with the given Project ID.
      */
+    public final Collection<IComponentNamePO> getAllComponentNamePOsNotRO(
+            Long projId) throws PMException {
+        
+        return CompNamePM.readAllCompNames(projId);
+    }
+    
+    /**
+     * @param projId a Project ID
+     * @return all IComponentNamePOs of the project with the given Project ID.
+     */
     public final Collection<IComponentNamePO> getAllNonRefCompNamePOs(
             Long projId) throws PMException {
         
         Collection<IComponentNamePO> allCompNamePOs = 
-            getAllComponentNamePOs(projId);
+            getAllComponentNamePOsNotRO(projId);
 
         CollectionUtils.filter(allCompNamePOs, new Predicate() {
 
@@ -784,8 +794,7 @@ public class ComponentNamesBP
         throws IncompatibleTypeException, PMException {
 
         
-        String oldName = capPo.getComponentName();
-        String oldGuid = compMapper.getCompNameCache().getGuidForName(oldName);
+        String oldGuid = capPo.getComponentName();
 
         if (StringUtils.isBlank(compName)) {
             compMapper.changeReuse(capPo, oldGuid, null);

@@ -51,11 +51,9 @@ import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.utils.KeyConverter;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
-import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -185,17 +183,6 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                 if (connected.getCode() == IStatus.OK) {
                     final String toolkit = TestExecution.getInstance()
                         .getConnectedAut().getToolkit();
-                    if (toolkit.equals(CommandConstants.SWT_TOOLKIT)
-                            || toolkit.equals(CommandConstants.RCP_TOOLKIT)) {
-                        m_checkModeMods = KeyConverter.convertSwingStateMask(
-                                m_checkModeMods);
-                        m_checkModeKey = KeyConverter.convertSwingToSwt(
-                                m_checkModeKey);
-                        m_checkCompMods = KeyConverter.convertSwingStateMask(
-                                m_checkCompMods);
-                        m_checkCompKey = KeyConverter.convertSwingToSwt(
-                                m_checkCompKey);
-                    }
                     TestExecutionContributor.getInstance().getClientTest()
                         .startRecordTestCase(m_workCopy, m_compNamesMapper,
                             m_recordCompMods, m_recordCompKey, m_recordApplMods,

@@ -28,7 +28,7 @@
     <para>
   		The concrete toolkit contains components and actions which are available in all other
   		supported toolkits. An action from the concrete toolkit can therefore be used in a test 
-  		for Swing, SWT, JavaFX, iOS and HTML applications. 
+  		for Swing, SWT, JavaFX and HTML applications. 
   	</para>
   </section>
   <section>
@@ -57,13 +57,6 @@
   				<listitem><para>Tabbed panes</para></listitem>
   				<listitem><para>Trees</para></listitem>
   			</itemizedlist>
-  	</para>
-  </section>
-  <section>
-  	<title>iOS Toolkit</title>
-  	<para>
-  		The iOS toolkit contains components which are specific to iOS applications. You will only 
-  		have access to these components in your tests if you select iOS as your AUT Toolkit.
   	</para>
   </section>
   <section>

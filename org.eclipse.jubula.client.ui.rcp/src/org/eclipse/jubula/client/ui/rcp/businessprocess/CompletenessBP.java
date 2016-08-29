@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator.ProblemCleanupOperation;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
@@ -28,6 +29,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.rules.SingleJobRule;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
@@ -56,8 +58,8 @@ public class CompletenessBP implements IProjectStateListener {
     private CompletenessBP() {
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectStateListener(this);
-        ICommandService commandService = (ICommandService) PlatformUI
-                .getWorkbench().getService(ICommandService.class);
+        ICommandService commandService = PlatformUI.getWorkbench().getService(
+                ICommandService.class);
 
         IExecutionListener saveListener = new IExecutionListener() {
             /** {@inheritDoc} */
@@ -173,6 +175,12 @@ public class CompletenessBP implements IProjectStateListener {
             try {
                 final IProjectPO project = GeneralStorage.getInstance()
                         .getProject();
+                
+                TreeTraverser treeTraverser = new TreeTraverser(project,
+                        new ProblemCleanupOperation());
+                treeTraverser.setMonitor(monitor);
+                treeTraverser.traverse(true);
+                
                 ded.fireCompletenessCheckStarted();
                 CompletenessGuard.checkAll(project, monitor);
             } finally {

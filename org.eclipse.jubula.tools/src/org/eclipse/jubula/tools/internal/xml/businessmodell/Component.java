@@ -344,7 +344,7 @@ public abstract class Component {
      * @param realized a realized Component
      * to add
      */
-    private void addRealized(Component realized) {
+    public void addRealized(Component realized) {
         m_realized.add(realized);
     }
     /**
@@ -380,6 +380,14 @@ public abstract class Component {
      */
     boolean addAllRealizer(Component realizer) {
         return m_allRealizers.add(realizer);
+    }
+    
+    /**
+     * removes the given list of realizers from the "allRealizers" list
+     * @param realizers the realizing Components to remove
+     */
+    void removeFromAllRealizer(List<? extends Component> realizers) {
+        m_allRealizers.removeAll(realizers);
     }
     
     /**

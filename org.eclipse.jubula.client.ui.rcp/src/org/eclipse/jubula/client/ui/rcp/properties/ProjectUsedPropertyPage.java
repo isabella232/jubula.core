@@ -262,7 +262,6 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
             workProject.addUsedProject(reuse);
             reuse.setParentProjectId(getProject().getId());
         }
-
     }
     
     /**
@@ -446,6 +445,7 @@ public class ProjectUsedPropertyPage extends AbstractProjectPropertyPage
      * {@inheritDoc}
      */
     public void okPressed() throws PMException {
+       
         if (m_listEntries != null) {
             updateProjects(m_listEntries);
         }

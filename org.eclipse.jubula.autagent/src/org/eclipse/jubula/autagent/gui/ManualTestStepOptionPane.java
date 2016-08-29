@@ -143,7 +143,6 @@ public class ManualTestStepOptionPane extends JOptionPane {
      *            the user defined timeout for message displaying
      * @return the result
      */
-    @SuppressWarnings("nls")
     public static ManualTestStepResult showDialog(String actionToPerform,
             String expectedBehavior, int timeout) {
         if (GraphicsEnvironment.isHeadless()) {

@@ -25,9 +25,9 @@ public interface ICapPO extends IParamNodePO, IComponentNameReuser {
     public abstract String getComponentName();
 
     /**
-     * @param name to set the GUID of the ComponentNamePO of the component
+     * @param guid to set the GUID of the ComponentNamePO of the component
      */
-    public abstract void setComponentName(String name);
+    public abstract void setComponentName(String guid);
 
     /**
      * @return Returns the type.

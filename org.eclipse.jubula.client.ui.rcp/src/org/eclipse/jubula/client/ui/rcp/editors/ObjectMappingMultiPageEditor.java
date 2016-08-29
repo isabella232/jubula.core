@@ -658,8 +658,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         DialogUtils.setWidgetName(viewer.getTree(), title);
         
-        IFocusService focusService = 
-            (IFocusService)getSite().getService(IFocusService.class);
+        IFocusService focusService = getSite().getService(IFocusService.class);
         
         focusService.addFocusTracker(viewer.getTree(), title);
         viewer.getTree().addFocusListener(new FocusAdapter() {
@@ -718,8 +717,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         DialogUtils.setWidgetName(viewer.getTree(), i18nTitleKey);
         
-        IFocusService focusService = 
-            (IFocusService)getSite().getService(IFocusService.class);
+        IFocusService focusService = getSite().getService(IFocusService.class);
         
         focusService.addFocusTracker(viewer.getTree(), i18nTitleKey);
         viewer.getTree().addFocusListener(new FocusAdapter() {
@@ -843,6 +841,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 
                 DataEventDispatcher.getInstance().fireDataChangedListener(
                         events.toArray(new DataChangedEvent[0]));
+                DataEventDispatcher.getInstance().fireDataChangedListener(
+                        this.getAut().getObjMap(), 
+                        DataState.StructureModified, 
+                        UpdateState.all);
                 
                 if (getAut().equals(
                         TestExecution.getInstance().getConnectedAut())
@@ -1028,6 +1030,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         getEditorHelper().setDirty(false);
         getEditorHelper().getEditSupport().close();
         PersistableEditorInput input = new PersistableEditorInput(obj);
+        m_compMapper = input.getEditSupport().getCompMapper();
         try {
             init(getEditorSite(), input);
             // MultiPageEditorPart sets the selection provider to a 
@@ -1209,6 +1212,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     
     /**
      * call refresh() for all the different viewers in this editor
+     * not really, the unmapped component names viewer is unaffected!
      */
     private void refreshAllViewer() {
         m_uiElementTreeViewer.refresh();
@@ -1226,7 +1230,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         switch (event) {
             case IObjectMappingObserver.EVENT_STEP_RECORDED :
                 IAUTMainPO aut = (IAUTMainPO)obj;
-                if (getAut() == aut) {
+                if (getAut().equals(aut)) {
                     cleanupNames();
                 }
                 break;
@@ -1249,8 +1253,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             IJBEditor gdEditor, boolean isDirty) {
         
         if (gdEditor == this) {
-            IEvaluationService service = (IEvaluationService) getSite()
-                    .getService(IEvaluationService.class);
+            IEvaluationService service = getSite().getService(
+                    IEvaluationService.class);
             service.requestEvaluation(EditorPartPropertyTester.FQN_IS_DIRTY);
         }
     }
@@ -1275,8 +1279,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     public int cleanupNames() {
         int addedItems = 0;
-        Set<IObjectMappingAssoziationPO> addedNodes = 
-            new HashSet<IObjectMappingAssoziationPO>();
         for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites()) {
             if (ts.getAut() == null) {
                 continue;
@@ -1286,7 +1288,9 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 TreeTraverser traverser = new TreeTraverser(ts, op);
                 traverser.traverse(true);
                 addedItems += op.getAddedNodeCount();
-                addedNodes.addAll(op.getAddedNodes());
+                if (m_compNameTreeViewer != null) {
+                    m_compNameTreeViewer.refresh();
+                }
             }
         }
         if (addedItems > 0) {
@@ -1302,6 +1306,14 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             }
         }
         return addedItems;
+    }
+    
+    /**
+     * adding new component names to the OMEditor, if present
+     * @return number of new comp names
+     */
+    public int addNewCompNames() {
+        return 0;
     }
 
     /**
@@ -1375,6 +1387,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public void handleDataChanged(IPersistentObject po, DataState dataState) {
 
         getEditorHelper().handleDataChanged(po, dataState);
+        
+        // required when deleting component names through the Comp Names Browser
+        // the names are correctly removed without this fix,
+        // but if we create a new name, they reappear :-)
+        if (po instanceof IComponentNamePO && dataState == DataState.Deleted) {
+            getOmEditorBP().deleteCompName((IComponentNamePO) po);
+        }
         if (m_treeViewerUpdater != null) {
             m_treeViewerUpdater.handleDataChanged(po, dataState);
         }

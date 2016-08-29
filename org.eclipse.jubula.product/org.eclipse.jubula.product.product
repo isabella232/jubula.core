@@ -58,9 +58,9 @@
    </plugins>
 
    <features>
-      <feature id="com.bredexsw.jubula.feature" version="4.0.0.qualifier"/>
+      <feature id="com.bredexsw.jubula.feature" version="4.0.0.qualifier" installMode="root"/>
    </features>
-   
+
    <configurations>
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />

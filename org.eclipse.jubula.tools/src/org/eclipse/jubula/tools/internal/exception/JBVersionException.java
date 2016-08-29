@@ -60,5 +60,17 @@ public class JBVersionException extends JBException {
     public List getErrorMsgs() {
         return m_errorMsgs;
     }
+    
+    /**
+     * @return error messages concatenated
+     */
+    public String getErrorMessagesString() {
+        StringBuilder builder = new StringBuilder();
+        for (Object message : m_errorMsgs) {
+            builder.append(message);
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
 
 }

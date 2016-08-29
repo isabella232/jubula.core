@@ -13,6 +13,7 @@ package org.eclipse.jubula.communication.internal.message;
 import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 
 /**
  * The message send from server to the client, transmitting the state of the
@@ -28,6 +29,9 @@ public class StartAUTServerStateMessage extends Message {
 
     /** a short textual description */
     private String m_description;
+    
+    /** */
+    private AutIdentifier m_autId;
 
     /** empty default constructor */
     public StartAUTServerStateMessage() {
@@ -90,5 +94,19 @@ public class StartAUTServerStateMessage extends Message {
      */
     public void setDescription(String description) {
         m_description = description;
+    }
+
+    /**
+     * @return the id of aut
+     */
+    public AutIdentifier getAutId() {
+        return m_autId;
+    }
+
+    /**
+     * @param autId the id of aut
+     */
+    public void setAutId(AutIdentifier autId) {
+        this.m_autId = autId;
     }
 }

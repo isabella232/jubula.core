@@ -57,8 +57,7 @@ public class DeleteComponentNameInViewHandler
         }
 
         if (confirmDelete(itemNames)) {
-            EntityManager s = GeneralStorage.getInstance()
-                    .getMasterSession();
+            EntityManager s = Persistor.instance().openSession();
             
             try {
                 EntityTransaction tx = Persistor.instance()
@@ -68,17 +67,26 @@ public class DeleteComponentNameInViewHandler
                     s.remove(s.merge(compName));
                 }
                 Persistor.instance().commitTransaction(s, tx);
+                EntityManager masterRO = GeneralStorage.getInstance().
+                        getMasterSession();
+                IComponentNamePO temp;
                 for (IComponentNamePO compName : toDelete) {
+                    temp = masterRO.find(compName.getClass(), compName.getId());
+                    if (temp != null) {
+                        masterRO.detach(temp);
+                    }
+                    ComponentNamesBP.getInstance().removeComponentNamePO(
+                            compName.getGuid());
                     DataEventDispatcher.getInstance()
                             .fireDataChangedListener(compName,
                                     DataState.Deleted, UpdateState.all);
-                    ComponentNamesBP.getInstance().removeComponentNamePO(
-                            compName.getGuid());
                 }
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleProjectDeletedException();
+            } finally {
+                Persistor.instance().dropSession(s);
             }
         }
         

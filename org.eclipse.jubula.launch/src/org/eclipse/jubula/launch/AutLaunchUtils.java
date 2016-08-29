@@ -68,9 +68,8 @@ public class AutLaunchUtils {
         }
 
         LOG.info("Not connected to an AUT Agent. Connecting to embedded AUT Agent."); //$NON-NLS-1$
-        IHandlerService handlerServce = 
-            (IHandlerService)PlatformUI.getWorkbench()
-                .getService(IHandlerService.class);
+        IHandlerService handlerServce = PlatformUI.getWorkbench().getService(
+                IHandlerService.class);
         try {
             handlerServce.executeCommand(
                 ConnectToEmbeddedAutAgentHandler

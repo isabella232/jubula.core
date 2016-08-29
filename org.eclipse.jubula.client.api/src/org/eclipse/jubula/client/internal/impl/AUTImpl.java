@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.internal.impl;
 
 import java.awt.image.BufferedImage;
 import java.net.ConnectException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.Validate;
@@ -31,10 +33,12 @@ import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.Synchronizer;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.communication.internal.IExceptionHandler;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
+import org.eclipse.jubula.communication.internal.message.MessageParam;
 import org.eclipse.jubula.communication.internal.message.SetProfileMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotResponseMessage;
@@ -43,6 +47,7 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.Profile;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
@@ -63,7 +68,8 @@ public class AUTImpl implements AUT {
     private AbstractToolkitInfo m_information;
     /** the exception handler */
     private ExecutionExceptionHandler m_handler;
-
+    /** */
+    private boolean m_logToConsole;
     /**
      * Constructor
      * 
@@ -161,7 +167,7 @@ public class AUTImpl implements AUT {
         try {
             CAPTestMessage capTestMessage = new CAPTestMessage(
                     (MessageCap) cap); 
-
+            logCAPtoConsole(capTestMessage);
             m_instance.send(capTestMessage);
             Object exchange = Synchronizer.instance().exchange(null);
             if (exchange instanceof CAPTestResponseMessage) {
@@ -185,8 +191,67 @@ public class AUTImpl implements AUT {
         } catch (InterruptedException e) {
             log.error(e.getLocalizedMessage(), e);
             throw new CommunicationException(e);
+        } catch (ExecutionException exec) {
+            logExecutionException(exec, false);
+            throw exec;
+        }
+        if (m_logToConsole && result.getException() != null) {
+            ExecutionException exec = result.getException();
+            logExecutionException(exec, true);
         }
         return result;
+    }
+
+    /**
+     * logs the CAP information to the console
+     * @param capTestMessage the {@link CAPTestMessage}
+     */
+    private void logCAPtoConsole(CAPTestMessage capTestMessage) {
+        if (m_logToConsole) {
+            StringBuilder builder = new StringBuilder();
+            MessageCap messcap = capTestMessage.getMessageCap();
+            builder.append("Method: " + messcap.getMethod() //$NON-NLS-1$
+                    + StringConstants.SPACE);
+            List<MessageParam> list = messcap.getMessageParams();
+            builder.append("Parameter: "); //$NON-NLS-1$
+            for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+                MessageParam messageParam = (MessageParam) iterator.next();
+                builder.append(StringConstants.QUOTE);
+                builder.append(messageParam.getValue());
+                builder.append(StringConstants.QUOTE);
+                if (iterator.hasNext()) {
+                    builder.append(
+                            StringConstants.COMMA + StringConstants.SPACE);
+                }
+            }
+            log.debug(builder.toString());
+            System.out.println(builder.toString());
+        }
+    }
+
+    /**
+     * this logs the occurred Exception to the console
+     * @param exec the {@link ExecutionException}
+     * @param catched if the exception was already handled via the {@link IExceptionHandler}
+     */
+    private void logExecutionException(ExecutionException exec,
+            boolean catched) {
+        StringBuilder builder = new StringBuilder();
+        if (catched) {
+            builder.append("Handled" + StringConstants.SPACE); //$NON-NLS-1$
+        }
+        builder.append("Error occured" + StringConstants.SPACE); //$NON-NLS-1$
+        builder.append(exec.getClass().getSimpleName());
+        if (exec instanceof CheckFailedException) {
+            CheckFailedException cfe = (CheckFailedException) exec;
+            builder.append(StringConstants.NEWLINE);
+            builder.append("Actual value: " + cfe.getActualValue()); //$NON-NLS-1$
+        }
+        if (exec.getMessage() != null) {
+            builder.append(StringConstants.NEWLINE + exec.getMessage());
+        }
+        System.out.println(builder.toString());
+        log.info(builder.toString());
     }
 
     /**
@@ -229,6 +294,8 @@ public class AUTImpl implements AUT {
                 exception = new CheckFailedException(
                     result, description, actualValue);
             }
+        } else {
+            result.setReturnValue(response.getReturnValue());
         }
         
         result.setException(exception);
@@ -318,5 +385,12 @@ public class AUTImpl implements AUT {
         } else {
             throw new IllegalStateException("No AUT connection!"); //$NON-NLS-1$
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void setCAPtoConsoleLogging(boolean logCapToConsole) {
+        m_logToConsole = logCapToConsole;
     }
 }

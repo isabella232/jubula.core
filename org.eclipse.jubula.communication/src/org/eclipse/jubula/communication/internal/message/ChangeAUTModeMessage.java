@@ -40,6 +40,9 @@ public class ChangeAUTModeMessage extends Message {
 
     /** constant for mode for checking */
     public static final int CHECK_MODE = 4;
+    
+    /** constant for mode for object mapping */
+    public static final int AGENT_OBJECT_MAPPING = 5;
 
     /** Static version */
     public static final double VERSION = 1.0;

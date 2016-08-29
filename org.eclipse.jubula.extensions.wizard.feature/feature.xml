@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2016 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+<feature
+      id="org.eclipse.jubula.extensions.wizard.feature"
+      label="Jubula Extension Wizard"
+      version="4.0.0.qualifier"
+      provider-name="Eclipse Jubula"
+      license-feature="org.eclipse.license"
+      license-feature-version="0.0.0">
+
+   <description url="http://www.eclipse.org/jubula">
+      Jubula Extension Wizard for creating an Eclipse Project
+   </description>
+
+   <copyright url="http://www.eclipse.org/jubula">
+      Copyright (c) 2016 BREDEX GmbH.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+BREDEX GmbH - initial API and implementation and/or initial documentation
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.jubula.toolkit.common"/>
+      <import plugin="org.eclipse.jubula.tools"/>
+      <import plugin="org.eclipse.jdt"/>
+      <import plugin="org.apache.commons.lang"/>
+      <import plugin="org.eclipse.jubula.toolkit.base.provider"/>
+      <import plugin="org.eclipse.jubula.toolkit.concrete.provider"/>
+      <import plugin="org.eclipse.jubula.toolkit.javafx.provider"/>
+      <import plugin="org.eclipse.jubula.toolkit.rcp.provider"/>
+      <import plugin="org.eclipse.jubula.toolkit.swing.provider"/>
+      <import plugin="org.eclipse.jubula.toolkit.swt.provider"/>
+      <import plugin="org.eclipse.jubula.toolkit.gef.provider"/>
+      <import feature="org.eclipse.xtext.xbase"/>
+      <import feature="org.eclipse.xtext.runtime"/>
+      <import feature="org.eclipse.emf.codegen.ecore"/>
+      <import feature="org.eclipse.fx.ide.rrobot.feature"/>
+   </requires>
+
+   <plugin
+         id="org.eclipse.jubula.extensions.wizard"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.toolkit.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.tools"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.toolkit.base.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>     
+
+   <plugin
+         id="org.eclipse.jubula.toolkit.concrete.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.toolkit.javafx.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.toolkit.rcp.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="org.eclipse.jubula.toolkit.swing.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>   
+            
+   <plugin
+         id="org.eclipse.jubula.toolkit.swt.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>  
+         
+   <plugin
+         id="org.eclipse.jubula.toolkit.gef.provider"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>  
+</feature>

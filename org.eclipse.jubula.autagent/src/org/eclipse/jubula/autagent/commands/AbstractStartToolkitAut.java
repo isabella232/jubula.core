@@ -33,6 +33,7 @@ import org.eclipse.jubula.tools.internal.constants.AUTStartResponse;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.AutEnvironmentConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.internal.utils.ZipUtil;
 import org.osgi.framework.Bundle;
@@ -77,12 +78,12 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
     public StartAUTServerStateMessage startAut(Map<String, String> parameters)
         throws IOException {
         StartAUTServerStateMessage envCheckMsg = validateEnvironment();
+        AutIdentifier autId = new AutIdentifier(parameters.get(
+                AutConfigConstants.AUT_ID));
         if (envCheckMsg == null) {
-            if (!MonitoringUtil.checkForDuplicateAutID(String.valueOf(
-                    parameters.get(AutConfigConstants.AUT_ID)))) {
+            if (!MonitoringUtil.checkForDuplicateAutID(String.valueOf(autId))) {
                 MonitoringDataStore cm = MonitoringDataStore.getInstance();
-                cm.putConfigMap(parameters.get(
-                      AutConfigConstants.AUT_ID), parameters);
+                cm.putConfigMap(autId.getID(), parameters);
             }
             File workingDir = getWorkingDir(parameters);
             String java = createBaseCmd(parameters);
@@ -101,8 +102,12 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
                 log.info("starting AUT with command: " //$NON-NLS-1$
                     + logMessage.toString());
             }
-            return executeCommand(cmdArray, envArray, workingDir);
+            StartAUTServerStateMessage stateMessage = executeCommand(cmdArray,
+                    envArray, workingDir, autId);
+            stateMessage.setAutId(autId);
+            return stateMessage;
         }
+        envCheckMsg.setAutId(autId);
         return envCheckMsg;
     }
 
@@ -205,12 +210,13 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
      * @param cmdArray The command line to execute.
      * @param envArray The execution environment.
      * @param workingDir The working directory.
+     * @param autId id of aut.
      * @return a <code>StartAutServerStateMessage</code> which either describes an error
      * condition or just tells the originator that the AUT was started correctly.
      */
-    protected StartAUTServerStateMessage executeCommand(
-        String [] cmdArray, String [] envArray, File workingDir)
-        throws IOException {
+    protected StartAUTServerStateMessage executeCommand(String [] cmdArray,
+            String [] envArray, File workingDir, AutIdentifier autId)
+                    throws IOException {
 
         final AutStarter autAgent = AutStarter.getInstance();
         Process process = Runtime.getRuntime().exec(cmdArray, envArray,
@@ -220,7 +226,7 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
                     + getErrorMessage());
             return getErrorMessage();
         }
-        if (!autAgent.watchAUT(process, m_isAgentSet)) {
+        if (!autAgent.watchAUT(process, m_isAgentSet, autId)) {
             process.destroy(); // new AUTServer could not be watched
             return createBusyMessage();
         }

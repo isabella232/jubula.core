@@ -40,6 +40,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
 /**
@@ -60,20 +61,20 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      */
     public JavaFXApplicationTester() {
       //Add scene graphs to the event confirmer
-        for (Stage s : CurrentStages.getStageList()) {
+        for (Window w : CurrentStages.getWindowList()) {
             ((RobotJavaFXImpl) getRobot()).getInterceptor().addSceneGraph(
-                    s.getScene().windowProperty());
+                    w.getScene().windowProperty());
         }
-        CurrentStages.addStagesListener(new ListChangeListener<Stage>() {
+        CurrentStages.addStagesListener(new ListChangeListener<Window>() {
             @Override
             public void onChanged(
-                    ListChangeListener.Change<? extends Stage> c) {
+                    ListChangeListener.Change<? extends Window> c) {
                 if (c.next()) {
                     if (c.wasAdded()) {
-                        for (Stage stage : c.getAddedSubList()) {
+                        for (Window win : c.getAddedSubList()) {
                             ((RobotJavaFXImpl) getRobot())
                                 .getInterceptor().addSceneGraph(
-                                    stage.getScene().windowProperty());
+                                    win.getScene().windowProperty());
                         }
                     }
                 }
@@ -88,7 +89,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
 
     @Override
     public Rectangle getActiveWindowBounds() {
-        Stage window = CurrentStages.getfocusStage();
+        Window window = CurrentStages.getfocusStage();
         Rectangle rec = new Rectangle(Rounding.round(window.getX()),
                 Rounding.round(window.getY()),
                 Rounding.round(window.getWidth()), Rounding.round(window

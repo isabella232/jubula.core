@@ -144,4 +144,24 @@
       </listitem>
     </orderedlist>
   </section>
+  <section xml:id="searching-for-deprecated-modules">
+    <title>Searching for deprecated modules</title>
+    <anchor role="helpid" condition="projectSearchForDeprecatedModulesPageContextId" xml:id="searching-for-deprecated-modules.projectSearchForDeprecatedModulesPageContextId" xreflabel="Searching for deprecated modules"/>
+    <para>
+      You can search for deprecated modules. After adding or removing
+      a used project(s) a dialog will be shown, where you can start search for 
+      deprecated modules. The result will be show in the search view.
+    </para>
+	<figure xml:id="searchingfordeprecated-modules-dialog">
+		<title>Reused Projects</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/search_for_deprecated_modules.png" />
+			</imageobject>
+			<textobject>
+				<phrase>Search for deprecated modules</phrase>
+			</textobject>
+		</mediaobject>
+	</figure>
+  </section>
 </section>

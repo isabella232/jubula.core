@@ -25,6 +25,7 @@ public class Messages extends NLS {
     public static String CommandlineOptionLenient;
     public static String CommandlineOptionPort;
     public static String CommandlineOptionQuiet;
+    public static String CommandlineOptionOMM;
     public static String CommandlineOptionStart;
     public static String CommandlineOptionVerbose;
     public static String InfoDefaultPort;

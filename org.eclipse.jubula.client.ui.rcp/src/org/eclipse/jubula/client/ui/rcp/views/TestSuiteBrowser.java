@@ -124,13 +124,14 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
         }
     }
 
+ 
     /** {@inheritDoc} */
     public void problemPropagationFinished() {
         final IWorkbench workbench = PlatformUI.getWorkbench();
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 try {
-                    getTreeViewer().refresh();
+                    refreshTreeView();
                     // completenessCheckDecorator can safely be enabled 
                     // after checking the project is done
                     IDecoratorManager dm = workbench.getDecoratorManager();
@@ -222,6 +223,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      */
     public void handleDataChanged(final IPersistentObject po, 
         final DataState dataState, final UpdateState updateState) {
+        
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 // due to checkstyle BUG this indirection is necessary
@@ -240,15 +242,17 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      */
     private void handleDataChangedImpl(final IPersistentObject po,
             final DataState dataState, final UpdateState updateState) {
+        
         // changes on the aut do not affect structure of this view
         if (po instanceof IAUTMainPO) {
             getTreeViewer().refresh();
             return;
         }
+        
         if (updateState == UpdateState.onlyInEditor) {
             return;
         }
-
+       
         switch (dataState) {
             case Added:
                 handleDataAdded(po);
@@ -270,28 +274,41 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 if (po instanceof IProjectPO) {
                     handleProjectLoaded();
                 }
-                if ((po instanceof ISpecTestCasePO)
+    
+                if ((po instanceof ISpecTestCasePO) 
                         || (po instanceof ITestSuitePO)
                         || (po instanceof ITestJobPO)) {
-
-                    // retrieve tree state
-                    Object[] expandedElements = 
-                        getTreeViewer().getExpandedElements();
-                    ISelection selection = getTreeViewer().getSelection();
-
-                    // refresh treeview
-                    getTreeViewer().refresh();
-
-                    // restore tree status
-                    getTreeViewer().setExpandedElements(expandedElements);
-                    getTreeViewer().setSelection(selection);
+                    refreshTreeView();
                 }
                 if (po instanceof IObjectMappingPO) {
                     getTreeViewer().refresh();
                 }
+
                 break;
             default:
                 break;
+        }
+    }
+
+
+    /**
+     * Refresh test suite browser
+     */
+    private void refreshTreeView() {
+        try {
+            // retrieve tree state
+            Object[] expandedElements = getTreeViewer()
+                    .getExpandedElements();
+            ISelection selection = getTreeViewer().getSelection();
+
+            // refresh treeview
+            getTreeViewer().refresh();
+
+            // restore tree status
+            getTreeViewer().setExpandedElements(expandedElements);
+            getTreeViewer().setSelection(selection);
+        } finally {
+            getTreeViewer().getTree().getParent().setRedraw(true);
         }
     }
     

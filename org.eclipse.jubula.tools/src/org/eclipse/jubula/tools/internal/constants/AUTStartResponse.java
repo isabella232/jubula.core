@@ -76,8 +76,14 @@ public final class AUTStartResponse {
      */
     public static final int JDK_INVALID = DOTNET_INSTALL_INVALID + 1; // 14
 
+    /**
+     * Java Virtual Machine attempts to read a class file and determines 
+     * that the major and minor version numbers in the file are not supported.
+     */
+    public static final int UNSUPPORTED_CLASS = JDK_INVALID + 1;
+    
     /** the highest constant in this class, change this if you add constants. */
-    public static final int MAX_CONSTANT = 15;
+    public static final int MAX_CONSTANT = 16;
 
     /** the constant used, when no reason is set */
     public static final int UNKNOWN = MAX_CONSTANT;

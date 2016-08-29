@@ -215,8 +215,7 @@ public class JBEditorHelper implements ILockedObjects,
         IEditorPart[] dirtyEditors = Plugin.getDefault().getDirtyEditors();
         
         for (IEditorPart editor : dirtyEditors) {
-            ILockedObjects lockedPOs = (ILockedObjects)editor.
-                getAdapter(ILockedObjects.class);
+            ILockedObjects lockedPOs = editor.getAdapter(ILockedObjects.class);
             if (lockedPOs != null) {
                 List<IPersistentObject> l = lockedPOs.getLockedObjects();
                 for (IPersistentObject lpo : l) {
@@ -247,8 +246,8 @@ public class JBEditorHelper implements ILockedObjects,
         throws PartInitException {
         
         m_clipboard = new Clipboard(site.getShell().getDisplay());
-        PersistableEditorInput editorInput = (PersistableEditorInput)input
-            .getAdapter(PersistableEditorInput.class);
+        PersistableEditorInput editorInput = input.getAdapter(
+                PersistableEditorInput.class);
         if (editorInput != null) {
             resetEditableState();
             m_editor.initTextAndInput(site, input);

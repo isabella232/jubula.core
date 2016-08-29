@@ -484,9 +484,8 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
 
                 try {
                     if (!file.isFile()) {
-                        error = createWarningStatus(NLS.bind(
-                            Messages.AUTConfigComponentFileNotFound,
-                                file.getCanonicalPath()));
+                        error = createWarningStatus(
+                            Messages.AUTConfigComponentFileNotFound);
                     } else {
                         // Make sure that the user has not entered an executable
                         // JAR file in the wrong field.

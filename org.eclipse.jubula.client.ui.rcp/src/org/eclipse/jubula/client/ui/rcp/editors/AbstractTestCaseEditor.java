@@ -647,11 +647,12 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     private void updateObjectMapping() {
         INodePO rootInput = 
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
-        for (INodePO node : rootInput.getUnmodifiableNodeList()) {
-            if (node instanceof ISpecTestCasePO) {
-                ObjectMappingEventDispatcher.notifyRecordObserver(
-                        (ISpecTestCasePO)node);
-            }
+        if (rootInput instanceof ISpecTestCasePO) {
+            ObjectMappingEventDispatcher.notifyRecordObserver(
+                    (ISpecTestCasePO)rootInput);
+        } else if (rootInput instanceof ITestSuitePO) {
+            ObjectMappingEventDispatcher.notifyRecordObserverTS(
+                    (ITestSuitePO)rootInput);
         }
     }
     
@@ -929,7 +930,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     private void updateTDManagerOfExecTestCases(INodePO root) {
         Iterator<INodePO> it = root.getNodeListIterator();
         while (it.hasNext()) {
-            IParamNodePO child = (IParamNodePO)it.next();
+            INodePO child = it.next();
             if (child instanceof IExecTestCasePO) {
                 ((IExecTestCasePO)child).synchronizeParameterIDs();
             }

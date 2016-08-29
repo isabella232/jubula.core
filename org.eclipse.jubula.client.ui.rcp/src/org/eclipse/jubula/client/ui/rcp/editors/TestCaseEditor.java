@@ -311,8 +311,10 @@ public class TestCaseEditor extends AbstractTestCaseEditor
             } else if (getEventHandlerTreeViewer().getTree() == tree) {
                 m_currentTreeViewer = getEventHandlerTreeViewer();
             }
-            m_selectionProviderDelegate
-                    .setSelectionProviderDelegate(m_currentTreeViewer);
+            if (m_selectionProviderDelegate != null) {
+                m_selectionProviderDelegate
+                .setSelectionProviderDelegate(m_currentTreeViewer);
+            }
         }       
     }
 

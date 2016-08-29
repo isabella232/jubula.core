@@ -13,10 +13,41 @@
   <?dbhtml dir="extensibility"?>
   <title>Extensibility</title>
   <para>
-    You can write extensions for various parts of the tool. This requires somebody to implement
-    the extension.
+    You can write extensions for various parts of the tool.
   </para>
   <para>
-    For information on how to do this, see the Developer Manual.
+    There is a simple way to extend your Jubula ITE to add support for a previously
+    unsupported component on a <emphasis>graphics component</emphasis> level, e.g.
+    if you only want to execute a click on that component. All you have to do is
+    to add <emphasis>"SimpleExtenions"</emphasis> as a key to the property map of an
+    AUT and a comma-separated list of fully qualified classnames as the value
+    (<xref linkend="define-aut"/>).
+  </para>
+  <para>
+    Such a component has to meet some requirements depending on its toolkit.
+    <itemizedlist>
+	  <listitem>
+	    <para>
+	      For the <emphasis>JavaFX</emphasis>-toolkit the component has to extend
+	      <emphasis>javafx.scene.Node</emphasis>.
+	    </para>
+	  </listitem>
+	  <listitem>
+        <para>
+          For the <emphasis>Swing</emphasis>-toolkit the component has to extend
+          <emphasis>javax.swing.JComponent</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          For the <emphasis>SWT</emphasis>-toolkit the component has to extend
+          <emphasis>org.eclipse.swt.widgets.Control</emphasis>.
+        </para>
+      </listitem>
+    </itemizedlist>
+  </para>
+  <para>
+    For information on how to implement a more extensive extension and all
+    possibilities for what can be extended, see the Developer Manual.
   </para>
 </section>

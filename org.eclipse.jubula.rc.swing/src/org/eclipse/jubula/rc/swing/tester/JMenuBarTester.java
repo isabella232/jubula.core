@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.swing.tester;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -24,13 +25,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
+import javax.swing.MenuSelectionManager;
 
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.swing.tester.adapter.JMenuItemAdapter;
 import org.eclipse.jubula.rc.swing.tester.util.WindowHelper;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 /**
  * Toolkit specific commands for the <code>JMenuBar</code>.
@@ -158,6 +162,9 @@ public class JMenuBarTester extends AbstractMenuTester {
      */
     protected void closeMenu(IMenuComponent menuBar, String[] textPath,
             String operator) {
+        if (closMacMenus()) {
+            return;
+        }
         if (menuBar.getRealComponent() instanceof JPopupMenu) {
             for (int i = 0; i < textPath.length; i++) {
                 if (((JPopupMenu)menuBar.getRealComponent()).isVisible()) {
@@ -171,11 +178,36 @@ public class JMenuBarTester extends AbstractMenuTester {
         super.closeMenu(menuBar, textPath, operator);
             
     }
-    
+
+    /**
+     * This methods closes the opened context menu via the {@link MenuSelectionManager}
+     * @return returns <code>true</code> if it is mac and has closed the menu
+     */
+    private boolean closMacMenus() {
+        if (EnvironmentUtils.isMacOS()) {
+            final MenuSelectionManager manager = MenuSelectionManager
+                    .defaultManager();
+            if (manager != null) {
+                getEventThreadQueuer().invokeAndWait("closeMac Menus", //$NON-NLS-1$
+                        new IRunnable<Object>() {
+                            public Rectangle run() {
+                                manager.clearSelectedPath();
+                                return null;
+                            }
+                        });
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      *{@inheritDoc}
      */
     protected void closeMenu(IMenuComponent menuBar, int[] path) {
+        if (closMacMenus()) {
+            return;
+        }
         if (menuBar.getRealComponent() instanceof JPopupMenu) {
             for (int i = 0; i < path.length; i++) {
                 if (((JPopupMenu)menuBar.getRealComponent()).isVisible()) {

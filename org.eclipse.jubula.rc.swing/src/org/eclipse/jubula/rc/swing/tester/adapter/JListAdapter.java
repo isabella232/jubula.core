@@ -18,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -98,27 +99,49 @@ public class JListAdapter extends JComponentAdapter implements IListComponent {
                 EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
         }
         
+        if (co.isScrollToVisible()) {
+            getRobot().scrollToVisible(m_list, r);
+        }
+        
         // if possible adjust height and width for items
         getRobotFactory().getEventThreadQueuer().invokeAndWait("setItemSize", new IRunnable<Void>() { //$NON-NLS-1$
             public Void run() throws StepExecutionException {
                 ListCellRenderer lcr = m_list.getCellRenderer();
                 if (lcr != null) {
-                    Component listItem = lcr.getListCellRendererComponent(
-                        m_list, model.getElementAt(index), index, false, false);
-                    Dimension preferredSize = listItem.getPreferredSize();
-                    r.setSize(preferredSize);
+                    String text = (String) model.getElementAt(index);
+                    if (StringUtils.isNotBlank(text)) {
+                        Component listItem = lcr.getListCellRendererComponent(
+                                             m_list, model.getElementAt(index), 
+                                             index, false, false);
+                        Dimension preferredSize = listItem.getPreferredSize();
+                        r.setSize(preferredSize);
+                    }
                 }                
                 return null;
             }
         });     
         
+      
+        // If list visible width is less than the cell width, need to adjust the to
+        // clickable rectangle to the visible part
+      
+        double listVisibleWidth = m_list.getVisibleRect().getWidth();
+        if (listVisibleWidth < r.getWidth())  {
+            double listVisibleX = m_list.getVisibleRect().getX();
+            Dimension d = new Dimension();
+            d.setSize(listVisibleWidth, r.getHeight());
+            r.setBounds((int) listVisibleX, (int) r.getY(), (int) r.getWidth(),
+                    (int) r.getHeight());
+            r.setSize(d);
+        }
+            
         if (maxWidth != JComboBoxAdapter.NO_MAX_WIDTH
                 && r.getWidth() > maxWidth) {
             Dimension d = new Dimension();
             d.setSize(maxWidth, r.getHeight());
             r.setSize(d);
         }
-
+     
         getRobot().click(m_list, r,
                 co.setClickType(ClickOptions.ClickType.RELEASED));
     }

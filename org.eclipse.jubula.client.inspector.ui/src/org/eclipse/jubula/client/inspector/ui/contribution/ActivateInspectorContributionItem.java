@@ -47,8 +47,7 @@ public class ActivateInspectorContributionItem
         List<IContributionItem> contributionItems = 
             new ArrayList<IContributionItem>();
 
-        ISourceProviderService service = 
-            (ISourceProviderService)PlatformUI.getWorkbench().getService(
+        ISourceProviderService service = PlatformUI.getWorkbench().getService(
                     ISourceProviderService.class);
         ISourceProvider inspectableAutsProvider = 
             service.getSourceProvider(

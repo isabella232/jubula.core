@@ -8,4 +8,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Bundle-ClassPath: .
-Main-Class: org.eclipse.jubula.examples.extension.swing.aut.JSliderExampleAUT
+Main-Class: org.eclipse.jubula.examples.extension.swing.aut.JSpinnerExampleAUT

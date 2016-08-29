@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.core.communication;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,6 +51,8 @@ import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.SendAUTListOfSupportedComponentsMessage;
 import org.eclipse.jubula.communication.internal.message.SendCompSystemI18nMessage;
 import org.eclipse.jubula.communication.internal.message.UnknownMessageException;
+import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -61,6 +65,7 @@ import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -429,6 +434,19 @@ public class AUTConnection extends BaseAUTConnection {
             IAUTMainPO connectedAut = TestExecution.getInstance()
                     .getConnectedAut();
             String autToolkitId = connectedAut.getToolkit();
+            try {
+                // Add simple extensions to comp-system
+                ToolkitDescriptor toolkitDescriptor =
+                        ToolkitSupportBP.getToolkitDescriptor(autToolkitId);
+                String supportedClasses = connectedAut.getPropertyMap().get(
+                        "SimpleExtensions"); //$NON-NLS-1$
+                compSystem.addSimpleExtensions(supportedClasses != null
+                            ? Arrays.asList(supportedClasses.split(",")) //$NON-NLS-1$
+                            : new ArrayList<String>(),
+                        toolkitDescriptor);
+            } catch (ToolkitPluginException e) {
+                LOG.error("Problem while loading simple extensions " + e); //$NON-NLS-1$
+            }
             List<Component> components = compSystem.getComponents(
                     autToolkitId, true);
 

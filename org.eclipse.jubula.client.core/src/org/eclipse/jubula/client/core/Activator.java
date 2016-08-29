@@ -42,7 +42,11 @@ public class Activator extends Plugin {
     public void start(BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
-        Configurator.loadLogbackConfiguration("client"); //$NON-NLS-1$
+        try {
+            Configurator.loadLogbackConfiguration("client"); //$NON-NLS-1$
+        } catch (IllegalStateException ie) {
+            // do nothing
+        }
         // initializing the component system
         ComponentBuilder.getInstance().getCompSystem();
     }

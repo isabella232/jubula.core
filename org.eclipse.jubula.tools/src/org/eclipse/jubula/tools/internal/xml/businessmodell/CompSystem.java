@@ -59,6 +59,9 @@ public class CompSystem {
     /** The list of concrete components. */
     private List<ConcreteComponent> m_concreteComponents;
     
+    /** The list of concrete components. */
+    private List<ConcreteComponent> m_simpleExtensionComponents;
+    
     /** The List of Event Types. */
     private Map<String, Integer> m_eventTypes;
     
@@ -104,6 +107,9 @@ public class CompSystem {
         }
         if (m_concreteComponents == null) {
             m_concreteComponents = new ArrayList<ConcreteComponent>();
+        }
+        if (m_simpleExtensionComponents == null) {
+            m_simpleExtensionComponents = new ArrayList<ConcreteComponent>();
         }
         if (m_eventTypes == null) {
             m_eventTypes = new HashMap<String, Integer>(4);
@@ -171,6 +177,56 @@ public class CompSystem {
             }
         }
         return toolkitComponents;
+    }
+
+    /**
+     * @param componentNames the names of the components to support
+     * @param toolkitDescriptor the descriptor of the belonging toolkit
+     */
+    public void addSimpleExtensions(List<String> componentNames,
+            ToolkitDescriptor toolkitDescriptor) {
+        Component graphicsComponent = null;
+        for (Component comp : getComponents()) {
+            if (comp.getType().equalsIgnoreCase("guidancer.abstract.Widget")) { //$NON-NLS-1$
+                graphicsComponent = comp;
+            }
+        }
+        cleanPreviousSimpleExtension(graphicsComponent);
+        for (String componentName : componentNames) {
+            String cleanName = componentName.trim();
+            if (m_componentsByType.containsKey(cleanName)) {
+                // if the Component is already supported, we do not add it to the list
+                continue;
+            }
+            ConcreteComponent myComponent = new ConcreteComponent();
+            myComponent.setType(cleanName); 
+            myComponent.setTesterClass(
+                    "org.eclipse.jubula.rc.common.tester.WidgetTester"); //$NON-NLS-1$
+            myComponent.setComponentClass(new ComponentClass(cleanName));
+            myComponent.addRealizedType("guidancer.abstract.Widget"); //$NON-NLS-1$
+            myComponent.setToolkitDesriptor(toolkitDescriptor);
+            myComponent.addAllRealizer(myComponent);
+            myComponent.getRealizers().add(myComponent);
+            graphicsComponent.addAllRealizer(myComponent);
+            myComponent.addRealized(graphicsComponent);
+            m_componentsByType.put(myComponent.getType(), myComponent);
+            m_simpleExtensionComponents.add(myComponent);
+        }
+        getConcreteComponents().addAll(m_simpleExtensionComponents);
+        getComponents().addAll(m_simpleExtensionComponents);
+    }
+
+    /**
+     * @param graphicsComponent the "guidancer.abstract.Widget" component
+     */
+    private void cleanPreviousSimpleExtension(Component graphicsComponent) {
+        getConcreteComponents().removeAll(m_simpleExtensionComponents);
+        getComponents().removeAll(m_simpleExtensionComponents);
+        for (Component c : m_simpleExtensionComponents) {
+            m_componentsByType.remove(c.getType());
+        }
+        graphicsComponent.removeFromAllRealizer(m_simpleExtensionComponents);
+        m_simpleExtensionComponents.clear();
     }
     
     

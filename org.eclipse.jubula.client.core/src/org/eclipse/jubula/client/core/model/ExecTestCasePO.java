@@ -733,18 +733,20 @@ class ExecTestCasePO extends TestCasePO implements
      * false otherwise.
      */
     public boolean checkHasUnusedTestData() {
-        for (String colId : getDataManager().getUniqueIds()) {
-            boolean hasColIdParam = false;
-            for (ListIterator<IParamDescriptionPO> paramListIter = 
-                    getParameterListIter(); paramListIter.hasNext(); ) {
-                IParamDescriptionPO paramDescr = paramListIter.next();
-                if (colId.equals(paramDescr.getUniqueId())) {
-                    hasColIdParam = true;
-                    break;
+        if (getReferencedDataCube() == null) {
+            for (String colId : getDataManager().getUniqueIds()) {
+                boolean hasColIdParam = false;
+                for (ListIterator<IParamDescriptionPO> paramListIter =
+                        getParameterListIter(); paramListIter.hasNext();) {
+                    IParamDescriptionPO paramDescr = paramListIter.next();
+                    if (colId.equals(paramDescr.getUniqueId())) {
+                        hasColIdParam = true;
+                        break;
+                    }
                 }
-            }
-            if (!hasColIdParam) {
-                return true;
+                if (!hasColIdParam) {
+                    return true;
+                }
             }
         }
         return false;

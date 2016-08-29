@@ -17,7 +17,9 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -216,7 +218,10 @@ public final class TeststyleHandler implements IDataChangedListener,
         for (DataChangedEvent e : events) {
             if (e.getUpdateState() != UpdateState.onlyInEditor) {
                 TestStyleJob tj = new TestStyleJob("Teststyle", events); //$NON-NLS-1$
-                tj.setRule(SingleJobRule.TESTSTYLERULE);
+                tj.setRule(
+                        new MultiRule(new ISchedulingRule[]{
+                            SingleJobRule.COMPLETENESSRULE,
+                            SingleJobRule.TESTSTYLERULE}));
                 JobUtils.executeJob(tj, null);
                 for (Job job : Job.getJobManager().find(tj)) {
                     if (job != tj) {
@@ -308,7 +313,10 @@ public final class TeststyleHandler implements IDataChangedListener,
     public void doCompleteCheck() {
         Job checkEverythingJob =
                 new CompleteTestStyleCheckJob("TestStyle - complete"); //$NON-NLS-1$
-        checkEverythingJob.setRule(SingleJobRule.TESTSTYLERULE);
+        checkEverythingJob.setRule(
+                new MultiRule(new ISchedulingRule[]{
+                    SingleJobRule.COMPLETENESSRULE,
+                    SingleJobRule.TESTSTYLERULE}));
         JobUtils.executeJob(checkEverythingJob, null);
         try {
             checkEverythingJob.join();

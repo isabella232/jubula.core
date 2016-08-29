@@ -17,20 +17,6 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.event.EventTarget;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Skin;
-import javafx.scene.control.SkinBase;
-import javafx.scene.control.Skinnable;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.stage.WindowEvent;
-
 import org.eclipse.jubula.rc.common.AUTServerConfiguration;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.components.AUTComponent;
@@ -56,6 +42,20 @@ import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
 
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.event.EventTarget;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.Skin;
+import javafx.scene.control.SkinBase;
+import javafx.scene.control.Skinnable;
+import javafx.stage.PopupWindow;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
+
 /**
  * This class is responsible for handling the components of the AUT. <br>
  *
@@ -65,7 +65,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
  * @author BREDEX GmbH
  * @created 10.10.2013
  */
-public class ComponentHandler implements ListChangeListener<Stage>,
+public class ComponentHandler implements ListChangeListener<Window>,
         BaseAUTListener {
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
@@ -92,24 +92,29 @@ public class ComponentHandler implements ListChangeListener<Stage>,
     }
 
     @Override
-    public void onChanged(Change<? extends Stage> change) {
+    public void onChanged(Change<? extends Window> change) {
         change.next();
 
-        for (final Stage stage : change.getRemoved()) {
-            hierarchy.removeComponentFromHierarchy(stage);
+        for (final Window win : change.getRemoved()) {
+            hierarchy.removeComponentFromHierarchy(win);
         }
         
-        for (final Stage stage : change.getAddedSubList()) {
-            stage.addEventFilter(WindowEvent.WINDOW_SHOWN,
-                    new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent event) {
-                        hierarchy.createHierarchyFrom(stage);
-                        stageResizeSync.register(stage);
-                        stage.removeEventFilter(WindowEvent.WINDOW_SHOWN, this);
-                    }
-                });
-
+        for (final Window win : change.getAddedSubList()) {
+            if (win.isShowing()) {
+                hierarchy.createHierarchyFrom(win);
+                stageResizeSync.register(win);
+            } else {
+                win.addEventFilter(WindowEvent.WINDOW_SHOWN,
+                        new EventHandler<WindowEvent>() {
+                            @Override
+                            public void handle(WindowEvent event) {
+                                hierarchy.createHierarchyFrom(win);
+                                stageResizeSync.register(win);
+                                win.removeEventFilter(WindowEvent.WINDOW_SHOWN,
+                                        this);
+                            }
+                        });
+            }
         }
     }
 
@@ -197,7 +202,8 @@ public class ComponentHandler implements ListChangeListener<Stage>,
         List<? extends Window> comps = getAssignableFrom(Window.class);
         List<Node> matches = new ArrayList<Node>();
         for (Window window : comps) {
-            if (window.isFocused() && window.isShowing()) {
+            if (window.isFocused() && window.isShowing() 
+                    || window.isShowing() && window instanceof PopupWindow) {
                 Parent root = window.getScene().getRoot();
                 matches = getAllNodesforPos(root, pos, matches);
             }

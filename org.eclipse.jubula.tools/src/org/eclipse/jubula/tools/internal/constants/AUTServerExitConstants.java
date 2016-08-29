@@ -84,6 +84,10 @@ public class AUTServerExitConstants {
     /** exit state in case that the started AUT is not supported
      * through the UI automation framework */
     public static final int AUT_NOT_UIA_SUPPORTED = 26;
+    
+    /** exit state in case that the started AUT is cannot be started cause of an already
+     *  used address*/
+    public static final int AUT_START_ADDRESS_ALREADY_IN_USE = 134;
 
     /**
      * do not instantiate

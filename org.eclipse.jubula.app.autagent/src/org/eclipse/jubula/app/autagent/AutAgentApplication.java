@@ -96,6 +96,11 @@ public class AutAgentApplication implements IApplication {
     private static final String COMMANDLINE_OPTION_LENIENT = "l"; //$NON-NLS-1$
 
     /**
+     * command line argument: quiet output
+     */
+    private static final String COMMANDLINE_OPTION_OBJECTMAPPING = "om"; //$NON-NLS-1$
+
+    /**
      * command line argument: verbose output
      */
     private static final String COMMANDLINE_OPTION_VERBOSE = "v"; //$NON-NLS-1$
@@ -141,7 +146,7 @@ public class AutAgentApplication implements IApplication {
         final AutStarter server = AutStarter.getInstance();
         CommandLineParser parser = new PosixParser();
         try {
-            CommandLine cmd = parser.parse(createOptions(), args);
+            CommandLine cmd = parser.parse(createOptions(false), args);
             if (cmd.hasOption(COMMANDLINE_OPTION_HELP)) {
                 printHelp();
                 return EXIT_HELP_OPTION;
@@ -163,9 +168,12 @@ public class AutAgentApplication implements IApplication {
                 } else if (cmd.hasOption(COMMANDLINE_OPTION_QUIET)) {
                     verbosity = Verbosity.QUIET;
                 }
-
+                boolean objectMapping = false;
+                if (cmd.hasOption(COMMANDLINE_OPTION_OBJECTMAPPING)) {
+                    objectMapping = true;
+                }
                 DesktopIntegration di = 
-                    new DesktopIntegration(server.getAgent());
+                    new DesktopIntegration(server.getAgent(), objectMapping);
                 di.setPort(port);
                 server.getAgent().addPropertyChangeListener(
                         AutAgent.PROP_NAME_AUTS, di);
@@ -231,10 +239,10 @@ public class AutAgentApplication implements IApplication {
 
     /**
      * method to create an options object, filled with all options
-     *
+     * @param onlyVisible if <code>true</code> hides specific information
      * @return the options
      */
-    private static Options createOptions() {
+    private static Options createOptions(boolean onlyVisible) {
         Options options = new Options();
 
         Option portOption = new Option(COMMANDLINE_OPTION_PORT, true,
@@ -246,7 +254,10 @@ public class AutAgentApplication implements IApplication {
                 Messages.CommandlineOptionLenient);
         options.addOption(COMMANDLINE_OPTION_HELP, false,
                 Messages.CommandlineOptionHelp);
-
+        if (!onlyVisible) {
+            options.addOption(COMMANDLINE_OPTION_OBJECTMAPPING,
+                    false, Messages.CommandlineOptionOMM);
+        }
         OptionGroup verbosityOptions = new OptionGroup();
         verbosityOptions.addOption(new Option(COMMANDLINE_OPTION_QUIET, false,
                 Messages.CommandlineOptionQuiet));
@@ -275,7 +286,7 @@ public class AutAgentApplication implements IApplication {
     private void printHelp() {
         System.out.println(Vn.getDefault().getVersion());
         HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp(AUTAGENT_LAUNCHER, createOptions(), true);
+        formatter.printHelp(AUTAGENT_LAUNCHER, createOptions(true), true);
     }
 
     /**

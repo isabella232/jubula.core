@@ -45,4 +45,16 @@ public interface Result<T> {
      * @return whether the {@link org.eclipse.jubula.communication.CAP CAP} has been executed successfully or not
      */
     boolean isOK();
+    
+    /**
+     * @return the stored value, mainly for use in the API
+     * @since 3.2
+     */
+    String getReturnValue(); 
+    
+    /**
+     * @param value the value to store, mainly for use in the API
+     * @since 3.2
+     */
+    void setReturnValue(String value);
 }

@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.controllers;
 import java.net.InetAddress;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.ClientTest;
@@ -266,10 +267,7 @@ public class TestExecutionContributor
         String error = null;
         switch (event.getState()) {
             case ServerEvent.CONNECTION_CLOSED:                
-                message = getConnectionMessage(message);
-                message = message + StringConstants.SPACE
-                    + StringConstants.COLON + StringConstants.SPACE
-                    + Messages.TestExecutionContributorConnAUTServClosed;
+                message = getConnectionCloseMsg(message);
                 icon = Constants.NO_SC;
                 setAutNotRunningState();
                 break;
@@ -330,7 +328,23 @@ public class TestExecutionContributor
                 setAutNotRunningState();
                 log.error(Messages.UnknownAUTServerState + event.getState());
         }
+        if (StringUtils.isNotBlank(event.getAdditionalInfo())) {
+            error += event.getAdditionalInfo();
+        }
         showError(icon, message, error);
+    }
+
+    /**
+     * Get connection closed message text
+     * @param msg base message
+     * @return detailed message
+     */
+    private String getConnectionCloseMsg(String msg) {
+        String message = getConnectionMessage(msg);
+        message = message + StringConstants.SPACE + StringConstants.COLON
+                + StringConstants.SPACE
+                + Messages.TestExecutionContributorConnAUTServClosed;
+        return message;
     }
 
     /**

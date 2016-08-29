@@ -324,6 +324,8 @@ public interface Constants {
     public static final String PERFORM_AUTO_PROJECT_LOAD_KEY = "PERFORM_AUTO_PROJECT_LOAD_KEY"; //$NON-NLS-1$
     /** Key for content assist of component names view to be stored as a resource property */
     public static final String MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL = "MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL"; //$NON-NLS-1$
+    /** Key for show the update reused project dialog */
+    public static final String UPDATE_REUSED_PROJECT_KEY = "UPDATE_REUSED_PROJECT_KEY"; //$NON-NLS-1$
     
     
     // -------------------------------------------------------------
@@ -385,23 +387,11 @@ public interface Constants {
     public static final int CLEAN_DAYS_KEY_DEFAULT = 5;
     
     /** Key for int value to be stored as a resource property */
-    public static final int MAPPINGMOD1_KEY_DEFAULT = 
-        InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK;
-    
+    public static final int MAPPING_WP_TRIGGER_DEFAULT = KeyEvent.VK_A;
     /** Key for int value to be stored as a resource property */
     public static final int MAPPING_WP_MOD1_KEY_DEFAULT = 
         InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK;
     
-    /** Key for int value to be stored as a resource property */
-    public static final int MAPPING_TRIGGER_DEFAULT = KeyEvent.VK_Q;
-
-    /** Key for int value to be stored as a resource property */
-    public static final int MAPPING_WP_TRIGGER_DEFAULT = KeyEvent.VK_A;
-    
-    /** Default value for Object Mapping trigger type */
-    public static final int MAPPING_TRIGGER_TYPE_DEFAULT = 
-        InputConstants.TYPE_KEY_PRESS;
-
     /** Default value for Object Mapping trigger type */
     public static final int MAPPING_WP_TRIGGER_TYPE_DEFAULT = 
         InputConstants.TYPE_KEY_PRESS;
@@ -493,9 +483,10 @@ public interface Constants {
      * closing the viewer) 
      */
     public static final boolean PREF_DEFAULT_CACHE_TEST_RESULTS = false;
-
     /** default value for loading the default project */
     public static final boolean LOAD_DEFAULT_PROJECT_KEY_DEFAULT = false;
+    /** default value of show update reused projects dialog */
+    public static final boolean UPDATE_REUSED_PROJECTS_KEY_DEFAULT = false;
 
     // --------------------------------------------------------------------
     

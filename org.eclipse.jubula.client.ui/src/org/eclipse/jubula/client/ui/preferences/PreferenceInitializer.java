@@ -86,6 +86,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.LOAD_DEFAULT_PROJECT_KEY_DEFAULT);
         prefStore.setDefault(Constants.REMEMBER_KEY,
                 Constants.REMEMBER_KEY_DEFAULT);
+        prefStore.setDefault(Constants.UPDATE_REUSED_PROJECT_KEY,
+                Constants.UPDATE_REUSED_PROJECTS_KEY_DEFAULT);
     }
     
     /**
@@ -131,12 +133,15 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     private static void initializeDefaultPreferencesKeyBoardShortCuts(
             IPreferenceStore prefStore) {
         prefStore.setDefault(Constants.MAPPING_MOD_KEY,
-                Constants.MAPPINGMOD1_KEY_DEFAULT);
+                org.eclipse.jubula.client.core.constants.Constants
+                .MAPPINGMOD1_KEY_DEFAULT);
         prefStore.setDefault(Constants.MAPPING_TRIGGER_KEY,
-                Constants.MAPPING_TRIGGER_DEFAULT);
+                org.eclipse.jubula.client.core.constants.Constants
+                .MAPPING_TRIGGER_DEFAULT);
         prefStore.setDefault(Constants.MAPPING_TRIGGER_TYPE_KEY,
-                Constants.MAPPING_TRIGGER_TYPE_DEFAULT);
-        
+                org.eclipse.jubula.client.core.constants.Constants
+                .MAPPING_TRIGGER_TYPE_DEFAULT);
+
         prefStore.setDefault(Constants.MAPPING_WITH_PARENTS_MOD_KEY,
                 Constants.MAPPING_WP_MOD1_KEY_DEFAULT);
         prefStore.setDefault(Constants.MAPPING_WITH_PARENTS_TRIGGER_KEY,

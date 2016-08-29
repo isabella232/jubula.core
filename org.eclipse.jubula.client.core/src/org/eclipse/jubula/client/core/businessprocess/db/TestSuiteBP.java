@@ -12,8 +12,12 @@ package org.eclipse.jubula.client.core.businessprocess.db;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections.ListUtils;
+import org.eclipse.jubula.client.core.model.IAUTConfigPO;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -28,6 +32,7 @@ import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
+import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 
 /**
  * @author BREDEX GmbH
@@ -67,8 +72,27 @@ public class TestSuiteBP extends NodeBP {
             EditSupport editSupport, INodePO tj, ITestSuitePO referencedTS,
             Integer position) throws PMAlreadyLockedException,
             PMDirtyVersionException, PMObjectDeletedException {
+        
+        Set<IAUTConfigPO> autConfigSet = null;
+        
+        if (referencedTS != null) {
+            IAUTMainPO aut = referencedTS.getAut();
+            if (aut != null) {
+                autConfigSet = aut.getAutConfigSet();
+            }
+        }
+        
         handleFirstReference(editSupport, referencedTS, false);
-        IRefTestSuitePO newRefTs = NodeMaker.createRefTestSuitePO(referencedTS);
+        IRefTestSuitePO newRefTs;
+        if (autConfigSet != null && autConfigSet.size() == 1) {
+            Map<String, String> configMap = autConfigSet.iterator()
+                    .next().getConfigMap();
+            String autName = configMap.get(AutConfigConstants.AUT_ID);
+            newRefTs = NodeMaker.createRefTestSuitePO(referencedTS,
+                    autName);
+        } else {
+            newRefTs = NodeMaker.createRefTestSuitePO(referencedTS);
+        }
         if (position != null) {
             tj.addNode(position.intValue(), newRefTs);
         } else {

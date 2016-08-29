@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -77,7 +78,19 @@ public class UINodeBP {
             INodePO nodePO = getExecFromTestResultNode(trNode);
             if (nodePO instanceof ITestCasePO
                     && !(nodePO instanceof IExecTestCasePO)) {
-                nodePO = NodePM.getNode(nodePO.getGuid());
+                nodePO = NodePM.getNode(GeneralStorage.getInstance()
+                        .getProject().getId(), nodePO.getGuid());
+                if (nodePO == null) {
+                    for (IReusedProjectPO usedProject
+                                : GeneralStorage.getInstance()
+                            .getProject().getUsedProjects()) {
+                        nodePO = NodePM.getNode(usedProject.getId(),
+                                nodePO.getGuid());
+                        if (nodePO != null) {
+                            break;
+                        }
+                    }
+                }
             }
             while (!(nodePO instanceof IExecTestCasePO)) {
                 trNode = trNode.getParent();
@@ -186,9 +199,20 @@ public class UINodeBP {
      */
     private static INodePO getExecFromTestResultNode(TestResultNode trNode) {
         INodePO nodePO = trNode.getNode();
+        String guid = nodePO.getGuid();
         if (nodePO instanceof ITestCasePO 
                 && nodePO.isGenerated()) {
-            nodePO = NodePM.getNode(nodePO.getGuid());
+            nodePO = NodePM.getNode(GeneralStorage.getInstance()
+                    .getProject().getId(), guid);
+            if (nodePO == null) {
+                for (IReusedProjectPO usedProject : GeneralStorage.getInstance()
+                        .getProject().getUsedProjects()) {
+                    nodePO = NodePM.getNode(usedProject.getId(), guid);
+                    if (nodePO != null) {
+                        break;
+                    }
+                }
+            }
         }
         return nodePO;
     }

@@ -229,7 +229,7 @@ public class OMEditorTreeContentProvider extends
                     }
                 }
             };
-            ded.addDataChangedListener(m_modelListener, true);
+            ded.addDataChangedListener(m_modelListener, false);
         }
     }
 }

@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener.sync;
 
-import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * Allows synchronization on a Stage that will likely be soon resized by the 
@@ -22,18 +22,18 @@ import javafx.stage.Stage;
 public interface IStageResizeSync {
 
     /**
-     * Registers <code>stage</code> with the receiver.
+     * Registers <code>window</code> with the receiver.
      * 
-     * @param stage the Stage to register.
+     * @param win the window to register.
      */
-    public void register(Stage stage);
+    public void register(Window win);
 
     /**
-     * Deregisters <code>stage</code> with the receiver.
+     * De-registers <code>window</code> with the receiver.
      * 
-     * @param stage the Stage to deregister.
+     * @param win the window to de-register.
      */
-    public void deregister(Stage stage);
+    public void deregister(Window win);
     
     /**
      * Blocks the calling thread until the Stage has been sufficiently resized

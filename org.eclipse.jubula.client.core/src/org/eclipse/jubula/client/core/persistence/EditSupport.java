@@ -97,8 +97,7 @@ public class EditSupport {
      * component names
      */
     private IWritableComponentNameMapper m_compMapper;
-
-
+    
     /**
      * Instantiate edit support for the supplied persistent object
      * 
@@ -327,7 +326,7 @@ public class EditSupport {
                     MessageIDs.E_CANNOT_SAVE_INVALID); 
         }
     }
-
+    
     /**
      * Tracks, that a test case, a test suite, or a test job has been modified.
      */
@@ -568,5 +567,5 @@ public class EditSupport {
     public IWritableComponentNameMapper getCompMapper() {
         return m_compMapper;
     }
-
+    
 }

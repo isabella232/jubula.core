@@ -253,6 +253,9 @@ public class Messages extends NLS {
     public static String NotSupported;
     public static String NoValueAvailableForParameter;
     public static String Null;
+    public static String ObjectMappingPreferencePageMouseButton1;
+    public static String ObjectMappingPreferencePageMouseButton2;
+    public static String ObjectMappingPreferencePageMouseButton3;
     public static String OfType;
     public static String OK;
     public static String OrginalTestcaseLocked;

@@ -206,14 +206,13 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         List<Param> params = action.getParams();
         Map<String, String> paramMap = new HashMap<String, String>();// with enums
         Map<String, String> paramTypeMap = new HashMap<String, String>();// only "simple" types
-        if (!params.isEmpty()) {
-            Iterator<Param> paramIterator = params.iterator();
-            // add parameters description to javadoc
         %>
         /**
          * <%=actionDescription%>
-         
         <%
+        if (!params.isEmpty()) {
+            Iterator<Param> paramIterator = params.iterator();
+            // add parameters description to javadoc
         while (paramIterator.hasNext()) {
             Param param = paramIterator.next();
             String paramName = nameLoader.translateFromCompSystem(param.getName());
@@ -222,14 +221,16 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             if (paramDescrKey != null) {
                 paramDescription = CompSystemI18n.getString(paramDescrKey);
             }
-       %>* @param <%=paramName%> 
+       %>
+         * @param <%=paramName%> 
          *        <%=paramDescription%>
-         
        <%
          }
-         %>* @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.
+         %>
+         * @throws IllegalArgumentException if one of the passed parameters is <code>null</code>.<%}
+         %>
          * <%=sinceA%>
-         */<%}%>
+         */
         <%if (action.isDeprecated()) {%>@Deprecated<%}%>
         @NonNull public CAP <%=methodName%>(
         <%    

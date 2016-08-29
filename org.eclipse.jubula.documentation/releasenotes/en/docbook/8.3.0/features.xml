@@ -12,7 +12,91 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
+<para><emphasis role="strong">Since M3</emphasis></para>
+<para>
+ <emphasis role="strong">Support for javafx.stage.Popup</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      The JavaFX toolkit now allows mapping in Popups.
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
+ <emphasis role="strong">Support for javafx.scene.shape.Shape</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      Jubula now supports Shapes (e.g. Circles or Rectangles) in the
+      JavaFX toolkit on a graphics component level.
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
+    <emphasis role="strong">An automatic screenshot is taken after timeouts.</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        When connection to the AUT is lost during test execution, and the Automatic Screenshots preference is ON,
+        the AUT Agent attempts to take a final screenshot, which is then saved to the Database. 
+    </para> 
+  </listitem>
+</itemizedlist>
+<para>
+    <emphasis role="strong">Possibility to get text values from a componentin the API</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        From now on it is possible to get a text value of a Component (like Label, TextInputComponent, etc)
+        in the API. 
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
+    <emphasis role="strong">Wizard for creating an extension</emphasis>
+</para>
+<itemizedlist>
+ <listitem>
+    <para>
+        We have created a wizard for eclipse which makes it easier to write a extension for not supported components.
+        See the developer manual for more information.
+    </para> 
+ </listitem>
+</itemizedlist>
+<para>
+    <emphasis role="strong">A list of changes which happened in the API since version 8.2.0 is located <link xl:href="../api-comparison/changes/8.2.0_to_8.3.0.html">here</link>.</emphasis>
+</para>
+
 <para><emphasis role="strong">Since M2</emphasis></para>
+<para>
+ <emphasis role="strong">Simple Extensions</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      Jubula now provides a simple way to add support for an unsupported component via the new 'Simple Extension' option.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      You don't have to use the complex way of creating and installing an extension anymore if you want to support a component on a <emphasis>graphics component</emphasis> level, e.g. if you only want to execute a click on that component.  
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      Now, you only need to add <emphasis>"SimpleExtensions"</emphasis> as a key to the property map of an AUT and a comma-separated list of fully qualified classnames as the value.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+      For more information take a look at the "Extensibility" chapter in the user manual.
+    </para>
+  </listitem>
+</itemizedlist>
 <para>
  <emphasis role="strong">Selenium version updated</emphasis>
 </para>

@@ -281,6 +281,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     private Text m_autIdTextField;
     /** validator for the AUT ID text field */
     private IValidator m_autIdValidator;
+    /** validator for the AUT Config Name text field */
+    private IValidator m_autConfigNameValidator;
 
     /** The basic mode button. */
     private Button m_basicModeButton;
@@ -932,7 +934,20 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                     m_autName, 
                     m_serverCombo.getText()
                 }));
+        String newAutConfigNameValue = m_autConfigNameTextField.getText();
         DialogStatusParameter error = null;
+        
+        if (m_autConfigNameValidator != null) {
+            IStatus validationStatus = m_autConfigNameValidator
+                    .validate(newAutConfigNameValue);
+            if (!validationStatus.isOK()) {
+                if (validationStatus.getSeverity() == IStatus.ERROR) {
+                    error = createErrorStatus(validationStatus.getMessage());
+                } else {
+                    error = createWarningStatus(validationStatus.getMessage());
+                }
+            }
+        }
         
         putConfigValue(AutConfigConstants.AUT_CONFIG_NAME, 
                 m_autConfigNameTextField.getText());
@@ -1336,15 +1351,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                         m_autWorkingDirectoryTextField.getText());
                 }
                 if (!dir.isDirectory()) {
-                    try {
-                        error = createWarningStatus(NLS.bind(
-                                Messages.AUTConfigComponentNoDir,
-                            dir.getCanonicalPath()));
-                    } catch (IOException e) {
-                        error = createWarningStatus(NLS.bind(
-                                Messages.AUTConfigComponentFileNotFound,
-                                m_autWorkingDirectoryTextField.getText()));
-                    }
+                    error = createWarningStatus(
+                            Messages.AUTConfigComponentNoDir);
                 }
             }
         } else if (!isEmpty) {
@@ -1487,6 +1495,13 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     //           in a separate setter method.
     public void setAutIdValidator(IValidator validator) {
         m_autIdValidator = validator;
+    }
+    
+    /**
+     * @param validator The validator to set.
+     */
+    public void setAutConfignameValidator(IValidator validator) {
+        m_autConfigNameValidator = validator;
     }
 
     /**

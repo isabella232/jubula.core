@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.communication.internal;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -1142,6 +1144,8 @@ public class Communicator {
      * @created 21.09.2004
      */
     public interface ConnectionManager {
+        /** the property name for the change listener*/
+        public static String PROP_CONNECTION_CHANGE = "connection_changed"; //$NON-NLS-1$
         /**
          * the state to send at next accept
          * @return a constant from ConnectionState
@@ -1160,6 +1164,18 @@ public class Communicator {
          */
         public void remove(Connection connection);
 
+        /**
+         * @param listener add the listener
+         */
+        public void addPropertyChangedListener(PropertyChangeListener listener);
+
+        /**
+         * 
+         * @param listener removes the listener
+         */
+        public void removePropertyChangedListener(
+                PropertyChangeListener listener);
+
     }
     
     
@@ -1171,9 +1187,14 @@ public class Communicator {
     private static class DefaultConnectionManager implements ConnectionManager {
         /** number of maximum connections to accept, this implementation accepts just one */
         private static final int BACKLOG = 1;
-
+        /** logger */
+        private static ConfigurableLogger cmLogger = new ConfigurableLogger(
+                LoggerFactory.getLogger(DefaultConnectionManager.class));
         /** list with accepted connections */
         private List<Connection> m_connections; 
+        /** property change support for adding and removing connections */
+        private PropertyChangeSupport m_propertyChangeSupport =
+                new PropertyChangeSupport(this);
         
         /**
          * default constructor <br>
@@ -1198,6 +1219,13 @@ public class Communicator {
          */
         public void add(Connection connection) {
             m_connections.add(connection);
+            try {
+                m_propertyChangeSupport.firePropertyChange(
+                        ConnectionManager.PROP_CONNECTION_CHANGE,
+                        m_connections.size() - 1, m_connections.size());
+            } catch (Exception e) {
+                cmLogger.warn("exception during calling of listeners", e); //$NON-NLS-1$
+            }
         }
         
         /**
@@ -1206,6 +1234,29 @@ public class Communicator {
          */
         public void remove(Connection connection) {
             m_connections.remove(connection);
+            try {
+                m_propertyChangeSupport.firePropertyChange(
+                        ConnectionManager.PROP_CONNECTION_CHANGE,
+                        m_connections.size() + 1, m_connections.size());
+            } catch (Exception e) {
+                cmLogger.warn("exception during calling of listeners", e); //$NON-NLS-1$
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void addPropertyChangedListener(
+                PropertyChangeListener listener) {
+            m_propertyChangeSupport.addPropertyChangeListener(listener);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public void removePropertyChangedListener(
+                PropertyChangeListener listener) {
+            m_propertyChangeSupport.removePropertyChangeListener(listener);
         }
     }
 

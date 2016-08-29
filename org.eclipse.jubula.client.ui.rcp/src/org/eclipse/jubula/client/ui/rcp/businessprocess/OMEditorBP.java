@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+import javax.persistence.EntityManager;
+
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -114,8 +116,10 @@ public class OMEditorBP {
             originalCategory = category;
 
             if (parent.getLogicalNames().isEmpty()) {
-                originalCategory.removeAssociation(parent);
-                
+                if (originalCategory != null) {
+                    // this happens when the Component Name was never in the database
+                    originalCategory.removeAssociation(parent);
+                }
                 if (parent.getTechnicalName() != null) {
                     // Move association to appropriate section/category
                     Stack<String> catPath = new Stack<String>();
@@ -138,7 +142,6 @@ public class OMEditorBP {
                         }
                         newCategory = subcategory;
                     }
-                    
                     newCategory.addAssociation(parent);
                 } else {
                     // Delete empty association from session
@@ -146,7 +149,17 @@ public class OMEditorBP {
                         .remove(parent);
                 }
             }
-
+            
+            EntityManager sess = getEditor().getEditorHelper().
+                    getEditSupport().getSession();
+            if (toDelete.getId() != null) {
+                IComponentNamePO toRem = sess.find(toDelete.getClass(),
+                        toDelete.getId());
+                if (toRem != null) {
+                    sess.detach(toRem);
+                }
+            }
+            
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     getEditor().getAut().getObjMap(), 
                     DataState.StructureModified, 
@@ -175,6 +188,7 @@ public class OMEditorBP {
 
         IObjectMappingCategoryPO parent = toDelete.getCategory();
         parent.removeAssociation(toDelete);
+        getEditor().getAut().getObjMap().removeAssociationFromCache(toDelete);
         DataEventDispatcher.getInstance().fireDataChangedListener(
                 parent, DataState.StructureModified, 
                 UpdateState.onlyInEditor);

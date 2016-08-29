@@ -592,12 +592,33 @@ public abstract class AbstractTableTester
     }
     
     /**
+     * @see {@link AbstractTableTester#rcReadValue(String, String, String, String)}
+     * @param row the row to select
+     * @param rowOperator the row header operator
+     * @param col the column to select
+     * @param colOperator the column header operator
+     * @return the text value at the defined position.
+     */
+    public String rcReadValue(String row, String rowOperator,
+            String col, String colOperator) {
+        return rcReadValue(null, row, rowOperator, col, colOperator);
+    }
+    
+    /**
      * {@inheritDoc}
      */
     public String rcReadValueAtMousePosition(String variable) {
         Cell cellAtMousePosition = getCellAtMousePosition();
         return getCellText(cellAtMousePosition.getRow(), 
                 cellAtMousePosition.getCol());
+    }
+    
+    /**
+     * @see {@link AbstractTableTester#rcReadValueAtMousePosition(String)}
+     * @return the text value at mouse position
+     */
+    public String rcReadValueAtMousePosition() {
+        return rcReadValueAtMousePosition(null);
     }
     
     /**

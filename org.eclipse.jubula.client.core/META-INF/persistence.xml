@@ -19,8 +19,13 @@
 			<property name="eclipselink.weaving.changetracking" value="false" />
 			<property name="eclipselink.weaving.fetchgroups" value="false" />
 			<property name="eclipselink.weaving.lazy" value="true" />
-			<!-- disabled second level cache, as this may otherwise lead to some strange 
-				behavior: http://eclip.se/339069 -->
+			<!-- disabled second level cache, as this may otherwise lead to some strange
+				behavior: http://eclip.se/339069
+			    We are not capable of using this due to a lot unresolved persistance
+			    problems. This is mostly happening when multipe users are working
+			    on one project. Also if we are having checks for this multi user scenario
+			    the performance might even be not better.
+		    -->
 			<property name="eclipselink.cache.shared.default" value="false" />
 			<property name="eclipselink.session.customizer"
 				value="org.eclipse.jubula.client.core.persistence.SessionCustomizer" />

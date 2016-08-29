@@ -11,42 +11,52 @@
 package org.eclipse.jubula.client.ui.rcp.wizards;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.databinding.validation.IValidator;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jubula.client.archive.JsonStorage;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
+import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutIdValidator;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.wizards.pages.AUTSettingWizardPage;
-import org.eclipse.jubula.client.ui.rcp.wizards.pages.AutConfigSettingWizardPage;
 import org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectSettingWizardPage;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.version.IVersion;
@@ -69,14 +79,6 @@ public class ProjectWizard extends Wizard implements INewWizard {
     private static final String PROJECT_SETTING_WP = 
         "org.eclipse.jubula.client.ui.rcp.wizards.pages.ProjectSettingWizardPage"; //$NON-NLS-1$
     
-    /** the ID for the AUTSettingWizardPage */
-    private static final String AUT_SETTING_WP = 
-        "org.eclipse.jubula.client.ui.rcp.wizards.pages.AUTSettingWizardPage"; //$NON-NLS-1$
-    
-    /** the ID for the AutConfigSettingWizardPage */
-    private static final String AUT_CONFIG_SETTING_WP = 
-        "org.eclipse.jubula.client.ui.rcp.wizards.pages.AutConfigSettingWizardPage"; //$NON-NLS-1$
-    
     /**
      * Prefix for unbound modules project names
      */
@@ -85,38 +87,18 @@ public class ProjectWizard extends Wizard implements INewWizard {
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(ProjectWizard.class);
     
-    /** the new project to create */
-    private IProjectPO m_newProject;
     /** the new autMain of the new project */
     private IAUTMainPO m_autMain;
     /** the new autConfig of the new project */
     private IAUTConfigPO m_autConfig;
     /** dialog to get the new project name from */
     private ProjectSettingWizardPage m_projectSettingWizardPage;
-    /** the wizard page for the aut settings */
-    private AUTSettingWizardPage m_autSettingWizardPage;
-    /** the wizard page for the aut configuration settings */
-    private AutConfigSettingWizardPage m_autConfigSettingWizardPage;
 
     /**
      * @return the wizard page for the project settings
      */
     public ProjectSettingWizardPage getProjectSettingWizardPage() {
         return m_projectSettingWizardPage;
-    }
-    
-    /**
-     * @return the wizard page for the AUT settings
-     */
-    public AUTSettingWizardPage getAutSettingWizardPage() {
-        return m_autSettingWizardPage;
-    }
-
-    /**
-     * @return the key of the wizard page for the AUT configuration settings
-     */
-    public String getAutConfigSettingWpID() {
-        return AUT_CONFIG_SETTING_WP;
     }
     
     /**
@@ -152,8 +134,16 @@ public class ProjectWizard extends Wizard implements INewWizard {
                                     name),
                             IProgressMonitor.UNKNOWN);
                         try {
-                            createNewProject(name, monitor);
-                            m_newProject = null;
+                            boolean needTemplate = m_projectSettingWizardPage
+                                    .needProjectTamplet();
+                            String projectToolkit = m_projectSettingWizardPage
+                                    .getProjectToolkit();
+                            createNewProject(name, projectToolkit, needTemplate,
+                                    monitor);
+                        } catch (ToolkitPluginException e) {
+                            Plugin.getDefault().writeStatus(new Status(
+                                    IStatus.ERROR, Activator.PLUGIN_ID,
+                                    e.getMessage()));
                         } finally {
                             monitor.done();
                         }
@@ -173,7 +163,6 @@ public class ProjectWizard extends Wizard implements INewWizard {
      * {@inheritDoc}
      */
     public boolean performCancel() {
-        m_newProject = null;
         Plugin.stopLongRunning();
         ProjectNameBP.getInstance().clearCache();
         return true;
@@ -184,38 +173,16 @@ public class ProjectWizard extends Wizard implements INewWizard {
     public void addPages() {
         Plugin.startLongRunning();
         final String emptystr = StringConstants.EMPTY;
-        m_newProject = NodeMaker.createProjectPO(emptystr, 
-            IVersion.JB_CLIENT_METADATA_VERSION); 
         m_autMain = PoMaker.createAUTMainPO(emptystr);
-        m_newProject.addAUTMain(m_autMain);
         m_autConfig = PoMaker.createAUTConfigPO();
         m_autMain.addAutConfigToSet(m_autConfig);
-        IValidator autIdValidator = 
-            new AutIdValidator(m_newProject, null, m_autConfig);
         m_projectSettingWizardPage = new ProjectSettingWizardPage(
-                PROJECT_SETTING_WP, m_newProject);
+                PROJECT_SETTING_WP, m_autMain, m_autConfig);
         m_projectSettingWizardPage.setTitle(Messages
                 .ProjectWizardProjectSettings);
         m_projectSettingWizardPage.setDescription(Messages
                 .ProjectWizardNewProject);
-        addPage(m_projectSettingWizardPage);            
-        
-        m_autSettingWizardPage = new AUTSettingWizardPage(
-                AUT_SETTING_WP, m_newProject, m_autMain);
-        m_autSettingWizardPage.setTitle(Messages.ProjectWizardAutSettings);
-        m_autSettingWizardPage.setDescription(Messages.ProjectWizardNewAUT);
-        m_autSettingWizardPage.setPageComplete(true);
-        addPage(m_autSettingWizardPage);
-        
-        m_autConfigSettingWizardPage = 
-            new AutConfigSettingWizardPage(AUT_CONFIG_SETTING_WP, 
-                    m_autConfig, autIdValidator); 
-        m_autConfigSettingWizardPage.setTitle(
-                Messages.ProjectWizardAutSettings);
-        m_autConfigSettingWizardPage.setDescription(
-                Messages.ProjectWizardAUTData);
-        m_autConfigSettingWizardPage.setPageComplete(true);
-        addPage(m_autConfigSettingWizardPage);  
+        addPage(m_projectSettingWizardPage); 
         
         Plugin.stopLongRunning();
     }
@@ -223,42 +190,62 @@ public class ProjectWizard extends Wizard implements INewWizard {
     /**
      * Creates a new project, stops a started AUT, closes all opened editors.
      * @param newProjectName the name for this project
+     * @param projectToolkit project toolkit
+     * @param needTemplate need of template 
      * @param monitor The progress monitor for this potentially long-running 
      *                operation.
      * @throws InterruptedException if the operation is canceled.
+     * @throws ToolkitPluginException 
      */
-    private void createNewProject(final String newProjectName, 
-        IProgressMonitor monitor) throws InterruptedException {          
+    private void createNewProject(final String newProjectName,
+            final String projectToolkit, boolean needTemplate,
+            IProgressMonitor monitor) throws InterruptedException,
+            ToolkitPluginException {          
         
         Plugin.closeAllOpenedJubulaEditors(false);
-        m_newProject.setIsReusable(
-            m_projectSettingWizardPage.isProjectReusable());
-        m_newProject.setIsProtected(
-                m_projectSettingWizardPage.isProjectProtected());
-        if (m_autMain.getName() == null
-                || StringConstants.EMPTY.equals(m_autMain.getName())) {
-            m_newProject.removeAUTMain(m_autMain);
+        ParamNameBPDecorator paramNameMapper = 
+                new ParamNameBPDecorator(ParamNameBP.getInstance());
+        final IWritableComponentNameCache compNameCache =
+            new ComponentNamesDecorator(null);
+        
+        IProjectPO project = null;
+        if (needTemplate) {
+            try {
+                URL templateUrl = ImportFileBP.getInstance()
+                        .getProjectTemplateUrl();
+                project = new JsonStorage().readProject(templateUrl,
+                        paramNameMapper, compNameCache, true, monitor,
+                        Plugin.getDefault());
+            } catch (PMReadException | JBVersionException e) {
+                e.printStackTrace();
+            }
+        } 
+        if (project == null) {
+            project = NodeMaker.createProjectPO(newProjectName,
+                    IVersion.JB_CLIENT_METADATA_VERSION);
         }
-        if (m_autConfig.getName() == null
-                || StringConstants.EMPTY.equals(m_autConfig.getName())) {
-            
+        project.setToolkit(projectToolkit);
+        if (m_autMain.getName() != null && !m_autMain.getName().isEmpty()
+                && m_autMain.getToolkit() != null) {
+            project.addAUTMain(m_autMain);
+            for (ITestSuitePO ts : TestSuiteBP.getListOfTestSuites(project)) {
+                ts.setAut(m_autMain);
+            }
+        }
+        if (m_autConfig.getName() == null || m_autConfig.getName().isEmpty()) {
             m_autMain.removeAutConfig(m_autConfig);
         }
-        ParamNameBPDecorator paramNameMapper = new ParamNameBPDecorator(
-                ParamNameBP.getInstance());
-        final IWritableComponentNameMapper compNamesMapper = 
-            new ProjectComponentNameMapper(
-                new ComponentNamesDecorator(null), m_newProject);
+        addUnboundModules(project);
         List<INameMapper> mapperList = new ArrayList<INameMapper>();
-        List<IWritableComponentNameMapper> compNameCacheList = 
-            new ArrayList<IWritableComponentNameMapper>();
-        addUnboundModules(m_newProject);
+        List<IWritableComponentNameMapper> compNameMapperList = 
+                new ArrayList<IWritableComponentNameMapper>();
         mapperList.add(paramNameMapper);
-        compNameCacheList.add(compNamesMapper);
+        compNameMapperList.add(
+                new ProjectComponentNameMapper(compNameCache, project));
         try {
             GeneralStorage.getInstance().reset();
-            ProjectPM.attachProjectToROSession(m_newProject, newProjectName, 
-                    mapperList, compNameCacheList, monitor);
+            ProjectPM.attachProjectToROSession(project, newProjectName, 
+                    mapperList, compNameMapperList, monitor);
         } catch (PMSaveException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(
                 new PMSaveException(e.getMessage(), 
@@ -287,10 +274,25 @@ public class ProjectWizard extends Wizard implements INewWizard {
 
         while (desc != null) {
             try {
-                String moduleName = LIBRARY_PREFIX + desc.getName();
+                String moduleName = LIBRARY_PREFIX + StringUtils.lowerCase(
+                        desc.getName());
                 IProjectPO ubmProject = 
                     ProjectPM.loadLatestVersionOfProjectByName(moduleName);
                 if (ubmProject != null) {
+                    IReusedProjectPO[] reusedProj = new IReusedProjectPO
+                            [newProject.getUsedProjects().size()];
+                    newProject.getUsedProjects().toArray(reusedProj);
+                    for (int i = 0; i < reusedProj.length; i++) {
+                        IReusedProjectPO oldReusedProject = reusedProj[i];
+                        if (oldReusedProject != null
+                                && oldReusedProject.getName()
+                                        .equals(ubmProject.getName())
+                                && oldReusedProject.getProjectVersion()
+                                        .compareTo(ubmProject
+                                                .getProjectVersion()) <= 0) {
+                            newProject.removeUsedProject(oldReusedProject);
+                        }
+                    }
                     newProject.addUsedProject(
                             PoMaker.createReusedProjectPO(ubmProject));
                 } else {

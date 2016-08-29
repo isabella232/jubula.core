@@ -10,8 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.events;
 
-
-
+import org.apache.commons.lang.StringUtils;
 
 /**
  * The event class containing state concerning the AUTServer.
@@ -90,6 +89,9 @@ public class AUTServerEvent extends ServerEvent {
     private static final String JDK_INVALID_DESCRIPTION =
         "Unrecognized option while trying to use -javaagent."; //$NON-NLS-1$
     
+    /** Inner message */
+    private String m_additionalInfo = StringUtils.EMPTY;
+    
     /**
      * constructor with paramerter for the state, see defined constants in
      * <code>ServerEvent</code>.
@@ -99,6 +101,20 @@ public class AUTServerEvent extends ServerEvent {
      */
     public AUTServerEvent(int state) {
         super(state);
+    }
+    
+    /**
+     * constructor with paramerter for the state, see defined constants in
+     * <code>ServerEvent</code>.
+     * 
+     * @param state
+     *            the new state of the AUTServer
+     * @param additionalInfo
+     *            additional message of the state
+     */
+    public AUTServerEvent(int state, String additionalInfo) {
+        super(state);
+        this.m_additionalInfo = additionalInfo;
     }
     
     /**
@@ -128,5 +144,25 @@ public class AUTServerEvent extends ServerEvent {
             default:
                 return US_DESCRIPTION;
         }
+    }
+    
+    /**
+     * @return a readable description of the event
+     */
+    public String toStringWithAdditionalInformation() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(this);
+        if (StringUtils.isNotBlank(m_additionalInfo)) {
+            builder.append(" - ");
+            builder.append(m_additionalInfo);
+        }
+        return builder.toString();
+    }
+    
+    /**
+     * @return additional information about the state
+     */
+    public String getAdditionalInfo() {
+        return m_additionalInfo;
     }
 }

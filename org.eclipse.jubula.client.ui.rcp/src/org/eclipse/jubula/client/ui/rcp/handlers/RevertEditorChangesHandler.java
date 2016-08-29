@@ -38,8 +38,7 @@ public class RevertEditorChangesHandler extends AbstractHandler {
             return null;
         }
         
-        final IJBEditor editor = 
-            (IJBEditor)activePart.getAdapter(IJBEditor.class);
+        final IJBEditor editor = activePart.getAdapter(IJBEditor.class);
         if (editor != null) {
             MessageDialog dialog = showConfirmDialog();
             if (dialog.getReturnCode() == Window.OK) {

@@ -227,8 +227,8 @@ class CapPO extends ParamNodePO implements ICapPO {
     /**
      * {@inheritDoc}
      */
-    public void setComponentName(String name) {
-        m_componentNameGuid = name;
+    public void setComponentName(String guid) {
+        m_componentNameGuid = guid;
     }
 
     /**

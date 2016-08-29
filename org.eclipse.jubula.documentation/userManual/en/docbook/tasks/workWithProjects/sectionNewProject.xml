@@ -54,38 +54,18 @@
     </listitem>
     <listitem>
       <para>
-        Activate the ”<emphasis>reusable project</emphasis>”
-        checkbox if you want to be able to reference the Test Cases
-        from this Project in other Projects. This will let you use
-        the Test Cases in this Project as the basis or library for
-        other Projects (see the section later for more details on
-        this (<xref linkend="reuseproject"/>)).
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Choose whether this Project should be protected. In a
-        protected Projects, you cannot delete Test Cases, edit
-        parameters for Test Cases, or make any changes to the column
-        usage of central test data sets. This is only necessary if
-        the Project is reused in another Project – the protection
-        ensures that irreversible changes cannot be made to the
-        reused Project that would adversely affect its dependent
-        Projects.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
         Select the toolkit your Project will use from the combo box.
         The toolkit is the library used to create the GUI.
       </para>
       <para>
         <emphasis role="strong">Toolkits for Projects</emphasis><?linebreak?>
-        The default toolkit is <emphasis>concrete</emphasis>. Choose this if you want to write Test Cases that can be used for different applications (e.g. for Swing and for RCP).
+        The default toolkit is <emphasis>concrete</emphasis>.
+        Choose this if you want to write Test Cases that can be used
+        for different applications (e.g. for Swing and for RCP).
       </para>
       <para>
         Choose another toolkit if you want to write Test Cases just
-        for a Swing, SWT, RCP, iOS, Windows or HTML application.
+        for a JavaFX, Swing, SWT, RCP or HTML application.
       </para>
       <para>
         The choice of toolkit you make here will determine what
@@ -94,18 +74,29 @@
         to specify tests for components specific to e.g. HTML or
         SWT.
       </para>
+      <para>
+        Furthermore, if you choose <emphasis>concrete</emphasis> as toolkit
+        for you project, you also have to specify a toolkit for your
+        application under test. For any other toolkit, you don't have to
+        do that.
+      </para>
     </listitem>
     <listitem>
       <para>
-        You can now click ”<emphasis>Next</emphasis>” to define an
-        AUT for this Project (<xref linkend="define-aut"/>).
+        In the <emphasis>AUT executable</emphasis> field, enter the path to
+        the application you want to test.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If you check the <emphasis>project template</emphasis> checkbox,
+        the project will be created with a basic structure which might
+        help you organize your project.
       </para>
     </listitem>
   </orderedlist>
   <para>
-    If you want to define the AUT later, you can click
-    ”<emphasis>Finish</emphasis>” to create the Project as it is.
-    You can define an AUT later via the Project properties under
+    If you want to modify the AUT later, you can do that via the Project properties under
     <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Properties</emphasis>.
   </para>
   <para>

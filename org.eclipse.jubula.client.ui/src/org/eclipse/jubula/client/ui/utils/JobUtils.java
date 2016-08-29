@@ -50,9 +50,8 @@ public class JobUtils {
      */
     public static void executeJob(Job job, IWorkbenchPart part, long delay) {
         if (part != null) {
-            IWorkbenchSiteProgressService ps = 
-                (IWorkbenchSiteProgressService)part
-                    .getSite().getAdapter(IWorkbenchSiteProgressService.class);
+            IWorkbenchSiteProgressService ps = part.getSite().getAdapter(
+                    IWorkbenchSiteProgressService.class);
             if (ps != null) {
                 ps.schedule(job);
             } else {

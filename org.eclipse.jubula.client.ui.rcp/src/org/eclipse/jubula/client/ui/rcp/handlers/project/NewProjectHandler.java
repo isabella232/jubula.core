@@ -18,13 +18,9 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.handlers.project.AbstractProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.dialogs.NagDialog;
-import org.eclipse.jubula.client.ui.rcp.widgets.autconfig.JavaAutConfigComponent;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
-import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
@@ -34,8 +30,6 @@ import org.eclipse.ui.PlatformUI;
  * @created 07.02.2005
  */
 public class NewProjectHandler extends AbstractProjectHandler {
-    /** was the nag dialog for the executable field already shown? */
-    private boolean m_alreadyNagged = false;
   
     /**
      * Opens the "New Project Wizard".
@@ -52,36 +46,14 @@ public class NewProjectHandler extends AbstractProjectHandler {
                      * {@inheritDoc}
                      */
                     protected void finishPressed() {
-                        String selectedToolkit = projectWizard.
-                            getAutSettingWizardPage().getToolkitComboBox().
-                            getSelectedObject();
+                        String selectedToolkit = projectWizard
+                                .getProjectSettingWizardPage().getAutToolkit();
                         if (selectedToolkit == null) {
-                            selectedToolkit = projectWizard.
-                                getProjectSettingWizardPage().
-                                getToolkitComboBox().getSelectedObject();
+                            selectedToolkit = projectWizard
+                                    .getProjectSettingWizardPage()
+                                    .getProjectToolkit();
                         }
-                        createWizardNagDialog(selectedToolkit);
                         super.finishPressed();
-                    }
-                    
-                    /**
-                     * {@inheritDoc}
-                     */
-                    protected void nextPressed() {
-                        if (projectWizard.getPage(projectWizard.
-                                getAutConfigSettingWpID()).equals(
-                                        super.getCurrentPage())) {
-                            String selectedToolkit = projectWizard.
-                                getAutSettingWizardPage().getToolkitComboBox().
-                                getSelectedObject();
-                            if (selectedToolkit == null) {
-                                selectedToolkit = projectWizard.
-                                    getProjectSettingWizardPage().
-                                    getToolkitComboBox().getSelectedObject();
-                            }
-                            createWizardNagDialog(selectedToolkit);
-                        }
-                        super.nextPressed();
                     }
                 };
                 dialog.open();
@@ -104,36 +76,11 @@ public class NewProjectHandler extends AbstractProjectHandler {
             }
         });
     }
-    
-    /**
-     * creates NagDialog for the AUT Configuration Settings Wizard Page
-     * @param selectedToolkit the currently selected toolkit
-     */
-    private void createWizardNagDialog(String selectedToolkit) {
-        if (!m_alreadyNagged && isSwingOrSwtPlugin(selectedToolkit)
-                && !JavaAutConfigComponent.isExecFieldEmpty()) {
-            NagDialog.runNagDialog(null,
-                "InfoNagger.DefineSwingOrSwtExecutable", //$NON-NLS-1$
-                ContextHelpIds.AUT_CONFIG_SETTING_WIZARD_PAGE); 
-            m_alreadyNagged = true;
-        }
-    }
-    
-    /**
-     * @param selectedToolkit the currently selected toolkit
-     * @return true if swing or swt toolkit is selected
-     */
-    private boolean isSwingOrSwtPlugin(String selectedToolkit) {
-        return selectedToolkit.equals(CommandConstants.SWING_TOOLKIT)
-                || selectedToolkit.equals(
-                CommandConstants.SWT_TOOLKIT);
-    }
 
     /**
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        m_alreadyNagged = false;
         if (GeneralStorage.getInstance().getProject() != null
                 && Plugin.getDefault().anyDirtyStar()) {
 

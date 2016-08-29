@@ -424,8 +424,8 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     private TestResultNode generateTestResult(Long summaryId)
             throws InterruptedException {
         
-        IProgressService progressService = 
-            (IProgressService)getSite().getService(IProgressService.class);
+        IProgressService progressService = getSite().getService(
+                IProgressService.class);
         
         GenerateTestResultTreeOperation operation = 
                 new GenerateTestResultTreeOperation(

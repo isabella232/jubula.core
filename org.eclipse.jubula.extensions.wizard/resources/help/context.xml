@@ -1,0 +1,43 @@
+<!--Copyright (c) 2016 BREDEX GmbH. All rights reserved. This program 
+    and the accompanying materials are made available under the terms of the 
+    Eclipse Public License v1.0 which accompanies this distribution, and is available 
+    at http://www.eclipse.org/legal/epl-v10.html -->
+<contexts>
+   <context id="pageone" title="Jubula Extension Wizard - Page 1">
+      <description>
+1.  Choose a <b>project name</b> prefix for your extension project. The name should be unique and cannot already exist in your workspace.
+2.  Choose an <b>execution environment</b>. We recommend that you only use Java SE-1.8 or later, otherwise your extension might not work correctly with Jubula.
+      </description>
+   </context>
+   <context id="pagetwo" title="Jubula Extension Wizard - Page 2">
+      <description>
+1. Select the <b>toolkit</b> you would like to create an extension for.
+      </description>
+   </context>
+   <context id="pagethree" title="Jubula Extension Wizard - Page 3">
+      <description>
+1. Enter your extension <b>plug-in's properties</b>. The <b>ID</b> and <b>Version</b> fields are mandatory, the other text fields are optional. The ID of your extension will also be used as package name prefix for the created files.
+2.  Select the <b>component type</b>. This will be the supertype of the component you will support with your extension. The component will inherit the behavior and all actions from the supertype. If you would like to implement support for a custom Table implementation, choose "guidancer.concrete.Table".
+
+<b>Types of extension</b>
+-  If you want to implement a completely new type or do not want to inherit from another type, choose "guidancer.abstract.Widget" (also called "Graphics Component") which only includes the most basic actions like verifying existence, enablement, focus, etc.
+-  If you would like to add actions to a component Jubula already supports, choose the suitable supertype and select <b>Add support for a standard component of the selected type</b>. After that you can choose a component from the dropdown menu.
+-  If you would like to create support for a custom component, choose the <b>Add support for a custom component</b> option and enter or browse for the fully qualified class name of that component.
+
+3. The Jubula Extension will need a <b>target platform</b> to work properly. If you would like the wizard to create a suitable target platform for you, tick <b>Create a Jubula target platform file</b>. After the wizard has finished you can open the created file and select "Set as Target Platform" in the opening "Target Definition" view.
+      </description>
+   </context>
+   <context id="pagefour" title="Jubula Extension Wizard - Page 4">
+      <description>
+This page is optional. We recommend that developers who are new to Jubula extension development complete this page.
+
+This wizard will create a <b>tester class</b> containing methods which implement the Actions for Jubula. The wizard automatically suggests a tester class name based on the information entered before. You can however choose a custom class name, if you like.
+
+1.  In the bottom table, you can define the actions your component should have. By clicking on the <b>New...</b> button a new action will be created. You can change its name by clicking on the name within the table, typing a new name and hitting return when you are finished.
+2.  Actions can have parameters, e.g. the expected result of an action. Double click on the parameters cell or press the <b>Params...</b> button to open the parameters view. This view works similarly to the actions table. As parameter type you can choose between Integer, String and Boolean.
+3.  Parameters can have a <b>value set</b> that defines which parameter values are valid. Enter all values separated by commas. The first value of the comma separated list will be the default value.
+4.  In both the actions view and the parameter view you can press the <b>Up</b> and <b>Down</b> button to change the order in which the methods and parameters will appear in the tester class.
+
+      </description>
+   </context>
+</contexts> 
