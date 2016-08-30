@@ -19,6 +19,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -67,6 +70,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.KeyAdapter;
@@ -75,16 +80,21 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -95,6 +105,8 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.progress.WorkbenchJob;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -114,6 +126,49 @@ public abstract class AbstractDataSetPage extends Page
     
     /** Search delay in millisecond */
     private static final long SEARCH_DELAY = 200;
+    
+    /** Image descriptor for enabled clear button.*/
+    private static final String CLEAR_ICON = "org.eclipse.ui.internal.dialogs.CLEAR_ICON"; //$NON-NLS-1$
+    /** Image descriptor for disabled clear button. */
+    private static final String DISABLED_CLEAR_ICON = "org.eclipse.ui.internal.dialogs.DCLEAR_ICON"; //$NON-NLS-1$
+    /** Image for the disabled clear button */
+    private static Image inactiveImage = null;
+    /** Image for the enabled clear button */
+    private static Image activeImage = null;
+    /** Image for the bressed clear button */
+    private static Image pressedImage = null;
+    
+    static {
+        Logger logger = LoggerFactory.getLogger(AbstractDataSetPage.class);
+        ImageRegistry imgReg = JFaceResources.getImageRegistry();
+        Display display = getDisplay();
+        
+        if (imgReg != null && display != null) {
+            ImageDescriptor disabledClearIcon = imgReg
+                    .getDescriptor(DISABLED_CLEAR_ICON);
+            ImageDescriptor clearIcon = imgReg
+                    .getDescriptor(CLEAR_ICON);
+            
+            if (disabledClearIcon != null) {
+                inactiveImage = disabledClearIcon.createImage();
+            } else {
+                logger.error("Filter: \"Disabled Clear Icon\"-Descriptor could not be found!"); //$NON-NLS-1$
+            }
+            
+            if (clearIcon != null) {
+                activeImage = clearIcon.createImage();
+                
+                if (activeImage != null) {
+                    pressedImage = new Image(display, activeImage,
+                            SWT.IMAGE_GRAY);
+                } else {
+                    logger.error("Filter: \"Pressed Clear Icon\" could not be created!"); //$NON-NLS-1$
+                }
+            } else {
+                logger.error("Filter: \"Clear Icon\"-Descriptor could not be found!"); //$NON-NLS-1$
+            }
+        }
+    }
 
     /** The data set filter */
     private DataSetFilter m_filter;
@@ -144,6 +199,8 @@ public abstract class AbstractDataSetPage extends Page
     private Button m_upButton;
     /** The Down Button */
     private Button m_downButton;
+    /** The Clear Filter Button */
+    private Label m_clearButton;
     
     /** En-/Disabler for swt.Controls */
     private ControlEnabler m_controlEnabler;
@@ -400,19 +457,158 @@ public abstract class AbstractDataSetPage extends Page
         
         addListenerToButtons();
     }
+
+    /**
+     * @return the Display instance
+     */
+    private static Display getDisplay()  {
+        Display display = Display.getCurrent();
+        if (display == null) {
+            display = Display.getDefault();
+        }
+        return display;
+    }
+    
+    /**
+     * Creates and configures the "Clear Filter" button
+     * @param parent the parent composite
+     */
+    private void createClearFilterButton(Composite parent) {
+        setClearButton(new Label(parent, SWT.NONE));
+        getClearButton().setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.ClearFilterButton"); //$NON-NLS-1$
+        getClearButton().setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER,
+                false, false));
+        getClearButton().setImage(inactiveImage);
+        getClearButton().setBackground(parent.getDisplay()
+                .getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+        getClearButton().setToolTipText(Messages.DataSetClearFilterButton);
+        
+        getClearButton().addMouseListener(new MouseAdapter() {
+            private MouseMoveListener m_moveListener;
+            @Override
+            public void mouseDown(MouseEvent e) {
+                getClearButton().setImage(pressedImage);
+                m_moveListener = new MouseMoveListener() {
+                    private boolean m_isMouseInButton = true;
+                    @Override
+                    public void mouseMove(MouseEvent e) {
+                        boolean isMouseInButton = isMouseInButton(e);
+                        if (isMouseInButton != m_isMouseInButton) {
+                            m_isMouseInButton = isMouseInButton;
+                            getClearButton().setImage(isMouseInButton
+                                    ? pressedImage : inactiveImage);
+                        }
+                    }
+                };
+                getClearButton().addMouseMoveListener(m_moveListener);
+            }
+            @Override
+            public void mouseUp(MouseEvent e) {
+                if (m_moveListener != null) {
+                    getClearButton().removeMouseMoveListener(m_moveListener);
+                    m_moveListener = null;
+                    boolean isMouseInButton = isMouseInButton(e);
+                    getClearButton().setImage(isMouseInButton ? activeImage
+                            : inactiveImage);
+                    if (isMouseInButton) {
+                        m_searchText.setText("");
+                        m_searchText.setFocus();
+                    }
+                }
+            }
+            private boolean isMouseInButton(MouseEvent e) {
+                Point buttonSize = getClearButton().getSize();
+                return 0 <= e.x && e.x < buttonSize.x && 0 <= e.y 
+                        && e.y < buttonSize.y;
+            }
+        });
+        getClearButton().addMouseTrackListener(new MouseTrackAdapter() {
+            @Override
+            public void mouseEnter(MouseEvent e) {
+                getClearButton().setImage(activeImage);
+            }
+            @Override
+            public void mouseExit(MouseEvent e) {
+                getClearButton().setImage(inactiveImage);
+            }
+        });
+        getClearButton().addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(DisposeEvent e) {
+                inactiveImage.dispose();
+                activeImage.dispose();
+                pressedImage.dispose();
+            }
+        });
+    }
+    
+    /**
+     * @param parent a parent composite
+     * @return whether or not the current OS supports a native filter
+     */
+    private boolean useNativeFilter(Composite parent) {
+        Text tempText = new Text(parent, SWT.SINGLE | SWT.BORDER
+                | SWT.SEARCH | SWT.ICON_CANCEL);
+        boolean usesNative = ((tempText.getStyle() & SWT.ICON_CANCEL) != 0);
+        tempText.dispose();
+        return usesNative;
+    }
     
     /**
      * inits the m_tableViewer
      * @param parent the parent of the m_tableViewer
      */
     private void initTableViewer(Composite parent) {
+        createFilter(parent);
+        createTableViewer(parent);
+    }
+
+    /**
+     * Creates the filter and its controls
+     * @param parent the parent composite
+     */
+    private void createFilter(Composite parent) {
         m_filter = new DataSetFilter();
-        GridLayout layout = new GridLayout(2, false);
-        parent.setLayout(layout);
-        m_searchText = new Text(parent, SWT.SINGLE | SWT.BORDER
-                | SWT.SEARCH | SWT.ICON_CANCEL);
-        m_searchText.setLayoutData(new GridData(GridData.GRAB_HORIZONTAL
-            | GridData.HORIZONTAL_ALIGN_FILL));
+        Composite filterComposite;
+        boolean usesNativeFilter = useNativeFilter(parent);
+        
+        if (!usesNativeFilter) {
+            filterComposite = new Composite(parent, SWT.BORDER);
+        } else {
+            filterComposite = new Composite(parent, SWT.NONE);
+        }
+        
+        filterComposite.setBackground(getDisplay()
+                .getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+        GridLayout filterLayout = new GridLayout(2, false);
+        filterLayout.marginHeight = 0;
+        filterLayout.marginWidth = 0;
+        filterComposite.setLayout(filterLayout);
+        filterComposite.setFont(parent.getFont());
+        GridData searchTextGridData = new GridData(SWT.FILL, SWT.CENTER,
+                true, false);
+        
+        if (!usesNativeFilter) {
+            m_searchText = new Text(filterComposite, SWT.SINGLE);
+            m_searchText.setLayoutData(searchTextGridData);
+            createClearFilterButton(filterComposite);
+        } else {
+            m_searchText = new Text(filterComposite, SWT.SINGLE | SWT.BORDER
+                    | SWT.SEARCH | SWT.ICON_CANCEL);
+            searchTextGridData.horizontalSpan = 2;
+            m_searchText.setLayoutData(searchTextGridData);
+        }
+        
+        updateClearButtonVisibility(false);
+        filterComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING,
+                true, false));
+    }
+
+    /**
+     * Creates the TableViewer
+     * @param parent the parent composite
+     */
+    private void createTableViewer(Composite parent) {
         TableViewer viewer = new TableViewer(parent, 
                 SWT.SINGLE | SWT.FULL_SELECTION);
         m_searchText.setMessage(WorkbenchMessages.FilteredTree_FilterMessage);
@@ -422,14 +618,23 @@ public abstract class AbstractDataSetPage extends Page
             public void modifyText(ModifyEvent e) {
                 if (m_currentPart instanceof AbstractJBEditor) {
                     if (m_searchText.getText().isEmpty()) {
+                        updateClearButtonVisibility(false);
                         m_addButton.setEnabled(true);
                         m_insertButton.setEnabled(true);
                         m_deleteButton.setEnabled(true);
+                        m_upButton.setEnabled(true);
+                        m_downButton.setEnabled(true);
                     } else {
+                        updateClearButtonVisibility(true);
                         m_addButton.setEnabled(false);
                         m_insertButton.setEnabled(false);
                         m_deleteButton.setEnabled(false);
+                        m_upButton.setEnabled(false);
+                        m_downButton.setEnabled(false);
                     }
+                } else {
+                    updateClearButtonVisibility(!m_searchText
+                            .getText().isEmpty());
                 }
                 searchJob.cancel();
                 searchJob.schedule(SEARCH_DELAY);
@@ -450,6 +655,15 @@ public abstract class AbstractDataSetPage extends Page
         getTableViewer().setLabelProvider(new GeneralLabelProvider());
         getTableViewer().addFilter(m_filter);
         setTableCursor(new DSVTableCursor(getTable(), SWT.NONE));
+    }
+
+    /**
+     * @param isVisible whether the clear filter button should be visible or not
+     */
+    private void updateClearButtonVisibility(boolean isVisible) {
+        if (getClearButton() != null) {
+            getClearButton().setVisible(isVisible);
+        }
     }
     
     /**
@@ -726,6 +940,20 @@ public abstract class AbstractDataSetPage extends Page
      */
     private Button getDownButton() {
         return m_downButton;
+    }
+    
+    /**
+     * @param clearButton the clearButton to set
+     */
+    private void setClearButton(Label clearButton) {
+        m_clearButton = clearButton;
+    }
+    
+    /**
+     * @return the clearButton
+     */
+    private Label getClearButton() {
+        return m_clearButton;
     }
 
     /**
