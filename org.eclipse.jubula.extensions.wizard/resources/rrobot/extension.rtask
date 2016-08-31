@@ -255,7 +255,10 @@ import ${SuperClassQualifier};
  *            and automatically gives the result to Jubula, so your method
  *            does not need a return value<br/><br/>
  * For further information about these methods / classes have a look at their
- * javaDoc documentation and at the provided extension examples for each toolkit
+ * javaDoc documentation and at the provided extension examples for each toolkit.
+ * You can find the extension examples bundles (starting with org.eclipse.jubula.examples.extension)
+ * in the Jubula git-Repository located at the development/git folder of the ITE or at 
+ * http://git.eclipse.org/c/jubula/org.eclipse.jubula.core.git
  */
 public class ${TesterClassName} extends ${SuperClassName} {
     /**
