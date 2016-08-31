@@ -70,8 +70,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.KeyAdapter;
@@ -491,8 +489,8 @@ public abstract class AbstractDataSetPage extends Page
                 m_moveListener = new MouseMoveListener() {
                     private boolean m_isMouseInButton = true;
                     @Override
-                    public void mouseMove(MouseEvent e) {
-                        boolean isMouseInButton = isMouseInButton(e);
+                    public void mouseMove(MouseEvent e2) {
+                        boolean isMouseInButton = isMouseInButton(e2);
                         if (isMouseInButton != m_isMouseInButton) {
                             m_isMouseInButton = isMouseInButton;
                             getClearButton().setImage(isMouseInButton
@@ -511,7 +509,7 @@ public abstract class AbstractDataSetPage extends Page
                     getClearButton().setImage(isMouseInButton ? activeImage
                             : inactiveImage);
                     if (isMouseInButton) {
-                        m_searchText.setText("");
+                        m_searchText.setText(StringConstants.EMPTY);
                         m_searchText.setFocus();
                     }
                 }
@@ -530,14 +528,6 @@ public abstract class AbstractDataSetPage extends Page
             @Override
             public void mouseExit(MouseEvent e) {
                 getClearButton().setImage(inactiveImage);
-            }
-        });
-        getClearButton().addDisposeListener(new DisposeListener() {
-            @Override
-            public void widgetDisposed(DisposeEvent e) {
-                inactiveImage.dispose();
-                activeImage.dispose();
-                pressedImage.dispose();
             }
         });
     }
@@ -851,7 +841,7 @@ public abstract class AbstractDataSetPage extends Page
     /**
      * {@inheritDoc}
      */
-    public Object getAdapter(Class adapter) {
+    public <T> T getAdapter(Class<T> adapter) {
         return null;
     }
     
