@@ -88,7 +88,12 @@ public class AutAgentApplication implements IApplication {
     /**
      * command line argument: show help
      */
-    private static final String COMMANDLINE_OPTION_HELP = "h"; //$NON-NLS-1$
+    private static final String COMMANDLINE_OPTION_HELP_SH = "h"; //$NON-NLS-1$
+    
+    /**
+     * command line argument: show help
+     */
+    private static final String COMMANDLINE_OPTION_HELP = "help"; //$NON-NLS-1$
 
     /**
      * command line argument: enable "lenient" mode
@@ -147,7 +152,8 @@ public class AutAgentApplication implements IApplication {
         CommandLineParser parser = new PosixParser();
         try {
             CommandLine cmd = parser.parse(createOptions(false), args);
-            if (cmd.hasOption(COMMANDLINE_OPTION_HELP)) {
+            if (cmd.hasOption(COMMANDLINE_OPTION_HELP)
+                    || cmd.hasOption(COMMANDLINE_OPTION_HELP_SH)) {
                 printHelp();
                 return EXIT_HELP_OPTION;
             }
@@ -254,6 +260,9 @@ public class AutAgentApplication implements IApplication {
                 Messages.CommandlineOptionLenient);
         options.addOption(COMMANDLINE_OPTION_HELP, false,
                 Messages.CommandlineOptionHelp);
+        options.addOption(COMMANDLINE_OPTION_HELP_SH, false,
+                Messages.CommandlineOptionHelp);
+
         if (!onlyVisible) {
             options.addOption(COMMANDLINE_OPTION_OBJECTMAPPING,
                     false, Messages.CommandlineOptionOMM);
