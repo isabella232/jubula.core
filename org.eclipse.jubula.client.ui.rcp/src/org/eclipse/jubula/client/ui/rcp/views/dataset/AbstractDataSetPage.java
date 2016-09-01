@@ -717,10 +717,17 @@ public abstract class AbstractDataSetPage extends Page
     
     
     /**
-     * @return the zero relative index of the selected data set.
+     * @return the index of the selected data set.
      */
     private int getSelectedDataSet() {
-        return getTableViewer().getTable().getSelectionIndex();
+        int index = -1;
+        try {
+            index = Integer.parseInt(getTableViewer().getTable()
+                    .getSelection()[0].getText(0)) - 1;
+        } catch (Exception e) {
+            // nothing
+        }
+        return index;
     }
     
     /**
