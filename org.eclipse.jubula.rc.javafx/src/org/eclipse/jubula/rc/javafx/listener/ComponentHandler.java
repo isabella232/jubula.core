@@ -12,7 +12,10 @@ package org.eclipse.jubula.rc.javafx.listener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.ReentrantLock;
@@ -176,7 +179,6 @@ public class ComponentHandler implements ListChangeListener<Window>,
             List<Node> resultList) {
         //Blame checkstyle for this extra list
         List<Node> result = resultList;
-        
         if (parent.isVisible()) {
             for (Node child : parent.getChildrenUnmodifiable()) {
                 if (child.isVisible() 
@@ -200,12 +202,31 @@ public class ComponentHandler implements ListChangeListener<Window>,
      */
     public static Node getComponentByPos(Point2D pos) {
         List<? extends Window> comps = getAssignableFrom(Window.class);
-        List<Node> matches = new ArrayList<Node>();
+        Map<Window, List<Node>> matchesByWindows =
+                new HashMap<Window, List<Node>>();
+        Set<Window> shadowedWindows = new HashSet<>(); 
+        List<Node> localNodes;
         for (Window window : comps) {
-            if (window.isFocused() && window.isShowing() 
-                    || window.isShowing() && window instanceof PopupWindow) {
+            localNodes = new ArrayList<Node>();
+            matchesByWindows.put(window, localNodes);
+            if ((window.isFocused() && window.isShowing()) 
+                    || (window.isShowing()
+                            && window instanceof PopupWindow)) {
                 Parent root = window.getScene().getRoot();
-                matches = getAllNodesforPos(root, pos, matches);
+                localNodes = getAllNodesforPos(root, pos, localNodes);
+                if (!localNodes.isEmpty() && window instanceof PopupWindow) {
+                    // if a popup window is under the cursor, it shadows its owner window
+                    // we need this, because the owner window is both visible and has a focus
+                    shadowedWindows.add(((PopupWindow) window).
+                            getOwnerWindow());
+                }
+            }
+        }
+        List<Node> matches = new ArrayList<Node>();
+        for (Window window : matchesByWindows.keySet()) {
+            // we only keep not-shadowed window components
+            if (!shadowedWindows.contains(window)) {
+                matches.addAll(matchesByWindows.get(window));
             }
         }
         List<Node> result = new ArrayList<Node>();
