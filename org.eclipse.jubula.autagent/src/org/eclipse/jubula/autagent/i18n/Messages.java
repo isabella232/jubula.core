@@ -23,6 +23,7 @@ public class Messages extends NLS {
     public static String AcceptingFailed;
     public static String AddressAlreadyInUse;
     public static String AutConnectionError;
+    public static String AutInOMM;
     public static String AutStartError;
     public static String AutsSysError;
     public static String AutsSysOut;
@@ -43,7 +44,9 @@ public class Messages extends NLS {
     public static String InvalidJDK;
     public static String IoException;
     public static String ListeningToPort;
+    public static String NoAutInOMM;
     public static String ObjectMappingMenu;
+    public static String ObjectMappingOpen;
     public static String ObjectMappingWindowMenu;
     public static String ObservingInterrupted;
     public static String OMPaneTitle;

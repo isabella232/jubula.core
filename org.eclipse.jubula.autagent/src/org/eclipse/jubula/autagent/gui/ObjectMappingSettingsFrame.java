@@ -51,7 +51,7 @@ public class ObjectMappingSettingsFrame extends JFrame {
         this.setTitle(Messages.OMSettingsTitle);
         this.setResizable(false);
         final JFrame frame = this;
-        this.setSize(300, 150);
+        this.setSize(300, 200);
 
         createContent(frame);
     }

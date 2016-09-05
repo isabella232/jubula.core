@@ -13,6 +13,7 @@
  */
 package org.eclipse.jubula.autagent.gui;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -63,6 +64,8 @@ public enum ObjectMappingFrame  implements IObjectMappingObserver {
     private static final Logger LOG =
             LoggerFactory.getLogger(ObjectMappingFrame.class);
     
+    /** label for the currently active AUT in OMM */
+    private JLabel m_componentOMAut;
     /** textfield for the component name */
     private JTextField m_componentName = null;
     /** textfield for the component class */
@@ -73,6 +76,7 @@ public enum ObjectMappingFrame  implements IObjectMappingObserver {
     private JFrame m_frame = null;
     /** */
     private boolean m_firstStartup = false;
+    
     
     /**
      * The Listener for the windows closing
@@ -133,24 +137,30 @@ public enum ObjectMappingFrame  implements IObjectMappingObserver {
         JPanel panel = new JPanel(layout);
         GridBagConstraints constraints = createDefaultConstraints();
         
-        createAndAddLabel(panel, Messages.ComponentName, 0);
-        createAndAddLabel(panel, Messages.ComponentType, 1);
-        createAndAddLabel(panel, Messages.ComponentIdentifier, 2);
+        createAndAddLabel(panel, Messages.AutInOMM, 0);
+        createAndAddLabel(panel, Messages.ComponentName, 1);
+        createAndAddLabel(panel, Messages.ComponentType, 2);
+        createAndAddLabel(panel, Messages.ComponentIdentifier, 3);
         
         constraints.gridx = 1;
         constraints.gridy = 0;
         constraints.fill = GridBagConstraints.HORIZONTAL;
         constraints.weightx = 2;
-        m_componentName = new JTextField();
-        m_componentName.setEditable(false);        
-        panel.add(m_componentName, constraints);
+        m_componentOMAut = new JLabel();
+        setOMAutName(null);
+        panel.add(m_componentOMAut, constraints);
         
         constraints.gridy = 1;
+        m_componentName = new JTextField();
+        m_componentName.setEditable(false);
+        panel.add(m_componentName, constraints);
+        
+        constraints.gridy = 2;
         m_componentClass = new JTextField();
         m_componentClass.setEditable(false);
         panel.add(m_componentClass, constraints);
         
-        constraints.gridy = 2;
+        constraints.gridy = 3;
         m_componentIdentfier = new JTextField();
         m_componentIdentfier.setEditable(false);
         m_componentIdentfier.addMouseListener(new MouseAdapter() {
@@ -161,6 +171,7 @@ public enum ObjectMappingFrame  implements IObjectMappingObserver {
                 m_componentIdentfier.selectAll();
             }
         });
+        
         JMenuItem menuItem = new JMenuItem(new DefaultEditorKit.CopyAction());
         menuItem.setText(Messages.CopyToClipboard);
         menuItem.setMnemonic(KeyEvent.VK_C);
@@ -172,6 +183,23 @@ public enum ObjectMappingFrame  implements IObjectMappingObserver {
         
         m_frame.add(panel);
     }
+    
+    /**
+     * Sets the name of the AUT that is currently in OMM.
+     * @param name the name of the AUT or {@code null}
+     */
+    public void setOMAutName(String name) {
+        if (m_componentOMAut != null) {
+            if (name == null) {
+                m_componentOMAut.setForeground(Color.LIGHT_GRAY);
+                m_componentOMAut.setText(Messages.NoAutInOMM);
+            } else {
+                m_componentOMAut.setForeground(Color.DARK_GRAY);
+                m_componentOMAut.setText(name);
+            }
+        }
+    }
+    
     /**
      * 
      * @param panel the panel where to add the label
