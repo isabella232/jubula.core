@@ -3,6 +3,9 @@
    <feature url="features/org.eclipse.jubula.feature_5.0.0.qualifier.jar" id="org.eclipse.jubula.feature" version="5.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
+   <feature url="features/org.eclipse.jubula.feature.source_5.0.0.qualifier.jar" id="org.eclipse.jubula.feature.source" version="5.0.0.qualifier">
+      <category name="org.eclipse.test"/>
+   </feature>
    <feature url="features/org.eclipse.jubula.feature.launch.java_5.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="5.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>

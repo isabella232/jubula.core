@@ -18,7 +18,6 @@
         <module>../org.eclipse.jubula.app</module>
         <module>../org.eclipse.jubula.app.testexec</module>
         <module>../org.eclipse.jubula.app.dbtool</module>
-        <module>../org.eclipse.jubula.feature</module>
         <module>../org.eclipse.jubula.feature.api</module>
         <module>../org.eclipse.jubula.feature.api.core</module>
         <module>../org.eclipse.jubula.feature.api.converter</module>
@@ -79,6 +78,7 @@
         <module>../org.eclipse.jubula.client.wiki.ui</module>
         <module>../org.eclipse.jubula.client.core.functions</module>
         <module>../org.eclipse.jubula.version</module>
+        <module>../org.eclipse.jubula.feature</module>
     </modules>
 
 </project>
