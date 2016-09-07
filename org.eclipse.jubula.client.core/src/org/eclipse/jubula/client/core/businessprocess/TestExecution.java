@@ -346,14 +346,48 @@ public class TestExecution {
             monitor.setCanceled(true);
             return;
         }
+        
+        if (!prepareTestExecution(testSuite, autId, summary,
+                monitor, noRunOptMode)) {
+            return;
+        }
+
+        monitor.subTask(Messages.
+                StartingTestSuite_resolvingPredefinedVariables);
+        m_varStore.storeEnvironmentVariables();
+        storePredefinedVariables(m_varStore, testSuite);
+        storeExternallyDefinedVariables(m_varStore, externalVars);
+        if (TestExecution.shouldExecutionStop (noRunOptMode,
+                TestExecutionConstants.RunSteps.RPV)) {
+            endTestExecution();
+            return;
+        }
+        startTestSuite(testSuite, monitor, noRunOptMode);
+        
+        addExecutionFinishedListener();
+    }
+    
+    /**
+     * 
+     * @param testSuite the Test Suite
+     * @param autId the AUT Id
+     * @param summary the Summary
+     * @param monitor the Monitor
+     * @param noRunOptMode whether 
+     * @return whether to continue the test execution
+     */
+    private boolean prepareTestExecution(ITestSuitePO testSuite,
+            AutIdentifier autId, ITestResultSummaryPO summary,
+            final IProgressMonitor monitor, String noRunOptMode) {
         try {
             IStatus connected = AUTConnection.getInstance().connectToAut(
                     autId, new SubProgressMonitor(monitor, 0));
+            
             if (connected.getCode() == IStatus.OK) {
                 if (TestExecution.shouldExecutionStop (noRunOptMode, 
                         TestExecutionConstants.RunSteps.CA)) {
                     endTestExecution();
-                    return;
+                    return false;
                 }
                 summary.setAutHostname(
                         AUTConnection.getInstance().getCommunicator()
@@ -361,50 +395,45 @@ public class TestExecution {
                             .getCanonicalHostName());
                 summary.setAutAgentName(AutAgentConnection.getInstance()
                         .getCommunicator().getHostName());
-                monitor.subTask(Messages.
-                        StartingTestSuite_resolvingPredefinedVariables);
-                m_varStore.storeEnvironmentVariables();
-                storePredefinedVariables(m_varStore, testSuite);
-                storeExternallyDefinedVariables(m_varStore, externalVars);
-                if (TestExecution.shouldExecutionStop (noRunOptMode,
-                        TestExecutionConstants.RunSteps.RPV)) {
-                    endTestExecution();
-                    return;
-                }
-                startTestSuite(testSuite, monitor, noRunOptMode);
-                
-                final AtomicBoolean testSuiteFinished = new AtomicBoolean();
-                ClientTest.instance().addTestExecutionEventListener(
-                        new ITestExecutionEventListener() {
-                            public void endTestExecution() {
-                                try {
-                                    AUTConnection.getInstance().close();
-                                } catch (ConnectionException e) {
-                                    // Do nothing. Connection is already closed.
-                                }
-                                ClientTest.instance()
-                                        .removeTestExecutionEventListener(this);
-                                testSuiteFinished.set(true);
-                            }
-
-                            public void stateChanged(TestExecutionEvent event) {
-                                // Do nothing
-                            }
-
-                            @Override
-                            public void receiveExecutionNotification(
-                                    String notification) {
-                                // Do nothing
-                            }
-                        });
-                while (!testSuiteFinished.get()) {
-                    TimeUtil.delay(250);
-                }
-            } else {
-                handleNoConnectionToAUT(testSuite, autId);
             }
-        } catch (ConnectionException e) {
-            LOG.error(Messages.UnableToConnectToAUT + StringConstants.DOT, e);
+        } catch (ConnectionException | NullPointerException ex) {
+            LOG.error(Messages.UnableToConnectToAUT + StringConstants.DOT, ex);
+            handleNoConnectionToAUT(testSuite, autId);
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Adds a finished listener to the test execution 
+     */
+    private void addExecutionFinishedListener() {
+        final AtomicBoolean testSuiteFinished = new AtomicBoolean();
+        ClientTest.instance().addTestExecutionEventListener(
+                new ITestExecutionEventListener() {
+                    public void endTestExecution() {
+                        try {
+                            AUTConnection.getInstance().close();
+                        } catch (ConnectionException e) {
+                            // Do nothing. Connection is already closed.
+                        }
+                        ClientTest.instance()
+                                .removeTestExecutionEventListener(this);
+                        testSuiteFinished.set(true);
+                    }
+
+                    public void stateChanged(TestExecutionEvent event) {
+                        // Do nothing
+                    }
+
+                    @Override
+                    public void receiveExecutionNotification(
+                            String notification) {
+                        // Do nothing
+                    }
+                });
+        while (!testSuiteFinished.get()) {
+            TimeUtil.delay(250);
         }
     }
     
