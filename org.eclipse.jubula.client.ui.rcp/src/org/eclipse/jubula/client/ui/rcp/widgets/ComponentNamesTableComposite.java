@@ -58,7 +58,6 @@ import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -734,9 +733,6 @@ public class ComponentNamesTableComposite extends Composite implements
                                 editor);
                     }
                 }
-            } else {
-                Assert.notReached(Messages
-                        .selectedExecNodeOwnerIsNotAnInstanceOfIJBEditor);
             }
         }
     }

@@ -381,7 +381,6 @@ public class Messages extends NLS {
     public static String LogicalNameErrorExists;
     public static String LogicalNameErrorInvalidChar;
     public static String LogicalNameErrorNoSpaceAtStartOrEnd;
-    public static String selectedExecNodeOwnerIsNotAnInstanceOfIJBEditor;
     public static String MergeComponentNamesLabel;
     public static String MergeComponentNamesMessage;
     public static String MergeComponentNamesShellTitle;
