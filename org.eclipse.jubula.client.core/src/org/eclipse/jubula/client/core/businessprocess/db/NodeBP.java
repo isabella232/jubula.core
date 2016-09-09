@@ -149,10 +149,11 @@ public class NodeBP {
      *         or if nodePO == null
      */
     public static boolean belongsToCurrentProject(INodePO nodePO) {
-        if (nodePO != null) {
+        IProjectPO currentProject = GeneralStorage.getInstance()
+                .getProject();
+        if (nodePO != null && currentProject != null) {
             EqualsBuilder eb = new EqualsBuilder();
-            eb.append(nodePO.getParentProjectId(), GeneralStorage.getInstance()
-                    .getProject().getId());
+            eb.append(nodePO.getParentProjectId(), currentProject.getId());
             return eb.isEquals();
         }
         return false;
