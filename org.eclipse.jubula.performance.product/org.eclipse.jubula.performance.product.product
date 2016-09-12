@@ -59,8 +59,8 @@
    <features>
       <feature id="com.bredexsw.jubula.feature" version="5.0.0.qualifier" installMode="root"/>
       <feature id="com.bredexsw.jubula.performance.feature" version="5.0.0.qualifier"/>
-      <feature id="org.aspectj" version="1.8.9.201604061446"/>
-      <feature id="org.eclipse.equinox.weaving.sdk" version="1.1.100.v20150430-1834"/>
+      <feature id="org.aspectj"/>
+      <feature id="org.eclipse.equinox.weaving.sdk"/>
    </features>
 
    <configurations>
