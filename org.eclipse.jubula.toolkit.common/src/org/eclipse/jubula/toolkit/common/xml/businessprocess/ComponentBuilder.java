@@ -133,7 +133,12 @@ public class ComponentBuilder extends AbstractComponentBuilder {
                 }
             }
         }
-        postProcess();
+        try {
+            postProcess();
+        } catch (ConfigXmlException cxe) {
+            m_initExceptions.put(cxe.getToolkitDescriptor(),
+                    cxe);
+        }
     }
 
     /**
