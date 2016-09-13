@@ -10,7 +10,7 @@
 <section xml:id="dealing-with-errors-in-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="dealWithErrors"?>
+  
   <title>Dealing with errors in tests: Event Handlers</title>
   <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="dealing-with-errors-in-tests.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
   <anchor role="helpid" condition="eventHandlerAddContextId" xml:id="dealing-with-errors-in-tests.eventHandlerAddContextId" xreflabel="Event Handlers"/>

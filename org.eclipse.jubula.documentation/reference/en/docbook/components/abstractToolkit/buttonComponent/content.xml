@@ -9,7 +9,7 @@
 <section xml:id="abstractToolkitButtonComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="buttonComponent"?>
+  
   <title>Abstract toolkit button component</title>
   <para>
   	This is an abstract component.

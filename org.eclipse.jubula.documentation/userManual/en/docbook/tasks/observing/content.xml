@@ -10,7 +10,7 @@
 <section xml:id="observing" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                       xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="observing"?>
+  
   <title>Observing Test Cases</title>
   <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="observing.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>
   <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="observing.testSpecificationViewContextId" xreflabel="Test Case Browser"/>

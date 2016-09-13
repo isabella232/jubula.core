@@ -9,7 +9,7 @@
 <section xml:id="HTMLToolkitBrowser" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="browser"?>
+  
   <title>HTML toolkit browser</title>
   <para>
   	The <emphasis>Web Browser</emphasis> component is the container for all other components in a HTML AUT.

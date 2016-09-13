@@ -10,7 +10,7 @@
 <section xml:id="approaches-to-testing" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="approaches"?>
+  
   <title>Approaches to testing</title>
   <para>
     Modular testing is supported by the ITE. You can either create

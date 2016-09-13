@@ -10,7 +10,7 @@
 <section xml:id="using-the-test-executor-for-testing-from-the-command-line" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="useTestExec"?>
+  
   <title>Using the test executor for testing from the command line</title>
   <anchor role="helpid" condition="problemViewContextId" xml:id="using-the-test-executor-for-testing-from-the-command-line.problemViewContextId" xreflabel="Problem View"/>
   

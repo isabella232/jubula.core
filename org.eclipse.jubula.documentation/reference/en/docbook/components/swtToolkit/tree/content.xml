@@ -9,7 +9,7 @@
 <section xml:id="SWTToolkitTree" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="tree"?>
+  
   <title>SWT toolkit tree</title>
   <para>
   	A tree in SWT is essentially the same as a tree in Swing, with an extra option to have checkboxes on the nodes of the

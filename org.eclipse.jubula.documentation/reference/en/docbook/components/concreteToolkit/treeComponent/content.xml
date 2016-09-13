@@ -9,7 +9,7 @@
 <section xml:id="ConcreteToolkitTreeComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="treeComponent"?>
+  
   <title>Concrete toolkit tree component</title>
   <para>
   	A <emphasis>tree</emphasis> component is a component with linked elements (nodes) and a hierarchical structure. One

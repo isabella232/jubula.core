@@ -10,7 +10,7 @@
 <section xml:id="testing-swing-auts" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="swingAUT"?>
+  
   <title>Testing Swing AUTs</title>
   <anchor role="helpid" condition="projectWizardContextId" xml:id="testing-swing-auts.projectWizardContextId" xreflabel="Creating a Project"/>
   <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="testing-swing-auts.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>

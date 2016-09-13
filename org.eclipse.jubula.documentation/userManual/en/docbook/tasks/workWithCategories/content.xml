@@ -10,7 +10,7 @@
 <section xml:id="working-with-categories-in-the-browsers-and-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                 xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                 xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="workWithCategories"?>
+  
   <title>Working with categories in the browsers and editors</title>
   <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="working-with-categories-in-the-browsers-and-editors.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
   <anchor role="helpid" condition="testExecViewContextId" xml:id="working-with-categories-in-the-browsers-and-editors.testExecViewContextId" xreflabel="Test Suite Browser"/>

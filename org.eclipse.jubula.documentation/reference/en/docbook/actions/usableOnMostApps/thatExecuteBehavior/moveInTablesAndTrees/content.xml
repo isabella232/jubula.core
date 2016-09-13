@@ -9,7 +9,7 @@
 <section xml:id="actionMoveInTablesAndTrees" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="moveInTablesAndTrees"?>
+  
   <title>Move in tables and trees</title>
   
   <xi:include href="tableComponents.xml"/>

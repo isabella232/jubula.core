@@ -9,7 +9,7 @@
 <section xml:id="actionsForComparingValues" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="forComparingValues"?>
+  
   <title>Actions for comparing values</title>
   
   <xi:include href="checkNumericValues/content.xml"/>

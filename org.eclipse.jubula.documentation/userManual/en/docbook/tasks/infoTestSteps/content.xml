@@ -10,7 +10,7 @@
 <section xml:id="information-on-test-steps" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="infoTestSteps"?>
+  
   <title>Information on Test Steps</title>
   <anchor role="helpid" condition="capContextId" xml:id="information-on-test-steps.capContextId" xreflabel="Test Steps"/>
   

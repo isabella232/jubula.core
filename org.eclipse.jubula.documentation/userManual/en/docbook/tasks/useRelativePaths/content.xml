@@ -10,7 +10,7 @@
 <section xml:id="using-relative-paths-in-aut-configurations-and-as-test-data" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="useRelativePaths"?>
+  
   <title>Using relative paths in AUT configurations and as test data</title>
   <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="using-relative-paths-in-aut-configurations-and-as-test-data.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
   <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="using-relative-paths-in-aut-configurations-and-as-test-data.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>

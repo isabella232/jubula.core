@@ -10,7 +10,7 @@
 <section xml:id="the-structure-of-the-example-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="exapleProject"?>
+  
   <title>The structure of the example Project</title>
   
   <xi:include href="sectionIntroExampleProject.xml"/>

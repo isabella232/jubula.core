@@ -10,7 +10,7 @@
 <section xml:id="adapting-the-user-interface" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="adaptUI"?>
+  
   <title>Adapting the user interface</title>
   <anchor role="helpid" condition="problemViewContextId" xml:id="adapting-the-user-interface.problemViewContextId" xreflabel="Problem View"/>
   

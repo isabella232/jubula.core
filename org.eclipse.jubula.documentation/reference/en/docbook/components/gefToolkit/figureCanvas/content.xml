@@ -9,7 +9,7 @@
 <section xml:id="GEFToolkitFigureCanvas" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="figureCanvas"?>
+  
   <title>GEF toolkit figure canvas</title>
   <para>
   	The <emphasis>figure canvas</emphasis> component is an editor where figures, connections and anchors are displayed.

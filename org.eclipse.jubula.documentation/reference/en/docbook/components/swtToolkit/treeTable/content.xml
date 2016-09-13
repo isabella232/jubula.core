@@ -9,7 +9,7 @@
 <section xml:id="SWTToolkitTreeTable" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="treeTable"?>
+  
   <title>SWT toolkit tree table</title>
   <para>
   	A tree table is an SWT component which has some of the properties of a tree (e.g. nodes which can be expanded or 

@@ -10,7 +10,7 @@
 <section xml:id="troubleshooting" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="troubleshooting"?>
+  
   <title>Troubleshooting</title>
   <anchor role="helpid" condition="problemViewContextId" xml:id="troubleshooting.problemViewContextId" xreflabel="Problem View"/>
   <anchor role="helpid" condition="objectMapEditorContextId" xml:id="troubleshooting.objectMapEditorContextId" xreflabel="Object Mapping"/>

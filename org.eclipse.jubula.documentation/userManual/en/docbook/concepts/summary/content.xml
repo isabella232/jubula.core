@@ -10,7 +10,7 @@
 <section xml:id="summary" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                     xmlns:xi="http://www.w3.org/2001/XInclude"
                                     xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="reusability"?>
+  
   <title>Summary</title>
   <para>
     After reading this chapter, the structure and concepts of the tool

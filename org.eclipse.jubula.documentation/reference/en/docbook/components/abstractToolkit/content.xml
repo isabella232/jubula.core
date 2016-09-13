@@ -9,7 +9,7 @@
 <section xml:id="abstractToolkitComponentOverview" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >                                                            
-  <?dbhtml dir="abstractToolkit"?>
+  
   <title>Abstract toolkit component overview</title>
   <para>
   	The abstract toolkit contains component types which are available on all toolkits supported, and which have 

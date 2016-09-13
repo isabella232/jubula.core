@@ -10,7 +10,7 @@
 <section xml:id="accessing-the-prepared-project" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                                            xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="preparedProject"?>
+  
   <title>Accessing the prepared Project</title>
   
   <xi:include href="sectionImportAndLoadPreparedProject.xml"/>

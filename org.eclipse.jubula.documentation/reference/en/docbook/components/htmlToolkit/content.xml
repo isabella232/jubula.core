@@ -9,7 +9,7 @@
 <section xml:id="htmlToolkitComponentOverview" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="htmlToolkit"?>
+  
   <title>HTML toolkit component overview</title>
   <para>
   	The HTML toolkit contains components that are specific to HTML applications. You will only have access to these components

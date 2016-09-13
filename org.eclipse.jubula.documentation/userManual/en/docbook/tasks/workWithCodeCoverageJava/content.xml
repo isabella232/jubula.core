@@ -10,7 +10,7 @@
 <section xml:id="working-with-code-coverage-with-java-tests" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="workWithCodeCoverageJava"?>
+  
   <title>Working with code coverage with Java tests</title>
   <anchor role="helpid" condition="testResultSummaryViewContextId" xml:id="working-with-code-coverage-with-java-tests.testResultSummaryViewContextId" xreflabel="Test Result Summary View"/>
   <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="working-with-code-coverage-with-java-tests.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>

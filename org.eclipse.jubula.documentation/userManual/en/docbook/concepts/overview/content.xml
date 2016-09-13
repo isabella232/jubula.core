@@ -10,7 +10,7 @@
 <section xml:id="overview" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                      xmlns:xi="http://www.w3.org/2001/XInclude"
                                      xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="overview"?>
+  
   <title>Overview</title>
   <para>
     The ITE is based on the <emphasis>Eclipse</emphasis> development

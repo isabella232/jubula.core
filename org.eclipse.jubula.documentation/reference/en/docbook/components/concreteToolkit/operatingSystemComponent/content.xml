@@ -9,7 +9,7 @@
 <section xml:id="ConcreteToolkitOperatingSystemComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="operatingSystem"?>
+  
   <title>Concrete toolkit Operating System component</title>
   <para>
   	The <emphasis>Operating System</emphasis> component is the container for everything which happens 

@@ -10,7 +10,7 @@
 <section xml:id="webaut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                    xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="webAUT"?>
+  
   <title>Testing HTML AUTs</title>
   <anchor role="helpid" condition="projectWizardContextId" xml:id="webaut.projectWizardContextId" xreflabel="Creating a Project"/>
   <anchor role="helpid" condition="autConfigSettingWizardPagePageContextId" xml:id="webaut.autConfigSettingWizardPagePageContextId" xreflabel="Configuring an AUT"/>

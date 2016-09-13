@@ -10,7 +10,7 @@
 <section xml:id="special-characters" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="specialCharacters"?>
+  
   <title>Special characters</title>
   <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="special-characters.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
   <anchor role="helpid" condition="guidancerDataSetViewContextId" xml:id="special-characters.guidancerDataSetViewContextId" xreflabel="Data Sets View"/>

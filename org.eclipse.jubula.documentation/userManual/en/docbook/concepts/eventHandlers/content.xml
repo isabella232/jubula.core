@@ -10,7 +10,7 @@
 <section xml:id="event-handlers" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="eventHandlers"?>
+  
   <title>Event Handlers</title>
   <anchor role="helpid" condition="eventHandlerAddContextId" xml:id="event-handlers.eventHandlerAddContextId" xreflabel="Event Handlers"/>
   <anchor role="helpid" condition="guidancerSpecTestCaseEditorContextId" xml:id="event-handlers.guidancerSpecTestCaseEditorContextId" xreflabel="Test Case Editor"/>

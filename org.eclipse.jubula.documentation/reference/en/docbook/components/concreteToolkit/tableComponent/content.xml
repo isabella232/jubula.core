@@ -9,7 +9,7 @@
 <section xml:id="ConcreteToolkitTableComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="tableComponent"?>
+  
   <title>Concrete toolkit table component</title>
   <para>
   	A <emphasis>table</emphasis> component is a component in which data is displayed and edited.

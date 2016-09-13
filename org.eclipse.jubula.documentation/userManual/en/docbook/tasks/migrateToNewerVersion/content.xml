@@ -10,7 +10,7 @@
 <section xml:id="migrating-to-newer-versions" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="migrateToNewerVersion"?>
+  
   <title>Migrating to newer versions</title>
   <para>
     There are various steps that need to be taken to update your environment and your Projects to a new version. Instructions on performing the necessary updates are online on the Testing Resources Portal:

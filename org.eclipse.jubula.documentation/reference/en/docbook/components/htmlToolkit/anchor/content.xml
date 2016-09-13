@@ -9,7 +9,7 @@
 <section xml:id="HTMLToolkitAnchor" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="anchor"?>
+  
   <title>HTML toolkit anchor</title>
   <para>
   	A HTML hyperlink is a link which can be followed from within a browser.

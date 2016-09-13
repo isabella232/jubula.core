@@ -10,7 +10,7 @@
 <section xml:id="define-aut" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                        xmlns:xi="http://www.w3.org/2001/XInclude"
                                        xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="defineAUT"?>
+  
   <title>Defining applications under test (AUTs)</title>
   <anchor role="helpid" condition="autSettingWizardPagePageContextId" xml:id="define-aut.autSettingWizardPagePageContextId" xreflabel="Defining an AUT"/>
   <anchor role="helpid" condition="runningAutsViewContextId" xml:id="define-aut.runningAutsViewContextId" xreflabel="Running AUTs View"/>

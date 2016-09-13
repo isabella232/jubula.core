@@ -9,7 +9,7 @@
 <section xml:id="ConcreteToolkitComboComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="comboComponent"?>
+  
   <title>Concrete toolkit combo component</title>
   <para>
   	A <emphasis>combo component</emphasis> is a component which consists of a field or button and a drop down

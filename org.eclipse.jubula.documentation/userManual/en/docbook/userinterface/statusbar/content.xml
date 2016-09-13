@@ -10,7 +10,7 @@
 <section xml:id="the-status-bar" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="statusbar"?>
+  
   <title>The status bar</title>
   <para>
 	The status bar in the lower right-hand corner of the perspective

@@ -10,7 +10,7 @@
 <section xml:id="overviewUI" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                            xmlns:xi="http://www.w3.org/2001/XInclude"
                                            xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="overviewUI"?>
+  
   <title>Overview user interface</title>
   <para>
     There are four types of area in the user interface: 

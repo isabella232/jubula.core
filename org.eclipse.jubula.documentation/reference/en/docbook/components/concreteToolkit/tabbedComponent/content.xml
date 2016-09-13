@@ -9,7 +9,7 @@
 <section xml:id="ConcreteToolkitTabComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="tabbedComponent"?>
+  
   <title>Concrete toolkit tabbed component</title>
   <para>
   	A <emphasis>tabbed</emphasis> component is a container that allows you to switch between multiple groups of

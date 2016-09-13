@@ -9,7 +9,7 @@
 <section xml:id="ConcreteToolkitTextComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="textComponent"?>
+  
   <title>Concrete toolkit text component</title>
   <para>
   	A <emphasis>text</emphasis> component is used for displaying a small, descriptive text and/or an image.

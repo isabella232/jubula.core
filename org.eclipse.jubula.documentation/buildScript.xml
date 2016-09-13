@@ -40,7 +40,7 @@
                     <arg value="1"/>
                 <arg value="--stringparam"/>
                     <arg value="use.id.as.filename"/>
-                    <arg value="1"/>
+                    <arg value="0"/>
                 <arg value="--stringparam"/>
                     <arg value="generate.toc"/>
                     <arg value="chapter toc

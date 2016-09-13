@@ -9,7 +9,7 @@
 <section xml:id="SWTToolkitToolItem" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
-  <?dbhtml dir="toolItem"?>
+  
   <title>SWT toolkit tool item</title>
   <para>
   	Toolbar items are buttons and their menus on a toolbar, such as the one in the ITE. Each of the buttons on the toolbar
