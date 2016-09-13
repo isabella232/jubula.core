@@ -296,9 +296,7 @@ public class CommentReporter implements ITestresultSummaryEventListener {
                             repoLabel, taskId, fieldUpdates, monitor);
                     if (!fieldUpdateStatus.isOK()) {
                         failed = true;
-                        c.writeErrorLine(fieldUpdateStatus.getMessage());
-                        c.writeErrorLine(
-                                NLS.bind(Messages.ReportingTaskFailed, taskId));
+                        writeErrorStatus(c, taskId, fieldUpdateStatus);
                         if (fieldUpdateStatus.getSeverity() == IStatus.CANCEL) {
                             break;
                         }
@@ -323,6 +321,25 @@ public class CommentReporter implements ITestresultSummaryEventListener {
         }
         return new Status(IStatus.ERROR, Activator.ID,
             "Reporting comments performed with errors..."); //$NON-NLS-1$
+    }
+    
+    /**
+     * write error lines to the console for the status and its children
+     * @param c the {@link IProgressConsole}
+     * @param taskId the id of the task
+     * @param fieldUpdateStatus the update status of a field after the executin
+     */
+    private void writeErrorStatus(IProgressConsole c, String taskId,
+            IStatus fieldUpdateStatus) {
+        c.writeErrorLine(fieldUpdateStatus.getMessage());
+        IStatus[] children = fieldUpdateStatus.getChildren();
+        if (children != null && children.length > 0) {
+            for (int i = 0; i < children.length; i++) {
+                c.writeErrorLine(children[i].getMessage());
+            }
+        }
+        c.writeErrorLine(
+                NLS.bind(Messages.ReportingTaskFailed, taskId));
     }
 
     /**
