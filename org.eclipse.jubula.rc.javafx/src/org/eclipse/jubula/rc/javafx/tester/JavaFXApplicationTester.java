@@ -352,21 +352,21 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
             } finally {
                 stage.removeEventFilter(WindowEvent.WINDOW_SHOWN, showHandler);
             }
-            boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                    "rcWaitForWindowConfirm", new Callable<Boolean>() { //$NON-NLS-1$
-
-                        @Override
-                        public Boolean call() throws Exception {
-                            return stage.isShowing();
-                        }
-                    });
-            if (!result) {
-                throw new StepExecutionException("window did not open", //$NON-NLS-1$
-                        EventFactory
-                                .createActionError(
-                                        TestErrorEvent.TIMEOUT_EXPIRED));
-            }
         }
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "rcWaitForWindowConfirm", new Callable<Boolean>() { //$NON-NLS-1$
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        return stage.isShowing();
+                    }
+                });
+        if (!result) {
+            throw new StepExecutionException("window did not open", //$NON-NLS-1$
+                    EventFactory
+                            .createActionError(TestErrorEvent.TIMEOUT_EXPIRED));
+        }
+        
         TimeUtil.delay(delay);
     }
 
@@ -431,7 +431,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                         return true;
                     }
                 });
-        if (isFocused) {
+        if (!isFocused) {
             try {
                 signal.await(pTimeout, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
@@ -442,21 +442,21 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
             } finally {
                 stage.focusedProperty().removeListener(focusListener);
             }
-            boolean result = EventThreadQueuerJavaFXImpl
-                    .invokeAndWait(
-                            "rcWaitForWindowActivationConfirm", new Callable<Boolean>() { //$NON-NLS-1$
-
-                                @Override
-                                public Boolean call() throws Exception {
-                                    return stage.isFocused();
-                                }
-                            });
-            if (!result) {
-                throw new StepExecutionException("window was not activated", //$NON-NLS-1$
-                        EventFactory.createActionError(
-                                        TestErrorEvent.TIMEOUT_EXPIRED));
-            }
         }
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "rcWaitForWindowActivationConfirm", new Callable<Boolean>() { //$NON-NLS-1$
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        return stage.isFocused();
+                    }
+                });
+        if (!result) {
+            throw new StepExecutionException("window was not activated", //$NON-NLS-1$
+                    EventFactory
+                            .createActionError(TestErrorEvent.TIMEOUT_EXPIRED));
+        }
+        
         TimeUtil.delay(delay);
     }
 
@@ -498,12 +498,16 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
 
                     @Override
                     public Boolean call() throws Exception {
-                        s.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
-                                closeHandler);
-                        return false;
+                        if (s.isShowing()) {
+                            s.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
+                                    closeHandler);
+                            return false;
+                        } else {
+                            return true;
+                        }
                     }
                 });
-        if (isClosing) {
+        if (!isClosing) {
             try {
                 signal.await(pTimeout, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
@@ -516,22 +520,25 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                 s.removeEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST,
                         closeHandler);
             }
-            boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                    "rcWaitForWindowToCloseConfirm", new Callable<Boolean>() { //$NON-NLS-1$
+        }
+        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "rcWaitForWindowToCloseConfirm", new Callable<Boolean>() { //$NON-NLS-1$
 
-                        @Override
-                        public Boolean call() throws Exception {
-                            final Stage tmpS = getStageByTitle(title, operator);
-
-                            return tmpS == null;
-                        }
-                    });
-            if (!result) {
-                throw new StepExecutionException("window was not closed", //$NON-NLS-1$
-                        EventFactory
-                                .createActionError(
-                                        TestErrorEvent.TIMEOUT_EXPIRED));
-            }
+                    @Override
+                    public Boolean call() throws Exception {
+                        final Stage tmpS = getStageByTitle(title, operator);
+                        // the stage might be still in the list be cause the fx
+                        // thread was not fast enough to remove it, thus
+                        // checking if showing == false which also means that
+                        // the stage is not rendered
+                        return tmpS == null || !tmpS.isShowing();
+                    }
+                });
+        if (!result) {
+            throw new StepExecutionException("window was not closed", //$NON-NLS-1$
+                    EventFactory
+                            .createActionError(
+                                    TestErrorEvent.TIMEOUT_EXPIRED));
         }
         TimeUtil.delay(delay);
     }
