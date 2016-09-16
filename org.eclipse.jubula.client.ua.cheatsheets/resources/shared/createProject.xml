@@ -13,7 +13,8 @@
       </description>
    </intro>
    <item title="Creating a Project with an AUT" dialog="true" skip="false">
-      <descriptioSelect: 
+      <description>
+      Select: 
 <br/>
 <b>Test &gt; New</b>
 <br/>
@@ -38,7 +39,7 @@ To start the Swing Simple Adder on Unix, select <b>SimpleAdder.sh</b>. To be abl
 <br/><br/>
 Deactivate the checkbox for loading a project template (we recommend this for your own projects later though).
 <br/><br/>
-Click <b>Finish</b>.>Finish</b>.
+Click <b>Finish</b>.
       </description>
    </item>
 </cheatsheet>
