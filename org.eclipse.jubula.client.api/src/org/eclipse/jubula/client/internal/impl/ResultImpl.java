@@ -10,12 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.internal.impl;
 
+import java.util.Map;
+
 import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
+import org.eclipse.jubula.tools.internal.utils.StringParsing;
 
 /**
  * @author BREDEX GmbH
@@ -101,5 +104,10 @@ public class ResultImpl<T> implements Result<T> {
      */
     public void setReturnValue(String value) {
         m_returnValue = value;
+    }
+
+   /** {@inheritDoc} */
+    public Map<String, String> getReturnValueAsMap() {
+        return StringParsing.convertToMap(m_returnValue);
     }
 }

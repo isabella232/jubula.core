@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+<meta name="copyright" content="Copyright (c) IBM Corporation and others 2009. This page is made available under license. For full details see the LEGAL in the documentation book that contains this page."/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<title>Compare Details</title>
+<style type="text/css">
+			.main{		font-family:Arial;
+						Helvetica, sans-serif;
+						text-align: left;}
+			.main h3 {	font-family:Arial, Helvetica, sans-serif;
+						background-color:#FFFFFF;
+						font-size:16px;
+						margin:0.1em;}
+			.main h4 { 	background-color:#CCCCCC;
+						margin:0.15em;}
+			a.typeslnk{	font-family:Arial, Helvetica, sans-serif;
+					   	text-decoration:none;}
+			a.typeslnk:hover{text-decoration:underline;}
+			.types{	display:none;
+					margin-bottom:0.25em;
+					margin-top:0.25em;
+					margin-right:0.25em;
+				   	margin-left:0.75em;}
+			thead.head{background-color:#CC9933}
+		</style>
+<script type="text/javascript">
+			function expand(location){
+			   if(document.getElementById){
+				  var childhtml = location.firstChild;
+				  if(!childhtml.innerHTML) {
+				  	childhtml = childhtml.nextSibling;
+				  }
+				  childhtml.innerHTML = childhtml.innerHTML == '[+] ' ? '[-] ' : '[+] ';
+				  var parent = location.parentNode;
+				  childhtml = parent.nextSibling.style ? parent.nextSibling : parent.nextSibling.nextSibling;
+				  childhtml.style.display = childhtml.style.display == 'block' ? 'none' : 'block';
+				}
+			}  
+		</script>
+</head>
+<body>
+<noscript>
+<style type="text/css">
+				.types{display:block;}
+				.kinds{display:block;}
+			</style>
+</noscript>
+<h1>Compare Details</h1>
+<div class="main">
+<table border="0" width="60%">
+<tr>
+<td>
+<h3>
+<a href="javascript:void(0)" class="typeslnk" onclick="expand(this)">
+<span>[+] </span> List of breaking changes
+								</a>
+</h3>
+<div class="types">
+<table border="1" width="100%" style="line">
+<thead class="head">
+<tr>
+<td>
+<b>Changes</b>
+</td>
+</tr>
+</thead>
+</table>
+</div>
+</td>
+</tr>
+</table>
+<table border="0" width="60%">
+<tr>
+<td>
+<h3>
+<a href="javascript:void(0)" class="typeslnk" onclick="expand(this)">
+<span>[+] </span> List of compatible changes
+							</a>
+</h3>
+<div class="types">
+<table border="1" width="100%" style="line">
+<thead class="head">
+<tr>
+<td>
+<b>Changes</b>
+</td>
+</tr>
+</thead>
+<tr>
+<td>It is now possible to use the Invoke Method And Store Result command of the Reflection Component from the API
+by calling the method <i>invokeExternalMethodStoreReturnValue</i> of the Reflection Component.
+The <i>Result</i> object has been extended by a new <i>getReturnValueAsMap</i> method which returns a Map supplied by the
+called method.
+</td>
+</tr>
+<tr>
+<td>
+It is now possible to use the Invoke External Method And Store Result command of the Reflection Component from the API.
+Just as with the other Store Result commands, one can obtain the result through the <i>getReturnValue</i> and <i>getReturnValueAsMap</i> methods of the <i>Result</i> object.
+</td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<p>
+<a href="http://validator.w3.org/check?uri=referer">
+<img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Strict" height="31" width="88"/>
+</a>
+</p>
+</body>
+</html>

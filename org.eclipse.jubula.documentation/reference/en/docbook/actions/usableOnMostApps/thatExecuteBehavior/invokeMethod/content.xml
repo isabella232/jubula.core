@@ -10,9 +10,10 @@
                                                          xmlns:xi="http://www.w3.org/2001/XInclude"
                                                          xmlns:xl="http://www.w3.org/1999/xlink" >
   
-  <title>Invoke Method</title>
+  <title>Invoke (External) Method</title>
   
   <xi:include href="generalComponents.xml"/>
   <xi:include href="reflectionComponent.xml"/>
+  <xi:include href="external.xml"/>
   
 </section>

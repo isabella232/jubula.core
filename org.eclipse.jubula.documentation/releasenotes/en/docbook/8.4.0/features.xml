@@ -1,0 +1,26 @@
+<!-- 
+  Copyright (c) 2016 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+  
+  Contributors:
+      BREDEX GmbH - initial API and implementation and/or initial documentation
+-->
+<section xml:id="new-features-and-developments-8.4.0" version="5.0"
+    xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>New Features and Developments</title>
+<para>
+ <emphasis role="strong">Invoke External Method</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      It is now possible to invoke external (AUT - independent) methods through the Reflection component.
+      The external JAR files must be placed in the directory <emphasis>&lt;installation-directory&gt;/ite/externaljars</emphasis>.
+    </para>
+  </listitem>
+</itemizedlist>
+</section>

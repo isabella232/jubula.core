@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,7 +19,10 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.net.UnknownHostException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -169,7 +173,10 @@ public abstract class AUTServer {
     
     /** List for error messages during extension loading **/
     private List<String> m_warnings = new ArrayList<String>();
-
+    
+    /** ClassLoader to load external (user-supplied) jars */
+    private ClassLoader m_externalLoader = null;
+    
     /** 
      * private constructor instantiates the listeners
      * @param mappingListener new instance of toolkit mapping server
@@ -185,6 +192,51 @@ public abstract class AUTServer {
         m_mappingListener = mappingListener;
         m_recordListener = recordListener;
         m_checkListener = checkListener;
+        
+        initExternalLoader();
+    }
+    
+    /** Initializes the classloader of the user-supplied jars */
+    private void initExternalLoader() {
+        try {
+            // The location of the rc.common_*.jar:
+            String start = AUTServer.class.getProtectionDomain()
+                    .getCodeSource().getLocation().getPath();
+            if (System.getProperty("os.name").startsWith("Win")) { //$NON-NLS-1$ //$NON-NLS-2$
+                // Java cannot properly determine the path for Windows
+                start = start.substring(1, start.length());
+            }
+            Path path = Paths.get(start);
+            // The location of the externaljars:
+            Path path2 = Paths.get(path.getParent()
+                    .getParent().toString(), "externaljars"); //$NON-NLS-1$
+            File dir = path2.toFile();
+            File[] res = dir.listFiles(new FilenameFilter() {
+                public boolean accept(File directory, String name) {
+                    return name.endsWith(".jar"); //$NON-NLS-1$
+                }
+            });
+            if (res == null) {
+                String s = "Could not load the external jars. The directory " //$NON-NLS-1$
+                        + path2.toString() + " does not exist"; //$NON-NLS-1$
+                log.info(s);
+                return;
+            }
+            ArrayList<URL> urls = new ArrayList<URL>();
+            for (int i = 0; i < res.length; i++) {
+                try {
+                    urls.add(res[i].toURI().toURL());
+                } catch (MalformedURLException e) {
+                    // just ignore, we simply won't load the jar
+                }
+            }
+            if (!urls.isEmpty()) {
+                m_externalLoader = new URLClassLoader(urls.toArray(new URL[0]));
+            }
+        } catch (Exception e) {
+            String s = "Unable to load the external jars: " + e.getMessage(); //$NON-NLS-1$
+            log.info(s);
+        }
     }
     
     /** 
@@ -1296,5 +1348,13 @@ public abstract class AUTServer {
      */
     public void setAutID(String autID) {
         m_autID = autID;
+    }
+    
+    /**
+     * returns the class loader
+     * @return the external class loader
+     */
+    public ClassLoader getExternalLoader() {
+        return m_externalLoader;
     }
 }

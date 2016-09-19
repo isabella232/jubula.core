@@ -3102,8 +3102,137 @@
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>
         </action>
+                <action name="CompSystem.InvokeMethodStoreReturnAPI" apiAction="true" since="4.0">
+            <method>rcInvokeMethodStoreReturnApi</method>
+            <param name="CompSystem.FQCN"
+                   descriptionKey="CompSystem.FQCN.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodName"
+                   descriptionKey="CompSystem.MethodName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodSignature"
+                   descriptionKey="CompSystem.MethodSignature.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgs"
+                   descriptionKey="CompSystem.Args.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgsSplit"
+                   descriptionKey="CompSystem.ArgsSplit.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+        </action>
         <action name="CompSystem.InvokeMethod" since="4.0">
             <method>rcInvokeMethod</method>
+            <param name="CompSystem.FQCN" 
+                   descriptionKey="CompSystem.FQCN.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodName"
+                   descriptionKey="CompSystem.MethodName.descr">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodSignature"
+                   descriptionKey="CompSystem.MethodSignature.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgs" 
+                   descriptionKey="CompSystem.Args.descr"
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgsSplit" 
+                   descriptionKey="CompSystem.ArgsSplit.descr"
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.InvokeExternalMethodStoreReturn" since="4.0">
+            <method>rcInvokeExternalMethodStoreReturn</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <param name="CompSystem.FQCN"
+                   descriptionKey="CompSystem.FQCN.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodName"
+                   descriptionKey="CompSystem.MethodName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodSignature"
+                   descriptionKey="CompSystem.MethodSignature.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgs"
+                   descriptionKey="CompSystem.Args.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgsSplit"
+                   descriptionKey="CompSystem.ArgsSplit.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>
+        </action>
+        <action name="CompSystem.InvokeExternalMethodStoreReturnAPI" apiAction="true" since="4.0">
+            <method>rcInvokeExternalMethodStoreReturnApi</method>
+            <param name="CompSystem.FQCN"
+                   descriptionKey="CompSystem.FQCN.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodName"
+                   descriptionKey="CompSystem.MethodName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodSignature"
+                   descriptionKey="CompSystem.MethodSignature.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgs"
+                   descriptionKey="CompSystem.Args.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.MethodArgsSplit"
+                   descriptionKey="CompSystem.ArgsSplit.descr" 
+                   optional="true">
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>3000</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.InvokeExternalMethod" since="4.0">
+            <method>rcInvokeExternalMethod</method>
             <param name="CompSystem.FQCN" 
                    descriptionKey="CompSystem.FQCN.descr">
                 <type>java.lang.String</type>

@@ -35,6 +35,7 @@
     <itemizedlist>
         <listitem><para>Enter the method signature.</para></listitem>
         <listitem><para>The signature is the list of types of the arguments, separated by ",".</para></listitem>
+        <listitem><para>You can use any Java class which has a public constructor accepting a single String argument.</para></listitem>
         <listitem><para>For Example, "java.lang.String,java.lang.Integer"</para></listitem>
     </itemizedlist>
 </section>

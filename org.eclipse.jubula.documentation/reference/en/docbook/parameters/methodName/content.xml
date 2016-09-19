@@ -34,5 +34,6 @@
     </table>
     <itemizedlist>
         <listitem><para>Enter the method name.</para></listitem>
+        <listitem><para>For Example, calculateNChooseK</para></listitem>
     </itemizedlist>
 </section>

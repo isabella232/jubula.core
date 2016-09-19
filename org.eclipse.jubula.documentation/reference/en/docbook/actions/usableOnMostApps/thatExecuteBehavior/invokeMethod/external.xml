@@ -6,18 +6,21 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="actionInvokeMethod" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="actionInvokeExternalMethod" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                               xmlns:xl="http://www.w3.org/1999/xlink" >
     
-  <title>Invoke Method without a Component</title>
+  <title>Invoke External Method</title>
   
-  <para><emphasis>Invoke Method</emphasis></para>
+  <para><emphasis>Invoke External Method</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          Use this action to invoke static methods in the AUT. Exceptions that occur during the execution of the method will be shown in the ITE as action errors. You can use an IllegalStateException in your method to indicate that something went wrong, the ITE will interpret that as a check failed error.
+          Use this action to invoke external static methods.
+          You have to copy the JAR files containing your methods to the directory <emphasis>&lt;installation-directory&gt;/ite/externaljars</emphasis>.
+          Exceptions that occur during the execution of the method will be shown in the ITE as action errors.
+          You can use an IllegalStateException in your method to indicate that something went wrong, the ITE will interpret that as a check failed error.
         </para>
       </listitem>
       <listitem>
@@ -66,12 +69,15 @@
     </itemizedlist>
   </para>
   
-    <para><emphasis>Invoke Method and Store Value</emphasis></para>
+    <para><emphasis>Invoke External Method and Store Value</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          Use this action to invoke static methods in the AUT. Exceptions that occur during the execution of the method will be shown in the ITE as action errors. You can use an IllegalStateException in your method to indicate that something went wrong, the ITE will interpret that as a check failed error.
+          Use this action to invoke external static methods.
+          You have to copy the JAR files containing your methods to the directory <emphasis>ite/externaljars</emphasis>.
+          Exceptions that occur during the execution of the method will be shown in the ITE as action errors.
+          You can use an IllegalStateException in your method to indicate that something went wrong, the ITE will interpret that as a check failed error.
         </para>
       </listitem>
       <listitem>
@@ -82,7 +88,6 @@
       <listitem>
         <para>
           Parameters:
-          
           <itemizedlist>
           <listitem>
               <para>

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client;
 
+import java.util.Map;
+
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.exceptions.ExecutionException;
 import org.eclipse.jubula.communication.CAP;
@@ -57,4 +59,10 @@ public interface Result<T> {
      * @since 3.2
      */
     void setReturnValue(String value);
+    
+    /**
+     * @return the stored value interpreted as a map
+     * @since 3.2
+     */
+    Map<String, String> getReturnValueAsMap();
 }
