@@ -707,6 +707,10 @@
       description="%stopAUTToolTip" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.SearchDeprecatedTCCommand"
+      name="%SearchDeprecatedTC" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.DisconnectCommand"
       name="%Disconnect" />
     <command
@@ -1549,6 +1553,12 @@
         commandId="org.eclipse.jubula.client.ui.rcp.commands.StartTestSuiteCommand"
         id="org.eclipse.jubula.client.ui.rcp.views.RunningAuts.toolbar.StartTestSuiteCommand"
         style="pulldown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.search.menu?end">
+      <command
+        commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchDeprecatedTCCommand"
+        style="push" />
     </menuContribution>
     <menuContribution locationURI="menu:edit?before=JubulaEditSeparator1">
       <command
@@ -2624,6 +2634,15 @@
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.project.ProjectPropertiesHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ProjectProperties">
+      <enabledWhen>
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+          <equals value="true" />
+        </with>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.SearchDeprecatedTCHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.SearchDeprecatedTCCommand">
       <enabledWhen>
         <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
           <equals value="true" />
