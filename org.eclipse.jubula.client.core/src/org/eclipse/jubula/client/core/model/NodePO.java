@@ -823,4 +823,9 @@ abstract class NodePO implements INodePO {
     public void setDescription(String description) {
         m_description = description;
     }
+    
+    /** {@inheritDoc} */
+    public Iterator<INodePO> getAllNodeIter() {
+        return getNodeListIterator();
+    }
 }

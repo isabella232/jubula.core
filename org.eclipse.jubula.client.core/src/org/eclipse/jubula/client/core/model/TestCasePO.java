@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.core.model;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -143,6 +144,65 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
                 getEventExecTcMap().values();
         setParents(evHandlers);
         return Collections.unmodifiableCollection(evHandlers);
+    }
+    
+
+    /**
+     * Private class implementing an Iterator over all child nodes
+     * @author BREDEX GmbH
+     *
+     */
+    private class AllNodeIterator implements Iterator<INodePO> {
+        /** Iterator over normal nodes */
+        private Iterator<INodePO> m_normals;
+        
+        /** Iterator over event handlers */
+        private Iterator<IEventExecTestCasePO> m_events;
+        
+        /**
+         * Private constructor
+         * @param tc the test case
+         */
+        private AllNodeIterator(ITestCasePO tc) {
+            super();
+            m_normals = tc.getNodeListIterator();
+            m_events = tc.getAllEventEventExecTC().iterator();
+        }
+
+        /** {@inheritDoc} */
+        public boolean hasNext() {
+            if (m_normals != null) {
+                if (m_normals.hasNext()) {
+                    return true;
+                }
+                m_normals = null;
+            }
+            return m_events.hasNext();
+        }
+
+        /** {@inheritDoc} */
+        public INodePO next() {
+            if (!hasNext()) {
+                return null;
+            }
+            
+            if (m_normals != null) {
+                return m_normals.next();
+            }
+            
+            return m_events.next();
+        }
+        
+        /** {@inheritDoc} */
+        public void remove() {
+            throw new UnsupportedOperationException(
+                    "This iterator does not support remove."); //$NON-NLS-1$
+        }
+    }
+
+    /** {@inheritDoc} */
+    public Iterator<INodePO> getAllNodeIter() {
+        return new AllNodeIterator(this);
     }
 
     /**

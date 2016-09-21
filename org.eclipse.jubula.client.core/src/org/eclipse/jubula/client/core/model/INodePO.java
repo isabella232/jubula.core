@@ -272,5 +272,11 @@ public interface INodePO extends ITimestampPO {
      * @param description The m_description to set.
      */
     public void setDescription(String description);
+    
+    /**
+     * Returns an iterator over all child nodes (including event handlers)
+     * @return the iterator
+     */
+    public Iterator<INodePO> getAllNodeIter();
 
 }
