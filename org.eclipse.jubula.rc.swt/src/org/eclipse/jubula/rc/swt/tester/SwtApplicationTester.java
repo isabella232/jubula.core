@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.awt.Rectangle;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
@@ -47,6 +49,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
+
 /**
  * @author BREDEX GmbH
  */
@@ -381,17 +384,24 @@ public class SwtApplicationTester extends AbstractApplicationTester {
      * @param exists
      *            <code>True</code> if the component is expected to exist and be
      *            visible, otherwise <code>false</code>.
+     * @param timeout the amount of time to wait for the existence of the
+     *          window to be checked
      */
     public void rcCheckExistenceOfWindow(final String title,
-            final String operator, final boolean exists) {
-        IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
-        Boolean windowExists = queuer.invokeAndWait(
-                "isWindowOpen", new IRunnable<Boolean>() { //$NON-NLS-1$
-                    public Boolean run() throws StepExecutionException {
-                        return isWindowOpen(title, operator);
-                    }
-                });
-        Verifier.equals(exists, windowExists.booleanValue());
+            final String operator, final boolean exists, int timeout) {
+        final IEventThreadQueuer queuer = new EventThreadQueuerSwtImpl();
+        invokeAndWait("rcCheckExistenceOfWindow", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                Boolean windowExists = queuer.invokeAndWait(
+                        "isWindowOpen", new IRunnable<Boolean>() { //$NON-NLS-1$
+                            public Boolean run() throws StepExecutionException {
+                                return isWindowOpen(title, operator);
+                            }
+                        });
+                Verifier.equals(exists, windowExists.booleanValue());
+            }
+        });
+        
     }
 
     /**

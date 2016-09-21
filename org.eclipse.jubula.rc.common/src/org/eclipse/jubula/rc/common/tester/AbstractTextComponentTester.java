@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -154,11 +155,16 @@ public class AbstractTextComponentTester
     }
     
     /**
-     * Verifies the editable property.
-     * @param editable The editable property to verify.
+     * {@inheritDoc}
      */
-    public void rcVerifyEditable(boolean editable) {
-        Verifier.equals(editable, getTextCompAdapter().isEditable());
+    public void rcVerifyEditable(final boolean editable, int timeout) {
+        CheckWithTimeoutQueuer.invokeAndWait("rcVerifxEditable", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        Verifier.equals(editable,
+                                getTextCompAdapter().isEditable());
+                    }
+                });
     }
         
     /**

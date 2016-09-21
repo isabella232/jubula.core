@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.awt.AWTEvent;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -367,10 +369,16 @@ public class SwingApplicationTester extends AbstractApplicationTester {
      * @param exists
      *            <code>True</code> if the window is expected to exist and be
      *            visible, otherwise <code>false</code>.
+     * @param timeout the amount of time to wait for the existence of the
+     *          window to be checked
      */
-    public void rcCheckExistenceOfWindow(final String title, String operator,
-            boolean exists) {
-        Verifier.equals(exists, isWindowOpen(title, operator));
+    public void rcCheckExistenceOfWindow(final String title,
+            final String operator, final boolean exists, int timeout) {
+        invokeAndWait("rcCheckExistenceOfWindow", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                Verifier.equals(exists, isWindowOpen(title, operator));
+            }
+        });
     }
 
     /**

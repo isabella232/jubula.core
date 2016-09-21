@@ -43,6 +43,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.stage.WindowEvent;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 /**
  * Tester-Class for the Application as a whole.
  *
@@ -216,10 +218,17 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
      * @param exists
      *            <code>True</code> if the window is expected to exist and be
      *            visible, otherwise <code>false</code>.
+     * @param timeout the amount of time to wait for the existence of the
+     *          window to be checked
      */
     public void rcCheckExistenceOfWindow(final String title, String operator,
-            boolean exists) {
-        Verifier.equals(exists, isStageInHierarchy(title, operator));
+            boolean exists, int timeout) {
+        invokeAndWait("rcCheckExistenceOfWindow", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                Verifier.equals(exists, isStageInHierarchy(title, operator));
+            }
+        });
     }
 
     /**

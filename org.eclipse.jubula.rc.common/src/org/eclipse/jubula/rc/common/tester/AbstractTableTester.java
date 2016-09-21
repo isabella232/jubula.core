@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.common.tester;
 
 import java.awt.Rectangle;
 
+import org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -26,6 +27,8 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
 
 /**
  * General implementation for tables.
@@ -65,33 +68,42 @@ public abstract class AbstractTableTester
      * Verifies the rendered text inside the currently selected cell.
      *
      * @param text The cell text to verify.
+     * @param timeout the maximum amount of time to wait for the rendered text
+     *          inside the currently selected cell to be verified
      * @throws StepExecutionException
      *      If there is no selected cell, or if the rendered text cannot
      *      be extracted.
      */
-    public void rcVerifyText(String text)
+    public void rcVerifyText(String text, int timeout)
         throws StepExecutionException {
 
-        rcVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
+        rcVerifyText(text, MatchUtil.DEFAULT_OPERATOR, timeout);
     }
     
     /**
      * Verifies the rendered text inside the currently selected cell.
      * @param text The cell text to verify.
      * @param operator The operation used to verify
-     * @throws StepExecutionException If there is no selected cell, or if the rendered text cannot be extracted.
+     * @param timeout the maximum amount of time to wait for the rendered text
+     *          inside the currently selected cell to be verified
+     * @throws StepExecutionException If there is no selected cell, or if the
+     *          rendered text cannot be extracted.
      */
-    public void rcVerifyText(String text, String operator)
-        throws StepExecutionException {
-        ITableComponent adapter = getTableAdapter();
-        Cell cell = adapter.getSelectedCell();
-        final int implRow = cell.getRow();
-        final int implCol = cell.getCol();
-        checkRowColBounds(implRow, implCol);
+    public void rcVerifyText(final String text, final String operator,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcVerifyText", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                ITableComponent adapter = getTableAdapter();
+                Cell cell = adapter.getSelectedCell();
+                final int implRow = cell.getRow();
+                final int implCol = cell.getCol();
+                checkRowColBounds(implRow, implCol);
 
-        adapter.scrollCellToVisible(implRow, implCol);
-        final String current = getCellText(implRow, implCol);
-        Verifier.match(current, text, operator);
+                adapter.scrollCellToVisible(implRow, implCol);
+                final String current = getCellText(implRow, implCol);
+                Verifier.match(current, text, operator);
+            }
+        });
     }
     
     /**
@@ -102,25 +114,33 @@ public abstract class AbstractTableTester
      * @param colOperator The column header operator
      * @param text The cell text to verify.
      * @param operator The operation used to verify
+     * @param timeout the amount of time to wait for the text in the passed
+     *          cell to be verified
      * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
      */
-    public void rcVerifyText(String text, String operator, final String row,
-            final String rowOperator, final String col,
-            final String colOperator) throws StepExecutionException {
-        ITableComponent adapter = getTableAdapter();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
-        final int implCol = adapter.getColumnFromString(col, colOperator);
-        String current;
-        //if row is header and column is existing
-        if (implRow == -1 && implCol > -1) {
-            current = adapter.getColumnHeaderText(implCol);        
-        } else {
-            checkRowColBounds(implRow, implCol);
-            adapter.scrollCellToVisible(implRow, implCol);
-            current = getCellText(implRow, implCol);
-        }
+    public void rcVerifyText(final String text, final String operator,
+            final String row, final String rowOperator, final String col,
+            final String colOperator, int timeout)
+            throws StepExecutionException {
+        invokeAndWait("rcVerifyText", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                ITableComponent adapter = getTableAdapter();
+                final int implRow = adapter.getRowFromString(row, rowOperator);
+                final int implCol =
+                        adapter.getColumnFromString(col, colOperator);
+                String current;
+                //if row is header and column is existing
+                if (implRow == -1 && implCol > -1) {
+                    current = adapter.getColumnHeaderText(implCol);        
+                } else {
+                    checkRowColBounds(implRow, implCol);
+                    adapter.scrollCellToVisible(implRow, implCol);
+                    current = getCellText(implRow, implCol);
+                }
+                Verifier.match(current, text, operator);
+            }
+        });
         
-        Verifier.match(current, text, operator);
     }
     
     /**
@@ -203,22 +223,31 @@ public abstract class AbstractTableTester
      * @param operator The operation used to verify
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param exists true if value exists, false otherwise
+     * @param timeout the maximum amount of time to wait to verify if the
+     *          value exists in the specified column
      * @throws StepExecutionException
      *             If the row or the column is invalid, or if the rendered text
      *             cannot be extracted.
      */
     public void rcVerifyValueInColumn(final String col,
             final String colOperator, final String value,
-            final String operator, final String searchType, boolean exists)
+            final String operator, final String searchType,
+            final boolean exists, int timeout)
         throws StepExecutionException {
-        ITableComponent adapter = getTableAdapter();
-        final int implCol = adapter.getColumnFromString(col, colOperator);
-        
-        
-        boolean valueExists = isValueExisting(adapter, implCol,
-                value, operator, searchType);
+        invokeAndWait("rcVerifyValueInColumn", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                ITableComponent adapter = getTableAdapter();
+                final int implCol =
+                        adapter.getColumnFromString(col, colOperator);
+                
+                
+                boolean valueExists = isValueExisting(adapter, implCol,
+                        value, operator, searchType);
 
-        Verifier.equals(exists, valueExists);
+                Verifier.equals(exists, valueExists);
+            }
+        });
+        
     }
     /**
      * Looks if value exists in the Column.
@@ -261,56 +290,62 @@ public abstract class AbstractTableTester
      * @param operator The operation used to verify
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param exists true if value exists, false otherwise
+     * @param timeout the maximum amount of time to wait to verify whether the
+     *          value exists in the row
      * @throws StepExecutionException
      *             If the row or the column is invalid, or if the rendered text
      *             cannot be extracted.
      */
     public void rcVerifyValueInRow(final String row, final String rowOperator,
             final String value, final String operator, final String searchType,
-            boolean exists)
-        throws StepExecutionException {
-        final ITableComponent adapter = getTableAdapter();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
-        boolean valueIsExisting = false;
-        //if row is header
-        if (implRow == -1) {
-            
-            for (int k = getStartingColIndex(searchType); 
-                                    k < adapter.getColumnCount(); ++k) {
-                if (MatchUtil.getInstance().match(
-                        adapter.getColumnHeaderText(k),
-                        value, operator)) {
-                    valueIsExisting = true;
-                    break;
-                }
-            }
-                            
-                        
-        } else {
-            
-            final int columnCount = adapter.getColumnCount();
-            if (columnCount > 0) {
-                for (int i = getStartingColIndex(searchType); 
-                        i < columnCount; ++i) {
-                    if (MatchUtil.getInstance().match(
-                            getCellText(implRow, i), value, operator)) {
-                        valueIsExisting = true;
-                        break;
-                    }
-                }
-            } else {
-                // No columns found. This table is used to present a
-                // list-like component.
-                if (MatchUtil.getInstance().match(
-                        adapter.getRowText(implRow),
-                            value, operator)) {
-                    valueIsExisting = true;
+            final boolean exists, int timeout)
+                    throws StepExecutionException {
+        invokeAndWait("rcVerifyValueInRow", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final ITableComponent adapter = getTableAdapter();
+                final int implRow = adapter.getRowFromString(row, rowOperator);
+                boolean valueIsExisting = false;
+                //if row is header
+                if (implRow == -1) {
                     
+                    for (int k = getStartingColIndex(searchType); 
+                                            k < adapter.getColumnCount(); ++k) {
+                        if (MatchUtil.getInstance().match(
+                                adapter.getColumnHeaderText(k),
+                                value, operator)) {
+                            valueIsExisting = true;
+                            break;
+                        }
+                    }
+                                    
+                                
+                } else {
+                    
+                    final int columnCount = adapter.getColumnCount();
+                    if (columnCount > 0) {
+                        for (int i = getStartingColIndex(searchType); 
+                                i < columnCount; ++i) {
+                            if (MatchUtil.getInstance().match(
+                                    getCellText(implRow, i), value, operator)) {
+                                valueIsExisting = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        // No columns found. This table is used to present a
+                        // list-like component.
+                        if (MatchUtil.getInstance().match(
+                                adapter.getRowText(implRow),
+                                    value, operator)) {
+                            valueIsExisting = true;
+                            
+                        }
+                    }             
+          
                 }
-            }             
-  
-        }
-        Verifier.equals(exists, valueIsExisting);
+                Verifier.equals(exists, valueIsExisting);
+            }
+        });
     }
     
     /**
@@ -322,9 +357,11 @@ public abstract class AbstractTableTester
      * @param rowOperator the row header operator
      * @param col the column to select
      * @param colOperator the column header operator
+     * @param timeout the maximum amount of time to wait to verify whether the
+     *          cell is editable or not
      */
-    public void rcVerifyEditable(boolean editable, String row,
-            String rowOperator, String col, String colOperator) {
+    public void rcVerifyEditable(final boolean editable, String row,
+            String rowOperator, String col, String colOperator, int timeout) {
         //if row is header row
         
         if (getTableAdapter().getRowFromString(row, rowOperator) == -1) {
@@ -334,7 +371,11 @@ public abstract class AbstractTableTester
         }        
         selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
                 ValueSets.BinaryChoice.no.rcValue());
-        rcVerifyEditable(editable);
+        invokeAndWait("rcVerifyEditable", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                rcVerifyEditable(editable, 0);
+            }
+        });
     }
     
     
@@ -363,61 +404,71 @@ public abstract class AbstractTableTester
      *
      * @param text The cell text to verify.
      * @param operator The operation used to verify
+     * @param timeout the maximum amount of time to wait for the text at mouse
+     *          position to be verified
      * @throws StepExecutionException If there is no selected cell, or if the
      *                              rendered text cannot be extracted.
      */
-    public void rcVerifyTextAtMousePosition(String text, String operator)
-        throws StepExecutionException {        
-        if (isMouseOnHeader()) {
-            throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
-                    EventFactory.createActionError(
-                            TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
-        }        
-        Cell cell = getCellAtMousePosition();
-        rcVerifyText(text, operator, 
-                Integer.toString(IndexConverter.toUserIndex(cell.getRow())),
-                MatchUtil.EQUALS, 
-                Integer.toString(IndexConverter.toUserIndex(cell.getCol())),
-                MatchUtil.EQUALS);
-    }
-    
-    /**
-     * Verifies the editable property of the selected cell.
-     *
-     * @param editable the editable property to verify.
-     */
-    public void rcVerifyEditableSelected(boolean editable) {
-        rcVerifyEditable(editable);
-    }
-    
-    /**
-     * Verifies the editable property of the current selected cell.
-     *
-     * @param editable The editable property to verify.
-     */
-    public void rcVerifyEditable(boolean editable) {
-        Cell cell = getTableAdapter().getSelectedCell();
-        
-        Verifier.equals(editable, getTableAdapter()
-                .isCellEditable(cell.getRow(), cell.getCol()));
-    }
-    
-    /**
-     * Verifies the editable property of the cell under current mouse position.
-     *
-     * @param editable the editable property to verify.
-     */
-    public void rcVerifyEditableMousePosition(boolean editable) {
-        //if row is header row
+    public void rcVerifyTextAtMousePosition(final String text,
+            final String operator, int timeout) throws StepExecutionException {
         if (isMouseOnHeader()) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
         }
         Cell cell = getCellAtMousePosition();
-        boolean isEditable = getTableAdapter().isCellEditable(
-                cell.getRow(), cell.getCol());
-        Verifier.equals(editable, isEditable);
+        rcVerifyText(text, operator, 
+                Integer.toString(IndexConverter.toUserIndex(cell.getRow())),
+                MatchUtil.EQUALS, 
+                Integer.toString(IndexConverter.toUserIndex(cell.getCol())),
+                MatchUtil.EQUALS, timeout);
+    }
+    
+    /**
+     * Verifies the editable property of the current selected cell.
+     *
+     * @param editable The editable property to verify.
+     * @param timeout the maximum amount of time to wait for the component
+     *                  to have the editable status to be the same as the parameter
+
+     */
+    public void rcVerifyEditable(final boolean editable, int timeout) {
+        final Cell cell = getTableAdapter().getSelectedCell();
+        CheckWithTimeoutQueuer.invokeAndWait("rcVerifyEditable", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        Verifier.equals(editable, getTableAdapter()
+                                .isCellEditable(cell.getRow(), cell.getCol()));
+                    }
+                });
+    }
+    
+    /**
+     * Verifies the editable property of the cell under current mouse position.
+     *
+     * @param editable the editable property to verify.
+     * @param timeout the maximum amount of time to wait to verify whether
+     *          the property of the cell under current mosue position is
+     *          editable
+     */
+    public void rcVerifyEditableMousePosition(final boolean editable,
+            int timeout) {
+        //if row is header row
+        invokeAndWait("rcVerifyEditableMousePosition", timeout, //$NON-NLS-1$
+            new Runnable () {
+                    public void run() {
+                    if (isMouseOnHeader()) {
+                        throw new StepExecutionException(
+                                "Unsupported Header Action", //$NON-NLS-1$
+                                EventFactory.createActionError(
+                                    TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
+                    }
+                    Cell cell = getCellAtMousePosition();
+                    boolean isEditable = getTableAdapter().isCellEditable(
+                            cell.getRow(), cell.getCol());
+                    Verifier.equals(editable, isEditable);
+                }
+            });
     }
     /**
      * Finds the first row which contains the value <code>value</code>
@@ -1116,13 +1167,21 @@ public abstract class AbstractTableTester
      * @param name The name of the property
      * @param value The value of the property as a string
      * @param operator The operator used to verify
+     * @param timeout the maximum amount of time to wait for the property
+     *          at mouse position to be checked
      */
-    public void rcCheckPropertyAtMousePosition(final String name, String value,
-            String operator) {
-        final Object cell = getNodeAtMousePosition();
-        final ITableComponent bean = getTableAdapter();
-        final String propToStr = bean.getPropertyValueOfCell(name, cell);
-        Verifier.match(propToStr, value, operator);
+    public void rcCheckPropertyAtMousePosition(final String name,
+            final String value, final String operator, int timeout) {
+        invokeAndWait("rcCheckPropertyAtMousePosition", timeout, //$NON-NLS-1$
+            new Runnable() {
+                public void run() {
+                    final Object cell = getNodeAtMousePosition();
+                    final ITableComponent bean = getTableAdapter();
+                    final String propToStr =
+                            bean.getPropertyValueOfCell(name, cell);
+                    Verifier.match(propToStr, value, operator);
+                }
+            });
     }
     
     /**
@@ -1130,18 +1189,36 @@ public abstract class AbstractTableTester
      * @param column the column
      * @param columnOperator the operator to find the column
      * @param exists true when the column should be found
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the given column exists to be performed
      */
-    public void rcCheckExistenceOfColumn(String column, String columnOperator,
-            boolean exists) {
-        int index = getTableAdapter().getColumnFromString(column,
-                columnOperator);
-        if (index >= 0) {
-            Rectangle bounds = getTableAdapter().getHeaderBounds(index);
-            if (bounds == null || bounds.getWidth() <= 0) {
-                index = -2;
+    public void rcCheckExistenceOfColumn(final String column,
+            final String columnOperator, final boolean exists, int timeout) {
+        invokeAndWait("rcCheckExistenceOfColumn", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                int index = getTableAdapter().getColumnFromString(column,
+                        columnOperator);
+                if (index >= 0) {
+                    Rectangle bounds = getTableAdapter().getHeaderBounds(index);
+                    if (bounds == null || bounds.getWidth() <= 0) {
+                        index = -2;
+                    }
+                }
+                Verifier.equals(exists, index >= 0);
             }
-        }
-        Verifier.equals(exists, index >= 0);
+        });
+    }
+    
+    /**
+     * Verifies the editable property of the selected cell.
+     *
+     * @param editable
+     *            the editable property to verify.
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the given selected column is editable
+     */
+    public void rcVerifyEditableSelected(boolean editable, int timeout) {
+        rcVerifyEditable(editable, timeout);
     }
 
 }

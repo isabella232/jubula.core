@@ -62,7 +62,7 @@ public interface Result<T> {
     
     /**
      * @return the stored value interpreted as a map
-     * @since 3.2
+     * @since 3.3
      */
     Map<String, String> getReturnValueAsMap();
 }

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.util.StringTokenizer;
 
 import org.apache.commons.lang.Validate;
@@ -57,11 +59,13 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+
 /**
  * Toolkit specific commands for the <code>Tree</code>
  *
@@ -147,26 +151,34 @@ public class TreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void rcVerifyTextAtMousePosition(String pattern, String operator) {
-        TreeItem itemAtMousePosition = (TreeItem) getNodeAtMousePosition();
-        int column = getMouseColumn();
-        AbstractTreeOperationContext context;
-        
-        if (column != -1) {
-            context = 
-                new TableTreeOperationContext(
-                    getEventThreadQueuer(), getRobot(),
-                    getTree(), column);
-        } else {
-            context =
-                new TableTreeOperationContext(
-                    getEventThreadQueuer(), getRobot(), 
-                    getTree());
-        }
-
-        Verifier.match(context.getRenderedText(itemAtMousePosition), 
-                pattern, operator);
-
+    public void rcVerifyTextAtMousePosition(final String pattern,
+            final String operator, int timeout) {
+        invokeAndWait("rcVerifyTextAtMousePosition", //$NON-NLS-1$
+                timeout,
+                new Runnable() {
+                    public void run() {
+                        TreeItem itemAtMousePosition = 
+                                (TreeItem) getNodeAtMousePosition();
+                        int column = getMouseColumn();
+                        AbstractTreeOperationContext context;
+                        
+                        if (column != -1) {
+                            context = 
+                                    new TableTreeOperationContext(
+                                            getEventThreadQueuer(), getRobot(),
+                                            getTree(), column);
+                        } else {
+                            context =
+                                    new TableTreeOperationContext(
+                                            getEventThreadQueuer(), getRobot(), 
+                                            getTree());
+                        }
+                        
+                        Verifier.match(context.getRenderedText(
+                                itemAtMousePosition), 
+                                pattern, operator);
+                    }
+                });
     }
 
     /**
@@ -611,30 +623,36 @@ public class TreeTester extends AbstractTreeTester {
      * @param column the column
      * @param columnOperator the operator to find the column
      * @param exists true when the column should be found
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the given column exists to be performed
      */
-    public void rcCheckExistenceOfColumn(String column, String columnOperator,
-            boolean exists) {
-        TableTreeOperationContext context;
-        int mouseColumn = getMouseColumn();
-        if (mouseColumn == -1) {
-            context = 
-                new TableTreeOperationContext(
-                    getEventThreadQueuer(), getRobot(), getTree());
-        } else {
-            context = 
-                new TableTreeOperationContext(
-                    getEventThreadQueuer(), getRobot(), getTree(), 
-                    mouseColumn);
-        }
-        
-        int index = context.getColumnFromString(column, columnOperator);
-        if (index >= 0) {
-            java.awt.Rectangle bounds = context.getHeaderBounds(index);
-            if (bounds == null || bounds.getWidth() <= 0) {
-                index = -2;
+    public void rcCheckExistenceOfColumn(final String column,
+            final String columnOperator, final boolean exists, int timeout) {
+        invokeAndWait("rcCheckExistenceOfColumn", timeout, new Runnable() {
+            public void run() {
+                TableTreeOperationContext context;
+                int mouseColumn = getMouseColumn();
+                if (mouseColumn == -1) {
+                    context = 
+                        new TableTreeOperationContext(
+                            getEventThreadQueuer(), getRobot(), getTree());
+                } else {
+                    context = 
+                        new TableTreeOperationContext(
+                            getEventThreadQueuer(), getRobot(), getTree(), 
+                            mouseColumn);
+                }
+                
+                int index = context.getColumnFromString(column, columnOperator);
+                if (index >= 0) {
+                    java.awt.Rectangle bounds = context.getHeaderBounds(index);
+                    if (bounds == null || bounds.getWidth() <= 0) {
+                        index = -2;
+                    }
+                }
+                Verifier.equals(exists, index >= 0);
             }
-        }
-        Verifier.equals(exists, index >= 0);
+        });
     }
 
     /**
@@ -719,12 +737,15 @@ public class TreeTester extends AbstractTreeTester {
      * @param pattern The pattern
      * @param column
      *            The column containing the text to verify
+     * @param timeout the maximum amount of time to wait for the check to be
+     *          performed
      * @throws StepExecutionException If no node is selected or the verification fails.
      */
-    public void rcVerifySelectedValue(String pattern, int column)
-        throws StepExecutionException {
+    public void rcVerifySelectedValue(final String pattern, final int column,
+            int timeout) throws StepExecutionException {
 
-        rcVerifySelectedValue(pattern, MatchUtil.DEFAULT_OPERATOR, column);
+        rcVerifySelectedValue(pattern, MatchUtil.DEFAULT_OPERATOR, column,
+                timeout);
     }
     /**
      * Verifies if the selected node underneath <code>treePath</code> at column
@@ -737,22 +758,30 @@ public class TreeTester extends AbstractTreeTester {
      *            actual values.
      * @param column
      *            The column containing the text to verify
+     * @param timeout the maximum amount of time to wait for the check to be
+     *          performed
      * @throws StepExecutionException If there is no tree node selected, the tree path contains no
      *             selection or the verification fails
      */
-    public void rcVerifySelectedValue(String pattern, String operator, 
-        int column) throws StepExecutionException {
-        
-        final int implCol = IndexConverter.toImplementationIndex(column);
-        checkColumnIndex(implCol);
-
-        TableTreeOperationContext context = new TableTreeOperationContext(
-            getEventThreadQueuer(), getRobot(), getTree(), implCol);
-
-        String text = context.getNodeTextAtColumn(context.getSelectedNode());
-        
-        Verifier.match(text, pattern, operator);
-
+    public void rcVerifySelectedValue(final String pattern,
+            final String operator, final int column, int timeout)
+                    throws StepExecutionException {
+        invokeAndWait("rcVerifySelectedValue", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final int implCol = IndexConverter
+                        .toImplementationIndex(column);
+                checkColumnIndex(implCol);
+                
+                TableTreeOperationContext context =
+                        new TableTreeOperationContext(getEventThreadQueuer(),
+                            getRobot(), getTree(), implCol);
+                
+                String text = context
+                        .getNodeTextAtColumn(context.getSelectedNode());
+                
+                Verifier.match(text, pattern, operator);
+            }
+        });
     }
     
     /**
@@ -909,15 +938,22 @@ public class TreeTester extends AbstractTreeTester {
      * @param operator
      *  If regular expressions are used to match the tree path
      * @param checked true if checkbox of tree node is selected, false otherwise
+     * @param timeout the maximum amount of time to wait for the state to occur
      * @throws StepExecutionException If the tree path is invalid, if the
      * double-click to expand the node fails, or if the selection is invalid.
      */
-    public void rcVerifyCheckbox(String pathType, int preAscend, String
-            treePath, String operator, boolean checked)
+    public void rcVerifyCheckbox(final String pathType, final int preAscend,
+            final String treePath, final String operator, final boolean checked,
+            int timeout)
         throws StepExecutionException {
-        verifyCheckBoxByPath(pathType, preAscend, 
-                createStringNodePath(splitTextTreePath(treePath), operator), 
-                checked);    
+        invokeAndWait("rcVerifyCheckBox", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                verifyCheckBoxByPath(pathType, preAscend, 
+                        createStringNodePath(
+                                splitTextTreePath(treePath), operator), 
+                        checked);    
+            }
+        });
     }
     
     /**
@@ -929,37 +965,50 @@ public class TreeTester extends AbstractTreeTester {
      *            parameter.
      * @param indexPath the index path
      * @param checked true if checkbox of tree node is selected, false otherwise
+     * @param timeout the maximum amount of time to wait for the state to occur
      * @throws StepExecutionException if <code>indexPath</code> is not a valid
      * path
      */
-    public void rcVerifyCheckboxByIndices(String pathType, int preAscend, 
-                    String indexPath, boolean checked)
+    public void rcVerifyCheckboxByIndices(final String pathType,
+            final int preAscend, final String indexPath, final boolean checked,
+            int timeout)
         throws StepExecutionException {
-    
-        verifyCheckBoxByPath(pathType, preAscend,
-                createIndexNodePath(splitIndexTreePath(indexPath)), 
-                    checked);    
+        invokeAndWait("rcVerifyChecktboxByIndices", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                verifyCheckBoxByPath(pathType, preAscend,
+                        createIndexNodePath(splitIndexTreePath(indexPath)), 
+                        checked);    
+            }
+        });
     }
     
     /**
      * Verifies whether the checkbox of the first selection in the tree is checked
      * 
      * @param checked true if checkbox of node is selected, false otherwise
+     * @param timeout the maximum amount of time to wait for the state to occur
      * @throws StepExecutionException If no node is selected or the verification fails.
      */
-    public void rcVerifySelectedCheckbox(boolean checked)
-        throws StepExecutionException {        
-        Boolean checkSelected = getEventThreadQueuer().invokeAndWait(
-                "rcVerifyTreeCheckbox", new IRunnable<Boolean>() { //$NON-NLS-1$
-                    public Boolean run() {
-                        AbstractTreeOperationContext context = 
-                                ((ITreeComponent)getComponent()).getContext();
-                        TreeItem node = (TreeItem) getSelectedNode(context);
-                        return node.getChecked();
-                    }            
-                });       
-        
-        Verifier.equals(checked, checkSelected.booleanValue());
+    public void rcVerifySelectedCheckbox(final boolean checked, int timeout)
+        throws StepExecutionException {
+        invokeAndWait("rcVerifySelectedCheckbox", timeout, new Runnable() { //$NON-NLS-1$
+            
+            public void run() {
+                Boolean checkSelected = getEventThreadQueuer().invokeAndWait(
+                        "rcVerifyTreeCheckbox", new IRunnable<Boolean>() { //$NON-NLS-1$
+                            public Boolean run() {
+                                AbstractTreeOperationContext context = 
+                                        ((ITreeComponent)getComponent())
+                                        .getContext();
+                                TreeItem node = 
+                                        (TreeItem) getSelectedNode(context);
+                                return node.getChecked();
+                            }            
+                        });       
+                Verifier.equals(checked, checkSelected.booleanValue());
+                
+            }
+        });
     }
 
     /**
@@ -1056,24 +1105,30 @@ public class TreeTester extends AbstractTreeTester {
 
     /** {@inheritDoc} */
     @Override
-    public void rcCheckPropertyAtMousePosition(final String name, String value,
-            String operator) {
-        Object cell = null;
-        int numColumns = getEventThreadQueuer().invokeAndWait(
-                "checkColumnIndex", //$NON-NLS-1$
-                new IRunnable<Integer>() {
-
-                    public Integer run() {
-                        return getTree().getColumnCount();
+    public void rcCheckPropertyAtMousePosition(final String name,
+            final String value, final String operator, int timeout) {
+        invokeAndWait("rcCheckPropertyAtMousePosition", timeout, //$NON-NLS-1$
+            new Runnable() {
+                public void run() {
+                    Object cell = null;
+                    int numColumns = getEventThreadQueuer().invokeAndWait(
+                            "checkColumnIndex", //$NON-NLS-1$
+                            new IRunnable<Integer>() {
+            
+                                public Integer run() {
+                                    return getTree().getColumnCount();
+                                }
+                            });
+                    if (numColumns > 0) {            
+                        cell = getCellAtMousePosition();
+                    } else {
+                        cell = getNodeAtMousePosition();
                     }
-                });
-        if (numColumns > 0) {            
-            cell = getCellAtMousePosition();
-        } else {
-            cell = getNodeAtMousePosition();
-        }
-        final ITreeComponent bean = getTreeAdapter();
-        final String propToStr = bean.getPropertyValueOfCell(name, cell);
-        Verifier.match(propToStr, value, operator);
+                    final ITreeComponent bean = getTreeAdapter();
+                    final String propToStr =
+                            bean.getPropertyValueOfCell(name, cell);
+                    Verifier.match(propToStr, value, operator);
+                }
+            });
     }
 }

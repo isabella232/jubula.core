@@ -315,9 +315,10 @@ public class JsonStorage {
             }
             projectPO = load(projectDTO, subMonitor.newChild(1), io,
                     assignNewGuid, assignNewVersion, paramNameMapper,
-                    compNameCache, false);
+                    compNameCache, false, exportDTO);
 
-            JsonImporter importer = new JsonImporter(monitor, io, false);
+            JsonImporter importer = new JsonImporter(monitor, io, false,
+                    exportDTO);
             List<TestresultSummaryDTO> summaryDTOs = 
                     (List<TestresultSummaryDTO>) allDTOs.get(RST);
             
@@ -350,6 +351,7 @@ public class JsonStorage {
      * @param paramNameMapper 
      * @param compNameCache 
      * @param skipTrackingInformation  
+     * @param exportInfo the exported verison information
      * @return IProjectPO 
      * @throws JBVersionException
      * @throws InterruptedException
@@ -360,14 +362,14 @@ public class JsonStorage {
             IProgressConsole io, boolean assignNewGuid,
             boolean assignNewVersion, IParamNameMapper paramNameMapper,
             IWritableComponentNameCache compNameCache,
-            boolean skipTrackingInformation)
+            boolean skipTrackingInformation, ExportInfoDTO exportInfo)
                     throws JBVersionException, InterruptedException,
                     PMReadException, ToolkitPluginException {
 
         IProjectPO projectPO = null;
         try {
             JsonImporter importer = new JsonImporter(monitor, io,
-                    skipTrackingInformation);
+                    skipTrackingInformation, exportInfo);
             projectPO = importer.createProject(dto, assignNewGuid,
                     assignNewVersion, paramNameMapper, compNameCache);
         } catch (InvalidDataException e) {

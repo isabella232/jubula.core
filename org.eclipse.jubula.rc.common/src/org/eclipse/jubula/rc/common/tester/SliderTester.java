@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ISliderComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -37,16 +38,27 @@ public class SliderTester extends WidgetTester {
      *            The operator
      * @param units
      *            The units in which the position is defined (value/percent)
+     * @param timeout the amaximum amount of time to wait for the position to be
+     *          verified
      */
-    public void rcVerifyPosition(String pos, String operator, String units) {
+    public void rcVerifyPosition(final String pos, final String operator,
+            final String units, int timeout) {
         if (pos == null) {
             throw new StepExecutionException("The position must not be null", //$NON-NLS-1$
                     EventFactory.createActionError());
         }
-        String actualPosition = getSliderAdapter().getPosition(units);
-        if (!MatchUtil.getInstance().match(actualPosition, pos, operator)) {
-            Verifier.throwVerifyFailed(pos, actualPosition);
-        }
+        CheckWithTimeoutQueuer.invokeAndWait("rcVerifyPosition", timeout,
+                new Runnable() {
+                    public void run() {
+                        String actualPosition =
+                                getSliderAdapter().getPosition(units);
+                        if (!MatchUtil.getInstance().match(actualPosition, pos,
+                                operator)) {
+                            Verifier.throwVerifyFailed(pos, actualPosition);
+                        }
+
+                    }
+                });
     }
     
     /**

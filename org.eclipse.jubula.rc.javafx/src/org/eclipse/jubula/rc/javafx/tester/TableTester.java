@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -452,16 +454,22 @@ public class TableTester extends AbstractTableTester {
      *
      * @param checked
      *            true if checkbox in cell should be selected, false otherwise
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the given column the checkbox is selected or not
      * @throws StepExecutionException
      *             If no cell is selected or the verification fails.
      */
-    public void rcVerifyCheckboxInSelectedRow(boolean checked)
-        throws StepExecutionException {
-        Cell selectedCell = ((ITableComponent) getComponent())
-                .getSelectedCell();
-        int row = selectedCell.getRow();
-        int column = getIndexOfColumnWithCheckbox(row);
-        verifyCheckboxInRow(checked, row, column);
+    public void rcVerifyCheckboxInSelectedRow(final boolean checked,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcVerifyCheckboxInSelectedRow", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                Cell selectedCell = ((ITableComponent) getComponent())
+                        .getSelectedCell();
+                int row = selectedCell.getRow();
+                int column = getIndexOfColumnWithCheckbox(row);
+                verifyCheckboxInRow(checked, row, column);
+            }
+        });
     }
 
     /**
@@ -470,19 +478,28 @@ public class TableTester extends AbstractTableTester {
      *
      * @param checked
      *            true if checkbox in cell is selected, false otherwise
+     * @param timeout the maximum amount of time to wait to verify whether the
+     *          checkbox in the row under the mouse pointer is checked
      */
-    public void rcVerifyCheckboxInRowAtMousePosition(boolean checked) {
-        Cell cell = getCellAtMousePosition();
-        if (cell != null) {
-            int row = cell.getRow();
-            int column = cell.getCol();
-            verifyCheckboxInRow(checked, row, column);
-        } else {
-            throw new StepExecutionException(
-                    "No checkbox found", //$NON-NLS-1$
-                    EventFactory.createActionError(
-                            TestErrorEvent.CHECKBOX_NOT_FOUND));
-        }
+    public void rcVerifyCheckboxInRowAtMousePosition(boolean checked,
+            int timeout) {
+        invokeAndWait("rcVerifyCheckboxInRowAtMousePosition", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        Cell cell = getCellAtMousePosition();
+                        if (cell != null) {
+                            int row = cell.getRow();
+                            int column = cell.getCol();
+                            verifyCheckboxInRow(checked, row, column);
+                        } else {
+                            throw new StepExecutionException(
+                                    "No checkbox found", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                            TestErrorEvent.CHECKBOX_NOT_FOUND));
+                        }
+                    }
+                });
     }
     
     /**
@@ -591,32 +608,34 @@ public class TableTester extends AbstractTableTester {
     @Override
     public void rcVerifyValueInRow(final String row, final String rowOperator,
             final String value, final String operator, final String searchType,
-            boolean exists)
-        throws StepExecutionException {
-
-        final ITableComponent adapter = (ITableComponent) getComponent();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
-        // if row is header
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "rcVerifyValueInRow", new Callable<Boolean>() { //$NON-NLS-1$
-
-                    @Override
-                    public Boolean call() throws Exception {
-                        boolean valueIsExisting = false;
-                        if (implRow == -1) {
-                            valueIsExisting = (getColumnByName(value, operator,
-                                    searchType, adapter, implRow) != null) 
-                                    ? true : false;
-                        } else {
-                            valueIsExisting = (getColumnByValue(value, operator,
-                                    searchType, adapter, implRow) != null) 
-                                    ? true : false;
-                        }
-                        return valueIsExisting;
-                    }
-                });
-
-        Verifier.equals(exists, result);
+            final boolean exists, int timeout) throws StepExecutionException {
+        invokeAndWait("rcVerifyValueInRow", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                final ITableComponent adapter =
+                        (ITableComponent) getComponent();
+                final int implRow = adapter.getRowFromString(row, rowOperator);
+                // if row is header
+                boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                        "rcVerifyValueInRow", new Callable<Boolean>() { //$NON-NLS-1$
+                            @Override
+                            public Boolean call() throws Exception {
+                                boolean valueIsExisting = false;
+                                if (implRow == -1) {
+                                    valueIsExisting = (getColumnByName(value,
+                                            operator, searchType, adapter,
+                                            implRow) != null) ? true : false;
+                                } else {
+                                    valueIsExisting = (getColumnByValue(value,
+                                            operator, searchType, adapter,
+                                            implRow) != null) ? true : false;
+                                }
+                                return valueIsExisting;
+                            }
+                        });
+                Verifier.equals(exists, result);
+            }
+        });
     }
     
     /**

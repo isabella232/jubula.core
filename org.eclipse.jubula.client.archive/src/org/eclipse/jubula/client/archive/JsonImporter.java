@@ -25,6 +25,10 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jubula.client.archive.converter.json.AddTimeoutToCAPConverter;
+import org.eclipse.jubula.client.archive.converter.json.RemoveDoubledUniqueIds;
+import org.eclipse.jubula.client.archive.converter.utils.AbstractConverter;
+import org.eclipse.jubula.client.archive.converter.utils.IConverter;
 import org.eclipse.jubula.client.archive.dto.AutConfigDTO;
 import org.eclipse.jubula.client.archive.dto.AutDTO;
 import org.eclipse.jubula.client.archive.dto.CapDTO;
@@ -39,6 +43,7 @@ import org.eclipse.jubula.client.archive.dto.DataRowDTO;
 import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.ExecCategoryDTO;
+import org.eclipse.jubula.client.archive.dto.ExportInfoDTO;
 import org.eclipse.jubula.client.archive.dto.MapEntryDTO;
 import org.eclipse.jubula.client.archive.dto.MonitoringValuesDTO;
 import org.eclipse.jubula.client.archive.dto.NamedTestDataDTO;
@@ -157,17 +162,22 @@ public class JsonImporter {
     
     /** The import output. */
     private IProgressConsole m_io;
+
+    /** */
+    private ExportInfoDTO m_exportInfo;
     
     /**
      * @param monitor 
      * @param io console
      * @param skipTrackingInformation 
+     * @param exportInfo the information about the 
      */
     public JsonImporter(IProgressMonitor monitor, IProgressConsole io,
-            boolean skipTrackingInformation) {
+            boolean skipTrackingInformation, ExportInfoDTO exportInfo) {
         m_monitor = monitor;
         m_io = io;
         m_skipTrackingInformation = skipTrackingInformation;
+        m_exportInfo = exportInfo;
     }
     
     /**
@@ -199,6 +209,8 @@ public class JsonImporter {
         checkUsedToolkits(projectDTO);
        
         
+        applyConverters(projectDTO);
+        
         IProjectPO proj = initProject(projectDTO, assignNewGuid,
                 assignNewVersion);
         EntityManager attrDescSession = Persistor.instance().openSession();
@@ -211,6 +223,20 @@ public class JsonImporter {
         return proj;
     }
     
+    /**
+     * @param projectDTO the project to convert
+     */
+    private void applyConverters(ProjectDTO projectDTO) {
+        List<AbstractConverter<ProjectDTO>> converters = 
+                new ArrayList<AbstractConverter<ProjectDTO>>(1);
+        converters.add(new RemoveDoubledUniqueIds(m_exportInfo));
+        converters.add(new AddTimeoutToCAPConverter(m_exportInfo));
+        
+        for (IConverter<ProjectDTO> converter : converters) {
+            converter.convert(projectDTO);
+        }
+    }
+
     /**
      * Check, whether the supported toolkits are supported.
      * @param usedToolkits collection of the used toolkits

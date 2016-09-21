@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
+
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -212,16 +215,20 @@ public class ToolItemTester extends ButtonTester {
      *            operator used for matching
      * @param enabled
      *            for checking enabled or disabled
+     * @param timeout
+     *            the maximum amount of time to wait for the state to occur
      */
-    public void rcVerifyContextMenuEnabled(String namePath, String operator,
-            boolean enabled) {
-
-        // Try to open menu
-        openDropdownMenu();
-
-        // Call appropriate delegate method
-        m_menuTester.verifyEnabled(namePath, operator, enabled);
-
+    public void rcVerifyContextMenuEnabled(final String namePath,
+            final String operator, final boolean enabled, int timeout) {
+        invokeAndWait("rcVerifyContextMenuEnabled", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                // Try to open menu
+                openDropdownMenu();
+                
+                // Call appropriate delegate method
+                m_menuTester.verifyEnabled(namePath, operator, enabled, 0);
+            }
+        });
     }
     
     /**
@@ -232,16 +239,22 @@ public class ToolItemTester extends ButtonTester {
      *            the menu item to select
      * @param enabled
      *            for checking enabled or disabled
+     * @param timeout
+     *            the maximum amount of time to wait for the state to occur
      */
-    public void rcVerifyContextMenuEnabledByIndexpath(String indexPath,
-            boolean enabled) {
+    public void rcVerifyContextMenuEnabledByIndexpath(final String indexPath,
+            final boolean enabled, int timeout) {
+        invokeAndWait("rcVerifyContextMenuEnabledByIndexpath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        // Try to open menu
+                        openDropdownMenu();
 
-        // Try to open menu
-        openDropdownMenu();
-
-        // Call appropriate delegate method
-        m_menuTester.verifyEnabledByIndexpath(indexPath, enabled);
-
+                        // Call appropriate delegate method
+                        m_menuTester.verifyEnabledByIndexpath(indexPath,
+                                enabled, 0);
+                    }
+                });
     }
     
     /**
@@ -253,15 +266,20 @@ public class ToolItemTester extends ButtonTester {
      *            operator operator used for matching
      * @param exists
      *            for checking existence or unexistence
+     * @param timeout
+     *            the maximum amount of time to wait for the state to occur
      */
-    public void rcVerifyContextMenuExists(String namePath, String operator,
-            boolean exists) {
-        // Try to open menu
-        openDropdownMenu();
-
-        // Call appropriate delegate method
-        m_menuTester.verifyExists(namePath, operator, exists);
-
+    public void rcVerifyContextMenuExists(final String namePath,
+            final String operator, final boolean exists, int timeout) {
+        invokeAndWait("rcVerifyContextMenuExists", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                // Try to open menu
+                openDropdownMenu();
+                
+                // Call appropriate delegate method
+                m_menuTester.verifyExists(namePath, operator, exists, 0);
+            }
+        });
     }
     
     /**
@@ -271,15 +289,21 @@ public class ToolItemTester extends ButtonTester {
      *            the menu item to select
      * @param exists
      *            for checking existence or unexistence
+     * @param timeout
+     *            the maximum amount of time to wait for the state to occur
      */
-    public void rcVerifyContextMenuExistsByIndexpath(String indexPath,
-            boolean exists) {
-
-        // Try to open menu
-        openDropdownMenu();
-
-        // Call appropriate delegate method
-        m_menuTester.verifyExistsByIndexpath(indexPath, exists);
+    public void rcVerifyContextMenuExistsByIndexpath(final String indexPath,
+            final boolean exists, int timeout) {
+        invokeAndWait("rcVerifyContextMenuExistsByIndexpath", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                // Try to open menu
+                openDropdownMenu();
+                
+                // Call appropriate delegate method
+                m_menuTester.verifyExistsByIndexpath(indexPath, exists, 0);
+                
+            }
+        });
     }
     
     /**
@@ -291,15 +315,20 @@ public class ToolItemTester extends ButtonTester {
      *            operator used for matching
      * @param selected
      *            for checking selected or not selected
+     * @param timeout
+     *            the maximum amount of time to wait for the state to occur
      */
-    public void rcVerifyContextMenuSelected(String namePath, String operator, 
-        boolean selected) {
-        
-        // Try to open menu
-        openDropdownMenu();
-
-        // Call appropriate delegate method
-        m_menuTester.verifySelected(namePath, operator, selected);
+    public void rcVerifyContextMenuSelected(final String namePath,
+            final String operator, final boolean selected, int timeout) {
+        invokeAndWait("rcVerifyContextMenuSelected", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                // Try to open menu
+                openDropdownMenu();
+                
+                // Call appropriate delegate method
+                m_menuTester.verifySelected(namePath, operator, selected, 0);
+            }
+        });
     }
     
     /**
@@ -309,15 +338,21 @@ public class ToolItemTester extends ButtonTester {
      *            the menu item to verify against
      * @param selected
      *            for checking selected or not selected
+     * @param timeout
+     *            the maximum amount of time to wait for the state to occur
      */
-    public void rcVerifyContextMenuSelectedByIndexpath(String indexPath,
-            boolean selected) {
+    public void rcVerifyContextMenuSelectedByIndexpath(final String indexPath,
+            final boolean selected, int timeout) {
+        invokeAndWait("rcVerifyContextMenuSelectedByIndexpath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        // Try to open menu
+                        openDropdownMenu();
 
-        // Try to open menu
-        openDropdownMenu();
-
-        // Call appropriate delegate method
-        m_menuTester.verifySelectedByIndexpath(indexPath, selected);
+                        // Call appropriate delegate method
+                        m_menuTester.verifySelectedByIndexpath(indexPath,
+                                selected, 0);
+                    }
+                });
     }
-    
 }

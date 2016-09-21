@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.rcp.e3.gef.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -192,19 +194,24 @@ public class FigureCanvasTester extends WidgetTester {
      * @param textPath The path to the figure.
      * @param operator The operator used for matching.
      * @param exists   Whether the figure is expected to exist.
+     * @param timeout the time to wait for the status to occur
      */
     public void rcCheckFigureExists(
-            String textPath, String operator, boolean exists) {
-
-        boolean isExisting = FigureCanvasUtil.
-            findFigure(findEditPart(textPath, operator)) != null;
-        if (!isExisting) {
-            // See if there's a connection anchor at the given path
-            isExisting = findConnectionAnchor(textPath, operator) != null;
-        }
-
-        Verifier.equals(exists, isExisting);
-
+            final String textPath, final String operator,
+            final boolean exists, int timeout) {
+        invokeAndWait("rcCheckFigureExists", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                boolean isExisting = FigureCanvasUtil.
+                        findFigure(findEditPart(textPath, operator)) != null;
+                if (!isExisting) {
+                    // See if there's a connection anchor at the given path
+                    isExisting = findConnectionAnchor(textPath, operator) 
+                            != null;
+                }
+                
+                Verifier.equals(exists, isExisting);
+            }
+        });
     }
 
     /**
@@ -215,17 +222,21 @@ public class FigureCanvasTester extends WidgetTester {
      * @param propertyName The name of the property
      * @param expectedPropValue The value of the property as a string
      * @param valueOperator The operator used to verify
+     * @param timeout the time to wait for the status to occur
      */
-    public void rcVerifyFigureProperty(String textPath,
-            String textPathOperator, String propertyName,
-            String expectedPropValue, String valueOperator) {
-
-        IFigure figure = FigureCanvasUtil.
-            findFigure(findEditPart(textPath, textPathOperator));
-        nullCheckFigure(figure);
-        String propToStr = getPropertyFromFigure(propertyName, figure);
-        Verifier.match(propToStr, expectedPropValue, valueOperator);
-
+    public void rcVerifyFigureProperty(final String textPath,
+            final String textPathOperator, final String propertyName,
+            final String expectedPropValue, final String valueOperator,
+            int timeout) {
+        invokeAndWait("rcVerifyFigureProperty", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                IFigure figure = FigureCanvasUtil.
+                        findFigure(findEditPart(textPath, textPathOperator));
+                nullCheckFigure(figure);
+                String propToStr = getPropertyFromFigure(propertyName, figure);
+                Verifier.match(propToStr, expectedPropValue, valueOperator);
+            }
+        });
     }
     
     /**
@@ -249,14 +260,18 @@ public class FigureCanvasTester extends WidgetTester {
      * @param textPath The path to the figure.
      * @param operator The operator used for matching.
      * @param exists   Whether the figure is expected to exist.
+     * @param timeout the time to wait for the status to occur
      */
-    public void rcCheckToolExists(
-            String textPath, String operator, boolean exists) {
-
-        boolean isExisting = findPaletteFigure(textPath, operator) != null;
-
-        Verifier.equals(exists, isExisting);
-
+    public void rcCheckToolExists(final String textPath, final String operator,
+            final boolean exists, int timeout) {
+        invokeAndWait("rcCheckToolExists", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                boolean isExisting = 
+                        findPaletteFigure(textPath, operator) != null;
+                
+                Verifier.equals(exists, isExisting);
+            }
+        });
     }
 
     /**
@@ -820,19 +835,23 @@ public class FigureCanvasTester extends WidgetTester {
      * @param targetOperator The operator to use for matching the target
      *                       figure path.
      * @param exists whether the connection is expected to exist.
+     * @param timeout the time to wait for the status to occur
      */
-    public void rcCheckConnectionExists(String sourceTextPath,
-            String sourceOperator, String targetTextPath,
-            String targetOperator, boolean exists) {
-        boolean found = true;
-        try {
-            getConnectionFigure(sourceTextPath,
-                    sourceOperator, targetTextPath, targetOperator);
-        } catch (StepExecutionException see) {
-            found = false;
-        }
-        Verifier.equals(exists, found);
-
+    public void rcCheckConnectionExists(final String sourceTextPath,
+            final String sourceOperator, final String targetTextPath,
+            final String targetOperator, final boolean exists, int timeout) {
+        invokeAndWait("rcCheckConnectionExists", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                boolean found = true;
+                try {
+                    getConnectionFigure(sourceTextPath,
+                            sourceOperator, targetTextPath, targetOperator);
+                } catch (StepExecutionException see) {
+                    found = false;
+                }
+                Verifier.equals(exists, found);
+            }
+        });
     }
 
     /**
@@ -931,43 +950,53 @@ public class FigureCanvasTester extends WidgetTester {
      * @param comparisonMethod
      *            the comparison method should be a rc value from
      *            {@link org.eclipse.jubula.toolkit.enums.ValueSets.NumberComparisonOperator}
+     * @param timeout 
+     *            the time to wait for the status to occur
      */
-    public void rcCheckNumberOfAnchors(String textPath, String operator,
-            String anchorType, int count, String comparisonMethod) {
-        GraphicalEditPart editPart =
-                findEditPart(textPath, operator);
-        if (editPart == null) {
-            throw new StepExecutionException(
-                    "No Edit Part could be found for the given text path.", //$NON-NLS-1$
-                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
-        }
-        IEditPartIdentifier editPartIdentifier =
-                DefaultEditPartAdapterFactory.loadFigureIdentifier(
-                        editPart);
-        int connectionCount = 0;
-        
-        if (anchorType
-                .equals(AnchorType.both.rcValue())) {
-            connectionCount = editPartIdentifier.getConnectionAnchors().size();
-        } else if (editPartIdentifier 
-                instanceof IDirectionalEditPartAnchorIdentifier) {
-            IDirectionalEditPartAnchorIdentifier extended = 
-                    (IDirectionalEditPartAnchorIdentifier) editPartIdentifier;
-            
-            if (anchorType.equals(AnchorType.incoming.rcValue())) {
-                connectionCount = extended
-                        .getIncomingConnectionAnchors().size();
-            } else if (anchorType
-                    .equals(AnchorType.outgoing.rcValue())) {
-                connectionCount = extended
-                        .getOutgoingConnectionAnchors().size();
+    public void rcCheckNumberOfAnchors(final String textPath,
+            final String operator, final String anchorType, 
+            final int count, final String comparisonMethod, int timeout) {
+        invokeAndWait("rcCheckNumbersOfAnchors", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                GraphicalEditPart editPart = findEditPart(textPath, operator);
+                if (editPart == null) {
+                    throw new StepExecutionException(
+                            "No Edit Part could be found for the given text path.", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                    TestErrorEvent.NOT_FOUND));
+                }
+                IEditPartIdentifier editPartIdentifier =
+                        DefaultEditPartAdapterFactory
+                                .loadFigureIdentifier(editPart);
+                int connectionCount = 0;
+
+                if (anchorType.equals(AnchorType.both.rcValue())) {
+                    connectionCount =
+                            editPartIdentifier.getConnectionAnchors().size();
+                } else if (editPartIdentifier 
+                        instanceof IDirectionalEditPartAnchorIdentifier) {
+                    IDirectionalEditPartAnchorIdentifier extended =
+                            (IDirectionalEditPartAnchorIdentifier) 
+                            editPartIdentifier;
+
+                    if (anchorType.equals(AnchorType.incoming.rcValue())) {
+                        connectionCount =
+                                extended.getIncomingConnectionAnchors().size();
+                    } else if (anchorType
+                            .equals(AnchorType.outgoing.rcValue())) {
+                        connectionCount =
+                                extended.getOutgoingConnectionAnchors().size();
+                    }
+                } else {
+                    throw new StepExecutionException(
+                            "GraphicalEditPart does not support the anchor type" //$NON-NLS-1$
+                                    + anchorType,
+                            EventFactory.createActionError());
+                }
+                Comparer.compare(Integer.toString(connectionCount),
+                        Integer.toString(count), comparisonMethod);
             }
-        } else  {
-            throw new StepExecutionException("GraphicalEditPart does not support the anchor type" + anchorType,  //$NON-NLS-1$
-                    EventFactory.createActionError());
-        }
-        Comparer.compare(Integer.toString(connectionCount), 
-                Integer.toString(count), comparisonMethod);
+        });
     }
 
     /**
@@ -979,45 +1008,54 @@ public class FigureCanvasTester extends WidgetTester {
      *            {@link org.eclipse.jubula.toolkit.enums.ValueSets.Operator}
      * @param hasConnection
      *            if the anchor has a connection or not
+     * @param timeout 
+     *            the time to wait for the status to occur
      */
-    public void rcCheckAnchorConnection(String textPath, String operator,
-            boolean hasConnection) {
-
-        ConnectionAnchor anchor = findConnectionAnchor(
-                textPath, operator);
-        if (anchor == null) {
-            throw new StepExecutionException(
-                    "No Anchor could be found for the given text path.", //$NON-NLS-1$
-                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
-        }
-        GraphicalEditPart anchorEditPart = getPartWithAnchor(textPath,
-                operator, true);
-
-        ConnectionEditPart[] sourceConnections =
-                getSourceConnectionEditParts(anchorEditPart);
-        ConnectionEditPart[] targetConnections =
-                getTargetConnectionEditParts(anchorEditPart);
-
-        boolean connection = false;
-        for (int i = 0; i < sourceConnections.length; i++) {
-            ConnectionEditPart connectiontest = checkConnectionWithAnchor(
-                    sourceConnections[i], anchor, null);
-            if (connectiontest != null) {
-                connection = true;
-                break;
-            }
-        }
-        if (!connection) {
-            for (int i = 0; i < targetConnections.length; i++) {
-                ConnectionEditPart connectiontest = checkConnectionWithAnchor(
-                        targetConnections[i], null, anchor);
-                if (connectiontest != null) {
-                    connection = true;
-                    break;
+    public void rcCheckAnchorConnection(final String textPath,
+            final String operator, final boolean hasConnection,
+            int timeout) {
+        invokeAndWait("rcCheckAnchorConnection", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                ConnectionAnchor anchor =
+                        findConnectionAnchor(textPath, operator);
+                if (anchor == null) {
+                    throw new StepExecutionException(
+                            "No Anchor could be found for the given text path.", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                    TestErrorEvent.NOT_FOUND));
                 }
+                GraphicalEditPart anchorEditPart =
+                        getPartWithAnchor(textPath, operator, true);
+
+                ConnectionEditPart[] sourceConnections =
+                        getSourceConnectionEditParts(anchorEditPart);
+                ConnectionEditPart[] targetConnections =
+                        getTargetConnectionEditParts(anchorEditPart);
+
+                boolean connection = false;
+                for (int i = 0; i < sourceConnections.length; i++) {
+                    ConnectionEditPart connectiontest =
+                            checkConnectionWithAnchor(sourceConnections[i],
+                                    anchor, null);
+                    if (connectiontest != null) {
+                        connection = true;
+                        break;
+                    }
+                }
+                if (!connection) {
+                    for (int i = 0; i < targetConnections.length; i++) {
+                        ConnectionEditPart connectiontest =
+                                checkConnectionWithAnchor(targetConnections[i],
+                                        null, anchor);
+                        if (connectiontest != null) {
+                            connection = true;
+                            break;
+                        }
+                    }
+                }
+                Verifier.equals(hasConnection, connection);
             }
-        }
-        Verifier.equals(hasConnection, connection);
+        });
     }
 
     /**
@@ -1063,15 +1101,22 @@ public class FigureCanvasTester extends WidgetTester {
      * @param propertyName The name of the property
      * @param expectedPropValue The value of the property as a string
      * @param valueOperator The operator used to verify
+     * @param timeout the time to wait for the status to occur
      */
-    public void rcVerifyConnectionProperty(String sourceTextPath,
-            String sourceOperator, String targetTextPath,
-            String targetOperator, final String propertyName,
-            String expectedPropValue, String valueOperator) {
-        final IFigure figure = getConnectionFigure(sourceTextPath,
-                sourceOperator, targetTextPath, targetOperator);        
-        final String propToStr = getPropertyFromFigure(propertyName, figure);
-        Verifier.match(propToStr, expectedPropValue, valueOperator);
+    public void rcVerifyConnectionProperty(final String sourceTextPath,
+            final String sourceOperator, final String targetTextPath,
+            final String targetOperator, final String propertyName,
+            final String expectedPropValue, final String valueOperator,
+            int timeout) {
+        invokeAndWait("rcVerifyConnectionProperty", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final IFigure figure = getConnectionFigure(sourceTextPath,
+                        sourceOperator, targetTextPath, targetOperator);        
+                final String propToStr = 
+                        getPropertyFromFigure(propertyName, figure);
+                Verifier.match(propToStr, expectedPropValue, valueOperator);
+            }
+        });
     }
 
     /**

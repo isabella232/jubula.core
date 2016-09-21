@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,29 +78,39 @@ public class ListTester extends AbstractTextVerifiableTester {
      * 
      * @param index The index to verify
      * @param expectSelected Whether the index should be selected.
+     * @param timeout the maximum amount of time to wait for the index's
+     *          selection to be verified
      */
-    public void rcVerifySelectedIndex(String index, boolean expectSelected) {
-        int[] selected = getCheckedSelectedIndices();
-        int implIndex = IndexConverter.toImplementationIndex(
-                Integer.parseInt(index));
-
-        boolean isSelected = ArrayUtils.contains(selected, implIndex);
-        if (expectSelected != isSelected) {
-            throw new StepExecutionException(
-                    "Selection check failed for index: " + index,  //$NON-NLS-1$
-                    EventFactory.createVerifyFailed(
-                            String.valueOf(expectSelected), 
-                            String.valueOf(isSelected)));
-        }
+    public void rcVerifySelectedIndex(final String index,
+            final boolean expectSelected, int timeout) {
+        invokeAndWait("rcVerifySelectedIndex", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                int[] selected = getCheckedSelectedIndices();
+                int implIndex = IndexConverter.toImplementationIndex(
+                        Integer.parseInt(index));
+                
+                boolean isSelected = ArrayUtils.contains(selected, implIndex);
+                if (expectSelected != isSelected) {
+                    throw new StepExecutionException(
+                            "Selection check failed for index: " + index,  //$NON-NLS-1$
+                            EventFactory.createVerifyFailed(
+                                    String.valueOf(expectSelected), 
+                                    String.valueOf(isSelected)));
+                }
+            }
+        });
     }
     
     /**
      * Verifies if the passed value or enumeration of values is selected. By
      * default, the enumeration separator is <code>,</code>
      * @param valueList The value or list of values to verify
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the passed value is selected to be performed
      */
-    public void rcVerifySelectedValue(String valueList) {
-        rcVerifySelectedValue(valueList, MatchUtil.DEFAULT_OPERATOR, true);
+    public void rcVerifySelectedValue(String valueList, int timeout) {
+        rcVerifySelectedValue(valueList, MatchUtil.DEFAULT_OPERATOR, true,
+                timeout);
     }
     
     /**
@@ -107,32 +119,46 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param value The value to verify
      * @param operator The operator to use when comparing the 
      *                 expected and actual values.
-     *  @param isSelected if the value should be selected or not.
+     * @param isSelected if the value should be selected or not.
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the passed value is selected to be performed
      */
-    public void rcVerifySelectedValue(String value, String operator,
-            boolean isSelected) {
-
-        final String[] current = getListAdapter().getSelectedValues();
-        final ListSelectionVerifier listSelVerifier =
-            new ListSelectionVerifier();
-        for (int i = 0; i < current.length; i++) {
-            listSelVerifier.addItem(i, current[i], true);
-        }
-        listSelVerifier.verifySelection(value, operator, isSelected);
+    public void rcVerifySelectedValue(final String value, final String operator,
+            final boolean isSelected, int timeout) {
+        invokeAndWait("rcVerifySelectedValue", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final String[] current = getListAdapter().getSelectedValues();
+                final ListSelectionVerifier listSelVerifier =
+                        new ListSelectionVerifier();
+                for (int i = 0; i < current.length; i++) {
+                    listSelVerifier.addItem(i, current[i], true);
+                }
+                listSelVerifier.verifySelection(value, operator,
+                        isSelected);
+            }
+        });
     }
     
     /**
      * Verifies if all selected elements of a list match a text.
      * @param text The text to verify
      * @param operator The operator used to verify
+     * @param timeout the maximum amount of time to wait to verify whether all
+     *          selected elements of the list matches the text
      */
-    public void rcVerifyText(String text, String operator) {
-        String[] selected = getListAdapter().getSelectedValues();
-        final int selCount = selected.length;
-        SelectionUtil.validateSelection(selected);
-        for (int i = 0; i < selCount; i++) {
-            Verifier.match(selected[i], text, operator);
-        }
+    public void rcVerifyText(final String text, final String operator,
+            int timeout) {
+        invokeAndWait("rcVerifyText", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                String[] selected = getListAdapter().getSelectedValues();
+                final int selCount = selected.length;
+                SelectionUtil.validateSelection(selected);
+                for (int i = 0; i < selCount; i++) {
+                    Verifier.match(selected[i], text, operator);
+                }
+            }
+        });
+        
     }
     
     /**
@@ -180,9 +206,15 @@ public class ListTester extends AbstractTextVerifiableTester {
     /**
      * Verifies if the list contains an element that renders <code>value</code>.
      * @param value The text to verify
+     * @param timeout the maximum amount to wait to check whether the component
+     *          contains the specified text
      */
-    public void rcVerifyContainsValue(String value) {
-        Verifier.equals(true, containsValue(value));
+    public void rcVerifyContainsValue(final String value, int timeout) {
+        invokeAndWait("rcVerifyContainsValue", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                Verifier.equals(true, containsValue(value));
+            }
+        });
     }
 
     /**
@@ -190,11 +222,16 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param value The text to verify
      * @param operator The operator used to verify
      * @param exists if the wanted value should exist or not.
+     * @param timeout the maximum amount to wait to check whether the component
+     *          contains the specified text
      */
-    public void rcVerifyContainsValue(String value, String operator,
-            boolean exists) {
-
-        Verifier.equals(exists, containsValue(value, operator));
+    public void rcVerifyContainsValue(final String value, final String operator,
+            final boolean exists, int timeout) {
+        invokeAndWait("rcVerifyContainsValue", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                Verifier.equals(exists, containsValue(value, operator));
+            }
+        });
     }
     
     /**
@@ -483,13 +520,21 @@ public class ListTester extends AbstractTextVerifiableTester {
      * @param name The name of the property
      * @param value The value of the property as a string
      * @param operator The operator used to verify
+     * @param timeout the maximum amount of time to wait for the property
+     *          at mouse position to be checked
      */
-    public void rcCheckPropertyAtMousePosition(final String name, String value,
-            String operator) {
-        final Object cell = getNodeAtMousePosition();
-        final IListComponent bean = getListAdapter();
-        final String propToStr = bean.getPropertyValueOfCell(name, cell);
-        Verifier.match(propToStr, value, operator);
+    public void rcCheckPropertyAtMousePosition(final String name,
+            final String value, final String operator, int timeout) {
+        invokeAndWait("rcCheckPropertyAtMousePosition", timeout, //$NON-NLS-1$
+            new Runnable() {
+                public void run() {
+                    final Object cell = getNodeAtMousePosition();
+                    final IListComponent bean = getListAdapter();
+                    final String propToStr =
+                            bean.getPropertyValueOfCell(name, cell);
+                    Verifier.match(propToStr, value, operator);
+                }
+            });
     }
     
     /**

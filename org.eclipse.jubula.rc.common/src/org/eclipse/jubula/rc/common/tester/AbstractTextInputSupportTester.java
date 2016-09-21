@@ -25,8 +25,10 @@ public abstract class AbstractTextInputSupportTester
      * Verifies the editable property of the current component.<br>
      * If it is a complex component, it is always the selected object.
      * @param editable The editable property to verify.
+     * @param timeout the maximum amount of time to wait for the component
+     *                  to have the editable status to be the same as the parameter
      */
-    public abstract void rcVerifyEditable(boolean editable);
+    public abstract void rcVerifyEditable(boolean editable, int timeout);
     /**
      * Types <code>text</code> into the component. This replaces the shown
      * content.<br>

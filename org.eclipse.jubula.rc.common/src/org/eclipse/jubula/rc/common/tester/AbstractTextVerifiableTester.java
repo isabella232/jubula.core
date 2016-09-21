@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.common.util.Verifier;
@@ -46,12 +47,22 @@ public abstract class AbstractTextVerifiableTester extends WidgetTester {
      * If it is a complex component, it is always the selected object.
      * @param text The text to verify.
      * @param operator The operation used to verify
+     * @param timeout the maximum amount of time to wait for a text that matches 
+     *                  the text parameter
      * @throws StepExecutionException If the rendered text cannot be extracted.
      */
-    public void rcVerifyText(String text, String operator)
+    public void rcVerifyText(final String text, final String operator,
+            int timeout)
         throws StepExecutionException {
-        Verifier.match(((ITextComponent)getComponent()).getText(), text,
-                                    operator);
+        CheckWithTimeoutQueuer.invokeAndWait("rcVerifyText", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        Verifier.match(
+                                ((ITextComponent) getComponent()).getText(),
+                                text, operator);
+
+                    }
+                });
     }
 
 }

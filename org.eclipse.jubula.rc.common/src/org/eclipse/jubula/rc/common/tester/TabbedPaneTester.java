@@ -20,6 +20,8 @@ import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 /**
  * Implementation of the general actions for TabPanes
  * @author BREDEX GmbH
@@ -150,15 +152,23 @@ public class TabbedPaneTester extends WidgetTester {
      * @param index index of tab
      * @param text The tab title
      * @param operator Operator to be executed
+     * @param timeout the maximum amount of time to wait for the text of the tab
+     *          identified by index to be verified
      * @throws StepExecutionException
      *             If the tab title is invalid.
      */
     public void rcVerifyTextOfTabByIndex(final int index, final String text,
-            final String operator)
-        throws StepExecutionException {        
-        final int tabIndex = IndexConverter.toImplementationIndex(index);
-        String tabTitle = getTabPane().getTitleofTab(tabIndex);
-        Verifier.match(tabTitle, text, operator);
+            final String operator, int timeout)
+        throws StepExecutionException {
+        invokeAndWait("rcVerifyTextOfTabByIndex", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final int tabIndex =
+                        IndexConverter.toImplementationIndex(index);
+                String tabTitle = getTabPane().getTitleofTab(tabIndex);
+                Verifier.match(tabTitle, text, operator);
+            }
+        });
+        
     }
     
     /**
@@ -167,20 +177,27 @@ public class TabbedPaneTester extends WidgetTester {
      * @param tab index/value of tab
      * @param operator Operator to be executed
      * @param exists boolean, tab exists
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the tab is existent in according to the exists parameter
      * @throws StepExecutionException if tab does not exist.
      */
-    public void rcVerifyExistenceOfTab(String tab, String operator,
-            boolean exists)
+    public void rcVerifyExistenceOfTab(final String tab, final String operator,
+            final boolean exists, int timeout)
         throws StepExecutionException {
-        final int tabIdx = getTabIndexFromString(tab, operator);
-        boolean tabExists = true;
-        try {
-            verifyIndexExists(tabIdx);
-        } catch (StepExecutionException e) {
-            tabExists = false;
-        }
+        invokeAndWait("rcVerifyExistenceOfTab", timeout, new Runnable() { //$NON-NLS-1$
 
-        Verifier.equals(exists, tabExists);
+            public void run() {
+                final int tabIdx = getTabIndexFromString(tab, operator);
+                boolean tabExists = true;
+                try {
+                    verifyIndexExists(tabIdx);
+                } catch (StepExecutionException e) {
+                    tabExists = false;
+                }
+                
+                Verifier.equals(exists, tabExists);
+            } 
+        });
     }
     
     /**
@@ -211,16 +228,21 @@ public class TabbedPaneTester extends WidgetTester {
      * @param title The tab title
      * @param operator operation to be executed
      * @param isEnabled wether to test if the tab  is enabled or not
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the tab has the specified enabled status
      * @throws StepExecutionException
      *             If the tab title is invalid.
      */
     public void rcVerifyEnabled(String title, String operator,
-        boolean isEnabled)
+        final boolean isEnabled, int timeout)
 
         throws StepExecutionException {
         final int tabIndex = getIndexOfTab(title, operator);
-
-        Verifier.equals(isEnabled, getTabPane().isEnabledAt(tabIndex));
+        invokeAndWait("rcVerifyEnabled", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                Verifier.equals(isEnabled, getTabPane().isEnabledAt(tabIndex));
+            }
+        });
     }
     
     /**
@@ -230,14 +252,22 @@ public class TabbedPaneTester extends WidgetTester {
      *            The tab index
      * @param enabled
      *            Should the tab be enabled?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the tab has the specified enabled status
      * @throws StepExecutionException
      *             If the tab index is invalid.
      */
-    public void rcVerifyEnabledByIndex(int index, boolean enabled)
+    public void rcVerifyEnabledByIndex(int index, final boolean enabled,
+            int timeout)
         throws StepExecutionException {
         final int implIdx = IndexConverter.toImplementationIndex(index);
-        verifyIndexExists(implIdx);
-        Verifier.equals(enabled, getTabPane().isEnabledAt(implIdx));
+        invokeAndWait("rcVerifyEnabledByIndex", timeout, new Runnable() { //$NON-NLS-1$
+            
+            public void run() {
+                verifyIndexExists(implIdx);
+                Verifier.equals(enabled, getTabPane().isEnabledAt(implIdx));
+            }
+        });
     }
     
     /**
@@ -247,24 +277,32 @@ public class TabbedPaneTester extends WidgetTester {
      *            The tab index
      * @param selected
      *            Should the tab be selected?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the tab is selected according to the selected parameter
+     *            
      * @throws StepExecutionException
      *             If the tab index is invalid.
      */
-    public void rcVerifySelectedTabByIndex(int index, boolean selected)
-        throws StepExecutionException {
-        int implIdx = IndexConverter.toImplementationIndex(index);
-        int selIndex = getTabPane().getSelectedIndex();
+    public void rcVerifySelectedTabByIndex(int index, final boolean selected,
+            int timeout) throws StepExecutionException {
+        final int implIdx = IndexConverter.toImplementationIndex(index);
+        invokeAndWait("rcVerifySelectedTabByIndex", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                int selIndex = getTabPane().getSelectedIndex();
+                if (selIndex == -1) {
+                    if (!selected) {
+                        return;
+                    }
+                    throw new StepExecutionException(
+                            I18n.getString(TestErrorEvent.NO_SELECTION),
+                            EventFactory.createActionError(
+                                    TestErrorEvent.NO_SELECTION));
+                }
 
-        if (selIndex == -1) {
-            if (!selected) {
-                return;
+                Verifier.equals(selected, selIndex == implIdx);
             }
-            throw new StepExecutionException(
-                I18n.getString(TestErrorEvent.NO_SELECTION),
-                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
-        }
 
-        Verifier.equals(selected, selIndex == implIdx);
+        });
     }
     
     /**
@@ -276,27 +314,38 @@ public class TabbedPaneTester extends WidgetTester {
      *            Operator to be executed
      * @param selected
      *            Should the tab be selected?
+     * @param timeout
+     *            the maximum amount of time to wait for the check whether
+     *            the selected tab has a specific title
      * @throws StepExecutionException
      *             If the tab title is invalid.
      */
-    public void rcVerifySelectedTab(String tabTitlePattern, String operator,
-            boolean selected)
-        throws StepExecutionException {
-        String selectedTabTitle = null; // for no Selection
-        int selectedIndex = getTabPane().getSelectedIndex();
-        if (selectedIndex >= 0) {
-            selectedTabTitle = getTabPane().getTitleofTab(selectedIndex);
-        }
+    public void rcVerifySelectedTab(final String tabTitlePattern,
+            final String operator, final boolean selected, int timeout)
+            throws StepExecutionException {
+        invokeAndWait("rcVerifySelectedTab", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                String selectedTabTitle = null; // for no Selection
+                int selectedIndex = getTabPane().getSelectedIndex();
+                if (selectedIndex >= 0) {
+                    selectedTabTitle =
+                            getTabPane().getTitleofTab(selectedIndex);
+                }
 
-        if (selectedTabTitle == null) {
-            if (!selected) {
-                return;
+                if (selectedTabTitle == null) {
+                    if (!selected) {
+                        return;
+                    }
+                    throw new StepExecutionException(
+                            I18n.getString(TestErrorEvent.NO_SELECTION),
+                            EventFactory.createActionError(
+                                    TestErrorEvent.NO_SELECTION));
+                }
+                Verifier.match(selectedTabTitle, tabTitlePattern, operator,
+                        selected);
+
             }
-            throw new StepExecutionException(
-                I18n.getString(TestErrorEvent.NO_SELECTION),
-                EventFactory.createActionError(TestErrorEvent.NO_SELECTION));
-        }
-        Verifier.match(selectedTabTitle, tabTitlePattern, operator, selected);
-    }    
+        });
+    }
     
 }

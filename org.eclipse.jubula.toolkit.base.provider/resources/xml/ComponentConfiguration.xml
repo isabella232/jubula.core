@@ -35,7 +35,7 @@
 				<defaultValue>250</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyExists" since="4.0">
+		<action name="CompSystem.VerifyExists" since="4.1">
 			<method>rcVerifyExists</method>
 			<param name="CompSystem.IsExisting"
                    descriptionKey="CompSystem.IsExisting.descr" >
@@ -52,7 +52,7 @@
 				<defaultValue>0</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabled">
+		<action name="CompSystem.VerifyEnabled" since="4.1">
 			<method>rcVerifyEnabled</method>
 			<param name="CompSystem.IsEnabled"
                    descriptionKey="CompSystem.IsEnabled.descr" >
@@ -63,8 +63,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyProperty">
+		<action name="CompSystem.VerifyProperty" since="4.1">
 			<method>rcVerifyProperty</method>
 			<param name="CompSystem.PropertyName"
                    descriptionKey="CompSystem.PropertyName.descr" >
@@ -85,6 +90,11 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		<action name="CompSystem.StorePropertyValue">
 			<method>rcStorePropertyValue</method>
@@ -98,7 +108,7 @@
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>
 		</action>
-		<action name="CompSystem.VerifyFocus">
+		<action name="CompSystem.VerifyFocus" since="4.1">
 			<method>rcVerifyFocus</method>
 			<param name="CompSystem.HasFocus"
                    descriptionKey="CompSystem.HasFocus.descr" >
@@ -109,8 +119,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.WaitForComponent">
+		<action name="CompSystem.WaitForComponent" since="4.1">
 			<method>rcWaitForComponent</method>
 			<param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -333,7 +348,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByIndexpath">
+		<action name="CompSystem.PopupVerifyEnabledByIndexpath" since="4.1">
 			<method>rcPopupVerifyEnabledByIndexPath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -358,8 +373,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByIndexpathPosition">
+		<action name="CompSystem.PopupVerifyEnabledByIndexpathPosition" since="4.1">
 			<method>rcPopupVerifyEnabledByIndexPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -401,6 +421,7 @@
 					<element name="CompSystem.True" value="true"/>
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
+    
 			</param>
 			<param name="CompSystem.MouseButton"
                    descriptionKey="CompSystem.MouseButton.descr" >
@@ -412,8 +433,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByTextpath">
+		<action name="CompSystem.PopupVerifyEnabledByTextpath" since="4.1">
 			<method>rcPopupVerifyEnabledByTextPath</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -449,8 +475,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifyEnabledByTextpathPosition">
+		<action name="CompSystem.PopupVerifyEnabledByTextpathPosition" since="4.1">
 			<method>rcPopupVerifyEnabledByTextPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -514,8 +545,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByIndexpath">
+		<action name="CompSystem.PopupVerifyExistsByIndexpath" since="4.1">
 			<method>rcPopupVerifyExistsByIndexPath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -540,8 +576,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByIndexpathPosition">
+		<action name="CompSystem.PopupVerifyExistsByIndexpathPosition" since="4.1">
 			<method>rcPopupVerifyExistsByIndexPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -594,8 +635,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByTextpath">
+		<action name="CompSystem.PopupVerifyExistsByTextpath" since="4.1">
 			<method>rcPopupVerifyExistsByTextPath</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -631,8 +677,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifyExistsByTextpathPosition">
+		<action name="CompSystem.PopupVerifyExistsByTextpathPosition" since="4.1">
 			<method>rcPopupVerifyExistsByTextPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -696,8 +747,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByIndexpath">
+		<action name="CompSystem.PopupVerifySelectedByIndexpath" since="4.1">
 			<method>rcPopupVerifySelectedByIndexPath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -722,8 +778,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByIndexpathPosition">
+		<action name="CompSystem.PopupVerifySelectedByIndexpathPosition" since="4.1">
 			<method>rcPopupVerifySelectedByIndexPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -776,8 +837,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByTextpath">
+		<action name="CompSystem.PopupVerifySelectedByTextpath" since="4.1">
 			<method>rcPopupVerifySelectedByTextPath</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -813,8 +879,13 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.PopupVerifySelectedByTextpathPosition">
+		<action name="CompSystem.PopupVerifySelectedByTextpathPosition" since="4.1">
 			<method>rcPopupVerifySelectedByTextPath</method>
 			<param name="CompSystem.XPos"
                    descriptionKey="CompSystem.XPos.descr" >
@@ -878,6 +949,11 @@
 					<element name="CompSystem.MouseButtonRight" value="3"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
 		<action name="CompSystem.Drag">
@@ -972,7 +1048,7 @@
 			</param>
 		</action>
 		<action name="CompSystem.InvokeMethodStoreReturn"
-		        descriptionKey="CompSystem.InvokeMethodStoreReturn.descr" since="4.0">
+		        descriptionKey="CompSystem.InvokeMethodStoreReturn.descr" since="4.1">
             <method>rcInvokeMethodStoreReturn</method>
             <param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -1009,7 +1085,7 @@
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>
         </action>
 		<action name="CompSystem.InvokeMethod"
-		        descriptionKey="CompSystem.InvokeMethod.descr" since="4.0">
+		        descriptionKey="CompSystem.InvokeMethod.descr" since="4.1">
 			<method>rcInvokeMethod</method>
 			<param name="CompSystem.FQCN" 
                    descriptionKey="CompSystem.FQCN.descr">
@@ -1044,7 +1120,7 @@
 	
 	<abstractComponent type="guidancer.abstract.TextInputSupport">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
-		<action name="CompSystem.VerifyEditable">
+		<action name="CompSystem.VerifyEditable" since="4.1">
 			<method>rcVerifyEditable</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -1055,6 +1131,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		<action name="CompSystem.InputText">
 			<method>rcReplaceText</method>
@@ -1074,7 +1155,7 @@
 	
 	<abstractComponent type="guidancer.abstract.TextVerifiable">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<action name="CompSystem.VerifyText">
+		<action name="CompSystem.VerifyText" since="4.1">
 			<method>rcVerifyText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1091,6 +1172,11 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		<action name="CompSystem.ReadValue">
 			<method>rcReadValue</method>
@@ -1109,7 +1195,7 @@
 	
 	<abstractComponent type="guidancer.abstract.ButtonComp">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
-		<action name="CompSystem.VerifySelected">
+		<action name="CompSystem.VerifySelected" since="4.1">
 			<method>rcVerifySelected</method>
 			<param name="CompSystem.IsSelected"
                    descriptionKey="CompSystem.IsSelected.descr" >
@@ -1120,6 +1206,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 	</abstractComponent>
 

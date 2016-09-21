@@ -48,20 +48,22 @@ public class NonControlTester extends WidgetTester {
 
     @Override
     public void rcPopupVerifyEnabledByIndexPath(String indexPath,
-        boolean enabled, int button) throws StepExecutionException {
+        boolean enabled, int button, int timeout) 
+                throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifyEnabledByIndexPath(int xPos, String xUnits,
-        int yPos, String yUnits, String indexPath, boolean enabled, int button)
+        int yPos, String yUnits, String indexPath, boolean enabled,
+        int button, int timeout)
         throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifyEnabledByTextPath(String textPath,
-        String operator, boolean enabled, int button)
+        String operator, boolean enabled, int button, int timeout)
         throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
@@ -69,26 +71,29 @@ public class NonControlTester extends WidgetTester {
     @Override
     public void rcPopupVerifyEnabledByTextPath(int xPos, String xUnits,
         int yPos, String yUnits, String textPath, String operator,
-        boolean enabled, int button) throws StepExecutionException {
+        boolean enabled, int button, int timeout) 
+                throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifySelectedByIndexPath(String indexPath,
-        boolean selected, int button) throws StepExecutionException {
+        boolean selected, int button, int timeout) 
+                throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifySelectedByIndexPath(int xPos, String xUnits,
-        int yPos, String yUnits, String indexPath, boolean selected, int button)
+        int yPos, String yUnits, String indexPath, boolean selected,
+        int button, int timeout)
         throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifySelectedByTextPath(String textPath,
-        String operator, boolean selected, int button)
+        String operator, boolean selected, int button, int timeout)
         throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
@@ -96,33 +101,35 @@ public class NonControlTester extends WidgetTester {
     @Override
     public void rcPopupVerifySelectedByTextPath(int xPos, String xUnits,
         int yPos, String yUnits, String textPath, String operator,
-        boolean selected, int button) throws StepExecutionException {
+        boolean selected, int button, int timeout) 
+                throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifyExistsByIndexPath(String indexPath,
-        boolean exists, int button) throws StepExecutionException {
+        boolean exists, int button, int timeout) throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifyExistsByIndexPath(int xPos, String xUnits,
-        int yPos, String yUnits, String indexPath, boolean exists, int button)
+        int yPos, String yUnits, String indexPath, boolean exists, int button,
+        int timeout)
         throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifyExistsByTextPath(String textPath, String operator,
-        boolean exists, int button) throws StepExecutionException {
+        boolean exists, int button, int timeout) throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 
     @Override
     public void rcPopupVerifyExistsByTextPath(int xPos, String xUnits,
         int yPos, String yUnits, String textPath, String operator,
-        boolean exists, int button) throws StepExecutionException {
+        boolean exists, int button, int timeout) throws StepExecutionException {
         StepExecutionException.throwUnsupportedAction();
     }
 }

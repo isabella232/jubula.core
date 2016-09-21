@@ -16,7 +16,7 @@ import org.osgi.framework.Version;
 public class JsonVersion {
 
     /** The currently json version */
-    public static final Version CURRENTLY_JSON_VERSION = new Version(1, 0, 0);
+    public static final Version CURRENTLY_JSON_VERSION = new Version(1, 0, 1);
     
     
     /**

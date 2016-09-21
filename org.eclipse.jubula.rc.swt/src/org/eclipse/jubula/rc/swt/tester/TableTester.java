@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swt.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.awt.Point;
 import java.awt.Rectangle;
 
@@ -676,10 +678,18 @@ public class TableTester extends AbstractTableTester {
      * Verifies whether the checkbox in the row under the mouse pointer is checked
      * 
      * @param checked true if checkbox in cell is selected, false otherwise
+     * @param timeout the maximum amount of time to wait to verify whether the
+     *          checkbox in the row under the mouse pointer is checked
      */
-    public void rcVerifyCheckboxInRowAtMousePosition(boolean checked) {
-        int row = getCellAtMousePosition().getRow();
-        verifyCheckboxInRow(checked, row);
+    public void rcVerifyCheckboxInRowAtMousePosition(final boolean checked,
+            int timeout) {
+        invokeAndWait("rcVerifyCheckboxInRowAtMousePosition", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        int row = getCellAtMousePosition().getRow();
+                        verifyCheckboxInRow(checked, row);
+                    }
+                });
     }
     
     /**

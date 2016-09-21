@@ -129,7 +129,7 @@ public class ProjectBP {
                     final IProjectPO duplicatedProject = JsonStorage.load(dto,
                             subMonitor.newChild(WORK_PROJECT_CREATION),
                             new NullImportOutput(), false, false,
-                            paramNameMapper, compNameCache, true);
+                            paramNameMapper, compNameCache, true, null);
                     if (monitor.isCanceled()) {
                         throw new InterruptedException();
                     }

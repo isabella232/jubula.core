@@ -25,6 +25,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.businessprocess.AbstractParamInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
@@ -246,18 +247,9 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
             // Excel files are ignored. Other data is checked.
             final int paramListSize = getParameterListSize();
             ITDManager testDataManager = getDataManager();
-            if ((testDataManager.getDataSetCount() == 0) 
-                    && (paramListSize > 0)) {
-                return false;
-            }
-
-            if (getParameterListSize() > testDataManager.getColumnCount()) {
-                return false;
-            }
 
             List<IParamDescriptionPO> requiredParameters = 
                 new ArrayList<IParamDescriptionPO>(getParameterList());
-
             IParameterInterfacePO refDataCube = getReferencedDataCube();
             for (int i = 0; i < testDataManager.getDataSetCount(); i++) {
                 for (IParamDescriptionPO paramDesc : requiredParameters) {
@@ -274,8 +266,19 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                         }
                     }
                    
-                    if (column == -1) {
-                        return false;
+                    if (column >= -1) {
+                        List<INodePO> nodes = null;
+                        if (this instanceof IExecTestCasePO) {
+                            IExecTestCasePO exec = (IExecTestCasePO) this;
+                            nodes = exec.getSpecTestCase()
+                                    .getUnmodifiableNodeList();
+                            String result = AbstractParamInterfaceBP
+                                    .getValueForSpecNodeWithParamDesc(paramDesc,
+                                            exec.getSpecTestCase(), column);
+                            if (StringUtils.isNotBlank(result)) {
+                                return true;
+                            }
+                        }
                     }
                     
                     String value = TestDataBP.INSTANCE.getTestData(
@@ -303,6 +306,13 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                         }
                     }
                 }
+            }
+            if ((testDataManager.getDataSetCount() == 0) 
+                    && (paramListSize > 0)) {
+                return false;
+            }
+            if (getParameterListSize() > testDataManager.getColumnCount()) {
+                return false;
             }
         }
         return true;

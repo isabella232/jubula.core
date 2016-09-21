@@ -406,7 +406,7 @@
                 <type>java.lang.String</type>
             </param>
 		</action>
-		<action name="CompSystem.WaitForComponent">
+		<action name="CompSystem.WaitForComponent" since="4.1">
 			<method>rcWaitForComponent</method>
             <param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >

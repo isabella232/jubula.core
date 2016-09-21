@@ -200,9 +200,14 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
         actions.removeAll(superActions);
     }
     Iterator<Action> actionsIterator = actions.iterator();
+    Action action = null;
     while (actionsIterator.hasNext()) {    
-        Action action = actionsIterator.next();
-        
+        boolean createDeprecated = false;
+        do{ // for creating methods without timeout
+        boolean foundTimeout = false;
+        if(!createDeprecated){
+            action = actionsIterator.next();
+        }
         String sinceA = "";
         String sinceAVersion = action.getSince();
         if (sinceAVersion != null && !sinceAVersion.isEmpty()) {
@@ -237,6 +242,10 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
             if (paramDescrKey != null) {
                 paramDescription = CompSystemI18n.getString(paramDescrKey);
             }
+            if(paramName.contains("imeout") && !createDeprecated)
+                foundTimeout = true;
+            if(paramName.contains("imeout") && createDeprecated)
+                continue;
        %>* @param <%=paramName%> 
          *        <%=paramDescription%>
          
@@ -258,6 +267,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
             String paramType = NameLoader.beautifyParamType(fqParamType);
             String paramName = nameLoader.translateFromCompSystem(name);
             String fixedType = nameLoader.getRealTypeForParameter(type, name);
+            if(createDeprecated && paramName.contains("imeout")){
+            if(!paramIterator.hasNext())
+                stringBuffer.deleteCharAt(stringBuffer.length()-1);
+              continue;
+            }
             paramMap.put(name, fqParamType);
             paramTypeMap.put(name, fixedType);
             %>
@@ -266,7 +280,10 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
         ) <%if (genInterface) {%>;<%} else {%> {
             <%for (Param parameter : params) {
             boolean isOptional = parameter.isOptional();
-            String paramName = parameter.getName();%>
+            String paramName = parameter.getName();
+            if(paramName.contains("imeout") && createDeprecated){
+                continue;
+            }%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
             <%if (!isOptional) {%>
             if (<%=translatedParamName%> == null) return;
@@ -285,10 +302,14 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
             boolean isOptional = parameter.isOptional();
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
             String paramName = parameter.getName();%>
-            <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
+            <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);
+            if(paramName.contains("imeout") && createDeprecated){
+                createDeprecated = false;
+                translatedParamName = "0";
+            }%>
                 <%String paramEnumType = paramMap.get(paramName);
                 String fqParamType = paramTypeMap.get(paramName);%>
-                <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
+                <%if (paramEnumType != null && nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
                         <%if (fqParamType.contains("Integer")) {%>
                             .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>.rcIntValue())
@@ -303,7 +324,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
                 <%}%>
             <%}%>
                             .build(), null);
-        }<%}%>
+        }<%}
+        createDeprecated = false;
+        if(foundTimeout)
+            createDeprecated = true;
+        } while(createDeprecated);%>
         
     <%}%>
 }

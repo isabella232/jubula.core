@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,10 +65,13 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param menuItem the menu item as a text path to verify against
      * @param operator operator used for matching
      * @param enabled is the specified menu item enabled?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
     public void verifyEnabled(String menuItem, String operator, 
-            boolean enabled) {
-        verifyEnabled(MenuUtilBase.splitPath(menuItem), operator, enabled);
+            boolean enabled, int timeout) {
+        verifyEnabled(MenuUtilBase.splitPath(menuItem), operator, enabled,
+                timeout);
     }
 
     /**
@@ -75,20 +80,26 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param menuItem the menu item to verify against
      * @param operator operator used for matching
      * @param enabled is the specified menu item enabled?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
-    public void verifyEnabled(String[] menuItem, String operator,
-            boolean enabled) {
+    public void verifyEnabled(final String[] menuItem, final String operator,
+            final boolean enabled, int timeout) {
         checkPathLength(menuItem.length);
-        final IMenuItemComponent item = navigateToMenuItem(
-                getAndCheckMenu(), menuItem, operator);
-        try {
-            checkIsNull(item);
-            Verifier.equals(enabled, item.isEnabled());
-        } finally {
-            closeMenu(getAndCheckMenu(), menuItem, operator);
-        }
-
+        invokeAndWait("verifyEnabled", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final IMenuItemComponent item = navigateToMenuItem(
+                        getAndCheckMenu(), menuItem, operator);
+                try {
+                    checkIsNull(item);
+                    Verifier.equals(enabled, item.isEnabled());
+                } finally {
+                    closeMenu(getAndCheckMenu(), menuItem, operator);
+                }
+            }
+        });
     }
+    
     /**
      * Checks if the given MenuItemAdapter is null and throws an Exception
      * 
@@ -105,10 +116,13 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * 
      * @param menuItem the menu item as a text path to verify against
      * @param enabled is the specified menu item enabled?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
-    public void verifyEnabledByIndexpath(String menuItem, boolean enabled) {
+    public void verifyEnabledByIndexpath(String menuItem, boolean enabled,
+            int timeout) {
         verifyEnabledByIndexpath(MenuUtilBase.splitIndexPath(menuItem),
-                enabled);
+                enabled, timeout);
     }
 
     /**
@@ -116,17 +130,24 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * 
      * @param menuItem the menu item to verify against
      * @param enabled is the specified menu item enabled?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
-    public void verifyEnabledByIndexpath(int[] menuItem, boolean enabled) {
+    public void verifyEnabledByIndexpath(final int[] menuItem,
+            final boolean enabled, int timeout) {
         checkPathLength(menuItem.length);
-        final IMenuItemComponent item = navigateToMenuItem(
-                getAndCheckMenu(), menuItem);
-        try {
-            checkIsNull(item);
-            Verifier.equals(enabled, item.isEnabled());
-        } finally {
-            closeMenu(getAndCheckMenu(), menuItem);
-        }
+        invokeAndWait("verifyEnabledByIndexpath", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final IMenuItemComponent item = navigateToMenuItem(
+                        getAndCheckMenu(), menuItem);
+                try {
+                    checkIsNull(item);
+                    Verifier.equals(enabled, item.isEnabled());
+                } finally {
+                    closeMenu(getAndCheckMenu(), menuItem);
+                }
+            }
+        });
     }
 
 
@@ -137,9 +158,13 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param menuItem the menu item to verify against
      * @param operator operator used for matching
      * @param exists  should the menu item exist?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void verifyExists(String menuItem, String operator, boolean exists) {
-        verifyExists(MenuUtilBase.splitPath(menuItem), operator, exists);
+    public void verifyExists(String menuItem, String operator, boolean exists,
+            int timeout) {
+        verifyExists(MenuUtilBase.splitPath(menuItem), operator, exists,
+                timeout);
     }
 
     /**
@@ -148,26 +173,36 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param menuItem the menu item to verify against
      * @param operator operator used for matching
      * @param exists should the menu item exist?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void verifyExists(String[] menuItem, String operator, 
-            boolean exists) {
+    public void verifyExists(final String[] menuItem, final String operator,
+            final boolean exists, int timeout) {
         checkPathLength(menuItem.length);
-        final IMenuItemComponent item = navigateToMenuItem(
-                getAndCheckMenu(), menuItem, operator);
-        try {
-            Verifier.equals(exists, item.isExisting());
-        } finally {
-            closeMenu(getAndCheckMenu(), menuItem, operator);
-        }
+        invokeAndWait("verifyExists", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final IMenuItemComponent item = navigateToMenuItem(
+                        getAndCheckMenu(), menuItem, operator);
+                try {
+                    Verifier.equals(exists, item.isExisting());
+                } finally {
+                    closeMenu(getAndCheckMenu(), menuItem, operator);
+                }
+            }
+        });
     }
 
     /**
      * Verifies if the specified menu item exists
      * @param menuItem the menu item to verify against
      * @param exists should the menu item exist?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void verifyExistsByIndexpath(String menuItem, boolean exists) {
-        verifyExistsByIndexpath(MenuUtilBase.splitIndexPath(menuItem), exists);
+    public void verifyExistsByIndexpath(String menuItem, boolean exists,
+            int timeout) {
+        verifyExistsByIndexpath(MenuUtilBase.splitIndexPath(menuItem), exists,
+                timeout);
     }
 
     /**
@@ -175,16 +210,23 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * 
      * @param menuItem the menu item to verify against
      * @param exists should the menu item exist?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void verifyExistsByIndexpath(int[] menuItem, boolean exists) {
+    public void verifyExistsByIndexpath(final int[] menuItem,
+            final boolean exists, int timeout) {
         checkPathLength(menuItem.length);
-        final IMenuItemComponent item = navigateToMenuItem(
+        invokeAndWait("verifyExistsByIndexpath", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final IMenuItemComponent item = navigateToMenuItem(
                         getAndCheckMenu(), menuItem);
-        try {
-            Verifier.equals(exists, item.isExisting());
-        } finally {
-            closeMenu(getAndCheckMenu(), menuItem);
-        }
+                try {
+                    Verifier.equals(exists, item.isExisting());
+                } finally {
+                    closeMenu(getAndCheckMenu(), menuItem);
+                }
+            }
+        });
     }
 
     /**
@@ -193,10 +235,13 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param menuItem the menu item to verify against
      * @param operator operator used for matching
      * @param selected is the specified menu item selected?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
     public void verifySelected(String menuItem, String operator,
-            boolean selected) {
-        verifySelected(MenuUtilBase.splitPath(menuItem), operator, selected);
+            boolean selected, int timeout) {
+        verifySelected(MenuUtilBase.splitPath(menuItem), operator, selected,
+                timeout);
     }
 
     /**
@@ -205,19 +250,25 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * @param menuItem the menu item to verify against
      * @param operator operator used for matching
      * @param selected is the specified menu item selected?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
-    public void verifySelected(String[] menuItem, String operator,
-            boolean selected) {
+    public void verifySelected(final String[] menuItem, final String operator,
+            final boolean selected, int timeout) {
         checkPathLength(menuItem.length);
-        final IMenuItemComponent item = navigateToMenuItem(
-                getAndCheckMenu(), menuItem, operator);
-        try {
-            checkIsNull(item);
-            Verifier.equals(selected, item.isSelected());
+        invokeAndWait("verifySelected", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final IMenuItemComponent item = navigateToMenuItem(
+                        getAndCheckMenu(), menuItem, operator);
+                try {
+                    checkIsNull(item);
+                    Verifier.equals(selected, item.isSelected());
+                } finally {
+                    closeMenu(getAndCheckMenu(), menuItem, operator);
+                }
+            }
+        });
 
-        } finally {
-            closeMenu(getAndCheckMenu(), menuItem, operator);
-        }
     }
 
     /**
@@ -225,10 +276,13 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * 
      * @param menuItem the menu item to verify against
      * @param selected is the specified menu item selected?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
-    public void verifySelectedByIndexpath(String menuItem, boolean selected) {
+    public void verifySelectedByIndexpath(String menuItem, boolean selected,
+            int timeout) {
         verifySelectedByIndexpath(MenuUtilBase.splitIndexPath(menuItem),
-                selected);
+                selected, timeout);
     }
 
     /**
@@ -236,18 +290,26 @@ public abstract class AbstractMenuTester extends AbstractUITester {
      * 
      * @param menuItem the menu item to verify against
      * @param selected is the specified menu item selected?
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
-    public void verifySelectedByIndexpath(int[] menuItem, boolean selected) {
+    public void verifySelectedByIndexpath(final int[] menuItem,
+            final boolean selected, int timeout) {
         checkPathLength(menuItem.length);
-        final IMenuItemComponent item = navigateToMenuItem(
-                getAndCheckMenu(), menuItem);
-        try {
-            checkIsNull(item);
-            Verifier.equals(selected, item.isSelected());
+        invokeAndWait("verifySelectedByIndexpath", timeout, new Runnable() { //$NON-NLS-1$
 
-        } finally {
-            closeMenu(getAndCheckMenu(), menuItem);
-        }
+            public void run() {
+                final IMenuItemComponent item =
+                        navigateToMenuItem(getAndCheckMenu(), menuItem);
+                try {
+                    checkIsNull(item);
+                    Verifier.equals(selected, item.isSelected());
+
+                } finally {
+                    closeMenu(getAndCheckMenu(), menuItem);
+                }
+            }
+        });
     }
     
     /**

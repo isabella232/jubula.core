@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.common.tester;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
@@ -19,6 +20,8 @@ import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
 
 /**
  * General implementation for ComboBoxes and ComboBox like components.
@@ -40,19 +43,29 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
     }
 
     /**
-     * Verifies the editable property. 
-     * @param editable The editable property to verify.
+     * {@inheritDoc}
      */
-    public void rcVerifyEditable(boolean editable) {
-        Verifier.equals(editable, getCBAdapter().isEditable());
+    public void rcVerifyEditable(final boolean editable, int timeout) {
+        CheckWithTimeoutQueuer.invokeAndWait("rcVerifyEditable", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        Verifier.equals(editable, getCBAdapter().isEditable());
+                    }
+                });
     }
     
     /**
      * Checks if the component contains the specified text.
      * @param text check if this text is in the combobox
+     * @param timeout the maximum amount to wait to check whether the component
+     *          contains the specified text
      */
-    public void rcVerifyContainsValue(final String text) {
-        Verifier.equals(true, containsValue(text, MatchUtil.EQUALS));
+    public void rcVerifyContainsValue(final String text, int timeout) {
+        invokeAndWait("rcVerifyContainsValue", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                Verifier.equals(true, containsValue(text, MatchUtil.EQUALS));
+            }
+        });
     }
     
     /**
@@ -60,11 +73,17 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * @param value The text to verify
      * @param operator The operator used to verify
      * @param exists If the value should exist or not.
+     * @param timeout the maximum amount to wait to check whether the component
+     *          contains the specified text
      */
-    public void rcVerifyContainsValue(String value, String operator, 
-            boolean exists) {        
-        final boolean contains = containsValue(value, operator);
-        Verifier.equals(exists, contains);
+    public void rcVerifyContainsValue(final String value, final String operator,
+            final boolean exists, int timeout) {
+        invokeAndWait("rcVerifyContainsValue", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                final boolean contains = containsValue(value, operator);
+                Verifier.equals(exists, contains);
+            }
+        });
     }
     
   /**
@@ -161,20 +180,19 @@ public class ComboBoxTester extends AbstractTextInputSupportTester {
      * Verifies if the combobox has <code>index</code> selected.
      * @param index The index to verify
      * @param isSelected If the index should be selected or not.
+     * @param timeout the maximum amount of time to wait for the index's
+     *          selection to be verified
      */
-    public void rcVerifySelectedIndex(String index, boolean isSelected) {
-        int implIdx = IndexConverter.toImplementationIndex(
-                IndexConverter.intValue(index));
-        int actual = getCBAdapter().getSelectedIndex();
-        Verifier.equals(implIdx, actual, isSelected);
-    }
-    
-    /**
-     * Verifies if the passed text is currently selected in the combobox.
-     * @param text The text to verify.
-     */
-    public void rcVerifyText(String text) {
-        rcVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
+    public void rcVerifySelectedIndex(final String index,
+            final boolean isSelected, int timeout) {
+        invokeAndWait("rcVerifySelectedIndex", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                int implIdx = IndexConverter.toImplementationIndex(
+                        IndexConverter.intValue(index));
+                int actual = getCBAdapter().getSelectedIndex();
+                Verifier.equals(implIdx, actual, isSelected);
+            }
+        });
     }
     
     /**

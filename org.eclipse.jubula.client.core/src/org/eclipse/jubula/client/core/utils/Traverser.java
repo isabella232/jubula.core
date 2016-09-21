@@ -25,6 +25,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.eclipse.jubula.client.core.businessprocess.AbstractParamInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
@@ -40,6 +41,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
@@ -49,6 +51,7 @@ import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.IncompleteDataException;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
@@ -945,6 +948,7 @@ public class Traverser {
                     paramNode.getParameterList();
             String value = null;
             for (IParamDescriptionPO desc : parameterList) {
+                int column = 0;
                 String descriptionId = desc.getUniqueId();
                 ITDManager tdManager = null;
                 try {
@@ -984,7 +988,13 @@ public class Traverser {
                                 .getName());
                     }
                 }
-                String date = tdManager.getCell(dataSetIndex, desc);
+                String date =
+                        getDataForExec(execNode, desc, tdManager, dataSetIndex);
+                if (StringUtils.isBlank(date)) {
+                    throw new JBFatalException(
+                            "Data for node " + execNode.getName(),
+                            MessageIDs.E_UNEXPECTED_EXCEPTION);
+                }
                 ParamValueConverter conv = new ModelParamValueConverter(
                         date, paramNode,  desc);
                 try {
@@ -1000,7 +1010,38 @@ public class Traverser {
                 // its definition and here.
                 execObject.addParameter(descriptionId, 
                         StringUtils.defaultString(value));
+                column++;
             }
         }
+    }
+
+    /**
+     * This method is also searching for default values if in the Exec there is only one CAP
+     * @param node if this is a {@link IExecTestCasePO} we are also searching if
+     *            there are default values
+     * @param desc the {@link IParamDescriptionPO} to get the correct value for
+     *            the parameter
+     * @param tdManager the data manger
+     * @param dataSetIndex the index for the data set
+     * @return the value (also default value) for the node
+     */
+    private String getDataForExec(INodePO node, IParamDescriptionPO desc,
+            ITDManager tdManager, int dataSetIndex) {
+        String data = StringConstants.EMPTY;
+        try {
+            data = tdManager.getCell(dataSetIndex, desc);
+        } catch (IndexOutOfBoundsException e) {
+            // ignored
+        }
+        if (StringUtils.isBlank(data) && node instanceof IExecTestCasePO) {
+            INodePO specNode = ((IExecTestCasePO) node).getSpecTestCase();
+            if (specNode instanceof ISpecTestCasePO) {
+                data = AbstractParamInterfaceBP
+                        .getValueForSpecNodeWithParamDesc(desc,
+                                (ISpecTestCasePO) specNode,
+                                dataSetIndex);
+            }
+        }
+        return data;
     }
 }

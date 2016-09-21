@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.awt.Point;
 
 import javax.swing.JTree;
@@ -22,6 +24,7 @@ import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
 /**
  * Toolkit specific commands for the <code>JTree</code>
  * 
@@ -98,8 +101,16 @@ public class JTreeTester extends AbstractTreeTester {
     /**
      * {@inheritDoc}
      */
-    public void rcVerifyTextAtMousePosition(String text, String operator) {
-        checkNodeText(new Object[] {getNodeAtMousePosition()}, text, operator);
+    public void rcVerifyTextAtMousePosition(final String text,
+            final String operator,
+            int timeout) {
+        invokeAndWait("rcVerifyTextAtMousePosition", //$NON-NLS-1$
+                timeout, new Runnable() {
+                    public void run() {
+                        checkNodeText(new Object[] { getNodeAtMousePosition() },
+                                text, operator);
+                    }
+                });
     }
     /**
      * 

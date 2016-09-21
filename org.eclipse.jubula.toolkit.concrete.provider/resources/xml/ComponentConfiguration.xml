@@ -141,7 +141,7 @@
 		<action name="CompSystem.Pause">
 			<method>rcPause</method>
 		</action>
-		<action name="CompSystem.WaitForWindow">
+		<action name="CompSystem.WaitForWindow" since="4.1">
 			<method>rcWaitForWindow</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -170,7 +170,7 @@
 			</param>
 		</action>
 				
-		<action name="CompSystem.WaitForWindowActivation">
+		<action name="CompSystem.WaitForWindowActivation" since="4.1">
 			<method>rcWaitForWindowActivation</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -199,7 +199,7 @@
 			</param>
 		</action>
 
-		<action name="CompSystem.WaitForWindowToClose">
+		<action name="CompSystem.WaitForWindowToClose" since="4.1">
 			<method>rcWaitForWindowToClose</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -286,7 +286,7 @@
 		
 		<action name="CompSystem.ExecuteCommand"
                 descriptionKey="CompSystem.ExecuteCommand.descr"
-                deprecated="true">
+                deprecated="true" >
 			<method>rcExecuteExternalCommand</method>
 			<param name="CompSystem.Command"
                    descriptionKey="CompSystem.Command.descr" >
@@ -486,7 +486,7 @@
                 <type>java.lang.String</type>
             </param>
         </action>
-        <action name="CompSystem.CheckClipboard">
+        <action name="CompSystem.CheckClipboard" since="4.1">
             <method>rcCheckClipboard</method>
 			<param name="CompSystem.Operator"
                    descriptionKey="CompSystem.Operator.descr" >
@@ -504,7 +504,7 @@
                 <type>java.lang.String</type>
             </param>
         </action>
-     	<action name="CompSystem.CheckExistenceOfWindow">
+     	<action name="CompSystem.CheckExistenceOfWindow" since="4.1">
 			<method>rcCheckExistenceOfWindow</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -522,7 +522,7 @@
 				</valueSet>
 			</param>
 			<param name="CompSystem.IsExisting"
-                   descriptionKey="CompSystem.IsExisting.descr" >
+                   descriptionKey="CompSystem.IsExisting.descr">
 				<type>java.lang.Boolean</type>
 				<defaultValue>true</defaultValue>
 				<valueSet>
@@ -530,6 +530,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		<action name="CompSystem.ManualTestStep">
 			<method>rcManualTestStep</method>
@@ -580,7 +585,7 @@
 				<type>java.lang.String</type>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledByTextpath">
+		<action name="CompSystem.VerifyEnabledByTextpath" since="4.1">
 			<method>verifyEnabled</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -606,8 +611,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyEnabledByIndexpath">
+		<action name="CompSystem.VerifyEnabledByIndexpath" since="4.1">
 			<method>verifyEnabledByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -622,8 +632,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyExistsByTextpath">
+		<action name="CompSystem.VerifyExistsByTextpath" since="4.1">
 			<method>verifyExists</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -649,8 +664,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyExistsByIndexpath">
+		<action name="CompSystem.VerifyExistsByIndexpath" since="4.1">
 			<method>verifyExistsByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -665,8 +685,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifySelectedByTextpath">
+		<action name="CompSystem.VerifySelectedByTextpath" since="4.1">
 			<method>verifySelected</method>
 			<param name="CompSystem.MenuPath"
                    descriptionKey="CompSystem.MenuPath.descr" >
@@ -692,8 +717,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifySelectedByIndexpath">
+		<action name="CompSystem.VerifySelectedByIndexpath" since="4.1">
 			<method>verifySelectedByIndexpath</method>
 			<param name="CompSystem.IndexPath"
                    descriptionKey="CompSystem.IndexPath.descr" >
@@ -708,8 +738,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.WaitForComponent">
+		<action name="CompSystem.WaitForComponent" since="4.1">
 			<method>waitForComponent</method>
 			<param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -726,7 +761,7 @@
 	
 	<concreteComponent type="guidancer.concrete.ComboBox">
 		<realizes>guidancer.abstract.TextInputSupport</realizes>
-		<action name="CompSystem.VerifyContainsValue">
+		<action name="CompSystem.VerifyContainsValue" since="4.1">
 			<method>rcVerifyContainsValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -752,8 +787,13 @@
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifySelectedIndex">
+		<action name="CompSystem.VerifySelectedIndex" since="4.1">
 			<method>rcVerifySelectedIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -767,6 +807,11 @@
                     <element name="CompSystem.True" value="true"/>
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
             </param>
 		</action>
 		<action name="CompSystem.SelectIndex">
@@ -808,7 +853,7 @@
 	
 	<concreteComponent type="guidancer.concrete.List">
 		<realizes>guidancer.abstract.TextVerifiable</realizes>
-		<action name="CompSystem.VerifySelectedValue">
+		<action name="CompSystem.VerifySelectedValue" since="4.1">
 			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -834,9 +879,14 @@
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.VerifyContainsValue">
+		<action name="CompSystem.VerifyContainsValue" since="4.1">
 			<method>rcVerifyContainsValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -862,8 +912,13 @@
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifySelectedIndices">
+		<action name="CompSystem.VerifySelectedIndices" since="4.1">
 			<method>rcVerifySelectedIndex</method>
 			<param name="CompSystem.Index"
                    descriptionKey="CompSystem.Index.descr" >
@@ -877,6 +932,11 @@
                     <element name="CompSystem.True" value="true"/>
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
             </param>
 		</action>
 		<action name="CompSystem.SelectIndices">
@@ -1087,7 +1147,7 @@
 				<defaultValue>100</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">
+		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.1">
             <method>rcCheckPropertyAtMousePosition</method>
             <param name="CompSystem.PropertyName"
                    descriptionKey="CompSystem.PropertyName.descr" >
@@ -1108,6 +1168,11 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
         </action>
 	</concreteComponent>
 	
@@ -1117,7 +1182,7 @@
 	
 	<concreteComponent type="guidancer.concrete.TabbedPane">
 		<realizes>guidancer.abstract.Widget</realizes>
-		<action name="CompSystem.VerifySelectedTab">
+		<action name="CompSystem.VerifySelectedTab" since="4.1">
 			<method>rcVerifySelectedTab</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -1143,6 +1208,11 @@
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		<action name="CompSystem.SelectTab">
 			<method>rcSelectTab</method>
@@ -1162,7 +1232,7 @@
 				</valueSet>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledTab">
+		<action name="CompSystem.VerifyEnabledTab" since="4.1">
 			<method>rcVerifyEnabled</method>
 			<param name="CompSystem.Title"
                    descriptionKey="CompSystem.Title.descr" >
@@ -1188,8 +1258,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifySelectedTabByIndex">
+		<action name="CompSystem.VerifySelectedTabByIndex" since="4.1">
 			<method>rcVerifySelectedTabByIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -1204,6 +1279,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		<action name="CompSystem.SelectTabByIndex">
 			<method>rcSelectTabByIndex</method>
@@ -1212,7 +1292,7 @@
 				<type>java.lang.Integer</type>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyEnabledTabByIndex">
+		<action name="CompSystem.VerifyEnabledTabByIndex" since="4.1">
 			<method>rcVerifyEnabledByIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -1227,8 +1307,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyTextOfTabByIndex">
+		<action name="CompSystem.VerifyTextOfTabByIndex" since="4.1">
 			<method>rcVerifyTextOfTabByIndex</method>
 			<param name="CompSystem.OneIndex"
                    descriptionKey="CompSystem.OneIndex.descr" >
@@ -1249,8 +1334,13 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyExistenceOfTab">
+		<action name="CompSystem.VerifyExistenceOfTab" since="4.1">
 			<method>rcVerifyExistenceOfTab</method>
 			<param name="CompSystem.Tab"
                    descriptionKey="CompSystem.Tab.descr" >
@@ -1276,6 +1366,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 	</concreteComponent>
 	
@@ -1506,7 +1601,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifyTableCellEditableNew">
+		<action name="CompSystem.VerifyTableCellEditableNew" since="4.1">
 			<method>rcVerifyEditable</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -1547,9 +1642,14 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.VerifySelectedTableCellEditable">
+		<action name="CompSystem.VerifySelectedTableCellEditable" since="4.1">
 			<method>rcVerifyEditableSelected</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -1560,9 +1660,14 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.VerifyTableCellEditableMousePosition">
+		<action name="CompSystem.VerifyTableCellEditableMousePosition" since="4.1">
 			<method>rcVerifyEditableMousePosition</method>
 			<param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
@@ -1573,9 +1678,14 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.VerifyTableCellTextNew">
+		<action name="CompSystem.VerifyTableCellTextNew" since="4.1">
 			<method>rcVerifyText</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1622,9 +1732,14 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 				
-		<action name="CompSystem.VerifyTableCellTextAtMousePosition">
+		<action name="CompSystem.VerifyTableCellTextAtMousePosition" since="4.1">
 			<method>rcVerifyTextAtMousePosition</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -1641,9 +1756,14 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.VerifyValueInRow">
+		<action name="CompSystem.VerifyValueInRow" since="4.1">
 			<method>rcVerifyValueInRow</method>
 			<param name="CompSystem.Row"
                    descriptionKey="CompSystem.Row.descr" >
@@ -1693,9 +1813,14 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.VerifyValueInColumn">
+		<action name="CompSystem.VerifyValueInColumn" since="4.1">
 			<method>rcVerifyValueInColumn</method>
 			<param name="CompSystem.Column"
                    descriptionKey="CompSystem.Column.descr" >
@@ -1745,6 +1870,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
 		<action name="CompSystem.SelectRowByValueNew">
@@ -2354,7 +2484,7 @@
 			</param>
 		</action>
 		
-		<action name="CompSystem.VerifyCheckboxInSelectedRow">
+		<action name="CompSystem.VerifyCheckboxInSelectedRow" since="4.1">
 			<method>rcVerifyCheckboxInSelectedRow</method>
 			<param name="CompSystem.Checked"
                    descriptionKey="CompSystem.Checked.descr" >
@@ -2365,9 +2495,14 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.VerifyCheckboxOfRowAtMousePosition">
+		<action name="CompSystem.VerifyCheckboxOfRowAtMousePosition" since="4.1">
 			<method>rcVerifyCheckboxInRowAtMousePosition</method>
 			<param name="CompSystem.Checked"
                    descriptionKey="CompSystem.Checked.descr" >
@@ -2378,6 +2513,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
 		<action name="CompSystem.ToggleCheckboxInSelectedRow">
@@ -2388,7 +2528,7 @@
 			<method>rcToggleCheckboxInRowAtMousePosition</method>
 		</action>
 		
-        <action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">
+        <action name="CompSystem.CheckPropertyAtMousePosition" since="4.1">
             <method>rcCheckPropertyAtMousePosition</method>
             <param name="CompSystem.PropertyName"
                    descriptionKey="CompSystem.PropertyName.descr" >
@@ -2409,8 +2549,13 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
         </action>
-        <action name="CompSystem.CheckExistenceOfColumn" since="4.0">
+        <action name="CompSystem.CheckExistenceOfColumn" since="4.1">
             <method>rcCheckExistenceOfColumn</method>
             <param name="CompSystem.Column"
                    descriptionKey="CompSystem.Column.descr" >
@@ -2436,7 +2581,12 @@
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
             </param>
-        </action>   		
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
 	</concreteComponent>
 	
 	<concreteComponent type="guidancer.concrete.TextComponent">
@@ -2740,7 +2890,7 @@
 				<defaultValue>1</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyPath">
+		<action name="CompSystem.VerifyPath" since="4.1">
 			<method>rcVerifyPath</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2780,8 +2930,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+               <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyPathByIndices">
+		<action name="CompSystem.VerifyPathByIndices" since="4.1">
 			<method>rcVerifyPathByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
@@ -2810,8 +2965,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyTextOfSelectedEntry">
+		<action name="CompSystem.VerifyTextOfSelectedEntry" since="4.1">
 			<method>rcVerifySelectedValue</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -2827,9 +2987,14 @@
 					<element name="CompSystem.MatchesRegExp" value="matches"/>
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
-			</param>	
+			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.VerifyTextAtMousePosition">
+		<action name="CompSystem.VerifyTextAtMousePosition" since="4.1">
 			<method>rcVerifyTextAtMousePosition</method>
 			<param name="CompSystem.Text"
                    descriptionKey="CompSystem.Text.descr" >
@@ -2846,6 +3011,11 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
 		<action name="CompSystem.DragByTextPath">
@@ -3031,7 +3201,7 @@
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
-		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.0">
+		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.1">
             <method>rcCheckPropertyAtMousePosition</method>
             <param name="CompSystem.PropertyName"
                    descriptionKey="CompSystem.PropertyName.descr" >
@@ -3052,11 +3222,16 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
         </action>
 	</concreteComponent>
 
 	<concreteComponent type="guidancer.concrete.Tooltip" hasDefaultMapping="true" since="4.0">
-        <action name="CompSystem.CheckTooltipText">
+        <action name="CompSystem.CheckTooltipText" since="4.1">
             <method>rcCheckTooltipText</method>
             <param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -3084,7 +3259,7 @@
 	<concreteComponent type="guidancer.concrete.JavaReflection" 
 	                   hasDefaultMapping="true"
 	                   descriptionKey="guidancer.concrete.JavaReflection.descr" since="4.0">
-        <action name="CompSystem.InvokeMethodStoreReturn" since="4.0">
+        <action name="CompSystem.InvokeMethodStoreReturn" since="4.1">
             <method>rcInvokeMethodStoreReturn</method>
             <param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -3120,7 +3295,7 @@
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>
         </action>
-                <action name="CompSystem.InvokeMethodStoreReturnAPI" apiAction="true" since="4.0">
+                <action name="CompSystem.InvokeMethodStoreReturnAPI" apiAction="true" since="4.1">
             <method>rcInvokeMethodStoreReturnApi</method>
             <param name="CompSystem.FQCN"
                    descriptionKey="CompSystem.FQCN.descr" >
@@ -3151,7 +3326,7 @@
                 <defaultValue>3000</defaultValue>
             </param>
         </action>
-        <action name="CompSystem.InvokeMethod" since="4.0">
+        <action name="CompSystem.InvokeMethod" since="4.1">
             <method>rcInvokeMethod</method>
             <param name="CompSystem.FQCN" 
                    descriptionKey="CompSystem.FQCN.descr">
@@ -3182,7 +3357,7 @@
                 <defaultValue>3000</defaultValue>
             </param>
         </action>
-        <action name="CompSystem.InvokeExternalMethodStoreReturn" since="4.0">
+        <action name="CompSystem.InvokeExternalMethodStoreReturn" since="4.1">
             <method>rcInvokeExternalMethodStoreReturn</method>
             <param name="CompSystem.Variable"
                    descriptionKey="CompSystem.Variable.descr" >
@@ -3218,7 +3393,7 @@
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$PropertyStorerCmd</postExecutionCommand>
         </action>
-        <action name="CompSystem.InvokeExternalMethodStoreReturnAPI" apiAction="true" since="4.0">
+        <action name="CompSystem.InvokeExternalMethodStoreReturnAPI" apiAction="true" since="4.1">
             <method>rcInvokeExternalMethodStoreReturnApi</method>
             <param name="CompSystem.FQCN"
                    descriptionKey="CompSystem.FQCN.descr" >
@@ -3249,7 +3424,7 @@
                 <defaultValue>3000</defaultValue>
             </param>
         </action>
-        <action name="CompSystem.InvokeExternalMethod" since="4.0">
+        <action name="CompSystem.InvokeExternalMethod" since="4.1">
             <method>rcInvokeExternalMethod</method>
             <param name="CompSystem.FQCN" 
                    descriptionKey="CompSystem.FQCN.descr">
@@ -3287,7 +3462,7 @@
                       hasDefaultMapping="true"
                       since="4.0">
     <action name="CompSystem.ExecuteCommand"
-            descriptionKey="CompSystem.ExecuteCommand.descr">
+            descriptionKey="CompSystem.ExecuteCommand.descr" since="4.1">
             <method>rcExec</method>
             <param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -3339,7 +3514,7 @@
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$CommandExecCmd</postExecutionCommand>    
         </action>
     <action name="CompSystem.ExecuteExecutable"
-            descriptionKey="CompSystem.ExecuteExecutable.descr">
+            descriptionKey="CompSystem.ExecuteExecutable.descr" since="4.1">
             <method>rcExec</method>
             <param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
@@ -3384,7 +3559,7 @@
     
     <concreteComponent type="guidancer.concrete.Slider" since="4.0">
         <realizes>guidancer.abstract.Widget</realizes>
-        <action name="CompSystem.VerifyPosition">
+        <action name="CompSystem.VerifyPosition" since="4.1">
             <method>rcVerifyPosition</method>
             <param name="CompSystem.Position"
                    descriptionKey="CompSystem.Position.descr" >
@@ -3409,6 +3584,11 @@
                     <element name="CompSystem.Percent" value="percent"/>
                     <element name="CompSystem.Value" value="value"/>
                 </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
             </param>
         </action>
         <action name="CompSystem.SelectPosition">

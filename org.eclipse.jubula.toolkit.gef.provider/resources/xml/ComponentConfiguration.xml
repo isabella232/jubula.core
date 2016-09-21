@@ -15,7 +15,7 @@
 		<realizes>guidancer.abstract.Widget</realizes>
 		<testerClass>org.eclipse.jubula.rc.rcp.e3.gef.tester.FigureCanvasTester</testerClass>
 		<componentClass name="org.eclipse.draw2d.FigureCanvas" />
-		<action name="CompSystem.CheckFigureExists">
+		<action name="CompSystem.CheckFigureExists" since="4.1">
 			<method>rcCheckFigureExists</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -41,8 +41,13 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
-		<action name="CompSystem.CheckToolExists">
+		<action name="CompSystem.CheckToolExists" since="4.1">
 			<method>rcCheckToolExists</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -68,6 +73,11 @@
 					<element name="CompSystem.False" value="false"/>
 				</valueSet>
 			</param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		<action name="CompSystem.ClickFigure">
 			<method>rcClickFigure</method>
@@ -235,7 +245,7 @@
 			</param>
 		</action>
 
-		<action name="CompSystem.CheckConnectionExists" since="4.0">
+		<action name="CompSystem.CheckConnectionExists" since="4.1">
             <method>rcCheckConnectionExists</method>
             <param name="CompSystem.SourceTextPath"
                    descriptionKey="CompSystem.SourceTextPath.descr" >
@@ -275,6 +285,11 @@
                     <element name="CompSystem.True" value="true"/>
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
             </param>
         </action>
         <action name="CompSystem.DragFigure">
@@ -399,7 +414,7 @@
 				<defaultValue>100</defaultValue>
 			</param>
 		</action>
-		<action name="CompSystem.VerifyFigureProperty">
+		<action name="CompSystem.VerifyFigureProperty" since="4.1">
 			<method>rcVerifyFigureProperty</method>
 			<param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -435,9 +450,14 @@
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
 		</action>
 		
-		<action name="CompSystem.CheckAnchorCount" since="4.0">
+		<action name="CompSystem.CheckAnchorCount" since="4.1">
             <method>rcCheckNumberOfAnchors</method>
             <param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -480,9 +500,14 @@
                     <element name="CompSystem.Greater" value="greater than"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
         </action>
         <action name="CompSystem.CheckAnchorConnection"
-            descriptionKey="CompSystem.CheckAnchorConnection.descr" since="4.0">
+            descriptionKey="CompSystem.CheckAnchorConnection.descr" since="4.1">
             <method>rcCheckAnchorConnection</method>
             <param name="CompSystem.TextPath"
                    descriptionKey="CompSystem.TextPath.descr" >
@@ -508,10 +533,15 @@
                     <element name="CompSystem.False" value="false"/>
                 </valueSet>
             </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
         </action>
         
         <action name="CompSystem.VerifyConnectionProperty" 
-        descriptionKey="CompSystem.VerifyConnectionProperty.descr" since="4.0">
+        descriptionKey="CompSystem.VerifyConnectionProperty.descr" since="4.1">
             <method>rcVerifyConnectionProperty</method>
                         <param name="CompSystem.SourceTextPath"
                    descriptionKey="CompSystem.SourceTextPath.descr">
@@ -561,6 +591,11 @@
                     <element name="CompSystem.MatchesRegExp" value="matches"/>
                     <element name="CompSystem.SimpleMatch" value="simple match"/>
                 </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
             </param>
         </action>
 	</toolkitComponent>

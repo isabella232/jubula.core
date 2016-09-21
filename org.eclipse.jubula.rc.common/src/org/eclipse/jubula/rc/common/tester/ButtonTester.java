@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IButtonComponent;
-import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 
 
@@ -35,19 +35,18 @@ public class ButtonTester extends AbstractTextVerifiableTester {
      * Verifies the selected property.
      * 
      * @param selected The selected property value to verify.
+     * @param timeout the maximum amount of time to wait for the component
+     *                  to have the Selected property to be the same as 
+     *                  the parameter
      */
-    public void rcVerifySelected(boolean selected) {
-
-        Verifier.equals(selected, getButtonAdapter().isSelected());
-    }
-   
-    /**
-     * Verifies the passed text.
-     * 
-     * @param text The text to verify
-     */
-    public void rcVerifyText(String text) {
-        rcVerifyText(text, MatchUtil.DEFAULT_OPERATOR);
+    public void rcVerifySelected(final boolean selected, int timeout) {
+        CheckWithTimeoutQueuer.invokeAndWait("rcVerifySelected", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        Verifier.equals(selected,
+                                getButtonAdapter().isSelected());
+                    }
+                });
     }
 
     /** {@inheritDoc} */

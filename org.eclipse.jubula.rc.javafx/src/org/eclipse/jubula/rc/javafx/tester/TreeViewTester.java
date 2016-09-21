@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.awt.Point;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -23,7 +25,6 @@ import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
-
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -52,8 +53,17 @@ public class TreeViewTester extends AbstractTreeTester {
     };
 
     @Override
-    public void rcVerifyTextAtMousePosition(String txt, String operator) {
-        checkNodeText(new Object[] { getNodeAtMousePosition() }, txt, operator);
+    public void rcVerifyTextAtMousePosition(final String txt,
+            final String operator, int timeout) {
+        invokeAndWait("rcVerifyTextAtMousePosition", //$NON-NLS-1$
+                timeout,
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        checkNodeText(new Object[] { getNodeAtMousePosition() },
+                                txt, operator);
+                    }
+                });
     }
 
     @Override

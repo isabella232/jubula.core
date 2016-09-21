@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -76,17 +78,35 @@ public class WidgetTester extends AbstractUITester {
      * Verifies if the component has the focus.
      * @param hasFocus <code>True</code> if the component is expected to has 
      *                  the focus, otherwise <code>false</code>
+     * @param timeout the maximum amount of time to wait for the component
+     *                  to have the focus status to be the same as the parameter
      */
-    public void rcVerifyFocus(boolean hasFocus) {
-        Verifier.equals(hasFocus, getWidgetAdapter().hasFocus());
+    public void rcVerifyFocus(final boolean hasFocus, int timeout) {
+        String name = "rcVerifyFocus"; //$NON-NLS-1$
+        invokeAndWait(name, timeout,
+                new Runnable() {
+                    public void run() {
+                        Verifier.equals(hasFocus,
+                                getWidgetAdapter().hasFocus());
+                    }
+                });
     }
     /**
      * Verifies if the component is enabled
      * @param enabled <code>True</code> if the component is expected to be 
      *                  enabled, otherwise <code>false</code>
+     * @param timeout the maximum amount of time to wait for the component
+     *                  to have the enabled status to be the same as the parameter
      */
-    public void rcVerifyEnabled(boolean enabled) {
-        Verifier.equals(enabled, getWidgetAdapter().isEnabled());
+    public void rcVerifyEnabled(final boolean enabled, int timeout) {
+        invokeAndWait("rcVerifyEnabled", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        Verifier.equals(enabled,
+                                getWidgetAdapter().isEnabled());
+
+                    }
+                });
     }
     
     /**
@@ -99,15 +119,21 @@ public class WidgetTester extends AbstractUITester {
      * @param name The name of the property
      * @param value The value of the property as a string
      * @param operator The operator used to verify
+     * @param timeout the maximum amount of time to wait for the property
+     *                  to match the value
      */
-    public void rcVerifyProperty(final String name, String value,
-            String operator) {
-        
-        final IWidgetComponent bean = (IWidgetComponent) getComponent();
-        bean.getPropteryValue(name);
+    public void rcVerifyProperty(final String name, final String value,
+            final String operator, int timeout) {
+        final IWidgetComponent bean =  (IWidgetComponent) getComponent();
+        invokeAndWait("rcVerifyProperty", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        bean.getPropteryValue(name);
 
-        final String propToStr = bean.getPropteryValue(name);
-        Verifier.match(propToStr, value, operator);
+                        final String propToStr = bean.getPropteryValue(name);
+                        Verifier.match(propToStr, value, operator);
+                    }
+                });
     }
 
     
@@ -292,13 +318,21 @@ public class WidgetTester extends AbstractUITester {
      * @param indexPath the menu item to verify
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
-    public void rcPopupVerifyEnabledByIndexPath(String indexPath,
-            boolean enabled, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter().showPopup(button);        
-        popup.verifyEnabledByIndexpath(indexPath, enabled);
-    }    
+    public void rcPopupVerifyEnabledByIndexPath(final String indexPath,
+            final boolean enabled, final int button, int timeout)
+            throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyEnabledByIndexPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup =
+                                getWidgetAdapter().showPopup(button);
+                        popup.verifyEnabledByIndexpath(indexPath, enabled, 0);
+                    }
+                });
+    }
   
     /**
      * Opens the popup menu at the given position relative the current component
@@ -310,13 +344,21 @@ public class WidgetTester extends AbstractUITester {
      * @param indexPath the menu item to verify
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
-    public void rcPopupVerifyEnabledByIndexPath(int xPos, String xUnits, 
-            int yPos, String yUnits, String indexPath, 
-            boolean enabled, int button) throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter()
-                .showPopup(xPos, xUnits, yPos, yUnits, button);
-        popup.verifyEnabledByIndexpath(indexPath, enabled);
+    public void rcPopupVerifyEnabledByIndexPath(final int xPos,
+            final String xUnits, final int yPos, final String yUnits,
+            final String indexPath, final boolean enabled, final int button,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyEnabledByIndexPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup = getWidgetAdapter()
+                                .showPopup(xPos, xUnits, yPos, yUnits, button);
+                        popup.verifyEnabledByIndexpath(indexPath, enabled, 0);
+                    }
+                });
     }
     
     /**
@@ -325,12 +367,20 @@ public class WidgetTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
-    public void rcPopupVerifyEnabledByTextPath(String textPath,
-            String operator, boolean enabled, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
-        popup.verifyEnabled(textPath, operator, enabled);
+    public void rcPopupVerifyEnabledByTextPath(final String textPath,
+            final String operator, final boolean enabled, final int button,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyEnabledByTextPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup =
+                                getWidgetAdapter().showPopup(button);
+                        popup.verifyEnabled(textPath, operator, enabled, 0);
+                    }
+                });
     }
     
     /**
@@ -344,15 +394,21 @@ public class WidgetTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param enabled for checking enabled or disabled
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is enabled according to the enabled parameter
      */
-    public void rcPopupVerifyEnabledByTextPath(final int xPos, 
-            final String xUnits, final int yPos,
-            final String yUnits, String textPath, String operator,
-                boolean enabled, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter()
-                .showPopup(xPos, xUnits, yPos, yUnits, button);
-        popup.verifyEnabled(textPath, operator, enabled);
+    public void rcPopupVerifyEnabledByTextPath(final int xPos,
+            final String xUnits, final int yPos, final String yUnits,
+            final String textPath, final String operator, final boolean enabled,
+            final int button, int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyEnabledByTextPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup = getWidgetAdapter()
+                                .showPopup(xPos, xUnits, yPos, yUnits, button);
+                        popup.verifyEnabled(textPath, operator, enabled, 0);
+                    }
+                });
     }
     
     /**
@@ -360,12 +416,20 @@ public class WidgetTester extends AbstractUITester {
      * @param indexPath the menu item to verify
      * @param selected for checking if entry is selected
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
-    public void rcPopupVerifySelectedByIndexPath(String indexPath,
-            boolean selected, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
-        popup.verifySelectedByIndexpath(indexPath, selected);
+    public void rcPopupVerifySelectedByIndexPath(final String indexPath,
+            final boolean selected, final int button, int timeout)
+            throws StepExecutionException {
+        invokeAndWait("rcPopupVerifySelectedByIndexPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup =
+                                getWidgetAdapter().showPopup(button);
+                        popup.verifySelectedByIndexpath(indexPath, selected, 0);
+                    }
+                });
     }
     
     /**
@@ -378,13 +442,21 @@ public class WidgetTester extends AbstractUITester {
      * @param indexPath the menu item to verify
      * @param selected for checking if entry is selected
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
-    public void rcPopupVerifySelectedByIndexPath(int xPos, String xUnits, 
-            int yPos, String yUnits, String indexPath, boolean selected, 
-            int button) throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter()
-                .showPopup(xPos, xUnits, yPos, yUnits, button);
-        popup.verifySelectedByIndexpath(indexPath, selected);
+    public void rcPopupVerifySelectedByIndexPath(final int xPos,
+            final String xUnits, final int yPos, final String yUnits,
+            final String indexPath, final boolean selected, final int button,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifySelectedByIndexPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup = getWidgetAdapter()
+                                .showPopup(xPos, xUnits, yPos, yUnits, button);
+                        popup.verifySelectedByIndexpath(indexPath, selected, 0);
+                    }
+                });
     }
     
     /**
@@ -393,12 +465,20 @@ public class WidgetTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param selected for checking if entry is selected
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
-    public void rcPopupVerifySelectedByTextPath(String textPath,
-            String operator, boolean selected, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
-        popup.verifySelected(textPath, operator, selected);
+    public void rcPopupVerifySelectedByTextPath(final String textPath,
+            final String operator, final boolean selected, final int button,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifySelectedByTextPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup =
+                                getWidgetAdapter().showPopup(button);
+                        popup.verifySelected(textPath, operator, selected, 0);
+                    }
+                });
     }
     
     /**
@@ -412,15 +492,22 @@ public class WidgetTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param selected for checking if entry is selected
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is selected according to the selected parameter
      */
-    public void rcPopupVerifySelectedByTextPath(final int xPos, 
-            final String xUnits, final int yPos,
-            final String yUnits, String textPath, String operator,
-                boolean selected, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter()
-                .showPopup(xPos, xUnits, yPos, yUnits, button);
-        popup.verifySelected(textPath, operator, selected);
+    public void rcPopupVerifySelectedByTextPath(final int xPos,
+            final String xUnits, final int yPos, final String yUnits,
+            final String textPath, final String operator,
+            final boolean selected, final int button, int timeout)
+            throws StepExecutionException {
+        invokeAndWait("rcPopupVerifySelectedByTextPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup = getWidgetAdapter()
+                                .showPopup(xPos, xUnits, yPos, yUnits, button);
+                        popup.verifySelected(textPath, operator, selected, 0);
+                    }
+                });
     }
     
     /**
@@ -428,12 +515,20 @@ public class WidgetTester extends AbstractUITester {
      * @param indexPath the menu item to verify
      * @param exists for checking if entry exists
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void rcPopupVerifyExistsByIndexPath(String indexPath,
-            boolean exists, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
-        popup.verifyExistsByIndexpath(indexPath, exists);      
+    public void rcPopupVerifyExistsByIndexPath(final String indexPath,
+            final boolean exists, final int button, int timeout)
+            throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyExistsByIndexPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup =
+                                getWidgetAdapter().showPopup(button);
+                        popup.verifyExistsByIndexpath(indexPath, exists, 0);
+                    }
+                });
     }
     
     /**
@@ -446,13 +541,22 @@ public class WidgetTester extends AbstractUITester {
      * @param indexPath the menu item to verify
      * @param exists for checking if entry exists
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void rcPopupVerifyExistsByIndexPath(int xPos, String xUnits, 
-            int yPos, String yUnits, String indexPath, 
-            boolean exists, int button) throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter()
-                .showPopup(xPos, xUnits, yPos, yUnits, button);
-        popup.verifyExistsByIndexpath(indexPath, exists);
+    public void rcPopupVerifyExistsByIndexPath(final int xPos,
+            final String xUnits, final int yPos, final String yUnits,
+            final String indexPath, final boolean exists, final int button,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyExistsByIndexPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractMenuTester popup = getWidgetAdapter()
+                                .showPopup(xPos, xUnits, yPos, yUnits, button);
+                        popup.verifyExistsByIndexpath(indexPath, exists, 0);
+
+                    }
+                });
     }
     
     /**
@@ -461,12 +565,18 @@ public class WidgetTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param exists for checking if entry exists
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void rcPopupVerifyExistsByTextPath(String textPath,
-            String operator, boolean exists, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
-        popup.verifyExists(textPath, operator, exists);
+    public void rcPopupVerifyExistsByTextPath(final String textPath,
+            final String operator, final boolean exists, final int button,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyExistsByTextPath", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                AbstractMenuTester popup = getWidgetAdapter().showPopup(button);
+                popup.verifyExists(textPath, operator, exists, 0);
+            }
+        });
     }
     
     /**
@@ -480,16 +590,22 @@ public class WidgetTester extends AbstractUITester {
      * @param operator operator used for matching
      * @param exists for checking if entry exists
      * @param button MouseButton
+     * @param timeout the maximum amount of time to wait for the check whether
+     *            the MenuItem is existing according to the exists parameter
      */
-    public void rcPopupVerifyExistsByTextPath(final int xPos, 
-            final String xUnits, final int yPos,
-            final String yUnits, String textPath, String operator,
-            boolean exists, int button)
-        throws StepExecutionException {
-        AbstractMenuTester popup = getWidgetAdapter()
-                .showPopup(xPos, xUnits, yPos, yUnits, button);
-        popup.verifyExists(textPath, operator, exists);
+    public void rcPopupVerifyExistsByTextPath(final int xPos,
+            final String xUnits, final int yPos, final String yUnits,
+            final String textPath, final String operator, final boolean exists,
+            final int button, int timeout) throws StepExecutionException {
+        invokeAndWait("rcPopupVerifyExistaByTextPath", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                AbstractMenuTester popup = getWidgetAdapter().showPopup(xPos,
+                        xUnits, yPos, yUnits, button);
+                popup.verifyExists(textPath, operator, exists, 0);
+            }
+        });
     }
+
     /**
      * 
      * @param extendSelection

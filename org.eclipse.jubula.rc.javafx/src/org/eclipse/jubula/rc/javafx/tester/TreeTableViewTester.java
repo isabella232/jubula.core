@@ -49,6 +49,7 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
 
 /**
  * Tester Class for the <code>TreeTableView</code>. If you are looking for more
@@ -283,23 +284,30 @@ public class TreeTableViewTester extends TreeViewTester {
      *            actual values.
      * @param column
      *            The column containing the text to verify
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the passed value is selected to be performed
      * @throws StepExecutionException If there is no tree node selected, the tree path contains no
      *             selection or the verification fails
      */
-    public void rcVerifySelectedValue(String pattern, String operator, 
-        int column) throws StepExecutionException {
-        
-        final int implCol = IndexConverter.toImplementationIndex(column);
-        checkColumnIndex(implCol);
-
-        TreeTableOperationContext context = getContext();
-        context.setColumn(implCol);
-
-        String text = context.getRenderedTextOfColumn(
-                context.getSelectedNode());
-        
-        Verifier.match(text, pattern, operator);
-
+    public void rcVerifySelectedValue(final String pattern,
+            final String operator, final int column, int timeout)
+                    throws StepExecutionException {
+        invokeAndWait("rcVerifySelectedValue", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                final int implCol = IndexConverter
+                        .toImplementationIndex(column);
+                checkColumnIndex(implCol);
+                
+                TreeTableOperationContext context = getContext();
+                context.setColumn(implCol);
+                
+                String text = context.getRenderedTextOfColumn(
+                        context.getSelectedNode());
+                
+                Verifier.match(text, pattern, operator);
+            }
+        });
     }
     
     /**
@@ -313,24 +321,30 @@ public class TreeTableViewTester extends TreeViewTester {
      *            actual values.
      * @param column the column or column path of the item to select
      * @param colOperator the operator for the column path
+     * @param timeout the maximum amount of time to wait for the check to be
+     *          performed
      * @throws StepExecutionException If there is no tree node selected, the tree path contains no
      *             selection or the verification fails
      */
-    public void rcVerifySelectedValueAtPath(String pattern, String operator,
-            String column, String colOperator)
-        throws StepExecutionException {
-        
-        TreeTableOperationContext context = getContext();
-        final int implCol = context.getColumnFromString(
-                column, colOperator, true);
-        checkColumnIndex(implCol);
-        context.setColumn(implCol);
-
-        String text = context
-                .getRenderedTextOfColumn(context.getSelectedNode());
-
-        Verifier.match(text, pattern, operator);
-
+    public void rcVerifySelectedValueAtPath(final String pattern,
+            final String operator, final String column,
+            final String colOperator, int timeout) 
+                    throws StepExecutionException {
+        invokeAndWait("rcVerifySelectedValueAtPath", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                TreeTableOperationContext context = getContext();
+                final int implCol = context.getColumnFromString(
+                        column, colOperator, true);
+                checkColumnIndex(implCol);
+                context.setColumn(implCol);
+                
+                String text = context
+                        .getRenderedTextOfColumn(context.getSelectedNode());
+                
+                Verifier.match(text, pattern, operator);
+            }
+        });
     }
 
     /**
@@ -406,9 +420,11 @@ public class TreeTableViewTester extends TreeViewTester {
      * @param rowOperator the row header operator
      * @param col the column to select
      * @param colOperator the column header operator
+     * @param timeout the maximum amount of time to wait for the check to be
+     *          performed
      */
     public void rcVerifyEditable(boolean editable, String row,
-            String rowOperator, String col, String colOperator) {
+            String rowOperator, String col, String colOperator, int timeout) {
         TreeTableOperationContext context = getContext();
         if (context.getRowFromString(row, rowOperator) == -1) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
@@ -417,30 +433,44 @@ public class TreeTableViewTester extends TreeViewTester {
         }        
         selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
                 ValueSets.BinaryChoice.no.rcValue());
-        rcVerifySelectedEditable(editable);
+        rcVerifySelectedEditable(editable, timeout);
     }
     
     /**
      * Verifies the editable property of the current selected cell.
      *
      * @param editable The editable property to verify.
+     * @param timeout the maximum amount of time to wait for the check to be
+     *          performed
      */
-    public void rcVerifySelectedEditable(boolean editable) {
-        Cell cell = getContext().getSelectedCell();
-        
-        Verifier.equals(editable, getContext().isCellEditable(
-                cell.getRow(), cell.getCol()));
+    public void rcVerifySelectedEditable(final boolean editable,
+            int timeout) {
+        invokeAndWait("rcVerifySelectedEditable", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                Cell cell = getContext().getSelectedCell();
+                
+                Verifier.equals(editable, getContext().isCellEditable(
+                        cell.getRow(), cell.getCol()));
+            }
+        });
     }
     
     /**
      * Verifies the editable property of the cell under the mouse.
      *
      * @param editable The editable property to verify.
+     * @param timeout the maximum amount of time to wait for the check to be
+     *          performed
      */
-    public void rcVerifyEditableAtMousePosition(boolean editable) {
-        TreeTableCell<?, ?> cell = 
-                (TreeTableCell<?, ?>)getNodeAtMousePosition();
-        Verifier.equals(editable, getContext().isCellEditable(cell));
+    public void rcVerifyEditableAtMousePosition(boolean editable, int timeout) {
+        invokeAndWait("rcVerisfEditableAtMousePosition", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                TreeTableCell<?, ?> cell = 
+                        (TreeTableCell<?, ?>)getNodeAtMousePosition();
+                Verifier.equals(editable, getContext().isCellEditable(cell));
+            }
+        });
     }
     /**
      * Verifies, whether value exists in row..
@@ -451,39 +481,45 @@ public class TreeTableViewTester extends TreeViewTester {
      * @param operator The operation used to verify
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param exists true if value exists, false otherwise
+     * @param timeout the maximum amount of time to wait to verify whether the
+     *          value exists in the row
      * @throws StepExecutionException
      *             If the row or the column is invalid, or if the rendered text
      *             cannot be extracted.
      */
     public void rcVerifyValueInRow(final String row, final String rowOperator,
             final String value, final String operator, final String searchType,
-            boolean exists)
-        throws StepExecutionException {
-        final TreeTableOperationContext adapter = getContext();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
-        boolean valueIsExisting = false;
-        //if row is header
-        if (implRow == -1) {
-            for (int i = getStartingColIndex(searchType); 
-                    i < adapter.getColumnCount(); ++i) {
-                if (MatchUtil.getInstance().match(
-                        adapter.getColumnHeaderText(i),
-                        value, operator)) {
-                    valueIsExisting = true;
-                    break;
+            final boolean exists, int timeout) throws StepExecutionException {
+        invokeAndWait("rcVerifyValueInRow", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                final TreeTableOperationContext adapter = getContext();
+                final int implRow = adapter.getRowFromString(row, rowOperator);
+                boolean valueIsExisting = false;
+                //if row is header
+                if (implRow == -1) {
+                    for (int i = getStartingColIndex(searchType); 
+                            i < adapter.getColumnCount(); ++i) {
+                        if (MatchUtil.getInstance().match(
+                                adapter.getColumnHeaderText(i),
+                                value, operator)) {
+                            valueIsExisting = true;
+                            break;
+                        }
+                    }             
+                } else {
+                    for (int i = getStartingColIndex(searchType); 
+                            i < adapter.getColumnCount(); ++i) {
+                        if (MatchUtil.getInstance().match(
+                                getCellText(implRow, i), value, operator)) {
+                            valueIsExisting = true;
+                            break;
+                        }
+                    }
                 }
-            }             
-        } else {
-            for (int i = getStartingColIndex(searchType); 
-                    i < adapter.getColumnCount(); ++i) {
-                if (MatchUtil.getInstance().match(
-                        getCellText(implRow, i), value, operator)) {
-                    valueIsExisting = true;
-                    break;
-                }
+                Verifier.equals(exists, valueIsExisting);
             }
-        }
-        Verifier.equals(exists, valueIsExisting);
+        });
     }
 
     /**
@@ -508,21 +544,30 @@ public class TreeTableViewTester extends TreeViewTester {
      * @param operator The operation used to verify
      * @param searchType Determines where the search begins ("relative" or "absolute")
      * @param exists true if value exists, false otherwise
+     * @param timeout the maximum amount of time to wait to verify whether the
+     *          value exists in the column
      * @throws StepExecutionException
      *             If the row or the column is invalid, or if the rendered text
      *             cannot be extracted.
      */
     public void rcVerifyValueInColumn(final String col,
             final String colOperator, final String value,
-            final String operator, final String searchType, boolean exists)
-        throws StepExecutionException {
-        TreeTableOperationContext adapter = getContext();
-        final int implCol = adapter.getColumnFromString(col, colOperator, true);
-        
-        boolean valueExists = isValueExisting(adapter, implCol,
-                value, operator, searchType);
+            final String operator, final String searchType,
+            final boolean exists, int timeout)
+                    throws StepExecutionException {
+        invokeAndWait("rcVerifyValueInColumn", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                TreeTableOperationContext adapter = getContext();
+                final int implCol = adapter.getColumnFromString(col,
+                        colOperator, true);
+                
+                boolean valueExists = isValueExisting(adapter, implCol,
+                        value, operator, searchType);
 
-        Verifier.equals(exists, valueExists);
+                Verifier.equals(exists, valueExists);
+            }
+        });
     }
 
     /**
@@ -585,26 +630,33 @@ public class TreeTableViewTester extends TreeViewTester {
      * @param colOperator The column header operator
      * @param text The cell text to verify.
      * @param operator The operation used to verify
+     * @param timeout the maximum amount of time to wait for the text to be
+     *          verified
      * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
      */
     public void rcVerifyText(String text, String operator, final String row,
             final String rowOperator, final String col,
-            final String colOperator) throws StepExecutionException {
-        TreeTableOperationContext adapter = getContext();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
-        final int implCol = adapter.getColumnFromString(
-                col, colOperator, implRow != -1);
-        String current;
-        //if row is header and column is existing
-        if (implRow == -1 && implCol > -1) {
-            current = adapter.getColumnHeaderText(implCol);        
-        } else {
-            checkRowColBounds(implRow, implCol);
-            adapter.scrollCellToVisible(implRow, implCol);
-            current = getCellText(implRow, implCol);
-        }
-        
-        Verifier.match(current, text, operator);
+            final String colOperator, int timeout) 
+                    throws StepExecutionException {
+        invokeAndWait("rcVerifyText", timeout, new Runnable() { //$NON-NLS-1$
+            @Override
+            public void run() {
+                TreeTableOperationContext adapter = getContext();
+                final int implRow = adapter.getRowFromString(row, rowOperator);
+                final int implCol = adapter.getColumnFromString(
+                        col, colOperator, implRow != -1);
+                String current;
+                //if row is header and column is existing
+                if (implRow == -1 && implCol > -1) {
+                    current = adapter.getColumnHeaderText(implCol);        
+                } else {
+                    checkRowColBounds(implRow, implCol);
+                    adapter.scrollCellToVisible(implRow, implCol);
+                    current = getCellText(implRow, implCol);
+                }
+                Verifier.match(current, text, operator);
+            }
+        });
     }
     
     /**
@@ -1033,29 +1085,35 @@ public class TreeTableViewTester extends TreeViewTester {
      * @param column the column
      * @param columnOperator the operator to find the column
      * @param exists true when the column should be found
+     * @param timeout the maximum amount of time to wait for the check whether
+     *          the given column exists to be performed
      */
     public void rcCheckExistenceOfColumn(String column, String columnOperator,
-            boolean exists) {
-        int index = -2;
-        try {
-            index = getContext().getColumnFromString(
-                    column, columnOperator, true);
-        } catch (StepExecutionException see) {
-            // If a column can not be found, an exception is thrown. Because
-            // this is a valid outcome for this method in this context, we
-            // catch the exception.
-            
-            if (exists) {
-                throw see;
+            boolean exists, int timeout) {
+        invokeAndWait("rcCheckExistenceOfColumn", timeout, new Runnable() {
+            public void run() {
+                int index = -2;
+                try {
+                    index = getContext().getColumnFromString(
+                            column, columnOperator, true);
+                } catch (StepExecutionException see) {
+                    // If a column can not be found, an exception is thrown. Because
+                    // this is a valid outcome for this method in this context, we
+                    // catch the exception.
+                    
+                    if (exists) {
+                        throw see;
+                    }
+                }
+                if (index >= 0) {
+                    Rectangle bounds = getContext().getHeaderBounds(index);
+                    if (bounds.getWidth() <= 0) {
+                        index = -2;
+                    }
+                }
+                Verifier.equals(exists, index >= 0);
             }
-        }
-        if (index >= 0) {
-            Rectangle bounds = getContext().getHeaderBounds(index);
-            if (bounds.getWidth() <= 0) {
-                index = -2;
-            }
-        }
-        Verifier.equals(exists, index >= 0);
+        });
     }
     /**
      * get the row index from a given cell

@@ -185,9 +185,14 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         actions.removeAll(superActions);
     }
     Iterator<Action> actionsIterator = actions.iterator();
+    Action action = null;
     while (actionsIterator.hasNext()) {    
-        Action action = actionsIterator.next();
-        
+        boolean createDeprecated = false;
+        do{ // for creating methods without timeout
+        boolean foundTimeout = false;
+        if(!createDeprecated){
+            action = actionsIterator.next();
+        }
         String sinceA = "";
         String sinceAVersion = action.getSince();
         if (sinceAVersion != null && !sinceAVersion.isEmpty()) {
@@ -216,6 +221,10 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
         while (paramIterator.hasNext()) {
             Param param = paramIterator.next();
             String paramName = nameLoader.translateFromCompSystem(param.getName());
+            if(paramName.contains("imeout") && !createDeprecated)
+                foundTimeout = true;
+            if(paramName.contains("imeout") && createDeprecated)
+                continue;
             String paramDescription = "";
             String paramDescrKey = param.getDescriptionKey();
             if (paramDescrKey != null) {
@@ -231,7 +240,8 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
          %>
          * <%=sinceA%>
          */
-        <%if (action.isDeprecated()) {%>@Deprecated<%}%>
+        <%if (action.isDeprecated()) {%>
+        @Deprecated<%}%>
         @NonNull public CAP <%=methodName%>(
         <%    
         // add parameters to method signature
@@ -245,6 +255,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             String fqParamType = nameLoader.findTypeForParameter(type, name);
             String paramType = NameLoader.beautifyParamType(fqParamType);
             String paramName = nameLoader.translateFromCompSystem(name);
+            if(createDeprecated && paramName.contains("imeout")){
+            if(!paramIterator.hasNext())
+                stringBuffer.deleteCharAt(stringBuffer.length()-1);
+              continue;
+            }
             String fixedType = nameLoader.getRealTypeForParameter(type, name);
             paramMap.put(name, fqParamType);
             paramTypeMap.put(name, fixedType);
@@ -255,7 +270,10 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             <%for (Param parameter : params) {
             boolean isOptional = parameter.isOptional();
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
-            String paramName = parameter.getName();%>
+            String paramName = parameter.getName();
+            if(paramName.contains("imeout") && createDeprecated){
+                continue;
+            }%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
             <%if (!isOptional) {%>
             Validate.notNull(<%=translatedParamName%>, "Argument '<%=translatedParamName%>' must not be null"); //$NON-NLS-1$
@@ -278,11 +296,18 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
             <%for (Param parameter : params) {
             boolean isOptional = parameter.isOptional();
             boolean hasCombineableValueSet = parameter.hasValueSet() && parameter.getValueSet().isCombinable();
-            String paramName = parameter.getName();%>
-            <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
+            String paramName = parameter.getName();
+
+            %>
+            <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);
+            if(paramName.contains("imeout") && createDeprecated){
+                createDeprecated = false;
+                translatedParamName = ""+parameter.getDefaultValue();
+            }
+            %>
                 <%String paramEnumType = paramMap.get(paramName);
                 String fqParamType = paramTypeMap.get(paramName);%>
-                <%if (nameLoader.isInEnumMap(paramEnumType)) {%>
+                <%if (paramEnumType != null && nameLoader.isInEnumMap(paramEnumType)) {%>
                     <%if (!hasCombineableValueSet) {%>
                         <%if (fqParamType.contains("Integer")) {%>
                         .add<%if(isOptional){%>Optional<%}%>Parameter(<%=translatedParamName%>.rcIntValue())
@@ -297,8 +322,18 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>
                 <%}%>
             <%}%>
                         .build();
-        }<%}%>
+        }<%}
+        createDeprecated = false;
+        if(foundTimeout)
+            createDeprecated = true;
+        } while(createDeprecated);
         
-    <%}%>
+        %>
+        
+    <%}
+
+    %>
 }
-<%}%> 
+<%
+
+}%> 

@@ -154,6 +154,7 @@ public abstract class AbstractEditorDndSupport {
         newCap.setComponentName(origCap.getComponentName());
         newCap.setComponentType(origCap.getComponentType());
         newCap.setActionName(origCap.getActionName());
+        newCap.getDataManager().clearUniqueIds();
         origCap.getDataManager().deepCopy(newCap.getDataManager());
     }
 

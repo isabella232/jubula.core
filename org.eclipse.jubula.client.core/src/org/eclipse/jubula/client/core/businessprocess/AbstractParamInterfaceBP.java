@@ -10,10 +10,17 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IModifiableParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.utils.ComboParamValidator;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
@@ -24,6 +31,7 @@ import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.VariableParamValueValidator;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
 
 
 /**
@@ -154,7 +162,66 @@ public abstract class AbstractParamInterfaceBP<T> {
                 // do nothing
             }
         }
+        if (col >= -1 && StringUtils.isBlank(result)) {
+            if (srcNode instanceof IExecTestCasePO) {
+                INodePO specNode = srcNode.getSpecificationUser();
+                specNode = ((IExecTestCasePO) srcNode).getSpecTestCase();
+                if (specNode instanceof ISpecTestCasePO) {
+                    result = getValueForSpecNodeWithParamDesc(
+                            srcDesc, (ISpecTestCasePO) specNode, col);
+                }
+            }
+        }
         return result;
+    }
+
+    /**
+     * Gets the value (including default value if there is a cap in the spec)
+     * @param srcDesc the {@link IParamDescriptionPO} of the parameter to get the value for
+     * @param specNode the spec node to check
+     * @param column the column number
+     * @return the value for a combination of {@link ISpecTestCasePO} column and {@link IParamDescriptionPO}
+     */
+    public static String getValueForSpecNodeWithParamDesc(
+            IParamDescriptionPO srcDesc, ISpecTestCasePO specNode, int column) {
+        List<INodePO> list = specNode.getUnmodifiableNodeList();
+        if (list.size() == 1) {
+            INodePO possibleCap = list.get(0);
+            if (possibleCap instanceof ICapPO) {
+                ICapPO cap = (ICapPO) possibleCap;
+                List<IDataSetPO> datasets = cap.getDataManager().getDataSets();
+                if (datasets.size() == 1) {
+                    IDataSetPO set = datasets.get(0);
+                    int i = 0;
+                    for (String string : set.getColumnStringValues()) {
+                        if (string.contains(srcDesc.getUniqueId())) {
+                            return getDefaultValue(cap, i);
+                        }
+                        i++;
+
+                    }
+                }
+            }
+
+        }
+        return null;
+    }
+    /**
+     * gets the default value for a index from a action
+     * @param cap the cap to get the default value from
+     * @param index the index
+     * @return the default value for the index or <code>null</code> 
+     * if no default value is set
+     */
+    private static String getDefaultValue(ICapPO cap, int index) {
+        List<Param> paramList = cap.getMetaAction().getParams();
+        if (paramList.size() > index) {
+            String defaultValue = paramList.get(index).getDefaultValue();
+            if (StringUtils.isNotBlank(defaultValue)) {
+                return defaultValue;
+            }
+        }
+        return null;
     }
     
     /**

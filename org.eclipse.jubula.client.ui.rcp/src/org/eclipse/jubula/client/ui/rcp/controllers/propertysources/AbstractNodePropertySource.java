@@ -263,7 +263,7 @@ public abstract class AbstractNodePropertySource
             if (value instanceof String) {
                 IParamNodePO node = (IParamNodePO)getPoNode();
                 GuiParamValueConverter conv = new GuiParamValueConverter(
-                    (String)value, node, getParamDesc(), 
+                    (String)value, node, getParamDesc(),
                     getValidatorForConverter(getParamDesc()));
                 if (conv.getErrors().isEmpty()) {
                     getTestCaseParamBP().startParameterUpdate(

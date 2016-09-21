@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,7 +35,6 @@ import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
-import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
@@ -69,10 +70,13 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * Verifies the text of the Node at mousePosition
      * @param text the text to check
      * @param operator the operator for the verification
+     * @param timeout the maximum amount of time to wait for the text to be
+     *          verified at mouse position
      */
     public abstract void rcVerifyTextAtMousePosition(
             String text, 
-            String operator);
+            String operator,
+            int timeout);
     /**
      * Splits the <code>treepath</code> string into an array, one entry for each level in the path
      *
@@ -495,20 +499,28 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param operator the RegEx operator
      * @param exists if true, the verify succeeds if the path DOES exist.
      *  If false, the verify succeeds if the path DOES NOT exist.
+     * @param timeout the maximum amount of time to wait for the path to be
+     *          verified
      */
-    public void rcVerifyPath(String pathType, int preAscend,
-            String treePath, String operator, boolean exists) {
-        try {
-            rcExpand(pathType, preAscend, treePath, operator);
-        } catch (StepExecutionException e) {
-            if (exists) {
-                Verifier.equals(exists, false);
-            }
-            return;
-        }
-        if (!exists) {
-            Verifier.equals(exists, true);
-        }
+    public void rcVerifyPath(final String pathType, final int preAscend,
+            final String treePath, final String operator, final boolean exists,
+            int timeout) {
+        invokeAndWait("rcVerifyPath", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        try {
+                            rcExpand(pathType, preAscend, treePath, operator);
+                        } catch (StepExecutionException e) {
+                            if (exists) {
+                                Verifier.equals(exists, false);
+                            }
+                            return;
+                        }
+                        if (!exists) {
+                            Verifier.equals(exists, true);
+                        }
+                    }
+                });
     }
 
     /**
@@ -521,20 +533,28 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param treePath the path to check
      * @param exists if true, the verify succeeds if the path DOES exist.
      *  If false, the verify succeeds if the path DOES NOT exist.
+     * @param timeout the maximum amount of time for the path to be verified
+     *          by indices
      */
-    public void rcVerifyPathByIndices(String pathType, int preAscend,
-            String treePath, boolean exists) {
-        try {
-            rcExpandByIndices(pathType, preAscend, treePath);
-        } catch (StepExecutionException e) {
-            if (exists) {
-                Verifier.equals(exists, false);
-            }
-            return;
-        }
-        if (!exists) {
-            Verifier.equals(exists, true);
-        }
+    public void rcVerifyPathByIndices(final String pathType,
+            final int preAscend, final String treePath, final boolean exists,
+            int timeout) {
+        invokeAndWait("rcVerifyIndices", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        try {
+                            rcExpandByIndices(pathType, preAscend, treePath);
+                        } catch (StepExecutionException e) {
+                            if (exists) {
+                                Verifier.equals(exists, false);
+                            }
+                            return;
+                        }
+                        if (!exists) {
+                            Verifier.equals(exists, true);
+                        }
+                    }
+                });
     }
     
     /**
@@ -577,27 +597,21 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param name The name of the property
      * @param value The value of the property as a string
      * @param operator The operator used to verify
+     * @param timeout the maximum amount of time to wait for the property
+     *          at mouse position to be checked
      */
-    public void rcCheckPropertyAtMousePosition(final String name, String value,
-            String operator) {
-        final Object cell = getNodeAtMousePosition();
-        final ITreeComponent bean = getTreeAdapter();
-        final String propToStr = bean.getPropertyValueOfCell(name, cell);
-        Verifier.match(propToStr, value, operator);
-    }
-
-    /**
-     * Verifies whether the first selection in the tree has a rendered text that is
-     * equal to <code>selection</code>.
-     *
-     * @param selection
-     *            The selection to verify
-     * @throws StepExecutionException
-     *             If no node is selected or the verification fails.
-     */
-    public void rcVerifySelectedValue(String selection)
-        throws StepExecutionException {
-        rcVerifySelectedValue(selection, MatchUtil.DEFAULT_OPERATOR);
+    public void rcCheckPropertyAtMousePosition(final String name,
+            final String value, final String operator, int timeout) {
+        invokeAndWait("rcCheckPropertyAtMousePosition", timeout, //$NON-NLS-1$
+            new Runnable() {
+                public void run() {
+                    final Object cell = getNodeAtMousePosition();
+                    final ITreeComponent bean = getTreeAdapter();
+                    final String propToStr = 
+                            bean.getPropertyValueOfCell(name, cell);
+                    Verifier.match(propToStr, value, operator);
+                }
+            });
     }
 
     /**
@@ -609,14 +623,23 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param operator
      *            The operator to use when comparing the expected and
      *            actual values.
+     * @param timeout the maximum amount of time to wait for the selected value
+     *          to be verified
      * @throws StepExecutionException
      *             If no node is selected or the verification fails.
      */
-    public void rcVerifySelectedValue(String pattern, String operator)
+    public void rcVerifySelectedValue(final String pattern,
+            final String operator, int timeout)
         throws StepExecutionException {
-
-        AbstractTreeOperationContext context = getTreeAdapter().getContext();
-        checkNodeText(context.getSelectedNodes(), pattern, operator);
+        invokeAndWait("rcVerifySelectedValue", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        AbstractTreeOperationContext context =
+                                getTreeAdapter().getContext();
+                        checkNodeText(context.getSelectedNodes(), pattern,
+                                operator);
+                    }
+                });
     }
     
     /**

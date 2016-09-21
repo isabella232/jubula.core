@@ -11,5 +11,5 @@
 	<artifactId>org.eclipse.jubula.toolkit.swt.api</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
-	<version>4.0.0-SNAPSHOT</version>
+	<version>4.1.0-SNAPSHOT</version>
 </project>

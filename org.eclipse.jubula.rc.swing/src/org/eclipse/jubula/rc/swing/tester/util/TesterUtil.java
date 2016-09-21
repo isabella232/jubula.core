@@ -268,6 +268,7 @@ public class TesterUtil {
                 }
             }
         }
+        log.warn("Renderer not supported: " + renderer.getClass());  //$NON-NLS-1$
         throw new StepExecutionException(
             "Renderer not supported: " + renderer.getClass(), //$NON-NLS-1$
             EventFactory.createActionError(
