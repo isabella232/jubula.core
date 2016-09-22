@@ -214,6 +214,8 @@ public abstract class AbstractDataSetPage extends Page
     private Long m_paramId;
     /** The column's widths */
     private int[] m_columnWidths;
+    /** The current parameters count */
+    private int m_columnCount;
     
     /** Constants for the button actions */
     private enum TestDataRowAction { 
@@ -1036,8 +1038,12 @@ public abstract class AbstractDataSetPage extends Page
         // create column for data set numer
         TableColumn dataSetNumberCol = new TableColumn(table, SWT.NONE);
         dataSetNumberCol.setText(Messages.DataSetViewControllerDataSetNumber);
-        dataSetNumberCol.setWidth((m_columnWidths != null && m_columnWidths
-                .length > 0)  ? m_columnWidths[0] : DATASET_NUMBER_COLUMNWIDTH);
+        if ((m_columnWidths != null && m_columnWidths.length > 0)
+                && m_columnCount == table.getColumnCount()) {
+            dataSetNumberCol.setWidth(m_columnWidths[0]);
+        } else {
+            dataSetNumberCol.setWidth(DATASET_NUMBER_COLUMNWIDTH);
+        }
         return dataSetNumberCol.getText();
     }
     
@@ -1048,13 +1054,21 @@ public abstract class AbstractDataSetPage extends Page
         final Table table = getTable();
         final TableColumn[] columns = table.getColumns();
         final int columnCount = columns.length;
-        columns[0].setWidth((m_columnWidths != null && m_columnWidths.length
-                > 0) ? m_columnWidths[0] : DATASET_NUMBER_COLUMNWIDTH);
+        if ((m_columnWidths != null && m_columnWidths.length > 0)
+                && m_columnCount == columns.length) {
+            columns[0].setWidth(m_columnWidths[0]);
+        } else {
+            columns[0].setWidth(DATASET_NUMBER_COLUMNWIDTH);
+        }
         for (int i = 1; i < columnCount; i++) {
             final TableColumn column = columns[i];
             column.pack();
-            column.setWidth((m_columnWidths != null && m_columnWidths.length
-                    > i) ? m_columnWidths[i] : COLUMN_WIDTH);
+            if ((m_columnWidths != null && m_columnWidths.length > i)
+                    && m_columnCount == columns.length) {
+                column.setWidth(m_columnWidths[i]);
+            } else {
+                column.setWidth(COLUMN_WIDTH);
+            }
         }
     }
     
@@ -1075,6 +1089,7 @@ public abstract class AbstractDataSetPage extends Page
                 for (TableColumn column : tableColumns) {
                     m_columnWidths[i++] = column.getWidth();
                 }
+                m_columnCount = tableColumns.length;
             }
         } else {
             m_paramId = getParamInterfaceObj().getId();
@@ -1087,16 +1102,19 @@ public abstract class AbstractDataSetPage extends Page
         columnProperties[0] = initDataSetColumn();
         // create columns for parameter
         int i = 1;
+        int parameterListSize = getParamInterfaceObj().getParameterListSize();
         for (IParamDescriptionPO descr : getParamInterfaceObj()
                 .getParameterList()) {
             TableColumn column = new TableColumn(table, SWT.NONE);
             String columnName = descr.getName();
             column.setText(columnName);
             columnProperties[i] = columnName;
-            if (m_columnWidths == null || m_columnWidths.length <= i) {
-                if (column.getWidth() < COLUMN_WIDTH) {
-                    column.setWidth(COLUMN_WIDTH);
-                }
+            if (m_columnWidths == null 
+                    || m_columnWidths.length <= i
+                    /* This has to be parameterListSize + 1 because the "#" 
+                     * column is not included within parameterList */
+                    || m_columnCount != (parameterListSize + 1)) { 
+                column.setWidth(COLUMN_WIDTH);
             } else {
                 column.setWidth(m_columnWidths[i]);
             }
