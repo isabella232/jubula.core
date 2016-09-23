@@ -93,6 +93,13 @@ public abstract class AbstractGoToTestResultErrorHandler
      */
     private final boolean isErrorNode(TestResultNode node) {
         int status = node.getStatus();
+        List<TestResultNode> resultNodeList = node.getResultNodeList();
+        if (resultNodeList != null) {
+            return (status == TestResultNode.ERROR)
+                    || (status == TestResultNode.ABORT) 
+                    || ((status == TestResultNode.TESTING)
+                            && (node.getResultNodeList().size() == 0));
+        }
         return (status == TestResultNode.ERROR)
                 || (status == TestResultNode.ABORT);
     }
