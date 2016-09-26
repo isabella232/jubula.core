@@ -24,6 +24,7 @@ import javafx.scene.control.TreeView;
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -228,6 +229,24 @@ public class TreeOperationContext
     @Override
     public void expandNode(final TreeItem<?> node) {
         scrollNodeToVisible(node);
+        boolean expanded = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "expandNodeCheckIfExpanded", //$NON-NLS-1$
+                new Callable<Boolean>() {
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        return node.isExpanded();
+
+                    }
+                });
+        if (expanded) {
+            return;
+        }
+        //If this is called during drag mode the target is not visible
+        if (DragAndDropHelper.getInstance().isDragMode()) {
+            throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
+        }
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("expandNode", //$NON-NLS-1$
                 new Callable<Object>() {
 

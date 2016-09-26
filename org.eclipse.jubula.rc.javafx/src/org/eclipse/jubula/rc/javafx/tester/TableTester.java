@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -40,10 +41,12 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ScrollToEvent;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumnBase;
@@ -60,6 +63,179 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 public class TableTester extends AbstractTableTester {
     /** The AUT Server logger. */
     private static AutServerLogger log = new AutServerLogger(TableTester.class);
+    
+    /**
+     * EventHandler to consume scroll events during DnD
+     */
+    private EventHandler<ScrollToEvent> m_scrollConsumer = 
+            new EventHandler<ScrollToEvent>() {
+
+        @Override
+        public void handle(ScrollToEvent event) {
+            event.consume();
+        }
+    };
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jubula.rc.common.tester.AbstractTableTester#rcDragCell(int,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, int, java.lang.String, int, java.lang.String)
+     */
+    @Override
+    public void rcDragCell(int mouseButton, String modifier, String row,
+            String rowOperator, String col, String colOperator, int xPos,
+            String xUnits, int yPos, String yUnits)
+            throws StepExecutionException {
+
+        super.rcDragCell(mouseButton, modifier, row, rowOperator, col,
+                colOperator, xPos, xUnits, yPos, yUnits);
+        //Add event filter to prevent scrolling
+        Node table = ((Node) getRealComponent());
+        table.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        DragAndDropHelper.getInstance().setDragMode(true);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jubula.rc.common.tester.AbstractTableTester#rcDropCell(java.
+     * lang.String, java.lang.String, java.lang.String, java.lang.String, int,
+     * java.lang.String, int, java.lang.String, int)
+     */
+    @Override
+    public void rcDropCell(String row, String rowOperator, String col,
+            String colOperator, int xPos, String xUnits, int yPos,
+            String yUnits, int delayBeforeDrop) throws StepExecutionException {
+        try {
+            ITableComponent adapter = (ITableComponent) getComponent();
+            int implRow = adapter.getRowFromString(row, rowOperator);
+            int implCol = adapter.getColumnFromString(col, colOperator);
+            TableCell targetCell = getCellAt(implRow + 1, implCol + 1);
+            if (targetCell == null) {
+                throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
+                        EventFactory
+                                .createActionError(TestErrorEvent.NOT_VISIBLE));
+            }
+            super.rcDropCell(row, rowOperator, col, colOperator, xPos, xUnits,
+                    yPos, yUnits, delayBeforeDrop);
+        } finally {
+            Node table = ((Node) getRealComponent());
+            table.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+            DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false); 
+            dndHelper.setDragMode(false);
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jubula.rc.common.tester.AbstractTableTester#rcDragRowByValue(
+     * int, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public void rcDragRowByValue(int mouseButton, String modifier, String col,
+            String colOperator, String value, String regexOp,
+            String searchType) {
+        super.rcDragRowByValue(mouseButton, modifier, col, colOperator, value,
+                regexOp, searchType);
+        //Add event filter to prevent scrolling
+        Node table = ((Node) getRealComponent());
+        table.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        DragAndDropHelper.getInstance().setDragMode(true);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.jubula.rc.common.tester.AbstractTableTester#rcDropRowByValue(
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     * java.lang.String, int)
+     */
+    @Override
+    public void rcDropRowByValue(String col, String colOperator, String value,
+            String regexOp, String searchType, int delayBeforeDrop) {
+        try {
+            ITableComponent adapter = (ITableComponent) getComponent();
+            int implRow = adapter.getRowFromString(value, regexOp);
+            int implCol = adapter.getColumnFromString(col, colOperator);
+            TableCell targetCell = getCellAt(implRow + 1, implCol + 1);
+            if (targetCell == null) {
+                throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
+                        EventFactory
+                                .createActionError(TestErrorEvent.NOT_VISIBLE));
+            }
+            super.rcDropRowByValue(col, colOperator, value, regexOp, searchType,
+                    delayBeforeDrop);
+        } finally {
+            Node table = ((Node) getRealComponent());
+            table.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+            DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false); 
+            dndHelper.setDragMode(false);
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jubula.rc.common.tester.AbstractTableTester#
+     * rcDragCellByColValue(int, java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     */
+    @Override
+    public void rcDragCellByColValue(int mouseButton, String modifier,
+            String row, String rowOperator, String value, String regex,
+            String searchType) {
+        super.rcDragCellByColValue(mouseButton, modifier, row, rowOperator,
+                value, regex, searchType);
+        // Add event filter to prevent scrolling
+        Node table = ((Node) getRealComponent());
+        table.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        DragAndDropHelper.getInstance().setDragMode(true);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jubula.rc.common.tester.AbstractTableTester#
+     * rcDropCellByColValue(java.lang.String, java.lang.String,
+     * java.lang.String, java.lang.String, java.lang.String, int)
+     */
+    @Override
+    public void rcDropCellByColValue(String row, String rowOperator,
+            String value, String regex, String searchType,
+            int delayBeforeDrop) {
+        try {
+            ITableComponent adapter = (ITableComponent) getComponent();
+            int implRow = adapter.getRowFromString(row, rowOperator);
+            int implCol = adapter.getColumnFromString(value, regex);
+            TableCell targetCell = getCellAt(implRow + 1, implCol + 1);
+            if (targetCell == null) {
+                throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
+                        EventFactory
+                                .createActionError(TestErrorEvent.NOT_VISIBLE));
+            }
+            super.rcDropCellByColValue(row, rowOperator, value, regex,
+                    searchType, delayBeforeDrop);
+        } finally {
+            Node table = ((Node) getRealComponent());
+            table.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+            DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false); 
+            dndHelper.setDragMode(false);
+        }
+    }
 
     @Override
     protected Object setEditorToReplaceMode(Object editor, boolean replace) {

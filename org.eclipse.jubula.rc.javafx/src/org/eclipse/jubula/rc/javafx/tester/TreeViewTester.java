@@ -14,20 +14,22 @@ import java.awt.Point;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Point2D;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeView;
-
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.control.ScrollToEvent;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeView;
 
 /**
  * Tester Class for the <code>TreeView</code>. If you are looking for more
@@ -37,6 +39,17 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @created 19.11.2013
  */
 public class TreeViewTester extends AbstractTreeTester {
+    /**
+     * EventHandler to consume scroll events during DnD
+     */
+    private EventHandler<ScrollToEvent> m_scrollConsumer = 
+            new EventHandler<ScrollToEvent>() {
+
+        @Override
+        public void handle(ScrollToEvent event) {
+            event.consume();
+        }
+    };
 
     @Override
     public void rcVerifyTextAtMousePosition(String txt, String operator) {
@@ -83,11 +96,14 @@ public class TreeViewTester extends AbstractTreeTester {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
+        //Add event filter to prevent scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
         rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
                 ValueSets.BinaryChoice.no.rcValue());
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
-
+        dndHelper.setDragMode(true);
     }
 
     @Override
@@ -97,12 +113,15 @@ public class TreeViewTester extends AbstractTreeTester {
         try {
             rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
-            waitBeforeDrop(delayBeforeDrop);
-            ((RobotJavaFXImpl)getRobot()).shakeMouse();
+            waitBeforeDrop(delayBeforeDrop); 
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            //Remove event filter after scrolling
+            Node tree = ((Node) getRealComponent());
+            tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+            dndHelper.setDragMode(false);
         }
     }
 
@@ -113,10 +132,15 @@ public class TreeViewTester extends AbstractTreeTester {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
+        // Add event filter to prevent scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+
         rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
                 ValueSets.BinaryChoice.no.rcValue());
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
+        dndHelper.setDragMode(true);
     }
 
     @Override
@@ -126,11 +150,14 @@ public class TreeViewTester extends AbstractTreeTester {
             rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
-            ((RobotJavaFXImpl)getRobot()).shakeMouse();
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            //Remove event filter after scrolling
+            Node tree = ((Node) getRealComponent());
+            tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+            dndHelper.setDragMode(false);
         }
     }
 

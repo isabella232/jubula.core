@@ -20,6 +20,7 @@ import java.util.concurrent.Callable;
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.RobotException;
@@ -318,6 +319,25 @@ public class TreeTableOperationContext extends
     @Override
     public void expandNode(final Object node) {
         scrollNodeToVisible(node);
+        boolean expanded = EventThreadQueuerJavaFXImpl.invokeAndWait(
+                "expandNodeCheckIfExpanded", //$NON-NLS-1$
+                new Callable<Boolean>() {
+
+                    @Override
+                    public Boolean call() throws Exception {
+                        TreeItem<?> item = (TreeItem<?>) node;
+                        return item.isExpanded();
+
+                    }
+                });
+        if (expanded) {
+            return;
+        }
+        // If this is called during drag mode the target is not visible
+        if (DragAndDropHelper.getInstance().isDragMode()) {
+            throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));
+        }
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("expandNode", //$NON-NLS-1$
                 new Callable<Object>() {
 
@@ -340,8 +360,7 @@ public class TreeTableOperationContext extends
                             if (checkItem == null) {
                                 continue;
                             }
-                            if (item != null
-                                    && checkItem.equals(item)
+                            if (item != null && checkItem.equals(item)
                                     && !item.isExpanded()) {
                                 return treeTableCell.getTreeTableRow()
                                         .getDisclosureNode();

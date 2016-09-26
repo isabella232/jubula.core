@@ -263,4 +263,62 @@ public class ListViewAdapter<T extends ListView<?>> extends
         }
         return null;
     }
+
+    /**
+     * Returns the cell based on the given index, or null if no cell was found
+     * 
+     * @param index the index of the cell to look for
+     * @return the cell or null
+     */
+    public ListCell<?> getCell(int index) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getCell", //$NON-NLS-1$
+                new Callable<ListCell<?>>() {
+                    public ListCell<?> call() throws Exception {
+                        final T listView = getRealComponent();
+                        listView.scrollTo(index);
+                        listView.layout();
+
+                        List<ListCell> lCells = NodeTraverseHelper
+                                .getInstancesOf(listView, ListCell.class);
+                        for (ListCell<?> cell : lCells) {
+                            if (cell.getIndex() == index
+                                    && cell.getListView() == listView) {
+                                return cell;
+                            }
+                        }
+                        return null;
+                    }
+                });
+    }
+
+    /**
+     * Returns the cell based on the given value, or null if no cell was found
+     * 
+     * @param value the value of the cell to look for
+     * @return the cell or null
+     */
+    public ListCell<?> getCell(String value) {
+        return EventThreadQueuerJavaFXImpl.invokeAndWait("getCell", //$NON-NLS-1$
+                new Callable<ListCell<?>>() {
+                    public ListCell<?> call() throws Exception {
+                        final T listView = getRealComponent();
+                        ObservableList<?> items = listView.getItems();
+                        int itemCount = items != null ? items.size() : -1;
+                        for (int i = 0; i < itemCount; i++) {
+                            listView.scrollTo(i);
+                            listView.layout();
+                            List<ListCell> lCells = NodeTraverseHelper
+                                    .getInstancesOf(listView, ListCell.class);
+                            for (ListCell<?> cell : lCells) {
+                                if (cell.getIndex() == i
+                                        && cell.getListView() == listView
+                                        && getCellText(cell) == value) {
+                                    return cell;
+                                }
+                            }
+                        }
+                        return null;
+                    }
+                });
+    }
 }

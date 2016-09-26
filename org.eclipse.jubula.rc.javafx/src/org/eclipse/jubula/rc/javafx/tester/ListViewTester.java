@@ -18,32 +18,54 @@ import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.ListTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.tester.adapter.ListViewAdapter;
 import org.eclipse.jubula.rc.javafx.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets.BinaryChoice;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollToEvent;
 
 /**
  * @author BREDEX GmbH
  */
 public class ListViewTester extends ListTester {
+    
+    /**
+     * EventHandler to consume scroll events during DnD
+     */
+    private EventHandler<ScrollToEvent> m_scrollConsumer = 
+            new EventHandler<ScrollToEvent>() {
+
+        @Override
+        public void handle(ScrollToEvent event) {
+            event.consume();
+        }
+    };
+    
     @Override
     public void rcDragValue(int mouseButton, String modifier, String value,
         String operator, String searchType) {
+        
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
+        
         rcSelectValue(value, operator, searchType, BinaryChoice.no.rcValue(),
                 mouseButton, 0);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
+      //Add event filter to prevent scrolling
+        Node listView = ((Node) getRealComponent());
+        listView.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        dndHelper.setDragMode(true);
     }
 
     @Override
@@ -51,38 +73,65 @@ public class ListViewTester extends ListTester {
         int delayBeforeDrop) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
+            ListCell<?> targetCell = ((ListViewAdapter<ListView<?>>) 
+                    getComponent()).getCell(value);
+            if (targetCell == null) {
+                throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
+                        EventFactory
+                                .createActionError(TestErrorEvent.NOT_VISIBLE));
+            }
             rcSelectValue(value, operator, searchType,
                     BinaryChoice.no.rcValue(), dndHelper.getMouseButton(), 0);
             waitBeforeDrop(delayBeforeDrop);
-            ((RobotJavaFXImpl)getRobot()).shakeMouse();
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            //Remove event filter
+            Node listView = ((Node) getRealComponent());
+            listView.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+            dndHelper.setDragMode(false);
         }
     }
 
     @Override
     public void rcDragIndex(int mouseButton, String modifier, int index) {
+        
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
+        
         rcSelectIndex(String.valueOf(index), BinaryChoice.no.rcValue(),
                 mouseButton, 0);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
+        //Add event filter to prevent scrolling
+        Node listView = ((Node) getRealComponent());
+        listView.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        dndHelper.setDragMode(true);
     }
 
     @Override
     public void rcDropIndex(int index, int delayBeforeDrop) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
+            ListCell<?> targetCell = ((ListViewAdapter<ListView<?>>)
+                    getComponent()).getCell(index);
+            if (targetCell == null) {
+                throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
+                        EventFactory
+                                .createActionError(TestErrorEvent.NOT_VISIBLE));
+            }
             rcSelectIndex(String.valueOf(index), BinaryChoice.no.rcValue(),
                     dndHelper.getMouseButton(), 0);
             waitBeforeDrop(delayBeforeDrop);
-            ((RobotJavaFXImpl)getRobot()).shakeMouse();
+            
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            //Remove event filter
+            Node listView = ((Node) getRealComponent());
+            listView.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+            dndHelper.setDragMode(false);
         }
     }
     
