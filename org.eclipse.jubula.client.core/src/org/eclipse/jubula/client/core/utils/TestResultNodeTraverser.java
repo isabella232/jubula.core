@@ -11,8 +11,11 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.jubula.client.core.model.TestResultNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -24,6 +27,10 @@ import org.eclipse.jubula.client.core.model.TestResultNode;
 public class TestResultNodeTraverser 
         extends AbstractTreeTraverser<TestResultNode> {
 
+    /** The logger */
+    private static Logger logger = LoggerFactory
+            .getLogger(TestResultNodeTraverser.class);
+    
     /**
      * Constructor
      * 
@@ -41,7 +48,16 @@ public class TestResultNodeTraverser
      * {@inheritDoc}
      */
     protected Iterator<TestResultNode> getChildIterator(TestResultNode node) {
-        return node.getResultNodeList().iterator();
+        if (node != null) {
+            List<TestResultNode> resultNodeList = node.getResultNodeList();
+            if (resultNodeList != null) {
+                return node.getResultNodeList().iterator();
+            }
+            logger.error("Result Node List was unexpectedly null!"); //$NON-NLS-1$
+        } else {
+            logger.error("Node was unexpectedly null!"); //$NON-NLS-1$
+        }
+        return null;
     }
 
 }
