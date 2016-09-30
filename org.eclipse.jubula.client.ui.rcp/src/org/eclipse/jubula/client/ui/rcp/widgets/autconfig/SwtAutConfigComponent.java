@@ -66,8 +66,8 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
         super.createAdvancedArea(advancedAreaComposite);
 
 
-        UIComponentHelper.createLabel(advancedAreaComposite, I18n
-                .getString("SwtAutConfigComponent.KEYBOARD_LAYOUT")); //$NON-NLS-1$
+        UIComponentHelper.createLabel(advancedAreaComposite,
+                "SwtAutConfigComponent.KEYBOARD_LAYOUT"); //$NON-NLS-1$
 
         m_keyboardLayoutCombo = 
             new ComboViewer(advancedAreaComposite, SWT.READ_ONLY);
