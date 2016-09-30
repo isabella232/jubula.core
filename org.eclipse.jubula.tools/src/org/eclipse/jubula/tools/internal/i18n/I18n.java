@@ -88,6 +88,34 @@ public class I18n {
         }
         return str;
     }
+    
+    /**
+     * Gets the internationalized String by a given key.
+     * 
+     * @param key
+     *            the key for the internationalized String.
+     * @param fallBack
+     *            returns the key if no value found
+     * @return a internationalized <code>String</code>.
+     */
+    public static String getStringWithoutErrorReport(
+            String key, boolean fallBack) {
+        if (key == null) {
+            return StringConstants.EMPTY;
+        }
+        if (StringConstants.EMPTY.equals(key)) {
+            return key;
+        }
+        String str = StringConstants.EMPTY;
+        try {
+            str = resourceBundle.getString(key);
+        } catch (MissingResourceException mre) {
+            if (fallBack) {
+                return key;
+            }
+        }
+        return str;
+    }
 
     /**
      * returns an internationalized string for the given key
@@ -116,6 +144,36 @@ public class I18n {
                 }
             }
             return buf.toString();
+        }
+    }
+    
+    /**
+     * returns an internationalized string for the given key
+     * NO ERROR MESSAGE IS LOGGED WHEN THE KEY IS NOT FOUND
+     * ONLY USE IF YOU REALLY HAVE TO!!!
+     * 
+     * @param key
+     *            the key
+     * @param args
+     *            the arguments needed to generate the string
+     * @return the internationalized string
+     */
+    public static String getStringWithoutErrorReport(
+            String key, Object[] args) {
+        if (StringConstants.EMPTY.equals(key)) {
+            return key;
+        }
+        try {
+            MessageFormat formatter = new MessageFormat(
+                    resourceBundle.getString(key));
+            try {
+                return formatter.format(args);
+            } catch (IllegalArgumentException e) {
+                return key;
+            }
+        } catch (MissingResourceException e) {
+            MessageFormat formatter = new MessageFormat(key);
+            return formatter.format(args);
         }
     }
 }

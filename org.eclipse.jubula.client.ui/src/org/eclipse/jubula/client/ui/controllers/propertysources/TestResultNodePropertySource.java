@@ -418,10 +418,20 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                         TestErrorEvent.Property.DESCRIPTION_KEY);
                     Object[] args = (Object[])event.getProps().get(
                         TestErrorEvent.Property.PARAMETER_KEY);
+                    /*
+                     * Ugly solution for an old problem: TestErrorEvents store their description as
+                     * DESCRIPTION_KEY: I18nKEY, PARAMETER_KEY: parameters
+                     * However, the TestResultViewer.generateTestErrorEvent method puts the
+                     * I18n VALUE instead of the KEY into the DESCRIPTION_KEY field
+                     * Until a fix is found (which might involve a lot of changes), to avoid filling the log with junk,
+                     * I turned off logging here
+                     * This is also necessary because the saved TestResultPO's are beyond repair, and they will
+                     * keep generating error at this point...
+                     */
                     if (args != null) {
-                        return I18n.getString(key, args);
+                        return I18n.getStringWithoutErrorReport(key, args);
                     }
-                    return I18n.getString(key, true);
+                    return I18n.getStringWithoutErrorReport(key, true);
                 }
             }, I18n.getString(TestErrorEvent.Property.DESCRIPTION_KEY));
             propDes.setCategory(P_TESTERROR_CAT);
