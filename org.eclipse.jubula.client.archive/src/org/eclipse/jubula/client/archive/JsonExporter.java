@@ -28,8 +28,8 @@ import org.eclipse.jubula.client.archive.dto.AutDTO;
 import org.eclipse.jubula.client.archive.dto.CapDTO;
 import org.eclipse.jubula.client.archive.dto.CategoryDTO;
 import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
-import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
+import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.DataRowDTO;
 import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
@@ -104,7 +104,6 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
-import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -917,12 +916,13 @@ public class JsonExporter {
             }
             Map<String, IMonitoringValue> 
                     tmpMap = poSummary.getMonitoringValues();
-            Iterator it = tmpMap.entrySet().iterator();
+            Iterator<Map.Entry<String, IMonitoringValue>> it =
+                    tmpMap.entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pairs = (Map.Entry) it.next();
-                MonitoringValue tmp = (MonitoringValue)pairs.getValue();
+                Map.Entry<String, IMonitoringValue> pairs = it.next();
+                IMonitoringValue tmp = pairs.getValue();
                 MonitoringValuesDTO monValDTO = new MonitoringValuesDTO();  
-                monValDTO.setKey((String)pairs.getKey());
+                monValDTO.setKey(pairs.getKey());
                 monValDTO.setCategory(tmp.getCategory());
                 monValDTO.setSignificant(tmp.isSignificant());
                 monValDTO.setType(tmp.getType());
