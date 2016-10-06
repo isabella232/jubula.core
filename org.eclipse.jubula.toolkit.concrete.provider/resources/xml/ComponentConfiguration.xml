@@ -486,6 +486,24 @@
                 <type>java.lang.String</type>
             </param>
         </action>
+        <action name="CompSystem.CheckClipboard">
+            <method>rcCheckClipboard</method>
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+            <param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+                <type>java.lang.String</type>
+            </param>
+        </action>
      	<action name="CompSystem.CheckExistenceOfWindow">
 			<method>rcCheckExistenceOfWindow</method>
 			<param name="CompSystem.Title"

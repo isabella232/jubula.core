@@ -221,7 +221,17 @@ public class TestErrorEvent {
      * Clipboard not available.
      */
     public static final String CLIPBOARD_NOT_AVAILABLE = "TestErrorEvent.ClipboardNotAvailable"; //$NON-NLS-1$
-
+    
+    /**
+     * Clipboard not available.
+     */
+    public static final String CLIPBOARD_UNSUPPORTED_FLAVOR = "TestErrorEvent.ClipboardUnsupportedFlavor"; //$NON-NLS-1$
+    
+    /**
+     * Clipboard not available.
+     */
+    public static final String CLIPBOARD_IO_ERROR = "TestErrorEvent.ClipboardIOError"; //$NON-NLS-1$
+    
     /**
      * Unsupported parameter value.
      */

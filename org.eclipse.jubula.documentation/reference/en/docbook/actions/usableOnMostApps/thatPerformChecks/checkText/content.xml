@@ -12,6 +12,7 @@
   
   <title>Check Text</title>
   
+  <xi:include href="clipboard.xml"/>
   <xi:include href="componentsThatShowText.xml"/>
   <xi:include href="tabComponents.xml"/>
   <xi:include href="tableComponents.xml"/>

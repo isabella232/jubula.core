@@ -13,10 +13,13 @@ package org.eclipse.jubula.rc.common.tester;
 import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -570,7 +573,7 @@ public abstract class AbstractApplicationTester implements ITester {
      * 
      * @param text The text to copy
      */
-    public void rcCopyToClipboard(final String text) {      
+    public void rcCopyToClipboard(final String text) {
         StringSelection strSel = new StringSelection(text);
         try {
             Toolkit.getDefaultToolkit().getSystemClipboard()
@@ -580,7 +583,49 @@ public abstract class AbstractApplicationTester implements ITester {
                     "Clipboard not available.", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.CLIPBOARD_NOT_AVAILABLE));
+        } catch (HeadlessException he) {
+            throw new StepExecutionException(
+                    "Clipboard not available.", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.CLIPBOARD_NOT_AVAILABLE));
         }
+    }
+    
+    /**
+     * method to compare a string to the system clipboard
+     * 
+     * @param operator
+     *            the comparison method
+     * @param text
+     *            the text for comparison
+     */
+    public void rcCheckClipboard(final String operator, final String text) {
+        String content = null;
+        try {
+            content = (String) Toolkit.getDefaultToolkit().getSystemClipboard()
+                    .getData(DataFlavor.stringFlavor);
+        } catch (IllegalStateException ise) {
+            throw new StepExecutionException(
+                    "Clipboard not available.", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.CLIPBOARD_NOT_AVAILABLE));
+        } catch (HeadlessException he) {
+            throw new StepExecutionException(
+                    "Clipboard not available.", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.CLIPBOARD_NOT_AVAILABLE));
+        } catch (UnsupportedFlavorException ufe) {
+            throw new StepExecutionException(
+                    "Unsupported Clipboard content.", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.CLIPBOARD_UNSUPPORTED_FLAVOR));
+        } catch (IOException ioe) {
+            throw new StepExecutionException(
+                    "Clipboard could not be compared.", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.CLIPBOARD_IO_ERROR));
+        }
+        Verifier.match(content, text, operator);
     }
     
     /**
