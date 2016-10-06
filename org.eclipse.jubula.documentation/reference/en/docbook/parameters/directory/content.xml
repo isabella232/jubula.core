@@ -39,5 +39,7 @@
   		to use quotes (") around the path or command if you are using path fragments (e.g ./ or ../)
   		for the relative path.</para></listitem>
   		<listitem><para>Please bear in mind that strings within quotes are not checked for validity.</para></listitem>
+  		<listitem><para>The backslash character (\) is interpreted as the escape character.
+  		If you want to use a backslash, which you will most likely do, type in a double backslash (\\).</para></listitem>
   	</itemizedlist>
 </section>
