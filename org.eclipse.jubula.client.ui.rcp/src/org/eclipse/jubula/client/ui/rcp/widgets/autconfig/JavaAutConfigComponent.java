@@ -20,18 +20,13 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipException;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.RemoteFileBrowserBP;
-import org.eclipse.jubula.client.ui.rcp.dialogs.ClassPathDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
-import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
@@ -41,13 +36,10 @@ import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
-import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -58,7 +50,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,22 +94,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     /** browse button for the executable */
     private Button m_execButton;
     /** gui component */
-    private List m_classPathListField;
-    /** gui component */
-    private Composite m_classPathButtonComposite;
-    /** gui component */
-    private Button m_addElementButton;
-    /** gui component */
-    private Button m_editElementButton;
-    /** gui component */
-    private Button m_removeElementButton;
-    /** move up button */
-    private Button m_moveElementUpButton;
-    /** move down button */
-    private Button m_moveElementDownButton;
-    /** gui component */
-    private Text m_classNameTextField;
-    /** gui component */
     private Text m_autArgsTextField;
     /** gui component */
     private I18nEnumCombo<ActivationMethod> m_activationMethodCombo;
@@ -140,8 +115,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     private WidgetFocusListener m_focusListener;
     /** the the WidgetSelectionListener */
     private WidgetSelectionListener m_selectionListener;
-    /** the the WidgetKeyListener */
-    private WidgetKeyListener m_keyListener;
+    
     /**
      * @param parent {@inheritDoc}
      * @param style {@inheritDoc}
@@ -204,14 +178,10 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                 field.setEnabled(true);
             }
         
-            boolean enableJarField = StringUtils.defaultString(
-                getConfigValue(AutConfigConstants.CLASSNAME)).length() == 0;
+            boolean enableJarField = true;
             m_jarTextField.setEnabled(enableJarField);
             m_jarButton.setEnabled(enableJarField
                     && (checkLocalhostServer() || isRemoteRequest()));
-
-            m_classNameTextField.setEnabled(StringUtils.defaultString(
-                getConfigValue(AutConfigConstants.JAR_FILE)).length() == 0);
 
             String exe = getConfigValue(AutConfigConstants.EXECUTABLE);
             boolean isEmpty = exe == null || exe.length() == 0;
@@ -219,22 +189,14 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                 field.setEnabled(isEmpty 
                     && field.isEnabled());
             }
-            if (!isEmpty) {
-                m_classPathListField.setSelection(-1);
-                checkClasspathButtons();
-            }
-
-            String classname = getConfigValue(AutConfigConstants.CLASSNAME);
+            
             String jar = getConfigValue(AutConfigConstants.JAR_FILE);
-            boolean isClassnameEmpty = 
-                classname == null || classname.length() == 0;
             boolean isJarEmpty =  
                 jar == null || jar.length() == 0;
-            boolean enableExe = isJarEmpty && isClassnameEmpty;
+            boolean enableExe = isJarEmpty;
             m_execTextField.setEnabled(enableExe);
             m_execButton.setEnabled(enableExe
                     && (checkLocalhostServer() || isRemoteRequest()));
-        
         }
         
         return hasChanged;
@@ -250,22 +212,13 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         super.installListeners();
 
         WidgetModifyListener modifyListener = getModifyListener();
-        WidgetKeyListener keyListener = getKeyListener();
         WidgetSelectionListener selectionListener = getSelectionListener();
 
         m_activationMethodCombo.addSelectionListener(selectionListener);
         m_autJreParamTextField.addModifyListener(modifyListener);
         m_envTextArea.addModifyListener(modifyListener);
-        m_classPathListField.addKeyListener(keyListener);
-        m_classPathListField.addSelectionListener(selectionListener);
-        m_addElementButton.addSelectionListener(selectionListener);
-        m_editElementButton.addSelectionListener(selectionListener);
-        m_moveElementUpButton.addSelectionListener(selectionListener);
-        m_moveElementDownButton.addSelectionListener(selectionListener);
-        m_removeElementButton.addSelectionListener(selectionListener);
         m_jarButton.addSelectionListener(selectionListener);
         m_jarTextField.addModifyListener(modifyListener);
-        m_classNameTextField.addModifyListener(modifyListener);
         getAUTAgentHostNameCombo().addModifyListener(modifyListener);
         m_autJreButton.addSelectionListener(selectionListener);
         m_autJreTextField.addModifyListener(modifyListener);
@@ -287,23 +240,16 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         super.deinstallListeners();
 
         WidgetModifyListener modifyListener = getModifyListener();
-        WidgetKeyListener keyListener = getKeyListener();
         WidgetSelectionListener selectionListener = getSelectionListener();
 
         m_activationMethodCombo.removeSelectionListener(selectionListener);
         m_autJreParamTextField.removeModifyListener(modifyListener);
         m_envTextArea.removeModifyListener(modifyListener);
-        m_classPathListField.removeKeyListener(keyListener);
-        m_addElementButton.removeSelectionListener(selectionListener);
         m_autJreButton.removeSelectionListener(selectionListener);
         m_autJreTextField.removeModifyListener(modifyListener);
-        m_classNameTextField.removeModifyListener(modifyListener);
-        m_classPathListField.removeSelectionListener(selectionListener);
-        m_editElementButton.removeSelectionListener(selectionListener);
         m_jarButton.removeSelectionListener(selectionListener);
         m_jarTextField.removeModifyListener(modifyListener);
         m_autArgsTextField.removeModifyListener(modifyListener);
-        m_removeElementButton.removeSelectionListener(selectionListener);
         getAUTAgentHostNameCombo().removeModifyListener(modifyListener);
         m_execTextField.removeFocusListener(getFocusListener());
         m_execTextField.removeModifyListener(modifyListener);
@@ -345,73 +291,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         m_jarButton.setText(Messages.AUTConfigComponentBrowse);
         m_jarButton.setLayoutData(BUTTON_LAYOUT);
         m_jarButton.setEnabled(Utils.isLocalhost());
-    }
-
-    /**
-     * Creates three buttons for the class path editor.
-     * 
-     * @param parent The parent composite.
-     */
-    private void initGuiClasspathEditor(Composite parent) {
-        UIComponentHelper.createLabel(
-                parent, "AUTConfigComponent.classPath"); //$NON-NLS-1$ 
-        Composite classpathComposite = 
-                UIComponentHelper.createLayoutComposite(parent);
-        m_classPathListField = new List(classpathComposite, 
-            LayoutUtil.MULTI_TEXT_STYLE | SWT.SINGLE);
-        GridData textGridData = new GridData();
-        textGridData.horizontalAlignment = GridData.FILL;
-        textGridData.grabExcessHorizontalSpace = true;
-        textGridData.heightHint = Dialog.convertHeightInCharsToPixels(LayoutUtil
-            .getFontMetrics(m_classPathListField), 2);
-        LayoutUtil.addToolTipAndMaxWidth(textGridData, m_classPathListField);
-        m_classPathListField.setLayoutData(textGridData);
-
-        Composite moveComposite = 
-                UIComponentHelper.createLayoutComposite(parent);
-        m_moveElementUpButton = 
-                new Button(moveComposite, SWT.PUSH);
-        m_moveElementUpButton.setImage(IconConstants.UP_ARROW_DIS_IMAGE);
-        m_moveElementUpButton.setToolTipText(
-                Messages.AutConfigDialogMoveCpUpToolTip);
-        m_moveElementUpButton.setLayoutData(BUTTON_LAYOUT);
-        
-        m_moveElementDownButton = 
-                new Button(moveComposite, SWT.PUSH);
-        m_moveElementDownButton.setImage(IconConstants.DOWN_ARROW_DIS_IMAGE);
-        m_moveElementDownButton.setToolTipText(
-                Messages.AutConfigDialogMoveCpDownToolTip);
-        m_moveElementDownButton.setLayoutData(BUTTON_LAYOUT);
-        
-        m_classPathButtonComposite = 
-            UIComponentHelper.createLayoutComposite(classpathComposite, 3);
-        m_addElementButton = new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_addElementButton.setText(Messages.AUTConfigComponentElement);
-        m_addElementButton.setLayoutData(BUTTON_LAYOUT);
-
-        m_editElementButton = new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_editElementButton.setText(Messages.AUTConfigComponentEdit);
-        m_editElementButton.setLayoutData(BUTTON_LAYOUT);
-
-        m_removeElementButton = 
-            new Button(m_classPathButtonComposite, SWT.PUSH);
-        m_removeElementButton.setText(Messages.AUTConfigComponentRemove);
-        m_removeElementButton.setLayoutData(BUTTON_LAYOUT);
-        
-        checkClasspathButtons();
-    }
-
-    /**
-     * @param classPath The classPath to set.
-     */
-    private void initDataClassPath(String classPath) {
-        m_classPathListField.removeAll();
-        if (!StringUtils.isEmpty(classPath)) {
-            String[] pathList = classPath.split(StringConstants.SEMICOLON);
-            for (int i = 0; i < pathList.length; i++) {
-                m_classPathListField.add(pathList[i]);
-            }
-        }
     }
 
     /**
@@ -469,29 +348,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                 ActivationMethod.getRCString(m_activationMethodCombo
                         .getSelectedObject()));
         return true;
-    }
-
-    /** 
-     * The action of the class name field.
-     * @return <code>null</code> if the new value is valid. Otherwise, returns
-     *         a status parameter indicating the cause of the problem.
-     */
-    DialogStatusParameter modifyClassNameFieldAction() {
-        if (m_classNameTextField == null || m_classNameTextField.isDisposed()) {
-            return null;
-        }
-
-        DialogStatusParameter error = null;
-        putConfigValue(AutConfigConstants.CLASSNAME, 
-                m_classNameTextField.getText());
-        if (!isValid(m_classNameTextField, true) 
-            && m_classNameTextField.getText().length() != 0) {
-
-            error = createErrorStatus(
-                    Messages.AUTConfigComponentWrongClassName);
-        }
-        
-        return error;
     }
 
     /** 
@@ -642,14 +498,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
      * @param data Map representing the data to use for population.
      */
     protected void populateAdvancedArea(Map<String, String> data) {
-        // class name
-        m_classNameTextField.setText(
-            StringUtils.defaultString(data.get(AutConfigConstants.CLASSNAME)));
-
-        // class path
-        initDataClassPath(
-            StringUtils.defaultString(data.get(AutConfigConstants.CLASSPATH)));
-
         // aut arguments
         m_autArgsTextField.setText(
             StringUtils.defaultString(data.get(
@@ -747,87 +595,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         return execFile.isAbsolute();
     }
     
-    /**
-     * Sets the enablement for the move classpath entry up button.
-     * @param enabled if the button should be enabled.
-     */
-    public void setClasspathUpEnabled(boolean enabled) {
-        m_moveElementUpButton.setEnabled(enabled);
-        if (enabled) {
-            m_moveElementUpButton.setImage(IconConstants.UP_ARROW_IMAGE);
-        } else {
-            m_moveElementUpButton.setImage(IconConstants.UP_ARROW_DIS_IMAGE);
-        }
-    }
-    
-    /**
-     * Sets the enablement for the move classpath entry down button.
-     * @param enabled if the button should be enabled.
-     */
-    public void setClasspathDownEnabled(boolean enabled) {
-        m_moveElementDownButton.setEnabled(enabled);
-        if (enabled) {
-            m_moveElementDownButton.setImage(IconConstants.DOWN_ARROW_IMAGE);
-        } else {
-            m_moveElementDownButton.setImage(
-                IconConstants.DOWN_ARROW_DIS_IMAGE);
-        }
-    }
-
-    /** Handles the aut-list event. */
-    void handleClassPathListEvent() {
-        checkClasspathButtons();
-        m_classPathListField.setFocus();
-    }
-    
-    /**
-     * Handle the selection event of the move element down button
-     */
-    void handleDownButtonEvent() {
-        int [] selectedIndices = m_classPathListField.getSelectionIndices();
-        Arrays.sort(selectedIndices);
-        int [] newSelectedIndices = new int [selectedIndices.length];
-        int greatestIndex = m_classPathListField.getItemCount() - 1;
-        if (selectedIndices.length > 0 
-            && selectedIndices[selectedIndices.length - 1] 
-                               < greatestIndex) {
-            
-            for (int i = 0; i < selectedIndices.length; i++) {
-                int index = selectedIndices[i];
-                int newIndex = index + 1;
-                String item = m_classPathListField.getItem(index);
-                m_classPathListField.remove(index);
-                m_classPathListField.add(item, newIndex);
-                newSelectedIndices[i] = newIndex;
-            }
-            m_classPathListField.setSelection(newSelectedIndices);
-        }
-        
-        checkClasspathButtons();
-    }
-
-    /**
-     * Handle the selection event of the move element up button
-     */
-    public void handleUpButtonEvent() {
-        int [] selectedIndices = m_classPathListField.getSelectionIndices();
-        Arrays.sort(selectedIndices);
-        int [] newSelectedIndices = new int [selectedIndices.length];
-        if (selectedIndices.length > 0 && selectedIndices[0] > 0) {
-            for (int i = 0; i < selectedIndices.length; i++) {
-                int index = selectedIndices[i];
-                int newIndex = index - 1;
-                String item = m_classPathListField.getItem(index);
-                m_classPathListField.remove(index);
-                m_classPathListField.add(item, newIndex);
-                newSelectedIndices[i] = newIndex;
-            }
-            m_classPathListField.setSelection(newSelectedIndices);
-        }
-        
-        checkClasspathButtons();
-    }
-
     /**
      * handle the browse request locally
      * 
@@ -981,161 +748,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         
         return error;
     }
-
-    /**
-     * Checks and sets the enablement for classpath area buttons
-     */
-    public void checkClasspathButtons() {
-        if (m_classPathListField.getItemCount() == 0) {
-            m_removeElementButton.setEnabled(false);
-            m_editElementButton.setEnabled(false);
-            setClasspathUpEnabled(false);
-            setClasspathDownEnabled(false);
-            return;
-        }
-        if (m_classPathListField.getSelectionCount() > 0) {
-            String[] selection = m_classPathListField.getSelection();
-            if (!StringConstants.EMPTY.equals(selection[0])) { 
-                m_removeElementButton.setEnabled(true);
-                m_editElementButton.setEnabled(true);
-            
-                int [] indices = m_classPathListField.getSelectionIndices();
-                int smallestIndex = indices[0];
-                int largestIndex = indices[0];
-                for (int index : indices) {
-                    smallestIndex = Math.min(smallestIndex, index);
-                    largestIndex = Math.max(largestIndex, index);
-                }
-                    
-                setClasspathUpEnabled(smallestIndex > 0);
-                setClasspathDownEnabled(
-                    largestIndex < m_classPathListField.getItemCount() - 1);
-            }
-        } else {
-            m_removeElementButton.setEnabled(false);
-            m_editElementButton.setEnabled(false);
-            m_moveElementDownButton.setEnabled(false);
-            m_moveElementUpButton.setEnabled(false);
-        }
-        
-    }
-    
-    /**
-     * Handles the button event.
-     */
-    public void handleRemoveButtonEvent() {
-        int selectionIndex = m_classPathListField.getSelectionIndex();
-        m_classPathListField.remove(m_classPathListField
-                .getSelection()[0]);
-        if (m_classPathListField.getItemCount() >= selectionIndex) {
-            m_classPathListField.select(selectionIndex - 1);
-        }
-        if (m_classPathListField.getItemCount() == 1) {
-            m_classPathListField.select(0);
-        }
-        if (m_classPathListField.getSelectionCount() == 0) {
-            m_classPathListField.select(0);
-        }
-        handleClassPathListEvent();
-        storeClassPath();
-    }
-    
-    /**
-     * Stores the classpath list to the AUT Configuration.
-     */
-    private void storeClassPath() {
-        
-        String classPath = StringConstants.EMPTY;
-        
-        for (int i = 0; i < m_classPathListField.getItemCount(); i++) {
-            classPath = 
-                classPath.concat(m_classPathListField.getItem(i) + ";"); //$NON-NLS-1$
-        }
-        if (!StringConstants.EMPTY.equals(classPath)) {
-            // cut off the last semicolon
-            classPath = classPath.substring(0, classPath.length() - 1);
-        }
-        putConfigValue(AutConfigConstants.CLASSPATH, classPath);
-    }
-
-    /**
-     * checks if adding an element to classpath is allowed, or if classpath
-     * exceeds maximum length
-     * @param elementToAdd String
-     * @return boolean
-     */
-    private boolean isClassPathLengthAllowed(String elementToAdd) {
-        String classPath = StringConstants.EMPTY;
-        for (int i = 0; i < m_classPathListField.getItemCount(); i++) {
-            classPath = classPath.concat(m_classPathListField.getItem(i) + ";"); //$NON-NLS-1$
-        }
-        classPath = classPath.concat(elementToAdd + ";"); //$NON-NLS-1$
-        return classPath.length() <= IPersistentObject.MAX_STRING_LENGTH;
-    }
-
-    /**
-     * Handles the button event.
-     * @param editButtonWasPressed true, if edit button was pressed
-     */
-    public void handleAddElementButtonEvent(boolean editButtonWasPressed) {
-        int maxLength = IPersistentObject.MAX_STRING_LENGTH 
-            - getClassPathLength();
-        if (maxLength < 1) {
-            ErrorHandlingUtil.createMessageDialog(
-                    MessageIDs.I_TOO_LONG_CLASSPATH, 
-                    new Object[] {IPersistentObject.MAX_STRING_LENGTH}, null);
-            return;
-        }
-        String oldText = StringConstants.EMPTY;
-        if (editButtonWasPressed) {
-            oldText = m_classPathListField.getSelection()[0];
-        }
-        ClassPathDialog dialog = new ClassPathDialog(getShell(), 
-                Messages.AUTConfigComponentClassPathDialogTitle,
-                oldText, Messages.AUTConfigComponentMessage, 
-                Messages.AUTConfigComponentLabel,
-                Messages.AUTConfigComponentWrongInputMessage,
-                StringConstants.EMPTY, IconConstants.CLASS_PATH_STRING,
-                Messages.AUTConfigComponentShellText,
-                false, maxLength, checkLocalhostServer(), null, true);
-        dialog.setStyle(SWT.APPLICATION_MODAL);
-        dialog.create();
-        DialogUtils.setWidgetNameForModalDialog(dialog);
-        dialog.open();
-        if (dialog.getReturnCode() == Window.OK) {
-            String[] elements = dialog.getName().split(System.getProperty("path.separator")); //$NON-NLS-1$
-            for (int i = 0; i < elements.length; i++) {
-                if (!StringConstants.EMPTY.equals(elements[i])) {
-                    if (isClassPathLengthAllowed(elements[i])) {
-                        if (editButtonWasPressed) {
-                            m_classPathListField.remove(oldText);
-                        }
-                        m_classPathListField.add(elements[i]);
-                    } else {
-                        ErrorHandlingUtil.createMessageDialog(
-                            MessageIDs.I_TOO_LONG_CLASSPATH,
-                                new Object[] { 
-                                    IPersistentObject.MAX_STRING_LENGTH },
-                                    null);
-                        return;
-                    }
-                }
-            }
-            storeClassPath();
-        }
-    }
-    
-    /**
-     * returns the classpath length
-     * @return int
-     */
-    private int getClassPathLength() {
-        String classPath = StringConstants.EMPTY;
-        for (int i = 0; i < m_classPathListField.getItemCount(); i++) {
-            classPath = classPath.concat(m_classPathListField.getItem(i) + ";"); //$NON-NLS-1$
-        }
-        return classPath.length();
-    }
     
     /**
      * 
@@ -1213,32 +825,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     }
     
     /**
-     * This private inner class contains a new KeyListener.
-     * 
-     * @author BREDEX GmbH
-     * @created 10.09.2007
-     */
-    private class WidgetKeyListener extends KeyAdapter {
-
-        /**
-         * {@inheritDoc}
-         */
-        @SuppressWarnings("synthetic-access")
-        public void keyPressed(KeyEvent e) {
-            if (e.widget == m_classPathListField
-                && e.stateMask == SWT.ALT) {
-                
-                if (e.keyCode == SWT.ARROW_DOWN) {
-                    handleDownButtonEvent();
-                } else if (e.keyCode == SWT.ARROW_UP) {
-                    handleUpButtonEvent();
-                }
-            }
-        }
-        
-    }
-
-    /**
      * This private inner class contains a new SelectionListener.
      * 
      * @author BREDEX GmbH
@@ -1282,30 +868,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                             SWT.APPLICATION_MODAL | SWT.ON_TOP));
                 }
                 return;
-            } else if (source.equals(m_removeElementButton)) {
-                handleRemoveButtonEvent();
-                return;
-            } else if (source.equals(m_moveElementUpButton)) {
-                handleUpButtonEvent();
-                return;
-            } else if (source.equals(m_moveElementDownButton)) {
-                handleDownButtonEvent();
-                return;
-            } else if (source.equals(m_editElementButton)) {
-                handleAddElementButtonEvent(true);
-                if (modifyClassNameFieldAction() != null) {
-                    m_classNameTextField.setFocus();
-                }
-                return;
-            } else if (source.equals(m_addElementButton)) {
-                handleAddElementButtonEvent(false);
-                if (modifyClassNameFieldAction() != null) {
-                    m_classNameTextField.setFocus();
-                }
-                return;
-            } else if (source.equals(m_classPathListField)) {
-                handleClassPathListEvent();
-                return;
             } else if (source.equals(m_activationMethodCombo)) {
                 handleActivationComboEvent();
                 return;
@@ -1329,20 +891,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
             DirectoryDialog directoryDialog = new DirectoryDialog(getShell(), 
                     SWT.APPLICATION_MODAL);
             String directory;
-            if (source.equals(m_classPathListField)) {
-                directoryDialog.setMessage(Messages.AUTConfigComponentEdit);
-                directoryDialog.setFilterPath(m_classPathListField
-                        .getSelection()[0]);
-                int selectionIndex = m_classPathListField.getSelectionIndex();
-                directory = directoryDialog.open();
-                if (directory != null) {
-                    m_classPathListField.remove(m_classPathListField
-                        .getSelection()[0]);
-                    m_classPathListField.add(directory, selectionIndex);
-                }
-                handleClassPathListEvent();
-                return;
-            }
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
                     + StringConstants.LEFT_PARENTHESES + source 
                     + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
@@ -1384,18 +932,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         // AUT directory editor
         createAutDirectoryEditor(advancedAreaComposite);
 
-        // class name editor
-        UIComponentHelper.createLabel(advancedAreaComposite,
-                "AUTConfigComponent.className"); //$NON-NLS-1$ 
-        m_classNameTextField = UIComponentHelper.createTextField(
-                advancedAreaComposite, 2);
-        LayoutUtil.setMaxChar(m_classNameTextField, 
-                IPersistentObject.MAX_STRING_LENGTH);
-        m_classNameTextField.setText(StringUtils
-                .defaultString(getConfigValue(AutConfigConstants.CLASSNAME)));
-        
-        // class path editor
-        initGuiClasspathEditor(advancedAreaComposite); 
         // parameter editor
         ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
                 advancedAreaComposite, "AUTConfigComponent.autArguments"), //$NON-NLS-1$
@@ -1490,27 +1026,10 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         javaFields.add(m_autJreTextField);
         javaFields.add(m_autJreComposite);
         javaFields.add(m_autJreParamTextField);
-        javaFields.add(m_classNameTextField);
-        javaFields.add(m_classPathButtonComposite);
-        javaFields.add(m_addElementButton);
-        javaFields.add(m_classPathListField);
         javaFields.add(m_jarButton);
         javaFields.add(m_jarTextField);
         
         return javaFields;
-    }
-    
-    /**
-     * 
-     * @return the single instance of the key listener.
-     */
-    @SuppressWarnings("synthetic-access")
-    private WidgetKeyListener getKeyListener() {
-        if (m_keyListener == null) {
-            m_keyListener = new WidgetKeyListener();
-        }
-        
-        return m_keyListener;
     }
 
     /**
@@ -1560,7 +1079,6 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         super.checkAll(paramList);
         addError(paramList, modifyAutConfigFieldAction());
         addError(paramList, modifyAutParamFieldAction());
-        addError(paramList, modifyClassNameFieldAction());
         addError(paramList, modifyEnvFieldAction());
         addError(paramList, modifyJarFieldAction());
         addError(paramList, modifyExecTextField());

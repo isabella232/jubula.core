@@ -461,27 +461,17 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * checks if All AUTConfigs are correct
      */
     private void checkAllAutConfigs() {
-        Set<IAUTMainPO> autList = GeneralStorage.getInstance()
-            .getProject().getAutMainList();
-        final String emtyString = StringConstants.EMPTY;
+        Set<IAUTMainPO> autList =
+                GeneralStorage.getInstance().getProject().getAutMainList();
         for (IAUTMainPO mainPO : autList) {
             for (IAUTConfigPO config : mainPO.getAutConfigSet()) {
-                final String jarFile = config.getValue(
-                        AutConfigConstants.JAR_FILE, null);
-                final String classPath = config.getValue(
-                        AutConfigConstants.CLASSPATH, null);
-                if (emtyString.equals(jarFile)) { 
-                    if (emtyString.equals(classPath)) {
-                        problemNoJarOrClassPathForAutConfigExists(
-                                config, mainPO);
-                    }
-                } else if (emtyString.equals(classPath) 
-                    && emtyString.equals(jarFile)) {
-
-                    problemNoJarOrClassPathForAutConfigExists(config, mainPO);
+                final String jarFile =
+                        config.getValue(AutConfigConstants.JAR_FILE, null);
+                if (StringConstants.EMPTY.equals(jarFile)) {
+                    problemNoJarForAutConfigExists(config, mainPO);
                 }
-                if (emtyString.equals(config.getConfiguredAUTAgentHostName())) {
-                    
+                if (StringConstants.EMPTY
+                        .equals(config.getConfiguredAUTAgentHostName())) {
                     problemNoServerForAutConfigExists(config, mainPO);
                 }
             }
@@ -682,7 +672,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param config AutConfig where problem occurs
      * @param aut corresponding aut
      */
-    private void problemNoJarOrClassPathForAutConfigExists(IAUTConfigPO config, 
+    private void problemNoJarForAutConfigExists(IAUTConfigPO config, 
             IAUTMainPO aut) {
         String message = NLS.bind(Messages.ProblemCheckerAutConfigMissesJar,
                 new String[] { config.getName(), aut.getName() });

@@ -107,13 +107,9 @@
     <title>Advanced AUT configuration</title>
     <para>
       You can use the advanced dialog (<xref linkend="autconfigadvanced"/>)
-      if your AUT is a Java JAR which can be started with a
-      double click, or if your application can be started using the
-      class name and the classpaths to your AUT. The advanced
-      configuration dialog also lets you create a working directory
-      for your AUT, and add command-line arguments needed to
-      start the AUT. You can select a JRE executable and, for
-      SWT/RCP AUTs, a keyboard layout.
+      to create a working directory for your AUT, and add command-line
+      arguments needed to start the AUT. You can select a JRE executable
+      and, for SWT/RCP AUTs, a keyboard layout.
     </para>
     <figure xml:id="autconfigadvanced">
       <title>AUTconfiguration window: advanced</title>
@@ -136,17 +132,6 @@
           directory (<xref linkend="using-working-dir-aut-config"/>)), or absolute. This JAR
           file must contain a manifest file which contains the main
           class and the classpath.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          If your AUT must be started with the class name, add
-          the main class name and the classpaths into their relative
-          fields. The paths can be relative (if you have defined a
-          working directory), or absolute.
-        </para>
-        <para role="tip">
-          Add all the necessary files and directories to start the AUT.
         </para>
       </listitem>
       <listitem>

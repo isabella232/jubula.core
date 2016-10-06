@@ -126,12 +126,6 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
      *         m_errorMesssage contains a detailed message to send back.
      */
     protected String getAUTMainClass(Map parameters) {
-        final String autClassName = (String)parameters.get(
-                AutConfigConstants.CLASSNAME);
-        if (autClassName != null && autClassName.length() > 0) {
-            // use the supplied information
-            return autClassName;
-        }
         final String jarFile = (String)parameters.get(
                 AutConfigConstants.JAR_FILE);
         String mainClass = getMainClassFromManifest(parameters);
@@ -284,16 +278,6 @@ public abstract class AbstractStartJavaAut extends AbstractStartToolkitAut {
         }
         classPath = classPath.trim();
         return classPath.replace(' ', PATH_SEPARATOR.charAt(0));
-    }
-
-    /**
-     * Workaround to make the given classpath, which uses a specific path 
-     * separator, usable on the current platform.
-     * @param clientPath The classpath to convert.
-     * @return the converted classpath
-     */
-    protected String convertClientSeparator(String clientPath) {
-        return clientPath.replaceAll(CLIENT_PATH_SEPARATOR, PATH_SEPARATOR);
     }
 
     /**

@@ -314,16 +314,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
      */
     protected StringBuffer createAutClasspath(Map parameters) {
         // Add AUT classpath
-        String autClassPathStr = (String)parameters.get(
-                AutConfigConstants.CLASSPATH);
-        if (autClassPathStr == null) {
-            autClassPathStr = StringConstants.EMPTY;
-        }
-        StringBuffer autClassPath = new StringBuffer(
-                convertClientSeparator(autClassPathStr)); 
-        if (autClassPath.length() > 0) {
-            autClassPath.append(PATH_SEPARATOR);
-        }
+        StringBuffer autClassPath = new StringBuffer();
         String jarFile = (String)parameters.get(AutConfigConstants.JAR_FILE);
         if (jarFile == null) {
             jarFile = StringConstants.EMPTY;

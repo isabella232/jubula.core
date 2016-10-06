@@ -48,16 +48,6 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
         List<String> cmds, Map<String, String> parameters) { 
         
         StringBuffer autClassPath = new StringBuffer();
-        String autClassPathValue = parameters.get(
-                AutConfigConstants.CLASSPATH);
-        if (autClassPathValue != null && !StringConstants.EMPTY
-                .equals(autClassPathValue)) {
-            autClassPath.append(convertClientSeparator(autClassPathValue));
-        }
-
-        if (autClassPath.length() > 0) {
-            autClassPath.append(pathSeparator);
-        }
         final String autJar = parameters.get(
                 AutConfigConstants.JAR_FILE);
         String manifestClassPath = getClassPathFromManifest(parameters);

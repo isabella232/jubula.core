@@ -20,8 +20,8 @@
     location.
   </para>
   <para>
-    The working directory is the root directory for any classpaths,
-    classnames, JAR files and binaries. If you create a working
+    The working directory is the root directory for any
+    JAR files and binaries. If you create a working
     directory, you can enter the paths to these items using a
     relative path, with the working directory as the root. For more
     information on relative paths, read the section later

@@ -48,7 +48,7 @@
       <listitem>
         <para>
           Make sure that the JAR or executable file for the AUT is
-          correct, or that the classpaths are correct
+          correct
           (<xref linkend="configuringaut"/>).
         </para>
       </listitem>
@@ -59,8 +59,8 @@
       </term>
       <listitem>
         <para>
-          Make sure that the JAR file or the classpaths you have
-          entered contain the main class (<xref linkend="configuringaut"/>).
+          Make sure that the JAR file you have
+          entered contains the main class (<xref linkend="configuringaut"/>).
         </para>
       </listitem>
     </varlistentry>

@@ -51,10 +51,6 @@ public class AutConfigConstants {
     public static final String AUT_RUN_AUT_ARGUMENTS = "AUT_RUN_AUT_ARGUMENTS"; //$NON-NLS-1$
     /** The arguments of the Aut-Run AUT (main-args) split character */
     public static final char AUT_RUN_AUT_ARGUMENTS_SEPARATOR_CHAR = '?';
-    /** The name of the Main-Class */
-    public static final String CLASSNAME = "CLASSNAME"; //$NON-NLS-1$
-    /** The classpath of the AUT */
-    public static final String CLASSPATH = "CLASSPATH"; //$NON-NLS-1$
     /** The environment of the AUT */
     public static final String ENVIRONMENT = "ENVIRONMENT"; //$NON-NLS-1$
     /** The key for the name of the Modern UI app used to start the AUT. */
