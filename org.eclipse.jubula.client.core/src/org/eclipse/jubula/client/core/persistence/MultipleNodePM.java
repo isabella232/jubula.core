@@ -971,6 +971,27 @@ public class MultipleNodePM  extends PersistenceManager {
     }
     
     /**
+     * executes a list of commands in a single transaction in the Master
+     * Session.
+     * 
+     * @param cmds
+     *      List<AbstractCmdHandle>
+     * @throws PMException
+     *      error occured
+     * @throws ProjectDeletedException
+     *      error occured
+     * @return a message containing information about the error that 
+     *         occurred during execution, or <code>null</code> if no error
+     *         occurred.
+     */
+    public MessageInfo executeCommands(List<AbstractCmdHandle> cmds) 
+        throws PMException, ProjectDeletedException {
+
+        return executeCommands(cmds, GeneralStorage.getInstance()
+                .getMasterSession());
+    }
+    
+    /**
      * executes a list of commands in a single transaction. The given session
      * is managed by the caller. This method will commit or rollback the 
      * transaction as appropriate, but will not close the session.

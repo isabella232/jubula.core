@@ -17,6 +17,7 @@
   <xi:include href="sectionIntroBrowsers.xml"/>
   <xi:include href="sectionRenamingItems.xml"/>
   <xi:include href="sectionDeletingItems.xml"/>
+  <xi:include href="sectionDeletingTestCasesWithOrphans.xml"/>
   <xi:include href="sectionWorkingWithIDsForTestCasesAndSuites.xml"/>
   <xi:include href="sectionOpeningTheTestCaseBrowserMultipleTimes.xml"/>
   <xi:include href="sectionOpeningTheTaskEditorForItems.xml"/>

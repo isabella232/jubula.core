@@ -10,12 +10,15 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -34,6 +37,9 @@ import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
  *
  */
 public class NativeSQLUtils {
+    
+    /** Maximum number of elements in a DB Query list - 1000 for Oracle... */
+    private static final int MAXLGT = 990;
     
     /** Exception message */
     private static final String FAIL = "Operation failed due to database error."; //$NON-NLS-1$ 
@@ -62,23 +68,65 @@ public class NativeSQLUtils {
         str.append(")"); //$NON-NLS-1$
         return str.toString();
     }
+    
+    /**
+     * Returns a list of lists of ids in the collection, each list is limited in size
+     * @param objects the objects
+     * @return the list of lists
+     */
+    public static List<String> getSlicedIdLists(
+            Collection<? extends IPersistentObject> objects) {
+        if (objects.isEmpty()) {
+            throw new IllegalArgumentException("Collection should not be empty."); //$NON-NLS-1$
+        }
+        StringBuilder str = null;
+        int num = 0;
+        List<String> result = new ArrayList<>();
+        
+        for (IPersistentObject per : objects) {
+            if (num == 0) {
+                str = new StringBuilder("("); //$NON-NLS-1$
+            }
+            str.append(per.getId());
+            str.append(","); //$NON-NLS-1$
+            num++;
+            if (num == MAXLGT) {
+                str.deleteCharAt(str.length() - 1);
+                str.append(")"); //$NON-NLS-1$
+                result.add(str.toString());
+                num = 0;
+            }
+        }
+        if (num != 0) {
+            str.deleteCharAt(str.length() - 1);
+            str.append(")"); //$NON-NLS-1$
+            result.add(str.toString());
+        }
+        return result;
+    }
 
     /**
      * Deletes a collection of independent top nodes from either the TC or TS Browsers
      *    The nodes have to be managed by the master session, and will be chaged
      * @param sess the session
      * @param nodes the nodes
+     * @param monitor the progress monitor or null
      */
     public static void deleteFromTCTSTreeAFFECTS(EntityManager sess,
-            Collection<INodePO> nodes) {
+            Collection<INodePO> nodes, IProgressMonitor monitor) {
+        
         for (INodePO node : nodes) {
             node.goingToBeDeleted(sess);
+            removeNodeAFFECTS(sess, node);
+            if (monitor != null) {
+                monitor.worked(1);
+            }
         }
-        for (INodePO child : nodes) {
-            removeNodeAFFECTS(sess, child);
+        Query q;
+        for (String smallList : getSlicedIdLists(nodes)) {
+            q = sess.createNativeQuery("delete from NODE where ID in " + smallList); //$NON-NLS-1$
+            q.executeUpdate();
         }
-        Query q = sess.createNativeQuery("delete from NODE where ID in " + getIdList(nodes)); //$NON-NLS-1$
-        q.executeUpdate();
     }
     
     /**

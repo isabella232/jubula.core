@@ -10,39 +10,23 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.persistence.EntityManager;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
-import org.eclipse.jubula.client.core.events.DataChangedEvent;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
-import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.client.ui.constants.Constants;
-import org.eclipse.jubula.client.ui.rcp.actions.TransactionWrapper;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -145,63 +129,12 @@ public class DeleteTCTSBrowserTreeItemHandler
         if (topNodes.isEmpty()) {
             return;
         }
-        Collection<INodePO> toDelete = NodeBP.getOffspringCollection(
+        Collection<INodePO> allNodes = NodeBP.getOffspringCollection(
                 topNodes);
-        if (!canDelete(toDelete)) {
+        if (!canDelete(allNodes)) {
             return;
         }
-        final Collection<IPersistentObject> toRefresh = new HashSet<>();
-        IProjectPO proj = GeneralStorage.getInstance().getProject();
-        if (NodeBP.isTC((INodePO) selection.getFirstElement())) {
-            toRefresh.add(proj.getSpecObjCont());
-        } else {
-            toRefresh.add(proj.getExecObjCont());
-        }
-        for (INodePO node : topNodes) {
-            INodePO par = node.getParentNode();
-            if (!par.equals(ISpecObjContPO.TCB_ROOT_NODE) 
-                    && !(par.equals(IExecObjContPO.TSB_ROOT_NODE))) {
-                toRefresh.add(par);
-            }
-        }
-        final Collection<IPersistentObject> toLock = new ArrayList<>();
-        toLock.addAll(toDelete);
-        toLock.addAll(toRefresh);
-
-        boolean succ = TransactionWrapper.executeOperation(new ITransaction() {
-
-            /** {@inheritDoc} */
-            public Collection<? extends IPersistentObject> getToLock() {
-                return toLock;
-            }
-            
-            /** {@inheritDoc} */
-            public Collection<? extends IPersistentObject> getToRefresh() {
-                return toRefresh;
-            }
-
-            /** {@inheritDoc} */
-            public void run(EntityManager sess) {
-                NativeSQLUtils.deleteFromTCTSTreeAFFECTS(sess, topNodes);
-            }
-
-            /** {@inheritDoc} */
-            public Collection<? extends IPersistentObject> getToMerge() {
-                return null;
-            }
-        
-        });
-        if (!succ) {
-            return;
-        }
-        List<DataChangedEvent> eventList = new ArrayList<DataChangedEvent>();
-        for (INodePO node : topNodes) {
-            eventList.add(new DataChangedEvent(node, DataState.Deleted,
-                    UpdateState.all));
-        }
-        CompNameManager.getInstance().countUsage();
-        DataEventDispatcher.getInstance().fireDataChangedListener(
-                eventList.toArray(new DataChangedEvent[0]));
+        DeleteNodesTransaction.deleteTopNodes(topNodes, allNodes, null);
     }
 
     /**

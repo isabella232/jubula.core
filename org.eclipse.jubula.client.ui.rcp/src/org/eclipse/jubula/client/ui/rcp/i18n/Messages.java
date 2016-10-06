@@ -221,6 +221,10 @@ public class Messages extends NLS {
     public static String DeleteTreeItemActionOMEditorOMText4;
     public static String DeleteTreeItemActionOMEditorOMTitle;
     public static String DeleteTreeItemActionShellTitle;
+    public static String DeleteUnusedAction;
+    public static String DeleteUnusedActionOverflow;
+    public static String DeleteUnusedActionShellTitle;
+    public static String DeleteUnusedProgress;
     public static String DeselectAll;
     public static String DirtyStarListLabelProviderAlreadySaved;
     public static String DisconnectedFromAUT;
@@ -908,6 +912,7 @@ public class Messages extends NLS {
     public static String UIJobCleaningTestResultFromDB;
     public static String UIJobConnectToAUTAgent;
     public static String UIJobDeletingTestResultDetails;
+    public static String UIJobDeletingUnused;
     public static String UIJobFindingNodes;
     public static String UIJobUpdatingRecentlyUsedAuts;
     public static String UIJobResolvingStartableAuts;

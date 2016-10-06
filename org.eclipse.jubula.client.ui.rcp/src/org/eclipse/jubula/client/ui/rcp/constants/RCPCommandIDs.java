@@ -32,6 +32,9 @@ public interface RCPCommandIDs {
     /** the ID of the "delete project" command */
     public static final String DELETE_PROJECT = "org.eclipse.jubula.client.ui.rcp.commands.DeleteProject"; //$NON-NLS-1$
     
+    /** the ID of the "delete unused" command */
+    public static final String DELETE_UNUSED = "org.eclipse.jubula.client.ui.rcp.commands.DeleteUnused"; //$NON-NLS-1$
+    
     /** the ID of the "file export" command */
     public static final String ECLIPSE_RCP_FILE_EXPORT  = 
             ActionFactory.EXPORT.getCommandId();

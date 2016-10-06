@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="deleting-test-cases-with-orphans" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Deleting Test Cases with orphans</title>
+  <anchor role="helpid" condition="testSpecificationViewContextId" xml:id="deleting-test-cases-with-orphans.testSpecificationViewContextId" xreflabel="Test Case Browser"/>
+  <orderedlist>
+    <listitem>
+      <para>
+        To delete a Test Case together with orphans that would remain unused,
+        select it in the browser.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Select <emphasis role="menuPath">Delete with orphans</emphasis>
+        from the context-sensitive menu.
+      </para>
+    </listitem>
+  </orderedlist>
+  <para role="warning">
+    If the item you want to delete is referenced somewhere in
+    your test, you must first remove it from the place where it is
+    reused before deleting it.
+  </para>
+    <para role="warning">
+    Before confirming the operation, make sure that you really want to
+    delete every Test Case that would remain unused. This cannot be undone!
+  </para>
+</section>

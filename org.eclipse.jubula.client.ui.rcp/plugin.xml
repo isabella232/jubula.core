@@ -798,6 +798,10 @@
       name="%ShowWhereUsed" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.DeleteUnused"
+      name="%DeleteUnusedCommand" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.CreateNewLogicalNameCommand"
       name="%NewLogicalName" />
     <command
@@ -1995,6 +1999,10 @@
              style="push">
        </command>
        <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.DeleteUnused"
+             style="push">
+       </command>
+       <command
              commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
              style="push">
        </command>
@@ -2399,6 +2407,29 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
             </or>
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
+          </iterate>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectProtected">
+            <equals value="false" />
+          </with>
+        </and>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteUnusedHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.DeleteUnused">
+      <activeWhen>
+        <with variable="activePartId">
+          <equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
+        </with>
+      </activeWhen>
+      <enabledWhen>
+        <and>
+          <count value="1" />
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
             <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
           <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectProtected">
@@ -3244,6 +3275,9 @@
       commandId="org.eclipse.jubula.client.ui.rcp.commands.DeleteProject"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/deleteProject_disabled.gif"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/deleteProject.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.DeleteUnused"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/deleteUnused.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.NewProject"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/project_dis.gif"
