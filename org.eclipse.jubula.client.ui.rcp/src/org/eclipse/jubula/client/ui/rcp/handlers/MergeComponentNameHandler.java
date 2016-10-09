@@ -17,30 +17,82 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.DirectComboBoxDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
+import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**
- * Abstract base class for handlers for "Merge Component Names"
- *
  * @author BREDEX GmbH
  * @created Mar 13, 2009
  */
-public abstract class AbstractMergeComponentNameHandler 
+public class MergeComponentNameHandler
         extends AbstractSelectionBasedHandler {
 
+    /**
+     * {@inheritDoc}
+     */
+    public Object executeImpl(ExecutionEvent event) {
+        // Get model objects from selection
+        Set<IComponentNamePO> compNames = getComponentNames(getSelection());
+
+        // Dialog
+        IComponentNamePO selectedCompNamePo = openDialog(compNames);
+
+        if (selectedCompNamePo == null) {
+            // cancel operation
+            return null;
+        }
+
+        EntityManager masterSession = GeneralStorage.getInstance()
+                .getMasterSession();
+        Persistor persistor = Persistor.instance();
+        EntityTransaction tx = persistor.getTransaction(masterSession);
+
+        // Make sure that we're using Component Names from the Master Session
+        Set<IComponentNamePO> inSessionCompNames = 
+                new HashSet<IComponentNamePO>();
+
+        try {
+            for (IComponentNamePO cn : compNames) {
+                IComponentNamePO compName = masterSession
+                        .find(cn.getClass(), cn.getId());
+                masterSession.refresh(compName);
+                persistor.lockPO(masterSession, compName);
+                inSessionCompNames.add(compName);
+            }
+            
+            performOperation(inSessionCompNames, selectedCompNamePo);
+            persistor.commitTransaction(masterSession, tx);
+            fireChangeEvents(inSessionCompNames);
+        } catch (PMException e) {
+            PMExceptionHandler.handlePMExceptionForMasterSession(e);
+        } catch (ProjectDeletedException e) {
+            PMExceptionHandler.handleProjectDeletedException();
+        }
+
+        return null;
+    }
+    
     /**
      * Opens the Merge dialog and returns the dialog's result.
      * 
@@ -72,7 +124,7 @@ public abstract class AbstractMergeComponentNameHandler
      * @param compNames The Component Names to merge.
      * @return the Merge Component Names dialog.
      */
-    protected DirectComboBoxDialog<IComponentNamePO> createDialog(
+    private DirectComboBoxDialog<IComponentNamePO> createDialog(
             Set<IComponentNamePO> compNames) {
 
         List<IComponentNamePO> compNamesList = 
@@ -111,7 +163,7 @@ public abstract class AbstractMergeComponentNameHandler
      * @param selectedCompNamePo The Component Name that will be used in place
      *                           of the merged Component Names.
      */
-    protected void performOperation(
+    private void performOperation(
             Set<IComponentNamePO> compNames,
             IComponentNamePO selectedCompNamePo) {
 
@@ -126,7 +178,7 @@ public abstract class AbstractMergeComponentNameHandler
      * 
      * @param compNames The Component Names for which to fire the events.
      */
-    protected void fireChangeEvents(Set<IComponentNamePO> compNames) {
+    private void fireChangeEvents(Set<IComponentNamePO> compNames) {
         for (IComponentNamePO compName : compNames) {
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     compName, DataState.Deleted, UpdateState.all);
@@ -138,7 +190,7 @@ public abstract class AbstractMergeComponentNameHandler
      * @param structuredSel The selection to check for Component Names.
      * @return all Component Names contained in the given selection.
      */
-    protected Set<IComponentNamePO> getComponentNames(
+    private Set<IComponentNamePO> getComponentNames(
             IStructuredSelection structuredSel) {
         Set<IComponentNamePO> compNames = 
             new HashSet<IComponentNamePO>();
