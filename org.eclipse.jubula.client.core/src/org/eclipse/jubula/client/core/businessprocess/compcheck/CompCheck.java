@@ -301,26 +301,7 @@ public class CompCheck {
      * @return whether there is a Comp Names Pair
      */
     private boolean specTCHasAutoGenPair(ISpecTestCasePO spec, String guid) {
-        for (Iterator<INodePO> it = spec.getNodeListIterator();
-                it.hasNext(); ) {
-            INodePO node = it.next();
-            if (node instanceof ICapPO) {
-                String cNGuid = ((ICapPO) node).getComponentName();
-                if (cNGuid != null && cNGuid.equals(guid)) {
-                    return true;
-                }
-            } else if (node instanceof IExecTestCasePO) {
-                for (ICompNamesPairPO pair : ((IExecTestCasePO) node)
-                        .getCompNamesPairs()) {
-                    if (pair.isPropagated() && guid.equals(
-                            pair.getSecondName())) {
-                        return true;
-                    }
-                }
-            }
-        }
-        for (Iterator<IEventExecTestCasePO> it = spec.
-            getAllEventEventExecTC().iterator(); it.hasNext();) {
+        for (Iterator<INodePO> it = spec.getAllNodeIter(); it.hasNext(); ) {
             INodePO node = it.next();
             if (node instanceof ICapPO) {
                 String cNGuid = ((ICapPO) node).getComponentName();
