@@ -21,8 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.UnknownHostException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -206,11 +204,9 @@ public abstract class AUTServer {
                 // Java cannot properly determine the path for Windows
                 start = start.substring(1, start.length());
             }
-            Path path = Paths.get(start);
+            start = start.replaceFirst("plugins/[^/]*$", "externaljars"); //$NON-NLS-1$ //$NON-NLS-2$
             // The location of the externaljars:
-            Path path2 = Paths.get(path.getParent()
-                    .getParent().toString(), "externaljars"); //$NON-NLS-1$
-            File dir = path2.toFile();
+            File dir = new File(start);
             File[] res = dir.listFiles(new FilenameFilter() {
                 public boolean accept(File directory, String name) {
                     return name.endsWith(".jar"); //$NON-NLS-1$
@@ -218,8 +214,8 @@ public abstract class AUTServer {
             });
             if (res == null) {
                 String s = "Could not load the external jars. The directory " //$NON-NLS-1$
-                        + path2.toString() + " does not exist"; //$NON-NLS-1$
-                log.info(s);
+                        + start + " does not exist"; //$NON-NLS-1$
+                log.error(s);
                 return;
             }
             ArrayList<URL> urls = new ArrayList<URL>();
