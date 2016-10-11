@@ -269,7 +269,7 @@ public class CompNamesBP {
         ISpecTestCasePO specNode = execNode.getSpecTestCase();
 
         if (specNode != null) {
-            for (Iterator it = specNode.getNodeListIterator(); it.hasNext();) {
+            for (Iterator it = specNode.getAllNodeIter(); it.hasNext();) {
                 INodePO child = (INodePO)it.next();
                 if (child instanceof IExecTestCasePO) {
                     addPropagatedPairs(pairs, (IExecTestCasePO)child);
