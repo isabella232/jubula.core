@@ -11,10 +11,7 @@
 package org.eclipse.jubula.client.core.persistence;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
@@ -28,10 +25,6 @@ import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -339,46 +332,6 @@ public class EditSupport {
         }
     }
 
-    /**
-     * 
-     * @return the GUIDs for all of the component names currently used by
-     *         the edited node. If the edited node is *not* an 
-     *         <code>ISpecTestCasePO</code>, returns an empty set.
-     */
-    public Set<String> getUsedComponentNameGuids() {
-        Set<String> usedCompNameGuids =
-            new HashSet<String>();
-        if (m_workVersion instanceof ISpecTestCasePO) {
-            ISpecTestCasePO specTc = (ISpecTestCasePO)m_workVersion;
-            for (Object obj : specTc.getAllEventEventExecTC()) {
-                if (obj instanceof IEventExecTestCasePO) {
-                    IEventExecTestCasePO evExTc =
-                        (IEventExecTestCasePO)obj;
-                    for (ICompNamesPairPO pair : evExTc.getCompNamesPairs()) {
-                        usedCompNameGuids.add(pair.getFirstName());
-                        usedCompNameGuids.add(pair.getSecondName());
-                    }
-                }
-            }
-            Iterator it = specTc.getNodeListIterator();
-            while (it.hasNext()) {
-                Object obj = it.next();
-                if (obj instanceof ICapPO) {
-                    ICapPO cap = (ICapPO)obj;
-                    usedCompNameGuids.add(cap.getComponentName());
-                } else if (obj instanceof IExecTestCasePO) {
-                    IExecTestCasePO execTc = (IExecTestCasePO)obj;
-                    for (ICompNamesPairPO pair : execTc.getCompNamesPairs()) {
-                        usedCompNameGuids.add(pair.getFirstName());
-                        usedCompNameGuids.add(pair.getSecondName());
-                    }
-                }
-            }
-        }
-
-        return usedCompNameGuids;
-    }
-    
     /**
      * Persists the Parameter Names.
      * @throws PMException
