@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+  xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.jubula</groupId>
+  <artifactId>org.eclipse.jubula.releng</artifactId>
+  <name>Eclipse Jubula</name>
+  <version>5.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <properties>
+    <tycho-version>0.22.0</tycho-version>
+    <tycho-extras-version>${tycho-version}</tycho-extras-version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  
+  <profiles>
+  
+    <profile>
+		<id>rc-nonrcp</id>
+		<modules>
+			<module>../org.eclipse.jubula.communication</module>
+			<module>../org.eclipse.jubula.toolkit.api</module>
+			<module>../org.eclipse.jubula.tools</module>
+    		<module>../org.eclipse.jubula.tools.exec</module>
+			<module>../org.eclipse.jubula.rc.common</module>
+			<module>../org.eclipse.jubula.rc.swt</module>
+			<module>../org.eclipse.jubula.rc.swing</module>
+			<module>../org.eclipse.jubula.rc.javafx</module>
+			<module>../org.eclipse.jubula.rc.javafx.j8u40</module>
+		</modules>
+	</profile>
+	
+	<profile>
+		<id>rc-rcp</id>
+		<modules>
+			<module>../org.eclipse.jubula.rc.common.orbit</module>
+			<module>../org.eclipse.jubula.communication</module>
+			<module>../org.eclipse.jubula.tools</module>
+			<module>../org.eclipse.jubula.toolkit.api</module>
+			<module>../org.eclipse.jubula.rc.rcp.common</module>
+			<module>../org.eclipse.jubula.rc.rcp.ext</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4.swt</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4.feature</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4.site</module>
+			<module>../org.eclipse.jubula.rc.rcp.swt</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3.specific</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3.feature</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3.site</module>
+			<module>../org.eclipse.jubula.rc.rcp</module>
+			<module>../org.eclipse.jubula.rc.rcp.site</module>
+			<module>../org.eclipse.jubula.rc.rcp.feature</module>
+		</modules>
+	</profile>
+	
+	<profile>
+		<id>rc</id>
+		<modules>
+			<module>../org.eclipse.jubula.rc.common.orbit</module>
+			<module>../org.eclipse.jubula.rc.rcp.common</module>
+			<module>../org.eclipse.jubula.rc.rcp.ext</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4.swt</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4.feature</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4</module>
+			<module>../org.eclipse.jubula.rc.rcp.e4.site</module>
+			<module>../org.eclipse.jubula.rc.rcp.swt</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3.specific</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3.feature</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3</module>
+			<module>../org.eclipse.jubula.rc.rcp.e3.site</module>
+			<module>../org.eclipse.jubula.rc.rcp</module>
+			<module>../org.eclipse.jubula.rc.rcp.site</module>
+			<module>../org.eclipse.jubula.rc.rcp.feature</module>
+			<module>../org.eclipse.jubula.communication</module>
+			<module>../org.eclipse.jubula.toolkit.api</module>
+			<module>../org.eclipse.jubula.tools</module>
+    		<module>../org.eclipse.jubula.tools.exec</module>
+			<module>../org.eclipse.jubula.rc.common</module>
+			<module>../org.eclipse.jubula.rc.swt</module>
+			<module>../org.eclipse.jubula.rc.swing</module>
+			<module>../org.eclipse.jubula.rc.javafx</module>
+			<module>../org.eclipse.jubula.rc.javafx.j8u40</module>
+		</modules>
+	</profile>
+
+	
+  </profiles>
+</project>

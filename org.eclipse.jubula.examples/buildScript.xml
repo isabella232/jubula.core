@@ -6,7 +6,7 @@
     which accompanies this distribution, and is available at
     http://www.eclipse.org/legal/epl-v10.html
  -->
-<project name="com.bredexsw.guidancer.examples" default="build">
+<project name="com.bredexsw.guidancer.examples" default="build" xmlns:if="ant:if">
 
 	<property name="build.dir"						value="build"/>
 	<property name="examples.aut.dir"				value="${build.dir}/AUTs"/>
@@ -69,7 +69,7 @@
 
 	<target name="releaseSimpleAdderJavaFX">
 		<exec dir="../${SimpleAdder.JavaFX}" executable="ant" >
-			<env key="JAVA_HOME" value="/devapps/java64/java8"/>
+			<env key="JAVA_HOME" value="${localJava8Home}"/>
 			<arg value="-f"/>
 			<arg value="buildScript.xml"/>
 			<arg value="build"/>
@@ -86,7 +86,7 @@
 
     <target name="releaseExampleJavaFXExtensionAUT">
         <exec dir="../${ExampleJavaFXExtensionAUT}" executable="ant" >
-            <env key="JAVA_HOME" value="/devapps/java64/java8"/>
+            <env key="JAVA_HOME" value="${localJava8Home}"/>
             <arg value="-f"/>
             <arg value="buildScript.xml"/>
             <arg value="build"/>
@@ -111,7 +111,9 @@
 	</target>
 
 	<target name="releaseSimpleAdderRCP">
-		<ant dir="../${SimpleAdder.RCP}" antfile="buildScript.xml" inheritAll="false" />
+		<ant dir="../${SimpleAdder.RCP}" antfile="buildScript.xml" inheritAll="false">
+		   <property name="offline" value="${offline}" />
+		</ant>
 		<mkdir dir="${examples.aut.simpleAdder.dir}/rcp"/>
 		<move todir="${examples.aut.simpleAdder.dir}/rcp">
 			<fileset dir="../org.eclipse.jubula.examples.aut.adder.rcp.product/target/products/org.eclipse.jubula.product.examples.aut.adder.rcp/"/>

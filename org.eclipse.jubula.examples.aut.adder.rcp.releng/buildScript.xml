@@ -7,7 +7,7 @@
     http://www.eclipse.org/legal/epl-v10.html
  -->
 
-<project name="SimpleAdder-RCP" default="cleanBuild" basedir=".">
+<project name="SimpleAdder-RCP" default="cleanBuild" basedir="." xmlns:if="ant:if">
 
     <target name="clean">
     	<echo>Implitly cleaning before building. Skipping Clean</echo>
@@ -17,9 +17,9 @@
         <exec executable="mvn" dir="." failonerror="true">
             <env key="MAVEN_OPTS" value="-Xmx512m" />
             <arg value="-Dtycho.disableP2Mirrors=true" />
-
             <arg value="clean" />
             <arg value="verify" />
+            <arg if:true="${offline}" value="-offline" />
         </exec>
     </target>
 

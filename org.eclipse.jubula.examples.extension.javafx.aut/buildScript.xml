@@ -8,7 +8,6 @@
  -->
 <project name="PieChart" default="build" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
 
-    <property name="java8.jdk.home" value="/devapps/java/java8" />
     <property name="source.dir" value="src" />
     <property name="out.dir" value="build" />
     <property name="out.dir.classes" value="${out.dir}/classes" />
@@ -18,8 +17,8 @@
     <target name="default">
         <path id="classpath">
             <filelist>
-                <file name="${java8.jdk.home}/lib/ant-javafx.jar" />
-                <file name="${java8.jdk.home}/lib/javafx-mx.jar" />
+                <file name="${env.JAVA_HOME}/lib/ant-javafx.jar" />
+                <file name="${env.JAVA_HOME}/lib/javafx-mx.jar" />
             </filelist>
         </path>
 
@@ -39,7 +38,7 @@
     <target name="compile" depends="default, init">
         <javac 
             fork="true" 
-            executable="${java8.jdk.home}/bin/javac" 
+            executable="${env.JAVA_HOME}/bin/javac" 
             includeantruntime="false" 
             srcdir="${source.dir}" 
             destdir="${out.dir}/classes" 
