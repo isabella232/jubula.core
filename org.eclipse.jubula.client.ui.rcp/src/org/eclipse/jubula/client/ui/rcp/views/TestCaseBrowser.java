@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -59,7 +60,9 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
@@ -71,7 +74,7 @@ import org.eclipse.ui.menus.CommandContributionItem;
  * @created 05.07.2004
  */
 public class TestCaseBrowser extends AbstractJBTreeView 
-    implements ITreeViewerContainer, IJBPart {
+    implements ITreeViewerContainer, IJBPart, IProblemPropagationListener {
     /** New-menu ID */
     public static final String NEW_ID = PlatformUI.PLUGIN_ID + ".NewSubMenu"; //$NON-NLS-1$
     /** Identifies the workbench plug-in */
@@ -134,6 +137,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         // add this TCB to the tracker
         MultipleTCBTracker.getInstance().addTCB(this);
         getSite().setSelectionProvider(getTreeViewer());
+        DataEventDispatcher.getInstance().addProblemPropagationListener(this);
     }
 
     /**
@@ -214,6 +218,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         try {
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.removeDataChangedListener(this);
+            ded.removeProblemPropagationListener(this);
             getViewSite().getWorkbenchWindow().getSelectionService()
                 .removeSelectionListener(getActionListener());
             getTreeViewer().removeDoubleClickListener(m_doubleClickListener);
@@ -488,5 +493,15 @@ public class TestCaseBrowser extends AbstractJBTreeView
     private void setActionListener(
             CutAndPasteEnablementListener actionListener) {
         m_actionListener = actionListener;
+    }
+
+    @Override
+    public void problemPropagationFinished() {
+        final IWorkbench workbench = PlatformUI.getWorkbench();
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                getTreeViewer().refresh();
+            }
+        });
     }
 }

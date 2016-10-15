@@ -365,6 +365,7 @@
         <or>
           <objectClass name="org.eclipse.jubula.client.core.model.ITestSuitePO" />
           <objectClass name="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+          <objectClass name="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
           <objectClass name="org.eclipse.jubula.client.core.model.ICapPO" />
           <objectClass name="org.eclipse.jubula.client.core.model.ICategoryPO" />
           <objectClass name="org.eclipse.jubula.client.core.model.ITestJobPO" />

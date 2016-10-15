@@ -177,7 +177,7 @@ public class CompletenessBP implements IProjectStateListener {
                         .getProject();
                 
                 TreeTraverser treeTraverser = new TreeTraverser(project,
-                        new ProblemCleanupOperation());
+                        new ProblemCleanupOperation(), true, true);
                 treeTraverser.setMonitor(monitor);
                 treeTraverser.traverse(true);
                 
