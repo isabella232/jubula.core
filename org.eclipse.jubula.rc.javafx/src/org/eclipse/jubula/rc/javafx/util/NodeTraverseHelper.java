@@ -17,7 +17,6 @@ import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 
-import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
@@ -130,8 +129,16 @@ public class NodeTraverseHelper {
      */
     public static List<String> findStrings(Parent parent) {
         ArrayList<String> renderedStrings = new ArrayList<>();
-        List<Node> children = new SortedList<>(parent.getChildrenUnmodifiable(),
-                new NodePositionComparator());
+        List<Node> children = new ArrayList<>();
+        
+        for (Node n : new ArrayList<Node>(parent.getChildrenUnmodifiable())) {
+            // Only add children which are part of a rendered scene and when
+            // bounds calculation is possible
+            if (n.localToScreen(n.getBoundsInLocal()) != null) {
+                children.add(n);
+            }
+        }
+        children.sort(new NodePositionComparator());
         for (Node n : children) {
             IComponent adapter = (IComponent) AdapterFactoryRegistry
                     .getInstance().getAdapter(IComponent.class, n);
