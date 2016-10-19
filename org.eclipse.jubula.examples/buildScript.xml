@@ -69,7 +69,6 @@
 
 	<target name="releaseSimpleAdderJavaFX">
 		<exec dir="../${SimpleAdder.JavaFX}" executable="ant" >
-			<env key="JAVA_HOME" value="${localJava8Home}"/>
 			<arg value="-f"/>
 			<arg value="buildScript.xml"/>
 			<arg value="build"/>
@@ -86,7 +85,6 @@
 
     <target name="releaseExampleJavaFXExtensionAUT">
         <exec dir="../${ExampleJavaFXExtensionAUT}" executable="ant" >
-            <env key="JAVA_HOME" value="${localJava8Home}"/>
             <arg value="-f"/>
             <arg value="buildScript.xml"/>
             <arg value="build"/>
