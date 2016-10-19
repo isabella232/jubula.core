@@ -16,6 +16,7 @@
   <xi:include href="clientAPI/chapter.xml"/>
   <xi:include href="toolkitExtension/toolkitExtension.xml"/>
   <xi:include href="gefToolkitExtension/gefToolkitExtension.xml"/>
+  <xi:include href="extensionWizard/extensionWizard.xml"/>
   <xi:include href="functions/functions.xml"/>
   <xi:include href="keyboardLayout/keyboardLayout.xml"/>
 

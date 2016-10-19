@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016 BREDEX GmbH. All rights reserved. This program and 
+    the accompanying materials are made available under the terms of the Eclipse 
+    Public License v1.0 which accompanies this distribution, and is available 
+    at http://www.eclipse.org/legal/epl-v10.html -->
+<section xml:id="wizard-installation" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>Installation</title>
+    <orderedlist>
+        <listitem>
+            <para>
+                Start the IDE and select from the main menu
+                <emphasis role="menupath">Help</emphasis> &gt;
+                <emphasis role="menupath">Install new software...</emphasis>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Click the ” <emphasis>Add...</emphasis>” button in the
+                <emphasis>Install</emphasis> dialog that appears.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Click the ”<emphasis>Archive</emphasis>” button in the
+                <emphasis>Add Repository</emphasis> dialog that appears.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Navigate to the jubula installation directory and choose the
+                "<emphasis role="input">org.eclipse.jubula.extensions.wizard.repo.zip</emphasis>"
+                file from the development directory.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                You can optionally give the repository a local name.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Click ”<emphasis>OK</emphasis>” to exit the
+                <emphasis>Add Repository</emphasis> dialog. The active 
+                dialog should now be <emphasis>Install</emphasis>.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Tick the checkbox next to the <emphasis>Jubula Extension Development</emphasis>
+                category or the <emphasis>Jubula Extension Wizard</emphasis>
+                feature and click ”<emphasis>Next</emphasis>”.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Confirm the <emphasis>Installation Details</emphasis> by
+                clicking the ”<emphasis>Next</emphasis>” button again.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Accept the license agreement terms and click”<emphasis>Finish</emphasis>”.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                A warning dialog may appear to warn you are installing
+                unsigned content. Click ”<emphasis>OK</emphasis>”.
+                Then the installation process begins.
+            </para>
+        </listitem>
+        <listitem>
+            <para>
+                Click the ”<emphasis>Restart Now</emphasis>” button to
+                perform a restart, when a dialog appears to prompt the
+                restart that will safely finish the update / installation.
+                After the restart the <emphasis>Jubula Extension Wizard</emphasis>
+                will be available in the "<emphasis>New Project</emphasis>" menu.
+            </para>
+        </listitem>
+    </orderedlist>
+
+    <para role="warning">
+        The Jubula Extension Wizard is not supposed to
+        be installed into the Jubula ITE or into Eclipse for Testers, 
+        see<xref linkend="wizard-requirements" />.
+    </para>
+
+</section>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2016 BREDEX GmbH. All rights reserved. This program and 
+    the accompanying materials are made available under the terms of the Eclipse 
+    Public License v1.0 which accompanies this distribution, and is available 
+    at http://www.eclipse.org/legal/epl-v10.html -->
+<section xml:id="wizard-usage" xmlns="http://docbook.org/ns/docbook"
+    xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>Usage of the New Extension Wizard</title>
+    <para>
+        After the installation of the Jubula Extension Wizard was successful a
+        new extension project can be created.
+    </para>
+    <section xml:id="wizard-usage-open-wizard">
+        <title>Opening the wizard</title>
+        <orderedlist>
+            <listitem>
+                <para>
+                    Select from the main menu
+                    <emphasis role="menupath">File</emphasis> &gt;
+                    <emphasis role="menupath">New</emphasis> &gt;
+                    <emphasis role="menupath">Project...</emphasis>.
+                </para>
+
+                <para role="tip">
+                    You can alternatively select
+                    <emphasis role="menupath">New</emphasis> &gt;
+                    <emphasis role="menupath">Project...</emphasis>
+                    from the context menu of the 
+                    <emphasis>Project Explorer</emphasis>
+                    or the <emphasis>Package Explorer</emphasis>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Expand the <emphasis>Jubula</emphasis> folder in the
+                    <emphasis>New Project</emphasis> window that appears.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Select
+                    <emphasis>Jubula Extension Project</emphasis>
+                    and click the "<emphasis>Next</emphasis>" button.
+                </para>
+            </listitem>
+
+        </orderedlist>
+    </section>
+    <section xml:id="wizard-usage-creating-an-extension">
+        <title>Creating an extension</title>
+        <orderedlist>
+            <listitem>
+                <para>
+                    In the <emphasis>Project Name</emphasis> field enter a
+                    project name prefix for your extension. The extension will
+                    consist of three eclipse projects, therefore the entered
+                    project name is being used as the prefix.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Select the execution environment. Make sure to use Java 1.8
+                    or later. If required, clicking on the "<emphasis>Configure JREs...</emphasis>"
+                    link will open the <emphasis>Installed JREs</emphasis>
+                    page of the Eclipse settings.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    After you have entered all the necessary information, click
+                    "<emphasis>Next</emphasis>" to continue.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Select the desired toolkit and click "<emphasis>Next</emphasis>".
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Enter the extension features' <emphasis>ID</emphasis>, 
+                    <emphasis>Version</emphasis>, <emphasis>Name</emphasis> and
+                    <emphasis>Vendor</emphasis>. In most cases the pre-entered
+                    texts should be suitable.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Select a <emphasis>component type</emphasis> from the
+                    dropdown menu. The component will inherit all standard
+                    actions of the component type. If you would e.g. like to
+                    add support for a component that behaves as a button,
+                    <emphasis>guidancer.concrete.Button</emphasis> should be
+                    chosen. The most basic type is
+                    <emphasis>guidancer.abstract.Widget</emphasis>.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                After choosing the type you can:
+                </para>
+                <orderedlist>
+                    <listitem>
+                        <para>
+                            Choose a component that is already supported and
+                            add additional actions to that component.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            Enter or choose a component that is not supported
+                            by Jubula, yet.
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+            <listitem>
+                <para>
+                    If you do not have a target platform for Jubula extension
+                    development, yet, tick "<emphasis>Create a Jubula target platform file</emphasis>".
+                    You need a valid target platform to code and build your
+                    extension properly.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Click "<emphasis>Next</emphasis>" to continue.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    Enter a <emphasis>class name</emphasis> for the
+                    <emphasis>tester class</emphasis>.
+                    The tester class will contain all action's methods.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    By pressing the "<emphasis>New...</emphasis>" button you can
+                    create a new action.
+                </para>
+            </listitem>
+            <listitem>
+                <orderedlist>
+                    <listitem>
+                        <para>
+                            To rename an action, simply click on the action's
+                            current name, enter the new name and hit enter.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            To delete an action, select it and click on
+                            the "<emphasis>Delete</emphasis>" button.
+                        </para>
+                    </listitem>
+                    <listitem>
+                        <para>
+                            To change the order in which the action's methods
+                            will occur in the tester class, use the
+                            "<emphasis>Up</emphasis>" and "<emphasis>Down</emphasis>"
+                            buttons to move a selected action up or down respectively.
+                        </para>
+                    </listitem>
+                </orderedlist>
+            </listitem>
+            <listitem>
+                <para>
+                    To add parameters to an action, select the action and click
+                    on the "<emphasis>Param...</emphasis>" button. In the
+                    opening <emphasis>Action Parameters</emphasis> window you
+                    can create, delete and change the order of parameters
+                    just like you would in the actions list.
+                    If only special values should be allowed for a parameter
+                    you can enter value sets. Enter all allowed values each
+                    separated by a commma. Make sure that the entered value set
+                    consists of values of the parameter's type only.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    By clicking "<emphasis>Finish</emphasis>" the wizard will
+                    close and the extension will be created.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    After the generation has finished and you have selected to
+                    create a target platform file, the file will be opened in
+                    the target platform editor. In the top right corner click
+                    "<emphasis>Set as Target Platform</emphasis>" to use
+                    the target platform in your workspace.
+                </para>
+            </listitem>
+            <listitem>
+                <para>
+                    For information about how to deploy your extension, see
+                    <xref linkend="deploying-the-toolkit-plug-in"/>.
+                </para>
+            </listitem>
+        </orderedlist>
+    </section>
+</section>
