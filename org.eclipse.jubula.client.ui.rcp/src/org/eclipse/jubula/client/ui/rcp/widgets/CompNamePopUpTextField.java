@@ -151,7 +151,9 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
                     public void run() {
                         Display.getDefault().syncExec(new Runnable() {
                             public void run() {
-                                openContentProposals();
+                                if (isFocusControl()) {
+                                    openContentProposals();
+                                }
                             }
                         });
                     }
