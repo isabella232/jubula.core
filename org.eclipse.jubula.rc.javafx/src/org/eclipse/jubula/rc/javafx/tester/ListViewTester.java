@@ -19,8 +19,8 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.ListTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.adapter.ListViewAdapter;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets.BinaryChoice;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -37,7 +37,6 @@ import javafx.scene.control.ScrollToEvent;
  * @author BREDEX GmbH
  */
 public class ListViewTester extends ListTester {
-    
     /**
      * EventHandler to consume scroll events during DnD
      */
@@ -49,11 +48,10 @@ public class ListViewTester extends ListTester {
             event.consume();
         }
     };
-    
+
     @Override
     public void rcDragValue(int mouseButton, String modifier, String value,
-        String operator, String searchType) {
-        
+            String operator, String searchType) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         dndHelper.setModifier(modifier);
         dndHelper.setMouseButton(mouseButton);
@@ -62,7 +60,7 @@ public class ListViewTester extends ListTester {
                 mouseButton, 0);
         pressOrReleaseModifiers(modifier, true);
         getRobot().mousePress(null, null, mouseButton);
-      //Add event filter to prevent scrolling
+        // Add event filter to prevent scrolling
         Node listView = ((Node) getRealComponent());
         listView.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
         dndHelper.setDragMode(true);
@@ -70,7 +68,7 @@ public class ListViewTester extends ListTester {
 
     @Override
     public void rcDropValue(String value, String operator, String searchType,
-        int delayBeforeDrop) {
+            int delayBeforeDrop) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
             ListCell<?> targetCell = ((ListViewAdapter<ListView<?>>) 
@@ -114,7 +112,7 @@ public class ListViewTester extends ListTester {
     public void rcDropIndex(int index, int delayBeforeDrop) {
         final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
         try {
-            ListCell<?> targetCell = ((ListViewAdapter<ListView<?>>)
+            ListCell<?> targetCell = ((ListViewAdapter<ListView<?>>) 
                     getComponent()).getCell(index);
             if (targetCell == null) {
                 throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
@@ -124,17 +122,16 @@ public class ListViewTester extends ListTester {
             rcSelectIndex(String.valueOf(index), BinaryChoice.no.rcValue(),
                     dndHelper.getMouseButton(), 0);
             waitBeforeDrop(delayBeforeDrop);
-            
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
-            //Remove event filter
+            // Remove event filter
             Node listView = ((Node) getRealComponent());
             listView.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
             dndHelper.setDragMode(false);
         }
     }
-    
+
     /** {@inheritDoc} */
     protected Object getNodeAtMousePosition() throws StepExecutionException {
         Point awtPoint = getRobot().getCurrentMousePosition();
@@ -159,12 +156,11 @@ public class ListViewTester extends ListTester {
                                 "No table node found at mouse position: " //$NON-NLS-1$
                                         + "X: " + point.getX() //$NON-NLS-1$
                                         + "Y: " + point.getY(), //$NON-NLS-1$
-                                EventFactory
-                                        .createActionError(
-                                                TestErrorEvent.NOT_FOUND));
+                                EventFactory.createActionError(
+                                        TestErrorEvent.NOT_FOUND));
                     }
                 });
         return result;
     }
-    
+
 }

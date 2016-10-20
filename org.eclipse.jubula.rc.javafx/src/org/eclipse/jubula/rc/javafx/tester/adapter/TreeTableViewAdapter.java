@@ -15,11 +15,12 @@ import java.util.concurrent.Callable;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
+import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeTableOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeTableComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.tester.util.TreeTableOperationContext;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -27,29 +28,83 @@ import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableView;
 
 /**
- * Implementation of the Tree interface as an adapter for <code>TreeTableView</code>.
+ * Implementation of the TreeTable interface as an adapter for
+ * <code>TreeTableView</code>.
  *
  * @author BREDEX GmbH
  * @created 23.06.2014
  */
-public class TreeTableViewAdapter 
+public class TreeTableViewAdapter
         extends JavaFXComponentAdapter<TreeTableView<?>>
-        implements ITreeComponent<TreeTableCell<?, ?>> {
+        implements ITreeTableComponent<TreeTableCell<?, ?>> {
 
     /**
      * Creates a new Instance
-     * @param objectToAdapt the TreeTableView which should be adapted
+     * 
+     * @param objectToAdapt
+     *            the TreeTableView which should be adapted
      *
      */
     public TreeTableViewAdapter(TreeTableView<?> objectToAdapt) {
         super(objectToAdapt);
     }
 
-    @Override
-    public Object getRootNode() {
-        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "getRootNode", new Callable<Object>() { //$NON-NLS-1$
+    /**
+     * {@inheritDoc}
+     */
+    public AbstractTreeTableOperationContext<TreeTableView<?>, Object>
+            getContext() {
+        return new TreeTableOperationContext(
+                getRobotFactory().getEventThreadQueuer(), getRobot(),
+                getRealComponent());
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public AbstractTreeTableOperationContext<TreeTableView<?>, Object>
+            getContext(int column) {
+        return new TreeTableOperationContext(
+                getRobotFactory().getEventThreadQueuer(), getRobot(),
+                getRealComponent(), column);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPropertyValueOfCell(String name,
+            TreeTableCell<?, ?> cell) {
+        Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
+                new Callable<String>() {
+                    @Override
+                    public String call() throws Exception {
+                        try {
+                            IComponent adapter =
+                                    (IComponent) AdapterFactoryRegistry
+                                            .getInstance()
+                                            .getAdapter(IComponent.class, cell);
+                            if (adapter != null) {
+                                return ((ITextComponent) adapter)
+                                        .getPropteryValue(name);
+                            }
+                            return null;
+                        } catch (RobotException e) {
+                            throw new StepExecutionException(e.getMessage(),
+                                EventFactory.createActionError(
+                                    TestErrorEvent.PROPERTY_NOT_ACCESSABLE));
+                        }
+                    }
+                });
+        return String.valueOf(prop);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object getRootNode() {
+        Object result = EventThreadQueuerJavaFXImpl.invokeAndWait("getRootNode", //$NON-NLS-1$
+                new Callable<Object>() {
                     @Override
                     public Object call() throws Exception {
                         return getRealComponent().getRoot().getValue();
@@ -58,53 +113,18 @@ public class TreeTableViewAdapter
         return result;
     }
 
-    @Override
-    public AbstractTreeOperationContext<TreeTableView<?>, Object> getContext() {
-        return new TreeTableOperationContext(getRobotFactory()
-                .getEventThreadQueuer(), getRobot(), getRealComponent());
-    }
-
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public boolean isRootVisible() {
-        boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
-                "isRootVisible", new Callable<Boolean>() { //$NON-NLS-1$
-
+        boolean result = EventThreadQueuerJavaFXImpl
+                .invokeAndWait("isRootVisible", new Callable<Boolean>() { //$NON-NLS-1$
                     @Override
                     public Boolean call() throws Exception {
                         return getRealComponent().showRootProperty().getValue();
                     }
                 });
-
         return result;
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public String getPropertyValueOfCell(String name,
-            TreeTableCell<?, ?> cell) {
-        Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
-                new Callable<String>() {
 
-                    @Override
-                    public String call() throws Exception {
-                        try {
-                            IComponent adapter = (IComponent) 
-                                    AdapterFactoryRegistry.getInstance()
-                                    .getAdapter(IComponent.class, cell);
-                            if (adapter != null) {
-                                return ((ITextComponent) adapter)
-                                        .getPropteryValue(name);
-                            }
-                            return null;
-                        } catch (RobotException e) {
-                            throw new StepExecutionException(e.getMessage(),
-                                    EventFactory.createActionError(
-                                            TestErrorEvent
-                                            .PROPERTY_NOT_ACCESSABLE));
-                        }
-                    }
-                });
-        return String.valueOf(prop);
-    }
 }

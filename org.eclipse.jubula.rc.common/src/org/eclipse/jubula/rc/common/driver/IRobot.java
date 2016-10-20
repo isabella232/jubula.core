@@ -280,4 +280,12 @@ public interface IRobot <CONSTRAINT_TYPE> {
      * @return The captured image
      */
     public BufferedImage createFullScreenCapture();
+
+    /**
+     * Move the mouse pointer from its current position to a few points in its
+     * proximity. This is used to initiate a drop operation.
+     * 
+     */
+    public void shakeMouse();
+
 }

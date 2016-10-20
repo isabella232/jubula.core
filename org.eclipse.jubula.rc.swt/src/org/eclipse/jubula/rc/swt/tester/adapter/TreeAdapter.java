@@ -12,67 +12,75 @@ package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
-import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
-import org.eclipse.jubula.rc.swt.tester.tree.TreeOperationContext;
+import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeTableOperationContext;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeTableComponent;
+import org.eclipse.jubula.rc.swt.tester.util.TreeOperationContext;
+import org.eclipse.jubula.rc.swt.tester.util.TreeTableOperationContext;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+
 /**
  * Implements the Tree interface for adapting a <code>SWT.Tree</code>
  * 
- *  @author BREDEX GmbH
+ * @author BREDEX GmbH
  */
-public class TreeAdapter extends ControlAdapter implements ITreeComponent {
+public class TreeAdapter
+        extends ControlAdapter
+        implements ITreeTableComponent {
+
     /**
-     * @param objectToAdapt graphics component which will be adapted
+     * @param objectToAdapt
+     *            graphics component which will be adapted
      */
     public TreeAdapter(Object objectToAdapt) {
         super(objectToAdapt);
     }
 
     /**
-     * @return the casted object
-     */
-    private Tree getTree() {
-        return (Tree) getRealComponent();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Object getRootNode() {
-        return getEventThreadQueuer().invokeAndWait(
-                "getRootNode", new IRunnable<TreeItem[]>() { //$NON-NLS-1$
-                    public TreeItem[] run() {
-                        return getTree().getItems();
-                    }
-                });
-    }
-    
-    /**
      * {@inheritDoc}
      */
     public AbstractTreeOperationContext getContext() {
-        return new TreeOperationContext(getEventThreadQueuer(),
-                getRobot(), getTree());
+        return new TreeOperationContext(getEventThreadQueuer(), getRobot(),
+                (Tree) getRealComponent());
     }
     
     /**
      * {@inheritDoc}
      */
-    public boolean isRootVisible() {
-        
-        return true;
+    public AbstractTreeTableOperationContext getContext(int column) {
+        return new TreeTableOperationContext(getEventThreadQueuer(), getRobot(),
+                (Tree) getRealComponent(), column);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getPropertyValueOfCell(final String name, final Object cell) {
-        return getEventThreadQueuer().invokeAndWait(
-            "getPropertyValueOfCell", new IRunnable<String>() { //$NON-NLS-1$
-                public String run() {
-                    return getRobot().getPropertyValue(cell, name);
-                }
-            });
+        return getEventThreadQueuer().invokeAndWait("getPropertyValueOfCell", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
+                        return getRobot().getPropertyValue(cell, name);
+                    }
+                });
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Object getRootNode() {
+        return getEventThreadQueuer().invokeAndWait("getRootNode", //$NON-NLS-1$
+                new IRunnable<TreeItem[]>() {
+                    public TreeItem[] run() {
+                        return ((Tree) getRealComponent()).getItems();
+                    }
+                });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isRootVisible() {
+        return true;
+    }
+
 }

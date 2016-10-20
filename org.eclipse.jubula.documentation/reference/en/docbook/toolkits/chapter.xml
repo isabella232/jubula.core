@@ -56,14 +56,15 @@
   				<listitem><para>Menus</para></listitem>
   				<listitem><para>Tabbed panes</para></listitem>
   				<listitem><para>Trees</para></listitem>
+  				<listitem><para>Tree Tables</para></listitem>
   			</itemizedlist>
   	</para>
   </section>
   <section>
   	<title>JavaFX Toolkit</title>
   	<para>
-  		The JavaFX toolkit contains components which are specific to JavaFX applications. You will 
-  		only have access to these components in your tests if you select JavaFX as your AUT Toolkit.
+  		The JavaFX toolkit contains components which are specific to JavaFX applications. All the JavaFX 
+  		components are also concrete components and can be found in the section on concrete components.
   	</para>
   </section>
   <section>
@@ -82,8 +83,7 @@
   	<title>Swing Toolkit</title>
   	<para>
   		The Swing toolkit contains components that can be used on Swing applications. All the Swing 
-  		components are also concrete components and can be found in the section on concrete 
-  		components.
+  		components are also concrete components and can be found in the section on concrete components.
   	</para>
   </section>
   <section>

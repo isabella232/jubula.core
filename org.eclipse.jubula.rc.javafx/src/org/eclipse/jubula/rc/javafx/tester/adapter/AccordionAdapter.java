@@ -18,7 +18,7 @@ import javafx.scene.control.TitledPane;
 
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabbedComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
 
 /**
  * Adapter for a {@link Accordion}.

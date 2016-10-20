@@ -293,11 +293,23 @@
 		<componentClass name="org.eclipse.swt.widgets.Table" />
 	</toolkitComponent>
 	
-	<toolkitComponent type="org.eclipse.swt.widgets.Tree" observable="false">
+	<toolkitComponent type="org.eclipse.swt.widgets.Tree" visible="false">
 		<realizes>guidancer.concrete.Tree</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
-		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" since="4.1">
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.TreeTable" visible="false">
+		<realizes>guidancer.concrete.TreeTable</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Tree" />
+	</toolkitComponent>
+	
+	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
+		<realizes>org.eclipse.swt.widgets.Tree</realizes>
+		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
+		<componentClass name="org.eclipse.swt.widgets.Tree" />
+		<action name="CompSystem.VerifyCheckboxOfSelectedEntry">
 			<method>rcVerifySelectedCheckbox</method>
 			<param name="CompSystem.Checked"
                    descriptionKey="CompSystem.Checked.descr" >
@@ -448,73 +460,31 @@
                 <defaultValue>0</defaultValue>
             </param>
 		</action>
-        <action name="CompSystem.CheckPropertyAtMousePosition" since="4.1">
-            <method>rcCheckPropertyAtMousePosition</method>
-            <param name="CompSystem.PropertyName"
-                   descriptionKey="CompSystem.PropertyName.descr" >
-                <type>java.lang.String</type>
-            </param>
-            <param name="CompSystem.PropertyValue"
-                   descriptionKey="CompSystem.PropertyValue.descr" >
-                <type>java.lang.String</type>
-            </param>
-            <param name="CompSystem.Operator"
-                   descriptionKey="CompSystem.Operator.descr" >
-                <type>java.lang.String</type>
-                <defaultValue>equals</defaultValue>
-                <valueSet>
-                    <element name="CompSystem.Equals" value="equals"/>
-                    <element name="CompSystem.NotEquals" value="not equals"/>
-                    <element name="CompSystem.MatchesRegExp" value="matches"/>
-                    <element name="CompSystem.SimpleMatch" value="simple match"/>
-                </valueSet>
-            </param>
-            <param name="CompSystem.Timeout"
-                   descriptionKey="CompSystem.Timeout.descr" >
-                <type>java.lang.Integer</type>
-                <defaultValue>0</defaultValue>
-            </param>
-        </action>  
 	</toolkitComponent>
 	
-	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
-		<realizes>org.eclipse.swt.widgets.Tree</realizes>
+	<toolkitComponent type="org.eclipse.swt.widgets.SwtTreeTable">
+		<realizes>org.eclipse.swt.widgets.TreeTable</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
-		<action name="CompSystem.CheckExistenceOfColumn" since="4.1">
-            <method>rcCheckExistenceOfColumn</method>
-            <param name="CompSystem.Column"
-                   descriptionKey="CompSystem.Column.descr" >
-                <type>java.lang.String</type>
-            </param>
-            <param name="CompSystem.ColumnOperator"
-                   descriptionKey="CompSystem.ColumnOperator.descr" >
-                <type>java.lang.String</type>
-                <defaultValue>equals</defaultValue>
-                <valueSet>
-                    <element name="CompSystem.Equals" value="equals"/>
-                    <element name="CompSystem.NotEquals" value="not equals"/>
-                    <element name="CompSystem.MatchesRegExp" value="matches"/>
-                    <element name="CompSystem.SimpleMatch" value="simple match"/>
-                </valueSet>
-            </param>
-            <param name="CompSystem.Exists"
-                   descriptionKey="CompSystem.Exists.descr" >
-                <type>java.lang.Boolean</type>
-                <defaultValue>true</defaultValue>
-                <valueSet>
-                    <element name="CompSystem.True" value="true"/>
-                    <element name="CompSystem.False" value="false"/>
-                </valueSet>
-            </param>
-            <param name="CompSystem.Timeout"
+		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" since="4.1">
+			<method>rcVerifySelectedCheckbox</method>
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >
                 <type>java.lang.Integer</type>
                 <defaultValue>0</defaultValue>
             </param>
-        </action>
-		<action name="CompSystem.SelectByTextPathAtColumn">
-			<method>rcSelect</method>
+		</action>
+		<action name="CompSystem.ToggleCheckboxByTextpath">
+			<method>rcToggleCheckbox</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
@@ -544,29 +514,9 @@
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
 			</param>
-			<param name="CompSystem.ClickCount"
-                   descriptionKey="CompSystem.ClickCount.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-			</param>	
-			<param name="CompSystem.Column"
-                   descriptionKey="CompSystem.Column.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-			</param>
-			<param name="CompSystem.MouseButton"
-                   descriptionKey="CompSystem.MouseButton.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-				<valueSet>
-					<element name="CompSystem.MouseButtonLeft" value="1"/>
-					<element name="CompSystem.MouseButtonMiddle" value="2"/>
-					<element name="CompSystem.MouseButtonRight" value="3"/>
-				</valueSet>
-			</param>
 		</action>
-		<action name="CompSystem.SelectByIndexPathAtColumn">
-			<method>rcSelectByIndices</method>
+		<action name="CompSystem.ToggleCheckboxByIndexpath">
+			<method>rcToggleCheckboxByIndices</method>
 			<param name="CompSystem.PathType"
                    descriptionKey="CompSystem.PathType.descr" >
 				<type>java.lang.String</type>
@@ -585,31 +535,25 @@
                    descriptionKey="CompSystem.IndexPath.descr" >
 				<type>java.lang.String</type>
 			</param>
-			<param name="CompSystem.ClickCount"
-                   descriptionKey="CompSystem.ClickCount.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-			</param>
-			<param name="CompSystem.Column"
-                   descriptionKey="CompSystem.Column.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
-			</param>
-			<param name="CompSystem.MouseButton"
-                   descriptionKey="CompSystem.MouseButton.descr" >
-				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
+		</action>
+		<action name="CompSystem.VerifyCheckboxOfNodeByTextpath" since="4.1">
+			<method>rcVerifyCheckbox</method>
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
 				<valueSet>
-					<element name="CompSystem.MouseButtonLeft" value="1"/>
-					<element name="CompSystem.MouseButtonMiddle" value="2"/>
-					<element name="CompSystem.MouseButtonRight" value="3"/>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
 				</valueSet>
 			</param>
-		</action>
-		<action name="CompSystem.VerifySelectedValueAtColumn" since="4.1">
-			<method>rcVerifySelectedValue</method>
-			<param name="CompSystem.Text"
-                   descriptionKey="CompSystem.Text.descr" >
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
 				<type>java.lang.String</type>
 			</param>
 			<param name="CompSystem.Operator"
@@ -622,11 +566,50 @@
 					<element name="CompSystem.MatchesRegExp" value="matches"/>
 					<element name="CompSystem.SimpleMatch" value="simple match"/>
 				</valueSet>
-			</param>	
-			<param name="CompSystem.Column"
-                   descriptionKey="CompSystem.Column.descr" >
+			</param>
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+		</action>
+		<action name="CompSystem.VerifyCheckboxOfNodeByIndexpath" since="4.1">
+			<method>rcVerifyCheckboxByIndices</method>
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
 				<type>java.lang.Integer</type>
-				<defaultValue>1</defaultValue>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Checked"
+                   descriptionKey="CompSystem.Checked.descr" >
+				<type>java.lang.Boolean</type>
+				<defaultValue>true</defaultValue>
+				<valueSet>
+					<element name="CompSystem.True" value="true"/>
+					<element name="CompSystem.False" value="false"/>
+				</valueSet>
 			</param>
             <param name="CompSystem.Timeout"
                    descriptionKey="CompSystem.Timeout.descr" >

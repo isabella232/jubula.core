@@ -31,7 +31,7 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.javafx.components.ParentGetter;
-import org.eclipse.jubula.rc.javafx.util.JavaFXEventConverter;
+import org.eclipse.jubula.rc.javafx.tester.util.JavaFXEventConverter;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 

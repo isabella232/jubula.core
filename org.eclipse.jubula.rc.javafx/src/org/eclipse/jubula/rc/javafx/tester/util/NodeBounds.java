@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.javafx.util;
+package org.eclipse.jubula.rc.javafx.tester.util;
 
 import java.awt.Rectangle;
 

@@ -36,6 +36,7 @@ import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotFactoryConfig;
 import org.eclipse.jubula.rc.swt.listener.ComponentHandler;
 import org.eclipse.jubula.rc.swt.listener.FocusTracker;
+import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener.Condition;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;

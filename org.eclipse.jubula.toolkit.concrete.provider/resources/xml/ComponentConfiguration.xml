@@ -3229,6 +3229,960 @@
             </param>
         </action>
 	</concreteComponent>
+	
+	<concreteComponent type="guidancer.concrete.TreeTable">
+		<realizes>guidancer.concrete.Tree</realizes>
+		<action name="CompSystem.CheckExistenceOfColumn" since="4.1">
+            <method>rcCheckExistenceOfColumn</method>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Exists"
+                   descriptionKey="CompSystem.Exists.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>true</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+		<action name="CompSystem.SelectByTextPathAtColumn" deprecated="false">
+			<method>rcSelect</method>
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>	
+			<param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.SelectByIndexPathAtColumn" deprecated="false">
+			<method>rcSelectByIndices</method>
+			<param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>absolute</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Absolute" value="absolute"/>
+					<element name="CompSystem.Relative" value="relative"/>
+				</valueSet>
+			</param>
+			<param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>0</defaultValue>
+			</param>
+			<param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+				<valueSet>
+					<element name="CompSystem.MouseButtonLeft" value="1"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2"/>
+					<element name="CompSystem.MouseButtonRight" value="3"/>
+				</valueSet>
+			</param>
+		</action>
+		<action name="CompSystem.VerifySelectedValueAtColumn" deprecated="false">
+			<method>rcVerifySelectedValue</method>
+			<param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+				<type>java.lang.String</type>
+			</param>
+			<param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+				<type>java.lang.String</type>
+				<defaultValue>equals</defaultValue>
+				<valueSet>
+					<element name="CompSystem.Equals" value="equals"/>
+					<element name="CompSystem.NotEquals" value="not equals"/>
+					<element name="CompSystem.MatchesRegExp" value="matches"/>
+					<element name="CompSystem.SimpleMatch" value="simple match"/>
+				</valueSet>
+			</param>	
+			<param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+				<type>java.lang.Integer</type>
+				<defaultValue>1</defaultValue>
+			</param>
+			<param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+		</action>
+				<action name="CompSystem.SelectByTextPathAtColumnPath" since="4.1">
+            <method>rcSelectColumnPath</method>
+            <param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>absolute</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Absolute" value="absolute"/>
+                    <element name="CompSystem.Relative" value="relative"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+            <param name="CompSystem.TextPath"
+                   descriptionKey="CompSystem.TextPath.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+            </param>    
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.MouseButtonLeft" value="1"/>
+                    <element name="CompSystem.MouseButtonMiddle" value="2"/>
+                    <element name="CompSystem.MouseButtonRight" value="3"/>
+                </valueSet>
+            </param>
+        </action>
+		<action name="CompSystem.SelectByIndexPathAtColumnPath" since="4.1">
+            <method>rcSelectByColumnPath</method>
+            <param name="CompSystem.PathType"
+                   descriptionKey="CompSystem.PathType.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>absolute</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Absolute" value="absolute"/>
+                    <element name="CompSystem.Relative" value="relative"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.PreAscend"
+                   descriptionKey="CompSystem.PreAscend.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+            <param name="CompSystem.IndexPath"
+                   descriptionKey="CompSystem.IndexPath.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.MouseButtonLeft" value="1"/>
+                    <element name="CompSystem.MouseButtonMiddle" value="2"/>
+                    <element name="CompSystem.MouseButtonRight" value="3"/>
+                </valueSet>
+            </param>
+        </action>
+        <action name="CompSystem.VerifySelectedValueAtColumnPath" since="4.1">
+            <method>rcVerifySelectedValueAtPath</method>
+            <param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>    
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <!-- JavaFX only, must be implemented for SWT in the future! -->
+        <action name="CompSystem.StorePropertyValueAtMousePosition" descriptionKey="CompSystem.StorePropertyValueAtMousePosition.descr" since="4.1">
+            <method>rcStorePropertyValueAtMousePosition</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>
+        </action>
+        <action name="CompSystem.VerifyTreeTableCellTextAtMousePosition" descriptionKey="CompSystem.VerifyTreeTableCellTextAtMousePosition.descr" since="4.1">
+            <method>rcVerifyCellTextAtMousePosition</method>
+            <param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Operator"
+                   descriptionKey="CompSystem.Operator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+             <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.ReadTableCellValueAtMousePosition" descriptionKey="CompSystem.ReadTableCellValueAtMousePosition.descr" since="4.1">
+            <method>rcReadValueAtMousePosition</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand> 
+        </action>
+        <action name="CompSystem.ReadTableCellValueAtMousePositionAPI" 
+                descriptionKey="CompSystem.ReadTableCellValueAtMousePosition.descr" since="4.1">
+            <method>rcReadValueAtMousePosition</method>
+        </action>
+        <action name="CompSystem.VerifyTableCellEditable" since="4.1">
+            <method>rcVerifyEditable</method>
+            <param name="CompSystem.IsEditable"
+                   descriptionKey="CompSystem.IsEditable.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>false</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.VerifyTableCellEditableMousePosition" descriptionKey="CompSystem.VerifyTableCellEditableMousePosition.descr" since="4.1">
+            <method>rcVerifyEditableAtMousePosition</method>
+            <param name="CompSystem.IsEditable"
+                   descriptionKey="CompSystem.IsEditable.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>false</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.VerifySelectedTableCellEditable" descriptionKey="CompSystem.VerifySelectedTableCellEditable.descr" since="4.1">
+            <method>rcVerifySelectedEditable</method>
+            <param name="CompSystem.IsEditable"
+                   descriptionKey="CompSystem.IsEditable.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>false</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.VerifyValueInRow" since="4.1">
+            <method>rcVerifyValueInRow</method>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.CellValue"
+                   descriptionKey="CompSystem.CellValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ValueOperator"
+                   descriptionKey="CompSystem.ValueOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.SearchType"
+                   descriptionKey="CompSystem.SearchType.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>absolute</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Absolute" value="absolute"/>
+                    <element name="CompSystem.Relative" value="relative"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Exists"
+                   descriptionKey="CompSystem.Exists.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>true</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.VerifyValueInColumn" since="4.1">
+            <method>rcVerifyValueInColumn</method>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.CellValue"
+                   descriptionKey="CompSystem.CellValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ValueOperator"
+                   descriptionKey="CompSystem.ValueOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.SearchType"
+                   descriptionKey="CompSystem.SearchType.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>absolute</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Absolute" value="absolute"/>
+                    <element name="CompSystem.Relative" value="relative"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Exists"
+                   descriptionKey="CompSystem.Exists.descr" >
+                <type>java.lang.Boolean</type>
+                <defaultValue>true</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.True" value="true"/>
+                    <element name="CompSystem.False" value="false"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.VerifyTableCellText" since="4.1">
+            <method>rcVerifyText</method>
+            <param name="CompSystem.Text"
+                   descriptionKey="CompSystem.Text.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.TextOperator"
+                   descriptionKey="CompSystem.TextOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Timeout"
+                   descriptionKey="CompSystem.Timeout.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>0</defaultValue>
+            </param>
+        </action>
+        <action name="CompSystem.ReadTableCellValue" since="4.1">
+            <method>rcReadValue</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand> 
+        </action>
+        <action name="CompSystem.ReadTableCellValueAPI"
+                descriptionKey="CompSystem.ReadTableCellValue.descr" since="4.1">
+            <method>rcReadValue</method>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+        </action>
+        <action name="CompSystem.SelectCell" since="4.1">
+            <method>rcSelectCell</method>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>50</defaultValue>
+            </param>
+            <param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>percent</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Percent" value="percent"/>
+                    <element name="CompSystem.Pixel" value="pixel"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>50</defaultValue>
+            </param>
+            <param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>percent</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Percent" value="percent"/>
+                    <element name="CompSystem.Pixel" value="pixel"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.ExtendSelection"
+                   descriptionKey="CompSystem.ExtendSelection.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>no</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Yes" value="yes"/>
+                    <element name="CompSystem.No" value="no"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.MouseButtonLeft" value="1"/>
+                    <element name="CompSystem.MouseButtonMiddle" value="2"/>
+                    <element name="CompSystem.MouseButtonRight" value="3"/>
+                </valueSet>
+            </param>
+        </action>
+        <action name="CompSystem.SelectRowByValue" since="4.1">
+            <method>rcSelectRowByValue</method>
+            <param name="CompSystem.Column"
+                   descriptionKey="CompSystem.Column.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ColumnOperator"
+                   descriptionKey="CompSystem.ColumnOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.CellValue"
+                   descriptionKey="CompSystem.CellValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ValueOperator"
+                   descriptionKey="CompSystem.ValueOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>        
+            <param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.ExtendSelection"
+                   descriptionKey="CompSystem.ExtendSelection.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>no</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Yes" value="yes"/>
+                    <element name="CompSystem.No" value="no"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.SearchType"
+                   descriptionKey="CompSystem.SearchType.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>absolute</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Absolute" value="absolute"/>
+                    <element name="CompSystem.Relative" value="relative"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.MouseButtonLeft" value="1"/>
+                    <element name="CompSystem.MouseButtonMiddle" value="2"/>
+                    <element name="CompSystem.MouseButtonRight" value="3"/>
+                </valueSet>
+            </param>
+        </action>
+        <action name="CompSystem.SelectCellByColValue" since="4.1">
+            <method>rcSelectCellByColValue</method>
+            <param name="CompSystem.Row"
+                   descriptionKey="CompSystem.Row.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.RowOperator"
+                   descriptionKey="CompSystem.RowOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.CellValue"
+                   descriptionKey="CompSystem.CellValue.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.ValueOperator"
+                   descriptionKey="CompSystem.ValueOperator.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>equals</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Equals" value="equals"/>
+                    <element name="CompSystem.NotEquals" value="not equals"/>
+                    <element name="CompSystem.MatchesRegExp" value="matches"/>
+                    <element name="CompSystem.SimpleMatch" value="simple match"/>
+                </valueSet>
+            </param>        
+            <param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.ExtendSelection"
+                   descriptionKey="CompSystem.ExtendSelection.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>no</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Yes" value="yes"/>
+                    <element name="CompSystem.No" value="no"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.SearchType"
+                   descriptionKey="CompSystem.SearchType.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>absolute</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Absolute" value="absolute"/>
+                    <element name="CompSystem.Relative" value="relative"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.MouseButton"
+                   descriptionKey="CompSystem.MouseButton.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.MouseButtonLeft" value="1"/>
+                    <element name="CompSystem.MouseButtonMiddle" value="2"/>
+                    <element name="CompSystem.MouseButtonRight" value="3"/>
+                </valueSet>
+            </param>
+        </action>
+        <action name="CompSystem.Move" since="4.1">
+            <method>rcMove</method>
+            <param name="CompSystem.Direction"
+                   descriptionKey="CompSystem.Direction.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>right</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Up" value="up"/>
+                    <element name="CompSystem.Down" value="down"/>
+                    <element name="CompSystem.Right" value="right"/>
+                    <element name="CompSystem.Left" value="left"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.CellCount"
+                   descriptionKey="CompSystem.CellCount.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.ClickCount"
+                   descriptionKey="CompSystem.ClickCount.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>1</defaultValue>
+            </param>
+            <param name="CompSystem.XPos"
+                   descriptionKey="CompSystem.XPos.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>50</defaultValue>
+            </param>
+            <param name="CompSystem.XUnits"
+                   descriptionKey="CompSystem.XUnits.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>percent</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Percent" value="percent"/>
+                    <element name="CompSystem.Pixel" value="pixel"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.YPos"
+                   descriptionKey="CompSystem.YPos.descr" >
+                <type>java.lang.Integer</type>
+                <defaultValue>50</defaultValue>
+            </param>
+            <param name="CompSystem.YUnits"
+                   descriptionKey="CompSystem.YUnits.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>percent</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Percent" value="percent"/>
+                    <element name="CompSystem.Pixel" value="pixel"/>
+                </valueSet>
+            </param>
+            <param name="CompSystem.ExtendSelection"
+                   descriptionKey="CompSystem.ExtendSelection.descr" >
+                <type>java.lang.String</type>
+                <defaultValue>no</defaultValue>
+                <valueSet>
+                    <element name="CompSystem.Yes" value="yes"/>
+                    <element name="CompSystem.No" value="no"/>
+                </valueSet>
+            </param>
+        </action>
+	</concreteComponent>
 
 	<concreteComponent type="guidancer.concrete.Tooltip" hasDefaultMapping="true" since="4.0">
         <action name="CompSystem.CheckTooltipText" since="4.1">

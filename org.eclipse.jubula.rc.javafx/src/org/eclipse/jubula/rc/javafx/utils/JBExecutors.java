@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.javafx.util.concurrent;
+package org.eclipse.jubula.rc.javafx.utils;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

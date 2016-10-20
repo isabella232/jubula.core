@@ -28,7 +28,7 @@ import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.rc.swt.driver.RobotFactorySwtImpl;
 import org.eclipse.jubula.rc.swt.driver.SelectionSwtEventMatcher;
 import org.eclipse.jubula.rc.swt.driver.ShowSwtEventMatcher;
-import org.eclipse.jubula.rc.swt.tester.CAPUtil;
+import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener.Condition;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;

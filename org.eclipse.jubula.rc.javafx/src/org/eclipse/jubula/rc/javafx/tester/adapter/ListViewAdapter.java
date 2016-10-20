@@ -25,9 +25,9 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IListComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
-import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -312,7 +312,7 @@ public class ListViewAdapter<T extends ListView<?>> extends
                             for (ListCell<?> cell : lCells) {
                                 if (cell.getIndex() == i
                                         && cell.getListView() == listView
-                                        && getCellText(cell) == value) {
+                                        && getCellText(cell).equals(value)) {
                                     return cell;
                                 }
                             }

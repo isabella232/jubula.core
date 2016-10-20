@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.swt.tester.adapter;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -19,11 +20,10 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
 import org.eclipse.jubula.rc.common.tester.WidgetTester;
-import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
-import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.MenuTester;
 import org.eclipse.jubula.rc.swt.tester.adapter.ControlAdapter.PopupShownCondition;
+import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.util.EventListener;
 import org.eclipse.jubula.rc.swt.tester.util.SimulatedTooltip;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
@@ -62,7 +62,7 @@ public class WidgetAdapter extends AbstractComponentAdapter {
      */
     public void rcDrop(final int xPos, final String xUnits, final int yPos, 
             final String yUnits, int delayBeforeDrop) {
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         final IRobot robot = getRobot();
         final String modifier = dndHelper.getModifier();
@@ -79,7 +79,7 @@ public class WidgetAdapter extends AbstractComponentAdapter {
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             mouseButton);
 
-                    CAPUtil.shakeMouse();
+                    robot.shakeMouse();
                     
                     // drop
                     clickDirect(0, mouseButton, xPos, xUnits, yPos, yUnits);
@@ -101,7 +101,7 @@ public class WidgetAdapter extends AbstractComponentAdapter {
             String xUnits, int yPos, String yUnits) {
         // Only store the Drag-Information. Otherwise the GUI-Eventqueue
         // blocks after performed Drag!
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);

@@ -31,7 +31,6 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
  * @author BREDEX GmbH
  */
 public class JTreeTester extends AbstractTreeTester {
-
    
     /**
      * {@inheritDoc}
@@ -112,6 +111,7 @@ public class JTreeTester extends AbstractTreeTester {
                     }
                 });
     }
+    
     /**
      * 
      * @return the tree node at the current mouse position.
@@ -123,18 +123,19 @@ public class JTreeTester extends AbstractTreeTester {
             
             public Object run() throws StepExecutionException {
                 Point mousePosition = getRobot().getCurrentMousePosition();
-                Point treeLocation = getTreeComponent().getLocationOnScreen();
+                Point treeLocation = ((JTree) getRealComponent()).
+                        getLocationOnScreen();
                 Point relativePos = new Point(
                         mousePosition.x - treeLocation.x,
                         mousePosition.y - treeLocation.y);
 
                 int rowAtMousePosition = 
-                    getTreeComponent().
+                    ((JTree) getRealComponent()).
                         getRowForLocation(relativePos.x, relativePos.y);
                 
                 if (rowAtMousePosition != -1) {
                     TreePath treePath = 
-                        getTreeComponent().
+                        ((JTree) getRealComponent()).
                             getPathForLocation(relativePos.x, relativePos.y);
                     
                     if (treePath != null 
@@ -151,11 +152,5 @@ public class JTreeTester extends AbstractTreeTester {
         });
 
     }
-    /**
-     * 
-     * @return The JTree
-     */
-    private JTree getTreeComponent() {
-        return (JTree) getComponent().getRealComponent();
-    }
+
 }

@@ -16,40 +16,31 @@ import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableView;
-
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
-import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
-import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeTraverser;
-import org.eclipse.jubula.rc.common.implclasses.tree.ExpandCollapseTreeNodeOperation;
-import org.eclipse.jubula.rc.common.implclasses.tree.INodePath;
-import org.eclipse.jubula.rc.common.implclasses.tree.PathBasedTraverser;
-import org.eclipse.jubula.rc.common.implclasses.tree.SelectTreeNodeOperation;
-import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
-import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperationConstraint;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.AbstractTreeTableTester;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.tester.adapter.TreeTableOperationContext;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.TreeTableOperationContext;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
-
 import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+import javafx.event.EventHandler;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.ScrollToEvent;
+import javafx.scene.control.TreeTableCell;
+import javafx.scene.control.TreeTableView;
 
 /**
  * Tester Class for the <code>TreeTableView</code>. If you are looking for more
@@ -58,11 +49,62 @@ import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeA
  * @author BREDEX GmbH
  * @created 23.06.2014
  */
-public class TreeTableViewTester extends TreeViewTester {
+public class TreeTableViewTester extends AbstractTreeTableTester {
 
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
             TreeTableViewTester.class);
+
+    /**
+     * EventHandler to consume scroll events during DnD
+     */
+    private EventHandler<ScrollToEvent> m_scrollConsumer = 
+            new EventHandler<ScrollToEvent>() {
+        @Override
+        public void handle(ScrollToEvent event) {
+            event.consume();
+        }
+    };
+
+    @Override
+    public void rcDragByTextPath(int mouseButton, String modifier,
+        String pathType, int preAscend, String treeTextPath, String operator) {
+        //Add event filter to prevent scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        super.rcDragByTextPath(mouseButton, modifier, pathType, preAscend,
+                treeTextPath, operator);
+    }
+
+    @Override
+    public void rcDropByTextPath(String pathType, int preAscend,
+            String treeTextPath, String operator, int delayBeforeDrop) {
+        super.rcDropByTextPath(pathType, preAscend, treeTextPath, operator,
+                delayBeforeDrop);
+        //Remove event filter after scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+    }
+
+    @Override
+    public void rcDragByIndexPath(int mouseButton, String modifier,
+            String pathType, int preAscend, String treeIndexPath) {
+        // Add event filter to prevent scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        super.rcDragByIndexPath(mouseButton, modifier, pathType, preAscend,
+                treeIndexPath);
+    }
+
+    @Override
+    public void rcDropByIndexPath(String pathType, int preAscend,
+            String treeIndexPath, int delayBeforeDrop) {
+        super.rcDropByIndexPath(pathType, preAscend, treeIndexPath,
+                delayBeforeDrop);
+        //Remove event filter after scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+    }
 
     @Override
     protected Object getNodeAtMousePosition() throws StepExecutionException {
@@ -116,236 +158,6 @@ public class TreeTableViewTester extends TreeViewTester {
                 || child.getTreeTableRow().getTreeItem().getParent()
                     .equals(parent.getTreeTableRow().getTreeItem()));
     }
-    
-    /**
-     * Selects the last node of the path given by <code>indexPath</code>
-     * at column <code>column</code>.
-     * 
-     * @param pathType whether the path is relative or absolute
-     * @param preAscend
-     *            Relative traversals will start this many parent nodes 
-     *            above the current node. Absolute traversals ignore this 
-     *            parameter.
-     * @param indexPath the index path
-     * @param clickCount the number of times to click
-     * @param column the column of the item to select
-     * @param button what mouse button should be used
-     * @throws StepExecutionException if <code>indexPath</code> is not a valid
-     * path
-     */
-    public void rcSelectByIndices(String pathType, int preAscend, 
-                                  String indexPath, int clickCount, int column,
-                                  int button)
-        throws StepExecutionException {
-        final int implCol = IndexConverter.toImplementationIndex(column);
-        checkColumnIndex(implCol);
-
-        selectByPath(pathType, preAscend, 
-            createIndexNodePath(splitIndexTreePath(indexPath)),
-                ClickOptions.create()
-                    .setClickCount(clickCount)
-                    .setMouseButton(button), implCol);
-    }
-    
-    /**
-     * Selects the last node of the path given by <code>indexPath</code>
-     * at the column given by the column path
-     * 
-     * @param pathType whether the path is relative or absolute
-     * @param preAscend
-     *            Relative traversals will start this many parent nodes 
-     *            above the current node. Absolute traversals ignore this 
-     *            parameter.
-     * @param indexPath the index path
-     * @param clickCount the number of times to click
-     * @param column the column or column path of the item to select
-     * @param operator for the column path
-     * @param button what mouse button should be used
-     * @throws StepExecutionException if <code>indexPath</code> is not a valid
-     * path
-     */
-    public void rcSelectByColumnPath(String pathType, int preAscend,
-            String indexPath, int clickCount, String column, String operator,
-            int button)
-        throws StepExecutionException {
-        final int implCol = getContext().getColumnFromString(
-                column, operator, true);
-        checkColumnIndex(implCol);
-
-        selectByPath(pathType, preAscend, 
-            createIndexNodePath(splitIndexTreePath(indexPath)),
-                ClickOptions.create()
-                    .setClickCount(clickCount)
-                    .setMouseButton(button), implCol);
-    }
-    
-    /**
-     * Selects the item at the end of the <code>treepath</code> at column 
-     * <code>column</code>.
-     * 
-     * @param pathType whether the path is relative or absolute
-     * @param preAscend
-     *            Relative traversals will start this many parent nodes 
-     *            above the current node. Absolute traversals ignore this 
-     *            parameter.
-     * @param treePath The tree path.
-     * @param operator
-     *  If regular expressions are used to match the tree path
-     * @param clickCount the click count
-     * @param column the column of the item to select
-     * @param button what mouse button should be used
-     * @throws StepExecutionException If the tree path is invalid, if the
-     * double-click to expand the node fails, or if the selection is invalid.
-     */
-    public void rcSelect(String pathType, int preAscend, String treePath, 
-                         String operator, int clickCount, int column,
-                         int button)
-        throws StepExecutionException {
-        
-        final int implCol = IndexConverter.toImplementationIndex(column);
-        checkColumnIndex(implCol);
-        selectByPath(pathType, preAscend, 
-            createStringNodePath(splitTextTreePath(treePath), operator), 
-            ClickOptions.create()
-                .setClickCount(clickCount)
-                .setMouseButton(button), implCol);
-
-    }
-    
-    /**
-     * Selects the item at the end of the <code>treepath</code> at column 
-     * <code>column</code>.
-     * 
-     * @param pathType whether the path is relative or absolute
-     * @param preAscend
-     *            Relative traversals will start this many parent nodes 
-     *            above the current node. Absolute traversals ignore this 
-     *            parameter.
-     * @param treePath The tree path.
-     * @param operator
-     *  If regular expressions are used to match the tree path
-     * @param clickCount the click count
-     * @param column the column or column path of the item to select
-     * @param colOperator the operator for the column path
-     * @param button what mouse button should be used
-     * @throws StepExecutionException If the tree path is invalid, if the
-     * double-click to expand the node fails, or if the selection is invalid.
-     */
-    public void rcSelectColumnPath(String pathType, int preAscend,
-            String treePath, String operator, int clickCount, String column,
-            String colOperator, int button)
-        throws StepExecutionException {
-        
-        final int implCol = getContext()
-                .getColumnFromString(column, colOperator, true);
-        checkColumnIndex(implCol);
-        
-        selectByPath(pathType, preAscend, 
-            createStringNodePath(splitTextTreePath(treePath), operator), 
-            ClickOptions.create()
-                .setClickCount(clickCount)
-                .setMouseButton(button), implCol);
-
-    }
-    
-    /**
-     * @param pathType pathType
-     * @param preAscend
-     *            Relative traversals will start this many parent nodes 
-     *            above the current node. Absolute traversals ignore this 
-     *            parameter.
-     * @param objectPath objectPath
-     * @param co the click options to use
-     * @param column the column
-     */
-    private void selectByPath(String pathType, int preAscend, 
-            INodePath objectPath, ClickOptions co, int column) {
-
-        TreeNodeOperation expOp = 
-            new ExpandCollapseTreeNodeOperation(false);
-        TreeNodeOperation selectOp = 
-            new SelectTreeNodeOperation(co);
-        INodePath subPath = objectPath.subPath(0, objectPath.getLength() - 1);
-
-        traverseTreeByPath(subPath, pathType, preAscend, expOp);
-        traverseLastElementByPath(
-            objectPath, pathType, preAscend, selectOp, column);
-            
-    }
-    
-    /**
-     * Verifies if the selected node underneath <code>treePath</code> at column
-     * <code>column</code> has a rendered text which is equal to 
-     * <code>selection</code>.
-     * 
-     * @param pattern the pattern
-     * @param operator
-     *            The operator to use when comparing the expected and 
-     *            actual values.
-     * @param column
-     *            The column containing the text to verify
-     * @param timeout the maximum amount of time to wait for the check whether
-     *          the passed value is selected to be performed
-     * @throws StepExecutionException If there is no tree node selected, the tree path contains no
-     *             selection or the verification fails
-     */
-    public void rcVerifySelectedValue(final String pattern,
-            final String operator, final int column, int timeout)
-                    throws StepExecutionException {
-        invokeAndWait("rcVerifySelectedValue", timeout, new Runnable() { //$NON-NLS-1$
-            @Override
-            public void run() {
-                final int implCol = IndexConverter
-                        .toImplementationIndex(column);
-                checkColumnIndex(implCol);
-                
-                TreeTableOperationContext context = getContext();
-                context.setColumn(implCol);
-                
-                String text = context.getRenderedTextOfColumn(
-                        context.getSelectedNode());
-                
-                Verifier.match(text, pattern, operator);
-            }
-        });
-    }
-    
-    /**
-     * Verifies if the selected node underneath <code>treePath</code> at column
-     * <code>column</code> has a rendered text which is equal to 
-     * <code>selection</code>.
-     * 
-     * @param pattern the pattern
-     * @param operator
-     *            The operator to use when comparing the expected and 
-     *            actual values.
-     * @param column the column or column path of the item to select
-     * @param colOperator the operator for the column path
-     * @param timeout the maximum amount of time to wait for the check to be
-     *          performed
-     * @throws StepExecutionException If there is no tree node selected, the tree path contains no
-     *             selection or the verification fails
-     */
-    public void rcVerifySelectedValueAtPath(final String pattern,
-            final String operator, final String column,
-            final String colOperator, int timeout) 
-                    throws StepExecutionException {
-        invokeAndWait("rcVerifySelectedValueAtPath", timeout, new Runnable() { //$NON-NLS-1$
-            @Override
-            public void run() {
-                TreeTableOperationContext context = getContext();
-                final int implCol = context.getColumnFromString(
-                        column, colOperator, true);
-                checkColumnIndex(implCol);
-                context.setColumn(implCol);
-                
-                String text = context
-                        .getRenderedTextOfColumn(context.getSelectedNode());
-                
-                Verifier.match(text, pattern, operator);
-            }
-        });
-    }
 
     /**
      * @return the tree table operation context
@@ -354,61 +166,6 @@ public class TreeTableViewTester extends TreeViewTester {
         return new TreeTableOperationContext(
                 getEventThreadQueuer(), getRobot(),
                 (TreeTableView<?>) getRealComponent());
-    }
-    
-    /**
-     * Traverses the tree by searching for the nodes in the tree
-     * path entry and calling the given operation on the last element in the path.
-     * @param treePath The tree path.
-     * @param pathType For example, "relative" or "absolute".
-     * @param preAscend
-     *            Relative traversals will start this many parent nodes 
-     *            above the current node. Absolute traversals ignore this 
-     *            parameter.
-     * @param operation The tree node operation.
-     * @param column The target column for the operation.
-     * @throws StepExecutionException If the path traversal fails.
-     */
-    private void traverseLastElementByPath(INodePath treePath, 
-            String pathType, int preAscend, TreeNodeOperation operation,
-            int column) 
-        throws StepExecutionException {
-
-        Validate.notNull(treePath);
-        Validate.notNull(operation);
-
-        TreeTableOperationContext context = getContext();
-        context.setColumn(column);
-        TreeItem<?> startNode = (TreeItem<?>) getStartNode(pathType, preAscend,
-                context);
-
-        AbstractTreeNodeTraverser traverser = new PathBasedTraverser(
-                context, treePath, new TreeNodeOperationConstraint());
-        traverser.traversePath(operation, startNode);
-    }
-    
-    /**
-     * 
-     * @param index The 0-based column index to check.
-     * @throws StepExecutionException if the column index is invalid.
-     */
-    private void checkColumnIndex(final int index) 
-        throws StepExecutionException {
-        int numCol = getEventThreadQueuer().invokeAndWait(
-                "checkColumnIndex", //$NON-NLS-1$
-                new IRunnable<Integer>() {
-
-                    public Integer run() {
-                        return ((TreeTableView<?>) getRealComponent())
-                                .getVisibleLeafColumns().size();
-                    }
-                });
-        if (index < 0 || index >= numCol) {
-            throw new StepExecutionException("Invalid column: " //$NON-NLS-1$
-                + IndexConverter.toUserIndex(index), 
-                EventFactory.createActionError(
-                    TestErrorEvent.INVALID_INDEX));
-        }
     }
     
     /**
@@ -472,6 +229,7 @@ public class TreeTableViewTester extends TreeViewTester {
             }
         });
     }
+    
     /**
      * Verifies, whether value exists in row..
      *
@@ -611,17 +369,7 @@ public class TreeTableViewTester extends TreeViewTester {
         }
         return startingIndex;
     }
-    
-    /**
-     * Verifies the rendered text inside the passed cell.
-     * @param row The row of the cell.
-     * @param rowOperator The row header operator
-     * @param col The column of the cell.
-     * @param colOperator The column header operator
-     * @param text The cell text to verify.
-     * @param operator The operation used to verify
-     * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
-     */
+
     /**
      * Verifies the rendered text inside the passed cell.
      * @param row The row of the cell.
@@ -791,6 +539,7 @@ public class TreeTableViewTester extends TreeViewTester {
         return getContext().getPropteryValue(getNodeAtMousePosition(),
                 propertyName);
     }
+    
     /**
      * Selects a table cell in the given row and column via click in the middle of the cell.
      * @param row The row of the cell.
@@ -976,7 +725,6 @@ public class TreeTableViewTester extends TreeViewTester {
                         .setMouseButton(button));
     }
 
-    
     /**
      * Finds the first row which contains the value <code>value</code>
      * in column <code>col</code> and selects this row.

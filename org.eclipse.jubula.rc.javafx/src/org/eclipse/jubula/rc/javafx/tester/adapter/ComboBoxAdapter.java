@@ -21,7 +21,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 
 import com.sun.javafx.scene.control.skin.ComboBoxBaseSkin;
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;

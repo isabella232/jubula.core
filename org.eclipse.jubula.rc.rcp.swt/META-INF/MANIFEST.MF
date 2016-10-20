@@ -20,6 +20,6 @@ Export-Package: org.eclipse.jubula.rc.swt,
  org.eclipse.jubula.rc.swt.listener,
  org.eclipse.jubula.rc.swt.tester,
  org.eclipse.jubula.rc.swt.tester.adapter,
- org.eclipse.jubula.rc.swt.tester.tree,
+ org.eclipse.jubula.rc.swt.tester.util,
  org.eclipse.jubula.rc.swt.utils,
  org.eclipse.jubula.rc.rcp.swt.aut

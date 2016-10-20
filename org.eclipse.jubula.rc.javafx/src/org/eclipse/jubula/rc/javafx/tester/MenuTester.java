@@ -15,14 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.stage.WindowEvent;
-
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.listener.EventLock;
 import org.eclipse.jubula.rc.common.tester.AbstractMenuTester;
@@ -36,6 +28,14 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.MenuItemAdapter;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.stage.WindowEvent;
 
 /**
  * Toolkit specific commands for the <code>Menu</code> and <code>MenuBar</code>.

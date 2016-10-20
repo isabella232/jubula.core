@@ -31,10 +31,10 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
-import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.AbstractTraverser;
+import org.eclipse.jubula.rc.javafx.tester.util.GenericTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
@@ -77,7 +77,7 @@ public class TableTester extends AbstractTableTester {
             event.consume();
         }
     };
-
+    
     /*
      * (non-Javadoc)
      * 

@@ -17,8 +17,8 @@ import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 

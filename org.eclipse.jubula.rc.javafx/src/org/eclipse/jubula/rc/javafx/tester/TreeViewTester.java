@@ -16,15 +16,14 @@ import java.awt.Point;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
-import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -65,6 +64,46 @@ public class TreeViewTester extends AbstractTreeTester {
                     }
                 });
     }
+    
+    @Override
+    public void rcDragByTextPath(int mouseButton, String modifier,
+        String pathType, int preAscend, String treeTextPath, String operator) {
+        //Add event filter to prevent scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        super.rcDragByTextPath(mouseButton, modifier, pathType, preAscend,
+                treeTextPath, operator);
+    }
+
+    @Override
+    public void rcDropByTextPath(String pathType, int preAscend,
+            String treeTextPath, String operator, int delayBeforeDrop) {
+        super.rcDropByTextPath(pathType, preAscend, treeTextPath, operator,
+                delayBeforeDrop);
+        //Remove event filter after scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+    }
+
+    @Override
+    public void rcDragByIndexPath(int mouseButton, String modifier,
+            String pathType, int preAscend, String treeIndexPath) {
+        // Add event filter to prevent scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+        super.rcDragByIndexPath(mouseButton, modifier, pathType, preAscend,
+                treeIndexPath);
+    }
+
+    @Override
+    public void rcDropByIndexPath(String pathType, int preAscend,
+            String treeIndexPath, int delayBeforeDrop) {
+        super.rcDropByIndexPath(pathType, preAscend, treeIndexPath,
+                delayBeforeDrop);
+        //Remove event filter after scrolling
+        Node tree = ((Node) getRealComponent());
+        tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
+    }
 
     @Override
     protected Object getNodeAtMousePosition() throws StepExecutionException {
@@ -98,77 +137,4 @@ public class TreeViewTester extends AbstractTreeTester {
                 });
         return result;
     }
-
-    @Override
-    public void rcDragByTextPath(int mouseButton, String modifier,
-        String pathType, int preAscend, String treeTextPath, String operator) {
-
-        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
-        dndHelper.setModifier(modifier);
-        dndHelper.setMouseButton(mouseButton);
-        //Add event filter to prevent scrolling
-        Node tree = ((Node) getRealComponent());
-        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
-        rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
-                ValueSets.BinaryChoice.no.rcValue());
-        pressOrReleaseModifiers(modifier, true);
-        getRobot().mousePress(null, null, mouseButton);
-        dndHelper.setDragMode(true);
-    }
-
-    @Override
-    public void rcDropByTextPath(String pathType, int preAscend,
-            String treeTextPath, String operator, int delayBeforeDrop) {
-
-        try {
-            rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
-                    ValueSets.BinaryChoice.no.rcValue());
-            waitBeforeDrop(delayBeforeDrop); 
-        } finally {
-            final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
-            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
-            pressOrReleaseModifiers(dndHelper.getModifier(), false);
-            //Remove event filter after scrolling
-            Node tree = ((Node) getRealComponent());
-            tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
-            dndHelper.setDragMode(false);
-        }
-    }
-
-    @Override
-    public void rcDragByIndexPath(int mouseButton, String modifier,
-            String pathType, int preAscend, String treeIndexPath) {
-
-        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
-        dndHelper.setModifier(modifier);
-        dndHelper.setMouseButton(mouseButton);
-        // Add event filter to prevent scrolling
-        Node tree = ((Node) getRealComponent());
-        tree.addEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
-
-        rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
-                ValueSets.BinaryChoice.no.rcValue());
-        pressOrReleaseModifiers(modifier, true);
-        getRobot().mousePress(null, null, mouseButton);
-        dndHelper.setDragMode(true);
-    }
-
-    @Override
-    public void rcDropByIndexPath(String pathType, int preAscend,
-            String treeIndexPath, int delayBeforeDrop) {
-        try {
-            rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
-                    ValueSets.BinaryChoice.no.rcValue());
-            waitBeforeDrop(delayBeforeDrop);
-        } finally {
-            final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
-            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
-            pressOrReleaseModifiers(dndHelper.getModifier(), false);
-            //Remove event filter after scrolling
-            Node tree = ((Node) getRealComponent());
-            tree.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
-            dndHelper.setDragMode(false);
-        }
-    }
-
 }

@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.swt.tester.tree;
+package org.eclipse.jubula.rc.swt.tester.util;
 
 
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;

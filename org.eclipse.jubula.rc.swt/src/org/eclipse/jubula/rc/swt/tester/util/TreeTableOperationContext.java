@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.swt.tester.tree;
+package org.eclipse.jubula.rc.swt.tester.util;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -19,46 +19,267 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
+import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeTableOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.util.IndexConverter;
+import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
-import org.eclipse.jubula.rc.swt.tester.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
 
-
 /**
- * This context holds the tree, the tree model and supports access to the Robot.
- * It also implements some general operations on trees.
  * @author BREDEX GmbH
- * @created 09.08.2005
  */
-public class TreeOperationContext 
-    extends AbstractTreeOperationContext<Tree, TreeItem> {
+public class TreeTableOperationContext
+        extends AbstractTreeTableOperationContext<Tree, TreeItem> {
 
     /** The AUT Server logger. */
     private static AutServerLogger log = 
-        new AutServerLogger(TreeOperationContext.class);
+        new AutServerLogger(TreeTableOperationContext.class);
+    
+    /**
+     * Creates a new instance.
+     * 
+     * @param queuer
+     *            the queuer
+     * @param robot
+     *            the robot
+     * @param tree
+     *            the tree
+     * @param column
+     *            the column
+     */
+    public TreeTableOperationContext(
+        IEventThreadQueuer queuer, IRobot robot, Tree tree, int column) {
+        super(queuer, robot, tree, column);
+    }
 
     /**
      * Creates a new instance.
      * 
-     * @param queuer The queuer
-     * @param robot The Robot
-     * @param tree The tree
+     * @param queuer
+     *            the queuer
+     * @param robot
+     *            the robot
+     * @param tree
+     *            the tree
      */
-    public TreeOperationContext(IEventThreadQueuer queuer, IRobot robot,
-        Tree tree) {
-        
-        super(queuer, robot, tree);
+    public TreeTableOperationContext(
+        IEventThreadQueuer queuer, IRobot robot, Tree tree) {
+        super(queuer, robot, tree, 0);
     }
+    
+    @Override
+    public int getNumberOfColumns() {
+        return getTreeTable().getColumnCount();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void clickNode(final TreeItem node, ClickOptions clickOps) {
+        scrollNodeToVisible(node);
+        org.eclipse.swt.graphics.Rectangle visibleItemBounds = 
+            getQueuer().invokeAndWait(
+                "getVisibleNodeBounds " + node, new IRunnable<org.eclipse.swt.graphics.Rectangle>() { //$NON-NLS-1$
+                    public org.eclipse.swt.graphics.Rectangle run() {
+                        final Rectangle nodeBounds = 
+                            SwtPointUtil.toAwtRectangle(
+                                SwtUtils.getRelativeBounds(node, getColumn()));
+                        return SwtPointUtil.toSwtRectangle(
+                                getVisibleRowBounds(nodeBounds));
+                    }
+                });
+        
+        getRobot().click(getTree(), visibleItemBounds,  
+            clickOps.setScrollToVisible(false));
+    }
+
+    @Override
+    public String getRenderedTextOfColumn(final Object node) {
+        if (node instanceof TreeItem) {
+            final TreeItem treeItem = (TreeItem) node;
+
+            final int userIndex = IndexConverter.toUserIndex(getColumn());
+            return getQueuer().invokeAndWait(
+                    "getNodeText: " + treeItem + " at column: " + userIndex, //$NON-NLS-1$ //$NON-NLS-2$
+                    new IRunnable<String>() {
+                        public String run() {
+                            return CAPUtil.getWidgetText(treeItem,
+                                    SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
+                                            + getColumn(),
+                                    treeItem.getText(getColumn()));
+                        }
+                    });
+        }
+        return StringConstants.EMPTY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getRenderedText(TreeItem node) throws StepExecutionException {
+        return getRenderedTextOfColumn(node);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void scrollNodeToVisible(final TreeItem node) {
+        getQueuer().invokeAndWait("showColumn: " + node, //$NON-NLS-1$
+                new IRunnable<Void>() {
+                    public Void run() {
+                        getTree().showItem(node);
+                        getTree().showColumn(getTree().getColumn(getColumn()));
+                        return null;
+                    }
+                });
+
+        final Rectangle nodeBoundsRelativeToParent = getNodeBounds(node);
+        final Tree tree = getTree();
+        
+        getQueuer().invokeAndWait("getNodeBoundsRelativeToParent", //$NON-NLS-1$
+            new IRunnable<Void>() {
+                public Void run() {
+                    org.eclipse.swt.graphics.Point cellOriginRelativeToParent = 
+                        tree.getDisplay().map(
+                                tree, tree.getParent(), 
+                                new org.eclipse.swt.graphics.Point(
+                                        nodeBoundsRelativeToParent.x, 
+                                        nodeBoundsRelativeToParent.y));
+                    nodeBoundsRelativeToParent.x = 
+                        cellOriginRelativeToParent.x;
+                    nodeBoundsRelativeToParent.y = 
+                        cellOriginRelativeToParent.y;
+                    return null;
+                }
+            });
+
+        Control parent = getQueuer().invokeAndWait("getParent", //$NON-NLS-1$
+                new IRunnable<Control>() {
+                    public Control run() {
+                        return tree.getParent();
+                    }
+                });
+        
+        getRobot().scrollToVisible(parent, 
+                SwtPointUtil.toSwtRectangle(nodeBoundsRelativeToParent));
+    }
+
+    @Override
+    public int getColumnFromString(final String col, final String operator,
+            boolean leaf) {
+        // FIXME bjoern check integrity
+        int column = -2;
+        try {
+            int usrIdxCol = Integer.parseInt(col);
+            if (usrIdxCol == 0) {
+                usrIdxCol = usrIdxCol + 1;
+            }
+            column = IndexConverter.toImplementationIndex(usrIdxCol);
+        } catch (NumberFormatException nfe) {
+            try {
+                Boolean isVisible = getQueuer().invokeAndWait(
+                        "getColumnFromString", //$NON-NLS-1$
+                        new IRunnable<Boolean>() {
+                            public Boolean run() {
+                                return getTree().getHeaderVisible();
+                            }
+                        });
+                if (!(isVisible.booleanValue())) {
+                    throw new StepExecutionException("No Header", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                    TestErrorEvent.NO_HEADER));
+                }
+
+                Integer implCol = getQueuer().invokeAndWait(
+                        "getColumnFromString", new IRunnable<Integer>() { //$NON-NLS-1$
+                            public Integer run() throws StepExecutionException {
+                                for (int i = 0; i < getTree()
+                                        .getColumnCount(); i++) {
+                                    String colHeader = getColumnHeaderText(i);
+                                    if (MatchUtil.getInstance().match(colHeader,
+                                            col, operator)) {
+                                        return i;
+                                    }
+                                }
+                                return -2;
+                            }
+                        });
+                column = implCol.intValue();
+            } catch (IllegalArgumentException iae) {
+                // do nothing here
+            }
+        }
+        return column;
+    }
+    
+    @Override
+    public String getColumnHeaderText(final int colIdx) {
+        return getQueuer().invokeAndWait("getColumnName", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
+                        final TreeColumn column = getTree().getColumn(colIdx);
+                        return CAPUtil.getWidgetText(column, column.getText());
+                    }
+                });
+    }
+    
+    @Override
+    public Rectangle getHeaderBounds(final int col) {
+        return getQueuer().invokeAndWait("getHeaderBounds", //$NON-NLS-1$
+                new IRunnable<Rectangle>() {
+                    public Rectangle run() throws StepExecutionException {
+                        Tree tree = getTree();
+                        org.eclipse.swt.graphics.Rectangle rect = tree
+                                .getItem(0).getBounds(col);
+                        rect.y = tree.getClientArea().y;
+                        return new Rectangle(rect.x, rect.y, rect.width,
+                                rect.height);
+                    }
+                });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Rectangle getNodeBounds(final TreeItem node) {
+        org.eclipse.swt.graphics.Rectangle r = 
+            getQueuer().invokeAndWait("getNodeBounds: " + node,  //$NON-NLS-1$
+                    new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
+                    public org.eclipse.swt.graphics.Rectangle run() {
+                        Tree tree = getTree();
+                        org.eclipse.swt.graphics.Rectangle bounds = 
+                            SwtUtils.getBounds(node, getColumn());
+                        Point relativeLocation = 
+                            tree.toControl(bounds.x, bounds.y);
+                        bounds.x = relativeLocation.x;
+                        bounds.y = relativeLocation.y;
+                        
+                        return bounds;
+                    }
+                });
+        Rectangle nodeBounds = new Rectangle(
+            r.x, r.y, r.width, r.height);
+
+        return nodeBounds;
+    }
+    
+    /*
+     * Actions from TreeOperationContext
+     */
 
     /**
      * @param node
@@ -73,19 +294,7 @@ public class TreeOperationContext
         throws StepExecutionException {
         return getRenderedText(node);
     }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public String getRenderedText(final TreeItem node)
-            throws StepExecutionException {
-        return getQueuer().invokeAndWait("getText", new IRunnable<String>() { //$NON-NLS-1$
-                public String run() {
-                    return CAPUtil.getWidgetText(node, node.getText());
-                }
-            });
-    }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -248,30 +457,6 @@ public class TreeOperationContext
     /**
      * {@inheritDoc}
      */
-    public void clickNode(final TreeItem node, final ClickOptions clickOps) {
-        scrollNodeToVisible(node);
-
-        // Wait for all paint events resulting from the scroll to be processed
-        // before calculating bounds.
-        SwtUtils.waitForDisplayIdle(node.getDisplay());
-        
-        org.eclipse.swt.graphics.Rectangle visibleRowBounds = 
-            getQueuer().invokeAndWait(
-                "getVisibleNodeBounds " + node, new IRunnable<org.eclipse.swt.graphics.Rectangle>() { //$NON-NLS-1$
-                    public org.eclipse.swt.graphics.Rectangle run() {
-                        final Rectangle nodeBounds = getNodeBounds(node);
-                        return SwtPointUtil.toSwtRectangle(
-                                getVisibleRowBounds(nodeBounds));
-                    }
-                });
-        
-        getRobot().click(getTree(), visibleRowBounds, 
-                clickOps.setScrollToVisible(false));
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
     public void toggleNodeCheckbox(final TreeItem node) {
         scrollNodeToVisible(node);
 
@@ -309,49 +494,6 @@ public class TreeOperationContext
                 });  
         
         Verifier.equals(checked, checkSelected.booleanValue());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void scrollNodeToVisible(final TreeItem node) {
-        getQueuer().invokeAndWait("showItem: " + node,  //$NON-NLS-1$
-            new IRunnable<Void>() {
-                public Void run() {
-                    getTree().showItem(node);
-                    return null;
-                }
-            });
-
-        final Rectangle nodeBoundsRelativeToParent = getNodeBounds(node);
-        final Tree tree = getTree();
-        
-        getQueuer().invokeAndWait("getNodeBoundsRelativeToParent", //$NON-NLS-1$
-            new IRunnable<Void>() {
-                public Void run() {
-                    org.eclipse.swt.graphics.Point cellOriginRelativeToParent = 
-                        tree.getDisplay().map(
-                                tree, tree.getParent(), 
-                                new org.eclipse.swt.graphics.Point(
-                                        nodeBoundsRelativeToParent.x, 
-                                        nodeBoundsRelativeToParent.y));
-                    nodeBoundsRelativeToParent.x = 
-                        cellOriginRelativeToParent.x;
-                    nodeBoundsRelativeToParent.y = 
-                        cellOriginRelativeToParent.y;
-                    return null;
-                }
-            });
-
-        Control parent = getQueuer().invokeAndWait("getParent", //$NON-NLS-1$
-                new IRunnable<Control>() {
-                    public Control run() {
-                        return tree.getParent();
-                    }
-                });
-        
-        getRobot().scrollToVisible(parent, 
-                SwtPointUtil.toSwtRectangle(nodeBoundsRelativeToParent));
     }
 
     /**
@@ -477,26 +619,6 @@ public class TreeOperationContext
             });
 
         return res;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Rectangle getNodeBounds(final TreeItem node) {
-        org.eclipse.swt.graphics.Rectangle r = 
-                getQueuer().invokeAndWait("getNodeBounds: " + node, //$NON-NLS-1$
-                        new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
-                            public org.eclipse.swt.graphics.Rectangle run() {
-                                Tree tree = getTree();
-                                org.eclipse.swt.graphics.Rectangle bounds = 
-                                    SwtUtils.getRelativeWidgetBounds(
-                                            node, tree);
-
-                                return bounds;
-                            }
-                        });
-        Rectangle nodeBounds = new Rectangle(r.x, r.y, r.width, r.height);
-        return nodeBounds;
     }
 
     /**

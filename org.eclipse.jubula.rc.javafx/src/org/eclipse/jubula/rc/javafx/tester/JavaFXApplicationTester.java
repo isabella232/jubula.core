@@ -30,7 +30,7 @@ import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.driver.RobotJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
-import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;

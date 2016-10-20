@@ -917,4 +917,25 @@ public class RobotAwtImpl implements IRobot<Rectangle> {
     public BufferedImage createFullScreenCapture() {
         return LocalScreenshotUtil.createFullScreenCapture();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void shakeMouse() {
+        /** number of pixels by which a "mouse shake" offsets the mouse cursor */
+        final int mouseShakeOffset = 10;
+
+        Point origin = getCurrentMousePosition();
+        try {
+            m_robot.mouseMove(
+                    origin.x + mouseShakeOffset, 
+                    origin.y + mouseShakeOffset);
+            m_robot.mouseMove(
+                    origin.x - mouseShakeOffset, 
+                    origin.y - mouseShakeOffset);
+        } finally {
+            m_robot.mouseMove(origin.x, origin.y);
+        }
+    }
+
 }

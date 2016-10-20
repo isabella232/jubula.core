@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation 
  *******************************************************************************/
-package org.eclipse.jubula.rc.swt.tester;
+package org.eclipse.jubula.rc.swt.tester.util;
 
 import java.awt.Point;
 import java.util.StringTokenizer;

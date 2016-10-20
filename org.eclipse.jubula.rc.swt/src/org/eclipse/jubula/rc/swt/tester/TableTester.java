@@ -16,6 +16,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -26,10 +27,10 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swt.components.SWTCell;
-import org.eclipse.jubula.rc.swt.driver.DragAndDropHelperSwt;
 import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
+import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
@@ -441,7 +442,7 @@ public class TableTester extends AbstractTableTester {
             final int yPos, final String yUnits) 
         throws StepExecutionException {
         
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
@@ -476,7 +477,7 @@ public class TableTester extends AbstractTableTester {
             final String xUnits, final int yPos, final String yUnits,
             int delayBeforeDrop) throws StepExecutionException {
         
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         final IRobot robot = getRobot();
         
@@ -489,7 +490,7 @@ public class TableTester extends AbstractTableTester {
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    CAPUtil.shakeMouse();
+                    robot.shakeMouse();
 
                     // drop
                     rcSelectCell(row, rowOperator, col, colOperator, 0, xPos,
@@ -524,7 +525,7 @@ public class TableTester extends AbstractTableTester {
             String colOperator, final String value, final String regexOp,
             final String searchType) {
         
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
@@ -552,7 +553,7 @@ public class TableTester extends AbstractTableTester {
             final String value, final String regexOp, final String searchType, 
             int delayBeforeDrop) {
         
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         final IRobot robot = getRobot();
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
@@ -565,7 +566,7 @@ public class TableTester extends AbstractTableTester {
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    CAPUtil.shakeMouse();
+                    robot.shakeMouse();
 
                     // drop
                     selectRowByValue(col, colOperator, value, regexOp,
@@ -601,7 +602,7 @@ public class TableTester extends AbstractTableTester {
             String row, String rowOperator, final String value,
             final String regex, final String searchType) {
         
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         dndHelper.setMouseButton(mouseButton);
         dndHelper.setModifier(modifier);
@@ -628,7 +629,7 @@ public class TableTester extends AbstractTableTester {
             final String value, final String regex, final String searchType,
             int delayBeforeDrop) {
         
-        final DragAndDropHelperSwt dndHelper = DragAndDropHelperSwt
+        final DragAndDropHelper dndHelper = DragAndDropHelper
             .getInstance();
         final IRobot robot = getRobot();
         pressOrReleaseModifiers(dndHelper.getModifier(), true);
@@ -641,7 +642,7 @@ public class TableTester extends AbstractTableTester {
                     robot.mousePress(dndHelper.getDragComponent(), null, 
                             dndHelper.getMouseButton());
 
-                    CAPUtil.shakeMouse();
+                    robot.shakeMouse();
 
                     // drop
                     selectCellByColValue(row, rowOperator, value, regex,

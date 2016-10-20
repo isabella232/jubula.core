@@ -21,7 +21,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.driver.RobotConfiguration;
 import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 
 /**

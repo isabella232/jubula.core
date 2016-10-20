@@ -10,14 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.listener;
 
+import org.eclipse.jubula.rc.javafx.utils.JBExecutors;
+
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-
-import org.eclipse.jubula.rc.javafx.util.concurrent.JBExecutors;
 
 /**
  * Alters the JavaFx mouse moved event, which is always fired when the mouse

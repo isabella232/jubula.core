@@ -24,8 +24,9 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.TreeOperationContext;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -48,7 +49,9 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
         super(objectToAdapt);
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public Object getRootNode() {
         Object result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getRootNode", new Callable<Object>() { //$NON-NLS-1$
@@ -61,13 +64,17 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
         return result;
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public AbstractTreeOperationContext<TreeView<?>, TreeItem<?>> getContext() {
         return new TreeOperationContext(getRobotFactory()
                 .getEventThreadQueuer(), getRobot(), getRealComponent());
     }
 
-    @Override
+    /**
+     * {@inheritDoc}
+     */
     public boolean isRootVisible() {
         boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "isRootVisible", new Callable<Boolean>() { //$NON-NLS-1$
@@ -81,10 +88,10 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
         return result;
     }
 
-
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getPropertyValueOfCell(String name, TreeItem<?> item) {
         Object prop = EventThreadQueuerJavaFXImpl.invokeAndWait("getProperty", //$NON-NLS-1$
                 new Callable<String>() {
@@ -136,4 +143,5 @@ public class TreeViewAdapter extends JavaFXComponentAdapter<TreeView<?>>
                 });
         return String.valueOf(prop);
     }
+    
 }

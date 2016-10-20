@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
 
 import org.eclipse.jubula.rc.common.listener.AUTEventListener;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.HighlightNode;
+import org.eclipse.jubula.rc.javafx.tester.util.HighlightNode;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 
 import javafx.application.Platform;

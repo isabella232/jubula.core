@@ -69,8 +69,8 @@ import org.eclipse.jubula.rc.common.util.PointUtil;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.Rounding;
+import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
+import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
@@ -1109,12 +1109,9 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
     public RobotEventInterceptorJavaFXImpl getInterceptor() {
         return m_interceptor;
     }
-    
 
     /**
-     * Move the mouse pointer from its current position to a few points in
-     * its proximity. This is used to initiate a drag operation.
-     * 
+     * {@inheritDoc}
      */
     public void shakeMouse() {
         /** number of pixels by which a "mouse shake" offsets the mouse cursor */
@@ -1132,4 +1129,5 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
             m_robot.mouseMove(origin.x, origin.y);
         }
     }
+
 }

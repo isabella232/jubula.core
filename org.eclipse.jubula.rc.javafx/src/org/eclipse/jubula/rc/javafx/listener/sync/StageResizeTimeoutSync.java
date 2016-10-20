@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.concurrent.JBExecutors;
+import org.eclipse.jubula.rc.javafx.utils.JBExecutors;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

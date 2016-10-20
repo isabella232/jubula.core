@@ -8,7 +8,7 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.javafx.tester.adapter;
+package org.eclipse.jubula.rc.javafx.tester.util;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
-import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
+import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeTableOperationContext;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
@@ -34,11 +34,6 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.AbstractTraverser;
-import org.eclipse.jubula.rc.javafx.util.GenericTraverseHelper;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
-import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -55,22 +50,19 @@ import javafx.scene.control.TreeTablePosition;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.Pane;
+
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on the tree inside a TreeTableView.
  *
  * @author BREDEX GmbH
- * @created 23.06.2014
  */
-public class TreeTableOperationContext extends
-        AbstractTreeOperationContext<TreeTableView<?>, Object> {
+public class TreeTableOperationContext
+        extends AbstractTreeTableOperationContext<TreeTableView<?>, Object> {
     /** The AUT Server logger. */
     private static AutServerLogger log = new AutServerLogger(
             TreeTableOperationContext.class);
-    
-    /** The column on which to perform the operation **/
-    private int m_column = 0;
-    
+
     /**
      * Workaround to support nested Columns without modifying classes which would
      * affect other toolkits
@@ -82,11 +74,33 @@ public class TreeTableOperationContext extends
      * Creates a new instance.
      *
      * @param queuer
-     *            The queuer
+     *            the queuer
      * @param robot
-     *            The Robot
+     *            the Robot
      * @param treeTable
-     *            The treeTable
+     *            the treeTable
+     * @param column
+     *            the column
+     */
+    public TreeTableOperationContext(IEventThreadQueuer queuer, IRobot robot,
+            TreeTableView<?> treeTable, int column) {
+        super(queuer, robot, treeTable, column);
+        if (treeTable.getRoot() == null) {
+            throw new StepExecutionException(
+                    "Tree Table is empty.", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+        }
+    }
+    
+    /**
+     * Creates a new instance.
+     *
+     * @param queuer
+     *            the queuer
+     * @param robot
+     *            the Robot
+     * @param treeTable
+     *            the treeTable
      */
     public TreeTableOperationContext(IEventThreadQueuer queuer, IRobot robot,
             TreeTableView<?> treeTable) {
@@ -98,12 +112,9 @@ public class TreeTableOperationContext extends
         }
     }
     
-    /**
-     * Sets the column this operation context operates on.
-     * @param column the column
-     */
-    public void setColumn(int column) {
-        m_column = column;
+    @Override
+    public int getNumberOfColumns() {
+        return getTreeTable().getVisibleLeafColumns().size();
     }
 
     @Override
@@ -164,15 +175,10 @@ public class TreeTableOperationContext extends
         return indexOfColumnContainingTree;
     }
     
-    /**
-     * Gets the rendered Text from the cell of the currently set column
-     * @param node the node
-     * @return the rendered text
-     * @throws StepExecutionException
-     */
+    @Override
     public String getRenderedTextOfColumn(final Object node)
         throws StepExecutionException {
-        return getTextFromNode(node, m_column);
+        return getTextFromNode(node, getColumn());
     }
 
     /**
@@ -291,14 +297,14 @@ public class TreeTableOperationContext extends
                                 .getRow((TreeItem<?>) node);
                         TreeTableView<?> trt = getTree();
                         trt.scrollTo(index);
-                        if (m_column >= trt.getColumns().size()) {
+                        if (getColumn() >= trt.getColumns().size()) {
                             // We want to scroll to a leaf column but the tree
                             // table only considers the top column for scrolling
                             // via index
                             trt.scrollToColumnIndex(
                                     trt.getColumns().size() - 1);
                         } else {
-                            trt.scrollToColumnIndex(m_column);
+                            trt.scrollToColumnIndex(getColumn());
                         }
                         // Update the layout coordinates otherwise
                         // we would get old position values
@@ -322,12 +328,10 @@ public class TreeTableOperationContext extends
         boolean expanded = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "expandNodeCheckIfExpanded", //$NON-NLS-1$
                 new Callable<Boolean>() {
-
                     @Override
                     public Boolean call() throws Exception {
                         TreeItem<?> item = (TreeItem<?>) node;
                         return item.isExpanded();
-
                     }
                 });
         if (expanded) {
@@ -601,7 +605,7 @@ public class TreeTableOperationContext extends
                                     && checkItem.equals(item)
                                     && treeTable.getVisibleLeafColumns()
                                         .indexOf(cell.getTableColumn()) 
-                                            == m_column) {
+                                            == getColumn()) {
                                 Rectangle b = NodeBounds
                                         .getAbsoluteBounds(cell);
                                 Rectangle treeB = NodeBounds
@@ -711,21 +715,10 @@ public class TreeTableOperationContext extends
         return result.intValue();
     }
     
-    /**
-     * Gets column index from string with index or text of first row
-     * 
-     * @param colPath
-     *            index or value in first col
-     * @param op
-     *            the operation used to verify
-     * @param leafColumn
-     *            true if the column found has to be a leaf column
-     * @return index of the column found, this is either the index in the list
-     *         of leaf columns or the index in the "workaround list" for parent
-     *         columns
-     */
+    @Override
     public int getColumnFromString(final String colPath, final String op,
             final boolean leafColumn) {
+        // FIXME bjoern check integrity
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
                     @Override
@@ -849,13 +842,7 @@ public class TreeTableOperationContext extends
         return column;
     }
     
-    /**
-     * gets header bounds for column
-     * 
-     * @param column
-     *            the zero based index of the column.
-     * @return The rectangle of the header
-     */
+    @Override
     public Rectangle getHeaderBounds(final int column) {
         Rectangle result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getHeaderBounds", new Callable<Rectangle>() { //$NON-NLS-1$
@@ -1080,15 +1067,7 @@ public class TreeTableOperationContext extends
         return result;
     }
     
-    /**
-     * Returns the text of the column appearing in the view at column position
-     * <code>column</code>.
-     * 
-     * @param column
-     *            the zero based index of the column in the view being queried
-     * @return the text of the column at position <code>column</code> in the
-     *         view where the first column is column 0
-     */
+    @Override
     public String getColumnHeaderText(final int column) {
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getColumnHeaderText", //$NON-NLS-1$
@@ -1246,4 +1225,5 @@ public class TreeTableOperationContext extends
                 });
         return String.valueOf(prop);
     }
+    
 }

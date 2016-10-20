@@ -18,6 +18,7 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeTraverser;
@@ -73,10 +74,17 @@ public abstract class AbstractTreeTester extends WidgetTester {
      * @param timeout the maximum amount of time to wait for the text to be
      *          verified at mouse position
      */
-    public abstract void rcVerifyTextAtMousePosition(
-            String text, 
-            String operator,
-            int timeout);
+    public void rcVerifyTextAtMousePosition(final String text,
+            final String operator, int timeout) {
+        invokeAndWait("rcVerifyTextAtMousePosition", timeout, //$NON-NLS-1$
+                new Runnable() {
+                    public void run() {
+                        checkNodeText(new Object[] { getNodeAtMousePosition() },
+                                text, operator);
+                    }
+                });
+    }
+
     /**
      * Splits the <code>treepath</code> string into an array, one entry for each level in the path
      *
@@ -723,55 +731,106 @@ public abstract class AbstractTreeTester extends WidgetTester {
     }
     
     /**
-     * @param mouseButton mouseButton
-     * @param modifierSpecification modifierSpecification
-     * @param pathType pathType
-     * @param preAscend preAscend
-     * @param treeTextPath treeTextPath
-     * @param operator operator */ 
-    public abstract void rcDragByTextPath(
-        int mouseButton, 
-        String modifierSpecification, 
-        String pathType, 
-        int preAscend, 
-        String treeTextPath, 
-        String operator);
+     * @param mouseButton
+     *            mouseButton
+     * @param modifier
+     *            modifier
+     * @param pathType
+     *            pathType
+     * @param preAscend
+     *            preAscend
+     * @param treeTextPath
+     *            treeTextPath
+     * @param operator
+     *            operator
+     */
+    public void rcDragByTextPath(int mouseButton, String modifier,
+            String pathType, int preAscend, String treeTextPath,
+            String operator) {
+        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        dndHelper.setModifier(modifier);
+        dndHelper.setMouseButton(mouseButton);
+        rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
+                ValueSets.BinaryChoice.no.rcValue());
+        pressOrReleaseModifiers(dndHelper.getModifier(), true);
+        getRobot().mousePress(null, null, dndHelper.getMouseButton());
+        dndHelper.setDragMode(true);
+    }
 
     /**
-     * @param pathType pathType
-     * @param preAscend preAscend
-     * @param treeTextPath treeTextPath
-     * @param operator operator
-     * @param delayBeforeDrop delayBeforeDrop */ 
-    public abstract void rcDropByTextPath(
-        String pathType, 
-        int preAscend, 
-        String treeTextPath, 
-        String operator, 
-        int delayBeforeDrop);
+     * @param pathType
+     *            pathType
+     * @param preAscend
+     *            preAscend
+     * @param treeTextPath
+     *            treeTextPath
+     * @param operator
+     *            operator
+     * @param delayBeforeDrop
+     *            delayBeforeDrop
+     */
+    public void rcDropByTextPath(String pathType, int preAscend,
+            String treeTextPath, String operator, int delayBeforeDrop) {
+        try {
+            rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
+                    ValueSets.BinaryChoice.no.rcValue());
+            waitBeforeDrop(delayBeforeDrop);
+            getRobot().shakeMouse();
+        } finally {
+            final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            dndHelper.setDragMode(false);
+        }
+    }
 
     /**
-     * @param mouseButton mouseButton
-     * @param modifierSpecification modifierSpecification
-     * @param pathType pathType
-     * @param preAscend preAscend
-     * @param treeIndexPath treeIndexPath */ 
-    public abstract void rcDragByIndexPath(
-        int mouseButton, 
-        String modifierSpecification, 
-        String pathType, 
-        int preAscend, 
-        String treeIndexPath);
+     * @param mouseButton
+     *            mouseButton
+     * @param modifier
+     *            modifier
+     * @param pathType
+     *            pathType
+     * @param preAscend
+     *            preAscend
+     * @param treeIndexPath
+     *            treeIndexPath
+     */
+    public void rcDragByIndexPath(int mouseButton, String modifier,
+            String pathType, int preAscend, String treeIndexPath) {
+        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        dndHelper.setModifier(modifier);
+        dndHelper.setMouseButton(mouseButton);
+        rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
+                ValueSets.BinaryChoice.no.rcValue());
+        pressOrReleaseModifiers(dndHelper.getModifier(), true);
+        getRobot().mousePress(null, null, dndHelper.getMouseButton());
+        dndHelper.setDragMode(true);
+    }
 
     /**
-     * @param pathType pathType
-     * @param preAscend preAscend
-     * @param treeIndexPath treeIndexPath
-     * @param delayBeforeDrop delayBeforeDrop */ 
-    public abstract void rcDropByIndexPath(
-        String pathType, 
-        int preAscend, 
-        String treeIndexPath, 
-        int delayBeforeDrop);    
+     * @param pathType
+     *            pathType
+     * @param preAscend
+     *            preAscend
+     * @param treeIndexPath
+     *            treeIndexPath
+     * @param delayBeforeDrop
+     *            delayBeforeDrop
+     */
+    public void rcDropByIndexPath(String pathType, int preAscend,
+            String treeIndexPath, int delayBeforeDrop) {
+        try {
+            rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
+                    ValueSets.BinaryChoice.no.rcValue());
+            waitBeforeDrop(delayBeforeDrop);
+            getRobot().shakeMouse();
+        } finally {
+            final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+            getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            dndHelper.setDragMode(false);
+        }
+    }
     
 }

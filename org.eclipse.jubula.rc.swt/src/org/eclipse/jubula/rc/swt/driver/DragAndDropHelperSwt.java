@@ -18,6 +18,7 @@ import org.eclipse.swt.widgets.Control;
  * @author BREDEX GmbH
  * @created Feb 6, 2008
  */
+@Deprecated
 public class DragAndDropHelperSwt {
 
     /** the singleton-instance */

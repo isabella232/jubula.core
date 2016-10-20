@@ -31,5 +31,6 @@
   <xi:include href="textInputComponent/content.xml"/>
   <xi:include href="tooltipComponent/content.xml"/>
   <xi:include href="treeComponent/content.xml"/>
+  <xi:include href="treeTableComponent/content.xml"/>
     
 </section>

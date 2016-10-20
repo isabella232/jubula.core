@@ -54,28 +54,21 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.swt.widgets.Tree;
 
 /**
- * This factory constructs the specific adapter out of the incoming
- * graphics component from the AUT.
+ * This factory constructs the specific adapter out of the incoming graphics
+ * component from the AUT.
  * 
  * @author BREDEX GmbH
  */
 public class SWTAdapterFactory implements IAdapterFactory {
+
     /** */
     private static final Class[] SUPPORTEDCLASSES = 
-            new Class[]{Button.class, Menu.class, MenuItem.class, Tree.class,
+            new Class[] { Button.class, Menu.class, MenuItem.class, Tree.class,
                 Table.class, List.class, Text.class, StyledText.class,
                 Combo.class, CCombo.class, Label.class, CLabel.class, 
                 TabFolder.class, CTabFolder.class, ToolItem.class,
                 DateTime.class, Scale.class, Slider.class, Spinner.class,
                 Link.class, ProgressBar.class, Canvas.class, Control.class };
-    
-    
-    /**
-     * {@inheritDoc}
-     */
-    public Class[] getSupportedClasses() {
-        return SUPPORTEDCLASSES;
-    }
 
     /**
      * {@inheritDoc}
@@ -127,13 +120,20 @@ public class SWTAdapterFactory implements IAdapterFactory {
                 returnvalue = new ControlAdapter(objectToAdapt);
             } else if (objectToAdapt instanceof Canvas) {
                 returnvalue = new ControlAdapter(objectToAdapt);
-            // FALLBACK! Leave at the end
+                // FALLBACK! Leave at the end
             } else if (objectToAdapt instanceof Control) {
                 returnvalue = new ControlAdapter(objectToAdapt);
             }
             return returnvalue;
         }
         return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Class[] getSupportedClasses() {
+        return SUPPORTEDCLASSES;
     }
 
 }

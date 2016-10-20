@@ -8,18 +8,13 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.jubula.rc.javafx.tester.adapter;
+package org.eclipse.jubula.rc.javafx.tester.util;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
-
-import javafx.collections.ObservableList;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
@@ -34,18 +29,19 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.common.util.SelectionUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.util.NodeBounds;
-import org.eclipse.jubula.rc.javafx.util.NodeTraverseHelper;
-import org.eclipse.jubula.rc.javafx.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+
+import javafx.collections.ObservableList;
+import javafx.scene.control.TreeCell;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 
 /**
  * This context holds the tree and supports access to the Robot. It also
  * implements some general operations on trees.
  *
  * @author BREDEX GmbH
- * @created 19.11.2013
  */
 public class TreeOperationContext 
     extends AbstractTreeOperationContext<TreeView<?>, TreeItem<?>> {
@@ -58,11 +54,11 @@ public class TreeOperationContext
      * Creates a new instance. The JTree must have a tree model.
      *
      * @param queuer
-     *            The queuer
+     *            the queuer
      * @param robot
-     *            The Robot
+     *            the Robot
      * @param tree
-     *            The tree
+     *            the tree
      */
     public TreeOperationContext(IEventThreadQueuer queuer, IRobot robot,
             TreeView<?> tree) {
@@ -232,17 +228,15 @@ public class TreeOperationContext
         boolean expanded = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "expandNodeCheckIfExpanded", //$NON-NLS-1$
                 new Callable<Boolean>() {
-
                     @Override
                     public Boolean call() throws Exception {
                         return node.isExpanded();
-
                     }
                 });
         if (expanded) {
             return;
         }
-        //If this is called during drag mode the target is not visible
+        // If this is called during drag mode the target is not visible
         if (DragAndDropHelper.getInstance().isDragMode()) {
             throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_VISIBLE));

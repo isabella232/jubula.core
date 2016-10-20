@@ -14,7 +14,7 @@ import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabbedComponent;
-import org.eclipse.jubula.rc.swt.tester.CAPUtil;
+import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;

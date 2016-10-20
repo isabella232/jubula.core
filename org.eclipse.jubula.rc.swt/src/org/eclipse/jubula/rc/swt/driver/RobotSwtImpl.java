@@ -1006,8 +1006,8 @@ public class RobotSwtImpl implements IRobot<Rectangle> {
         } else {
             int keyStrokeSpecSize = keyStrokeSpec.length();
             char keySpec = keyStrokeSpec.charAt(keyStrokeSpecSize - 1);
-            // 'ß'.toUpperCase is "SS" we do not want that!
-            if ('ß' != keySpec) {
+            // 'ï¿½'.toUpperCase is "SS" we do not want that!
+            if ('ï¿½' != keySpec) {
                 keySpec = Character.toUpperCase(keySpec);
             }
             String modifiedKeyStrokeSpec = keyStrokeSpec.substring(0,
@@ -1658,4 +1658,30 @@ public class RobotSwtImpl implements IRobot<Rectangle> {
     public BufferedImage createFullScreenCapture() {
         return LocalScreenshotUtil.createFullScreenCapture();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void shakeMouse() {
+        /**
+         * number of pixels by which a "mouse shake" offsets the mouse cursor
+         */
+        final int mouseShakeOffset = 10;
+
+        java.awt.Point origin =
+                AUTServer.getInstance().getRobot().getCurrentMousePosition();
+        SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
+        lowLevelRobot.mouseMove(origin.x + mouseShakeOffset,
+                origin.y + mouseShakeOffset);
+        lowLevelRobot.mouseMove(origin.x - mouseShakeOffset,
+                origin.y - mouseShakeOffset);
+        lowLevelRobot.mouseMove(origin.x, origin.y);
+        if (!EnvironmentUtils.isWindowsOS() && !EnvironmentUtils.isMacOS()) {
+            boolean moreEvents = true;
+            while (moreEvents) {
+                moreEvents = Display.getDefault().readAndDispatch();
+            }
+        }
+    }
+
 }
