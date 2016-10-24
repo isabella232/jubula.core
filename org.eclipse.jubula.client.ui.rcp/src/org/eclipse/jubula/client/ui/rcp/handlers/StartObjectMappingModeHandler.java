@@ -211,6 +211,7 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
                 omEditor = (ObjectMappingMultiPageEditor)activeEditor;
             }
         }
+
         if (omEditor == null) {
             if (runningAut == null) {
                 LOG.error(Messages.CouldNotOpenOMEditorNoAUT);
@@ -219,9 +220,11 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
                         + StringConstants.COLON + StringConstants.SPACE
                         + runningAut.getExecutableName());
             }
+            AbstractRunningAutHandler.setLastAutID(RUNNING_AUT, null);
             return null;
         }
 
+        AbstractRunningAutHandler.setLastAutID(RUNNING_AUT, runningAut);
         IObjectMappingCategoryPO unMappedTech = 
             omEditor.getAut().getObjMap().getUnmappedTechnicalCategory();
 
@@ -310,6 +313,11 @@ public class StartObjectMappingModeHandler extends AbstractRunningAutHandler {
             startObjectMappingModeJob.setSystem(true);
             JobUtils.executeJob(startObjectMappingModeJob, null);
         }
+    }
+
+    /** {@inheritDoc} */
+    protected String getKey() {
+        return RUNNING_AUT;
     }
 
 }

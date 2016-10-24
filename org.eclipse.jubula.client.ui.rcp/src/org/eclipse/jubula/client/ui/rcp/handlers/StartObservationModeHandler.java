@@ -218,7 +218,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
      */
     public Object executeImpl(ExecutionEvent event) {
         AutIdentifier runningAut = getRunningAut(event, RUNNING_AUT);
-
+        AbstractRunningAutHandler.setLastAutID(RUNNING_AUT, null);
         if (!Utils.openPerspective(Constants.SPEC_PERSPECTIVE)) {
             return null;
         }
@@ -232,8 +232,8 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                 && editor.getEditorHelper().requestEditableState() 
                 == JBEditorHelper.EditableState.OK) {
             setEditor(editor, runningAut);
+            AbstractRunningAutHandler.setLastAutID(RUNNING_AUT, runningAut);
         }
-
         return null;
     }
 
@@ -381,5 +381,11 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         };
         return dialog;
     }
+    
+    /** {@inheritDoc} */
+    protected String getKey() {
+        return RUNNING_AUT;
+    }
+
 
 }

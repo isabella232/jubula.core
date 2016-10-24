@@ -68,6 +68,6 @@ public class StartObjectMappingModeContributionItem extends
         return CommandHelper.createContributionItem(
                 RCPCommandIDs.START_OBJECT_MAPPING_MODE, 
                 params, labelBuilder.toString(), 
-                CommandContributionItem.STYLE_PUSH);
+                CommandContributionItem.STYLE_CHECK);
     }
 }
