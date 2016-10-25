@@ -324,6 +324,7 @@ public class JsonStorage {
             importer.initTestResultSummaries(subMonitor.newChild(1),
                     summaryDTOs, projectPO);
         } catch (IOException e) {
+            log.warn("error during import", e); //$NON-NLS-1$
             // If the operation has been canceled, then this is just
             // a result of canceling the IO.
             if (!monitor.isCanceled()) {

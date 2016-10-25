@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         property = "type") 
 @JsonSubTypes({  
     @Type(value = CategoryDTO.class, name = "cat"),
+    @Type(value = CommentDTO.class, name = "com"),
     @Type(value = ExecCategoryDTO.class, name = "ecat"),
     @Type(value = ParameterDTO.class, name = "par"),
     @Type(value = ProjectDTO.class, name = "pro"),

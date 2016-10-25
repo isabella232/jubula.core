@@ -22,8 +22,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class TestJobDTO extends NodeDTO {
     /** */
-    private List<RefTestSuiteDTO> m_refTestSuites =
-            new ArrayList<RefTestSuiteDTO>();
+    private List<NodeDTO> m_refTestSuites =
+            new ArrayList<NodeDTO>();
 
     
     /** needed because JSON mapping */
@@ -42,12 +42,19 @@ public class TestJobDTO extends NodeDTO {
     public void addRefTestSuite(RefTestSuiteDTO rtsDTO) {
         m_refTestSuites.add(rtsDTO);
     }
+    
+    /**
+     * @param commentDTO 
+     */
+    public void addComment(CommentDTO commentDTO) {
+        m_refTestSuites.add(commentDTO);
+    }
 
     /**
      * @return refTestSuites
      */
     @JsonProperty("refTestSuites")
-    public List<RefTestSuiteDTO> getRefTestSuites() {
+    public List<NodeDTO> getRefTestSuites() {
         return m_refTestSuites;
     }
 }

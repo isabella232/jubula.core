@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.archive.dto.AutDTO;
 import org.eclipse.jubula.client.archive.dto.CapDTO;
 import org.eclipse.jubula.client.archive.dto.CategoryDTO;
 import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
+import org.eclipse.jubula.client.archive.dto.CommentDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.DataRowDTO;
@@ -68,6 +69,7 @@ import org.eclipse.jubula.client.core.model.ICapParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICheckConfContPO;
 import org.eclipse.jubula.client.core.model.ICheckConfPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompIdentifierPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -618,6 +620,10 @@ public class JsonExporter {
                 RefTestCaseDTO refTestCaseDTO = new RefTestCaseDTO(tcPO);
                 fillRefTestCase(refTestCaseDTO, tcPO);
                 tcDTO.addTestStep(refTestCaseDTO);
+            } else if (o instanceof ICommentPO) {
+                ICommentPO commentPO = (ICommentPO) o;
+                CommentDTO commentDTO = new CommentDTO(commentPO);
+                tcDTO.addTestStep(commentDTO);
             }
         }
 
@@ -820,8 +826,13 @@ public class JsonExporter {
                 IExecTestCasePO tc = (IExecTestCasePO)o;
                 RefTestCaseDTO rtcDTO = new RefTestCaseDTO(tc);
                 fillRefTestCase(rtcDTO, tc);
-                tsDTO.addUsedTestcase(rtcDTO);
+                tsDTO.addUsedTestCase(rtcDTO);
+            } else if (o instanceof ICommentPO) {
+                ICommentPO commentPO = (ICommentPO) o;
+                CommentDTO commentDTO = new CommentDTO(commentPO);
+                tsDTO.addUsedTestCase(commentDTO);
             }
+
         }
         for (Object o : po.getDefaultEventHandler().keySet()) {
             String eventType = (String)o;
@@ -848,7 +859,7 @@ public class JsonExporter {
      * @param tj test job object
      */
     private void fillTestJob(TestJobDTO tjDTO, ITestJobPO tj) {
-        for (Object child : tj.getUnmodifiableNodeList()) {
+        for (INodePO child : tj.getUnmodifiableNodeList()) {
             if (child instanceof IRefTestSuitePO) {
                 IRefTestSuitePO rts = (IRefTestSuitePO)child;
                 RefTestSuiteDTO rtsDTO = new RefTestSuiteDTO(rts);
@@ -857,6 +868,8 @@ public class JsonExporter {
                 rtsDTO.setTsUuid(rts.getTestSuiteGuid());
                 rtsDTO.setAutId(rts.getTestSuiteAutID());
                 tjDTO.addRefTestSuite(rtsDTO);
+            } else if (child instanceof ICommentPO) {
+                tjDTO.addComment(new CommentDTO((ICommentPO) child));
             }
         }
     }

@@ -27,8 +27,8 @@ public class TestSuiteDTO extends NodeDTO {
     /** */
     private int m_stepDelay = 0;
     /** */
-    private List<RefTestCaseDTO> m_usedTestcases =
-            new ArrayList<RefTestCaseDTO>();
+    private List<NodeDTO> m_usedTestcases =
+            new ArrayList<NodeDTO>();
     /** */
     private List<DefaultEventHandlerDTO> m_eventHandlers =
             new ArrayList<DefaultEventHandlerDTO>(4);
@@ -80,14 +80,18 @@ public class TestSuiteDTO extends NodeDTO {
      * @return usedTestcase
      */
     @JsonProperty("usedTestcase")
-    public List<RefTestCaseDTO> getUsedTestcases() {
+    public List<NodeDTO> getUsedTestCases() {
         return m_usedTestcases;
     }
 
     /**
      * @param usedTestcase 
      */
-    public void addUsedTestcase(RefTestCaseDTO usedTestcase) {
+    public void addUsedTestCase(NodeDTO usedTestcase) {
+        if (!(usedTestcase instanceof RefTestCaseDTO
+                || usedTestcase instanceof CommentDTO)) {
+            throw new IllegalArgumentException();
+        }
         this.m_usedTestcases.add(usedTestcase);
     }
 
