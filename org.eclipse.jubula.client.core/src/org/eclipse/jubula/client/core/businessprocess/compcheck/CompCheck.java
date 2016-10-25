@@ -159,16 +159,19 @@ public class CompCheck {
     private void handleExecTestCasePO(Set<String> guids,
             IExecTestCasePO child) {
         // We designed the traverse such that the corresponding SpecTC must have been traversed before
-        Set<String> childSpecGuids = m_mustMap.get(child.getSpecTestCase().
-                getId());
-        ICompNamesPairPO pair;
-        for (String guid : childSpecGuids) {
-            pair = child.getCompNamesPair(guid);
-            if (pair != null) {
-                guids.add(ComponentNamesBP.getInstance().
-                        resolveGuid(pair.getSecondName()));
-            } else {
-                guids.add(guid);
+
+        ISpecTestCasePO childSpecTC = child.getSpecTestCase();
+        if (childSpecTC != null) {
+            Set<String> childSpecGuids = m_mustMap.get(childSpecTC.getId());
+            ICompNamesPairPO pair;
+            for (String guid : childSpecGuids) {
+                pair = child.getCompNamesPair(guid);
+                if (pair != null) {
+                    guids.add(ComponentNamesBP.getInstance()
+                            .resolveGuid(pair.getSecondName()));
+                } else {
+                    guids.add(guid);
+                }
             }
         }
     }
@@ -176,11 +179,15 @@ public class CompCheck {
     /**
      * Returns the Id of the SpecTC for ExecTCs and the normal id for other nodes
      * @param node the node
-     * @return the id
+     * @return the id or null if 
      */
     private Long getId(INodePO node) {
         if (node instanceof IExecTestCasePO) {
-            return ((IExecTestCasePO) node).getSpecTestCase().getId();
+            ISpecTestCasePO specTC = ((IExecTestCasePO) node).getSpecTestCase();
+            if (specTC != null) {
+                return specTC.getId();
+            }
+            return null;
         }
         return node.getId();
     }
