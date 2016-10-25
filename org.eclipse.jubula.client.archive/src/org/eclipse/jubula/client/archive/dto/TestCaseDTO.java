@@ -54,7 +54,8 @@ public class TestCaseDTO extends ParameterDTO {
      */
     public void addTestStep(NodeDTO testStep) {
         if (!(testStep instanceof RefTestCaseDTO
-                || testStep instanceof CapDTO)) {
+                || testStep instanceof CapDTO
+                || testStep instanceof CommentDTO)) {
             throw new IllegalArgumentException();
         }
         this.m_testSteps.add(testStep);

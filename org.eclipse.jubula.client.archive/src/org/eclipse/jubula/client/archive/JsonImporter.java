@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.archive.dto.CategoryDTO;
 import org.eclipse.jubula.client.archive.dto.CheckActivatedContextDTO;
 import org.eclipse.jubula.client.archive.dto.CheckAttributeDTO;
 import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
+import org.eclipse.jubula.client.archive.dto.CommentDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.DataRowDTO;
@@ -77,6 +78,7 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICheckConfContPO;
 import org.eclipse.jubula.client.core.model.ICheckConfPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -393,6 +395,9 @@ public class JsonImporter {
                 } else if (stepDto instanceof RefTestCaseDTO) {
                     tc.addNode(createExecTestCase(
                         proj, (RefTestCaseDTO)stepDto, assignNewGuid));
+                } else if (stepDto instanceof CommentDTO) {
+                    tc.addNode(createComment((CommentDTO) stepDto,
+                            assignNewGuid));
                 }
             }
             for (EventTestCaseDTO evTcDto : dto.getEventTestcases()) {
@@ -458,6 +463,20 @@ public class JsonImporter {
             }
             ImportExportUtil.switchCompNamesGuids(proj, oldToNewGUID);
         }
+    }
+    
+    /**
+     * 
+     * @param dto the DTO to 
+     * @param assignNewUuid if there should be a new Uuid
+     * @return a {@link ICommentPO}
+     */
+    private ICommentPO createComment(CommentDTO dto,
+            boolean assignNewUuid) {
+        if (dto.getUuid() != null && !assignNewUuid) {
+            return NodeMaker.createCommentPO(dto.getName(), dto.getUuid());
+        }
+        return NodeMaker.createCommentPO(dto.getName());
     }
     
     /**
@@ -1202,7 +1221,7 @@ public class JsonImporter {
      */
     private IExecPersistable createTestJob(TestJobDTO dto,
             boolean assignNewGuid) throws InvalidDataException {
-        
+
         ITestJobPO tj;
         if (dto.getUuid() != null && !assignNewGuid) {
             tj = NodeMaker.createTestJobPO(dto.getName(), dto.getUuid());
@@ -1213,31 +1232,40 @@ public class JsonImporter {
         tj.setDescription(dto.getDescription());
         tj.setTaskId(dto.getTaskId());
         fillTrackedChangesInformation(tj, dto);
-        
-        for (RefTestSuiteDTO dtoRts : dto.getRefTestSuites()) {
-            IRefTestSuitePO rts;
-            if (assignNewGuid) {
-                // Only Test Suites from the same project can be referenced,
-                // and all Test Suites for this Project have already been 
-                // initialized (so they have already been entered into the 
-                // old to new GUID map). This is why we can simply directly use 
-                // the old to new GUID map.
-                String testSuiteGuid = m_oldToNewGuids.get(dtoRts.getTsUuid());
-                if (testSuiteGuid == null) {
-                    throw new InvalidDataException(
-                            "Test Suite Reference: No new GUID found for Test Suite with old GUID: " + dtoRts.getTsUuid(),  //$NON-NLS-1$ 
-                            MessageIDs.E_IMPORT_PROJECT_XML_FAILED);
-                }
-                rts = NodeMaker.createRefTestSuitePO(dtoRts.getName(), 
-                        testSuiteGuid, dtoRts.getAutId());
-            } else {
-                rts = NodeMaker.createRefTestSuitePO(dtoRts.getName(), dtoRts
-                       .getUuid(), dtoRts.getTsUuid(), dtoRts.getAutId());
 
+        for (NodeDTO dtoRefs : dto.getRefTestSuites()) {
+            if (dtoRefs instanceof RefTestSuiteDTO) {
+                RefTestSuiteDTO dtoRts = (RefTestSuiteDTO) dtoRefs;
+                IRefTestSuitePO rts;
+                if (assignNewGuid) {
+                    // Only Test Suites from the same project can be referenced,
+                    // and all Test Suites for this Project have already been
+                    // initialized (so they have already been entered into the
+                    // old to new GUID map). This is why we can simply directly
+                    // use
+                    // the old to new GUID map.
+                    String testSuiteGuid =
+                            m_oldToNewGuids.get(dtoRts.getTsUuid());
+                    if (testSuiteGuid == null) {
+                        throw new InvalidDataException(
+                                "Test Suite Reference: No new GUID found for Test Suite with old GUID: " //$NON-NLS-1$
+                                        + dtoRts.getTsUuid(),
+                                MessageIDs.E_IMPORT_PROJECT_XML_FAILED);
+                    }
+                    rts = NodeMaker.createRefTestSuitePO(dtoRts.getName(),
+                            testSuiteGuid, dtoRts.getAutId());
+                } else {
+                    rts = NodeMaker.createRefTestSuitePO(dtoRts.getName(),
+                            dtoRts.getUuid(), dtoRts.getTsUuid(),
+                            dtoRts.getAutId());
+
+                }
+                rts.setComment(dtoRts.getComment());
+                rts.setDescription(dtoRts.getDescription());
+                tj.addNode(rts);
+            } else if (dtoRefs instanceof CommentDTO) {
+                tj.addNode(createComment((CommentDTO) dtoRefs, assignNewGuid));
             }
-            rts.setComment(dtoRts.getComment());
-            rts.setDescription(dtoRts.getDescription());
-            tj.addNode(rts);
         }
         return tj;
     }
@@ -1317,8 +1345,14 @@ public class JsonImporter {
         if (dto.getSelectedAut() != null) {
             ts.setAut(m_autRef.get(dto.getSelectedAut()));
         }
-        for (RefTestCaseDTO ref : dto.getUsedTestcases()) {
-            ts.addNode(createExecTestCase(proj, ref, assignNewGuid));
+        for (NodeDTO ref : dto.getUsedTestCases()) {
+            if (ref instanceof RefTestCaseDTO) {
+                ts.addNode(createExecTestCase(proj, (RefTestCaseDTO) ref,
+                        assignNewGuid));
+            }
+            if (ref instanceof CommentDTO) {
+                ts.addNode(createComment((CommentDTO) ref, assignNewGuid));
+            }
         }
         
         Map<String, Integer> defaultEventHandler = 
