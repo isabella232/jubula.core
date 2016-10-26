@@ -1049,6 +1049,8 @@ public class TestresultSummaryView extends ViewPart implements
                         return IconConstants.STEP_RETRY_OK_IMAGE;
                     case TestResultNode.ABORT:
                         return IconConstants.STEP_NOT_OK_IMAGE;
+                    case TestResultNode.SUCCESS_ONLY_SKIPPED:
+                        return IconConstants.STEP_SUCCESS_SKIPPED_IMAGE;
                     default:
                         return null;
                 }

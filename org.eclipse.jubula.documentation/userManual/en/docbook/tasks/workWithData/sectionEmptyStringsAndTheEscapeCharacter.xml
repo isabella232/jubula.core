@@ -10,7 +10,7 @@
 <section xml:id="special-parameters-empty-strings-and-the-escape-character" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Special parameters: empty strings and the escape character</title>
+  <title>Special parameters: empty strings, the escape character, and skipping test steps</title>
   <anchor role="helpid" condition="guidancerPropertiesViewContextId" xml:id="special-parameters-empty-strings-and-the-escape-character.guidancerPropertiesViewContextId" xreflabel="Properties View"/>
   <anchor role="helpid" condition="guidancerCentralTestDataEditorContextId" xml:id="special-parameters-empty-strings-and-the-escape-character.guidancerCentralTestDataEditorContextId" xreflabel="Central Test Data"/>
   <para>
@@ -47,5 +47,15 @@
   </para>
   <para role="tip">
     When you are using regular expressions, you will also need to think about which symbols need neutralising. Sometimes more than one backslash is necessary.
+  </para>
+  <para>
+    <emphasis role="strong">Skipping test steps</emphasis>
+  </para>
+  <para>
+    In order to skip a single test step you can use the special <emphasis>'##jbskip##'</emphasis> value.
+    A test step will not be executed as long as one of the step's parameters contains the value '##jbskip##'.
+  </para>
+  <para>
+    The value can be used for all parameters except for those whose values are limited to a value set (e.g. the Operator parameter). If the parameter's type is any other than String you can enter it by putting it into single quote marks.
   </para>
 </section>

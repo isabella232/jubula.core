@@ -56,6 +56,12 @@ public class CAPTestResponseMessage extends Message {
 
     /** constant to signal to pause the execution */
     public static final int PAUSE_EXECUTION = 31;
+    
+    /** test was skipped */
+    public static final int TEST_SKIP = 40;
+    
+    /** test was successful but only contained skipped children */
+    public static final int TEST_SUCCESS_ONLY_SKIPPED = 41;
 
     /** The state of test */
     private int m_state = TEST_OK;

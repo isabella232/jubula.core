@@ -140,7 +140,12 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         if (m_lastNonCap.getStatus() == TestResultNode.NOT_YET_TESTED
                 || m_lastNonCap.getStatus() == TestResultNode.TESTING) {
 
-            m_lastNonCap.setResult(TestResultNode.SUCCESS, null);
+            if (isAllSkipped(m_lastNonCap)) {
+                m_lastNonCap.setResult(TestResultNode.SUCCESS_ONLY_SKIPPED,
+                        null);
+            } else {
+                m_lastNonCap.setResult(TestResultNode.SUCCESS, null);
+            }
 
             if (m_endNode.getStatus() == TestResultNode.NOT_YET_TESTED
                     || m_endNode.getStatus() == TestResultNode.TESTING) {
@@ -151,6 +156,26 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         m_lastNonCap = m_lastNonCap.getParent();
         m_endNode = m_lastNonCap;
     }
+    
+    /**
+     * Checks whether the node's child nodes are all skipped
+     * @param node the node whose children should be checked
+     * @return <code>true</code> if the node's child nodes are all skipped,
+     * <code>false</code> otherwise.
+     */
+    private boolean isAllSkipped(TestResultNode node) {
+        List<TestResultNode> children = node.getResultNodeList();
+        if (children.size() > 0) {
+            for (TestResultNode child : children) {
+                if (child.getStatus() != TestResultNode.SUCCESS_ONLY_SKIPPED 
+                        && child.getStatus() != TestResultNode.SKIPPED) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
     /** 
      * {@inheritDoc}
@@ -159,7 +184,12 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         if (m_lastNonCap.getStatus() == TestResultNode.NOT_YET_TESTED 
                 || m_lastNonCap.getStatus() == TestResultNode.TESTING) {
            
-            m_lastNonCap.setResult(TestResultNode.SUCCESS, null);
+            if (isAllSkipped(m_lastNonCap)) {
+                m_lastNonCap.setResult(TestResultNode.SUCCESS_ONLY_SKIPPED,
+                        null);
+            } else {
+                m_lastNonCap.setResult(TestResultNode.SUCCESS, null);
+            }
 
             if (m_endNode.getStatus() == TestResultNode.NOT_YET_TESTED
                     || m_endNode.getStatus() == TestResultNode.TESTING) {

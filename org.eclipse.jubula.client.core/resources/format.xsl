@@ -121,6 +121,22 @@
 				big.abo::after {
 					content: " (test aborted due to internal error)";
 				}
+                
+                big.skp {
+                    color: lightgray;
+                }
+                
+                big.skp::after {
+                    content: " (skipped)";
+                }
+
+                big.chs {
+                    color: lightgray;
+                }
+                
+                big.chs::after {
+                    content: " (all child nodes were skipped)";
+                }
 				
 				/* testing */
 				big.tst {
@@ -291,6 +307,9 @@
 						<xsl:when test="status = 6">
 							<font color="lightgray">STOPPED</font>
 						</xsl:when>
+                        <xsl:when test="status = 21">
+                            <font color="lightgray">SUCCESSFUL (ALL CHILD NODES WERE SKIPPED)</font>
+                        </xsl:when>
 						<xsl:otherwise><font color="#DD0000">FAILED</font>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -718,6 +737,12 @@
 				<xsl:when test="status = 9">
 					<xsl:attribute name="class">abo</xsl:attribute>
 				</xsl:when>
+                <xsl:when test="status = 20">
+                    <xsl:attribute name="class">skp</xsl:attribute>
+                </xsl:when>
+                <xsl:when test="status = 21">
+                    <xsl:attribute name="class">chs</xsl:attribute>
+                </xsl:when>
 				<xsl:otherwise>
 					<xsl:attribute name="class">tst</xsl:attribute>
 				</xsl:otherwise>

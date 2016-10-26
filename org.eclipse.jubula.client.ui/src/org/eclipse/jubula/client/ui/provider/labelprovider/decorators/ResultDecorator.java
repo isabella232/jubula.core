@@ -73,6 +73,13 @@ public class ResultDecorator extends AbstractLightweightLabelDecorator {
                 case TestResultNode.ABORT:
                     image2use = IconConstants.STEP_NOT_OK_IMAGE_DESCRIPTOR;
                     break;
+                case TestResultNode.SKIPPED:
+                    image2use = IconConstants.STEP_SKIPPED_IMAGE_DESCRIPTOR;
+                    break;
+                case TestResultNode.SUCCESS_ONLY_SKIPPED:
+                    image2use =
+                        IconConstants.STEP_SUCCESS_SKIPPED_IMAGE_DESCRIPTOR;
+                    break;
                 default:
                     break;
             }

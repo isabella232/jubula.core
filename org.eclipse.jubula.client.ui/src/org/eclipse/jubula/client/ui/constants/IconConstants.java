@@ -109,6 +109,16 @@ public class IconConstants {
     /** The Step Testing image */
     public static final Image STEP_TESTING_IMAGE = STEP_TESTING_IMAGE_DESCRIPTOR
             .createImage();
+    /** The StepSkipped descriptor */
+    public static final ImageDescriptor STEP_SKIPPED_IMAGE_DESCRIPTOR = getImageDescriptor("StepSkipped.gif"); //$NON-NLS-1$
+    /** The StepSkipped image */
+    public static final Image STEP_SKIPPED_IMAGE = STEP_SKIPPED_IMAGE_DESCRIPTOR
+            .createImage();
+    /** The StepOkContainsSkipped descriptor */
+    public static final ImageDescriptor STEP_SUCCESS_SKIPPED_IMAGE_DESCRIPTOR = getImageDescriptor("StepOKContainsSkipped.gif"); //$NON-NLS-1$
+    /** The StepSkipped image */
+    public static final Image STEP_SUCCESS_SKIPPED_IMAGE = 
+            STEP_SUCCESS_SKIPPED_IMAGE_DESCRIPTOR.createImage();
     /** The StepNotOK  */
     public static final ImageDescriptor STEP_NOT_OK_IMAGE_DESCRIPTOR = getImageDescriptor("StepNotOK.gif"); //$NON-NLS-1$
     /** The StepNotOK  */

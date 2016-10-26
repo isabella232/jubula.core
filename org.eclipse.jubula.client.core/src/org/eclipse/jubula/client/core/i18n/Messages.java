@@ -322,6 +322,7 @@ public class Messages extends NLS {
     public static String SessionAndTransactionDontMatch;
     public static String SetNameNotSupportedOnProjectPO;
     public static String ShowWhereUsedSearching;
+    public static String SkipTestStepParameter;
     public static String StartAUTServerMessageSend;
     public static String StartingObjectMapping;
     public static String StartingRecordModus;
@@ -354,7 +355,9 @@ public class Messages extends NLS {
     public static String TestResultNodeGUINoNode;
     public static String TestResultNodeNotYetTested;
     public static String TestResultNodeRetrying;
+    public static String TestResultNodeSkipped;
     public static String TestResultNodeStepfailed;
+    public static String TestResultNodeSuccessOnlySkipped;
     public static String TestResultNodeSuccessfullyTested;
     public static String TestResultNodeSuccessRetry;
     public static String TestResultNodeTesting;

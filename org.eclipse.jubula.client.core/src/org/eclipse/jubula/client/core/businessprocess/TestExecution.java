@@ -18,6 +18,7 @@ import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
@@ -660,6 +661,37 @@ public class TestExecution {
     }
     
     /**
+     * Determines if the given CAP should be skipped.
+     * @param cap the CAP
+     * @return <code>true</code> if the CAP should be skipped,
+     *         <code>false</code> otherwise
+     */
+    private boolean shouldSkipCAP(ICapPO cap) {
+        try {
+            ITDManager tdManager =
+                    m_externalTestDataBP.getExternalCheckedTDManager(cap);
+            Iterator<IParamDescriptionPO> params = cap.getParameterListIter();
+            while (params.hasNext()) {
+                IParamDescriptionPO param = params.next();
+                String testData = tdManager.getCell(0, param);
+                ParamValueConverter converter =
+                        new ModelParamValueConverter(testData, cap, param);
+                String value = converter.getExecutionString(
+                        new ArrayList<ExecObject>(m_trav.getExecStackAsList()));
+                if (value.equals(Messages.SkipTestStepParameter)) {
+                    return true;
+                }
+            }
+        } catch (InvalidDataException e) {
+            // This can be ignored here
+        } catch (JBException e) {
+            fireError(e);
+        }
+        
+        return false;
+    }
+    
+    /**
      * Invokes the next step
      * 
      * @param cap cap, which to create the corresponding message for
@@ -668,10 +700,12 @@ public class TestExecution {
     private void processCap(ICapPO cap) {
         ICapPO currCap = cap;
         MessageCap messageCap = null;
+
         if (currCap == null) {
             endTestExecution();
             return;
         }
+        
         try {
             if (LOG.isDebugEnabled()) {
                 LOG.debug(Messages.TestStep + StringConstants.COLON
@@ -775,6 +809,13 @@ public class TestExecution {
      */
     private CAPTestResponseMessage clientExecutionHandling(ICapPO cap, 
         CAPTestMessage capTestMessage) {
+
+        if (shouldSkipCAP(cap)) {
+            CAPTestResponseMessage response = new CAPTestResponseMessage();
+            response.setState(CAPTestResponseMessage.TEST_SKIP);
+            response.setMessageCap(capTestMessage.getMessageCap());
+            return response;
+        }
         
         Action action = cap.getMetaAction();
         if (!action.isClientAction()) {
@@ -795,6 +836,7 @@ public class TestExecution {
             response.setMessageCap(capTestMessage.getMessageCap());
             return response;
         }
+        
         
         return null;
     }
@@ -1056,36 +1098,9 @@ public class TestExecution {
             pauseExecution(PauseMode.PAUSE);
         }
         if (testOk) {
-            resultNode.setResult(m_trav.getSuccessResult(), null);
+            processResultOk(msg, resultNode);
         } else {
-            // ErrorEvent has occured
-            TestErrorEvent event = msg.getTestErrorEvent();
-            if (StringUtils.isEmpty(resultNode.getCommandLog())) {
-                String commandLogKey = TestErrorEvent.Property.COMMAND_LOG_KEY;
-                String commandLog = (String) event.getProps()
-                        .get(commandLogKey);
-                resultNode.setCommandLog(commandLog);
-                event.getProps().remove(commandLogKey);
-            }
-            ReentryProperty reentry = m_trav.getEventHandlerReentry(
-                    event.getId()); 
-            if (reentry.equals(ReentryProperty.RETRY)) {
-                resultNode.setResult(TestResultNode.RETRYING, event);
-            } else {
-                m_stepCounter.incrementNumberOfFailedSteps();
-                if (reentry.equals(ReentryProperty.CONDITION)) {
-                    resultNode.setResult(TestResultNode.CONDITION_FAILED,
-                            event);
-                } else {
-                    resultNode.setResult(TestResultNode.ERROR, event);
-                }
-                if (m_autoScreenshot) {
-                    addScreenshotThroughAgent(false);
-                }
-                if (ClientTest.instance().isPauseTestExecutionOnError()) {
-                    pauseExecution(PauseMode.PAUSE);
-                }
-            }
+            processErrorEventOccured(msg, resultNode);
         }
         while (isPaused()) {
             testConnection();
@@ -1112,6 +1127,60 @@ public class TestExecution {
         }
     }
     
+    /**
+     * Sets the result of the given result node depending on whether the CAP was
+     * actually executed or was skipped
+     * @param msg the CAPTestResponseMessage of the CAP
+     * @param resultNode the resultNode of the CAP
+     */
+    private void processResultOk(final CAPTestResponseMessage msg,
+            TestResultNode resultNode) {
+        if (msg.getState() == CAPTestResponseMessage.TEST_SKIP) {
+            resultNode.setResult(TestResultNode.SKIPPED, null);
+        } else {
+            resultNode.setResult(m_trav.getSuccessResult(), null);
+        }
+    }
+    
+    /**
+     * Processes the result if an error event occured.
+     * @param msg the CAPTestResponseMessage of the CAP
+     * @param resultNode the resultNode of the CAP
+     */
+    private void processErrorEventOccured(final CAPTestResponseMessage msg,
+            TestResultNode resultNode) {
+
+        // ErrorEvent has occured
+        TestErrorEvent event = msg.getTestErrorEvent();
+        if (StringUtils.isEmpty(resultNode.getCommandLog())) {
+            String commandLogKey = TestErrorEvent.Property.COMMAND_LOG_KEY;
+            String commandLog = (String) event.getProps().get(commandLogKey);
+            resultNode.setCommandLog(commandLog);
+            event.getProps().remove(commandLogKey);
+        }
+        ReentryProperty reentry = m_trav.getEventHandlerReentry(
+                event.getId());
+        if (reentry.equals(ReentryProperty.RETRY)) {
+            resultNode.setResult(TestResultNode.RETRYING, event);
+        } else {
+            m_stepCounter.incrementNumberOfFailedSteps();
+            if (reentry.equals(ReentryProperty.CONDITION)) {
+                resultNode.setResult(TestResultNode.CONDITION_FAILED,
+                        event);
+            } else {            
+                resultNode.setResult(TestResultNode.ERROR, event);
+                if (m_autoScreenshot) {
+                    addScreenshotThroughAgent(false);
+                }
+                if (ClientTest.instance()
+                        .isPauseTestExecutionOnError()) {
+                    pauseExecution(PauseMode.PAUSE);
+                }
+            }
+        }
+    }
+    
+
     /**
      * asks the AUT Agent or the AUT to take a screenshot
      * @param agent true if we send the request to the AUT Agent, false if to the AUT

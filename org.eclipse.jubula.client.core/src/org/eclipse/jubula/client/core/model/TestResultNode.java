@@ -85,6 +85,16 @@ public class TestResultNode {
     
     /** Status if an infinite loop was encountered */
     public static final int INFINITE_LOOP = 11;
+
+    /**
+     * Status if the test was skipped
+     */
+    public static final int SKIPPED = 20;
+    
+    /**
+     * Status if the test is successful but contains only skipped test cases
+     */
+    public static final int SUCCESS_ONLY_SKIPPED = 21;
     
     /** the logger */
     private static final Logger LOG = 
@@ -448,6 +458,10 @@ public class TestResultNode {
                 return Messages.TestResultNodeConditionFailed;
             case INFINITE_LOOP:
                 return Messages.TestResultNodeInfiniteLoop;
+            case SKIPPED : 
+                return Messages.TestResultNodeSkipped;
+            case SUCCESS_ONLY_SKIPPED :
+                return Messages.TestResultNodeSuccessOnlySkipped;
             default : 
                 break;
         } 
