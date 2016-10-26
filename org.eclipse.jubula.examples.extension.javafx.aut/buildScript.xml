@@ -13,6 +13,7 @@
     <property name="out.dir.classes" value="${out.dir}/classes" />
     <property name="out.dir.jars" value="${out.dir}/jars" />
     <property name="app.jar.name" value="PieChart.jar" />
+	<property environment="env"/>
 
     <target name="default">
         <path id="classpath">
