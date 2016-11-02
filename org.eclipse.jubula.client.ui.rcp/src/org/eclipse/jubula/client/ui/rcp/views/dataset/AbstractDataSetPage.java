@@ -1084,6 +1084,8 @@ public abstract class AbstractDataSetPage extends Page
         };
         /** The index of the cell the editor was last activated at */
         private int m_currentEditorIndex;
+        /** The current selection index of the shown table items */
+        private int m_currentSelectionIndex;
         
         /**
          * @param parent parent
@@ -1151,10 +1153,10 @@ public abstract class AbstractDataSetPage extends Page
         private void writeDataSetData(String property, Object value, 
                 AbstractJBEditor edit) {
             final int langIndex = getColumnIndexOfProperty(property);
+            getTable().getItem(m_currentSelectionIndex).setText(langIndex, 
+                    value == null ? StringConstants.EMPTY : (String) value);
             setValueToModel(value, edit, m_currentEditorIndex,
                     m_currentEditorIndex);
-            getTable().getItem(m_currentEditorIndex).setText(langIndex, 
-                value == null ? StringConstants.EMPTY : (String) value);
         }
         
 
@@ -1280,6 +1282,7 @@ public abstract class AbstractDataSetPage extends Page
                 // end http://eclip.se/390800
                 TextControlBP.selectAll(m_editor.getEditor());
                 m_currentEditorIndex = getSelectedDataSet();
+                m_currentSelectionIndex = getTable().getSelectionIndex();
             }
         }
 
