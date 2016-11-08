@@ -152,6 +152,10 @@
       a used project(s) a dialog will be shown, where you can start search for 
       deprecated modules. The result will be show in the search view.
     </para>
+    <para>
+      You can also start the search for deprecated modules by selecting 
+      <emphasis role="menuPath">Search</emphasis>--&gt;<emphasis role="menuPath">Search for deprecated modules</emphasis>.
+    </para>
 	<figure xml:id="searchingfordeprecated-modules-dialog">
 		<title>Reused Projects</title>
 		<mediaobject>
