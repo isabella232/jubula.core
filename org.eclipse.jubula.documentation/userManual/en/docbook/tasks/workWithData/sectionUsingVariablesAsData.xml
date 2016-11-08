@@ -26,6 +26,8 @@
         Some actions (e.g. store value) let you save a value as a
         variable. You specify the name of the variable, e.g.
         <emphasis role="input">USERNAME</emphasis>.
+        Note that only standard ASCII alphanumerics and the underscore are
+        allowed in variable names, that is, the characters 'a'...'z', 'A'...'Z', '0'...'9', '_'.
       </para>
     </listitem>
     <listitem>
@@ -33,6 +35,9 @@
         When you want to use the variable, you can enter it as a
         parameter by preceding it with a dollar sign:
         <emphasis role="input">$USERNAME</emphasis>.
+        The parser will interpret the longest sequence of allowed characters after the $ sign to
+        constitute the variable name, e. g. <emphasis role="input">$VARÜABLE</emphasis> is interpreted as
+        the value of the variable named VAR followed by the literal text 'ÜABLE'.
       </para>
     </listitem>
   </itemizedlist>

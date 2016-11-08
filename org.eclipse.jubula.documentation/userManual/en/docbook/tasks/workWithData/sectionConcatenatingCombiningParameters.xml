@@ -51,20 +51,32 @@
   <orderedlist>
     <listitem>
       <para>
-        Referenced parameters must be written with curly brackets around the reference name:
+        Referenced parameters can be either written with curly brackets around the reference name:
       </para>
       
       <para>
-        <emphasis role="input">={REF_NAME</emphasis>}
+        <emphasis role="input">={REF_NAME}</emphasis>
+      </para>
+      <para>
+       or you can use a shorthand: the = sign followed by the name of the reference like:
+      </para>
+      <para>
+        <emphasis role="input">=REF_NAME</emphasis>
       </para>
     </listitem>
     <listitem>
       <para>
-        Variable names must also be written with curly brackets around them:
+        Variable names can also be either written with curly brackets around them:
       </para>
       
       <para>
         <emphasis role="input">${VAR_NAME}</emphasis>
+      </para>
+      <para>
+       or you can use a shorthand: the $ sign followed by the name of the reference like:
+      </para>
+      <para>
+        <emphasis role="input">$VAR_NAME</emphasis>
       </para>
     </listitem>
     <listitem>
@@ -79,6 +91,22 @@
       
       <para>
         <emphasis role="input">test_={PROJECTNAME}_${CUSTOMERNUMBER}_?now()</emphasis>
+      </para>
+      <para>
+       Be careful with the shorthand notation: the parser interprets all allowed characters following
+       an = or $ sign to be part of the name of the reference or variable, for example:
+      </para>
+      <para>
+       <emphasis role="input">test_=PRo1_JÖCT_$NAMÄ</emphasis>
+      </para>
+      <para>
+       is interpreted by the parser as
+      </para>
+      <para>
+       <emphasis role="input">test_={PRo1_J}ÖCT_${NAM}Ä</emphasis>,
+      </para>
+      <para>
+       so it uses the reference 'PRo1_J' and the variable 'NAM'.
       </para>
     </listitem>
   </orderedlist>

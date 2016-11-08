@@ -33,8 +33,8 @@
         <emphasis role="input">=REF_NAME</emphasis>.
       </para>
       <para role="tip">
-        Reference names may only consist of letters, numbers
-        and underscores. You cannot use spaces in reference names.
+        Reference names may only consist of letters (standard ASCII characters), numbers
+        and underscores. You cannot use spaces in reference names or any mutated vowels.
       </para>
     </listitem>
     <listitem>
