@@ -1461,9 +1461,6 @@ public abstract class AbstractDataSetPage extends Page
                     getParamInterfaceObj(), getParamName(), this, SWT.NONE);
             control.addKeyListener(m_keyListener);
             control.setFocus();
-            // FIXME: see http://eclip.se/390800
-            // control.addFocusListener(m_focusListener);
-            // end http://eclip.se/390800
             control.addListener(SWT.Selection, m_listener);
             m_oldValue = getRow().getText(getColumn());
             TextControlBP.setText(m_oldValue, control);
@@ -1492,12 +1489,10 @@ public abstract class AbstractDataSetPage extends Page
         private void activateEditor() {
             if (canModify()) {
                 m_editor.setEditor(createEditor());
-                // FIXME: see http://eclip.se/390800
                 Control editorCtrl = m_editor.getEditor();
                 if ((editorCtrl != null) && !editorCtrl.isDisposed()) {
                     editorCtrl.addFocusListener(m_focusListener);
                 }
-                // end http://eclip.se/390800
                 TextControlBP.selectAll(m_editor.getEditor());
                 m_currentEditorIndex = getSelectedDataSet();
                 m_currentSelectionIndex = getTable().getSelectionIndex();
@@ -1773,6 +1768,10 @@ public abstract class AbstractDataSetPage extends Page
                 // e.g. in Jubula plugin-version you can open an java editor, 
                 // that reacts on org.eclipse.jface.text.TextSelection, which
                 // is not a StructuredSelection
+                return;
+            }
+            if (getTable().isDisposed()) {
+                // Check if the Table is disposed to prevent SWTExceptions.
                 return;
             }
             IStructuredSelection strucSelection = 
