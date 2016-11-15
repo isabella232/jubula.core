@@ -217,7 +217,7 @@ public class ComponentNamesTableComposite extends Composite implements
          * {@inheritDoc}
          */
         public void cancelEditor() {
-            // do nothing
+            // Do nothing.
         }
 
         /**
@@ -225,7 +225,7 @@ public class ComponentNamesTableComposite extends Composite implements
          */
         public void editorValueChanged(boolean oldValidState, 
             boolean newValidState) { 
-            // Do nothing
+            // Do nothing.
         }
     }
     
@@ -341,12 +341,11 @@ public class ComponentNamesTableComposite extends Composite implements
          * {@inheritDoc}
          */
         public void modify(Object element, String property, Object value) {
-            if (getValue(element, property).equals(value)
-                    || (value != null 
-                        && ((String)value).trim().length() == 0)) {
-                return;
-            }
-            updateSecondName(getPair(element), (String)value);
+            /*
+             * Do nothing, since this method seemed to-do nothing except causing
+             * a bug in the component names view. Everything is already handled
+             * by CellEditorListener.applyEditorValue().
+             */
         }
         
         /**
