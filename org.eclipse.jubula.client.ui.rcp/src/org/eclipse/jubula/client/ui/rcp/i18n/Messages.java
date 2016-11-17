@@ -226,9 +226,11 @@ public class Messages extends NLS {
     public static String EditorCanNotBeOpened;
     public static String EditorPreferencePageAddPositionText;
     public static String EditorPreferencePageDescription;
+    public static String EditorPreferencePageSaveReminderText;
     public static String EditorPreferencePageShowCapInfo;
     public static String EditorPreferencePageShowTransientChildrenCheckBox;
     public static String EditorPreferencePageShowCountersCheckBox;
+    public static String EditorSaveReminder;
     public static String EditorsSaveEditors;
     public static String EditorWillBeClosed;
     public static String EditParametersDialogAdd;
@@ -540,11 +542,15 @@ public class Messages extends NLS {
     public static String PrefPageBasicDataDirInvalid;
     public static String PrefPageBasicDataDirLabel;
     public static String PrefPageBasicDataDirWSLabel;
+    public static String PrefPageBasicEnableSaveReminder;
     public static String PrefPageBasicInsertNewNode;
     public static String PrefPageBasicNever;
     public static String PrefPageBasicNodeInsertionGroup;
     public static String PrefPageBasicOpenPerspective;
     public static String PrefPageBasicPrompt;
+    public static String PrefPageBasicReminderInterval1;
+    public static String PrefPageBasicReminderInterval2;
+    public static String PrefPageBasicSaveReminderGroup;
     public static String PrefPageBasicSelectDataDir;
     public static String PrefPageTrackChanges;
     public static String PrefPageTrackChangesDeleteData;

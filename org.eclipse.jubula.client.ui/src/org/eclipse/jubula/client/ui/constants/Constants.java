@@ -311,6 +311,10 @@ public interface Constants {
     /** Key for m_text value to be stored as a resource property */
     public static final String NODE_INSERT_KEY = "NODE_INSERT_KEY"; //$NON-NLS-1$
     /** Key for m_text value to be stored as a resource property */
+    public static final String SAVE_REMINDER_ENABLE_KEY = "SAVE_REMINDER_ENABLE_KEY"; //$NON-NLS-1$
+    /** Key for m_text value to be stored as a resource property */
+    public static final String SAVE_REMINDER_INTERVAL_KEY = "SAVE_REMINDER_INTERVAL_KEY"; //$NON-NLS-1$
+    /** Key for m_text value to be stored as a resource property */
     public static final String SHOWCAPINFO_KEY = "SHOWCAPINFO_PREF_KEY"; //$NON-NLS-1$
     /** Key preference store property */
     public static final String SHOW_TRANSIENT_CHILDREN_KEY = "SHOW_TRANSIENT_CHILDREN_KEY"; //$NON-NLS-1$
@@ -481,7 +485,11 @@ public interface Constants {
     public static final String START_BROWSE_PATH_DEFAULT = 
         StringConstants.EMPTY;
     /** Key for boolean value to be stored as a resource property */
-    public static final boolean NODE_INSERT_KEY_DEFAULT = false;
+    public static final boolean NODE_INSERT_KEY_DEFAULT = true;
+    /** Key for boolean value to be stored as a resource property */
+    public static final boolean SAVE_REMINDER_ENABLE_KEY_DEFAULT = false;
+    /** Key for int value to be stored as a resource property */
+    public static final int SAVE_REMINDER_INTERVAL_KEY_DEFAULT = 10;
     /** Key for boolean value to be stored as a resource property */
     public static final boolean SHOWCAPINFO_KEY_DEFAULT = true;
     /** default value for showing transient childrens */

@@ -12,9 +12,17 @@ package org.eclipse.jubula.client.ui.rcp.events;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.PlatformUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +32,9 @@ import org.slf4j.LoggerFactory;
  * @created Jun 7, 2010
  */
 public class GuiEventDispatcher {
+    
+    /** Multiplicator milliseconds to minutes. */
+    private static final int MS_TO_MIN_MULTIPLICATOR = 60000;
 
     /** to notify clients about change of the dirty state of an editor */
     public interface IEditorDirtyStateListener {
@@ -61,10 +72,61 @@ public class GuiEventDispatcher {
         new HashSet<IEditorDirtyStateListener>();
     
     /**
+     * 
+     */
+    private ScheduledExecutorService m_dirtyScheduler =
+            Executors.newSingleThreadScheduledExecutor();
+
+    /**
+     * The timestamp when the last save occurred.
+     */
+    private volatile long m_dirtyTimestamp = System.currentTimeMillis();
+
+    /**
+     * If the timer for the save reminder is activated.
+     */
+    private volatile boolean m_dirtyTimer = false;
+
+    /**
      * private constructor
      */
     private GuiEventDispatcher() {
-        // Nothing to initialize
+        m_dirtyScheduler = Executors.newSingleThreadScheduledExecutor();
+        m_dirtyScheduler.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                long timer = m_dirtyTimestamp
+                        + (Plugin.getDefault().getPreferenceStore()
+                                .getInt(Constants.SAVE_REMINDER_INTERVAL_KEY)
+                                * MS_TO_MIN_MULTIPLICATOR);
+                boolean enabled = Plugin.getDefault().getPreferenceStore()
+                        .getBoolean(Constants.SAVE_REMINDER_ENABLE_KEY);
+                if (System.currentTimeMillis() > timer && enabled
+                        && m_dirtyTimer) {
+                    showSaveReminder();
+                    updateDirtyTimer(false);
+                }
+            }
+        }, 0, 1, TimeUnit.SECONDS);
+    }
+
+    /**
+     * Shows the reminder pop-up.
+     */
+    private void showSaveReminder() {
+        final String message = NLS.bind(Messages.EditorSaveReminder,
+                Plugin.getDefault().getPreferenceStore()
+                        .getInt(Constants.SAVE_REMINDER_INTERVAL_KEY));
+        Plugin.getDisplay().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                MessageDialog
+                        .openWarning(
+                                PlatformUI.getWorkbench()
+                                        .getActiveWorkbenchWindow().getShell(),
+                                "Warning", message); //$NON-NLS-1$
+            }
+        });
     }
     
     /**
@@ -99,6 +161,8 @@ public class GuiEventDispatcher {
     public void removeEditorDirtyStateListener(IEditorDirtyStateListener l) {
         m_editorDirtyStateListeners.remove(l);
         m_editorDirtyStateListenersPost.remove(l);
+        // scheduler update
+        updateDirtyTimer(false);
     }
     
     /**
@@ -130,5 +194,21 @@ public class GuiEventDispatcher {
                 LOG.error(Messages.UnhandledExceptionCallingListeners, t);
             }
         }
+
+        // scheduler update
+        updateDirtyTimer(isDirty);
     }
+
+    /**
+     * 
+     * @param dirty
+     *            determines if new dirty editors exist
+     */
+    private synchronized void updateDirtyTimer(boolean dirty) {
+        if (dirty && !m_dirtyTimer) {
+            this.m_dirtyTimestamp = System.currentTimeMillis();
+        }
+        m_dirtyTimer = dirty;
+    }
+
 }

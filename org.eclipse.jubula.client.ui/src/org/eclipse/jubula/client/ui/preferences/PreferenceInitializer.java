@@ -82,6 +82,10 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.PERSP_CHANGE_KEY_DEFAULT);
         prefStore.setDefault(Constants.NODE_INSERT_KEY,
                 Constants.NODE_INSERT_KEY_DEFAULT);
+        prefStore.setDefault(Constants.SAVE_REMINDER_ENABLE_KEY,
+                Constants.SAVE_REMINDER_ENABLE_KEY_DEFAULT);
+        prefStore.setDefault(Constants.SAVE_REMINDER_INTERVAL_KEY,
+                Constants.SAVE_REMINDER_INTERVAL_KEY_DEFAULT);
         prefStore.setDefault(Constants.SHOWCAPINFO_KEY,
                 Constants.SHOWCAPINFO_KEY_DEFAULT);
         prefStore.setDefault(Constants.SHOW_TRANSIENT_CHILDREN_KEY,
