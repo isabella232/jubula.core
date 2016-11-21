@@ -666,12 +666,19 @@ public class TableTester extends AbstractTableTester {
      * is checked
      * 
      * @param checked true if checkbox in cell should be selected, false otherwise
+     * @param timeout the maximum amount of time to wait to verify whether the
+     *          checkbox in the row is checked
      * @throws StepExecutionException If no cell is selected or the verification fails.
      */
-    public void rcVerifyCheckboxInSelectedRow(boolean checked)
-        throws StepExecutionException {
-        int row = ((ITableComponent) getComponent()).getSelectedCell().getRow();
-        verifyCheckboxInRow(checked, row);
+    public void rcVerifyCheckboxInSelectedRow(final boolean checked,
+            int timeout) throws StepExecutionException {
+        invokeAndWait("rcVerifyCheckBoxInSelectedRow", timeout, new Runnable() { //$NON-NLS-1$
+            public void run() {
+                int row = ((ITableComponent) getComponent()).getSelectedCell()
+                        .getRow();
+                verifyCheckboxInRow(checked, row);
+            }
+        });
     }
     
     /**
