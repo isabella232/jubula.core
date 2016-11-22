@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +22,8 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.utils.ComboParamValidator;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
@@ -50,7 +53,20 @@ public abstract class AbstractParamInterfaceBP<T> {
      *            the row to insert
      */
     public void addDataSet(IParameterInterfacePO obj, int row) {
-        obj.getDataManager().insertDataSet(row);
+        IExecTestCasePO exec = (IExecTestCasePO) obj;
+        ISpecTestCasePO spec = exec.getSpecTestCase();
+        ITDManager dataManager = exec.getDataManager();
+        int i = 0;
+        List<String> list = new ArrayList<String>();
+        while (i < dataManager.getUniqueIds().size()) {
+            String uuid = dataManager.getUniqueIds().get(i);
+            IParamDescriptionPO uniqueID = exec.getParameterForUniqueId(uuid);
+            String value = getValueForSpecNodeWithParamDesc(uniqueID, spec);
+            list.add(value);
+            i++;
+        }
+        IDataSetPO dataSet = PoMaker.createListWrapperPO(list);
+        obj.getDataManager().insertDataSet(dataSet, row);
     }
     
     /**
@@ -150,7 +166,10 @@ public abstract class AbstractParamInterfaceBP<T> {
         }
         int col = srcNode.getDataManager().findColumnForParam(
                 srcDesc.getUniqueId());
-        if (col > -1 && srcNode.getDataManager().getDataSetCount() > rowCount) {
+        boolean colNotExistend = false;
+        boolean foundCol = false;
+        int dataSetCount = srcNode.getDataManager().getDataSetCount();
+        if (col > -1 && dataSetCount > rowCount) {
             IDataSetPO row = srcNode.getDataManager().getDataSet(rowCount);
             try {
                 String td = row.getValueAt(col);
@@ -158,17 +177,21 @@ public abstract class AbstractParamInterfaceBP<T> {
                     new ModelParamValueConverter(td,
                             srcNode, srcDesc);
                 result = conv.getGuiString();
+                foundCol = true;
             } catch (IndexOutOfBoundsException e) {
                 // do nothing
+                colNotExistend = true;
             }
         }
-        if (col >= -1 && StringUtils.isBlank(result)) {
+        if (col == -1 || colNotExistend 
+                || (dataSetCount <= srcNode.getParameterListSize() 
+                && StringUtils.isBlank(result) && !foundCol)) {
             if (srcNode instanceof IExecTestCasePO) {
                 INodePO specNode = srcNode.getSpecificationUser();
                 specNode = ((IExecTestCasePO) srcNode).getSpecTestCase();
                 if (specNode instanceof ISpecTestCasePO) {
                     result = getValueForSpecNodeWithParamDesc(
-                            srcDesc, (ISpecTestCasePO) specNode, col);
+                            srcDesc, (ISpecTestCasePO) specNode);
                 }
             }
         }
@@ -179,11 +202,10 @@ public abstract class AbstractParamInterfaceBP<T> {
      * Gets the value (including default value if there is a cap in the spec)
      * @param srcDesc the {@link IParamDescriptionPO} of the parameter to get the value for
      * @param specNode the spec node to check
-     * @param column the column number
      * @return the value for a combination of {@link ISpecTestCasePO} column and {@link IParamDescriptionPO}
      */
     public static String getValueForSpecNodeWithParamDesc(
-            IParamDescriptionPO srcDesc, ISpecTestCasePO specNode, int column) {
+            IParamDescriptionPO srcDesc, ISpecTestCasePO specNode) {
         List<INodePO> list = specNode.getUnmodifiableNodeList();
         if (list.size() == 1) {
             INodePO possibleCap = list.get(0);
@@ -252,14 +274,19 @@ public abstract class AbstractParamInterfaceBP<T> {
 
         String oldTd = null;
         final IParamDescriptionPO desc = conv.getDesc();
+        IParameterInterfacePO currentNode = conv.getCurrentNode();
+        ITDManager dataManager = currentNode.getDataManager();
         try {
-            oldTd = conv.getCurrentNode().getDataManager().getCell(dataSetRow,
+            oldTd = dataManager.getCell(dataSetRow,
                 desc);
         } catch (IndexOutOfBoundsException e) { // NOPMD by al on 3/19/07 1:23 PM
             // Nothing to be done
         }
         String td = createOrUpdateTestData(oldTd, conv);
-        conv.getCurrentNode().getDataManager().updateCell(td, dataSetRow,
+        if (dataManager.getDataSetCount() <= dataSetRow) {
+            addDataSet(currentNode, dataSetRow);
+        }
+        dataManager.updateCell(td, dataSetRow,
             desc.getUniqueId());
     }
     

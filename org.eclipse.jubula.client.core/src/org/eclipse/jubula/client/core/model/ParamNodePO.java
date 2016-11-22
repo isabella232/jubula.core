@@ -266,23 +266,24 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                         }
                     }
                    
-                    if (column >= -1) {
-                        List<INodePO> nodes = null;
-                        if (this instanceof IExecTestCasePO) {
-                            IExecTestCasePO exec = (IExecTestCasePO) this;
-                            nodes = exec.getSpecTestCase()
-                                    .getUnmodifiableNodeList();
-                            String result = AbstractParamInterfaceBP
-                                    .getValueForSpecNodeWithParamDesc(paramDesc,
-                                            exec.getSpecTestCase(), column);
-                            if (StringUtils.isNotBlank(result)) {
-                                return true;
-                            }
-                        }
-                    }
                     
                     String value = TestDataBP.INSTANCE.getTestData(
                             this, testDataManager, paramDesc, i);
+                    if (StringUtils.isBlank(value) && column >= -1) {
+                        if (this instanceof IExecTestCasePO) {
+                            IExecTestCasePO exec = (IExecTestCasePO) this;
+                            String result = AbstractParamInterfaceBP
+                                    .getValueForSpecNodeWithParamDesc(paramDesc,
+                                            exec.getSpecTestCase());
+                            if (value == null  
+                                    && StringUtils.isNotBlank(result)) {
+                                value = result;
+                            }
+                            if (StringUtils.isBlank(result)) {
+                                return false;
+                            }
+                        }
+                    }
                     if (StringUtils.isNotEmpty(value)) {
                         ModelParamValueConverter mpvc = 
                                 new ModelParamValueConverter(
@@ -307,15 +308,44 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                     }
                 }
             }
-            if ((testDataManager.getDataSetCount() == 0) 
+            if ((testDataManager.getDataSetCount() == 0)
                     && (paramListSize > 0)) {
-                return false;
-            }
-            if (getParameterListSize() > testDataManager.getColumnCount()) {
-                return false;
+                // this is needed if a Spec is the data holder
+                return checkSpecForIncompleteData();
             }
         }
         return true;
+    }
+
+    /**
+     * checks if the instance of a spec is having default values 
+     * for all parameters
+     * @return if the test data is complete
+     */
+    private boolean checkSpecForIncompleteData() {
+        ISpecTestCasePO thisSpec = null;
+        if (this instanceof ISpecTestCasePO) {
+            thisSpec = (ISpecTestCasePO) this;
+        } else if (this instanceof IExecTestCasePO) {
+            thisSpec = ((IExecTestCasePO)this).getSpecTestCase();
+        }
+        if (thisSpec != null) {
+            List<IParamDescriptionPO> specParameters =
+                    thisSpec.getParameterList();
+            boolean isComplete = true;
+            for (IParamDescriptionPO paramDesc : specParameters) {
+                String result = AbstractParamInterfaceBP
+                        .getValueForSpecNodeWithParamDesc(
+                                paramDesc,
+                                thisSpec);
+                if (StringUtils.isBlank(result)) {
+                    isComplete = false;
+                }
+            }
+            return isComplete;
+
+        }
+        return false;
     }
 
     /**

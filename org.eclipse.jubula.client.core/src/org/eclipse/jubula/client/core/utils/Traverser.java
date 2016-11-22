@@ -992,7 +992,7 @@ public class Traverser {
                         getDataForExec(execNode, desc, tdManager, dataSetIndex);
                 if (StringUtils.isBlank(date)) {
                     throw new JBFatalException(
-                            "Data for node " + execNode.getName(),
+                            "Data for node " + execNode.getName(), //$NON-NLS-1$
                             MessageIDs.E_UNEXPECTED_EXCEPTION);
                 }
                 ParamValueConverter conv = new ModelParamValueConverter(
@@ -1028,18 +1028,20 @@ public class Traverser {
     private String getDataForExec(INodePO node, IParamDescriptionPO desc,
             ITDManager tdManager, int dataSetIndex) {
         String data = StringConstants.EMPTY;
+        boolean cellNotFound = false;
         try {
             data = tdManager.getCell(dataSetIndex, desc);
         } catch (IndexOutOfBoundsException e) {
+            cellNotFound = true;
             // ignored
         }
-        if (StringUtils.isBlank(data) && node instanceof IExecTestCasePO) {
+        if (cellNotFound && StringUtils.isBlank(data)
+                && node instanceof IExecTestCasePO) {
             INodePO specNode = ((IExecTestCasePO) node).getSpecTestCase();
             if (specNode instanceof ISpecTestCasePO) {
                 data = AbstractParamInterfaceBP
                         .getValueForSpecNodeWithParamDesc(desc,
-                                (ISpecTestCasePO) specNode,
-                                dataSetIndex);
+                                (ISpecTestCasePO) specNode);
             }
         }
         return data;
