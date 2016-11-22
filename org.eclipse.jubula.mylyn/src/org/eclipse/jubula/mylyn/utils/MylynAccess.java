@@ -270,7 +270,7 @@ public final class MylynAccess {
                                     Activator.ID,
                                     "Task might not have been updated successfully.")); //$NON-NLS-1$
                         }
-                        if (monitor.isCanceled()) {
+                        if (monitor != null && monitor.isCanceled()) {
                             updateInfo.add(new Status(IStatus.OK,
                                     Activator.ID, "Task update has been cancelled.")); //$NON-NLS-1$
                             break;
