@@ -200,8 +200,7 @@ public class ZipUtil {
                 }
             }
         }
-        
-        return (File[])extractedFiles.toArray();
+        return extractedFiles.toArray(new File[extractedFiles.size()]);
     }
     
     /**

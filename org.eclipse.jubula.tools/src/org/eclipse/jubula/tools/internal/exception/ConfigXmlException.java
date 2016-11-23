@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.tools.internal.exception;
 
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+
 /**
  * exceptions concerning any problem with XML configuration files
  * 
@@ -17,6 +19,9 @@ package org.eclipse.jubula.tools.internal.exception;
  * @created 29.11.2005
  */
 public class ConfigXmlException extends JBFatalAbortException {
+    /** the toolkitDescriptor if existent*/
+    private String m_toolkitDescriptor = StringConstants.EMPTY;
+
     /**
      * public constructor
      * 
@@ -27,5 +32,25 @@ public class ConfigXmlException extends JBFatalAbortException {
      */
     public ConfigXmlException(String message, Integer id) {
         super(message, id);
+    }
+    
+    /**
+     * public constructor
+     * 
+     * @param toolkitDescriptor the name of the {@link org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor}
+     * @param message the detailed message
+     * @param id An ErrorMessage.ID. {@inheritDoc}
+     */
+    public ConfigXmlException(String toolkitDescriptor, 
+            String message, Integer id) {
+        super(message, id);
+        m_toolkitDescriptor = toolkitDescriptor;
+    }
+    
+    /**
+     * @return the toolkit descriptor
+     */
+    public String getToolkitDescriptor() {
+        return m_toolkitDescriptor;
     }
 }

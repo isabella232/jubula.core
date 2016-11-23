@@ -43,31 +43,6 @@ Make sure that the Integrated Test Environment (ITE)  is maximized to complete t
             <param name="path" value="../shared/createProject.xml">
             </param>
          </task>
-         <task kind="cheatsheet" name="Define an AUT" skip="false">
-            <intro>
-               Each Project can have one or more AUT&apos;s.
-            </intro>
-            <param name="path" value="../shared/defineAUT.xml">
-            </param>
-         </task>
-         <task kind="cheatsheet" name="Configure the AUT" skip="false">
-            <intro>
-               Each AUT can have one or more configurations. 
-<br/><br/>
-A configuration contains details about how to start the AUT.
-<br/><br/>
-For example, you need to define where to start your AUT (on what computer) and with what arguments. 
-<br/><br/>
-Some AUT&apos;s will need different configurations so that they can be tested on different platforms.
-            </intro>
-            <onCompletion>
-               It may be necessary to change or add other information in the AUT configuration dialog when you configure your own AUT - especially if you are working with the AUT on another machine. <br/><br/> 
-There is more information on configuring AUT&apos;s in the handbook, in the <b>Tasks</b> chapter.  <br/><br/>
-You can also see context-sensitive help by pressing <b>F1</b> in the AUT configuration dialog.
-            </onCompletion>
-            <param name="path" value="../shared/configureAUT.xml">
-            </param>
-         </task>
       </taskGroup>
       <taskGroup kind="set" name="Creating the test specification" skip="false">
          <intro>

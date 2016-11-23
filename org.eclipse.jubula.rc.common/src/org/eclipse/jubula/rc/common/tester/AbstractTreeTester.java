@@ -36,7 +36,6 @@ import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -503,17 +502,12 @@ public abstract class AbstractTreeTester extends WidgetTester {
             rcExpand(pathType, preAscend, treePath, operator);
         } catch (StepExecutionException e) {
             if (exists) {
-                throw new StepVerifyFailedException(
-                        "Verify failed on tree-path: " //$NON-NLS-1$
-                                + treePath, EventFactory.createVerifyFailed(
-                                        treePath, StringConstants.EMPTY));
+                Verifier.equals(exists, false);
             }
             return;
         }
         if (!exists) {
-            throw new StepVerifyFailedException("Verify failed on tree-path: ",  //$NON-NLS-1$
-                EventFactory.createVerifyFailed(
-                        StringConstants.EMPTY, treePath));
+            Verifier.equals(exists, true);
         }
     }
 
@@ -534,17 +528,12 @@ public abstract class AbstractTreeTester extends WidgetTester {
             rcExpandByIndices(pathType, preAscend, treePath);
         } catch (StepExecutionException e) {
             if (exists) {
-                throw new StepVerifyFailedException("Verify failed on tree-path: " //$NON-NLS-1$
-                    + treePath,
-                    EventFactory.createVerifyFailed(treePath, 
-                            StringConstants.EMPTY));
+                Verifier.equals(exists, false);
             }
             return;
         }
         if (!exists) {
-            throw new StepVerifyFailedException("Verify failed on tree-path: ",  //$NON-NLS-1$
-                EventFactory.createVerifyFailed(
-                        StringConstants.EMPTY, treePath));
+            Verifier.equals(exists, true);
         }
     }
     

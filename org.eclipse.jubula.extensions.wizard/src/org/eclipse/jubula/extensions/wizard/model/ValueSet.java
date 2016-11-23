@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.extensions.wizard.model;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
+
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * A value set containing all legal values for a parameter
@@ -25,7 +27,7 @@ public class ValueSet {
     
     /** Constructor */
     public ValueSet() {
-        m_valueSet = new HashSet<>();
+        m_valueSet = new LinkedHashSet<>();
     }
     
     /**
@@ -65,7 +67,8 @@ public class ValueSet {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (String elem : m_valueSet) {
-            sb.append(elem.trim() + ", "); //$NON-NLS-1$
+            sb.append(elem.trim() + StringConstants.COMMA
+                    + StringConstants.SPACE);
         }
         if (sb.length() > 0) {
             sb.replace(sb.lastIndexOf(","), sb.lastIndexOf(" "), ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$

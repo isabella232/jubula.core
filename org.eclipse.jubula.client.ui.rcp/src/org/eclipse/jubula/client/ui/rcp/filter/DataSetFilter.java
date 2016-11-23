@@ -40,7 +40,7 @@ public class DataSetFilter extends ViewerFilter {
             return true;
         }
         for (String value : ((IDataSetPO)element).getColumnStringValues()) {
-            if (value.matches(m_searchString)) {
+            if (value != null && value.matches(m_searchString)) {
                 return true;
             }
         }

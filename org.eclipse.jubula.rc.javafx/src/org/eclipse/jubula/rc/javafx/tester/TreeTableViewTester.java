@@ -78,10 +78,15 @@ public class TreeTableViewTester extends TreeViewTester {
                         List<TreeTableCell> tCells = NodeTraverseHelper
                                 .getInstancesOf((Parent) getRealComponent(),
                                         TreeTableCell.class);
+                        TreeTableCell resultCell = null;
                         for (TreeTableCell cell : tCells) {
-                            if (NodeBounds.checkIfContains(point, cell)) {
-                                return cell;
+                            //this check is necessary because the parent cell also contains the point
+                            if (childCheck(point, resultCell, cell)) {
+                                resultCell = cell;
                             }
+                        }
+                        if (resultCell != null) {
+                            return resultCell;
                         }
                         throw new StepExecutionException(
                                 "No tree node found at mouse position: " //$NON-NLS-1$
@@ -93,6 +98,22 @@ public class TreeTableViewTester extends TreeViewTester {
                     }
                 });
         return result;
+    }
+    
+    /**
+     * @param point mouse point
+     * @param parent supposed parent cell
+     * @param child supposed child of parent cell
+     * @return <code>true</code> if the child cell contains the point
+     *              and the supposed parent is null or the supposed child
+     *              is child of supposed parent. Otherwise <code>false</code>.
+     */
+    private boolean childCheck (Point2D point, TreeTableCell parent,
+            TreeTableCell child) {
+        
+        return NodeBounds.checkIfContains(point, child) && (parent == null
+                || child.getTreeTableRow().getTreeItem().getParent()
+                    .equals(parent.getTreeTableRow().getTreeItem()));
     }
     
     /**

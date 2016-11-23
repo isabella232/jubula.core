@@ -175,6 +175,7 @@ public class TestresultSummaryDTO {
         m_projectMajorVersion = trs.getProjectMajorVersion();
         m_projectMinorVersion = trs.getProjectMinorVersion();
         m_projectMicroVersion = trs.getProjectMicroVersion();
+        m_projectVersionQualifier = trs.getProjectVersionQualifier();
         m_projectName = trs.getProjectName();
         m_blobWritten = trs.isReportWritten();
         m_testsuiteDate = trs.getTestsuiteDate();

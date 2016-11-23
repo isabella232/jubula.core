@@ -223,25 +223,28 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * remove.
      */
     private void removeReferences(IParamDescriptionPO desc,
-            Iterator childrenIt) {
+            Iterator<? extends INodePO> childrenIt) {
         while (childrenIt.hasNext()) {
-            final IParamNodePO child = (IParamNodePO)childrenIt.next();
-            final ITDManager mgr = child.getDataManager();
-            final Iterator<TDCell> refIt = 
-                child.getParamReferencesIterator();
-            while (refIt.hasNext()) {
-                final TDCell cell = refIt.next();
-                final String guid = mgr.getUniqueIds().get(cell.getCol());
-                final IParamDescriptionPO childDesc = 
-                    child.getParameterForUniqueId(guid); 
-                final ModelParamValueConverter conv = 
-                    new ModelParamValueConverter(cell.getTestData(), child, 
-                            childDesc);
-                if (conv.containsReferences()) {
-                    final boolean isModified = conv.removeReference(
-                            desc.getUniqueId());
-                    if (isModified) {
-                        cell.setTestData(conv.getModelString());
+            INodePO node = childrenIt.next();
+            if (node instanceof IParamNodePO) {
+                final IParamNodePO child = (IParamNodePO)node;
+                final ITDManager mgr = child.getDataManager();
+                final Iterator<TDCell> refIt =
+                    child.getParamReferencesIterator();
+                while (refIt.hasNext()) {
+                    final TDCell cell = refIt.next();
+                    final String guid = mgr.getUniqueIds().get(cell.getCol());
+                    final IParamDescriptionPO childDesc =
+                        child.getParameterForUniqueId(guid);
+                    final ModelParamValueConverter conv =
+                        new ModelParamValueConverter(cell.getTestData(), child,
+                                childDesc);
+                    if (conv.containsReferences()) {
+                        final boolean isModified = conv.removeReference(
+                                desc.getUniqueId());
+                        if (isModified) {
+                            cell.setTestData(conv.getModelString());
+                        }
                     }
                 }
             }
