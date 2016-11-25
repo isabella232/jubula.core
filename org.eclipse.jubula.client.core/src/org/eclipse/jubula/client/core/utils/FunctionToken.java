@@ -227,4 +227,18 @@ public class FunctionToken extends AbstractParamValueToken
         
         return argCount;
     }
+
+    /**
+     * @return the arguments
+     */
+    public IParamValueToken[] getArguments() {
+        return m_argTokens;
+    }
+
+    /**
+     * @return the function name
+     */
+    public String getFunctionName() {
+        return m_functionName;
+    }
 }

@@ -25,7 +25,7 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
  * @author BREDEX GmbH
  * @created 14.08.2007
  */
-class SimpleValueToken extends AbstractParamValueToken {
+public class SimpleValueToken extends AbstractParamValueToken {
 
     /**
      * @param s string represents the token

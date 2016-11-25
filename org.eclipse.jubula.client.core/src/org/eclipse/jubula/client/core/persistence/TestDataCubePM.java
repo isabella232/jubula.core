@@ -14,20 +14,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-
+import org.eclipse.jubula.client.core.utils.FunctionToken;
+import org.eclipse.jubula.client.core.utils.IParamValueToken;
+import org.eclipse.jubula.client.core.utils.LiteralToken;
+import org.eclipse.jubula.client.core.utils.ParamValueConverter;
+import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
+import org.eclipse.jubula.client.core.utils.SimpleValueToken;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 /**
- * PM to handle all test data cube related Persistence (JPA / EclipseLink) queries
+ * PM to handle all test data cube related Persistence (JPA / EclipseLink)
+ * queries
  * 
  * @author BREDEX GmbH
  * @created Jul 21, 2010
@@ -35,7 +45,7 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 public class TestDataCubePM {
     /** hide */
     private TestDataCubePM() {
-    // empty
+        // empty
     }
 
     /**
@@ -48,16 +58,18 @@ public class TestDataCubePM {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public static List<ITestDataCubePO> computeReuser(IParameterInterfacePO tdc,
             EntityManager session) {
-        
+
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery query = builder.createQuery();
         Root from = query.from(PoMaker.getTestDataCubeClass());
-        query.select(from).where(builder.and(
-                builder.isNotNull(from.get("hbmReferencedDataCube")), //$NON-NLS-1$
-                builder.equal(from.get("hbmParentProjectId"), tdc.getParentProjectId()))); //$NON-NLS-1$
-        
-        List<ITestDataCubePO> queryResult = 
-            session.createQuery(query).getResultList();
+        query.select(from)
+                .where(builder.and(
+                        builder.isNotNull(from.get("hbmReferencedDataCube")), //$NON-NLS-1$
+                        builder.equal(from.get("hbmParentProjectId"), //$NON-NLS-1$
+                                tdc.getParentProjectId())));
+
+        List<ITestDataCubePO> queryResult =
+                session.createQuery(query).getResultList();
         List<ITestDataCubePO> result = new ArrayList<ITestDataCubePO>();
         for (ITestDataCubePO pio : queryResult) {
             if (areEqual(pio.getReferencedDataCube(), tdc)) {
@@ -79,21 +91,68 @@ public class TestDataCubePM {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public static List<IParamNodePO> computeParamNodeReuser(
-            IParameterInterfacePO pioToSearch, EntityManager session, 
+            IParameterInterfacePO pioToSearch, EntityManager session,
             IProjectPO proj) {
-        
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery query = builder.createQuery();
-        Root from = query.from(PoMaker.getTestCasePOClass());
-        query.select(from).where(
-                builder.equal(from.get("hbmParentProjectId"), proj.getId())); //$NON-NLS-1$
-        
-        List<IParameterInterfacePO> queryResult = 
-            session.createQuery(query).getResultList();
+
+        Query query = session.createQuery(
+                "select paramPO from ParamNodePO paramPO where paramPO.hbmParentProjectId = :projId"); //$NON-NLS-1$
+        query.setParameter("projId", proj.getId()); //$NON-NLS-1$
+
+        List<IParameterInterfacePO> queryResult = query.getResultList();
         List<IParamNodePO> result = new ArrayList<IParamNodePO>();
         for (IParameterInterfacePO pio : queryResult) {
-            if (pio instanceof IParamNodePO) {
-                IParamNodePO pn = (IParamNodePO)pio;
+            search: if (pio instanceof IParamNodePO) {
+                IParamNodePO pn = (IParamNodePO) pio;
+                /*
+                 * Start search for function call ?getCentralTestDataSetValue()
+                 */
+                for (IDataSetPO dataSet : pn.getDataManager().getDataSets()) {
+                    for (int i = 0; i < dataSet.getColumnCount(); i++) {
+                        String testData = dataSet.getValueAt(i);
+                        ParamValueConverter conv = new SimpleStringConverter(
+                                testData);
+                        for (IParamValueToken token : conv.getTokens()) {
+                            if (!(token instanceof FunctionToken)) {
+                                continue;
+                            }
+                            FunctionToken funct = (FunctionToken) token;
+                            if (!StringUtils.equals(funct.getFunctionName(),
+                                    "getCentralTestDataSetValue") //$NON-NLS-1$
+                                    || funct.getArguments().length < 1) {
+                                continue;
+                            }
+                            try {
+                                IParamValueToken[] args = funct.getArguments();
+                                StringBuilder build = new StringBuilder();
+                                int nextArg = 0;
+                                while (nextArg < args.length
+                                        && (args[nextArg]
+                                            instanceof LiteralToken
+                                        || args[nextArg]
+                                            instanceof SimpleValueToken)) {
+                                    build.append(args[nextArg]
+                                            .getExecutionString(null));
+                                    nextArg++;
+                                }
+                                /*
+                                 * The CentralTestDataSet is used here. We stop
+                                 * searching, because if it is also referenced
+                                 * as a whole, it would be added twice.
+                                 */
+                                if (StringUtils.equals(build.toString(),
+                                        pioToSearch.getName())) {
+                                    result.add(pn);
+                                    break search;
+                                }
+                            } catch (InvalidDataException e) {
+                                // no success...
+                            }
+                        }
+                    }
+                }
+                /*
+                 * End search for function call ?getCentralTestDataSetValue()
+                 */
                 if (areEqual(pn.getReferencedDataCube(), pioToSearch)) {
                     result.add(pn);
                 }
@@ -101,7 +160,7 @@ public class TestDataCubePM {
         }
         return result;
     }
-    
+
     /**
      * @param po1
      *            the first poi

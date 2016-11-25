@@ -21,7 +21,7 @@ import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 /**
  * token to represent a string starts end ends with a single quote
  */
-class LiteralToken extends AbstractParamValueToken {
+public class LiteralToken extends AbstractParamValueToken {
 
     /**
      * @param s string represents the token

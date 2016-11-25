@@ -22,18 +22,10 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.ICommentPO;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.ITestJobPO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.Constants;
@@ -445,20 +437,7 @@ public class BasicSearchResult implements ISearchResult {
                     node  = em.find(NodeMaker.getNodePOClass(), id);
                 }
             }
-            INodePO specNode = null;
-            if (node instanceof IExecTestCasePO
-                    || node instanceof IRefTestSuitePO 
-                    || node instanceof ICapPO
-                    || node instanceof IEventExecTestCasePO
-                    || node instanceof ICommentPO) {
-                specNode = node.getSpecAncestor();
-            }
-            if (node instanceof ISpecTestCasePO
-                    || node instanceof ITestSuitePO
-                    || node instanceof ITestJobPO) {
-                specNode = node;
-            }
-            
+            INodePO specNode = node.getSpecAncestor();
             if (specNode != null && NodeBP.isEditable(specNode)) {
                 IEditorPart openEditor = AbstractOpenHandler
                         .openEditor(specNode);
