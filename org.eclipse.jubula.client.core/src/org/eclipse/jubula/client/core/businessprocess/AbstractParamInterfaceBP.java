@@ -53,17 +53,26 @@ public abstract class AbstractParamInterfaceBP<T> {
      *            the row to insert
      */
     public void addDataSet(IParameterInterfacePO obj, int row) {
-        IExecTestCasePO exec = (IExecTestCasePO) obj;
-        ISpecTestCasePO spec = exec.getSpecTestCase();
-        ITDManager dataManager = exec.getDataManager();
-        int i = 0;
+        ISpecTestCasePO spec = null;
+        ITDManager dataManager = null;
         List<String> list = new ArrayList<String>();
-        while (i < dataManager.getUniqueIds().size()) {
-            String uuid = dataManager.getUniqueIds().get(i);
-            IParamDescriptionPO uniqueID = exec.getParameterForUniqueId(uuid);
-            String value = getValueForSpecNodeWithParamDesc(uniqueID, spec);
-            list.add(value);
-            i++;
+        if (obj instanceof IExecTestCasePO) {
+            IExecTestCasePO exec = (IExecTestCasePO) obj;
+            spec = exec.getSpecTestCase();
+            dataManager = exec.getDataManager();
+        } else if (obj instanceof ISpecTestCasePO) {
+            spec = (ISpecTestCasePO) obj;
+            dataManager = spec.getDataManager();
+        }
+        if (dataManager != null && spec != null) {
+            List<String> uniqueIds = dataManager.getUniqueIds();
+            for (int i = 0; i < uniqueIds.size(); i++) {
+                String uuid = uniqueIds.get(i);
+                IParamDescriptionPO uniqueID = obj
+                        .getParameterForUniqueId(uuid);
+                String value = getValueForSpecNodeWithParamDesc(uniqueID, spec);
+                list.add(value);
+            }
         }
         IDataSetPO dataSet = PoMaker.createListWrapperPO(list);
         obj.getDataManager().insertDataSet(dataSet, row);
