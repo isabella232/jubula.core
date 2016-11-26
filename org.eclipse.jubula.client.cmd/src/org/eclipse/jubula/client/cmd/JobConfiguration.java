@@ -117,6 +117,8 @@ public class JobConfiguration {
     private int m_port = 0;
     /** flag to automatically take screenshots */
     private boolean m_autoScreenshot = true;
+    /** maximum number of iterations */
+    private int m_iterMax = 100;
     /** flag to save screenshots in XML and HTML */
     private boolean m_xmlScreenshot = true;
     /** file name for the xml and html document */
@@ -457,6 +459,15 @@ public class JobConfiguration {
         if (cmd.hasOption(ClientTestStrings.AUTO_SCREENSHOT)) { 
             setAutoScreenshot(false);
         }
+        if (cmd.hasOption(ClientTestStrings.ITER_MAX)) {
+            try {
+                setIterMax(Integer.parseInt(cmd
+                        .getOptionValue(ClientTestStrings.ITER_MAX)));
+            } catch (NumberFormatException e) {
+                // will be reported during validate
+                setIterMax(Constants.INVALID_VALUE); 
+            }
+        }
         if (cmd.hasOption(ClientTestStrings.NO_XML_SCREENSHOT)) { 
             setXMLScreenshot(false);
         }
@@ -469,6 +480,14 @@ public class JobConfiguration {
                 setTimeout(Constants.INVALID_VALUE); 
             }
         }
+        parseJobOptsCont(cmd);
+    }
+    
+    /**
+     * Continuation method for parseJobOptions
+     * @param cmd the Command Line
+     */
+    private void parseJobOptsCont(CommandLine cmd) {
         if (cmd.hasOption(ClientStrings.NORUN)) {
             setNoRunOptMode(TestExecutionConstants.RunSteps.
                     validateRunStep(cmd.getOptionValue(ClientStrings.NORUN)));
@@ -964,6 +983,20 @@ public class JobConfiguration {
         m_timeout = timeout;
     }
 
+    /**
+     * @param iterMax the maximum number of iterations
+     */
+    public void setIterMax(int iterMax) {
+        m_iterMax = iterMax;
+    }
+
+    /**
+     * @return the maximum number of iterations
+     */
+    public int getIterMax() {
+        return m_iterMax;
+    }
+    
     /**
      * @param autoScreenshot the autoScreenshot to set
      */

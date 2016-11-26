@@ -22,8 +22,7 @@ import javax.persistence.Version;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
-
-
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 
 /**
  * Represents the one-to-one mapping of GUID to logical Component Name.
@@ -45,8 +44,8 @@ class ComponentNamePO extends AbstractGuidNamePO
     /** The ID of the depending Project */
     private Long m_parentProjectId = null;
     
-    /** The component type */
-    private String m_componentType = null;
+    /** The transient component type */
+    private transient String m_componentType = null;
     
     /** The referenced GUID */
     private String m_referencedGuid = null;
@@ -56,7 +55,13 @@ class ComponentNamePO extends AbstractGuidNamePO
 
     /** version of this in db*/
     private transient Integer m_version;
-
+    
+    /** Type problem if there is any */
+    private transient IProblem m_typeProblem;
+    
+    /** The calculated usage type of the CN */
+    private transient String m_usageType;
+    
     /**
      * Default Constructor. Only for Persistence (JPA / EclipseLink)!
      */
@@ -76,26 +81,23 @@ class ComponentNamePO extends AbstractGuidNamePO
         
         setHbmGuid(guid);
         setHbmName(name);
-        setHbmComponentType(type);
         setHbmCreationContext(creationContext.toString());
+        setComponentType(type);
     }
     
     /**
-     * 
-     * @return the componentType.
+     * Clones a ComponentNamePO object
+     * @param toClone the object to clone
      */
-    @Basic
-    @Column(name = "COMP_TYPE")
-    String getHbmComponentType() {
-        return m_componentType;
-    }
-
-    /**
-     * 
-     * @param componentType the componentType to set
-     */
-    void setHbmComponentType(String componentType) {
-        m_componentType = componentType;
+    ComponentNamePO(ComponentNamePO toClone) {
+        setHbmGuid(toClone.getHbmGuid());
+        setHbmName(toClone.getHbmName());
+        m_parentProjectId = toClone.getHbmParentProjectId();
+        m_referencedGuid = toClone.getHbmReferencedGuid();
+        m_creationContext = toClone.getHbmCreationContext();
+        m_version = toClone.getVersion();
+        m_typeProblem = toClone.getTypeProblem();
+        setId(toClone.getId());
     }
 
     /**
@@ -117,20 +119,18 @@ class ComponentNamePO extends AbstractGuidNamePO
     }
     
     /**
-     * 
      * @return the componentType
      */
     @Transient
     public String getComponentType() {
-        return getHbmComponentType();
+        return m_componentType;
     }
 
     /**
-     * 
      * @param componentType the componentType to set
      */
     public void setComponentType(String componentType) {
-        setHbmComponentType(componentType);
+        m_componentType = componentType;
     }
 
     /**
@@ -270,11 +270,35 @@ class ComponentNamePO extends AbstractGuidNamePO
         return m_version;
     }
 
-    /**
-     * @param version version
-     */
-    @SuppressWarnings("unused")
-    private void setVersion(Integer version) {
+    /** {@inheritDoc} */
+    void setVersion(Integer version) {
         m_version  = version;        
+    }
+    
+    /** {@inheritDoc} */
+    public void setId(Long id) {
+        super.setId(id);
+    }
+
+    /** {@inheritDoc} */
+    @Transient
+    public IProblem getTypeProblem() {
+        return m_typeProblem;
+    }
+
+    /** {@inheritDoc} */
+    public void setTypeProblem(IProblem problem) {
+        m_typeProblem = problem;
+    }
+
+    /** {@inheritDoc} */
+    public void setUsageType(String type) {
+        m_usageType = type;
+    }
+
+    /** {@inheritDoc} */
+    @Transient
+    public String getUsageType() {
+        return m_usageType;
     }
 }

@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -135,8 +134,6 @@ public class ChangeCtdsColumnUsageOperation
                 }
                 isOk = true;
             } catch (ProjectDeletedException e) {
-                ErrorHandlingUtil.createMessageDialog(e, null, null);
-            } catch (IncompatibleTypeException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
             } catch (PMException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);

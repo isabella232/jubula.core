@@ -71,7 +71,7 @@ public class PasteJBEditorHandler extends AbstractHandler {
                     TCEditorDndSupport.copyPaste((TestCaseEditor)jbe,
                             pasteSelection, target);
                 } else if (jbe instanceof TestSuiteEditor) {
-                    TSEditorDndSupport.copyPaste((TestSuiteEditor)jbe,
+                    new TSEditorDndSupport().copyPaste((TestSuiteEditor)jbe,
                             pasteSelection, target);
                 } else if (jbe instanceof TestJobEditor) {
                     TJEditorDndSupport.copyPaste(jbe, pasteSelection, target);

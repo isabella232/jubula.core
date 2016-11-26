@@ -19,9 +19,11 @@ import java.util.ListIterator;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Query;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.StringUtils;
@@ -38,7 +40,7 @@ import org.eclipse.jubula.client.core.utils.RefToken;
  * @created 06.06.2005
  */
 @Entity
-@DiscriminatorValue("A")
+@DiscriminatorValue(value = "A")
 abstract class ParamNodePO extends NodePO implements IParamNodePO {
     
     /** 
@@ -78,14 +80,29 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      * @return the object responsible for maintaining the receiver's parameter
      *         interface as well as test data.
      */
-    @ManyToOne(cascade = CascadeType.ALL, 
-               targetEntity = TestDataCubePO.class, 
+    @OneToOne(cascade = CascadeType.ALL, 
+               targetEntity = TestDataCubePO.class,
+               orphanRemoval = true,
                fetch = FetchType.EAGER)
     @JoinColumn(name = "FK_PARAM_INTERFACE", unique = true)
     // Do not use Batch fetching here this might lead to duplicate data
     // <and> problems that are caused by that fact see e.g. http://eclip.se/489220
     private TestDataCubePO getParameterInterface() {
         return m_parameterInterface;
+    }
+    
+    /**
+     * Removes the associated TestDataCube from the DB
+     * @param sess the session
+     */
+    private void removeParamInterface(EntityManager sess) {
+        m_parameterInterface.goingToBeDeleted(sess);
+        Query q = sess.createNativeQuery("update NODE set FK_PARAM_INTERFACE = null where ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId());
+        q.executeUpdate();
+        q = sess.createNativeQuery("delete from PARAM_INTERFACE where ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, m_parameterInterface.getId());
+        q.executeUpdate();
     }
 
     /**
@@ -410,7 +427,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      */
     @Transient
     public INodePO getSpecificationUser() {
-        return getParentNode();
+        return getSpecAncestor();
     }
     
     /**
@@ -430,5 +447,11 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
      */
     public boolean hasReferencedTestData() {
         return getReferencedDataCube() != null;
+    }
+    
+    /** {@inheritDoc} */
+    public void goingToBeDeleted(EntityManager sess) {
+        super.goingToBeDeleted(sess);
+        removeParamInterface(sess);
     }
 }

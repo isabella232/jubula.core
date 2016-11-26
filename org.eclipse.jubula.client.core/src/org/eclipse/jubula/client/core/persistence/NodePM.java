@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
@@ -32,6 +33,7 @@ import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
@@ -46,7 +48,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
-import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -67,10 +68,15 @@ import org.slf4j.LoggerFactory;
  * @created 07.09.2004
  */
 public class NodePM extends PersistenceManager {
+    
     /**
      * Command for parent/child adding and removing
      */
     public abstract static class AbstractCmdHandleChild {
+        
+        /** A bit cumbersome, but this object will be used in some children */
+        private IPersistentObject m_parent = null;
+        
         /**
          * Template for this command. If executed add the child to the parent.
          * 
@@ -117,6 +123,21 @@ public class NodePM extends PersistenceManager {
             }
             child.setParentProjectId(parentProjectId);
         }
+        
+        /**
+         * Sets the alternative parent - used only by ChildIntoSpec and Exec
+         * @param par the parent
+         */
+        public void setParent(IPersistentObject par) {
+            m_parent = par;
+        }
+        
+        /**
+         * @return guess what...
+         */
+        public IPersistentObject getParent() {
+            return m_parent;
+        }
     }
 
     /**
@@ -157,8 +178,14 @@ public class NodePM extends PersistenceManager {
          */
         public void add(INodePO parent, INodePO child, Integer pos) {
             // pos is not used here
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getSpecObjCont().addSpecObject((ISpecPersistable)child);
+            if (getParent() != null && getParent() instanceof ISpecObjContPO) {
+                // circumventing the method signature...
+                ((ISpecObjContPO) getParent()).addSpecObject(
+                        (ISpecPersistable) child);
+            } else {
+                IProjectPO proj = GeneralStorage.getInstance().getProject();
+                proj.getSpecObjCont().addSpecObject((ISpecPersistable)child);
+            }
             setParentProjectId(child, parent);
         }
 
@@ -185,8 +212,14 @@ public class NodePM extends PersistenceManager {
          */
         public void add(INodePO parent, INodePO child, Integer pos) {
             // pos is not used here
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getExecObjCont().addExecObject((IExecPersistable)child);
+            if (getParent() != null && getParent() instanceof IExecObjContPO) {
+                // circumventing the method signature...
+                ((IExecObjContPO) getParent()).addExecObject(
+                        (IExecPersistable) child);
+            } else {
+                IProjectPO proj = GeneralStorage.getInstance().getProject();
+                proj.getExecObjCont().addExecObject((IExecPersistable)child);
+            }
             setParentProjectId(child, parent);
         }
 
@@ -297,7 +330,8 @@ public class NodePM extends PersistenceManager {
             return new CmdHandleChildIntoSpecList();
         } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
             return new CmdHandleChildIntoExecList();
-        } else if (parent instanceof ICategoryPO) {
+        } else if (parent instanceof ICategoryPO
+                || parent instanceof IAbstractContainerPO) {
             // category/specTc in category
             return new CmdHandleChildIntoNodeList();
         } else if (parent instanceof ITestSuitePO) {
@@ -333,70 +367,56 @@ public class NodePM extends PersistenceManager {
      * instance
      */
     public static void addAndPersistChildNode(INodePO parent, INodePO child,
-        Integer pos)
-        throws PMSaveException, PMAlreadyLockedException, PMException, 
-        ProjectDeletedException {
-        processAndPersistChildNode(parent, child, pos,
-            getCmdHandleChild(parent, child), true);
-    }
-
-    /**
-     * Insert a child and persist to DB
-     * 
-     * @param parent
-     *            parent of child to insert
-     * @param child
-     *            child to insert
-     * @param pos
-     *            where to insert the child. if null insert after end
-     * @param handler
-     *            Command for adding and removing a child
-     * @param doAdd
-     *            specifies if an add operation should be performed. If false,
-     *            the child node is removed.
-     * @throws PMException in case of rollback failed
-     * @throws ProjectDeletedException if the project was deleted in another
-     * instance
-     */
-    private static void processAndPersistChildNode(INodePO parent,
-        INodePO child, Integer pos, AbstractCmdHandleChild handler,
-        boolean doAdd) throws PMException, ProjectDeletedException {
-        EntityTransaction tx = null;
-        IPersistentObject lockedObj = null;
-        GeneralStorage gs = GeneralStorage.getInstance();
-        final EntityManager sess = gs.getMasterSession();
-        IProjectPO currentProject = gs.getProject();
+        Integer pos) throws PMSaveException, PMAlreadyLockedException,
+        PMException, ProjectDeletedException {
         final Persistor persistor = Persistor.instance();
-        if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
-            lockedObj = currentProject.getSpecObjCont();
-        } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
-            lockedObj = currentProject.getExecObjCont();
-        } else {
-            lockedObj = parent;
-        }
+        final EntityManager sess = persistor.openSession();
         try {
-            tx = persistor.getTransaction(sess);
-            persistor.lockPO(sess, lockedObj);
-            if (!doAdd) { // don't lock newly created POs 
-                lockedObj = child;
-                persistor.lockPO(sess, lockedObj);
+            AbstractCmdHandleChild handler = getCmdHandleChild(parent, child);
+            IProjectPO currProj = GeneralStorage.getInstance().getProject();
+            EntityTransaction tx = persistor.getTransaction(sess);
+            sess.persist(child);
+            IPersistentObject newParent = null;
+            boolean root = true;
+            if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
+                newParent = currProj.getSpecObjCont();
+            } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
+                newParent = currProj.getExecObjCont();
+            } else {
+                root = false;
+                newParent = parent;
             }
-        } catch (PersistenceException e) {
-            PersistenceManager.handleDBExceptionForMasterSession(lockedObj, e);
-        }
-        if (doAdd) {
+            newParent = sess.find(newParent.getClass(), newParent.getId());
+            persistor.lockPO(sess, newParent);
+            if (root) {
+                handler.setParent(newParent);
+                handler.add(parent, child, pos);
+            } else {
+                handler.add((INodePO) newParent, child, pos);
+            }
             
-            handler.add(parent, child, pos);
-        } else {
-            handler.delete(parent, child);
-        }
-        try {
-            if (!doAdd) {
-                sess.remove(child);
-            }
             persistor.commitTransaction(sess, tx);
+            refreshMasterSession(newParent);
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForMasterSession(null, e);
+        } finally {
+            persistor.dropSession(sess);
+        }
+    }
+    
+    /**
+     * Refreshes an object in the master session
+     * @param refr the objects
+     */
+    public static void refreshMasterSession(IPersistentObject refr) {
+        EntityManager sess = GeneralStorage.getInstance().getMasterSession();
+        IPersistentObject obj = sess.find(refr.getClass(), refr.getId());
+        if (obj != null) {
+            try {
+                sess.refresh(obj);
+            } catch (EntityNotFoundException e) {
+                sess.detach(obj);
+            }
         }
     }
 
@@ -419,16 +439,20 @@ public class NodePM extends PersistenceManager {
         throws PMDirtyVersionException, PMAlreadyLockedException,
         PMSaveException, PMException, ProjectDeletedException {
 
-        EntityManager sess = GeneralStorage.getInstance().getMasterSession();
+        Persistor per = Persistor.instance();
+        EntityManager sess = per.openSession();
         EntityTransaction tx = null;
         try {
-            final Persistor persistor = Persistor.instance();
-            tx = persistor.getTransaction(sess);
-            persistor.lockPO(sess, node);
-            node.setName(newName);
-            persistor.commitTransaction(sess, tx);
+            INodePO newNode = sess.find(node.getClass(), node.getId());
+            tx = per.getTransaction(sess);
+            per.lockPO(sess, node);
+            newNode.setName(newName);
+            per.commitTransaction(sess, tx);
+            refreshMasterSession(node);
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForMasterSession(node, e);
+        } finally {
+            per.dropSession(sess);
         }
     }
 
@@ -451,38 +475,23 @@ public class NodePM extends PersistenceManager {
         throws PMDirtyVersionException, PMAlreadyLockedException,
         PMSaveException, PMException, ProjectDeletedException {
 
-        EntityManager sess = GeneralStorage.getInstance().getMasterSession();
+        final Persistor persistor = Persistor.instance();
+        EntityManager sess = persistor.openSession();
         EntityTransaction tx = null;
         try {
-            final Persistor persistor = Persistor.instance();
             tx = persistor.getTransaction(sess);
             persistor.lockPO(sess, node);
             node.setComment(newComment);
+            INodePO persNode = sess.find(node.getClass(), node.getId());
+            persNode.setComment(newComment);
             persistor.commitTransaction(sess, tx);
         } catch (PersistenceException e) {
             PersistenceManager.handleDBExceptionForMasterSession(node, e);
+        } finally {
+            persistor.dropSession(sess);
         }
     }
     
-    /**
-     * @param cat category, which is the parent of the testcases to import
-     * @param specObjList list with testcases to import
-     * @throws PMException in case of a problem while import
-     * @throws ProjectDeletedException if the project was deleted in another
-     * instance
-     */
-    public static void addImportedTestCases(ICategoryPO cat, 
-            List< ? extends INodePO> specObjList)
-        throws PMException, ProjectDeletedException {
-        
-        final GeneralStorage genStorage = GeneralStorage.getInstance();
-        IProjectPO currentProject = genStorage.getProject();
-        for (INodePO specObj : specObjList) {
-            cat.addNode(specObj);
-        }
-        addAndPersistChildNode(currentProject, cat, null);
-    }
-
     /**
      * @param type
      *            the type of elements to find
@@ -938,6 +947,27 @@ public class NodePM extends PersistenceManager {
     }
     
     /**
+     * @param child witch parent of node searched
+     * @return the first SpecTestCase parent
+     */
+    public static ISpecTestCasePO getSpecTestCaseParent(INodePO child) {
+        if (child == null) {
+            return null;
+        }
+        INodePO node = child;
+        if (node instanceof ISpecTestCasePO) {
+            return (ISpecTestCasePO)node;
+        }
+        while (node.getParentNode() != null) {
+            node = node.getParentNode();
+            if (node instanceof ISpecTestCasePO) {
+                return (ISpecTestCasePO)node;
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Finds a Test Suite within the currently opened project.
      * 
      * @param testSuiteGuid The GUID of the Test Suite.
@@ -1234,18 +1264,18 @@ public class NodePM extends PersistenceManager {
         monitor.beginTask(Messages.DeleteTrackedChangesActionDialog, 
                 listOfNodesWithTrackedChanges.size());
 
-        GeneralStorage instance = GeneralStorage.getInstance();
-        final EntityManager session = instance.getMasterSession();
         final Persistor persistor = Persistor.instance();
+        final EntityManager session = persistor.openSession();
         EntityTransaction tx = null;
+        tx = persistor.getTransaction(session);
         
         for (INodePO node: listOfNodesWithTrackedChanges) {
-            tx = persistor.getTransaction(session);
             try {
                 persistor.lockPO(session, node);
                 node.deleteTrackedChanges();
+                session.merge(node);
                 nodeToWasLockedMap.put(node, new Boolean(false));
-            } catch (PMException e) {
+            } catch (PMException | PersistenceException e) {
                 // can not delete tracked changes of this node
                 nodeToWasLockedMap.put(node, new Boolean(true));
             }
@@ -1253,7 +1283,7 @@ public class NodePM extends PersistenceManager {
         }
         
         persistor.commitTransaction(session, tx);
-        LockManager.instance().unlockPOs(session);
+        persistor.dropSession(session);
         
         monitor.done();
         return nodeToWasLockedMap;

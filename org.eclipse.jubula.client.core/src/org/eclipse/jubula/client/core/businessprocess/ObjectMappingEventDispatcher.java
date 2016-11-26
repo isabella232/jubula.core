@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -49,35 +50,27 @@ public class ObjectMappingEventDispatcher {
     }
     
     /**
-     * Notifies all observer that there could be changes.
-     * @param tc
-     *      The tc that was updated
-     */
-    public static synchronized void notifyRecordObserver(ISpecTestCasePO tc) {
-        //FIXME if there is a fast way to get the TS where the tc is used
-        notifyRecordObserverTS();
-    }
-    /**
      * 
-     * @param testSuites the testSuites
+     * @param node either a SpecTestCasePO or a TestSuitePO
      */
-    public static synchronized void notifyRecordObserverTS(
-            ITestSuitePO... testSuites) {
+    public static synchronized void updateObjectMappings(
+            INodePO node) {
         List <IObjectMappingObserver> obs = 
                 Collections.unmodifiableList(observer);
         if (obs.isEmpty()) {
             return;
         }
 
-        Set<IAUTMainPO> autList = new HashSet<IAUTMainPO>(1);
-        if (testSuites.length == 0) {
+        Set<IAUTMainPO> autList = new HashSet<IAUTMainPO>();
+        if (node instanceof ISpecTestCasePO) {
+            // we don't search for the TestSuites using the node
+            // in case this happens to be too slow, we should do that
             IProjectPO project = GeneralStorage.getInstance().getProject();
             if (project != null) {
                 autList = project.getAutMainList();
             }
-        }
-        for (ITestSuitePO ts : testSuites) {
-            IAUTMainPO aut = ts.getAut();
+        } else if (node instanceof ITestSuitePO) {
+            IAUTMainPO aut = ((ITestSuitePO) node).getAut();
             if (aut != null) {
                 autList.add(aut);
             }

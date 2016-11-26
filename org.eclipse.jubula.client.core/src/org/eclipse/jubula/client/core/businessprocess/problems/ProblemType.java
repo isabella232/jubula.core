@@ -51,7 +51,13 @@ public enum ProblemType {
 
     /** AutConfig is incomplete - repair : OPEN AUTCONFIG EDITOR */
     REASON_NO_JAR_FOR_AUTCONFIG,
+    
+    /** Component Name has conflicting usages */
+    REASON_INCOMPATIBLE_USAGE_TYPE,
 
+    /** Component Name has conflicting usages */
+    REASON_INCOMPATIBLE_MAP_TYPE,
+    
     /**  test suite has no TCs - repair : nothing or help window, what all could be wrong */
     REASON_EMPTY_TESTSUITE,
 
@@ -75,6 +81,9 @@ public enum ProblemType {
     
     /** An ExecTestase has unused Test Data  */
     REASON_UNUSED_TESTDATA,
+    
+    /** An If condition  has no executable test**/
+    REASON_IF_WITHOUT_TEST,
     
     /** non specific problem */ 
     NO_QUICKFIX

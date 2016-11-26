@@ -18,11 +18,12 @@ import java.util.Map;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jubula.client.core.businessprocess.CompNameTypeManager;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -97,26 +98,26 @@ public class NewCAPDialog extends TitleAreaDialog {
     /** The label of the componentTextField */
     private Label m_compNameLabel;
     /** the ISpecTestCasePO */
-    private ISpecTestCasePO m_specTCGui;
+    private INodePO m_nodeGui;
     /** the modifyListener */
     private final WidgetModifyListener m_modifyListener = 
         new WidgetModifyListener();
 
-    /** the component mapper to use for finding and modifying components */
-    private IComponentNameMapper m_compMapper;
+    /** the component cache to use for finding and modifying components */
+    private IComponentNameCache m_compCache;
     
     /**
      * The constructor.
      * @param parentShell the parent shell
-     * @param specTCGui the ISpecTestCasePO.
-     * @param compMapper The Component Name mapper to use.
+     * @param nodeGui the ISpecTestCasePO.
+     * @param compCache The Component Name cache to use.
      */
-    public NewCAPDialog(Shell parentShell, ISpecTestCasePO specTCGui, 
-            IComponentNameMapper compMapper) {
+    public NewCAPDialog(Shell parentShell, INodePO nodeGui, 
+            IComponentNameCache compCache) {
        
         super(parentShell);
-        m_specTCGui = specTCGui;
-        m_compMapper = compMapper;
+        m_nodeGui = nodeGui;
+        m_compCache = compCache;
     }
 
     /**
@@ -148,7 +149,7 @@ public class NewCAPDialog extends TitleAreaDialog {
         area.setLayoutData(gridData);
         createFields(area);
         LayoutUtil.createSeparator(parent);
-        String str = getNextChildrenName(m_specTCGui);
+        String str = getNextChildrenName(m_nodeGui);
         m_capNameField.setText(str); 
         m_capNameField.selectAll();
         m_capNameField.addModifyListener(m_modifyListener);
@@ -266,7 +267,7 @@ public class NewCAPDialog extends TitleAreaDialog {
         m_compNameLabel.setText(Messages.NewCAPDialogComponentNameLabel);
         m_compNameLabel.setEnabled(false);
         m_componentNameField = new CompNamePopUpTextField(
-                m_compMapper, area,
+                m_compCache, area,
                 SWT.SINGLE | SWT.BORDER);
         m_componentNameField.setEnabled(false);
         GridData gridData = newGridData();
@@ -415,10 +416,11 @@ public class NewCAPDialog extends TitleAreaDialog {
     
     /** 
      * the action of the cap name field
-     * @return false, if the cap name field contents an error:
-     * the step name starts or end with a blank, or the field is empty
+     * @return false, if the cap name field contains a simple error:
+     *   the step name starts or ends with a blank or the field is empty
+     *   type checks are not done at this level, only upon submission
      */
-    private boolean modifyComponentNameFieldAction() {        
+    private boolean modifyComponentNameFieldAction() {
         boolean isCorrect = true, defaultName = false;
         int componentNameLength = m_componentNameField.getText().length();
         if ((componentNameLength == 0)
@@ -430,29 +432,32 @@ public class NewCAPDialog extends TitleAreaDialog {
             isCorrect = false;
         }
         if (!m_componentNameField.isEnabled()) {
-            
             defaultName = true;
             isCorrect = true;
         }
-        String compatibilityErrorMsg = null;
-        if (!defaultName) {
-            compatibilityErrorMsg = 
-                    ComponentNamesBP.getInstance()
-                    .isCompatible(m_componentCombo.getSelectedObject(),
-                            m_componentNameField.getText(), m_compMapper,
-                            GeneralStorage.getInstance().getProject().getId());
-
+        String guid = m_compCache.getGuidForName(
+                m_componentNameField.getText());
+        IComponentNamePO cN = null;
+        String type = null;
+        if (guid != null) {
+            cN = m_compCache.getResCompNamePOByGuid(guid);
+            type = cN.getComponentType();
         }
-        isCorrect &= compatibilityErrorMsg == null;
         
+        if (cN != null && !ComponentNamesBP.UNKNOWN_COMPONENT_TYPE.equals(type)
+            && !CompNameTypeManager.mayBeCompatible(cN,
+                    m_componentCombo.getSelectedObject())) {
+            enableOKButton();
+            setErrorMessage("Using this Component Name has a chance of causing type errors."); //$NON-NLS-1$
+            return true;
+        }
+
         if (isCorrect) {
             modifyCapNameFieldAction(true);
             return isCorrect;
         }
         getButton(IDialogConstants.OK_ID).setEnabled(false);
-        if (compatibilityErrorMsg != null) {
-            setErrorMessage(compatibilityErrorMsg);
-        } else if (componentNameLength == 0 && !defaultName) {
+        if (componentNameLength == 0 && !defaultName) {
             setErrorMessage(Messages.NewCAPDialogEmptyCompName);
         } else if (defaultName) {
             setErrorMessage(NLS.bind(Messages.NewCAPDialogReservedCompName, 
@@ -506,17 +511,17 @@ public class NewCAPDialog extends TitleAreaDialog {
     }
     
     /**
-     * @param tc Parent TestCase
+     * @param parent Parent TestCase
      * @return name for Next Cap
      */
-    private String getNextChildrenName(ISpecTestCasePO tc) {
+    private String getNextChildrenName(INodePO parent) {
         String capName = StringConstants.EMPTY;
-        int index = tc.getNodeListSize() + 1;
+        int index = parent.getNodeListSize() + 1;
         boolean uniqueName = false;
         while (!uniqueName) {
             capName = InitialValueConstants.DEFAULT_CAP_NAME + index;
             uniqueName = true;
-            for (INodePO node : tc.getUnmodifiableNodeList()) {
+            for (INodePO node : parent.getUnmodifiableNodeList()) {
                 if (node.getName().equals(capName)) {
                     uniqueName = false;
                     index++;

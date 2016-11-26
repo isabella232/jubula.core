@@ -40,6 +40,9 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
      * <code>m_lastCap</code> resultNode to actual executed cap
      */
     private TestResultNode m_lastCap;
+    
+    /** The depth of the ignored subtree - 0 if we are not ignoring... */
+    private int m_ignoreDepth;
 
     /**
      * @param trav traverser for associated testexecution tree
@@ -48,12 +51,24 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
         Validate.notNull(trav, Messages.NoTraverserInstance);
         m_rootNode = new TestResultNode(trav.getRoot(), null);
         m_endNode = m_rootNode;
+        m_ignoreDepth = 0;
     }
     
     /** 
      * {@inheritDoc}
      */
     public void stackIncremented(INodePO node) {
+        if (m_ignoreDepth > 0) {
+            m_ignoreDepth++;
+            return;
+        }
+        if (node instanceof IAbstractContainerPO
+                && node.getParentNode() instanceof ICondStructPO
+                && !((ICondStructPO) node.getParentNode()).
+                    needIncludeInTRTree(node)) {
+            m_ignoreDepth = 1;
+            return;
+        }
         m_endNode = new TestResultNode(node, m_endNode);     
     }
 
@@ -61,6 +76,10 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
      * {@inheritDoc}
      */
     public void stackDecremented() {
+        if (m_ignoreDepth > 0) {
+            m_ignoreDepth--;
+            return;
+        }
         m_endNode = m_endNode.getParent();
     }
 
@@ -68,6 +87,9 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
      * {@inheritDoc}
      */
     public void nextDataSetIteration() {
+        if (m_ignoreDepth > 0) {
+            return;
+        }
         m_endNode = new TestResultNode(m_endNode.getNode(), 
             m_endNode.getParent());
     }
@@ -76,6 +98,9 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
      * {@inheritDoc}
      */
     public void nextCap(ICapPO cap) {
+        if (m_ignoreDepth > 0) {
+            return;
+        }
         m_lastCap = new TestResultNode(cap, m_endNode);
         m_lastCap.setActionName(CompSystemI18n.getString(cap.getActionName()));
         m_lastCap.setComponentType(
@@ -93,5 +118,10 @@ public class ResultTreeBuilder implements IExecStackModificationListener {
      */
     public void retryCap(ICapPO cap) {
         nextCap(cap);
+    }
+
+    /** {@inheritDoc} */
+    public void infiniteLoop() {
+        // not relevant
     }
 }

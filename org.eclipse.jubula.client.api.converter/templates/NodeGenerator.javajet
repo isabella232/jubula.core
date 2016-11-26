@@ -8,7 +8,7 @@ imports="java.util.*
          org.eclipse.jubula.client.api.converter.utils.ParamUtils
          org.eclipse.jubula.client.api.converter.utils.Utils
          org.eclipse.jubula.client.core.businessprocess.CompNamesBP
-         org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP
+         org.eclipse.jubula.client.core.businessprocess.CompNameManager
          org.eclipse.jubula.client.core.model.ICapPO
          org.eclipse.jubula.client.core.model.ICompNamesPairPO
          org.eclipse.jubula.client.core.model.IEventExecTestCasePO
@@ -54,7 +54,7 @@ boolean hasTaskId = StringUtils.isNotBlank(taskId);
 Iterator<INodePO> childIterator = node.getNodeListIterator();
 String packageBase = info.getPackageBasePath();
 NameLoader nameLoader = NameLoader.getInstance();
-ComponentNamesBP componentNamesBP = ComponentNamesBP.getInstance();
+CompNameManager compNameManager = CompNameManager.getInstance();
 CompNamesBP compNamesBP = new CompNamesBP();
 List<String> compIdentifierNames = new ArrayList<String>();
 boolean definesLocalCheckFailedHandling = false;
@@ -167,7 +167,8 @@ public class <%=className%> {
         while (compNamePairsIterator.hasNext()) {
             ICompNamesPairPO pair = compNamePairsIterator.next();
             String compIdentifierName = StringConstants.EMPTY;
-            compIdentifierName = componentNamesBP.getName(pair.getSecondName());
+            compIdentifierName = compNameManager.getNameByGuid(
+            	pair.getSecondName());
             if (StringUtils.isBlank(compIdentifierName)
                   || compIdentifierNames.contains(compIdentifierName)) {
                 continue;
@@ -370,7 +371,8 @@ public class <%=className%> {
                 } else {
                     factoryName = loader.get("factoryName");
                     componentNameToCreate = loader.get("componentTypeName");
-                    compIdentifierName = componentNamesBP.getName(cap.getComponentName());
+                    compIdentifierName = compNameManager.getNameByGuid(
+                    	cap.getComponentName());
                 }
                 if (actionName != null) {%>
         
@@ -434,7 +436,7 @@ public class <%=className%> {
                 testCaseName = classesToImport.contains(specInfo) ? specInfo.getClassName() : specInfo.getFqName();
                 // Determine which component identifiers of the child need to be instanciated
                 List<String> childCompIdentifierNames = Utils.determineCompIdentifierList(
-                        componentNamesBP, compNamesBP, exec);
+                        compNameManager, compNamesBP, exec);
                 Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
                 Iterator<IParamDescriptionPO> childParamIterator;
                 // Determine whether the child uses central test data
@@ -596,7 +598,7 @@ public class <%=className%> {
                 if (eventTC.getReentryProp().equals(ReentryProperty.RETURN)) {
                     // Determine which component identifiers of the child need to be instanciated
                     List<String> childCompIdentifierNames = Utils.determineCompIdentifierList(
-                        componentNamesBP, compNamesBP, eventTC);
+                        compNameManager, compNamesBP, eventTC);
                     Iterator<String> childCompIdentifierNamesIterator = childCompIdentifierNames.iterator();                
                 %>
         

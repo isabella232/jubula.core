@@ -52,6 +52,9 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
             final boolean autoScreenshots = Plugin.getDefault()
                     .getPreferenceStore().getBoolean(
                             Constants.AUTO_SCREENSHOT_KEY);
+            final int iterMax = Plugin.getDefault()
+                    .getPreferenceStore().getInt(
+                            Constants.MAX_ITERATION_KEY);
             final String jobName = Messages.UIJobStartTestJob;
             Job startTestJobJob = new Job(jobName) {
                 protected IStatus run(IProgressMonitor monitor) {
@@ -67,8 +70,8 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
                     });
                     if (prepareOk.get()) {
                         ClientTest.instance().startTestJob(
-                                finalTestJob,
-                                autoScreenshots, null);
+                                finalTestJob, autoScreenshots,
+                                iterMax, null);
                     }
                     monitor.done();
                     return Status.OK_STATUS;

@@ -80,6 +80,12 @@ public class TestResultNode {
      */
     public static final int ABORT = 9;
     
+    /** Status if Condition failed */
+    public static final int CONDITION_FAILED = 10;
+    
+    /** Status if an infinite loop was encountered */
+    public static final int INFINITE_LOOP = 11;
+    
     /** the logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(TestResultNode.class);
@@ -371,7 +377,8 @@ public class TestResultNode {
             }
         }
         
-        if (isError(status)) {
+        if (isError(status) && status != CONDITION_FAILED
+                && status != INFINITE_LOOP) {
             if (getParent() != null) { // NOPMD by al on 3/19/07 1:37 PM
                 getParent().setResult(ERROR_IN_CHILD, null);
             }
@@ -380,14 +387,15 @@ public class TestResultNode {
             fireTestResultChanged(this);
         }
     }
-
+    
     /**
      * @param status to be checked
      * @return true if the status means an error condition
      */
     private boolean isError(int status) {        
         return status == ERROR || status == ERROR_IN_CHILD
-            || status == NO_VERIFY || status == NOT_TESTED || status == ABORT;
+            || status == NO_VERIFY || status == NOT_TESTED || status == ABORT
+            || status == CONDITION_FAILED || status == INFINITE_LOOP;
     }
     /**
      * {@inheritDoc}
@@ -411,26 +419,38 @@ public class TestResultNode {
      * @return  String to a status
      */
     public String getStatusString() {
-        switch (m_status) {
-            case TestResultNode.ERROR : 
+        return getStatusString(m_status);
+    }
+    
+    /**
+    * @param status the status
+    * @return  String to a status
+    */
+    public static String getStatusString(int status) {
+        switch (status) {
+            case ERROR : 
                 return Messages.TestResultNodeStepfailed;
-            case TestResultNode.ERROR_IN_CHILD :
+            case ERROR_IN_CHILD :
                 return Messages.TestResultNodeErrorInChildren;
-            case TestResultNode.NOT_YET_TESTED :
+            case NOT_YET_TESTED :
                 return Messages.TestResultNodeNotYetTested;
-            case TestResultNode.SUCCESS :
+            case SUCCESS :
                 return Messages.TestResultNodeSuccessfullyTested;
-            case TestResultNode.TESTING :
+            case TESTING :
                 return Messages.TestResultNodeTesting;
-            case TestResultNode.RETRYING :
+            case RETRYING :
                 return Messages.TestResultNodeRetrying;
-            case TestResultNode.SUCCESS_RETRY :
+            case SUCCESS_RETRY :
                 return Messages.TestResultNodeSuccessRetry;
-            case TestResultNode.ABORT : 
+            case ABORT : 
                 return Messages.TestResultNodeAbort;
+            case CONDITION_FAILED:
+                return Messages.TestResultNodeConditionFailed;
+            case INFINITE_LOOP:
+                return Messages.TestResultNodeInfiniteLoop;
             default : 
                 break;
-        }
+        } 
         return Messages.TestResultNodeUnknown;
     }
 
@@ -672,6 +692,16 @@ public class TestResultNode {
             return Messages.TestResultNodeTypeTestSuite;
         } else if (node instanceof ICommentPO) {
             return Messages.TestResultNodeTypeComment;
+        } else if (node instanceof IConditionalStatementPO) {
+            return Messages.TestResultNodeTypeCondition;
+        } else if (node instanceof IDoWhilePO) {
+            return Messages.TestResultNodeTypeDoWhile;
+        } else if (node instanceof IWhileDoPO) {
+            return Messages.TestResultNodeTypeWhileDo;
+        } else if (node instanceof IAbstractContainerPO) {
+            return Messages.TestResultNodeTypeContainer;
+        } else if (node instanceof IIteratePO) {
+            return Messages.TestResultNodeTypeIterate;
         }
         return Messages.TestResultNodeTypeUnknown;
     }
@@ -728,4 +758,5 @@ public class TestResultNode {
     public void setCommandLog(String commandLog) {
         this.m_commandLog = commandLog;
     }
+    
 }

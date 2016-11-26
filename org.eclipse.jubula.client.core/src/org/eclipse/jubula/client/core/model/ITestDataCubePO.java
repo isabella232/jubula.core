@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import javax.persistence.EntityManager;
+
 /**
  * @author BREDEX GmbH
  * @created Jul 15, 2010
@@ -21,5 +23,11 @@ public interface ITestDataCubePO
      * @param name The new name.
      */
     public void setName(String name);
+    
+    /**
+     * Should be called before deleting the object
+     * @param sess the session
+     */
+    public void goingToBeDeleted(EntityManager sess);
 
 }

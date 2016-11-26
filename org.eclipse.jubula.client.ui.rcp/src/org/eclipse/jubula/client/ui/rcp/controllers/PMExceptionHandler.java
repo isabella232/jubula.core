@@ -82,7 +82,7 @@ public class PMExceptionHandler {
             GeneralStorage.handleFatalError(e);
         }
     }
-      
+    
     /**
      * @param exc PMException
      * @param editor editor caused this exception
@@ -140,7 +140,7 @@ public class PMExceptionHandler {
                 ErrorHandlingUtil.createMessageDialog(
                         MessageIDs.E_CURRENT_PROJ_DEL);
                 Utils.clearClient();
-                GeneralStorage.getInstance().setProject(null);
+                GeneralStorage.getInstance().nullProject();
                 if (oldProj != null) {
                     final DataEventDispatcher ded = 
                             DataEventDispatcher.getInstance();

@@ -14,13 +14,10 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.TCBrowserDndSupport;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**
@@ -64,13 +61,8 @@ public class PasteTreeItemActionTCBrowser extends AbstractPasteTreeItemAction {
             // change to update the enablement automatically.
             setEnabled(false);
             
-            try {
-                TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);
-            } catch (PMException e) {
-                PMExceptionHandler.handlePMExceptionForMasterSession(e);
-            } catch (ProjectDeletedException e) {
-                PMExceptionHandler.handleProjectDeletedException();
-            }
+            TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);
+            
         }
     }
 

@@ -19,16 +19,22 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -39,6 +45,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.NodeNameUtil;
 import org.eclipse.jubula.client.core.utils.StringHelper;
@@ -217,6 +224,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                         break;
                 }
             }
+        } else if (object instanceof IComponentNamePO) {
+            if (((IComponentNamePO) object).getTypeProblem() != null) {
+                return IconConstants.ERROR_IMAGE;
+            }
         }
         return super.getToolTipImage(object);
     }
@@ -230,7 +241,7 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             String prefix = StringConstants.EMPTY;
             String name = null;
             INodePO node = (INodePO)element;
-            if (!node.isActive()) {
+            if (!checkActivation((INodePO)element)) {
                 prefix = INACTIVE_PREFIX;
             }
             
@@ -242,6 +253,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 name = getText((ICapPO)node);
             } else if (node instanceof IExecTestCasePO) {
                 name = NodeNameUtil.getText((IExecTestCasePO)node, true);
+            } else if (node instanceof IControllerPO) {
+                name = NodeNameUtil.getText((IControllerPO) node);
+            } else if (node instanceof IAbstractContainerPO) {
+                name = NodeNameUtil.getText((IAbstractContainerPO) node);
             } else if (node instanceof ISpecTestCasePO) {
                 name = NodeNameUtil.getText((ISpecTestCasePO)node, true);
             }  else {
@@ -325,6 +340,27 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         if (element instanceof ICommentPO) {
             return IconConstants.COMMENT_IMAGE;
         }
+        
+        if (element instanceof IConditionalStatementPO) {
+            return IconConstants.CONDITION;
+        }
+        
+        if (element instanceof IDoWhilePO) {
+            return IconConstants.DO_WHILE;
+        }
+        
+        if (element instanceof IWhileDoPO) {
+            return IconConstants.WHILE_DO;
+        }
+        
+        if (element instanceof IAbstractContainerPO) {
+            return IconConstants.CONTAINER;
+        }
+        
+        if (element instanceof IIteratePO) {
+            return IconConstants.ITERATE;
+        }
+        
         return null;
     }
 
@@ -341,8 +377,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     public Color getForeground(Object element) {
         if (element instanceof IExecTestCasePO 
                 || element instanceof ICapPO
-                || element instanceof IRefTestSuitePO) { 
-            if (!((INodePO)element).isActive()) {
+                || element instanceof IRefTestSuitePO
+                || element instanceof IControllerPO
+                || element instanceof IAbstractContainerPO) { 
+            if (!checkActivation((INodePO)element)) {
                 return LayoutUtil.INACTIVE_COLOR;
             }
             return DISABLED_COLOR;
@@ -363,6 +401,25 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         }
 
         return null;
+    }
+    
+    /**
+     * @param node to be checked
+     * @return <code>false</code> if one of the parents is inactive.
+     *          Otherwise return <code>false</code>.
+     */
+    private static boolean checkActivation(INodePO node) {
+        if (!node.isActive()) {
+            return false;
+        }
+        INodePO parent = node.getParentNode();
+        while (parent != null && !(parent instanceof ISpecTestCasePO)) {
+            if (!parent.isActive()) {
+                return false;
+            }
+            parent = parent.getParentNode();
+        }
+        return true;
     }
     
     /**
@@ -402,19 +459,18 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             nameBuilder.append(GeneralLabelProvider.OPEN_BRACKED);
             final Map<String, String> map = 
                 StringHelper.getInstance().getMap();
-            IComponentNameMapper compMapper = 
-                Plugin.getActiveCompMapper();
+            IComponentNameCache compCache = 
+                Plugin.getActiveCompCache();
             nameBuilder.append(Messages.CapGUIType)
                 .append(map.get(testStep.getComponentType()))
                 .append(GeneralLabelProvider.SEPARATOR)
                 .append(Messages.CapGUIName);
             String componentName = testStep.getComponentName();
-            if (compMapper != null) {
-                componentName = 
-                    compMapper.getCompNameCache().getName(componentName);
+            if (compCache != null) {
+                componentName = compCache.getNameByGuid(componentName);
             } else {
                 componentName = 
-                    ComponentNamesBP.getInstance().getName(componentName);
+                    CompNameManager.getInstance().getNameByGuid(componentName);
             }
             if (componentName != null) {
                 nameBuilder.append(componentName);

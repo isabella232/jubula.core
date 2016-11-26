@@ -17,25 +17,19 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TDCell;
-import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
-import org.eclipse.jubula.tools.internal.exception.JBException;
-import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 
 
 /**
@@ -47,35 +41,6 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 public class TreeOpsBP {
 
     /**
-     * Exception for failed tree operations
-     * 
-     * @author BREDEX GmbH
-     * @created 09.09.2005
-     */
-    public static class TreeOpFailedException extends JBException {
-
-        /**
-         * @param message message
-         * @param id id
-         */
-        public TreeOpFailedException(String message, Integer id) {
-            super(message, id);
-        }
-
-        /**
-         * @param message message
-         * @param cause cause
-         * @param id id
-         */
-        public TreeOpFailedException(String message, 
-            Throwable cause, Integer id) {
-
-            super(message, cause, id);
-        }
-
-    }
-
-    /**
      * Hidden default constructor
      */
     private TreeOpsBP() {
@@ -84,7 +49,8 @@ public class TreeOpsBP {
 
     /**
      * Extracts a given List of nodes from a node to a new TestCase and
-     * inserts the new created/extracted TestCase into the owner node as an ExecTestCase.
+     *       inserts the new created/extracted TestCase into the owner node as an ExecTestCase.
+     * The new Test Case is not put into the child node list of the SpecObjContPO!
      * @param newTcName The name of the new SpecTestCase
      * @param ownerNode the edited node from which to extract
      * @param modNodes the node to be extracted
@@ -95,40 +61,34 @@ public class TreeOpsBP {
      */
     public static IExecTestCasePO extractTestCase(String newTcName,
         INodePO ownerNode, List<INodePO> modNodes, EntityManager s, 
-        ParamNameBPDecorator mapper) throws TreeOpFailedException {
+        ParamNameBPDecorator mapper) {
 
         final boolean isOwnerSpecTestCase = 
             ownerNode instanceof ISpecTestCasePO;
+        INodePO oldParent = modNodes.get(0).getParentNode();
         ISpecTestCasePO newTc = NodeMaker.createSpecTestCasePO(newTcName);
+        newTc.setParentProjectId(oldParent.getParentProjectId());
         s.persist(newTc); // to get an id for newTc
-        INodePO parent = ISpecObjContPO.TCB_ROOT_NODE;
-        AbstractCmdHandleChild handler = NodePM.getCmdHandleChild(parent, 
-            newTc);
-        handler.add(parent, newTc, null);
+        
         int pos = -1;
         Map<String, String> oldToNewParamGuids = new HashMap<String, String>();
-        for (INodePO selectecNode : modNodes) {
-            INodePO moveNode = findNode(ownerNode, selectecNode);
-            if (moveNode == null) {
-                throw new TreeOpFailedException(Messages.NodeMismatch,
-                    MessageIDs.E_PO_NOT_FOUND);
-            }
-            if (isOwnerSpecTestCase && selectecNode instanceof IParamNodePO) {
-                addParamsToParent(newTc, (IParamNodePO)selectecNode, mapper,
+        for (INodePO moveNode : modNodes) {
+            if (isOwnerSpecTestCase && moveNode instanceof IParamNodePO) {
+                addParamsToParent(newTc, (IParamNodePO)moveNode, mapper,
                         (ISpecTestCasePO)ownerNode, oldToNewParamGuids);
             }
-            pos = ownerNode.indexOf(moveNode);
-            AbstractCmdHandleChild childHandler = NodePM.getCmdHandleChild(
-                ownerNode, moveNode);
-            childHandler.remove(ownerNode, moveNode);
-            childHandler.add(newTc, moveNode, null);
+            pos = oldParent.indexOf(moveNode);
+            oldParent.removeNode(moveNode);
+            newTc.addNode(moveNode);
         }
         IExecTestCasePO newExec = NodeMaker.createExecTestCasePO(newTc);
+        newExec.setSpecTestCase(newTc);
         if (isOwnerSpecTestCase) {
             propagateParams(newExec, (IParamNodePO)ownerNode);
         }
         propagateCompNames(modNodes, newExec);
-        ownerNode.addNode(pos, newExec);
+        oldParent.addNode(pos, newExec);
+        s.persist(newExec);
         ownerNode.addTrackedChange("modified", true); //$NON-NLS-1$
         return newExec;
     }
@@ -256,32 +216,6 @@ public class TreeOpsBP {
         }
         
     }
-    
-
-    /**
-     * Moves the given node from the given old parent to the given new parent.
-     * 
-     * @param moveNode
-     *            the node to move
-     * @param oldParent
-     *            the old parent
-     * @param newParent
-     *            the new parent
-     * @param pos
-     *            the position to insert
-     */
-    public static void moveNode(INodePO moveNode, INodePO oldParent,
-        INodePO newParent, int pos) {
-
-        AbstractCmdHandleChild childHandler = NodePM.getCmdHandleChild(
-            oldParent, moveNode);
-        childHandler.remove(oldParent, moveNode);
-
-        childHandler = NodePM.getCmdHandleChild(newParent, moveNode);
-        childHandler.add(newParent, moveNode, pos);
-    }
-
-    
 
     /**
      * Checks if the given selected node exsists in the given owner node

@@ -32,9 +32,9 @@ import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.alm.mylyn.core.bp.CommentReporter;
 import org.eclipse.jubula.client.core.ClientTest;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
 import org.eclipse.jubula.client.core.errorhandling.IErrorMessagePresenter;
@@ -55,7 +55,6 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.ComponentNameReuseBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ImportFileBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ProblemsBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.ToolkitBP;
@@ -1157,7 +1156,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                     if (event.getPo() instanceof IProjectPO
                             && event.getDataState() == DataState.Deleted) {
                         Utils.clearClient(false);
-                        GeneralStorage.getInstance().setProject(null);
+                        GeneralStorage.getInstance().nullProject();
                     }
                 }
             }
@@ -1199,9 +1198,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
         // register service for checking completeness
         CompletenessBP.getInstance();
 
-        // register Component Name reuse tracker
-        ComponentNameReuseBP.getInstance();
-        
         // register service for toolkit
         ToolkitBP.getInstance();
         
@@ -1315,25 +1311,25 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
 
     /**
      * 
-     * @return the component mapper corresponding to the active editor, or
-     *         the master session mapper if the active editor has no 
-     *         coresponding mapper or if no editor is currently active.
+     * @return the component cache corresponding to the active editor, or
+     *         the master session cache if the active editor has no 
+     *         coresponding cache or if no editor is currently active.
      */
-    public static IComponentNameMapper getActiveCompMapper() {
+    public static IComponentNameCache getActiveCompCache() {
         IWorkbenchPart activePart = Plugin.getActivePart();
         if (activePart instanceof IContributedContentsView) {
             activePart = 
                 ((IContributedContentsView)activePart).getContributingPart();
         }
-        IComponentNameMapper mapper = null;
+        IComponentNameCache cache = null;
         if (activePart != null) {
-            mapper = activePart.getAdapter(IComponentNameMapper.class);
+            cache = activePart.getAdapter(IComponentNameCache.class);
         }
-        if (mapper != null) {
-            return mapper;
+        if (cache != null) {
+            return cache;
         }
         
-        return MasterSessionComponentNameMapper.getInstance();
+        return CompNameManager.getInstance();
     }
 
     /**

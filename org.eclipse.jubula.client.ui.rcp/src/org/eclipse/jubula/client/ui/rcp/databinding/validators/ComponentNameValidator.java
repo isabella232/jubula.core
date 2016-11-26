@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.databinding.validators;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
@@ -26,21 +26,15 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
  */
 public class ComponentNameValidator implements IValidator {
 
-    /** the mapper used for finding and resolving component names */
-    private IComponentNameMapper m_compNamesMapper;
     /** support for rename */
     private String m_oldName;
 
     /**
      * Constructor
      * 
-     * @param compNamesMapper 
-     *          The mapper used for finding and resolving component names.
      * @param oldName if not null allow this name the support rename
      */
-    public ComponentNameValidator(IComponentNameMapper compNamesMapper, 
-            String oldName) {
-        m_compNamesMapper = compNamesMapper;
+    public ComponentNameValidator(String oldName) {
         m_oldName = oldName;
     }
     
@@ -62,8 +56,7 @@ public class ComponentNameValidator implements IValidator {
         if (!is.isOK()) {
             return is;
         }
-        if ((m_compNamesMapper.getCompNameCache()
-                .getGuidForName(stringValue) == null)
+        if (!CompNameManager.getInstance().isLogNameUsed(stringValue)
                 || stringValue.equals(m_oldName)) {
 
             return ValidationStatus.ok();

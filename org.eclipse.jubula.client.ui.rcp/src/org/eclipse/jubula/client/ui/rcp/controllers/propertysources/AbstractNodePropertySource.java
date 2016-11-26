@@ -23,7 +23,7 @@ import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.AbstractParamInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -390,16 +390,15 @@ public abstract class AbstractNodePropertySource
     
     /**
      * 
-     * @return the component name mapper for this property source.
+     * @return the component name cache for this property source.
      */
-    protected IWritableComponentNameMapper getActiveComponentNameMapper() {
+    protected IWritableComponentNameCache getActiveComponentNameCache() {
         final IEditorPart activeEditor = Plugin.getActiveEditor();
-        IWritableComponentNameMapper mapper = null;
+        IWritableComponentNameCache cache = null;
         if (activeEditor instanceof IJBEditor) {
-            mapper = ((IJBEditor)activeEditor).getEditorHelper()
-                .getEditSupport().getCompMapper();
+            cache = ((IJBEditor)activeEditor).getCompNameCache();
         }
-        return mapper;
+        return cache;
     }
 
     /**

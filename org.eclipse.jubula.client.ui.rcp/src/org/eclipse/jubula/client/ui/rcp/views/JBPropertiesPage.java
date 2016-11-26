@@ -49,7 +49,7 @@ import org.eclipse.jface.viewers.TreeViewerEditor;
 import org.eclipse.jface.viewers.TreeViewerFocusCellManager;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerCell;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -323,8 +323,8 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
     /** helpListener of this view */
     private ContextHelpListener m_helpListener = new ContextHelpListener();
     
-    /** the Component Name mapper to use when this page is active */
-    private IComponentNameMapper m_compMapper;
+    /** the Component Name cache to use when this page is active */
+    private IComponentNameCache m_compCache;
 
     /** current editor */
     private AbstractJBEditor m_currentEditor = Plugin.getDefault()
@@ -338,14 +338,14 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
      * 
      * @param isEditable <code>true</code> if the properties shown in the view
      *                   should initially be editable.
-     * @param compMapper the Component Name mapper to use when this page is 
+     * @param compCache the Component Name cache to use when this page is 
      *                   active. May be <code>null</code>, if no specific
      *                   mapper should be used.
      */
     public JBPropertiesPage(
-            boolean isEditable, IComponentNameMapper compMapper) {
+            boolean isEditable, IComponentNameCache compCache) {
         super();
-        m_compMapper = compMapper;
+        m_compCache = compCache;
         m_isEditable = isEditable;
     }
 
@@ -507,7 +507,7 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         // and the editor with that SpecTC is saved.
         boolean parentMatch = false;
         if (getCurrentPO() instanceof INodePO) {
-            INodePO parent = ((INodePO)getCurrentPO()).getParentNode();
+            INodePO parent = ((INodePO)getCurrentPO()).getSpecAncestor();
             parentMatch = (parent != null) && po.equals(parent);
         }
         
@@ -1118,9 +1118,9 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
             return m_contextProvider;
         } else if (adapter.equals(IPropertySheetPage.class)) {
             return this;
-        } else if (adapter.equals(IComponentNameMapper.class) 
-                && m_compMapper != null) {
-            return m_compMapper;
+        } else if (adapter.equals(IComponentNameCache.class) 
+                && m_compCache != null) {
+            return m_compCache;
         }
         return null;
     }

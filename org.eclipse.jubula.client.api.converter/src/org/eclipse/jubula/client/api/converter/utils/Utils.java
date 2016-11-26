@@ -19,8 +19,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.eclipse.jubula.client.api.converter.NodeInfo;
 import org.eclipse.jubula.client.api.converter.exceptions.InvalidNodeNameException;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -287,13 +287,13 @@ public class Utils {
     /**
      * Returns a list of component identifier names needed for instantiation
      * of an exec test case
-     * @param componentNamesBP component names business process
+     * @param compManager component names business process
      * @param compNamesBP comp names business process
      * @param exec the exec test case
      * @return the list
      */
     public static List<String> determineCompIdentifierList(
-            ComponentNamesBP componentNamesBP, CompNamesBP compNamesBP,
+            CompNameManager compManager, CompNamesBP compNamesBP,
             IExecTestCasePO exec) {
         List<ICompNamesPairPO> childCompNamePairs = compNamesBP
                 .getAllCompNamesPairs(exec);
@@ -302,8 +302,8 @@ public class Utils {
         List<String> childCompIdentifierNames = new ArrayList<String>();
         while (childCompNamePairsIterator.hasNext()) {
             ICompNamesPairPO pair = childCompNamePairsIterator.next();
-            String compIdentifierName = componentNamesBP.getName(
-                    pair.getSecondName());
+            String compIdentifierName = compManager.getResCompNamePOByGuid(
+                    pair.getSecondName()).getName();
             if (StringUtils.isBlank(compIdentifierName)) {
                 continue;
             }

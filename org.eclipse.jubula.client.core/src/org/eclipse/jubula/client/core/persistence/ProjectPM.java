@@ -27,10 +27,10 @@ import javax.persistence.Query;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
@@ -59,7 +59,6 @@ import org.eclipse.jubula.tools.internal.version.IVersion;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 /**
  * @author BREDEX GmbH
@@ -663,11 +662,11 @@ public class ProjectPM extends PersistenceManager
             
             IProjectPO p = s.find(NodeMaker.getProjectPOClass(),
                     project.getId());
-            GeneralStorage.getInstance().setProject(p);
+            GeneralStorage.getInstance().setProjectLoadReused(p);
             ParamNameBP.getInstance().initMap();
-            ComponentNamesBP.getInstance().init();
+            CompNameManager.getInstance().init();
         } catch (PersistenceException e) {
-            GeneralStorage.getInstance().setProject(null);
+            GeneralStorage.getInstance().nullProject();
             OperationCanceledException cancel = checkForCancel(e);
             if (cancel != null) {
                 throw cancel;
@@ -685,7 +684,7 @@ public class ProjectPM extends PersistenceManager
             throw new PMReadException(msg + e.getMessage(),
                 MessageIDs.E_CANT_READ_PROJECT);
         } catch (JBException e) {
-            GeneralStorage.getInstance().setProject(null);
+            GeneralStorage.getInstance().nullProject();
             String msg = Messages.CantReadProjectFromDatabase 
                 + StringConstants.DOT;
             log.error(Messages.UnexpectedPersistenceErrorIgnored, e);
@@ -815,6 +814,7 @@ public class ProjectPM extends PersistenceManager
         preloadDataForClass(s, projectIds, "UsedToolkitPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "AUTContPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "ParamDescriptionPO"); //$NON-NLS-1$
+        preloadDataForClass(s, projectIds, "CondStructPO"); //$NON-NLS-1$
 
         // Special pre-load due to http://eclip.se/432394
         preloadDistinctDataForClass(s, projectIds, "TestDataCubePO"); //$NON-NLS-1$
@@ -894,7 +894,7 @@ public class ProjectPM extends PersistenceManager
      *            name part of the ProjectNamePO. If there is no new name, this
      *            parameter must be null (same project, different version)
      * @param mapperList mapper to resolve Parameter Names
-     * @param compNameBindingList mapper to resolve Component Names
+     * @param compNameBindingList cache to resolve Component Names
      * @param monitor The progress monitor for this potentially long-running 
      *                operation.
      * @throws PMException
@@ -904,7 +904,7 @@ public class ProjectPM extends PersistenceManager
      */
     public static void attachProjectToROSession(IProjectPO proj, 
         String newProjectName, List<INameMapper> mapperList, 
-        List<IWritableComponentNameMapper> compNameBindingList, 
+        List<IWritableComponentNameCache> compNameBindingList, 
         IProgressMonitor monitor) 
         throws PMException, ProjectDeletedException, InterruptedException {
         
@@ -929,20 +929,20 @@ public class ProjectPM extends PersistenceManager
             for (INameMapper mapper : mapperList) {
                 mapper.persist(s, proj.getId());
             }
-            for (IWritableComponentNameMapper compNameBinding 
+            for (IWritableComponentNameCache compNameBinding 
                     : compNameBindingList) {
                 CompNamePM.flushCompNames(s, proj.getId(), compNameBinding);
             }
             if (!monitor.isCanceled()) {
                 Persistor.instance().commitTransaction(s, tx);
-                GeneralStorage.getInstance().setProject(proj);
+                GeneralStorage.getInstance().setProjectLoadReused(proj);
                 for (INameMapper mapper : mapperList) {
                     mapper.updateStandardMapperAndCleanup(proj.getId());
                 }
-                for (IComponentNameMapper compNameBinding 
+                for (IComponentNameCache compNameBinding 
                         : compNameBindingList) {
-                    compNameBinding.getCompNameCache()
-                        .updateStandardMapperAndCleanup(proj.getId());
+                    compNameBinding.updateStandardMapperAndCleanup(
+                            proj.getId());
                 }
             } else {
                 Persistor.instance().rollbackTransaction(s, tx);
@@ -950,9 +950,9 @@ public class ProjectPM extends PersistenceManager
                 for (INameMapper mapper : mapperList) {
                     mapper.clearAllNames();                    
                 }
-                for (IComponentNameMapper compNameBinding 
+                for (IComponentNameCache compNameBinding 
                         : compNameBindingList) {
-                    compNameBinding.getCompNameCache().clear();
+                    compNameBinding.clear();
                 }
                 throw new InterruptedException();
             }
@@ -960,10 +960,8 @@ public class ProjectPM extends PersistenceManager
             handleAlreadyLockedException(mapperList, s, tx);
         } catch (OperationCanceledException oce) {
             handleOperationCanceled(mapperList, s, tx);
-        } catch (PersistenceException e) {
-            handlePersistenceException(mapperList, s, tx, e);
-        } catch (IncompatibleTypeException ite) {
-            handleIncompatibleTypeException(mapperList, s, tx, ite);
+        } catch (PersistenceException | JBException e) {
+            handleOtherException(mapperList, s, tx, e);
         } finally {
             // Remove Persistence progress listeners
             setHbmProgressMonitor(null);
@@ -999,34 +997,6 @@ public class ProjectPM extends PersistenceManager
     }
 
     /**
-     * Handles an IncompatibleTypeException.
-     * 
-     * @param mapperList Name mappers.
-     * @param s The session in which the error occurred.
-     * @param tx The transaction in which the error occurred.
-     * @param ite The error that occurred.
-     * @throws PMException If rollback fails.
-     * @throws PMSaveException If rollback does not fail.
-     */
-    private static void handleIncompatibleTypeException(
-            List<INameMapper> mapperList, EntityManager s, 
-            EntityTransaction tx,
-            IncompatibleTypeException ite) throws PMException, PMSaveException {
-        if (tx != null) {
-            Persistor.instance().rollbackTransaction(s, tx);
-        }
-
-        GeneralStorage.getInstance().reset();
-        for (INameMapper mapper : mapperList) {
-            mapper.clearAllNames();                    
-        }
-
-        String msg = "Can't attach project. "; //$NON-NLS-1$
-        throw new PMSaveException(msg + ite.getMessage(),
-            MessageIDs.E_ATTACH_PROJECT);
-    }
-
-    /**
      * Handles a <code>PersistenceException</code>.
      * 
      * @param mapperList The Parameter Name mapping list.
@@ -1038,8 +1008,8 @@ public class ProjectPM extends PersistenceManager
      *                              that the operation was canceled.
      * @throws PMSaveException wrapper for the Persistence exception.
      */
-    private static void handlePersistenceException(List<INameMapper> mapperList,
-            EntityManager s, EntityTransaction tx, PersistenceException e)
+    private static void handleOtherException(List<INameMapper> mapperList,
+            EntityManager s, EntityTransaction tx, Exception e)
         throws PMException, InterruptedException, PMSaveException {
         
         if (tx != null) {
@@ -1094,7 +1064,7 @@ public class ProjectPM extends PersistenceManager
     private static void initBPs(IProjectPO proj) throws PMException,
             ProjectDeletedException, PMSaveException {
         try {
-            ComponentNamesBP.getInstance().init();
+            CompNameManager.getInstance().init();
             ParamNameBP.getInstance().initMap();
         } catch (PMException e) {
             throw new PMException(
@@ -1130,7 +1100,7 @@ public class ProjectPM extends PersistenceManager
      *            name part of the ProjectNamePO. If there is no new name, this
      *            parameter must be null (same project, different version)
      * @param mapperList a List of INameMapper to persist names (Parameter).
-     * @param compNameBindingList a List of Component Name mappers to persist 
+     * @param compNameBindingList a List of Component Name caches to persist 
      *                            names (Component).
      * @throws PMException in case of any db error
      * @throws ProjectDeletedException if project is already deleted
@@ -1138,7 +1108,7 @@ public class ProjectPM extends PersistenceManager
      */
     public static void saveProject(IProjectPO proj, String newProjectName, 
             List<INameMapper> mapperList, 
-            List<IWritableComponentNameMapper> compNameBindingList) 
+            List<IWritableComponentNameCache> compNameBindingList) 
         throws PMException, ProjectDeletedException, 
             InterruptedException {
         
@@ -1159,7 +1129,7 @@ public class ProjectPM extends PersistenceManager
             for (INameMapper mapper : mapperList) {
                 mapper.persist(saveSession, proj.getId());
             }
-            for (IWritableComponentNameMapper compNameBinding 
+            for (IWritableComponentNameCache compNameBinding 
                     : compNameBindingList) {
                 CompNamePM.flushCompNames(saveSession, 
                         proj.getId(), compNameBinding);
@@ -1168,9 +1138,8 @@ public class ProjectPM extends PersistenceManager
             for (INameMapper mapper : mapperList) {
                 mapper.updateStandardMapperAndCleanup(proj.getId());
             }
-            for (IComponentNameMapper compNameCache : compNameBindingList) {
-                compNameCache.getCompNameCache()
-                    .updateStandardMapperAndCleanup(proj.getId());
+            for (IComponentNameCache compNameCache : compNameBindingList) {
+                compNameCache.updateStandardMapperAndCleanup(proj.getId());
             }
         } catch (PersistenceException e) {
             if (tx != null) {
@@ -1182,13 +1151,6 @@ public class ProjectPM extends PersistenceManager
             }
             String msg = Messages.CantSaveProject + StringConstants.DOT;
             throw new PMSaveException(msg + e.getMessage(),
-                    MessageIDs.E_ATTACH_PROJECT);
-        } catch (IncompatibleTypeException ite) {
-            if (tx != null) {
-                Persistor.instance().rollbackTransaction(saveSession, tx);
-            }
-            String msg = Messages.CantSaveProject + StringConstants.DOT;
-            throw new PMSaveException(msg + ite.getMessage(),
                     MessageIDs.E_ATTACH_PROJECT);
         } finally {
             Persistor.instance().dropSession(saveSession);
@@ -2021,6 +1983,5 @@ public class ProjectPM extends PersistenceManager
             persistor.dropSessionWithoutLockRelease(session);
         }
         return ((hits != null) && (hits.size() > 0));
-
-    }
+    }    
 }

@@ -246,7 +246,7 @@ class CompNamesPairPO implements ICompNamesPairPO {
     public String getComponentType(IWritableComponentNameCache compNameCache, 
             Collection<Component> availableComponents) {
         IComponentNamePO compNamePo = 
-            compNameCache.getCompNamePo(getFirstName());
+            compNameCache.getResCompNamePOByGuid(getFirstName());
         if (compNamePo == null) {
             StringBuilder msg = new StringBuilder();
             msg.append(Messages.CouldNotFindComponentNameWithGUID);

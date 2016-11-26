@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.util.Set;
+import java.util.Collection;
+import java.util.Map;
 
-import org.eclipse.jubula.client.core.model.IComponentNameData;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 
 
@@ -38,29 +38,10 @@ public interface IComponentNameCache {
     /**
      * 
      * @param guid The GUID of a Component Name.
-     * @return the Component Name with the given GUID, or <code>null</code> if
-     *         no such Component Name can be found.
-     */
-    public IComponentNamePO getCompNamePo(String guid);
-
-    /**
-     * 
-     * @param guid The GUID of a Component Name.
-     * @param resolveRefs <code>true</code> if the references to other 
-     *                    Component Names should be followed. 
-     *                    Otherwise <code>false</code>.
-     * @return the Component Name with the given GUID, or <code>null</code> if
-     *         no such Component Name can be found.
-     */
-    public IComponentNamePO getCompNamePo(String guid, boolean resolveRefs);
-
-    /**
-     * 
-     * @param guid The GUID of a Component Name.
      * @return the name of the Component Name with the given GUID, or 
      *         <code>guid</code> if no such Component Name can be found.
      */
-    public String getName(String guid);
+    public String getNameByGuid(String guid);
 
     /**
      * Returns the GUID of the Component Name with the given <code>name</code>, 
@@ -94,15 +75,22 @@ public interface IComponentNameCache {
     public String getGuidForName(String name, Long parentProjectId);
     
     /**
-     * 
-     * @return data for all Component Names reachable from this cache.
+     * Method to bypass the old getCompNamePo
+     * @param guid the guid
+     * @return the resolved Component Name PO
      */
-    public Set<IComponentNameData> getComponentNameData();
-
+    public IComponentNamePO getResCompNamePOByGuid(String guid);
+    
     /**
-     * 
-     * @return data for all Component Names local to this cache.
+     * Returns all Component Names
+     * @return the Component Names
      */
-    public Set<IComponentNameData> getLocalComponentNameData();
+    public Collection<IComponentNamePO> getAllCompNamePOs();
+    
+    /**
+     * Returns the local changes to Component Names
+     * @return the guid => Component Name map containing local changes
+     */
+    public Map<String, IComponentNamePO> getLocalChanges();
 
 }

@@ -156,6 +156,11 @@ public class MessageIDs {
     public static final Integer E_DB_PROFILE_NOT_EXIST = new Integer(2064);
     /** if import of project (xml) failed for broken xml */
     public static final Integer E_IMPORT_XML_FAILED = new Integer(2065);
+    /** if refreshing the master session failed */
+    public static final Integer E_REFRESH_MS_FAILED = new Integer(2066);
+    /** if refreshing the master session failed */
+    public static final Integer E_OP_FAILED = new Integer(2067);
+
     
     // -- GENERAL ERROR IDs ------------------------------------------------
     /** if serilization exception */
@@ -842,6 +847,8 @@ public class MessageIDs {
         messageMap.put(E_STALE_OBJECT, e, "ErrorMessage.STALE_OBJECT", null); //$NON-NLS-1$
         messageMap.put(E_COMMIT_FAILED, e, "ErrorMessage.COMMIT_FAILED", null); //$NON-NLS-1$
         messageMap.put(E_REFRESH_FAILED, e, "ErrorMessage.REFRESH_FAILED", null); //$NON-NLS-1$
+        messageMap.put(E_REFRESH_MS_FAILED, e, "ErrorMessage.REFRESH_MS_FAILED", null); //$NON-NLS-1$
+        messageMap.put(E_OP_FAILED, e, "ErrorMessage.OPERATION_FAILED", null); //$NON-NLS-1$
         messageMap.put(E_REFRESH_REQUIRED, e, "ErrorMessage.REFRESH_REQUIRED", null); //$NON-NLS-1$
         messageMap.put(E_DB_SAVE, e, "ErrorMessage.DB_SAVE", null); //$NON-NLS-1$
         messageMap.put(E_DB_IN_USE, e, "ErrorMessage.DB_IN_USE", null); //$NON-NLS-1$

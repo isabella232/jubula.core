@@ -31,18 +31,23 @@ import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
 import org.eclipse.jubula.client.archive.dto.CommentDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
+import org.eclipse.jubula.client.archive.dto.ConditionalStatementDTO;
 import org.eclipse.jubula.client.archive.dto.DataRowDTO;
 import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
+import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.ExecCategoryDTO;
+import org.eclipse.jubula.client.archive.dto.IterateDTO;
 import org.eclipse.jubula.client.archive.dto.MapEntryDTO;
 import org.eclipse.jubula.client.archive.dto.MonitoringValuesDTO;
 import org.eclipse.jubula.client.archive.dto.NamedTestDataDTO;
+import org.eclipse.jubula.client.archive.dto.NodeDTO;
 import org.eclipse.jubula.client.archive.dto.ObjectMappingDTO;
 import org.eclipse.jubula.client.archive.dto.ObjectMappingProfileDTO;
 import org.eclipse.jubula.client.archive.dto.OmCategoryDTO;
 import org.eclipse.jubula.client.archive.dto.OmEntryDTO;
 import org.eclipse.jubula.client.archive.dto.ParamDescriptionDTO;
+import org.eclipse.jubula.client.archive.dto.ParameterDTO;
 import org.eclipse.jubula.client.archive.dto.ProjectDTO;
 import org.eclipse.jubula.client.archive.dto.RefTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.RefTestSuiteDTO;
@@ -58,12 +63,12 @@ import org.eclipse.jubula.client.archive.dto.TestresultSummaryDTO;
 import org.eclipse.jubula.client.archive.dto.UsedToolkitDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.schema.ReentryProperty;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICapParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -73,10 +78,13 @@ import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompIdentifierPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
-import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
@@ -96,6 +104,8 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
+import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -281,8 +291,8 @@ public class JsonExporter {
     private void fillComponentNames()
             throws PMException, OperationCanceledException {
         ImportExportUtil.checkCancel(m_monitor);
-        final Collection<IComponentNamePO> allCompNamePOs = ComponentNamesBP
-                .getInstance().getAllComponentNamePOs(m_project.getId());
+        final Collection<IComponentNamePO> allCompNamePOs =
+                CompNamePM.readAllCompNamesRO(m_project.getId());
         for (IComponentNamePO compName : allCompNamePOs) {
             ComponentNameDTO compNameDTO = new ComponentNameDTO();
             compNameDTO.setUuid(compName.getGuid());
@@ -609,7 +619,7 @@ public class JsonExporter {
      * @param po spec test case object
      */
     private void fillTestCase(TestCaseDTO tcDTO, ISpecTestCasePO po) {
-        for (Object o : po.getUnmodifiableNodeList()) {
+        for (INodePO o : po.getUnmodifiableNodeList()) {
             if (o instanceof ICapPO) {
                 ICapPO capPO = (ICapPO)o;
                 CapDTO capDTO = new CapDTO(capPO);
@@ -624,35 +634,153 @@ public class JsonExporter {
                 ICommentPO commentPO = (ICommentPO) o;
                 CommentDTO commentDTO = new CommentDTO(commentPO);
                 tcDTO.addTestStep(commentDTO);
+            } else if (o instanceof IConditionalStatementPO) {
+                IConditionalStatementPO conPO = (IConditionalStatementPO)o;
+                ConditionalStatementDTO conDTO =
+                        new ConditionalStatementDTO(conPO);
+                fillConditionalStatement(conDTO, conPO);
+                tcDTO.addTestStep(conDTO);
+            } else if (o instanceof IIteratePO) {
+                IIteratePO iteratePO = (IIteratePO) o;
+                IterateDTO iterateDTO = new IterateDTO(iteratePO);
+                fillIterateStatment(iterateDTO, iteratePO);
+                tcDTO.addTestStep(iterateDTO);
+            } else if (o instanceof IWhileDoPO || o instanceof IDoWhilePO) {
+                ICondStructPO condStructPO = (ICondStructPO) o;
+                WhileDTO whileDoDTO = new WhileDTO(o);
+                if (condStructPO instanceof IDoWhilePO) {
+                    fillWhileStatment(whileDoDTO, condStructPO, true);
+                } else { 
+                    fillWhileStatment(whileDoDTO, condStructPO, false);
+                }
+                tcDTO.addTestStep(whileDoDTO);
             }
         }
 
-        for (IParamDescriptionPO paramPO : po.getParameterList()) {
-            ParamDescriptionDTO pdDTO = new ParamDescriptionDTO();
-            fillParamDescription(pdDTO, paramPO);
-            tcDTO.addParameterDescription(pdDTO);
-        }
+        addParamDesc(tcDTO, po);
 
         tcDTO.setInterfaceLocked(po.isInterfaceLocked());
 
-        tcDTO.setDatafile(po.getDataFile());
-        if (po.getReferencedDataCube() != null) {
-            tcDTO.setReferencedTestData(po.getReferencedDataCube().getName());
-        }
-        final ITDManager dataManager = po.getDataManager();
-        if (dataManager != null) {
-            if (po.getReferencedDataCube() == null) {
-                TDManagerDTO tdmDTO = new TDManagerDTO();
-                fillTDManager(tdmDTO, dataManager);
-                tcDTO.setTDManager(tdmDTO);
-            }
-        }
+        addTestDataManager(tcDTO, po);
 
         for (Object o : po.getEventExecTcMap().keySet()) {
             IEventExecTestCasePO evTc = po.getEventExecTC((String)o);
             EventTestCaseDTO etcDTO = new EventTestCaseDTO(evTc);
             fillEventTestCase(etcDTO, evTc);
             tcDTO.addEventTestcase(etcDTO);
+        }
+    }
+
+    /**
+     * @param iterateDTO the {@link IterateDTO}
+     * @param iteratePO the {@link IIteratePO} to convert to JSON
+     */
+    private void fillIterateStatment(IterateDTO iterateDTO,
+            IIteratePO iteratePO) {
+        NodeDTO container = new NodeDTO(iteratePO.getDoBranch());
+        fillContainer(iterateDTO, iteratePO.getDoBranch());
+        iterateDTO.addNode(container);
+        addParamDesc(iterateDTO, iteratePO);
+        
+
+        addTestDataManager(iterateDTO, iteratePO);
+        
+    }
+    /**
+     * Adds the test Param Desc to the DTO
+     * @param paramDTO a {@link ParameterDTO} or some child classes
+     * @param paramInterfacePO the persisted PO
+     */
+    private void addParamDesc(ParameterDTO paramDTO,
+            IParameterInterfacePO paramInterfacePO) {
+        for (IParamDescriptionPO paramPO : paramInterfacePO
+                .getParameterList()) {
+            ParamDescriptionDTO pdDTO = new ParamDescriptionDTO();
+            fillParamDescription(pdDTO, paramPO);
+            paramDTO.addParameterDescription(pdDTO);
+        }
+    }
+
+    /**
+     * Adds the test Data Manager to the DTO
+     * @param paramDTO a {@link ParameterDTO} or some child classes
+     * @param nodePO the persisted PO
+     */
+    private void addTestDataManager(ParameterDTO paramDTO,
+            IParameterInterfacePO nodePO) {
+        paramDTO.setDatafile(nodePO.getDataFile());
+        if (nodePO.getReferencedDataCube() != null) {
+            paramDTO.setReferencedTestData(
+                    nodePO.getReferencedDataCube().getName());
+        }
+        final ITDManager dataManager = nodePO.getDataManager();
+        if (dataManager != null) {
+            if (nodePO.getReferencedDataCube() == null) {
+                TDManagerDTO tdmDTO = new TDManagerDTO();
+                fillTDManager(tdmDTO, dataManager);
+                paramDTO.setTDManager(tdmDTO);
+            }
+        }
+    }
+
+    /**
+     * @param whileDTO the {@link WhileDTO}
+     * @param whilePO either a {@link IWhileDoPO} or {@link IDoWhilePO}
+     * @param isDoFirst is the do First?
+     */
+    private void fillWhileStatment(WhileDTO whileDTO, ICondStructPO whilePO,
+            boolean isDoFirst) {
+        whileDTO.setNegated(whilePO.isNegate());
+        NodeDTO container = new NodeDTO(whilePO.getDoBranch());
+        fillContainer(container, whilePO.getDoBranch());
+        NodeDTO whileContainer = new NodeDTO(whilePO.getCondition());
+        fillContainer(whileContainer, whilePO.getCondition());
+
+        whileDTO.setDoWhile(isDoFirst);
+        whileDTO.addNode(container);
+        whileDTO.addNode(whileContainer);
+
+    }
+
+    /**
+     * fill up condition
+     * @param conDTO condition dto
+     * @param po condition entity
+     */
+    private void fillConditionalStatement(ConditionalStatementDTO conDTO,
+            IConditionalStatementPO po) {
+        conDTO.setNegated(po.isNegate());
+        NodeDTO container = new NodeDTO(po.getCondition());
+        fillContainer(container, po.getCondition());
+        conDTO.addNode(container);
+
+        container = new NodeDTO(po.getThenBranch());
+        fillContainer(container, po.getThenBranch());
+        conDTO.addNode(container);
+        
+        container = new NodeDTO(po.getElseBranch());
+        fillContainer(container, po.getElseBranch());
+        conDTO.addNode(container);
+    }
+    
+    /**
+     * @param container node of do branch
+     * @param po container
+     */
+    private void fillContainer(NodeDTO container,
+            INodePO po) {
+        for (INodePO node : po.getUnmodifiableNodeList()) {
+            if (node instanceof ICapPO) {
+                ICapPO capPO = (ICapPO)node;
+                CapDTO capDTO = new CapDTO(capPO);
+                fillCap(capDTO, capPO);
+                container.addNode(capDTO);
+            } else if (node instanceof IExecTestCasePO) {
+                IExecTestCasePO tcPO = (IExecTestCasePO)node;
+                RefTestCaseDTO refTestCaseDTO = new RefTestCaseDTO(tcPO);
+                fillRefTestCase(refTestCaseDTO, tcPO);
+                container.addNode(refTestCaseDTO);
+            }
         }
     }
 

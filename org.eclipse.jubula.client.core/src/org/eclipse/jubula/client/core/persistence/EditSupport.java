@@ -20,11 +20,12 @@ import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.jubula.client.core.businessprocess.CompNameMapperFactory;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameCacheFactory;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -35,6 +36,7 @@ import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.CompNamePM.SaveCompNamesData;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.JBFatalAbortException;
@@ -89,7 +91,7 @@ public class EditSupport {
      * <code>m_compMapper</code>mapper for resolving and persistence of 
      * component names
      */
-    private IWritableComponentNameMapper m_compMapper;
+    private IWritableComponentNameCache m_cache;
     
     /**
      * Instantiate edit support for the supplied persistent object
@@ -106,8 +108,8 @@ public class EditSupport {
         init();
         m_workVersion = createWorkVersion(po);
         m_paramMapper = paramMapper;
-        m_compMapper = CompNameMapperFactory.createCompNameMapper(
-                m_workVersion, new ComponentNamesDecorator(getSession()));
+        m_cache = CompNameCacheFactory.createCompNameCache(
+                m_workVersion);
     }
 
     /**
@@ -231,7 +233,7 @@ public class EditSupport {
         
         invalidate();
     }
-
+    
     /**
      * persists the workversion in database
      * 
@@ -243,80 +245,90 @@ public class EditSupport {
      *             in case of failed rollback
      * @throws ProjectDeletedException
      *             if the project was deleted in another instance
-     * @throws IncompatibleTypeException
-     *             if a Component Name is reused in an incompatible context.
      */
-    public void saveWorkVersion() throws PMReadException, PMSaveException,
-        PMException, ProjectDeletedException, IncompatibleTypeException {
-        if (m_isValid) {
-            if (m_isLocked) {
-                trackChanges();
-                boolean stayLocked = false;
-                try {
-                    boolean mayModifyParamNames = 
-                        m_workVersion instanceof ISpecTestCasePO
-                            || m_workVersion instanceof ITestDataCategoryPO;
-                    if (mayModifyParamNames) {
-                        saveParamNames();
-                    }
-                    /*
-                     * CARE: isDirty() only checks for the synchronisation state
-                     * of the session and the database; --> e.g. isDirty() is
-                     * false if the session has been flushed
-                     */
-                    // The saving of param names that occurs above may flush the
-                    // session, which would make the session not "dirty".
-                    // We cover this case by assuming that any situation in 
-                    // which param names may be modified is a situation where
-                    // we definitely want to save+commit.
-                    if (mayModifyParamNames 
-                            || m_session.unwrap(JpaEntityManager.class)
-                                .getUnitOfWork().hasChanges()) {
-                        saveComponentNames();
-                        Persistor.instance().commitTransaction(m_session,
-                                m_transaction);
-                        Long projId = GeneralStorage.getInstance().getProject()
-                                .getId();
-                        if (m_paramMapper != null) {
-                            m_paramMapper
-                                    .updateStandardMapperAndCleanup(projId);
-                        }
-                        if (m_compMapper != null) {
-                            m_compMapper.getCompNameCache()
-                                    .updateStandardMapperAndCleanup(projId);
-                        }
-                        refreshOriginalVersions();
-                    } else {
-                        Persistor.instance().rollbackTransaction(m_session,
-                                m_transaction);
-                    }
-                    m_lockedObjects.clear();
-                    if (m_session != null) {
-                        m_transaction = m_session.getTransaction();
-                        m_transaction.begin();
-                    } else {
-                        init();
-                    }
-                } catch (IncompatibleTypeException ite) {
-                    stayLocked = true;
-                    throw ite;
-                } catch (PersistenceException e) {
-                    PersistenceManager.handleDBExceptionForEditor(
-                            m_workVersion, e, this);
-                } finally {
-                    m_isLocked = stayLocked;
+    public void saveWorkVersion()
+        throws PMReadException, PMSaveException, PMException,
+        ProjectDeletedException {
+        SaveCompNamesData saveData = null;
+        if (!m_isValid) {
+            throw new JBFatalAbortException(
+                Messages.NotAllowedToSaveAnUnlockedWorkversion
+                + StringConstants.DOT, MessageIDs.E_CANNOT_SAVE_INVALID); 
+        }
+        if (!m_isLocked) {
+            throw new JBFatalAbortException(
+                Messages.NotAllowedToSaveAnUnlockedWorkversion
+                + StringConstants.DOT, MessageIDs.E_CANNOT_SAVE_UNLOCKED); 
+        }
+        trackChanges();
+        boolean stayLocked = false;
+        try {
+            boolean mayModifyParamNames = 
+                m_workVersion instanceof ISpecTestCasePO
+                    || m_workVersion instanceof ITestDataCategoryPO;
+            if (mayModifyParamNames) {
+                saveParamNames();
+            }
+            /* CARE: isDirty() only checks for the synchronisation state
+             * of the session and the database; --> e.g. isDirty() is
+             * false if the session has been flushed
+             */
+            // The saving of param names that occurs above may flush the
+            // session, which would make the session not "dirty".
+            // We cover this case by assuming that any situation in 
+            // which param names may be modified is a situation where we definitely want to save+commit.
+            if (mayModifyParamNames 
+                    || m_session.unwrap(JpaEntityManager.class)
+                        .getUnitOfWork().hasChanges()) {
+
+                Long projId = GeneralStorage.getInstance().getProject()
+                        .getId();
+                saveData = CompNamePM.flushCompNames(
+                        m_session, projId, m_cache);
+                Persistor.instance().commitTransaction(m_session,
+                        m_transaction);
+                if (m_paramMapper != null) {
+                    m_paramMapper.updateStandardMapperAndCleanup(projId);
+                }
+                refreshOriginalVersions();
+                if (saveData != null) {
+                    CompNameManager.getInstance().compNamesChanged(saveData);
                 }
             } else {
-                throw new JBFatalAbortException(
-                        Messages.NotAllowedToSaveAnUnlockedWorkversion
-                        + StringConstants.DOT,
-                        MessageIDs.E_CANNOT_SAVE_UNLOCKED); 
+                Persistor.instance().rollbackTransaction(m_session,
+                        m_transaction);
             }
-        } else {
-            throw new JBFatalAbortException(
-                    Messages.NotAllowedToSaveAnUnlockedWorkversion
-                    + StringConstants.DOT,
-                    MessageIDs.E_CANNOT_SAVE_INVALID); 
+            m_lockedObjects.clear();
+            if (m_session != null) {
+                m_transaction = m_session.getTransaction();
+                m_transaction.begin();
+            } else {
+                init();
+            }
+        } catch (PersistenceException e) {
+            PersistenceManager.handleDBExceptionForEditor(
+                    m_workVersion, e, this);
+        } finally {
+            m_isLocked = stayLocked;
+            detachObjects(saveData);
+        }
+    }
+    
+    /**
+     * Detaching all managed Component Names
+     * @param data t save data
+     */
+    private void detachObjects(SaveCompNamesData data) {
+        if (m_session == null || data == null) {
+            return;
+        }
+        for (IComponentNamePO cN : data.getDBVersions()) {
+            try {
+                m_session.detach(cN);
+            } catch (IllegalArgumentException e) {
+                // Should not happen, but even if it does, it means the
+                // Component Name is already detached, so we rejoice 
+            }
         }
     }
     
@@ -339,20 +351,6 @@ public class EditSupport {
     private void saveParamNames() throws PMException {
         m_paramMapper.persist(m_session, 
             GeneralStorage.getInstance().getProject().getId());
-    }
-
-    /**
-     * Persists the Comnponent Names.
-     * @throws PMException
-     */
-    private void saveComponentNames() 
-        throws PMException, IncompatibleTypeException {
-        
-        if (m_compMapper != null) {
-            CompNamePM.flushCompNames(m_session, 
-                    GeneralStorage.getInstance().getProject().getId(), 
-                    m_compMapper);
-        }
     }
     
     /**
@@ -441,10 +439,9 @@ public class EditSupport {
             close();
             init();
             m_workVersion = workVersion;
-            m_compMapper.setCompNameCache(
-                    new ComponentNamesDecorator(getSession()));
             m_workVersion = m_session.merge(m_workVersion);
-            m_compMapper.setContext(m_workVersion);
+            m_cache = CompNameCacheFactory.createCompNameCache(
+                    m_workVersion);
         } catch (PersistenceException e) {
             final String msg = Messages.ReinitOfSessionFailed;
             log.error(msg);
@@ -463,9 +460,8 @@ public class EditSupport {
             close();
             init();
             m_workVersion = createWorkVersion(workVersion);
-            m_compMapper.setCompNameCache(
-                    new ComponentNamesDecorator(getSession()));
-            m_compMapper.setContext(m_workVersion);
+            m_cache = CompNameCacheFactory.createCompNameCache(
+                    m_workVersion);
             if (m_paramMapper != null) {
                 Long projId = 
                     GeneralStorage.getInstance().getProject().getId();
@@ -515,10 +511,10 @@ public class EditSupport {
     }
     
     /**
-     * @return the CompMapper, businessLogic for Component Names.
+     * Returns the cache
+     * @return the cache
      */
-    public IWritableComponentNameMapper getCompMapper() {
-        return m_compMapper;
+    public IWritableComponentNameCache getCache() {
+        return m_cache;
     }
-    
 }

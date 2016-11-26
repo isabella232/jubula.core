@@ -70,6 +70,8 @@ public class ClientTestStrings {
     /** object attribute */
     public static final String AUTO_SCREENSHOT = "s"; //$NON-NLS-1$
     /** object attribute */
+    public static final String ITER_MAX = "itermax"; //$NON-NLS-1$
+    /** object attribute */
     public static final String NO_XML_SCREENSHOT = "sx"; //$NON-NLS-1$
 
     /** command line option for supplying a workspace location */

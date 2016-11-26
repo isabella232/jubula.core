@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -187,9 +187,9 @@ public class JBEditorHelper implements ILockedObjects,
             || adapter == IJBEditor.class) {
             return this;
         } else if (adapter.equals(IPropertySheetPage.class)) {
-            return new JBPropertiesPage(true, getEditSupport().getCompMapper());
-        } else if (adapter.equals(IComponentNameMapper.class)) {
-            return getEditSupport().getCompMapper();
+            return new JBPropertiesPage(true, getEditSupport().getCache());
+        } else if (adapter.equals(IComponentNameCache.class)) {
+            return getEditSupport().getCache();
         }
         return null;
     }

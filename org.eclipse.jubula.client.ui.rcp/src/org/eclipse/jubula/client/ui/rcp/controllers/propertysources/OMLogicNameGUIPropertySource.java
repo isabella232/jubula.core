@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -112,11 +112,8 @@ public class OMLogicNameGUIPropertySource
          */
         public Object getProperty() {
             IComponentNamePO compName = getNode();
-            IComponentNameMapper compMapper = Plugin.getActiveCompMapper();
-            if (compMapper != null) {
-                compName = compMapper.getCompNameCache().getCompNamePo(
-                        compName.getGuid());
-            }
+            IComponentNameCache compCache = Plugin.getActiveCompCache();
+            compName = compCache.getResCompNamePOByGuid(compName.getGuid());
             if (compName != null && compName.getName() != null) {
                 return compName.getName();
             }
@@ -149,11 +146,8 @@ public class OMLogicNameGUIPropertySource
          */
         public Object getProperty() {
             IComponentNamePO compName = getNode();
-            IComponentNameMapper compMapper = Plugin.getActiveCompMapper();
-            if (compMapper != null) {
-                compName = compMapper.getCompNameCache().getCompNamePo(
-                        compName.getGuid());
-            }
+            IComponentNameCache compCache = Plugin.getActiveCompCache();
+            compName = compCache.getResCompNamePOByGuid(compName.getGuid());
             if (compName != null && compName.getComponentType() != null) {
                 return CompSystemI18n.getString(
                         compName.getComponentType(), true);

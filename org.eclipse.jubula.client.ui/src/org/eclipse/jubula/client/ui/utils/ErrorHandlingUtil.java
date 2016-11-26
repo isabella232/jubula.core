@@ -211,6 +211,21 @@ public class ErrorHandlingUtil {
     }
     
     /**
+     * Open the message dialog and logs the JBException.
+     * @param ex the actual JBRuntimeException
+     * @return the dialog.
+     */
+    public static Dialog createMessageDialogException(Throwable ex) {
+        Integer messageID = MessageIDs.E_OP_FAILED;
+        Message m = MessageIDs.getMessageObject(messageID);
+        if (m != null && m.getSeverity() == Message.ERROR) {
+            LOG.error(Messages.AnErrorHasOccurred + StringConstants.DOT, ex);
+        }
+        return createMessageDialog(messageID, null,
+                getStackTrace(ex));
+    }
+    
+    /**
      * @param throwable the throwable to get the stack trace from
      * @return the stack trace as a string
      */

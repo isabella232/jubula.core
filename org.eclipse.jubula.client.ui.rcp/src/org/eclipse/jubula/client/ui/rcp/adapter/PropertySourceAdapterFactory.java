@@ -11,12 +11,15 @@
 package org.eclipse.jubula.client.ui.rcp.adapter;
 
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -27,8 +30,11 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AutIdentifierPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CategoryGUIPropertySource;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CondStructGUIPropertySource;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.ContainerGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.EventExecTestCaseGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.ExecTestCaseGUIPropertySource;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IterateGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.OMLogicNameGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.OMTechNameGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.ProjectGUIPropertySource;
@@ -54,12 +60,13 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
         AutIdentifier.class, ITestSuitePO.class, ISpecTestCasePO.class,
         ICapPO.class, IEventExecTestCasePO.class, IExecTestCasePO.class,
         IExecObjContPO.class, IRefTestSuitePO.class, ITestJobPO.class,
-        ICategoryPO.class
-    };
+        ICategoryPO.class, ICondStructPO.class,
+        IAbstractContainerPO.class, IIteratePO.class};
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public IPropertySource getAdapter(Object adaptableObject, 
             Class adapterType) {
         if (adapterType == IPropertySource.class) {
@@ -100,6 +107,15 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
             } else if (adaptableObject instanceof ITestJobPO) {
                 return new TestJobGUIPropertySource(
                         (ITestJobPO)adaptableObject);
+            } else if (adaptableObject instanceof IAbstractContainerPO) {
+                return new ContainerGUIPropertySource(
+                        (IAbstractContainerPO)adaptableObject);
+            } else if (adaptableObject instanceof ICondStructPO) {
+                return new CondStructGUIPropertySource(
+                        (ICondStructPO)adaptableObject);
+            } else if (adaptableObject instanceof IIteratePO) {
+                return new IterateGUIPropertySource(
+                        (IIteratePO) adaptableObject);
             }
         }
         return null;
@@ -108,6 +124,7 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public Class[] getAdapterList() {
         return m_types;
     }

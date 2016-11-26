@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.db;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,9 +21,13 @@ import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
@@ -157,5 +163,53 @@ public class NodeBP {
             return eb.isEquals();
         }
         return false;
+    }
+    
+    /**
+     * Finds offsprings of a node - should only be called for Categories, SpecTCs and TestSuites
+     * @param nodes the node
+     * @return all offspring
+     */
+    public static Collection<INodePO> getOffspringCollection(
+            Collection<INodePO> nodes) {
+        for (INodePO node : nodes) {
+            if (!(node instanceof ICategoryPO || node instanceof ITestSuitePO
+                    || node instanceof ISpecTestCasePO)) {
+                throw new UnsupportedOperationException("This method only supports Categories, Test Suites and Spec Test Cases."); //$NON-NLS-1$
+            }
+        }
+        List<INodePO> offspring = new ArrayList<INodePO>();
+        for (INodePO node : nodes) {
+            addOffspring(node, offspring);
+        }
+        return offspring;
+    }
+    
+    /**
+     * Adds the offspring of a node to a collection
+     * @param node the node
+     * @param offspring the offspring
+     */
+    private static void addOffspring(INodePO node,
+            Collection<INodePO> offspring) {
+        if (node instanceof ICategoryPO) {
+            for (INodePO child : node.getUnmodifiableNodeList()) {
+                addOffspring(child, offspring);
+            }
+        }
+        offspring.add(node);
+    }
+    
+    /**
+     * Determines whether a node comes from the TC or TS Browser
+     * @param node the node
+     * @return whether
+     */
+    public static boolean isTC(INodePO node) {
+        INodePO top = node;
+        while (top.getParentNode() != null) {
+            top = top.getParentNode();
+        }
+        return top == ISpecObjContPO.TCB_ROOT_NODE; 
     }
 }

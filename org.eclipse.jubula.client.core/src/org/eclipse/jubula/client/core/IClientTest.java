@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.SortedSet;
 
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.businessprocess.TestExecutionEvent;
 import org.eclipse.jubula.client.core.events.AUTEvent;
@@ -101,7 +101,7 @@ public interface IClientTest {
     /**
      * Starts the record mode. <br>
      * @param spec  SpecTestCasePO
-     * @param compNamesMapper The ComponentNamesDecorator associated with the 
+     * @param compNamesCache The Component Names cache associated with the 
      *                        edit session of the spec test case.
      * @param recordCompMod key modifier
      * @param recordCompKey key
@@ -116,7 +116,7 @@ public interface IClientTest {
      * @param multiLineTrigger SortedSet
      */
     public abstract void startRecordTestCase(ISpecTestCasePO spec,
-            IWritableComponentNameMapper compNamesMapper, int recordCompMod,
+            IWritableComponentNameCache compNamesCache, int recordCompMod,
             int recordCompKey, int recordApplMod, int recordApplKey,
             int checkModeKeyMod, int checkModeKey, int checkCompKeyMod,
             int checkCompKey, boolean dialogOpen,
@@ -136,6 +136,7 @@ public interface IClientTest {
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
+     * @param iterMax maximum iteration count
      * @param autId
      *            The ID of the Running AUT on which the test will take place.
      * @param externalVars
@@ -146,7 +147,7 @@ public interface IClientTest {
      *            The displayed TS name or null for using of execTestSuite name.
      */
     public abstract void startTestSuite(ITestSuitePO execTestSuite,
-        AutIdentifier autId, boolean autoScreenshot,
+        AutIdentifier autId, boolean autoScreenshot, int iterMax,
         Map<String, String> externalVars, String noRunOptMode,
         String jobDesc);
 
@@ -157,11 +158,12 @@ public interface IClientTest {
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
+     * @param iterMax maximum number of iterations
      * @param noRunOptMode The mode of no run-option if it was specified or null otherwise
      * @return list of actually executed test suites
      */
     public abstract List<INodePO> startTestJob(ITestJobPO testJob,
-            boolean autoScreenshot, String noRunOptMode);
+            boolean autoScreenshot, int iterMax, String noRunOptMode);
     
     /**
      * Stops test execution.

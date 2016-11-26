@@ -51,6 +51,9 @@ public class FindNodesForComponentNameOp
      */
     public boolean operate(ITreeTraverserContext<INodePO> ctx, INodePO parent, 
             INodePO node, boolean alreadyVisited) {
+        if (alreadyVisited) {
+            return false;
+        }
         if (node instanceof ICapPO) {
             ICapPO cap = (ICapPO)node;
             if (getCompNameGuid().equals(cap.getComponentName())) {

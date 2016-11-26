@@ -13,11 +13,16 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
+import org.eclipse.jubula.client.ui.rcp.actions.NodeAdder;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -61,5 +66,32 @@ public abstract class AbstractNewHandler extends AbstractHandler {
             }
         }
         return parentNode;
+    }
+    
+    /**
+     * Adds a newly created node to the DB and into the master session
+     * 
+     * @param created the created node
+     * @param ev the Event object
+     */
+    public void addCreatedNode(INodePO created, ExecutionEvent ev) {
+        INodePO parent = getParentNode(ev);
+        IWorkbenchPart activePart = HandlerUtil.getActivePart(ev);
+
+        NodeAdder.addNode(created, parent);
+        
+        INodePO master = GeneralStorage.getInstance().getMasterSession().
+                find(created.getClass(), created.getId());
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                    master, DataState.Added, UpdateState.all);
+        /*TreeViewer tr = null;
+        if (activePart instanceof TestCaseBrowser) {
+            tr = ((TestCaseBrowser) activePart).getTreeViewer();
+        } else if (activePart instanceof TestSuiteBrowser) {
+            tr = ((TestSuiteBrowser) activePart).getTreeViewer();
+        }
+        if (tr != null) {
+            tr.setSelection(new StructuredSelection(master), true);
+        }*/
     }
 }

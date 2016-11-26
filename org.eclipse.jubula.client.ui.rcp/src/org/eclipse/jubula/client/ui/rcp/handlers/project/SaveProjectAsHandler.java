@@ -23,13 +23,11 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.archive.JsonStorage;
 import org.eclipse.jubula.client.archive.dto.ProjectDTO;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
+import org.eclipse.jubula.client.core.businessprocess.ProjectCompNameCache;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -123,8 +121,6 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                     new Object[] {cProjectName, m_newProjectName}), TOTAL_WORK);
             final ParamNameBPDecorator paramNameMapper = 
                 new ParamNameBPDecorator(ParamNameBP.getInstance());
-            final IWritableComponentNameCache compNameCache = 
-                new ComponentNamesDecorator(null);
             try {
                 NodePM.getInstance().setUseCache(true);
                 ProjectDTO dto = JsonStorage.save(GeneralStorage.getInstance()
@@ -136,23 +132,23 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 }
                 if (dto != null) {
                     IProjectPO duplicatedProject = null;
+                    IWritableComponentNameCache cache =
+                            new ProjectCompNameCache(null);
                     try {
                         duplicatedProject = JsonStorage.load(dto,
                                 subMonitor.newChild(WORK_PROJECT_CREATION),
                                 Plugin.getDefault(), true, false,
-                                paramNameMapper, compNameCache, true, null);
+                                paramNameMapper, cache, true, null);
                     } catch (ToolkitPluginException e1) { 
                         log.error(e1.getMessage()); // This should not be occur
                     }
-                    IWritableComponentNameMapper compNameMapper =
-                        new ProjectComponentNameMapper(
-                            compNameCache, duplicatedProject);
                     try {
+                        cache.setContext(duplicatedProject);
                         duplicatedProject.setClientMetaDataVersion(IVersion
                             .JB_CLIENT_METADATA_VERSION);
                         attachProjectWithProgress(subMonitor.newChild(
                                 WORK_PROJECT_SAVE), paramNameMapper, 
-                                compNameMapper, duplicatedProject);
+                                cache, duplicatedProject);
                     } catch (PMSaveException e) {
                         Plugin.stopLongRunning();
                         PMExceptionHandler.handlePMExceptionForMasterSession(
@@ -212,8 +208,8 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
          * @param paramNameMapper
          *            The parameter name mapper to use when adding the project
          *            to the database.
-         * @param compNameMapper
-         *            The component name mapper to use when adding the project
+         * @param compNameCache
+         *            The component name cache to use when adding the project
          *            to the database.
          * @param project
          *            The project to add to the database
@@ -226,7 +222,7 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
          */
         private void attachProjectWithProgress(IProgressMonitor monitor,
                 final ParamNameBPDecorator paramNameMapper, 
-                IWritableComponentNameMapper compNameMapper,
+                IWritableComponentNameCache compNameCache,
                 final IProjectPO project) throws PMException,
                 ProjectDeletedException, InterruptedException {
 
@@ -237,17 +233,17 @@ public class SaveProjectAsHandler extends AbstractProjectHandler {
                 GeneralStorage.getInstance().getProject();
             if (clearedProject != null) {
                 Utils.clearClient();
-                GeneralStorage.getInstance().setProject(null);
+                GeneralStorage.getInstance().nullProject();
                 final DataEventDispatcher ded = DataEventDispatcher
                         .getInstance();
                 ded.fireDataChangedListener(clearedProject, DataState.Deleted,
                         UpdateState.all);
             }
             List<INameMapper> mapperList = new ArrayList<INameMapper>();
-            List<IWritableComponentNameMapper> compNameCacheList = 
-                new ArrayList<IWritableComponentNameMapper>();
+            List<IWritableComponentNameCache> compNameCacheList = 
+                new ArrayList<IWritableComponentNameCache>();
             mapperList.add(paramNameMapper);
-            compNameCacheList.add(compNameMapper);
+            compNameCacheList.add(compNameCache);
             ProjectPM.attachProjectToROSession(project, m_newProjectName, 
                 mapperList, compNameCacheList, monitor);
 

@@ -19,13 +19,16 @@ import java.util.Map;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
 import javax.persistence.Transient;
 
+import org.apache.commons.collections.iterators.IteratorChain;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
@@ -91,6 +94,23 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
     public Map<String, IEventExecTestCasePO> getEventExecTcMap() {
         return m_eventExecTcMap;
     }
+    
+    /**
+     * Removes the links to the event handlers
+     * @param sess the session
+     */
+    private void removeEventHandlers(EntityManager sess) {
+        if (m_eventExecTcMap.isEmpty()) {
+            return;
+        }
+        Query q = sess.createNativeQuery("delete from EVENT_HANDLERS where EVENT_HANDLER_ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId()).executeUpdate();
+        for (INodePO node : getEventExecTcMap().values()) {
+            node.goingToBeDeleted(sess);
+            q = sess.createNativeQuery("delete from NODE where ID = ?1"); //$NON-NLS-1$
+            q.setParameter(1, node.getId()).executeUpdate();
+        }
+    }
 
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -146,63 +166,20 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
         return Collections.unmodifiableCollection(evHandlers);
     }
     
-
-    /**
-     * Private class implementing an Iterator over all child nodes
-     * @author BREDEX GmbH
-     *
-     */
-    private class AllNodeIterator implements Iterator<INodePO> {
-        /** Iterator over normal nodes */
-        private Iterator<INodePO> m_normals;
-        
-        /** Iterator over event handlers */
-        private Iterator<IEventExecTestCasePO> m_events;
-        
-        /**
-         * Private constructor
-         * @param tc the test case
-         */
-        private AllNodeIterator(ITestCasePO tc) {
-            super();
-            m_normals = tc.getNodeListIterator();
-            m_events = tc.getAllEventEventExecTC().iterator();
-        }
-
-        /** {@inheritDoc} */
-        public boolean hasNext() {
-            if (m_normals != null) {
-                if (m_normals.hasNext()) {
-                    return true;
-                }
-                m_normals = null;
-            }
-            return m_events.hasNext();
-        }
-
-        /** {@inheritDoc} */
-        public INodePO next() {
-            if (!hasNext()) {
-                return null;
-            }
-            
-            if (m_normals != null) {
-                return m_normals.next();
-            }
-            
-            return m_events.next();
-        }
-        
-        /** {@inheritDoc} */
-        public void remove() {
-            throw new UnsupportedOperationException(
-                    "This iterator does not support remove."); //$NON-NLS-1$
-        }
-    }
-
     /** {@inheritDoc} */
+    @Transient
     public Iterator<INodePO> getAllNodeIter() {
-        return new AllNodeIterator(this);
+        IteratorChain chain = new IteratorChain();
+        chain.addIterator(getNodeListIterator());
+        chain.addIterator(getAllEventEventExecTC().iterator());
+        for (INodePO node : getUnmodifiableNodeList()) {
+            if (node instanceof IControllerPO) {
+                for (INodePO cont : node.getUnmodifiableNodeList()) {
+                    chain.addIterator(cont.getNodeListIterator());
+                }
+            }
+        }
+        return chain;
     }
 
     /**
@@ -223,4 +200,11 @@ abstract class TestCasePO extends ParamNodePO implements ITestCasePO {
             evTc.setParentNode(this);
         }
     }
+    
+    /** {@inheritDoc} */
+    public void goingToBeDeleted(EntityManager sess) {
+        removeEventHandlers(sess);
+        super.goingToBeDeleted(sess);
+    }
+
 }

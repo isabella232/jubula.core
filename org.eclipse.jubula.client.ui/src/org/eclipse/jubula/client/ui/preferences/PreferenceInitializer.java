@@ -34,6 +34,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         initializeDefaultPreferencesKeyBoardShortCuts(prefStore);
         initializeDefaultPreferencesObservation(prefStore);
         initializeDefaultPreferencesTestResults(prefStore);
+        initializeDefaultPreferencesEditors(prefStore);
 
         prefStore.setDefault(Constants.ASKSTOPAUT_KEY,
                 Constants.ASKSTOPAUT_KEY_DEFAULT);
@@ -59,6 +60,9 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         prefStore.setDefault(
                 Constants.AUT_AGENT_SETTINGS_KEY, 
                 serverValuesBuilder.toString());
+        
+        prefStore.setDefault(Constants.MAX_ITERATION_KEY,
+                Constants.MAX_ITERATION_DEFAULT);
     }
 
     /**
@@ -182,4 +186,15 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
         prefStore.setDefault(Constants.MULTILINETRIGGER_KEY,
                 Constants.MULTILINETRIGGER_KEY_DEFAULT);
     }
+
+    /**
+     * initialize the default preferences for the Editors page
+     * @param prefStore Preference store
+     */
+    private static void initializeDefaultPreferencesEditors(
+            IPreferenceStore prefStore) {
+        prefStore.setDefault(Constants.SHOWCOUNTERS_KEY,
+                Constants.SHOWCOUNTERS_KEY_DEFAULT);
+    }
+    
 }

@@ -12,8 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
@@ -33,14 +32,13 @@ public abstract class AbstractNewComponentNameHandler extends AbstractHandler {
     /**
      * Opens the "New Component Name..." dialog.
      * 
-     * @param compNameMapper The mapper to use for finding Component Names.
      * @return the name typed into the dialog, or <code>null</code> if the 
      *         dialog was cancelled.
      */
-    protected String openDialog(IComponentNameMapper compNameMapper) {
+    protected String openDialog() {
 
         EnterLogicalCompNameDialog newNameDialog = 
-            new NewLogicalCompNameDialog(compNameMapper, getActiveShell());
+            new NewLogicalCompNameDialog(getActiveShell());
         newNameDialog.setHelpAvailable(true);
         newNameDialog.create();
         DialogUtils.setWidgetNameForModalDialog(newNameDialog);
@@ -58,19 +56,18 @@ public abstract class AbstractNewComponentNameHandler extends AbstractHandler {
      * Creates the Component Name.
      * 
      * @param newName The name for the new Component Name.
-     * @param mapper The mapper to which the new Component Name should be added.
+     * @param cache The cache to which the new Component Name should be added.
+     *      Should be null if the global cache is used (that is, when the CNPO is instantly persisted).
      * @return the newly created Component Name.
      */
     protected IComponentNamePO performOperation(
-            String newName, IWritableComponentNameMapper mapper) {
+            String newName, IWritableComponentNameCache cache) {
         
         String compType = ComponentBuilder.getInstance()
             .getCompSystem().getMostAbstractComponent().getType();
-        IComponentNamePO compNamePo = 
-            mapper.getCompNameCache().createComponentNamePO(
-                    newName, compType, 
-                    CompNameCreationContext.OBJECT_MAPPING);
-        return compNamePo;
+        
+        return cache.createComponentNamePO(newName,
+                compType, CompNameCreationContext.OBJECT_MAPPING);
     }
 
 }

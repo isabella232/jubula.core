@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.teststyle;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,9 +28,9 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedL
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectStateListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -47,8 +46,8 @@ import org.eclipse.jubula.client.teststyle.checks.CheckCont;
 import org.eclipse.jubula.client.teststyle.checks.contexts.BaseContext;
 import org.eclipse.jubula.client.teststyle.gui.TeststyleProblemAdder;
 import org.eclipse.jubula.client.teststyle.gui.decoration.DecoratorHandler;
-import org.eclipse.jubula.client.teststyle.problems.ProblemCont;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
+import org.eclipse.jubula.client.teststyle.problems.ProblemCont;
 import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -261,24 +260,26 @@ public final class TeststyleHandler implements IDataChangedListener,
             check(project);
         }
         if (po instanceof ISpecTestCasePO || po instanceof ITestSuitePO
-                || po instanceof ITestJobPO) {
+                || po instanceof ITestJobPO
+                || po instanceof IConditionalStatementPO
+                || po instanceof IAbstractContainerPO) {
             INodePO node = (INodePO)po;
-            Iterator<INodePO> iter = node.getNodeListIterator();
-            while (iter.hasNext()) {
-                Object next = iter.next();
-                if (next instanceof IParamNodePO) {
-                    IParamNodePO paramNode = (IParamNodePO)next;
-                    handleChangedPo(paramNode, dataState, updateState);
-                }
-            }
-            if (node instanceof ISpecTestCasePO) {
-                ISpecTestCasePO specTc = (ISpecTestCasePO)node;
-                Collection<IEventExecTestCasePO> c = specTc
-                        .getAllEventEventExecTC();
-                for (IEventExecTestCasePO eh : c) {
-                    handleChangedPo(eh, dataState, updateState);
-                }
-            }
+            Iterator<INodePO> iter = node.getAllNodeIter();
+            handleChangedPo(iter, dataState, updateState);
+        }
+    }
+    
+    /**
+     * @param iter iterator of child node
+     * @param dataState kind of modification
+     * @param updateState determines the parts to update
+     */
+    private void handleChangedPo(Iterator<INodePO> iter, DataState dataState,
+            UpdateState updateState) {
+
+        while (iter.hasNext()) {
+            INodePO child = iter.next();
+            handleChangedPo(child, dataState, updateState);
         }
     }
 

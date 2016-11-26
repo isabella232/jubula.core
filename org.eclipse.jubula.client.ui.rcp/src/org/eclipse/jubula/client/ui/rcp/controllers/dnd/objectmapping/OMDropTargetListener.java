@@ -88,7 +88,9 @@ public class OMDropTargetListener extends ViewerDropAdapter {
         } else if (containsOnlyType(selection, IComponentNamePO.class)) {
             // Use logic for dropping Component Names
             List<IComponentNamePO> toMove = selection.toList();
-            dropComponentNames(editor, toMove, target);
+            if (dropComponentNames(editor, toMove, target)) {
+                return;
+            }
         }
 
         LocalSelectionTransfer.getTransfer().setSelection(null);
@@ -124,17 +126,19 @@ public class OMDropTargetListener extends ViewerDropAdapter {
      *            The Component Names being moved.
      * @param target
      *            The location to which the Component Names are being moved.
+     * @return whether the operation is cancelled by the user
      */
-    protected void dropComponentNames(ObjectMappingMultiPageEditor editor,
+    protected boolean dropComponentNames(ObjectMappingMultiPageEditor editor,
             List<IComponentNamePO> toMove, Object target) {
 
         if (target instanceof IObjectMappingAssoziationPO) {
-            OMEditorDndSupport.checkTypeCompatibilityAndMove(toMove,
+            return OMEditorDndSupport.checkTypeCompatibilityAndMove(toMove,
                     (IObjectMappingAssoziationPO)target, editor);
         } else if (target instanceof IObjectMappingCategoryPO) {
             OMEditorDndSupport.checkTypeCompatibilityAndMove(toMove,
                     (IObjectMappingCategoryPO)target, editor);
         }
+        return false;
     }
 
     /**

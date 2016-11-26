@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.persistence;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,16 +20,16 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.ProjectCompNameCache;
 import org.eclipse.jubula.client.core.datastructure.CompNameUsageMap;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -100,47 +101,6 @@ public class MultipleNodePM  extends PersistenceManager {
          */
         public abstract MessageInfo execute(EntityManager sess);
         
-    }
-    
-    /**
-     * Command to delete a single test suite
-     */
-    public static class DeleteExecHandle extends AbstractCmdHandle {
-
-        /** the exec node to delete */
-        private IExecPersistable m_execNode;
-        
-        /**
-         * constructor 
-         * @param exec
-         *      the exec node to delete
-         */
-        public DeleteExecHandle(IExecPersistable exec) {
-            m_execNode = exec;
-            getObjsToLock().add(exec);
-            
-            if (isNestedNode(exec)) {
-                getObjsToLock().add(exec.getParentNode());
-            } else {
-                IProjectPO proj = GeneralStorage.getInstance().getProject();
-                getObjsToLock().add(proj.getExecObjCont());  
-            }
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
-        public MessageInfo execute(EntityManager sess) {
-            if (isNestedNode(m_execNode)) {
-                m_execNode.getParentNode().removeNode(m_execNode);
-            } else {
-                IProjectPO proj = GeneralStorage.getInstance().getProject();
-                proj.getExecObjCont().removeExecObject(m_execNode);  
-            }
-            
-            sess.remove(m_execNode);
-            return null;
-        }
     }
 
     /**
@@ -229,30 +189,25 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
-            IWritableComponentNameMapper extProjectCompMapper = 
-                new ProjectComponentNameMapper(
-                        new ComponentNamesDecorator(sess), 
-                        m_newParentProj);
+            IWritableComponentNameCache extProjectCompCache = 
+                new ProjectCompNameCache(m_newParentProj);
 
             try {
                 Map<String, IComponentNamePO> createdComponentNames =
                     new HashMap<String, IComponentNamePO>();
                 createdComponentNames.putAll(
-                        handleFirstNames(sess, extProjectCompMapper));
+                        handleFirstNames(sess, extProjectCompCache));
                 createdComponentNames.putAll(
-                        handleSecondNames(sess, extProjectCompMapper));
+                        handleSecondNames(sess, extProjectCompCache));
                 for (String guid : createdComponentNames.keySet()) {
-                    handleMapping(sess, extProjectCompMapper, 
+                    handleMapping(sess, extProjectCompCache, 
                             guid, createdComponentNames.get(guid));
                 }
                 
                 CompNamePM.flushCompNames(
-                        sess, m_newParentProj.getId(), extProjectCompMapper);
+                        sess, m_newParentProj.getId(), extProjectCompCache);
             } catch (PMException e) {
                 return new MessageInfo(e.getErrorId(), null);
-            } catch (IncompatibleTypeException e) {
-                return new MessageInfo(
-                        e.getErrorId(), e.getErrorMessageParams());
             } catch (ComponentNameExistsException e) {
                 return new MessageInfo(
                         e.getErrorId(), e.getErrorMessageParams());
@@ -268,21 +223,17 @@ public class MultipleNodePM  extends PersistenceManager {
          * @param sess The session in which to perform the work. This session
          *             will not be managed at all by this method (i.e. no 
          *             commit or rollback for transactions, no closing).
-         * @param extProjectCompMapper The business logic object that knows 
-         *                             how to perform the mapping.
+         * @param extProjectCompCache The Comp Name Cache
          * @param originalGuid The GUID of the Component Name for which to 
          *                     check for mappings.
          * @param compName The Component Name that will be mapped.
          * @throws PMException If a persistence error occurs while performing
          *                     the mapping.
-         * @throws IncompatibleTypeException 
-         *                     If a type incompatiblity would be caused by 
-         *                     performing the mapping.
          */
         private void handleMapping(EntityManager sess,
-                IWritableComponentNameMapper extProjectCompMapper, 
+                IWritableComponentNameCache extProjectCompCache, 
                 String originalGuid, IComponentNamePO compName) 
-            throws PMException, IncompatibleTypeException {
+            throws PMException {
             
             IProjectPO currentProject = sess.find(
                     NodeMaker.getProjectPOClass(), m_currentProjectId);
@@ -290,7 +241,7 @@ public class MultipleNodePM  extends PersistenceManager {
                 if (LockManager.instance().lockPO(sess, aut, true)) {
                     IObjectMappingAssoziationPO assoc = 
                         aut.getObjMap().getLogicalNameAssoc(originalGuid);
-                    extProjectCompMapper.changeReuse(
+                    extProjectCompCache.changeReuse(
                             assoc, null, compName.getGuid());
                 }
             }
@@ -298,18 +249,13 @@ public class MultipleNodePM  extends PersistenceManager {
 
         /**
          * @param sess The session in which to perform the operation.
-         * @param extProjectCompMapper The Component Name mapper to use for the
-         *                             operation.
+         * @param extProjectCompCache The Component Name cache.
          * @return mapping from GUID of "moved/cloned" Component Name to newly 
          *                 created Component Name in reused Project.
-         * @throws IncompatibleTypeException if the types of the 
-         *                                   Component Names are incompatible.
-         * @throws PMException if a database error occurs.
          */
         private Map<String, IComponentNamePO> handleSecondNames(
                 EntityManager sess,
-                IWritableComponentNameMapper extProjectCompMapper) 
-            throws IncompatibleTypeException, PMException {
+                IWritableComponentNameCache extProjectCompCache) {
 
             Map<String, IComponentNamePO> createdNames = 
                 new HashMap<String, IComponentNamePO>();
@@ -319,13 +265,13 @@ public class MultipleNodePM  extends PersistenceManager {
                 IComponentNamePO existingExtCompName =
                     getCompNamePOForName(
                             compName.getName(), 
-                            extProjectCompMapper.getCompNameCache(),
+                            extProjectCompCache,
                             m_newParentProj.getId());
                 if (existingExtCompName != null 
                         && existingExtCompName.getParentProjectId().equals(
                                 m_newParentProj.getId())) {
                     // Update relevant users
-                    updateSecondNameUsers(extProjectCompMapper,
+                    updateSecondNameUsers(extProjectCompCache,
                             secondCompNameToUsers, compName,
                             existingExtCompName);
                 } else {
@@ -333,14 +279,14 @@ public class MultipleNodePM  extends PersistenceManager {
                     String compType = ComponentBuilder.getInstance()
                         .getCompSystem().getMostAbstractComponent().getType();
                     IComponentNamePO newCompName = 
-                        extProjectCompMapper.getCompNameCache()
-                            .createComponentNamePO(
+                        extProjectCompCache.createComponentNamePO(
                                     compName.getName(), compType, 
                                     CompNameCreationContext.OVERRIDDEN_NAME);
+                    extProjectCompCache.addCompNamePO(newCompName);
                     newCompName.setParentProjectId(m_newParentProj.getId());
                     createdNames.put(compName.getGuid(), newCompName);
                     // Update relevant users
-                    updateSecondNameUsers(extProjectCompMapper,
+                    updateSecondNameUsers(extProjectCompCache,
                             secondCompNameToUsers, compName, newCompName);
                 }
             }
@@ -351,26 +297,23 @@ public class MultipleNodePM  extends PersistenceManager {
         /**
          * Updates the objects using the given Component Name as a second name.
          * 
-         * @param extProjectCompMapper The Component Name mapper to use to
+         * @param extProjectCompCache The Component Name cache to use to
          *                             perform the update.
          * @param secondCompNameToUsers The users to update.
          * @param compName The Component Name currently used.
          * @param existingExtCompName The new Component Name to use.
-         * @throws IncompatibleTypeException if the types of the 
-         *                                   Component Names are incompatible.
-         * @throws PMException if a database error occurs.
          */
         private void updateSecondNameUsers(
-                IWritableComponentNameMapper extProjectCompMapper,
+                IWritableComponentNameCache extProjectCompCache,
                 Map<IComponentNamePO, Set<INodePO>> secondCompNameToUsers,
-                IComponentNamePO compName, IComponentNamePO existingExtCompName)
-            throws IncompatibleTypeException, PMException {
+                IComponentNamePO compName,
+                IComponentNamePO existingExtCompName) {
             
             for (INodePO node : secondCompNameToUsers
                     .get(compName)) {
                 if (node instanceof ICapPO) {
                     ICapPO capPo = (ICapPO)node;
-                    extProjectCompMapper.changeReuse(
+                    extProjectCompCache.changeReuse(
                             capPo, capPo.getComponentName(), 
                             existingExtCompName.getGuid());
                 } else if (node instanceof IExecTestCasePO) {
@@ -379,7 +322,7 @@ public class MultipleNodePM  extends PersistenceManager {
                             .getCompNamesPairs()) {
                         if (pair.getSecondName().equals(
                                 compName.getGuid())) {
-                            extProjectCompMapper.changeReuse(
+                            extProjectCompCache.changeReuse(
                                     pair, pair.getSecondName(), 
                                     existingExtCompName.getGuid());
                         }
@@ -391,7 +334,7 @@ public class MultipleNodePM  extends PersistenceManager {
         /**
          * 
          * @param sess The session in which to perform the operation.
-         * @param compMapper The Component Name mapper to use for the
+         * @param compCache The Component Name cache to use for the
          *                             operation.
          * @return mapping from GUID of "moved/cloned" Component Name to newly 
          *                 created Component Name in reused Project.
@@ -400,7 +343,7 @@ public class MultipleNodePM  extends PersistenceManager {
          *                          reused Project.
          */
         private Map<String, IComponentNamePO> handleFirstNames(
-                EntityManager sess, IWritableComponentNameMapper compMapper) 
+                EntityManager sess, IWritableComponentNameCache compCache) 
             throws ComponentNameExistsException {
             
             Map<String, IComponentNamePO> createdComponentNames =
@@ -418,7 +361,7 @@ public class MultipleNodePM  extends PersistenceManager {
                     IComponentNamePO existingExtCompName = 
                         getCompNamePOForName(
                                 compName.getName(), 
-                                compMapper.getCompNameCache(),
+                                compCache,
                                 m_newParentProj.getId());
                     if (existingExtCompName != null 
                             && existingExtCompName.getParentProjectId()
@@ -435,10 +378,10 @@ public class MultipleNodePM  extends PersistenceManager {
                         .getCompSystem().getMostAbstractComponent().getType();
                     
                     IComponentNamePO newCompName = 
-                        compMapper.getCompNameCache()
-                            .createComponentNamePO(
+                        compCache.createComponentNamePO(
                                     compName.getName(), compType, 
                                     CompNameCreationContext.STEP);
+                    compCache.addCompNamePO(newCompName);
                     newCompName.setParentProjectId(m_newParentProj.getId());
                     createdComponentNames.put(compName.getGuid(), newCompName);
                     // Update relevant users
@@ -503,7 +446,7 @@ public class MultipleNodePM  extends PersistenceManager {
                 Long parentProjectId) {
             String guid = compNameCache.getGuidForName(name, parentProjectId);
             if (guid != null) {
-                return compNameCache.getCompNamePo(guid);
+                return compNameCache.getResCompNamePOByGuid(guid);
             }
             return null;
         }
@@ -619,7 +562,7 @@ public class MultipleNodePM  extends PersistenceManager {
             if (node instanceof ISpecTestCasePO 
                     && !(oldParent.getParentProjectId().equals(
                             newParent.getParentProjectId()))) {
-                Iterator iter = node.getNodeListIterator();
+                Iterator iter = node.getAllNodeIter();
                 while (iter.hasNext()) {
                     INodePO child = (INodePO)iter.next();
                     if (child instanceof IExecTestCasePO) {
@@ -754,6 +697,54 @@ public class MultipleNodePM  extends PersistenceManager {
     }
 
     /**
+     * Command to delete a single test suite
+     */
+    public static class DeleteExecHandle extends AbstractCmdHandle {
+
+        /** the exec node to delete */
+        private IExecPersistable m_execNode;
+        
+        /**
+         * constructor 
+         * @param exec
+         *      the exec node to delete
+         */
+        public DeleteExecHandle(IExecPersistable exec) {
+            m_execNode = exec;
+            getObjsToLock().add(exec);
+            
+            if (isNestedNode(exec)) {
+                getObjsToLock().add(exec.getParentNode());
+            } else {
+                IProjectPO proj = GeneralStorage.getInstance().getProject();
+                getObjsToLock().add(proj.getExecObjCont());  
+            }
+        }
+        
+        /**
+         * {@inheritDoc}
+         */
+        public MessageInfo execute(EntityManager sess) {
+            IExecPersistable tc = sess.find(m_execNode.getClass(),
+                    m_execNode.getId());
+            if (isNestedNode(m_execNode)) {
+                INodePO par = m_execNode.getParentNode();
+                par = sess.find(par.getClass(), par.getId());
+                par.removeNode(tc);
+            } else {
+                IExecObjContPO cont = GeneralStorage.getInstance().
+                        getProject().getExecObjCont();
+                cont = sess.find(cont.getClass(), cont.getId());
+                cont.removeExecObject(tc);
+            }
+            
+            sess.remove(tc);
+            
+            return null;
+        }
+    }    
+    
+    /**
      * Command to delete a single test case
      */
     public static class DeleteTCHandle extends AbstractCmdHandle {
@@ -788,15 +779,21 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
+            ISpecTestCasePO tc = sess.find(m_testCase.getClass(),
+                    m_testCase.getId());
             if (isNestedNode(m_testCase)) {
-                m_testCase.getParentNode().removeNode(m_testCase);
+                INodePO par = m_testCase.getParentNode();
+                par = sess.find(par.getClass(), par.getId());
+                par.removeNode(tc);
             } else {
-                IProjectPO proj = GeneralStorage.getInstance().getProject();
-                proj.getSpecObjCont().removeSpecObject(m_testCase);  
+                ISpecObjContPO cont = GeneralStorage.getInstance().
+                        getProject().getSpecObjCont();
+                cont = sess.find(cont.getClass(), cont.getId());
+                cont.removeSpecObject(tc);
             }
-            registerParamNamesForDeletion(m_testCase);
+            registerParamNamesForDeletion(tc);
             
-            sess.remove(m_testCase);
+            sess.remove(tc);
             
             return null;
         }
@@ -844,11 +841,13 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
-            ISpecTestCasePO usingSpecTc = (ISpecTestCasePO)m_eventTestCase.
+            ISpecTestCasePO specTc = (ISpecTestCasePO)m_eventTestCase.
                 getParentNode();
-            usingSpecTc.removeNode(m_eventTestCase);
-            
-            sess.remove(m_eventTestCase);
+            specTc = sess.find(specTc.getClass(), specTc.getId());
+            IEventExecTestCasePO evTC = sess.find(m_eventTestCase.getClass(),
+                    m_eventTestCase.getId());
+            specTc.removeNode(evTC);
+            sess.remove(evTC);
             
             return null;
         }
@@ -888,19 +887,25 @@ public class MultipleNodePM  extends PersistenceManager {
          * {@inheritDoc}
          */
         public MessageInfo execute(EntityManager sess) {
+            ICategoryPO cat = sess.find(m_category.getClass(),
+                    m_category.getId());
+            INodePO par = m_category.getParentNode();
             if (isNestedNode(m_category)) {
-                m_category.getParentNode().removeNode(m_category);
+                par = sess.find(par.getClass(), par.getId());
+                par.removeNode(cat);
             } else {
                 IProjectPO proj = GeneralStorage.getInstance().getProject();
-                INodePO parent = m_category.getParentNode();
-                if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
-                    proj.getSpecObjCont().removeSpecObject(m_category);  
-                } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
-                    proj.getExecObjCont().removeExecObject(m_category);
+                if (par == ISpecObjContPO.TCB_ROOT_NODE) {
+                    ISpecObjContPO cont = proj.getSpecObjCont();
+                    cont = sess.find(cont.getClass(), cont.getId());
+                    cont.removeSpecObject(cat);
+                } else if (par == IExecObjContPO.TSB_ROOT_NODE) {
+                    IExecObjContPO cont = proj.getExecObjCont();
+                    cont = sess.find(cont.getClass(), cont.getId());
+                    cont.removeExecObject(cat);
                 }
             }
-
-            sess.remove(m_category);
+            sess.remove(cat);
             
             return null;
         }
@@ -962,27 +967,6 @@ public class MultipleNodePM  extends PersistenceManager {
     }
     
     /**
-     * executes a list of commands in a single transaction in the Master
-     * Session.
-     * 
-     * @param cmds
-     *      List<AbstractCmdHandle>
-     * @throws PMException
-     *      error occured
-     * @throws ProjectDeletedException
-     *      error occured
-     * @return a message containing information about the error that 
-     *         occurred during execution, or <code>null</code> if no error
-     *         occurred.
-     */
-    public MessageInfo executeCommands(List<AbstractCmdHandle> cmds) 
-        throws PMException, ProjectDeletedException {
-
-        return executeCommands(cmds, GeneralStorage.getInstance()
-                .getMasterSession());
-    }
-
-    /**
      * executes a list of commands in a single transaction. The given session
      * is managed by the caller. This method will commit or rollback the 
      * transaction as appropriate, but will not close the session.
@@ -1041,29 +1025,38 @@ public class MultipleNodePM  extends PersistenceManager {
             
             // commit transaction and remove all locks
             persistor.commitTransaction(sess, tx);
-            
             if (dec != null) {
                 // sync with master sessions mapper
                 Long projId = GeneralStorage.getInstance().getProject().getId();
                 dec.updateStandardMapperAndCleanup(projId);
             }
             
-            EntityManager masterSession = 
+            EntityManager master = 
                 GeneralStorage.getInstance().getMasterSession();
             for (AbstractCmdHandle cmd : cmds) {
                 if (cmd instanceof UpdateParamNamesHandle) {
                     UpdateParamNamesHandle paramCmd = 
                         (UpdateParamNamesHandle)cmd;
                     for (IParamNamePO paramName : paramCmd.getParamNames()) {
-                        masterSession.detach(paramName);
+                        master.detach(paramName);
                     }
                 }
             }
-
+            for (IPersistentObject next : objectsToLock) {
+                IPersistentObject obj = master.find(next.getClass(),
+                        next.getId());
+                if (obj != null) {
+                    try {
+                        master.refresh(obj);
+                    } catch (EntityNotFoundException e) {
+                        // ok, the object was deleted...
+                        master.detach(obj);
+                    }
+                }
+            }
         } catch (PersistenceException e1) {
             PersistenceManager.handleDBExceptionForMasterSession(actObj, e1);
         }
-
         return null;
     }
     
@@ -1134,18 +1127,14 @@ public class MultipleNodePM  extends PersistenceManager {
      *      true, if no conflict exists. That means, there are no IExecTestCasePO 
      *      or all located in other nodes, which are going to be affected
      */
-    public static boolean allExecsFromList(List<INodePO> affectedNodes, 
+    public static boolean allExecsFromList(Collection<INodePO> affectedNodes, 
         List<IExecTestCasePO> execTestCases) {
         if (execTestCases.isEmpty()) {
             return true;
         }
         for (IExecTestCasePO execTc : execTestCases) {
             INodePO parent;
-            if (execTc instanceof IEventExecTestCasePO) {
-                parent = execTc.getParentNode();
-            } else {
-                parent = execTc.getParentNode();
-            }
+            parent = execTc.getSpecAncestor();
             if (!affectedNodes.contains(parent)) {
                 return false;
             }

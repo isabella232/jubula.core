@@ -322,7 +322,9 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         /** structure of object was modified, including their data*/
          StructureModified,
         /** current object has modification regarding to reuse */
-         ReuseChanged
+         ReuseChanged,
+         /** an Editor was saved */
+         Saved
     }
      
     /** specifies the connection state between client and server */
@@ -1046,7 +1048,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             IProblemPropagationListener l) {
         return m_problemPropagationListeners.remove(l);
     }
-    
+
     /**
      * notify listener about modification of Record Mode
      * @param state of Record Mode

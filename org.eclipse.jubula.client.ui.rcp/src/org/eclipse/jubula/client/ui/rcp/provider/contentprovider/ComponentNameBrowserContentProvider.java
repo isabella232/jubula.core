@@ -11,38 +11,38 @@
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.ComponentNameReuseBP;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvider;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -60,9 +60,11 @@ import org.eclipse.swt.graphics.Image;
  * @author BREDEX GmbH
  * @created 06.02.2009
  */
-public class ComponentNameBrowserContentProvider extends LabelProvider
+
+public class ComponentNameBrowserContentProvider extends TooltipLabelProvider
         implements ITreeContentProvider, IColorProvider, 
         IProjectLoadedListener, IDataChangedListener {
+
     /** The color for disabled elements */
     private static final Color DISABLED_COLOR = LayoutUtil.GRAY_COLOR;
     
@@ -79,6 +81,8 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
     /** the parent->children cache */
     private Map<Object, List<Object>> m_children = 
             new HashMap<Object, List<Object>>(79);
+    
+    
     /**
      * register handler for project load and data change to clear caches
      */
@@ -86,7 +90,6 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectLoadedListener(this, true);
         ded.addDataChangedListener(this, false);
-
     }
     /**
      * Drops all cached data.
@@ -108,7 +111,11 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         boolean refreshView = false;
         for (DataChangedEvent e : events) {
             if (e.getUpdateState() != UpdateState.onlyInEditor
-                    && e.getPo() instanceof IComponentNamePO) {
+                    && (e.getPo() instanceof IComponentNamePO
+                        || ((e.getDataState() == DataState.Saved)
+                        && (e.getPo() instanceof IObjectMappingPO)
+                            || (e.getPo() instanceof ITestCasePO)
+                            || (e.getPo() instanceof ITestSuitePO)))) {
                 refreshView = true;
                 break;
             }
@@ -136,10 +143,12 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
             AbstractCompNamesCategory pe = 
                 (AbstractCompNamesCategory)parentO;
             if (pe instanceof UsedCompnamesCategory) {
-                children = findUsedCompNames(pe);
+                children = CompNameManager.getInstance().
+                        getUsedCompNames(pe.m_parentProjectID);
             }
             if (pe instanceof UnusedCompnamesCategory) {
-                children = findUnusedCompNames(pe);
+                children = CompNameManager.getInstance().
+                        getUnusedCompNames(pe.m_parentProjectID);
             }
             if (pe instanceof ReusedCompnamesCategory) {
                 children = findAllReusedProjects(pe);
@@ -229,84 +238,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
         return DUMMY;
     }
 
-    /**
-     * @param pe
-     *            the parent element
-     * @return all unused component names po for the given synthetic gui
-     */
-    private Object[] findUnusedCompNames(AbstractCompNamesCategory pe) {
-        try {
-            Collection<IComponentNamePO> cn = ComponentNamesBP.getInstance()
-                    .getAllNonRefCompNamePOs(pe.getParentProjectID());
-            
-            Set<String> nonRefCompNameGuids = new HashSet<String>();
-            for (IComponentNamePO iComponentNamePO : cn) {
-                nonRefCompNameGuids.add(iComponentNamePO.getGuid());
-            }
-            
-            final Set<String> usedCompNames = ComponentNameReuseBP.getInstance()
-                    .getUsedCompNames(nonRefCompNameGuids);
-            
-            CollectionUtils.filter(cn, new Predicate() {
-                public boolean evaluate(Object element) {
-                    if (element instanceof IComponentNamePO) {
-                        IComponentNamePO compName = (IComponentNamePO)element;
-                        if (usedCompNames.contains(compName.getGuid())) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-                
-            });
-            return cn.toArray();
-        } catch (PMException e) {
-            // nothing to catch here
-        }
-        return DUMMY;
-    }
-
-    /**
-     * @param pe
-     *            the parent element
-     * @return all used component names po for the given synthetic gui
-     */
-    private Object[] findUsedCompNames(AbstractCompNamesCategory pe) {
-        try {
-            Collection<IComponentNamePO> cn = ComponentNamesBP.getInstance()
-                    .getAllNonRefCompNamePOs(pe.getParentProjectID());
-            
-            Set<String> nonRefCompNameGuids = new HashSet<String>();
-            for (IComponentNamePO iComponentNamePO : cn) {
-                nonRefCompNameGuids.add(iComponentNamePO.getGuid());
-            }
-            
-            final Set<String> usedCompNames = ComponentNameReuseBP.getInstance()
-                    .getUsedCompNames(nonRefCompNameGuids);
-            
-            CollectionUtils.filter(cn, new Predicate() {
-                public boolean evaluate(Object element) {
-                    if (element instanceof IComponentNamePO) {
-                        IComponentNamePO compName = (IComponentNamePO)element;
-                        
-                        if (usedCompNames.contains(compName.getGuid())) {
-                            return true;
-                        }
-                    }
-                    return false;
-                }
-                
-            });
-            return cn.toArray();
-        } catch (PMException e) {
-            // nothing to catch here
-        }
-        return DUMMY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Object getParent(Object element) {
         return m_relationShip.get(element);
     }
@@ -338,6 +270,9 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
      */
     public void dispose() {
         clearCaches();
+        DataEventDispatcher ded = DataEventDispatcher.getInstance();
+        ded.removeProjectLoadedListener(this);
+        ded.removeDataChangedListener(this);
     }
 
     /**
@@ -362,10 +297,24 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
 
         if (element instanceof IComponentNamePO) {
             IComponentNamePO cName = ((IComponentNamePO)element);
+            cName = CompNameManager.getInstance().getResCompNamePOByGuid(
+                    cName.getGuid());
             String cType = CompSystemI18n.getString(cName.getComponentType());
             String displayName = cName.getName() 
                  + StringConstants.SPACE + StringConstants.LEFT_BRACKET 
                  + cType + StringConstants.RIGHT_BRACKET;
+            
+            int count = CompNameManager.getInstance().
+                    getUsageByGuid(cName.getGuid());
+            
+            if (Plugin.getDefault().getPreferenceStore()
+                    .getBoolean(Constants.SHOWCOUNTERS_KEY)) {
+                displayName += StringConstants.SPACE
+                        + StringConstants.LEFT_PARENTHESES
+                        + CompNameManager.getInstance().
+                        getUsageByGuid(cName.getGuid())
+                        + StringConstants.RIGHT_PARENTHESES;
+            }
 
             return displayName;
         }
@@ -545,6 +494,7 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
      * @created 16.02.2009
      */
     public class UsedCompnamesCategory extends AbstractCompNamesCategory {
+                
         /**
          * @param parentID
          *            the parent project id
@@ -565,6 +515,10 @@ public class ComponentNameBrowserContentProvider extends LabelProvider
      * @created 16.02.2009
      */
     public class UnusedCompnamesCategory extends AbstractCompNamesCategory {
+        
+        /** The children component names */
+        private Set<IComponentNamePO> m_compNames;
+        
         /**
          * @param parentID
          *            the parent project id

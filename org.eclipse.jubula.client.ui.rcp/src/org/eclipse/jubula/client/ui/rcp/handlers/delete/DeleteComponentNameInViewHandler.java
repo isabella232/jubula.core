@@ -15,19 +15,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
@@ -57,26 +52,9 @@ public class DeleteComponentNameInViewHandler
         }
 
         if (confirmDelete(itemNames)) {
-            EntityManager s = Persistor.instance().openSession();
-            
             try {
-                EntityTransaction tx = Persistor.instance()
-                        .getTransaction(s); 
-                Persistor.instance().lockPOSet(s, toDelete);
+                CompNameManager.getInstance().deleteCompNames(toDelete);
                 for (IComponentNamePO compName : toDelete) {
-                    s.remove(s.merge(compName));
-                }
-                Persistor.instance().commitTransaction(s, tx);
-                EntityManager masterRO = GeneralStorage.getInstance().
-                        getMasterSession();
-                IComponentNamePO temp;
-                for (IComponentNamePO compName : toDelete) {
-                    temp = masterRO.find(compName.getClass(), compName.getId());
-                    if (temp != null) {
-                        masterRO.detach(temp);
-                    }
-                    ComponentNamesBP.getInstance().removeComponentNamePO(
-                            compName.getGuid());
                     DataEventDispatcher.getInstance()
                             .fireDataChangedListener(compName,
                                     DataState.Deleted, UpdateState.all);
@@ -85,8 +63,6 @@ public class DeleteComponentNameInViewHandler
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleProjectDeletedException();
-            } finally {
-                Persistor.instance().dropSession(s);
             }
         }
         

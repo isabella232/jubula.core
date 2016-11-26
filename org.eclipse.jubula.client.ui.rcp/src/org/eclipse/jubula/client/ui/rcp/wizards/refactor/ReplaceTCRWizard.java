@@ -26,7 +26,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
-import org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTreeItemHandlerTCEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages.AdditionalInformationPage;
@@ -125,9 +124,6 @@ public class ReplaceTCRWizard extends Wizard {
      */
     public IWizardPage getNextPage(IWizardPage page) {
         if (page instanceof ChooseTestCasePage) {
-//            TestCaseBP.handleFirstReference(m_editor.getEditorHelper()
-//                    .getEditSupport(),
-//                    m_choosePage.getChoosenTestCase(), false);
             ISpecTestCasePO specTC = m_choosePage.getChoosenTestCase();
             m_newExec = NodeMaker.createExecTestCasePO(specTC);
             m_addInfoPage.bindNewExec(m_newExec);
@@ -143,11 +139,12 @@ public class ReplaceTCRWizard extends Wizard {
         INodePO placeToInsert = m_listOfExecsToReplace.get(0);
         ISpecTestCasePO specTcToInsert = m_choosePage.getChoosenTestCase();
         try {
-            Integer index = NewTestCaseHandlerTCEditor.getPositionToInsert(
-                    m_parentTC, placeToInsert);
+            Integer index = placeToInsert.getParentNode().indexOf(
+                    placeToInsert);
             JBEditorHelper eh = m_editor.getEditorHelper();
             IExecTestCasePO replacementTCReference = TestCaseBP
-                    .addReferencedTestCase(m_parentTC, m_newExec, index);
+                    .addReferencedTestCase(placeToInsert.getParentNode(),
+                            m_newExec, index);
             InteractionEventDispatcher.getDefault()
                     .fireProgammableSelectionEvent(
                             new StructuredSelection(specTcToInsert));

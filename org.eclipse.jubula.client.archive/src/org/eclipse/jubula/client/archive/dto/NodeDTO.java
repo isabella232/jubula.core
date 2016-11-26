@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.dto;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -35,8 +37,12 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     @Type(value = ProjectDTO.class, name = "pro"),
     @Type(value = TestSuiteDTO.class, name = "ts"),
     @Type(value = RefTestSuiteDTO.class, name = "rts"),
-    @Type(value = TestJobDTO.class, name = "tj") })
+    @Type(value = TestJobDTO.class, name = "tj"),
+    @Type(value = ConditionDTO.class, name = "cod")})
 public class NodeDTO {
+    
+    /** children */
+    private List<NodeDTO> m_nodes = new ArrayList<NodeDTO>();
     
     /** */
     private String m_name, m_comment, m_uuid, m_taskId, m_description;
@@ -189,5 +195,20 @@ public class NodeDTO {
      */
     public void setDescription(String description) {
         this.m_description = description;
+    }
+    
+    /**
+     * @return nodes
+     */
+    @JsonProperty("nodes")
+    public List<NodeDTO> getNodes() {
+        return m_nodes;
+    }
+    
+    /**
+     * @param node 
+     */
+    public void addNode(NodeDTO node) {
+        this.m_nodes.add(node);
     }
 }

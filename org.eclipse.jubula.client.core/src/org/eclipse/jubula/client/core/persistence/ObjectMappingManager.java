@@ -45,12 +45,8 @@ public class ObjectMappingManager {
      *              If a database error occurs.
      * @throws ProjectDeletedException 
      *              If the project was deleted in another transaction.
-     * @throws IncompatibleTypeException 
-     *              If at least one of the mappings contains a component type 
-     *              incompatibility.
      */
-    public void saveMappings() throws PMException, 
-            ProjectDeletedException, IncompatibleTypeException {
+    public void saveMappings() throws PMException, ProjectDeletedException {
         try {
             for (IAUTMainPO aut : m_objectMappings.keySet()) {
                 if (aut != null) {

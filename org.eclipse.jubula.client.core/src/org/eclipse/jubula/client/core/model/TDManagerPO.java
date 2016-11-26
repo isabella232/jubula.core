@@ -21,12 +21,14 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -34,6 +36,7 @@ import javax.persistence.Version;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.progress.ElementLoadedProgressListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
@@ -186,6 +189,24 @@ class TDManagerPO implements ITDManager {
     @BatchFetch(value = BatchFetchType.JOIN)
     public List<IDataSetPO> getDataTable() {
         return m_dataTable;
+    }
+    
+    /**
+     * Removes the Data Sets
+     * @param sess the session
+     */
+    private void removeDataSets(EntityManager sess) {
+        if (m_dataTable.isEmpty()) {
+            return;
+        }
+        Query q = sess.createNativeQuery("delete from TD_MANAGER_TEST_DATA_LIST where TDMANAGERPO_ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId());
+        q.executeUpdate();
+        String list = NativeSQLUtils.getIdList(m_dataTable);
+        q = sess.createNativeQuery("delete from TEST_DATA_CELL where FK_DATASET_ID in " + list); //$NON-NLS-1$
+        q.executeUpdate();
+        q = sess.createNativeQuery("delete from TEST_DATA_LIST where ID in " + list); //$NON-NLS-1$
+        q.executeUpdate();
     }
 
     /**
@@ -495,6 +516,15 @@ class TDManagerPO implements ITDManager {
     }
     
     /**
+     * Removes the entries from the collection table
+     * @param sess the session
+     */
+    private void removeLinksToParams(EntityManager sess) {
+        Query q = sess.createNativeQuery("delete from TD_MANAGER_PARAM_ID where TDMANAGERPO_ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId()).executeUpdate();
+    }
+    
+    /**
      * @param uniqueId unique id of parameter to find the column in datatable
      * @return the column contains values for given parameter or -1, if param is not contained in datatable
      */
@@ -532,6 +562,12 @@ class TDManagerPO implements ITDManager {
             removeColumn(uniqueId);
             getUniqueIds().remove(uniqueId);
         }
+    }
+
+    /** {@inheritDoc} */
+    public void goingToBeDeleted(EntityManager sess) {
+        removeDataSets(sess);
+        removeLinksToParams(sess);
     }
 
 }

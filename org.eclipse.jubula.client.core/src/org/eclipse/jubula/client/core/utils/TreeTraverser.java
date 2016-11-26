@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
@@ -72,6 +73,11 @@ public class TreeTraverser {
      * default behavior
      */
     private boolean m_traverseExecPart = true;
+    
+    /**
+     * Traverses reused projects when project as the root is given
+     */
+    private boolean m_traverseReused = true;
     
     /** 
      * The maximum traversal depth. <code>NO_DEPTH_LIMIT</code> by default. 
@@ -213,6 +219,11 @@ public class TreeTraverser {
                             it.hasNext();) {
                         traverseImpl(context, node, it.next());
                     }
+                    if (node instanceof IControllerPO) {
+                        for (INodePO child : node.getUnmodifiableNodeList()) {
+                            traverseImpl(context, node, child);
+                        }
+                    }
                     if (m_traverseEventHandlers
                             && node instanceof ITestCasePO) {
                         ISpecTestCasePO testCase;
@@ -257,7 +268,9 @@ public class TreeTraverser {
             IProjectPO project) {
         if (m_traverseSpecPart) {
             traverseLocalSpecPart(context, project);
-            traverseReusedProjectSpecPart(context, project);
+            if (m_traverseReused) {
+                traverseReusedProjectSpecPart(context, project);
+            }
         } 
         if (m_traverseExecPart) {
             traverseExecPart(context, project);
@@ -392,5 +405,12 @@ public class TreeTraverser {
      */
     public void setMonitor(IProgressMonitor monitor) {
         m_monitor = monitor;
+    }
+    
+    /**
+     * @param reused whether to traverse reused projects
+     */
+    public void setTraverseReused(boolean reused) {
+        m_traverseReused = reused;
     }
 }

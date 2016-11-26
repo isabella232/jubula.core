@@ -20,10 +20,12 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.Query;
 import javax.persistence.Transient;
 
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -199,6 +201,15 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     public Map<String, Integer> getDefaultEventHandler() {
         return m_defaultEventHandler;
     }
+    
+    /**
+     * Removes the default handlers
+     * @param sess the session
+     */
+    private void removeDefaultEventHandlers(EntityManager sess) {
+        Query q = sess.createNativeQuery("delete from DEF_EVENTH where TESTSUITEPO_ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId()).executeUpdate();
+    }
 
     /**
      * @param defaultEventHandler
@@ -244,4 +255,11 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     public Boolean isReused() {
         return true;
     }
+    
+    /** {@inheritDoc} */
+    public void goingToBeDeleted(EntityManager sess) {
+        super.goingToBeDeleted(sess);
+        removeDefaultEventHandlers(sess);
+    }
+
 }

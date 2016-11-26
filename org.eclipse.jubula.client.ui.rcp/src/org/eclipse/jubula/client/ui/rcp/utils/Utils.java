@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,16 +20,12 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
-import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -196,16 +191,6 @@ public class Utils {
     }
     
     /**
-     * Gets a List of expanded items of the given TreeViewer.
-     * @param tv the TreeViewer
-     * @return a List of expanded items
-     */
-    public static List<Object> getExpandedTreeItems(TreeViewer tv) {
-        Object[] expandedElems = tv.getExpandedElements();
-        return new ArrayList<Object>(Arrays.asList(expandedElems));
-    }
-    
-    /**
      * @return the last browsed path.
      */
     public static String getLastDirPath() {
@@ -255,7 +240,7 @@ public class Utils {
         if (gs != null && Persistor.instance() != null) {
             IProjectPO currProj = gs.getProject();
             if (currProj != null) {
-                gs.setProject(null);
+                gs.nullProject();
             }
             gs.reset();
         }
@@ -343,84 +328,6 @@ public class Utils {
             }
         }
         return null;
-    }
-    /**
-     * @param exec the exec TC to search in
-     * @param name the comp name to get the type for
-     * @return the comp type
-     */
-    public static String getComponentType(IExecTestCasePO exec, String name) {
-        return getComponentType(exec, name, false);
-    }
-    
-    /**
-     * @param exec the exec TC to search in
-     * @param name the comp name to get the type for
-     * @param checkForPropagate true if propagation should be checked
-     * @return the comp type
-     */
-    private static String getComponentType(IExecTestCasePO exec, String name, 
-            boolean checkForPropagate) {
-        
-        String type = StringConstants.EMPTY;
-        ICompNamesPairPO compNamesPair = exec.getCompNamesPair(name);
-        if (compNamesPair != null) {
-            if (checkForPropagate) {
-                if (compNamesPair.isPropagated()) {
-                    type = searchCompTypeInTree(exec, name);
-                    compNamesPair.setType(type);
-                    return type;
-                }
-            } else {
-                return searchCompTypeInTree(exec, name);
-            }
-        } 
-        if (exec.getCompNamesPairs().isEmpty()) {
-            return searchCompTypeInTree(exec, name);
-        } 
-        for (ICompNamesPairPO pair : exec.getCompNamesPairs()) {
-            if (pair.getSecondName() != null
-                    && pair.getSecondName().equals(name)) {
-                
-                if (checkForPropagate) {
-                    if (pair.isPropagated()) {
-                        return getComponentType(exec, pair.getFirstName(), 
-                                true);
-                    }
-                } else {
-                    return getComponentType(exec, pair.getFirstName(), true);
-                }
-            }
-        }
-        return StringConstants.EMPTY;
-    }
-
-    /**
-     * @param exec the exec TC to search in
-     * @param name the comp name to get the type for
-     * @return the comp type
-     */
-    private static String searchCompTypeInTree(IExecTestCasePO exec, 
-            String name) {
-        
-        String type = StringConstants.EMPTY;
-        if (exec.getSpecTestCase() != null) {
-            for (Object node 
-                    : exec.getSpecTestCase().getUnmodifiableNodeList()) {
-                if (node instanceof ICapPO) {
-                    ICapPO cap = (ICapPO)node;
-                    if (name.equals(cap.getComponentName())) {
-                        return cap.getComponentType();
-                    }
-                } else if (node instanceof IExecTestCasePO) {
-                    type = getComponentType((IExecTestCasePO)node, name, true);
-                    if (!StringConstants.EMPTY.equals(type)) {
-                        break;
-                    }
-                }
-            }
-        }
-        return type;
     }
     
     /**

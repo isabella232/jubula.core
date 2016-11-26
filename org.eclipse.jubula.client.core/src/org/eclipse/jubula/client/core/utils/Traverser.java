@@ -30,13 +30,19 @@ import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IEventStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -44,6 +50,8 @@ import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
+import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -53,6 +61,7 @@ import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -185,6 +194,12 @@ public class Traverser {
     /** business process for retrieving test data */
     private ExternalTestDataBP m_externalTestDataBP;
     
+    /** Indicates that we are just building the test result tree - this is for the loops */
+    private boolean m_building = false;
+    
+    /** Maximum number of iterations */
+    private int m_iterMax = 100;
+    
     /**
      * @param root root node from tree
      */
@@ -238,9 +253,16 @@ public class Traverser {
                     processExecTestCase(stackObj, (IExecTestCasePO)childNode);
                     return next();
                 }
-                if (childNode instanceof ICommentPO) {
+                if (childNode instanceof ICommentPO
+                        || childNode instanceof IControllerPO
+                        || childNode instanceof IAbstractContainerPO) {
                     m_execStack.push(new ExecObject(childNode, NO_DATASET));
                     fireExecStackIncremented(childNode);
+                    if (childNode instanceof IIteratePO) {
+                        // not very nice, but we handle the 0-times executed iteration this way
+                        decrementIterate(((IIteratePO) childNode).
+                                getDoBranch());
+                    }
                     return next();
                 }
                 Assert.notReached(Messages.ErrorInTestExecutionTree);
@@ -268,7 +290,7 @@ public class Traverser {
         // end
         return null;
     }
-
+    
     /**
      * processes a childnode which is an ExecTestCasePO
      * @param stackObj the stack object
@@ -315,14 +337,13 @@ public class Traverser {
             } else {
                 throw new IncompleteDataException(
                     NLS.bind(Messages.ErrorWhenBuildingTestExecutionTree, 
-                            exec.getParentNode().getName()),
+                            exec.getSpecAncestor().getName()),
                     MessageIDs.E_DATASOURCE_CONTAIN_EMPTY_DATA);
             }
         // no data sets or fixed value
         } else {
             m_execStack.push(new ExecObject(exec, NO_DATASET));
         }
-        executeLogging();
         fireExecStackIncremented(exec);
     }
 
@@ -337,12 +358,125 @@ public class Traverser {
             IEventExecTestCasePO eventExec = (IEventExecTestCasePO)node; 
             prop = eventExec.getReentryProp();
         }
+        if (node instanceof IAbstractContainerPO) {
+            // a container is finished without a Check Fail being triggered
+            // what happens next depends on what the container's parent is and what is the container
+            
+            // first we remove the container
+            m_execStack.pop();
+            fireExecStackDecremented();
+            
+            if (m_execStack.isEmpty()) {
+                // this can only happen when adding a new branch to the Test Result Tree
+                // then the root is a ContainerPO
+                return prop;
+            }
+            // so here the top of the exec stack is the controller, that is, node.getParent
+            
+            if (node.getParentNode() instanceof IConditionalStatementPO) {
+                decrementCondStatementCont(node);
+            } else if (node.getParentNode() instanceof IDoWhilePO
+                    || node.getParentNode() instanceof IWhileDoPO) {
+                decrementDoWhileDoCont(node);
+            } else if (node.getParentNode() instanceof IIteratePO) {
+                decrementIterate(node);
+            }
+            return prop;
+        }
         if (!m_execStack.isEmpty()) {
             m_execStack.pop();
-            executeLogging();
             fireExecStackDecremented();
         }
         return prop;
+    }
+    
+    /**
+     * A sub-branch of a Conditional Statement is finished
+     * @param node the sub-branch
+     */
+    private void decrementCondStatementCont(INodePO node) {
+        IConditionalStatementPO par =
+                (IConditionalStatementPO) node.getParentNode();
+        if (node.equals(par.getCondition())) {
+            // the condition is finished, so we continue with the Then or Else branches
+            INodePO next = par.isNegate() ? par.getElseBranch()
+                    : par.getThenBranch();
+            m_execStack.push(new ExecObject(next, NO_DATASET));
+            fireExecStackIncremented(next);
+            return;
+        }
+        // the Then or Else branches are finished, so the conditional statement is also
+        m_execStack.pop();
+        fireExecStackDecremented();
+    }
+    
+    /**
+     * A sub-branch of a Do-While or While-Do is finished
+     * @param node the sub-branch
+     */
+    private void decrementDoWhileDoCont(INodePO node) {
+        ICondStructPO par =
+                (ICondStructPO) node.getParentNode();
+        if (node.equals(par.getCondition())) {
+            // the condition is TRUE
+            if (par.isNegate() || m_building) {
+                // negated Do-While-Do or only Test Result Tree building, so we have to stop now
+                m_execStack.pop();
+                fireExecStackDecremented();
+            } else {
+                // we continue with the do branch
+                // if the Do-While-Do is negated then we will simply stop 
+                INodePO next = par.getDoBranch();
+                m_execStack.push(new ExecObject(next, NO_DATASET));
+                fireExecStackIncremented(next);
+            }
+        } else {
+            // the do branch is executed, here comes the condition
+            if (m_execStack.peek().getIncLoopCount() >= m_iterMax) {
+                // or rather not, this looks like an infinite loop...
+                fireInifiniteLoop();
+                m_execStack.pop();
+                fireExecStackDecremented();
+                LOG.error(Messages.ErrorInfiniteLoop);
+            } else {
+                INodePO next = par.getCondition();
+                m_execStack.push(new ExecObject(next, NO_DATASET));
+                fireExecStackIncremented(next);
+            }
+        }
+    }
+    
+    /**
+     * The Do block of an Iterate is finished
+     * @param node the Do block
+     */
+    public void decrementIterate(INodePO node) {
+        IIteratePO iter = (IIteratePO) node.getParentNode();
+        ExecObject top = m_execStack.peek();
+        int limit = 0;
+        if (!m_building) {
+            try {
+                limit = Math.min(Integer.parseInt(top.getParameterValue(
+                    iter.getParameterList().get(0).getUniqueId())), m_iterMax);
+                
+            } catch (NumberFormatException e) {
+                limit = 0;
+            }
+        }
+        if (limit < top.getIncLoopCount()) {
+            // end
+            if (limit == m_iterMax) {
+                fireInifiniteLoop();
+            }
+            m_execStack.pop();
+            fireExecStackDecremented();
+            LOG.error(Messages.ErrorInfiniteLoop);
+        } else {
+            // continue
+            INodePO next = iter.getDoBranch();
+            m_execStack.push(new ExecObject(next, NO_DATASET));
+            fireExecStackIncremented(next);
+        }
     }
 
     /**
@@ -454,7 +588,7 @@ public class Traverser {
      */
     private void fireExecStackIncremented(INodePO node) {
         addParameters(m_execStack.peek());
-        
+        executeLogging();
         Iterator<IExecStackModificationListener> it = 
             m_execListenerList.iterator();
         while (it.hasNext()) {
@@ -471,6 +605,7 @@ public class Traverser {
      *  event for pop-operation on execStack
      */
     private void fireExecStackDecremented() {
+        executeLogging();
         Iterator<IExecStackModificationListener> it = 
             m_execListenerList.iterator();
         while (it.hasNext()) {
@@ -482,11 +617,28 @@ public class Traverser {
             }
         }
     }
+
+    /**
+     *  event for pop-operation on execStack
+     */
+    private void fireInifiniteLoop() {
+        Iterator<IExecStackModificationListener> it = 
+            m_execListenerList.iterator();
+        while (it.hasNext()) {
+            IExecStackModificationListener l = it.next();
+            try {
+                l.infiniteLoop();
+            } catch (Throwable t) {
+                LOG.error(Messages.ErrorWhileNotifyingListeners, t);
+            }
+        }
+    }
     
     /**
      *  event for push-operation on execStack
      */
     private void fireEventStackIncremented() {
+        executeLogging();
         Iterator<IEventStackModificationListener> it = 
             m_eventListenerList.iterator();
         while (it.hasNext()) {
@@ -585,25 +737,25 @@ public class Traverser {
                 for (int i = m_eventStack.size(); i > 0 
                     && !m_execStack.isEmpty(); i--) {
                     m_execStack.pop();
-                    executeLogging();
                     fireExecStackDecremented();
                 }
-
-                popEventStackNested();
+                int pos = m_eventStack.peek().getStackPos();
+                popEventStack();
+                popEventStackNested(pos);
 
             } else if (reentryProp.equals(ReentryProperty.RETURN)) {
-                int stackPos = popEventStackNested();
+                int stackPos = m_eventStack.peek().getStackPos();
+                popEventStack();
+                stackPos = popEventStackNested(stackPos);
                 
                 while (m_execStack.size() > stackPos) {
                     m_execStack.pop();
-                    executeLogging();
                     fireExecStackDecremented();
                 }
                 
             } else if (reentryProp.equals(ReentryProperty.EXIT)) {
                 for (int i = m_execStack.size() - 1; i >= 0; i--) {
                     m_execStack.pop();
-                    executeLogging();
                     fireExecStackDecremented();
                 }
                 for (int i = m_eventStack.size() - 1; i >= 0; i--) {
@@ -620,7 +772,6 @@ public class Traverser {
             } else {
                 for (int i = m_execStack.size() - 1; i >= 0; i--) {
                     m_execStack.pop();
-                    executeLogging();
                     fireExecStackDecremented();
                 }
                 for (int i = m_eventStack.size() - 1; i >= 0; i--) {
@@ -637,18 +788,11 @@ public class Traverser {
      * Repeatedly pops the event stack until either the event stack is empty
      * or the top event on the stack has a lower execution stack position than
      * the top event on the stack at the time this method was called.
-     * 
+     * @param stackPos the stack position of the previous top element of the event stack
      * @return the execution stack position of the event object at the top of 
      *         the event stack at the time this method is called.
      */
-    private int popEventStackNested() {
-        int stackPos = 0;
-        if (!m_eventStack.isEmpty()) {
-            stackPos = m_eventStack.peek().getStackPos();
-        }
-        
-        popEventStack();
-
+    private int popEventStackNested(int stackPos) {
         // Remove all events that occurred higher on the execution stack
         // than the currently processed event
         while (!m_eventStack.isEmpty() 
@@ -747,6 +891,44 @@ public class Traverser {
         ExecObject execObj = m_execStack.peek();
         EventObject eventObj = getEventObject(eventType, true);
         IEventExecTestCasePO eventExecTC = eventObj.getEventExecTc();
+
+        if (eventExecTC.getReentryProp().equals(ReentryProperty.CONDITION)) {
+            // failed Condition - we need something similar to a RETURN reentry
+            // the event stack does not contain the event handler!
+            // the exec stack ends with the Condition container and its CondStruct parent  
+            int stackPos = popEventStackNested(eventObj.getStackPos());
+            while (m_execStack.size() > stackPos + 1) {
+                m_execStack.pop();
+                fireExecStackDecremented();
+            }
+            ExecObject top = m_execStack.peek();
+            if (top.getExecNode() instanceof IConditionalStatementPO) {
+                // The CondStruct is an If / Then / Else
+                IConditionalStatementPO cond = (IConditionalStatementPO)
+                        top.getExecNode();
+                // This is the time to insert the Else or Then branch
+                INodePO node = cond.isNegate() ? cond.getThenBranch()
+                        : cond.getElseBranch();
+                
+                m_execStack.push(new ExecObject(node, NO_DATASET));
+                fireExecStackIncremented(node);
+            } else if (top.getExecNode() instanceof ICondStructPO) {
+                // not very nice, but a CondStruct which is not an If
+                // is a Do-While or While-Do
+                ICondStructPO cond = (ICondStructPO) top.getExecNode();
+                if (cond.isNegate()) {
+                    // failed, so we continue the iteration
+                    INodePO node = cond.getDoBranch();
+                    m_execStack.push(new ExecObject(node, NO_DATASET));
+                    fireExecStackIncremented(node);
+                } else {
+                    // failed, normal, so we stop the iteration
+                    m_execStack.pop();
+                    fireExecStackDecremented();
+                }
+            }
+            return next();
+        }
         
         int dataSetIndex = 0;
         final ITDManager mgr = eventExecTC.getDataManager();
@@ -771,19 +953,7 @@ public class Traverser {
         m_eventStack.push(eventObj);
         fireEventStackIncremented();
         fireExecStackIncremented(eventExecTC);
-        executeLogging();
         return next();
-    }
-    
-    /**
-     * Tells whether an error is currently being handled. This is the case if 
-     * any event handler for the test case is currently on the event stack.
-     * 
-     * @return <code>true</code> if an error is currently being handled. 
-     *         Otherwise <code>false</code>.
-     */
-    public boolean isHandlingError() {
-        return !m_eventStack.isEmpty();
     }
     
     /**
@@ -811,6 +981,19 @@ public class Traverser {
         int startIndex = m_execStack.size() - 1;
         for (int i = startIndex; i > 0 && i < m_execStack.size(); --i) {
             ExecObject obj = m_execStack.get(i);
+            
+            if (eventType.equals(TestErrorEvent.ID.VERIFY_FAILED)
+                    && obj.getExecNode() instanceof IAbstractContainerPO) {
+                eventObj = handleContainer((IAbstractContainerPO) obj.
+                        getExecNode(), i);
+                if (eventObj != null) {
+                    return eventObj;
+                }
+            }
+            
+            if (!(obj.getExecNode() instanceof IExecTestCasePO)) {
+                continue;
+            }
             IExecTestCasePO execTc = (IExecTestCasePO)obj.getExecNode();
             
             IEventExecTestCasePO eventExecTc = execTc.getEventExecTC(eventType);
@@ -842,6 +1025,23 @@ public class Traverser {
         }
         return eventObj;      
     }
+    
+    /**
+     * Handles container nodes for events
+     * @param cont the container
+     * @param i the stack position of the container
+     * @return the EventObject or null if the container doesn't care about the event
+     */
+    private EventObject handleContainer(IAbstractContainerPO cont, int i) {
+        INodePO par = cont.getParentNode();
+        if (par instanceof ICondStructPO && cont.equals(
+                ((ICondStructPO) par).getCondition())) {
+            // this Condition fails, consuming the error event 
+            // the 'real' handler node is the parent, that's why i - 1
+            return new EventObject(NodeMaker.COND_EVENT_EXECTC, i - 1);
+        }
+        return null;
+    }
 
     /**
      * Tells whether the test case at the given index in the execution stack
@@ -872,25 +1072,27 @@ public class Traverser {
      * @created 29.04.2005
      */
     private static class EventObject {        
-        /** <code>m_eventExecTc</code> managed eventExecTestCase */
-        private IEventExecTestCasePO m_eventExecTc;
+        /** <code>m_eventExec</code> the EventExecTestCasePO */
+        private IEventExecTestCasePO m_eventExec;
         /** <code>m_stackPos</code> place of discovery of eventExecTestCase in execStack */
         private int m_stackPos;
 
         /**
-         * @param eventExecTc managed eventExecTestCase
+         * @param eventExec the event exec PO
          * @param stackPos place of discovery of eventExecTestCase in execStack
          */
-        private EventObject(IEventExecTestCasePO eventExecTc, int stackPos) {
-            m_eventExecTc = eventExecTc;
+        private EventObject(IEventExecTestCasePO eventExec, int stackPos) {
+            m_eventExec = eventExec;
             m_stackPos = stackPos;
         }
         /**
+         * Returns the node as an EventExecTC
          * @return Returns the eventExecTc.
          */
         public IEventExecTestCasePO getEventExecTc() {
-            return m_eventExecTc;
+            return m_eventExec;
         }
+        
         /**
          * @return Returns the stackPos.
          */
@@ -1045,5 +1247,20 @@ public class Traverser {
             }
         }
         return data;
+    }
+    
+    /**
+     * Sets the building flag
+     * @param build the flag
+     */
+    public void setBuilding(boolean build) {
+        m_building = build;
+    }
+    
+    /**
+     * @param iterMax the maximum iterate count
+     */
+    public void setIterMax(int iterMax) {
+        m_iterMax = iterMax;
     }
 }

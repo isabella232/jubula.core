@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,7 +19,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
@@ -29,6 +27,7 @@ import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.TDCell;
+import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -61,7 +60,8 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             IExecTestCasePO exTc = (IExecTestCasePO)conv.getCurrentNode();
             exTc.resolveTDReference();
         }
-        INodePO parent = conv.getCurrentNode().getSpecificationUser();
+        INodePO parent = NodePM.getSpecTestCaseParent(
+                (INodePO)conv.getCurrentNode());
         if (parent instanceof ISpecTestCasePO) {
             ISpecTestCasePO parentSpecTc = (ISpecTestCasePO)parent;
             for (String refName : conv.getParametersToAdd(parentSpecTc)) {
@@ -200,22 +200,8 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
     public void removeParameter(IParamDescriptionPO desc, 
             ISpecTestCasePO specTc) {
         specTc.removeParameter(desc.getUniqueId());
-        removeReferencesInChildren(specTc, desc);
+        removeReferences(desc, specTc.getAllNodeIter());
     }
-
-    /**
-     * @param specTc parent
-     * @param desc desc of removed parameter of specTc
-     */
-    private void removeReferencesInChildren(ISpecTestCasePO specTc, 
-        IParamDescriptionPO desc) {
-        
-        removeReferences(desc, specTc.getNodeListIterator());        
-        final Collection<IEventExecTestCasePO> eventHandler = 
-            specTc.getAllEventEventExecTC();
-        removeReferences(desc, eventHandler.iterator());
-    }
-
 
     /**
      * @param desc desc of removed parameter of specTc
@@ -261,11 +247,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             IParamDescriptionPO desc, String newGuid,
             ParamNameBPDecorator mapper) {
         changeUsageReferences(
-                specTc.getNodeListIterator(), desc, newGuid, mapper);
-        final Collection<IEventExecTestCasePO> eventHandler =
-            specTc.getAllEventEventExecTC();
-        changeUsageReferences(
-                eventHandler.iterator(), desc, newGuid, mapper);
+                specTc.getAllNodeIter(), desc, newGuid, mapper);
     }
 
     /**
@@ -376,7 +358,8 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
             
             // FIXME zeb assuming that the preceding instanceof checks imply
             //           that the object is an INodePO
-            final INodePO parentNode = ((INodePO)paramNode).getParentNode();
+            final INodePO parentNode = NodePM.getSpecTestCaseParent(
+                    ((INodePO)paramNode));
             if (parentNode instanceof ISpecTestCasePO) {
                 return !((ISpecTestCasePO)parentNode).isInterfaceLocked();
             }

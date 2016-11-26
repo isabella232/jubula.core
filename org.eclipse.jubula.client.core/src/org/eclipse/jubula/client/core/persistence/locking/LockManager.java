@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence.locking;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -408,7 +408,7 @@ public final class LockManager {
      * @return boolean
      */
     public synchronized boolean lockPOs(EntityManager sess, 
-        final Set< ? extends IPersistentObject> objectsToLock, 
+        final Collection< ? extends IPersistentObject> objectsToLock, 
         final boolean checkVersion)
         throws PMDirtyVersionException, PMObjectDeletedException, 
         PMAlreadyLockedException {
@@ -473,7 +473,7 @@ public final class LockManager {
         if (runResult == Result.OBJECT_DIRTY) {
             throw new PMDirtyVersionException(po,
                 Messages.LockFailedDueToDbOutOfSync,
-                MessageIDs.E_DELETED_OBJECT); 
+                MessageIDs.E_STALE_OBJECT); 
         }
         
     }

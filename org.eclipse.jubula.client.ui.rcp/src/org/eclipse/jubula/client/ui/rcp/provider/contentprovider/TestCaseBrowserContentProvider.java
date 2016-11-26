@@ -44,7 +44,7 @@ public class TestCaseBrowserContentProvider extends BrowserContentProvider {
      */
     public Object[] getChildren(Object parentElement) {
         if (parentElement instanceof ISpecObjContPO[]) {
-            return new Object[] { ((ISpecObjContPO[])parentElement)[0] };
+            return (Object[])parentElement;
         }
 
         if (parentElement instanceof ISpecObjContPO) {

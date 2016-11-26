@@ -127,10 +127,12 @@ public class TestExecutionGUIController {
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
+     * @param iterMax the maximum number of iterations
      * @param autId The ID of the Running AUT on which the test will take place.
      */
     public static void startTestSuite(final ITestSuitePO ts,
-        final AutIdentifier autId, final boolean autoScreenshot) {
+        final AutIdentifier autId, final boolean autoScreenshot,
+        final int iterMax) {
         TestExecutionContributor.setClientMinimized(true);
         JBThread t = new JBThread("Initialize Test Execution") { //$NON-NLS-1$
             @Override
@@ -138,8 +140,8 @@ public class TestExecutionGUIController {
                 if (!AbstractStartTestHandler.prepareTestExecution()) {
                     stopTestSuite();
                 }
-                TestExecutionContributor.getInstance()
-                        .startTestSuiteAction(ts, autId, autoScreenshot);
+                TestExecutionContributor.getInstance().startTestSuiteAction(
+                        ts, autId, autoScreenshot, iterMax);
             }
 
             @Override

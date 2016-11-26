@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter.ConvValidationState;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -123,7 +124,8 @@ public class RefToken extends AbstractParamValueToken {
             uuid = extractCore(m_modelString);
         } else if (m_guiString != null) {
             if (m_currentNode instanceof INodePO) {
-                INodePO parent = ((INodePO)m_currentNode).getParentNode();
+                INodePO parent = NodePM.getSpecTestCaseParent(
+                        (INodePO)m_currentNode);
                 String refName = extractCore(m_guiString);
                 if (parent instanceof IParamNodePO) {
                     IParamNodePO parentNode = (IParamNodePO)parent;
@@ -219,7 +221,7 @@ public class RefToken extends AbstractParamValueToken {
             setErrorKey(MessageIDs.E_NO_REF_FOR_SPEC_TC);
             return ConvValidationState.invalid;
         } else if (m_currentNode instanceof INodePO 
-                && ((INodePO)m_currentNode).getParentNode() 
+                && ((INodePO)m_currentNode).getSpecAncestor() 
                     instanceof ITestSuitePO) {
             setErrorKey(MessageIDs.E_REF_IN_TS);
             return ConvValidationState.invalid;
@@ -230,7 +232,8 @@ public class RefToken extends AbstractParamValueToken {
         final boolean isModifiable = TestCaseParamBP.isReferenceValueAllowed(
                 m_currentNode);
         if (m_isTokenGuiBased) {
-            INodePO parent = m_currentNode.getSpecificationUser();
+            INodePO parent = NodePM.getSpecTestCaseParent(
+                    (INodePO)m_currentNode);
             String refName = extractCore(m_guiString);
             if (parent instanceof ISpecTestCasePO) {
                 ISpecTestCasePO specTc = (ISpecTestCasePO)parent;
@@ -339,7 +342,8 @@ public class RefToken extends AbstractParamValueToken {
             refName = extractCore(m_guiString);
         } else if (m_modelString != null) {
             String uuid = extractCore(m_modelString);
-            INodePO parent = m_currentNode.getSpecificationUser();
+            INodePO parent = NodePM.getSpecTestCaseParent(
+                    (INodePO)m_currentNode);
             if (parent instanceof IParamNodePO) {
                 IParamNodePO parentNode = (IParamNodePO) parent;
                 IParamDescriptionPO desc = parentNode

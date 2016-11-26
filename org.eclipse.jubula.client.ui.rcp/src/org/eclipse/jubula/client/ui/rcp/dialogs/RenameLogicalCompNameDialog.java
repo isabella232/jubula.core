@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.dialogs;
 
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.swt.widgets.Composite;
@@ -25,13 +24,11 @@ import org.eclipse.swt.widgets.Shell;
 public class RenameLogicalCompNameDialog extends EnterLogicalCompNameDialog {
 
     /**
-     * @param compNamesMapper see EnterLogicalCompNameDialog
      * @param parentShell  see EnterLogicalCompNameDialog
      * @param oldName the original name being used
      */
-    public RenameLogicalCompNameDialog(IComponentNameMapper compNamesMapper,
-            Shell parentShell, String oldName) {
-        super(compNamesMapper, parentShell, oldName);
+    public RenameLogicalCompNameDialog(Shell parentShell, String oldName) {
+        super(parentShell, oldName);
     }
 
     /**

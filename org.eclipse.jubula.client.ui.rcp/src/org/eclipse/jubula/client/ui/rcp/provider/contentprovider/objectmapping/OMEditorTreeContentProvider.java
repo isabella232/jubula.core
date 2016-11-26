@@ -20,7 +20,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -50,7 +50,7 @@ public class OMEditorTreeContentProvider extends
         new HashMap<Object, Object>();
     
     /** used for finding Component Names */
-    private IComponentNameMapper m_compNameMapper;
+    private IComponentNameCache m_compNameCache;
     
     /** listener for updates to the model */
     private IDataChangedListener m_modelListener;
@@ -58,10 +58,10 @@ public class OMEditorTreeContentProvider extends
     /**
      * Constructor.
      * 
-     * @param compNameMapper The mapper to use for finding Component Names.
+     * @param compNameCache The cache to use for finding Component Names.
      */
-    public OMEditorTreeContentProvider(IComponentNameMapper compNameMapper) {
-        m_compNameMapper = compNameMapper;
+    public OMEditorTreeContentProvider(IComponentNameCache compNameCache) {
+        m_compNameCache = compNameCache;
     }
 
     /**
@@ -88,8 +88,7 @@ public class OMEditorTreeContentProvider extends
             List<Object> componentNamePoList = new ArrayList<Object>();
             for (String compNameGuid : assoc.getLogicalNames()) {
                 IComponentNamePO compNamePo = 
-                    m_compNameMapper.getCompNameCache().getCompNamePo(
-                            compNameGuid);
+                    m_compNameCache.getResCompNamePOByGuid(compNameGuid);
                 if (compNamePo != null) {
                     componentNamePoList.add(compNamePo);
                 } else {
@@ -116,9 +115,8 @@ public class OMEditorTreeContentProvider extends
                     childList.add(assoc);
                 } else {
                     for (String compNameGuid : assoc.getLogicalNames()) {
-                        IComponentNamePO compName = 
-                            m_compNameMapper.getCompNameCache()
-                                .getCompNamePo(compNameGuid);
+                        IComponentNamePO compName = m_compNameCache.
+                                getResCompNamePOByGuid(compNameGuid);
                         if (compName != null) {
                             // Only add the Component Name if it hasn't been
                             // deleted.

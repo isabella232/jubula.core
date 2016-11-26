@@ -21,6 +21,17 @@
       It is now possible to invoke external (AUT - independent) methods through the Reflection component.
       The external JAR files must be placed in the directory <emphasis>&lt;installation-directory&gt;/ite/externaljars</emphasis>.
     </para>
+    <para>
+      We introduced new nodes altering the test execution flow: Conditional Statements and Loops.
+    </para>
+    <para>
+      Component Name types are calculated and treated differently from this release onwards.
+      The type becomes only a decoration, so actions resulting in invalid Component Name types
+      are allowed from now on, however, the user is warned before any action resulting in an
+      invalid type. Component Names with invalid type are decorated by error markers, just like
+      Component Names which are mapped into a Component which does not realize one of the
+      actions which might be executed on the Component Name.
+    </para>
   </listitem>
 </itemizedlist>
 </section>

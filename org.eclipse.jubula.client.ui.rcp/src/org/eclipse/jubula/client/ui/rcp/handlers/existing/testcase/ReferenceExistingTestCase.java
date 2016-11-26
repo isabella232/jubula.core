@@ -35,6 +35,7 @@ import org.eclipse.jubula.client.ui.rcp.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCEditor;
+import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator.NodeTarget;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.ISelectionListener;
@@ -89,13 +90,13 @@ public class ReferenceExistingTestCase
      *            the test case editor
      * @param editorNode
      *            the editor node
-     * @param node
+     * @param selected
      *            the currently selected node
      * @return the selection listener
      */
     private ISelectionListener getSelectionListener(
             final AbstractTestCaseEditor tce, final INodePO editorNode,
-            final INodePO node) {
+            final INodePO selected) {
         return new ISelectionListener() {
             public void selectionChanged(IWorkbenchPart part,
                     ISelection selection) {
@@ -103,25 +104,26 @@ public class ReferenceExistingTestCase
                     return;
                 }
                 List<Object> selectedElements = 
-                    ((IStructuredSelection)selection)
-                        .toList();
+                    ((IStructuredSelection)selection).toList();
                 Collections.reverse(selectedElements);
                 Iterator iter = selectedElements.iterator();
                 List<IExecTestCasePO> addedElements = 
                     new ArrayList<IExecTestCasePO>();
+                NodeTarget place = NewTestCaseHandlerTCEditor.
+                        getPositionToInsert(selected, tce.getTreeViewer().
+                                getExpandedState(selected));
+                if (place == null) {
+                    return;
+                }
                 try {
                     while (iter.hasNext()) {
                         ISpecTestCasePO specTcToInsert = (ISpecTestCasePO)iter
                                 .next();
                         try {
-                            Integer index = null;
-                            if (node instanceof IExecTestCasePO) {
-                                index = NewTestCaseHandlerTCEditor
-                                        .getPositionToInsert(editorNode, node);
-                            }
                             addedElements.add(TestCaseBP.addReferencedTestCase(
                                     tce.getEditorHelper().getEditSupport(),
-                                    editorNode, specTcToInsert, index));
+                                    place.getNode(), specTcToInsert,
+                                    place.getPos()));
                         } catch (PMException e) {
                             NodeEditorInput inp = (NodeEditorInput)tce
                                     .getAdapter(NodeEditorInput.class);
@@ -136,6 +138,8 @@ public class ReferenceExistingTestCase
                     }
                     tce.getEditorHelper().getEditSupport().lockWorkVersion();
                     tce.getEditorHelper().setDirty(true);
+                    tce.refresh();
+                    tce.getTreeViewer().setExpandedState(place.getNode(), true);
                     tce.setSelection(new StructuredSelection(addedElements));
                 } catch (PMException e1) {
                     PMExceptionHandler.handlePMExceptionForEditor(e1, tce);
@@ -143,4 +147,5 @@ public class ReferenceExistingTestCase
             }
         };
     }
+
 }

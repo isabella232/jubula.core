@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICommentPO;
-import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -87,17 +86,25 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
             targetNode = (ITestJobPO)dropTarget.getParentNode();
         }
         int position = targetNode.indexOf(dropTarget);
+        INodePO last = null;
         for (Object obj : selectedElements.toArray()) {
             position++;
             
             if (obj instanceof IRefTestSuitePO) {
                 
-                copyPasteTestSuite(targetEditor, (IRefTestSuitePO)obj,
+                last = copyPasteTestSuite(targetEditor, (IRefTestSuitePO)obj,
                         targetNode, position, project);
+            } else if (obj instanceof ICommentPO) {
+                INodePO comm = NodeMaker.createCommentPO(
+                        ((ICommentPO) obj).getName());
+                fillNode((INodePO) obj, comm);
+                targetNode.addNode(position, comm);
+                last = comm;
             } else {
                 return false;
             }
         }
+        postDropAction(last, targetEditor);
         return true;
     }
     
@@ -110,10 +117,9 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
      *                     target.
      * @param targetNode target parent node
      * @param project currently project
-     * @return <code>true</code> if the paste was successful. 
-     *         Otherwise <code>false</code>.
+     * @return the created node
      */
-    public static boolean copyPasteTestSuite(
+    public static INodePO copyPasteTestSuite(
         AbstractJBEditor targetEditor, IRefTestSuitePO refTestSuit,
         ITestJobPO targetNode, int dropPosition, IProjectPO project) {
     
@@ -127,9 +133,7 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
         DataEventDispatcher.getInstance()
             .fireDataChangedListener(newRefTestSuite,
                 DataState.Added, UpdateState.onlyInEditor);
-        postDropAction(newRefTestSuite, targetEditor);
-        
-        return true;
+        return newRefTestSuite;
     }
 
     /**
@@ -205,7 +209,8 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
                     if (target != nodeToDrop
                             && (target instanceof IRefTestSuitePO
                                     || target instanceof ICommentPO)) {
-                        moveNode(nodeToDrop, target);
+                        moveNode(nodeToDrop, target, target.getParentNode().
+                                indexOf(target));
                     }
                 }
                 postDropAction(nodeToDrop, targetEditor);
@@ -223,8 +228,17 @@ public class TJEditorDndSupport extends AbstractEditorDndSupport {
      */
     public static boolean validateCopy(IStructuredSelection toDrop,
             INodePO dropTarget) {
-        return validateCopy(toDrop, dropTarget, IRefTestSuitePO.class,
-                IEventExecTestCasePO.class);
+        if (toDrop == null || toDrop.isEmpty() || dropTarget == null) {
+            return false;
+        }
+        for (Iterator it = toDrop.iterator(); it.hasNext(); ) {
+            Object next = it.next();
+            if (!(next instanceof IRefTestSuitePO
+                    || next instanceof ICommentPO)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

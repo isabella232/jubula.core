@@ -29,12 +29,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IPropertyChangedListener;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
@@ -44,7 +43,6 @@ import org.eclipse.jubula.client.ui.rcp.propertytester.EditorPartPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
@@ -238,13 +236,13 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
             Object firstElement = ((StructuredSelection) selection)
                     .getFirstElement();
             if (firstElement instanceof INodePO) {
-                INodePO node = (INodePO) firstElement;
                 final IPersistentObject editorRoot = getWorkVersion();
+                INodePO node = (INodePO) firstElement;
                 if (editorRoot.getId().equals(node.getId())) {
                     newSelection = new StructuredSelection(editorRoot);
                 } else {
                     Iterator<? extends INodePO> nodeListIterator = 
-                            getIteratorForNode(node);
+                            ((INodePO) editorRoot).getAllNodeIter();
                     while (nodeListIterator.hasNext()) {
                         INodePO child = nodeListIterator.next();
                         if (node.getGuid().equals(child.getGuid())) {
@@ -257,7 +255,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         }
         setSelectionImpl(newSelection);
     }
-
+    
     /**
      * @return the work version to use for this editor
      */
@@ -265,15 +263,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
         return getEditorHelper().getEditSupport().getWorkVersion();
     }
     
-    /**
-     * @param node
-     *            the node to get the correct iterator for
-     * @return the iterator for the given node type
-     */
-    protected Iterator<? extends INodePO> getIteratorForNode(INodePO node) {
-        return ((INodePO) getWorkVersion()).getNodeListIterator();
-    }
-
     /**
      * Sets the current selection for this selection provider.
      *
@@ -516,20 +505,6 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     }
     
     /**
-     * @param pmce PMCompNameException
-     */
-    protected void handlePMCompNameException(IncompatibleTypeException pmce) {
-        ErrorHandlingUtil.createMessageDialog(pmce.getErrorId(), 
-                pmce.getErrorMessageParams(), null);
-        try {
-            ComponentNamesBP.getInstance().init();
-        } catch (PMException e) {
-            LOG.error(e.getLocalizedMessage(), e);
-            ErrorHandlingUtil.createMessageDialog(e, null, null);
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     public void dispose() {
@@ -646,5 +621,10 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
                 getTreeViewer().refresh(true);
             }
         });
+    }
+    
+    /** {@inheritDoc} */
+    public IWritableComponentNameCache getCompNameCache() {
+        return m_editorHelper.getEditSupport().getCache();
     }
 }

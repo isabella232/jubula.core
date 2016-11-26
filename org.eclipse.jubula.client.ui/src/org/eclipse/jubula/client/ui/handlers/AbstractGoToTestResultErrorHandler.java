@@ -97,6 +97,8 @@ public abstract class AbstractGoToTestResultErrorHandler
         if (resultNodeList != null) {
             return (status == TestResultNode.ERROR)
                     || (status == TestResultNode.ABORT) 
+                    || status == TestResultNode.CONDITION_FAILED
+                    || status == TestResultNode.INFINITE_LOOP
                     || ((status == TestResultNode.TESTING)
                             && (node.getResultNodeList().size() == 0));
         }

@@ -12,12 +12,14 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 /**
  * 
  * @author BREDEX GmbH
  * @created 09.02.2011
  */
-public interface ITDManager {
+public interface ITDManager extends IPersistentObject {
     /**
      * Deletes the Data Set with the specified index.
      * 
@@ -168,4 +170,10 @@ public interface ITDManager {
      * @return the parent project id
      */
     public Long getParentProjectId();
+    
+    /**
+     * This object going to be deleted, so it should remove all of its dependencies
+     * @param sess the session
+     */
+    public void goingToBeDeleted(EntityManager sess);
 }

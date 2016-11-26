@@ -14,7 +14,6 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.ui.dialogs.AbstractValidatedDialog;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.ComponentNameValidator;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -41,37 +40,26 @@ public abstract class EnterLogicalCompNameDialog
     
     /** initial value for name, null if none */
     private String m_initialName;
-
-    /** the mapper used for finding and resolving component names */
-    private IComponentNameMapper m_compNamesMapper;
     
     /**
      * Constructor
      * 
-     * @param compNamesMapper 
-     *          The mapper used for finding and resolving component names.
      * @param parentShell
      *            the parent SWT shell
      */
-    public EnterLogicalCompNameDialog(
-            IComponentNameMapper compNamesMapper, Shell parentShell) {
-        
+    public EnterLogicalCompNameDialog(Shell parentShell) {
         super(parentShell);
-        m_compNamesMapper = compNamesMapper;
     }
     /**
      * Constructor
      * 
-     * @param compNamesMapper 
-     *          The mapper used for finding and resolving component names.
      * @param parentShell
      *            the parent SWT shell
      * @param initialName if set used to initialize the name field
      */
-    public EnterLogicalCompNameDialog(
-            IComponentNameMapper compNamesMapper, Shell parentShell, 
+    public EnterLogicalCompNameDialog(Shell parentShell, 
             String initialName) {
-        this(compNamesMapper, parentShell);
+        this(parentShell);
         m_initialName = initialName;
     }
 
@@ -100,7 +88,7 @@ public abstract class EnterLogicalCompNameDialog
                 m_name,
                 new UpdateValueStrategy()
                         .setAfterGetValidator(new ComponentNameValidator(
-                                m_compNamesMapper, m_initialName)),
+                                m_initialName)),
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_UPDATE));
         
         if (m_initialName != null) {
@@ -140,5 +128,4 @@ public abstract class EnterLogicalCompNameDialog
     public void setName(String name) {
         m_name.setValue(name);
     }
-    
 }

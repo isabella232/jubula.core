@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -356,8 +355,6 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
 
             getEditorHelper().resetEditableState();
             getEditorHelper().setDirty(false);
-        } catch (IncompatibleTypeException pmce) {
-            handlePMCompNameException(pmce);
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
             try {

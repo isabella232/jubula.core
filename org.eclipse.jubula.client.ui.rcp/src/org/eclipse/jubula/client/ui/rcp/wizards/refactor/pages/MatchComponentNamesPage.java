@@ -23,10 +23,14 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
@@ -133,11 +137,13 @@ public class MatchComponentNamesPage extends WizardPage {
         public String getText(Object element) {
             if (element instanceof ICompNamesPairPO) {
                 ICompNamesPairPO pair = (ICompNamesPairPO)element;
-                StringBuilder sb = new StringBuilder(m_editor.getEditorHelper()
-                        .getEditSupport().getCompMapper().getCompNameCache()
-                        .getName(pair.getSecondName()));
+                EditSupport supp = m_editor.getEditorHelper().getEditSupport();
+                IWritableComponentNameCache cache = m_editor.getCompNameCache();
+                StringBuilder sb = new StringBuilder(cache.getNameByGuid(
+                        pair.getSecondName()));
                 if (StringUtils.isEmpty(pair.getType())) {
-                    CompNamesBP.searchCompType(pair, m_parents.get(pair));
+                    CalcTypes.recalculateCompNamePairs(cache,
+                            (ISpecTestCasePO) supp.getWorkVersion());
                 }
                 sb.append(StringConstants.SPACE)
                         .append(StringConstants.LEFT_BRACKET)

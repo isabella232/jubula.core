@@ -161,7 +161,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                     || reasonInt == null) {
                 return new IMarkerResolution[0];
             }
-
+            
             ProblemType type = ProblemType.values()[((Integer)reasonInt)
                                                     .intValue()];
 
@@ -201,6 +201,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             case REASON_DEPRECATED_COMP:
             case REASON_MISSING_SPEC_TC:
             case REASON_UNUSED_TESTDATA:
+            case REASON_IF_WITHOUT_TEST:
                 return getOpenNodeInEditorResolutions(objectName, nodeGUID);
             case REASON_NO_AUT_FOR_PROJECT_EXISTS:
             case REASON_NO_AUTCONFIG_FOR_SERVER_EXIST:

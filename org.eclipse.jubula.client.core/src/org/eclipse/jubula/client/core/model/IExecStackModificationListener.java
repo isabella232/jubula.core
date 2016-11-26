@@ -36,6 +36,12 @@ public interface IExecStackModificationListener {
     void nextDataSetIteration();
     
     /**
+     * signal for an infinite loop
+     * the top of the exec stack is the loop node
+     */
+    void infiniteLoop();
+    
+    /**
      * @param cap actual proceeded cap in testexecution
      */
     void nextCap(ICapPO cap);

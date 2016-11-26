@@ -205,6 +205,14 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REFERENCE_TC);
         mgr.add(submenuAdd);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_CONDITIONAL_STATEMENT);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_WHILE_DO);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_DO_WHILE);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_ITERATE_LOOP);
         CommandHelper.createContributionPushItem(mgr,
                 IWorkbenchCommandConstants.EDIT_COPY);
         CommandHelper.createContributionPushItem(mgr,

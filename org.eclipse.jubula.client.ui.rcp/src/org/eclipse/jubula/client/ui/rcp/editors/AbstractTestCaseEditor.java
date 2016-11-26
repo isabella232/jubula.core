@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
@@ -27,14 +28,17 @@ import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
+import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -46,6 +50,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -65,7 +70,6 @@ import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -267,14 +271,15 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     /**
      * run local completeness checks such as test data completeness
      */
-    protected void runLocalChecks() {
+    public void runLocalChecks() {
         INodePO node = (INodePO) getEditorHelper().getEditSupport()
                 .getWorkVersion();
-        for (INodePO child : node.getUnmodifiableNodeList()) {
-            CompletenessGuard.checkLocalTestData(child);
+        checkForEmptyConditions(node);
+        for (Iterator it = node.getAllNodeIter(); it.hasNext(); ) {
+            CompletenessGuard.checkLocalTestData((INodePO) it.next());
         }
     }
-
+    
     /**
      * @param root the root of the TreeViewer.
      */
@@ -285,7 +290,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             getMainTreeViewer().setInput(new INodePO[] {root});
         } finally {
             getMainTreeViewer().getTree().setRedraw(true);
-            getMainTreeViewer().expandAll();
+            getMainTreeViewer().expandToLevel(2);
             setSelection(new StructuredSelection(root));
         }
     }
@@ -305,20 +310,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             fixCompNameReferences();
             final IPersistentObject perObj = editSupport.getWorkVersion();
 
-            IWritableComponentNameCache compNameCache = 
-                editSupport.getCompMapper().getCompNameCache();
-            Set<IComponentNamePO> renamedCompNames = 
-                new HashSet<IComponentNamePO>(
-                        compNameCache.getRenamedNames());
-            Set<IComponentNamePO> reuseChangedCompNames = 
-                new HashSet<IComponentNamePO>(); 
-            for (String compNameGuid : compNameCache.getReusedNames()) {
-                IComponentNamePO compName = 
-                    compNameCache.getCompNamePo(compNameGuid);
-                if (compName != null) {
-                    reuseChangedCompNames.add(compName);
-                }
-            }
+            getCompNameCache().clearUnusedCompNames((INodePO) perObj);
 
             if (perObj instanceof ISpecTestCasePO) {
                 final IProjectPO project = GeneralStorage.getInstance()
@@ -328,25 +320,14 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             }
             TimestampBP.refreshTimestamp((ITimestampPO)perObj);
             editSupport.saveWorkVersion();
-            updateObjectMapping();
-            List<DataChangedEvent> eventList = 
-                new ArrayList<DataChangedEvent>();
-            for (IComponentNamePO compName : renamedCompNames) {
-                eventList.add(new DataChangedEvent(compName, DataState.Renamed,
-                        UpdateState.all));
-            }
-
-            for (IComponentNamePO compName : reuseChangedCompNames) {
-                eventList.add(new DataChangedEvent(compName,
-                        DataState.ReuseChanged, UpdateState.all));
-            }
+            getCompNameCache().clear();
+            ObjectMappingEventDispatcher.updateObjectMappings(
+                    (INodePO) perObj);
             DataEventDispatcher.getInstance().fireDataChangedListener(
-                    eventList.toArray(new DataChangedEvent[0]));
-            
+                getWorkVersion(), DataState.Saved, UpdateState.all);
+
             getEditorHelper().resetEditableState();
             getEditorHelper().setDirty(false);
-        } catch (IncompatibleTypeException pmce) {
-            handlePMCompNameException(pmce);
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
             try {
@@ -369,8 +350,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         // Replace all reference guids with referenced guids
         INodePO rootNode = 
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
-        IComponentNameCache compNameCache = getEditorHelper().getEditSupport()
-            .getCompMapper().getCompNameCache();
+        IComponentNameCache compNameCache = getCompNameCache();
         Iterator<INodePO> iter = rootNode.getNodeListIterator();
         while (iter.hasNext()) {
             INodePO nodePO = iter.next();
@@ -384,9 +364,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                     String firstName = pair.getFirstName();
                     String secondName = pair.getSecondName();
                     IComponentNamePO firstCompNamePo = 
-                        compNameCache.getCompNamePo(firstName);
+                        compNameCache.getResCompNamePOByGuid(firstName);
                     IComponentNamePO secondCompNamePo = 
-                        compNameCache.getCompNamePo(secondName);
+                        compNameCache.getResCompNamePOByGuid(secondName);
 
                     if (!(firstCompNamePo.getGuid().equals(firstName)
                             && secondCompNamePo.getGuid().equals(secondName))) {
@@ -410,7 +390,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 ICapPO capPo = (ICapPO)nodePO;
                 String compNameGuid = capPo.getComponentName();
                 IComponentNamePO compNamePo = 
-                    compNameCache.getCompNamePo(compNameGuid);
+                    compNameCache.getResCompNamePOByGuid(compNameGuid);
                 if (compNamePo != null
                         && !compNamePo.getGuid().equals(compNameGuid)) {
                     capPo.setComponentName(compNamePo.getGuid());
@@ -433,7 +413,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
         if (node instanceof ISpecTestCasePO
                 || node instanceof ITestSuitePO) {
-            for (Object o : node.getUnmodifiableNodeList()) {
+            for (Iterator<INodePO> it = node.getAllNodeIter(); it.hasNext(); ) {
+                INodePO o = it.next();
                 if (o instanceof IExecTestCasePO) {
                     IExecTestCasePO exec = (IExecTestCasePO)o;
                     ICompNamesPairPO [] pairArray = 
@@ -460,27 +441,12 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
      * @param pair the current compNamesPairPO
      */
     private void searchAndSetComponentType(final ICompNamesPairPO pair) {
-        if (pair.getType() != null
-                && CompNamesBP.isValidCompNamePair(pair)) {
+        if (!StringUtils.isEmpty(pair.getType())) {
             return;
         }
-        final IPersistentObject orig = 
-            getEditorHelper().getEditSupport().getOriginal();
-        if (orig instanceof ISpecTestCasePO || orig instanceof ITestSuitePO) {
-            INodePO origNode = (INodePO)orig;
-            for (Object node : origNode.getUnmodifiableNodeList()) {
-                if (CompNamesBP.searchCompType(pair, node)) {
-                    return;
-                }
-            }
-        }
-        // if exec was added to an editor session
-        Object selectedElement = getStructuredSelection().getFirstElement();
-        if (selectedElement != null
-                && (pair.getType() == null || !CompNamesBP
-                        .isValidCompNamePair(pair))) {
-            CompNamesBP.searchCompType(pair, selectedElement);
-        }
+        EditSupport supp = getEditorHelper().getEditSupport();
+        CalcTypes.recalculateCompNamePairs(getCompNameCache(),
+                (ISpecTestCasePO) supp.getWorkVersion());
     }
 
     /**
@@ -616,7 +582,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 
             }
         }
-        Iterator<INodePO> iter = testCase.getNodeListIterator();
+        Iterator<INodePO> iter = testCase.getAllNodeIter();
         while (iter.hasNext()) {
             INodePO nodePO = iter.next();
             if (nodePO instanceof IExecTestCasePO) {
@@ -642,21 +608,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     }
 
     /**
-     * 
-     */
-    private void updateObjectMapping() {
-        INodePO rootInput = 
-            (INodePO)getEditorHelper().getEditSupport().getWorkVersion();
-        if (rootInput instanceof ISpecTestCasePO) {
-            ObjectMappingEventDispatcher.notifyRecordObserver(
-                    (ISpecTestCasePO)rootInput);
-        } else if (rootInput instanceof ITestSuitePO) {
-            ObjectMappingEventDispatcher.notifyRecordObserverTS(
-                    (ITestSuitePO)rootInput);
-        }
-    }
-    
-    /**
      * {@inheritDoc}
      */
     protected void fillContextMenu(IMenuManager mgr) {
@@ -671,6 +622,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 RCPCommandIDs.REFERENCE_TC);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.NEW_CAP);
+
         mgr.add(submenuAdd);
         CommandHelper.createContributionPushItem(mgr,
                 IWorkbenchCommandConstants.EDIT_CUT);
@@ -703,6 +655,15 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 RCPCommandIDs.SHOW_WHERE_USED);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
+        
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_CONDITIONAL_STATEMENT);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_WHILE_DO);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_DO_WHILE);
+        CommandHelper.createContributionPushItem(submenuAdd,
+                RCPCommandIDs.NEW_ITERATE_LOOP);
         CommandHelper.createContributionPushItem(submenuAdd,
                 RCPCommandIDs.NEW_TESTCASE);
         CommandHelper.createContributionPushItem(submenuAdd,
@@ -757,7 +718,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     /** {@inheritDoc} */
     public void handleDataChanged(DataChangedEvent... events) {
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState());
+            handleDataChanged(e.getPo(), e.getDataState(), e.getUpdateState());
         }
     }
     
@@ -776,7 +737,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     /**
      * {@inheritDoc}
      */
-    public void handleDataChanged(IPersistentObject po, DataState dataState) {
+    public void handleDataChanged(IPersistentObject po, DataState dataState,
+            UpdateState updState) {
         
         if (po instanceof INodePO) {
             INodePO changedNode = (INodePO)po;
@@ -786,6 +748,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             if (editorNode instanceof ISpecTestCasePO) {
                 isVisibleInEditor |= ((ISpecTestCasePO)editorNode)
                         .getAllEventEventExecTC().contains(po);
+                isVisibleInEditor |= contains(editorNode, changedNode);
             }
             switch (dataState) {
                 case Added:
@@ -795,6 +758,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                     break;
                 case Deleted:
                     if (!(po instanceof IProjectPO)) {
+                        isVisibleInEditor = true;
                         refresh();
                     } 
                     break;
@@ -809,17 +773,46 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                         return;
                     }
                     break;
-                case ReuseChanged:
-                    // nothing yet!
-                    break;
                 default:
-                    Assert.notReached();
             }
             if (isVisibleInEditor) {
                 runLocalChecks();
             }
             getEditorHelper().handleDataChanged(po, dataState);
+        } else if (po instanceof IComponentNamePO
+                && updState != UpdateState.onlyInEditor) {
+            handleCompNameChanged((IComponentNamePO) po, dataState);
         }
+    }
+    
+    /**
+     * Handles Component Name changes
+     * @param cN the Component Name
+     * @param state the DataState
+     */
+    private void handleCompNameChanged(IComponentNamePO cN, DataState state) {
+        String guid = cN.getGuid();
+        switch (state) {
+            case Renamed:
+                getCompNameCache().renamedCompName(cN.getGuid(), cN.getName());
+                break;
+            default:
+        }
+    }
+    
+    /**
+     * @param parent node
+     * @param changedNode searched node
+     * @return <code>true</code> if parent node contains changedNode node.
+     *          Otherwise return <code>false</code>.
+     */
+    private boolean contains(INodePO parent, INodePO changedNode) {
+        for (Iterator it = parent.getAllNodeIter(); it.hasNext(); ) {
+            if (it.next().equals(changedNode)) {
+                return true;
+            }
+        }
+        return false;
     }
 
      /**
@@ -928,7 +921,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
      * @param root root node of editor
      */
     private void updateTDManagerOfExecTestCases(INodePO root) {
-        Iterator<INodePO> it = root.getNodeListIterator();
+        Iterator<INodePO> it = root.getAllNodeIter();
         while (it.hasNext()) {
             INodePO child = it.next();
             if (child instanceof IExecTestCasePO) {
@@ -989,5 +982,42 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     private void handleNodeAdded(INodePO addedNode) {
         refresh();
         setSelection(new StructuredSelection(addedNode));
+    }
+    
+    /**
+     * Checks for empty conditions
+     * @param node the node
+     */
+    private void checkForEmptyConditions(INodePO node) {
+        for (Iterator<INodePO> it = node.getNodeListIterator();
+                it.hasNext(); ) {
+            INodePO next = it.next();
+            if (next instanceof ICondStructPO) {
+                removeIncompleteProblems((ICondStructPO) next);
+            }
+        }
+        Set<IProblem> copy = new HashSet<IProblem>(node.getProblems());
+        for (IProblem problem : copy) {
+            if (problem.equals(ProblemFactory.ERROR_IN_CHILD)) {
+                node.removeProblem(problem);
+                break;
+            }
+        }
+        CompletenessGuard.checkEmptyContainer(node);
+    }
+    
+    /**
+     * Removes empty condition error markers from a node
+     * @param cond the ConditionPO node
+     */
+    private void removeIncompleteProblems(ICondStructPO cond) {
+        Set<IProblem> copy = new HashSet<IProblem>(cond.getProblems());
+        for (IProblem problem : copy) {
+            if (problem.getProblemType().equals(
+                    ProblemType.REASON_IF_WITHOUT_TEST)) {
+                cond.removeProblem(problem);
+                return;
+            }
+        }
     }
 }

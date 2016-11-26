@@ -91,7 +91,8 @@ public class TestCaseBP  extends NodeBP {
         }       
 
         DataEventDispatcher.getInstance().fireDataChangedListener(
-                newExecTC, DataState.Added, UpdateState.onlyInEditor); 
+                newExecTC, DataState.StructureModified,
+                UpdateState.onlyInEditor); 
 
         return newExecTC;
     }
@@ -169,8 +170,6 @@ public class TestCaseBP  extends NodeBP {
      * @param name the name of the new SpecTestCase
      * @param parent the parent of thenew SpecTestCase. 
      * Must be the Project or a Category!
-     * @param position the position to insert. If null, SpecTestCase will be 
-     * added as last element. 
      * @return the new SpecTestCasePO
      * @throws PMSaveException in case of save failed
      * @throws PMAlreadyLockedException in case of already locked
@@ -178,15 +177,11 @@ public class TestCaseBP  extends NodeBP {
      * @throws ProjectDeletedException in case of project deleted
      */
     public static ISpecTestCasePO createNewSpecTestCase(String name, 
-        INodePO parent, Integer position) throws PMSaveException, 
+        INodePO parent) throws PMSaveException, 
         PMAlreadyLockedException, PMException, ProjectDeletedException {
         
-        Integer pos = position;
         ISpecTestCasePO specTC = NodeMaker.createSpecTestCasePO(name);
-        if (pos != null && pos < 0) {
-            pos = null;
-        }
-        NodePM.addAndPersistChildNode(parent, specTC, pos);
+        NodePM.addAndPersistChildNode(parent, specTC, null);
         return specTC;
     }
     

@@ -63,7 +63,10 @@ public class DeprecatedModulesQuery extends AbstractQuery {
         Set<INodePO> deprecatedNodes = op.getDeprecatedNodes();
         for (INodePO iNodePO : deprecatedNodes) {
             String parentName = StringConstants.EMPTY;
-            INodePO parentNode = iNodePO.getParentNode();
+            INodePO parentNode = iNodePO.getSpecAncestor();
+            if (parentNode == null) {
+                parentNode = iNodePO.getParentNode();
+            }
             if (parentNode != null) {
                 parentName = parentNode.getName();
             }

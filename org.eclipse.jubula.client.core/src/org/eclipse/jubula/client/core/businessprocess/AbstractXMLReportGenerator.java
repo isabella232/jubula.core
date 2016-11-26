@@ -23,13 +23,18 @@ import org.dom4j.Element;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestResult;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.model.TestResultParameter;
@@ -239,6 +244,21 @@ public abstract class AbstractXMLReportGenerator {
             insertInto = element.addElement("comment"); //$NON-NLS-1$
             Element nameElement = insertInto.addElement("name"); //$NON-NLS-1$
             nameElement.addCDATA(((ICommentPO) node).getName());
+        } else if (node instanceof IConditionalStatementPO) {
+            insertInto = element.addElement("ifthenelse"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
+        } else if (node instanceof IAbstractContainerPO) {
+            insertInto = element.addElement("container"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
+        } else if (node instanceof IWhileDoPO) {
+            insertInto = element.addElement("whiledo"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
+        } else if (node instanceof IDoWhilePO) {
+            insertInto = element.addElement("dowhile"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
+        } else if (node instanceof IIteratePO) {
+            insertInto = element.addElement("repeat"); //$NON-NLS-1$
+            addGeneralElements(resultNode, insertInto);
         }
 
         addParamNodeElements(resultNode, insertInto);

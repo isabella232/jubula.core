@@ -16,6 +16,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
@@ -73,6 +74,9 @@ public class RevertEditorChangesHandler extends AbstractHandler {
         try {
             editor.reOpenEditor(
                     editor.getEditorHelper().getEditSupport().getOriginal());
+            if (editor instanceof AbstractJBEditor) {
+                ((AbstractJBEditor) editor).getTreeViewer().expandAll();
+            }
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialog(
                 MessageIDs.E_REVERT_EDITOR_CHANGES_FAILED);

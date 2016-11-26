@@ -15,8 +15,10 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -48,16 +50,24 @@ public class NodeNameViewerSorter extends ViewerSorter {
         }
         
         // do not sort the sequence of exec test cases or caps in spec test cases
-        if (e1 instanceof IExecTestCasePO 
-                || e2 instanceof IExecTestCasePO
-                || e1 instanceof ICapPO 
-                || e2 instanceof ICapPO
-                || e1 instanceof IRefTestSuitePO
-                || e2 instanceof IRefTestSuitePO) {
+        if (unsortable(e1) || unsortable(e2)) {
             return 0;
         }
 
         return super.compare(viewer, e1, e2);
+    }
+    
+    /**
+     * @param o to be checked
+     * @return <code>true</code> if the sorting is not necessary.
+     *          Otherwise return <code>false</code>
+     */
+    private boolean unsortable(Object o) {
+        return o instanceof IExecTestCasePO
+                || o instanceof ICapPO
+                || o instanceof IRefTestSuitePO
+                || o instanceof IConditionalStatementPO
+                || o instanceof IAbstractContainerPO;
     }
 
     /**

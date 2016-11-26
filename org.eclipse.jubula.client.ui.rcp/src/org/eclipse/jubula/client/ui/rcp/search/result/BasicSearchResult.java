@@ -451,7 +451,7 @@ public class BasicSearchResult implements ISearchResult {
                     || node instanceof ICapPO
                     || node instanceof IEventExecTestCasePO
                     || node instanceof ICommentPO) {
-                specNode = node.getParentNode();
+                specNode = node.getSpecAncestor();
             }
             if (node instanceof ISpecTestCasePO
                     || node instanceof ITestSuitePO
@@ -459,7 +459,7 @@ public class BasicSearchResult implements ISearchResult {
                 specNode = node;
             }
             
-            if (NodeBP.isEditable(specNode)) {
+            if (specNode != null && NodeBP.isEditable(specNode)) {
                 IEditorPart openEditor = AbstractOpenHandler
                         .openEditor(specNode);
                 if (openEditor instanceof AbstractJBEditor) {

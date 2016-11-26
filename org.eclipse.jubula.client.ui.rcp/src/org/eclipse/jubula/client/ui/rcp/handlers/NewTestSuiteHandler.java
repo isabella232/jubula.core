@@ -14,27 +14,19 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**
@@ -55,24 +47,16 @@ public class NewTestSuiteHandler extends AbstractNewHandler {
      * @param event the execution event
      */
     public void newTestSuite(ExecutionEvent event) {
-        final INodePO finalTSParent = getParentNode(event);
-
         InputDialog dialog = newTestSuitePopUp();
         if (dialog.getReturnCode() == Window.CANCEL) {
             return;
         }
         
-        try {
-            ITestSuitePO testSuite = NodeMaker.createTestSuitePO(dialog
+        if (Window.OK == dialog.getReturnCode()) {
+            ITestSuitePO suite = NodeMaker.createTestSuitePO(dialog
                     .getName());
-            setDefaultValuesToTestSuite(testSuite);
-            NodePM.addAndPersistChildNode(finalTSParent, testSuite, null);
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    testSuite, DataState.Added, UpdateState.all);
-        } catch (PMException e) {
-            PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleProjectDeletedException();
+            setDefaultValuesToTestSuite(suite);
+            addCreatedNode(suite, event);
         }
     }
 

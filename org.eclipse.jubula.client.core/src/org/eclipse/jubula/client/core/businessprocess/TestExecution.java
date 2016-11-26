@@ -116,7 +116,6 @@ import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor;
 import org.eclipse.jubula.tools.internal.utils.ExternalCommandExecutor.MonitorTask;
-import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
@@ -213,6 +212,9 @@ public class TestExecution {
      * automatically taken
      */
     private boolean m_autoScreenshot = true;
+    
+    /** The maximum number of iterations */
+    private int m_maxIterateCount = 100;
 
     /** the started Test Job */
     private ITestJobPO m_startedTestJob;
@@ -320,6 +322,7 @@ public class TestExecution {
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
+     * @param iterMax the maximum number of iterations
      * @param autId
      *            The ID of the Running AUT on which the test will take place.
      * @param externalVars
@@ -332,12 +335,13 @@ public class TestExecution {
      *            The value of no-run option argument if it was specified, null otherwise
      */
     public void executeTestSuite(ITestSuitePO testSuite,
-        AutIdentifier autId, boolean autoScreenshot,
+        AutIdentifier autId, boolean autoScreenshot, int iterMax,
         Map<String, String> externalVars, ITestResultSummaryPO summary,
         final IProgressMonitor monitor, String noRunOptMode) {
         m_stopped = false;
 
         m_autoScreenshot = autoScreenshot;
+        m_maxIterateCount = iterMax;
         setPaused(false);
         Validate.notNull(testSuite, Messages.TestsuiteMustNotBeNull);
         m_externalTestDataBP.clearExternalData();
@@ -583,6 +587,7 @@ public class TestExecution {
         ICapPO firstCap = null;
         m_expectedNumberOfSteps = 0;
         m_trav = new Traverser(testSuite);
+        m_trav.setIterMax(m_maxIterateCount);
         try {
             // build and show result Tree
             monitor.subTask(Messages.
@@ -590,6 +595,7 @@ public class TestExecution {
             monitor.subTask(Messages.
                     StartingTestSuite_buildingTestExecutionTree);
             Traverser copier = new Traverser(testSuite);
+            copier.setBuilding(true);
             ResultTreeBuilder resultTreeBuilder = new ResultTreeBuilder(copier);
             copier.addExecStackModificationListener(resultTreeBuilder);
             ICapPO iterNode = copier.next();
@@ -849,7 +855,7 @@ public class TestExecution {
                 logicalName = m_compNamesBP.findCompName(
                         m_trav.getExecStackAsNodeList(), cap, 
                         cap.getComponentName(),
-                        ComponentNamesBP.getInstance()).getCompName();
+                        CompNameManager.getInstance()).getCompName();
             }
             messageCap.setResolvedLogicalName(logicalName);
             IComponentIdentifier technicalName = null;
@@ -1034,81 +1040,78 @@ public class TestExecution {
      * @param msg The response message.
      */
     public void processServerResponse(final CAPTestResponseMessage msg) {
-        Thread t = new IsAliveThread("Execute Test Step") { //$NON-NLS-1$
-            public void run() {
-                ICapPO nextCap = null;
-                processPostExecution(msg);
-                TestResultNode resultNode = m_resultTreeTracker.getEndNode();
-                m_testResultNode = resultNode;
-                MessageCap mc = msg.getMessageCap();
-                resultNode.setComponentName(ComponentNamesBP.getInstance().
-                        getName(mc.getResolvedLogicalName(), 
-                        GeneralStorage.getInstance().getProject().getId()));
-                IComponentIdentifier ci = mc.getCi();
-                resultNode.setOmHeuristicEquivalence(ci.getMatchPercentage());
-                resultNode.setNoOfSimilarComponents(
-                        ci.getNumberOfOtherMatchingComponents());
-                final boolean testOk = !msg.hasTestErrorEvent();
-                if (msg.getState() == CAPTestResponseMessage.PAUSE_EXECUTION) {
+        ICapPO nextCap = null;
+        processPostExecution(msg);
+        TestResultNode resultNode = m_resultTreeTracker.getEndNode();
+        m_testResultNode = resultNode;
+        MessageCap mc = msg.getMessageCap();
+        resultNode.setComponentName(CompNameManager.getInstance().
+                getNameByGuid(mc.getResolvedLogicalName()));
+        IComponentIdentifier ci = mc.getCi();
+        resultNode.setOmHeuristicEquivalence(ci.getMatchPercentage());
+        resultNode.setNoOfSimilarComponents(
+                ci.getNumberOfOtherMatchingComponents());
+        final boolean testOk = !msg.hasTestErrorEvent();
+        if (msg.getState() == CAPTestResponseMessage.PAUSE_EXECUTION) {
+            pauseExecution(PauseMode.PAUSE);
+        }
+        if (testOk) {
+            resultNode.setResult(m_trav.getSuccessResult(), null);
+        } else {
+            // ErrorEvent has occured
+            TestErrorEvent event = msg.getTestErrorEvent();
+            if (StringUtils.isEmpty(resultNode.getCommandLog())) {
+                String commandLogKey = TestErrorEvent.Property.COMMAND_LOG_KEY;
+                String commandLog = (String) event.getProps()
+                        .get(commandLogKey);
+                resultNode.setCommandLog(commandLog);
+                event.getProps().remove(commandLogKey);
+            }
+            ReentryProperty reentry = m_trav.getEventHandlerReentry(
+                    event.getId()); 
+            if (reentry.equals(ReentryProperty.RETRY)) {
+                resultNode.setResult(TestResultNode.RETRYING, event);
+            } else {
+                m_stepCounter.incrementNumberOfFailedSteps();
+                if (reentry.equals(ReentryProperty.CONDITION)) {
+                    resultNode.setResult(TestResultNode.CONDITION_FAILED,
+                            event);
+                } else {
+                    resultNode.setResult(TestResultNode.ERROR, event);
+                }
+                if (m_autoScreenshot) {
+                    addScreenshotThroughAgent(false);
+                }
+                if (ClientTest.instance().isPauseTestExecutionOnError()) {
                     pauseExecution(PauseMode.PAUSE);
                 }
-                if (testOk) {
-                    resultNode.setResult(m_trav.getSuccessResult(), null);
-                } else {
-                    // ErrorEvent has occured
-                    TestErrorEvent event = msg.getTestErrorEvent();
-                    if (StringUtils.isEmpty(resultNode.getCommandLog())) {
-                        String commandLogKey = TestErrorEvent.Property
-                                .COMMAND_LOG_KEY;
-                        String commandLog = (String) event.getProps()
-                                .get(commandLogKey);
-                        resultNode.setCommandLog(commandLog);
-                        event.getProps().remove(commandLogKey);
-                    }
-                    if (m_trav.getEventHandlerReentry(event.getId()).equals(
-                            ReentryProperty.RETRY)) {
-                        resultNode.setResult(TestResultNode.RETRYING, event);
-                    } else {
-                        m_stepCounter.incrementNumberOfFailedSteps();
-                        resultNode.setResult(TestResultNode.ERROR, event);
-                        if (m_autoScreenshot) {
-                            addScreenshotThroughAgent(false);
-                        }
-                        if (ClientTest.instance()
-                                .isPauseTestExecutionOnError()) {
-                            pauseExecution(PauseMode.PAUSE);
-                        }
-                    }
-                }
-                while (isPaused()) {
-                    testConnection();
-                    TimeUtil.delay(100);
-                }
-                
-                if (!m_stopped) {
-                    try {
-                        nextCap = testOk || m_skipError ? m_trav.next()
-                                : m_trav.next(msg.getTestErrorEvent().getId());
-                        m_skipError = false;
-                    } catch (JBException e) {
-                        LOG.error(Messages.IncompleteTestdata, e);
-                        fireError(e);
-                    }
-                    if (nextCap != null) {
-                        processCap(nextCap);
-                    } else {
-                        if (LOG.isInfoEnabled()) {
-                            LOG.info(Messages.TestsuiteFinished);
-                        }
-                        endTestExecution();
-                    }
-                }
             }
-        };
-        t.start();
+        }
+        while (isPaused()) {
+            testConnection();
+            TimeUtil.delay(100);
+        }
+        
+        if (!m_stopped) {
+            try {
+                nextCap = testOk || m_skipError ? m_trav.next()
+                        : m_trav.next(msg.getTestErrorEvent().getId());
+                m_skipError = false;
+            } catch (JBException e) {
+                LOG.error(Messages.IncompleteTestdata, e);
+                fireError(e);
+            }
+            if (nextCap != null) {
+                processCap(nextCap);
+            } else {
+                if (LOG.isInfoEnabled()) {
+                    LOG.info(Messages.TestsuiteFinished);
+                }
+                endTestExecution();
+            }
+        }
     }
     
-
     /**
      * asks the AUT Agent or the AUT to take a screenshot
      * @param agent true if we send the request to the AUT Agent, false if to the AUT
@@ -2204,6 +2207,11 @@ public class TestExecution {
         /** increment the number of failed steps */
         public void incrementNumberOfFailedSteps() {
             m_failedSteps++;
+        }
+
+        /** {@inheritDoc} */
+        public void infiniteLoop() {
+            // do nothing
         }
     }
     

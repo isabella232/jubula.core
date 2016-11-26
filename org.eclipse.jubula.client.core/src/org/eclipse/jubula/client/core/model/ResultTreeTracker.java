@@ -21,6 +21,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.utils.ExecObject;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
+import org.eclipse.jubula.client.core.utils.Traverser;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -28,9 +29,6 @@ import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
-
 
 
 /**
@@ -87,14 +85,16 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             m_eventHierarchy++;
         }
         
-        if (m_eventHierarchy > 0) {
+        if (node instanceof IAbstractContainerPO && m_eventHierarchy == 0) {
+            handleContainer((IAbstractContainerPO) node);
+        } else if (m_eventHierarchy > 0) {
             int nextIndex = m_lastNonCap.getNextChildIndex();
             m_lastNonCap = new TestResultNode(
                     node, m_lastNonCap, nextIndex);
             m_lastNonCap.getParent().updateResultNode(nextIndex, m_lastNonCap);
         } else {
             TestResultNode nextNonCap = m_lastNonCap.getResultNodeList().
-                get(m_lastNonCap.getNextChildIndex());
+                    get(m_lastNonCap.getNextChildIndex());
             while (nextNonCap.getNode() != node) {
                 nextNonCap = m_lastNonCap.getResultNodeList().
                     get(m_lastNonCap.getNextChildIndex());
@@ -113,6 +113,21 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             m_lastNonCap.getParent().setResult(TestResultNode.TESTING, null);
         }
 
+    }
+    
+    /**
+     * Adding a container to the TestResultTree
+     * @param cont the container
+     */
+    private void handleContainer(IAbstractContainerPO cont) {
+        // we use the fact that Controller Test Result Nodes cannot have Event Handlers
+        // so the next child is either the expected one or nothing
+        Integer ind = m_lastNonCap.getNextChildIndex();
+        if (m_lastNonCap.getResultNodeList().size() == ind) {
+            addSubtree(cont, ind);
+        } else {
+            m_lastNonCap = m_lastNonCap.getResultNodeList().get(ind);
+        }
     }
 
     /** 
@@ -316,5 +331,45 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         m_endNode.getParent().updateResultNode(nextIndex, m_endNode);
 
         addParameters(cap, m_endNode);
+    }
+    
+    /** 
+     * Adds a new subtree into the Result Tree
+     * @param root the root
+     * @param nextIndex the next index 
+     */
+    private void addSubtree(INodePO root, int nextIndex) {
+        TestResultNode node = getRTBuilder(root).getRootNode();
+        m_lastNonCap.addChild(node);
+        node.getParent().updateResultNode(nextIndex, node);
+        node.setActionName(null);
+        node.setResult(TestResultNode.TESTING, null);
+        m_lastNonCap = node;
+    }
+    
+    /**
+     * @param root node
+     * @return result tree builder
+     * @throws JBException
+     */
+    public static ResultTreeBuilder getRTBuilder(INodePO root) {
+        Traverser traverser = new Traverser(root);
+        traverser.setBuilding(true);
+        ResultTreeBuilder resultTreeBuilder = new ResultTreeBuilder(traverser);
+        traverser.addExecStackModificationListener(resultTreeBuilder);
+        try {
+            INodePO iterNode = traverser.next();
+            while (iterNode != null) {
+                iterNode = traverser.next();
+            }
+        } catch (JBException e) {
+            log.error(Messages.TestDataNotAvailable + StringConstants.DOT, e);
+        }
+        return resultTreeBuilder;
+    }
+
+    /** {@inheritDoc} */
+    public void infiniteLoop() {
+        m_lastNonCap.setResult(TestResultNode.INFINITE_LOOP, null);
     }
 }

@@ -16,10 +16,14 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
@@ -48,13 +52,19 @@ public class AbstractJBCollectionPropertyTester extends
     
     /** the id of the "isCutAllowed" property */
     public static final String IS_CUT_ALLOWED = "isCutAllowed"; //$NON-NLS-1$
+    
+    /** canExtractOrSaveAs */
+    public static final String CAN_EXTRACT_OR_SAVE = "canExtractOrSaveAs"; //$NON-NLS-1$
+    
+    /** canAddCondition */
+    public static final String CAN_ADD_COND = "canAddCondition"; //$NON-NLS-1$
+    
     /**
      * testable properties
      */
     private static final String[] PROPERTIES = new String[] { 
-        IS_PASTE_ALLOWED,
-        IS_COPY_ALLOWED,
-        IS_CUT_ALLOWED };
+        IS_PASTE_ALLOWED, IS_COPY_ALLOWED, IS_CUT_ALLOWED,
+        CAN_EXTRACT_OR_SAVE, CAN_ADD_COND};
 
     /**
      * 
@@ -70,10 +80,66 @@ public class AbstractJBCollectionPropertyTester extends
             return testIsCopyCutAllowed(selectionContents, false);
         } else if (property.equals(IS_CUT_ALLOWED)) {
             return testIsCopyCutAllowed(selectionContents, true);
+        } else if (property.equals(CAN_EXTRACT_OR_SAVE)) {
+            return testCanExtractOrSave(selectionContents);
+        } else if (property.equals(CAN_ADD_COND)) {
+            return canAddCondition(selectionContents);
         }
         return false;
     }
-
+    
+    /**
+     * Tests whether a selection can be extracted or saved as
+     * @param selection the selection
+     * @return whether yes or no
+     */
+    private boolean testCanExtractOrSave(
+            Collection<? extends Object> selection) {
+        IEditorPart activeEditor = Plugin.getActiveEditor();
+        if (!(activeEditor instanceof TestCaseEditor
+                || activeEditor instanceof TestSuiteEditor)
+                || selection == null
+                || selection.isEmpty()) {
+            return false;
+        }
+        for (Object o : selection) {
+            if (!(o instanceof ICommentPO
+                    || o instanceof IControllerPO
+                    || o instanceof ICapPO
+                    || o instanceof IExecTestCasePO)
+                || o instanceof IEventExecTestCasePO) {
+                return false;
+            }
+        }
+        return nodesAndHaveSameParent(selection);
+    }
+    
+    /**
+     * Decides whether one can add a Conditional Statement to the place
+     * @param selection the selection
+     * @return whether
+     */
+    private boolean canAddCondition(Collection<? extends Object> selection) {
+        IEditorPart activeEditor = Plugin.getActiveEditor();
+        if (!(activeEditor instanceof TestCaseEditor
+                || activeEditor instanceof TestSuiteEditor)
+            || selection == null
+            || selection.size() != 1) {
+            return false;
+        }
+        Object sel = selection.iterator().next();
+        if (sel instanceof ISpecTestCasePO
+                || sel instanceof ITestSuitePO) {
+            return true;
+        }
+        if (!(sel instanceof INodePO)) {
+            return false;
+        }
+        INodePO par = ((INodePO) sel).getParentNode();
+        return par != null && (par instanceof ISpecTestCasePO
+                || par instanceof ITestSuitePO);
+    }
+    
     /**
      * 
      * @param selectionContents The selection contents to test.
@@ -98,18 +164,44 @@ public class AbstractJBCollectionPropertyTester extends
         if (activeEditor instanceof TestCaseEditor) {
             classes.add(IExecTestCasePO.class);
             classes.add(ICapPO.class);
+            classes.add(IControllerPO.class);
+            classes.add(ICommentPO.class);
             isEnable = getCopyActionEnablement(selectionContents, classes,
                     isItCut);
+            isEnable &= nodesAndHaveSameParent(selectionContents);
         } else if (activeEditor instanceof TestSuiteEditor) {
             classes.add(IExecTestCasePO.class);
+            classes.add(ICommentPO.class);
+            classes.add(IControllerPO.class);
             isEnable = getCopyActionEnablement(selectionContents, classes,
                     isItCut);
         } else if (activeEditor instanceof TestJobEditor) {
             classes.add(IRefTestSuitePO.class);
+            classes.add(ICommentPO.class);
             isEnable = getCopyActionEnablement(selectionContents, classes,
                     isItCut);
         }
         return isEnable;
+    }
+    
+    /**
+     * Checks if the collection is a collection of nodes with the same parent
+     * @param selection the selection
+     * @return whether
+     */
+    private boolean nodesAndHaveSameParent(Collection<? extends Object>
+        selection) {
+        INodePO par = null;
+        for (Object obj : selection) {
+            if (!(obj instanceof INodePO)) {
+                return false;
+            }
+            if (par != null && (par != ((INodePO) obj).getParentNode())) {
+                return false;
+            }
+            par = ((INodePO) obj).getParentNode();
+        }
+        return true;
     }
 
     /**
@@ -171,6 +263,7 @@ public class AbstractJBCollectionPropertyTester extends
             Collection<? extends Object> selectionContents,
             List<Class<?>> checkedClasses, boolean isItCut) {
 
+        INodePO par = null;
         for (Object node : selectionContents) {
             if (node == null || (node instanceof IEventExecTestCasePO
                     && isItCut)) {

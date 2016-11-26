@@ -14,6 +14,7 @@ import java.util.Set;
 
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
@@ -51,7 +52,13 @@ public class TooltipLabelProvider extends GeneralLabelProvider {
                 }
                 return sb.toString();
             }
+        } else if (element instanceof IComponentNamePO) {
+            IProblem prob = ((IComponentNamePO) element).getTypeProblem();
+            if (prob != null) {
+                return prob.getTooltipMessage();
+            }
         }
+
         return super.getToolTipText(element);
     }
 }

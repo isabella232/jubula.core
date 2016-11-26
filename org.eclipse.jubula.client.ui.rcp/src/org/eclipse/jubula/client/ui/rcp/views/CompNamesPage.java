@@ -99,9 +99,8 @@ public class CompNamesPage extends Page implements ISelectionListener {
                         m_oldSelectedExecNodeOwner)))) {
             
             if (part instanceof IJBEditor) {
-                m_control.getCellEdit().setComponentNameMapper(
-                    ((IJBEditor)part).getEditorHelper().getEditSupport()
-                        .getCompMapper());
+                m_control.getCellEdit().setComponentNameCache(
+                    ((IJBEditor)part).getCompNameCache());
             }
             m_control.setSelectedExecNodeOwner(selectedExecNodeOwner);
             m_control.setSelectedExecNode(selectedExecNode);

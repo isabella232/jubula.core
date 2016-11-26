@@ -13,21 +13,27 @@ package org.eclipse.jubula.client.ui.rcp.views;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ITestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
+import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
 import org.eclipse.jubula.client.ui.rcp.editors.PersistentObjectComparer;
 import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.ComponentNameBrowserContentProvider;
@@ -38,6 +44,7 @@ import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.part.ViewPart;
@@ -52,7 +59,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
  */
 public class ComponentNameBrowser extends ViewPart implements
         IProjectLoadedListener, ITreeViewerContainer, IJBPart,
-        IDataChangedListener {
+        IDataChangedListener, IProblemPropagationListener {
     /** Default expansion for the tree */
     public static final int DEFAULT_EXPANSION = 2;
 
@@ -66,9 +73,6 @@ public class ComponentNameBrowser extends ViewPart implements
     /** the tree viewer */
     private TreeViewer m_treeViewer;
 
-    /** updater for tree viewer based on changes to Component Names */
-    private ComponentNameTreeViewerUpdater m_treeViewerUpdater;
-    
     /**
      * {@inheritDoc}
      */
@@ -88,8 +92,13 @@ public class ComponentNameBrowser extends ViewPart implements
         getTreeViewer().setContentProvider(cp);
         getTreeViewer().setComparer(new UIIdentitiyElementComparer());
 
-        getTreeViewer().setLabelProvider(cp);
-        
+        ColumnViewerToolTipSupport.enableFor(getTreeViewer());
+        DecoratingCellLabelProvider lp = new DecoratingCellLabelProvider(
+                cp, Plugin.getDefault()
+                        .getWorkbench().getDecoratorManager()
+                        .getLabelDecorator());
+        getTreeViewer().setLabelProvider(lp);
+
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
         getTreeViewer().setSorter(new ComponentNameNameViewerSorter());
@@ -101,13 +110,10 @@ public class ComponentNameBrowser extends ViewPart implements
         Plugin.getHelpSystem().setHelp(getTreeViewer().getControl(),
                 ContextHelpIds.COMPONENT_NAMES_BROWSER);
 
-        m_treeViewerUpdater = new ComponentNameTreeViewerUpdater(
-                getTreeViewer());
-
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectLoadedListener(this, true);
         ded.addDataChangedListener(this, true);
-        ded.addDataChangedListener(m_treeViewerUpdater, true);
+        ded.addProblemPropagationListener(this);
 
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
@@ -135,8 +141,7 @@ public class ComponentNameBrowser extends ViewPart implements
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.removeProjectLoadedListener(this);
         ded.removeDataChangedListener(this);
-        ded.removeDataChangedListener(m_treeViewerUpdater);
-        m_treeViewerUpdater = null;
+        ded.removeProblemPropagationListener(this);
         super.dispose();
     }
     
@@ -207,22 +212,42 @@ public class ComponentNameBrowser extends ViewPart implements
         boolean refreshView = false;
         for (DataChangedEvent e : events) {
             if (e.getUpdateState() != UpdateState.onlyInEditor
-                    && e.getPo() instanceof IComponentNamePO) {
+                    && (e.getPo() instanceof IComponentNamePO
+                        || ((e.getDataState() == DataState.Saved)
+                        && (e.getPo() instanceof IObjectMappingPO)
+                            || (e.getPo() instanceof ITestCasePO)
+                            || (e.getPo() instanceof ITestSuitePO)))) {
                 refreshView = true;
                 break;
             }
         }
         if (refreshView) {
-            // retrieve tree state
-            Object[] expandedElements = getTreeViewer().getExpandedElements();
-            ISelection selection = getTreeViewer().getSelection();
-
-            // refresh treeview
-            getTreeViewer().refresh();
-
-            // restore tree status
-            getTreeViewer().setExpandedElements(expandedElements);
-            getTreeViewer().setSelection(selection);
+            refreshTree();
         }
+    }
+
+    /** {@inheritDoc} */
+    public void problemPropagationFinished() {
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                refreshTree();
+            }
+        });
+    }
+
+    /**
+     * Refreshing the CN Browser
+     */
+    private void refreshTree() {
+     // retrieve tree state
+        Object[] expandedElements = getTreeViewer().getExpandedElements();
+        ISelection selection = getTreeViewer().getSelection();
+
+        // refresh treeview
+        getTreeViewer().refresh();
+
+        // restore tree status
+        getTreeViewer().setExpandedElements(expandedElements);
+        getTreeViewer().setSelection(selection);
     }
 }

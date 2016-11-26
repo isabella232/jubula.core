@@ -466,6 +466,8 @@ public class TestCaseBrowser extends AbstractJBTreeView
         if (po instanceof ISpecTestCasePO
                 || po instanceof ICategoryPO) {
             getTreeViewer().refresh();
+            getTreeViewer().expandToLevel(getTreeViewer().getAutoExpandLevel());
+            getTreeViewer().setSelection(new StructuredSelection(po), true);
         } else if (po instanceof IProjectPO) {
             handleProjectLoaded();
         }

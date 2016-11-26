@@ -154,6 +154,9 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.AUTO_SCREENSHOT,
                 false, StringConstants.EMPTY, Messages.ClientAutoScreenshot, 
                     false));
+        options.addOption(createOption(ClientTestStrings.ITER_MAX,
+                true, ClientTestStrings.ITER_MAX,
+                Messages.IterMax, false));
         options.addOption(createOption(ClientTestStrings.NO_XML_SCREENSHOT,
                 false, StringConstants.EMPTY, Messages.ClientNoXmlScreenshot, 
                     false));
@@ -190,6 +193,10 @@ public class TestexecClient extends AbstractCmdlineClient {
         if (job.getPort() == Constants.INVALID_VALUE) {
             appendError(errorMsgs, ClientTestStrings.PORT,
                     ClientTestStrings.PORT_NUMBER);
+        }
+        if (job.getIterMax() == Constants.INVALID_VALUE) {
+            appendError(errorMsgs, ClientTestStrings.ITER_MAX,
+                    ClientTestStrings.ITER_MAX);
         }
         if ((job.getServer() != null) && (job.getPort() == 0)) {
             appendError(errorMsgs, ClientTestStrings.PORT, 

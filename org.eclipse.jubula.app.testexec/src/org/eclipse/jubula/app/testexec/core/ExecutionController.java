@@ -58,14 +58,19 @@ import org.eclipse.jubula.client.core.events.IServerEventListener;
 import org.eclipse.jubula.client.core.events.ServerEvent;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.Persistor;
@@ -438,7 +443,8 @@ public class ExecutionController implements IAUTServerEventListener,
                 ClientTest.instance().startTestSuite(
                         ts,
                         m_startedAutId != null ? m_startedAutId : m_job
-                                .getAutId(), m_job.isAutoScreenshot(), null,
+                                .getAutId(), m_job.isAutoScreenshot(),
+                        m_job.getIterMax(), null,
                         m_job.getNoRunOptMode(), null);
             }
         }
@@ -456,8 +462,8 @@ public class ExecutionController implements IAUTServerEventListener,
                 new Object[] { tjName,
                                 m_job.getTestJob().getNodeListSize()}));
         List<INodePO> executedTestSuites = ClientTest.instance().startTestJob(
-                m_job.getTestJob(),
-                m_job.isAutoScreenshot(), m_job.getNoRunOptMode());
+                m_job.getTestJob(), m_job.isAutoScreenshot(),
+                m_job.getIterMax(), m_job.getNoRunOptMode());
         sysOut(NLS.bind(Messages.ExecutionControllerTestJobExecutedTestSuites,
                 new Object[] { tjName,
                         executedTestSuites.size()}));
@@ -1013,6 +1019,16 @@ public class ExecutionController implements IAUTServerEventListener,
             } else if (node instanceof IExecTestCasePO) {
                 nodeType = Messages.TestCase;
                 name = NodeNameUtil.getText((IExecTestCasePO)node, false);
+            } else if (node instanceof IConditionalStatementPO) {
+                nodeType = Messages.Conditional;
+            } else if (node instanceof IAbstractContainerPO) {
+                nodeType = Messages.Container;
+            } else if (node instanceof IDoWhilePO) {
+                nodeType = Messages.DoWhile;
+            } else if (node instanceof IWhileDoPO) {
+                nodeType = Messages.WhileDo;
+            } else if (node instanceof IIteratePO) {
+                nodeType = Messages.Iterate;
             }
             
             StringBuilder sb = new StringBuilder(nodeType);
@@ -1035,7 +1051,7 @@ public class ExecutionController implements IAUTServerEventListener,
         public void nextDataSetIteration() {
             // do nothing
         }
-
+        
         /**
          * {@inheritDoc}
          */
@@ -1056,6 +1072,11 @@ public class ExecutionController implements IAUTServerEventListener,
                     + StringConstants.COLON
                     + StringConstants.SPACE
                     + String.valueOf(cap.getName()));
+        }
+
+        /** {@inheritDoc} */
+        public void infiniteLoop() {
+            // not relevant
         }
     }
 

@@ -54,6 +54,8 @@ public class ResultDecorator extends AbstractLightweightLabelDecorator {
                     image2use = IconConstants.STEP_OK_IMAGE_DESCRIPTOR;
                     break;
                 case TestResultNode.ERROR:
+                case TestResultNode.CONDITION_FAILED:
+                case TestResultNode.INFINITE_LOOP:
                     image2use = IconConstants.STEP_NOT_OK_IMAGE_DESCRIPTOR;
                     break;
                 case TestResultNode.ERROR_IN_CHILD:

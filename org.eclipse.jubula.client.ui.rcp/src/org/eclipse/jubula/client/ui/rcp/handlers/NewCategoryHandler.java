@@ -13,18 +13,13 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 import java.util.Iterator;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
@@ -34,7 +29,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.ui.IWorkbenchPart;
@@ -103,16 +97,7 @@ public class NewCategoryHandler extends AbstractNewHandler {
             ContextHelpIds.DIALOG_NEW_CATEGORY);
         dialog.open();
         if (Window.OK == dialog.getReturnCode()) {
-            String categoryName = dialog.getName();
-            ICategoryPO category = NodeMaker.createCategoryPO(categoryName);
-            NodePM.addAndPersistChildNode(categoryParent, category, null);
-            DataEventDispatcher.getInstance().fireDataChangedListener(category, 
-                DataState.Added, UpdateState.all);
-            if (activePart instanceof TestCaseBrowser) {
-                TestCaseBrowser tcb = (TestCaseBrowser) activePart;
-                tcb.getTreeViewer().setSelection(
-                        new StructuredSelection(category), true);
-            }
+            addCreatedNode(NodeMaker.createCategoryPO(dialog.getName()), event);
         }
         dialog.close();
     }

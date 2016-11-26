@@ -10,29 +10,22 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
-import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.PersistenceException;
+import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
-import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
-import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.PersistenceManager;
+import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -79,69 +72,42 @@ public class DeleteTreeItemHandlerTCEditor
      * @param nodes
      *            the nodes to delete
      * @param editor
-     *            the editor to perfrom the deletion for
+     *            the editor to perform the deletion for
      */
     public static void deleteNodesFromEditor(List<? extends INodePO> nodes,
             AbstractJBEditor editor) {
         editor.getEditorHelper().getClipboard().clearContents();
+        EditSupport supp = editor.getEditorHelper().getEditSupport();
+        IWritableComponentNameCache localCache = supp.getCache();
         for (INodePO node : nodes) {
-            try {
-                node.getParentNode().removeNode(node);
-                if (node instanceof IExecTestCasePO) {
-                    IExecTestCasePO po = (IExecTestCasePO) node;
-                    Collection<ICompNamesPairPO> col = po.getCompNamesPairs();
-                    for (ICompNamesPairPO iCompNamesPairPO : col) {
-                        iCompNamesPairPO.getSecondName();
-                    }
-                    for (int i = po.getDataManager().getDataSetCount() - 1;
-                            i >= 0; i--) {
-                        po.getDataManager().removeDataSet(i);
-                    }
-                }
-                if (node.getId() != null) {
-                    editor.getEditorHelper().getEditSupport().getSession()
-                            .remove(node);
-                }
-                createReuseEvents(editor, node);
-                editor.getEditorHelper().setDirty(true);
-                DataEventDispatcher.getInstance().fireDataChangedListener(node,
-                        DataState.Deleted, UpdateState.onlyInEditor);
-            } catch (PersistenceException e) {
-                try {
-                    PersistenceManager.handleDBExceptionForEditor(node, e,
-                            editor.getEditorHelper().getEditSupport());
-                } catch (PMException pme) {
-                    PMExceptionHandler.handlePMExceptionForMasterSession(pme);
-                }
-            }
+            deleteNode(node, editor.getEntityManager());
         }
-    }
 
+        editor.getEditorHelper().setDirty(true);
+        CalcTypes calc = new CalcTypes(localCache,
+                (INodePO) supp.getWorkVersion());
+        calc.calculateTypes();
+        localCache.storeLocalProblems(calc);
+    }
+    
     /**
-     * changes the component names back to the first name so correct events are generated
-     * @param editor the editor from which we need the EditSupport
-     * @param node the node to generate the component name change events from
+     * Deletes children of a node then the node itself
+     * @param node the node
+     * @param sess the session
      */
-    private static void createReuseEvents(AbstractJBEditor editor,
-            INodePO node) {
-        if (node instanceof IExecTestCasePO) {
-            IWritableComponentNameMapper mapper =
-                    editor.getEditorHelper().getEditSupport().getCompMapper();
-            IWritableComponentNameCache cache = mapper.getCompNameCache();
-            IExecTestCasePO exec = (IExecTestCasePO) node;
-            Collection<ICompNamesPairPO> compNamesPairs =
-                    exec.getCompNamesPairs();
-            for (ICompNamesPairPO iCompNamesPairPO : compNamesPairs) {
-                IComponentNamePO compName =
-                        cache.getCompNamePo(iCompNamesPairPO.getFirstName());
-                try {
-                    new CompNamesBP().updateCompNamesPair(exec,
-                            iCompNamesPairPO, compName.getName(), mapper);
-                } catch (IncompatibleTypeException | PMException e) {
-                    log.warn("error occured during update of component " //$NON-NLS-1$
-                            + "names from deleted node", e); //$NON-NLS-1$
-                }
-            }
+    private static void deleteNode(INodePO node, EntityManager sess) {
+        node.getParentNode().removeNode(node);
+        if (node instanceof IParamNodePO) {
+            IParamNodePO po = (IParamNodePO) node;
+            for (int i = po.getDataManager().getDataSetCount() - 1;
+                    i >= 0; i--) {
+                po.getDataManager().removeDataSet(i);
+            }                
         }
+        if (node.getId() != null) {
+            sess.remove(node);
+        }
+        DataEventDispatcher.getInstance().fireDataChangedListener(node,
+                DataState.Deleted, UpdateState.onlyInEditor);
     }
 }

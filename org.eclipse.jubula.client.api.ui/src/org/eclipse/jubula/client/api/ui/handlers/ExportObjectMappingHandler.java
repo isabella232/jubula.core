@@ -22,7 +22,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.api.ui.utils.OMExport;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
@@ -54,8 +54,8 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     /** map containing all object mappings */
     private Map<String, String> m_map = new TreeMap<String, String>();
     
-    /** the component name mapper to use */
-    private IComponentNameMapper m_compMapper;
+    /** the component name cache to use */
+    private IComponentNameCache m_compCache;
     
     /** the class generator for the OM class */
     private OMClassGenerator m_omClassGenerator = new OMClassGenerator();
@@ -113,8 +113,7 @@ public class ExportObjectMappingHandler extends AbstractHandler {
      */
     private void fillMap(final ObjectMappingMultiPageEditor omEditor,
             IAUTMainPO aut) {
-        m_compMapper = omEditor.getEditorHelper().getEditSupport()
-                .getCompMapper();
+        m_compCache = omEditor.getCompNameCache();
         IObjectMappingPO objMap = aut.getObjMap();
         IStructuredSelection selection = (IStructuredSelection) omEditor
                 .getTreeViewer().getSelection();
@@ -225,8 +224,7 @@ public class ExportObjectMappingHandler extends AbstractHandler {
     private void addAssoziationToMap(IObjectMappingAssoziationPO assoziation)
             throws IOException {
         for (String compUUID : assoziation.getLogicalNames()) {
-            String compName = m_compMapper.getCompNameCache()
-                    .getName(compUUID);
+            String compName = m_compCache.getNameByGuid(compUUID);
             ComponentIdentifier identifier = (ComponentIdentifier) 
                     ObjectMappingUtil.createCompIdentifierFromAssoziation(
                             assoziation);

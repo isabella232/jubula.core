@@ -21,9 +21,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**
@@ -86,13 +84,15 @@ public class TSBrowserDndSupport extends AbstractBrowserDndSupport {
      * 
      * @param nodesToBeMoved The nodes to move.
      * @param target The target location.
+     * @return boolean success?
      */
-    public static void moveNodes(List<INodePO> nodesToBeMoved,
-            IPersistentObject target) throws PMException,
-            ProjectDeletedException {
-        if (TestSuiteBrowser.getInstance() != null) {
-            doMove(nodesToBeMoved, target);
+    public static boolean moveNodes(List<INodePO> nodesToBeMoved,
+            IPersistentObject target) {
+        if (TestSuiteBrowser.getInstance() != null
+                && !nodesToBeMoved.isEmpty()) {
+            return doMove(nodesToBeMoved, target);
         }
+        return false;
     }
 
 }

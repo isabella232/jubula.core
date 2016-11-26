@@ -21,6 +21,12 @@
 	<entity class="org.eclipse.jubula.client.core.model.CapPO" />
 	<entity class="org.eclipse.jubula.client.core.model.CategoryPO" />
     <entity class="org.eclipse.jubula.client.core.model.CommentPO" />
+    <entity class="org.eclipse.jubula.client.core.model.CondStructPO" />
+    <entity class="org.eclipse.jubula.client.core.model.ContainerPO" />
+    <entity class="org.eclipse.jubula.client.core.model.DoWhilePO" />
+    <entity class="org.eclipse.jubula.client.core.model.WhileDoPO" />
+    <entity class="org.eclipse.jubula.client.core.model.ConditionalStatementPO" />
+    <entity class="org.eclipse.jubula.client.core.model.IteratePO" />
 	<entity class="org.eclipse.jubula.client.core.model.EventExecTestCasePO" />
 	<entity class="org.eclipse.jubula.client.core.model.ExecTestCasePO" />
 	<entity class="org.eclipse.jubula.client.core.model.ParamNodePO" />

@@ -14,7 +14,6 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -43,21 +42,17 @@ public class RenameLogicalNameHandler
         if (activeEditor instanceof ObjectMappingMultiPageEditor) {
             ObjectMappingMultiPageEditor omEditor = 
                 (ObjectMappingMultiPageEditor)activeEditor;
-            final IComponentNameMapper compNamesMapper = 
-                omEditor.getEditorHelper().getEditSupport().getCompMapper();
             final IComponentNamePO compName = getSelectedComponentName();
             if (compName != null) {
                 final JBEditorHelper editorHelper = omEditor.getEditorHelper();
                 editorHelper.doEditorOperation(new IEditorOperation() {
                     public void run(IPersistentObject workingPo) {
                         String newName = 
-                                getNewName(event, compNamesMapper, compName);
+                                getNewName(event, compName);
                         if (newName != null) {
                             
-                            rename(
-                                editorHelper.getEditSupport().getCompMapper(), 
-                                compName.getGuid(), 
-                                newName);
+                            rename(editorHelper.getEditSupport().getCache(), 
+                                compName.getGuid(), newName);
                             
                             editorHelper.setDirty(true);
 

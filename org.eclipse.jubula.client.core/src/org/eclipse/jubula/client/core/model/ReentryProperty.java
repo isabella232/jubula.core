@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -74,6 +75,11 @@ public final class ReentryProperty {
      * <code>RETRY</code> retry test step
      */
     public static final ReentryProperty RETRY = new ReentryProperty(8);
+    
+    /**
+     * <code>CONDITION</code> placeholder to indicate a condition
+     */
+    public static final ReentryProperty CONDITION = new ReentryProperty(9);
 
     /** Array of existing Reentry Properties */
     public static final ReentryProperty[] REENTRY_PROP_ARRAY = 
@@ -133,6 +139,8 @@ public final class ReentryProperty {
                 return EXIT;
             case 8:
                 return RETRY;
+            case 9:
+                return CONDITION;
             default:
                 return null; // can not happen, values are validated
         }
@@ -178,6 +186,10 @@ public final class ReentryProperty {
      *  
      */
     private static void validateValue(int value) throws InvalidDataException {
+        if (value == 9) {
+            // CONDITION
+            return;
+        }
         for (int i = 0; i < REENTRY_PROP_ARRAY.length; i++) {
             ReentryProperty prop = REENTRY_PROP_ARRAY[i];
             if (prop.getValue() == value) {
@@ -236,7 +248,9 @@ public final class ReentryProperty {
             case 7:
                 return Messages.EventExecTestCasePOEXIT; 
             case 8:
-                return Messages.EventExecTestCasePORETRY; 
+                return Messages.EventExecTestCasePORETRY;
+            case 9: // condition - just a placeholder, so is never shown
+                return StringUtils.EMPTY;
             default:
                 Assert.notReached(Messages.WrongTypeOfReentryProperty 
                     + StringConstants.EXCLAMATION_MARK); 

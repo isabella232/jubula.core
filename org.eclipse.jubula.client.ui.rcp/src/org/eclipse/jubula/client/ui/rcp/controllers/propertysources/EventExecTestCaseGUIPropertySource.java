@@ -252,7 +252,7 @@ public class EventExecTestCaseGUIPropertySource extends
             boolean propSet = false;
             IEventExecTestCasePO eventTc = (IEventExecTestCasePO) getPoNode();
             final String oldType = eventTc.getEventType();
-            ISpecTestCasePO specTc = (ISpecTestCasePO)eventTc.getParentNode();
+            ISpecTestCasePO specTc = (ISpecTestCasePO)eventTc.getSpecAncestor();
             specTc.removeNode(eventTc);
             String evType = EVENT_TYPES[((Integer)value).intValue()];
             evType = StringHelper.getInstance().getMap().get(evType);

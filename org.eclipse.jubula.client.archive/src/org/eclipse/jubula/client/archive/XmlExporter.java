@@ -68,7 +68,6 @@ import org.eclipse.jubula.client.archive.schema.TestSuite;
 import org.eclipse.jubula.client.archive.schema.TestresultSummaries;
 import org.eclipse.jubula.client.archive.schema.TestresultSummary;
 import org.eclipse.jubula.client.archive.schema.UsedToolkit;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
@@ -114,6 +113,7 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
@@ -704,8 +704,8 @@ class XmlExporter {
      */
     private void fillComponentNames(Project projXml, IProjectPO projPo)
         throws PMException {
-        final Collection<IComponentNamePO> allCompNamePOs = ComponentNamesBP
-                .getInstance().getAllComponentNamePOs(projPo.getId());
+        final Collection<IComponentNamePO> allCompNamePOs = CompNamePM
+                .readAllCompNamesRO(projPo.getId());
         for (IComponentNamePO compName : allCompNamePOs) {
             final ComponentName newXmlCompName = projXml.addNewComponentNames();
             newXmlCompName.setGUID(compName.getGuid());
@@ -1243,8 +1243,7 @@ class XmlExporter {
         // (component names = 1)
         try {
             final Collection<IComponentNamePO> allComponentNamePOs = 
-                ComponentNamesBP.getInstance()
-                    .getAllComponentNamePOs(project.getId());
+                CompNamePM.readAllCompNamesRO(project.getId());
             work += allComponentNamePOs.size();
         } catch (PMException e) {
             // nothing here

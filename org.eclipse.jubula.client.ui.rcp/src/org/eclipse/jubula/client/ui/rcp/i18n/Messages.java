@@ -160,13 +160,6 @@ public class Messages extends NLS {
     public static String CompNameBrowserReusedCat;
     public static String CompNameBrowserUnusedCat;
     public static String CompNameBrowserUsedCat;
-    public static String CompNameExistsDialogCompAlreadyExistsInProj;
-    public static String CompNameExistsDialogCompNameNotCompatible;
-    public static String CompNameExistsDialogComponentType;
-    public static String CompNameExistsDialogDefaultDlgMessage;
-    public static String CompNameExistsDialogDialogTitle;
-    public static String CompNameExistsDialogPressOkOrEnter;
-    public static String CompNameExistsDialogTypeComponentName;
     public static String CompNamesViewNewNameColumn;
     public static String CompNamesViewNoCompNameInfo;
     public static String CompNamesViewOldNameColumn;
@@ -175,6 +168,12 @@ public class Messages extends NLS {
     public static String CompletenessCheckRunningOperation; 
     public static String Component;
     public static String ComponentCouldNotBeFoundInRunningAut;
+    public static String ConditionGUIPropertySourceName;
+    public static String ConditionGUIPropertySourceNegate;
+    public static String ContainerGUIPropertySourceName;
+    public static String DoWhileGUIPropertySourceName;
+    public static String WhileDoGUIPropertySourceName;
+    public static String IterateGUIPropertySourceName;
     public static String ConfigurationMustNotNull;
     public static String ConnectToAutAgentPulldownItemName;
     public static String CoreException;
@@ -229,6 +228,7 @@ public class Messages extends NLS {
     public static String EditorPreferencePageDescription;
     public static String EditorPreferencePageShowCapInfo;
     public static String EditorPreferencePageShowTransientChildrenCheckBox;
+    public static String EditorPreferencePageShowCountersCheckBox;
     public static String EditorsSaveEditors;
     public static String EditorWillBeClosed;
     public static String EditParametersDialogAdd;
@@ -367,6 +367,10 @@ public class Messages extends NLS {
     public static String ImportXLSTestDataWizardImportOperationName;
     public static String ImportXLSTestDataWizardSuccessfullImport;
     public static String ImportXLSTestDataWizardTitle;
+    public static String IncompatibleMapDialogText;
+    public static String IncompatibleMapDialogTitle;
+    public static String IncompatiblePairChangeDialogText;
+    public static String IncompatiblePairChangeDialogTitle;
     public static String InCurrentProject;
     public static String InfoDetailCannotMoveTc;
     public static String InfoDetailConnectToAutAgentFailed;
@@ -381,6 +385,7 @@ public class Messages extends NLS {
     public static String LogicalNameErrorExists;
     public static String LogicalNameErrorInvalidChar;
     public static String LogicalNameErrorNoSpaceAtStartOrEnd;
+    public static String MapProblem;
     public static String MergeComponentNamesLabel;
     public static String MergeComponentNamesMessage;
     public static String MergeComponentNamesShellTitle;
@@ -444,9 +449,9 @@ public class Messages extends NLS {
     public static String NotSupported;
     public static String NotSupportedControl;
     public static String NotUseReferenceParameterTitle;
+    public static String NotUseReferenceParameter;
     public static String NotUsePropagatedComponentNameTitle;
     public static String NotUsePropagatedComponentName;
-    public static String NotUseReferenceParameter;
     public static String ObjectMappingEditorCategory;
     public static String ObjectMappingEditorComponentType;
     public static String ObjectMappingEditorConfigView;
@@ -861,9 +866,10 @@ public class Messages extends NLS {
     public static String TestResultViewPreferencePageDirSelector;
     public static String TestResultViewPreferencePageGenerateReport;
     public static String TestResultViewPreferencePageGenerateMonitoringReport;
-    public static String TestResultViewPreferencePageInvalidMaxNumberOfDays;
-    public static String TestResultViewPreferencePageInvalidNegMaxNumberOfDays;
+    public static String TestResultViewPreferencePageInvalidNumber;
+    public static String TestResultViewPreferencePageNegativeNumber;
     public static String TestResultViewPreferencePageMaxNumberOfDaysText;
+    public static String TestResultViewPreferencePageMaxNumOfItersText;
     public static String TestResultViewPreferencePageOpenLogView;
     public static String TestResultViewPreferencePageOpenResultView;
     public static String TestResultViewPreferencePagePathEmpty;

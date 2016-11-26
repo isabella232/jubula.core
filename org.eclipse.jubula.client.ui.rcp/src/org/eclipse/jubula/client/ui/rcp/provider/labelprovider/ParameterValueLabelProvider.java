@@ -93,7 +93,7 @@ public class ParameterValueLabelProvider extends LabelProvider
                     property, paramNode, 
                     controller.getParamDesc(), new NullValidator());
             if (conv.containsReferences()) {
-                if (paramNode.getParentNode() instanceof ITestSuitePO) {
+                if (paramNode.getSpecAncestor() instanceof ITestSuitePO) {
                     return m_missingDataImage;
                 }
                 return IconConstants.REF_VALUE_IMAGE;

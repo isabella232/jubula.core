@@ -26,10 +26,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.ObjectUtils;
@@ -430,6 +432,18 @@ class ExecTestCasePO extends TestCasePO implements
     
     /** {@inheritDoc} */
     @Transient
+    public Iterator<INodePO> getAllNodeIter() {
+        ISpecTestCasePO specTestCase = getSpecTestCase();
+        if (specTestCase != null) {
+            return specTestCase.getAllNodeIter();
+        }
+        
+        List<INodePO> emptyList = Collections.emptyList();
+        return emptyList.iterator();
+    }
+    
+    /** {@inheritDoc} */
+    @Transient
     public int getNodeListSize() {
         if (getSpecTestCase() != null) {
             return getSpecTestCase().getNodeListSize();
@@ -525,6 +539,16 @@ class ExecTestCasePO extends TestCasePO implements
     private Map<String, ICompNamesPairPO> getHbmCompNamesMap() {
         return m_compNamesMap;
     }
+    
+    /**
+     * Removes Comp Names Pairs
+     * @param sess the session
+     */
+    private void removeCompNamesPairs(EntityManager sess) {
+        Query q = sess.createNativeQuery("delete from COMP_NAME_PAIRS where FK_EXECTC = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId()).executeUpdate();
+    }
+    
     /**
      * only for Persistence (JPA / EclipseLink)
      * 
@@ -751,4 +775,11 @@ class ExecTestCasePO extends TestCasePO implements
         }
         return false;
     }
+
+    /** {@inheritDoc} */
+    public void goingToBeDeleted(EntityManager sess) {
+        super.goingToBeDeleted(sess);
+        removeCompNamesPairs(sess);
+    }
+
 }

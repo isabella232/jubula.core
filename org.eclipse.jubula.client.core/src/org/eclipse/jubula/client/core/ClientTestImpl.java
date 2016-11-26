@@ -44,7 +44,7 @@ import org.eclipse.jubula.client.core.businessprocess.CompleteXMLReportGenerator
 import org.eclipse.jubula.client.core.businessprocess.ErrorsOnlyXMLReportGenerator;
 import org.eclipse.jubula.client.core.businessprocess.FileXMLReportWriter;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution.PauseMode;
@@ -457,7 +457,7 @@ public class ClientTestImpl implements IClientTest {
      * {@inheritDoc}
      */
     public void startRecordTestCase(ISpecTestCasePO spec, 
-            IWritableComponentNameMapper compNamesMapper, 
+            IWritableComponentNameCache compNamesCache, 
             int recordCompMod, int recordCompKey, 
             int recordApplMod, int recordApplKey,
             int checkModeKeyMod, int checkModeKey, 
@@ -486,7 +486,7 @@ public class ClientTestImpl implements IClientTest {
                             
             AUTConnection.getInstance().send(message);
             CAPRecordedCommand.setRecSpecTestCase(spec);
-            CAPRecordedCommand.setCompNamesMapper(compNamesMapper);
+            CAPRecordedCommand.setCompNamesCache(compNamesCache);
         } catch (UnknownMessageException ume) {
             fireAUTServerStateChanged(new AUTServerEvent(ume.getErrorId()));
         } catch (NotConnectedException nce) {
@@ -537,7 +537,8 @@ public class ClientTestImpl implements IClientTest {
      */
     public void startTestSuite(final ITestSuitePO execTestSuite,
             final AutIdentifier autId,
-            final boolean autoScreenshot, 
+            final boolean autoScreenshot,
+            final int iterMax,
             final Map<String, String> externalVars,
             final String noRunOptMode,
             String jobDesc) {
@@ -558,7 +559,7 @@ public class ClientTestImpl implements IClientTest {
                 m_testsuiteStartTime = new Date();
                 setTestresultSummary(PoMaker.createTestResultSummaryPO());
                 TestExecution.getInstance().executeTestSuite(execTestSuite,
-                        autId, autoScreenshot, externalVars,
+                        autId, autoScreenshot, iterMax, externalVars,
                         getTestresultSummary(), monitor, noRunOptMode);
                 if (monitor.isCanceled()) {
                     return Status.CANCEL_STATUS;
@@ -578,7 +579,7 @@ public class ClientTestImpl implements IClientTest {
 
     /** {@inheritDoc} */
     public List<INodePO> startTestJob(ITestJobPO testJob,
-            boolean autoScreenshot, String noRunOptMode) {
+            boolean autoScreenshot, int iterMax, String noRunOptMode) {
         TestExecution.getInstance().setStartedTestJob(testJob);
         List<INodePO> executedTestSuites = new ArrayList<INodePO>();
         m_testjobStartTime = new Date();
@@ -609,7 +610,7 @@ public class ClientTestImpl implements IClientTest {
                     AutIdentifier autId = new AutIdentifier(refTestSuite
                             .getTestSuiteAutID());
                     startTestSuite(refTestSuite.getTestSuite(), autId,
-                            autoScreenshot, null, noRunOptMode, 
+                            autoScreenshot, iterMax, null, noRunOptMode, 
                             NodeNameUtil.getText(refTestSuite));
                     while (!isTestExecutionFinished.get()) {
                         TimeUtil.delay(500);

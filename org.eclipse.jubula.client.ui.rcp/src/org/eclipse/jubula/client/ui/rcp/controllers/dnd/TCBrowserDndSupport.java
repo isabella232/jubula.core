@@ -20,9 +20,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**
@@ -86,12 +84,14 @@ public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
      * 
      * @param nodesToBeMoved The nodes to move.
      * @param target The target location.
+     * @return success?
      */
-    public static void moveNodes(List<INodePO> nodesToBeMoved,
-            IPersistentObject target) throws PMException,
-            ProjectDeletedException {
-        if (MultipleTCBTracker.getInstance().getMainTCB() != null) {
-            doMove(nodesToBeMoved, target);
+    public static boolean moveNodes(List<INodePO> nodesToBeMoved,
+            IPersistentObject target) {
+        if (MultipleTCBTracker.getInstance().getMainTCB() != null
+                && !nodesToBeMoved.isEmpty()) {
+            return doMove(nodesToBeMoved, target);
         }
+        return false;
     }
 }

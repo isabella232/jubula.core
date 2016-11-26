@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="overview" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Overview of Conditional Statements and Loops</title>
+  <para>
+    There are four special nodes for altering normal test execution, called Controllers:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Conditional Statements (If - Then - Else)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Do - While loops
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        While - Do loops
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Repeat loops
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    You can add the aforementioned nodes to Test Cases through the Add submenu of the
+    context menu in a Test Case Editor.
+  </para>
+  <para>
+    These nodes have a fixed list of children (so-called Containers) which in
+    turn can contain only non-Controller nodes (so they can contain only
+    Test Steps, Test Case References and Comments).
+  </para>
+  <para>
+    Conditional Statements, Do - While loops and While - Do loops have a Condition
+    child (called While for the latter two) whose behavior is the following:
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        Conditions cannot be empty, so they must always contain at least one active node.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Conditions are determined by Checks. So a Condition is considered to be false as
+        soon as such a Check Fail is encountered in any of its children which is not handled by
+        a Check Fail handler. If a Condition (and its executed children) does not contain any Checks,
+        then it is considered to be false.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <para>
+    For example in the following IfThenElse Test Case, the Condition references a Test Case which
+    has its own Handler for Check Fails, so even if the actual Check in that Test Case fails,
+    this failure will be caught by the Handler, so it will not make the Condition to become false.
+  </para>
+  <figure xml:id="samplecondition">
+    <title>A sample Condition</title>
+       <mediaobject>
+          <imageobject>
+             <imagedata fileref="images/samplecondition.png"/>
+          </imageobject>
+          <textobject><phrase>Condition</phrase></textobject>
+       </mediaobject>
+  </figure>
+  <para>
+    Test Result Nodes corresponding to Test Steps making a Condition fail are marked by error markers,
+    but these markers are not propagated up to their ancestors.
+  </para>
+</section>

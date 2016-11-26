@@ -17,6 +17,7 @@ import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.osgi.util.NLS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,8 +78,13 @@ public class CAPTestResponseCommand implements APICommand {
      */
     public Message execute() {
         logResult();
-        TestExecution.getInstance()
-            .processServerResponse((CAPTestResponseMessage)getMessage());
+        Thread t = new IsAliveThread("Execute Test Step") { //$NON-NLS-1$
+            public void run() {
+                TestExecution.getInstance().processServerResponse(
+                        (CAPTestResponseMessage)getMessage());            
+            }
+        };
+        t.start();
         return null;
     }
 

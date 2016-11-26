@@ -19,10 +19,15 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.DependencyFinderOp;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -220,6 +225,24 @@ public class TestCaseTreeComposite extends Composite {
             if (element instanceof ICategoryPO
                     || element instanceof IReusedProjectPO) {
                 return IconConstants.CATEGORY_IMAGE;
+            }
+            
+            if (element instanceof IConditionalStatementPO) {
+                return IconConstants.CONDITION;
+            }
+            
+            if (element instanceof IDoWhilePO) {
+                return IconConstants.DO_WHILE;
+            }
+            if (element instanceof IWhileDoPO) {
+                return IconConstants.DO_WHILE;
+            }
+            if (element instanceof IIteratePO) {
+                return IconConstants.ITERATE;
+            }
+            
+            if (element instanceof IAbstractContainerPO) {
+                return IconConstants.CONTAINER;
             }
             
             return null;

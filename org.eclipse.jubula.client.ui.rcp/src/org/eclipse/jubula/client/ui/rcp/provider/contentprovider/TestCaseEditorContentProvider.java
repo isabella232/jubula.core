@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 
 /**
@@ -24,9 +26,14 @@ public class TestCaseEditorContentProvider
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof ISpecTestCasePO) {
-            return ((ISpecTestCasePO)parentElement)
-                .getUnmodifiableNodeList().toArray();
+        if (parentElement instanceof ISpecObjContPO[]) {
+            return new Object[] { ((ISpecObjContPO[])parentElement)[0] };
+        }
+        if (!(parentElement instanceof IExecTestCasePO)
+                && parentElement instanceof INodePO
+                && ((INodePO) parentElement).getNodeListSize() > 0) {
+            return ((INodePO) parentElement).getUnmodifiableNodeList().
+                    toArray();
         }
         
         return ArrayUtils.EMPTY_OBJECT_ARRAY;
@@ -36,8 +43,9 @@ public class TestCaseEditorContentProvider
      * {@inheritDoc}
      */
     public Object getParent(Object element) {
-        if (element instanceof IExecTestCasePO) {
-            return ((IExecTestCasePO)element).getParentNode();
+        if (element instanceof INodePO
+                && !(element instanceof ISpecTestCasePO)) {
+            return ((INodePO)element).getParentNode();
         }
         
         return null;
@@ -47,8 +55,12 @@ public class TestCaseEditorContentProvider
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
-        if (element instanceof ISpecTestCasePO) {
-            return ((ISpecTestCasePO)element).getNodeListSize() > 0;
+        if (element instanceof IExecTestCasePO) {
+            // ExecTCs cheat the getNodeListSize()...
+            return false;
+        }
+        if (element instanceof INodePO) {
+            return ((INodePO)element).getNodeListSize() > 0;
         }
         return false;
     }   

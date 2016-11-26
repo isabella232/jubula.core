@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -27,15 +28,15 @@ import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
-import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -52,6 +53,8 @@ import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.editors.NodeEditorInput;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator;
+import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator.NodeTarget;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
@@ -105,25 +108,24 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 return false;
             }
             INodePO node = (INodePO)obj;
-            if (node instanceof ICapPO || node instanceof IExecTestCasePO
-                    || node instanceof ICommentPO) {
-                INodePO target = dropTarget;
-                if (target != node
-                    && (target instanceof ICapPO 
-                        || target instanceof IExecTestCasePO
-                        || target instanceof ICommentPO)) {
-                        
-                    droppedNode = moveNode(node, target);
+            boolean exp = targetEditor.getTreeViewer().
+                    getExpandedState(dropTarget);
+            if (!(node instanceof ISpecTestCasePO)) {
+                NodeTarget tar = NodeTargetCalculator.calcNodeTarget(node,
+                        dropTarget, dropPosition, exp);
+                if (tar != null) {
+                    droppedNode = moveNode(node, tar.getNode(), tar.getPos());
                 }
-            }
-            if (node instanceof ISpecTestCasePO) {
-                if (performDrop(targetEditor, dropTarget, 
-                        dropPosition, (ISpecTestCasePO)node) == null) {
+            } else {
+                droppedNode = performDrop(targetEditor, dropTarget, 
+                        dropPosition, (ISpecTestCasePO)node, exp);
+                if (droppedNode == null) {
                     return false;
                 }
             }
             postDropAction(droppedNode, targetEditor);
         }
+        targetEditor.runLocalChecks();
         return true;
     }
     
@@ -141,61 +143,103 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
             IStructuredSelection toDrop, INodePO dropTarget) {
         
         if (targetEditor.getEditorHelper().requestEditableState() 
-                != JBEditorHelper.EditableState.OK) {
+                != JBEditorHelper.EditableState.OK
+                || !(dropTarget.getSpecAncestor() instanceof ISpecTestCasePO)) {
             return false;
         }
-        @SuppressWarnings("unchecked")
-        List<Object> selectedElements = toDrop.toList();
-        
-        ISpecTestCasePO targetNode;
-        if (dropTarget instanceof ISpecTestCasePO) {
-            targetNode = (ISpecTestCasePO)dropTarget;
-        } else {
-            targetNode = (ISpecTestCasePO)dropTarget.getParentNode();
+        if (toDrop.isEmpty()) {
+            return false;
         }
+        ISpecTestCasePO targetSpecTC = (ISpecTestCasePO) 
+                dropTarget.getSpecAncestor();
         
-        boolean isContainsEctOrCap = false;
-        for (Object obj : selectedElements.toArray()) {
+        boolean noTCHandlers = false;
+        INodePO last = null;
+        for (Object obj : getFullList(toDrop)) {
             if (!(obj instanceof INodePO)) {
                 return false;
             }
 
             if (obj instanceof IEventExecTestCasePO) {
                 
-                copyPasteEventExecTestCase(targetEditor,
-                        (IEventExecTestCasePO)obj, targetNode);
-            } else if (obj instanceof IExecTestCasePO
-                    || obj instanceof ICapPO) {
-                
+                last = copyPasteEventExecTestCase(targetEditor,
+                        (IEventExecTestCasePO)obj, targetSpecTC);
+                continue;
+            }
+            noTCHandlers = true;
+            if (obj instanceof IParamNodePO) {
                 IParamNodePO paramNode = (IParamNodePO)obj;
-                isContainsEctOrCap = true;
-                if (!(targetNode.equals(paramNode.getParentNode())
-                        || checkParentParameters(targetNode, paramNode, null,
+                if (!(targetSpecTC.equals(paramNode.getSpecAncestor())
+                        || checkParentParameters(targetSpecTC, paramNode, null,
                                 false))) {
                     return false;
                 }
-            } else {
-                return false;
             }
         }
-
-        if (isContainsEctOrCap) {
-            int position = targetNode.indexOf(dropTarget);
-            for (Object obj : selectedElements.toArray()) {
-                position++;
-                
-                if (obj instanceof IExecTestCasePO) {
-                    
-                    copyPasteExecTestCase(targetEditor, (IExecTestCasePO)obj,
-                            targetNode, position);
-                } else if (obj instanceof ICapPO) {
-                    
-                    copyPasteCap(targetEditor, (ICapPO)obj, targetNode,
-                            position);
+        if (noTCHandlers) {
+            NodeTarget tar = NodeTargetCalculator.calcNodeTarget(
+                    (INodePO) toDrop.getFirstElement(), dropTarget,
+                    ViewerDropAdapter.LOCATION_ON, false);
+            last = copyPasteNodes(targetEditor, tar.getNode(),
+                    toDrop.toList(), tar.getPos());
+        }
+        postDropAction(last, targetEditor);
+        targetEditor.runLocalChecks();
+        return true;
+    }
+    
+    /**
+     * Recursively copies a list of nodes
+     * @param editor the editor
+     * @param target the target node
+     * @param nodes the nodes to copy
+     * @param fromPos the position
+     * @return the last node
+     */
+    private static INodePO copyPasteNodes(AbstractTestCaseEditor editor,
+            INodePO target, List<INodePO> nodes, int fromPos) {
+        ParamNameBPDecorator pMapper = editor.getEditorHelper()
+                .getEditSupport().getParamMapper();
+        int pos = fromPos;
+        INodePO last = null;
+        for (INodePO node : nodes) {
+            if (node instanceof ICapPO) {
+                last = copyPasteCap(editor, (ICapPO) node, target, pos);
+            } else if (node instanceof IExecTestCasePO) {
+                last = copyPasteExecTestCase(editor, (IExecTestCasePO) node,
+                        target, pos);
+            } else if (node instanceof ICommentPO) {
+                INodePO comm = NodeMaker.createCommentPO(
+                        ((ICommentPO) node).getName());
+                fillNode(node, comm);
+                target.addNode(pos, comm);
+                last = comm;
+            } else if (node instanceof IControllerPO) {
+                // we assume a very strict structure here
+                // controllers have Container children which in turn can only have
+                // CapPO, ExecTCPO, CommentPO, ... children (so no Controllers or Containers)
+                IControllerPO controller = NodeMaker.
+                        createControllerPO((IControllerPO) node); 
+                List<INodePO> nodeList = node.getUnmodifiableNodeList();
+                List<INodePO> contList = controller.getUnmodifiableNodeList();
+                if (node instanceof IParamNodePO) {
+                    fillParamNode((IParamNodePO) node,
+                            (IParamNodePO) controller, false);
+                    checkParentParameters((ISpecTestCasePO) target.
+                            getSpecAncestor(), (IParamNodePO) controller,
+                            pMapper, true);
+                } else {
+                    fillNode(node, controller);
+                }
+                target.addNode(pos, controller);
+                for (int i = 0; i < nodeList.size(); i++) {
+                    last = copyPasteNodes(editor, contList.get(i),
+                            nodeList.get(i).getUnmodifiableNodeList(), 0);
                 }
             }
+            pos++;
         }
-        return true;
+        return last;
     }
     
     /**
@@ -203,13 +247,12 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param targetEditor The editor to which the item is to be dropped/pasted.
      * @param origEvent The item that was dragged/cut.
      * @param targetNode target parent node
-     * @return <code>true</code> if the paste was successful. 
-     *         Otherwise <code>false</code>.
+     * @return the node
      */
-    public static boolean copyPasteEventExecTestCase(
+    public static INodePO copyPasteEventExecTestCase(
             AbstractTestCaseEditor targetEditor,
             IEventExecTestCasePO origEvent, ISpecTestCasePO targetNode) {
-        
+        IEventExecTestCasePO newEvent = null;
         if (targetNode.getEventExecTcMap()
                 .containsKey(origEvent.getEventType())) {
             
@@ -223,7 +266,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 targetNode.getEventExecTcMap()
                     .remove(origEvent.getEventType());
             } else {
-                return false;
+                return null;
             }
         }
         
@@ -236,7 +279,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                         false)) {
             
             try {
-                IEventExecTestCasePO newEvent = NodeMaker
+                newEvent = NodeMaker
                         .createEventExecTestCasePO(origEvent
                         .getSpecTestCase(), targetNode);
                 fillExec(origEvent, newEvent, false);
@@ -259,9 +302,9 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             }
         } else {
-            return false;
+            return null;
         }
-        return true;
+        return newEvent;
     }
     
     /**
@@ -272,28 +315,27 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      *                     indicate the drop position relative to the drop
      *                     target.
      * @param targetNode target parent node
-     * @return <code>true</code> if the paste was successful. 
-     *         Otherwise <code>false</code>.
+     * @return the new node
      */
-    public static boolean copyPasteExecTestCase(
+    public static INodePO copyPasteExecTestCase(
         AbstractTestCaseEditor targetEditor, IExecTestCasePO execTestCase,
-        ISpecTestCasePO targetNode, int dropPosition) {
+        INodePO targetNode, int dropPosition) {
     
         IExecTestCasePO newExecTestCase = NodeMaker
                 .createExecTestCasePO(execTestCase.getSpecTestCase());
         fillExec(execTestCase, newExecTestCase, false);
         ParamNameBPDecorator pMapper = targetEditor.getEditorHelper()
                 .getEditSupport().getParamMapper();
-        checkParentParameters(targetNode, newExecTestCase, pMapper, true);
+        checkParentParameters((ISpecTestCasePO) targetNode.getSpecAncestor(),
+                newExecTestCase, pMapper, true);
         TestCaseBP.addReferencedTestCase(targetNode, newExecTestCase,
                 dropPosition);
         targetEditor.getEditorHelper().setDirty(true);
         DataEventDispatcher.getInstance()
             .fireDataChangedListener(newExecTestCase,
                 DataState.Added, UpdateState.onlyInEditor);
-        postDropAction(newExecTestCase, targetEditor);
         
-        return true;
+        return newExecTestCase;
     }
     
     /**
@@ -304,12 +346,11 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param dropPosition One of the values defined in ViewerDropAdapter to 
      *                     indicate the drop position relative to the drop
      *                     target.
-     * @return <code>true</code> if the paste was successful. 
-     *         Otherwise <code>false</code>.
+     * @return the new node
      */
-    public static boolean copyPasteCap(
+    public static INodePO copyPasteCap(
             AbstractTestCaseEditor targetEditor, ICapPO cap,
-            ISpecTestCasePO targetNode, int dropPosition) {
+            INodePO targetNode, int dropPosition) {
         
         ParamNameBPDecorator pMapper = targetEditor.getEditorHelper()
                 .getEditSupport().getParamMapper();
@@ -320,13 +361,13 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
         fillCap(cap, newCap);
         newCap.setParentNode(targetNode);
         targetNode.addNode(dropPosition, newCap);
-        checkParentParameters(targetNode, newCap, pMapper, true);
+        checkParentParameters((ISpecTestCasePO) targetNode.getSpecAncestor(),
+                newCap, pMapper, true);
         targetEditor.getTreeViewer().expandToLevel(targetNode, 1);
         targetEditor.handleParamChanged();
         DataEventDispatcher.getInstance().fireParamChangedListener();
-        postDropAction(newCap, targetEditor);
         
-        return true;
+        return newCap;
     }
 
     /**
@@ -337,26 +378,32 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param dropPosition One of the values defined in ViewerDropAdapter to 
      *                     indicate the drop position relative to the drop
      *                     target.
+     * @param exp whether target is expanded
      * @return the new IExecTestCasePO object if the drop/paste was successful. 
      *         Otherwise <code>null</code>.
      */
     private static IExecTestCasePO performDrop(
         AbstractTestCaseEditor targetEditor, INodePO dropTarget,
-        int dropPosition, ISpecTestCasePO toDrop) {
+        int dropPosition, ISpecTestCasePO toDrop, boolean exp) {
         INodePO target = dropTarget;
         if (target != toDrop) {
             EditSupport editSupport = 
                 targetEditor.getEditorHelper().getEditSupport();
             try {
-                if (target instanceof ICapPO 
-                    || target instanceof IExecTestCasePO) {
-                    return dropOnCAPorExecTc(editSupport, toDrop, target,
-                            dropPosition);
-                } else if (target instanceof ISpecTestCasePO) {
-                    return dropOnSpecTc(editSupport, toDrop, target);
+                NodeTarget tar = NodeTargetCalculator.calcNodeTarget(toDrop,
+                        dropTarget, dropPosition, exp);
+                if (tar == null) {
+                    return null;
+                }
+                if (target instanceof ISpecTestCasePO) {
+                    return dropOnSpecTc(editSupport, toDrop, tar.getNode(),
+                            tar.getPos());
                 } else if (target instanceof ITestSuitePO) {
                     return dropOnTestsuite(editSupport,
-                            (ITestSuitePO)target, toDrop);
+                            (ITestSuitePO)target, toDrop, tar.getPos());
+                } else {
+                    return dropOnSgElse(editSupport, toDrop, tar.getNode(),
+                            tar.getPos());
                 }
             } catch (PMException e) {
                 NodeEditorInput inp = (NodeEditorInput)targetEditor.
@@ -477,48 +524,73 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
     public static boolean validateCopy(IStructuredSelection toDrop,
             INodePO dropTarget) {
         
-        if (toDrop == null || toDrop.isEmpty() || dropTarget == null) {
+        if (toDrop == null || toDrop.isEmpty() || dropTarget == null
+                || !(dropTarget.getSpecAncestor() instanceof ISpecTestCasePO)) {
             return false;
         }
         
+        ISpecTestCasePO targSpecTC;
+        targSpecTC = (ISpecTestCasePO)dropTarget.getSpecAncestor();
+        
+        INodePO par = null;
         for (Object obj : toDrop.toArray()) {
             if (!(obj instanceof INodePO)) {
                 return false;
-            } 
-            INodePO transferGUI = (INodePO)obj;
-            INodePO parentNode = transferGUI.getParentNode();
-            if (parentNode.equals(obj)) {
+            }
+            if (obj instanceof IControllerPO
+                    && !(dropTarget instanceof ISpecTestCasePO)
+                    && dropTarget.getParentNode() != targSpecTC) {
+                // Controllers can only be direct children of SpecTCs
                 return false;
             }
-            if (transferGUI instanceof ICapPO) {
-                continue;
-            }
-            ISpecTestCasePO specTcGUI;
-            if (!(dropTarget instanceof ISpecTestCasePO)) {
-                specTcGUI = (ISpecTestCasePO)dropTarget.getParentNode();
-            } else {
-                specTcGUI = (ISpecTestCasePO)dropTarget;
-            }
-            if (specTcGUI.equals(parentNode)) {
-                continue;
-            }
-            ISpecTestCasePO childGUI;
-            if (transferGUI instanceof ICapPO) {
-                continue;
-            } else if (transferGUI instanceof ISpecTestCasePO) {
-                childGUI = (ISpecTestCasePO)transferGUI;
-            } else if (transferGUI instanceof IExecTestCasePO) {
-                childGUI = ((IExecTestCasePO)transferGUI).getSpecTestCase();
-            } else {
+
+            INodePO dropNode = (INodePO)obj;
+            if (par != null && !par.equals(dropNode.getParentNode())) {
                 return false;
             }
-            if (childGUI.hasCircularDependences(specTcGUI)) {
+        }
+        
+        for (Object obj : getFullList(toDrop)) {
+            INodePO dropNode = (INodePO)obj;
+            par = dropNode.getParentNode();
+            if (!(dropNode instanceof IExecTestCasePO
+                    || dropNode instanceof ISpecTestCasePO)
+                    || targSpecTC.equals(dropNode.getSpecAncestor())) {
+                continue;
+            }
+            ISpecTestCasePO dropSpecTC = null;
+            if (dropNode instanceof ISpecTestCasePO) {
+                dropSpecTC = (ISpecTestCasePO)dropNode;
+            } else if (dropNode instanceof IExecTestCasePO) {
+                dropSpecTC = ((IExecTestCasePO)dropNode).getSpecTestCase();
+            }
+            if (dropSpecTC.hasCircularDependences(targSpecTC)) {
                 return false;
             }
         }
         return true;
     }
-
+    
+    /**
+     * Returns the full list of nodes by adding grandchildren of ControllerPOs
+     * @param nodes the list of nodes
+     * @return the new list
+     */
+    private static List getFullList(IStructuredSelection nodes) {
+        List<Object> res = new ArrayList<>(nodes.size());
+        for (Iterator it = nodes.iterator(); it.hasNext(); ) {
+            Object next = it.next();
+            res.add(next);
+            if (next instanceof IControllerPO) {
+                for (Iterator<INodePO> itC = ((INodePO) next).getAllNodeIter();
+                        itC.hasNext(); ) {
+                    res.add(itC.next());
+                }
+            }
+        }
+        return res;
+    }
+    
     /**
      * 
      * @param sourceViewer The viewer containing the dragged/cut item.
@@ -551,35 +623,35 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
         }
 
         Iterator iter = toDrop.iterator();
+        INodePO par = null;
         while (iter.hasNext()) {
             Object obj = iter.next();
-            if (!(obj instanceof INodePO)) {
+            if (!(obj instanceof INodePO)
+                    || obj instanceof IAbstractContainerPO) {
                 return false;
-            } 
+            }
+            if (obj instanceof IControllerPO
+                && !(dropTarget instanceof ISpecTestCasePO)
+                && !(dropTarget.getParentNode() instanceof ISpecTestCasePO)) {
+                return false;
+            }
             INodePO transferGUI = (INodePO)obj;
             INodePO parentNode = transferGUI.getParentNode();
-            if (!(parentNode instanceof ISpecTestCasePO)
-                    && !(parentNode instanceof IProjectPO)
-                    && !(parentNode instanceof ICategoryPO)) {
+            if (par != null && par != parentNode) {
                 return false;
             }
+            par = parentNode;
             if (!(transferGUI instanceof ISpecTestCasePO) 
-                    && transferGUI.getParentNode() 
-                        != dropTarget.getParentNode()) {
+                    && transferGUI.getSpecAncestor() 
+                        != dropTarget.getSpecAncestor()) {
                 return false;
-            }
-            ISpecTestCasePO specTcGUI;
-            if (!(dropTarget instanceof ISpecTestCasePO)) {
-                specTcGUI = (ISpecTestCasePO)dropTarget.getParentNode();
-            } else {
-                specTcGUI = (ISpecTestCasePO)dropTarget;
             }
             if (!(transferGUI instanceof ISpecTestCasePO)) {
                 continue;
             }
-            ISpecTestCasePO childGUI = (ISpecTestCasePO)transferGUI;
-            if (childGUI.hasCircularDependences(specTcGUI)) {
-                
+            ISpecTestCasePO specTcGUI = (ISpecTestCasePO) dropTarget.
+                    getSpecAncestor();
+            if (transferGUI.hasCircularDependences(specTcGUI)) {
                 return false;
             }
         }
@@ -590,6 +662,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param editSupport The EditSupport in which to perform the action.
      * @param node the node to be dropped.
      * @param target the target node.
+     * @param pos the position
      * @throws PMDirtyVersionException in case of version conflict (dirty read)
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
@@ -597,11 +670,11 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @return the new execTestCaseNode
      */
     private static IExecTestCasePO dropOnSpecTc(EditSupport editSupport, 
-            INodePO node, INodePO target)
+            INodePO node, INodePO target, int pos)
         throws PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
         return TestCaseBP.addReferencedTestCase(editSupport, 
-                target, (ISpecTestCasePO)node, 0);
+                target, (ISpecTestCasePO)node, pos);
     }
     
     /**
@@ -610,6 +683,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @param editSupport The EditSupport in which to perform the action.
      * @param testSuite the TestSuite to drop on
      * @param testcase the TestCAse to drop
+     * @param pos the position
      * @throws PMAlreadyLockedException in case of persistence error
      * @throws PMDirtyVersionException in case of persistence error
      * @throws PMException in case of persistence error
@@ -617,38 +691,30 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
      * @return the new execTestCaseNode
      */
     private static IExecTestCasePO dropOnTestsuite(EditSupport editSupport, 
-            ITestSuitePO testSuite, ISpecTestCasePO testcase) 
+            ITestSuitePO testSuite, ISpecTestCasePO testcase, int pos) 
         throws PMAlreadyLockedException, 
         PMDirtyVersionException, PMException {
         
         return TestCaseBP.addReferencedTestCase(editSupport, testSuite, 
-                testcase, 0);
+                testcase, pos);
     }
 
     /**
      * @param editSupport The EditSupport in which to perform the action.
      * @param node the node to be dropped
      * @param target the target node.
-     * @param location One of the values defined in ViewerDropAdapter to 
-     *                     indicate the drop position relative to the drop
-     *                     target.
+     * @param pos the position
      * @throws PMDirtyVersionException in case of version conflict (dirty read)
      * @throws PMAlreadyLockedException if the origSpecTc is already locked by another user
      * @throws PMException in case of unspecified db error
      * 
      * @return the new execTestCaseNode
      */
-    private static IExecTestCasePO dropOnCAPorExecTc(EditSupport editSupport, 
+    private static IExecTestCasePO dropOnSgElse(EditSupport editSupport, 
             INodePO node, INodePO target,
-            int location) throws PMAlreadyLockedException,
+            int pos) throws PMAlreadyLockedException,
             PMDirtyVersionException, PMException {
-        ISpecTestCasePO specTcGUItoDrop = (ISpecTestCasePO)node;
-        INodePO parentGUI = target.getParentNode();
-        int position = parentGUI.indexOf(target);
-        if (location != ViewerDropAdapter.LOCATION_BEFORE) {
-            position++;
-        }
-        return TestCaseBP.addReferencedTestCase(editSupport, parentGUI, 
-                specTcGUItoDrop, position);
+        return TestCaseBP.addReferencedTestCase(editSupport, target, 
+                (ISpecTestCasePO) node, pos);
     }
 }

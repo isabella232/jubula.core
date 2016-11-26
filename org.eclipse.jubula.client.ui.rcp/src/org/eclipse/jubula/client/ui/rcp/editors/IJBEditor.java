@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.editors;
 
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.IEntityManagerProvider;
@@ -79,4 +80,10 @@ public interface IJBEditor extends IEditorPart, IWorkbenchPart2,
      * @param isDirty whether the editor is now dirty.
      */
     public void fireDirtyProperty(boolean isDirty);
+    
+    /**
+     * Returns the Comp Name Cache
+     * @return the cache
+     */
+    public IWritableComponentNameCache getCompNameCache();
 }

@@ -23,7 +23,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AUTPropertiesDialog;
@@ -93,9 +92,6 @@ public class CreateAutDefinitionHandler
                 } catch (PMException e) {
                     ErrorHandlingUtil.createMessageDialog(e, null, null);
                 } catch (ProjectDeletedException e) {
-                    ErrorHandlingUtil.createMessageDialog(e, null, null);
-                } catch (IncompatibleTypeException e) {
-                    // Not something we would expect.
                     ErrorHandlingUtil.createMessageDialog(e, null, null);
                 } finally {
                     if (es != null) {

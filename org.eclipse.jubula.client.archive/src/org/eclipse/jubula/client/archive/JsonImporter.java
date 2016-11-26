@@ -39,11 +39,13 @@ import org.eclipse.jubula.client.archive.dto.CheckConfigurationDTO;
 import org.eclipse.jubula.client.archive.dto.CommentDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNameDTO;
 import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
+import org.eclipse.jubula.client.archive.dto.ConditionalStatementDTO;
 import org.eclipse.jubula.client.archive.dto.DataRowDTO;
 import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.ExecCategoryDTO;
 import org.eclipse.jubula.client.archive.dto.ExportInfoDTO;
+import org.eclipse.jubula.client.archive.dto.IterateDTO;
 import org.eclipse.jubula.client.archive.dto.MapEntryDTO;
 import org.eclipse.jubula.client.archive.dto.MonitoringValuesDTO;
 import org.eclipse.jubula.client.archive.dto.NamedTestDataDTO;
@@ -66,6 +68,7 @@ import org.eclipse.jubula.client.archive.dto.TestJobDTO;
 import org.eclipse.jubula.client.archive.dto.TestSuiteDTO;
 import org.eclipse.jubula.client.archive.dto.TestresultSummaryDTO;
 import org.eclipse.jubula.client.archive.dto.UsedToolkitDTO;
+import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
@@ -79,6 +82,7 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPlugi
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICheckConfContPO;
@@ -86,8 +90,12 @@ import org.eclipse.jubula.client.core.model.ICheckConfPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -107,6 +115,7 @@ import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
@@ -420,35 +429,119 @@ public class JsonImporter {
      * @param dto test case dto
      * @param proj currently projectPO
      * @param stcPo if assignNewGuid is false then it is need the spec test case
-     * @param assignNewGuid need we a new Guid or not
+     * @param newGuid need we a new Guid or not
      * @throws InvalidDataException
      */
     private void generateRefTestCase(TestCaseDTO dto, IProjectPO proj,
-            ISpecTestCasePO stcPo, boolean assignNewGuid)
+            ISpecTestCasePO stcPo, boolean newGuid)
                     throws InvalidDataException {
 
         try {
-            ISpecTestCasePO tc = !assignNewGuid && stcPo != null ? stcPo
+            ISpecTestCasePO tc = !newGuid && stcPo != null ? stcPo
                     : m_tcRef.get(m_oldToNewGuids.get(dto.getUuid()));
             for (NodeDTO stepDto : dto.getTestSteps()) {
                 if (stepDto instanceof CapDTO) {
-                    tc.addNode(createCap(proj, (CapDTO)stepDto, assignNewGuid));
+                    tc.addNode(createCap(proj, (CapDTO)stepDto, newGuid));
                 } else if (stepDto instanceof RefTestCaseDTO) {
                     tc.addNode(createExecTestCase(
-                        proj, (RefTestCaseDTO)stepDto, assignNewGuid));
+                        proj, (RefTestCaseDTO)stepDto, newGuid));
                 } else if (stepDto instanceof CommentDTO) {
                     tc.addNode(createComment((CommentDTO) stepDto,
-                            assignNewGuid));
+                            newGuid));
+                } else if (stepDto instanceof ConditionalStatementDTO) {
+                    tc.addNode(createConditionalStatement(
+                            (ConditionalStatementDTO)stepDto, proj, newGuid));
+                } else if (stepDto instanceof WhileDTO) {
+                    tc.addNode(createWhile(proj, (WhileDTO)stepDto, newGuid));
+                } else if (stepDto instanceof IterateDTO) {
+                    tc.addNode(createIterate(proj, (IterateDTO)stepDto,
+                            newGuid));
                 }
             }
             for (EventTestCaseDTO evTcDto : dto.getEventTestcases()) {
                 tc.addEventTestCase(createEventExecTestCase(
-                    proj, tc, evTcDto, assignNewGuid));
+                    proj, tc, evTcDto, newGuid));
             }
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
+    }
+    
+    /**
+     * @param dto test case dto
+     * @param proj currently projectPO
+     * @param newGuid need we a new Guid or not
+     * @return an condition
+     * @throws InvalidDataException
+     */
+    private IConditionalStatementPO createConditionalStatement(
+            ConditionalStatementDTO dto, IProjectPO proj,
+            boolean newGuid) throws InvalidDataException {
+        IConditionalStatementPO con = getConditionalStatement(dto, newGuid);
+        con.setNegate(dto.isNegated());
+        con.setGenerated(dto.getGenerated());
+        con.setComment(dto.getComment());
+        con.setTaskId(dto.getTaskId());
+        con.setDescription(dto.getDescription());
+        
+        List<NodeDTO> nodes = dto.getNodes();
+        for (NodeDTO node : nodes) {
+            ImportExportUtil.checkCancel(m_monitor);
+            if (node instanceof CapDTO) {
+                con.addNode(createCap(proj, (CapDTO)node, newGuid));
+            } else if (node instanceof RefTestCaseDTO) {
+                con.addNode(createExecTestCase(
+                    proj, (RefTestCaseDTO)node, newGuid));
+            }
+        }
+        
+        if (nodes != null && nodes.size() == 3) {
+            fillContainer(nodes.get(0), con.getCondition(), proj, newGuid);
+            fillContainer(nodes.get(1), con.getThenBranch(),
+                    proj, newGuid);
+            fillContainer(nodes.get(2), con.getElseBranch(),
+                    proj, newGuid);
+        }
+        return con;
+    }
+    
+    /**
+     * @param dto container dto
+     * @param po container po
+     * @param proj project
+     * @param assignNewGuid 
+     * @throws InvalidDataException
+     */
+    private void fillContainer(NodeDTO dto, IAbstractContainerPO po,
+           IProjectPO proj, boolean assignNewGuid) {
+        po.setGenerated(dto.getGenerated());
+        po.setComment(dto.getComment());
+        po.setTaskId(dto.getTaskId());
+        po.setDescription(dto.getDescription());
+        for (NodeDTO node : dto.getNodes()) {
+            ImportExportUtil.checkCancel(m_monitor);
+            if (node instanceof CapDTO) {
+                po.addNode(createCap(proj, (CapDTO)node, assignNewGuid));
+            } else if (node instanceof RefTestCaseDTO) {
+                po.addNode(createExecTestCase(
+                    proj, (RefTestCaseDTO)node, assignNewGuid));
+            }
+        }
+    }
+    
+    /**
+     * @param dto 
+     * @param assignNewGuid 
+     * @return condition
+     */
+    private IConditionalStatementPO getConditionalStatement(
+            ConditionalStatementDTO dto, boolean assignNewGuid) {
+        if (dto.getUuid() != null && !assignNewGuid) {
+            return NodeMaker.createConditionalStatementPO(dto.getName(),
+                    dto.getUuid());
+        }
+        return NodeMaker.createConditionalStatementPO(dto.getName());
     }
 
     /**
@@ -489,8 +582,7 @@ public class JsonImporter {
                     .createComponentNamePO(guid, name, type, ctx, proj.getId());
                 componentNamePO.setReferencedGuid(compName.getRefUuid());
                 createdCompNames.add(componentNamePO);
-                compNameCache.addComponentNamePO(
-                        componentNamePO);
+                compNameCache.addCompNamePO(componentNamePO);
             }
         }
         
@@ -883,6 +975,95 @@ public class JsonImporter {
             cap.setDataManager(tdman);                
         }
         return cap;
+    }
+    
+    /**
+     * 
+     * @param proj the project
+     * @param dto the {@link WhileDTO}
+     * @param assignNewGuid should there be new guids assigned
+     * @return and instance of either {@link IWhileDoPO} or {@link IDoWhilePO}
+     */
+    private ICondStructPO createWhile(IProjectPO proj, WhileDTO dto,
+            boolean assignNewGuid) {
+        ICondStructPO whilePO = null;
+        boolean needsNewGUID = assignNewGuid || dto.getUuid() == null;
+        if (dto.isDoWhile()) {
+            if (assignNewGuid) {
+                whilePO = NodeMaker.createDoWhilePO(dto.getName());
+            } else {
+                whilePO = NodeMaker
+                        .createDoWhilePO(dto.getName(), dto.getUuid());
+            }
+        } else {
+            if (assignNewGuid) {
+                whilePO = NodeMaker.createWhileDoPO(dto.getName());
+            } else {
+                whilePO = NodeMaker
+                        .createWhileDoPO(dto.getName(), dto.getUuid());
+            }
+        }
+        whilePO.setNegate(dto.isNegated());
+        whilePO.setGenerated(dto.getGenerated());
+        whilePO.setComment(dto.getComment());
+        whilePO.setTaskId(dto.getTaskId());
+        whilePO.setDescription(dto.getDescription());
+
+        List<NodeDTO> nodes = dto.getNodes();
+        for (NodeDTO node : nodes) {
+            ImportExportUtil.checkCancel(m_monitor);
+            if (node instanceof CapDTO) {
+                whilePO.addNode(createCap(proj, (CapDTO) node, assignNewGuid));
+            } else if (node instanceof RefTestCaseDTO) {
+                whilePO.addNode(createExecTestCase(proj, (RefTestCaseDTO) node,
+                        assignNewGuid));
+            }
+        }
+        if (nodes != null && nodes.size() == 2) {
+            if (dto.isDoWhile()) {
+                fillContainer(nodes.get(0), whilePO.getDoBranch(), proj,
+                        assignNewGuid);
+                fillContainer(nodes.get(1), whilePO.getCondition(), proj,
+                        assignNewGuid);
+            } else {
+                fillContainer(nodes.get(0), whilePO.getDoBranch(), proj,
+                        assignNewGuid);
+                fillContainer(nodes.get(1), whilePO.getCondition(), proj,
+                        assignNewGuid);
+            }
+        }
+        return whilePO;
+    }
+    
+    /**
+     * 
+     * @param proj the project
+     * @param dto the {@link IterateDTO}
+     * @param assignNewGuid should there be new GUIDs assigned
+     * @return the created and filled {@link IIteratePO}
+     */
+    private IIteratePO createIterate(IProjectPO proj, IterateDTO dto,
+            boolean assignNewGuid) {
+        IIteratePO iteratePO = null;
+        if (dto.getUuid() != null && !assignNewGuid) {
+            iteratePO =
+                    NodeMaker.createIteratePO(dto.getName());
+        } else {
+            iteratePO =
+                    NodeMaker.createIteratePO(dto.getName(), dto.getUuid());
+        }
+        
+        iteratePO.setGenerated(dto.getGenerated());
+        iteratePO.setComment(dto.getComment());
+        iteratePO.setTaskId(dto.getTaskId());
+        iteratePO.setDescription(dto.getDescription());
+        
+        iteratePO.setDataManager(createTDManager(iteratePO, dto.getTDManager(),
+                assignNewGuid));
+        
+        fillContainer(dto, iteratePO.getDoBranch(), proj,
+                assignNewGuid);
+        return iteratePO;
     }
 
     /**

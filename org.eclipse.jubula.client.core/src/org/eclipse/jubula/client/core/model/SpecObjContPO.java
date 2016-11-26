@@ -96,7 +96,7 @@ public class SpecObjContPO implements ISpecObjContPO {
     //                      It's worth looking at this again after changing JPA providers,
     //                      as we may be able to change it back to a OneToMany.
     @ManyToMany(cascade = CascadeType.ALL, 
-               fetch = FetchType.EAGER, 
+               fetch = FetchType.LAZY, 
                targetEntity = NodePO.class)
     @OrderColumn(name = "IDX")
     @BatchFetch(value = BatchFetchType.JOIN)

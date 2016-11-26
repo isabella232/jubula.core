@@ -69,6 +69,18 @@ public interface RCPCommandIDs {
     /** the ID of the "edit comment" command */
     public static final String EDIT_COMMENT = "org.eclipse.jubula.client.ui.rcp.commands.editComment"; //$NON-NLS-1$
     
+    /** the ID of the "new conditional statement command" */
+    public static final String NEW_CONDITIONAL_STATEMENT = "org.eclipse.jubula.client.ui.rcp.commands.newConditionalStatement"; //$NON-NLS-1$
+
+    /** the ID of the "new do while loop command" */
+    public static final String NEW_DO_WHILE = "org.eclipse.jubula.client.ui.rcp.commands.newDoWhile"; //$NON-NLS-1$
+
+    /** the ID of the "new while do loop command" */
+    public static final String NEW_WHILE_DO = "org.eclipse.jubula.client.ui.rcp.commands.newWhileDo"; //$NON-NLS-1$
+
+    /** the ID of the "new iterate loop command" */
+    public static final String NEW_ITERATE_LOOP = "org.eclipse.jubula.client.ui.rcp.commands.newIterateLoop"; //$NON-NLS-1$
+    
     /** the ID of the "delete comment" command */
     public static final String DELETE_COMMENT = "org.eclipse.jubula.client.ui.rcp.commands.deleteComment"; //$NON-NLS-1$
     

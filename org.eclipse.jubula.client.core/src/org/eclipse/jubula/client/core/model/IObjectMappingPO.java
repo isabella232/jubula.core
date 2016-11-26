@@ -139,4 +139,10 @@ public interface IObjectMappingPO extends ITimestampPO {
      * @return the top-level category for mapped components.
      */
     public abstract IObjectMappingCategoryPO getMappedCategory();
+    
+    /**
+     * Adds an association to the cache
+     * @param assoc the assoc to add
+     */
+    public void addAssociationToCache(IObjectMappingAssoziationPO assoc);
 }

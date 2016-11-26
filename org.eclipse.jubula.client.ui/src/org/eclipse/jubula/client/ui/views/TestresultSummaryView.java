@@ -1036,6 +1036,8 @@ public class TestresultSummaryView extends ViewPart implements
                     case TestResultNode.SUCCESS:
                         return IconConstants.STEP_OK_IMAGE;
                     case TestResultNode.ERROR:
+                    case TestResultNode.CONDITION_FAILED:
+                    case TestResultNode.INFINITE_LOOP:
                         return IconConstants.STEP_NOT_OK_IMAGE;
                     case TestResultNode.ERROR_IN_CHILD:
                         return IconConstants.STEP_NOT_OK_IMAGE;

@@ -13,8 +13,9 @@ package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -22,6 +23,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -44,10 +46,16 @@ public abstract class AbstractEditorDndSupport {
      */
     protected static void postDropAction(INodePO node,
             AbstractJBEditor targetEditor) {
+        TreeViewer tree = targetEditor.getTreeViewer();
+        IPersistentObject root = targetEditor.getEditorHelper().
+                getEditSupport().getWorkVersion();
+        tree.setExpandedState(root, true);
+        IWritableComponentNameCache cache = targetEditor.getCompNameCache();
         targetEditor.setFocus();
         targetEditor.refresh();
-        targetEditor.getEditorHelper().setDirty(true);
         if (node != null) {
+            targetEditor.getEditorHelper().setDirty(true);
+            tree.setExpandedState(node.getParentNode(), true);
             targetEditor.setSelection(new StructuredSelection(node));
         }
         LocalSelectionTransfer.getInstance().setSelection(null);
@@ -56,12 +64,17 @@ public abstract class AbstractEditorDndSupport {
     /**
      * @param node the node to be moved.
      * @param target the target node.
+     * @param pos the position
      * @return the dropped node.
      */
-    protected static INodePO moveNode(INodePO node, INodePO target) {
-        int newPos = target.getParentNode().indexOf(target);
-        node.getParentNode().removeNode(node);
-        target.getParentNode().addNode(newPos, node);
+    protected static INodePO moveNode(INodePO node, INodePO target, int pos) {
+        int newPos = pos;
+        INodePO par = node.getParentNode();
+        if (par == target && par.indexOf(node) < pos) {
+            newPos--;
+        }
+        par.removeNode(node);
+        target.addNode(newPos, node);
         return node;
     }
 
@@ -74,7 +87,7 @@ public abstract class AbstractEditorDndSupport {
      */
     protected static void fillExec(IExecTestCasePO origExec, 
         IExecTestCasePO newExec, boolean deleteRefDatas) {
-        fillParamNode(origExec, newExec);
+        fillParamNode(origExec, newExec, deleteRefDatas);
         newExec.setName(origExec.getRealName());
         ISpecTestCasePO origSpecTC = origExec.getSpecTestCase();
         
@@ -87,10 +100,6 @@ public abstract class AbstractEditorDndSupport {
             }
         } else {
             newExec.setHasReferencedTD(true);
-        }
-        
-        if (deleteRefDatas) {
-            deleteRefDatas(newExec);
         }
         
         for (ICompNamesPairPO origPair : origExec.getCompNamesPairs()) {
@@ -150,7 +159,7 @@ public abstract class AbstractEditorDndSupport {
      * @param newCap    The new Test step
      */
     protected static void fillCap(ICapPO origCap, ICapPO newCap) {
-        fillParamNode(origCap, newCap);
+        fillParamNode(origCap, newCap, false);
         newCap.setComponentName(origCap.getComponentName());
         newCap.setComponentType(origCap.getComponentType());
         newCap.setActionName(origCap.getActionName());
@@ -190,42 +199,18 @@ public abstract class AbstractEditorDndSupport {
      * 
      * @param origNode  The original parameter node.
      * @param newNode   The new parameter node.
+     * @param delRef whether to delete data references
      */
     protected static void fillParamNode(IParamNodePO origNode,
-            IParamNodePO newNode) {
+            IParamNodePO newNode, boolean delRef) {
 
         fillNode(origNode, newNode);
+        if (delRef) {
+            deleteRefDatas(newNode);
+        }
         newNode.setName(origNode.getName());
         newNode.setDataFile(origNode.getDataFile());
         newNode.setReferencedDataCube(origNode.getReferencedDataCube());
     }
 
-    /**
-     * 
-     * @param toDrop The items that were dragged/cut.
-     * @param dropTarget The drop/paste target.
-     * @param enabledClass toDrop items should be of this class. 
-     * @param disabledClass toDrop items should be not of this class. 
-     * @return <code>true</code> if the given information indicates that the
-     *         drop/paste is valid. Otherwise <code>false</code>.
-     */
-    public static boolean validateCopy(IStructuredSelection toDrop,
-            INodePO dropTarget, Class<?> enabledClass, Class<?> disabledClass) {
-        
-        if (toDrop == null || toDrop.isEmpty() || dropTarget == null) {
-            return false;
-        }
-        
-        for (Object obj : toDrop.toArray()) {
-            if (!(enabledClass.isAssignableFrom(obj.getClass()))) {
-                return false;
-            }
-            if (disabledClass != null
-                    && disabledClass.isAssignableFrom(obj.getClass())) {
-                return false;
-            }
-        }
-        
-        return true;
-    }
 }

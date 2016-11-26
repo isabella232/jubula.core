@@ -24,13 +24,11 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jubula.client.archive.JsonStorage;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.ProjectCompNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
@@ -206,7 +204,7 @@ public class ProjectWizard extends Wizard implements INewWizard {
         ParamNameBPDecorator paramNameMapper = 
                 new ParamNameBPDecorator(ParamNameBP.getInstance());
         final IWritableComponentNameCache compNameCache =
-            new ComponentNamesDecorator(null);
+            new ProjectCompNameCache(null);
         
         IProjectPO project = null;
         if (needTemplate) {
@@ -237,15 +235,15 @@ public class ProjectWizard extends Wizard implements INewWizard {
         }
         addUnboundModules(project);
         List<INameMapper> mapperList = new ArrayList<INameMapper>();
-        List<IWritableComponentNameMapper> compNameMapperList = 
-                new ArrayList<IWritableComponentNameMapper>();
+        List<IWritableComponentNameCache> compNameCacheList = 
+                new ArrayList<IWritableComponentNameCache>();
         mapperList.add(paramNameMapper);
-        compNameMapperList.add(
-                new ProjectComponentNameMapper(compNameCache, project));
+        compNameCache.setContext(project);
+        compNameCacheList.add(compNameCache);
         try {
             GeneralStorage.getInstance().reset();
             ProjectPM.attachProjectToROSession(project, newProjectName, 
-                    mapperList, compNameMapperList, monitor);
+                    mapperList, compNameCacheList, monitor);
         } catch (PMSaveException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(
                 new PMSaveException(e.getMessage(), 

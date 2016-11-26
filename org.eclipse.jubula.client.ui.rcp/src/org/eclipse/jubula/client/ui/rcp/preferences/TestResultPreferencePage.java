@@ -108,6 +108,9 @@ public class TestResultPreferencePage extends PreferencePage
      * view
      */
     private Text m_numberOfDays = null;
+    
+    /** textfield to define maximum number of iterations */
+    private Text m_iterMaxField = null;
 
     /**
      * <code>m_testExecRememberValue</code>
@@ -159,6 +162,7 @@ public class TestResultPreferencePage extends PreferencePage
         
 
         createMaxNumberOfResults(composite);
+        createIterMaxField(composite);
         // context sensitive help
         Plugin.getHelpSystem().setHelp(parent,
                 ContextHelpIds.PREFPAGE_TESTRESULT);
@@ -200,6 +204,37 @@ public class TestResultPreferencePage extends PreferencePage
         gridData.horizontalSpan = 1;
         gridData.grabExcessHorizontalSpace = false;
         m_numberOfDays.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                // nothing
+            }
+            public void keyReleased(KeyEvent e) {
+                checkCompleteness();
+            }
+        });
+    }
+    
+    /**
+     * @param composite the parent composite
+     */
+    private void createIterMaxField(Composite composite) {
+        Label label = new Label(composite, SWT.NONE);
+        label.setFont(LayoutUtil.BOLD_TAHOMA);
+        label.setText(Messages.TestResultViewPreferencePageMaxNumOfItersText);
+        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.horizontalSpan = 4;
+        gridData.grabExcessHorizontalSpace = true;
+        label.setLayoutData(gridData);
+        m_iterMaxField = newTextField(composite);
+        gridData = new GridData(GridData.FILL_HORIZONTAL);
+        gridData.horizontalSpan = 3;
+        gridData.grabExcessHorizontalSpace = true;
+        LayoutUtil.addToolTipAndMaxWidth(gridData, m_iterMaxField);
+        m_iterMaxField.setLayoutData(gridData);
+        gridData = new GridData(GridData.HORIZONTAL_ALIGN_END);
+        gridData.horizontalSpan = 1;
+        gridData.grabExcessHorizontalSpace = false;
+        m_iterMaxField.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 // nothing
             }
@@ -269,25 +304,39 @@ public class TestResultPreferencePage extends PreferencePage
             setValid(false);
             return;
         }
-        String numberOfResults = m_numberOfDays.getText().trim();
-        try {
-            int noOfResults = Integer.parseInt(numberOfResults);
-            if (noOfResults < 1) {
-                setErrorMessage(Messages
-                        .TestResultViewPreferencePageInvalidNegMaxNumberOfDays);
-                setValid(false);
-                return;
-            }
-        } catch (NumberFormatException e) {
-            setErrorMessage(Messages
-                    .TestResultViewPreferencePageInvalidMaxNumberOfDays);
-            setValid(false);
+        if (!checkValidNumber(m_numberOfDays.getText().trim())) {
+            return;
+        }
+        if (!checkValidNumber(m_iterMaxField.getText().trim())) {
             return;
         }
         
         setErrorMessage(null);
         setMessage(Messages.TestResultViewPreferencePageTitle, NONE);
         setValid(true);
+    }
+
+    /**
+     * Checks whether an input is a positive integer
+     * @param text the text
+     * @return whether it is a positive integer
+     */
+    private boolean checkValidNumber(String text) {
+        try {
+            int num = Integer.parseInt(text);
+            if (num < 1) {
+                setErrorMessage(Messages
+                        .TestResultViewPreferencePageNegativeNumber);
+                setValid(false);
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            setErrorMessage(Messages
+                    .TestResultViewPreferencePageInvalidNumber);
+            setValid(false);
+            return false;
+        }
+        return true;
     }
     
     /**
@@ -489,6 +538,8 @@ public class TestResultPreferencePage extends PreferencePage
         m_path.setEnabled(m_generateReport.getSelection());
         m_numberOfDays.setText(getDefaultPrefsString(
                 Constants.MAX_NUMBER_OF_DAYS_KEY));
+        m_iterMaxField.setText(getDefaultPrefsString(
+                Constants.MAX_ITERATION_KEY));
         setErrorMessage(null);
         setMessage(Messages.TestResultViewPreferencePageTitle,
             NONE); 
@@ -526,6 +577,8 @@ public class TestResultPreferencePage extends PreferencePage
                 Constants.RESULTPATH_KEY));
         m_numberOfDays.setText(getPreferenceStore().getString(
                 Constants.MAX_NUMBER_OF_DAYS_KEY));
+        m_iterMaxField.setText(getPreferenceStore().getString(
+                Constants.MAX_ITERATION_KEY));
         enableReportStyleCombo();
         enableLogFileBrowser();
         enableMonitoringReportGeneration();
@@ -572,6 +625,8 @@ public class TestResultPreferencePage extends PreferencePage
             Constants.RESULTPATH_KEY, m_path.getText());
         getPreferenceStore().setValue(Constants.MAX_NUMBER_OF_DAYS_KEY,
                 m_numberOfDays.getText());
+        getPreferenceStore().setValue(Constants.MAX_ITERATION_KEY,
+                m_iterMaxField.getText());
         getPreferenceStore().setValue(
                 Constants.TEST_EXECUTION_RELEVANT_REMEMBER_KEY,
                 m_testExecRememberValue);

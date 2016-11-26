@@ -15,8 +15,12 @@ import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.CompNameTypeManager;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -24,14 +28,17 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
-import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
-
-
+import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * Utility class containing methods for use in drag and drop as well as 
@@ -56,43 +63,39 @@ public class OMEditorDndSupport {
      * @param target The association to which the Component Names will be
      *               assigned.
      * @param editor Editor in which the assignment is taking place.
+     * @return whether the operation is cancelled by the user
      */
-    public static void checkTypeCompatibilityAndMove(
+    public static boolean checkTypeCompatibilityAndMove(
             List<IComponentNamePO> compNamesToMove, 
             IObjectMappingAssoziationPO target, 
             ObjectMappingMultiPageEditor editor) {
 
-        IWritableComponentNameMapper compMapper = 
-            editor.getEditorHelper().getEditSupport().getCompMapper();
+        IWritableComponentNameCache compCache = editor.getCompNameCache();
         IObjectMappingCategoryPO unmappedTechnical =
             editor.getAut().getObjMap().getUnmappedTechnicalCategory();
+        if (checkProblemsAndStop(compNamesToMove, target, editor)) {
+            return true;
+        }
         for (IComponentNamePO compName : compNamesToMove) {
             String compNameGuid = compName.getGuid();
             if (!target.getLogicalNames().contains(compNameGuid)) {
                 IObjectMappingAssoziationPO oldAssoc = 
-                    editor.getOmEditorBP().getAssociation(compNameGuid);
-                try {
-                    compMapper.changeReuse(target, null, compNameGuid);
-                    compMapper.changeReuse(oldAssoc, compNameGuid, null);
-                    if (getSection(target).equals(
-                            unmappedTechnical)) {
-                        // Change section to mapped, creating new categories 
-                        // if necessary.
-                        IObjectMappingCategoryPO mapped =
-                            editor.getAut().getObjMap().getMappedCategory();
-                        IObjectMappingCategoryPO newCategory = 
-                            editor.getOmEditorBP().createCategory(
-                                    mapped, target.getCategory());
-                        target.getCategory().removeAssociation(target);
-                        newCategory.addAssociation(target);
-                    }
-                    cleanupAssociation(editor, oldAssoc);
-                } catch (IncompatibleTypeException e) {
-                    ErrorHandlingUtil.createMessageDialog(
-                            e.getErrorId(), e.getErrorMessageParams(), null);
-                } catch (PMException pme) {
-                    PMExceptionHandler.handlePMExceptionForEditor(pme, editor);
+                        editor.getOmEditorBP().getAssociation(compNameGuid);
+                compCache.changeReuse(target, null, compNameGuid);
+                compCache.changeReuse(oldAssoc, compNameGuid, null);
+                if (getSection(target).equals(
+                        unmappedTechnical)) {
+                    // Change section to mapped, creating new categories 
+                    // if necessary.
+                    IObjectMappingCategoryPO mapped =
+                        editor.getAut().getObjMap().getMappedCategory();
+                    IObjectMappingCategoryPO newCategory = 
+                        editor.getOmEditorBP().createCategory(
+                                mapped, target.getCategory());
+                    target.getCategory().removeAssociation(target);
+                    newCategory.addAssociation(target);
                 }
+                cleanupAssociation(editor, oldAssoc);
             }
         }
         DataEventDispatcher.getInstance().fireDataChangedListener(
@@ -101,6 +104,73 @@ public class OMEditorDndSupport {
                 UpdateState.onlyInEditor);
         
         editor.getTreeViewer().setExpandedState(target, true);
+        return false;
+    }
+    
+    /**
+     * Checks whether mapping the CNs to the Technical Name creates any problems
+     *      if yes, the user is notified and can cancel the action
+     * @param compNamesToMove The Component Names to assign.
+     * @param target The association to which the Component Names will be
+     *               assigned.
+     * @param editor Editor in which the assignment is taking place.
+     * @return whether the operation is cancelled by the user
+     */
+    private static boolean checkProblemsAndStop(
+            List<IComponentNamePO> compNamesToMove, 
+            IObjectMappingAssoziationPO target, 
+            ObjectMappingMultiPageEditor editor) {
+        List<IComponentNamePO> problems = new ArrayList<>();
+        List<Component> availableComponents = ComponentBuilder.getInstance()
+                .getCompSystem().getComponents(editor.getAut().getToolkit(),
+                true);
+        String type = null;
+        if (target.getTechnicalName() != null) {
+            type = CompSystem.getComponentType(target.getTechnicalName()
+                    .getSupportedClassName(), availableComponents);
+        }
+        IComponentNamePO masterCN;
+        for (IComponentNamePO cN : compNamesToMove) {
+            masterCN = CompNameManager.getInstance()
+                    .getResCompNamePOByGuid(cN.getGuid());
+            if (masterCN == null) {
+                continue;
+            }
+            if (!masterCN.getUsageType().equals(
+                    ComponentNamesBP.UNKNOWN_COMPONENT_TYPE)
+                    && !CompNameTypeManager.doesFirstTypeRealizeSecond(
+                    type, masterCN.getUsageType())) {
+                problems.add(masterCN);
+            }
+        }
+        if (problems.isEmpty()) {
+            return false;
+        }
+        StringBuilder list = new StringBuilder();
+        for (IComponentNamePO cN : problems) {
+            list.append(StringConstants.SPACE);
+            list.append(StringConstants.SPACE);
+            list.append(StringConstants.SPACE);
+            list.append(cN.getName());
+            list.append(StringConstants.SPACE);
+            list.append(StringConstants.LEFT_BRACKET);
+            list.append(CompSystemI18n.getString(cN.getUsageType()));
+            list.append(StringConstants.RIGHT_BRACKET);
+            list.append(StringConstants.NEWLINE);
+        }
+        String message = NLS.bind(Messages.IncompatibleMapDialogText,
+                list.toString());
+        
+        MessageDialog dialog = new MessageDialog(null, 
+                Messages.IncompatibleMapDialogTitle,
+            null, 
+            message, MessageDialog.QUESTION, new String[] {
+                Messages.DialogMessageButton_YES,
+                Messages.DialogMessageButton_NO }, 0);
+        dialog.create();
+        DialogUtils.setWidgetNameForModalDialog(dialog);
+        dialog.open();
+        return dialog.getReturnCode() != 0;
     }
 
     /**
@@ -158,8 +228,7 @@ public class OMEditorDndSupport {
         if (!unmappedCat.equals(targetSection)) {
             return;
         }
-        IWritableComponentNameMapper compMapper = 
-            editor.getEditorHelper().getEditSupport().getCompMapper();
+        IWritableComponentNameCache compCache = editor.getCompNameCache();
         for (IComponentNamePO compName : compNamesToMove) {
             String compNameGuid = compName.getGuid();
             IObjectMappingAssoziationPO oldAssoc =
@@ -169,32 +238,26 @@ public class OMEditorDndSupport {
                 target.addAssociation(oldAssoc);
                 continue;
             }
-            try {
-                IObjectMappingAssoziationPO newAssoc = 
-                    PoMaker.createObjectMappingAssoziationPO(
-                            null, new HashSet<String>());
-                compMapper.changeReuse(newAssoc, null, compNameGuid);
-                compMapper.changeReuse(oldAssoc, compNameGuid, null);
-                target.addAssociation(newAssoc);
-                if (oldAssoc != null) {
-                    if (oldAssoc.getLogicalNames().isEmpty()) {
-                        // Change section to unmapped tech, creating new 
-                        // categories if necessary.
-                        IObjectMappingCategoryPO unmappedTech =
-                            editor.getAut().getObjMap()
-                            .getUnmappedTechnicalCategory();
-                        IObjectMappingCategoryPO newCategory = 
-                            editor.getOmEditorBP().createCategory(
-                                    unmappedTech, oldAssoc.getCategory());
-                        oldAssoc.getCategory().removeAssociation(oldAssoc);
-                        newCategory.addAssociation(oldAssoc);
-                    }
+            IObjectMappingAssoziationPO newAssoc = 
+                PoMaker.createObjectMappingAssoziationPO(
+                        null, new HashSet<String>());
+            editor.getAut().getObjMap().addAssociationToCache(newAssoc);
+            compCache.changeReuse(newAssoc, null, compNameGuid);
+            compCache.changeReuse(oldAssoc, compNameGuid, null);
+            target.addAssociation(newAssoc);
+            if (oldAssoc != null) {
+                if (oldAssoc.getLogicalNames().isEmpty()) {
+                    // Change section to unmapped tech, creating new 
+                    // categories if necessary.
+                    IObjectMappingCategoryPO unmappedTech =
+                        editor.getAut().getObjMap()
+                        .getUnmappedTechnicalCategory();
+                    IObjectMappingCategoryPO newCategory = 
+                        editor.getOmEditorBP().createCategory(
+                                unmappedTech, oldAssoc.getCategory());
+                    oldAssoc.getCategory().removeAssociation(oldAssoc);
+                    newCategory.addAssociation(oldAssoc);
                 }
-            } catch (IncompatibleTypeException e) {
-                ErrorHandlingUtil.createMessageDialog(
-                        e, e.getErrorMessageParams(), null);
-            } catch (PMException pme) {
-                PMExceptionHandler.handlePMExceptionForEditor(pme, editor);
             }
         }
         DataEventDispatcher.getInstance().fireDataChangedListener(
@@ -233,31 +296,24 @@ public class OMEditorDndSupport {
                 IObjectMappingCategoryPO unmappedCompNames = 
                     editor.getAut().getObjMap().getUnmappedLogicalCategory();
                 
-                IWritableComponentNameMapper compMapper = 
-                    editor.getEditorHelper().getEditSupport().getCompMapper();
+                IWritableComponentNameCache compCache =
+                        editor.getCompNameCache();
                 for (String compNameGuid 
                         : new ArrayList<String>(assoc.getLogicalNames())) {
-                    try {
-                        compMapper.changeReuse(assoc, compNameGuid, null);
-                        IObjectMappingAssoziationPO compNameAssoc = 
-                            PoMaker.createObjectMappingAssoziationPO(
-                                    null, new HashSet<String>());
-                        compMapper.changeReuse(
-                                compNameAssoc, null, compNameGuid);
-                        unmappedCompNames.addAssociation(compNameAssoc);
-                    } catch (IncompatibleTypeException e) {
-                        ErrorHandlingUtil.createMessageDialog(
-                                e, e.getErrorMessageParams(), null);
-                    } catch (PMException pme) {
-                        PMExceptionHandler.handlePMExceptionForEditor(
-                                pme, editor);
-                    }
+                    compCache.changeReuse(assoc, compNameGuid, null);
+                    IObjectMappingAssoziationPO compNameAssoc = 
+                        PoMaker.createObjectMappingAssoziationPO(
+                                null, new HashSet<String>());
+                    editor.getAut().getObjMap()
+                        .addAssociationToCache(compNameAssoc);
+                    compCache.changeReuse(
+                            compNameAssoc, null, compNameGuid);
+                    unmappedCompNames.addAssociation(compNameAssoc);
                 }
                 
                 IObjectMappingCategoryPO fromCategory = assoc.getCategory();
                 fromCategory.removeAssociation(assoc);
                 target.addAssociation(assoc);
-                
             }
         }
 

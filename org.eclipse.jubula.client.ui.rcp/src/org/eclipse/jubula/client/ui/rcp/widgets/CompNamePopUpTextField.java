@@ -18,7 +18,7 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -99,11 +99,11 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
     /**
      * Constructs a text field. When pressing STRG+SPACE a list pops up.
      * 
-     * @param compMapper The Component Name mapper to use.
+     * @param compCache The Component Name cache to use.
      * @param composite The parent composite.
      * @param style The style of the text field.
      */
-    public CompNamePopUpTextField(IComponentNameMapper compMapper,
+    public CompNamePopUpTextField(IComponentNameCache compCache,
             Composite composite, int style) {
         
         super(composite, style);
@@ -141,7 +141,7 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
 
         };
         m_popupListener = new IContentProposalListener2Implementation();
-        m_contentProposalProvider = new CompNamesProposalProvider(compMapper);
+        m_contentProposalProvider = new CompNamesProposalProvider(compCache);
         enableContentProposal(m_contentProposalProvider, ks);
         
         int delay = Plugin.getDefault().getPreferenceStore().getInt(
@@ -295,11 +295,11 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
     
     /**
      * 
-     * @param compMapper The Component Name mapper to use.
+     * @param compCache The Component Name cache to use.
      */
-    public void setComponentNameMapper(IComponentNameMapper compMapper) {
+    public void setComponentNameCache(IComponentNameCache compCache) {
         if (m_contentProposalProvider != null) {
-            m_contentProposalProvider.setComponentNameMapper(compMapper);
+            m_contentProposalProvider.setComponentNameCache(compCache);
         }
     }
 

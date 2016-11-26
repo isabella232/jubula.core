@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -29,27 +30,25 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TDCell;
+import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.NodePM.AbstractCmdHandleChild;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.TransactionSupport;
-import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransactAction;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.client.core.utils.RefToken;
+import org.eclipse.jubula.client.ui.rcp.actions.TransactionWrapper;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 /**
  * @author Markus Tiede
@@ -60,7 +59,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
      * @author Markus Tiede
      * @since 1.2
      */
-    private static class CloneTransaction implements ITransactAction {
+    private static class CloneTransaction implements ITransaction {
         /**
          * the name of the new test case
          */
@@ -75,6 +74,9 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
          */
         private ISpecTestCasePO m_newSpecTC = null;
         
+        /** The editor root node */
+        private IPersistentObject m_oldRoot = null;
+        
         /**
          * Constructor
          * 
@@ -87,6 +89,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
                 List<INodePO> nodesToClone) {
             m_newTestCaseName = newTestCaseName;
             m_nodesToClone = nodesToClone;
+            m_oldRoot = m_nodesToClone.get(0).getSpecAncestor();
         }
 
         /** {@inheritDoc} */
@@ -96,34 +99,32 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
             final ParamNameBPDecorator pMapper = new ParamNameBPDecorator(
                     ParamNameBP.getInstance());
             s.persist(newTc);
-            INodePO parent = ISpecObjContPO.TCB_ROOT_NODE;
-            AbstractCmdHandleChild handler = NodePM.getCmdHandleChild(parent,
-                    newTc);
-            handler.add(parent, newTc, null);
             Map<String, String> oldToNewGuids = new HashMap<String, String>();
             for (INodePO node : m_nodesToClone) {
-                addCloneToNewSpecTc(newTc, node, s, pMapper, oldToNewGuids);
+                addCloneToNode(newTc, node, pMapper, oldToNewGuids, newTc);
             }
             registerParamNamesToSave(newTc, pMapper);
             s.merge(newTc);
             pMapper.persist(s, GeneralStorage.getInstance().getProject()
                     .getId());
             setNewSpecTC(newTc);
+            NativeSQLUtils.addNodeAFFECTS(s, newTc,
+                    GeneralStorage.getInstance().getProject().getSpecObjCont());
         }
         
         /**
-         * @param newSpecTC
-         *            the new spec test case
+         * @param addTo
+         *            the node to add to
          * @param nodeToCopy
          *            the param node to clone and add
-         * @param session the session 
          * @param pMapper the param name mapper
          * @param oldToNewGuids the old to new guid map
+         * @param specTC the top-level specTC for the params
          * @throws PMException in case of an persitence exception
          */
-        private void addCloneToNewSpecTc(ISpecTestCasePO newSpecTC,
-            INodePO nodeToCopy, EntityManager session,
-            ParamNameBPDecorator pMapper, Map<String, String> oldToNewGuids)
+        private void addCloneToNode(INodePO addTo,
+            INodePO nodeToCopy, ParamNameBPDecorator pMapper,
+            Map<String, String> oldToNewGuids, ISpecTestCasePO specTC)
             throws PMException {
             INodePO newNode = null;
             if (nodeToCopy instanceof IExecTestCasePO) {
@@ -146,13 +147,23 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
                 ICommentPO newComment = NodeMaker.createCommentPO(
                         origComment.getName());
                 newNode = newComment;
+            } else if (nodeToCopy instanceof IControllerPO) {
+                newNode = NodeMaker.createControllerPO(
+                        (IControllerPO) nodeToCopy);
+                int i = 0;
+                for (INodePO node : nodeToCopy.getUnmodifiableNodeList()) {
+                    for (INodePO node2 : node.getUnmodifiableNodeList()) {
+                        addCloneToNode(newNode.getUnmodifiableNodeList().get(i),
+                                node2, pMapper, oldToNewGuids, specTC);
+                    }
+                }
             }
             if (newNode != null) {
                 if (newNode instanceof IParamNodePO) {                    
-                    addParamsToNewParent(newSpecTC, (IParamNodePO) newNode,
-                            pMapper, oldToNewGuids);
+                    addParamsToSpec(specTC, (IParamNodePO) newNode, pMapper,
+                            oldToNewGuids);
                 }
-                newSpecTC.addNode(newNode);
+                addTo.addNode(newNode);
             }
         }
 
@@ -166,7 +177,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
          * @param oldToNewUuids
          *            the old to new guids map
          */
-        private void addParamsToNewParent(ISpecTestCasePO newSpecTC,
+        private void addParamsToSpec(ISpecTestCasePO newSpecTC,
             IParamNodePO newParamChildNode, ParamNameBPDecorator pMapper,
             Map<String, String> oldToNewUuids) {
             TDCell cell = null;
@@ -272,6 +283,23 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
         public void setNewSpecTC(ISpecTestCasePO newSpecTC) {
             m_newSpecTC = newSpecTC;
         }
+
+        /** {@inheritDoc} */
+        public Collection<? extends IPersistentObject> getToLock() {
+            List<IPersistentObject> list = new ArrayList<>(2);
+            list.add(GeneralStorage.getInstance().getProject().
+                    getSpecObjCont());
+            list.add(m_oldRoot);
+            return list;
+        }
+
+        /** {@inheritDoc} */
+        public Collection<? extends IPersistentObject> getToRefresh() {
+            List<IPersistentObject> list = new ArrayList<>(1);
+            list.add(GeneralStorage.getInstance().getProject().
+                    getSpecObjCont());
+            return list;
+        }
     }
 
     /** {@inheritDoc} */
@@ -311,13 +339,9 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
             String newTestCaseName, List<INodePO> nodesToClone) {
         final CloneTransaction op = 
                 new CloneTransaction(newTestCaseName, nodesToClone);
-        try {
-            new TransactionSupport().transact(op);
-        } catch (PMException e) {
-            PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleProjectDeletedException();
-        }
+        
+        TransactionWrapper.executeOperation(op);
+        
         return op.getNewSpecTC();
     }
 }

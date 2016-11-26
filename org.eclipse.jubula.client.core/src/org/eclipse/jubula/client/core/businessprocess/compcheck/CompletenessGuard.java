@@ -11,18 +11,28 @@
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
-import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -49,7 +59,7 @@ public final class CompletenessGuard {
             return !alreadyVisited;
         }
     }
-
+    
     /**
      * Operation to reflect the activity status of a node
      */
@@ -113,6 +123,13 @@ public final class CompletenessGuard {
         traverser.addOperation(new InactiveNodesOperation());
         traverser.traverse(true);
         
+        for (ISpecPersistable spec : GeneralStorage.getInstance().getProject().
+                getSpecObjCont().getSpecObjList()) {
+            if (spec instanceof ISpecTestCasePO) {
+                checkEmptyContainer(spec);
+            }
+        }
+        
         CompCheck check = new CompCheck(TestSuiteBP.getListOfTestSuites());
         check.traverse();
         check.addProblems();
@@ -126,21 +143,6 @@ public final class CompletenessGuard {
      */
     public static void checkTestData(INodePO root) {
         new TreeTraverser(root, new CheckTestDataCompleteness()).traverse(true);
-    }
-
-    /**
-     * @param node
-     *            the node
-     * @param aut
-     *            AUT, for which to set the omFlag
-     * @param omFlag
-     *            The omFlag to set.
-     */
-    private static void setCompletenessObjectMapping(INodePO node,
-            IAUTMainPO aut, boolean omFlag) {
-        setNodeProblem(node,
-                ProblemFactory.createIncompleteObjectMappingProblem(aut),
-                omFlag);
     }
 
     /**
@@ -226,6 +228,46 @@ public final class CompletenessGuard {
                 setCompletenessTestData(nodeToModify,
                         dataSourceNode.isTestDataComplete());
                 
+            }
+        }
+    }
+    
+    /**
+     * marking the node if it is an empty condition
+     * @param node the node
+     */
+    public static void checkEmptyContainer(INodePO node) {
+        // Marking incomplete conditions
+        List<INodePO> list = node.getUnmodifiableNodeList();
+        for (INodePO child : list) {
+            if (child instanceof ICondStructPO || child instanceof IIteratePO) {
+                boolean ok = false;
+                INodePO branch = null;
+                if (child instanceof ICondStructPO) {
+                    branch = ((ICondStructPO) child).getCondition();
+                } else {
+                    branch = ((IIteratePO) child).getDoBranch();
+                }
+                for (Iterator<INodePO> it = branch.getNodeListIterator();
+                        it.hasNext(); ) {
+                    INodePO branchChild = it.next();
+                    if (branchChild.isActive()
+                            && !(branchChild instanceof ICommentPO)) {
+                        ok = true;
+                        break;
+                    }
+                }
+                if (!ok) {
+                    String message = Messages.ProblemIncompleteBranch;
+                    child.addProblem(ProblemFactory.createProblemWithMarker(
+                            new Status(IStatus.ERROR,
+                                    Activator.PLUGIN_ID, message), message,
+                            child, ProblemType.REASON_IF_WITHOUT_TEST));
+                    // Problem Propagation works through ExecTestCasePOs
+                    // So we have to mark the SpecTC here
+                    ProblemPropagator.setProblem(child.getParentNode(),
+                            IStatus.ERROR);
+                }
             }
         }
     }

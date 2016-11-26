@@ -36,13 +36,11 @@ import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResol
 import org.eclipse.jubula.client.archive.errorhandling.NullProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.ProjectCompNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
@@ -104,8 +102,8 @@ public class FileStorageBP {
         /** 
          * mapping: projects to import => corresponding component name mapper 
          */
-        private Map<IProjectPO, List<IWritableComponentNameMapper>> 
-            m_projectToCompMapperMap;
+        private Map<IProjectPO, List<IWritableComponentNameCache>> 
+            m_projectToCompCacheMap;
     
         /** names of the files to read */
         private List<URL> m_fileURLs;
@@ -127,9 +125,9 @@ public class FileStorageBP {
             m_fileURLs = fileURLs;
             m_projectToMapperMap = 
                 new LinkedHashMap<IProjectPO, List<INameMapper>>();
-            m_projectToCompMapperMap = 
+            m_projectToCompCacheMap = 
                 new LinkedHashMap<IProjectPO, 
-                    List<IWritableComponentNameMapper>>();
+                    List<IWritableComponentNameCache>>();
             m_console = console;
         }
         
@@ -151,7 +149,7 @@ public class FileStorageBP {
                     ParamNameBPDecorator paramNameMapper = 
                         new ParamNameBPDecorator(ParamNameBP.getInstance());
                     final IWritableComponentNameCache compNameCache =
-                        new ComponentNamesDecorator(null);
+                        new ProjectCompNameCache(null);
                     String fileName = fileURL.getFile();
                     lastFileName = fileName;
                     m_console.writeStatus(new Status(IStatus.INFO,
@@ -166,13 +164,13 @@ public class FileStorageBP {
                         }
                         List<INameMapper> mapperList = 
                             new ArrayList<INameMapper>();
-                        List<IWritableComponentNameMapper> compNameMapperList = 
-                            new ArrayList<IWritableComponentNameMapper>();
+                        List<IWritableComponentNameCache> compNameCacheList = 
+                            new ArrayList<IWritableComponentNameCache>();
                         mapperList.add(paramNameMapper);
-                        compNameMapperList.add(new ProjectComponentNameMapper(
-                                compNameCache, proj));
+                        compNameCache.setContext(proj);
+                        compNameCacheList.add(compNameCache);
                         m_projectToMapperMap.put(proj, mapperList);
-                        m_projectToCompMapperMap.put(proj, compNameMapperList);
+                        m_projectToCompCacheMap.put(proj, compNameCacheList);
                     } catch (JBVersionException e) {
                         for (Object msg : e.getErrorMsgs()) {
                             m_console.writeStatus(new Status(IStatus.ERROR,
@@ -259,12 +257,12 @@ public class FileStorageBP {
         /**
          * 
          * @return the mapping between projects to import and their 
-         *         corresponding component name mapper
+         *         corresponding component name cache
          */
-        public Map<IProjectPO, List<IWritableComponentNameMapper>> 
+        public Map<IProjectPO, List<IWritableComponentNameCache>> 
             getProjectToCompCacheMap() {
         
-            return m_projectToCompMapperMap;
+            return m_projectToCompCacheMap;
         }
     }
 
@@ -281,7 +279,7 @@ public class FileStorageBP {
         private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
     
         /** mapping: projects to import => corresponding comp name mapper */
-        private Map<IProjectPO, List<IWritableComponentNameMapper>> 
+        private Map<IProjectPO, List<IWritableComponentNameCache>> 
             m_projectToCompCacheMap;
     
         /** whether a refresh is required after import */
@@ -308,7 +306,7 @@ public class FileStorageBP {
          */
         public CompleteImportOperation(
                 Map<IProjectPO, List<INameMapper>> projectToMapperMap, 
-                Map<IProjectPO, List<IWritableComponentNameMapper>> 
+                Map<IProjectPO, List<IWritableComponentNameCache>> 
                 projectToCompCacheMap, IProgressConsole console) {
     
             m_projectToMapperMap = projectToMapperMap;
@@ -557,7 +555,7 @@ public class FileStorageBP {
                         ProgressMonitorTracker.SINGLETON;
                 tracker.setProgressMonitor(monitor);
                 List<INameMapper> mapperList = m_projectToMapperMap.get(proj);
-                List<IWritableComponentNameMapper> compNameBindingList = 
+                List<IWritableComponentNameCache> compNameBindingList = 
                     m_projectToCompCacheMap.get(proj);
                 try {
                     ProjectPM.saveProject(proj, selectedProjectName, 
@@ -887,7 +885,7 @@ public class FileStorageBP {
         private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
     
         /** mapping: projects to import => corresponding comp name cache List */
-        private Map<IProjectPO, List<IWritableComponentNameMapper>> 
+        private Map<IProjectPO, List<IWritableComponentNameCache>> 
             m_projectToCompCacheMap;
 
         /** the project to open immediately after import */
@@ -906,7 +904,7 @@ public class FileStorageBP {
          *            name mappers.
          * @param projectToCompCacheMap
          *            Mapping from projects to import to corresponding 
-         *            component name mappers.
+         *            component name caches.
          * @param console
          *              The console to use to display progress and 
          *              error messages.
@@ -916,7 +914,7 @@ public class FileStorageBP {
          */
         public ImportOperation(Map<IProjectPO, 
                 List<INameMapper>> projectToMapperMap, 
-                Map<IProjectPO, List<IWritableComponentNameMapper>> 
+                Map<IProjectPO, List<IWritableComponentNameCache>> 
                 projectToCompCacheMap, 
                 IProgressConsole console, boolean openProject) {
             

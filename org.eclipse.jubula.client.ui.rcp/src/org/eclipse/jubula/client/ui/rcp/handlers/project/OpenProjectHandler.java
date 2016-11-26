@@ -374,7 +374,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     .getProject();
             if (clearedProject != null) {
                 Utils.clearClient();
-                GeneralStorage.getInstance().setProject(null);
+                GeneralStorage.getInstance().nullProject();
                 final DataEventDispatcher ded = DataEventDispatcher
                         .getInstance();
                 ded.fireDataChangedListener(clearedProject, DataState.Deleted,

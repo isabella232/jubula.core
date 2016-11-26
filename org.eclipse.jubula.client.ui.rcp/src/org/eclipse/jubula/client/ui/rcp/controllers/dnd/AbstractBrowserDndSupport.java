@@ -11,19 +11,27 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.EntityManager;
+
+import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM.AbstractCmdHandle;
-import org.eclipse.jubula.client.core.persistence.MultipleNodePM.MoveNodeHandle;
-import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
+import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
+import org.eclipse.jubula.client.ui.rcp.actions.TransactionWrapper;
 
 
 /**
@@ -49,32 +57,74 @@ public abstract class AbstractBrowserDndSupport {
      *      GuiNode
      * @param nodes
      *      List <INodePO>
+     * @return whether the operation was successfull
      */
-    protected static void doMove(List<INodePO> nodes, IPersistentObject target)
-        throws PMException, ProjectDeletedException {
+    protected static boolean doMove(final List<INodePO> nodes,
+            final IPersistentObject target) {
+        
+        boolean tC = NodeBP.isTC(nodes.get(0));
+        
+        final Set<IPersistentObject> toLock = new HashSet<>();
+        final Set<IPersistentObject> toRefresh = new HashSet<>();
+        IProjectPO proj = GeneralStorage.getInstance().getProject();
+        
+        for (INodePO node : nodes) {
+            if (node.getParentNode() == ISpecObjContPO.TCB_ROOT_NODE) {
+                toLock.add(proj.getSpecObjCont());
+                toRefresh.add(proj.getSpecObjCont());
+            } else if (node.getParentNode() == IExecObjContPO.TSB_ROOT_NODE) {
+                toLock.add(proj.getExecObjCont());
+                toRefresh.add(proj.getExecObjCont());
+            } else {
+                toLock.add(node.getParentNode());
+                toRefresh.add(node.getParentNode());
+            }
+            toLock.add(node);
+            toRefresh.add(node);
+        }
+        toLock.add(target);
+        toRefresh.add(target);
+        
+        boolean succ = TransactionWrapper.executeOperation(new
+                ITransaction() {
+            
+            /** {@inheritDoc} */
+            public void run(EntityManager sess) {
+                for (INodePO node : nodes) {
+                    NativeSQLUtils.moveNode(sess, node, target);
+                }
+            }
+            
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToRefresh() {
+                return toRefresh;
+            }
+            
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToLock() {
+                return toLock;
+            }
+        });
+        
+        if (!succ) {
+            return false;
+        }
+        
         // persist changes into database
-        List<AbstractCmdHandle> cmds = new ArrayList<AbstractCmdHandle>();
         List<DataChangedEvent> eventList = 
                 new ArrayList<DataChangedEvent>();
         for (INodePO nodeToMove : nodes) {
 
-            // determine old parent
-            INodePO oldParent = nodeToMove.getParentNode();
-
             // create command
-            cmds.add(new MoveNodeHandle(nodeToMove, oldParent, target));
             eventList.add(new DataChangedEvent(target, 
                     DataState.StructureModified, UpdateState.notInEditor));
-            eventList.add(new DataChangedEvent(oldParent, 
+            eventList.add(new DataChangedEvent(nodeToMove.getParentNode(), 
                     DataState.StructureModified, UpdateState.notInEditor));
         }
-
-        
-        // execute commands in master session
-        MultipleNodePM.getInstance().executeCommands(cmds);
-
         // notify listener for updates
         DataEventDispatcher.getInstance().fireDataChangedListener(
                 eventList.toArray(new DataChangedEvent[0]));
+        return true;
     }
+    
 }

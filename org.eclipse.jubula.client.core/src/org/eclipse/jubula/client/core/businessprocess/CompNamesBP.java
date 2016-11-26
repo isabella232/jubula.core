@@ -21,7 +21,6 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
@@ -30,9 +29,6 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
-import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
@@ -46,136 +42,6 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
  * @created 08.09.2005
  */
 public class CompNamesBP {
-    /**
-     * Interface for updates of overridden component names or propagations.
-     */
-    private interface IUpdater {
-        /**
-         * Updates the parent test execution node.
-         * 
-         * @param parentExec
-         *            The parent test execution node
-         * @param pair
-         *            The component name pair
-         */
-        public void updateParentExecTestCase(IExecTestCasePO parentExec,
-            ICompNamesPairPO pair);
-
-        /**
-         * Updates the component name pair
-         * 
-         * @param pair
-         *            The component name pair
-         * @return <code>true</code> if the pair has been updated,
-         *         <code>false</code> otherwise
-         */
-        public boolean updateCompNamesPair(ICompNamesPairPO pair);
-    }
-
-    /**
-     * Updates the propagated property of a component name pair.
-     * 
-     * {@inheritDoc}
-     */
-    private static class PropagatedUpdater implements IUpdater {
-        /**
-         * The propagated property
-         */
-        private boolean m_propagated;
-
-        /**
-         * Constructor
-         * 
-         * @param propagated
-         *            The propagated property to update
-         */
-        public PropagatedUpdater(boolean propagated) {
-            m_propagated = propagated;
-        }
-
-        /**
-         * Updates the The propagated property and returns <code>true</code>
-         * if the new property differs from the property of <code>pair</code>.
-         * 
-         * {@inheritDoc}
-         */
-        public boolean updateCompNamesPair(ICompNamesPairPO pair) {
-            boolean oldValue = pair.isPropagated();
-            pair.setPropagated(m_propagated);
-
-            return oldValue != m_propagated;
-        }
-
-        /**
-         * Removes the component name pair from the parent if it is not
-         * propagated.
-         * 
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.CompNamesPairPO)
-         */
-        public void updateParentExecTestCase(IExecTestCasePO parentExec,
-            ICompNamesPairPO pair) {
-
-            String name = pair.getSecondName();
-            if (!m_propagated) {
-                parentExec.removeCompNamesPair(name);
-            }
-        }
-    }
-
-    /**
-     * Updates the second name (that means, the overriding name) of a component
-     * name pair.
-     */
-    private static class SecondNameUpdater implements IUpdater {
-        /**
-         * The second name GUID.
-         */
-        private String m_secondNameGuid;
-
-        /**
-         * Constructor
-         * 
-         * @param secondName
-         *            The second name
-         */
-        public SecondNameUpdater(String secondName) {
-            m_secondNameGuid = secondName;
-        }
-
-        /**
-         * Sets the second name into the <code>pair</code>. Returns
-         * <code>true</code>.
-         * 
-         * {@inheritDoc}
-         */
-        public boolean updateCompNamesPair(ICompNamesPairPO pair) {
-            pair.setSecondName(m_secondNameGuid);
-            return true;
-        }
-
-        /**
-         * Updates the parent node if it contains a component name pair that
-         * overrides the second name of the passed <code>pair</code>.
-         * 
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.CompNamesPairPO)
-         */
-        public void updateParentExecTestCase(IExecTestCasePO parentExec,
-            ICompNamesPairPO pair) {
-
-            Validate.noNullElements(new Object[]{parentExec, pair});
-            ICompNamesPairPO parentPair = parentExec.getCompNamesPair(pair
-                .getSecondName());
-            if (parentPair != null) {
-                parentExec.removeCompNamesPair(parentPair.getFirstName());
-                final String type = parentExec.getCompNamesPair(
-                    pair.getFirstName()).getType();
-                parentExec.addCompNamesPair(PoMaker.createCompNamesPairPO(
-                    m_secondNameGuid, parentPair.getSecondName(), type));
-            }
-        }
-    }
 
     /**
      * Adds all propagated component name pairs of the test execution node to
@@ -196,6 +62,7 @@ public class CompNamesBP {
                             .equals(StringConstants.EMPTY)) 
                                 ? StringConstants.EMPTY : pair.getType();
                     // ------------------------------------------------
+//                    if (StringUtils.isEmpty(pair.getType())) {
                     if (pair.getType() == null) {
                         for (Object o : execNode.getSpecTestCase()
                                 .getUnmodifiableNodeList()) {
@@ -270,11 +137,11 @@ public class CompNamesBP {
 
         if (specNode != null) {
             for (Iterator it = specNode.getAllNodeIter(); it.hasNext();) {
-                INodePO child = (INodePO)it.next();
+                INodePO child = (INodePO) it.next();
                 if (child instanceof IExecTestCasePO) {
-                    addPropagatedPairs(pairs, (IExecTestCasePO)child);
+                    addPropagatedPairs(pairs, (IExecTestCasePO) child);
                 } else if (child instanceof ICapPO) {
-                    addCapComponentName(pairs, (ICapPO)child);
+                    addCapComponentName(pairs, (ICapPO) child);
                 }
             }
         }
@@ -292,178 +159,37 @@ public class CompNamesBP {
     }
 
     /**
-     * Finds all test execution nodes of the passed test specification node with
-     * the following condition: The test execution node matches if one of its
-     * children is the same as the passed execution node <code>execNode</code>.
-     * 
-     * @param specNode
-     *            The specification node
-     * @param execNode
-     *            The execution node
-     * @return The list of execution nodes
-     */
-    private List<IExecTestCasePO> findExecNodes(ISpecTestCasePO specNode,
-        IExecTestCasePO execNode) {
-        
-        List<IExecTestCasePO> nodes = new ArrayList<IExecTestCasePO>();
-        List <IExecTestCasePO> execTestCases = NodePM
-            .getInternalExecTestCases(specNode.getGuid(), 
-                specNode.getParentProjectId());
-        for (IExecTestCasePO execTc : execTestCases) {
-            for (Iterator itNodes = execTc.getNodeListIterator(); itNodes
-                .hasNext();) {
-                
-                INodePO child = (INodePO)itNodes.next();
-                if (child == execNode) {
-                    nodes.add(execTc);
-                }
-            }
-        }        
-        return nodes;
-    }
-
-    /**
-     * Updates the passed execution node and the passed component name pair
-     * using the updater.
-     * 
-     * @param execNode
-     *            The execution node to update
-     * @param pair
-     *            The component name pair to update
-     * @param updater
-     *            The updater
-     * @return The result of
-     *         {@link IUpdater#updateCompNamesPair(CompNamesPairPO)}
-     */
-    private boolean updateCompNamesPair(IExecTestCasePO execNode,
-        ICompNamesPairPO pair, IUpdater updater) {
-
-        final INodePO execParent = execNode.getParentNode();
-        if (execParent instanceof ISpecTestCasePO) {
-            ISpecTestCasePO parent = (ISpecTestCasePO)execParent;
-            for (IExecTestCasePO parentExec : findExecNodes(parent, execNode)) {
-
-                updater.updateParentExecTestCase(parentExec, pair);
-            }
-        }
-
-        boolean update = updater.updateCompNamesPair(pair);
-        if (update && execNode.getCompNamesPair(pair.getFirstName()) == null) {
-            execNode.addCompNamesPair(pair);
-        }
-        return update;
-    }
-
-    /**
-     * Updates the passed component name pair by setting the propagated
-     * property. The method also updates the passed test execution node (by
-     * adding the pair if required) and its parent execution nodes.
-     * 
-     * @param execNode
-     *            The test execution node
-     * @param pair
-     *            The component name pair
-     * @param propagated
-     *            The property to update
-     * @return <code>true</code> if the propagated property has been updated,
-     *         <code>false</code> otherwise
-     */
-    public boolean updateCompNamesPair(IExecTestCasePO execNode,
-        ICompNamesPairPO pair, boolean propagated) {
-        return updateCompNamesPair(execNode, pair, new PropagatedUpdater(
-            propagated));
-    }
-
-    /**
      * Updates the passed component name pair by setting the second name
-     * property (that means, the overriding component name. The method also
-     * updates the passed test execution node (by adding the pair if required)
-     * and its parent execution nodes.
+     * property (that means, the overriding component name.
      * 
      * @param execNode The test execution node
      * @param pair The component name pair
      * @param secondCompName The second component name
-     * @param compMapper business process for componentNames.    
-     * @return <code>true</code> if the name property has been updated,
-     *         <code>false</code> otherwise
+     * @param cache cache for componentNames.    
      */
-    public boolean updateCompNamesPair(IExecTestCasePO execNode,
+    public void updateCompNamesPairNew(IExecTestCasePO execNode,
         ICompNamesPairPO pair, String secondCompName, 
-        IWritableComponentNameMapper compMapper) 
-        throws IncompatibleTypeException, PMException {
-
-        if (secondCompName == null 
-                || StringConstants.EMPTY.equals(secondCompName)) {
-            return false;
-        }
-        String secondName = 
-            compMapper.getCompNameCache().getGuidForName(secondCompName);
+        IWritableComponentNameCache cache) {
+        
+        String secondName = cache.getGuidForName(secondCompName);
         if (StringUtils.equals(secondName, pair.getSecondName())) {
-            return false;
+            return;
         }
 
-        
-        
         if (secondName == null) {
             final IComponentNamePO newComponentNamePO = 
-                compMapper.getCompNameCache().createComponentNamePO(
-                        secondCompName, pair.getType(), 
+                cache.createComponentNamePO(secondCompName, pair.getType(), 
                         CompNameCreationContext.OVERRIDDEN_NAME);
             newComponentNamePO.setParentProjectId(
                     execNode.getParentProjectId());
             secondName = newComponentNamePO.getGuid();
         }
-
-        compMapper.changeReuse(pair, pair.getSecondName(), secondName);
-
-        return updateCompNamesPair(execNode, pair, new SecondNameUpdater(
-                secondName));
-    }
-
-    /**
-     * @param pair the current compNamesPairPO
-     * @param node the node to search comp type in
-     * @return true, if comp type was found
-     */
-    public static boolean searchCompType(
-            final ICompNamesPairPO pair, Object node) {
-        if (node instanceof IExecTestCasePO) {
-            ISpecTestCasePO specTc = ((IExecTestCasePO)node).getSpecTestCase();
-            if (specTc == null) {
-                // Referenced SpecTestCase does not exist
-                return false;
-            }
-            for (Object childNode : specTc.getUnmodifiableNodeList()) {
-
-                if (childNode instanceof IExecTestCasePO) {
-                    IExecTestCasePO exec = (IExecTestCasePO)childNode;
-                    for (ICompNamesPairPO cnp : exec.getCompNamesPairs()) {
-                        if (cnp.getSecondName().equals(pair.getFirstName())
-                            && cnp.isPropagated()) {
-
-                            pair.setType(cnp.getType());
-                            if (isValidCompNamePair(pair)) {
-                                return true;
-                            } 
-                            boolean retVal = searchCompType(cnp, exec);
-                            pair.setType(cnp.getType());
-                            return retVal;
-                        }                    
-                    }                    
-                } else if (childNode instanceof ICapPO) {
-                    ICapPO cap = (ICapPO)childNode;
-                    if (cap.getComponentName() != null
-                            && cap.getComponentName()
-                                .equals(pair.getFirstName())) {
-                        pair.setType(cap.getComponentType());
-                        return true;
-                    }
-                }
-            }
+        cache.changeReuse(pair, pair.getSecondName(), secondName);
+        if (execNode.getCompNamesPair(pair.getFirstName()) == null) {
+            execNode.addCompNamesPair(pair);
         }
-        return false;
     }
-    
+
     /**
      * Finds the component name of the passed test step. The method searches for
      * the name in the passed tree path, which is exepected to be a top-down
@@ -492,7 +218,7 @@ public class CompNamesBP {
             IComponentNameCache compNameCache) {
         String currentName = compNameGuid;
         IComponentNamePO currentNamePo = 
-            compNameCache.getCompNamePo(currentName);
+            compNameCache.getResCompNamePOByGuid(currentName);
         if (currentNamePo != null) {
             currentName = currentNamePo.getGuid();
         }
@@ -531,7 +257,7 @@ public class CompNamesBP {
                 if (pair != null) {
                     currentName = pair.getSecondName();
                     currentNamePo = 
-                        compNameCache.getCompNamePo(currentName);
+                        compNameCache.getResCompNamePOByGuid(currentName);
                     if (currentNamePo != null) {
                         currentName = currentNamePo.getGuid();
                     }
@@ -553,18 +279,24 @@ public class CompNamesBP {
 
     /**
      * Removes incorrect CompNamePairs from children of the given node.
-     * 
+     * @param cache the Component Name Cache
      * @param node CompNamePairs for children of this node will be analyzed.
      */
-    public static void removeIncorrectCompNamePairs(INodePO node) {
-        for (Object o : node.getUnmodifiableNodeList()) {
-            if (o instanceof IExecTestCasePO) {
-                IExecTestCasePO exec = (IExecTestCasePO)o;
+    public static void removeIncorrectCompNamePairs(
+            IWritableComponentNameCache cache, INodePO node) {
+        if (!(node instanceof ISpecTestCasePO)) {
+            return;
+        }
+        ISpecTestCasePO spec = (ISpecTestCasePO) node;
+        CalcTypes.recalculateCompNamePairs(cache, spec);
+        for (Iterator<INodePO> it = spec.getAllNodeIter(); it.hasNext(); ) {
+            INodePO next = it.next();
+            if (next instanceof IExecTestCasePO) {
+                IExecTestCasePO exec = (IExecTestCasePO) next;
                 // we need to iterate over a copy of the collection
                 // because we are removing elements during iteration
                 for (ICompNamesPairPO pair : new LinkedList<ICompNamesPairPO>(
                         exec.getCompNamesPairs())) {
-                    searchCompType(pair, exec);
                     if (!isValidCompNamePair(pair)) {
                         exec.removeCompNamesPair(pair.getFirstName());
                     }

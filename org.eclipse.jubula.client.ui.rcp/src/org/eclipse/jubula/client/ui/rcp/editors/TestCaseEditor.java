@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.editors;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +27,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
-import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -47,7 +45,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ObjectMappingManager;
 import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
@@ -170,9 +167,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleProjectDeletedException();
-            } catch (IncompatibleTypeException ite) {
-                ErrorHandlingUtil.createMessageDialog(ite, 
-                        ite.getErrorMessageParams(), null);
             }
         }
     }
@@ -200,7 +194,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         Set<INodePO> lockedNodePOs = new HashSet<INodePO>();
         for (IExecTestCasePO execTc : execTcRefs) {
             try {
-                INodePO parentNode = execTc.getParentNode();
+                INodePO parentNode = execTc.getSpecAncestor();
                 if (parentNode != null) {
                     INodePO editorSessionParentNode = editorSession.find(
                             parentNode.getClass(), parentNode.getId());
@@ -227,7 +221,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         // Remove incorrect pairs for nodes for which we were able to acquire
         // a lock.
         for (INodePO node : lockedNodePOs) {
-            CompNamesBP.removeIncorrectCompNamePairs(node);
+            CompNamesBP.removeIncorrectCompNamePairs(getCompNameCache(), node);
         }
     }
 
@@ -564,15 +558,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         return new TCEditorDropTargetListener(this);
     }
     
-    /** {@inheritDoc} */
-    protected void runLocalChecks() {
-        super.runLocalChecks();
-        ISpecTestCasePO workVersion = getWorkVersion();
-        for (INodePO child : workVersion.getAllEventEventExecTC()) {
-            CompletenessGuard.checkLocalTestData(child);
-        }
-    }
-
     /**
      * @return the work version to use for this editor
      */
@@ -580,15 +565,6 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         return (ISpecTestCasePO)super.getWorkVersion();
     }
 
-    @Override
-    protected Iterator<? extends INodePO> getIteratorForNode(INodePO node) {
-        if (node instanceof IEventExecTestCasePO) {
-            return getWorkVersion().getAllEventEventExecTC().iterator();
-        }
-
-        return super.getIteratorForNode(node);
-    }
-    
     /** {@inheritDoc} */
     public void setSelectionImpl(ISelection selection) {
         if (selection instanceof StructuredSelection) {

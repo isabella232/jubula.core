@@ -78,7 +78,6 @@ public class DeleteTreeItemHandlerOMEditor
                                 selection.toArray(), editor);
                     }
                 }
-                
                 if (lastParent != null) {
                     refreshViewer(editor, lastParent);
                 }
@@ -100,7 +99,7 @@ public class DeleteTreeItemHandlerOMEditor
         for (Object node : toDelete) {
             if (node instanceof IComponentNamePO) {
                 lastParent = editor.getOmEditorBP().deleteCompName(
-                        (IComponentNamePO)node);
+                        (IComponentNamePO)node, true);
             } else if (node instanceof IObjectMappingAssoziationPO) {
                 lastParent = editor.getOmEditorBP().deleteAssociation(
                         (IObjectMappingAssoziationPO)node);
@@ -149,7 +148,7 @@ public class DeleteTreeItemHandlerOMEditor
                 Messages.DeleteTreeItemActionOMEditorOMText2);
             if (delete) {
                 lastParent = editor.getOmEditorBP().deleteCompName(
-                        (IComponentNamePO)toDelete);
+                        (IComponentNamePO)toDelete, true);
                 editor.getEditorHelper().setDirty(true);
                 editor.cleanupNames();
                 editor.synchronizeViewers();

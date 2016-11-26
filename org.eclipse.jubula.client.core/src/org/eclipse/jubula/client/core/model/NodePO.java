@@ -32,6 +32,7 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -43,6 +44,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OrderColumn;
+import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
@@ -56,6 +59,7 @@ import org.eclipse.jubula.client.core.businessprocess.progress.RemoveProgressLis
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.utils.DependencyCheckerOp;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
@@ -265,6 +269,9 @@ abstract class NodePO implements INodePO {
      * Access method for the m_nodeList property.
      * only to use for Persistence (JPA / EclipseLink)
      * 
+     * The reason for the Many-To-Many is that Eclipselink cannot deal with moving around
+     *     nodes of a tree which have grandchildren...
+     * 
      * @return the current value of the m_nodeList property
      */
     @ManyToMany(fetch = FetchType.EAGER, 
@@ -277,6 +284,42 @@ abstract class NodePO implements INodePO {
     @BatchFetch(value = BatchFetchType.JOIN)
     List<INodePO> getHbmNodeList() {
         return m_nodeList;
+    }
+    
+    /**
+     * Frees the node children of the node, lets them handle their children and deletes them
+     * @param sess the session
+     */
+    private void removeNodeChildren(EntityManager sess) {
+        if (m_nodeList.isEmpty()) {
+            return;
+        }
+        Query q = sess.createNativeQuery("delete from NODE_LIST where PARENT = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId());
+        q.executeUpdate();
+        for (INodePO child : m_nodeList) {
+            child.goingToBeDeleted(sess);
+        }
+        q = sess.createNativeQuery("delete from NODE where ID in " + NativeSQLUtils.getIdList(m_nodeList)); //$NON-NLS-1$
+        q.executeUpdate();
+    }
+    
+    /** {@inheritDoc} */
+    public void deleteChildNativeSQL(EntityManager sess, INodePO child) {
+        int idx = m_nodeList.indexOf(child);
+        if (idx == -1) {
+            return;
+        }
+        Query q = sess.createNativeQuery("delete from NODE_LIST where PARENT = ?1 and CHILD = ?2 and IDX = ?3"); //$NON-NLS-1$
+        q.setParameter(1, getId()).setParameter(2, child.getId()).
+            setParameter(3, idx);
+        int res = q.executeUpdate();
+        if (res != 1) {
+            throw new PersistenceException("Child removal failed due to database error."); //$NON-NLS-1$
+        }
+        q = sess.createNativeQuery("update NODE_LIST set IDX = IDX - 1 where PARENT = ?1 and IDX > ?2"); //$NON-NLS-1$
+        q.setParameter(1, getId()).setParameter(2, idx);
+        q.executeUpdate();
     }
     
     /**
@@ -709,6 +752,16 @@ abstract class NodePO implements INodePO {
     private Map<Long, String> getTrackedChangesMap() {
         return m_trackedChangesMap;
     }
+    
+    /**
+     * Removes the track children of the node
+     * @param sess the session
+     */
+    private void removeTrackChildren(EntityManager sess) {
+        Query q = sess.createNativeQuery("delete from NODE_TRACK where NODE_ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId());
+        q.executeUpdate();
+    }
 
     /**
      * {@inheritDoc}
@@ -825,7 +878,25 @@ abstract class NodePO implements INodePO {
     }
     
     /** {@inheritDoc} */
+    @Transient
     public Iterator<INodePO> getAllNodeIter() {
         return getNodeListIterator();
+    }
+    
+    /** {@inheritDoc} */
+    @Transient
+    public INodePO getSpecAncestor() {
+        INodePO par = this;
+        while (par != null && !(par instanceof ISpecTestCasePO 
+                || par instanceof ITestSuitePO || par instanceof ITestJobPO)) {
+            par = par.getParentNode();
+        }
+        return par;
+    }
+    
+    /** {@inheritDoc} */
+    public void goingToBeDeleted(EntityManager sess) {
+        removeNodeChildren(sess);
+        removeTrackChildren(sess);
     }
 }

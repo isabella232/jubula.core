@@ -25,9 +25,11 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProblemPropagationListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -161,7 +163,9 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                     runCommand(RCPCommandIDs.OPEN_TESTJOB_EDITOR);
                 } else if (firstElement instanceof IExecObjContPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE);
-                }  else if (firstElement instanceof ICapPO) {
+                }  else if (firstElement instanceof ICapPO
+                        || firstElement instanceof IControllerPO
+                        || firstElement instanceof IAbstractContainerPO) {
                     runCommand(RCPCommandIDs.OPEN_TESTCASE_EDITOR);
                 } else if (firstElement instanceof ICategoryPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE);

@@ -20,7 +20,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.events.IRecordListener;
@@ -33,8 +33,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.CAPRecordedMessage;
 import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
@@ -77,8 +75,8 @@ public class CAPRecordedCommand implements ICommand {
     /** The TestCase to record in */
     private static ISpecTestCasePO recSpecTestCase;
     
-    /** The component names mapper for adding new component names */
-    private static IWritableComponentNameMapper compNamesMapper;
+    /** The component names cache for adding new component names */
+    private static IWritableComponentNameCache compNamesCache;
 
     /**
      * The Editor/ContentProvider listening to recorded Caps
@@ -203,28 +201,13 @@ public class CAPRecordedCommand implements ICommand {
         ICapPO recCap = NodeMaker.createCapPO(capName, componentName,
                 componentType, actionName);
         // Set the Component Name to null so that the Component Name 
-        // mapper doesn't remove the instance of reuse 
+        // cache doesn't remove the instance of reuse 
         // for <code>componentName</code>.
         recCap.setComponentName(null);
         
-        try {
-            if (!messageCap.hasDefaultMapping()) {
-                ComponentNamesBP.getInstance().setCompName(
-                        recCap, componentName, 
-                        CompNameCreationContext.STEP, compNamesMapper);
-            }
-        } catch (IncompatibleTypeException e) {
-            // Should not happen, but if it does, return null to indicate that 
-            // the cap was not created successfully.
-            LOG.error(Messages.ErrorOccurredWhileObservingTestStep 
-                    + StringConstants.DOT, e);
-            return null;
-        } catch (PMException e) {
-            // Should not happen, but if it does, return null to indicate that 
-            // the cap was not created successfully.
-            LOG.error(Messages.ErrorOccurredWhileObservingTestStep 
-                    + StringConstants.DOT, e);
-            return null;
+        if (!messageCap.hasDefaultMapping()) {
+            ComponentNamesBP.setCompName(recCap, componentName, 
+                    CompNameCreationContext.STEP, compNamesCache);
         }
         recSpecTestCase.addNode(recCap);
         List params = messageCap.getMessageParams();
@@ -389,9 +372,8 @@ public class CAPRecordedCommand implements ICommand {
                             && oma.getTechnicalName()
                                     .equals(messageCap.getCi())) {
                         for (String compNameGuid : logicalNames) {
-                            IComponentNamePO compNamePo = compNamesMapper
-                                    .getCompNameCache().getCompNamePo(
-                                            compNameGuid);
+                            IComponentNamePO compNamePo = compNamesCache.
+                                    getResCompNamePOByGuid(compNameGuid);
                             if (compNamePo != null) {
                                 if (compNamePo.getParentProjectId().equals(
                                         GeneralStorage.getInstance()
@@ -518,12 +500,12 @@ public class CAPRecordedCommand implements ICommand {
         return CAPRecordedCommand.recSpecTestCase;
     }
     /**
-     * @param compMapper The comp names mapper to set.
+     * @param compCache The comp names cache to set.
      */
-    public static void setCompNamesMapper(
-            IWritableComponentNameMapper compMapper) {
+    public static void setCompNamesCache(
+            IWritableComponentNameCache compCache) {
         
-        CAPRecordedCommand.compNamesMapper = compMapper;
+        CAPRecordedCommand.compNamesCache = compCache;
     }
     
     /**

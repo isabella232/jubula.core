@@ -15,10 +15,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.persistence.Query;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -129,7 +131,21 @@ class TestDataCubePO implements ITestDataCubePO {
     @BatchFetch(value = BatchFetchType.JOIN)
     protected List<IParamDescriptionPO> getHbmParameterList() {
         return m_hbmParameterList;
-    }   
+    }
+    
+    /**
+     * Removes the parameter descriptions
+     * @param sess the session
+     */
+    private void removeParamDescriptions(EntityManager sess) {
+        Query q = sess.createNativeQuery("delete from PARAM_DESC where PARAM_NODE = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId()).executeUpdate();
+        for (IParamDescriptionPO desc : getHbmParameterList()) {
+            q = sess.createNativeQuery("delete from PARAM_NAMES where GUID = ?1 and PARENT_PROJ = ?2"); //$NON-NLS-1$
+            q.setParameter(1, desc.getUniqueId()).
+                setParameter(2, getParentProjectId()).executeUpdate();
+        }
+    }
     
     /**
      * Add a parameter description to the list of descriptions
@@ -280,6 +296,18 @@ class TestDataCubePO implements ITestDataCubePO {
     @BatchFetch(value = BatchFetchType.JOIN)
     protected ITDManager getHbmDataManager() {
         return m_dataManager;
+    }
+    
+    /**
+     * Removes the data manager
+     * @param sess the session
+     */
+    private void removeDataManager(EntityManager sess) {
+        m_dataManager.goingToBeDeleted(sess);
+        Query q = sess.createNativeQuery("update PARAM_INTERFACE set TD_MANAGER = null where ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, getId()).executeUpdate();
+        q = sess.createNativeQuery("delete from TD_MANAGER where ID = ?1"); //$NON-NLS-1$
+        q.setParameter(1, m_dataManager.getId()).executeUpdate();
     }
     
     /**
@@ -550,5 +578,11 @@ class TestDataCubePO implements ITestDataCubePO {
      */
     public void setParent(ITestDataCategoryPO parent) {
         m_parent = parent;
+    }
+    
+    /** {@inheritDoc} */
+    public void goingToBeDeleted(EntityManager sess) {
+        removeParamDescriptions(sess);
+        removeDataManager(sess);
     }
 }

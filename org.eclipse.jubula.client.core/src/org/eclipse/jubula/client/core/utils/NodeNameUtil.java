@@ -14,6 +14,8 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
@@ -121,6 +123,24 @@ public class NodeNameUtil {
             return testCase.getName();
         }
         return testCase.getName() + getParameterString(testCase);
+    }
+    
+    /**
+     * Returns the default name of a Controller
+     * @param control the controller
+     * @return the name
+     */
+    public static String getText(IControllerPO control) {
+        return control.getDefaultName(control);
+    }
+    
+    /**
+     * Returns the default name of a Container
+     * @param cont the container
+     * @return the name
+     */
+    public static String getText(IAbstractContainerPO cont) {
+        return ((IControllerPO) cont.getParentNode()).getDefaultName(cont);
     }
     
     /**

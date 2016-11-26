@@ -27,8 +27,12 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -40,6 +44,7 @@ import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TestResult;
@@ -70,6 +75,21 @@ public class TestresultSummaryBP {
      * use this constant for summary table
      */
     public static final String AUTRUN = "autrun"; //$NON-NLS-1$
+
+    /** constant for keyword type Iterate loop */
+    public static final int TYPE_ITERATE = 9;
+    
+    /** constant for keyword type While Do loop */
+    public static final int TYPE_WHILEDO = 8;
+    
+    /** constant for keyword type Do While loop */
+    public static final int TYPE_DOWHILE = 7;
+    
+    /** constant for keyword type Abstract Container */
+    public static final int TYPE_CONTAINER = 6;
+    
+    /** constant for keyword type Condition */
+    public static final int TYPE_CONDITION = 5;
 
     /** constant for keyword type Comment */
     public static final int TYPE_COMMENT = 4;
@@ -312,6 +332,16 @@ public class TestresultSummaryBP {
             keyword.setInternalKeywordType(TYPE_TEST_SUITE);
         } else if (node instanceof ICommentPO) {
             keyword.setInternalKeywordType(TYPE_COMMENT);
+        } else if (node instanceof IConditionalStatementPO) {
+            keyword.setInternalKeywordType(TYPE_CONDITION);
+        } else if (node instanceof IAbstractContainerPO) {
+            keyword.setInternalKeywordType(TYPE_CONTAINER);
+        } else if (node instanceof IDoWhilePO) {
+            keyword.setInternalKeywordType(TYPE_DOWHILE);
+        } else if (node instanceof IWhileDoPO) {
+            keyword.setInternalKeywordType(TYPE_WHILEDO);
+        } else if (node instanceof IIteratePO) {
+            keyword.setInternalKeywordType(TYPE_ITERATE);
         }
     }
     

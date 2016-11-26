@@ -20,11 +20,12 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -32,21 +33,17 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.PopupCompNameTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.rcp.dialogs.CNTypeProblemDialog;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.ParameterValueLabelProvider;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -57,7 +54,6 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
@@ -554,38 +550,27 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
         public boolean setProperty(Object value) {
             
             boolean isCompNameChangedAndSpecTCReused = false;
-            final IWritableComponentNameMapper compMapper = 
-                getActiveComponentNameMapper();
-            Validate.notNull(compMapper);
+            IWritableComponentNameCache cache = getActiveComponentNameCache();
+            Validate.notNull(cache);
             final ICapPO cap = (ICapPO) getPoNode();
-            try {
-                ComponentNamesBP.getInstance().setCompName(cap, 
-                        String.valueOf(value), 
-                        CompNameCreationContext.STEP, compMapper);
-                ISpecTestCasePO specTc = 
-                    (ISpecTestCasePO)getPoNode().getParentNode();
-                if (!NodePM.getInternalExecTestCases(specTc.getGuid(), 
-                        specTc.getParentProjectId()).isEmpty()) {
-                    
-                    isCompNameChangedAndSpecTCReused = true;
-                }
-                DataEventDispatcher.getInstance().firePropertyChanged(
-                        isCompNameChangedAndSpecTCReused);
-                return true;
-            } catch (IncompatibleTypeException ite) {
-                ErrorHandlingUtil.createMessageDialog(
-                        ite, ite.getErrorMessageParams(), null);
-            } catch (PMException e) {
-                IEditorPart activeEditor = Plugin.getActiveEditor();
-                if (activeEditor instanceof IJBEditor) {
-                    PMExceptionHandler.handlePMExceptionForEditor(
-                            e, (IJBEditor)activeEditor);
-                } else {
-                    PMExceptionHandler.handlePMExceptionForMasterSession(e);
-                }
+            String oldGuid = cap.getComponentName();
+            ISpecTestCasePO specTc = 
+                    (ISpecTestCasePO)getPoNode().getSpecAncestor();
+            ComponentNamesBP.setCompName(cap, String.valueOf(value), 
+                    CompNameCreationContext.STEP, cache);
+            
+            if (!CNTypeProblemDialog.noProblemOrIgnore(cache, specTc)) {
+                cache.changeReuse(cap, cap.getComponentName(), oldGuid);
+                return false;
             }
             
-            return false;
+            if (!NodePM.getInternalExecTestCases(specTc.getGuid(), 
+                    specTc.getParentProjectId()).isEmpty()) {
+                isCompNameChangedAndSpecTCReused = true;
+            }
+            DataEventDispatcher.getInstance().firePropertyChanged(
+                    isCompNameChangedAndSpecTCReused);
+            return true;
         }
         
         /**
@@ -593,15 +578,13 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
          */
         public Object getProperty() {
             final ICapPO cap = (ICapPO) getPoNode();
-            IComponentNameMapper compMapper = 
-                Plugin.getActiveCompMapper();
+            IComponentNameCache compCache = Plugin.getActiveCompCache();
             final String componentNameGuid = cap.getComponentName();
             if (componentNameGuid != null) {
-                if (compMapper != null) {
-                    return compMapper.getCompNameCache().getName(
-                            componentNameGuid);
+                if (compCache != null) {
+                    return compCache.getNameByGuid(componentNameGuid);
                 }
-                return ComponentNamesBP.getInstance().getName(
+                return CompNameManager.getInstance().getNameByGuid(
                         componentNameGuid);
             }
             return StringConstants.EMPTY;

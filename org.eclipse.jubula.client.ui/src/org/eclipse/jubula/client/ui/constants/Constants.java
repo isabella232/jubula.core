@@ -162,6 +162,9 @@ public interface Constants {
 
     /** Key for m_text value to be stored as a resource property */
     public static final String SHOWCHILDCOUNT_KEY = "SHOWCHILDCOUNT_PREF_KEY"; //$NON-NLS-1$
+    
+    /** Key indicating whether number information should be shown for CNs */
+    public static final String SHOWCOUNTERS_KEY = "SHOWCOUNTERS_PREF_KEY"; //$NON-NLS-1$
 
     /** Key for m_text value to be stored as a resource property */
     public static final String SHOWRECORDDIALOG_KEY = "SHOWRECORDDIALOG_PREF_KEY"; //$NON-NLS-1$
@@ -326,7 +329,10 @@ public interface Constants {
     public static final String MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL = "MILLIS_TO_OPEN_COMP_NAMES_CONTENT_PROPOSAL"; //$NON-NLS-1$
     /** Key for show the update reused project dialog */
     public static final String UPDATE_REUSED_PROJECT_KEY = "UPDATE_REUSED_PROJECT_KEY"; //$NON-NLS-1$
-    
+    /** Key for the maximum number of iterations */
+    public static final String MAX_ITERATION_KEY = "MAX_ITERATION_KEY"; //$NON-NLS-1$
+    /** Key for show the update reused project dialog */
+    public static final int MAX_ITERATION_DEFAULT = 100;
     
     // -------------------------------------------------------------
     // preference default values
@@ -345,6 +351,9 @@ public interface Constants {
     
     /** Key for boolean value to be stored as a resource property */
     public static final boolean SHOWCHILDCOUNT_KEY_DEFAULT = false;
+    
+    /** Key for certain counters to be shown */
+    public static final boolean SHOWCOUNTERS_KEY_DEFAULT = true;
     
     /** Key for boolean value to be stored as a resource property */
     public static final boolean SHOWRECORDDIALOG_KEY_DEFAULT = true;

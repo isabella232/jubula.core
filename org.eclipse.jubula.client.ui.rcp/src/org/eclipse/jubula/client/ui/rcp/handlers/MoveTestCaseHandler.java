@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -43,10 +44,10 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -299,12 +300,13 @@ public class MoveTestCaseHandler extends AbstractHandler {
         IReusedProjectPO selectedProject) {
         // Prepare modification to selected project
         EntityManager sess = null;
+        Persistor per = Persistor.instance();
         try {
             IProjectPO extProject = ProjectPM.loadReusedProject(
                 selectedProject);
-            sess = GeneralStorage.getInstance().getEntityManager();
-            extProject = sess.find(NodeMaker.getProjectPOClass(),
-                    extProject.getId());
+            sess = per.openSession();
+            EntityTransaction tx = per.getTransaction(sess);
+            extProject = sess.find(extProject.getClass(), extProject.getId());
             List<ICapPO> moveProblem = getMoveProblem(extProject, 
                 selectionList);
             if (!moveProblem.isEmpty()) {
@@ -357,6 +359,8 @@ public class MoveTestCaseHandler extends AbstractHandler {
         } catch (ToolkitPluginException tpie) {
             ErrorHandlingUtil.createMessageDialog(
                     MessageIDs.E_GENERAL_TOOLKIT_ERROR);
+        } finally {
+            per.dropSession(sess);
         }
     }
 
@@ -445,7 +449,6 @@ public class MoveTestCaseHandler extends AbstractHandler {
         CompNameUsageMap usageMap = new CompNameUsageMap();
         final IProjectPO currenProject = GeneralStorage.getInstance()
                 .getProject();
-        final String projGuid = currenProject.getGuid();
         final Long projId = currenProject.getId();
         for (INodePO selNode : selectionList) {
             commands.add(new MultipleNodePM.MoveNodeHandle(selNode, selNode
@@ -458,7 +461,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
                 ISpecTestCasePO specTestCasePo = (ISpecTestCasePO) spec;
                 specTcPOs.add(specTestCasePo);
                 CollectComponentNameUsersOp op = 
-                        new CollectComponentNameUsersOp(projGuid, projId);
+                        new CollectComponentNameUsersOp(projId);
                 new TreeTraverser(specTestCasePo, op, true, 2).traverse();
                 usageMap.addAll(op.getUsageMap());
                 for (IExecTestCasePO execTc : NodePM.getInternalExecTestCases(
@@ -534,7 +537,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
                         return true;
                     }
                     Iterator<INodePO> execTcs = specTestCasePo
-                            .getNodeListIterator();
+                            .getAllNodeIter();
                     while (execTcs.hasNext()) {
                         INodePO exec = execTcs.next();
                         if (exec instanceof IExecTestCasePO) {

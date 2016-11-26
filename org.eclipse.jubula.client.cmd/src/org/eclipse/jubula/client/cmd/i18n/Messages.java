@@ -74,6 +74,7 @@ public class Messages extends NLS {
     public static String ExecutionControllerDatabase;
     public static String ExecutionControllerDataBaseEnd;
     public static String ExecutionControllerDatabaseStart;
+    public static String IterMax;
     public static String NoArgumentFor;
     public static String NoCorrespondingMessage;
     public static String NoPlatformInstanceLocation;

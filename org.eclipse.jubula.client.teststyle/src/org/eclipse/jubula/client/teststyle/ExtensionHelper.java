@@ -210,8 +210,9 @@ public class ExtensionHelper {
      * Initializes the configurations for the checks.
      */
     static void initCheckConfiguration() {
-        EntityManager s = GeneralStorage.getInstance().getMasterSession();
-        EntityTransaction tx = Persistor.instance().getTransaction(s);
+        Persistor per = Persistor.instance();
+        EntityManager s = per.openSession();
+        EntityTransaction tx = per.getTransaction(s);
         IProjectPO project = GeneralStorage.getInstance().getProject();
         
         ICheckConfContPO cfg = 
@@ -255,10 +256,12 @@ public class ExtensionHelper {
         }
         
         try {
-            Persistor.instance().commitTransaction(s, tx);
+            per.commitTransaction(s, tx);
         } catch (Exception e) {
             LOG.error(Ext.EXCEPTION, e);
-        } 
+        } finally {
+            per.dropSession(s);
+        }
     }
 
     /**

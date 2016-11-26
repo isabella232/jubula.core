@@ -21,13 +21,11 @@ import org.eclipse.jubula.client.archive.JsonStorage;
 import org.eclipse.jubula.client.archive.dto.ProjectDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.output.NullImportOutput;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.ProjectCompNameCache;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -112,8 +110,6 @@ public class ProjectBP {
                             TOTAL_WORK);
             final ParamNameBPDecorator paramNameMapper = 
                 new ParamNameBPDecorator(ParamNameBP.getInstance());
-            final IWritableComponentNameCache compNameCache = 
-                new ComponentNamesDecorator(null);
             try {
                 NodePM.getInstance().setUseCache(true);
                 GeneralStorage.getInstance().validateProjectExists(m_project);
@@ -126,6 +122,8 @@ public class ProjectBP {
                 }
 
                 if (dto != null) {
+                    IWritableComponentNameCache compNameCache =
+                            new ProjectCompNameCache(null);
                     final IProjectPO duplicatedProject = JsonStorage.load(dto,
                             subMonitor.newChild(WORK_PROJECT_CREATION),
                             new NullImportOutput(), false, false,
@@ -133,15 +131,12 @@ public class ProjectBP {
                     if (monitor.isCanceled()) {
                         throw new InterruptedException();
                     }
-                    IWritableComponentNameMapper compNameMapper =
-                        new ProjectComponentNameMapper(
-                                compNameCache, duplicatedProject);
-                    
+                    compNameCache.setContext(duplicatedProject);
                     duplicatedProject.setClientMetaDataVersion(
                         IVersion.JB_CLIENT_METADATA_VERSION);
                     attachProjectWithProgress(
                             subMonitor.newChild(WORK_PROJECT_SAVE), 
-                            paramNameMapper, compNameMapper, duplicatedProject);
+                            paramNameMapper, compNameCache, duplicatedProject);
                 }
             } catch (final PMSaveException e) {
                 log.error(Messages.ErrorWhileCreatingNewProjectVersion, e);
@@ -173,8 +168,8 @@ public class ProjectBP {
          * @param paramNameMapper
          *            The parameter name mapper to use when adding the project
          *            to the database.
-         * @param compNameMapper
-         *            The component name mapper to use when adding the project
+         * @param compNameCache
+         *            The component name cache to use when adding the project
          *            to the database.
          * @param project
          *            The project to add to the database
@@ -187,7 +182,7 @@ public class ProjectBP {
          */
         private void attachProjectWithProgress(IProgressMonitor monitor,
                 final ParamNameBPDecorator paramNameMapper,
-                final IWritableComponentNameMapper compNameMapper,
+                final IWritableComponentNameCache compNameCache,
                 final IProjectPO project) throws PMException,
                 ProjectDeletedException, InterruptedException {
 
@@ -200,10 +195,10 @@ public class ProjectBP {
                         clearedProject, DataState.Deleted, UpdateState.all);
             }
             List<INameMapper> mapperList = new ArrayList<INameMapper>();
-            List<IWritableComponentNameMapper> compNameCacheList = 
-                new ArrayList<IWritableComponentNameMapper>();
+            List<IWritableComponentNameCache> compNameCacheList = 
+                new ArrayList<IWritableComponentNameCache>();
             mapperList.add(paramNameMapper);
-            compNameCacheList.add(compNameMapper);
+            compNameCacheList.add(compNameCache);
             ProjectPM.attachProjectToROSession(project, project.getName(), 
                     mapperList, compNameCacheList, monitor);
         }

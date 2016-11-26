@@ -10,74 +10,29 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.Map;
 
 import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
+import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.persistence.PMException;
-
+import org.eclipse.jubula.client.core.model.IComponentNameReuser;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 
 /**
  * Caching mechanism for Component Names.
  *
- * @author BREDEX GmbH
+ * @author BREDEX GmbH 
  * @created Feb 5, 2009
  */
 public interface IWritableComponentNameCache extends IComponentNameCache {
 
     /**
-     * @return all Component Names that were created within the context of 
-     *         this cache.
-     */
-    Collection<IComponentNamePO> getNewNames();
-
-    /**
-     * @return all Component Names whose reuse has been changed within the
-     *         context of this cache.
-     */
-    Collection<String> getReusedNames();
-
-    /**
-     * @return a mapping from Component Name GUID to new name for all 
-     *         Component Names that were renamed within the context of this 
-     *         cache.
-     */
-    Collection<IComponentNamePO> getRenamedNames();
-
-    /**
-     * @return all Component Names marked for deletion within the context of
-     *         this cache.
-     */
-    Collection<IComponentNamePO> getDeletedNames();
-
-    /**
-     * Removes an instance of reuse for the Component Name with the given GUID
-     * and updates the type for that Component Name accordingly.
-     * 
-     * @param componentNameGuid The GUID of the Component Name whose reuse
-     *                          has changed.
-     * @throws PMException if a database error occurs.
-     */
-    public void removeReuse(String componentNameGuid) throws PMException;
-
-    /**
-     * Adds an instance of reuse for the Component Name with the given GUID
-     * and updates the type for that Component Name accordingly.
-     * 
-     * @param componentNameGuid The GUID of the Component Name whose reuse
-     *                          has changed.
-     * @throws PMException if a database error occurs.
-     */
-    public void addReuse(String componentNameGuid) throws PMException;
-
-    /**
      * Adds the given Component Name to this cache.
-     * 
      * @param compNamePo The new Component Name to add.
      */
-    public void addComponentNamePO(IComponentNamePO compNamePo);
-
+    public void addCompNamePO(IComponentNamePO compNamePo);
+    
     /**
      * Creates and returns a new Component Name with the given attributes.
      * 
@@ -90,6 +45,18 @@ public interface IWritableComponentNameCache extends IComponentNameCache {
             CompNameCreationContext creationContext);
 
     /**
+     * Creates and returns a new Component Name with the given attributes.
+     * 
+     * @param guid The GUID for the Component Name.
+     * @param name The name for the Component Name.
+     * @param type The reuse type for the Component Name.
+     * @param creationContext The creation context.
+     * @return the newly created Component Name.
+     */
+    public IComponentNamePO createComponentNamePO(String guid, String name, 
+            String type, CompNameCreationContext creationContext);
+    
+    /**
      * Marks the Component name with the given GUID as renamed to 
      * <code>newName</code>.
      * 
@@ -99,10 +66,79 @@ public interface IWritableComponentNameCache extends IComponentNameCache {
     public void renameComponentName(String guid, String newName);
 
     /**
-     * For performance reasons we want to preload cache
-     * @param guids IComponentNamePO
-     * @param projectId the parent project id
+     * Renames a Component Name
+     * @param guid the guid
+     * @param newName the new name
      */
-    public void initCache(Set<String> guids, Long projectId);
+    public void renamedCompName(String guid, String newName);
+    
+    /**
+     * Clones a component name into the local cache if it is not yet present there
+     * @param guid the guid of the CN to clone
+     */
+    public void addIfNotYetPresent(String guid);
+    
+    /**
+     * Clears those Component Names which have 0 local usage changes
+     * Should be only called from TS / TC Editors
+     * @param node the editor root
+     */
+    public void clearUnusedCompNames(INodePO node);
+    
+    /**
+     * Removes a Component Name from the local changes
+     * @param guid the guid of the Component Name
+     */
+    public void removeCompName(String guid);
+
+    /**
+     * Stores locally caused CN type problems, and writes types
+     * Should be used for unsaved changes
+     * @param calc the calculator which calculated the problems 
+     */
+    public void storeLocalProblems(CalcTypes calc);
+    
+    /**
+     * Returns new problems after having run a full type recalculation
+     * @param calc the calculator
+     * @return the new problems
+     */
+    public Map<String, ProblemType> getNewProblems(CalcTypes calc);
+    
+    /**
+     * Updates the the given object to use the Component Name with the new GUID
+     * instead of the one with the old GUID.
+     * 
+     * @param user The object having its reuse changed.
+     * @param oldGuid The GUID of the Component Name that is no longer reused.
+     *                May be <code>null</code>, which indicates that no
+     *                Component Name was being used.
+     * @param newGuid The GUID of the Component Name that is now to be reused.
+     *                May be <code>null</code>, which indicates that no
+     *                Component Name will be used.
+     */
+    public void changeReuse(IComponentNameReuser user, String oldGuid,
+            String newGuid);
+    
+    /**
+     * Handles the existence of Component Names that were to be inserted into
+     * the database. This occurs when, for example: an editor with a new
+     * Component Name is saved, but another Component Name with the same name
+     * already exists in the database. The resolution is usually to identify
+     * references to the saved GUID and replace them with references to the 
+     * pre-existing GUID.
+     * 
+     * @param guidToCompNameMap Mapping from GUID of Component Names that were
+     *                          supposed to be inserted in the database to the
+     *                          GUID of Component Names that already exist in 
+     *                          the database.
+     */
+    public void handleExistingNames(Map<String, String> guidToCompNameMap);
+    
+    /**
+     * Sets the context
+     * @param context the context
+     */
+    public void setContext(IPersistentObject context);
     
 }

@@ -39,6 +39,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
 import org.eclipse.jubula.client.core.model.ITestResultAdditionPO;
@@ -314,6 +315,24 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                             result.getKeywordName(),
                             result.getInternalKeywordGuid());
                     return backingComment;
+                case TestresultSummaryBP.TYPE_CONDITION:
+                    IConditionalStatementPO condition = NodeMaker
+                        .createConditionalStatementPO(
+                            result.getKeywordName(),
+                            result.getInternalKeywordGuid());
+                    return condition;
+                case TestresultSummaryBP.TYPE_DOWHILE:
+                    return NodeMaker.createDoWhilePO(result.getKeywordName(),
+                            result.getInternalKeywordGuid());
+                case TestresultSummaryBP.TYPE_WHILEDO:
+                    return NodeMaker.createWhileDoPO(result.getKeywordName(),
+                            result.getInternalKeywordGuid());
+                case TestresultSummaryBP.TYPE_ITERATE:
+                    return NodeMaker.createIteratePO(result.getKeywordName(),
+                            result.getInternalKeywordGuid());
+                case TestresultSummaryBP.TYPE_CONTAINER:
+                    return NodeMaker.createContainerPO(result.getKeywordName(),
+                            result.getInternalKeywordGuid());
                 default:
                     return null;
             }

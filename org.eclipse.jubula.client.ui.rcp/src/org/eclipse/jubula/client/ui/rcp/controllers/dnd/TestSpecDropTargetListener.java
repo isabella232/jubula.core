@@ -16,16 +16,12 @@ import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
-import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
-
 
 
 /**
@@ -52,18 +48,11 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
         IPersistentObject target = (IPersistentObject)getCurrentTarget();
         List <INodePO> nodesToBeMoved = transfer.getSelection().toList();
-        try {
-            TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);
-            return true;
-        } catch (PMException e) {
-            PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleProjectDeletedException();
-        } finally {
-            LocalSelectionTransfer.getInstance().setSelection(null);
+        if (!TCBrowserDndSupport.moveNodes(nodesToBeMoved, target)) {
+            return false;
         }
-        
-        return false;
+        LocalSelectionTransfer.getInstance().setSelection(null);
+        return true;
     }
 
     /**

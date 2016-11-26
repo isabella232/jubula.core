@@ -68,6 +68,7 @@ public class Messages extends NLS {
     public static String ComponentIsNotSupported;
     public static String ComponentNotFound;
     public static String ComponentTypeIsNull;
+    public static String Condition;
     public static String ConnectedTo;
     public static String ConnectedToTheServer;
     public static String ConnectingFailed;
@@ -118,7 +119,10 @@ public class Messages extends NLS {
     public static String DisposeOfPersistorFailed;
     public static String DoesNotHaveAParentProject;
     public static String DoesNotTrackItsParentProject;
+    public static String Do;
     public static String DoubleEventTestCaseForTheSameEvent;
+    public static String DoWhileName;
+    public static String Else;
     public static String EmptyComponentName;
     public static String EmptyParameterName;
     public static String ErrorDetailDATASOURCE_CONTAIN_EMPTY_DATA;
@@ -151,6 +155,7 @@ public class Messages extends NLS {
     public static String ErrorWhileGettingListOfRegisteredAUTs;
     public static String ErrorWhileNotifyingListeners;
     public static String ErrorWritingComponentNamesToDBOfProjectID;
+    public static String ErrorInfiniteLoop;
     public static String EstablishingConnectionToAUT;
     public static String EventExecTestCasePOBREAK;
     public static String EventExecTestCasePOCONTINUE;
@@ -184,6 +189,7 @@ public class Messages extends NLS {
     public static String GeneralFailure;
     public static String GettingAllComponentsFromAUT;
     public static String PersistenceLoadFailed;
+    public static String IfThenElseName;
     public static String ImplementingMethodHasThrownAnException;
     public static String IncompatibleType;
     public static String IncompleteTestdata;
@@ -198,6 +204,7 @@ public class Messages extends NLS {
     public static String IsBeingReplacedWith;
     public static String IsNotAvailable;
     public static String IsNotResolvable;
+    public static String IterateCount;
     public static String ItsNotAllowedToRemoveParametersFromCapPO;
     public static String JobConfigurationValidateAnyAut;
     public static String JobConfigurationValidateAutConf;
@@ -258,6 +265,7 @@ public class Messages extends NLS {
     public static String ObjectMappingPreferencePageMouseButton3;
     public static String OfType;
     public static String OK;
+    public static String OperationFailed;
     public static String OrginalTestcaseLocked;
     public static String OriginalObjectForCreatingOfWorkversionIsNull;
     public static String Param;
@@ -272,8 +280,13 @@ public class Messages extends NLS {
     public static String PMExceptionWhileWritingUsedToolkitsInDB;
     public static String ProblemIncompleteObjectMappingMarkerText;
     public static String ProblemIncompleteObjectMappingTooltip;
+    public static String ProblemIncompatibleUsageTypeMarkerText;
+    public static String ProblemIncompatibleUsageTypeMarkerToolkit;
+    public static String ProblemIncompatibleMapTypeMarkerText;
+    public static String ProblemIncompatibleMapTypeMarkerToolkit;
     public static String ProblemIncompleteTestDataMarkerText;
     public static String ProblemIncompleteTestDataTooltip;
+    public static String ProblemIncompleteBranch;
     public static String ProblemInstallingDBScheme;
     public static String ProblemPropagationJobName;
     public static String ProblemMissingReferencedTestCaseMarkerText;
@@ -291,8 +304,10 @@ public class Messages extends NLS {
     public static String ReadingOfProjectNameOrParamNamesFailed;
     public static String Reference;
     public static String RefreshOfOriginalVersionFailed;
+    public static String RefreshFailed;
     public static String ReinitOfSessionFailed;
     public static String RemovingIAUTEventListener;
+    public static String RepeatName;
     public static String RequestingAUTAgentToCloseAUTConnection;
     public static String ResetFailed;
     public static String Resource;
@@ -333,6 +348,8 @@ public class Messages extends NLS {
     public static String TestErrorEventVerifyFailed;
     public static String TestexecutionHasResumed;
     public static String TestResultNodeAbort;
+    public static String TestResultNodeConditionFailed;
+    public static String TestResultNodeInfiniteLoop;
     public static String TestResultNodeErrorInChildren;
     public static String TestResultNodeGUINoNode;
     public static String TestResultNodeNotYetTested;
@@ -396,7 +413,15 @@ public class Messages extends NLS {
     public static String TestResultNodeTypeTestStep;
     public static String TestResultNodeTypeTestSuite;
     public static String TestResultNodeTypeComment;
+    public static String TestResultNodeTypeCondition;
+    public static String TestResultNodeTypeDoWhile;
+    public static String TestResultNodeTypeWhileDo;
+    public static String TestResultNodeTypeContainer;
+    public static String TestResultNodeTypeIterate;
     public static String TestResultNodeTypeUnknown;
+    public static String Then;
+    public static String WhileDoName;
+    public static String While;
     public static String EmptyProperty;
     
     static {

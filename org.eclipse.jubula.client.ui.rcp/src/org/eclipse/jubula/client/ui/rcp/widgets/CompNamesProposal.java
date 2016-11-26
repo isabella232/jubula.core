@@ -11,9 +11,8 @@
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import org.eclipse.jface.fieldassist.IContentProposal;
-import org.eclipse.jubula.client.core.model.IComponentNameData;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.utils.StringHelper;
-import org.eclipse.jubula.client.ui.rcp.utils.ComponentNameVisibility;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
@@ -29,15 +28,12 @@ public class CompNamesProposal implements IContentProposal {
     private String m_content;
     
     /**
-     * construct a content proposal from the ComponentNameData
-     * @param data ComponentNameData
-     * @param visibility The visibility of the given component data
+     * construct a content proposal from the ComponentNamePO
+     * @param data ComponentNamePO
      */
-    public CompNamesProposal(IComponentNameData data, 
-            ComponentNameVisibility visibility) {
+    public CompNamesProposal(IComponentNamePO data) {
         
-        StringBuilder label = new StringBuilder();
-        label.append(visibility.name().substring(0, 1));
+        StringBuilder label = new StringBuilder("G"); //$NON-NLS-1$
         label.append(data.getName());
         if (!(data.getComponentType() == null || StringConstants.EMPTY
                 .equals(data.getComponentType()))) {

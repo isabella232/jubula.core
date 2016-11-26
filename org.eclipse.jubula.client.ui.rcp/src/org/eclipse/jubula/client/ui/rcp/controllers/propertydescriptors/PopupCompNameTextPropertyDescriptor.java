@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors;
 
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
@@ -51,15 +51,14 @@ public class PopupCompNameTextPropertyDescriptor extends PropertyDescriptor {
      * {@inheritDoc}
      */
     public CellEditor createPropertyEditor(Composite parent) {
-        IComponentNameMapper compMapper = null;
+        IComponentNameCache compCache = null;
         IEditorPart activeEditor = Plugin.getActiveEditor();
         if (activeEditor instanceof IJBEditor) {
-            compMapper = ((IJBEditor)activeEditor).getEditorHelper()
-                .getEditSupport().getCompMapper();
+            compCache = ((IJBEditor)activeEditor).getCompNameCache();
         }
 
         CompNamePopupTextCellEditor editor = 
-            new CompNamePopupTextCellEditor(compMapper, parent);
+            new CompNamePopupTextCellEditor(compCache, parent);
         editor.setFilter(m_filter);
         return editor; 
 

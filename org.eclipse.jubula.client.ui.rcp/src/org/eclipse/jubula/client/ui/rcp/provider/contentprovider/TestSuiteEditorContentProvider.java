@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 
 
@@ -25,8 +26,8 @@ public class TestSuiteEditorContentProvider
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof ITestSuitePO) {
-            return ((ITestSuitePO)parentElement)
+        if (!(parentElement instanceof IExecTestCasePO)) {
+            return ((INodePO)parentElement)
                 .getUnmodifiableNodeList().toArray();
         }
         
@@ -37,8 +38,8 @@ public class TestSuiteEditorContentProvider
      * {@inheritDoc}
      */
     public Object getParent(Object element) {
-        if (element instanceof IExecTestCasePO) {
-            return ((IExecTestCasePO)element).getParentNode();
+        if (!(element instanceof ITestSuitePO)) {
+            return ((INodePO)element).getParentNode();
         }
         
         return null;
@@ -48,8 +49,8 @@ public class TestSuiteEditorContentProvider
      * {@inheritDoc}
      */
     public boolean hasChildren(Object element) {
-        if (element instanceof ITestSuitePO) {
-            return ((ITestSuitePO)element).getNodeListSize() > 0;
+        if (!(element instanceof IExecTestCasePO)) {
+            return ((INodePO)element).getNodeListSize() > 0;
         }
         
         return false;

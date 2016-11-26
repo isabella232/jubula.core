@@ -15,17 +15,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
-import org.eclipse.jubula.client.core.model.IComponentNameData;
+import org.eclipse.jubula.client.core.businessprocess.CompNameTypeManager;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.StringHelper;
-import org.eclipse.jubula.client.ui.rcp.utils.ComponentNameVisibility;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 
@@ -38,7 +35,7 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
      * @author BREDEX GmbH
      * @created 16.08.2005
      */
-    private class JBComparator implements Comparator<IComponentNameData> {
+    private class JBComparator implements Comparator<IComponentNamePO> {
 
         /**
          * @param element0 element 0.
@@ -48,46 +45,33 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
          *         second. 
          */
         @SuppressWarnings("synthetic-access")
-        public int compare(IComponentNameData element0, 
-                IComponentNameData element1) {
+        public int compare(IComponentNamePO element0, 
+                IComponentNamePO element1) {
             
             String name0 = element0.getName() == null ? StringConstants.EMPTY
                     : element0.getName();
             String name1 = element1.getName() == null ? StringConstants.EMPTY
                     : element1.getName();
-            ComponentNameVisibility vis0 = 
-                ComponentNameVisibility.getVisibility(
-                        element0, m_compNameMapper.getCompNameCache());
-            ComponentNameVisibility vis1 = 
-                ComponentNameVisibility.getVisibility(
-                        element1, m_compNameMapper.getCompNameCache()); 
             String type0 = element0.getComponentType() == null 
                 ? StringConstants.EMPTY : element0.getComponentType();
             String type1 = element1.getComponentType() == null 
                 ? StringConstants.EMPTY : element1.getComponentType();
 
             // Sorting:
-            // 1st: visibility  (local --> global --> aut)
-            // 2nd: types       (alphabetical componentTypes)
-            // 3rd: names       (alphabetical componentNames)
+            // 1st: types       (alphabetical componentTypes)
+            // 2nd: names       (alphabetical componentNames)
             
-            // matches the names in the types
-            if (type0.equals(type1)) {
-                return name0.toLowerCase().compareTo(name1.toLowerCase());
-            }
-            // matches the types in the catgories
-            if (vis0.equals(vis1)) {
+            if (!type0.equals(type1)) {
                 StringHelper helper = StringHelper.getInstance();
                 return helper.get(type0, true).compareTo(
                     helper.get(type1, true));
             }            
-            // matches the categories
-            return vis0.compareTo(vis1);
+            return name0.toLowerCase().compareTo(name1.toLowerCase());
         }
     }
 
     /** used for looking up Component Names */
-    private IComponentNameMapper m_compNameMapper;
+    private IComponentNameCache m_compNameCache;
 
     /** 
      * Component Type for which to provide proposals. Only Component Names 
@@ -100,10 +84,10 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
     /**
      * Constructor
      * 
-     * @param compNameMapper Used for looking up Component Names.
+     * @param compNameCache Used for looking up Component Names.
      */
-    public CompNamesProposalProvider(IComponentNameMapper compNameMapper) {
-        m_compNameMapper = compNameMapper;
+    public CompNamesProposalProvider(IComponentNameCache compNameCache) {
+        m_compNameCache = compNameCache;
     }
 
     /**
@@ -113,9 +97,8 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
     public IContentProposal[] getProposals(final String contents,
             int position) {
 
-        List<IComponentNameData> compNamesList = 
-            new ArrayList<IComponentNameData>(
-                    m_compNameMapper.getCompNameCache().getComponentNameData());
+        List<IComponentNamePO> compNamesList =
+                new ArrayList<>();
         final Long currentProjectId = 
             GeneralStorage.getInstance().getProject() != null 
                 ? GeneralStorage.getInstance().getProject().getId() : null;
@@ -125,51 +108,30 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
         } else {
             subString = contents.substring(0, position);
         }
-                
-        CollectionUtils.filter(compNamesList, new Predicate() {
-
-            public boolean evaluate(Object arg) {
-                IComponentNameData elem = (IComponentNameData)arg;
-                String item = elem.getName();
-                boolean ok = !StringUtils.isEmpty(item) 
-                    && item.startsWith(subString)
-                    && (elem.getParentProjectId() == null
-                           || elem.getParentProjectId().equals(
-                                   currentProjectId))
-                    && checkFilterInHierarchy(m_typeFilter, elem);
-                return ok;
+        
+        for (IComponentNamePO cN : m_compNameCache.getAllCompNamePOs()) {
+            if (StringUtils.isEmpty(cN.getName()) 
+                    || !cN.getName().startsWith(subString)
+                    || cN.getParentProjectId() == null
+                    || !cN.getParentProjectId().equals(
+                                   currentProjectId)) {
+                continue;
             }
-        });
-        if (!StringUtils.isEmpty(contents)) {
-            Collections.sort(compNamesList, new JBComparator());
+            if (CompNameTypeManager.mayBeCompatible(cN, m_typeFilter)) {
+                compNamesList.add(cN);
+            }
         }
+
+        Collections.sort(compNamesList, new JBComparator());
 
         List<IContentProposal> proposals = 
             new ArrayList<IContentProposal>(compNamesList.size());
         
 
-        for (IComponentNameData data : compNamesList) {
-            proposals.add(new CompNamesProposal(data,
-                    ComponentNameVisibility.getVisibility(data,
-                            m_compNameMapper.getCompNameCache())));
+        for (IComponentNamePO data : compNamesList) {
+            proposals.add(new CompNamesProposal(data));
         }
         return proposals.toArray(new IContentProposal[proposals.size()]);
-    }
-
-    /**
-     * Checks component hierachy with current filter.
-     * @param filter the filter to check with
-     * @param checkable the string to check
-     * @return true, if given string is allowed
-     */
-    private boolean checkFilterInHierarchy(String filter, 
-            IComponentNameData checkable) {
-
-        return ComponentNamesBP.getInstance().isCompatible(
-            filter, checkable.getName(), m_compNameMapper,
-            GeneralStorage.getInstance().getProject().getId()) 
-                == null;
-        
     }
 
     /**
@@ -184,9 +146,9 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
 
     /**
      * 
-     * @param compNameMapper The new mapper to use.
+     * @param compNameCache The new cache to use.
      */
-    public void setComponentNameMapper(IComponentNameMapper compNameMapper) {
-        m_compNameMapper = compNameMapper;
+    public void setComponentNameCache(IComponentNameCache compNameCache) {
+        m_compNameCache = compNameCache;
     }
 }

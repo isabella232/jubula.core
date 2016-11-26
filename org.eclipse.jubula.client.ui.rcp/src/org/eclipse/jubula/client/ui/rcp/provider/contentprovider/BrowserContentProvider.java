@@ -24,18 +24,18 @@ abstract class BrowserContentProvider
     extends AbstractTreeViewContentProvider {
 
     /**
-     * @param referencedTestCase test case
+     * @param parent node
      * @return all children of a test case which should be displayed
      */
-    List<INodePO> getChildrenToDisplay(INodePO referencedTestCase) {
-        List<INodePO> allChildren = referencedTestCase
+    List<INodePO> getChildrenToDisplay(INodePO parent) {
+        List<INodePO> allChildren = parent
                 .getUnmodifiableNodeList();
-        List<INodePO> displayedChildren = new ArrayList<INodePO>();
+        List<INodePO> children = new ArrayList<INodePO>();
         for (INodePO child : allChildren) {
             if (!(child instanceof ICommentPO)) {
-                displayedChildren.add(child);
+                children.add(child);
             }
         }
-        return displayedChildren;
+        return children;
     }  
 }

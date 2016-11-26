@@ -418,14 +418,15 @@ public class ChooseTestSuiteBP {
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
+     * @param iterMax the maximum number of iterations
      */
     public void executeTestSuite(ITestSuitePO tsToStart, AutIdentifier autId,
-            boolean autoScreenshot) {
+            boolean autoScreenshot, int iterMax) {
         if (!Utils.openPerspective(Constants.EXEC_PERSPECTIVE)) {
             return;
         }
         TestExecutionGUIController.startTestSuite(tsToStart, autId,
-                autoScreenshot);
+                autoScreenshot, iterMax);
         setLastUsedTestSuite(tsToStart);
         setLastUsedAUT(autId);
     }

@@ -31,7 +31,6 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
@@ -179,8 +178,6 @@ public class TestJobEditor extends AbstractJBEditor {
 
             getEditorHelper().resetEditableState();
             getEditorHelper().setDirty(false);
-        } catch (IncompatibleTypeException pmce) {
-            handlePMCompNameException(pmce);
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
             try {

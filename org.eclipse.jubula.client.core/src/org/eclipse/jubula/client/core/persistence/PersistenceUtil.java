@@ -21,7 +21,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
-import org.eclipse.jubula.tools.internal.utils.ValueListIterator;
 
 
 /**
@@ -31,6 +30,9 @@ import org.eclipse.jubula.tools.internal.utils.ValueListIterator;
  * @created May 19, 2010
  */
 public class PersistenceUtil {
+    
+    /** Maximum number of entries in an Oracle in (...) clause **/
+    public static final int MAX_DB_VALUE_LIST = 1000;
 
     /**
      * Private constructor to prevent instantiation of a utility class.
@@ -59,9 +61,9 @@ public class PersistenceUtil {
 
         List<Predicate> expressionCollections = new ArrayList<Predicate>();
         In currentSet = criteriaBuilder.in(property);
-        int count = ValueListIterator.MAX_DB_VALUE_LIST;
+        int count = MAX_DB_VALUE_LIST;
         for (Object expression : expressionList) {
-            if (count >= ValueListIterator.MAX_DB_VALUE_LIST) {
+            if (count >= MAX_DB_VALUE_LIST) {
                 currentSet = criteriaBuilder.in(property);
                 expressionCollections.add(currentSet);
                 count = 0;

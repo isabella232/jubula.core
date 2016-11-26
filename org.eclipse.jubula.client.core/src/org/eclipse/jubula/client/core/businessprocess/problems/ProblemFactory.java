@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.osgi.util.NLS;
 
@@ -82,6 +83,28 @@ public final class ProblemFactory {
                             ProblemIncompleteObjectMappingTooltip,
                             autName)), autName,
                     ProblemType.REASON_OM_INCOMPLETE);
+    }
+    
+    /**
+     * Creates an incompatible type Problem
+     * @param cN the Component Name
+     * @param type the Problem Type
+     * @return the Problem
+     */
+    public static IProblem createIncompatibleTypeProblem(
+            IComponentNamePO cN, ProblemType type) {
+        if (type.equals(ProblemType.REASON_INCOMPATIBLE_MAP_TYPE)) {
+            return new Problem(NLS.bind(
+                Messages.ProblemIncompatibleMapTypeMarkerText, cN.getName()),
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                NLS.bind(Messages.ProblemIncompatibleMapTypeMarkerText,
+                        cN.getName())), cN.getName(), type);
+        }
+        return new Problem(NLS.bind(
+                Messages.ProblemIncompatibleUsageTypeMarkerText, cN.getName()),
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                NLS.bind(Messages.ProblemIncompatibleUsageTypeMarkerText,
+                        cN.getName())), cN.getName(), type);
     }
 
     /**

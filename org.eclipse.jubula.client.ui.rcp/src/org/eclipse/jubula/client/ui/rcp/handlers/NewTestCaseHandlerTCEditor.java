@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
@@ -33,6 +34,8 @@ import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator;
+import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator.NodeTarget;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
@@ -76,7 +79,7 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
                     INodePO parent = ISpecObjContPO.TCB_ROOT_NODE;
                     try {
                         newSpecTC = TestCaseBP.createNewSpecTestCase(tcName,
-                                parent, null);
+                                parent);
                         DataEventDispatcher.getInstance()
                             .fireDataChangedListener(
                                 newSpecTC, DataState.Added, UpdateState.all);
@@ -88,8 +91,11 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
                 }
                 if (newSpecTC != null) {
                     Integer index = null;
-                    if (selectedNode instanceof IExecTestCasePO) {
-                        index = getPositionToInsert(editorNode, selectedNode);
+                    NodeTarget place = getPositionToInsert(selectedNode,
+                            tce.getTreeViewer().getExpandedState(
+                                    selectedNode));
+                    if (place == null) {
+                        return;
                     }
 
                     try {
@@ -98,8 +104,8 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
                                 .createWorkVersion(newSpecTC);
                         IExecTestCasePO newExecTC = TestCaseBP
                                 .addReferencedTestCase(tce.getEditorHelper()
-                                        .getEditSupport(), editorNode,
-                                        workNewSpecTC, index);
+                                        .getEditSupport(), place.getNode(),
+                                        workNewSpecTC, place.getPos());
 
                         tce.getEditorHelper().setDirty(true);
                         DataEventDispatcher.getInstance()
@@ -115,21 +121,22 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
     }
     
     /**
-     * @param workNode
-     *            the workversion of the current specTC
-     * @param selectedNode
-     *            the currently selected node
+     * @param node the currently selected node: we insert below this or at the end of the SpecTC
+     * @param exp whether node is expanded
      * @return the position to add
      */
-    public static Integer getPositionToInsert(INodePO workNode,
-            INodePO selectedNode) {
+    public static NodeTarget getPositionToInsert(INodePO node, boolean exp) {
 
-        int positionToAdd = workNode.indexOf(selectedNode) + 1;
         if (Plugin.getDefault().getPreferenceStore()
                 .getBoolean(Constants.NODE_INSERT_KEY)) {
 
-            positionToAdd = workNode.getUnmodifiableNodeList().size() + 1;
+            INodePO top = node;
+            while (top != null && !(top instanceof ISpecTestCasePO)) {
+                top = top.getParentNode();
+            }
+            return new NodeTarget(top.getNodeListSize(), top);
         }
-        return positionToAdd;
+        return NodeTargetCalculator.calcNodeTarget(null, node,
+                ViewerDropAdapter.LOCATION_AFTER, exp);
     }
 }

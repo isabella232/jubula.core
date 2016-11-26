@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.treeoperations;
 
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
@@ -52,7 +52,7 @@ public class FindResponsibleNodesForComponentNameOp
             CompNameResult result = 
                 m_compNameBP.findCompName(ctx.getCurrentTreePath(), 
                         cap, cap.getComponentName(),
-                        ComponentNamesBP.getInstance());
+                        CompNameManager.getInstance());
             if (getCompNameGuid().equals(result.getCompName())) {
                 INodePO responsibleNode = result.getResponsibleNode();
                 if (responsibleNode instanceof ICapPO) {

@@ -10,28 +10,22 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameCreationContext;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.persistence.CompNamePM;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 
 /**
+ * Creates a new component name in the Component Name Browser
  * @author BREDEX GmbH
  * @created Mar 13, 2009
  */
@@ -42,41 +36,23 @@ public class NewComponentNameInViewHandler extends
      * {@inheritDoc}
      */
     public Object executeImpl(ExecutionEvent event) {
-        EntityManager s = Persistor.instance().openSession();
-        IWritableComponentNameMapper compNameMapper = 
-            new ProjectComponentNameMapper(
-                    new ComponentNamesDecorator(s), 
-                    GeneralStorage.getInstance().getProject());
-
         // Show dialog
-        String newName = openDialog(compNameMapper);
+        String newName = openDialog();
         
         try {
             if (newName != null) {
-                EntityTransaction tx = 
-                    Persistor.instance().getTransaction(s);
-                IComponentNamePO newCompName = 
-                    performOperation(newName, compNameMapper);
-                CompNamePM.flushCompNames(s, 
-                        GeneralStorage.getInstance().getProject().getId(), 
-                        compNameMapper);
-                Persistor.instance().commitTransaction(s, tx);
-                compNameMapper.getCompNameCache()
-                    .updateStandardMapperAndCleanup(
-                        GeneralStorage.getInstance().getProject()
-                            .getId());
+                String compType = ComponentBuilder.getInstance()
+                        .getCompSystem().getMostAbstractComponent().getType();
+                IComponentNamePO cNamePO = CompNameManager.getInstance().
+                        createAndPersistCompNamePO(newName, compType,
+                                CompNameCreationContext.OBJECT_MAPPING);
                 DataEventDispatcher.getInstance().fireDataChangedListener(
-                        newCompName, DataState.Added, UpdateState.all);
+                        cNamePO, DataState.Added, UpdateState.notInEditor);
             }
-        } catch (IncompatibleTypeException e) {
-            ErrorHandlingUtil.createMessageDialog(
-                    e, e.getErrorMessageParams(), null);
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleProjectDeletedException();
-        } finally {
-            Persistor.instance().dropSession(s);
         }
         
         return null;

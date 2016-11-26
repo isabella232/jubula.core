@@ -39,7 +39,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -871,6 +870,9 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
                 return STATE_OK;
             case TestResultNode.ABORT:
                 return STATE_FAILED;
+            case TestResultNode.CONDITION_FAILED:
+            case TestResultNode.INFINITE_LOOP:
+                return STATE_OK;
             default:
                 return null;
         }
@@ -883,27 +885,7 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
      */
     @Transient
     public String getStatusString() {
-        switch (getTestsuiteStatus()) {
-            case TestResultNode.ERROR:
-                return Messages.TestResultNodeStepfailed;
-            case TestResultNode.ERROR_IN_CHILD:
-                return Messages.TestResultNodeErrorInChildren;
-            case TestResultNode.NOT_YET_TESTED:
-                return Messages.TestResultNodeNotYetTested;
-            case TestResultNode.SUCCESS:
-                return Messages.TestResultNodeSuccessfullyTested;
-            case TestResultNode.TESTING:
-                return Messages.TestResultNodeTesting;
-            case TestResultNode.RETRYING:
-                return Messages.TestResultNodeRetrying;
-            case TestResultNode.SUCCESS_RETRY:
-                return Messages.TestResultNodeSuccessRetry;
-            case TestResultNode.ABORT:
-                return Messages.TestResultNodeAbort;
-            default:
-                break;
-        }
-        return Messages.TestResultNodeUnknown;
+        return TestResultNode.getStatusString(getTestsuiteStatus());
     }
 
     /**

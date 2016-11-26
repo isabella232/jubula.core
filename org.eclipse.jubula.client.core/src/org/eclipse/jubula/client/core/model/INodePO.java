@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
+import javax.persistence.EntityManager;
+
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 
 /**
@@ -102,10 +104,29 @@ public interface INodePO extends ITimestampPO {
     public abstract int hashCode();
 
     /**
-     * 
+     * The behaviour of this iterator is the following:
+     *  - for SpecTestCasePOs it returns the normal nodes - without the Event Handlers
+     *  - for ExecTestCasePOs it returns the corresponding SpecTestCasePO's getNodeListIterator,
+     *      or an empty iterator if the SpectTCPO is null
+     *  - for ConditionPOs it returns the condition nodes
      * @return iterator for unmodifiable NodeList
      */
     public abstract Iterator<INodePO> getNodeListIterator();
+    
+    /**
+     * The behaviour of this iterator is the following:
+     *  - for SpecTestCasePOs it returns all nodes, event handlers and all children of
+     *        children of RestrictedNode children
+     *  - for ExecTestCasePOs it returns the corresponding SpecTestCasePO's getAllNodeIter,
+     *      or an empty iterator if the SpectTCPO is null
+     * This assumes a very restricted structure of children for SpecTestCasePOs:
+     *    Restricted Nodes only have Containers as direct children which in turn cannot contain
+     *    Containers or Restricted Nodes
+     * @return the iterator
+     */
+    public Iterator<INodePO> getAllNodeIter();
+
+
 
     /**
      * @return size of nodeList
@@ -274,9 +295,21 @@ public interface INodePO extends ITimestampPO {
     public void setDescription(String description);
     
     /**
-     * Returns an iterator over all child nodes (including event handlers)
-     * @return the iterator
+     * Returns the SpecTC or TestSuite ancestor of a NodePO or null
+     * @return the ancestor
      */
-    public Iterator<INodePO> getAllNodeIter();
-
+    public INodePO getSpecAncestor();
+    
+    /**
+     * A node is going to be deleted, so it should remove all dependencies of its children
+     * @param sess the session
+     */
+    public void goingToBeDeleted(EntityManager sess);
+    
+    /**
+     * Removes one of the node's children by a native SQL query
+     * @param sess the session
+     * @param child the child
+     */
+    public void deleteChildNativeSQL(EntityManager sess, INodePO child);
 }

@@ -74,7 +74,7 @@ public class ParamNodeDataSetPage extends AbstractDataSetPage {
             Object inputNode = paramObj;
             if (paramObj instanceof ICapPO 
                     || paramObj instanceof IExecTestCasePO) {
-                inputNode = getParamNodePO(paramObj).getParentNode();
+                inputNode = getParamNodePO(paramObj).getSpecAncestor();
             }
             List<IEditorReference> editors = Plugin.getAllEditors();
             for (IEditorReference reference : editors) {

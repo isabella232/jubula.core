@@ -17,7 +17,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
@@ -59,8 +59,8 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
                 "ObjectMappingEditor.UnAssignedTech"); //$NON-NLS-1$
     }
 
-    /** the component mapper to use for finding and modifying components */
-    private IComponentNameMapper m_compMapper;
+    /** the component cache to use for finding and modifying components */
+    private IComponentNameCache m_compCache;
     
     /** clipboard */
     private Clipboard m_clipboard = new Clipboard(PlatformUI.getWorkbench()
@@ -69,11 +69,11 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
     /**
      * Constructor
      * 
-     * @param compMapper The component mapper to use for finding and modifying 
+     * @param compCache The component cache to use for finding and modifying 
      *                   Component Names.
      */
-    public OMEditorTreeLabelProvider(IComponentNameMapper compMapper) {
-        m_compMapper = compMapper;
+    public OMEditorTreeLabelProvider(IComponentNameCache compCache) {
+        m_compCache = compCache;
     }
     
     /**
@@ -186,7 +186,7 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
                 return compId.getComponentNameToDisplay();
             }
         } else if (element instanceof IComponentNamePO) {
-            return m_compMapper.getCompNameCache().getName(
+            return m_compCache.getNameByGuid(
                     ((IComponentNamePO)element).getGuid());
         } else if (element instanceof IObjectMappingCategoryPO) {
             IObjectMappingCategoryPO category = 

@@ -403,15 +403,155 @@
 			</A>
             <xsl:apply-templates select="@duration" />
 			<xsl:variable name="child_nodes" 
-					      select="comment|testcase|step|eventhandler"/>
+					      select="comment|testcase|step|eventhandler|ifthenelse"/>
 			<xsl:if test="count($child_nodes) != 0">
 				<ul>
 					<xsl:apply-templates
-						select="comment|testcase|step|eventhandler"/>
+						select="comment|testcase|step|eventhandler|ifthenelse"/>
 				</ul>
 			</xsl:if>
 		</li>
 	</xsl:template>
+    
+    <xsl:template match="ifthenelse">
+        <li>
+            <xsl:choose>
+                <xsl:when test="status != 2 and status != 3 and status != 5">
+                    <xsl:attribute name="class">c</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="class">o</xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+            <A HREF="#cond" onclick="t(this)">
+            <xsl:call-template name="writeColored">
+                <!-- quoted String -->
+                <xsl:with-param name="text" select="'If-Then-Else'"/>
+            </xsl:call-template>
+            </A>
+            <xsl:apply-templates select="@duration" />
+            <xsl:variable name="child_nodes" 
+                          select="container"/>
+            <xsl:if test="count($child_nodes) != 0">
+                <ul>
+                    <xsl:apply-templates
+                        select="container"/>
+                </ul>
+            </xsl:if>
+        </li>
+    </xsl:template>
+    
+    <xsl:template match="container">
+        <li>
+            <xsl:choose>
+                <xsl:when test="status != 2 and status != 3 and status != 5">
+                    <xsl:attribute name="class">c</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="class">o</xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+            <A HREF="#cont" onclick="t(this)">
+            <xsl:call-template name="writeColored">
+                <!-- quoted String -->
+                <xsl:with-param name="text" select="'Container'"/>
+            </xsl:call-template>
+            </A>
+            <xsl:apply-templates select="@duration" />
+            <xsl:variable name="child_nodes" 
+                          select="comment|testcase|step"/>
+            <xsl:if test="count($child_nodes) != 0">
+                <ul>
+                    <xsl:apply-templates
+                        select="comment|testcase|step"/>
+                </ul>
+            </xsl:if>
+        </li>
+    </xsl:template>
+    
+    <xsl:template match="dowhile">
+        <li>
+            <xsl:choose>
+                <xsl:when test="status != 2 and status != 3 and status != 5">
+                    <xsl:attribute name="class">c</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="class">o</xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+            <A HREF="#cont" onclick="t(this)">
+            <xsl:call-template name="writeColored">
+                <!-- quoted String -->
+                <xsl:with-param name="text" select="'Do-While'"/>
+            </xsl:call-template>
+            </A>
+            <xsl:apply-templates select="@duration" />
+            <xsl:variable name="child_nodes" 
+                          select="comment|testcase|step"/>
+            <xsl:if test="count($child_nodes) != 0">
+                <ul>
+                    <xsl:apply-templates
+                        select="comment|testcase|step"/>
+                </ul>
+            </xsl:if>
+        </li>
+    </xsl:template>
+
+    <xsl:template match="whiledo">
+        <li>
+            <xsl:choose>
+                <xsl:when test="status != 2 and status != 3 and status != 5">
+                    <xsl:attribute name="class">c</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="class">o</xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+            <A HREF="#cont" onclick="t(this)">
+            <xsl:call-template name="writeColored">
+                <!-- quoted String -->
+                <xsl:with-param name="text" select="'While-Do'"/>
+            </xsl:call-template>
+            </A>
+            <xsl:apply-templates select="@duration" />
+            <xsl:variable name="child_nodes" 
+                          select="comment|testcase|step"/>
+            <xsl:if test="count($child_nodes) != 0">
+                <ul>
+                    <xsl:apply-templates
+                        select="comment|testcase|step"/>
+                </ul>
+            </xsl:if>
+        </li>
+    </xsl:template>
+    
+    <xsl:template match="repeat">
+        <li>
+            <xsl:choose>
+                <xsl:when test="status != 2 and status != 3 and status != 5">
+                    <xsl:attribute name="class">c</xsl:attribute>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:attribute name="class">o</xsl:attribute>
+                </xsl:otherwise>
+            </xsl:choose>
+            <A HREF="#cont" onclick="t(this)">
+            <xsl:call-template name="writeColored">
+                <!-- quoted String -->
+                <xsl:with-param name="text" select="'Repeat'"/>
+            </xsl:call-template>
+            </A>
+            <xsl:apply-templates select="@duration" />
+            <xsl:variable name="child_nodes" 
+                          select="comment|testcase|step"/>
+            <xsl:if test="count($child_nodes) != 0">
+                <ul>
+                    <xsl:apply-templates
+                        select="comment|testcase|step"/>
+                </ul>
+            </xsl:if>
+        </li>
+    </xsl:template>
 	
 	<xsl:template match="step">
 		<li>

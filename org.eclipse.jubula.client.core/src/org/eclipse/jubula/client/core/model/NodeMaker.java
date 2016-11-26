@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 
 
@@ -19,6 +20,10 @@ import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
  */
 public abstract class NodeMaker {
 
+    /** A constant handler to mark conditions */
+    public static final IEventExecTestCasePO COND_EVENT_EXECTC =
+            new EventExecTestCasePO(ReentryProperty.CONDITION);
+    
     /** hide */
     private NodeMaker() {
     // hide for factory class
@@ -421,7 +426,165 @@ public abstract class NodeMaker {
     public static ICommentPO createCommentPO(String comment, String guid) {
         return new CommentPO(comment, guid);
     }
+    
+    /**
+     * creates a new instance of {@link ConditionalStatementPO}
+     * @return the new instance of {@link ConditionalStatementPO}
+     */
+    public static IConditionalStatementPO createConditionalStatementPO() {
+        return new ConditionalStatementPO(Messages.IfThenElseName);
+    }
+    
+    /**
+     * creates a new instance of {@link ConditionalStatementPO}
+     * @param name name
+     * @param guid guid
+     * @return the new instance of {@link ConditionalStatementPO}
+     */
+    public static IConditionalStatementPO createConditionalStatementPO(
+            String name, String guid) {
+        return new ConditionalStatementPO(name, guid);
+    }
 
+    /**
+     * creates a new instance of {@link DoWhilePO}
+     * @return the new instance of {@link DoWhilePO}
+     */
+    public static IDoWhilePO createDoWhilePO() {
+        return new DoWhilePO(Messages.DoWhileName);
+    }
+
+    /**
+     * creates a new instance of {@link DoWhilePO}
+     * @param name the name
+     * @param guid the guid
+     * @return the new instance of {@link DoWhilePO}
+     */
+    public static IDoWhilePO createDoWhilePO(String name, String guid) {
+        return new DoWhilePO(name, guid);
+    }
+    
+    /**
+     * creates a new instance of {@link DoWhilePO}
+     * @param name the name
+     * @return the new instance of {@link DoWhilePO}
+     */
+    public static IDoWhilePO createDoWhilePO(String name) {
+        return new DoWhilePO(name);
+    }
+    
+    /**
+     * creates a new instance of {@link WhileDoPO}
+     * @return the new instance of {@link WhileDoPO}
+     */
+    public static IWhileDoPO createWhileDoPO() {
+        return new WhileDoPO(Messages.WhileDoName);
+    }
+
+    /**
+     * creates a new instance of {@link WhileDoPO}
+     * @param name the name
+     * @param guid the guid
+     * @return the new instance of {@link WhileDoPO}
+     */
+    public static IWhileDoPO createWhileDoPO(String name, String guid) {
+        return new WhileDoPO(name, guid);
+    }
+    
+    /**
+     * creates a new instance of {@link WhileDoPO}
+     * @param name the name
+     * @return the new instance of {@link WhileDoPO}
+     */
+    public static IWhileDoPO createWhileDoPO(String name) {
+        return new WhileDoPO(name);
+    }
+    
+    /**
+     * Creates the same type of container as cont
+     * @param cont the container
+     * @return the new (empty) container
+     */
+    public static IControllerPO createControllerPO(IControllerPO cont) {
+        IControllerPO copy = null;
+        if (cont instanceof IConditionalStatementPO) {
+            copy = createConditionalStatementPO(cont.getName());
+        } else if (cont instanceof IDoWhilePO) {
+            copy = createDoWhilePO(cont.getName());
+        } else if (cont instanceof IWhileDoPO) {
+            copy = createWhileDoPO(cont.getName());
+        } else if (cont instanceof IIteratePO) {
+            copy = createIteratePO(cont.getName());
+            ((IIteratePO) cont).getDataManager().deepCopy(
+                    ((IIteratePO) copy).getDataManager());
+        } else {
+            throw new UnsupportedOperationException("Unknown Controller type."); //$NON-NLS-1$
+        }
+        for (int i = 0; i < cont.getUnmodifiableNodeList().size(); i++) {
+            copy.getUnmodifiableNodeList().get(i).setName(
+                    cont.getUnmodifiableNodeList().get(i).getName());
+        }
+        return copy;
+    }
+
+    
+    /**
+     * creates a new instance of {@link WhileDoPO}
+     * @return the new instance of {@link WhileDoPO}
+     */
+    public static IIteratePO createIteratePO() {
+        return new IteratePO(Messages.RepeatName);
+    }
+    
+    /**
+     * creates a new instance of {@link IteratePO}
+     * @param name the name
+     * @return the new instance of {@link IteratePO}
+     */
+    public static IIteratePO createIteratePO(String name) {
+        return new IteratePO(name);
+    }
+    
+    /**
+     * creates a new instance of {@link WhileDoPO}
+     * @param name the name
+     * @param guid the guid
+     * @return the new instance of {@link WhileDoPO}
+     */
+    public static IIteratePO createIteratePO(String name, String guid) {
+        return new IteratePO(name, guid);
+    }
+    
+    /**
+     * Creates a ContainerPO
+     * @param name the name
+     * @return the new ContainerPO with generated GUID
+     */
+    public static IAbstractContainerPO createContainerPO(String name) {
+        return new ContainerPO(name);
+    }
+    
+    /**
+     * Creates a ContainerPO
+     * @param name the name
+     * @param guid the guid
+     * @return the new ContainerPO with generated GUID
+     */
+    public static IAbstractContainerPO createContainerPO(
+            String name, String guid) {
+        return new ContainerPO(name, guid);
+    }
+    
+    /**
+     * creates a new instance of {@link ConditionalStatementPO}
+     * @param name name
+     * @return the new instance of {@link ConditionalStatementPO}
+     */
+    public static IConditionalStatementPO createConditionalStatementPO(
+            String name) {
+        return new ConditionalStatementPO(name);
+    }
+    
     /**
      * get the class instance of NodePO (needed by Persistor)
      * @return the class instance of NodePO

@@ -68,6 +68,15 @@ class EventExecTestCasePO extends ExecTestCasePO implements
     }
     
     /**
+     * Constructor for unique instances
+     * @param prop a reentry property
+     */
+    EventExecTestCasePO(ReentryProperty prop) {
+        super();
+        setReentryProp(prop);
+    }
+    
+    /**
      * constructor
      * @param specTC referenced specTestCase
      * @param assocNode the associated Node which uses this EventHandler

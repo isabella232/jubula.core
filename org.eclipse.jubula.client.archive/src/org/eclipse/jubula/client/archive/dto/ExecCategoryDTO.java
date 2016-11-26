@@ -10,22 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jubula.client.core.model.INodePO;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author BREDEX GmbH
  */
 public class ExecCategoryDTO extends NodeDTO {
-
-    /** it could contain testsuite or testjob or category */
-    private List<NodeDTO> m_nodes =
-            new ArrayList<NodeDTO>();
-
     
     /** needed because JSON mapping */
     public ExecCategoryDTO() { }
@@ -47,14 +37,6 @@ public class ExecCategoryDTO extends NodeDTO {
             
             throw new IllegalArgumentException();
         }
-        this.m_nodes.add(node);
-    }
-    
-    /**
-     * @return nodes
-     */
-    @JsonProperty("nodes")
-    public List<NodeDTO> getNodes() {
-        return m_nodes;
+        super.addNode(node);
     }
 }

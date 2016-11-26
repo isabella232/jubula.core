@@ -141,7 +141,7 @@ public class DeleteProjectHandler extends AbstractProjectHandler {
                 };
                 if (m_deleteCurrentProject) {
                     Utils.clearClient();
-                    GeneralStorage.getInstance().setProject(null);
+                    GeneralStorage.getInstance().nullProject();
                     ded.fireDataChangedListener(m_project,
                             DataState.Deleted, UpdateState.all);
                 } else if (isRefreshRequired) {

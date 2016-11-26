@@ -64,6 +64,8 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ITestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICondStructPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IAbstractContainerPO" />
             </or>
           </iterate>
         </and>

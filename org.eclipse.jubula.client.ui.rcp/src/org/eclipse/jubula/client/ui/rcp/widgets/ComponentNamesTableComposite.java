@@ -26,36 +26,32 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.ReusedCompNameValidator;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
-import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
-import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
+import org.eclipse.jubula.client.ui.rcp.dialogs.CNTypeProblemDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.utils.Utils;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
@@ -114,7 +110,7 @@ public class ComponentNamesTableComposite extends Composite implements
     
     /**
      * The currently selected test execution node, may be <code>null</code>,
-     * if no test execution node ist selected.
+     * if no test execution node is selected.
      */
     private IExecTestCasePO m_selectedExecNode;
     
@@ -147,8 +143,8 @@ public class ComponentNamesTableComposite extends Composite implements
     /** the check state listener */
     private CheckStateListener m_checkStateListener = new CheckStateListener();
     
-    /** the component mapper to use for finding and modifying components */
-    private IComponentNameMapper m_compMapper;
+    /** the component cache to use for finding and modifying components */
+    private IComponentNameCache m_compCache;
     
     /**
      * @param parent
@@ -181,8 +177,8 @@ public class ComponentNamesTableComposite extends Composite implements
         m_tableViewer.setColumnProperties(new String[] { COLUMN_PROPAGATE, 
             COLUMN_OLD_NAME, COLUMN_NEW_NAME, COLUMN_TYPE_NAME });
 
-        setCompMapper(Plugin.getActiveCompMapper());
-        setCellEdit(new CompNamePopupTextCellEditor(getCompMapper(), table));
+        setCompCache(Plugin.getActiveCompCache());
+        setCellEdit(new CompNamePopupTextCellEditor(getCompCache(), table));
         m_tableViewer.setCellEditors(new CellEditor[] { null, null, 
             getCellEdit(), null});
         getCellEdit().addListener(m_cellEditorListener);
@@ -246,42 +242,26 @@ public class ComponentNamesTableComposite extends Composite implements
             }
             Object o = ((IStructuredSelection)event.getSelection())
                 .getFirstElement();
-            if (o instanceof ICompNamesPairPO 
-                    && getSelectedExecNodeOwner() 
-                        instanceof AbstractTestCaseEditor) {
-                
-                ICompNamesPairPO pair = (ICompNamesPairPO)o;
-                m_selectedPair = pair;
-                getCellModifier().setModifiable(m_editable 
-                    && !StringConstants.EMPTY.equals(pair.getType()));
-                if (!getCellModifier().isModifiable()) {
-                    return;
-                }
-                String filter = pair.getType();
-                if (filter == null || StringConstants.EMPTY.equals(filter)) {
-                    IExecTestCasePO execNode = getSelectedExecNode();
-                    // search in the original session the correct compType
-                    IPersistentObject po = ((AbstractTestCaseEditor)
-                        getSelectedExecNodeOwner()).getEditorHelper()
-                        .getEditSupport().getOriginal();
-                    if (po instanceof ISpecTestCasePO) {
-                        for (Object node : ((ISpecTestCasePO)po)
-                                .getUnmodifiableNodeList()) {
-                            
-                            if (node.equals(getSelectedExecNode())) {
-                                execNode = (IExecTestCasePO)node;
-                                break;
-                            }
-                        }
-                    }
-                    filter = Utils.getComponentType(execNode, 
-                        pair.getFirstName());
-                }
-                getCellEdit().setFilter(filter);
-                setInvalidData(false);
-            } else {
+            if (!(o instanceof ICompNamesPairPO && getSelectedExecNodeOwner() 
+                        instanceof AbstractTestCaseEditor)) {
                 m_selectedPair = null;
+                return;
             }
+            IWritableComponentNameCache cache = ((AbstractTestCaseEditor)
+                    getSelectedExecNodeOwner()).getCompNameCache();
+
+            ICompNamesPairPO pair = (ICompNamesPairPO)o;
+            m_selectedPair = pair;
+            getCellModifier().setModifiable(m_editable 
+                && !StringConstants.EMPTY.equals(pair.getType()));
+            if (!getCellModifier().isModifiable()) {
+                return;
+            }
+            CalcTypes calc = new CalcTypes(cache, null);
+            String filter = calc.calculateLocalType(getSelectedExecNode()
+                    .getSpecTestCase(), pair.getFirstName());
+            getCellEdit().setFilter(filter);
+            setInvalidData(false);
         }
     }
     
@@ -329,11 +309,11 @@ public class ComponentNamesTableComposite extends Composite implements
          * {@inheritDoc}
          */
         public Object getValue(Object element, String property) {
-            if (getCompMapper() != null) {
-                return getCompMapper().getCompNameCache().getName(
+            if (getCompCache() != null) {
+                return getCompCache().getNameByGuid(
                         getPair(element).getSecondName());
             }
-            return ComponentNamesBP.getInstance().getName(
+            return CompNameManager.getInstance().getNameByGuid(
                     getPair(element).getSecondName());
         }
         
@@ -488,18 +468,18 @@ public class ComponentNamesTableComposite extends Composite implements
                 case 0:
                     return StringConstants.EMPTY;
                 case 1:
-                    if (getCompMapper() != null) {
-                        return getCompMapper().getCompNameCache()
-                            .getName(pair.getFirstName());
+                    if (getCompCache() != null) {
+                        return getCompCache()
+                            .getNameByGuid(pair.getFirstName());
                     }
-                    return ComponentNamesBP.getInstance().getName(
+                    return CompNameManager.getInstance().getNameByGuid(
                             pair.getFirstName());
                 case 2:
-                    if (getCompMapper() != null) {
-                        return getCompMapper().getCompNameCache()
-                            .getName(pair.getSecondName());
+                    if (getCompCache() != null) {
+                        return getCompCache().
+                            getNameByGuid(pair.getSecondName());
                     }
-                    return ComponentNamesBP.getInstance().getName(
+                    return CompNameManager.getInstance().getNameByGuid(
                             pair.getSecondName());
                 case 3:
                     searchAndSetComponentType(pair);
@@ -554,23 +534,13 @@ public class ComponentNamesTableComposite extends Composite implements
             return;
         }
         if ((getSelectedExecNodeOwner() instanceof IJBEditor)) {
-            final IPersistentObject orig = 
-                ((IJBEditor)getSelectedExecNodeOwner()).getEditorHelper()
-                    .getEditSupport().getOriginal();
-            if (orig instanceof ISpecTestCasePO 
-                || orig instanceof ITestSuitePO) {
-                
-                INodePO origNode = (INodePO)orig;
-                for (Object node : origNode.getUnmodifiableNodeList()) {
-                    if (CompNamesBP.searchCompType(pair, node)) {
-                        return;
-                    }
-                }
+            EditSupport supp = ((IJBEditor)getSelectedExecNodeOwner()).
+                    getEditorHelper().getEditSupport();
+            if (supp == null) {
+                return;
             }
-        }
-        // if exec was added to an editor session
-        if (StringUtils.isEmpty(pair.getType())) {
-            CompNamesBP.searchCompType(pair, getSelectedExecNode());
+            CalcTypes.recalculateCompNamePairs(supp.getCache(),
+                    (INodePO) supp.getWorkVersion());
         }
     }
     
@@ -599,8 +569,12 @@ public class ComponentNamesTableComposite extends Composite implements
      */
     private void updateTableInput() {
         boolean editable = false;
+        INodePO workVersion = null;
         if (getSelectedExecNodeOwner() instanceof AbstractTestCaseEditor) {
             editable = true;
+            workVersion = (INodePO)
+                    ((AbstractTestCaseEditor) getSelectedExecNodeOwner())
+                    .getEditorHelper().getEditSupport().getWorkVersion();
         }
         List<ICompNamesPairPO> input = null;
         if (getSelectedExecNode() != null) {
@@ -613,11 +587,8 @@ public class ComponentNamesTableComposite extends Composite implements
 
             IWorkbenchPart activePart = Plugin.getActivePart();
             if (activePart instanceof IJBEditor) {
-                setCompMapper(((IJBEditor)activePart).getEditorHelper()
-                    .getEditSupport().getCompMapper());
+                setCompCache(((IJBEditor)activePart).getCompNameCache());
             }
-            getCellEdit().setValidator(new CompNameCellValidator(m_tableViewer, 
-                new ReusedCompNameValidator(getCompMapper())));
         }
         m_tableViewer.setInput(input);
         // Set the table to (non-) editable. We don't use Control.setEditable()
@@ -682,8 +653,15 @@ public class ComponentNamesTableComposite extends Composite implements
      *            The propagated property
      */
     private void updatePropagated(ICompNamesPairPO pair, boolean propagated) {
-        if (m_compNamesBP.updateCompNamesPair(getSelectedExecNode(), pair,
-                propagated)) {
+        if (getSelectedExecNodeOwner() instanceof IJBEditor) {
+            IExecTestCasePO exec = getSelectedExecNode();
+            if (exec == null) {
+                return;
+            }
+            pair.setPropagated(propagated);
+            if (exec.getCompNamesPair(pair.getFirstName()) == null) {
+                exec.addCompNamesPair(pair);
+            }
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     getSelectedExecNode(), DataState.StructureModified,
                     UpdateState.onlyInEditor);
@@ -699,41 +677,39 @@ public class ComponentNamesTableComposite extends Composite implements
      *            The second name
      */
     private void updateSecondName(ICompNamesPairPO pair, String secondName) {
-        if (!getInvalidData()) {
-            if (getSelectedExecNodeOwner() instanceof IJBEditor) {
-                if (getSelectedExecNode() != null) {
-                    final IJBEditor editor = 
-                        (IJBEditor)getSelectedExecNodeOwner();
-                    final IWritableComponentNameMapper compMapper = editor
-                            .getEditorHelper().getEditSupport().getCompMapper();
-                    try {
-                        if (m_compNamesBP.updateCompNamesPair(
-                                getSelectedExecNode(), pair, secondName,
-                                compMapper)) {
-                            DataEventDispatcher.getInstance()
-                                    .fireDataChangedListener(
-                                            getSelectedExecNode(),
-                                            DataState.StructureModified,
-                                            UpdateState.onlyInEditor);
-                        }
-                    } catch (IncompatibleTypeException e) {
-                        setInvalidData(true);
-                        ErrorHandlingUtil.createMessageDialog(
-                                e, e.getErrorMessageParams(),
-                                null);
-                    } catch (PMAlreadyLockedException pme) {
-                        setInvalidData(true);
-                        PMExceptionHandler.handlePMAlreadyLockedException(pme,
-                                new String[] { Messages.TheComponentName,
-                                    secondName });
-                    } catch (PMException pme) {
-                        setInvalidData(true);
-                        PMExceptionHandler.handlePMExceptionForEditor(pme,
-                                editor);
-                    }
-                }
-            }
+        if (getInvalidData()
+            || !(getSelectedExecNodeOwner() instanceof IJBEditor)
+            || getSelectedExecNode() == null) {
+            return;
         }
+        if (secondName == null || secondName.length() == 0) {
+            return;
+        }
+        final AbstractTestCaseEditor editor = 
+            (AbstractTestCaseEditor)getSelectedExecNodeOwner();
+        IWritableComponentNameCache cache = editor.getCompNameCache();
+        String oldName = pair.getSecondName();
+        IComponentNamePO cN = cache.getResCompNamePOByGuid(oldName);
+        if (cN != null) {
+            oldName = cN.getName();
+        }
+        INodePO root = (INodePO) editor.getEditorHelper().getEditSupport().
+                getWorkVersion();
+        
+        m_compNamesBP.updateCompNamesPairNew(getSelectedExecNode(),
+                pair, secondName, cache);
+        setInvalidData(true);
+        if (!CNTypeProblemDialog.noProblemOrIgnore(cache, root)) {
+            m_compNamesBP.updateCompNamesPairNew(getSelectedExecNode(),
+                    pair, oldName, cache);
+            return;
+        }
+
+        setInvalidData(false);
+        
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                getSelectedExecNode(), DataState.StructureModified,
+                UpdateState.onlyInEditor);
     }
     
     /**
@@ -811,17 +787,17 @@ public class ComponentNamesTableComposite extends Composite implements
     }
 
     /**
-     * @param compMapper the compMapper to set
+     * @param compCache the compCache to set
      */
-    private void setCompMapper(IComponentNameMapper compMapper) {
-        m_compMapper = compMapper;
+    private void setCompCache(IComponentNameCache compCache) {
+        m_compCache = compCache;
     }
 
     /**
-     * @return the compMapper
+     * @return the compCache
      */
-    private IComponentNameMapper getCompMapper() {
-        return m_compMapper;
+    private IComponentNameCache getCompCache() {
+        return m_compCache;
     }
 
     /**
@@ -850,7 +826,9 @@ public class ComponentNamesTableComposite extends Composite implements
      */
     public void handleDataChanged(IPersistentObject po, DataState dataState) {
         IExecTestCasePO selectedExecNode = getSelectedExecNode();
-        if ((selectedExecNode != null) && selectedExecNode.equals(po)) {
+        if (po instanceof IExecTestCasePO || po instanceof ISpecTestCasePO
+                || po instanceof IComponentNamePO
+                || po instanceof ICompNamesPairPO) {
             m_tableViewer.refresh();
         }
     }

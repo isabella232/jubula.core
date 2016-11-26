@@ -95,9 +95,8 @@ public class ShowWhereUsedComponentNameQuery
                 reuse.size());
         reuseLoc.addAll(getSearchResultListFromNodes(reuse));
         Set<IObjectMappingAssoziationPO> reuseAssocs = 
-            ComponentNamesBP.getInstance().findAssocsOfReuse(
-                GeneralStorage.getInstance().getProject().getAutMainList(), 
-                logicalName);
+            ComponentNamesBP.findAssocsOfReuse(GeneralStorage.getInstance()
+                .getProject().getAutMainList(), logicalName);
         for (IObjectMappingAssoziationPO assoc : reuseAssocs) {
             IAUTMainPO aut = null;
             IObjectMappingCategoryPO cat = assoc.getCategory();
@@ -142,7 +141,7 @@ public class ShowWhereUsedComponentNameQuery
         IProgressMonitor monitor) {
         Set<INodePO> reuse = new HashSet<INodePO>();
         IProjectPO project = GeneralStorage.getInstance().getProject();
-        reuse.addAll(ComponentNamesBP.getInstance().findNodesOfReuse(
+        reuse.addAll(ComponentNamesBP.findNodesOfReuse(
                 project.getSpecObjCont().getSpecObjList(),
                 TestSuiteBP.getListOfTestSuites(project), logicalName,
                 monitor));

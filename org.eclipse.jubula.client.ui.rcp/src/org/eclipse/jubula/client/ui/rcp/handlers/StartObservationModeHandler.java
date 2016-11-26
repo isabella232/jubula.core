@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
@@ -87,7 +87,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         /** The ComponentNamesDecorator associated with the 
          *  edit session of the spec test case.
          */
-        private IWritableComponentNameMapper m_compNamesMapper;
+        private IWritableComponentNameCache m_compNamesCache;
         
         /** key modifier to activate/deactivate check mode */
         private int m_checkModeMods;
@@ -130,7 +130,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
 
         /**
          * @param workCopy  SpecTestCasePO
-         * @param compNamesMapper The ComponentNamesDecorator associated with the 
+         * @param compNamesCache The Component Names Cache associated with the 
          *                        edit session of the spec test case.
          * @param checkModeMods key modifier to activate/deactivate check mode
          * @param checkModeKey key to activate/deactivate check mode
@@ -147,7 +147,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
          * @param autId AutIdentifier of connected aut
          */
         public StartObservationModeJob(ISpecTestCasePO workCopy,
-                IWritableComponentNameMapper compNamesMapper,
+                IWritableComponentNameCache compNamesCache,
                 int recordCompMods, int recordCompKey, int recordApplMods,
                 int recordApplKey, int checkModeMods, int checkModeKey,
                 int checkCompMods, int checkCompKey, boolean dialogOpen,
@@ -156,7 +156,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                 TestCaseEditor editor, AutIdentifier autId) {
             super("Start Observation Mode"); //$NON-NLS-1$
             m_workCopy = workCopy;
-            m_compNamesMapper = compNamesMapper;
+            m_compNamesCache = compNamesCache;
             m_recordCompMods = recordCompMods;
             m_recordCompKey = recordCompKey;
             m_recordApplMods = recordApplMods;
@@ -184,7 +184,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                     final String toolkit = TestExecution.getInstance()
                         .getConnectedAut().getToolkit();
                     TestExecutionContributor.getInstance().getClientTest()
-                        .startRecordTestCase(m_workCopy, m_compNamesMapper,
+                        .startRecordTestCase(m_workCopy, m_compNamesCache,
                             m_recordCompMods, m_recordCompKey, m_recordApplMods,
                             m_recordApplKey, m_checkModeMods, m_checkModeKey,
                             m_checkCompMods, m_checkCompKey, m_dialogOpen,
@@ -340,11 +340,11 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         final ISpecTestCasePO workCopy = 
             (ISpecTestCasePO)editor.getEditorHelper().getEditSupport()
                 .getWorkVersion();
-        final IWritableComponentNameMapper compNamesMapper = editor
-                .getEditorHelper().getEditSupport().getCompMapper();
+        final IWritableComponentNameCache compNamesCache =
+                editor.getCompNameCache();
         
         Job startObservationModeJob = new StartObservationModeJob(
-                workCopy, compNamesMapper,
+                workCopy, compNamesCache,
                 recordCompMods, recordCompKey, recordApplMods,
                 recordApplKey, checkModeMods, checkModeKey,
                 checkCompMods, checkCompKey, dialogOpen,

@@ -147,7 +147,7 @@
       class="org.eclipse.jubula.client.ui.rcp.propertytester.AbstractJBCollectionPropertyTester"
       id="org.eclipse.jubula.client.ui.rcp.propertytester.AbstractJBCollectionPropertyTester"
       namespace="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection"
-      properties="isPasteAllowed,isCopyAllowed,isCutAllowed"
+      properties="isPasteAllowed,isCopyAllowed,isCutAllowed,canExtractOrSaveAs, canAddCondition"
       type="java.util.Collection" />
   </extension>
   <extension
@@ -219,6 +219,21 @@
     </factory>
     <factory
       adaptableType="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO"
+      class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
+      <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+    </factory>
+    <factory
+      adaptableType="org.eclipse.jubula.client.core.model.ICondStructPO"
+      class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
+      <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+    </factory>
+    <factory
+      adaptableType="org.eclipse.jubula.client.core.model.IIteratePO"
+      class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
+      <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
+    </factory>
+    <factory
+      adaptableType="org.eclipse.jubula.client.core.model.IAbstractContainerPO"
       class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
     </factory>
@@ -364,12 +379,11 @@
       <enablement>
         <or>
           <objectClass name="org.eclipse.jubula.client.core.model.ITestSuitePO" />
-          <objectClass name="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-          <objectClass name="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
-          <objectClass name="org.eclipse.jubula.client.core.model.ICapPO" />
           <objectClass name="org.eclipse.jubula.client.core.model.ICategoryPO" />
           <objectClass name="org.eclipse.jubula.client.core.model.ITestJobPO" />
           <objectClass name="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
+          <objectClass name="org.eclipse.jubula.client.core.model.ICondStructPO" />
+          <objectClass name="org.eclipse.jubula.client.core.model.IParamNodePO" />
         </or>
       </enablement>
       <description> This decorator decorates Test Suites, Test Cases or Test Steps with
@@ -404,6 +418,20 @@
       </enablement>
       <description> Decorates Test Cases or Test Case References which make use of test
         data from an external source.
+      </description>
+    </decorator>
+    <decorator
+      class="org.eclipse.jubula.client.ui.rcp.provider.labelprovider.decorators.CompNameDecorator"
+      id="org.eclipse.jubula.client.ui.rcp.decorators.compNameDecorator"
+      label="Comp Name Decorator"
+      lightweight="true"
+      location="BOTTOM_RIGHT"
+      state="true">
+      <enablement>
+        <objectClass name="org.eclipse.jubula.client.core.model.IComponentNamePO" />
+      </enablement>
+      <description>
+      	Decorates Component Names with type problems.
       </description>
     </decorator>
   </extension>
@@ -808,6 +836,22 @@
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.editComment"
       name="%EditComment" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.newConditionalStatement"
+      name="%NewConditionalStatement" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.newDoWhile"
+      name="%NewDoWhileLoop" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.newWhileDo"
+      name="%NewWhileDoLoop" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.newIterateLoop"
+      name="%NewIterateLoop" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.newTestCaseReference"
@@ -2302,7 +2346,7 @@
       </enabledWhen>
     </handler>
     <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTreeItemHandlerTCBrowser"
+      class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTCTSBrowserTreeItemHandler"
       commandId="org.eclipse.ui.edit.delete">
       <activeWhen>
         <with variable="activePartId">
@@ -2343,6 +2387,8 @@
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICondStructPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IIteratePO" />
             </or>
             <not>
               <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
@@ -2393,7 +2439,7 @@
       </enabledWhen>
     </handler>
     <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTreeItemHandlerTSBrowser"
+      class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTCTSBrowserTreeItemHandler"
       commandId="org.eclipse.ui.edit.delete">
       <activeWhen>
         <with variable="activePartId">
@@ -2461,34 +2507,6 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.existing.testcase.ReferenceExistingTestCase"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newTestCaseReference">
       <activeWhen>
-        <or>
-          <and>
-            <with variable="activePartId">
-              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
-            </with>
-            <iterate
-              ifEmpty="false"
-              operator="and">
-              <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
-            </iterate>
-          </and>
-          <and>
-            <with variable="activePartId">
-              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
-            </with>
-            <iterate
-              ifEmpty="false"
-              operator="and">
-              <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
-            </iterate>
-          </and>
-        </or>
-      </activeWhen>
-    </handler>
-    <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.existing.testcase.ReferenceExistingTestCase"
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.newTestCaseReference">
-      <activeWhen>
         <and>
           <or>
             <with variable="activePartId">
@@ -2499,14 +2517,6 @@
             </with>
           </or>
           <count value="1" />
-          <iterate
-            ifEmpty="false"
-            operator="or">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
-            </or>
-          </iterate>
         </and>
       </activeWhen>
     </handler>
@@ -2515,34 +2525,10 @@
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newCap">
       <activeWhen>
         <and>
-          <with variable="activePartId">
-            <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
-          </with>
-          <iterate
-            ifEmpty="false"
-            operator="and">
-            <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
-          </iterate>
-        </and>
-      </activeWhen>
-    </handler>
-    <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.newcap.NewCAP"
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.newCap">
-      <activeWhen>
-        <and>
-          <with variable="activePartId">
-            <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
-          </with>
-          <count value="1" />
-          <iterate
-            ifEmpty="false"
-            operator="or">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
-            </or>
-          </iterate>
+           <with variable="activePartId">
+             <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+           </with>
+           <count value="1" />
         </and>
       </activeWhen>
     </handler>
@@ -2562,18 +2548,35 @@
               <count value="1" />
               <count value="0" />
           </or>
-          <iterate
-            ifEmpty="true"
-            operator="or">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.IRefTestSuitePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
-            </or>
-          </iterate>
         </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NewController"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newConditionalStatement">
+      <activeWhen>
+		<test property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.canAddCondition" />
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NewController"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newWhileDo">
+      <activeWhen>
+		<test property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.canAddCondition" />
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NewController"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newDoWhile">
+      <activeWhen>
+		<test property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.canAddCondition" />
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NewController"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newIterateLoop">
+      <activeWhen>
+		<test property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.canAddCondition" />
       </activeWhen>
     </handler>
     <handler
@@ -3090,6 +3093,18 @@
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newComment"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addComment.gif" />
     <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newConditionalStatement"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/condition.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newWhileDo"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/whiledo.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newDoWhile"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/dowhile.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.newIterateLoop"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/iterate.gif" />
+    <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testCaseRef.gif" />
     <image
@@ -3326,64 +3341,14 @@
       class="org.eclipse.jubula.client.ui.rcp.handlers.ExtractTestCaseHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase">
       <activeWhen>
-        <and>
-          <or>
-            <with variable="activePartId">
-              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
-            </with>
-            <with variable="activePartId">
-              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
-            </with>
-          </or>
-          <iterate
-            ifEmpty="false"
-            operator="and">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
-            </or>
-          </iterate>
-          <not>
-            <iterate
-              ifEmpty="true"
-              operator="or">
-              <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
-            </iterate>
-          </not>
-        </and>
+          <test property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.canExtractOrSaveAs" />
       </activeWhen>
     </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.SaveAsNewTestCaseHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.SaveAsNew">
       <activeWhen>
-        <and>
-          <or>
-            <with variable="activePartId">
-              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
-            </with>
-            <with variable="activePartId">
-              <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
-            </with>
-          </or>
-          <iterate
-            ifEmpty="false"
-            operator="and">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
-            </or>
-          </iterate>
-          <not>
-            <iterate
-              ifEmpty="true"
-              operator="or">
-              <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
-            </iterate>
-          </not>
-        </and>
+		  <test property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.canExtractOrSaveAs" />
       </activeWhen>
     </handler>
     <handler
@@ -3405,6 +3370,7 @@
             <or>
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IControllerPO" />
             </or>
           </iterate>
           <not>
@@ -3478,15 +3444,6 @@
               <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor" />
             </with>
           </or>
-          <count value="1" />
-          <iterate
-            ifEmpty="false"
-            operator="or">
-            <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
-            </or>
-          </iterate>
         </and>
       </activeWhen>
     </handler>
@@ -3624,6 +3581,8 @@
               <or>
                 <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
                 <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
+                <instanceof value="org.eclipse.jubula.client.core.model.IControllerPO" />
+                <instanceof value="org.eclipse.jubula.client.core.model.IAbstractContainerPO" />
               </or>
               <test
                 property="org.eclipse.jubula.client.core.model.isEditable"
@@ -3984,6 +3943,7 @@
                 <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
             </or>
           </iterate>
+          <test property="org.eclipse.jubula.client.ui.rcp.AbstractJBCollection.canExtractOrSaveAs" />
         </and>
       </activeWhen>
     </handler>

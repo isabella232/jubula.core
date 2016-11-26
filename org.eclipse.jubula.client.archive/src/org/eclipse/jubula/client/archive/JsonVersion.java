@@ -30,6 +30,6 @@ public class JsonVersion {
      *              than major version number of CURRENTLY_JSON_VERSION
      */
     public static boolean isCompatible(Version version) {
-        return version.getMajor() == CURRENTLY_JSON_VERSION.getMajor();
+        return version.getMajor() <= CURRENTLY_JSON_VERSION.getMajor();
     }
 }

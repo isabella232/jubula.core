@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2004, 2010 BREDEX GmbH.
+ * Copyright (c) 2016 BREDEX GmbH.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,75 +10,109 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence;
 
+import java.util.Collection;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
 
-import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.persistence.locking.LockManager;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
-
 /**
- * This class supports database transactions 
- *
+ * A class supporting transactions with fully integrated Session and Exception handling
+ * The user does not receive any special report on the error, but the causing Exception is
+ * properly displayed.
  * @author BREDEX GmbH
- * @created 09.09.2005
  *
  */
 public class TransactionSupport {
-
-    /**
-     * Interface for an transaction action
-     * @author BREDEX GmbH
-     * @created 12.09.2005
-     *
-     */
-    public interface ITransactAction {
+    
+    /** Private constructor */
+    private TransactionSupport() {
+        // empty
+    }
+    
+    /** Interface used for the transaction */
+    public interface ITransaction {
         
         /**
-         * Executes the transaction
-         * @param sess The database session
-         * @throws PMException in any case of db error
-         * @throws ProjectDeletedException if the project was deleted in another
-         * instance
+         * Sets the set of objects to be locked - these objects do not have
+         *     to be managed anywhere or can be managed by any session
+         * @return the collection of objects
          */
-        public void run(EntityManager sess) throws PMException, 
-        ProjectDeletedException;
-    }
-    
-    
-    /**
-     * The database session
-     */
-    private EntityManager m_session;
-    
-    /**
-     * Constructor
-     */
-    public TransactionSupport() {
-        this(GeneralStorage.getInstance().getEntityManager());
-    }
-    
-    /**
-     * Constructor
-     * @param session the database session
-     */
-    public TransactionSupport(EntityManager session) {
-        Validate.notNull(session);
-        m_session = session;
-    }
+        public Collection<? extends IPersistentObject> getToLock();
 
-    /**
-     * 
-     * @param action the ITransactAction to execute.
-     * @throws PMException .
-     * @throws ProjectDeletedException if the project was deleted in another
-     * instance
-     */
-    public void transact(ITransactAction action) throws PMException, 
-        ProjectDeletedException {
-        EntityTransaction tx = null;       
-        tx = Persistor.instance().getTransaction(m_session);
-        action.run(m_session);
-        Persistor.instance().commitTransaction(m_session, tx);
+        /**
+         * Sets the set of objects to be refreshed - these objects do not have
+         *     to be managed anywhere or can be managed by any session
+         * @return the collection of objects
+         */
+        public Collection<? extends IPersistentObject> getToRefresh();
+        
+        /**
+         * Executes the operations
+         * @param sess the session to use
+         * @throws PMException
+         * @throws ProjectDeletedException
+         */
+        public abstract void run(EntityManager sess) throws PMException,
+            ProjectDeletedException;
     }
+    
+    /**
+     * Executes the transaction
+     * @param op the operation
+     * @throws PersistenceException
+     * @throws PMException
+     * @throws ProjectDeletedException
+     */
+    public static void transact(ITransaction op)
+            throws PMException, ProjectDeletedException, PersistenceException {
+        EntityManager sess = null;
+        Persistor per = Persistor.instance();
+        boolean success = false;
+        try {
+            sess = per.openSession();
+            EntityTransaction tx = per.getTransaction(sess);
+            LockManager.instance().lockPOs(sess, op.getToLock(), true);
+            op.run(sess);
+            per.commitTransaction(sess, tx);
+            success = true;
+        } finally {
+            per.dropSession(sess);
+        }
+        refreshMasterSession(op);
+    }
+    
+    /**
+     * Refreshes objects of the master session
+     * @param op the objects - these don't need to be managed
+     */
+    private static void refreshMasterSession(ITransaction op)
+        throws PMRefreshFailedException {
+        if (op.getToRefresh() == null
+                || op.getToRefresh().isEmpty()) {
+            return;
+        }
+        try {
+            EntityManager master = GeneralStorage.getInstance().
+                    getMasterSession();
+            for (IPersistentObject po : op.getToRefresh()) {
+                po = master.find(po.getClass(), po.getId());
+                if (po != null) {
+                    master.refresh(po);
+                }
+                if (po instanceof INodePO) {
+                    // to set the parents of the children...
+                    ((INodePO) po).getUnmodifiableNodeList();
+                }
+            }
+        } catch (Exception e) {
+            throw new PMRefreshFailedException(e);
+        }
+    }
+    
 }

@@ -16,9 +16,13 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
@@ -45,14 +49,26 @@ public class NewCommentHandler extends AbstractSelectionBasedHandler {
             tce.getEditorHelper().doEditorOperation(new IEditorOperation() {
                 
                 public void run(IPersistentObject workingPo) {
-                    INodePO workTC = (INodePO)workingPo;
                     IStructuredSelection selection = getSelection();
-                    int posistionToAdd = 0;
-                    INodePO selectedNode = (INodePO)selection.getFirstElement();
-                    if (selectedNode != null) {
-                        posistionToAdd = workTC.indexOf(selectedNode);
+                    INodePO selected = (INodePO)selection.getFirstElement();
+                    INodePO target = selected;
+                    if (selected != null) {
+                        while (!(target instanceof ISpecTestCasePO
+                                || target instanceof IAbstractContainerPO
+                                || target instanceof ITestSuitePO
+                                || target instanceof ITestJobPO
+                                || target == null)) {
+                            target = selected.getParentNode();
+                        }
+                    } else {
+                        target = (INodePO)workingPo;
                     }
-                    addComment(workTC, posistionToAdd, tce);
+                    if (target == null) {
+                        return;
+                    }
+                    int posistionToAdd = target == selected
+                            ? 0 : target.indexOf(selected);
+                    addComment(target, posistionToAdd, tce);
                 }
             });
         }

@@ -10,20 +10,14 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.rename;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesDecorator;
-import org.eclipse.jubula.client.core.businessprocess.ProjectComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
@@ -43,49 +37,23 @@ public class RenameComponentNameInViewHandler extends
     public Object executeImpl(ExecutionEvent event) {
         IComponentNamePO compName = getSelectedComponentName();
         if (compName != null) {
-            EntityManager renameSession = 
-                    Persistor.instance().openSession();
             try {
-                ProjectComponentNameMapper compNameMapper =
-                    new ProjectComponentNameMapper(
-                            new ComponentNamesDecorator(
-                                    renameSession), 
-                                    GeneralStorage.getInstance().getProject());
-                String newName = getNewName(event, compNameMapper, compName);
+                String newName = getNewName(event, compName);
                 if (newName != null) {
-                    EntityTransaction tx = 
-                        Persistor.instance().getTransaction(renameSession);
-                    rename(compNameMapper, compName.getGuid(), newName);
-                    Persistor.instance()
-                        .commitTransaction(renameSession, tx);
-                    compNameMapper.getCompNameCache()
-                        .updateStandardMapperAndCleanup(
-                                GeneralStorage.getInstance().getProject()
-                                    .getId());
+                    CompNameManager.getInstance().
+                        renameCompName(compName, newName);
                     IComponentNamePO eventCompName = 
-                        ComponentNamesBP.getInstance().getCompNamePo(
+                        CompNameManager.getInstance().getResCompNamePOByGuid(
                                 compName.getGuid());
                     DataEventDispatcher.getInstance().fireDataChangedListener(
                             eventCompName, DataState.Renamed, UpdateState.all);
-                    EntityManager masterRO = GeneralStorage.getInstance().
-                            getMasterSession();
-                    IComponentNamePO refreshCN;
-                    refreshCN = masterRO.find(compName.getClass(),
-                            compName.getId());
-                    if (refreshCN != null) {
-                        masterRO.refresh(refreshCN);
-                    }
                 }
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForMasterSession(e);
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleProjectDeletedException();
-            } finally {
-                Persistor.instance().dropSession(renameSession);
             }
         }
-        
         return null;
     }
-    
 }

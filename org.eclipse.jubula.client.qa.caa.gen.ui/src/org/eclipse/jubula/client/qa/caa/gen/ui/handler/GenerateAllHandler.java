@@ -70,7 +70,7 @@ public class GenerateAllHandler extends AbstractHandler {
                 category, null);
         
             ISpecTestCasePO tkTC = TestCaseBP.createNewSpecTestCase(toolkitID,
-                category, null);
+                category);
 
             createEventHandler(category);
             
@@ -124,13 +124,13 @@ public class GenerateAllHandler extends AbstractHandler {
         throws PMSaveException, PMAlreadyLockedException, PMException,
         ProjectDeletedException {
         m_aeEH = TestCaseBP.createNewSpecTestCase("EH - Action Error", //$NON-NLS-1$
-            category, null);
+            category);
         m_cfEH = TestCaseBP.createNewSpecTestCase("EH - Check Failed", //$NON-NLS-1$
-            category, null);
+            category);
         m_cnfEH = TestCaseBP.createNewSpecTestCase("EH - Component not found", //$NON-NLS-1$
-            category, null);
+            category);
         m_ceEH = TestCaseBP.createNewSpecTestCase("EH - Configuration Error", //$NON-NLS-1$
-            category, null);
+            category);
     }
 
     /**
@@ -154,7 +154,7 @@ public class GenerateAllHandler extends AbstractHandler {
         ISpecTestCasePO typeTC, ConcreteComponent c) throws PMSaveException,
         PMAlreadyLockedException, PMException, ProjectDeletedException, 
         InvalidDataException {
-
+        
         ICategoryPO actionsCat = NodeMaker.createCategoryPO("Actions"); //$NON-NLS-1$
         NodePM.addAndPersistChildNode(typeCat, actionsCat, null);
 
@@ -186,7 +186,7 @@ public class GenerateAllHandler extends AbstractHandler {
                 NodeMaker.createExecTestCasePO(actionTC), null);
             
             ISpecTestCasePO actionTC01 = TestCaseBP.createNewSpecTestCase(
-                REQ_PREFIX + actionName + " - 01", actionCat, null); //$NON-NLS-1$
+                REQ_PREFIX + actionName + " - 01", actionCat); //$NON-NLS-1$
 
             TestCaseBP.addReferencedTestCase(actionTC,
                 NodeMaker.createExecTestCasePO(actionTC01), null);

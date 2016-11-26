@@ -27,9 +27,9 @@ import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.CompNameTypeManager;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.MasterSessionComponentNameMapper;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -140,8 +140,8 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
             rightGridData.minimumWidth = 200;
             rightGridData.grabExcessHorizontalSpace = true;
 
-            IComponentNamePO newComponentName = ComponentNamesBP.getInstance()
-                    .getCompNamePo(compNamesPair.getFirstName());
+            IComponentNamePO newComponentName = CompNameManager.getInstance()
+                    .getResCompNamePOByGuid(compNamesPair.getFirstName());
 
             String displayName = getDisplayName(newComponentName.getName(),
                     newComponentName.getComponentType());
@@ -177,15 +177,15 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
                 iterator.hasNext();) {
             ICompNamesPairPO oldPairs = (ICompNamesPairPO) iterator.next();
             
-            IComponentNamePO oldComponent = ComponentNamesBP.getInstance()
-                    .getCompNamePo(oldPairs.getFirstName());
+            IComponentNamePO oldComponent = CompNameManager.getInstance()
+                    .getResCompNamePOByGuid(oldPairs.getFirstName());
             
-            String isCompatible = ComponentNamesBP.getInstance().isCompatible(
-                    componentName.getComponentType(), oldComponent.getName(),
-                    MasterSessionComponentNameMapper.getInstance(),
-                    null, true);   
-            if (isCompatible == null 
-                    && !listOfMatchingCompNames
+            String newType = componentName.getUsageType();
+            String oldType = oldComponent.getUsageType();
+            boolean isComp = CompNameTypeManager.doesFirstTypeRealizeSecond(
+                    oldType, newType);
+            
+            if (isComp && !listOfMatchingCompNames
                         .contains(oldComponent.getGuid())) {
                 listOfMatchingCompNames.add(oldComponent.getGuid());
                 if (componentName.getName().equals(oldComponent.getName())
@@ -237,8 +237,8 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
                 if (element instanceof String) {
                     String guid = (String) element;
                     if (!StringUtils.isBlank((String)element)) {
-                        IComponentNamePO newComponentName = ComponentNamesBP
-                                .getInstance().getCompNamePo(guid);
+                        IComponentNamePO newComponentName = CompNameManager
+                                .getInstance().getResCompNamePOByGuid(guid);
                         return getDisplayName(newComponentName.getGuid(),
                                 newComponentName.getComponentType());
                     }
@@ -280,8 +280,8 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
      * @return a String as <code> ComponentName > SecondComponentName [ComponentType]</code>
      */
     private String getDisplayName(String guidName, String guidType) {
-        String firstName = ComponentNamesBP.getInstance().getName(
-                guidName);
+        String firstName = CompNameManager.getInstance()
+                .getResCompNamePOByGuid(guidName).getName();
         String type = CompSystemI18n.getString(guidType);
         String displayName = firstName;
         if (!StringUtils.isBlank(type)) {

@@ -18,13 +18,18 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.i18n.Messages;
@@ -86,6 +91,16 @@ public class TestResultTreeViewLabelProvider extends CellLabelProvider
             }
         } else if (node instanceof ICommentPO) {
             image = IconConstants.COMMENT_IMAGE;
+        } else if (node instanceof IConditionalStatementPO) {
+            image = IconConstants.CONDITION;
+        } else if (node instanceof IAbstractContainerPO) {
+            image = IconConstants.CAP_IMAGE;
+        } else if (node instanceof IDoWhilePO) {
+            image = IconConstants.DO_WHILE;
+        } else if (node instanceof IWhileDoPO) {
+            image = IconConstants.WHILE_DO;
+        } else if (node instanceof IIteratePO) {
+            image = IconConstants.ITERATE;
         }
         return image;
     }

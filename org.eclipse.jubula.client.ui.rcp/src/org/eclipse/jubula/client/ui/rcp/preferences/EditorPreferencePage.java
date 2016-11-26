@@ -54,6 +54,8 @@ public class EditorPreferencePage extends PreferencePage
     private Button m_nodeInsertButton;
     /** button for add node in testCaseEditor */
     private Button m_nodeAddButton;
+    /** button for counters */
+    private Button m_showCounters;
 
     /** The preferece store to hold the existing preference values. */
     private IPreferenceStore m_store = Plugin.getDefault()
@@ -83,6 +85,13 @@ public class EditorPreferencePage extends PreferencePage
 
         /** Define layout rules for widget placement */
         compositeGridData(composite);
+        
+        m_showCounters = new Button(composite, SWT.CHECK);
+        m_showCounters.setText(
+                Messages.EditorPreferencePageShowCountersCheckBox);
+        m_showCounters.setSelection(Plugin.getDefault().getPreferenceStore()
+                .getBoolean(Constants.SHOWCOUNTERS_KEY));
+        
         createInsertNodeAfterSelectedNodeButton(composite);
 
         /** return the widget used as the base for the user interface */
@@ -149,6 +158,8 @@ public class EditorPreferencePage extends PreferencePage
                 .getDefaultBoolean(Constants.NODE_INSERT_KEY));
         m_nodeAddButton.setSelection(!m_store
                 .getDefaultBoolean(Constants.NODE_INSERT_KEY));
+        m_showCounters.setSelection(m_store.getDefaultBoolean(
+                Constants.SHOWCOUNTERS_KEY));
     }
 
     /**
@@ -159,6 +170,8 @@ public class EditorPreferencePage extends PreferencePage
     public boolean performOk() {
         Plugin.getDefault().getPreferenceStore().setValue(
                 Constants.NODE_INSERT_KEY, m_nodeAddButton.getSelection());
+        Plugin.getDefault().getPreferenceStore().setValue(
+                Constants.SHOWCOUNTERS_KEY, m_showCounters.getSelection());
         return super.performOk();
     }
 

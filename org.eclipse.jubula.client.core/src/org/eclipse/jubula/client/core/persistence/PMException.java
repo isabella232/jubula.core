@@ -17,12 +17,19 @@ import org.eclipse.jubula.tools.internal.exception.JBException;
 public class PMException extends JBException {
 
     /**
-     * {@inheritDoc}
      * @param message guess what...
      * @param id An ErrorMessage.ID.
-     * {@inheritDoc}
      */
     public PMException(String message, Integer id) {
         super(message, id);
+    }
+    
+    /**
+     * @param message guess what...
+     * @param id An ErrorMessage.ID.
+     * @param e the original exception if it existed
+     */
+    public PMException(String message, Throwable e, Integer id) {
+        super(message, e, id);
     }
 }

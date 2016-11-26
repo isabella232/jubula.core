@@ -11,12 +11,11 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.PersistenceException;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -25,7 +24,6 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.TreeOpsBP;
-import org.eclipse.jubula.client.core.businessprocess.TreeOpsBP.TreeOpFailedException;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -34,12 +32,11 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.PersistenceManager;
-import org.eclipse.jubula.client.core.persistence.Persistor;
-import org.eclipse.jubula.client.core.persistence.TransactionSupport;
-import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransactAction;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
+import org.eclipse.jubula.client.ui.rcp.actions.TransactionWrapper;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
@@ -73,17 +70,13 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
                 .getEditSupport().getOriginal();
         if (node != null) {
             validateNode(node);
-            final IStructuredSelection selection = getSelection();
-            ExtractionReturn extractRet = performExtraction(
-                    newTestCaseName, node, selection);
-            if (extractRet.getErrorMessage() != null) {
-                ErrorHandlingUtil.createMessageDialog(new JBException(
-                        extractRet.getErrorMessage(),
-                        MessageIDs.E_UNEXPECTED_EXCEPTION), null,
-                        new String[] { extractRet.getErrorMessage() });
-            }
+            IExecTestCasePO exec = performExtraction(newTestCaseName, node,
+                    getSelection());
             try {
                 editor.reOpenEditor(node);
+                editor.getTreeViewer().setSelection(
+                        new StructuredSelection(editor.getEntityManager().
+                                find(exec.getClass(), exec.getId())));
             } catch (PMException e) {
                 PMExceptionHandler.handlePMExceptionForEditor(e, editor);
             }
@@ -100,42 +93,6 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         }
 
         return null;
-    }
-
-    /**
-     * @author BREDEX GmbH
-     * @created 12.09.2005
-     */
-    private static class ExtractionReturn {
-
-        /** The error message */
-        private String m_errorMessage = null;
-
-        /** the new ExecTestCasePO */
-        private IExecTestCasePO m_execTestCasePO = null;
-
-        /**
-         * @return Returns the errorMessage.
-         */
-        public String getErrorMessage() {
-            return m_errorMessage;
-        }
-
-        /**
-         * @return Returns the execTestCasePO.
-         */
-        public IExecTestCasePO getExecTestCasePO() {
-            return m_execTestCasePO;
-        }
-
-        /**
-         * @param execTestCasePO
-         *            The execTestCasePO to set.
-         */
-        public void setExecTestCasePO(IExecTestCasePO execTestCasePO) {
-            m_execTestCasePO = execTestCasePO;
-        }
-
     }
 
     /**
@@ -160,39 +117,36 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
      *            the nodes to be extracted
      * @return an error message or null.
      */
-    private ExtractionReturn performExtraction(final String newTcName,
+    private IExecTestCasePO performExtraction(final String newTcName,
             final INodePO node, final IStructuredSelection selection) {
 
         final List<INodePO> modNodes = new ArrayList<INodePO>(
                 selection.size());
         Iterator it = selection.iterator();
         while (it.hasNext()) {
-            modNodes.add((INodePO) it.next());
-        }
-        try {
-            ExtractionReturn extractionRet = persistExtraction(node, newTcName,
-                    modNodes);
-            DataEventDispatcher.getInstance().fireDataChangedListener(node,
-                    DataState.StructureModified, UpdateState.all);
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    extractionRet.getExecTestCasePO(), DataState.Added,
-                    UpdateState.all);
-            final ISpecTestCasePO newSpecTc = extractionRet.getExecTestCasePO()
-                    .getSpecTestCase();
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    newSpecTc, DataState.Added, UpdateState.all);
-            TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
-            if (tcb != null) {
-                tcb.getTreeViewer().setSelection(
-                        new StructuredSelection(newSpecTc), true);
+            Object next = it.next();
+            if (next instanceof INodePO) {
+                modNodes.add((INodePO) next);
             }
-            return extractionRet;
-        } catch (PMException e) {
-            PMExceptionHandler.handlePMExceptionForMasterSession(e);
-        } catch (ProjectDeletedException e) {
-            PMExceptionHandler.handleProjectDeletedException();
         }
-        return new ExtractionReturn();
+        if (modNodes.isEmpty()) {
+            return null;
+        }
+        
+        IExecTestCasePO exec = persistExtraction(node, newTcName, modNodes);
+        DataEventDispatcher.getInstance().fireDataChangedListener(node,
+                DataState.StructureModified, UpdateState.all);
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                exec, DataState.Added, UpdateState.all);
+        final ISpecTestCasePO newSpecTc = exec.getSpecTestCase();
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                newSpecTc, DataState.Added, UpdateState.all);
+        TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
+        if (tcb != null) {
+            tcb.getTreeViewer().setSelection(
+                    new StructuredSelection(exec), true);
+        }
+        return exec;
     }
 
     /**
@@ -203,57 +157,63 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
      * @param modNodes
      *            nodes to move from the old tc to the new tc
      * @return result of extraction
-     * @throws PMException
-     *             in case of persistence error
-     * @throws ProjectDeletedException
-     *             in case of deleted project
      */
-    private ExtractionReturn persistExtraction(final INodePO ownerNode,
-        final String newTcName, final List<INodePO> modNodes)
-        throws PMException, ProjectDeletedException {
-
-        final ExtractionReturn extractionRet = new ExtractionReturn();
+    private IExecTestCasePO persistExtraction(final INodePO ownerNode,
+        final String newTcName, final List<INodePO> modNodes) {
+        
         final ParamNameBPDecorator mapper = new ParamNameBPDecorator(
                 ParamNameBP.getInstance());
-        final ITransactAction op = new ITransactAction() {
-            public void run(EntityManager s) throws PMException,
-                    ProjectDeletedException {
-                IPersistentObject obj = null;
-                try {
-                    Persistor.instance().refreshPO(s, ownerNode,
-                            LockModeType.PESSIMISTIC_WRITE);
-                    List<INodePO> nodesToRef = 
-                            new ArrayList<INodePO>();
-                    getModNodesFromCurrentSession(s, nodesToRef);
-                    final IExecTestCasePO newExecTc = TreeOpsBP
-                            .extractTestCase(newTcName, ownerNode, nodesToRef,
-                                    s, mapper);
-                    extractionRet.setExecTestCasePO(newExecTc);
-                    obj = newExecTc;
-                    s.persist(newExecTc);
-                    final ISpecTestCasePO newSpecTc = newExecTc
-                            .getSpecTestCase();
-                    registerParamNamesToSave(newSpecTc, mapper);
-                    obj = newSpecTc;
-                    s.merge(newSpecTc);
-                    mapper.persist(s, GeneralStorage.getInstance().getProject()
-                            .getId());
-                } catch (TreeOpFailedException e) {
-                    ErrorHandlingUtil.createMessageDialog(e, null, null);
-                } catch (PersistenceException e) {
-                    PersistenceManager
-                            .handleDBExceptionForMasterSession(obj, e);
-                }
+        final IExecTestCasePO[] lol = new IExecTestCasePO[1];
+        
+        final List<IPersistentObject> toLock = new ArrayList<>(2);
+        final IPersistentObject cont = GeneralStorage.getInstance().
+                getProject().getSpecObjCont();
+        toLock.add(cont);
+        toLock.add(ownerNode);
+
+        boolean succ = TransactionWrapper.executeOperation(new ITransaction() {
+
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToLock() {
+                return toLock;
             }
 
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToRefresh() {
+                return toLock;
+            }
+
+            /** {@inheritDoc} */
+            public void run(EntityManager sess)
+                    throws PMException {
+                List<INodePO> nodesToRef = 
+                        new ArrayList<INodePO>();
+                getModNodesFromCurrentSession(sess, nodesToRef);
+                lol[0] = TreeOpsBP
+                        .extractTestCase(newTcName, ownerNode, nodesToRef,
+                                sess, mapper);
+                final ISpecTestCasePO newSpecTc = lol[0].getSpecTestCase();
+                registerParamNamesToSave(newSpecTc, mapper);
+                mapper.persist(sess, GeneralStorage.getInstance().getProject()
+                        .getId());
+                NativeSQLUtils.addNodeAFFECTS(sess, lol[0].getSpecTestCase(),
+                        cont);
+            }
+            
             /**
-             * @param s
-             *            session used for refactoring (master session)
-             * @param nodesToRef
-             *            nodes to refactor from current session
+             * Loads the moved nodes to the session
+             * @param s session used for refactoring
+             * @param nodesToRef nodes to refactor from current session
              */
             private void getModNodesFromCurrentSession(EntityManager s,
                     List<INodePO> nodesToRef) {
+                if (modNodes.isEmpty()) {
+                    return;
+                }
+                INodePO par = modNodes.get(0).getParentNode();
+                par = s.find(par.getClass(), par.getId());
+                // we have to set the children's parent node...
+                par.getUnmodifiableNodeList();
                 for (INodePO node : modNodes) {
                     INodePO object = s.find(node.getClass(), node.getId());
                     if (object != null) {
@@ -261,10 +221,14 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
                     }
                 }
             }
-
-        };
-        new TransactionSupport().transact(op);
+            
+        });
+        
+        if (!succ) {
+            return null;
+        }
+        
         mapper.updateStandardMapperAndCleanup(ownerNode.getParentProjectId());
-        return extractionRet;
+        return lol[0];
     }
 }

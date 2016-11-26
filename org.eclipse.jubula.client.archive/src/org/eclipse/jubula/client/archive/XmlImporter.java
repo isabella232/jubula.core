@@ -640,7 +640,7 @@ class XmlImporter {
                     .createComponentNamePO(guid, name, type, ctx, proj.getId());
                 componentNamePO.setReferencedGuid(compName.getRefGuid());
                 createdCompNames.add(componentNamePO);
-                compNameCache.addComponentNamePO(
+                compNameCache.addCompNamePO(
                         componentNamePO);
             }
         }

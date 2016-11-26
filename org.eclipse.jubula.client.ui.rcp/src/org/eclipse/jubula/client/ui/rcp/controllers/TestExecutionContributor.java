@@ -553,7 +553,7 @@ public class TestExecutionContributor
             case TEST_EXEC_COMPONENT_FAILED:
                 cap = TestExecution.getInstance().getActualCap();
                 final String componentName = cap.getComponentName();
-                testCaseName = cap.getParentNode().getName();
+                testCaseName = cap.getSpecAncestor().getName();
                 capName = cap.getName();
                 error = NLS.bind(Messages.TestExecutionContributorCompFailure,
                         new Object[]{componentName, testCaseName, capName});
@@ -618,7 +618,7 @@ public class TestExecutionContributor
      */
     private String getIncompleteTestRunMessage(State testExecEventID) {
         ICapPO cap = TestExecution.getInstance().getActualCap();
-        String testCaseName = cap.getParentNode().getName();
+        String testCaseName = cap.getSpecAncestor().getName();
         String capName = cap.getName();
         switch (testExecEventID) {
             case TEST_RUN_INCOMPLETE_TESTDATA_ERROR:
@@ -758,11 +758,12 @@ public class TestExecutionContributor
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
+     * @param iterMax maximum number of iterations
      */
     public void startTestSuiteAction(ITestSuitePO ts, 
-            AutIdentifier autId, boolean autoScreenshot) {
+            AutIdentifier autId, boolean autoScreenshot, int iterMax) {
         TimeUtil.delay(TimingConstantsClient.START_TEST_SUITE_DELAY);
-        getClientTest().startTestSuite(ts, autId, autoScreenshot, null,
+        getClientTest().startTestSuite(ts, autId, autoScreenshot, iterMax, null,
             TestExecutionConstants.RunSteps.NORMAL.getStepValue(), null);
     }
 

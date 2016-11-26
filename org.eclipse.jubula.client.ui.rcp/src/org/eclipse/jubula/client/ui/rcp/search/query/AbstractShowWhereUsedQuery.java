@@ -51,14 +51,15 @@ public abstract class AbstractShowWhereUsedQuery extends AbstractQuery {
             IProgressMonitor monitor, INodePO[] reuse) {
         final List<SearchResultElement> reuseLoc =
             new ArrayList<SearchResultElement>(reuse.length);
-        List<INodePO> parentList = new ArrayList<INodePO>();
 
         for (INodePO node : reuse) {
-            INodePO parent = node.getParentNode();
+            INodePO parent = node.getSpecAncestor();
+            if (parent == null) {
+                parent = node.getParentNode();
+            }
             if (parent != null) {
                 Long id = node.getId();
                 String nodeName = GeneralLabelProvider.getTextImpl(node);
-                parentList.add(parent);
                 reuseLoc.add(new SearchResultElement<Long>(NLS.bind(
                         Messages.SearchResultPageElementLabel, new Object[] {
                                 parent.getName(), nodeName }), id,

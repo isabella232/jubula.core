@@ -25,6 +25,7 @@
   <xi:include href="workWithEditors/content.xml"/>
   <xi:include href="workWithCategories/content.xml"/>
   <xi:include href="workWithTestCases/content.xml"/>
+  <xi:include href="workWithConditions/content.xml"/>
   <xi:include href="workWithData/content.xml"/>
   <xi:include href="workWithComponentNames/content.xml"/>
   <xi:include href="workWithSuites/content.xml"/>

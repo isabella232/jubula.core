@@ -70,42 +70,8 @@
       <para>
         Press <emphasis role="input">»CTRL+SPACE«</emphasis> to see a
         list of component names you have already used for this type
-        of component:
+        of component.
       </para>
-      <variablelist>
-        <varlistentry>
-          <term>
-            <inlinemediaobject>
-              <imageobject>
-                <imagedata fileref="images/localName.png"/>
-              </imageobject>
-            </inlinemediaobject>
-            <emphasis>Local</emphasis>
-          </term>
-          <listitem>
-            <para>
-              component names are names you have used in this Test
-              Case for this component type .
-            </para>
-          </listitem>
-        </varlistentry>
-        <varlistentry>
-          <term>
-            <inlinemediaobject>
-              <imageobject>
-                <imagedata fileref="images/globalName.png"/>
-              </imageobject>
-            </inlinemediaobject>
-            <emphasis>Global</emphasis>
-          </term>
-          <listitem>
-            <para>
-              component names are names you have used for this
-              component type, but not in this Test Case.
-            </para>
-          </listitem>
-        </varlistentry>
-      </variablelist>
       <para role="tip">
         You can configure how frequently the content assist
         in the Component Names View should open in the preferences.

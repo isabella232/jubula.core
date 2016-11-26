@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.dialogs;
 
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.swt.widgets.Composite;
@@ -25,12 +24,10 @@ import org.eclipse.swt.widgets.Shell;
 public class NewLogicalCompNameDialog extends EnterLogicalCompNameDialog {
 
     /**
-     * @param compNamesMapper see EnterLogicalCompNameDialog
      * @param parentShell  see EnterLogicalCompNameDialog
      */
-    public NewLogicalCompNameDialog(IComponentNameMapper compNamesMapper,
-            Shell parentShell) {
-        super(compNamesMapper, parentShell);
+    public NewLogicalCompNameDialog(Shell parentShell) {
+        super(parentShell);
     }
 
     /**
@@ -43,6 +40,4 @@ public class NewLogicalCompNameDialog extends EnterLogicalCompNameDialog {
         getShell().setText(Messages.NewLogicalNameDialogTitle);
         return super.createDialogArea(parent);
     }
-
-    
 }

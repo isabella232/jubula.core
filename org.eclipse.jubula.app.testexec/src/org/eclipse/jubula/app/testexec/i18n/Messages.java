@@ -72,6 +72,11 @@ public class Messages extends NLS {
     public static String Step;
     public static String TestCase;
     public static String TestSuite;
+    public static String Conditional;
+    public static String Iterate;
+    public static String DoWhile;
+    public static String WhileDo;
+    public static String Container;
     public static String WatchdogTimer;
     
     static {

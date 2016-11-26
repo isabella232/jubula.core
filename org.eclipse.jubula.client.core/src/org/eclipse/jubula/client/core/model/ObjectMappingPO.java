@@ -30,7 +30,7 @@ import javax.persistence.Transient;
 import javax.persistence.Version;
 
 import org.apache.commons.lang.Validate;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.utils.ObjectMappingUtil;
@@ -280,7 +280,7 @@ class ObjectMappingPO implements IObjectMappingPO {
         if (asso == null) {
             // Check for default mapping
             IComponentNamePO compNamePo = 
-                ComponentNamesBP.getInstance().getCompNamePo(logical);
+                CompNameManager.getInstance().getResCompNamePOByGuid(logical);
             if (compNamePo != null) {
                 asso = getLogicalNameAssoc(compNamePo.getName());
             }
@@ -313,6 +313,14 @@ class ObjectMappingPO implements IObjectMappingPO {
             m_mappings = mappings;
         }
         return m_mappings;
+    }
+    
+    /** {@inheritDoc} */
+    public void addAssociationToCache(IObjectMappingAssoziationPO assoc) {
+        getMappings().add(assoc);
+        for (String guid : assoc.getLogicalNames()) {
+            m_logicalNameToAssoc.put(guid, assoc);
+        }
     }
     
     /**

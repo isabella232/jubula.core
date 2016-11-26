@@ -111,7 +111,11 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
             final boolean autoScreenshots = Plugin.getDefault()
                     .getPreferenceStore()
                     .getBoolean(Constants.AUTO_SCREENSHOT_KEY);
-            runTestSuite(testSuiteToStart, runningAut, autoScreenshots);
+            final int iterMax = Plugin.getDefault()
+                    .getPreferenceStore()
+                    .getInt(Constants.MAX_ITERATION_KEY);
+            runTestSuite(testSuiteToStart, runningAut, autoScreenshots,
+                    iterMax);
 
             // Update command state
             if (lastStartedTestSuiteState != null
@@ -132,13 +136,14 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
      * @param autoScreenshot
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
+     * @param iterMax the maximum number of iterations
      */
     public void runTestSuite(ITestSuitePO ts, AutIdentifier autId,
-            boolean autoScreenshot) {
+            boolean autoScreenshot, int iterMax) {
         TestSuiteState state = validateSaveState(ts);
         if (state != TestSuiteState.incomplete) {
             ChooseTestSuiteBP.getInstance().executeTestSuite(ts, autId,
-                    autoScreenshot);
+                    autoScreenshot, iterMax);
         }
     }
 

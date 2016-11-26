@@ -133,8 +133,16 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
         }
         
         try {
-            IEditorInput input = createEditorInput(node);
-            String editorId = getEditorId(node);
+            IPersistentObject nodeToEdit = node;
+            if (!(node instanceof ISpecTestCasePO || node instanceof IAUTMainPO
+                    || node instanceof ITestJobPO
+                    || node instanceof ITestDataCategoryPO)
+                    && node instanceof INodePO) {
+                nodeToEdit = ((INodePO) node).getSpecAncestor();
+            }
+
+            IEditorInput input = createEditorInput(nodeToEdit);
+            String editorId = getEditorId(nodeToEdit);
             
             IWorkbenchPage page = Plugin.getActivePage();
             IEditorPart editor = page.findEditor(input);
@@ -179,6 +187,7 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
         if (node instanceof ITestDataCategoryPO) {
             return Constants.CENTRAL_TESTDATA_EDITOR_ID;
         }
+        
         
         Assert.notReached();
         return StringUtils.EMPTY;

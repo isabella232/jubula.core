@@ -10,19 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.archive.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jubula.client.core.model.INodePO;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * @author BREDEX GmbH
  */
 public class CategoryDTO extends NodeDTO {
-    /** */
-    private List<NodeDTO> m_nodes = new ArrayList<NodeDTO>();
     
     /** needed because JSON mapping */
     public CategoryDTO() { }
@@ -35,20 +28,12 @@ public class CategoryDTO extends NodeDTO {
     }
     
     /**
-     * @return nodes
-     */
-    @JsonProperty("nodes")
-    public List<NodeDTO> getNodes() {
-        return m_nodes;
-    }
-    
-    /**
      * @param node 
      */
     public void addNode(NodeDTO node) {
         if (!(node instanceof TestCaseDTO || node instanceof CategoryDTO)) {
             throw new IllegalArgumentException();
         }
-        this.m_nodes.add(node);
+        super.addNode(node);
     }
 }

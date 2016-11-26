@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="ifThenElse" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Conditional Statements (If - Then - Else)</title>
+  <para>
+    Conditional Statements behave as usual: if their Condition does not throw any
+    unhandled Check Fail events then their Then Container is executed, otherwise their
+    Else Container is executed instantly after the Check Fail event is encountered - so the
+    remaining parts of the Conditions are skipped.
+  </para>
+  <para>
+    You can set a Conditional Statement to be Negated in the Properties View of its top node
+    (called "If" by default). A Negated Conditional Statement executes its Then Container when
+    its Condition fails and its Else Container when it does not.
+  </para>
+</section>

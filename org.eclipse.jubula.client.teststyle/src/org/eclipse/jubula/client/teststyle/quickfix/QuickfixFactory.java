@@ -72,7 +72,7 @@ public class QuickfixFactory {
             Object obj = getObject(marker);
             if (obj instanceof IExecTestCasePO) {
                 IExecTestCasePO execTestCase = (IExecTestCasePO) obj;
-                AbstractOpenHandler.openEditor(execTestCase.getParentNode());
+                AbstractOpenHandler.openEditor(execTestCase.getSpecAncestor());
             } else {
                 AbstractOpenHandler.openEditor((IPersistentObject)obj);
             }

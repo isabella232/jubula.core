@@ -15,9 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-import javax.persistence.EntityManager;
-
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
+import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -27,12 +26,8 @@ import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
-import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping.OMEditorDndSupport;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 
 
 /**
@@ -83,7 +78,9 @@ public class OMEditorBP {
      */
     public IObjectMappingCategoryPO deleteCategory(
             IObjectMappingCategoryPO toDelete) {
-
+        
+        changeReuseOfCompNames(toDelete);
+        
         IObjectMappingCategoryPO parent = toDelete.getParent();
         parent.removeCategory(toDelete);
         DataEventDispatcher.getInstance().fireDataChangedListener(
@@ -96,82 +93,84 @@ public class OMEditorBP {
     }
     
     /**
+     * Removes the used Component Names
+     * @param toDelete the category to delete
+     */
+    private void changeReuseOfCompNames(IObjectMappingCategoryPO toDelete) {
+        for (IObjectMappingAssoziationPO assoc
+                : toDelete.getUnmodifiableAssociationList()) {
+            removeCompNames(assoc);
+        }
+        for (IObjectMappingCategoryPO cat
+                : toDelete.getUnmodifiableCategoryList()) {
+            changeReuseOfCompNames(cat);
+        }
+    }
+
+    /**
      * Deletes the given Component Name from the object map.
      * 
      * @param toDelete The Component Name to delete.
+     * @param fromEditor indicates that the deletion initiated from the Editor
      * @return the category to which the Component Name belonged before it was
      *         deleted.
      */
     public IObjectMappingCategoryPO deleteCompName(
-            IComponentNamePO toDelete) {
-
+            IComponentNamePO toDelete, boolean fromEditor) {
         IObjectMappingCategoryPO originalCategory = null;
-        IWritableComponentNameMapper compNameMapper = 
-            getEditor().getEditorHelper().getEditSupport().getCompMapper();
+        IWritableComponentNameCache cNCache = getEditor().getCompNameCache();
         IObjectMappingAssoziationPO parent = getAssociation(toDelete.getGuid());
-        try {
-            compNameMapper.changeReuse(parent, toDelete.getGuid(), null);
-
-            IObjectMappingCategoryPO category = parent.getCategory();
-            originalCategory = category;
-
-            if (parent.getLogicalNames().isEmpty()) {
-                if (originalCategory != null) {
-                    // this happens when the Component Name was never in the database
-                    originalCategory.removeAssociation(parent);
-                }
-                if (parent.getTechnicalName() != null) {
-                    // Move association to appropriate section/category
-                    Stack<String> catPath = new Stack<String>();
-                    while (category.getParent() != null) {
-                        catPath.push(category.getName());
-                        category = category.getParent();
-                    }
-                    IObjectMappingCategoryPO newCategory = 
-                        getEditor().getAut().getObjMap()
-                            .getUnmappedTechnicalCategory();
-                    while (!catPath.isEmpty()) {
-                        String catName = catPath.pop();
-                        IObjectMappingCategoryPO subcategory = 
-                            findSubcategory(newCategory, catName);
-                        if (subcategory == null) {
-                            // Create new category
-                            subcategory = 
-                                PoMaker.createObjectMappingCategoryPO(catName);
-                            newCategory.addCategory(subcategory);
-                        }
-                        newCategory = subcategory;
-                    }
-                    newCategory.addAssociation(parent);
-                } else {
-                    // Delete empty association from session
-                    getEditor().getEditorHelper().getEditSupport().getSession()
-                        .remove(parent);
-                }
-            }
-            
-            EntityManager sess = getEditor().getEditorHelper().
-                    getEditSupport().getSession();
-            if (toDelete.getId() != null) {
-                IComponentNamePO toRem = sess.find(toDelete.getClass(),
-                        toDelete.getId());
-                if (toRem != null) {
-                    sess.detach(toRem);
-                }
-            }
-            
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    getEditor().getAut().getObjMap(), 
-                    DataState.StructureModified, 
-                    UpdateState.onlyInEditor);
-
-        } catch (IncompatibleTypeException ite) {
-            ErrorHandlingUtil.createMessageDialog(
-                    ite, ite.getErrorMessageParams(), null);
-        } catch (PMException pme) {
-            PMExceptionHandler.handlePMExceptionForEditor(pme, getEditor());
+        if (parent == null) {
+            return null;
         }
+        cNCache.changeReuse(parent, toDelete.getGuid(), null);
 
+        IObjectMappingCategoryPO category = parent.getCategory();
+        originalCategory = category;
+
+        if (parent.getLogicalNames().isEmpty()) {
+            if (originalCategory != null) {
+                // can be null when the Component Name was never in the database
+                originalCategory.removeAssociation(parent);
+            }
+            if (parent.getTechnicalName() != null) {
+                // Move association to appropriate section/category
+                Stack<String> catPath = new Stack<String>();
+                while (category.getParent() != null) {
+                    catPath.push(category.getName());
+                    category = category.getParent();
+                }
+                IObjectMappingCategoryPO newCategory = getEditor().getAut()
+                        .getObjMap().getUnmappedTechnicalCategory();
+                while (!catPath.isEmpty()) {
+                    String catName = catPath.pop();
+                    IObjectMappingCategoryPO subcategory = 
+                        findSubcategory(newCategory, catName);
+                    if (subcategory == null) {
+                        // Create new category
+                        subcategory = 
+                            PoMaker.createObjectMappingCategoryPO(catName);
+                        newCategory.addCategory(subcategory);
+                    }
+                    newCategory = subcategory;
+                }
+                newCategory.addAssociation(parent);
+            } else {
+                // Delete empty association from session
+                getEditor().getEntityManager().remove(parent);
+            }
+        }
+        if (fromEditor && CompNameManager.getInstance()
+                .getResCompNamePOByGuid(toDelete.getGuid()) == null) {
+            // Comp Name is not in the DB, so we need to remove it from the cache
+            // if it is still in the DB, we cannot throw it, because its type may have changed
+            // due to removal from the Editor
+            cNCache.removeCompName(toDelete.getGuid());
+        }
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                getEditor().getAut().getObjMap(), 
+                DataState.StructureModified, 
+                UpdateState.onlyInEditor);            
         
         return originalCategory;
     }
@@ -186,6 +185,7 @@ public class OMEditorBP {
     public IObjectMappingCategoryPO deleteAssociation(
             IObjectMappingAssoziationPO toDelete) {
 
+        removeCompNames(toDelete);
         IObjectMappingCategoryPO parent = toDelete.getCategory();
         parent.removeAssociation(toDelete);
         getEditor().getAut().getObjMap().removeAssociationFromCache(toDelete);
@@ -193,6 +193,16 @@ public class OMEditorBP {
                 parent, DataState.StructureModified, 
                 UpdateState.onlyInEditor);
         return parent;
+    }
+    
+    /**
+     * Changes the usage of the Component Names in the association
+     * @param assoc the association
+     */
+    private void removeCompNames(IObjectMappingAssoziationPO assoc) {
+        for (String guid : assoc.getLogicalNames()) {
+            getEditor().getCompNameCache().changeReuse(assoc, guid, null);
+        }
     }
 
     /**

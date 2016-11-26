@@ -15,8 +15,10 @@ import java.util.Date;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -255,6 +257,12 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                 image = IconConstants.CAP_IMAGE; 
             }
         }
+        if (node instanceof IConditionalStatementPO) {
+            image = IconConstants.CONDITION; 
+        }
+        if (node instanceof IAbstractContainerPO) {
+            image = IconConstants.CAP_IMAGE; 
+        }
         return image;
     }
 
@@ -273,6 +281,8 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
                             return IconConstants.STEP_OK_IMAGE;
                         case TestResultNode.ERROR:
                         case TestResultNode.ERROR_IN_CHILD:
+                        case TestResultNode.CONDITION_FAILED:
+                        case TestResultNode.INFINITE_LOOP:
                             return IconConstants.STEP_NOT_OK_IMAGE;
                         case TestResultNode.RETRYING:
                             return IconConstants.STEP_RETRY_IMAGE;

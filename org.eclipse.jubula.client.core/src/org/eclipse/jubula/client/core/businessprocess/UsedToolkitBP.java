@@ -102,7 +102,7 @@ public class UsedToolkitBP {
     public void addToolkit(ISpecTestCasePO specTC, IProjectPO project) 
         throws PMException, ProjectDeletedException {
         
-        final Iterator<INodePO> childs = specTC.getNodeListIterator();
+        final Iterator<INodePO> childs = specTC.getAllNodeIter();
         final Set<IUsedToolkitPO> addedToolkits = 
             new HashSet<IUsedToolkitPO>();
         final Set<IUsedToolkitPO> currentToolkits = 
@@ -383,7 +383,7 @@ public class UsedToolkitBP {
                 NodePM.getInternalExecTestCases(specTC.getGuid(), 
                     specTC.getParentProjectId());
             for (IExecTestCasePO exec : execs) {
-                final INodePO execParent = exec.getParentNode();
+                final INodePO execParent = exec.getSpecAncestor();
                 final String parentLevel = execParent.getToolkitLevel();
                 if (ToolkitUtils.isToolkitMoreConcrete(parentLevel, oldTkLevel)
                     || (!moreConcrete && existsCapWithLevel(oldTkLevel, 

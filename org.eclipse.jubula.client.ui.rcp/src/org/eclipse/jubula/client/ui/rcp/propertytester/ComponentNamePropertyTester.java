@@ -10,11 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.propertytester;
 
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.ComponentNameReuseBP;
 
 
 /**
@@ -56,8 +56,8 @@ public class ComponentNamePropertyTester extends AbstractBooleanPropertyTester {
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
         
         if (currentProject != null) {
-            return ComponentNameReuseBP.getInstance().isCompNameReused(
-                    compName.getGuid());
+            return CompNameManager.getInstance().
+                    getUsageByGuid(compName.getGuid()) > 0;
         }
         return true;
     }

@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.widgets;
 import java.text.MessageFormat;
 
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameMapper;
+import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.CharacterConstants;
@@ -71,22 +71,22 @@ public class CompNamePopupTextCellEditor extends CellEditor {
     /** cache of last valid stored value */
     private String m_lastValidValue;
     
-    /** the component mapper to use for finding and modifying components */
-    private IComponentNameMapper m_compMapper;
+    /** the component cache to use for finding and modifying components */
+    private IComponentNameCache m_compCache;
     
     /**
      * Creates a new m_popupText string cell editor parented under the given control.
      * The cell editor value is the string itself, which is initially the empty string. 
      * Initially, the cell editor has no cell validator.
      * 
-     * @param compMapper The Component Names mapper to use.
+     * @param compCache The Component Names cache to use.
      * @param parent the parent control
      */
-    public CompNamePopupTextCellEditor(IComponentNameMapper compMapper, 
+    public CompNamePopupTextCellEditor(IComponentNameCache compCache, 
             Composite parent) {
         
         super(parent, DEFAULT_STYLE);
-        setComponentNameMapper(compMapper);
+        setComponentNameCache(compCache);
         m_lastValidValue = StringConstants.EMPTY;
     }
 
@@ -143,7 +143,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
      */
     protected Control createControl(Composite parent) {        
         m_popupText = new CompNamePopUpTextField(
-                m_compMapper, parent, getStyle());
+                m_compCache, parent, getStyle());
         m_popupText.addSelectionListener(new SelectionAdapter() {
             public void widgetDefaultSelected(SelectionEvent e) {
                 handleDefaultSelection();
@@ -514,11 +514,11 @@ public class CompNamePopupTextCellEditor extends CellEditor {
     
     /**
      * 
-     * @param compMapper The new Component Name mapper to use.
+     * @param compCache The new Component Name cache to use.
      */
-    public void setComponentNameMapper(IComponentNameMapper compMapper) {
-        m_popupText.setComponentNameMapper(compMapper);
-        m_compMapper = compMapper;
+    public void setComponentNameCache(IComponentNameCache compCache) {
+        m_popupText.setComponentNameCache(compCache);
+        m_compCache = compCache;
     }
     
     /**

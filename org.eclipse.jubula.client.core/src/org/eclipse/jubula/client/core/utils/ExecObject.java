@@ -46,6 +46,9 @@ public class ExecObject {
      */
     private int m_retryCount = 0;
     
+    /** The loop count */
+    private int m_loopCount = 0;
+    
     /** mapping from parameter identifiers to parameter values */
     private Map<String, String> m_parameters = new HashMap<String, String>();
     
@@ -167,6 +170,14 @@ public class ExecObject {
      */
     public String getParameterValue(String parameterIdentifier) {
         return m_parameters.get(parameterIdentifier);
+    }
+    
+    /**
+     * Returns the incremented loop count
+     * @return the count
+     */
+    public int getIncLoopCount() {
+        return ++m_loopCount;
     }
     
 }

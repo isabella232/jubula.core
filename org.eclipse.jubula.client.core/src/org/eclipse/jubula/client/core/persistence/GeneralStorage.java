@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.persistence;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -23,7 +25,9 @@ import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalAbortException;
 import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
@@ -53,6 +57,9 @@ public class GeneralStorage implements IEntityManagerProvider {
      * of object for specification tree (specTestCases and categories)
      **/
     private IProjectPO m_project = null;
+    
+    /** The reused projects managed by the main session */
+    private Map<Long, IProjectPO> m_reusedProjects = null;
     
     /**
      * <code>m_masterSession</code>session only for objects to display
@@ -90,13 +97,41 @@ public class GeneralStorage implements IEntityManagerProvider {
     public IProjectPO getProject() {
         return m_project;
     }
-    /**
-     * @param project The project to set.
-     */
-    public void setProject(IProjectPO project) {
-        m_project = project;
-    }
 
+    /** Nulls the project */
+    public void nullProject() {
+        m_project = null;
+        m_reusedProjects = null;
+    }
+    
+    /**
+     * Sets the project and loads the reused projects into the master session
+     * @param project the project
+     * @throws JBException the exception
+     */
+    public void setProjectLoadReused(IProjectPO project) throws JBException {
+        m_project = project;
+        if (project == null) {
+            m_reusedProjects = null;
+            return;
+        }
+        m_reusedProjects = new HashMap<>();
+        for (IReusedProjectPO reused : project.getUsedProjects()) {
+            IProjectPO reusedP = ProjectPM.loadReusedProjectInMasterSession(
+                    reused);
+            if (reusedP != null) {
+                m_reusedProjects.put(reusedP.getId(), reusedP);
+            }
+        }
+    }
+    
+    /**
+     * Returns the reused projects
+     * @return the ID => ProjectPO map
+     */
+    public Map<Long, IProjectPO> getReusedProjects() {
+        return m_reusedProjects;
+    }
 
     /**
      * @return Returns the masterSession.

@@ -30,7 +30,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 @JsonSubTypes({
     @Type(value = CapDTO.class, name = "cap"),
     @Type(value = TestCaseDTO.class, name = "tc"),
-    @Type(value = RefTestCaseDTO.class, name = "rtc") })
+    @Type(value = RefTestCaseDTO.class, name = "rtc"),
+    @Type(value = IterateDTO.class, name = "itc")})
 public class ParameterDTO extends NodeDTO {
     /** */
     private List<ParamDescriptionDTO> m_parameterDescriptions =

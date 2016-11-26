@@ -13,11 +13,9 @@ package org.eclipse.jubula.client.teststyle.checks.contexts;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
-
-
 
 /**
  * @author marcell
@@ -36,8 +34,8 @@ public class ComponentNameContext extends BaseContext {
      * {@inheritDoc}
      */
     public List<Object> getAll() {
-        List<Object> cn = new ArrayList<Object>(ComponentNamesBP.getInstance()
-                .getAllComponentNamePOs());
+        List<Object> cn = new ArrayList<Object>(CompNameManager.getInstance()
+                .getAllCompNamePOs());
         return cn;
     }
 

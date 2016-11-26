@@ -19,6 +19,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
@@ -37,12 +38,9 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IObjectMappingObserver;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameMapper;
-import org.eclipse.jubula.client.core.businessprocess.ObjectMappingComponentNameMapper;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
@@ -53,6 +51,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -68,9 +67,10 @@ import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.PMReadException;
+import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -80,7 +80,6 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.OMEditorBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.controllers.ComponentNameTreeViewerUpdater;
 import org.eclipse.jubula.client.ui.rcp.controllers.OpenOMETracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
@@ -99,12 +98,10 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabel
 import org.eclipse.jubula.client.ui.rcp.provider.selectionprovider.SelectionProviderIntermediate;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
-import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.IMultiTreeViewerContainer;
 import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
@@ -139,7 +136,6 @@ import org.eclipse.ui.swt.IFocusService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Editor for managing Object Mapping in Jubula.
  *
@@ -149,7 +145,7 @@ import org.slf4j.LoggerFactory;
 public class ObjectMappingMultiPageEditor extends MultiPageEditorPart 
     implements IJBPart, IJBEditor, IObjectMappingObserver, 
                IEditorDirtyStateListener, IMultiTreeViewerContainer, 
-               IPropertyListener {
+               IPropertyListener, IDataChangedListener {
     /** Show-menu */
     public static final String CLEANUP_ID = PlatformUI.PLUGIN_ID + ".CleanupSubMenu"; //$NON-NLS-1$
     
@@ -184,9 +180,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private ObjectMappingConfigComponent m_mappingConfigComponent;
     
-    /** updater for tree viewer based on changes to Component Names */
-    private ComponentNameTreeViewerUpdater m_treeViewerUpdater;
-
     /** mapping: page number => selection provider for that page */
     private Map<Integer, ISelectionProvider> m_pageToSelectionProvider =
         new HashMap<Integer, ISelectionProvider>();
@@ -276,52 +269,75 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         @SuppressWarnings("synthetic-access")
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
-            if (node instanceof ICapPO) {
-                final ICapPO cap = (ICapPO)node;
-                CompNameResult result = 
-                    m_compNamesBP.findCompName(ctx.getCurrentTreePath(), 
-                            cap, cap.getComponentName(),
-                            getCompMapper().getCompNameCache());
-                final IComponentNamePO compNamePo = 
-                    getCompMapper().getCompNameCache().getCompNamePo(
-                            result.getCompName());
-                if (compNamePo != null) {
-                    if (!(cap.getMetaComponentType() 
-                                instanceof ConcreteComponent
-                            && ((ConcreteComponent)cap.getMetaComponentType())
-                                .hasDefaultMapping())
-                            && m_omEditorBP.getAssociation(
-                                    compNamePo.getGuid()) == null) {
-                        if (getEditorHelper().requestEditableState() 
-                                != EditableState.OK) {
-                            return true;
-                        }
-
-                        IObjectMappingAssoziationPO assoc = 
-                            PoMaker.createObjectMappingAssoziationPO(
-                                    null, new HashSet<String>());
-                        try {
-                            getCompMapper().changeReuse(
-                                    assoc, null, compNamePo.getGuid());
-                            getAut().getObjMap().getUnmappedLogicalCategory()
-                                .addAssociation(assoc);
-                            m_addedNodes.add(assoc);
-                            m_addedNodeCount++;
-                        } catch (IncompatibleTypeException e) {
-                            ErrorHandlingUtil.createMessageDialog(
-                                    e, e.getErrorMessageParams(), null);
-                        } catch (PMException pme) {
-                            // Should not happen since we are assigning the
-                            // Component Name to an unmapped association.
-                            // Log it just in case.
-                            LOG.error(Messages.ErrorCollectingComponentNames
-                                    + StringConstants.DOT, pme);
-                        }
-                    }
+            if (!(node instanceof ICapPO)) {
+                return true;
+            }
+            final ICapPO cap = (ICapPO)node;
+            CompNameResult result = 
+                m_compNamesBP.findCompName(ctx.getCurrentTreePath(), 
+                        cap, cap.getComponentName(), getCompNameCache());
+            final IComponentNamePO compNamePo = 
+                getCompNameCache().getResCompNamePOByGuid(result.getCompName());
+            if (compNamePo == null) {
+                return true;
+            }
+            if (!(cap.getMetaComponentType() instanceof ConcreteComponent
+                    && ((ConcreteComponent)cap.getMetaComponentType())
+                        .hasDefaultMapping())
+                    && m_omEditorBP.getAssociation(
+                            compNamePo.getGuid()) == null) {
+                if (getEditorHelper().requestEditableState() 
+                        != EditableState.OK) {
+                    return true;
                 }
+                
+                if (checkForExistingLogicalName(compNamePo)) {
+                    return true;
+                }
+                
+                IObjectMappingAssoziationPO assoc = 
+                    PoMaker.createObjectMappingAssoziationPO(
+                            null, new HashSet<String>());
+                getCompNameCache().changeReuse(
+                        assoc, null, compNamePo.getGuid());
+                getAut().getObjMap().getUnmappedLogicalCategory()
+                    .addAssociation(assoc);
+                m_addedNodes.add(assoc);
+                m_addedNodeCount++;
             }
             return true;
         }
+        
+        /**
+         * Checks whether a Component Name with the given logical name is already created in this editor
+         * In this case the cache version has a different guid than the main session version
+         * If yes, replaces the cache version by the main session version
+         * @param cN the Component Name
+         * @return whether a locally created CN existed with the same logical name
+         */
+        private boolean checkForExistingLogicalName(IComponentNamePO cN) {
+            Map<String, IComponentNamePO> localChanges = getCompNameCache().
+                    getLocalChanges();
+            if (localChanges.containsKey(cN.getGuid())) {
+                return false;
+            }
+            for (String guid : localChanges.keySet()) {
+                IComponentNamePO localCN = localChanges.get(guid);
+                if (localCN.getName().equals(cN.getName())) {
+                    IObjectMappingAssoziationPO assoc = getAut().getObjMap()
+                            .getLogicalNameAssoc(localCN.getGuid());
+                    // this should not be null, because the CN should have
+                    //      been removed from the local cache if no association holds the CN
+                    Assert.isNotNull(assoc);
+                    getCompNameCache().changeReuse(assoc, localCN.getGuid(),
+                            cN.getGuid());
+                    getCompNameCache().removeCompName(localCN.getGuid());
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         /**
          * @return Returns the addedNodeCount.
          */
@@ -351,9 +367,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /** selection provider for the split pane view */
     private SelectionProviderIntermediate m_splitPaneSelectionProvider;
     
-    /** component mapper */
-    private IWritableComponentNameMapper m_compMapper; 
-    
     /**
      * {@inheritDoc}
      */
@@ -370,10 +383,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         checkMasterSessionUpToDate();
         
-        m_compMapper = 
-                getEditorHelper().getEditSupport()
-                    .getCompMapper();
-
         // Create menu manager.
         MenuManager menuMgr = createContextMenu();
 
@@ -381,11 +390,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 this, true);
         getEditorHelper().addListeners();
         getOmEditorBP().collectNewLogicalComponentNames();
-        
-        ObjectMappingComponentNameMapper mapper;
-        mapper =  (ObjectMappingComponentNameMapper) getEditorHelper()
-                .getEditSupport().getCompMapper();
-        mapper.initCompNameCache(getAut());
         
         int splitPaneViewIndex = addPage(
                 createSplitPanePageControl(getContainer(), menuMgr));
@@ -412,6 +416,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         ObjectMappingEventDispatcher.addObserver(this);
         checkAndFixInconsistentData();
         OpenOMETracker.INSTANCE.addOME(this);
+        DataEventDispatcher.getInstance().addDataChangedListener(this, false);
     }
 
     /**
@@ -433,12 +438,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         IObjectMappingPO objMap = getAut().getObjMap();
 
-        
-        isChanged |= fixCompNameReferences(objMap,
-                m_compMapper.getCompNameCache());
-        isChanged |= removeDeletedCompNames(objMap,
-                m_compMapper.getCompNameCache());
-        
+        isChanged |= fixCompNameReferences(objMap, getCompNameCache());
+        isChanged |= removeDeletedCompNames(objMap, getCompNameCache());
         
         if (isChanged) {
             try {
@@ -459,7 +460,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * Object Map.
      * 
      * @param objectMap The Object Map to fix.
-     * @param compNameCache The cache to use for retrieving Component Names.
+     * @param cache The cache to use for retrieving Component Names.
      * 
      * @return <code>true</code> if this method call caused any change
      *         (i.e. if any Component Names were removed). 
@@ -467,7 +468,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     private boolean removeDeletedCompNames(
             IObjectMappingPO objectMap, 
-            IComponentNameCache compNameCache) {
+            IComponentNameCache cache) {
 
         boolean isChanged = false;
 
@@ -478,7 +479,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             if (assoc.getTechnicalName() == null) {
                 Set<String> compNamesToRemove = new HashSet<String>();
                 for (String compNameGuid : assoc.getLogicalNames()) {
-                    if (compNameCache.getCompNamePo(compNameGuid) == null) {
+                    if (cache.getResCompNamePOByGuid(compNameGuid) == null) {
                         compNamesToRemove.add(compNameGuid);
                     }
                 }
@@ -640,7 +641,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         viewer.getTree().setLayoutData(
                 GridDataFactory.fillDefaults().grab(true, true).create());
-        setProviders(viewer, getCompMapper());
+        setProviders(viewer, getCompNameCache());
         viewer.setUseHashlookup(true);
         viewer.setSorter(new ObjectMappingTreeSorter());
         viewer.setComparer(new PersistentObjectComparer());
@@ -699,7 +700,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         viewer.getTree().setLayoutData(
                 GridDataFactory.fillDefaults().grab(true, true).create());
-        setProviders(viewer, getCompMapper());
+        setProviders(viewer, getCompNameCache());
         viewer.setUseHashlookup(true);
         viewer.setSorter(new ObjectMappingTreeSorter());
         viewer.setComparer(new PersistentObjectComparer());
@@ -811,61 +812,14 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         TimestampBP.refreshTimestamp(objMap);
         try {
             if (getEditorHelper().isDirty()) {
-                EditSupport editSupport = getEditorHelper().getEditSupport();
-                IObjectMappingProfilePO origProfile = 
-                    ((IAUTMainPO)editSupport.getOriginal()).getObjMap()
-                        .getProfile();
-                IObjectMappingProfilePO workProfile = 
-                    ((IAUTMainPO)editSupport.getWorkVersion()).getObjMap()
-                        .getProfile();
-
-                IWritableComponentNameCache compNameCache = 
-                    editSupport.getCompMapper().getCompNameCache();
-                
-                Set<IComponentNamePO> renamedCompNames =  
-                    new HashSet<IComponentNamePO>(
-                            compNameCache.getRenamedNames());
-                Set<IComponentNamePO> reuseChangedCompNames = 
-                    getCompNamesWithChangedReuse(compNameCache);
-
-                fixCompNameReferences(getAut().getObjMap(), 
-                        getEditorHelper().getEditSupport()
-                            .getCompMapper().getCompNameCache());
-                
-                editSupport.saveWorkVersion();
-                
-                List<DataChangedEvent> events = 
-                                new ArrayList<DataChangedEvent>();
-                events.addAll(getRenamedEvents(renamedCompNames));
-                events.addAll(getReuseChangedEvents(reuseChangedCompNames));
-                
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        events.toArray(new DataChangedEvent[0]));
-                DataEventDispatcher.getInstance().fireDataChangedListener(
-                        this.getAut().getObjMap(), 
-                        DataState.StructureModified, 
-                        UpdateState.all);
-                
-                if (getAut().equals(
-                        TestExecution.getInstance().getConnectedAut())
-                    && !workProfile.equals(origProfile)) {
-                    
-                    NagDialog.runNagDialog(
-                            Plugin.getActiveWorkbenchWindowShell(),
-                            "InfoNagger.ObjectMappingProfileChanged", //$NON-NLS-1$
-                            ContextHelpIds.OBJECT_MAP_EDITOR); 
-                }
+                performSave();
             }
-            ComponentNamesBP.getInstance().init();
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForEditor(e, this);
             errorOccured = true;
         } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleProjectDeletedException();
             errorOccured = true;
-        } catch (IncompatibleTypeException ite) {
-            ErrorHandlingUtil.createMessageDialog(
-                    ite, ite.getErrorMessageParams(), null);
         } finally {
             monitor.done();
             if (!errorOccured) {
@@ -878,59 +832,44 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             }
         }
     }
+    
+    /** Performs the save operation */
+    private void performSave() throws PMReadException, PMSaveException,
+            PMException, ProjectDeletedException {
+        
+        EditSupport editSupport = getEditorHelper().getEditSupport();
+        IWritableComponentNameCache compNameCache = editSupport.getCache();
 
-    /**
-     * 
-     * @param compNameCache The cache to use for finding Component Names.
-     * @return all Component Names marked within <code>compNameCache</code> as
-     *         having had their reuse changed.
-     */
-    private Set<IComponentNamePO> getCompNamesWithChangedReuse(
-            IWritableComponentNameCache compNameCache) {
-        Set<IComponentNamePO> reuseChangedCompNames = 
-            new HashSet<IComponentNamePO>(); 
-        for (String compNameGuid : compNameCache.getReusedNames()) {
-            IComponentNamePO compName = 
-                compNameCache.getCompNamePo(compNameGuid);
-            if (compName != null) {
-                reuseChangedCompNames.add(compName);
-            }
+        IObjectMappingProfilePO origProfile = 
+            ((IAUTMainPO)editSupport.getOriginal()).getObjMap()
+                .getProfile();
+        IObjectMappingProfilePO workProfile = 
+            ((IAUTMainPO)editSupport.getWorkVersion()).getObjMap()
+                .getProfile();
+        
+        fixCompNameReferences(getAut().getObjMap(), 
+                compNameCache);
+        
+        editSupport.saveWorkVersion();
+        compNameCache.clear();
+        
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                this.getAut().getObjMap(), 
+                DataState.StructureModified, 
+                UpdateState.all);
+        
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                getAut().getObjMap(), DataState.Saved, UpdateState.all);
+        
+        if (getAut().equals(
+                TestExecution.getInstance().getConnectedAut())
+                && !workProfile.equals(origProfile)) {
+            
+            NagDialog.runNagDialog(
+                    Plugin.getActiveWorkbenchWindowShell(),
+                    "InfoNagger.ObjectMappingProfileChanged", //$NON-NLS-1$
+                    ContextHelpIds.OBJECT_MAP_EDITOR); 
         }
-        return reuseChangedCompNames;
-    }
-
-    /**
-     * Get "ReuseChanged" data changed events for each given Component Name.
-     * 
-     * @param reuseChangedCompNames The Component Names for which to fire 
-     *                              the events.
-     * @return "ReuseChanged" data changed events                        
-     */
-    private List<DataChangedEvent> getReuseChangedEvents(
-            Set<IComponentNamePO> reuseChangedCompNames) {
-        List<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
-        for (IComponentNamePO compName : reuseChangedCompNames) {
-            events.add(new DataChangedEvent(compName, DataState.ReuseChanged,
-                    UpdateState.all));
-        }
-        return events;
-    }
-
-    /**
-     * Get "Renamed" data changed events for each given Component Name.
-     * 
-     * @param renamedCompNames
-     *            The Component Names for which to fire the events.
-     * @return "Renamed" data changed events
-     */
-    private List<DataChangedEvent> getRenamedEvents(
-            Set<IComponentNamePO> renamedCompNames) {
-        List<DataChangedEvent> events = new ArrayList<DataChangedEvent>();
-        for (IComponentNamePO compName : renamedCompNames) {
-            events.add(new DataChangedEvent(compName, DataState.Renamed,
-                    UpdateState.all));
-        }
-        return events;
     }
 
     /**
@@ -954,7 +893,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             Set<String> guidsToRemove = new HashSet<String>();
             for (String compNameGuid : assoc.getLogicalNames()) {
                 IComponentNamePO compNamePo = 
-                    compNameCache.getCompNamePo(compNameGuid);
+                    compNameCache.getResCompNamePOByGuid(compNameGuid);
                 if (compNamePo != null 
                         && !compNamePo.getGuid().equals(compNameGuid)) {
                     guidsToRemove.add(compNameGuid);
@@ -1030,7 +969,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         getEditorHelper().setDirty(false);
         getEditorHelper().getEditSupport().close();
         PersistableEditorInput input = new PersistableEditorInput(obj);
-        m_compMapper = input.getEditSupport().getCompMapper();
         try {
             init(getEditorSite(), input);
             // MultiPageEditorPart sets the selection provider to a 
@@ -1039,8 +977,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             m_selectionProvider.setSelectionProviderDelegate(
                     m_pageToSelectionProvider.get(getActivePage()));
             getSite().setSelectionProvider(m_selectionProvider);
-            m_treeViewerUpdater =  new ComponentNameTreeViewerUpdater(
-                    getActiveTreeViewer());
             final IObjectMappingPO om = getAut().getObjMap();
 
             m_mappingConfigComponent.setInput(om);
@@ -1056,7 +992,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             for (TreeViewer splitViewer : viewerToInput.keySet()) {
                 Object [] expandedSplitViewerElements = 
                     splitViewer.getExpandedElements();
-                setProviders(splitViewer, getCompMapper());
+                setProviders(splitViewer, getCompNameCache());
                 splitViewer.setInput(viewerToInput.get(splitViewer));
                 splitViewer.setExpandedElements(expandedSplitViewerElements);
                 // Clearing the selection seems to help prevent the behavior 
@@ -1073,14 +1009,14 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * the given viewer.
      * 
      * @param viewer The viewer to receive new providers.
-     * @param compNameMapper The mapper to use to initialize the providers.
+     * @param compNameCache The cache to use to initialize the providers.
      */
     private static void setProviders(AbstractTreeViewer viewer,
-            IWritableComponentNameMapper compNameMapper) {
+            IWritableComponentNameCache compNameCache) {
         viewer.setLabelProvider(
-                new OMEditorTreeLabelProvider(compNameMapper));
+                new OMEditorTreeLabelProvider(compNameCache));
         viewer.setContentProvider(
-                new OMEditorTreeContentProvider(compNameMapper));
+                new OMEditorTreeContentProvider(compNameCache));
     }
     
     /**
@@ -1212,10 +1148,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     
     /**
      * call refresh() for all the different viewers in this editor
-     * not really, the unmapped component names viewer is unaffected!
      */
     private void refreshAllViewer() {
         m_uiElementTreeViewer.refresh();
+        m_compNameTreeViewer.refresh();
         m_mappedComponentTreeViewer.refresh();
     }
     
@@ -1308,7 +1244,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             getEditorHelper().setDirty(true);
         }
         if (!isDirty()) {
-            
             try {
                 getEditorHelper().getEditSupport().reinitializeEditSupport();
                 getEditorHelper().resetEditableState();
@@ -1347,6 +1282,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     public void dispose() {
+        DataEventDispatcher.getInstance().removeDataChangedListener(this);
         ObjectMappingEventDispatcher.removeObserver(this);
         OpenOMETracker.INSTANCE.removeOME(this);
         getEditorSite().getActionBars().setGlobalActionHandler(
@@ -1364,7 +1300,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         getSite().setSelectionProvider(null);
         GuiEventDispatcher.getInstance().removeEditorDirtyStateListener(this);
         
-        m_treeViewerUpdater = null;
         if (m_editorHelper != null) {
             m_editorHelper.dispose();
         }
@@ -1387,27 +1322,41 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         return null;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Handles those events which may change the component names from outside the editor's scope
+     * These are so far: removing a component name through the Browser or renaming one anywhere 
+     * @param events the events
+     */
     public void handleDataChanged(DataChangedEvent... events) {
+        boolean refreshView = false;
         for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState());
+            if (e.getUpdateState() != UpdateState.onlyInEditor
+                    && e.getPo() instanceof IComponentNamePO) {
+                handleOneChange((IComponentNamePO) e.getPo(), e.getDataState());
+                break;
+            }
         }
     }
     
-    /** {@inheritDoc} */
-    public void handleDataChanged(IPersistentObject po, DataState dataState) {
-
-        getEditorHelper().handleDataChanged(po, dataState);
-        
-        // required when deleting component names through the Comp Names Browser
-        // the names are correctly removed without this fix,
-        // but if we create a new name, they reappear :-)
-        if (po instanceof IComponentNamePO && dataState == DataState.Deleted) {
-            getOmEditorBP().deleteCompName((IComponentNamePO) po);
+    /**
+     * Deals with a single data change event
+     * @param compName the Component Name
+     * @param state the data state
+     */
+    private void handleOneChange(IComponentNamePO compName, DataState state) {
+        switch (state) {
+            case Renamed:
+                getCompNameCache().renamedCompName(compName.getGuid(),
+                        compName.getName());
+                break;
+            case Deleted:
+                getOmEditorBP().deleteCompName(compName, false);
+                break;
+            default:
         }
-        if (m_treeViewerUpdater != null) {
-            m_treeViewerUpdater.handleDataChanged(po, dataState);
-        }
+        m_compNameTreeViewer.refresh();
+        m_uiElementTreeViewer.refresh();
+        m_mappedComponentTreeViewer.refresh();
     }
     
     /**
@@ -1432,15 +1381,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_selectionProvider.setSelectionProviderDelegate(
                 m_pageToSelectionProvider.get(newPageIndex));
         
-    }
-
-    /**
-     * Convenience method for accessing the editor's component name mapper.
-     * 
-     * @return the editor's component name mapper.
-     */
-    private IWritableComponentNameMapper getCompMapper() {
-        return m_compMapper;
     }
 
     /**
@@ -1491,4 +1431,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public EntityManager getEntityManager() {
         return getEditorHelper().getEditSupport().getSession();
     }
+
+    /** {@inheritDoc} */
+    public IWritableComponentNameCache getCompNameCache() {
+        return getEditorHelper().getEditSupport().getCache();
+    }
+    
 }

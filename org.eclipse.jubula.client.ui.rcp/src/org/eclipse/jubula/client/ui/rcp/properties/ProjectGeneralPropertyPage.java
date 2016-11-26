@@ -27,7 +27,6 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -42,7 +41,6 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IncompatibleTypeException;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -773,11 +771,13 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             Set<IReusedProjectPO> newReused = new HashSet<IReusedProjectPO>(
                 ((IProjectPropertiesPO)getEditSupport().getWorkVersion())
                     .getUsedProjects());
+            boolean needRefresh = !origReused.containsAll(newReused)
+                    || !newReused.containsAll(origReused); 
             newReused.removeAll(origReused);
             getEditSupport().saveWorkVersion();
             refreshAutMainList();
             boolean doSearchQuery = false;
-            doSearchQuery = handleReusedChanged(newReused);
+            doSearchQuery = handleReusedChanged(newReused, needRefresh);
             DataEventDispatcher ded = DataEventDispatcher.getInstance();
             ded.fireProjectStateChanged(ProjectState.prop_modified);
             
@@ -802,9 +802,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             ErrorHandlingUtil.createMessageDialog(e, null, null);
         } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleProjectDeletedException();
-        } catch (IncompatibleTypeException ite) {
-            ErrorHandlingUtil.createMessageDialog(
-                    ite, ite.getErrorMessageParams(), null);
         } catch (InterruptedException e) {
             ErrorHandlingUtil.createMessageDialog(
                     new JBException(Messages.UnexpectedError, e,
@@ -823,15 +820,19 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
      * modules {@link DeprecatedModulesQuery} and also refreshes the master
      * session if there was a change in the reused of projects.
      * @param newReused the list of new {@link IReusedProjectPO}
+     * @param needRefresh whether a refresh of the project is needed
      * @return boolean which states if the search query should be done
      * @throws InvocationTargetException might occur during refresh
      * @throws InterruptedException might occur during refresh
      */
-    private boolean handleReusedChanged(Set<IReusedProjectPO> newReused)
+    private boolean handleReusedChanged(Set<IReusedProjectPO> newReused,
+            boolean needRefresh)
             throws InvocationTargetException, InterruptedException {
         boolean doSearchQuery = false;
-        if (newReused.size() > 0) {
+        if (!newReused.isEmpty()) {
             doSearchQuery = openSearchForDeprecatedDialog();
+        }
+        if (needRefresh) {
             PlatformUI.getWorkbench().getProgressService().run(false, false,
                     new RefreshProjectHandler.RefreshProjectOperation());
         }
@@ -839,11 +840,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             try {
                 IProjectPO reusedProject =
                     ProjectPM.loadReusedProject(reused);
-                if (reusedProject != null) {
-                    // incomplete database, see https://bxapps.bredex.de/bugzilla/show_bug.cgi?id=854
-                    ComponentNamesBP.getInstance().refreshNames(
-                            reusedProject.getId());
-                }
             } catch (JBException e) {
                 // Could not refresh Component Name information for
                 // reused project. Log the exception.

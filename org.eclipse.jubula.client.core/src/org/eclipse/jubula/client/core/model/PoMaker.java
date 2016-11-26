@@ -499,6 +499,15 @@ public abstract class PoMaker {
     }
     
     /**
+     * Clones a ComponentNamePO
+     * @param toClone the ComponentNamePO to clone
+     * @return the clone
+     */
+    public static IComponentNamePO cloneCompName(IComponentNamePO toClone) {
+        return new ComponentNamePO((ComponentNamePO) toClone);
+    }
+    
+    /**
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */

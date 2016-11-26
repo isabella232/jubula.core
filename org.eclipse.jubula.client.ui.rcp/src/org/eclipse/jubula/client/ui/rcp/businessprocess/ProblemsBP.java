@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator;
 import org.eclipse.jubula.client.core.businessprocess.db.TestJobBP;
@@ -41,6 +42,7 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -61,7 +63,6 @@ import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -80,7 +81,7 @@ import org.slf4j.LoggerFactory;
  * @created 12.03.2007
  */
 public class ProblemsBP implements ICompletenessCheckListener,
-    IServerConnectionListener {
+        IServerConnectionListener {
     
     /** this instance */
     private static ProblemsBP instance; 
@@ -198,15 +199,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
             if (project.getIsProtected()) {
                 problemProtectedProjectLoaded();
             }
+            collectTypeProblems();
         }
-        if (checkCompNamesPair) {
-            checkCompNamesPairs();
-        } else {
-            // Keep all problems related to Comp Names
-            copyCompNamesProblems();
-        }
+        copyCompNamesProblems();
 
         if (checkCompNamesPair) {
+            checkWrongParamsAndExecs();
             checkMissingProjects();
         } else {
             // Keep all problems related to Missing Projects
@@ -235,7 +233,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
             return;
         }
         new TreeTraverser(project, 
-            new CollectProblemsOperation(), false, true)
+            new CollectProblemsOperation(), true, true)
                 .traverse(true);
     }
     
@@ -279,6 +277,8 @@ public class ProblemsBP implements ICompletenessCheckListener,
             if (data instanceof INodePO) {
                 INodePO node = (INodePO) data;
                 node.removeProblem(problem);
+            } else if (data instanceof IComponentNamePO) {
+                ((IComponentNamePO) data).setTypeProblem(null);
             }
         }
         
@@ -715,7 +715,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * Checks, if an execTC has compNames without compTypes
      */
     @SuppressWarnings("synthetic-access")
-    private void checkCompNamesPairs() {
+    private void checkWrongParamsAndExecs() {
         IProjectPO project = GeneralStorage.getInstance().getProject();
         if (project == null) {
             return;
@@ -760,7 +760,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param cap the corresponding cap
      */
     private void problemDeprecatedActionFound(ICapPO cap) {
-        final ITestCasePO tcPO = (ITestCasePO) cap.getParentNode();
+        final ITestCasePO tcPO = (ITestCasePO) cap.getSpecAncestor();
         String message = NLS.bind(Messages.ProblemCheckerDeprecatedAction,
                 new String[] { cap.getName(), tcPO.getName() });
         m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
@@ -773,7 +773,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param cap the corresponding cap
      */
     private void problemDeprecatedCompFound(ICapPO cap) {
-        final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
+        final ITestCasePO tcPO = (ITestCasePO)cap.getSpecAncestor();
         String message = NLS.bind(Messages.ProblemCheckerDeprecatedAction,
                 new String[] { cap.getName(), tcPO.getName() });
         m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
@@ -786,7 +786,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param cap the corresponding cap
      */
     private void problemCompDoesNotExist(ICapPO cap) {
-        final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
+        final ITestCasePO tcPO = (ITestCasePO)cap.getSpecAncestor();
         
         String message = NLS.bind(Messages.ProblemCheckerCompDoesNotExist,
                         new String[] { cap.getName(), tcPO.getName(),
@@ -801,7 +801,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param cap the corresponding cap
      */
     private void problemActionDoesNotExist(ICapPO cap) {
-        final ITestCasePO tcPO = (ITestCasePO)cap.getParentNode();
+        final ITestCasePO tcPO = (ITestCasePO)cap.getSpecAncestor();
         
         String message = NLS.bind(
                 Messages.ProblemCheckerCompDoesNotExist,
@@ -816,7 +816,7 @@ public class ProblemsBP implements ICompletenessCheckListener,
      * @param cap the corresponding cap
      */
     private void problemParamDoesNotExist(ICapPO cap) {
-        final ITestCasePO tcPO = (ITestCasePO) cap.getParentNode();
+        final ITestCasePO tcPO = (ITestCasePO) cap.getSpecAncestor();
 
         String message = NLS.bind(
                 Messages.ProblemCheckerCompDoesNotExist,
@@ -835,6 +835,12 @@ public class ProblemsBP implements ICompletenessCheckListener,
         /** {@inheritDoc} */
         public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (alreadyVisited) {
+                return false;
+            }
+            if (node instanceof IExecTestCasePO) {
+                addCNPairProblemIfThereIsOne((IExecTestCasePO) node);
+            }
             if (ProblemFactory.hasProblem(node)) {
                 for (IProblem problem : node.getProblems()) {
                     if (problem.hasUserMessage()) {
@@ -885,27 +891,11 @@ public class ProblemsBP implements ICompletenessCheckListener,
          */
         public boolean operate(ITreeTraverserContext<INodePO> ctx, 
                 INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (alreadyVisited) {
+                return false;
+            }
             
-            if (node instanceof IExecTestCasePO) {
-                IExecTestCasePO execTC = (IExecTestCasePO)node;
-                boolean hasCompleteTestCaseReferences =
-                        !execTC.getProblems().contains(ProblemFactory
-                                .MISSING_NODE);
-                if (hasCompleteTestCaseReferences) {
-                    // Only check CompNamesPair if test case reference
-                    // is available.
-
-                    for (ICompNamesPairPO pair : execTC.getCompNamesPairs()) {
-                        String type = Utils.getComponentType(execTC, pair
-                            .getFirstName());
-                        pair.setType(type);
-                        if (type == null 
-                                || StringConstants.EMPTY.equals(type)) {
-                            problemNoCompTypeForCompNamesPairExists(execTC);
-                        }
-                    }
-                }
-            } else if (node instanceof ICapPO) {
+            if (node instanceof ICapPO) {
                 ICapPO cap = (ICapPO)node;
                 if (cap.getMetaComponentType() instanceof InvalidComponent) {
                     String message = Messages.Component + StringConstants.COLON
@@ -950,29 +940,43 @@ public class ProblemsBP implements ICompletenessCheckListener,
             return true;
         }
         
-        /**
-         * @param execTC the execTC that has problems
-         */
-        private void problemNoCompTypeForCompNamesPairExists(
-            IExecTestCasePO execTC) {
-            INodePO parentNode = execTC.getParentNode();
-            if (parentNode == null) {
-                // in case of EventExecTestCase
+    }
+    
+    /**
+     * Checks whether the ExecTC has a broken CompNamesPair
+     * @param exec the execTC
+     */
+    private void addCNPairProblemIfThereIsOne(IExecTestCasePO exec) {
+        for (ICompNamesPairPO pair : exec.getCompNamesPairs()) {
+            if (pair.getType().equals(StringConstants.EMPTY)) {
+                problemNoCompTypeForCompNamesPairExists(exec);
                 return;
             }
-            String name = parentNode.getName();
-            if (StringConstants.EMPTY.equals(name)
-                && parentNode instanceof IExecTestCasePO) {
-
-                name = ((IExecTestCasePO)parentNode)
-                    .getSpecTestCase().getName();
-            } 
-            m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
-                    new Status(IStatus.WARNING, Activator.PLUGIN_ID, 
-                        NLS.bind(Messages.ProblemCheckerNoCompType, name)),
-                        NLS.bind(Messages.ProblemCheckerNoCompType, name), 
-                    parentNode, ProblemType.REASON_NO_COMPTYPE));
         }
+    }
+
+    /**
+     * @param execTC the execTC that has problems
+     */
+    private void problemNoCompTypeForCompNamesPairExists(
+        IExecTestCasePO execTC) {
+        INodePO parentNode = execTC.getSpecAncestor();
+        if (parentNode == null) {
+            // in case of EventExecTestCase
+            return;
+        }
+        String name = parentNode.getName();
+        if (StringConstants.EMPTY.equals(name)
+            && parentNode instanceof IExecTestCasePO) {
+
+            name = ((IExecTestCasePO)parentNode)
+                .getSpecTestCase().getName();
+        } 
+        m_localProblemsToShow.add(ProblemFactory.createProblemWithMarker(
+                new Status(IStatus.WARNING, Activator.PLUGIN_ID, 
+                    NLS.bind(Messages.ProblemCheckerNoCompType, name)),
+                    NLS.bind(Messages.ProblemCheckerNoCompType, name), 
+                parentNode, ProblemType.REASON_NO_COMPTYPE));
     }
     
     /** {@inheritDoc} */
@@ -983,5 +987,23 @@ public class ProblemsBP implements ICompletenessCheckListener,
     /** {@inheritDoc} */
     public void completenessCheckStarted() {
         // currently empty
+    }
+    
+    /**
+     * Recalculates all Component Name type-related info for the master session
+     * And creates appropriate problems
+     */
+    private void collectTypeProblems() {
+        for (IComponentNamePO cN : CompNameManager.getInstance().
+                getAllCompNamePOs()) {
+            if (cN.getTypeProblem() != null) {
+                m_allProblemsToShow.add(cN.getTypeProblem());
+            }
+        }
+        
+        // And from ExecTCs
+        /*for (IExecTestCasePO exec : calc.getPairProblems()) {
+            problemNoCompTypeForCompNamesPairExists(exec);
+        }*/
     }
 }
