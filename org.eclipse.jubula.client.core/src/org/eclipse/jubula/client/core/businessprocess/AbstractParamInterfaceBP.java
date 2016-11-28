@@ -74,8 +74,12 @@ public abstract class AbstractParamInterfaceBP<T> {
                 list.add(value);
             }
         }
-        IDataSetPO dataSet = PoMaker.createListWrapperPO(list);
-        obj.getDataManager().insertDataSet(dataSet, row);
+        if (list.size() > 0) {
+            IDataSetPO dataSet = PoMaker.createListWrapperPO(list);
+            obj.getDataManager().insertDataSet(dataSet, row);
+        } else {
+            obj.getDataManager().insertDataSet(row);
+        }
     }
     
     /**
