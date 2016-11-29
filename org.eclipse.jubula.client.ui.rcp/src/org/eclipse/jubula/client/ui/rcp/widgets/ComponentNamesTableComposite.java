@@ -10,9 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -26,8 +26,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
@@ -443,7 +443,6 @@ public class ComponentNamesTableComposite extends Composite implements
          * {@inheritDoc}
          */
         public Image getColumnImage(Object element, int columnIndex) {
-            searchAndSetComponentType((ICompNamesPairPO)element);
             String type = ((ICompNamesPairPO)element).getType();
             switch (columnIndex) {
                 case 0:
@@ -482,7 +481,6 @@ public class ComponentNamesTableComposite extends Composite implements
                     return CompNameManager.getInstance().getNameByGuid(
                             pair.getSecondName());
                 case 3:
-                    searchAndSetComponentType(pair);
                     String type = pair.getType();
                     for (int i = 0; i < table.getItems().length; i++) {
                         if (table.getItems()[i].getData() != null
@@ -526,13 +524,9 @@ public class ComponentNamesTableComposite extends Composite implements
     }
     
     /**
-     * 
-     * @param pair the current compNamesPairPO
+     * Sets the type of CNPairs
      */
-    private void searchAndSetComponentType(final ICompNamesPairPO pair) {
-        if (!StringUtils.isEmpty(pair.getType())) {
-            return;
-        }
+    private void searchAndSetComponentType() {
         if ((getSelectedExecNodeOwner() instanceof IJBEditor)) {
             EditSupport supp = ((IJBEditor)getSelectedExecNodeOwner()).
                     getEditorHelper().getEditSupport();
@@ -570,6 +564,7 @@ public class ComponentNamesTableComposite extends Composite implements
     private void updateTableInput() {
         boolean editable = false;
         INodePO workVersion = null;
+        IExecTestCasePO exec = getSelectedExecNode();
         if (getSelectedExecNodeOwner() instanceof AbstractTestCaseEditor) {
             editable = true;
             workVersion = (INodePO)
@@ -578,12 +573,21 @@ public class ComponentNamesTableComposite extends Composite implements
         }
         List<ICompNamesPairPO> input = null;
         if (getSelectedExecNode() != null) {
-            input = m_compNamesBP.getAllCompNamesPairs(getSelectedExecNode());
+            input = m_compNamesBP.getAllCompNamesPairs(exec);
 
+            List<ICompNamesPairPO> newPairs = new ArrayList<>();
             // Add validator
             for (ICompNamesPairPO pair : input) {
-                searchAndSetComponentType(pair);
+                if (exec.getCompNamesPair(pair.getFirstName()) == null) {
+                    newPairs.add(pair);
+                    exec.addCompNamesPair(pair);
+                }
             }
+            searchAndSetComponentType();
+            for (ICompNamesPairPO pair : newPairs) {
+                exec.removeCompNamesPair(pair.getFirstName());
+            }
+            
 
             IWorkbenchPart activePart = Plugin.getActivePart();
             if (activePart instanceof IJBEditor) {

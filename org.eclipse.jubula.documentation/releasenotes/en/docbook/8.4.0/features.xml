@@ -25,12 +25,12 @@
       We introduced new nodes altering the test execution flow: Conditional Statements and Loops.
     </para>
     <para>
-      Component Name types are calculated and treated differently from this release onwards.
-      The type becomes only a decoration, so actions resulting in invalid Component Name types
+      Component name types are calculated and treated differently from this release onwards.
+      The type becomes only decorative, so actions resulting in invalid component name types
       are allowed from now on, however, the user is warned before any action resulting in an
-      invalid type. Component Names with invalid type are decorated by error markers, just like
-      Component Names which are mapped into a Component which does not realize one of the
-      actions which might be executed on the Component Name.
+      invalid type. Component names with invalid type are decorated by error markers, just like
+      component names which are mapped into a component which does not realize one of the
+      actions which might be executed on the component name.
     </para>
   </listitem>
 </itemizedlist>

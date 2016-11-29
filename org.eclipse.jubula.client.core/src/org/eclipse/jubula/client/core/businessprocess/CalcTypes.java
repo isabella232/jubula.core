@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
@@ -76,6 +77,9 @@ public class CalcTypes {
     
     /** Info for the problems */
     private Map<String, List<String>> m_problemInfo = new HashMap<>();
+    
+    /** The GUID => last type change map */
+    private Map<String, String> m_lastTypeChange = new HashMap<>();
     
     /** Most abstract component type */
     private String m_mostAbstract = CompNameTypeManager.getMostAbstractType();
@@ -203,6 +207,8 @@ public class CalcTypes {
                         List<String> info = new ArrayList<>(2);
                         info.add(CompSystemI18n.getString(type));
                         info.add(CompSystemI18n.getString(globType));
+                        info.add(m_lastTypeChange.get(guid));
+                        info.add(aut.getGuid());
                         m_problemInfo.put(resGuid, info);
                     }
                 }
@@ -256,7 +262,7 @@ public class CalcTypes {
                 }
                 guid = CompNameManager.getInstance().resolveGuid(guid);
                 String type = ((ICapPO) child).getComponentType();
-                updateType(guid, type, localType);
+                updateType(guid, type, localType, node);
             } else if (child instanceof IExecTestCasePO) {
                 // for ExecTestCasePOs we first handle the SpecTestCasePO
                 ISpecTestCasePO spec = ((IExecTestCasePO) child)
@@ -278,7 +284,7 @@ public class CalcTypes {
                         guid = pair.getSecondName();
                         guid = CompNameManager.getInstance().resolveGuid(guid);
                     }
-                    updateType(guid, mapLocal.get(gui), localType);
+                    updateType(guid, mapLocal.get(gui), localType, node);
                 }
                 setCompNamePairTypes((IExecTestCasePO) child, mapLocal);
             }
@@ -291,9 +297,10 @@ public class CalcTypes {
      * @param guid the guid
      * @param type the type
      * @param localType the local type map
+     * @param node the node
      */
     private void updateType(String guid, String type,
-            Map<String, String> localType) {
+            Map<String, String> localType, INodePO node) {
         // Calculating the local type for the CN
         if (localType.containsKey(guid)) {
             localType.put(guid, CompNameTypeManager.calcUsageType(
@@ -302,6 +309,8 @@ public class CalcTypes {
             localType.put(guid, type);
         }
         String currentType = m_usageType.get(guid);
+        String currentTypeDisp = CompSystemI18n.getString(currentType);
+        String typeDisp = CompSystemI18n.getString(type);
         if (currentType == null) {
             m_usageType.put(guid, m_mostAbstract);
             currentType = m_mostAbstract;
@@ -314,9 +323,14 @@ public class CalcTypes {
                 currentType, type);
         if (newType.equals(ComponentNamesBP.UNKNOWN_COMPONENT_TYPE)) {
             List<String> info = new ArrayList<String>(2);
-            info.add(CompSystemI18n.getString(type));
-            info.add(CompSystemI18n.getString(currentType));
+            info.add(typeDisp);
+            info.add(currentTypeDisp);
+            info.add(m_lastTypeChange.get(guid));
+            info.add(node.getGuid());
             m_problemInfo.put(guid, info);
+        } else if (!StringUtils.equals(currentTypeDisp,
+                CompSystemI18n.getString(newType))) {
+            m_lastTypeChange.put(guid, node.getGuid());
         }
         m_usageType.put(guid, newType);
     }

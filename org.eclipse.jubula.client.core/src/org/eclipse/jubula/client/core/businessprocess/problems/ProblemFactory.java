@@ -98,13 +98,13 @@ public final class ProblemFactory {
                 Messages.ProblemIncompatibleMapTypeMarkerText, cN.getName()),
                 new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                 NLS.bind(Messages.ProblemIncompatibleMapTypeMarkerText,
-                        cN.getName())), cN.getName(), type);
+                        cN.getName())), cN, type);
         }
         return new Problem(NLS.bind(
                 Messages.ProblemIncompatibleUsageTypeMarkerText, cN.getName()),
                 new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                 NLS.bind(Messages.ProblemIncompatibleUsageTypeMarkerText,
-                        cN.getName())), cN.getName(), type);
+                        cN.getName())), cN, type);
     }
 
     /**

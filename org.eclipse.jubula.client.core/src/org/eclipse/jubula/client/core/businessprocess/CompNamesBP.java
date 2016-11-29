@@ -58,29 +58,8 @@ public class CompNamesBP {
             if (pair.isPropagated()) {
                 String name = pair.getSecondName();
                 if (!pairs.containsKey(name)) {
-                    String type = (pair.getType() == null || pair.getType()
-                            .equals(StringConstants.EMPTY)) 
-                                ? StringConstants.EMPTY : pair.getType();
-                    // ------------------------------------------------
-//                    if (StringUtils.isEmpty(pair.getType())) {
-                    if (pair.getType() == null) {
-                        for (Object o : execNode.getSpecTestCase()
-                                .getUnmodifiableNodeList()) {
-
-                            INodePO node = (INodePO)o;
-                            if (node instanceof ICapPO) {
-                                ICapPO cap = (ICapPO)node;
-                                if (cap.getComponentName().equals(
-                                        pair.getName())) {
-
-                                    type = cap.getComponentType();
-                                    pair.setType(type);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    pairs.put(name, PoMaker.createCompNamesPairPO(name, type));
+                    pairs.put(name, PoMaker.createCompNamesPairPO(name,
+                            StringConstants.EMPTY));
                 }
             }
         }

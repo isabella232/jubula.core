@@ -21,9 +21,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
+import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -96,13 +100,76 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             INodePO node = NodePM.getNode(GeneralStorage.getInstance()
                     .getProject().getId(), m_nodeGUID);
             if (node != null) {
-                while (!(NodeBP.isEditable(node) 
+                while (node != null && !(NodeBP.isEditable(node) 
                         && (node instanceof ITestSuitePO
                         || node instanceof ITestJobPO
                         || node instanceof ISpecTestCasePO))) {
                     node = node.getParentNode();
                 }
+                if (node != null) {
+                    AbstractOpenHandler.openEditor(node);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Opens two editors to resolve an incompatibility
+     * @author BREDEX GmbH
+     */
+    private static class TypeIncompResolver implements IMarkerResolution {
+
+        /** The component name */
+        private IComponentNamePO m_cN;
+        
+        /** The info - .get(2) and .get(3) contains the relevant guids */
+        private List<String> m_info;
+        
+        /**
+         * Constructor
+         * @param cN the component name
+         * @param info the info
+         */
+        private TypeIncompResolver(IComponentNamePO cN, List<String> info) {
+            m_cN = cN;
+            m_info = info;
+        }
+        
+        /** {@inheritDoc} */
+        public String getLabel() {
+            return NLS.bind(Messages.ProblemViewOpenEditor, m_cN.getName());
+        }
+
+        /** {@inheritDoc} */
+        public void run(IMarker marker) {
+            INodePO node = NodePM.getNode(GeneralStorage.getInstance()
+                    .getProject().getId(), m_info.get(2));
+            if (node == null) {
+                return;
+            }
+            node = node.getSpecAncestor();
+            if (NodeBP.isEditable(node)) {
                 AbstractOpenHandler.openEditor(node);
+            }
+            if (m_cN.getTypeProblem().getProblemType().equals(
+                    ProblemType.REASON_INCOMPATIBLE_MAP_TYPE)) {
+                for (IAUTMainPO aut : GeneralStorage.getInstance().
+                        getProject().getAutCont().getAutMainList()) {
+                    if (aut.getGuid().equals(m_info.get(3))) {
+                        AbstractOpenHandler.openEditor(aut);
+                        break;
+                    }
+                }    
+            } else {
+                node = NodePM.getNode(GeneralStorage.getInstance()
+                        .getProject().getId(), m_info.get(3));
+                if (node == null) {
+                    return;
+                }
+                node = node.getSpecAncestor();
+                if (NodeBP.isEditable(node)) {
+                    AbstractOpenHandler.openEditor(node);
+                }   
             }
         }
     }
@@ -216,6 +283,9 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 return getNoServerDefinedResolutions();
             case REASON_PROJECT_DOES_NOT_EXIST:
                 return getMissingProjectResolutions();
+            case REASON_INCOMPATIBLE_MAP_TYPE:
+            case REASON_INCOMPATIBLE_USAGE_TYPE:
+                return getIncompatibleTypeResolutions(nodeGUID);
             default:
                 return new IMarkerResolution[0];
         }
@@ -323,6 +393,27 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             String nodeGUID) {
         return new IMarkerResolution[] { new OpenNodeInEditorMarkerResolution(
                 nodeName, nodeGUID) };
+    }
+    
+    /**
+     * Returns an incompatible type resolver
+     * @param guid the guid
+     * @return the resolver
+     */
+    private IMarkerResolution[] getIncompatibleTypeResolutions(String guid) {
+        IComponentNamePO cN = CompNameManager.getInstance().
+                getResCompNamePOByGuid(guid);
+        if (cN == null || cN.getTypeProblem() == null) {
+            return new IMarkerResolution[] {};
+        }
+        CalcTypes calc = new CalcTypes(CompNameManager.getInstance(), null);
+        calc.calculateTypes();
+        List<String> info = calc.getProblemInfo(guid);
+        // info.get(2) is the last type change place, 3 is the conflict source (see CalcTypes)
+        if (info == null || info.size() != 4) {
+            return new IMarkerResolution[] {};
+        }
+        return new IMarkerResolution[] {new TypeIncompResolver(cN, info)};
     }
  
     /**

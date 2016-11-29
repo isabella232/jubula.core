@@ -584,20 +584,19 @@ public class CompNameManager implements IComponentNameCache {
      * Recalculates all CN types
      */
     public void recalculateTypes() {
-        long start = System.currentTimeMillis();
         String mostAbstract = CompNameTypeManager.getMostAbstractType();
         for (IComponentNamePO cN : CompNameManager.getInstance()
                 .getAllCompNamePOs()) {
             if (GeneralStorage.getInstance().getProject().getId().equals(
                     cN.getParentProjectId())) {
                 cN.setComponentType(mostAbstract);
+                cN.setTypeProblem(null);
             }
         }
         CalcTypes calc = new CalcTypes(CompNameManager.getInstance(), null);
         calc.setWriteTypes(true);
         calc.calculateTypes();
         CompNameManager.getInstance().setTypeProblems(calc);
-        System.out.println("Recalculation took " + (System.currentTimeMillis() - start) + "ms to run.");
     }
     
     /**

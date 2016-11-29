@@ -239,7 +239,7 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
                     if (!StringUtils.isBlank((String)element)) {
                         IComponentNamePO newComponentName = CompNameManager
                                 .getInstance().getResCompNamePOByGuid(guid);
-                        return getDisplayName(newComponentName.getGuid(),
+                        return getDisplayName(newComponentName.getName(),
                                 newComponentName.getComponentType());
                     }
                 }
@@ -273,15 +273,12 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
     
     /**
      * 
-     * @param guidName
-     *            guid of the component name
+     * @param firstName the name of the component name
      * @param guidType
      *            guid of the type
      * @return a String as <code> ComponentName > SecondComponentName [ComponentType]</code>
      */
-    private String getDisplayName(String guidName, String guidType) {
-        String firstName = CompNameManager.getInstance()
-                .getResCompNamePOByGuid(guidName).getName();
+    private String getDisplayName(String firstName, String guidType) {
         String type = CompSystemI18n.getString(guidType);
         String displayName = firstName;
         if (!StringUtils.isBlank(type)) {

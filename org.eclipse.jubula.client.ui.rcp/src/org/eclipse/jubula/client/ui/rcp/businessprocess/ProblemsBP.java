@@ -543,7 +543,10 @@ public class ProblemsBP implements ICompletenessCheckListener,
                         null);
             }
             marker.setAttribute(Constants.JB_REASON, type.ordinal());
-            if (object instanceof INodePO) {
+            if (object instanceof IComponentNamePO) {
+                marker.setAttribute(Constants.JB_NODE_GUID,
+                        ((IComponentNamePO) object).getGuid());
+            } else if (object instanceof INodePO) {
                 INodePO node = (INodePO) object;
                 marker.setAttribute(Constants.JB_OBJECT_NAME, node.getName());
                 marker.setAttribute(Constants.JB_NODE_GUID, node.getGuid());
@@ -1000,10 +1003,5 @@ public class ProblemsBP implements ICompletenessCheckListener,
                 m_allProblemsToShow.add(cN.getTypeProblem());
             }
         }
-        
-        // And from ExecTCs
-        /*for (IExecTestCasePO exec : calc.getPairProblems()) {
-            problemNoCompTypeForCompNamesPairExists(exec);
-        }*/
     }
 }
