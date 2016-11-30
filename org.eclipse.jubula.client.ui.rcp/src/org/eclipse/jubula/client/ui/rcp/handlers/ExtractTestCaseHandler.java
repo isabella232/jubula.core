@@ -138,13 +138,15 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
                 DataState.StructureModified, UpdateState.all);
         DataEventDispatcher.getInstance().fireDataChangedListener(
                 exec, DataState.Added, UpdateState.all);
-        final ISpecTestCasePO newSpecTc = exec.getSpecTestCase();
+        ISpecTestCasePO newSpecTC = exec.getSpecTestCase();
+        newSpecTC = GeneralStorage.getInstance().getMasterSession().find(
+                newSpecTC.getClass(), newSpecTC.getId());
         DataEventDispatcher.getInstance().fireDataChangedListener(
-                newSpecTc, DataState.Added, UpdateState.all);
+                newSpecTC, DataState.Added, UpdateState.all);
         TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
         if (tcb != null) {
             tcb.getTreeViewer().setSelection(
-                    new StructuredSelection(exec), true);
+                    new StructuredSelection(newSpecTC), true);
         }
         return exec;
     }

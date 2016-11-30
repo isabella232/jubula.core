@@ -316,6 +316,8 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
             }
             newSpecTC = createAndPerformNodeDuplication(newTestCaseName,
                     nodesToClone);
+            newSpecTC = GeneralStorage.getInstance().getMasterSession().find(
+                    newSpecTC.getClass(), newSpecTC.getId());
 
             DataEventDispatcher.getInstance().fireDataChangedListener(
                     newSpecTC, DataState.Added, UpdateState.all);
