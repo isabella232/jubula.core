@@ -130,9 +130,9 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
         if (Plugin.getDefault().getPreferenceStore()
                 .getBoolean(Constants.NODE_INSERT_KEY)) {
 
-            INodePO top = node;
-            while (top != null && !(top instanceof ISpecTestCasePO)) {
-                top = top.getParentNode();
+            INodePO top = node.getSpecAncestor();
+            if (top == null) {
+                return null;
             }
             return new NodeTarget(top.getNodeListSize(), top);
         }
