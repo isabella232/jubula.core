@@ -27,14 +27,17 @@
   					<entry>TIMEOUT_IN_MILLISECS</entry>
   					<entry>Integer</entry>
   					<entry></entry>
-  					<entry>1000</entry>
+  					<entry>0 or 1000</entry>
   				</row>
   			</tbody>
   		</tgroup>
   	</table>
   	<itemizedlist>
   		<listitem><para>Enter the amount of time (in milliseconds) to wait before Test Step fails.</para></listitem>
-  	</itemizedlist>
+        <listitem><para>For most of the check actions this means that the check is executed multiple times.
+        The check action then fails with a check failed if the timeout is reached and the wanted check is still not successful</para></listitem>
+  	    <listitem><para>You can adjust the polling delay from check actions when setting the environment property <emphasis role="input">TEST_RC_POLLING_DELAY=&lt;timeInMs&gt;</emphasis></para></listitem>
+   </itemizedlist>
   
   
 </section>

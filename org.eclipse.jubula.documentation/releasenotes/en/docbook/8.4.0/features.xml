@@ -34,4 +34,18 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+ <emphasis role="strong">Check actions with timeout parameter</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+ <para>
+  Most of the check actions do now have a timeout parameter. If there is a
+  timeout value greater than 0 the check action is checking
+  multiple times if the wanted status has occurred. If this did not
+  happen until the timeout is reached the check is marked as check
+  failed.
+ </para>
+  </listitem>
+</itemizedlist>
 </section>

@@ -44,6 +44,11 @@
                 <xref linkend="selected" xrefstyle="template:%t"/>
               </para>
             </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>
@@ -86,6 +91,11 @@
             <listitem>
               <para>
                 <xref linkend="selected" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="timeout_in_millisecs" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
