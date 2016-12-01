@@ -50,7 +50,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.ICondStructPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -274,7 +274,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     public void runLocalChecks() {
         INodePO node = (INodePO) getEditorHelper().getEditSupport()
                 .getWorkVersion();
-        checkForEmptyConditions(node);
+        checkForEmptyControllers(node);
         for (Iterator it = node.getAllNodeIter(); it.hasNext(); ) {
             CompletenessGuard.checkLocalTestData((INodePO) it.next());
         }
@@ -745,10 +745,10 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             INodePO editorNode = (INodePO)getEditorHelper().getEditSupport()
                     .getWorkVersion();
             boolean isVisibleInEditor = editorNode.indexOf(changedNode) > -1;
+            isVisibleInEditor |= contains(editorNode, changedNode);
             if (editorNode instanceof ISpecTestCasePO) {
                 isVisibleInEditor |= ((ISpecTestCasePO)editorNode)
                         .getAllEventEventExecTC().contains(po);
-                isVisibleInEditor |= contains(editorNode, changedNode);
             }
             switch (dataState) {
                 case Added:
@@ -985,15 +985,15 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     }
     
     /**
-     * Checks for empty conditions
+     * Checks for empty controllers
      * @param node the node
      */
-    private void checkForEmptyConditions(INodePO node) {
+    private void checkForEmptyControllers(INodePO node) {
         for (Iterator<INodePO> it = node.getNodeListIterator();
                 it.hasNext(); ) {
             INodePO next = it.next();
-            if (next instanceof ICondStructPO) {
-                removeIncompleteProblems((ICondStructPO) next);
+            if (next instanceof IControllerPO) {
+                removeIncompleteProblems((IControllerPO) next);
             }
         }
         Set<IProblem> copy = new HashSet<IProblem>(node.getProblems());
@@ -1007,15 +1007,15 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     }
     
     /**
-     * Removes empty condition error markers from a node
-     * @param cond the ConditionPO node
+     * Removes empty controller error markers from a node
+     * @param cont the ConditionPO node
      */
-    private void removeIncompleteProblems(ICondStructPO cond) {
-        Set<IProblem> copy = new HashSet<IProblem>(cond.getProblems());
+    private void removeIncompleteProblems(IControllerPO cont) {
+        Set<IProblem> copy = new HashSet<IProblem>(cont.getProblems());
         for (IProblem problem : copy) {
             if (problem.getProblemType().equals(
                     ProblemType.REASON_IF_WITHOUT_TEST)) {
-                cond.removeProblem(problem);
+                cont.removeProblem(problem);
                 return;
             }
         }

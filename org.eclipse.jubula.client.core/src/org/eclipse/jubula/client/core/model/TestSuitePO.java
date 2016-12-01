@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.core.model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.Query;
 import javax.persistence.Transient;
 
+import org.apache.commons.collections.iterators.IteratorChain;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
@@ -260,6 +262,21 @@ class TestSuitePO extends NodePO implements ITestSuitePO {
     public void goingToBeDeleted(EntityManager sess) {
         super.goingToBeDeleted(sess);
         removeDefaultEventHandlers(sess);
+    }
+    
+    /** {@inheritDoc} */
+    @Transient
+    public Iterator<INodePO> getAllNodeIter() {
+        IteratorChain chain = new IteratorChain();
+        chain.addIterator(getNodeListIterator());
+        for (INodePO node : getUnmodifiableNodeList()) {
+            if (node instanceof IControllerPO) {
+                for (INodePO cont : node.getUnmodifiableNodeList()) {
+                    chain.addIterator(cont.getNodeListIterator());
+                }
+            }
+        }
+        return chain;
     }
 
 }
