@@ -220,6 +220,7 @@ public class Messages extends NLS {
     public static String DeleteTreeItemActionShellTitle;
     public static String DeselectAll;
     public static String DirtyStarListLabelProviderAlreadySaved;
+    public static String DisconnectedFromAUT;
     public static String DoesNotExist;
     public static String DoubleClickEventWasCreatedByAnUnknownWidget;
     public static String DoubleEventTypeTitle;

@@ -22,6 +22,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
@@ -31,6 +32,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -181,8 +183,14 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
                 IStatus connected = AUTConnection.getInstance().connectToAut(
                         m_autId, new NullProgressMonitor());
                 if (connected.getCode() == IStatus.OK) {
-                    final String toolkit = TestExecution.getInstance()
-                        .getConnectedAut().getToolkit();
+                    IAUTMainPO aut = TestExecution.getInstance()
+                            .getConnectedAut();
+                    if (aut == null) {
+                        LOG.error(Messages.DisconnectedFromAUT);
+                        return new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                                Messages.DisconnectedFromAUT);
+                    }
+                    final String toolkit = aut.getToolkit();
                     TestExecutionContributor.getInstance().getClientTest()
                         .startRecordTestCase(m_workCopy, m_compNamesCache,
                             m_recordCompMods, m_recordCompKey, m_recordApplMods,
