@@ -22,7 +22,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
@@ -97,13 +96,6 @@ public class DeleteTreeItemHandlerTCEditor
      */
     private static void deleteNode(INodePO node, EntityManager sess) {
         node.getParentNode().removeNode(node);
-        if (node instanceof IParamNodePO) {
-            IParamNodePO po = (IParamNodePO) node;
-            for (int i = po.getDataManager().getDataSetCount() - 1;
-                    i >= 0; i--) {
-                po.getDataManager().removeDataSet(i);
-            }                
-        }
         if (node.getId() != null) {
             sess.remove(node);
         }

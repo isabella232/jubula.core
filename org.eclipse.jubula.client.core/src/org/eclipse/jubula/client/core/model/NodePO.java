@@ -39,12 +39,10 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -274,12 +272,10 @@ abstract class NodePO implements INodePO {
      * 
      * @return the current value of the m_nodeList property
      */
-    @ManyToMany(fetch = FetchType.EAGER, 
+    @OneToMany(fetch = FetchType.EAGER, 
                 cascade = CascadeType.ALL, 
                 targetEntity = NodePO.class)
-    @JoinTable(name = "NODE_LIST", 
-               joinColumns = @JoinColumn(name = "PARENT"), 
-               inverseJoinColumns = @JoinColumn(name = "CHILD"))
+    @JoinColumn(name = "PARENT")
     @OrderColumn(name = "IDX")
     @BatchFetch(value = BatchFetchType.JOIN)
     List<INodePO> getHbmNodeList() {
@@ -294,31 +290,10 @@ abstract class NodePO implements INodePO {
         if (m_nodeList.isEmpty()) {
             return;
         }
-        Query q = sess.createNativeQuery("delete from NODE_LIST where PARENT = ?1"); //$NON-NLS-1$
-        q.setParameter(1, getId());
-        q.executeUpdate();
         for (INodePO child : m_nodeList) {
             child.goingToBeDeleted(sess);
         }
-        q = sess.createNativeQuery("delete from NODE where ID in " + NativeSQLUtils.getIdList(m_nodeList)); //$NON-NLS-1$
-        q.executeUpdate();
-    }
-    
-    /** {@inheritDoc} */
-    public void deleteChildNativeSQL(EntityManager sess, INodePO child) {
-        int idx = m_nodeList.indexOf(child);
-        if (idx == -1) {
-            return;
-        }
-        Query q = sess.createNativeQuery("delete from NODE_LIST where PARENT = ?1 and CHILD = ?2 and IDX = ?3"); //$NON-NLS-1$
-        q.setParameter(1, getId()).setParameter(2, child.getId()).
-            setParameter(3, idx);
-        int res = q.executeUpdate();
-        if (res != 1) {
-            throw new PersistenceException("Child removal failed due to database error."); //$NON-NLS-1$
-        }
-        q = sess.createNativeQuery("update NODE_LIST set IDX = IDX - 1 where PARENT = ?1 and IDX > ?2"); //$NON-NLS-1$
-        q.setParameter(1, getId()).setParameter(2, idx);
+        Query q = sess.createNativeQuery("delete from NODE where ID in " + NativeSQLUtils.getIdList(m_nodeList)); //$NON-NLS-1$
         q.executeUpdate();
     }
     

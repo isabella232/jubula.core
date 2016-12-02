@@ -306,10 +306,4 @@ public interface INodePO extends ITimestampPO {
      */
     public void goingToBeDeleted(EntityManager sess);
     
-    /**
-     * Removes one of the node's children by a native SQL query
-     * @param sess the session
-     * @param child the child
-     */
-    public void deleteChildNativeSQL(EntityManager sess, INodePO child);
 }

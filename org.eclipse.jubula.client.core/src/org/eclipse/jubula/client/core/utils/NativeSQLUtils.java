@@ -106,15 +106,17 @@ public class NativeSQLUtils {
             q2.setParameter(1, proj.getExecObjCont().getId());
         } else {
             pos = par.indexOf(node);
-            q1 = sess.createNativeQuery("delete from NODE_LIST where PARENT = ?1 and CHILD = ?2 and IDX = ?3"); //$NON-NLS-1$
-            q1.setParameter(1, par.getId());
-            q2 = sess.createNativeQuery("update NODE_LIST set IDX = IDX - 1 where PARENT = ?1 and IDX > ?2"); //$NON-NLS-1$
+            q1 = null;
+            q2 = sess.createNativeQuery("update NODE set IDX = IDX - 1 where PARENT = ?1 and IDX > ?2"); //$NON-NLS-1$
             q2.setParameter(1, par.getId());
         }
-        q1.setParameter(2, node.getId()).setParameter(3, pos);
-        int res = q1.executeUpdate();
-        if (res != 1) {
-            throw new PersistenceException(FAIL);
+        // removing from a regular node parent does not require q1
+        if (q1 != null) {
+            q1.setParameter(2, node.getId()).setParameter(3, pos);
+            int res = q1.executeUpdate();
+            if (res != 1) {
+                throw new PersistenceException(FAIL);
+            }
         }
         q2.setParameter(2, pos).executeUpdate();
         if (par == ISpecObjContPO.TCB_ROOT_NODE) {
@@ -148,7 +150,7 @@ public class NativeSQLUtils {
             q1 = sess.createNativeQuery("insert into EXEC_CONT_NODE (EXECOBJCONTPO_ID, HBMEXECOBJLIST_ID, IDX) values (?1, ?2, ?3)"); //$NON-NLS-1$
         } else {
             pos = ((INodePO) par).getNodeListSize();
-            q1 = sess.createNativeQuery("insert into NODE_LIST (PARENT, CHILD, IDX) values (?1, ?2, ?3)"); //$NON-NLS-1$
+            q1 = sess.createNativeQuery("update NODE set PARENT = ?1, IDX = ?3 where ID = ?2"); //$NON-NLS-1$
         }
         q1.setParameter(1, par.getId()).setParameter(2, toAdd.getId());
         int res = q1.setParameter(3, pos).executeUpdate();
