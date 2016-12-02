@@ -806,8 +806,6 @@ public class ProjectPM extends PersistenceManager
         findReusedProjects(projectIds,
                 key.getProjectProperties().getUsedProjects());
 
-        preloadDataForClass(s, projectIds, "SpecObjContPO"); //$NON-NLS-1$
-        preloadDataForClass(s, projectIds, "ExecObjContPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "CompNamesPairPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "CompIdentifierPO"); //$NON-NLS-1$
         preloadDataForClass(s, projectIds, "AUTConfigPO"); //$NON-NLS-1$
