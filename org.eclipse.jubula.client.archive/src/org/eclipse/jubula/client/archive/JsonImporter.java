@@ -573,17 +573,14 @@ public class JsonImporter {
             }
             final String name = compName.getCompName();
             final String type = compName.getCompType();
-            if (!componentHasDefaultMapping(type)) {
-                
-                final String creationContext = compName.getCreationContext();
-                final CompNameCreationContext ctx = CompNameCreationContext
-                    .forName(creationContext);
-                final IComponentNamePO componentNamePO = PoMaker
-                    .createComponentNamePO(guid, name, type, ctx, proj.getId());
-                componentNamePO.setReferencedGuid(compName.getRefUuid());
-                createdCompNames.add(componentNamePO);
-                compNameCache.addCompNamePO(componentNamePO);
-            }
+            final String creationContext = compName.getCreationContext();
+            final CompNameCreationContext ctx = CompNameCreationContext
+                .forName(creationContext);
+            final IComponentNamePO componentNamePO = PoMaker
+                .createComponentNamePO(guid, name, type, ctx, proj.getId());
+            componentNamePO.setReferencedGuid(compName.getRefUuid());
+            createdCompNames.add(componentNamePO);
+            compNameCache.addCompNamePO(componentNamePO);
         }
         
         if (assignNewGuid) {
