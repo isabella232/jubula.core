@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -166,7 +167,7 @@ public class NodeBP {
     }
     
     /**
-     * Finds offsprings of a node - should only be called for Categories, SpecTCs and TestSuites
+     * Finds offsprings of a node - should only be called for Categories, SpecTCs, TestSuites and TestJobs
      * @param nodes the node
      * @return all offspring
      */
@@ -174,8 +175,9 @@ public class NodeBP {
             Collection<INodePO> nodes) {
         for (INodePO node : nodes) {
             if (!(node instanceof ICategoryPO || node instanceof ITestSuitePO
-                    || node instanceof ISpecTestCasePO)) {
-                throw new UnsupportedOperationException("This method only supports Categories, Test Suites and Spec Test Cases."); //$NON-NLS-1$
+                    || node instanceof ISpecTestCasePO
+                    || node instanceof ITestJobPO)) {
+                throw new UnsupportedOperationException("This method only supports Categories, Test Suites, Spec Test Cases and Test Jobs."); //$NON-NLS-1$
             }
         }
         List<INodePO> offspring = new ArrayList<INodePO>();
