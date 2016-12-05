@@ -594,7 +594,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
         boolean cancelPressed = false;
         ProjectDialog dialog = null;
         List<IProjectPO> projList = checkAllAvailableProjects();
-        if (!projList.isEmpty()) {
+        if (projList != null && !projList.isEmpty()) {
             if (ProjectUIBP.getInstance().shouldPerformAutoProjectLoad()) {
                 project = ProjectUIBP.getMostRecentProjectData();
             } else {
