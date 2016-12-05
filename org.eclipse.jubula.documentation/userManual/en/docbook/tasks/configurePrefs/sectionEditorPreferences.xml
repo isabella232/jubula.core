@@ -14,7 +14,9 @@
   <anchor role="helpid" condition="editorPrefPageContextId" xml:id="editor-preferences.editorPrefPageContextId" xreflabel="Editor Preferences"/>
   <para>
     In the <emphasis>Test - Editors</emphasis> preferences, you can
-    choose whether you want items (Test Cases and Test Steps) to be
+    choose whether to display the usage counter for component names
+    (only usages within the current project are counted) and
+    also whether you want items (Test Cases and Test Steps) to be
     placed at the bottom of the tree or after the selected item when
     you use the <emphasis>add</emphasis> option.
   </para>

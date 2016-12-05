@@ -10,14 +10,14 @@
 <section xml:id="database-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>database preferences</title>
+  <title>Database preferences</title>
   <anchor role="helpid" condition="databaseConnectionConfigurationDialogContextId" xml:id="database-preferences.databaseConnectionConfigurationDialogContextId" xreflabel="Database connection preferences"/>
   <para>
     You can find the database connection preference page under:
   </para>
   
   <para>
-    <emphasis>Test-database Connections</emphasis>
+    <emphasis>Test-Database Connections</emphasis>
   </para>
   
   <para>
@@ -46,7 +46,7 @@
     <orderedlist>
       <listitem>
         <para>
-          In the database Connections preference page, click
+          In the database connections preference page, click
           ”<emphasis>Add</emphasis>”.
         </para>
       </listitem>
@@ -79,7 +79,7 @@
     </orderedlist>
     <para>
       You can edit and delete database configurations using the
-      buttons in the database Connections preference page.
+      buttons in the database connections preference page.
     </para>
   </section>
 </section>

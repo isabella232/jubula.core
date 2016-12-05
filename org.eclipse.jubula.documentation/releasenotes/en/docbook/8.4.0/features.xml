@@ -32,6 +32,11 @@
       component names which are mapped into a component which does not realize one of the
       actions which might be executed on the component name.
     </para>
+    <para>
+      A new feature is added to the Component Name Browser: it is now possible to display the usage counter
+      for component names. This shows the number of places in the current project where the component name is
+      used. Users can turn this feature on and off in the <emphasis>Test - Editors</emphasis> preference window.
+    </para>
   </listitem>
 </itemizedlist>
 <para>
