@@ -281,7 +281,8 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
     
                 if ((po instanceof ISpecTestCasePO) 
                         || (po instanceof ITestSuitePO)
-                        || (po instanceof ITestJobPO)) {
+                        || (po instanceof ITestJobPO)
+                        || (po instanceof ICategoryPO)) {
                     refreshTreeView();
                 }
                 if (po instanceof IObjectMappingPO) {

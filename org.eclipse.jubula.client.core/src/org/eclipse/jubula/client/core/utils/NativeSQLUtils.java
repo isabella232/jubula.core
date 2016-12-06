@@ -106,11 +106,13 @@ public class NativeSQLUtils {
             q2.setParameter(1, proj.getExecObjCont().getId());
         } else {
             pos = par.indexOf(node);
+            q1 = sess.createNativeQuery("update NODE set PARENT = null and IDX = null where ID = ?1"); //$NON-NLS-1$
+            q1.setParameter(1, node.getId()).executeUpdate();
             q1 = null;
             q2 = sess.createNativeQuery("update NODE set IDX = IDX - 1 where PARENT = ?1 and IDX > ?2"); //$NON-NLS-1$
             q2.setParameter(1, par.getId());
         }
-        // removing from a regular node parent does not require q1
+        // removing from a regular node parent requires a very different query which is already executed
         if (q1 != null) {
             q1.setParameter(2, node.getId()).setParameter(3, pos);
             int res = q1.executeUpdate();
