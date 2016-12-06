@@ -297,15 +297,15 @@ public class IconConstants {
     /** comment image */
     public static final Image COMMENT_IMAGE = getImage("file_obj.png"); //$NON-NLS-1$
     /** conditional statement image */
-    public static final Image CONDITION = getImage("condition.gif"); //$NON-NLS-1$
+    public static final Image CONDITION = getImage("condition.png"); //$NON-NLS-1$
     /** do while image */
-    public static final Image DO_WHILE = getImage("dowhile.gif"); //$NON-NLS-1$
+    public static final Image DO_WHILE = getImage("dowhile.png"); //$NON-NLS-1$
     /** while do image */
-    public static final Image WHILE_DO = getImage("whiledo.gif"); //$NON-NLS-1$
+    public static final Image WHILE_DO = getImage("whiledo.png"); //$NON-NLS-1$
     /** container statement image */
-    public static final Image CONTAINER = getImage("container.gif"); //$NON-NLS-1$
+    public static final Image CONTAINER = getImage("container.png"); //$NON-NLS-1$
     /** iterate image */
-    public static final Image ITERATE = getImage("iterate.gif"); //$NON-NLS-1$
+    public static final Image ITERATE = getImage("repeat.png"); //$NON-NLS-1$
     /** comment image */
     public static final ImageDescriptor COMMANDLOG_IMAGE_DESCRIPTOR = getImageDescriptor("dataDecorator.png"); //$NON-NLS-1$
     /** testJob image */

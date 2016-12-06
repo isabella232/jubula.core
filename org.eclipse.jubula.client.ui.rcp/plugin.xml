@@ -3094,16 +3094,16 @@
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/addComment.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newConditionalStatement"
-      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/condition.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/condition.png" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newWhileDo"
-      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/whiledo.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/whiledo.png" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newDoWhile"
-      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/dowhile.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/dowhile.png" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.newIterateLoop"
-      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/iterate.gif" />
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/repeat.png" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/testCaseRef.gif" />
