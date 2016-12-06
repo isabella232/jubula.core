@@ -25,6 +25,7 @@
     To avoid infinite loops, all loops automatically stop after a set amount of runs. You can
     change this value in the Test --> Test Results Properties Page. The default value is 100.
     In case a (possibly) infinite loop is encountered, its corresponding Test Result Node is marked
-    with an error marker.
+    with an error marker. When executing tests using the <emphasis>testexec</emphasis> client,
+    this value can be set by the <emphasis>-itermax</emphasis> command - line option.
   </para>
 </section>
