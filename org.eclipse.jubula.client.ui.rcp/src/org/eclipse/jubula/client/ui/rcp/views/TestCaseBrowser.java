@@ -60,7 +60,6 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
@@ -500,7 +499,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
     @Override
     public void problemPropagationFinished() {
         final IWorkbench workbench = PlatformUI.getWorkbench();
-        Display.getDefault().syncExec(new Runnable() {
+        Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 getTreeViewer().refresh();
             }

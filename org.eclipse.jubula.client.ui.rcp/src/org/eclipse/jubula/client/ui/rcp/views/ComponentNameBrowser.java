@@ -44,7 +44,6 @@ import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.part.ViewPart;
@@ -222,13 +221,18 @@ public class ComponentNameBrowser extends ViewPart implements
             }
         }
         if (refreshView) {
-            refreshTree();
+            refreshInDisplayThread();
         }
     }
 
     /** {@inheritDoc} */
     public void problemPropagationFinished() {
-        Display.getDefault().syncExec(new Runnable() {
+        refreshInDisplayThread();
+    }
+    
+    /** Refreshes the tree in the SWT Display thread */
+    private void refreshInDisplayThread() {
+        Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
                 refreshTree();
             }

@@ -60,6 +60,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
@@ -833,7 +834,11 @@ public class ComponentNamesTableComposite extends Composite implements
         if (po instanceof IExecTestCasePO || po instanceof ISpecTestCasePO
                 || po instanceof IComponentNamePO
                 || po instanceof ICompNamesPairPO) {
-            m_tableViewer.refresh();
+            Plugin.getDisplay().syncExec(new Runnable() {
+                public void run() {
+                    m_tableViewer.refresh();
+                }
+            });
         }
     }
 }
