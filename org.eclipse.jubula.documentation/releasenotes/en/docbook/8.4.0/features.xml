@@ -13,7 +13,42 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
 <para>
- <emphasis role="strong">Invoke External Method</emphasis>
+ <emphasis role="strong">Conditional Statements and Loops</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        We introduced new nodes altering the test execution flow: Conditional Statements and Loops.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+        The <emphasis>If-Then-Else-node</emphasis> allows you to specify one or 
+        more test cases or test steps as a condition. Based upon the result of 
+        the condition nodes, either the "then" or the "else" branch will be 
+        entered and the containing nodes will be executed. The condition can
+        also be negated.  
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+        The <emphasis>While-Do-node</emphasis> and the 
+        <emphasis>Do-While-Node</emphasis> will both repeat the test nodes
+        inside the "do"-branch until the condition is no longer being met. In 
+        contrary to the While-Do-node, the Do-While-node checks the condition
+        after each run through the "do"-branch. Therefore the Do-While-node will
+        always run at least once.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+        The <emphasis>Repeat-node</emphasis> repeats the nodes inside the "do"-branch
+        for a specified amount of times.
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
+ <emphasis role="strong">Invoke External Methods</emphasis>
 </para>
 <itemizedlist>
   <listitem>
@@ -21,9 +56,13 @@
       It is now possible to invoke external (AUT - independent) methods through the Reflection component.
       The external JAR files must be placed in the directory <emphasis>&lt;installation-directory&gt;/ite/externaljars</emphasis>.
     </para>
-    <para>
-      We introduced new nodes altering the test execution flow: Conditional Statements and Loops.
-    </para>
+  </listitem>
+</itemizedlist>
+<para>
+ <emphasis role="strong">Component Names</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
     <para>
       Component name types are calculated and treated differently from this release onwards.
       The type becomes only decorative, so actions resulting in invalid component name types
@@ -32,6 +71,8 @@
       component names which are mapped into a component which does not realize one of the
       actions which might be executed on the component name.
     </para>
+  </listitem>
+  <listitem>
     <para>
       A new feature is added to the Component Name Browser: it is now possible to display the usage counter
       for component names. This shows the number of places in the current project where the component name is
@@ -50,6 +91,17 @@
   multiple times if the wanted status has occurred. If this did not
   happen until the timeout is reached the check is marked as check
   failed.
+ </para>
+  </listitem>
+</itemizedlist>
+<para>
+ <emphasis role="strong">Skipping test steps</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+ <para>
+  Test steps can now be skipped by changing the value of at least one parameter
+  of a test step to '##jbskip##'.
  </para>
   </listitem>
 </itemizedlist>
