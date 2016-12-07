@@ -84,7 +84,7 @@ public abstract class BaseConnection {
      *             in case of version error between client and remote side
      */
     public synchronized void run() throws AlreadyConnectedException, 
-    JBVersionException {
+        JBVersionException {
         
         if (isConnected()) {
             log.error("run() called to an already connected connection"); //$NON-NLS-1$
