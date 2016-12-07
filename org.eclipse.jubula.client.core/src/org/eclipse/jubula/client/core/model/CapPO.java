@@ -236,7 +236,7 @@ class CapPO extends ParamNodePO implements ICapPO {
      * @return Returns the type.
      */
     @Basic
-    @Column(name = "COMP_TYPE", length = MAX_STRING_LENGTH)
+    @Column(name = "COMP_TYPE")
     public String getComponentType() {
         return m_componentType;
     }
@@ -305,7 +305,7 @@ class CapPO extends ParamNodePO implements ICapPO {
      * @return Returns the actionName.
      */
     @Basic
-    @Column(name = "COMP_ACTION", length = MAX_STRING_LENGTH)
+    @Column(name = "COMP_ACTION")
     private String getHbmActionName() {
         return m_hbmActionName;
     }
