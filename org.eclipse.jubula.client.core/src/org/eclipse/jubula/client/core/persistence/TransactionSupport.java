@@ -93,14 +93,14 @@ public class TransactionSupport {
      */
     private static void refreshMasterSession(ITransaction op)
         throws PMRefreshFailedException {
-        if (op.getToRefresh() == null
-                || op.getToRefresh().isEmpty()) {
+        Collection<? extends IPersistentObject> toRefresh = op.getToRefresh();
+        if (toRefresh == null || toRefresh.isEmpty()) {
             return;
         }
         try {
             EntityManager master = GeneralStorage.getInstance().
                     getMasterSession();
-            for (IPersistentObject po : op.getToRefresh()) {
+            for (IPersistentObject po : toRefresh) {
                 po = master.find(po.getClass(), po.getId());
                 if (po != null) {
                     master.refresh(po);

@@ -1284,6 +1284,15 @@ public class NodePM extends PersistenceManager {
         
         persistor.commitTransaction(session, tx);
         persistor.dropSession(session);
+        EntityManager master = GeneralStorage.getInstance().getMasterSession();
+        for (INodePO key : nodeToWasLockedMap.keySet()) {
+            if (!nodeToWasLockedMap.get(key)) {
+                INodePO refr = master.find(key.getClass(), key.getId());
+                if (refr != null) {
+                    master.refresh(refr);
+                }
+            }
+        }
         
         monitor.done();
         return nodeToWasLockedMap;

@@ -165,6 +165,7 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         
         final ParamNameBPDecorator mapper = new ParamNameBPDecorator(
                 ParamNameBP.getInstance());
+        // circumventing the final declaration
         final IExecTestCasePO[] lol = new IExecTestCasePO[1];
         
         final List<IPersistentObject> toLock = new ArrayList<>(2);
@@ -182,7 +183,10 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
 
             /** {@inheritDoc} */
             public Collection<? extends IPersistentObject> getToRefresh() {
-                return toLock;
+                List<IPersistentObject> toRefr = new ArrayList<>(toLock);
+                toRefr.addAll(lol[0].getSpecTestCase().
+                        getUnmodifiableNodeList());
+                return toRefr;
             }
 
             /** {@inheritDoc} */
@@ -225,11 +229,9 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
             }
             
         });
-        
         if (!succ) {
             return null;
         }
-        
         mapper.updateStandardMapperAndCleanup(ownerNode.getParentProjectId());
         return lol[0];
     }
