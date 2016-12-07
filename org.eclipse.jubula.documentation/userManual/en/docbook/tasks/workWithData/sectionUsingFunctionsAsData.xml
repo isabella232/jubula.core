@@ -199,15 +199,15 @@
         </term>
         <listitem>
           <para>
-            This function can add days (d), months (M), and years
-            (y) to a given date. The date must first be parsed (i.e.
-            using parseDate) so that the correct internal format is
-            used. This function takes two arguments: the first is
-            the date to modify, and the second is the modification
+            This function can add days (d), months (M), years (y), hours (h),
+            minutes (i), seconds (s) and milliseconds (j) to a given date. The 
+            date must first be parsed (i.e. using parseDate) so that the correct
+            internal format is used. This function takes two arguments: the
+            first is the date to modify, and the second is the modification
             to perform, e.g. <emphasis role="input">?modifyDate(?now(),1d)</emphasis>.
             Additions are entered as positive integers (but without
             a plus sign, e.g. 1d, 1M, 1y) and subtractions are
-            entered as negative integers, e.g. -1d, -1M, -1y.
+            entered as negative integers, e.g. -1d, -1M, -1y, -1i.
           </para>
         </listitem>
       </varlistentry>

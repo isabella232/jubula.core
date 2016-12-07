@@ -52,6 +52,14 @@ public final class ModifyDateEvaluator extends AbstractFunctionEvaluator {
                     result = DateUtils.addMonths(date, offset);
                 } else if (op.equalsIgnoreCase("y")) { //$NON-NLS-1$
                     result = DateUtils.addYears(date, offset);
+                } else if (op.equalsIgnoreCase("h")) { //$NON-NLS-1$
+                    result = DateUtils.addHours(date, offset);
+                } else if (op.equalsIgnoreCase("i")) { //$NON-NLS-1$
+                    result = DateUtils.addMinutes(date, offset);
+                } else if (op.equalsIgnoreCase("s")) { //$NON-NLS-1$
+                    result = DateUtils.addSeconds(date, offset);
+                } else if (op.equalsIgnoreCase("j")) { //$NON-NLS-1$
+                    result = DateUtils.addMilliseconds(date, offset);
                 } else {
                     throw new InvalidDataException("illegal offset format: " //$NON-NLS-1$
                             + arguments[1], MessageIDs.E_WRONG_PARAMETER_VALUE);
