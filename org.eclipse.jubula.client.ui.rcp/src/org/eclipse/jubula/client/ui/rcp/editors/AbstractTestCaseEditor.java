@@ -445,8 +445,15 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             return;
         }
         EditSupport supp = getEditorHelper().getEditSupport();
-        CalcTypes.recalculateCompNamePairs(getCompNameCache(),
-                (ISpecTestCasePO) supp.getWorkVersion());
+        IPersistentObject workVersion = supp.getWorkVersion();
+        if (workVersion instanceof INodePO) {
+            CalcTypes.recalculateCompNamePairs(getCompNameCache(),
+                    (INodePO) workVersion);
+            
+        } else {
+            LOG.warn("class not supported for recalculating component pair " //$NON-NLS-1$
+                    + workVersion.getClass().getCanonicalName());
+        }
     }
 
     /**
