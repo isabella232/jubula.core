@@ -180,7 +180,10 @@ public abstract class AbstractQuery implements ISearchQuery {
             new ArrayList<SearchResultElement>(
                 reuse.size());
         for (INodePO node : reuse) {
-            INodePO parent = node.getParentNode();
+            INodePO parent = node.getSpecAncestor();
+            if (parent == null) {
+                parent = node.getParentNode();
+            }
             String resultName;
             String nodeName = GeneralLabelProvider.getTextImpl(node);
             if (validParent(parent)) {
