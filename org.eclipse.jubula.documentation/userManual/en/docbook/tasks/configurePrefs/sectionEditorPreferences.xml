@@ -13,11 +13,43 @@
   <title>Editor preferences</title>
   <anchor role="helpid" condition="editorPrefPageContextId" xml:id="editor-preferences.editorPrefPageContextId" xreflabel="Editor Preferences"/>
   <para>
-    In the <emphasis>Test - Editors</emphasis> preferences, you can
-    choose whether to display the usage counter for component names
-    (only usages within the current project are counted) and
-    also whether you want items (Test Cases and Test Steps) to be
-    placed at the bottom of the tree or after the selected item when
-    you use the <emphasis>add</emphasis> option.
+    In the <emphasis>Test - Editors</emphasis> preferences,
+    you can alter your preferences for:
   </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Usage counter for Component Names:
+      </term>
+      <listitem>
+        <para>
+          If you deactivate this option, you hide the usage counter for Component Names in the browser.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Position to add:
+      </term>
+      <listitem>
+        <para>
+          Here you can
+          choose whether you want items (Test Cases and Test Steps) to be
+          placed at the bottom of the tree or after the selected item when
+          you use the <emphasis>add</emphasis> option.
+        </para>
+      </listitem>
+    </varlistentry>
+    <varlistentry>
+      <term>
+        Save reminder:
+      </term>
+      <listitem>
+        <para>
+          Here you can configure if you want to be reminded after a
+          specified interval, if unsaved editors exist in your workspace.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
 </section>
