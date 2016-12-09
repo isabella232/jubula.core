@@ -61,6 +61,8 @@ import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to get keywords and summary from testresultnode to persist in database
@@ -102,6 +104,10 @@ public class TestresultSummaryBP {
     
     /** constant for keyword type Test Suite */
     public static final int TYPE_TEST_SUITE = 1;
+    
+    /** the logger */
+    private static Logger log = LoggerFactory.getLogger(
+            TestresultSummaryBP.class);
     
     /** instance */
     private static TestresultSummaryBP instance = null;
@@ -357,7 +363,12 @@ public class TestresultSummaryBP {
             IParameterDetailsPO parameter = PoMaker.createParameterDetailsPO();
             parameter.setParameterName(param.getName());
             parameter.setParameterType(param.getType());
-            parameter.setParameterValue(param.getValue());
+            String value = param.getValue();
+            if (value.length() >= 3500) {
+                log.warn("Parameter value to long: " + value); //$NON-NLS-1$
+                value = StringUtils.substring(value, 0, 3500);
+            }
+            parameter.setParameterValue(value);
             keyword.addParameter(parameter);
         }
         
