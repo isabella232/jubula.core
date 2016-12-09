@@ -931,7 +931,8 @@ public class ProjectPM extends PersistenceManager
             }
             for (IWritableComponentNameCache compNameBinding 
                     : compNameBindingList) {
-                CompNamePM.flushCompNames(s, proj.getId(), compNameBinding);
+                CompNamePM.flushCompNamesImport(s, proj.getId(),
+                        compNameBinding);
             }
             if (!monitor.isCanceled()) {
                 Persistor.instance().commitTransaction(s, tx);
@@ -1131,7 +1132,7 @@ public class ProjectPM extends PersistenceManager
             }
             for (IWritableComponentNameCache compNameBinding 
                     : compNameBindingList) {
-                CompNamePM.flushCompNames(saveSession, 
+                CompNamePM.flushCompNamesImport(saveSession, 
                         proj.getId(), compNameBinding);
             }
             Persistor.instance().commitTransaction(saveSession, tx);

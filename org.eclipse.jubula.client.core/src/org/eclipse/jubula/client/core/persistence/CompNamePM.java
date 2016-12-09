@@ -573,6 +573,24 @@ public class CompNamePM extends AbstractNamePM {
         }
         return new SaveCompNamesData(dbVersions, guidsToSwap);
     }
+    
+    /**
+     * Merges the Component Names from the cache to the session
+     * @param sess the session
+     * @param projId the ID of the project
+     * @param cache the cache
+     */
+    public static void flushCompNamesImport(EntityManager sess,
+            Long projId, IWritableComponentNameCache cache) {
+        Map<String, IComponentNamePO> localChanges = cache.getLocalChanges();
+        for (String guid : localChanges.keySet()) {
+            IComponentNamePO cN = localChanges.get(guid);
+            if (cN.getParentProjectId() == null) {
+                cN.setParentProjectId(projId);
+            }
+            sess.persist(localChanges.get(guid));
+        }
+    }
 
     /**
      * Deletes all unused Component Names that reference other Component Names.
