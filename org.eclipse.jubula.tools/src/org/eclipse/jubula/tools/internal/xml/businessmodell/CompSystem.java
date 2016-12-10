@@ -150,6 +150,7 @@ public class CompSystem {
     public List<Component> getComponents(String toolkitId, 
         boolean addReferencedToolkits) {
         final List<Component> toolkitComponents = new ArrayList<Component>();
+        toolkitComponents.addAll(m_simpleExtensionComponents);
         final ToolkitDescriptor currDescriptor = 
             getToolkitDescriptor(toolkitId);
         String includesToolkit = currDescriptor.getIncludes();
@@ -210,6 +211,8 @@ public class CompSystem {
             graphicsComponent.addAllRealizer(myComponent);
             myComponent.addRealized(graphicsComponent);
             m_componentsByType.put(myComponent.getType(), myComponent);
+            m_componentsByTypeLowerCase.put(myComponent.getType().toLowerCase(),
+                    myComponent);
             m_simpleExtensionComponents.add(myComponent);
         }
         getConcreteComponents().addAll(m_simpleExtensionComponents);
