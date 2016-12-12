@@ -12,7 +12,7 @@
                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Do - While and While - Do loops</title>
   <para>
-    These loops behave as usual: their Do Container is executed as long as their
+    These loops are executing the test cases in their Do Container as long as their
     While Condition is true. For Do - While loops the Do Container is executed first
     followed by the While Condition, for While - Do loops the other way around.
   </para>

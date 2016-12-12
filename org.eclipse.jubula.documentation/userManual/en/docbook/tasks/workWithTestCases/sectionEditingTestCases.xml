@@ -27,6 +27,11 @@
         add and edit Test Steps (<xref linkend="specsteps"/>).
       </para>
     </listitem>
+        <listitem>
+      <para>
+        add and edit conditions and loops (<xref linkend="conditions_overview"/>).
+      </para>
+    </listitem>
     <listitem>
       <para>
         rename the Test Case (<xref linkend="renaming-items-in-browsers"/>) or the Test

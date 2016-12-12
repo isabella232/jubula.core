@@ -37,7 +37,8 @@
     </listitem>
   </itemizedlist>
   <para>
-    You can add the aforementioned nodes to Test Cases through the Add submenu of the
+    You can add the nodes to Test Cases through the 
+    <emphasis role="menuPath">Add</emphasis> submenu of the
     context menu in a Test Case Editor.
   </para>
   <para>

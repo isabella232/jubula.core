@@ -12,7 +12,7 @@
                                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Repeat loops</title>
   <para>
-    These loops behave as usual: their Do Container is executed as many times as their
+    The Do Container is executed as many times as their
     Iterate count parameter indicates. This parameter is evaluated statically when
     execution of the Repeat loop begins, so any changes to this parameter inside the loop
     (e.g. if it uses a variable) does not have any effect on the number of iterations.

@@ -13,7 +13,16 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>Known issues and other information</title>
  
-   <para>
-    There are no known issues or additional information for this version.
+  <para>
+    <emphasis role="strong">JaCoCo version updated</emphasis>
   </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        JaCoCo has been updated from version 0.7.3 to 0.7.7.
+        More information about changes in JaCoCo are available at
+        <link xl:href="http://www.eclemma.org/jacoco/trunk/doc/changes.html">http://www.eclemma.org/jacoco/trunk/doc/changes.html</link>.
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>
