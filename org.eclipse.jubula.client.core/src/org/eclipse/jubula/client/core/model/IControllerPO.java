@@ -23,4 +23,5 @@ public interface IControllerPO extends INodePO {
      * @return the name
      */
     public String getDefaultName(INodePO node);
+    
 }

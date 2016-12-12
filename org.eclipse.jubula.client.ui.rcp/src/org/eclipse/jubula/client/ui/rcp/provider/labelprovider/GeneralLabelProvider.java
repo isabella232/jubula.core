@@ -253,10 +253,6 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                 name = getText((ICapPO)node);
             } else if (node instanceof IExecTestCasePO) {
                 name = NodeNameUtil.getText((IExecTestCasePO)node, true);
-            } else if (node instanceof IControllerPO) {
-                name = NodeNameUtil.getText((IControllerPO) node);
-            } else if (node instanceof IAbstractContainerPO) {
-                name = NodeNameUtil.getText((IAbstractContainerPO) node);
             } else if (node instanceof ISpecTestCasePO) {
                 name = NodeNameUtil.getText((ISpecTestCasePO)node, true);
             }  else {

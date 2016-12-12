@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import org.apache.commons.collections.iterators.IteratorChain;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * A class which represents a node with a rigid set of children
@@ -90,6 +91,15 @@ abstract class ControllerPO extends NodePO
             chain.addIterator(it.next().getAllNodeIter());
         }
         return chain;
+    }
+    
+    /** {@inheritDoc} */
+    public void setName(String name) {
+        if (StringUtils.isNotEmpty(name)) {
+            super.setName(name);
+        } else {
+            super.setName(getDefaultName(this));
+        }
     }
 
 }

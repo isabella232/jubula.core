@@ -13,6 +13,8 @@ package org.eclipse.jubula.client.core.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * A container class to be used in some structures like conditional statements and iterates
  * @author BREDEX GmbH
@@ -45,5 +47,18 @@ class ContainerPO extends NodePO implements IAbstractContainerPO {
         super(name, guid, false);
     }
 
+    /** {@inheritDoc} */
+    public void setName(String name) {
+        if (StringUtils.isNotEmpty(name)) {
+            super.setName(name);
+            return;
+        }
+        if (!(getParentNode() instanceof IControllerPO)) {
+            super.setName("Unknown container."); //$NON-NLS-1$
+        } else {
+            super.setName(((IControllerPO) getParentNode()).
+                    getDefaultName(this));
+        }
+    }
     
 }

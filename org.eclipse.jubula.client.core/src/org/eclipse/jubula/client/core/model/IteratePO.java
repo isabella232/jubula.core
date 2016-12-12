@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.Transient;
 
 import org.apache.commons.collections.iterators.IteratorChain;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.i18n.Messages;
 
 /**
@@ -99,6 +100,15 @@ class IteratePO extends ParamNodePO implements IIteratePO {
             return Messages.RepeatName;
         }
         return Messages.Do;
+    }
+    
+    /** {@inheritDoc} */
+    public void setName(String name) {
+        if (StringUtils.isNotEmpty(name)) {
+            super.setName(name);
+        } else {
+            super.setName(getDefaultName(this));
+        }
     }
 
 }
