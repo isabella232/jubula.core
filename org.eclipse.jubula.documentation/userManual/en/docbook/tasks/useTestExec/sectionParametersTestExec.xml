@@ -237,6 +237,15 @@
             </entry>
           </row>
           <row>
+            <entry>Maximum iteration count (optional)</entry>
+            <entry>
+              <emphasis role="input">-itermax &lt;number of iterations&gt;</emphasis><?linebreak?>
+              e.g. <emphasis>-itermax 50</emphasis><?linebreak?>
+              Sets the maximum number of iterations for loops, used to avoid possibly infinite runs.
+              The default value is 100.
+            </entry>
+          </row>
+          <row>
             <entry>Workspace</entry>
             <entry>
               <emphasis role="input">-data &lt;path to workspace&gt;</emphasis><?linebreak?>
