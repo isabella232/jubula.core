@@ -286,6 +286,11 @@
 						<th colspan="2" align="left"><h2>Test Suite Information</h2></th>
 					</tr>
 				</xsl:when>
+                <xsl:when test="status = 21">
+                    <tr bgcolor="lightgray">
+                        <th colspan="2" align="left"><h2>Test Suite Information</h2></th>
+                    </tr>
+                </xsl:when>
 				<xsl:otherwise>
 					<tr bgcolor="#DD0000">
 						<th colspan="2" align="left"><h2>Test Suite Information</h2></th>
