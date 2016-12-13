@@ -24,7 +24,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -128,10 +127,8 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
      */
     public static NodeTarget getPositionToInsert(INodePO node, boolean exp) {
 
-        if (Plugin.getDefault().getPreferenceStore()
-                .getBoolean(Constants.NODE_INSERT_KEY)
-                || node instanceof ISpecTestCasePO
-                || node instanceof ITestSuitePO) {
+        if (!Plugin.getDefault().getPreferenceStore()
+                .getBoolean(Constants.NODE_INSERT_KEY)) {
 
             INodePO top = node.getSpecAncestor();
             if (top == null) {
