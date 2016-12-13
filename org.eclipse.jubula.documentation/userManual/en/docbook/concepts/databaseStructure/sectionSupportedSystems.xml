@@ -21,4 +21,8 @@
     Link</emphasis> may also be used as a database, though these
     have not been tested by our team.
   </para>
+  <para>
+    Some databases which limit the row size (like MySQL) have problems with Jubula if they are set to use multi-byte encodings like <emphasis>UTF8</emphasis>.
+    Try to use single-byte encodings like <emphasis>latin1</emphasis> if you encounter any problems.
+  </para>
 </section>

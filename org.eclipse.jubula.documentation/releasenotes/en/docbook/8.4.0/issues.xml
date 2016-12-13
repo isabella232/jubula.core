@@ -24,5 +24,11 @@
         <link xl:href="http://www.eclemma.org/jacoco/trunk/doc/changes.html">http://www.eclemma.org/jacoco/trunk/doc/changes.html</link>.
       </para>
     </listitem>
+    <listitem>
+     <para>
+       Some databases which limit the row size (like MySQL) have problems with Jubula if they are set to use multi-byte encodings like <emphasis>UTF8</emphasis>.
+       Try to use single-byte encodings like <emphasis>latin1</emphasis> if you encounter any problems.
+     </para>
+  </listitem>
   </itemizedlist>
 </section>
