@@ -38,17 +38,24 @@ public class BaseAUTConnection extends BaseConnection {
      */
     private AutIdentifier m_connectedAutId;
 
+    /** Empty constructor for DirectAUTConnection */
+    public BaseAUTConnection() {
+        // nothing
+    }
+    
     /**
      * Constructor
+     * 
+     * @param port the port to use - 0 for random
      * 
      * @throws ConnectionException
      *             containing a detailed message why the connection could not
      *             initialized
      */
-    public BaseAUTConnection() throws ConnectionException {
+    public BaseAUTConnection(int port) throws ConnectionException {
         try {
             // create a communicator on any free port
-            Communicator communicator = new Communicator(0, this.getClass()
+            Communicator communicator = new Communicator(port, this.getClass()
                     .getClassLoader());
             communicator.setIsServerSocketClosable(false);
             setCommunicator(communicator);

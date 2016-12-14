@@ -43,6 +43,12 @@ public final class EnvConstants {
     /** <code>LOCALHOST_FQDN</code> */
     public static final String LOCALHOST_FQDN;
     
+    /** Key for setting the client port */
+    public static final String CLIENTPORT_KEY = "jubClientPort"; //$NON-NLS-1$
+    
+    /** Key for setting the client IP address */
+    public static final String CLIENTIP_KEY = "jubClientAddr"; //$NON-NLS-1$
+    
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(EnvConstants.class);
     

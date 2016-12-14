@@ -46,6 +46,14 @@
         You have started the AUT (<xref linkend="starting-the-aut"/>).
       </para>
     </listitem>
+    <listitem>
+      <para>
+        It may happen that your firewall prevents the AUT from connecting to the Jubula client or the <emphasis>testexec</emphasis> command-line tool.
+        If this happens, you can setup a specified IP address and port for the client to listen on.
+        You can do this by setting the JVM properties <emphasis>jubClientAddr</emphasis> and <emphasis>jubClientPort</emphasis>, through the
+        <emphasis>jubula.ini</emphasis> and <emphasis>testexec.vmoptions</emphasis> files.
+	  </para>
+    </listitem>
   </itemizedlist>
   <para role="tip">
     You can use the Test Suite Browser to click through the

@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jubula.client.core.Activator;
@@ -61,6 +62,7 @@ import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
@@ -97,12 +99,14 @@ public class AUTConnection extends BaseAUTConnection {
     /**
      * private constructor. creates a communicator
      * 
+     * @param portNum the port number - 0 if random
+     * 
      * @throws ConnectionException
      *             containing a detailed message why the connection could not
      *             initialized
      */
-    private AUTConnection() throws ConnectionException {
-        super();
+    private AUTConnection(int portNum) throws ConnectionException {
+        super(portNum);
         m_autConnectionListener = new AUTConnectionListener();
         getCommunicator().addCommunicationErrorListener(
             m_autConnectionListener);
@@ -119,7 +123,17 @@ public class AUTConnection extends BaseAUTConnection {
         throws ConnectionException {
 
         if (instance == null) {
-            instance = new AUTConnection();
+            String port = EnvironmentUtils.getProcessOrSystemProperty(
+                    EnvConstants.CLIENTPORT_KEY);
+            int portNum = 0;
+            try {
+                if (port != null) {
+                    portNum = Integer.parseInt(port);
+                }
+            } catch (NumberFormatException e) {
+                LOG.error("Unable to parse the Client Port number: " + port); //$NON-NLS-1$
+            }
+            instance = new AUTConnection(portNum);
         }
         return instance;
     }
@@ -327,10 +341,14 @@ public class AUTConnection extends BaseAUTConnection {
         ConnectToAutResponseCommand responseCommand =
             new ConnectToAutResponseCommand();
         try {
+            String ipAddr = EnvironmentUtils.getProcessOrSystemProperty(
+                    EnvConstants.CLIENTIP_KEY);
+            if (StringUtils.isEmpty(ipAddr)) {
+                ipAddr = EnvConstants.LOCALHOST_FQDN; 
+            }
             AutAgentConnection.getInstance().getCommunicator()
                 .requestAndWait(new ConnectToAutMessage(
-                    EnvConstants.LOCALHOST_FQDN, 
-                    getCommunicator().getLocalPort(), autId), 
+                    ipAddr, getCommunicator().getLocalPort(), autId), 
                 responseCommand, 10000);
         } catch (InterruptedException e) {
             LOG.error("connect to AUT: " + e); //$NON-NLS-1$

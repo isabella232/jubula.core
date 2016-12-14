@@ -54,4 +54,15 @@
     </para>
   </listitem>
 </itemizedlist>
+  <para>
+    <emphasis role="strong">Added the possibility to use a static IP Address and port for the AUT - Client connection.</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        This is possible by setting the JVM properties <emphasis>jubClientAddr</emphasis> and <emphasis>jubClientPort</emphasis> in either
+        the <emphasis>jubula.ini</emphasis> or the <emphasis>testexec.vmoptions</emphasis> configuration files.
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>
