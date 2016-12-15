@@ -1010,7 +1010,7 @@ public class ClientTestImpl implements IClientTest {
                 if (isRunningWithMonitoring()) {
                     final Job monJob = createMonitoringJob(result);
                     monJob.addJobChangeListener(new JobChangeAdapter() {
-                        public void done(IJobChangeEvent event) {
+                        public void done(IJobChangeEvent changeEvent) {
                             ab.set(true);
                             DataEventDispatcher.getInstance()
                                 .fireTestresultSummaryChanged(

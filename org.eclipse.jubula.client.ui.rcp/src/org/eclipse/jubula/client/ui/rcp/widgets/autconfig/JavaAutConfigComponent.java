@@ -36,6 +36,7 @@ import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusEvent;
@@ -933,9 +934,9 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         createAutDirectoryEditor(advancedAreaComposite);
 
         // parameter editor
-        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
+        ControlDecorator.createInfo(UIComponentHelper.createLabel(
                 advancedAreaComposite, "AUTConfigComponent.autArguments"), //$NON-NLS-1$
-                "ControlDecorator.AUTArguments", false); //$NON-NLS-1$
+                I18n.getString("ControlDecorator.AUTArguments"), false); //$NON-NLS-1$
         m_autArgsTextField = 
             UIComponentHelper.createTextField(advancedAreaComposite, 2); 
         // JRE directory editor
@@ -969,9 +970,9 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     protected void createExpertArea(Composite expertAreaComposite) {
         
         // JRE parameter editor
-        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
+        ControlDecorator.createInfo(UIComponentHelper.createLabel(
                 expertAreaComposite, "AUTConfigComponent.jreArguments"), //$NON-NLS-1$
-                "ControlDecorator.JREArguments", false); //$NON-NLS-1$
+                I18n.getString("ControlDecorator.JREArguments"), false); //$NON-NLS-1$
         m_autJreParamTextField = UIComponentHelper.createTextField(
                 expertAreaComposite, 2);
         // Environment editor
@@ -985,9 +986,9 @@ public class JavaAutConfigComponent extends AutConfigComponent {
 
         UIComponentHelper.createSeparator(expertAreaComposite, 3);
         
-        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
+        ControlDecorator.createInfo(UIComponentHelper.createLabel(
                 expertAreaComposite, "AUTConfigComponent.labelMonitoring"), //$NON-NLS-1$, 
-                "AUTConfigComponent.labelMonitoring.helpText", false); //$NON-NLS-1$
+                I18n.getString("AUTConfigComponent.labelMonitoring.helpText"), false); //$NON-NLS-1$
                         
         m_monitoringCombo = UIComponentHelper.createCombo(
                 expertAreaComposite, 2, 

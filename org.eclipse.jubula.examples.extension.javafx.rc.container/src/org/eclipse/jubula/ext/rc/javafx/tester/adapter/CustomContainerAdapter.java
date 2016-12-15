@@ -25,6 +25,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
  * 
  * @author BREDEX GmbH
  */
+@SuppressWarnings("nls")
 public class CustomContainerAdapter<T extends ListCell<?>> extends
         AbstractComponentAdapter<T> implements IContainerAdapter {
 

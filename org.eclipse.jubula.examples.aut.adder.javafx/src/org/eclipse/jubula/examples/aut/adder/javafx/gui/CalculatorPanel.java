@@ -109,7 +109,7 @@ public class CalculatorPanel extends GridPane {
         this.add(m_value2, 2, 1);
 
         this.add(m_buttonResult, 0, 2);
-        m_fieldResult.setDisable(true);
+        m_fieldResult.setEditable(false);
         this.add(m_fieldResult, 1, 2);
         this.add(m_result, 2, 2);
 

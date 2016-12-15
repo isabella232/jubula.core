@@ -693,9 +693,9 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
 
         UIComponentHelper.createSeparator(expertAreaComposite, 3);
         
-        ControlDecorator.decorateInfo(UIComponentHelper.createLabel(
+        ControlDecorator.createInfo(UIComponentHelper.createLabel(
                 expertAreaComposite, "AUTConfigComponent.labelMonitoring"), //$NON-NLS-1$, 
-                "AUTConfigComponent.labelMonitoring.helpText", false); //$NON-NLS-1$
+                I18n.getString("AUTConfigComponent.labelMonitoring.helpText"), false); //$NON-NLS-1$
                         
         m_monitoringCombo = UIComponentHelper.createCombo(
                 expertAreaComposite, 2, 

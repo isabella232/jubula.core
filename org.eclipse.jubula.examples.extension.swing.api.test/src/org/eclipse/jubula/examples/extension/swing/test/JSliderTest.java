@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
+@SuppressWarnings("nls")
 public class JSliderTest {
     
     /** AUT-Agent host name to use */

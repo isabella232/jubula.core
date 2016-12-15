@@ -44,6 +44,7 @@ public class JTextComponentExtensionTester extends AbstractTextComponentTester {
      * @param text the text to check against
      * @param operator the operator
      */
+    @SuppressWarnings("nls")
     public void rcVerifyToolTip(String text, String operator) {
         if (text.equals("Exception")) {
             throw new StepExecutionException("This is a message",

@@ -172,8 +172,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         
         Label browserPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.browserPath"); //$NON-NLS-1$ 
         browserPathLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.browserPathLabel"); //$NON-NLS-1$
-        ControlDecorator.decorateInfo(browserPathLabel,  
-                "ControlDecorator.WebBrowserPath", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(browserPathLabel,  
+                I18n.getString("ControlDecorator.WebBrowserPath"), false); //$NON-NLS-1$
         
         m_browserTextField = UIComponentHelper.createTextField(
             parent, 1);
@@ -188,8 +188,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         
         Label driverPathLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.driverPath"); //$NON-NLS-1$ 
         driverPathLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.driverPathLabel"); //$NON-NLS-1$
-        ControlDecorator.decorateInfo(driverPathLabel,  
-                "ControlDecorator.WebDriverPath", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(driverPathLabel,  
+                I18n.getString("ControlDecorator.WebDriverPath"), false); //$NON-NLS-1$
         
         m_driverTextField = UIComponentHelper.createTextField(
             parent, 1);
@@ -700,8 +700,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
     protected void createSingleModeCheckBox(Composite parent) {
         Label singleWindowModeLabel = UIComponentHelper.createLabel(parent, "WebAutConfigComponent.singleWindowMode"); //$NON-NLS-1$ 
         singleWindowModeLabel.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.singleWindowModeLabel"); //$NON-NLS-1$
-        ControlDecorator.decorateInfo(singleWindowModeLabel,  
-                "ControlDecorator.SingleWindowMode", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(singleWindowModeLabel,  
+                I18n.getString("ControlDecorator.SingleWindowMode"), false); //$NON-NLS-1$
         m_singleWindowCheckBox = UIComponentHelper
                 .createToggleButton(parent, 2);
         m_singleWindowCheckBox.setData(SwtToolkitConstants.WIDGET_NAME, "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.SingleWindowCheckBox"); //$NON-NLS-1$ 
@@ -717,8 +717,8 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
                 "WebAutConfigComponent.webdriverMode"); //$NON-NLS-1$ 
         useWebdriverLabel.setData(SwtToolkitConstants.WIDGET_NAME,
                 "org.eclipse.jubula.toolkit.provider.html.gui.HtmlAutConfigComponent.WebdriverLabel"); //$NON-NLS-1$
-        ControlDecorator.decorateInfo(useWebdriverLabel,  
-                "ControlDecorator.WebdriverMode", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(useWebdriverLabel,  
+                I18n.getString("ControlDecorator.WebdriverMode"), false); //$NON-NLS-1$
         m_webdriverCheckBox = UIComponentHelper
                 .createToggleButton(parent, 2);
         m_webdriverCheckBox.setData(SwtToolkitConstants.WIDGET_NAME,

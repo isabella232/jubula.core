@@ -15,7 +15,7 @@ import java.util.List;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -246,8 +246,8 @@ public abstract class AbstractSearchPage extends DialogPage implements
         check.setLayoutData(gd);
         check.setText(searchableType.getName());
 
-        IObservableValue guiElement = SWTObservables
-                .observeSelection(check);
+        IObservableValue guiElement = WidgetProperties.selection()
+                .observe(check);
         IObservableValue modelElement = PojoObservables.observeValue(
                 searchableType, "selected"); //$NON-NLS-1$
         dbc.bindValue(guiElement, modelElement);
@@ -268,8 +268,8 @@ public abstract class AbstractSearchPage extends DialogPage implements
         check.setLayoutData(gd);
         check.setText(searchableField.getDescName());
 
-        IObservableValue guiElement = SWTObservables
-                .observeSelection(check);
+        IObservableValue guiElement = WidgetProperties.selection()
+                .observe(check);
         IObservableValue modelElement = PojoObservables.observeValue(
                 searchableField, "selected"); //$NON-NLS-1$
         dbc.bindValue(guiElement, modelElement);

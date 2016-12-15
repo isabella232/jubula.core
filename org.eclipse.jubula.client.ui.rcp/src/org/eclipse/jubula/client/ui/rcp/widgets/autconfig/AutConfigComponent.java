@@ -579,9 +579,9 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         initGuiServerChooser(parent);
 
         // AUT ID field
-        ControlDecorator.decorateInfo(
+        ControlDecorator.createInfo(
             UIComponentHelper.createLabel(parent, "AUTConfigComponent.autId"), //$NON-NLS-1$, 
-            "AUTConfigComponent.autId.helpText", false); //$NON-NLS-1$
+            I18n.getString("AUTConfigComponent.autId.helpText"), false); //$NON-NLS-1$
          
         m_autIdTextField = UIComponentHelper.createTextField(parent, 2);
         
@@ -1100,7 +1100,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         String text) {
 
         return !((textLength == 0 && !emptyAllowed)
-                || (text.startsWith(" ") || text.endsWith(" ")));
+                || (text.startsWith(" ") || text.endsWith(" "))); //$NON-NLS-1$ //$NON-NLS-2$
     }
     
     /**

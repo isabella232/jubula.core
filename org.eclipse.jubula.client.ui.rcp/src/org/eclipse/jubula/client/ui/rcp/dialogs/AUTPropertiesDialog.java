@@ -64,6 +64,7 @@ import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.ModifyEvent;
@@ -665,8 +666,9 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
     private void createGenerateNamesCheckBox(Composite parent) {
         Label infoLabel = newLabel(parent,
                 Messages.AUTPropertiesDialogGenerateNames);
-        ControlDecorator.decorateInfo(infoLabel, 
-                "AUTPropertiesDialog.generateNamesDescription", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(infoLabel, 
+                I18n.getString("AUTPropertiesDialog.generateNamesDescription"), //$NON-NLS-1$
+                false);
         m_generateNames = new Button(parent, SWT.CHECK);
         m_generateNames.addSelectionListener(new SelectionListener() {
 

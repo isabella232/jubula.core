@@ -32,6 +32,7 @@ public class JSpinnerExampleAUT extends JFrame {
     private static final long serialVersionUID = 1L;
     
     /** constructor */
+    @SuppressWarnings("nls")
     public JSpinnerExampleAUT() {
         super("JSpinner Example AUT");
         

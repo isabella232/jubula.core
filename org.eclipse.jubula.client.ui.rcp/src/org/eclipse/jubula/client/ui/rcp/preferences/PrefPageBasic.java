@@ -27,6 +27,7 @@ import org.eclipse.jubula.client.ui.rcp.widgets.CheckedIntText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.KeyEvent;
@@ -208,8 +209,8 @@ public class PrefPageBasic extends PreferencePage implements
         m_capInfoCheckbox.setSelection(Plugin.getDefault()
                 .getPreferenceStore().getBoolean(
                         Constants.SHOWCAPINFO_KEY));
-        ControlDecorator.decorateInfo(m_capInfoCheckbox,  
-                "ControlDecorator.ShowCapInfo", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_capInfoCheckbox,  
+                I18n.getString("ControlDecorator.ShowCapInfo"), false); //$NON-NLS-1$
     }
     
     /**
@@ -223,8 +224,8 @@ public class PrefPageBasic extends PreferencePage implements
         m_showTransientChildrenCheckBox.setSelection(Plugin.getDefault()
                 .getPreferenceStore().getBoolean(
                         Constants.SHOW_TRANSIENT_CHILDREN_KEY));
-        ControlDecorator.decorateInfo(m_showTransientChildrenCheckBox,
-                "ControlDecorator.showTransientChildrenCheckBox", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_showTransientChildrenCheckBox,
+                I18n.getString("ControlDecorator.showTransientChildrenCheckBox"), false); //$NON-NLS-1$
     }
     
     /**
@@ -281,8 +282,8 @@ public class PrefPageBasic extends PreferencePage implements
                 validatePage();
             }
         });
-        ControlDecorator.decorateInfo(m_compNamesContentAssistTime,
-                "ControlDecorator.ComponentNamesContentAssistInfo", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_compNamesContentAssistTime,
+                I18n.getString("ControlDecorator.ComponentNamesContentAssistInfo"), false); //$NON-NLS-1$
     }
 
     /**

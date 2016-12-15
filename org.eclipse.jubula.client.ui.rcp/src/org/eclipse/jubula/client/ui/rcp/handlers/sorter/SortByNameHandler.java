@@ -33,7 +33,8 @@ public class SortByNameHandler extends AbstractHandler {
         
         if (wp instanceof ComponentNameBrowser) {
             ComponentNameBrowser cnb = (ComponentNameBrowser)wp;
-            cnb.getTreeViewer().setSorter(new ComponentNameNameViewerSorter());
+            cnb.getTreeViewer().setComparator(
+                    new ComponentNameNameViewerSorter());
         }
         
         return null;

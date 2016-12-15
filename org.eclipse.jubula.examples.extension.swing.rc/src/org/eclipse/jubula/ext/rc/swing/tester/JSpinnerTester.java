@@ -29,6 +29,7 @@ import org.eclipse.jubula.rc.common.tester.WidgetTester;
  * @author BREDEX GmbH
  * 
  */
+@SuppressWarnings("nls")
 public class JSpinnerTester extends WidgetTester {
 
     /**

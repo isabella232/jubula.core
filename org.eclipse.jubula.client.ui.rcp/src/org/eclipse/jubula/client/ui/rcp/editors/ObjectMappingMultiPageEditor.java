@@ -35,7 +35,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
@@ -232,7 +232,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * @author BREDEX GmbH
      * @created Mar 10, 2009
      */
-    private static class ObjectMappingTreeSorter extends ViewerSorter {
+    private static class ObjectMappingTreeSorter extends ViewerComparator {
         /**
          * {@inheritDoc}
          */
@@ -643,7 +643,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 GridDataFactory.fillDefaults().grab(true, true).create());
         setProviders(viewer, getCompNameCache());
         viewer.setUseHashlookup(true);
-        viewer.setSorter(new ObjectMappingTreeSorter());
+        viewer.setComparator(new ObjectMappingTreeSorter());
         viewer.setComparer(new PersistentObjectComparer());
         viewer.setInput(topLevelCategory);
 
@@ -702,7 +702,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 GridDataFactory.fillDefaults().grab(true, true).create());
         setProviders(viewer, getCompNameCache());
         viewer.setUseHashlookup(true);
-        viewer.setSorter(new ObjectMappingTreeSorter());
+        viewer.setComparator(new ObjectMappingTreeSorter());
         viewer.setComparer(new PersistentObjectComparer());
         viewer.setInput(topLevelCategory);
 

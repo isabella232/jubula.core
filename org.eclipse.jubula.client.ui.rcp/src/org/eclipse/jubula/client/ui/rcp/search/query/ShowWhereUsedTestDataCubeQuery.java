@@ -43,7 +43,6 @@ public class ShowWhereUsedTestDataCubeQuery extends AbstractShowWhereUsedQuery {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("nls")
     public String getLabel() {
         StringBuilder sb = new StringBuilder();
         sb.append(getTimestamp());

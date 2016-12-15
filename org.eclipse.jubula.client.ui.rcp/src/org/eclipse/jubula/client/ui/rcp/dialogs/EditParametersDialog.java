@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.ICellModifier;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -171,8 +172,8 @@ public final class EditParametersDialog extends AbstractEditParametersDialog {
             }
             
         });
-        ControlDecorator.decorateInfo(m_lockInterfaceCheckBox, 
-                "ControlDecorator.EditParameterLock", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_lockInterfaceCheckBox, 
+                I18n.getString("ControlDecorator.EditParameterLock"), false); //$NON-NLS-1$
     }
 
     /**

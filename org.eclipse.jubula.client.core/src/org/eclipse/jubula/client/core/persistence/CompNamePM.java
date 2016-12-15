@@ -403,7 +403,6 @@ public class CompNamePM extends AbstractNamePM {
      *            The guid of the component name to check.
      * @return number of the reusage.
      */
-    @SuppressWarnings("unchecked")
     public static synchronized long getNumberOfUsages(
             EntityManager session, Long parentProjectId, 
             String compNameGuid) {

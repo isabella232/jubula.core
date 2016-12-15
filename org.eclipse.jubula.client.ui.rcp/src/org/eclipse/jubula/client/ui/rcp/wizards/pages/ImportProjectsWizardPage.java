@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -628,8 +629,8 @@ public class ImportProjectsWizardPage extends WizardPage
         gridData.grabExcessHorizontalSpace = false;
         gridData.horizontalAlignment = SWT.LEFT;
         listLabel.setLayoutData(gridData);
-        ControlDecorator.decorateInfo(listLabel, 
-                "ControlDecorator.Import", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(listLabel, 
+                I18n.getString("ControlDecorator.Import"), false); //$NON-NLS-1$
         
         addImportList(composite);
         addListButtons(composite);

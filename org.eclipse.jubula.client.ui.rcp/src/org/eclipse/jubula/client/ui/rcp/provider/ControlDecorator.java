@@ -12,7 +12,6 @@ package org.eclipse.jubula.client.ui.rcp.provider;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Control;
@@ -73,21 +72,6 @@ public class ControlDecorator extends ControlDecoration {
         infoBobbles.setMarginWidth(2);
         infoBobbles.setShowOnlyOnFocus(showOnFocus);
         return infoBobbles;
-    }
-
-    /**
-     * 
-     * @param control that should be decorated with an info-bobble
-     * @param descriptionkey the i18n-key of the info-bobbles text description
-     * @param showfocus set to true shows the info-bobble only if control has focus,
-     * avoid setting this parameter to true if the control can not gain any focus
-     * e.g. SWT.NO_FOCUS
-     * @deprecated Use {@link #createInfo(Control, String, Boolean).
-     */
-    public static void decorateInfo(Control control, 
-            String descriptionkey, Boolean showfocus) { 
-        createInfo(control,
-                I18n.getString(descriptionkey), showfocus);
     }
 
     /**

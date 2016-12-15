@@ -100,7 +100,7 @@ public class ComponentNameBrowser extends ViewPart implements
 
         getTreeViewer().setUseHashlookup(true);
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
-        getTreeViewer().setSorter(new ComponentNameNameViewerSorter());
+        getTreeViewer().setComparator(new ComponentNameNameViewerSorter());
         getTreeViewer().setComparer(new PersistentObjectComparer());
         getViewSite().setSelectionProvider(getTreeViewer());
 

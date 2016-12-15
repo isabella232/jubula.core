@@ -59,10 +59,6 @@ public class CommandExecutor {
     }
     /** @author BREDEX GmbH */
     private static class ExtendedDefaultExecutor extends DefaultExecutor {
-        /** the working directory of this VM */
-        private static final String CURRENT_VM_WORKING_DIR_ABS_PATH = 
-                FilenameUtils.getFullPathNoEndSeparator(new File(System.getProperty("user.dir")).getAbsolutePath() //$NON-NLS-1$
-                        + File.separator);
         /** launcher used for windows OS family types */
         private CommandLauncher m_windowsCommandLauncher = 
                 new WindowsCommandLauncher();

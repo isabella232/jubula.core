@@ -7,11 +7,11 @@ Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.communication,
- org.eclipse.jubula.communication.internal;x-internal:=true,
+ org.eclipse.jubula.communication.internal;x-friends:="org.eclipse.jubula.rc.javafx",
  org.eclipse.jubula.communication.internal.commands;x-internal:=true,
  org.eclipse.jubula.communication.internal.connection;x-internal:=true,
  org.eclipse.jubula.communication.internal.listener;x-internal:=true,
- org.eclipse.jubula.communication.internal.message;x-internal:=true,
+ org.eclipse.jubula.communication.internal.message;x-friends:="org.eclipse.jubula.rc.javafx",
  org.eclipse.jubula.communication.internal.message.html;x-internal:=true,
  org.eclipse.jubula.communication.internal.parser;x-internal:=true,
  org.eclipse.jubula.communication.internal.writer;x-internal:=true

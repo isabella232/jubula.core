@@ -12,7 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.wizards.refactor.pages;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.PojoObservables;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;
@@ -86,9 +86,10 @@ public class AdditionalInformationPage extends WizardPage {
     public void bindNewExec(IExecTestCasePO newExec) {
         m_dbc.dispose();
         m_dbc = new DataBindingContext();
-        m_dbc.bindValue(SWTObservables.observeText(m_execName, SWT.Modify),
+        m_dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(m_execName),
                 PojoObservables.observeValue(newExec, "name")); //$NON-NLS-1$
-        m_dbc.bindValue(SWTObservables.observeText(m_execComment, SWT.Modify),
+        m_dbc.bindValue(WidgetProperties.text(SWT.Modify)
+                .observe(m_execComment),
                 PojoObservables.observeValue(newExec, "comment")); //$NON-NLS-1$
         m_dbc.updateTargets();
     }

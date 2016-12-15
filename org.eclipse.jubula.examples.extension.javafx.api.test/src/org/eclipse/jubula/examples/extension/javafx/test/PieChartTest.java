@@ -32,6 +32,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
+@SuppressWarnings("nls")
 public class PieChartTest {
     /** the default number of pies within the AUT */
     public static final int DEFAULT_NO_OF_SLICES = 5;

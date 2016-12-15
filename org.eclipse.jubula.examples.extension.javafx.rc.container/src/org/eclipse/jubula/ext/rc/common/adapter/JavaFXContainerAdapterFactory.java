@@ -25,7 +25,7 @@ import org.eclipse.jubula.rc.javafx.tester.adapter.IContainerAdapter;
  */
 public class JavaFXContainerAdapterFactory implements IAdapterFactory {
     /** {@inheritDoc} */
-    public Class[] getSupportedClasses() {
+    public Class<?>[] getSupportedClasses() {
         return new Class[] { ListCell.class };
     }
 

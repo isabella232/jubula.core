@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -330,8 +331,8 @@ public class ProjectDialog extends TitleAreaDialog {
         GridData data = new GridData();
         data.horizontalSpan = HORIZONTAL_SPAN;
         m_keepTestresultSummaryButton.setLayoutData(data);
-        ControlDecorator.decorateInfo(m_keepTestresultSummaryButton,  
-                "ControlDecorator.KeepTestresultSummary", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_keepTestresultSummaryButton,  
+                I18n.getString("ControlDecorator.KeepTestresultSummary"), false); //$NON-NLS-1$
     }
 
     /**

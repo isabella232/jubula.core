@@ -66,6 +66,7 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.search.ui.NewSearchUI;
@@ -281,9 +282,9 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         Composite rightComposite = createComposite(parent, 3, 
             GridData.FILL, true);
         
-        ControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.createInfo(createLabel(leftComposite, 
             Messages.ProjectPropertyPageProjectGuid), 
-            "ControlDecorator.ProjectPropertiesGUID", false); //$NON-NLS-1$
+            I18n.getString("ControlDecorator.ProjectPropertiesGUID"), false); //$NON-NLS-1$
         
         Text guidText = new Text(rightComposite, SWT.WRAP);
         GridData labelGrid = new GridData(GridData.FILL, GridData.CENTER, 
@@ -304,9 +305,9 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2,
                 GridData.FILL, true);
-        ControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.createInfo(createLabel(leftComposite, 
                 Messages.ProjectPropertyPageIsReusable),
-                "ControlDecorator.NewProjectIsReusable", false); //$NON-NLS-1$
+                I18n.getString("ControlDecorator.NewProjectIsReusable"), false); //$NON-NLS-1$
         m_isReusableCheckbox = new Button(rightComposite, SWT.CHECK);
 
         m_isReusableCheckbox.setSelection(m_origProjectProps.getIsReusable());
@@ -333,9 +334,10 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 GridData.BEGINNING, false);
         Composite rightComposite = createComposite(parent, NUM_COLUMNS_2,
                 GridData.FILL, true);
-        ControlDecorator.decorateInfo(createLabel(leftComposite, 
+        ControlDecorator.createInfo(createLabel(leftComposite, 
                 Messages.ProjectPropertyPageIsProtected),
-                "ControlDecorator.NewProjectIsProtected", false); //$NON-NLS-1$
+                I18n.getString("ControlDecorator.NewProjectIsProtected"), //$NON-NLS-1$
+                false);
         m_isProtectedCheckbox = new Button(rightComposite, SWT.CHECK);
 
         m_isProtectedCheckbox.setSelection(m_origProjectProps.getIsProtected());
@@ -482,8 +484,9 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             
         });
         enableCleanResultDaysTextfield();
-        ControlDecorator.decorateInfo(m_cleanResultDays,  
-                "TestResultViewPreferencePage.cleanResultsInfo", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_cleanResultDays,  
+                I18n.getString("TestResultViewPreferencePage.cleanResultsInfo"), //$NON-NLS-1$
+                false);
     }
     
     /**
@@ -500,8 +503,9 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         gridData.horizontalSpan = 2;
         gridData.grabExcessHorizontalSpace = false;
         m_isTrackingActivatedButton.setLayoutData(gridData);
-        ControlDecorator.decorateInfo(m_isTrackingActivatedButton,
-                "TestResultViewPreferencePage.TrackChangesInfo", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_isTrackingActivatedButton,
+                I18n.getString("TestResultViewPreferencePage.TrackChangesInfo"), //$NON-NLS-1$
+                false);
         
         m_isTrackingActivatedButton.addSelectionListener(
                 new SelectionListener() {
@@ -580,8 +584,10 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
         gridData = new GridData(SWT.BEGINNING, SWT.NONE, true, true);
         gridData.widthHint = 80;
         m_trackChangesSpan.setLayoutData(gridData);
-        ControlDecorator.decorateInfo(m_trackChangesSpan,  
-                "TestResultViewPreferencePage.cleanResultsTimeunitInfo", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(m_trackChangesSpan,  
+                I18n.getString(
+                        "TestResultViewPreferencePage.cleanResultsTimeunitInfo"), //$NON-NLS-1$
+                    false);
         
         Integer span = m_origProjectProps.getTrackChangesSpan();
         if (span != null) {
@@ -590,7 +596,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
             // set 10 as default
             m_trackChangesSpan.setText("10"); //$NON-NLS-1$
         }
-        
         m_trackChangesSpan.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 // nothing
@@ -599,7 +604,6 @@ public class ProjectGeneralPropertyPage extends AbstractProjectPropertyPage {
                 checkCompleteness();
             }
         });
-        
         if (m_isTrackingActivatedButton != null) {
             UIComponentHelper.setEnabledRecursive(
                     m_trackChangesTimespanSelection, 

@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.sorter;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 
 
@@ -19,7 +19,7 @@ import org.eclipse.jubula.client.core.model.IComponentNamePO;
  * @author BREDEX GmbH
  * @created 17.02.2009
  */
-public class ComponentNameNameViewerSorter extends ViewerSorter {
+public class ComponentNameNameViewerSorter extends ViewerComparator {
     /**
      * {@inheritDoc}
      */

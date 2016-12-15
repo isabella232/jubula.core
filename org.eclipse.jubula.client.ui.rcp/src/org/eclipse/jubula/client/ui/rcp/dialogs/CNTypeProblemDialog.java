@@ -72,13 +72,13 @@ public class CNTypeProblemDialog {
             if (problems.get(guid).equals(
                     ProblemType.REASON_INCOMPATIBLE_MAP_TYPE)) {
                 msg.append(StringConstants.NEWLINE);
-                msg.append("Mapped to: ");
+                msg.append("Mapped to: "); //$NON-NLS-1$
                 msg.append(StringConstants.QUOTE);
                 msg.append(info.get(0));
                 msg.append(StringConstants.QUOTE);
                 msg.append(StringConstants.COMMA);
                 msg.append(StringConstants.SPACE);
-                msg.append("used as: ");
+                msg.append("used as: "); //$NON-NLS-1$
                 msg.append(StringConstants.QUOTE);
                 msg.append(info.get(1));
                 msg.append(StringConstants.QUOTE);
@@ -88,11 +88,11 @@ public class CNTypeProblemDialog {
                 for (int i = 0; i < 6; i++) {
                     msg.append(StringConstants.SPACE);
                 }
-                msg.append("Used as ");
+                msg.append("Used as "); //$NON-NLS-1$
                 msg.append(StringConstants.QUOTE);
                 msg.append(info.get(0));
                 msg.append(StringConstants.QUOTE);
-                msg.append(" and ");
+                msg.append(" and "); //$NON-NLS-1$
                 msg.append(StringConstants.QUOTE);
                 msg.append(info.get(1));
                 msg.append(StringConstants.QUOTE);

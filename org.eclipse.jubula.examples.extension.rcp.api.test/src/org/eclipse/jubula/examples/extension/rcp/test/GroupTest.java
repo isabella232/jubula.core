@@ -32,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /** @author BREDEX GmbH */
+@SuppressWarnings("nls")
 public class GroupTest {
     
     /** AUT-Agent host name to use */

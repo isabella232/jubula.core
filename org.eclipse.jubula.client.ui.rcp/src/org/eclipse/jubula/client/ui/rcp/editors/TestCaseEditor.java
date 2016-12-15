@@ -379,8 +379,9 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         headLineComposite.setLayout(layout);
         Label headLine = new Label(headLineComposite, SWT.NONE);
         headLine.setText(Messages.TestCaseEditorEHAreaHeadline); 
-        ControlDecorator.decorateInfo(headLine,
-                "ControlDecorator.EventHandler", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(headLine,
+                I18n.getString("ControlDecorator.EventHandler"), //$NON-NLS-1$
+                false);
         GridData ehTvGridData = new GridData();
         ehTvGridData.grabExcessHorizontalSpace = true;
         ehTvGridData.grabExcessVerticalSpace = true;

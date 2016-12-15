@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author BREDEX GmbH
  */
+@SuppressWarnings("nls")
 public class PieChartComponents {
     /** the logger */
     private static Logger log = LoggerFactory

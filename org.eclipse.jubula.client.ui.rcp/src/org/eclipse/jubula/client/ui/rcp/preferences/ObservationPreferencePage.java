@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -179,8 +180,8 @@ public class ObservationPreferencePage extends PreferencePage implements
         GridData data2 = new GridData();
         data2.horizontalSpan = 4;
         dialogLabel.setLayoutData(data2);        
-        ControlDecorator.decorateInfo(dialogLabel,  
-                "ControlDecorator.ObervationConsole", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(dialogLabel,  
+                I18n.getString("ControlDecorator.ObervationConsole"), false); //$NON-NLS-1$
               
         m_showDialog = new Button(composite, SWT.CHECK);
         m_showDialog.setText(Messages.ObservationPreferencePageShowDialog);
@@ -199,8 +200,8 @@ public class ObservationPreferencePage extends PreferencePage implements
         GridData data3 = new GridData();
         data3.horizontalSpan = 4;
         triggerLabel.setLayoutData(data3);
-        ControlDecorator.decorateInfo(triggerLabel, 
-                "ControlDecorator.ObservationTriggerReplaceText", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(triggerLabel, 
+                I18n.getString("ControlDecorator.ObservationTriggerReplaceText"), false); //$NON-NLS-1$
         
         Set<String> values = new HashSet<String>();
         m_singleLineTrigger = new ModifiableTriggerList(composite, SWT.NONE, 

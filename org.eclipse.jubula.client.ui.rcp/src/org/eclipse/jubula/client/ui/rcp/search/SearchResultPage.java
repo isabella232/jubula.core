@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedListener;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -89,7 +89,7 @@ public class SearchResultPage extends AbstractSearchResultPage
                 new DecoratingLabelProvider(new LabelProvider(), Plugin
                         .getDefault().getWorkbench().getDecoratorManager()
                         .getLabelDecorator()));
-        getTreeViewer().setSorter(new ViewerSorter());
+        getTreeViewer().setComparator(new ViewerComparator());
         getSite().setSelectionProvider(getTreeViewer());
         
         DataEventDispatcher.getInstance().addProjectLoadedListener(this, true);

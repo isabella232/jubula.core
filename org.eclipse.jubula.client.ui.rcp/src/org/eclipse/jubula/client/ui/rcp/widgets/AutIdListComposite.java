@@ -17,7 +17,7 @@ import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.ui.rcp.dialogs.EnterAutIdDialog;
@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -74,8 +75,8 @@ public class AutIdListComposite extends Composite {
         setLayout(compositeLayout);
         Label idLabel = new Label(this, SWT.NONE);
         idLabel.setText(Messages.AUTPropertiesDialogAutId);
-        ControlDecorator.decorateInfo(idLabel, 
-                "AUTPropertiesDialog.AutId.helpText", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(idLabel, 
+                I18n.getString("AUTPropertiesDialog.AutId.helpText"), false); //$NON-NLS-1$
         GridData data = new GridData(SWT.BEGINNING, SWT.FILL, false, false);
         data.horizontalSpan = 1;
         idLabel.setLayoutData(data);
@@ -88,7 +89,7 @@ public class AutIdListComposite extends Composite {
         final ListViewer idListViewer = new ListViewer(this,
                 LayoutUtil.MULTI_TEXT_STYLE);
         idListViewer.setContentProvider(new ObservableListContentProvider());
-        idListViewer.setSorter(new ViewerSorter());
+        idListViewer.setComparator(new ViewerComparator());
         idListViewer.setInput(idListModel);
         final List idList = idListViewer.getList();
         data = new GridData(SWT.FILL, SWT.FILL, true, false);

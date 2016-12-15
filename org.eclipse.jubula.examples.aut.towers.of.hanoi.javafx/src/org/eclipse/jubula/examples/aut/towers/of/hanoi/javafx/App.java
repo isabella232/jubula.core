@@ -31,6 +31,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
  
+@SuppressWarnings("nls")
 public class App extends Application {
 	
 	private final int WIDTH = 1050;
@@ -75,7 +76,8 @@ public class App extends Application {
         primaryStage.show();
     }
 
-	private void initStacks(VBox stack0, VBox stack1, VBox stack2) {
+
+    private void initStacks(VBox stack0, VBox stack1, VBox stack2) {
 		stack0.getChildren().clear();
 		stack1.getChildren().clear();
 		stack2.getChildren().clear();

@@ -14,7 +14,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jubula.client.ui.dialogs.AbstractValidatedDialog;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -37,7 +37,7 @@ import org.eclipse.swt.widgets.Text;
 public class EnterAutIdDialog extends AbstractValidatedDialog {
 
     /** observable (bindable) value for AUT ID */
-    private WritableValue m_autId;
+    private WritableValue<String> m_autId;
     
     /** initial value for AUT ID, null if none */
     private String m_initialAutId;
@@ -82,7 +82,7 @@ public class EnterAutIdDialog extends AbstractValidatedDialog {
         LayoutUtil.setMaxChar(autIdField);
         
         IObservableValue autIdFieldText = 
-            SWTObservables.observeText(autIdField, SWT.Modify);
+                WidgetProperties.text(SWT.Modify).observe(autIdField);
         m_autId = WritableValue.withValueType(String.class);
         
         getValidationContext().bindValue(
@@ -116,7 +116,7 @@ public class EnterAutIdDialog extends AbstractValidatedDialog {
      * @return the value of the AUT ID being modified.
      */
     public String getAutId() {
-        return (String)m_autId.getValue();
+        return m_autId.getValue();
     }
 
     /**

@@ -153,7 +153,7 @@ public class AUTServerEvent extends ServerEvent {
         StringBuilder builder = new StringBuilder();
         builder.append(this);
         if (StringUtils.isNotBlank(m_additionalInfo)) {
-            builder.append(" - ");
+            builder.append(" - "); //$NON-NLS-1$
             builder.append(m_additionalInfo);
         }
         return builder.toString();

@@ -32,6 +32,7 @@ import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -228,8 +229,9 @@ public class AUTSettingWizardPage extends WizardPage {
                 SWT.FILL, true);
         Label infoLabel = newLabel(leftComposite, 
                 Messages.AUTPropertiesDialogGenerateNames);
-        ControlDecorator.decorateInfo(infoLabel, 
-                "AUTPropertiesDialog.generateNamesDescription", false); //$NON-NLS-1$
+        ControlDecorator.createInfo(infoLabel, 
+                I18n.getString("AUTPropertiesDialog.generateNamesDescription"), //$NON-NLS-1$
+                false);
         m_generateNames = new Button(rightComposite, SWT.CHECK);
         m_generateNames.addSelectionListener(new SelectionListener() {
             
@@ -267,9 +269,10 @@ public class AUTSettingWizardPage extends WizardPage {
         
         newLabel(leftComposite, StringConstants.EMPTY);
         newLabel(rightComposite, StringConstants.EMPTY);
-        ControlDecorator.decorateInfo(newLabel(leftComposite, 
+        ControlDecorator.createInfo(newLabel(leftComposite, 
                 Messages.AUTSettingWizardPageToolkit), 
-                "ControlDecorator.NewProjectAUTToolkit", false); //$NON-NLS-1$
+                I18n.getString("ControlDecorator.NewProjectAUTToolkit"), //$NON-NLS-1$
+                false);
         try {
             m_autToolKitComboBox = ControlFactory.createAutToolkitCombo(
                 rightComposite, m_project, m_autMain.getToolkit());
