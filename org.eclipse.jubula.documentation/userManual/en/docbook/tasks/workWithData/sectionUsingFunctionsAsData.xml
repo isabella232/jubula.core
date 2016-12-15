@@ -136,7 +136,27 @@
             is not. <emphasis role="input">1000</emphasis> can be entered but
             <emphasis role="input">1,000</emphasis> cannot. Entering
             <emphasis role="input">1.000</emphasis> is equivalent to entering
-            <emphasis role="input">1</emphasis>.
+            <emphasis role="input">1</emphasis>. You can use the 
+            <emphasis role="input">formatNumber</emphasis> function to convert
+            a number to an integer or to change the amount of decimal points a
+            number has.
+          </para>
+        </listitem>
+      </varlistentry>
+      <varlistentry>
+        <term>
+          formatNumber
+        </term>
+        <listitem>
+          <para>
+            Takes two arguments, the decimal to be formatted and the amount of
+            decimal places the formatted number should contain. The numbers or
+            decimal places will not be rounded when using this function.
+            <emphasis role="input">?formatNumber(15.43,0)</emphasis> gives
+            <emphasis role="input">15</emphasis>. <emphasis role="input">?formatNumber(15.4,3)</emphasis>
+            gives <emphasis role="input">15.4</emphasis>, no zeros will be
+            appended. <emphasis role="input">?formatNumber(15.4356,2)</emphasis>
+            gives <emphasis role="input">15.43</emphasis>.
           </para>
         </listitem>
       </varlistentry>

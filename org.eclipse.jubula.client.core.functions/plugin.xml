@@ -296,5 +296,18 @@
             type="string">
       </parameter>
    </function>
+   <function
+       class="org.eclipse.jubula.client.core.functions.FormatNumberEvaluator"
+       evaluator="local"
+       name="formatNumber">
+       <parameter
+           name="number"
+           type="number">
+       </parameter>
+       <parameter
+           name="decimals"
+           type="number">
+       </parameter>
+   </function>
    </extension>
 </plugin>
