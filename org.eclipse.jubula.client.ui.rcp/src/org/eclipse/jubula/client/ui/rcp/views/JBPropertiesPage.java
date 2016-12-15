@@ -379,7 +379,6 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         tree.setHeaderVisible(true);
         tree.setLinesVisible(true);
         m_treeViewer = new TreeViewer(tree);
-
         // add expand/collapse column
         TreeViewerColumn expandCollapseColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
@@ -387,18 +386,22 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         expandCollapseColumn.getColumn().setWidth(20);
         expandCollapseColumn.getColumn().setResizable(false);
         expandCollapseColumn.setLabelProvider(new CellLabelProvider() {
-            
             public void update(ViewerCell cell) {
                 // Nothing to display. Nothing to update.
             }
         });
+        final int width = m_treeViewer.getTree().getParent()
+                .getClientArea().width;
         
+        /* We make sure to have an initial size, just in case. */
+        final int area = (width <= 100) ? 100 : width;
+
         // add property name column
         TreeViewerColumn propertyNameColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyNameColumn.getColumn().setText(
                 Messages.JubulaPropertiesViewProperty);
-        propertyNameColumn.getColumn().setWidth(175);
+        propertyNameColumn.getColumn().setWidth((int) (width * 0.36));
         propertyNameColumn.setLabelProvider(new PropertyNameLabelProvider());
         
         // add property value column
@@ -406,19 +409,16 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyValueColumn.getColumn().setText(
                 Messages.JubulaPropertiesViewValue);
-        propertyValueColumn.getColumn().setWidth(300);
+        propertyValueColumn.getColumn().setWidth((int) (width * 0.54));
         propertyValueColumn.setLabelProvider(new PropertyValueLabelProvider());
         propertyValueColumn.setEditingSupport(
                 new PropertiesEditingSupport(m_treeViewer));
         
         m_treeViewer.addSelectionChangedListener(m_helpContextListener);
-        
         m_treeViewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
         m_treeViewer.setContentProvider(new PropertiesContentProvider());
         ColumnViewerToolTipSupport.enableFor(m_treeViewer);
-
         m_treeViewer.setComparer(new PropertiesElementComparer());
-        
         m_focusCellManager = 
             new TreeViewerFocusCellManager(m_treeViewer,
                     new FocusCellOwnerDrawHighlighter(m_treeViewer));
@@ -438,7 +438,6 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                             == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
                 }
             };
-        
         TreeViewerEditor.create(m_treeViewer, m_focusCellManager, 
                 actSupport, ColumnViewerEditor.TABBING_VERTICAL
                     | ColumnViewerEditor.KEYBOARD_ACTIVATION
