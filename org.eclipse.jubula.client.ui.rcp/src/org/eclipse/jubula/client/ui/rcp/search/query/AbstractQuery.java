@@ -181,7 +181,7 @@ public abstract class AbstractQuery implements ISearchQuery {
                 reuse.size());
         for (INodePO node : reuse) {
             INodePO parent = node.getSpecAncestor();
-            if (parent == null) {
+            if (parent == null || parent == node) {
                 parent = node.getParentNode();
             }
             String resultName;
