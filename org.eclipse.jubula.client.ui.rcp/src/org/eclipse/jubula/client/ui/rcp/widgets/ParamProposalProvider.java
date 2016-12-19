@@ -174,6 +174,9 @@ public class ParamProposalProvider implements IContentProposalProvider {
         while ((node != null) && !(node instanceof ISpecTestCasePO)) {
             node = node.getParentNode();
         }
+        if (node == null) {
+            return proposals;
+        }
         ISpecTestCasePO paramNode = (ISpecTestCasePO)node;
         
         if (!(m_node instanceof ISpecTestCasePO)) {

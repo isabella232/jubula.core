@@ -286,7 +286,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
 
         /** {@inheritDoc} */
         public Collection<? extends IPersistentObject> getToLock() {
-            List<IPersistentObject> list = new ArrayList<>(2);
+            List<IPersistentObject> list = new ArrayList<>();
             list.add(GeneralStorage.getInstance().getProject().
                     getSpecObjCont());
             list.add(m_oldRoot);
@@ -295,10 +295,17 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
 
         /** {@inheritDoc} */
         public Collection<? extends IPersistentObject> getToRefresh() {
-            List<IPersistentObject> list = new ArrayList<>(1);
+            List<IPersistentObject> list = new ArrayList<>();
             list.add(GeneralStorage.getInstance().getProject().
                     getSpecObjCont());
             return list;
+        }
+
+        /** {@inheritDoc} */
+        public Collection<? extends IPersistentObject> getToMerge() {
+            List<IPersistentObject> toMerge = new ArrayList<>();
+            toMerge.add(m_newSpecTC);
+            return toMerge;
         }
     }
 

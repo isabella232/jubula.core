@@ -22,7 +22,7 @@ import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 
 /**
  * A standard transaction wrapper class which tries to execute an operation
- *   in a new session and handles any DB-related exception that could happen in the process.
+ *   in a new session and handles any exception that could happen in the process.
  * @author BREDEX GmbH
  *
  */
@@ -49,7 +49,7 @@ public class TransactionWrapper {
         } catch (PMAlreadyLockedException | PMObjectDeletedException e) {
             PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (PMException e) {
-            ErrorHandlingUtil.createMessageDialogException(e.getCause());
+            ErrorHandlingUtil.createMessageDialogException(e);
         } catch (Exception e) {
             ErrorHandlingUtil.createMessageDialogException(e);
         }

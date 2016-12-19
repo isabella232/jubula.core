@@ -480,10 +480,11 @@ public class MultipleNodePM  extends PersistenceManager {
          */
         public MessageInfo execute(EntityManager sess) {
             sess.persist(m_newExec);
+            INodePO parent = sess.find(m_parent.getClass(), m_parent.getId());
             if (m_newExec instanceof IEventExecTestCasePO) {
-                if (m_parent instanceof ISpecTestCasePO) {
+                if (parent instanceof ISpecTestCasePO) {
 
-                    ISpecTestCasePO spec = (ISpecTestCasePO) m_parent;
+                    ISpecTestCasePO spec = (ISpecTestCasePO) parent;
                     try {
                         spec.addEventTestCase((IEventExecTestCasePO) m_newExec);
                         return null;
@@ -493,8 +494,8 @@ public class MultipleNodePM  extends PersistenceManager {
                 }
                 // This secures that no IEventExecTC is added in a wrong PO
                 return new MessageInfo(MessageIDs.E_EVENT_SUPPORT, null);
-            } 
-            m_parent.addNode(m_index, m_newExec);
+            }
+            parent.addNode(m_index, m_newExec);
             
             return null;
         }
@@ -942,9 +943,12 @@ public class MultipleNodePM  extends PersistenceManager {
         public MessageInfo execute(EntityManager sess) {
             if (isNestedNode(m_execNode)) {
                 m_execNode.getParentNode().removeNode(m_execNode);
-            }            
-            
-            sess.remove(m_execNode);
+            }
+            IExecTestCasePO exec = sess.find(m_execNode.getClass(),
+                    m_execNode.getId());
+            if (exec != null) {
+                sess.remove(exec);
+            }
             return null;
         }
     }

@@ -104,6 +104,11 @@ public abstract class AbstractBrowserDndSupport {
             public Collection<? extends IPersistentObject> getToLock() {
                 return toLock;
             }
+
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToMerge() {
+                return null;
+            }
         });
         
         if (!succ) {

@@ -43,4 +43,15 @@
      </para>
   </listitem>
 </itemizedlist>
+<para>
+<emphasis role="strong">Improved Replace Test Case References operation</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        It is now possible to choose default values for unmatched parameters in the Replace Test Case Reference operation (the non-Editor version).
+        These default values can not contain references, but all other types are usable (e.g. variables and functions).
+    </para>
+  </listitem>
+</itemizedlist>
 </section>

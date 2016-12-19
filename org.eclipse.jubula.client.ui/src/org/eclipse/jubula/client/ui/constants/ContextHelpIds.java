@@ -264,7 +264,7 @@ public interface ContextHelpIds {
 
     /** help context id for a wizard */
     public static final String
-        SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD = PRAEFIX
+        SEARCH_REFACTOR_REPLACE_EXECTC_WIZARD = PRAEFIX
             + "searchRefactorReplaceExecutionTestCaseWizardContextId"; //$NON-NLS-1$
 
     /** help context id for a wizard page */

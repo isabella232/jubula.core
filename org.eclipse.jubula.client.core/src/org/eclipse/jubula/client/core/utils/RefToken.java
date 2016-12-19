@@ -71,7 +71,7 @@ public class RefToken extends AbstractParamValueToken {
      */
     private boolean m_isTokenGuiBased;
 
-    /** node holding this reference */
+    /** node holding this reference - can be null, but then the RefToken is invalid */
     private IParameterInterfacePO m_currentNode;
     
     /**
@@ -216,6 +216,10 @@ public class RefToken extends AbstractParamValueToken {
      * @see IParamValueToken#validate(INodePO)
      */
     public ConvValidationState validate() {
+        if (m_currentNode == null) {
+            setErrorKey(MessageIDs.E_NO_REF_ALLOWED);
+            return ConvValidationState.invalid;
+        }
         ConvValidationState state = ConvValidationState.notSet;
         if (m_currentNode instanceof ISpecTestCasePO) {
             setErrorKey(MessageIDs.E_NO_REF_FOR_SPEC_TC);

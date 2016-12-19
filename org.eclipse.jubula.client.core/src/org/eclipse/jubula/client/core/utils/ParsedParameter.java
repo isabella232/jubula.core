@@ -56,8 +56,8 @@ public class ParsedParameter extends DepthFirstAdapter {
      * Constructor
      * 
      * @param isGuiSource Whether the parsed value comes from user input.
-     * @param paramNode The parameter node to which the 
-     *                  parsed parameter belongs.
+     * @param paramNode The parameter node to which the parsed parameter belongs.
+     *                  Can be null in the GUI context!
      * @param desc The parameter description to which the 
      *             parsed parameter belongs.
      */

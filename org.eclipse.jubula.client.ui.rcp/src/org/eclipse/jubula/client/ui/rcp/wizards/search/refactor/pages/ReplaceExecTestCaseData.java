@@ -20,9 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.swt.widgets.Combo;
 
 /**
@@ -35,6 +37,10 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
     /** The parameter description map between new as key and old as value. */
     private Map<IParamDescriptionPO, IParamDescriptionPO> m_newOldParamMap;
 
+    /** The (new unmatched parameter) => (its value) map */
+    private Map<IParamDescriptionPO, String> m_unmatchedValuesMap =
+            new HashMap<>();
+    
     /**
      * @param execTestCases The set of execution Test Cases, for which the
      *                      usage of the specification Test Case has to changed.
@@ -95,6 +101,22 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
         }
         setOldParameterNames(oldParamNames);
     }
+    
+    /**
+     * @param textFields The ParamDesc => Text map, will overwrite the current
+     */
+    public void setUnmatchedValuesMap(
+            Map<IParamDescriptionPO, CheckedParamText> textFields) {
+        m_unmatchedValuesMap.clear();
+        for (IParamDescriptionPO desc : textFields.keySet()) {
+            CheckedParamText text = textFields.get(desc);
+            if (text.isValid()) {
+                m_unmatchedValuesMap.put(desc, text.getText());
+            } else {
+                m_unmatchedValuesMap.put(desc, StringUtils.EMPTY);
+            }
+        }
+    }
 
     /**
      * Set the selected old parameters by a list of names. Use
@@ -127,6 +149,13 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
         return m_newOldParamMap;
     }
 
+    /**
+     * @return The map between unmatched new parameter descriptions as key and values.
+     */
+    public Map<IParamDescriptionPO, String> getUnmatchedValuesMap() {
+        return m_unmatchedValuesMap;
+    }
+    
     /**
      * @return True, if both the new and the old Test Case do not have parameters,
      *         otherwise false.
@@ -168,5 +197,5 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
         Collection<IParamDescriptionPO> values = m_newOldParamMap.values();
         return Collections.frequency(values, null) == values.size();
     }
-
+    
 }

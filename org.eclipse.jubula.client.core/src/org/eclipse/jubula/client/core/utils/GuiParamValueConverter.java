@@ -10,24 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
-import java.io.IOException;
-import java.io.PushbackReader;
-import java.io.StringReader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
-import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
-import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -36,14 +25,11 @@ import org.slf4j.LoggerFactory;
  */
 public class GuiParamValueConverter extends ParamValueConverter {
 
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(GuiParamValueConverter.class);
-    
     /**
      * hint: the string could be null.
      * @param guiString to convert
      * @param currentNode node with parameter for this parameterValue
+     *                      can be null, but in this case all node-related tokens will be invalid (currently RefToken)
      * @param desc param description associated with current string (parameter value)
      * @param validator to use for special validations
      */
@@ -67,27 +53,6 @@ public class GuiParamValueConverter extends ParamValueConverter {
     protected void init(String guiString) {
         setGuiString(guiString);
         createTokens();
-    }
-    
-    /** create tokens from gui string */
-    void createTokens() {
-        Parser parser = new Parser(new JubulaParameterLexer(new PushbackReader(
-                new StringReader(StringUtils.defaultString(getGuiString())))));
-        ParsedParameter parsedParam = 
-            new ParsedParameter(true, getCurrentNode(), getDesc());
-        try {
-            parser.parse().apply(parsedParam);
-            setTokens(parsedParam.getTokens());
-        } catch (LexerException e) {
-            createErrors(e, getGuiString());
-        } catch (ParserException e) {
-            createErrors(e, getGuiString());
-        } catch (IOException e) {
-            LOG.error(Messages.ParameterParsingErrorOccurred, e);
-            createErrors(e, getGuiString());
-        } catch (SemanticParsingException e) {
-            createErrors(e, getGuiString());
-        }
     }
     
     /**
@@ -149,5 +114,10 @@ public class GuiParamValueConverter extends ParamValueConverter {
             setModelString(builder.toString());
         }
         return super.getModelString();
+    }
+    
+    /** {@inheritDoc} */
+    public boolean isGUI() {
+        return true;
     }
 }

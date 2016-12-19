@@ -12,10 +12,10 @@ package org.eclipse.jubula.client.ui.rcp.wizards.search.refactor.pages;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.GeneralLabelProvider;
@@ -55,7 +55,7 @@ public class ParameterNamesMatchingWizardPage
     public ParameterNamesMatchingWizardPage(String pageName,
             ReplaceExecTestCaseData replaceExecTestCasesData) {
         super(pageName, Messages.ReplaceTCRWizard_matchParameterNames_title,
-                null);
+                null, ContextHelpIds.SEARCH_REFACTOR_REPLACE_EXECTC_WIZARD);
         m_replaceExecTestCasesData = replaceExecTestCasesData;
         setDescription(Messages
                 .ReplaceTCRWizard_matchParameterNames_multi_description);
@@ -164,25 +164,6 @@ public class ParameterNamesMatchingWizardPage
         Label label = new Label(parent, SWT.NONE);
         label.setText(text);
         return label;
-    }
-
-    /**
-     * Show help contend attached to wizard after selecting the ? icon,
-     * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
-     * {@inheritDoc}
-     */
-    public void performHelp() {
-        Plugin.getHelpSystem().displayHelp(ContextHelpIds
-                .SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD);
-    }
-
-    /**
-     * The wizard can be finished only at this last page.
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isPageComplete() {
-        return isCurrentPage();
     }
 
     /**

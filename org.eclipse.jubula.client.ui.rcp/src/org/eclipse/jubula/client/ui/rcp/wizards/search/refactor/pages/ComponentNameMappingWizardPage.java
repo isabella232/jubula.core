@@ -36,7 +36,6 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.ControlDecorator;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -80,7 +79,7 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
     public ComponentNameMappingWizardPage(String pageName,
             Set<IExecTestCasePO> execTCList) {
         super(pageName, Messages.ReplaceTCRWizard_matchComponentNames_title,
-                null);
+                null,  ContextHelpIds.SEARCH_REFACTOR_REPLACE_EXECTC_WIZARD);
         for (Iterator iterator = execTCList.iterator(); iterator.hasNext();) {
             IExecTestCasePO exec = (IExecTestCasePO) iterator.next();
             m_oldCompNamePairs.addAll(m_compNamesBP.getAllCompNamesPairs(exec));
@@ -353,13 +352,4 @@ public class ComponentNameMappingWizardPage extends AbstractMatchSelectionPage {
         setAdditionalInformation(messages);
     }
     
-    /**
-     * Show help contend attached to wizard after selecting the ? icon,
-     * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
-     * {@inheritDoc}
-     */
-    public void performHelp() {
-        Plugin.getHelpSystem().displayHelp(ContextHelpIds
-                .SEARCH_REFACTOR_REPLACE_EXECUTION_TEST_CASE_WIZARD);
-    }
 }

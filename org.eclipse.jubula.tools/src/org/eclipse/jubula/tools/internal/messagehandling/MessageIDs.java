@@ -210,6 +210,7 @@ public class MessageIDs {
     public static final Integer E_TOOLKIT_COMPSYS_ERROR = new Integer(3023);
     /** if problems did occur during conversion of a project */
     public static final Integer E_CONVERSION_ABORTED_ERROR = new Integer(3024);
+    
     // -- DATAMODEL ERROR IDs ----------------------------------------------   
     /** if a parameter does not exist */
     public static final Integer E_NO_PARAMETER = new Integer(4000);
@@ -498,6 +499,9 @@ public class MessageIDs {
     /** problems viewing task attributes */
     public static final Integer E_ERROR_VIEW_TASK_ATTRIBUTES = 
             new Integer(9523);
+    /** References are not allowed in the given context */
+    public static final Integer E_NO_REF_ALLOWED = new Integer(9524);
+
     
     
     // ---------------------------------------------------------------------
@@ -736,6 +740,7 @@ public class MessageIDs {
         messageMap.put(E_MOVE_TC_COMP_NAME_EXISTS, e, "ErrorMessage.MOVE_TC_COMP_NAME_EXISTS", new String [] {"ErrorDetail.MOVE_TC_COMP_NAME_EXISTS"}); //$NON-NLS-1$ //$NON-NLS-2$
         messageMap.put(E_MOVE_TC_COMP_TYPE_INCOMPATIBLE, e, "ErrorMessage.MOVE_TC_COMP_TYPE_INCOMPATIBLE", new String [] {"ErrorDetail.MOVE_TC_COMP_TYPE_INCOMPATIBLE"}); //$NON-NLS-1$ //$NON-NLS-2$
         messageMap.put(E_ERROR_VIEW_TASK_ATTRIBUTES, e, "ErrorMessage.VIEW_TASK_ATTRIBUTES", null); //$NON-NLS-1$
+        messageMap.put(E_NO_REF_ALLOWED, e, "ErrorMessage.NO_REF_ALLOWED", null); //$NON-NLS-1$
     }
     
     /**

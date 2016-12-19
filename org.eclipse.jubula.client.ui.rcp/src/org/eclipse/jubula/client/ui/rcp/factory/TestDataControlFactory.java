@@ -56,7 +56,7 @@ public class TestDataControlFactory {
     /**
      * values available for Boolean parameters
      */
-    private static final String[] BOOLEAN_VALUES = 
+    public static final String[] BOOLEAN_VALUES = 
         new String[]{"true", "false"}; //$NON-NLS-1$ //$NON-NLS-2$
 
 

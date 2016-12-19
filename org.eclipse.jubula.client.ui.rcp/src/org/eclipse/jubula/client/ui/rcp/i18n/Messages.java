@@ -713,6 +713,11 @@ public class Messages extends NLS {
     public static String ReplaceTCRWizard_choosePage_multi_description;
     public static String ReplaceTCRWizard_ComponentNameMapping_newTC;
     public static String ReplaceTCRWizard_ComponentNameMapping_oldTC;
+    public static String ReplaceTCRWizard_fillParameters_title;
+    public static String ReplaceTCRWizard_fillParameters_multi_description;
+    public static String ReplaceTCRWizard_fillParameters_newParameter;
+    public static String ReplaceTCRWizard_fillParameters_value;
+    public static String ReplaceTCRWizard_fillParameters_invalidData;
     public static String ReplaceTCRWizard_matchComponentNames_title;
     public static String ReplaceTCRWizard_matchComponentNames_multi_description;
     public static String ReplaceTCRWizard_matchComponentNames_oldInterface;

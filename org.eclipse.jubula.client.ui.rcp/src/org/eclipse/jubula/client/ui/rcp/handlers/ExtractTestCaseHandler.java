@@ -30,11 +30,12 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
-import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.client.ui.rcp.actions.TransactionWrapper;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
@@ -105,6 +106,121 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
                 || node instanceof ITestSuitePO,
                 Messages.ExtractTestCaseOperateISpecTestCasePO);
     }
+    
+    /**
+     * The class execution the extraction
+     * @author BREDEX GmbH
+     */
+    private static class ExtractOperation implements ITransaction {
+        
+        /** The objects to lock */
+        private List<IPersistentObject> m_lock = null;
+        
+        /** The extracted nodes */
+        private List<INodePO> m_modNodes;
+
+        /** The Spec TC being edited */
+        private INodePO m_owner;
+        
+        /** The new Exec TC */
+        private IExecTestCasePO m_exec;
+        
+        /** The name of the new Spec TC */
+        private String m_specName;
+        
+        /** Maper used to handle param names */
+        private ParamNameBPDecorator m_mapper = new ParamNameBPDecorator(
+                ParamNameBP.getInstance());
+        
+        /** The Spec Obj Cont */
+        private ISpecObjContPO m_cont = GeneralStorage.getInstance().
+                getProject().getSpecObjCont();
+        
+        /**
+         * Constructor
+         * @param owner the Spec TC containing the extracted nodes 
+         * @param modNodes the extracted nodes (they must have the same parent)
+         * @param name the name of the new Spec TC
+         */
+        public ExtractOperation(INodePO owner, List<INodePO> modNodes,
+                String name) {
+            m_modNodes = modNodes;
+            m_owner = owner;
+            m_specName = name;
+        }
+        
+        /** {@inheritDoc} */
+        public Collection<? extends IPersistentObject> getToLock() {
+            m_lock = new ArrayList<>(2);
+            m_lock.add(m_cont);
+            m_lock.add(m_owner);
+            return m_lock;
+        }
+
+        /** {@inheritDoc} */
+        public Collection<? extends IPersistentObject> getToRefresh() {
+            return m_lock;
+        }
+        
+        /** {@inheritDoc} */
+        public Collection<? extends IPersistentObject> getToMerge() {
+            List<IPersistentObject> toMerge = new ArrayList<>();
+            toMerge.add(m_exec.getSpecTestCase());
+            return toMerge;
+        }
+
+        /** {@inheritDoc} */
+        public void run(EntityManager sess)
+                throws PMException {
+            List<INodePO> nodesToRef = new ArrayList<INodePO>();
+            getModNodesFromCurrentSession(sess, nodesToRef);
+            m_exec = TreeOpsBP.extractTestCase(m_specName, m_owner, nodesToRef,
+                            sess, m_mapper);
+            final ISpecTestCasePO newSpecTc = m_exec.getSpecTestCase();
+            registerParamNamesToSave(newSpecTc, m_mapper);
+            m_mapper.persist(sess, GeneralStorage.getInstance().getProject()
+                    .getId());
+            NativeSQLUtils.addNodeAFFECTS(sess, m_exec.getSpecTestCase(),
+                    m_cont);
+        }
+        
+        /**
+         * Loads the moved nodes to the session
+         * @param s session used for refactoring
+         * @param nodesToRef nodes to refactor from current session
+         */
+        private void getModNodesFromCurrentSession(EntityManager s,
+                List<INodePO> nodesToRef) {
+            if (m_modNodes.isEmpty()) {
+                return;
+            }
+            INodePO par = m_modNodes.get(0).getParentNode();
+            par = s.find(par.getClass(), par.getId());
+            // we have to set the children's parent node...
+            par.getUnmodifiableNodeList();
+            for (INodePO node : m_modNodes) {
+                INodePO object = s.find(node.getClass(), node.getId());
+                if (object != null) {
+                    nodesToRef.add(object);
+                }
+            }
+        }
+        
+        /**
+         * @return the used param name mapper
+         */
+        public ParamNameBPDecorator getMapper() {
+            return m_mapper;
+        }
+        
+        /**
+         * @return the new exec node
+         */
+        public IExecTestCasePO getExec() {
+            return m_exec;
+        }
+
+    }
 
     /**
      * performs the extraction
@@ -133,12 +249,23 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
             return null;
         }
         
-        IExecTestCasePO exec = persistExtraction(node, newTcName, modNodes);
+        ExtractOperation op = new ExtractOperation(node, modNodes,
+                newTcName);
+
+        boolean succ = TransactionWrapper.executeOperation(op);
+        if (!succ) {
+            return null;
+        }
+        op.getMapper().updateStandardMapperAndCleanup(
+                node.getParentProjectId());
+
+        IExecTestCasePO newExec = op.getExec();
+        
         DataEventDispatcher.getInstance().fireDataChangedListener(node,
                 DataState.StructureModified, UpdateState.all);
         DataEventDispatcher.getInstance().fireDataChangedListener(
-                exec, DataState.Added, UpdateState.all);
-        ISpecTestCasePO newSpecTC = exec.getSpecTestCase();
+                newExec, DataState.Added, UpdateState.all);
+        ISpecTestCasePO newSpecTC = newExec.getSpecTestCase();
         newSpecTC = GeneralStorage.getInstance().getMasterSession().find(
                 newSpecTC.getClass(), newSpecTC.getId());
         DataEventDispatcher.getInstance().fireDataChangedListener(
@@ -148,91 +275,6 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
             tcb.getTreeViewer().setSelection(
                     new StructuredSelection(newSpecTC), true);
         }
-        return exec;
-    }
-
-    /**
-     * @param newTcName
-     *            the name of the new SpecTestCase
-     * @param ownerNode
-     *            the edited {@link INodePO} from which to extract
-     * @param modNodes
-     *            nodes to move from the old tc to the new tc
-     * @return result of extraction
-     */
-    private IExecTestCasePO persistExtraction(final INodePO ownerNode,
-        final String newTcName, final List<INodePO> modNodes) {
-        
-        final ParamNameBPDecorator mapper = new ParamNameBPDecorator(
-                ParamNameBP.getInstance());
-        // circumventing the final declaration
-        final IExecTestCasePO[] lol = new IExecTestCasePO[1];
-        
-        final List<IPersistentObject> toLock = new ArrayList<>(2);
-        final IPersistentObject cont = GeneralStorage.getInstance().
-                getProject().getSpecObjCont();
-        toLock.add(cont);
-        toLock.add(ownerNode);
-
-        boolean succ = TransactionWrapper.executeOperation(new ITransaction() {
-
-            /** {@inheritDoc} */
-            public Collection<? extends IPersistentObject> getToLock() {
-                return toLock;
-            }
-
-            /** {@inheritDoc} */
-            public Collection<? extends IPersistentObject> getToRefresh() {
-                List<IPersistentObject> toRefr = new ArrayList<>(toLock);
-                toRefr.addAll(lol[0].getSpecTestCase().
-                        getUnmodifiableNodeList());
-                return toRefr;
-            }
-
-            /** {@inheritDoc} */
-            public void run(EntityManager sess)
-                    throws PMException {
-                List<INodePO> nodesToRef = 
-                        new ArrayList<INodePO>();
-                getModNodesFromCurrentSession(sess, nodesToRef);
-                lol[0] = TreeOpsBP
-                        .extractTestCase(newTcName, ownerNode, nodesToRef,
-                                sess, mapper);
-                final ISpecTestCasePO newSpecTc = lol[0].getSpecTestCase();
-                registerParamNamesToSave(newSpecTc, mapper);
-                mapper.persist(sess, GeneralStorage.getInstance().getProject()
-                        .getId());
-                NativeSQLUtils.addNodeAFFECTS(sess, lol[0].getSpecTestCase(),
-                        cont);
-            }
-            
-            /**
-             * Loads the moved nodes to the session
-             * @param s session used for refactoring
-             * @param nodesToRef nodes to refactor from current session
-             */
-            private void getModNodesFromCurrentSession(EntityManager s,
-                    List<INodePO> nodesToRef) {
-                if (modNodes.isEmpty()) {
-                    return;
-                }
-                INodePO par = modNodes.get(0).getParentNode();
-                par = s.find(par.getClass(), par.getId());
-                // we have to set the children's parent node...
-                par.getUnmodifiableNodeList();
-                for (INodePO node : modNodes) {
-                    INodePO object = s.find(node.getClass(), node.getId());
-                    if (object != null) {
-                        nodesToRef.add(object);
-                    }
-                }
-            }
-            
-        });
-        if (!succ) {
-            return null;
-        }
-        mapper.updateStandardMapperAndCleanup(ownerNode.getParentProjectId());
-        return lol[0];
+        return newExec;
     }
 }

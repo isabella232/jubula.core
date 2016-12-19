@@ -10,24 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
-import java.io.IOException;
-import java.io.PushbackReader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
-import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
-import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
-import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
-import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -35,10 +24,6 @@ import org.slf4j.LoggerFactory;
  * @created 31.10.2007
  */
 public class ModelParamValueConverter extends ParamValueConverter {
-    
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(ModelParamValueConverter.class);
     
     /**
      * hint: the string could be null.
@@ -76,30 +61,6 @@ public class ModelParamValueConverter extends ParamValueConverter {
             }
         }
         return super.getGuiString();
-    }
-    
-    /**
-     * @{inheritDoc}
-     */
-    void createTokens() {
-        Parser parser = new Parser(new JubulaParameterLexer(new PushbackReader(
-                new StringReader(StringUtils.defaultString(
-                        getModelString())))));
-        ParsedParameter parsedParam = 
-            new ParsedParameter(false, getCurrentNode(), getDesc());
-        try {
-            parser.parse().apply(parsedParam);
-            setTokens(parsedParam.getTokens());
-        } catch (LexerException e) {
-            createErrors(e, getModelString());
-        } catch (ParserException e) {
-            createErrors(e, getModelString());
-        } catch (IOException e) {
-            LOG.error(Messages.ParameterParsingErrorOccurred, e);
-            createErrors(e, getModelString());
-        } catch (SemanticParsingException e) {
-            createErrors(e, getModelString());
-        }
     }
 
     /** {@inheritDoc}
@@ -198,5 +159,10 @@ public class ModelParamValueConverter extends ParamValueConverter {
     private void updateStrings() {
         updateModelString();
         setGuiString(null);
+    }
+    
+    /** {@inheritDoc} */
+    public boolean isGUI() {
+        return false;
     }
 }

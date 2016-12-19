@@ -10,20 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
-import java.io.IOException;
-import java.io.PushbackReader;
-import java.io.StringReader;
 import java.util.List;
 import java.util.Locale;
-
-import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
-import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
-import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
-import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Creates tokens with our self defined sablecc lexer. There is only validation
@@ -34,10 +22,6 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  */
 public class SimpleStringConverter extends ParamValueConverter {
-
-    /** the logger */
-    private static final Logger LOG = LoggerFactory
-            .getLogger(SimpleStringConverter.class);
 
     /**
      * actual state
@@ -70,27 +54,6 @@ public class SimpleStringConverter extends ParamValueConverter {
     protected void init(String guiString) {
         setGuiString(guiString);
         createTokens();
-    }
-
-    /** create tokens from gui string */
-    void createTokens() {
-        Parser parser = new Parser(new JubulaParameterLexer(new PushbackReader(
-                new StringReader(StringUtils.defaultString(getGuiString())))));
-        ParsedParameter parsedParam = new ParsedParameter(true, null, null);
-        try {
-            parser.parse().apply(parsedParam);
-            List<IParamValueToken> liste = parsedParam.getTokens();
-            setTokens(liste);
-        } catch (LexerException e) {
-            createErrors(e, getGuiString());
-        } catch (ParserException e) {
-            createErrors(e, getGuiString());
-        } catch (IOException e) {
-            LOG.error(Messages.ParameterParsingErrorOccurred, e);
-            createErrors(e, getGuiString());
-        } catch (SemanticParsingException e) {
-            createErrors(e, getGuiString());
-        }
     }
 
     /**
@@ -131,5 +94,10 @@ public class SimpleStringConverter extends ParamValueConverter {
      */
     public String getExecutionString(List<ExecObject> stack, Locale locale) {
         return null;
+    }
+    
+    /** {@inheritDoc} */
+    public boolean isGUI() {
+        return true;
     }
 }

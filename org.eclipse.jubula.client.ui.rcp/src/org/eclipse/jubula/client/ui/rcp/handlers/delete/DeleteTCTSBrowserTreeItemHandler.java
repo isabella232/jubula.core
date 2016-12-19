@@ -176,14 +176,18 @@ public class DeleteTCTSBrowserTreeItemHandler
             }
             
             /** {@inheritDoc} */
-            public Collection<? extends IPersistentObject>
-                getToRefresh() {
+            public Collection<? extends IPersistentObject> getToRefresh() {
                 return toRefresh;
             }
 
             /** {@inheritDoc} */
             public void run(EntityManager sess) {
                 NativeSQLUtils.deleteFromTCTSTreeAFFECTS(sess, topNodes);
+            }
+
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToMerge() {
+                return null;
             }
         
         });

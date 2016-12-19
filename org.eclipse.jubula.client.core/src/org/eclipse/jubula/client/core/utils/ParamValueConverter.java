@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.io.IOException;
+import java.io.PushbackReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,16 +20,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.gen.parser.parameter.lexer.LexerException;
 import org.eclipse.jubula.client.core.gen.parser.parameter.node.EOF;
+import org.eclipse.jubula.client.core.gen.parser.parameter.parser.Parser;
 import org.eclipse.jubula.client.core.gen.parser.parameter.parser.ParserException;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.parser.parameter.JubulaParameterLexer;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 
@@ -38,6 +45,10 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
  */
 public abstract class ParamValueConverter {
 
+    /** the logger */
+    private static final Logger LOG = LoggerFactory.getLogger(
+            ParamValueConverter.class);
+    
     /** 
      * All error codes that should be indicated to the user as "recoverable".
      * Essentially, this means that the parameter text is not currently valid,
@@ -75,16 +86,16 @@ public abstract class ParamValueConverter {
     private List<TokenError> m_errors = new ArrayList<TokenError>(1);
 
     /**
-     * <code>m_currentNode</code>node contains the parameter with this parameter value
+     * <code>m_currentNode</code>node contains the parameter with this parameter value - can be null for global context
      */
-    private IParameterInterfacePO m_currentNode;
+    private IParameterInterfacePO m_currentNode = null;
 
     /** param description associated with current gui- or model string */
-    private IParamDescriptionPO m_desc;
+    private IParamDescriptionPO m_desc = null;
     
     /** validator for special validations */
     private IParamValueValidator m_validator;
-   
+    
     /**
      * describes the state of a single token
      */
@@ -101,14 +112,16 @@ public abstract class ParamValueConverter {
 
     
     /**
-     * @param currentNode node with parameter for this parameterValue
+     * @param currentNode node with parameter for this parameterValue - can be null for global context
      * @param desc param description associated with current string (parameter value)
      * @param validator to use for special validations
      */
     public ParamValueConverter(IParameterInterfacePO currentNode,
         IParamDescriptionPO desc, IParamValueValidator validator)  {
-        Validate.notNull(currentNode, 
-            Messages.NodeForGivenParameterValueMustNotBeNull);
+        if (!isGUI()) {
+            Validate.notNull(currentNode, 
+                    Messages.NodeForGivenParameterValueMustNotBeNull);
+        }
         m_currentNode = currentNode;
         m_desc = desc;
         m_validator = validator;
@@ -190,11 +203,30 @@ public abstract class ParamValueConverter {
     }
 
     /**
-     * parses the GUI string and separates it in single tokens
-     * 
+     * parses the provided string and separates it in single tokens
      */
-    abstract void createTokens();
-
+    void createTokens() {
+        String toParse = isGUI() ? getGuiString() : getModelString();
+        Parser parser = new Parser(new JubulaParameterLexer(new PushbackReader(
+                new StringReader(StringUtils.defaultString(toParse)))));
+        ParsedParameter parsedParam = new ParsedParameter(isGUI(),
+                getCurrentNode(), getDesc());
+        try {
+            parser.parse().apply(parsedParam);
+            List<IParamValueToken> liste = parsedParam.getTokens();
+            setTokens(liste);
+        } catch (LexerException e) {
+            createErrors(e, getGuiString());
+        } catch (ParserException e) {
+            createErrors(e, getGuiString());
+        } catch (IOException e) {
+            LOG.error(Messages.ParameterParsingErrorOccurred, e);
+            createErrors(e, getGuiString());
+        } catch (SemanticParsingException e) {
+            createErrors(e, getGuiString());
+        }
+    }
+    
     /** calls the validation for each token */
     abstract void validateSingleTokens();
 
@@ -427,5 +459,10 @@ public abstract class ParamValueConverter {
             addError(tokenError);
         }
     }
-   
+    
+    /**
+     * @return whether we are in GUI context
+     */
+    abstract boolean isGUI();
+
 }

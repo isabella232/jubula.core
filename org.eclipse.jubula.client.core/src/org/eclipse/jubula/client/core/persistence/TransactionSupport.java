@@ -25,6 +25,7 @@ import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
  * A class supporting transactions with fully integrated Session and Exception handling
  * The user does not receive any special report on the error, but the causing Exception is
  * properly displayed.
+ * No exception handling or wrapping is done by this class
  * @author BREDEX GmbH
  *
  */
@@ -46,20 +47,22 @@ public class TransactionSupport {
         public Collection<? extends IPersistentObject> getToLock();
 
         /**
-         * Sets the set of objects to be refreshed - these objects do not have
-         *     to be managed anywhere or can be managed by any session
+         * Sets the set of objects to be refreshed in the master session
          * @return the collection of objects
          */
         public Collection<? extends IPersistentObject> getToRefresh();
         
         /**
+         * @return the collection of objects to be merged into the master session
+         */
+        public Collection<? extends IPersistentObject> getToMerge();
+        
+        /**
          * Executes the operations
          * @param sess the session to use
-         * @throws PMException
-         * @throws ProjectDeletedException
+         * @throws Exception
          */
-        public abstract void run(EntityManager sess) throws PMException,
-            ProjectDeletedException;
+        public abstract void run(EntityManager sess) throws Exception;
     }
     
     /**
@@ -69,8 +72,7 @@ public class TransactionSupport {
      * @throws PMException
      * @throws ProjectDeletedException
      */
-    public static void transact(ITransaction op)
-            throws PMException, ProjectDeletedException, PersistenceException {
+    public static void transact(ITransaction op) throws Exception {
         EntityManager sess = null;
         Persistor per = Persistor.instance();
         boolean success = false;
@@ -84,6 +86,7 @@ public class TransactionSupport {
         } finally {
             per.dropSession(sess);
         }
+        mergeMasterSession(op);
         refreshMasterSession(op);
     }
     
@@ -109,6 +112,27 @@ public class TransactionSupport {
                     // to set the parents of the children...
                     ((INodePO) po).getUnmodifiableNodeList();
                 }
+            }
+        } catch (Exception e) {
+            throw new PMRefreshFailedException(e);
+        }
+    }
+    
+    /**
+     * Merges objects of the master session
+     * @param op the objects - these don't need to be managed
+     */
+    private static void mergeMasterSession(ITransaction op)
+        throws PMRefreshFailedException {
+        Collection<? extends IPersistentObject> toMerge = op.getToMerge();
+        if (toMerge == null || toMerge.isEmpty()) {
+            return;
+        }
+        try {
+            EntityManager master = GeneralStorage.getInstance().
+                    getMasterSession();
+            for (IPersistentObject po : toMerge) {
+                master.merge(po);
             }
         } catch (Exception e) {
             throw new PMRefreshFailedException(e);

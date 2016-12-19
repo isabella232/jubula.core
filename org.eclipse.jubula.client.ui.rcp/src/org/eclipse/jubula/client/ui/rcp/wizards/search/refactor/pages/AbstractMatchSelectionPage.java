@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -45,18 +46,24 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
 
     /** The text area for additional information. */
     private Text m_infoText;
+    
+    /** The help id associated to this page */
+    private String m_helpId;
 
     /**
      * @param pageName The page name.
      * @param title The title of the page.
      * @param titleImage The image descriptor for the title of this wizard page,
      *   or <code>null</code> if none.
+     * @param helpId the HelpId of the page
      */
     public AbstractMatchSelectionPage(
             String pageName,
             String title,
-            ImageDescriptor titleImage) {
+            ImageDescriptor titleImage,
+            String helpId) {
         super(title, title, titleImage);
+        m_helpId = helpId;
     }
 
     /**
@@ -183,4 +190,13 @@ public abstract class AbstractMatchSelectionPage extends WizardPage {
      */
     protected abstract void createSelectionTable(Composite parent);
 
+    /**
+     * Show help contend attached to wizard after selecting the ? icon,
+     * or pressing F1 on Windows / Shift+F1 on Linux / Help on MAC.
+     * {@inheritDoc}
+     */
+    public void performHelp() {
+        Plugin.getHelpSystem().displayHelp(m_helpId);
+    }
+    
 }

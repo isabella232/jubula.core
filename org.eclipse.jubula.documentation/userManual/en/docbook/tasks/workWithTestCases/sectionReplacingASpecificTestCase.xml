@@ -163,7 +163,8 @@
           <para>
             choose to leave any combo boxes empty. In this case, no
             match for that parameter will take place, and the new
-            parameter will be used.
+            parameter will be used. You can set a default value for this parameter
+            on the next page.
           </para>
         </listitem>
         <listitem>
@@ -172,19 +173,32 @@
             there is no compatible type for matching in the existing
             Test Case, or because the existing Test Case had no
             referenced parameters. In such cases, the new parameter
-            will be used after the replace.
+            will be used after the replace. You can set a default value for this parameter
+            on the next page.
           </para>
         </listitem>
       </itemizedlist>
       <para role="warning">
-        For any non-matched (or non-matchable) parameters,
-        the new parameters from the new Test Case will be used. This
-        may result in incomplete test data for your tests.
+        For any non-matched (or non-matchable) parameters, you can
+        set default values on the next page.
       </para>
     </listitem>
     <listitem>
       <para>
         Once you have finished matching the parameters, press
+        ”<emphasis>Next</emphasis>” to continue to the next page.
+      </para>
+    </listitem>
+    <listitem>
+    	<para>
+    		On the last page you can set default values to those parameters which
+    		were unmatched on the previous page. These default values cannot contain
+    		references, but all other data types are allowed (e.g. variables or functions).
+    	</para>
+    </listitem>
+    <listitem>
+      <para>
+        Once you have finished setting the default values, press
         ”<emphasis>Finish</emphasis>” to perform the replace.
       </para>
     </listitem>

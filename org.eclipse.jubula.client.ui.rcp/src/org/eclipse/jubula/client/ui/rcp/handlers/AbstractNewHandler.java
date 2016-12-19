@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -19,10 +25,14 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
-import org.eclipse.jubula.client.ui.rcp.actions.NodeAdder;
+import org.eclipse.jubula.client.ui.rcp.actions.TransactionWrapper;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -74,24 +84,51 @@ public abstract class AbstractNewHandler extends AbstractHandler {
      * @param created the created node
      * @param ev the Event object
      */
-    public void addCreatedNode(INodePO created, ExecutionEvent ev) {
+    public void addCreatedNode(final INodePO created, ExecutionEvent ev) {
         INodePO parent = getParentNode(ev);
         IWorkbenchPart activePart = HandlerUtil.getActivePart(ev);
 
-        NodeAdder.addNode(created, parent);
+        final List<IPersistentObject> toLock = new ArrayList<>();
+        IProjectPO pr = GeneralStorage.getInstance().getProject();
+        final IPersistentObject par;
+        if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
+            par = pr.getSpecObjCont();
+        } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
+            par = pr.getExecObjCont();
+        } else {
+            par = parent;
+        }
+        toLock.add(par);
+        
+        TransactionWrapper.executeOperation(new ITransaction() {
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToLock() {
+                return toLock;
+            }
+
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToRefresh() {
+                return toLock;
+            }
+
+            /** {@inheritDoc} */
+            public void run(EntityManager sess) {
+                sess.persist(created);
+                NativeSQLUtils.addNodeAFFECTS(sess, created, par);
+            }
+
+            /** {@inheritDoc} */
+            public Collection<? extends IPersistentObject> getToMerge() {
+                ArrayList<IPersistentObject> toMerge = new ArrayList<>();
+                toMerge.add(created);
+                return toMerge;
+            }
+        });
         
         INodePO master = GeneralStorage.getInstance().getMasterSession().
                 find(created.getClass(), created.getId());
         DataEventDispatcher.getInstance().fireDataChangedListener(
                     master, DataState.Added, UpdateState.all);
-        /*TreeViewer tr = null;
-        if (activePart instanceof TestCaseBrowser) {
-            tr = ((TestCaseBrowser) activePart).getTreeViewer();
-        } else if (activePart instanceof TestSuiteBrowser) {
-            tr = ((TestSuiteBrowser) activePart).getTreeViewer();
-        }
-        if (tr != null) {
-            tr.setSelection(new StructuredSelection(master), true);
-        }*/
     }
+    
 }
