@@ -1714,13 +1714,6 @@ public abstract class AbstractDataSetPage extends Page
         
         IParameterInterfacePO paramInterfacePO = 
             getSelectedParamInterfaceObj(selection);
-        if (getParamInterfaceObj() != null
-                && getParamInterfaceObj() == paramInterfacePO) {
-            // identity check is ok here because node of SpecBrowser and
-            // SpecEditor are equal but can have different data if the
-            // Editor node has been edited!
-            return;
-        }
         
         setParamInterfaceObj(paramInterfacePO);
         updateView();
