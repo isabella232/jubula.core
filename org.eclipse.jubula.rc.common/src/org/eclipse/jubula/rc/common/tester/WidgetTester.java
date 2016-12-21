@@ -54,7 +54,7 @@ public class WidgetTester extends AbstractUITester {
      * Casts the IComponentAdapter to an IWidgetAdapter for better access
      * @return The widgetAdapter
      */
-    private IWidgetComponent getWidgetAdapter() {
+    protected IWidgetComponent getWidgetAdapter() {
         return (IWidgetComponent) getComponent();
     }
     

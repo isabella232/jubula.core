@@ -26,6 +26,8 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.AbstractTableTester;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IWidgetComponent;
+import org.eclipse.jubula.rc.swing.tester.adapter.JComponentAdapter;
 import org.eclipse.jubula.rc.swing.utils.SwingUtils;
 /**
  * Toolkit specific commands for the <code>JTable</code>
@@ -181,4 +183,13 @@ public class JTableTester extends AbstractTableTester {
         StepExecutionException.throwUnsupportedAction();
         return null;
     }
+
+    @Override
+    protected IWidgetComponent getWidgetAdapter() {
+        if (getRobot().isMouseInComponent(getTable().getTableHeader())) {
+            return new JComponentAdapter(getTable().getTableHeader());
+        }
+        return (IWidgetComponent) getComponent();
+    }
+
 }
