@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.TransferData;
 
 /**
@@ -45,13 +46,19 @@ public class TestExecDropTargetListener extends ViewerDropAdapter {
      */
     @SuppressWarnings("unchecked")
     public boolean performDrop(Object data) {
+        DropTargetEvent ev = getCurrentEvent();
+        if (FileTransfer.getInstance().isSupportedType(ev.currentDataType)
+                && ev.data instanceof String[]) {
+            DropFileOperation.dropFiles((String[]) ev.data);
+            return true;
+        }
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
         IPersistentObject target = (IPersistentObject)getCurrentTarget();
         List <INodePO> nodesToBeMoved = transfer.getSelection().toList();
         if (!TSBrowserDndSupport.moveNodes(nodesToBeMoved, target)) {
             return false;
         }
-        LocalSelectionTransfer.getInstance().setSelection(null);
+        transfer.setSelection(null);
         return true;
     }
 
@@ -60,6 +67,10 @@ public class TestExecDropTargetListener extends ViewerDropAdapter {
      */
     public boolean validateDrop(Object target, int operation,
         TransferData transferType) {
+        if (FileTransfer.getInstance().isSupportedType(
+                getCurrentEvent().currentDataType)) {
+            return true;
+        }
         if (LocalSelectionTransfer.getInstance().getSelection() == null) {
             return false;
         }

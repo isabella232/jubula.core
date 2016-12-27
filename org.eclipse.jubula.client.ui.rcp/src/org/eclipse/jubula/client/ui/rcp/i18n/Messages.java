@@ -133,6 +133,7 @@ public class Messages extends NLS {
     public static String AUTSettingWizardPageToolkit;
     public static String AUTSettingWizardPageUpperLabel;
     public static String AUTSettingWizardPageUpToolTip;
+    public static String Bytes;
     public static String CannotFindReusableProjects;
     public static String CannotOpenThePerspective;
     public static String CannotRemoveLastProjectDialogTitle;
@@ -170,6 +171,8 @@ public class Messages extends NLS {
     public static String ComponentCouldNotBeFoundInRunningAut;
     public static String ConditionGUIPropertySourceName;
     public static String ConditionGUIPropertySourceNegate;
+    public static String ConfirmImportDialogTitle;
+    public static String ConfirmImportDialogText;
     public static String ContainerGUIPropertySourceName;
     public static String DoWhileGUIPropertySourceName;
     public static String WhileDoGUIPropertySourceName;

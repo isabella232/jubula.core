@@ -65,6 +65,7 @@ import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -116,7 +117,9 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
             .getInstance()};
         getTreeViewer().addDragSupport(ops, transfers,
             new TreeViewerContainerDragSourceListener(getTreeViewer()));
-        getTreeViewer().addDropSupport(ops, transfers,
+        Transfer[] dropTr = new Transfer[] {LocalSelectionTransfer
+                .getInstance(), FileTransfer.getInstance()};
+        getTreeViewer().addDropSupport(ops, dropTr,
             new TestExecDropTargetListener(this));
         
         DataEventDispatcher ded = DataEventDispatcher.getInstance();
