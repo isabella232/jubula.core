@@ -200,7 +200,9 @@ public class OMEditorBP {
      * @param assoc the association
      */
     private void removeCompNames(IObjectMappingAssoziationPO assoc) {
-        for (String guid : assoc.getLogicalNames()) {
+        // making a copy to avoid Concurrent Modification
+        List<String> guids = new ArrayList<>(assoc.getLogicalNames());
+        for (String guid : guids) {
             getEditor().getCompNameCache().changeReuse(assoc, guid, null);
         }
     }
