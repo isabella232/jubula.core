@@ -10,10 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.actions;
 
+import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
+import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.PMObjectDeletedException;
+import org.eclipse.jubula.client.core.persistence.PMRefreshFailedException;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
-import org.eclipse.jubula.client.core.persistence.PMException;
-import org.eclipse.jubula.client.core.persistence.PMRefreshFailedException;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
@@ -44,6 +46,8 @@ public class TransactionWrapper {
             return true;
         } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleProjectDeletedException();
+        } catch (PMAlreadyLockedException | PMObjectDeletedException e) {
+            PMExceptionHandler.handlePMExceptionForMasterSession(e);
         } catch (PMException e) {
             ErrorHandlingUtil.createMessageDialogException(e.getCause());
         } catch (Exception e) {
