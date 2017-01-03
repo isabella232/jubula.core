@@ -18,7 +18,8 @@ import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
-import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -66,8 +67,9 @@ public class NodeNameViewerSorter extends ViewerSorter {
         return o instanceof IExecTestCasePO
                 || o instanceof ICapPO
                 || o instanceof IRefTestSuitePO
-                || o instanceof IConditionalStatementPO
-                || o instanceof IAbstractContainerPO;
+                || o instanceof IControllerPO
+                || o instanceof IAbstractContainerPO
+                || o instanceof ICommentPO;
     }
 
     /**
