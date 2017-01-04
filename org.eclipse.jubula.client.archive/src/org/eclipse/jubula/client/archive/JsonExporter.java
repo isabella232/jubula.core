@@ -678,7 +678,7 @@ public class JsonExporter {
     private void fillIterateStatment(IterateDTO iterateDTO,
             IIteratePO iteratePO) {
         NodeDTO container = new NodeDTO(iteratePO.getDoBranch());
-        fillContainer(iterateDTO, iteratePO.getDoBranch());
+        fillContainer(container, iteratePO.getDoBranch());
         iterateDTO.addNode(container);
         addParamDesc(iterateDTO, iteratePO);
         

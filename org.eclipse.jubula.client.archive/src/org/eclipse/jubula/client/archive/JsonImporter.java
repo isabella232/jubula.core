@@ -486,15 +486,6 @@ public class JsonImporter {
         con.setDescription(dto.getDescription());
         
         List<NodeDTO> nodes = dto.getNodes();
-        for (NodeDTO node : nodes) {
-            ImportExportUtil.checkCancel(m_monitor);
-            if (node instanceof CapDTO) {
-                con.addNode(createCap(proj, (CapDTO)node, newGuid));
-            } else if (node instanceof RefTestCaseDTO) {
-                con.addNode(createExecTestCase(
-                    proj, (RefTestCaseDTO)node, newGuid));
-            }
-        }
         
         if (nodes != null && nodes.size() == 3) {
             fillContainer(nodes.get(0), con.getCondition(), proj, newGuid);
@@ -1007,15 +998,6 @@ public class JsonImporter {
         whilePO.setDescription(dto.getDescription());
 
         List<NodeDTO> nodes = dto.getNodes();
-        for (NodeDTO node : nodes) {
-            ImportExportUtil.checkCancel(m_monitor);
-            if (node instanceof CapDTO) {
-                whilePO.addNode(createCap(proj, (CapDTO) node, assignNewGuid));
-            } else if (node instanceof RefTestCaseDTO) {
-                whilePO.addNode(createExecTestCase(proj, (RefTestCaseDTO) node,
-                        assignNewGuid));
-            }
-        }
         if (nodes != null && nodes.size() == 2) {
             if (dto.isDoWhile()) {
                 fillContainer(nodes.get(0), whilePO.getDoBranch(), proj,
@@ -1058,8 +1040,11 @@ public class JsonImporter {
         iteratePO.setDataManager(createTDManager(iteratePO, dto.getTDManager(),
                 assignNewGuid));
         
-        fillContainer(dto, iteratePO.getDoBranch(), proj,
+        List<NodeDTO> nodes = dto.getNodes();
+        if (nodes != null && nodes.size() == 1) {
+            fillContainer(nodes.get(0), iteratePO.getDoBranch(), proj,
                 assignNewGuid);
+        }
         return iteratePO;
     }
 
