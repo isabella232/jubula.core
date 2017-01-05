@@ -245,8 +245,11 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             String prefix = StringConstants.EMPTY;
             String name = null;
             INodePO node = (INodePO)element;
-            if (!checkActivation((INodePO)element)) {
+            if (!checkActivation(node)) {
                 prefix = INACTIVE_PREFIX;
+                if (!node.isActive() && !isParentActive(node)) {
+                    prefix += INACTIVE_PREFIX;
+                }
             }
             
             if (node instanceof IRefTestSuitePO) {
@@ -411,13 +414,22 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     
     /**
      * @param node to be checked
-     * @return <code>false</code> if one of the parents is inactive.
-     *          Otherwise return <code>false</code>.
+     * @return <code>false</code> if the node or one of the parents is inactive.
+     *          Otherwise return <code>true</code>.
      */
     private static boolean checkActivation(INodePO node) {
         if (!node.isActive()) {
             return false;
         }
+        return isParentActive(node);
+    }
+
+    /**
+     * @param node to be checked
+     * @return <code>false</code> if one of the parents is inactive.
+     *          Otherwise return <code>true</code>.
+     */
+    private static boolean isParentActive(INodePO node) {
         INodePO parent = node.getParentNode();
         while (parent != null && !(parent instanceof ISpecTestCasePO)) {
             if (!parent.isActive()) {
