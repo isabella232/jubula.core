@@ -31,6 +31,7 @@ import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -87,6 +88,9 @@ public class GeneralLabelProvider extends ColumnLabelProvider
     
     /** <code>SEPARATOR</code> */
     protected static final String SEPARATOR = "; "; //$NON-NLS-1$
+    
+    /** for negated conditions <code>NEGATED_POSTFIX</code> */
+    protected static final String NEGATED_POSTFIX = " (negated) "; //$NON-NLS-1$
     
     /** the logger */
     private static final Logger LOG = 
@@ -258,8 +262,14 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             }  else {
                 name = node.getName();
             }
+            String postfix = StringConstants.EMPTY;
+            if (node instanceof ICondStructPO 
+                    && ((ICondStructPO) node).isNegate()) {
+                postfix = NEGATED_POSTFIX;
+            }
             
-            return new StringBuilder(prefix).append(name).toString();
+            return new StringBuilder(prefix).append(name).append(postfix)
+                    .toString();
         }
 
         if (element instanceof IReusedProjectPO) {
