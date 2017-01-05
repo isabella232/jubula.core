@@ -19,6 +19,7 @@
         <para>
           Use this action to invoke external static methods.
           You have to copy the JAR files containing your methods to the directory <emphasis>&lt;installation-directory&gt;/ite/externaljars</emphasis>.
+          The directory may not exist at first run, if so, you have to create it.
           Exceptions that occur during the execution of the method will be shown in the ITE as action errors.
           You can use an IllegalStateException in your method to indicate that something went wrong, the ITE will interpret that as a check failed error.
         </para>
