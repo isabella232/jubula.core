@@ -623,7 +623,6 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
         }
 
         Iterator iter = toDrop.iterator();
-        INodePO par = null;
         while (iter.hasNext()) {
             Object obj = iter.next();
             if (!(obj instanceof INodePO)
@@ -636,11 +635,6 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 return false;
             }
             INodePO transferGUI = (INodePO)obj;
-            INodePO parentNode = transferGUI.getParentNode();
-            if (par != null && par != parentNode) {
-                return false;
-            }
-            par = parentNode;
             if (!(transferGUI instanceof ISpecTestCasePO) 
                     && transferGUI.getSpecAncestor() 
                         != dropTarget.getSpecAncestor()) {
