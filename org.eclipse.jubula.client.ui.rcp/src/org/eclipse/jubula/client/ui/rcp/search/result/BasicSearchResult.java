@@ -425,29 +425,43 @@ public class BasicSearchResult implements ISearchResult {
             } else {
                 Plugin.activate(jbtv);
             }
-            TreeViewer tv = jbtv.getTreeViewer();
-            EntityManager em = jbtv.getEntityManager();
+            INodePO node = retrieveNodeForId(id, jbtv);
+            if (node != null) {
+                INodePO specNode = node.getSpecAncestor();
+                if (specNode != null && NodeBP.isEditable(specNode)) {
+                    IEditorPart openEditor = AbstractOpenHandler
+                            .openEditor(specNode);
+                    if (openEditor instanceof AbstractJBEditor) {
+                        AbstractJBEditor jbEditor =
+                                (AbstractJBEditor) openEditor;
+                        jbEditor.setSelection(
+                                new StructuredSelection(node));
+                    }
+                }
+            }
+        }
+
+        /**
+         * Retrieves the node for the specivied ID and TreeView
+         * @param id the id of the node
+         * @param jbtv the TreeView the node is to be retrieved for
+         * @return the retrieved node, otherwise null
+         */
+        private INodePO retrieveNodeForId(Long id, AbstractJBTreeView jbtv) {
+            AbstractJBTreeView currentJbtv = jbtv;
+            TreeViewer tv = currentJbtv.getTreeViewer();
+            EntityManager em = currentJbtv.getEntityManager();
             INodePO node = UINodeBP.selectNodeInTree(id, tv, em);
             if (node == null) {
-                jbtv = (AbstractJBTreeView) Plugin
+                currentJbtv = (AbstractJBTreeView) Plugin
                         .showView(Constants.TS_BROWSER_ID);
-                tv = jbtv.getTreeViewer();
+                tv = currentJbtv.getTreeViewer();
                 node = UINodeBP.selectNodeInTree(id, tv, em);
                 if (node == null) {
                     node  = em.find(NodeMaker.getNodePOClass(), id);
                 }
             }
-            INodePO specNode = node.getSpecAncestor();
-            if (specNode != null && NodeBP.isEditable(specNode)) {
-                IEditorPart openEditor = AbstractOpenHandler
-                        .openEditor(specNode);
-                if (openEditor instanceof AbstractJBEditor) {
-                    AbstractJBEditor jbEditor =
-                            (AbstractJBEditor) openEditor;
-                    jbEditor.setSelection(
-                            new StructuredSelection(node));
-                }
-            }
+            return node;
         }
     }
 
