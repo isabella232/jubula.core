@@ -517,6 +517,8 @@ public class JsonImporter {
             } else if (node instanceof RefTestCaseDTO) {
                 po.addNode(createExecTestCase(
                     proj, (RefTestCaseDTO)node, assignNewGuid));
+            } else if (node instanceof CommentDTO) {
+                po.addNode(createComment((CommentDTO) node, assignNewGuid));
             }
         }
     }
@@ -1529,7 +1531,7 @@ public class JsonImporter {
      *              element
      */
     private IExecPersistable createTestSuite(IProjectPO proj, TestSuiteDTO dto, 
-        boolean assignNewGuid) {
+        boolean assignNewGuid) throws InvalidDataException {
         
         ITestSuitePO ts;
         if (dto.getUuid() != null && !assignNewGuid) {
@@ -1553,9 +1555,16 @@ public class JsonImporter {
             if (ref instanceof RefTestCaseDTO) {
                 ts.addNode(createExecTestCase(proj, (RefTestCaseDTO) ref,
                         assignNewGuid));
-            }
-            if (ref instanceof CommentDTO) {
+            } else if (ref instanceof CommentDTO) {
                 ts.addNode(createComment((CommentDTO) ref, assignNewGuid));
+            } else if (ref instanceof ConditionalStatementDTO) {
+                ts.addNode(createConditionalStatement(
+                        (ConditionalStatementDTO)ref, proj, assignNewGuid));
+            } else if (ref instanceof WhileDTO) {
+                ts.addNode(createWhile(proj, (WhileDTO)ref, assignNewGuid));
+            } else if (ref instanceof IterateDTO) {
+                ts.addNode(createIterate(proj, (IterateDTO)ref,
+                        assignNewGuid));
             }
         }
         

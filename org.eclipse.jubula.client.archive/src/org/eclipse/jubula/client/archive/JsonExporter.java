@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.archive.dto.ComponentNamesPairDTO;
 import org.eclipse.jubula.client.archive.dto.ConditionalStatementDTO;
 import org.eclipse.jubula.client.archive.dto.DataRowDTO;
 import org.eclipse.jubula.client.archive.dto.DefaultEventHandlerDTO;
-import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.dto.EventTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.ExecCategoryDTO;
 import org.eclipse.jubula.client.archive.dto.IterateDTO;
@@ -61,6 +60,7 @@ import org.eclipse.jubula.client.archive.dto.TestJobDTO;
 import org.eclipse.jubula.client.archive.dto.TestSuiteDTO;
 import org.eclipse.jubula.client.archive.dto.TestresultSummaryDTO;
 import org.eclipse.jubula.client.archive.dto.UsedToolkitDTO;
+import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.archive.schema.ReentryProperty;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
@@ -68,7 +68,6 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
-import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICapParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -85,6 +84,7 @@ import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IIteratePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
@@ -780,6 +780,10 @@ public class JsonExporter {
                 RefTestCaseDTO refTestCaseDTO = new RefTestCaseDTO(tcPO);
                 fillRefTestCase(refTestCaseDTO, tcPO);
                 container.addNode(refTestCaseDTO);
+            }  else if (node instanceof ICommentPO) {
+                ICommentPO commentPO = (ICommentPO) node;
+                CommentDTO commentDTO = new CommentDTO(commentPO);
+                container.addNode(commentDTO);
             }
         }
     }
@@ -959,8 +963,27 @@ public class JsonExporter {
                 ICommentPO commentPO = (ICommentPO) o;
                 CommentDTO commentDTO = new CommentDTO(commentPO);
                 tsDTO.addUsedTestCase(commentDTO);
+            } else if (o instanceof IConditionalStatementPO) {
+                IConditionalStatementPO conPO = (IConditionalStatementPO)o;
+                ConditionalStatementDTO conDTO =
+                        new ConditionalStatementDTO(conPO);
+                fillConditionalStatement(conDTO, conPO);
+                tsDTO.addUsedTestCase(conDTO);
+            } else if (o instanceof IIteratePO) {
+                IIteratePO iteratePO = (IIteratePO) o;
+                IterateDTO iterateDTO = new IterateDTO(iteratePO);
+                fillIterateStatment(iterateDTO, iteratePO);
+                tsDTO.addUsedTestCase(iterateDTO);
+            } else if (o instanceof IWhileDoPO || o instanceof IDoWhilePO) {
+                ICondStructPO condStructPO = (ICondStructPO) o;
+                WhileDTO whileDoDTO = new WhileDTO(o);
+                if (condStructPO instanceof IDoWhilePO) {
+                    fillWhileStatment(whileDoDTO, condStructPO, true);
+                } else { 
+                    fillWhileStatment(whileDoDTO, condStructPO, false);
+                }
+                tsDTO.addUsedTestCase(whileDoDTO);
             }
-
         }
         for (Object o : po.getDefaultEventHandler().keySet()) {
             String eventType = (String)o;
