@@ -102,17 +102,7 @@ public class ResultTreeTracker implements IExecStackModificationListener {
             m_lastNonCap = nextNonCap;
         }
         m_endNode = m_lastNonCap;
-        if (m_lastNonCap.getStatus() == TestResultNode.NOT_YET_TESTED) {
-            m_lastNonCap.setResult(TestResultNode.TESTING, null);
-            if (node instanceof IParamNodePO) {
-                addParameters((IParamNodePO)node, m_lastNonCap);
-            }
-        }
-        if (m_lastNonCap.getParent().getStatus() 
-                == TestResultNode.NOT_YET_TESTED) {
-            m_lastNonCap.getParent().setResult(TestResultNode.TESTING, null);
-        }
-
+        handleLastNonCap(node);
     }
     
     /**
@@ -207,18 +197,30 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                 getResultNodeList().
                     get(nextIndex);
         }
+        handleLastNonCap(m_lastNonCap.getNode());
+    }
+    
+    /**
+     * Adds parameters and sets the result of the newly created last non cap
+     * @param node the node
+     */
+    private void handleLastNonCap(INodePO node) {
         if (m_lastNonCap.getStatus() == TestResultNode.NOT_YET_TESTED) {
-            INodePO node = m_lastNonCap.getNode();
             if (node instanceof IParamNodePO) {
                 addParameters((IParamNodePO)node, m_lastNonCap);
             }
             m_lastNonCap.setResult(TestResultNode.TESTING, null);
         }
+        if (node instanceof ICondStructPO) {
+            m_lastNonCap.addParameter(new TestResultParameter(
+                    "IsNegated", //$NON-NLS-1$
+                    "java.lang.Boolean", //$NON-NLS-1$
+                    Boolean.toString(((ICondStructPO) node).isNegate())));
+        }
         if (m_lastNonCap.getParent().getStatus() 
             == TestResultNode.NOT_YET_TESTED) {
             m_lastNonCap.getParent().setResult(TestResultNode.TESTING, null);
         }
-
     }
 
     /** 

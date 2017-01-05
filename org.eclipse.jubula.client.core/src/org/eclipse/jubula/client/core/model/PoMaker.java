@@ -315,16 +315,6 @@ public abstract class PoMaker {
     
     /**
      * factory method to replace constructor
-     * @param parameters parameters
-     * @return TestResultPO
-     */
-    public static ITestResultPO createTestResultPO(
-            List<IParameterDetailsPO> parameters) {
-        return new TestResultPO(parameters);
-    }
-    
-    /**
-     * factory method to replace constructor
      * @return ParameterDetailsPO
      */
     public static IParameterDetailsPO createParameterDetailsPO() {

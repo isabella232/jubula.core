@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -126,6 +127,11 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         if (node instanceof IEventExecTestCasePO) {
             initEventTestCasePropDescriptor(node);
         }
+        if (m_node.getStatus() != TestResultNode.NOT_YET_TESTED) {
+            if (node instanceof ICondStructPO) {
+                initCondStructPropDescriptor((ICondStructPO) node);
+            }
+        }
 
         if (m_node.getEvent() != null) { 
             initErrorEventPropDescriptor();
@@ -215,6 +221,10 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
      * @param testResult The Test Result for which to display the Parameters.
      */
     private void initParameterDescriptor(TestResultNode testResult) {
+        if (testResult.getNode() instanceof ICondStructPO) {
+            // CondStructPO's store their Negated flag as a fake Parameter
+            return;
+        }
         for (final TestResultParameter parameter : testResult.getParameters()) {
             PropertyDescriptor propDesc = new PropertyDescriptor(
                     new PropertyController() {
@@ -443,6 +453,20 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
             }, Messages.TestResultNodeGUIPropertySourceReentry);
         propDes.setCategory(
                 Messages.TestResultNodeGUIPropertySourceEventhandler);
+        addPropertyDescriptor(propDes);
+    }
+    
+    /**
+     * @param node the Cond Struct
+     */
+    private void initCondStructPropDescriptor(final ICondStructPO node) {
+        PropertyDescriptor propDes = new PropertyDescriptor(
+                new PropertyController() {
+                    public Object getProperty() {
+                        return node.isNegate();
+                    }
+                }, Messages.TestResultNodeGUIPropertySourceNegated);
+        propDes.setCategory(P_TESTSTEP_CAT);
         addPropertyDescriptor(propDes);
     }
 

@@ -82,6 +82,7 @@ public class Messages extends NLS {
     public static String TestResultNodePropertySourceErrorDetail;
     public static String TestResultNodePropertySourceErrorType;
     public static String TestResultNodeGUIPropertySourceEventhandler;
+    public static String TestResultNodeGUIPropertySourceNegated;
     public static String TestResultNodeGUIPropertySourceReentry;
     public static String TestResultNodePropertySourceResultStep;
     public static String TestResultNodePropertySourceStepName;

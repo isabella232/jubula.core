@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
-import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
@@ -294,10 +293,7 @@ public class TestresultSummaryBP {
                     resultNode.getParent().getNode().getId());
         }
 
-        if (node instanceof IParameterInterfacePO) {
-            addParameterListToResult(keyword, resultNode, 
-                    (IParameterInterfacePO)node);
-        }
+        addParameterListToResult(keyword, resultNode);
 
         keyword.setKeywordType(resultNode.getTypeOfNode());
         if (node instanceof ICapPO) {
@@ -353,12 +349,10 @@ public class TestresultSummaryBP {
     
     /**
      * @param node TestResultNode
-     * @param parameterInterface Source for Parameter information.
      * @param keyword ITestResultPO
-     * @return result with parameter
      */
-    private ITestResultPO addParameterListToResult(ITestResultPO keyword,
-            TestResultNode node, IParameterInterfacePO parameterInterface) {
+    private void addParameterListToResult(ITestResultPO keyword,
+            TestResultNode node) {
         for (TestResultParameter param : node.getParameters()) {
             IParameterDetailsPO parameter = PoMaker.createParameterDetailsPO();
             parameter.setParameterName(param.getName());
@@ -371,8 +365,6 @@ public class TestresultSummaryBP {
             parameter.setParameterValue(value);
             keyword.addParameter(parameter);
         }
-        
-        return keyword;
     }
     
     /**
