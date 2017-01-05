@@ -18,6 +18,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IControllerPO;
@@ -25,6 +26,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
@@ -254,9 +256,11 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
             IStructuredSelection selection, 
             Object target, boolean allowFromBrowser) {
         
-        if (selection == null || target == null) {
+        if (selection == null || !(target instanceof INodePO)) {
             return false;
         }
+        
+        INodePO targNode = (INodePO) target;
 
         if (sourceViewer != null && !sourceViewer.equals(targetViewer)) {
             boolean foundOne = false;
@@ -273,16 +277,23 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
 
         Iterator iter = selection.iterator();
         while (iter.hasNext()) {
-            Object transferObj = iter.next();
-            if (!(transferObj instanceof INodePO)) {
+            Object next = iter.next();
+            if (!(next instanceof INodePO)
+                    || next instanceof IAbstractContainerPO) {
                 return false;
             } 
-            INodePO transferGUI = (INodePO)transferObj;
-            if (!((transferGUI instanceof IExecTestCasePO
+            if (next instanceof IControllerPO
+                    && !(targNode instanceof ITestSuitePO)
+                    && !(targNode.getParentNode() instanceof ITestSuitePO)) {
+                return false;
+            }
+            INodePO node = (INodePO)next;
+            if (!((node instanceof IExecTestCasePO
                     && sourceViewer == targetViewer)
-                    || (transferGUI instanceof ICommentPO
+                    || (node instanceof ICommentPO
                             && sourceViewer == targetViewer)
-                    || (transferGUI instanceof ISpecTestCasePO))) {
+                    || (node instanceof ISpecTestCasePO)
+                    || (node instanceof IControllerPO))) {
                 
                 return false;
             }
