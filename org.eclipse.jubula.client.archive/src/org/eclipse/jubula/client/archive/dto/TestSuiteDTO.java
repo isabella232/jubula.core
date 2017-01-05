@@ -89,7 +89,10 @@ public class TestSuiteDTO extends NodeDTO {
      */
     public void addUsedTestCase(NodeDTO usedTestcase) {
         if (!(usedTestcase instanceof RefTestCaseDTO
-                || usedTestcase instanceof CommentDTO)) {
+                || usedTestcase instanceof CommentDTO
+                || usedTestcase instanceof ConditionalStatementDTO
+                || usedTestcase instanceof WhileDTO
+                || usedTestcase instanceof IterateDTO)) {
             throw new IllegalArgumentException();
         }
         this.m_usedTestcases.add(usedTestcase);
