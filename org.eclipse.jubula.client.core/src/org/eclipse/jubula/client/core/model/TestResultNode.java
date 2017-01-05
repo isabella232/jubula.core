@@ -106,6 +106,9 @@ public class TestResultNode {
     /** length of Parameter value separator string */
     private static final int SEPARATOR_LEN = SEPARATOR.length();
     
+    /** */
+    private static final String NEGATED = "Negated"; //$NON-NLS-1$
+    
     /**
      * index for Tree Tracker
      */
@@ -727,11 +730,18 @@ public class TestResultNode {
         StringBuilder paramValueBuilder = new StringBuilder();
         List<TestResultParameter> parameters = getParameters();
         // use index based loop to avoid ConcurrentModificationException
+        boolean isCondStruct = getNode() instanceof ICondStructPO;
         for (int index = 0; index < parameters.size(); index++) {
             TestResultParameter parameter = parameters.get(index);
-            paramValueBuilder.append(
-                    StringUtils.defaultString(parameter.getValue())).append(
-                    SEPARATOR);
+            if (!isCondStruct) {
+                paramValueBuilder
+                        .append(StringUtils.defaultString(parameter.getValue()))
+                        .append(SEPARATOR);
+            } else {
+                if (Boolean.parseBoolean(parameter.getValue())) {
+                    paramValueBuilder.append(NEGATED).append(SEPARATOR);
+                }
+            }
         }
         if (paramValueBuilder.length() > 0) {
             int builderLength = paramValueBuilder.length();

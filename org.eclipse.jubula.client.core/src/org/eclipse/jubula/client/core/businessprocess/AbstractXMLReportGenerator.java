@@ -26,6 +26,7 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -74,6 +75,9 @@ public abstract class AbstractXMLReportGenerator {
      */
     public static final String NUM_EVENT_HANDLER_STEPS = "numEventHandlerSteps"; //$NON-NLS-1$
 
+    /** Postfix used to indicate a negated CondStruct */
+    private static final String NEGATED_POSTFIX = " - NEGATED"; //$NON-NLS-1$
+    
     /** The logger */
     private static final Logger LOG = LoggerFactory.getLogger(
         AbstractXMLReportGenerator.class);
@@ -411,6 +415,7 @@ public abstract class AbstractXMLReportGenerator {
         
         final INodePO resNode = resultNode.getNode();
         name.addText(resNode.getName());
+        
         if (resNode.getComment() != null) {
             Element comment = insertInto.addElement("comment"); //$NON-NLS-1$
             comment.addText(resNode.getComment());
@@ -423,6 +428,11 @@ public abstract class AbstractXMLReportGenerator {
         if (durationMillis != -1) {
             insertInto.addAttribute("duration", //$NON-NLS-1$
                     DurationFormatUtils.formatDurationHMS(durationMillis));
+        }
+        if (resNode instanceof ICondStructPO) {
+            Element negated = insertInto.addElement("negated"); //$NON-NLS-1$
+            negated.addText(Boolean.toString(
+                    ((ICondStructPO) resNode).isNegate()));
         }
     }
     /**

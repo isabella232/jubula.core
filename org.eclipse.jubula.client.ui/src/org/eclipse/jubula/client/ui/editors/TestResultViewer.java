@@ -39,6 +39,7 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.businessprocess.TestresultSummaryBP;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
@@ -215,11 +216,14 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                             generateBackingNode(result),
                             parentNodeStack.isEmpty() ? null
                                     : parentNodeStack.peek());
+                    List<IParameterDetailsPO> parameterList = result.
+                            getUnmodifiableParameterList();
+                    setNegatedState(createdNode, parameterList);
                     createdNode.setComponentName(result.getComponentName());
                     createdNode.setComponentType(result.getComponentType());
                     createdNode.setTaskId(result.getTaskId());
                     for (IParameterDetailsPO param 
-                            : result.getUnmodifiableParameterList()) {
+                            : parameterList) {
                         createdNode.addParameter(
                                 new TestResultParameter(param));
                     }
@@ -240,6 +244,21 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                 pMonitor.done();
             }
         }
+
+        /**
+         * sets the negated state for the html
+         * @param createdNode the {@link TestResultNode}
+         * @param parameterList the list of parameterDetails
+         */
+        private void setNegatedState(TestResultNode createdNode,
+                List<IParameterDetailsPO> parameterList) {
+            INodePO theNode = createdNode.getNode();
+            if (theNode instanceof ICondStructPO && parameterList.size() > 0) {
+                ((ICondStructPO) theNode).setNegate("true" //$NON-NLS-1$
+                        .equals(parameterList.get(0).getParameterValue()));
+            }
+        }
+
         /**
          * 
          * @param createdNode the created {@link TestResultNode}

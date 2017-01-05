@@ -759,6 +759,9 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:value-of select="name"/> - <xsl:value-of select="$text"/>
+			<xsl:choose>
+            	<xsl:when test="negated = 'true'"> [Negated]</xsl:when>
+            </xsl:choose>
 		</big>
 		<xsl:if test="comment != ''">
 			<abbr><xsl:attribute name="title"><xsl:value-of select="comment"/></xsl:attribute>*</abbr>
