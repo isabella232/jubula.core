@@ -121,6 +121,14 @@
 				big.abo::after {
 					content: " (test aborted due to internal error)";
 				}
+				
+				big.inf {
+                    color: darkgreen;
+                }
+                
+                big.inf::after {
+                    content: " (ok - possibly infinite loop)";
+                }
                 
                 big.skp {
                     color: lightgray;
@@ -401,7 +409,7 @@
 	</xsl:template>
 
 	<xsl:template match="test-run">
-		<xsl:apply-templates select="comment|testcase|step|eventhandler"/>
+		<xsl:apply-templates select="comment|testcase|step|eventhandler|ifthenelse|dowhile|whiledo|repeat"/>
 	</xsl:template>
 	
 	<xsl:template match="testcase">
@@ -422,11 +430,11 @@
 			</A>
             <xsl:apply-templates select="@duration" />
 			<xsl:variable name="child_nodes" 
-					      select="comment|testcase|step|eventhandler|ifthenelse"/>
+					      select="comment|testcase|step|eventhandler|ifthenelse|dowhile|whiledo|repeat"/>
 			<xsl:if test="count($child_nodes) != 0">
 				<ul>
 					<xsl:apply-templates
-						select="comment|testcase|step|eventhandler|ifthenelse"/>
+						select="comment|testcase|step|eventhandler|ifthenelse|dowhile|whiledo|repeat"/>
 				</ul>
 			</xsl:if>
 		</li>
@@ -506,11 +514,11 @@
             </A>
             <xsl:apply-templates select="@duration" />
             <xsl:variable name="child_nodes" 
-                          select="comment|testcase|step"/>
+                          select="container"/>
             <xsl:if test="count($child_nodes) != 0">
                 <ul>
                     <xsl:apply-templates
-                        select="comment|testcase|step"/>
+                        select="container"/>
                 </ul>
             </xsl:if>
         </li>
@@ -534,11 +542,11 @@
             </A>
             <xsl:apply-templates select="@duration" />
             <xsl:variable name="child_nodes" 
-                          select="comment|testcase|step"/>
+                          select="container"/>
             <xsl:if test="count($child_nodes) != 0">
                 <ul>
                     <xsl:apply-templates
-                        select="comment|testcase|step"/>
+                        select="container"/>
                 </ul>
             </xsl:if>
         </li>
@@ -562,11 +570,11 @@
             </A>
             <xsl:apply-templates select="@duration" />
             <xsl:variable name="child_nodes" 
-                          select="comment|testcase|step"/>
+                          select="container"/>
             <xsl:if test="count($child_nodes) != 0">
                 <ul>
                     <xsl:apply-templates
-                        select="comment|testcase|step"/>
+                        select="container"/>
                 </ul>
             </xsl:if>
         </li>
@@ -736,6 +744,9 @@
 				</xsl:when>
 				<xsl:when test="status = 9">
 					<xsl:attribute name="class">abo</xsl:attribute>
+				</xsl:when>
+				<xsl:when test="status = 11">
+					<xsl:attribute name="class">inf</xsl:attribute>
 				</xsl:when>
                 <xsl:when test="status = 20">
                     <xsl:attribute name="class">skp</xsl:attribute>
