@@ -12,4 +12,22 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
+<para>
+ <emphasis role="strong">Deletion with Orphans</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        We introduced a new feature in the Test Case Browser called <emphasis>Delete with Orphans</emphasis>.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+        When tidying up a project, there are Test Cases that are no longer required or used.
+        The <emphasis>Delete with Orphans</emphasis> feature allows you to show all Test Cases
+        that would remain unused if a certain Test Case were deleted. It then offers you
+        to delete the Test Case with all its remaining "Orphans".
+    </para>
+  </listitem>
+</itemizedlist>
 </section>
