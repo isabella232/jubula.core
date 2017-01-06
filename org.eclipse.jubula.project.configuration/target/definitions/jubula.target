@@ -54,7 +54,7 @@
 <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
 <!-- Mylyn END -->
 <unit id="org.eclipse.jdt.annotation" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/neon"/>
+<repository location="http://download.eclipse.org/releases/neon/201610111000"/>
 </location>
 <!-- license -->
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
