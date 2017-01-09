@@ -166,7 +166,12 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                 }  else if (firstElement instanceof ICapPO
                         || firstElement instanceof IControllerPO
                         || firstElement instanceof IAbstractContainerPO) {
-                    runCommand(RCPCommandIDs.OPEN_TESTCASE_EDITOR);
+                    INodePO fE = (INodePO) firstElement;
+                    if (fE.getSpecAncestor() instanceof ITestSuitePO) {
+                        runCommand(RCPCommandIDs.OPEN_TESTSUITE_EDITOR);
+                    } else {
+                        runCommand(RCPCommandIDs.OPEN_TESTCASE_EDITOR);
+                    }
                 } else if (firstElement instanceof ICategoryPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE);
                 }
