@@ -17,6 +17,8 @@ import org.eclipse.jubula.rc.swt.driver.EventThreadQueuerSwtImpl;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Rectangle;
@@ -82,6 +84,9 @@ public class SimulatedTooltip extends Thread {
     /**  The label to display the text */
     private final Label m_label;
     
+    /** The font used to display the tooltip */
+    private Font m_font = null;
+    
     /**
      * Constructor
      * 
@@ -111,6 +116,16 @@ public class SimulatedTooltip extends Thread {
         m_displayText = popupText;
         m_dialogWidth = dialogWidth;
         m_label = new Label(m_dialog, SWT.WRAP);
+        m_dialog.addDisposeListener(new DisposeListener() {
+
+            public void widgetDisposed(DisposeEvent e) {
+                if (m_font != null) {
+                    m_font.dispose();
+                    m_font = null;
+                }
+            }
+            
+        });
 
         m_componentBounds = componentBounds;
     }
@@ -187,14 +202,14 @@ public class SimulatedTooltip extends Thread {
      * 
      */
     public void createText() {
-        final Font font1 = new Font(m_dialog.getDisplay(), TOOLTIP_FONT,
+        m_font = new Font(m_dialog.getDisplay(), TOOLTIP_FONT,
                 m_textSize, SWT.NORMAL);
         
         GridData gd = new GridData();
         gd.grabExcessHorizontalSpace = true;
         gd.horizontalAlignment = SWT.FILL;
         m_label.setLayoutData(gd);
-        m_label.setFont(font1);
+        m_label.setFont(m_font);
         m_label.setBackground(TOOLTIP_BG_COLOR);
         m_label.setText(m_displayText);
     }
