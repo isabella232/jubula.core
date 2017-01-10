@@ -1,0 +1,97 @@
+<!-- Copyright (c) 2016 BREDEX GmbH. All rights reserved. This program and 
+ the accompanying materials are made available under the terms of the Eclipse 
+ Public License v1.0 which accompanies this distribution, and is available 
+ at http://www.eclipse.org/legal/epl-v10.html Contributors: BREDEX GmbH - 
+ initial API and implementation and/or initial documentation -->
+<section xml:id="known-issues-and-other-information-8.4.1"
+ version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xl="http://www.w3.org/1999/xlink">
+ <title>Known issues and other information</title>
+
+ <para>
+  <emphasis role="strong">Following Bugs are resolved</emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=508977"> Bug 508977</link>
+    A New Function is available which allows the user to convert a
+    numerical number with a decimal point to an integer and the other
+    way around.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=494756"> Bug 494756</link>
+    Return value of function ignored for click actions, resolved by Bug
+    508977.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509847"> Bug 509847</link>
+    The order of the loops and conditions in a Test Case is now shown
+    correct in the Test Suite Browser and the Test Case Browser.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509910"> Bug 509910</link>
+    A Bug fix for the use of technical and logical Component Names.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509909"> Bug 509909</link>
+    All unused Component Names will be now deleted in the Object Mapping
+    Editor.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509911"> Bug 509911</link>
+    A correct error message is now shown in case of user want to do
+    operations like: replace all, save as new, etc when an object was
+    locked or deleted.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509851"> Bug 509851</link>
+    It is now possible to add a description to a repeat module.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509959"> Bug 509959</link>
+    User has now the possibility to drag and drop conditions in the Test
+    Suite Editor.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509852"> Bug 509852</link>
+    Visual Representation for negated conditions in the ITE.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509969"> Bug 509969</link>
+    Condition nodes in a Test Suite can now be exported.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=510020"> Bug 510020</link>
+    HTML TestResult Reports does now contain all conditions and loops.
+   </para>
+  </listitem>
+  <listitem>
+   <para>
+    <link xl:href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=509849"> Bug 509849</link>
+    Visualization of Negations of Conditions in the Testresult and
+    -execution view and XML and HTML Reports.
+   </para>
+  </listitem>
+ </itemizedlist>
+</section>
