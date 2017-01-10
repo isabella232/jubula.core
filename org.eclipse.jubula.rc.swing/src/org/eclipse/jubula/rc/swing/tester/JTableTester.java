@@ -186,7 +186,8 @@ public class JTableTester extends AbstractTableTester {
 
     @Override
     protected IWidgetComponent getWidgetAdapter() {
-        if (getRobot().isMouseInComponent(getTable().getTableHeader())) {
+        if (getTable().getTableHeader() != null
+                && getRobot().isMouseInComponent(getTable().getTableHeader())) {
             return new JComponentAdapter(getTable().getTableHeader());
         }
         return (IWidgetComponent) getComponent();
