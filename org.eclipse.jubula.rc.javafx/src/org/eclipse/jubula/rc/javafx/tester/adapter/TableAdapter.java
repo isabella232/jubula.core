@@ -204,7 +204,6 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                     @Override
                     public Integer call() throws Exception {
                         TableView table = getRealComponent();
-                        
                         List<String> path = StringParsing.splitToList(colPath,
                                 TestDataConstants.PATH_CHAR_DEFAULT,
                                 TestDataConstants.ESCAPE_CHAR_DEFAULT, false);
@@ -243,7 +242,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
         Iterator<String> pathIterator = path.iterator();
         String currCol = null;
         TableColumn<?, ?> column = null;
-        while (pathIterator.hasNext()) {
+        pathIteration: while (pathIterator.hasNext()) {
             try {
                 currCol = pathIterator.next();
                 int usrIdxCol = Integer.parseInt(currCol);
@@ -269,10 +268,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                             column = columns.get(i);
                         }
                     } catch (IndexOutOfBoundsException e) {
-                        throw new StepExecutionException(
-                                "Invalid Index: " + IndexConverter.toUserIndex(i), //$NON-NLS-1$
-                                EventFactory.createActionError(
-                                        TestErrorEvent.INVALID_INDEX));
+                        return null;
                     }
                 }
             } catch (NumberFormatException nfe) {
@@ -292,9 +288,10 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                             if (pathIterator.hasNext()) {
                                 columns = c.getColumns();
                             }
-                            break;
+                            continue pathIteration;
                         }
                     }
+                    return null;
                 } catch (IllegalArgumentException iae) {
                     // do nothing here
                 }
