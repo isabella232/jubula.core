@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.delete;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -17,6 +18,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -27,9 +30,12 @@ import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.IProgressService;
 
 
 /**
@@ -129,12 +135,25 @@ public class DeleteTCTSBrowserTreeItemHandler
         if (topNodes.isEmpty()) {
             return;
         }
-        Collection<INodePO> allNodes = NodeBP.getOffspringCollection(
+        final Collection<INodePO> allNodes = NodeBP.getOffspringCollection(
                 topNodes);
         if (!canDelete(allNodes)) {
             return;
         }
-        DeleteNodesTransaction.deleteTopNodes(topNodes, allNodes, null);
+        try {
+            IProgressService ser =
+                    PlatformUI.getWorkbench().getProgressService();
+            ser.run(true, false, new IRunnableWithProgress() {
+                public void run(IProgressMonitor monitor) {
+                    monitor.beginTask(Messages.DeleteNodes, topNodes.size());
+                    DeleteNodesTransaction.deleteTopNodes(
+                            topNodes, allNodes, monitor);
+                    monitor.done();
+                }
+            });
+        } catch (InvocationTargetException | InterruptedException e) {
+            // We are not interested - Interrupted cannot be thrown anyway
+        }
     }
 
     /**

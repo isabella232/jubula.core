@@ -208,6 +208,7 @@ public class Messages extends NLS {
     public static String DatabaseMigrationWebsiteLinkLabel;
     public static String DatabaseMigrationWebsiteLink;
     public static String DataSetClearFilterButton;
+    public static String DeleteNodes;
     public static String DeleteProjectActionCaption;
     public static String DeleteProjectActionDeleting;
     public static String DeleteProjectActionKeepTestresultSummaryCheckbox;
