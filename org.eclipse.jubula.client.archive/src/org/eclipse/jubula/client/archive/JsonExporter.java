@@ -106,8 +106,6 @@ import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
@@ -583,8 +581,7 @@ public class JsonExporter {
     /** fill the spec persistent objects
      * @throws OperationCanceledException */
     private void handleSpecPersistables() throws OperationCanceledException {
-        for (ISpecPersistable tcOrCat : m_project.getSpecObjCont()
-                .getSpecObjList()) {
+        for (INodePO tcOrCat : m_project.getUnmodSpecList()) {
             
             ImportExportUtil.checkCancel(m_monitor);
             if (tcOrCat instanceof ICategoryPO) {
@@ -606,17 +603,14 @@ public class JsonExporter {
      */
     private void fillCategory(CategoryDTO categoryDTO, ICategoryPO po) {
         for (INodePO node : po.getUnmodifiableNodeList()) {
-            if (node instanceof ISpecPersistable) {
-                ISpecPersistable tcOrCat = (ISpecPersistable)node;
-                if (tcOrCat instanceof ICategoryPO) {
-                    CategoryDTO catDTO = new CategoryDTO(tcOrCat);
-                    fillCategory(catDTO, (ICategoryPO)tcOrCat);
-                    categoryDTO.addNode(catDTO);
-                } else {
-                    TestCaseDTO tcDTO = new TestCaseDTO(tcOrCat); 
-                    fillTestCase(tcDTO, (ISpecTestCasePO)tcOrCat);
-                    categoryDTO.addNode(tcDTO);
-                }
+            if (node instanceof ICategoryPO) {
+                CategoryDTO catDTO = new CategoryDTO(node);
+                fillCategory(catDTO, (ICategoryPO)node);
+                categoryDTO.addNode(catDTO);
+            } else if (node instanceof ISpecTestCasePO) {
+                TestCaseDTO tcDTO = new TestCaseDTO(node); 
+                fillTestCase(tcDTO, (ISpecTestCasePO)node);
+                categoryDTO.addNode(tcDTO);
             }
         }
     }
@@ -902,8 +896,7 @@ public class JsonExporter {
     /** fill Exec persistables 
      * @throws OperationCanceledException */
     private void handleExecPersistables() throws OperationCanceledException {
-        for (IExecPersistable tsOrTjOrCat : m_project.getExecObjCont()
-                .getExecObjList()) {
+        for (INodePO tsOrTjOrCat : m_project.getUnmodExecList()) {
 
             ImportExportUtil.checkCancel(m_monitor);
             if (tsOrTjOrCat instanceof ICategoryPO) {
@@ -928,23 +921,19 @@ public class JsonExporter {
      * @param po category object
      */
     private void fillCategory(ExecCategoryDTO execCatDTO, ICategoryPO po) {
-        for (Object o : po.getUnmodifiableNodeList()) {
-            if (o instanceof IExecPersistable) {
-                IExecPersistable tcOrCat = (IExecPersistable)o;
-                
-                if (tcOrCat instanceof ICategoryPO) {
-                    ExecCategoryDTO eCatDTO = new ExecCategoryDTO(tcOrCat);
-                    fillCategory(eCatDTO, (ICategoryPO) tcOrCat);
-                    execCatDTO.addNode(eCatDTO);
-                } else if (tcOrCat instanceof ITestSuitePO) {
-                    TestSuiteDTO tsDTO = new TestSuiteDTO(tcOrCat);
-                    fillTestsuite(tsDTO, (ITestSuitePO) tcOrCat);
-                    execCatDTO.addNode(tsDTO);
-                } else {
-                    TestJobDTO tjDTO = new TestJobDTO(tcOrCat);
-                    fillTestJob(tjDTO, (ITestJobPO) tcOrCat);
-                    execCatDTO.addNode(tjDTO);
-                }
+        for (INodePO o : po.getUnmodifiableNodeList()) {
+            if (o instanceof ICategoryPO) {
+                ExecCategoryDTO eCatDTO = new ExecCategoryDTO(o);
+                fillCategory(eCatDTO, (ICategoryPO) o);
+                execCatDTO.addNode(eCatDTO);
+            } else if (o instanceof ITestSuitePO) {
+                TestSuiteDTO tsDTO = new TestSuiteDTO(o);
+                fillTestsuite(tsDTO, (ITestSuitePO) o);
+                execCatDTO.addNode(tsDTO);
+            } else {
+                TestJobDTO tjDTO = new TestJobDTO(o);
+                fillTestJob(tjDTO, (ITestJobPO) o);
+                execCatDTO.addNode(tjDTO);
             }
         }
     }

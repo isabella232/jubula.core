@@ -33,7 +33,6 @@ import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -41,7 +40,6 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -246,6 +244,17 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             String prefix = StringConstants.EMPTY;
             String name = null;
             INodePO node = (INodePO)element;
+            if (node.isSpecObjCont()) {
+                return Messages.TreeBuilderTestCases;
+            }
+            if (node.isExecObjCont()) {
+                IProjectPO proj = GeneralStorage.getInstance().getProject();
+                if (proj != null) {
+                    return proj.getName();
+                }
+                
+                LOG.error(Messages.GeneralLabelProvier_NoActiveProject);
+            }
             if (!checkActivation(node)) {
                 prefix = INACTIVE_PREFIX;
                 if (!node.isActive() && !isParentActive(node)) {
@@ -287,17 +296,6 @@ public class GeneralLabelProvider extends ColumnLabelProvider
                     + reusedProject.getVersionString()
                     + StringConstants.RIGHT_BRACKET;
         }
-        if (element instanceof ISpecObjContPO) {
-            return Messages.TreeBuilderTestCases;
-        } else if (element instanceof IExecObjContPO) { 
-            IProjectPO activeProject = 
-                    GeneralStorage.getInstance().getProject();
-            if (activeProject != null) {
-                return activeProject.getName();
-            }
-            
-            LOG.error(Messages.GeneralLabelProvier_NoActiveProject);
-        }
         if (element instanceof AbstractTestCaseEditor) {
             return getTextImpl(
                     ((AbstractTestCaseEditor) element).getEditorHelper().
@@ -311,6 +309,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
      * @return an image for the given element
      */
     public static Image getImageImpl(Object element) {
+        if (element instanceof INodePO
+                && ((INodePO) element).isExecObjCont()) {
+            return IconConstants.PROJECT_IMAGE;
+        }
         if (element instanceof ITestSuitePO) {
             return IconConstants.TS_IMAGE;
         }
@@ -319,10 +321,6 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             return IconConstants.CAP_IMAGE;
         }
         
-        if (element instanceof IExecObjContPO) {
-            return IconConstants.PROJECT_IMAGE;
-        }
-
         if (element instanceof IEventExecTestCasePO) {
             return IconConstants.EH_IMAGE;
         }

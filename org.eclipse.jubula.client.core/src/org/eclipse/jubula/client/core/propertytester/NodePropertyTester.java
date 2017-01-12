@@ -29,13 +29,15 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 public class NodePropertyTester extends AbstractBooleanPropertyTester {
     /** the id of the "isEditable" property */
     public static final String EDITABLE_PROP = "isEditable"; //$NON-NLS-1$
+    /** the id of the "isRootNode" property */
+    public static final String ROOT_CONT_PROP = "isRootContainer"; //$NON-NLS-1$
     /** the id of the "hasTaskId" property */
     public static final String HAS_TASK_ID_PROP = "hasTaskId"; //$NON-NLS-1$
     /**
      * <code>PROPERTIES</code>
      */
     private static final String[] PROPERTIES = new String[] { EDITABLE_PROP,
-        HAS_TASK_ID_PROP};
+        HAS_TASK_ID_PROP, ROOT_CONT_PROP};
     
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
@@ -44,6 +46,8 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
             return testIsEditable(po);
         } else if (property.equals(HAS_TASK_ID_PROP)) {
             return hasTaskIdSet(po);
+        } else if (property.equals(ROOT_CONT_PROP)) {
+            return testIsRootCont(po);
         }
         return false;
     }
@@ -57,6 +61,16 @@ public class NodePropertyTester extends AbstractBooleanPropertyTester {
             return true;
         }
         return NodeBP.isEditable(node);
+    }
+
+    /**
+     * @param node the node to test
+     * @return whether the node is a Project's Spec / Exec container
+     */
+    private boolean testIsRootCont(IPersistentObject node) {
+        return node instanceof INodePO
+                && (((INodePO) node).isSpecObjCont()
+                        || ((INodePO) node).isExecObjCont());
     }
     
     /**

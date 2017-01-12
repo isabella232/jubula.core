@@ -18,16 +18,13 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
@@ -52,7 +49,7 @@ public abstract class AbstractBrowserDndSupport {
 
     /**
      * tries to move all selected node into the target node. Operates on the GUI model
-     * and on the INodePO model 
+     * and on the INodePO model.
      * @param target
      *      GuiNode
      * @param nodes
@@ -61,24 +58,17 @@ public abstract class AbstractBrowserDndSupport {
      */
     protected static boolean doMove(final List<INodePO> nodes,
             final IPersistentObject target) {
-        
-        boolean tC = NodeBP.isTC(nodes.get(0));
+        if (nodes.isEmpty()) {
+            return false;
+        }
         
         final Set<IPersistentObject> toLock = new HashSet<>();
         final Set<IPersistentObject> toRefresh = new HashSet<>();
         IProjectPO proj = GeneralStorage.getInstance().getProject();
         
         for (INodePO node : nodes) {
-            if (node.getParentNode() == ISpecObjContPO.TCB_ROOT_NODE) {
-                toLock.add(proj.getSpecObjCont());
-                toRefresh.add(proj.getSpecObjCont());
-            } else if (node.getParentNode() == IExecObjContPO.TSB_ROOT_NODE) {
-                toLock.add(proj.getExecObjCont());
-                toRefresh.add(proj.getExecObjCont());
-            } else {
-                toLock.add(node.getParentNode());
-                toRefresh.add(node.getParentNode());
-            }
+            toLock.add(node.getParentNode());
+            toRefresh.add(node.getParentNode());
             toLock.add(node);
             toRefresh.add(node);
         }

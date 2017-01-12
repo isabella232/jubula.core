@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
 
 
@@ -41,7 +41,7 @@ public class CategoryContext extends BaseContext {
     public List<Object> getAll() {
         List<Object> tmp = new ArrayList<Object>();
         IProjectPO project = GeneralStorage.getInstance().getProject();
-        for (ISpecPersistable p : project.getSpecObjCont().getSpecObjList()) {
+        for (INodePO p : project.getUnmodSpecList()) {
             tmp.addAll(getCategories(p));
         }
         return tmp;
@@ -61,9 +61,8 @@ public class CategoryContext extends BaseContext {
         if (obj instanceof ICategoryPO) {
             tmp.add(obj);
         } 
-        if (obj instanceof ISpecPersistable) {
-            ISpecPersistable cat = (ISpecPersistable) obj;
-            for (Object o : cat.getUnmodifiableNodeList()) {
+        if (obj instanceof ICategoryPO) {
+            for (Object o : ((ICategoryPO) obj).getUnmodifiableNodeList()) {
                 tmp.addAll(getCategories(o));
             }
         }

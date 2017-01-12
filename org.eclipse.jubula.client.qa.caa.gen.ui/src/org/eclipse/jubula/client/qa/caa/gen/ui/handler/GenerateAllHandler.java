@@ -21,10 +21,10 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -66,7 +66,8 @@ public class GenerateAllHandler extends AbstractHandler {
 
         ICategoryPO category = NodeMaker.createCategoryPO("GENERATED"); //$NON-NLS-1$
         try {
-            NodePM.addAndPersistChildNode(ISpecObjContPO.TCB_ROOT_NODE, 
+            NodePM.addAndPersistChildNode(
+                GeneralStorage.getInstance().getProject().getSpecObjCont(), 
                 category, null);
         
             ISpecTestCasePO tkTC = TestCaseBP.createNewSpecTestCase(toolkitID,

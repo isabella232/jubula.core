@@ -22,7 +22,7 @@
       class="org.eclipse.jubula.client.core.propertytester.NodePropertyTester"
       id="org.eclipse.jubula.client.core.propertytester.NodePropertyTester"
       namespace="org.eclipse.jubula.client.core.model"
-      properties="isEditable, hasTaskId"
+      properties="isEditable, hasTaskId, isRootContainer"
       type="org.eclipse.jubula.client.core.model.IPersistentObject" />
       </extension>
 </plugin>

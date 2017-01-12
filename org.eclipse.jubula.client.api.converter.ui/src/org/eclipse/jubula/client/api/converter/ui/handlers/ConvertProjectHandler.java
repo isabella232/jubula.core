@@ -48,8 +48,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -232,14 +230,14 @@ public class ConvertProjectHandler extends AbstractHandler {
                 throw new StopConversionException();
             }
             String projectPath = basePath + StringConstants.SLASH + projectName;
-            for (INodePO node : project.getExecObjCont().getExecObjList()) {
+            for (INodePO node : project.getUnmodExecList()) {
                 if (progressMonitor.isCanceled()) {
                     throw new StopConversionException();
                 }
                 String path = projectPath + StringConstants.SLASH + EXEC_PATH;
                 determineClassNamesForNode(node, path);
             }
-            for (INodePO node : project.getSpecObjCont().getSpecObjList()) {
+            for (INodePO node : project.getUnmodSpecList()) {
                 if (progressMonitor.isCanceled()) {
                     throw new StopConversionException();
                 }
@@ -339,12 +337,10 @@ public class ConvertProjectHandler extends AbstractHandler {
         private void handleProject(IProjectPO project, String basePath)
                 throws StopConversionException {
             createCentralTestDataClass(project, basePath);
-            for (IExecPersistable node : project.getExecObjCont()
-                    .getExecObjList()) {
+            for (INodePO node : project.getUnmodExecList()) {
                 handleNode(node);
             }
-            for (ISpecPersistable node : project.getSpecObjCont()
-                    .getSpecObjList()) {
+            for (INodePO node : project.getUnmodSpecList()) {
                 handleNode(node);
             }
         }

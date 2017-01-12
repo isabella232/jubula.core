@@ -53,7 +53,6 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
@@ -574,8 +573,7 @@ public class FileStorageBP {
                 
                 totalWork += getWorkForNode(testSuite);
             }
-            for (ISpecPersistable spec 
-                    : proj.getSpecObjCont().getSpecObjList()) {
+            for (INodePO spec : proj.getUnmodSpecList()) {
                 
                 totalWork += getWorkForNode(spec);
             }

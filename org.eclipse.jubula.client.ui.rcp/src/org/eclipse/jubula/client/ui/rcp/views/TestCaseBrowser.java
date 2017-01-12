@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -234,7 +233,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
         if (activeProject != null) {
             getTreeViewer().setInput(
-                    new ISpecObjContPO[] {activeProject.getSpecObjCont()});
+                    new INodePO[] {activeProject.getSpecObjCont()});
             getTreeViewer().expandToLevel(DEFAULT_EXPANSION);
         } else {
             getTreeViewer().setInput(null);
@@ -251,8 +250,7 @@ public class TestCaseBrowser extends AbstractJBTreeView
             IStructuredSelection selection = getActualSelection();
             Object firstElement = selection.getFirstElement();
             String commandId;
-            if (firstElement instanceof ISpecObjContPO
-                    || firstElement instanceof ICategoryPO) {
+            if (firstElement instanceof ICategoryPO) {
                 commandId = RCPCommandIDs.NEW_TESTCASE;
             } else if (firstElement instanceof IExecTestCasePO) {
                 commandId = RCPCommandIDs.OPEN_SPECIFICATION;
@@ -279,7 +277,9 @@ public class TestCaseBrowser extends AbstractJBTreeView
             for (INodePO guiNode : selList) {
                 if (!(guiNode instanceof ICategoryPO 
                         || guiNode instanceof ISpecTestCasePO)
-                        || !NodeBP.isEditable(guiNode)) {
+                    || !NodeBP.isEditable(guiNode)
+                    || guiNode.isExecObjCont()
+                    || guiNode.isSpecObjCont()) {
                     
                     m_cutTreeItemAction.setEnabled(false);
                     return;

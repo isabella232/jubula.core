@@ -19,7 +19,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
@@ -187,7 +186,7 @@ public class TestCaseBP  extends NodeBP {
     
     /**
      * this method is recovering missing {@link ISpecTestCasePO} and add them
-     * to {@link ISpecObjContPO#TCB_ROOT_NODE}
+     * to the project's Spec Obj Cont
      * see http://bugs.eclipse.org/455483
      * @return a list of {@link ISpecTestCasePO} which where modified (might be empty)
      * @throws ProjectDeletedException might occur when calling {@link NodePM#addAndPersistChildNode(INodePO, INodePO, Integer)}
@@ -207,7 +206,8 @@ public class TestCaseBP  extends NodeBP {
             }
         }
         for (ISpecTestCasePO projectAsParent : specsWithProjectAsParent) {
-            NodePM.addAndPersistChildNode(ISpecObjContPO.TCB_ROOT_NODE,
+            NodePM.addAndPersistChildNode(
+                    GeneralStorage.getInstance().getProject().getSpecObjCont(),
                     projectAsParent, 0);
         }
         return specsWithProjectAsParent;

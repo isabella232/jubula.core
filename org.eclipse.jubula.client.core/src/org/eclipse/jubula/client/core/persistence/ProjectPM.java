@@ -653,7 +653,6 @@ public class ProjectPM extends PersistenceManager
      */
     public static void loadProjectInROSession(IProjectPO project)
         throws PMReadException {
-
         GeneralStorage.getInstance().reset();
         EntityManager s = GeneralStorage.getInstance().getMasterSession();
         s.clear(); // get rid of all session (cached) data
@@ -1448,27 +1447,6 @@ public class ProjectPM extends PersistenceManager
             persistor.lockPO(deleteSess, p);
             deleteProjectIndependentDBObjects(deleteSess, p);
 
-            // FIXME zeb Workaround for EclipseLink deleting the objects in the
-            //           wrong order. Test Cases that reference Test Data Cubes
-            //           were being deleted *after* the Test Data Cubes 
-            //           themselves.
-            List<ISpecPersistable> specObjList = 
-                new ArrayList<ISpecPersistable>(
-                        p.getSpecObjCont().getSpecObjList());
-            List<IExecPersistable> execObjList = 
-                new ArrayList<IExecPersistable>(
-                        p.getExecObjCont().getExecObjList());
-            for (ISpecPersistable po : specObjList) {
-                p.getSpecObjCont().removeSpecObject(po);
-                persistor.deletePO(deleteSess, po);
-            }
-            for (IExecPersistable po : execObjList) {
-                p.getExecObjCont().removeExecObject(po);
-                persistor.deletePO(deleteSess, po);
-            }
-            deleteSess.flush();
-            // FIXME zeb end workaround
-            
             persistor.deletePO(deleteSess, p);
             CompNamePM.deleteCompNames(deleteSess, projId);
             persistor.commitTransaction(deleteSess, tx);
@@ -1513,14 +1491,10 @@ public class ProjectPM extends PersistenceManager
         int totalWork = 1;
         
         // (INodePO=1)
-        for (IExecPersistable exec 
-                : proj.getExecObjCont().getExecObjList()) {
-            
+        for (INodePO exec : proj.getUnmodExecList()) {
             totalWork += getWorkForNode(exec);
         }
-        for (ISpecPersistable spec 
-                : proj.getSpecObjCont().getSpecObjList()) {
-            
+        for (INodePO spec : proj.getUnmodSpecList()) {
             totalWork += getWorkForNode(spec);
         }
         

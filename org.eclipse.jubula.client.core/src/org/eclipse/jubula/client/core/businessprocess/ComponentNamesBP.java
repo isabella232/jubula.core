@@ -25,7 +25,6 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -175,7 +174,7 @@ public class ComponentNamesBP {
      *         <code>autsToSearch</code>.
      */
     public static Set<INodePO> findNodesOfReuse(
-            Collection<ISpecPersistable> specsToSearch, 
+            Collection<INodePO> specsToSearch, 
             Collection<ITestSuitePO> suitesToSearch, String compNameGuid, 
             IProgressMonitor monitor) {
 
@@ -185,7 +184,7 @@ public class ComponentNamesBP {
                 Messages.ShowWhereUsedSearching,
                 specsToSearch.size() + suitesToSearch.size());
         
-        for (ISpecPersistable node : specsToSearch) {
+        for (INodePO node : specsToSearch) {
             FindNodesForComponentNameOp op = 
                 new FindNodesForComponentNameOp(compNameGuid);
             TreeTraverser traverser = new TreeTraverser(node, op);

@@ -10,13 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
-
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
  */
-public interface ISpecTestCasePO extends ITestCasePO, ISpecPersistable,
+public interface ISpecTestCasePO extends ITestCasePO,
     IEventHandlerContainer, IModifiableParameterInterfacePO {
     
     /**

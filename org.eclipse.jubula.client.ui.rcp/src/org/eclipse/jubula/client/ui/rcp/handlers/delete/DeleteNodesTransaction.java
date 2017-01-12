@@ -20,16 +20,13 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
-import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
@@ -75,17 +72,8 @@ public class DeleteNodesTransaction implements ITransaction {
         m_monitor = monitor;
         m_toRefresh = new HashSet<>();
         IProjectPO proj = GeneralStorage.getInstance().getProject();
-        if (NodeBP.isTC(m_nodes.iterator().next())) {
-            m_toRefresh.add(proj.getSpecObjCont());
-        } else {
-            m_toRefresh.add(proj.getExecObjCont());
-        }
         for (INodePO node : topNodes) {
-            INodePO par = node.getParentNode();
-            if (!par.equals(ISpecObjContPO.TCB_ROOT_NODE)
-                    && !(par.equals(IExecObjContPO.TSB_ROOT_NODE))) {
-                m_toRefresh.add(par);
-            }
+            m_toRefresh.add(node.getParentNode());
         }
         m_toLock = new ArrayList<>();
         m_toLock.addAll(m_allNodes);

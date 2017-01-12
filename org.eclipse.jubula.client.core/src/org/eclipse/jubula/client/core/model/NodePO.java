@@ -84,6 +84,10 @@ import org.slf4j.LoggerFactory;
         ElementLoadedProgressListener.class, 
         InsertProgressListener.class, RemoveProgressListener.class })
 abstract class NodePO implements INodePO {
+    
+    /** unsupported operation warning */
+    public static final String NOSUPPORT = "This type of node does not support alteration of its collection of children."; //$NON-NLS-1$
+    
     /** the logger */
     private static final Logger LOG = LoggerFactory
             .getLogger(NodePO.class);
@@ -892,4 +896,23 @@ abstract class NodePO implements INodePO {
     public void setJUnitTestSuite(boolean isJUnitSuite) {
         m_isJUnitSuite = isJUnitSuite;
     }
+    
+    /** {@inheritDoc} */
+    public boolean isExecObjCont() {
+        INodePO par = getParentNode();
+        if (!(par instanceof IProjectPO)) {
+            return false;
+        }
+        return this.equals(((IProjectPO) getParentNode()).getExecObjCont());
+    }
+    
+    /** {@inheritDoc} */
+    public boolean isSpecObjCont() {
+        INodePO par = getParentNode();
+        if (!(par instanceof IProjectPO)) {
+            return false;
+        }
+        return this.equals(((IProjectPO) getParentNode()).getSpecObjCont());
+    }
+
 }

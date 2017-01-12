@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
 
 
@@ -42,7 +41,7 @@ public class ExecTestCaseContext extends BaseContext {
     public List<Object> getAll() {
         List<Object> tmp = new ArrayList<Object>();
         IProjectPO project = GeneralStorage.getInstance().getProject();
-        for (ISpecPersistable p : project.getSpecObjCont().getSpecObjList()) {
+        for (INodePO p : project.getUnmodSpecList()) {
             tmp.addAll(getExecTestCases(p));
         }
         for (ITestSuitePO p : TestSuiteBP.getListOfTestSuites(project)) {

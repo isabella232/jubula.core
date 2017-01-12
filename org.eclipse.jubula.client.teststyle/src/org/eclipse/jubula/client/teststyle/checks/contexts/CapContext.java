@@ -17,7 +17,6 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
 
 
@@ -42,7 +41,7 @@ public class CapContext extends BaseContext {
     public List<Object> getAll() {
         List<Object> tmp = new ArrayList<Object>();
         IProjectPO project = GeneralStorage.getInstance().getProject();
-        for (ISpecPersistable p : project.getSpecObjCont().getSpecObjList()) {
+        for (INodePO p : project.getUnmodSpecList()) {
             tmp.addAll(getCaps(p));
         }
         return tmp;

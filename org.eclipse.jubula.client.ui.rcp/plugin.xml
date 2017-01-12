@@ -203,11 +203,6 @@
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
     </factory>
     <factory
-      adaptableType="org.eclipse.jubula.client.core.model.IExecObjContPO"
-      class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
-      <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
-    </factory>
-    <factory
       adaptableType="org.eclipse.jubula.client.core.model.IRefTestSuitePO"
       class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
@@ -2498,6 +2493,9 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
             </or>
             <test property="org.eclipse.jubula.client.core.model.isEditable" />
+            <not>
+              <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
+            </not>
           </iterate>
         </and>
       </enabledWhen>
@@ -2525,6 +2523,9 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
             </or>
             <test property="org.eclipse.jubula.client.core.model.isEditable" />
+            <not>
+              <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
+            </not>
           </iterate>
         </and>
       </enabledWhen>
@@ -2548,6 +2549,10 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
             </or>
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
+            <not>
+              <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
+            </not>
           </iterate>
         </and>
       </enabledWhen>
@@ -2605,11 +2610,38 @@
               <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
             </or>
             <test property="org.eclipse.jubula.client.core.model.isEditable" />
+            <not>
+              <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
+            </not>
           </iterate>
           <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectProtected">
             <equals value="false" />
           </with>
         </and>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTCTSBrowserTreeItemHandler"
+      commandId="org.eclipse.ui.edit.delete">
+      <activeWhen>
+        <with variable="activePartId">
+          <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
+        </with>
+      </activeWhen>
+      <enabledWhen>
+        <iterate
+          ifEmpty="false"
+          operator="and">
+          <or>
+            <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
+            <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
+            <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
+          </or>
+          <test property="org.eclipse.jubula.client.core.model.isEditable" />
+          <not>
+            <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
+          </not>
+        </iterate>
       </enabledWhen>
     </handler>
     <handler
@@ -2703,26 +2735,6 @@
           <not>
             <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
           </not>
-        </iterate>
-      </enabledWhen>
-    </handler>
-    <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteTCTSBrowserTreeItemHandler"
-      commandId="org.eclipse.ui.edit.delete">
-      <activeWhen>
-        <with variable="activePartId">
-          <equals value="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser" />
-        </with>
-      </activeWhen>
-      <enabledWhen>
-        <iterate
-          ifEmpty="false"
-          operator="and">
-          <or>
-            <instanceof value="org.eclipse.jubula.client.core.model.ITestSuitePO" />
-            <instanceof value="org.eclipse.jubula.client.core.model.ITestJobPO" />
-            <instanceof value="org.eclipse.jubula.client.core.model.ICategoryPO" />
-          </or>
         </iterate>
       </enabledWhen>
     </handler>
@@ -3287,7 +3299,10 @@
                       value="org.eclipse.jubula.client.core.model.ISpecTestCasePO">
                 </instanceof>
              </or>
-            <test property="org.eclipse.jubula.client.core.model.isEditable" />
+             <test property="org.eclipse.jubula.client.core.model.isEditable" />
+             <not>
+                <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
+             </not>
           </iterate>
        </enabledWhen>
     </handler>
@@ -3710,12 +3725,11 @@
           <iterate
             ifEmpty="false"
             operator="and">
+            <instanceof value="org.eclipse.jubula.client.core.model.INodePO" />
             <or>
-              <instanceof value="org.eclipse.jubula.client.core.model.INodePO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.ISpecObjContPO" />
-              <instanceof value="org.eclipse.jubula.client.core.model.IExecObjContPO" />
+              <test property="org.eclipse.jubula.client.core.model.isEditable" />
+              <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
             </or>
-            <test property="org.eclipse.jubula.client.core.model.isEditable" />
           </iterate>
         </and>
       </activeWhen>
@@ -3744,7 +3758,10 @@
           <iterate
             ifEmpty="false"
             operator="and">
-            <test property="org.eclipse.jubula.client.core.model.isEditable" />
+              <or>
+                <test property="org.eclipse.jubula.client.core.model.isEditable" />
+                <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
+              </or>
           </iterate>
         </and>
       </activeWhen>

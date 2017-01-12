@@ -315,4 +315,14 @@ public interface INodePO extends ITimestampPO {
      */
     public void goingToBeDeleted(EntityManager sess);
     
+    /**
+     * @return whether the node is an Exec Obj Cont (TSB root) of a Project
+     */
+    public boolean isExecObjCont();
+
+    /**
+     * @return whether the node is a Spec Obj Cont (TCB root) of a Project
+     */
+    public boolean isSpecObjCont();
+    
 }

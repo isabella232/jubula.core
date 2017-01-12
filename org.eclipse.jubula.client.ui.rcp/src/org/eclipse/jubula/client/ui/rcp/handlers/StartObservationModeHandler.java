@@ -34,7 +34,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.RecordModeState
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -259,7 +258,7 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         final Set<String> usedNames = new HashSet<String>();
         // generate a unique name
         for (Object node : GeneralStorage.getInstance().getProject()
-                .getSpecObjCont().getSpecObjList()) {
+                .getUnmodSpecList()) {
             if (node instanceof ITestCasePO
                     && ((INodePO) node).getName().startsWith(standardName)) {
                 usedNames.add(((INodePO) node).getName());
@@ -278,7 +277,8 @@ public class StartObservationModeHandler extends AbstractRunningAutHandler {
         dialog.open();
         if (Window.OK == dialog.getReturnCode()) {
             String tcName = dialog.getName();
-            final INodePO parentPO = ISpecObjContPO.TCB_ROOT_NODE;
+            final INodePO parentPO = GeneralStorage.getInstance().
+                    getProject().getSpecObjCont();
             ISpecTestCasePO recSpecTestCase = NodeMaker
                     .createSpecTestCasePO(tcName);
             try {

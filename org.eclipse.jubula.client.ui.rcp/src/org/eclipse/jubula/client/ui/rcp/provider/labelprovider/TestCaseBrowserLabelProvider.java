@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.labelprovider;
 
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.swt.graphics.Image;
@@ -34,7 +34,8 @@ public class TestCaseBrowserLabelProvider extends TooltipLabelProvider {
     
     @Override
     public Image getImage(Object element) {
-        if (element instanceof ISpecObjContPO) {
+        if (element instanceof INodePO
+                && ((INodePO) element).isSpecObjCont()) {
             return IconConstants.CATEGORY_IMAGE;
         }
         return super.getImage(element);

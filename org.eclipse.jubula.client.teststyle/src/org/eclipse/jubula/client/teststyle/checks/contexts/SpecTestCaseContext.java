@@ -13,11 +13,12 @@ package org.eclipse.jubula.client.teststyle.checks.contexts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.teststyle.i18n.Messages;
 
 /**
@@ -39,7 +40,7 @@ public class SpecTestCaseContext extends BaseContext {
     public List<Object> getAll() {
         List<Object> tmp = new ArrayList<Object>();
         IProjectPO project = GeneralStorage.getInstance().getProject();
-        for (ISpecPersistable p : project.getSpecObjCont().getSpecObjList()) {
+        for (INodePO p : project.getUnmodSpecList()) {
             tmp.addAll(getTestCases(p));
         }
         return tmp;
@@ -58,9 +59,8 @@ public class SpecTestCaseContext extends BaseContext {
         List<Object> tmp = new ArrayList<Object>();
         if (obj instanceof ITestCasePO) {
             tmp.add(obj);
-        } else if (obj instanceof ISpecPersistable) {
-            ISpecPersistable cat = (ISpecPersistable) obj;
-            for (Object o : cat.getUnmodifiableNodeList()) {
+        } else if (obj instanceof ICategoryPO) {
+            for (Object o : ((ICategoryPO)obj).getUnmodifiableNodeList()) {
                 tmp.addAll(getTestCases(o));
             }
         }

@@ -15,14 +15,9 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jubula.client.core.model.ExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.SpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.utils.ITreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -116,32 +111,11 @@ public abstract class AbstractTraverserQuery
             structuredSelection) {
         if (structuredSelection != null) {
             @SuppressWarnings("unchecked")
-            List<IPersistentObject> selectionList =
+            List<INodePO> selectionList =
                     structuredSelection.toList();
-            for (IPersistentObject node: selectionList) {
-                traversePersistentObject(node);
+            for (INodePO node: selectionList) {
+                traverseNodePO(node);
             }
-        }
-    }
-
-    /**
-     * @param node The persistent object starting for traversing.
-     */
-    private void traversePersistentObject(IPersistentObject node) {
-        if (node instanceof ExecObjContPO) { // root node of TSB
-            List<IExecPersistable> specList =
-                    ((ExecObjContPO) node).getExecObjList();
-            for (IExecPersistable spec: specList) {
-                traverseNodePO(spec);
-            }
-        } else if (node instanceof SpecObjContPO) { // root node of TCB
-            List<ISpecPersistable> specList =
-                    ((SpecObjContPO) node).getSpecObjList();
-            for (ISpecPersistable spec: specList) {
-                traverseNodePO(spec);
-            }
-        } else if (node instanceof INodePO) {
-            traverseNodePO((INodePO) node);
         }
     }
 

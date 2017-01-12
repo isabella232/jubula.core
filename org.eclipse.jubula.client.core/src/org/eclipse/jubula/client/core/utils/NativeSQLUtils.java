@@ -19,14 +19,10 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 
 /**
  * Class helping handling native SQL queries
@@ -140,42 +136,14 @@ public class NativeSQLUtils {
         IProjectPO proj = GeneralStorage.getInstance().getProject();
         int pos = -1;
         INodePO par = node.getParentNode();
-        if (par == ISpecObjContPO.TCB_ROOT_NODE) {
-            pos = proj.getSpecObjCont().getSpecObjList().indexOf(node);
-            q1 = sess.createNativeQuery("delete from SPEC_CONT_NODE where SPECOBJCONTPO_ID = ?1 and HBMSPECOBJLIST_ID = ?2 and IDX = ?3"); //$NON-NLS-1$
-            q1.setParameter(1, proj.getSpecObjCont().getId());
-            q2 = sess.createNativeQuery("update SPEC_CONT_NODE set IDX = IDX - 1 where SPECOBJCONTPO_ID = ?1 and IDX > ?2"); //$NON-NLS-1$
-            q2.setParameter(1, proj.getSpecObjCont().getId());
-        } else if (par == IExecObjContPO.TSB_ROOT_NODE) {
-            pos = proj.getExecObjCont().getExecObjList().indexOf(node);
-            q1 = sess.createNativeQuery("delete from EXEC_CONT_NODE where EXECOBJCONTPO_ID = ?1 and HBMEXECOBJLIST_ID = ?2 and IDX = ?3"); //$NON-NLS-1$
-            q1.setParameter(1, proj.getExecObjCont().getId());
-            q2 = sess.createNativeQuery("update EXEC_CONT_NODE set IDX = IDX - 1 where EXECOBJCONTPO_ID = ?1 and IDX > ?2"); //$NON-NLS-1$
-            q2.setParameter(1, proj.getExecObjCont().getId());
-        } else {
-            pos = par.indexOf(node);
-            q1 = sess.createNativeQuery("update NODE set PARENT = null, IDX = null where ID = ?1"); //$NON-NLS-1$
-            q1.setParameter(1, node.getId()).executeUpdate();
-            q1 = null;
-            q2 = sess.createNativeQuery("update NODE set IDX = IDX - 1 where PARENT = ?1 and IDX > ?2"); //$NON-NLS-1$
-            q2.setParameter(1, par.getId());
-        }
-        // removing from a regular node parent requires a very different query which is already executed
-        if (q1 != null) {
-            q1.setParameter(2, node.getId()).setParameter(3, pos);
-            int res = q1.executeUpdate();
-            if (res != 1) {
-                throw new PersistenceException(FAIL);
-            }
-        }
+        
+        pos = par.indexOf(node);
+        q1 = sess.createNativeQuery("update NODE set PARENT = null, IDX = null where ID = ?1"); //$NON-NLS-1$
+        q1.setParameter(1, node.getId()).executeUpdate();
+        q2 = sess.createNativeQuery("update NODE set IDX = IDX - 1 where PARENT = ?1 and IDX > ?2"); //$NON-NLS-1$
+        q2.setParameter(1, par.getId());
         q2.setParameter(2, pos).executeUpdate();
-        if (par == ISpecObjContPO.TCB_ROOT_NODE) {
-            proj.getSpecObjCont().removeSpecObject((ISpecPersistable) node);
-        } else if (par == IExecObjContPO.TSB_ROOT_NODE) {
-            proj.getExecObjCont().removeExecObject((IExecPersistable) node);
-        } else {
-            node.getParentNode().removeNode(node);
-        }
+        node.getParentNode().removeNode(node);
     }
     
     /**
@@ -192,28 +160,14 @@ public class NativeSQLUtils {
         Query q1;
         IProjectPO proj = GeneralStorage.getInstance().getProject();
         int pos = -1;
-        if (par instanceof ISpecObjContPO) {
-            pos = ((ISpecObjContPO) par).getSpecObjList().size();
-            q1 = sess.createNativeQuery("insert into SPEC_CONT_NODE (SPECOBJCONTPO_ID, HBMSPECOBJLIST_ID, IDX) values (?1, ?2, ?3)"); //$NON-NLS-1$
-        } else if (par instanceof IExecObjContPO) {
-            pos = ((IExecObjContPO) par).getExecObjList().size();
-            q1 = sess.createNativeQuery("insert into EXEC_CONT_NODE (EXECOBJCONTPO_ID, HBMEXECOBJLIST_ID, IDX) values (?1, ?2, ?3)"); //$NON-NLS-1$
-        } else {
-            pos = ((INodePO) par).getNodeListSize();
-            q1 = sess.createNativeQuery("update NODE set PARENT = ?1, IDX = ?3 where ID = ?2"); //$NON-NLS-1$
-        }
+        pos = ((INodePO) par).getNodeListSize();
+        q1 = sess.createNativeQuery("update NODE set PARENT = ?1, IDX = ?3 where ID = ?2"); //$NON-NLS-1$
         q1.setParameter(1, par.getId()).setParameter(2, toAdd.getId());
         int res = q1.setParameter(3, pos).executeUpdate();
         if (res != 1) {
             throw new PersistenceException(FAIL);
         }
-        if (par instanceof ISpecObjContPO) {
-            ((ISpecObjContPO) par).addSpecObject((ISpecPersistable) toAdd);
-        } else if (par instanceof IExecObjContPO) {
-            ((IExecObjContPO) par).addExecObject((IExecPersistable) toAdd);
-        } else {
-            ((INodePO) par).addNode(toAdd);
-        }
+        ((INodePO) par).addNode(toAdd);
     }
     
     /**

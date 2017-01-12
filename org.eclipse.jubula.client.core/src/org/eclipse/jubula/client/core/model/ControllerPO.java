@@ -29,9 +29,6 @@ import org.apache.commons.lang.StringUtils;
 abstract class ControllerPO extends NodePO
     implements IControllerPO {
     
-    /** unsupported operation warning */
-    public static final String NOSUPPORT = "This type of node does not support alteration of its collection of children."; //$NON-NLS-1$
-    
     /** only for Persistence (JPA / EclipseLink) */
     ControllerPO() {
         // only for Persistence
@@ -70,7 +67,7 @@ abstract class ControllerPO extends NodePO
     }
     
     /** {@inheritDoc} */
-    public final void removeAlNodes() {
+    public final void removeAllNodes() {
         throw new UnsupportedOperationException(NOSUPPORT);
     }
     

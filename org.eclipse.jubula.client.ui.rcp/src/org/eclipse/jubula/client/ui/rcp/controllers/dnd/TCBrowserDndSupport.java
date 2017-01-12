@@ -18,7 +18,6 @@ import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 
@@ -62,8 +61,7 @@ public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
                 return false;
             }
             // check the object to drop on (target)
-            if (!(target instanceof ICategoryPO
-                    || target instanceof ISpecObjContPO)
+            if (!(target instanceof ICategoryPO)
                     || (target instanceof INodePO
                             && !NodeBP.isEditable((IPersistentObject)target))) {
                 
@@ -88,8 +86,7 @@ public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
      */
     public static boolean moveNodes(List<INodePO> nodesToBeMoved,
             IPersistentObject target) {
-        if (MultipleTCBTracker.getInstance().getMainTCB() != null
-                && !nodesToBeMoved.isEmpty()) {
+        if (MultipleTCBTracker.getInstance().getMainTCB() != null) {
             return doMove(nodesToBeMoved, target);
         }
         return false;

@@ -18,16 +18,14 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 
@@ -290,9 +288,7 @@ public class TreeTraverser {
      */
     protected void traverseExecPart(ITreeTraverserContext<INodePO> context,
             IProjectPO project) {
-        for (IExecPersistable exec : project.getExecObjCont()
-                .getExecObjList()) {
-
+        for (INodePO exec : project.getUnmodExecList()) {
             traverseImpl(context, project, exec);
         }
     }
@@ -328,8 +324,7 @@ public class TreeTraverser {
      */
     protected void traverseLocalSpecPart(
             ITreeTraverserContext<INodePO> context, IProjectPO project) {
-        for (ISpecPersistable specNode 
-                : project.getSpecObjCont().getSpecObjList()) {
+        for (INodePO specNode : project.getUnmodSpecList()) {
             traverseImpl(context, project, specNode);
         }
     }

@@ -17,9 +17,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
-import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
@@ -110,12 +108,7 @@ public class NewCategoryHandler extends AbstractNewHandler {
      */
     boolean existCategory(INodePO node, String name) {
         Iterator<? extends INodePO> iter = null;
-        if (node instanceof ICategoryPO) {
-            iter = node.getNodeListIterator();
-        } else {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            iter = proj.getSpecObjCont().getSpecObjList().iterator();
-        }
+        iter = node.getNodeListIterator();
         while (iter.hasNext()) {
             INodePO iterNode = iter.next();
             if (iterNode instanceof ICategoryPO

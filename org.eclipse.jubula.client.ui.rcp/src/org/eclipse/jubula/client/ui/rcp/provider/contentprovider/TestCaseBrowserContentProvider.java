@@ -15,11 +15,11 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -43,14 +43,15 @@ public class TestCaseBrowserContentProvider extends BrowserContentProvider {
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof ISpecObjContPO[]) {
+        if (parentElement instanceof INodePO[]) {
             return (Object[])parentElement;
         }
 
-        if (parentElement instanceof ISpecObjContPO) {
-            ISpecObjContPO specObjects = (ISpecObjContPO)parentElement;
+        if (parentElement instanceof ICategoryPO
+                && ((ICategoryPO)parentElement).isSpecObjCont()) {
+            ICategoryPO specObj = (ICategoryPO) parentElement;
             List<Object> elements = new ArrayList<Object>();
-            elements.addAll(specObjects.getSpecObjList());
+            elements.addAll(specObj.getUnmodifiableNodeList());
             IProjectPO activeProject = 
                     GeneralStorage.getInstance().getProject();
             if (activeProject != null) {
@@ -97,8 +98,7 @@ public class TestCaseBrowserContentProvider extends BrowserContentProvider {
                             (IReusedProjectPO)parentElement);
 
                 if (reusedProject != null) {
-                    return reusedProject.getSpecObjCont()
-                        .getSpecObjList().toArray();
+                    return reusedProject.getUnmodSpecList().toArray();
                 }
 
                 return ArrayUtils.EMPTY_OBJECT_ARRAY;

@@ -141,7 +141,7 @@ public class ShowWhereUsedComponentNameQuery
         Set<INodePO> reuse = new HashSet<INodePO>();
         IProjectPO project = GeneralStorage.getInstance().getProject();
         reuse.addAll(ComponentNamesBP.findNodesOfReuse(
-                project.getSpecObjCont().getSpecObjList(),
+                project.getUnmodSpecList(),
                 TestSuiteBP.getListOfTestSuites(project), logicalName,
                 monitor));
         return reuse;

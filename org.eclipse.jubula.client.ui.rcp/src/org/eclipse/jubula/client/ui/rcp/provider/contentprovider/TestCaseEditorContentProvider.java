@@ -13,7 +13,6 @@ package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 
 /**
@@ -26,8 +25,8 @@ public class TestCaseEditorContentProvider
      * {@inheritDoc}
      */
     public Object[] getChildren(Object parentElement) {
-        if (parentElement instanceof ISpecObjContPO[]) {
-            return new Object[] { ((ISpecObjContPO[])parentElement)[0] };
+        if (parentElement instanceof INodePO[]) {
+            return new Object[] { ((INodePO[])parentElement)[0] };
         }
         if (!(parentElement instanceof IExecTestCasePO)
                 && parentElement instanceof INodePO

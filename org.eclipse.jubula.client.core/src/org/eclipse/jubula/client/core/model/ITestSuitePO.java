@@ -12,13 +12,11 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Map;
 
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
  */
-public interface ITestSuitePO extends INodePO, IExecPersistable, Comparable {
+public interface ITestSuitePO extends INodePO, Comparable {
     /** 
      * Array of Reentry Properties that are valid for use with 
      * Default Event Handlers. This should consist only of Reentry Types

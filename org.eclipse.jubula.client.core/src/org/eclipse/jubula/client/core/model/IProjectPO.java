@@ -84,16 +84,6 @@ public interface IProjectPO extends IParamNodePO {
     public abstract void setMarkupLanguage(String markupLanguage);
 
     /**
-     * @return Returns the specObjCont.
-     */
-    public abstract ISpecObjContPO getSpecObjCont();
-
-    /**
-     * @return Returns the excObjCont.
-     */
-    public abstract IExecObjContPO getExecObjCont();
-    
-    /**
      * @return Returns the test data container.
      */
     public abstract ITestDataCategoryPO getTestDataCubeCont();
@@ -220,4 +210,25 @@ public interface IProjectPO extends IParamNodePO {
      * @return Returns the AutCont.
      */
     public IAUTContPO getAutCont();
+    
+    /**
+     * @return Returns the container of top-level Test Suite Tree nodes
+     */
+    public INodePO getExecObjCont();
+    
+    /**
+     * @return Returns the container of top-level Test Case Tree nodes
+     */
+    public INodePO getSpecObjCont();
+
+    /**
+     * @return The unmodifiable list of top-level Test Suite Tree nodes
+     */
+    public List<INodePO> getUnmodExecList();
+
+    /**
+     * @return The unmodifiable list of top-level Test Case Tree nodes
+     */
+    public List<INodePO> getUnmodSpecList();
+    
 }

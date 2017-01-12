@@ -42,7 +42,6 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.MultipleNodePM;
@@ -315,7 +314,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
                     null, null);
                 return;
             }
-            ISpecObjContPO newParent = extProject.getSpecObjCont();
+            INodePO newParent = extProject.getSpecObjCont();
 
             List<MultipleNodePM.AbstractCmdHandle> commands = 
                 createCommands(selectionList, newParent, extProject);
@@ -440,7 +439,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
      * @return The commands necessary to move the given nodes.
      */
     private List<MultipleNodePM.AbstractCmdHandle> createCommands(
-            List<INodePO> selectionList, ISpecObjContPO newParent,
+            List<INodePO> selectionList, INodePO newParent,
             IProjectPO extProject) throws JBException {
 
         List<MultipleNodePM.AbstractCmdHandle> commands = 

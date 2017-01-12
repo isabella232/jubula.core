@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
 
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -57,14 +55,17 @@ public abstract class AbstractTreeViewContentProvider extends
             INodePO parent = node.getParentNode();
             Long nodeProjId = node.getParentProjectId();
             
+            if (node.isExecObjCont() || node.isSpecObjCont()) {
+                return GeneralStorage.getInstance().getProject();
+            }
+            
             IProjectPO activeProject = 
                 GeneralStorage.getInstance().getProject();
             if (activeProject != null && nodeProjId != null) {
                 if (!nodeProjId.equals(activeProject.getId())
-                        && parent == ISpecObjContPO.TCB_ROOT_NODE) {
+                        && parent.isSpecObjCont()) {
                     // Parent is a TCB_ROOT_NODE, but node is not from the
-                    // current
-                    // project. So it must be a reused project.
+                    // current project. So it must be a reused project.
                     try {
                         String nodeProjGUID = ProjectPM
                                 .getGuidOfProjectId(nodeProjId);
@@ -83,9 +84,7 @@ public abstract class AbstractTreeViewContentProvider extends
             }
             return parent;
         }
-        if (element instanceof IReusedProjectPO
-                || element instanceof ISpecObjContPO
-                || element instanceof IExecObjContPO) {
+        if (element instanceof IReusedProjectPO) {
             return GeneralStorage.getInstance().getProject();
         }
         if (element instanceof ITestDataCategoryPO) {

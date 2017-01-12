@@ -59,22 +59,22 @@ class IteratePO extends ParamNodePO implements IIteratePO {
     
     /** {@inheritDoc} */
     public final void addNode(INodePO childNode) {
-        throw new UnsupportedOperationException(ControllerPO.NOSUPPORT);
+        throw new UnsupportedOperationException(NOSUPPORT);
     }
     
     /** {@inheritDoc} */
     public final void addNode(int position, INodePO childNode) {
-        throw new UnsupportedOperationException(ControllerPO.NOSUPPORT);
+        throw new UnsupportedOperationException(NOSUPPORT);
     }
     
     /** {@inheritDoc} */
     public final void removeNode(INodePO childNode) {
-        throw new UnsupportedOperationException(ControllerPO.NOSUPPORT);
+        throw new UnsupportedOperationException(NOSUPPORT);
     }
     
     /** {@inheritDoc} */
     public final void removeAllNodes() {
-        throw new UnsupportedOperationException(ControllerPO.NOSUPPORT);
+        throw new UnsupportedOperationException(NOSUPPORT);
     }
 
     /** {@inheritDoc} */

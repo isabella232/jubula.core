@@ -10,14 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
-
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
  */
-public interface ICategoryPO extends INodePO, IExecPersistable,
-        ISpecPersistable {
+public interface ICategoryPO extends INodePO {
     // currently empty
 }

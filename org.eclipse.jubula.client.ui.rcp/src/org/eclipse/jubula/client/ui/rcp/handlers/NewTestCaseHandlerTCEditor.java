@@ -23,9 +23,9 @@ import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -78,10 +78,10 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
                 ISpecTestCasePO newSpecTC = null;
                 if (Window.OK == dialog.getReturnCode()) {
                     String tcName = dialog.getName();
-                    INodePO parent = ISpecObjContPO.TCB_ROOT_NODE;
                     try {
                         newSpecTC = TestCaseBP.createNewSpecTestCase(tcName,
-                                parent);
+                                GeneralStorage.getInstance().
+                                getProject().getSpecObjCont());
                         DataEventDispatcher.getInstance()
                             .fireDataChangedListener(
                                 newSpecTC, DataState.Added, UpdateState.all);

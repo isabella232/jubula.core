@@ -16,7 +16,6 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 
 
 /**
@@ -48,9 +47,7 @@ public class SpecTreeTraverser extends TreeTraverser {
             }
             if (node instanceof IProjectPO) {
                 IProjectPO project = (IProjectPO)node;
-                project.getSpecObjCont().getSpecObjList();
-                for (ISpecPersistable specPers : project.getSpecObjCont()
-                    .getSpecObjList()) {
+                for (INodePO specPers : project.getUnmodSpecList()) {
                     
                     traverseImpl(context, project, specPers);
                 }

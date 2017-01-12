@@ -34,7 +34,7 @@ public class TestCaseTreeCompositeContentProvider
         if (parentElement instanceof IProjectPO) {
             IProjectPO project = (IProjectPO)parentElement;
             List<Object> elements = new ArrayList<Object>();
-            elements.addAll(project.getSpecObjCont().getSpecObjList());
+            elements.addAll(project.getUnmodSpecList());
             elements.addAll(project.getUsedProjects());
             return elements.toArray();
         }
@@ -51,8 +51,7 @@ public class TestCaseTreeCompositeContentProvider
                             (IReusedProjectPO)parentElement);
 
                 if (reusedProject != null) {
-                    return reusedProject.getSpecObjCont()
-                        .getSpecObjList().toArray();
+                    return reusedProject.getUnmodSpecList().toArray();
                 }
 
                 return ArrayUtils.EMPTY_OBJECT_ARRAY;

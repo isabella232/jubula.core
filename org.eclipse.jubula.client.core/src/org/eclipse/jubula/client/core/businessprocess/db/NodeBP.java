@@ -25,7 +25,6 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
@@ -202,16 +201,4 @@ public class NodeBP {
         offspring.add(node);
     }
     
-    /**
-     * Determines whether a node comes from the TC or TS Browser
-     * @param node the node
-     * @return whether
-     */
-    public static boolean isTC(INodePO node) {
-        INodePO top = node;
-        while (top.getParentNode() != null) {
-            top = top.getParentNode();
-        }
-        return top == ISpecObjContPO.TCB_ROOT_NODE; 
-    }
 }

@@ -274,6 +274,7 @@ public class Messages extends NLS {
     public static String ParameterWithUniqueId;
     public static String ParamProposal_ParsingError;
     public static String ParentChildInconsistency;
+    public static String ParentIsNull;
     public static String ParentProjectDoesNotExistWithID;
     public static String ParentProjectId;
     public static String PersistenceErrorCreateEntityManagerFailed;
@@ -296,6 +297,7 @@ public class Messages extends NLS {
     public static String Project;
     public static String ProjectNotInDB;
     public static String ProjectWasDeleted;
+    public static String ProjectWithIllegalChild;
     public static String ProjectWizardCreatingProject;
     public static String PropertyTesterPropertyNotSupported;
     public static String PropertyTesterTypeNotSupported;

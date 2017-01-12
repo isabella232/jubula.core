@@ -36,14 +36,12 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -169,74 +167,6 @@ public class NodePM extends PersistenceManager {
     /**
      * {@inheritDoc}
      */
-    public static class CmdHandleChildIntoSpecList extends
-        AbstractCmdHandleChild {
-
-        /**
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO)
-         */
-        public void add(INodePO parent, INodePO child, Integer pos) {
-            // pos is not used here
-            if (getParent() != null && getParent() instanceof ISpecObjContPO) {
-                // circumventing the method signature...
-                ((ISpecObjContPO) getParent()).addSpecObject(
-                        (ISpecPersistable) child);
-            } else {
-                IProjectPO proj = GeneralStorage.getInstance().getProject();
-                proj.getSpecObjCont().addSpecObject((ISpecPersistable)child);
-            }
-            setParentProjectId(child, parent);
-        }
-
-        /**
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO)
-         */
-        public void remove(INodePO parent, INodePO child) {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getSpecObjCont().removeSpecObject((ISpecPersistable)child);
-        }
-
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public static class CmdHandleChildIntoExecList extends
-        AbstractCmdHandleChild {
-
-        /**
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO)
-         */
-        public void add(INodePO parent, INodePO child, Integer pos) {
-            // pos is not used here
-            if (getParent() != null && getParent() instanceof IExecObjContPO) {
-                // circumventing the method signature...
-                ((IExecObjContPO) getParent()).addExecObject(
-                        (IExecPersistable) child);
-            } else {
-                IProjectPO proj = GeneralStorage.getInstance().getProject();
-                proj.getExecObjCont().addExecObject((IExecPersistable)child);
-            }
-            setParentProjectId(child, parent);
-        }
-
-        /**
-         * {@inheritDoc}
-         *      org.eclipse.jubula.client.core.model.INodePO)
-         */
-        public void remove(INodePO parent, INodePO child) {
-            IProjectPO proj = GeneralStorage.getInstance().getProject();
-            proj.getExecObjCont().removeExecObject((IExecPersistable)child);
-        }
-
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
     public static class CmdHandleEventHandlerIntoMap 
         extends AbstractCmdHandleChild {
         /**
@@ -326,11 +256,7 @@ public class NodePM extends PersistenceManager {
      */
     public static AbstractCmdHandleChild getCmdHandleChild(INodePO parent,
             INodePO child) {
-        if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
-            return new CmdHandleChildIntoSpecList();
-        } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
-            return new CmdHandleChildIntoExecList();
-        } else if (parent instanceof ICategoryPO
+        if (parent instanceof ICategoryPO
                 || parent instanceof IAbstractContainerPO) {
             // category/specTc in category
             return new CmdHandleChildIntoNodeList();
@@ -376,24 +302,10 @@ public class NodePM extends PersistenceManager {
             IProjectPO currProj = GeneralStorage.getInstance().getProject();
             EntityTransaction tx = persistor.getTransaction(sess);
             sess.persist(child);
-            IPersistentObject newParent = null;
-            boolean root = true;
-            if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
-                newParent = currProj.getSpecObjCont();
-            } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
-                newParent = currProj.getExecObjCont();
-            } else {
-                root = false;
-                newParent = parent;
-            }
-            newParent = sess.find(newParent.getClass(), newParent.getId());
+            IPersistentObject newParent;
+            newParent = sess.find(parent.getClass(), parent.getId());
             persistor.lockPO(sess, newParent);
-            if (root) {
-                handler.setParent(newParent);
-                handler.add(parent, child, pos);
-            } else {
-                handler.add((INodePO) newParent, child, pos);
-            }
+            handler.add((INodePO) newParent, child, pos);
             
             persistor.commitTransaction(sess, tx);
             refreshMasterSession(newParent);
@@ -709,30 +621,6 @@ public class NodePM extends PersistenceManager {
         
     }
 
-    /**
-     * 
-     * @param project proj
-     * @return read-only list of ISpecPersistable objects
-     */
-    public static synchronized List<ISpecPersistable> loadSpecObjList(
-        IProjectPO project) {
-        
-        if (project == null) {
-            return new ArrayList<ISpecPersistable>();
-        }
-
-        EntityManager s = GeneralStorage.getInstance().getMasterSession();
-        Query q = s.createQuery("select cont from SpecObjContPO as cont where cont.hbmParentProjectId = :parentProjectId"); //$NON-NLS-1$
-        q.setParameter("parentProjectId", project.getId()); //$NON-NLS-1$
-        
-        try {
-            return ((ISpecObjContPO)q.getSingleResult()).getSpecObjList();
-        } catch (NoResultException nre) {
-            return new ArrayList<ISpecPersistable>();
-        }
-        
-    }
-    
     /**
      * Finds a test case within reused projects.
      * @param reusedProjects Set of reused projects that are available.

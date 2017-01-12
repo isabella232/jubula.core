@@ -30,7 +30,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
@@ -131,9 +130,9 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         /** Maper used to handle param names */
         private ParamNameBPDecorator m_mapper = new ParamNameBPDecorator(
                 ParamNameBP.getInstance());
-        
-        /** The Spec Obj Cont */
-        private ISpecObjContPO m_cont = GeneralStorage.getInstance().
+
+        /** The SpecObjCont */
+        private INodePO m_cont = GeneralStorage.getInstance().
                 getProject().getSpecObjCont();
         
         /**

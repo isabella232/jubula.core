@@ -30,7 +30,6 @@ import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IControllerPO;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
@@ -164,7 +163,7 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
                     runCommand(RCPCommandIDs.OPEN_SPECIFICATION);
                 } else if (firstElement instanceof ITestJobPO) {
                     runCommand(RCPCommandIDs.OPEN_TESTJOB_EDITOR);
-                } else if (firstElement instanceof IExecObjContPO) {
+                } else if (firstElement instanceof ICategoryPO) {
                     runCommand(RCPCommandIDs.NEW_TESTSUITE);
                 }  else if (firstElement instanceof ICapPO
                         || firstElement instanceof IControllerPO

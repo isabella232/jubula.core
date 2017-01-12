@@ -120,8 +120,6 @@ import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
@@ -385,10 +383,10 @@ public class JsonImporter {
             m_monitor.worked(1);
             ImportExportUtil.checkCancel(m_monitor);
             if (node instanceof CategoryDTO) {
-                proj.getSpecObjCont().addSpecObject(createCategory(proj,
+                proj.getSpecObjCont().addNode(createCategory(proj,
                         (CategoryDTO)node, assignNewGuid, mapper));
             } else if (node instanceof TestCaseDTO) {
-                proj.getSpecObjCont().addSpecObject(createTestCaseBase(proj,
+                proj.getSpecObjCont().addNode(createTestCaseBase(proj,
                         (TestCaseDTO)node, assignNewGuid, mapper));
             }
         }
@@ -762,7 +760,7 @@ public class JsonImporter {
      *              but may happen when someone generates DTO project description
      *              outside of GUIdancer.
      */
-    private ISpecPersistable createCategory(IProjectPO proj, CategoryDTO dto,
+    private INodePO createCategory(IProjectPO proj, CategoryDTO dto,
             boolean assignNewGuid, IParamNameMapper mapper)
                 throws InvalidDataException {
         ICategoryPO cat;
@@ -1384,7 +1382,7 @@ public class JsonImporter {
         
         for (NodeDTO node : dto.getExecCategories()) {
             ImportExportUtil.checkCancel(m_monitor);
-            proj.getExecObjCont().addExecObject(
+            proj.getExecObjCont().addNode(
                     createTestSuitesOrTestJobsOrCategories(proj, node,
                             assignNewGuid));
         }
@@ -1397,7 +1395,7 @@ public class JsonImporter {
      * @return IExecPersistable 
      * @throws InvalidDataException
      */
-    private IExecPersistable createTestSuitesOrTestJobsOrCategories(
+    private INodePO createTestSuitesOrTestJobsOrCategories(
             IProjectPO proj, NodeDTO dto, boolean assignNewGuid)
                     throws InvalidDataException {
         
@@ -1427,7 +1425,7 @@ public class JsonImporter {
      *              but may happen when someone generates DTO project description
      *              outside of GUIdancer.
      */
-    private IExecPersistable createTestJob(TestJobDTO dto,
+    private INodePO createTestJob(TestJobDTO dto,
             boolean assignNewGuid) throws InvalidDataException {
 
         ITestJobPO tj;
@@ -1494,7 +1492,7 @@ public class JsonImporter {
      *              an object. This should not happen for exported project,
      *              but may happen when someone generates DTO project.
      */
-    private IExecPersistable createExecCategory(IProjectPO proj, 
+    private INodePO createExecCategory(IProjectPO proj, 
         ExecCategoryDTO dto, boolean assignNewGuid) 
         throws InvalidDataException {
         
@@ -1532,7 +1530,7 @@ public class JsonImporter {
      * @return a persistent object generated from the information in the DTO
      *              element
      */
-    private IExecPersistable createTestSuite(IProjectPO proj, TestSuiteDTO dto, 
+    private INodePO createTestSuite(IProjectPO proj, TestSuiteDTO dto, 
         boolean assignNewGuid) throws InvalidDataException {
         
         ITestSuitePO ts;

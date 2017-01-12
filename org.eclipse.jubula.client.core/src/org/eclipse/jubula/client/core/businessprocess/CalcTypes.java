@@ -32,7 +32,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
@@ -125,8 +124,7 @@ public class CalcTypes {
         reusedAndSelf.add(GeneralStorage.getInstance().getProject());
         for (IProjectPO proj : reusedAndSelf) {
             // SpecTestCasePOs
-            for (ISpecPersistable node : proj.getSpecObjCont()
-                    .getSpecObjList()) {
+            for (INodePO node : proj.getUnmodSpecList()) {
                 if (!m_localPropTypes.containsKey(node.getId())) {
                     traverse(node);
                 }

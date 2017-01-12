@@ -24,11 +24,9 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
@@ -68,10 +66,11 @@ public abstract class AbstractNewHandler extends AbstractHandler {
         }
         if (parentNode == null) {
             IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
+            IProjectPO proj = GeneralStorage.getInstance().getProject();
             if (activePart instanceof TestSuiteBrowser) {
-                parentNode = IExecObjContPO.TSB_ROOT_NODE;
+                parentNode = proj.getExecObjCont();
             } else {
-                parentNode = ISpecObjContPO.TCB_ROOT_NODE;
+                parentNode = proj.getSpecObjCont();
             }
         }
         return parentNode;
@@ -84,19 +83,12 @@ public abstract class AbstractNewHandler extends AbstractHandler {
      * @param ev the Event object
      */
     public void addCreatedNode(final INodePO created, ExecutionEvent ev) {
-        INodePO parent = getParentNode(ev);
+        final INodePO parent = getParentNode(ev);
 
         final List<IPersistentObject> toLock = new ArrayList<>();
         IProjectPO pr = GeneralStorage.getInstance().getProject();
         final IPersistentObject par;
-        if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
-            par = pr.getSpecObjCont();
-        } else if (parent == IExecObjContPO.TSB_ROOT_NODE) {
-            par = pr.getExecObjCont();
-        } else {
-            par = parent;
-        }
-        toLock.add(par);
+        toLock.add(parent);
         
         boolean succ = TransactionWrapper.executeOperation(new ITransaction() {
             /** {@inheritDoc} */
@@ -112,7 +104,7 @@ public abstract class AbstractNewHandler extends AbstractHandler {
             /** {@inheritDoc} */
             public void run(EntityManager sess) {
                 sess.persist(created);
-                NativeSQLUtils.addNodeAFFECTS(sess, created, par);
+                NativeSQLUtils.addNodeAFFECTS(sess, created, parent);
             }
 
             /** {@inheritDoc} */

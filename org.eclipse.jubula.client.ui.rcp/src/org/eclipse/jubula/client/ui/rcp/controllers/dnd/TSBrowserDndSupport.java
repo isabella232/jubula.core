@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -63,8 +62,7 @@ public class TSBrowserDndSupport extends AbstractBrowserDndSupport {
                 return false;
             }
             // check the object to drop on (target)
-            if (!(target instanceof ICategoryPO
-                    || target instanceof IExecObjContPO)
+            if (!(target instanceof ICategoryPO)
                     || (target instanceof INodePO
                             && !NodeBP.isEditable((IPersistentObject)target))) {
                 return false;
@@ -88,8 +86,7 @@ public class TSBrowserDndSupport extends AbstractBrowserDndSupport {
      */
     public static boolean moveNodes(List<INodePO> nodesToBeMoved,
             IPersistentObject target) {
-        if (TestSuiteBrowser.getInstance() != null
-                && !nodesToBeMoved.isEmpty()) {
+        if (TestSuiteBrowser.getInstance() != null) {
             return doMove(nodesToBeMoved, target);
         }
         return false;

@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 @Entity
 @DiscriminatorValue(value = "P")
 class ProjectPO extends ParamNodePO implements IProjectPO {
-
+    
     /** standard logging */
     private static Logger log = LoggerFactory.getLogger(ProjectPO.class);
     
@@ -53,17 +53,6 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     /** object to manage all AUTs */
     private AUTContPO m_autCont = null;
 
-    /**
-     * <code>m_execObjCont</code>object to manage all executable object such as
-     * test suites, test jobs and the categories they belong to
-     */
-    private ExecObjContPO m_execObjCont = null;
-    
-    /**
-     * <code>m_specObjCont</code>object to manage all specObjects
-     */
-    private SpecObjContPO m_specObjCont = null;
-    
     /**
      * <code>m_clientMetaDataVersion</code>metaDataVersion of Client which 
      * was used for creation of project
@@ -134,8 +123,8 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
                     majorNumber, minorNumber, microNumber, versionQualifier));
         setAutCont(PoMaker.createAUTContPO());
         setTestDataCubeContPO(PoMaker.createTestDataCategoryPO());
-        setExecObjCont(PoMaker.createExecObjContPO());
-        setSpecObjCont(PoMaker.createSpecObjContPO());
+        super.addNode(0, NodeMaker.createCategoryPO("TSB_ROOT")); //$NON-NLS-1$
+        super.addNode(1, NodeMaker.createCategoryPO("TCB_ROOT")); //$NON-NLS-1$
         setClientMetaDataVersion(metadataVersion);
     }
 
@@ -195,80 +184,12 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
     }  
 
     /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public ISpecObjContPO getSpecObjCont() {
-        return getHbmSpecObjCont();
-    }
-    
-    /**
-     * @param specObjCont The specObjCont to set.
-     */
-    private void setSpecObjCont(ISpecObjContPO specObjCont) {
-        setHbmSpecObjCont((SpecObjContPO)specObjCont);
-        getHbmSpecObjCont().setParentProjectId(getId());
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Transient
-    public IExecObjContPO getExecObjCont() {
-        return getHbmExecObjCont();
-    }
-    
-    /**
-     * @param execObjCont The execObjCont to set.
-     */
-    private void setExecObjCont(IExecObjContPO execObjCont) {
-        setHbmExecObjCont((ExecObjContPO)execObjCont);
-        getHbmExecObjCont().setParentProjectId(getId());
-    }
-
-    /**
      * @param autCont The autCont to set.
      */
     private void setAutCont(IAUTContPO autCont) {
         setHbmAutCont((AUTContPO)autCont);
     }
 
-    /**
-     *      
-     * @return Returns the specObjCont.
-     */
-    @OneToOne(cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
-    @JoinColumn(name = "SPECOBJ_CONT", unique = true)
-    private SpecObjContPO getHbmSpecObjCont() {
-        return m_specObjCont;
-    }
-
-    /**
-     * @param specObjCont The specObjCont to set.
-     */
-    private void setHbmSpecObjCont(SpecObjContPO specObjCont) {
-        m_specObjCont = specObjCont;
-    }
-
-    /**
-     *      
-     * @return Returns the execObjCont.
-     */
-    @OneToOne(cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
-    @JoinColumn(name = "EXECOBJ_CONT", unique = true)
-    private ExecObjContPO getHbmExecObjCont() {
-        return m_execObjCont;
-    }
-
-    /**
-     * @param execObjCont The execObjCont to set.
-     */
-    private void setHbmExecObjCont(ExecObjContPO execObjCont) {
-        m_execObjCont = execObjCont;
-    }
-    
     /**
      *      
      * @return Returns the AutCont.
@@ -595,15 +516,10 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         if (getHbmAutCont() != null) {
             getHbmAutCont().setParentProjectId(projectId);
         }
-        if (getHbmSpecObjCont() != null) {
-            getHbmSpecObjCont().setParentProjectId(projectId);
-        }
-        if (getHbmExecObjCont() != null) {
-            getHbmExecObjCont().setParentProjectId(projectId);
-        }
         if (getHbmTestDataCubeContPO() != null) {
             getHbmTestDataCubeContPO().setParentProjectId(projectId);
         }
+        super.setParentProjectId(projectId);
     }
 
     /**
@@ -674,6 +590,58 @@ class ProjectPO extends ParamNodePO implements IProjectPO {
         return new ProjectVersion(getMajorProjectVersion(),
                 getMinorProjectVersion(), getMicroProjectVersion(),
                 getProjectVersionQualifier());
+    }
+    
+    /** {@inheridDoc} */
+    @Override
+    public void addNode(INodePO childNode) {
+        throw new UnsupportedOperationException(NOSUPPORT);
+    }
+    
+    /** {@inheridDoc} */
+    @Override
+    public void addNode(int position, INodePO childNode) {
+        throw new UnsupportedOperationException(NOSUPPORT);
+    }
+    
+    /** {@inheridDoc} */
+    @Override
+    public void removeNode(INodePO childNode) {
+        throw new UnsupportedOperationException(NOSUPPORT);
+    }
+    
+    /** {@inheridDoc} */
+    @Override
+    public void removeAllNodes() {
+        throw new UnsupportedOperationException(NOSUPPORT);
+    }
+    
+    /**
+     * The following methods establish the top-level node project structure
+     * ProjectPOs have two children: the first contains the TSB top-level
+     *      nodes, the second the TCB top-level nodes
+     * These nodes are not special in any sense, so children can be added to them
+     *      the same way as for 'normal' nodes
+     */
+
+    /** {@inheritDoc} */
+    public INodePO getExecObjCont() {
+        return getUnmodifiableNodeList().get(0);
+    }
+    
+    /** {@inheritDoc} */
+    public INodePO getSpecObjCont() {
+        return getUnmodifiableNodeList().get(1);
+    }
+    
+    /** {@inheritDoc} */
+    public List<INodePO> getUnmodExecList() {
+        return getExecObjCont().getUnmodifiableNodeList();
+    }
+
+    /** {@inheritDoc} */
+    public List<INodePO> getUnmodSpecList() {
+        return getSpecObjCont().getUnmodifiableNodeList();
     }
     
 }

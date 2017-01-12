@@ -9,14 +9,12 @@
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -43,13 +41,6 @@ public class TestSuiteBrowserContentProvider extends BrowserContentProvider {
         if (parentElement instanceof IProjectPO) {
             return new Object[] { ((IProjectPO) parentElement)
                     .getExecObjCont() };
-        }
-
-        if (parentElement instanceof IExecObjContPO) {
-            IExecObjContPO execObjects = (IExecObjContPO)parentElement;
-            List<Object> elements = new ArrayList<Object>();
-            elements.addAll(execObjects.getExecObjList());
-            return elements.toArray();
         }
 
         if (parentElement instanceof IExecTestCasePO) {

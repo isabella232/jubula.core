@@ -13,14 +13,10 @@ package org.eclipse.jubula.client.alm.mylyn.ui.bridge.bridge;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
-import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.IExecPersistable;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
@@ -61,16 +57,18 @@ public class NodeStructureBridge extends AbstractContextStructureBridge {
         if (object instanceof SearchResultElement<?>) {
             accepted = true;
         } else if (object instanceof INodePO) {
+            INodePO thisNode = (INodePO) object;
+            if (thisNode.isExecObjCont() || thisNode.isExecObjCont()) {
+                return true;
+            }
             accepted = true;
-            INodePO node = getRoot((INodePO)object);
+            INodePO node = getRoot(thisNode);
             String name = node.getName();
             if (name == null && log.isWarnEnabled()) {
                 log.warn("found INodePO with no name"); //$NON-NLS-1$
                 accepted = false;
             }
-        } else if (object instanceof ISpecObjContPO 
-                || object instanceof IExecObjContPO
-                || object instanceof IReusedProjectPO) {
+        } else if (object instanceof IReusedProjectPO) {
             accepted = true;
         }
         return accepted;
@@ -97,12 +95,13 @@ public class NodeStructureBridge extends AbstractContextStructureBridge {
 
     /** {@inheritDoc} */
     public boolean canFilter(Object element) {
-        Boolean filterable = true;
-        if (element instanceof ISpecObjContPO
-                || element instanceof IExecObjContPO) {
-            filterable = false;
+        if (element instanceof INodePO) {
+            INodePO node = (INodePO) element;
+            if (node.isExecObjCont() || node.isSpecObjCont()) {
+                return false;
+            }
         }
-        return filterable;
+        return true;
     }
 
     /** {@inheritDoc} */
@@ -114,16 +113,6 @@ public class NodeStructureBridge extends AbstractContextStructureBridge {
             for (INodePO child : node.getUnmodifiableNodeList()) {
                 childHandles.add(getHandleIdentifier(child));
             }
-        } else if (objForHandle instanceof IExecObjContPO) {
-            for (IExecPersistable execs : ((IExecObjContPO) objForHandle)
-                    .getExecObjList()) {
-                childHandles.add(execs.getGuid());
-            }
-        } else if (objForHandle instanceof ISpecObjContPO) {
-            for (ISpecPersistable specs : ((ISpecObjContPO) objForHandle)
-                    .getSpecObjList()) {
-                childHandles.add(specs.getGuid());
-            }
         } else if (objForHandle instanceof IReusedProjectPO) {
             try {
                 IProjectPO reusedProject = ProjectPM
@@ -131,8 +120,8 @@ public class NodeStructureBridge extends AbstractContextStructureBridge {
                                 (IReusedProjectPO) objForHandle);
 
                 if (reusedProject != null) {
-                    for (ISpecPersistable specs : reusedProject
-                            .getSpecObjCont().getSpecObjList()) {
+                    for (INodePO specs : reusedProject
+                            .getUnmodSpecList()) {
                         childHandles.add(specs.getGuid());
                     }
                 }
@@ -231,11 +220,10 @@ public class NodeStructureBridge extends AbstractContextStructureBridge {
                 INodePO node = (INodePO)objForHandle;
                 if (node.getParentNode() != null) {
                     INodePO parent = node.getParentNode();
-                    if (parent == ISpecObjContPO.TCB_ROOT_NODE) {
+                    if (parent.isSpecObjCont()) {
                         // This works around the fact that each top-level node
-                        // from a Reused Project has ISpecObjContPO.TCB_ROOT_NODE
-                        // as its parent (because SpecObjContPO#getSpecObjList
-                        // currently sets all parents to ISpecObjContPO.TCB_ROOT_NODE).
+                        // from a Reused Project has the Spec Obj Cont of the project
+                        // as its parent.
                         // Since we actually want such nodes to have the Reused 
                         // Project as parent in this case, the fix is to 
                         // return the GUID of the corresponding reused Project.

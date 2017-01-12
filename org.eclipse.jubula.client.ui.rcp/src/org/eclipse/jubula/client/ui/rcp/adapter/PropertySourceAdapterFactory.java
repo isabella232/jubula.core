@@ -17,11 +17,9 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
-import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -59,7 +57,7 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
         IComponentNamePO.class, IObjectMappingAssoziationPO.class,
         AutIdentifier.class, ITestSuitePO.class, ISpecTestCasePO.class,
         ICapPO.class, IEventExecTestCasePO.class, IExecTestCasePO.class,
-        IExecObjContPO.class, IRefTestSuitePO.class, ITestJobPO.class,
+        IRefTestSuitePO.class, ITestJobPO.class,
         ICategoryPO.class, ICondStructPO.class,
         IAbstractContainerPO.class, IIteratePO.class};
 
@@ -94,16 +92,16 @@ public class PropertySourceAdapterFactory implements IAdapterFactory {
             } else if (adaptableObject instanceof IExecTestCasePO) {
                 return new ExecTestCaseGUIPropertySource(
                         (IExecTestCasePO)adaptableObject);
-            } else if (adaptableObject instanceof IExecObjContPO) {
-                IProjectPO project = GeneralStorage
-                        .getInstance().getProject();
-                return new ProjectGUIPropertySource(project);
             } else if (adaptableObject instanceof IRefTestSuitePO) {
                 return new RefTestSuiteGUIPropertySource(
                         (IRefTestSuitePO)adaptableObject);
             } else if (adaptableObject instanceof ICategoryPO) {
-                return new CategoryGUIPropertySource(
-                        (ICategoryPO)adaptableObject);
+                ICategoryPO cat = (ICategoryPO) adaptableObject;
+                if (cat.isExecObjCont()) {
+                    return new ProjectGUIPropertySource(GeneralStorage
+                            .getInstance().getProject());
+                }
+                return new CategoryGUIPropertySource(cat);
             } else if (adaptableObject instanceof ITestJobPO) {
                 return new TestJobGUIPropertySource(
                         (ITestJobPO)adaptableObject);

@@ -372,22 +372,6 @@ public abstract class PoMaker {
 
     /**
      * factory method to replace constructor
-     * @return SpecObjContPO
-     */
-    public static ISpecObjContPO createSpecObjContPO() {
-        return new SpecObjContPO();
-    }
-    
-    /**
-     * factory method to replace constructor
-     * @return SpecObjContPO
-     */
-    public static IExecObjContPO createExecObjContPO() {
-        return new ExecObjContPO();
-    }
-
-    /**
-     * factory method to replace constructor
      * @param node node
      * @return TDManagerPO
      */
