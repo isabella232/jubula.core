@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.editors;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -189,7 +191,13 @@ public class ObjectMappingConfigComponent {
          */
         public Object convert(Object fromObject) {
             String doubleString = (String)fromObject;
-            return Double.parseDouble(doubleString.replaceAll("%", "")) / 100; //$NON-NLS-1$ //$NON-NLS-2$
+            try {
+                return NumberFormat.getInstance().
+                        parse(doubleString).doubleValue() / 100;
+            } catch (ParseException e) {
+                // in theory shouldn't happen because the received String is a converted double
+                return 0;
+            }
         }
     }
 
