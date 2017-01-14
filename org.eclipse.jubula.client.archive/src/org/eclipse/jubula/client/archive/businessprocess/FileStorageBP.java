@@ -97,12 +97,12 @@ public class FileStorageBP {
         /** 
          * mapping: projects to import => corresponding param name mapper 
          */
-        private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
+        private Map<IProjectPO, INameMapper> m_projectToMapperMap;
     
         /** 
          * mapping: projects to import => corresponding component name mapper 
          */
-        private Map<IProjectPO, List<IWritableComponentNameCache>> 
+        private Map<IProjectPO, IWritableComponentNameCache> 
             m_projectToCompCacheMap;
     
         /** names of the files to read */
@@ -124,10 +124,10 @@ public class FileStorageBP {
                 List<URL> fileURLs, IProgressConsole console) {
             m_fileURLs = fileURLs;
             m_projectToMapperMap = 
-                new LinkedHashMap<IProjectPO, List<INameMapper>>();
+                new LinkedHashMap<IProjectPO, INameMapper>();
             m_projectToCompCacheMap = 
                 new LinkedHashMap<IProjectPO, 
-                    List<IWritableComponentNameCache>>();
+                    IWritableComponentNameCache>();
             m_console = console;
         }
         
@@ -162,15 +162,9 @@ public class FileStorageBP {
                         if (proj == null) {
                             continue;
                         }
-                        List<INameMapper> mapperList = 
-                            new ArrayList<INameMapper>();
-                        List<IWritableComponentNameCache> compNameCacheList = 
-                            new ArrayList<IWritableComponentNameCache>();
-                        mapperList.add(paramNameMapper);
                         compNameCache.setContext(proj);
-                        compNameCacheList.add(compNameCache);
-                        m_projectToMapperMap.put(proj, mapperList);
-                        m_projectToCompCacheMap.put(proj, compNameCacheList);
+                        m_projectToMapperMap.put(proj, paramNameMapper);
+                        m_projectToCompCacheMap.put(proj, compNameCache);
                     } catch (JBVersionException e) {
                         for (Object msg : e.getErrorMsgs()) {
                             m_console.writeStatus(new Status(IStatus.ERROR,
@@ -250,7 +244,7 @@ public class FileStorageBP {
          * 
          * @return the projects to import, as read from the project files.
          */
-        public Map<IProjectPO, List<INameMapper>> getProjectToMapperMap() {
+        public Map<IProjectPO, INameMapper> getProjectToMapperMap() {
             return m_projectToMapperMap;
         }
     
@@ -259,7 +253,7 @@ public class FileStorageBP {
          * @return the mapping between projects to import and their 
          *         corresponding component name cache
          */
-        public Map<IProjectPO, List<IWritableComponentNameCache>> 
+        public Map<IProjectPO, IWritableComponentNameCache> 
             getProjectToCompCacheMap() {
         
             return m_projectToCompCacheMap;
@@ -276,10 +270,10 @@ public class FileStorageBP {
             implements IRunnableWithProgress {
     
         /** mapping: projects to import => corresponding param name mapper */
-        private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
+        private Map<IProjectPO, INameMapper> m_projectToMapperMap;
     
-        /** mapping: projects to import => corresponding comp name mapper */
-        private Map<IProjectPO, List<IWritableComponentNameCache>> 
+        /** mapping: projects to import => corresponding comp name cache */
+        private Map<IProjectPO, IWritableComponentNameCache> 
             m_projectToCompCacheMap;
     
         /** whether a refresh is required after import */
@@ -299,14 +293,14 @@ public class FileStorageBP {
          *            name mappers.
          * @param projectToCompCacheMap
          *            Mapping from projects to import to corresponding 
-         *            component name mappers.
+         *            component name caches.
          * @param console
          *              The console to use to display progress and 
          *              error messages.
          */
         public CompleteImportOperation(
-                Map<IProjectPO, List<INameMapper>> projectToMapperMap, 
-                Map<IProjectPO, List<IWritableComponentNameCache>> 
+                Map<IProjectPO, INameMapper> projectToMapperMap, 
+                Map<IProjectPO, IWritableComponentNameCache> 
                 projectToCompCacheMap, IProgressConsole console) {
     
             m_projectToMapperMap = projectToMapperMap;
@@ -554,12 +548,11 @@ public class FileStorageBP {
                 ProgressMonitorTracker tracker = 
                         ProgressMonitorTracker.SINGLETON;
                 tracker.setProgressMonitor(monitor);
-                List<INameMapper> mapperList = m_projectToMapperMap.get(proj);
-                List<IWritableComponentNameCache> compNameBindingList = 
+                IWritableComponentNameCache compNameCache = 
                     m_projectToCompCacheMap.get(proj);
                 try {
                     ProjectPM.saveProject(proj, selectedProjectName, 
-                            mapperList, compNameBindingList);
+                            m_projectToMapperMap.get(proj), compNameCache);
                 } finally {
                     // Remove JPA progress listeners
                     tracker.setProgressMonitor(null);
@@ -881,11 +874,11 @@ public class FileStorageBP {
      * @created Jan 9, 2008
      */
     private static class ImportOperation implements IRunnableWithProgress {
-        /** mapping: projects to import => corresponding name mapper List */
-        private Map<IProjectPO, List<INameMapper>> m_projectToMapperMap;
+        /** mapping: projects to import => corresponding name mappers */
+        private Map<IProjectPO, INameMapper> m_projectToMapperMap;
     
-        /** mapping: projects to import => corresponding comp name cache List */
-        private Map<IProjectPO, List<IWritableComponentNameCache>> 
+        /** mapping: projects to import => corresponding comp name cache*/
+        private Map<IProjectPO, IWritableComponentNameCache> 
             m_projectToCompCacheMap;
 
         /** the project to open immediately after import */
@@ -913,8 +906,8 @@ public class FileStorageBP {
          *            immediately opened after import.
          */
         public ImportOperation(Map<IProjectPO, 
-                List<INameMapper>> projectToMapperMap, 
-                Map<IProjectPO, List<IWritableComponentNameCache>> 
+                INameMapper> projectToMapperMap, 
+                Map<IProjectPO, IWritableComponentNameCache> 
                 projectToCompCacheMap, 
                 IProgressConsole console, boolean openProject) {
             

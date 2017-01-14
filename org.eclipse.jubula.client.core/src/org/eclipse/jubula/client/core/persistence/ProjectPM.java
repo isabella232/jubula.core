@@ -1100,16 +1100,16 @@ public class ProjectPM extends PersistenceManager
      * @param newProjectName
      *            name part of the ProjectNamePO. If there is no new name, this
      *            parameter must be null (same project, different version)
-     * @param mapperList a List of INameMapper to persist names (Parameter).
-     * @param compNameBindingList a List of Component Name caches to persist 
+     * @param paramMapper an INameMapper to persist names (Parameter).
+     * @param compNameCache the Component Name cache to persist 
      *                            names (Component).
      * @throws PMException in case of any db error
      * @throws ProjectDeletedException if project is already deleted
      * @throws InterruptedException if the operation is canceled
      */
     public static void saveProject(IProjectPO proj, String newProjectName, 
-            List<INameMapper> mapperList, 
-            List<IWritableComponentNameCache> compNameBindingList) 
+            INameMapper paramMapper, 
+            IWritableComponentNameCache compNameCache) 
         throws PMException, ProjectDeletedException, 
             InterruptedException {
         
@@ -1127,21 +1127,12 @@ public class ProjectPM extends PersistenceManager
                     saveSession, proj.getGuid(), newProjectName);
             }
             ProjectNameBP.getInstance().storeTransientNames(saveSession);
-            for (INameMapper mapper : mapperList) {
-                mapper.persist(saveSession, proj.getId());
-            }
-            for (IWritableComponentNameCache compNameBinding 
-                    : compNameBindingList) {
-                CompNamePM.flushCompNamesImport(saveSession, 
-                        proj.getId(), compNameBinding);
-            }
+            paramMapper.persist(saveSession, proj.getId());
+            CompNamePM.flushCompNamesImport(saveSession, 
+                    proj.getId(), compNameCache);
             Persistor.instance().commitTransaction(saveSession, tx);
-            for (INameMapper mapper : mapperList) {
-                mapper.updateStandardMapperAndCleanup(proj.getId());
-            }
-            for (IComponentNameCache compNameCache : compNameBindingList) {
-                compNameCache.updateStandardMapperAndCleanup(proj.getId());
-            }
+            paramMapper.updateStandardMapperAndCleanup(proj.getId());
+            compNameCache.updateStandardMapperAndCleanup(proj.getId());
         } catch (PersistenceException e) {
             if (tx != null) {
                 Persistor.instance().rollbackTransaction(saveSession, tx);
@@ -1156,8 +1147,8 @@ public class ProjectPM extends PersistenceManager
         } finally {
             Persistor.instance().dropSession(saveSession);
         }
-    } 
-
+    }
+    
     /**
      * Check if there is a ProjectPO whith the supplied name in the DB.
      * 
