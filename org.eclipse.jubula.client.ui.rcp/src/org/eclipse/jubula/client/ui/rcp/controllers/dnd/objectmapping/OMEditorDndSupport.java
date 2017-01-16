@@ -11,8 +11,10 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.dnd.objectmapping;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -328,44 +330,6 @@ public class OMEditorDndSupport {
     }
 
     /**
-     * Checks if there are categories to be merged. Ask User if he wants to merge and
-     * returns the result
-     * 
-     * @param toBeMoved The categories that are being moved.
-     * @param targetCategory The target category.
-     * @return
-     *      boolean
-     */
-    public static boolean isMergeIfNeeded(
-            List<IObjectMappingCategoryPO> toBeMoved, 
-            IObjectMappingCategoryPO targetCategory) {
-        boolean doIt = true;
-
-        for (IObjectMappingCategoryPO categoryToMove : toBeMoved) {
-            IObjectMappingCategoryPO existingCategory = null;
-            for (IObjectMappingCategoryPO child 
-                    : targetCategory.getUnmodifiableCategoryList()) {
-                if (child.getName().equals(categoryToMove.getName())) {
-                    existingCategory = child;
-                    break;                            
-                }
-            }
-
-            if (existingCategory != null) {
-                Dialog dialog = ErrorHandlingUtil.createMessageDialog(
-                    MessageIDs.Q_MERGE_CATEGORY, new Object[]{
-                        existingCategory.getName(),
-                        targetCategory.getName()},
-                        null);
-                if (dialog.getReturnCode() == Window.CANCEL) {
-                    doIt = false;
-                }
-            }
-        }
-        return doIt;
-    }
-
-    /**
      * 
      * @param toMove The associations for which the move operation is 
      *               to be checked.
@@ -448,6 +412,71 @@ public class OMEditorDndSupport {
             IObjectMappingAssoziationPO assoc) {
 
         return assoc != null ? assoc.getSection() : null;
+    }
+    
+    /**
+     * Moving categories...
+     * @param cats the categories
+     * @param targ the target
+     * @return whether the move ws successful
+     */
+    public static boolean moveCategories(List<IObjectMappingCategoryPO> cats,
+            IObjectMappingCategoryPO targ) {
+        List<IObjectMappingCategoryPO> topCats = new ArrayList<>();
+        boolean isTop;
+        IObjectMappingCategoryPO par;
+        for (IObjectMappingCategoryPO cat : cats) {
+            isTop = true;
+            par = cat;
+            while (isTop && par != null) {
+                par = par.getParent();
+                if (cats.contains(par)) {
+                    isTop = false;
+                }
+            }
+            if (isTop) {
+                topCats.add(cat);
+            }
+        }
+        correctNames(topCats, targ);
+        for (IObjectMappingCategoryPO cat : topCats) {
+            cat.getParent().removeCategory(cat);
+            targ.addCategory(cat);
+        }
+        return true;
+    }
+    
+    /**
+     * Checks and corrects any name collisions before moving categories
+     * @param cats the categories
+     * @param target the target category
+     */
+    private static void correctNames(List<IObjectMappingCategoryPO> cats,
+            IObjectMappingCategoryPO target) {
+        Map<String, Integer> nameMap = new HashMap<>();
+        for (IObjectMappingCategoryPO cat
+            : target.getUnmodifiableCategoryList()) {
+            nameMap.put(cat.getName(), 0);
+        }
+        Integer val;
+        IObjectMappingCategoryPO next;
+        String name;
+        for (int i = 0; i < cats.size(); i++) {
+            next = cats.get(i);
+            name = next.getName();
+            val = nameMap.get(name);
+            if (val == null) {
+                continue;
+            }
+            val++;
+            next.setName(name + "_" + val); //$NON-NLS-1$
+            if (nameMap.containsKey(next.getName())) {
+                // unlikely, but the new name may also be used...
+                i--;
+            } else {
+                nameMap.put(name, val);
+            }
+        }
     }
 
 }

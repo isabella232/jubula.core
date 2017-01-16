@@ -281,7 +281,6 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
      * @return The subcategories of this category.
      */
     @OneToMany(cascade = CascadeType.ALL, 
-               orphanRemoval = true, 
                targetEntity = ObjectMappingCategoryPO.class,
                fetch = FetchType.LAZY)
     @JoinColumn(name = "FK_PARENT")

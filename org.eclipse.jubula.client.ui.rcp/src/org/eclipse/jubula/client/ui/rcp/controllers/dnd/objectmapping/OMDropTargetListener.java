@@ -85,6 +85,7 @@ public class OMDropTargetListener extends ViewerDropAdapter {
             // Use logic for dropping categories
             List<IObjectMappingCategoryPO> toMove = selection.toList();
             dropCategories(toMove, target);
+            editor.getTreeViewer().refresh();
         } else if (containsOnlyType(selection, IComponentNamePO.class)) {
             // Use logic for dropping Component Names
             List<IComponentNamePO> toMove = selection.toList();
@@ -157,13 +158,10 @@ public class OMDropTargetListener extends ViewerDropAdapter {
         if (target instanceof IObjectMappingCategoryPO) {
             IObjectMappingCategoryPO targetCategory = 
                 (IObjectMappingCategoryPO)target;
-            if (!OMEditorDndSupport.isMergeIfNeeded(toMove, targetCategory)) {
-                return false;
-            }
-            return false;
+            return OMEditorDndSupport.moveCategories(toMove, targetCategory);
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -179,6 +177,7 @@ public class OMDropTargetListener extends ViewerDropAdapter {
      * 
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public boolean validateDrop(Object target, int op, TransferData type) {
         if (!(LocalSelectionTransfer.getTransfer().getSelection() 
                 instanceof IStructuredSelection)) {
@@ -214,9 +213,9 @@ public class OMDropTargetListener extends ViewerDropAdapter {
                 IObjectMappingCategoryPO.class)) {
             // Use logic for validating categories
             if (dropTarget instanceof IObjectMappingCategoryPO) {
-                return false;
+                return canDropCats(selection.toList(),
+                        (IObjectMappingCategoryPO) dropTarget);
             }
-
             return false;
         } else if (containsOnlyType(selection, IComponentNamePO.class)) {
             // Use logic for validating Component Names
@@ -229,6 +228,35 @@ public class OMDropTargetListener extends ViewerDropAdapter {
         }
 
         return false;
+    }
+    
+    /**
+     * Checks whether the list of Categories is draggable to the target category
+     * @param cats the categories
+     * @param target the target
+     * @return whether
+     */
+    private static boolean canDropCats(List<IObjectMappingCategoryPO> cats,
+            IObjectMappingCategoryPO target) {
+        if (cats.isEmpty()) {
+            return false;
+        }
+        IObjectMappingCategoryPO currCat = target;
+        while (currCat.getParent() != null) {
+            if (cats.contains(currCat)) {
+                // Trying to move a parent inside a child??
+                // The case when currCat is the top node is ignored, but that
+                //      cannot be in cats anyway 
+                return false;
+            }
+            currCat = currCat.getParent();
+        }
+        IObjectMappingCategoryPO srcTop = cats.get(0);
+        while (srcTop.getParent() != null) {
+            srcTop = srcTop.getParent();
+        }
+        // cannot Dnd categories between different tree viewers
+        return currCat == srcTop;
     }
 
     /**

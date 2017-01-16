@@ -40,6 +40,7 @@ public class PasteOMEditor extends AbstractHandler {
      * 
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public Object execute(ExecutionEvent event) {
         ObjectMappingMultiPageEditor ome = 
             (ObjectMappingMultiPageEditor)Plugin.getActiveEditor();
@@ -77,19 +78,6 @@ public class PasteOMEditor extends AbstractHandler {
                 if (target instanceof IObjectMappingCategoryPO) {
                     OMEditorDndSupport.checkAndMoveAssociations(
                             toMove, (IObjectMappingCategoryPO)target, ome);
-                }
-            } else if (transfer.containsOnlyType(
-                    IObjectMappingCategoryPO.class)) {
-                // Use logic for dropping categories
-                if (target instanceof IObjectMappingCategoryPO) {
-                    IObjectMappingCategoryPO targetCategory = 
-                        (IObjectMappingCategoryPO)target;
-                    List<IObjectMappingCategoryPO> toMove = 
-                        transfer.getSelection().toList();
-                    if (!OMEditorDndSupport.isMergeIfNeeded(
-                            toMove, targetCategory)) {
-                        return null;
-                    }
                 }
             } else if (transfer.containsOnlyType(IComponentNamePO.class)) {
                 // Use logic for dropping Component Names
