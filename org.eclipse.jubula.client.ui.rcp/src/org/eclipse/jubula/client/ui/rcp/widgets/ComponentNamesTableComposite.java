@@ -10,8 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -524,17 +524,32 @@ public class ComponentNamesTableComposite extends Composite implements
     }
     
     /**
-     * Sets the type of CNPairs
+     * Sets the type of the ExecTC's CNPairs, some of them new 'transient' ones
+     * @param cNPairs the 'transient' CNPairs
+     * @param spec the SpecTC of the ExecTC
      */
-    private void searchAndSetComponentType() {
+    private void searchAndSetComponentType(List<ICompNamesPairPO> cNPairs,
+            ISpecTestCasePO spec) {
+        if (cNPairs.isEmpty()) {
+            return;
+        }
+        IComponentNameCache cache;
         if ((getSelectedExecNodeOwner() instanceof IJBEditor)) {
             EditSupport supp = ((IJBEditor)getSelectedExecNodeOwner()).
                     getEditorHelper().getEditSupport();
             if (supp == null) {
                 return;
             }
-            CalcTypes.recalculateCompNamePairs(supp.getCache(),
-                    (INodePO) supp.getWorkVersion());
+            cache = supp.getCache();
+        } else {
+            cache = CompNameManager.getInstance();
+        }
+        CalcTypes calc = new CalcTypes(cache, null);
+        calc.calculateLocalType(spec, null);
+        Map<String, String> locMap = calc.getLocalTypes(spec);
+        for (ICompNamesPairPO pair : cNPairs) {
+            pair.setType(locMap.get(CompNameManager.getInstance().
+                    resolveGuid(pair.getFirstName())));
         }
     }
     
@@ -572,26 +587,16 @@ public class ComponentNamesTableComposite extends Composite implements
                     .getEditorHelper().getEditSupport().getWorkVersion();
         }
         List<ICompNamesPairPO> input = null;
-        if (getSelectedExecNode() != null) {
+        if (exec != null) {
             input = m_compNamesBP.getAllCompNamesPairs(exec);
-
-            List<ICompNamesPairPO> newPairs = new ArrayList<>();
-            // Add validator
-            for (ICompNamesPairPO pair : input) {
-                if (exec.getCompNamesPair(pair.getFirstName()) == null) {
-                    newPairs.add(pair);
-                    exec.addCompNamesPair(pair);
-                }
-            }
-            searchAndSetComponentType();
-            for (ICompNamesPairPO pair : newPairs) {
-                exec.removeCompNamesPair(pair.getFirstName());
-            }
-            
-
             IWorkbenchPart activePart = Plugin.getActivePart();
             if (activePart instanceof IJBEditor) {
                 setCompCache(((IJBEditor)activePart).getCompNameCache());
+            }
+            ISpecTestCasePO spec = exec.getSpecTestCase();
+            if (spec != null) {
+                // has to set the type of the CompNamePairPOs, some of them new 'transient' ones
+                searchAndSetComponentType(input, spec);
             }
         }
         m_tableViewer.setInput(input);

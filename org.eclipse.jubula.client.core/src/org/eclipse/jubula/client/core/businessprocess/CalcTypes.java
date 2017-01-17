@@ -137,7 +137,7 @@ public class CalcTypes {
     /**
      * Calculating the local type for a single Component Name
      * @param node the starting node - should be SpecTC or TestSuite
-     * @param guid the guid
+     * @param guid the guid - can be null if irrelevant
      * @return the type - can be null if the CN does not appear anywhere
      *          below the given node
      */
@@ -344,9 +344,9 @@ public class CalcTypes {
             Map<String, String> specMap) {
         String resGuid;
         for (ICompNamesPairPO pair : exec.getCompNamesPairs()) {
-            resGuid = CompNameManager.getInstance().resolveGuid(
-                    pair.getFirstName());
             if (m_writeTypes) {
+                resGuid = CompNameManager.getInstance().resolveGuid(
+                        pair.getFirstName());
                 pair.setType(specMap.get(resGuid));
             }
         }
@@ -424,10 +424,19 @@ public class CalcTypes {
      * @param spec the SpecTestCasePO
      */
     public static void recalculateCompNamePairs(
-            IWritableComponentNameCache cache, INodePO spec) {
+            IComponentNameCache cache, INodePO spec) {
         CalcTypes calc = new CalcTypes(cache, spec);
         calc.setWriteTypes(true);
         calc.calculateLocalType(spec, null);
 
+    }
+    
+    /**
+     * Returns the local types at a given node
+     * @param node the node
+     * @return the (CN Guid) => (local type) map
+     */
+    public Map<String, String> getLocalTypes(INodePO node) {
+        return m_localType.get(node.getId());
     }
 }
