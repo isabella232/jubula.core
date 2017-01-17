@@ -28,7 +28,22 @@
 ../jre/bin/java</programArgsLin>
       <programArgsWin>-vm
 ../jre/bin/javaw.exe</programArgsWin>
-      <vmArgs>-server
+      <vmArgs><vmArgsLin>
+         <argsX86_64>-server</argsX86_64>
+         -Duser.language=en
+         -Duser.country=US
+         -Dorg.osgi.service.http.port=60002
+         #VMARGS_2INSERT
+         -Xss1m
+      </vmArgsLin>
+      <vmArgsWin>
+         <argsX86_64>-server</argsX86_64>
+         -Duser.language=en
+         -Duser.country=US
+         -Dorg.osgi.service.http.port=60002
+         #VMARGS_2INSERT
+         -Xss1m
+      </vmArgsWin>
 -Duser.language=en
 -Duser.country=US
 -Dorg.osgi.service.http.port=60002
