@@ -30,4 +30,17 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+  <emphasis role="strong">Import project files by drag and drop</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+     <para>
+       It is now possible to import <emphasis>.jub</emphasis> project files
+       by dragging them to the Test Suite Browser View of the ITE. If only
+       one project is imported this way, it is automatically opened. Please note
+       that this feature is not supported on some Linux distributions.
+     </para>
+  </listitem>
+</itemizedlist>
 </section>

@@ -15,69 +15,90 @@
   <anchor role="helpid" condition="dialogProjectImportRenameContextId" xml:id="importproject.dialogProjectImportRenameContextId" xreflabel="Project Import Rename Dialog"/>
   <anchor role="helpid" condition="importProjectDialogContextId" xml:id="importproject.importProjectDialogContextId" xreflabel="Importing Projects"/>
   <anchor role="helpid" condition="openProjectImportAllRequiredProjectsContextId" xml:id="importproject.openProjectImportAllRequiredProjectsContextId" xreflabel="Importing Dependent Projects"/>
-  <orderedlist>
-    <listitem>
-      <para>
-        To import Projects, select:
-      </para>
-      
-      <para>
-        <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Import</emphasis>.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        In the dialog which appears (<xref linkend="Import"/>), enter or
-        browse to the Projects you want to import.
-      </para>
-      <para role="tip">
-        Note that the <emphasis>*.jub</emphasis> interchange format is now the default.
-        If you want to import older XML project simply switch the import file type to XML.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        If you have entered the path to a Project, click
-        ”<emphasis>Add</emphasis>” to add it to the list of Projects
-        to be imported.
-      </para>
-      <para role="tip">
-        Note that the ”<emphasis>Add</emphasis>” button will
-        only be activated if the path you have entered is correct.
-      </para>
-      <para>
-        If you add multiple Projects to be imported, you can change
-        the order they are imported in using the arrows next to the
-        list of Projects. You can also remove a Project from the
-        list of Projects to be imported.
-      </para>
-      <para role="tip">
-        If you are importing Projects that are dependent on
-        other Projects (i.e. they reuse other Projects), import the
-        supporting Projects first.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        If you only want to import one Project, you can select the
-        option to open the Project once it has been imported.
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        When you have finished your selection, click
-        ”<emphasis>OK</emphasis>”. The Projects you selected will be
-        imported in the order specified.
-      </para>
-    </listitem>
-  </orderedlist>
-  <figure xml:id="Import">
-    <title>Import Dialog</title>
-    <mediaobject>
-      <imageobject>
-        <imagedata fileref="images/Import.png" />
-      </imageobject>
-      <textobject><phrase>Import Dialog</phrase></textobject>
-    </mediaobject>
-  </figure>
+  <section xml:id="exportdiag">
+    <title>Importing a project through the Menu</title>
+    <orderedlist>
+      <listitem>
+        <para>
+          To import Projects, select:
+        </para>
+        <para>
+          <emphasis role="menuPath">Test</emphasis>--&gt;<emphasis role="menuPath">Import</emphasis>.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          In the dialog which appears (<xref linkend="Import"/>), enter or
+          browse to the Projects you want to import.
+        </para>
+        <para role="tip">
+          Note that the <emphasis>*.jub</emphasis> interchange format is now the default.
+          If you want to import older XML project simply switch the import file type to XML.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you have entered the path to a Project, click
+          ”<emphasis>Add</emphasis>” to add it to the list of Projects
+          to be imported.
+        </para>
+        <para role="tip">
+          Note that the ”<emphasis>Add</emphasis>” button will
+          only be activated if the path you have entered is correct.
+        </para>
+        <para>
+          If you add multiple Projects to be imported, you can change
+          the order they are imported in using the arrows next to the
+          list of Projects. You can also remove a Project from the
+          list of Projects to be imported.
+        </para>
+        <para role="tip">
+          If you are importing Projects that are dependent on
+          other Projects (i.e. they reuse other Projects), import the
+          supporting Projects first.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          If you only want to import one Project, you can select the
+          option to open the Project once it has been imported.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          When you have finished your selection, click
+          ”<emphasis>OK</emphasis>”. The Projects you selected will be
+          imported in the order specified.
+        </para>
+      </listitem>
+    </orderedlist>
+    <figure xml:id="Import">
+      <title>Import Dialog</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/Import.png" />
+        </imageobject>
+        <textobject><phrase>Import Dialog</phrase></textobject>
+      </mediaobject>
+    </figure>
+  </section>
+  <section>
+    <title>Importing projects through drag and drop</title>
+    <para>
+      Projects can be imported by dragging and dropping their project files
+      to the Test Suite Browser View of the ITE.
+      After dragging the project files to the Browser, a dialog is opened, listing
+      the files to be imported. After confirming, the import is executed, and if only
+      one project is imported this way, it is automatically opened.
+    </para>
+    <para>
+      Please note, that this operation is not supported by
+      all Linux environments.
+    </para>
+    <para role="warning">
+      It is only possible to drag and drop <emphasis>.jub</emphasis> files to the ITE.
+      If you want to import older XML projects, you have to use the regular import through
+      the menu. 
+    </para>
+  </section>
 </section>
