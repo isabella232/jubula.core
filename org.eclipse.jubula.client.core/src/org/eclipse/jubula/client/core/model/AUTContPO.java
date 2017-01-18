@@ -84,7 +84,8 @@ class AUTContPO implements IAUTContPO {
      */
     @OneToMany(cascade = CascadeType.ALL, 
                fetch = FetchType.EAGER, 
-               targetEntity = AUTMainPO.class)
+               targetEntity = AUTMainPO.class,
+               orphanRemoval = true)
     @JoinColumn(name = "FK_AUT_CONT")
     @BatchFetch(value = BatchFetchType.JOIN)
     public Set<IAUTMainPO> getAutMainList() {
