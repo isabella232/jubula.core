@@ -40,6 +40,7 @@ import org.eclipse.jubula.client.ui.rcp.handlers.project.OpenProjectHandler;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.OpenProjectHandler.OpenProjectOperation;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
@@ -143,6 +144,8 @@ public class ImportFileBP implements IProjectNameConflictResolver,
                     log.error(Messages.ErrorOccurredDuringImport, 
                             ite.getCause());
                     openOp.handleOperationException();
+                    ErrorHandlingUtil.createMessageDialogException(
+                            ite.getCause());
                 } catch (InterruptedException e) {
                     // Operation was canceled.
                     openOp.handleOperationException();
@@ -151,6 +154,7 @@ public class ImportFileBP implements IProjectNameConflictResolver,
         } catch (InvocationTargetException ite) {
             // Exception occurred during operation
             log.error(Messages.ErrorOccurredDuringImport, ite.getCause());
+            ErrorHandlingUtil.createMessageDialogException(ite.getCause());
         } catch (InterruptedException e) {
             // Operation was canceled.
             showCancelImport(Plugin.getDefault());

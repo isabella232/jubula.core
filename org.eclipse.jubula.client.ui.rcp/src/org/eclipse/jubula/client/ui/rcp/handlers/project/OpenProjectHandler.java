@@ -360,6 +360,8 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                 showErrorDialog(Messages.ErrorMessageCantReadProject);
             } catch (OperationCanceledException oce) {
                 Utils.clearClient();
+            } catch (Exception e) {
+                ErrorHandlingUtil.createMessageDialogException(e);
             } finally {
                 Plugin.stopLongRunning();
             }
