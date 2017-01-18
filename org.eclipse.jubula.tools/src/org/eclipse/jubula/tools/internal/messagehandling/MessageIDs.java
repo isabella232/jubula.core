@@ -515,8 +515,6 @@ public class MessageIDs {
     public static final Integer Q_SAVE_AND_EXTRACT = new Integer(2);
     /** if you type in a reference */
     public static final Integer Q_TYPE_REFERENCE = new Integer(3);  
-    /** if you want to merge the currently selected category */
-    public static final Integer Q_MERGE_CATEGORY = new Integer(5);
     /** question if testdata should be deleted when an excel file is entered */
     public static final Integer Q_EXCELDATA_INPUT = new Integer(6);
     /** question if Object Mapping should be cleaned or not */
@@ -983,7 +981,6 @@ public class MessageIDs {
         messageMap.put(Q_DELETE_PROJECT, q, "QuestionMessage.DELETE_PROJECT", null);  //$NON-NLS-1$
         messageMap.put(Q_SAVE_AND_EXTRACT, q, "QuestionMessage.SAVE_AND_EXTRACT", null);  //$NON-NLS-1$
         messageMap.put(Q_TYPE_REFERENCE, q, "QuestionMessage.TYPE_REFERENCE", null);   //$NON-NLS-1$
-        messageMap.put(Q_MERGE_CATEGORY, q, "QuestionMessage.MERGE_CATEGORY", null);   //$NON-NLS-1$
         messageMap.put(Q_EXCELDATA_INPUT, q, "QuestionMessage.EXCELDATA_INPUT", null);   //$NON-NLS-1$
         messageMap.put(Q_CLEAN_OM, q, "QuestionMessage.CLEAN_OM", null); //$NON-NLS-1$
         messageMap.put(Q_REMOVE_PROJECT_LANGUAGES, q, "QuestionMessage.REMOVE_PROJECT_LANGUAGES", null); //$NON-NLS-1$
