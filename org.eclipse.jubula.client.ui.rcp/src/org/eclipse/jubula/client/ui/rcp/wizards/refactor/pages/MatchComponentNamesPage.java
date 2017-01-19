@@ -29,7 +29,6 @@ import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCach
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
-import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
@@ -143,7 +142,7 @@ public class MatchComponentNamesPage extends WizardPage {
                         pair.getSecondName()));
                 if (StringUtils.isEmpty(pair.getType())) {
                     CalcTypes.recalculateCompNamePairs(cache,
-                            (ISpecTestCasePO) supp.getWorkVersion());
+                            (INodePO) supp.getWorkVersion());
                 }
                 sb.append(StringConstants.SPACE)
                         .append(StringConstants.LEFT_BRACKET)
