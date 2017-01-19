@@ -56,6 +56,8 @@ import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -72,7 +74,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * @created Jul 25, 2011
  */
 public class ComponentNamesTableComposite extends Composite implements
-    IDataChangedListener {
+    IDataChangedListener, DisposeListener {
     /**
      * Internal name of the second column.
      */
@@ -154,6 +156,7 @@ public class ComponentNamesTableComposite extends Composite implements
      */
     public ComponentNamesTableComposite(Composite parent, int style) {
         super(parent, style);
+        this.addDisposeListener(this);
         setLayout(this);
         Table table = new Table(this, SWT.BORDER | SWT.CHECK
                 | SWT.FULL_SELECTION);
@@ -181,12 +184,9 @@ public class ComponentNamesTableComposite extends Composite implements
         setCellEdit(new CompNamePopupTextCellEditor(getCompCache(), table));
         m_tableViewer.setCellEditors(new CellEditor[] { null, null, 
             getCellEdit(), null});
-        getCellEdit().addListener(m_cellEditorListener);
         setCellModifier(new CellModifier());
         m_tableViewer.setCellModifier(getCellModifier()); 
-        m_tableViewer.addCheckStateListener(m_checkStateListener);
-        m_tableViewer.addSelectionChangedListener(m_selectionChangedListener);
-        DataEventDispatcher.getInstance().addDataChangedListener(this, true);
+        handleListenersAndResources(true);
         Plugin.getHelpSystem().setHelp(this, ContextHelpIds.COMP_NAME);
         setSelectedExecNode(null);
         setSelectedExecNodeOwner(null);
@@ -641,19 +641,6 @@ public class ComponentNamesTableComposite extends Composite implements
     }
     
     /**
-     * {@inheritDoc}
-     */
-    public void dispose() {
-        getCellEdit().removeListener(m_cellEditorListener);
-        m_tableViewer.removeCheckStateListener(m_checkStateListener);
-        m_tableViewer.removeSelectionChangedListener(
-            m_selectionChangedListener);
-        m_tableViewer = null;
-        DataEventDispatcher.getInstance().removeDataChangedListener(this);
-        super.dispose();
-    }
-    
-    /**
      * Updates the propagated property of the pair.
      * 
      * @param pair
@@ -848,5 +835,32 @@ public class ComponentNamesTableComposite extends Composite implements
                 }
             });
         }
+    }
+
+    /**
+     * Adds and disposes of resources - should be called from constructors and dispose listeners
+     * @param add whether adding or disposing
+     */
+    private void handleListenersAndResources(boolean add) {
+        if (add) {
+            getCellEdit().addListener(m_cellEditorListener);
+            m_tableViewer.addCheckStateListener(m_checkStateListener);
+            m_tableViewer.addSelectionChangedListener(
+                    m_selectionChangedListener);
+            DataEventDispatcher.getInstance().addDataChangedListener(
+                    this, true);
+            return;
+        }
+        getCellEdit().removeListener(m_cellEditorListener);
+        m_tableViewer.removeCheckStateListener(m_checkStateListener);
+        m_tableViewer.removeSelectionChangedListener(
+                m_selectionChangedListener);
+        m_tableViewer = null;
+        DataEventDispatcher.getInstance().removeDataChangedListener(this);
+    }
+    
+    @Override
+    public void widgetDisposed(DisposeEvent e) {
+        handleListenersAndResources(false);
     }
 }
