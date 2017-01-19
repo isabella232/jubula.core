@@ -100,7 +100,7 @@ public abstract class AbstractNewHandler extends AbstractHandler {
         }
         toLock.add(par);
         
-        TransactionWrapper.executeOperation(new ITransaction() {
+        boolean succ = TransactionWrapper.executeOperation(new ITransaction() {
             /** {@inheritDoc} */
             public Collection<? extends IPersistentObject> getToLock() {
                 return toLock;
@@ -125,10 +125,12 @@ public abstract class AbstractNewHandler extends AbstractHandler {
             }
         });
         
-        INodePO master = GeneralStorage.getInstance().getMasterSession().
-                find(created.getClass(), created.getId());
-        DataEventDispatcher.getInstance().fireDataChangedListener(
-                    master, DataState.Added, UpdateState.all);
+        if (succ) {
+            INodePO master = GeneralStorage.getInstance().getMasterSession().
+                    find(created.getClass(), created.getId());
+            DataEventDispatcher.getInstance().fireDataChangedListener(
+                        master, DataState.Added, UpdateState.all);
+        }
     }
     
 }

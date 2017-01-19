@@ -266,9 +266,10 @@ public class ReplaceTestCaseTransaction implements IRunnableWithProgress,
      */
     public void run(IProgressMonitor monitor) {
         m_monitor = monitor;
-        TransactionWrapper.executeOperation(this);
-        DataEventDispatcher.getInstance().fireProjectLoadedListener(
-                monitor);
+        if (TransactionWrapper.executeOperation(this)) {
+            DataEventDispatcher.getInstance().fireProjectLoadedListener(
+                    monitor);
+        }
     }
 
 }

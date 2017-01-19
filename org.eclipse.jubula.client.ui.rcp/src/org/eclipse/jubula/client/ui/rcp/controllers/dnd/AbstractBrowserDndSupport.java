@@ -115,12 +115,9 @@ public abstract class AbstractBrowserDndSupport {
             return false;
         }
         
-        // persist changes into database
         List<DataChangedEvent> eventList = 
                 new ArrayList<DataChangedEvent>();
         for (INodePO nodeToMove : nodes) {
-
-            // create command
             eventList.add(new DataChangedEvent(target, 
                     DataState.StructureModified, UpdateState.notInEditor));
             eventList.add(new DataChangedEvent(nodeToMove.getParentNode(), 
