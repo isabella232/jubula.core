@@ -168,7 +168,7 @@ public class DeleteTCTSBrowserTreeItemHandler
         toLock.addAll(toDelete);
         toLock.addAll(toRefresh);
 
-        TransactionWrapper.executeOperation(new ITransaction() {
+        boolean succ = TransactionWrapper.executeOperation(new ITransaction() {
 
             /** {@inheritDoc} */
             public Collection<? extends IPersistentObject> getToLock() {
@@ -191,6 +191,9 @@ public class DeleteTCTSBrowserTreeItemHandler
             }
         
         });
+        if (!succ) {
+            return;
+        }
         List<DataChangedEvent> eventList = new ArrayList<DataChangedEvent>();
         for (INodePO node : topNodes) {
             eventList.add(new DataChangedEvent(node, DataState.Deleted,

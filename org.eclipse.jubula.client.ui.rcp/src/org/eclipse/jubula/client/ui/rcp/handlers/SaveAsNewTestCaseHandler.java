@@ -107,9 +107,9 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
             s.merge(newTc);
             pMapper.persist(s, GeneralStorage.getInstance().getProject()
                     .getId());
-            setNewSpecTC(newTc);
             NativeSQLUtils.addNodeAFFECTS(s, newTc,
                     GeneralStorage.getInstance().getProject().getSpecObjCont());
+            setNewSpecTC(newTc);
         }
         
         /**
@@ -323,6 +323,9 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
             }
             newSpecTC = createAndPerformNodeDuplication(newTestCaseName,
                     nodesToClone);
+            if (newSpecTC == null) {
+                return null;
+            }
             newSpecTC = GeneralStorage.getInstance().getMasterSession().find(
                     newSpecTC.getClass(), newSpecTC.getId());
 
@@ -343,14 +346,16 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
      * @param nodesToClone
      *            the nodes to clone
      * @return the new spec test case with cloned param nodes
+     *         or null if something went wrong
      */
     private ISpecTestCasePO createAndPerformNodeDuplication(
             String newTestCaseName, List<INodePO> nodesToClone) {
         final CloneTransaction op = 
                 new CloneTransaction(newTestCaseName, nodesToClone);
         
-        TransactionWrapper.executeOperation(op);
-        
-        return op.getNewSpecTC();
+        if (TransactionWrapper.executeOperation(op)) {
+            return op.getNewSpecTC();
+        }
+        return null;
     }
 }
