@@ -35,9 +35,11 @@ public class E4SwtComponentNamer extends RcpSwtComponentNamer
      * @param mPartStack The opened part stack of the application model.
      */
     public void onModelPartStackCreated(MPartStack mPartStack) {
-        if (mPartStack.getWidget() != null) {
-            setTechnicalName(mPartStack, mPartStack.getElementId());
-        }
+        // A part stack which is visible in two perspectives,
+        // has two different representation in the application model.
+        // We do not name the widget here, because it is detected by the
+        // SWT namer as a "Tabbed Component (...)" including the
+        // titles of the tabs.
     }
 
     /**
