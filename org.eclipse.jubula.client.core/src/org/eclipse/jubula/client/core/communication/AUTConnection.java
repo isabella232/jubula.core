@@ -553,8 +553,8 @@ public class AUTConnection extends BaseAUTConnection {
         public void connectingFailed(InetAddress inetAddress, int port) {
             StringBuilder msg = new StringBuilder();
             msg.append(Messages.ConnectingFailed);
-            msg.append(StringConstants.LEFT_PARENTHESES);
-            msg.append(StringConstants.RIGHT_PARENTHESES);
+            msg.append(StringConstants.LEFT_PARENTHESIS);
+            msg.append(StringConstants.RIGHT_PARENTHESIS);
             msg.append(StringConstants.SPACE);
             msg.append(Messages.CalledAlthoughThisIsServer);
             LOG.error(msg.toString());

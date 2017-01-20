@@ -14,9 +14,12 @@ package org.eclipse.jubula.rc.common.util;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
@@ -52,23 +55,35 @@ public class PropertyUtil {
      * @throws RobotException
      *             in case of problems
      */
+    @SuppressWarnings("unchecked")
     public static String getPropertyValue(Object object, String propertyName)
             throws RobotException {
         String propertyValue = StringConstants.EMPTY;
         Validate.notNull(object, "Tested component must not be null"); //$NON-NLS-1$
         try {
-            final Object prop = PropertyUtils.getProperty(object,
-                    propertyName);
-            // Check if an adapter exists
-            IPropertyValue propertyValueAdapter = 
-                ((IPropertyValue) AdapterFactoryRegistry
-                    .getInstance().getAdapter(
-                            IPropertyValue.class, prop));
-            if (propertyValueAdapter != null) {
-                propertyValue = propertyValueAdapter
-                        .getStringRepresentation(prop);
+            ArrayList<String> path = 
+                    new ArrayList<String>(Arrays.asList(
+                            propertyName.split(StringConstants.SLASH)));
+            
+            final Object prop;
+            if (path.size() > 0) {
+                prop = getPropertyByPathOrMethod(object, path, 0);
             } else {
-                propertyValue = String.valueOf(prop);
+                prop = null;
+            }
+            
+            if (prop != null) {
+                // Check if an adapter exists
+                IPropertyValue propertyValueAdapter = 
+                    ((IPropertyValue) AdapterFactoryRegistry
+                        .getInstance().getAdapter(
+                                IPropertyValue.class, prop));
+                if (propertyValueAdapter != null) {
+                    propertyValue = propertyValueAdapter
+                            .getStringRepresentation(prop);
+                } else {
+                    propertyValue = String.valueOf(prop);
+                }
             }
         } catch (IllegalAccessException e) {
             throw new RobotException(e);
@@ -85,6 +100,58 @@ public class PropertyUtil {
         }
         
         return propertyValue;
+    }
+    
+    /**
+     * Either retrieves the value of the last property of the path or
+     * invokes the method with the last name in the path of the return value
+     * of the forelast property.
+     * @param object the return value of the last recursion step
+     * @param path the path of the nested properties / method name
+     * @param index the current recursion's index
+     * @return the value of the nested property or the return value of the
+     * invoked method
+     * 
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     */
+    private static Object getPropertyByPathOrMethod(Object object,
+            ArrayList<String> path, int index) throws IllegalAccessException,
+                InvocationTargetException, NoSuchMethodException {
+        String name = path.get(index);
+        
+        if (index >= 0 && index < (path.size() - 1)) {
+            if (name.endsWith(StringConstants.PARENTHESES_PAIR)) {
+                return getPropertyByPathOrMethod(
+                            MethodUtils
+                            .invokeExactMethod(object, 
+                                name.replace(
+                                    StringConstants.LEFT_PARENTHESIS
+                                    + StringConstants.RIGHT_PARENTHESIS,
+                                    StringConstants.EMPTY
+                                ),
+                                null
+                        ),
+                        path, index + 1);
+            }
+            return getPropertyByPathOrMethod(PropertyUtils
+                    .getProperty(object, name), path, index + 1);
+            
+        } else if (index >= 0 && index == (path.size() - 1)) {
+            if (name.endsWith(StringConstants.PARENTHESES_PAIR)) {
+                return MethodUtils.invokeExactMethod(object,
+                        name.replace(
+                            StringConstants.PARENTHESES_PAIR,
+                            StringConstants.EMPTY
+                        ),
+                        null);
+            }
+            return PropertyUtils.getProperty(object, path.get(index));
+            
+        } else {
+            return null;
+        }
     }
     
     /**

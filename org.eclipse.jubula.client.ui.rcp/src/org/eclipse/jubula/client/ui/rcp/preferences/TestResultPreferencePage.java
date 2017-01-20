@@ -764,8 +764,8 @@ public class TestResultPreferencePage extends PreferencePage
                 return;
             }
             Assert.notReached(Messages.EventActivatedUnknownWidget 
-                    + StringConstants.LEFT_PARENTHESES + o 
-                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
+                    + StringConstants.LEFT_PARENTHESIS + o 
+                    + StringConstants.RIGHT_PARENTHESIS + StringConstants.DOT);
         }
     }
 }

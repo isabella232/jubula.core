@@ -183,8 +183,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
                 return;
             }
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
-                    + StringConstants.LEFT_PARENTHESES + source 
-                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
+                    + StringConstants.LEFT_PARENTHESIS + source 
+                    + StringConstants.RIGHT_PARENTHESIS + StringConstants.DOT);
         }
         /**
          * {@inheritDoc}

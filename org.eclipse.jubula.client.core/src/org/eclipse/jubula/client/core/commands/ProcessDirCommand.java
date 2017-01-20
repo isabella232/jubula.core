@@ -37,8 +37,8 @@ public class ProcessDirCommand implements ICommand {
      */
     public Message execute() {
         log.debug(Messages.ExecutingDirectoryListCommand 
-            + StringConstants.RIGHT_PARENTHESES + Messages.Response
-            + StringConstants.LEFT_PARENTHESES);
+            + StringConstants.RIGHT_PARENTHESIS + Messages.Response
+            + StringConstants.LEFT_PARENTHESIS);
         return null;
     }
 

@@ -92,9 +92,9 @@ public class TestResultEditorInput implements IEditorInput {
         StringBuilder msg = new StringBuilder();
         msg.append(m_testSuiteName)
             .append(StringConstants.SPACE)
-            .append(StringConstants.LEFT_PARENTHESES)
+            .append(StringConstants.LEFT_PARENTHESIS)
             .append(m_testSuiteStartTime)
-            .append(StringConstants.RIGHT_PARENTHESES);
+            .append(StringConstants.RIGHT_PARENTHESIS);
         return msg.toString();
     }
 

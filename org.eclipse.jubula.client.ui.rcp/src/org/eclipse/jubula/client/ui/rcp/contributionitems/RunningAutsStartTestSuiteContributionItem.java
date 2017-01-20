@@ -142,9 +142,9 @@ public class RunningAutsStartTestSuiteContributionItem extends
         StringBuilder labelBuilder = new StringBuilder();
         labelBuilder.append(suiteToStart.getAut().getName())
             .append(StringConstants.SPACE)
-            .append(StringConstants.LEFT_PARENTHESES)
+            .append(StringConstants.LEFT_PARENTHESIS)
             .append(autId.getExecutableName())
-            .append(StringConstants.RIGHT_PARENTHESES)
+            .append(StringConstants.RIGHT_PARENTHESIS)
             .append(StringConstants.SPACE)
             .append(StringConstants.COLON)
             .append(StringConstants.SPACE)

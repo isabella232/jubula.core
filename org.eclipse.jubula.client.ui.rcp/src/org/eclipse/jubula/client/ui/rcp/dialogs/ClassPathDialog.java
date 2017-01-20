@@ -194,8 +194,8 @@ public class ClassPathDialog extends InputDialog {
                 return;
             } 
             Assert.notReached(Messages.EventActivatedUnknownWidget
-                    + StringConstants.LEFT_PARENTHESES + o
-                    + StringConstants.RIGHT_PARENTHESES
+                    + StringConstants.LEFT_PARENTHESIS + o
+                    + StringConstants.RIGHT_PARENTHESIS
                     + StringConstants.DOT);    
         }
     }

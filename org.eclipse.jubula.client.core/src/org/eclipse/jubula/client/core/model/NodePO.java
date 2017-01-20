@@ -470,8 +470,8 @@ abstract class NodePO implements INodePO {
      */
     public String toString() {
         return super.toString() + StringConstants.SPACE 
-            + StringConstants.LEFT_PARENTHESES + getName() 
-            + StringConstants.RIGHT_PARENTHESES;
+            + StringConstants.LEFT_PARENTHESIS + getName() 
+            + StringConstants.RIGHT_PARENTHESIS;
     }
     
     /**

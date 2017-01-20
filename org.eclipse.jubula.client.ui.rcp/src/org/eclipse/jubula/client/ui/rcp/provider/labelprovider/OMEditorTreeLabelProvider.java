@@ -206,9 +206,9 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
                 childListSize += 
                     category.getUnmodifiableCategoryList().size();
                 nameBuilder.append(StringConstants.SPACE 
-                        + StringConstants.LEFT_PARENTHESES)
+                        + StringConstants.LEFT_PARENTHESIS)
                             .append(childListSize).append(StringConstants
-                                    .RIGHT_PARENTHESES);
+                                    .RIGHT_PARENTHESIS);
             }
             return nameBuilder.toString();
         } else if (element instanceof String) {

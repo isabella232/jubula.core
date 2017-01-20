@@ -174,8 +174,8 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      */
     public String toString() {
         return super.toString() + StringConstants.SPACE 
-            + StringConstants.LEFT_PARENTHESES + m_id.toString() 
-            + StringConstants.RIGHT_PARENTHESES;
+            + StringConstants.LEFT_PARENTHESIS + m_id.toString() 
+            + StringConstants.RIGHT_PARENTHESIS;
     }
     
     /**

@@ -928,17 +928,17 @@ public class TestExecution {
             msg.append(Messages.NoEntryFor);
             msg.append(StringConstants.SPACE);
             msg.append(cap.getComponentName());
-            msg.append(StringConstants.LEFT_PARENTHESES);
+            msg.append(StringConstants.LEFT_PARENTHESIS);
             msg.append(StringConstants.EQUALS_SIGN);
             msg.append(Messages.ProfessionalName);
-            msg.append(StringConstants.RIGHT_PARENTHESES);
+            msg.append(StringConstants.RIGHT_PARENTHESIS);
             msg.append(StringConstants.SPACE);
             msg.append(StringConstants.SLASH);
             msg.append(StringConstants.SPACE);
-            msg.append(StringConstants.LEFT_PARENTHESES);
+            msg.append(StringConstants.LEFT_PARENTHESIS);
             msg.append(StringConstants.EQUALS_SIGN);
             msg.append(Messages.TechnicalName);
-            msg.append(StringConstants.RIGHT_PARENTHESES);
+            msg.append(StringConstants.RIGHT_PARENTHESIS);
             LOG.error(msg.toString(), blcnme);
             throw blcnme;
         } catch (InvalidDataException e) {

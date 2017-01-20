@@ -310,10 +310,10 @@ public class ComponentNameBrowserContentProvider extends TooltipLabelProvider
             if (Plugin.getDefault().getPreferenceStore()
                     .getBoolean(Constants.SHOWCOUNTERS_KEY)) {
                 displayName += StringConstants.SPACE
-                        + StringConstants.LEFT_PARENTHESES
+                        + StringConstants.LEFT_PARENTHESIS
                         + CompNameManager.getInstance().
                         getUsageByGuid(cName.getGuid())
-                        + StringConstants.RIGHT_PARENTHESES;
+                        + StringConstants.RIGHT_PARENTHESIS;
             }
 
             return displayName;

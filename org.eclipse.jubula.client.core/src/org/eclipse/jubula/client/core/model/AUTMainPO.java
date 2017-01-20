@@ -225,8 +225,8 @@ class AUTMainPO implements IAUTMainPO {
      */
     public String toString() {
         return super.toString() + StringConstants.SPACE 
-            + StringConstants.LEFT_PARENTHESES + m_autName 
-            + StringConstants.RIGHT_PARENTHESES;
+            + StringConstants.LEFT_PARENTHESIS + m_autName 
+            + StringConstants.RIGHT_PARENTHESIS;
     }
     
 

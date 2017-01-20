@@ -93,15 +93,20 @@ public interface StringConstants {
     public static final String COMMA = ","; //$NON-NLS-1$
     
     /**
-     * <code>LEFT_PARENTHESES "("</code>
+     * <code>LEFT_PARENTHESIS "("</code>
      */
-    public static final String LEFT_PARENTHESES = "("; //$NON-NLS-1$ 
+    public static final String LEFT_PARENTHESIS = "("; //$NON-NLS-1$ 
     
     /**
-     * <code>RIGHT_PARENTHESES ")"</code>
+     * <code>RIGHT_PARENTHESIS ")"</code>
      */
-    public static final String RIGHT_PARENTHESES = ")"; //$NON-NLS-1$
-
+    public static final String RIGHT_PARENTHESIS = ")"; //$NON-NLS-1$
+    
+    /**
+     * <code>PARENTHESIS_PAIR "()"</code>
+     */
+    public static final String PARENTHESES_PAIR = "()"; //$NON-NLS-1$
+    
     /**
      * <code>LEFT_BRACKET "["</code>
      */

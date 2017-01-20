@@ -878,8 +878,8 @@ public class JavaAutConfigComponent extends AutConfigComponent {
             } 
 
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
-                    + StringConstants.LEFT_PARENTHESES + source 
-                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
+                    + StringConstants.LEFT_PARENTHESIS + source 
+                    + StringConstants.RIGHT_PARENTHESIS + StringConstants.DOT);
         }
 
         /**
@@ -893,8 +893,8 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                     SWT.APPLICATION_MODAL);
             String directory;
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
-                    + StringConstants.LEFT_PARENTHESES + source 
-                    + StringConstants.RIGHT_PARENTHESES + StringConstants.DOT);
+                    + StringConstants.LEFT_PARENTHESIS + source 
+                    + StringConstants.RIGHT_PARENTHESIS + StringConstants.DOT);
         }
     }
     

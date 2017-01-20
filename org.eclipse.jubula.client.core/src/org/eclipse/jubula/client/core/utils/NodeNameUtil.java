@@ -173,8 +173,8 @@ public class NodeNameUtil {
     private static void appendSpecName(StringBuilder nameBuilder,
             String specName) {
         nameBuilder.append(StringConstants.SPACE)
-            .append(StringConstants.LEFT_PARENTHESES)
+            .append(StringConstants.LEFT_PARENTHESIS)
             .append(specName)
-            .append(StringConstants.RIGHT_PARENTHESES);
+            .append(StringConstants.RIGHT_PARENTHESIS);
     }
 }

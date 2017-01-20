@@ -134,9 +134,9 @@ public class TSBStartTestSuiteContributionItem
             .append(StringConstants.SPACE)
             .append(suiteToStart.getAut().getName())
             .append(StringConstants.SPACE)
-            .append(StringConstants.LEFT_PARENTHESES)
+            .append(StringConstants.LEFT_PARENTHESIS)
             .append(autId.getExecutableName())
-            .append(StringConstants.RIGHT_PARENTHESES);
+            .append(StringConstants.RIGHT_PARENTHESIS);
         return CommandHelper.createContributionItem(
                 RCPCommandIDs.START_TEST_SUITE, params, labelBuilder
                         .toString(), CommandContributionItem.STYLE_CHECK);

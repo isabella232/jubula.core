@@ -62,8 +62,8 @@ public class StartAutContributionItem extends CompoundContributionItem {
                             null);
                     if (autId != null) {
                         itemName += StringConstants.SPACE
-                            + StringConstants.LEFT_PARENTHESES
-                            + autId + StringConstants.RIGHT_PARENTHESES;
+                            + StringConstants.LEFT_PARENTHESIS
+                            + autId + StringConstants.RIGHT_PARENTHESIS;
                     }
                     itemName += " : " + conf.getName(); //$NON-NLS-1$;
                     contributionItems.add(CommandHelper.createContributionItem(

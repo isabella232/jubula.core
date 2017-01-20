@@ -251,9 +251,9 @@ class CompNamesPairPO implements ICompNamesPairPO {
             StringBuilder msg = new StringBuilder();
             msg.append(Messages.CouldNotFindComponentNameWithGUID);
             msg.append(StringConstants.SPACE);
-            msg.append(StringConstants.LEFT_PARENTHESES);
+            msg.append(StringConstants.LEFT_PARENTHESIS);
             msg.append(getFirstName());
-            msg.append(StringConstants.RIGHT_PARENTHESES);
+            msg.append(StringConstants.RIGHT_PARENTHESIS);
             msg.append(StringConstants.SPACE);
             msg.append(Messages.WhileTryingToIdentifyItsType);
             msg.append(StringConstants.DOT);

@@ -38,10 +38,10 @@ public class CompNamesProposal implements IContentProposal {
         if (!(data.getComponentType() == null || StringConstants.EMPTY
                 .equals(data.getComponentType()))) {
             label.append(StringConstants.SPACE);
-            label.append(StringConstants.LEFT_PARENTHESES);
+            label.append(StringConstants.LEFT_PARENTHESIS);
             label.append(StringHelper.getInstance().get(
                     data.getComponentType(), true));
-            label.append(StringConstants.RIGHT_PARENTHESES);
+            label.append(StringConstants.RIGHT_PARENTHESIS);
         }
         m_label = label.toString();
         m_content = data.getName();

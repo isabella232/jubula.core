@@ -182,10 +182,10 @@ public class ProjectNameBP {
         } catch (PersistenceException he) {
             StringBuilder msgbuid = new StringBuilder();
             msgbuid.append(Messages.CouldNotDeleteProjectName);
-            msgbuid.append(StringConstants.LEFT_PARENTHESES);
+            msgbuid.append(StringConstants.LEFT_PARENTHESIS);
             msgbuid.append(Messages.ForGuid);
             msgbuid.append(guid);
-            msgbuid.append(StringConstants.RIGHT_PARENTHESES);
+            msgbuid.append(StringConstants.RIGHT_PARENTHESIS);
             msgbuid.append(Messages.FromTheDatabase);
             msgbuid.append(StringConstants.DOT);
             log.error(msgbuid.toString(), he);

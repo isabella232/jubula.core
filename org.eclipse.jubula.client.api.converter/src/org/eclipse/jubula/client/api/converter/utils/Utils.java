@@ -236,7 +236,7 @@ public class Utils {
             StringConstants.EXCLAMATION_MARK,
             StringConstants.LEFT_BRACKET,
             StringConstants.LEFT_INEQUALITY_SING,
-            StringConstants.LEFT_PARENTHESES,
+            StringConstants.LEFT_PARENTHESIS,
             StringConstants.MINUS,
             StringConstants.PIPE,
             StringConstants.PLUS,
@@ -244,7 +244,7 @@ public class Utils {
             StringConstants.QUOTE,
             StringConstants.RIGHT_BRACKET,
             StringConstants.RIGHT_INEQUALITY_SING,
-            StringConstants.RIGHT_PARENTHESES,
+            StringConstants.RIGHT_PARENTHESIS,
             StringConstants.SEMICOLON,
             StringConstants.SLASH,
             StringConstants.STAR

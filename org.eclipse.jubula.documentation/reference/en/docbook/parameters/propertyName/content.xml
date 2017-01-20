@@ -35,6 +35,8 @@
   	<itemizedlist>
   		<listitem><para>Enter the name of the property you want perform an action on.</para></listitem>
   		<listitem><para>For example, to check the width, enter <emphasis>width</emphasis>.</para></listitem>
+        <listitem><para>It is also possible to enter nested properties, so you could enter <emphasis>items/empty</emphasis> to retrieve the <emphasis>empty</emphasis> property of the <emphasis>items</emphasis> property.</para></listitem>
+        <listitem><para>Furthermore, a method can be called on a property. To check the row count of a table you could enter <emphasis>items/size()</emphasis>. Only methods without parameters can be called.</para></listitem>
   	</itemizedlist>
   
   

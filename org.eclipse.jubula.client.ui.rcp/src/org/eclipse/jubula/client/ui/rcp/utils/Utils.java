@@ -180,8 +180,8 @@ public class Utils {
             msg.append(Messages.CannotOpenThePerspective)
                     .append(StringConstants.COLON)
                     .append(StringConstants.SPACE).append(perspectiveID)
-                    .append(StringConstants.LEFT_PARENTHESES).append(e)
-                    .append(StringConstants.RIGHT_PARENTHESES)
+                    .append(StringConstants.LEFT_PARENTHESIS).append(e)
+                    .append(StringConstants.RIGHT_PARENTHESIS)
                     .append(StringConstants.DOT);
             log.error(msg.toString());
             ErrorHandlingUtil.createMessageDialog(MessageIDs.E_NO_PERSPECTIVE);

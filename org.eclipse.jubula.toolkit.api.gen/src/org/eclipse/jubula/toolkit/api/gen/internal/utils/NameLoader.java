@@ -122,9 +122,9 @@ public class NameLoader {
         desiredName = desiredName.replace(
                 StringConstants.MINUS, StringConstants.SPACE)
                     .replace(
-                StringConstants.LEFT_PARENTHESES, StringConstants.SPACE)
+                StringConstants.LEFT_PARENTHESIS, StringConstants.SPACE)
                     .replace(
-                StringConstants.RIGHT_PARENTHESES, StringConstants.SPACE)
+                StringConstants.RIGHT_PARENTHESIS, StringConstants.SPACE)
                     .replace(
                 StringConstants.SLASH, StringConstants.SPACE);
         desiredName = WordUtils.capitalize(desiredName);
@@ -203,14 +203,14 @@ public class NameLoader {
         String desiredName = CompSystemI18n.getString(name);
         desiredName = desiredName
                 .replace(StringConstants.SLASH, StringConstants.SPACE);
-        if (desiredName.startsWith(StringConstants.LEFT_PARENTHESES)) {
+        if (desiredName.startsWith(StringConstants.LEFT_PARENTHESIS)) {
             desiredName = StringUtils.substringAfter(
-                    desiredName, StringConstants.RIGHT_PARENTHESES);
+                    desiredName, StringConstants.RIGHT_PARENTHESIS);
         }
         desiredName = desiredName
-                .replace(StringConstants.LEFT_PARENTHESES,
+                .replace(StringConstants.LEFT_PARENTHESIS,
                         StringConstants.SPACE)
-                .replace(StringConstants.RIGHT_PARENTHESES,
+                .replace(StringConstants.RIGHT_PARENTHESIS,
                         StringConstants.SPACE);
         desiredName = WordUtils.capitalize(desiredName);
         desiredName = StringUtils.deleteWhitespace(desiredName);

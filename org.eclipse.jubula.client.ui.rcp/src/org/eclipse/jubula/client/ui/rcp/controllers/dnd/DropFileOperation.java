@@ -96,11 +96,11 @@ public class DropFileOperation {
                 builder.append(Paths.get(uri).getFileName().toString());
                 f = new File(uri);
                 builder.append(StringConstants.SPACE);
-                builder.append(StringConstants.LEFT_PARENTHESES);
+                builder.append(StringConstants.LEFT_PARENTHESIS);
                 builder.append(f.length());
                 builder.append(StringConstants.SPACE);
                 builder.append(Messages.Bytes);
-                builder.append(StringConstants.RIGHT_PARENTHESES);
+                builder.append(StringConstants.RIGHT_PARENTHESIS);
                 builder.append(StringConstants.NEWLINE);
             } catch (URISyntaxException e) {
                 // nothing, we just don't list this 'file's
