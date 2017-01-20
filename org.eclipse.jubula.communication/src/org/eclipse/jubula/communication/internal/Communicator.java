@@ -307,6 +307,7 @@ public class Communicator {
             // it's a server that hasn't yet started accepting connections
             setAccepting(true);
             acceptingThread = new AcceptingThread();
+            acceptingThread.setDaemon(true);
             acceptingThread.start();
         } else if (m_inetAddress != null) {
             // it's a client
@@ -1099,7 +1100,7 @@ public class Communicator {
                     String response = DefaultServerSocket.requestClientType(
                             socket, reader, inputStream,
                             DEFAULT_CONNECTING_TIMEOUT * THOUSAND);
-
+                    
                     if (response != null) {
                         IConnectionInitializer initializer = 
                                 m_responseToInitializer.get(response);
