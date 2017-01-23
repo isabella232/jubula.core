@@ -77,7 +77,9 @@ public class ReplaceExecTestCaseData extends ChooseTestCaseData {
         List<String> matchingNames = new ArrayList<String>();
         for (IParamDescriptionPO oldParamDesc: getOldSpecTestCase()
                 .getParameterList()) {
-            if (newParamDesc.getType().equals(oldParamDesc.getType())) {
+            String newType = newParamDesc.getType();
+            if ("java.lang.String".equals(newType) //$NON-NLS-1$
+                    || newParamDesc.getType().equals(oldParamDesc.getType())) {
                 matchingNames.add(oldParamDesc.getName());
             }
         }

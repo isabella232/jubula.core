@@ -200,7 +200,9 @@ public class ParamProposalProvider implements IContentProposalProvider {
                 List<IParamDescriptionPO> params = 
                     paramNode.getParameterList();
                 for (IParamDescriptionPO param : params) {
-                    if (param.getType().equals(m_paramDesc.getType())) {
+                    String parType = m_paramDesc.getType();
+                    if ("java.lang.String".equals(parType) //$NON-NLS-1$
+                            || param.getType().equals(parType)) {
                         String p = PARAMETER_PREFIX + param.getName();
                         if (p.startsWith(contents)) {
                             proposals.add(new ParamProposal(

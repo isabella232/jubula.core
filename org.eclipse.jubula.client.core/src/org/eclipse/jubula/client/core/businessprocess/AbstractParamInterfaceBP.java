@@ -229,7 +229,8 @@ public abstract class AbstractParamInterfaceBP<T> {
                     IDataSetPO set = datasets.get(0);
                     int i = 0;
                     for (String string : set.getColumnStringValues()) {
-                        if (string.contains(srcDesc.getUniqueId())) {
+                        if (StringUtils.contains(string,
+                                srcDesc.getUniqueId())) {
                             return getDefaultValue(cap, i);
                         }
                         i++;

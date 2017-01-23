@@ -249,8 +249,10 @@ public class RefToken extends AbstractParamValueToken {
                 }
                 if ((paramNames.keySet()).contains(refName)) {
                     IParamDescriptionPO desc = paramNames.get(refName);
-                    if (desc.getType().equals(
-                            getParamDescription().getType())) {
+                    String pType = getParamDescription().getType();
+                    // We allow conversion from any type to String
+                    if ("java.lang.String".equals(pType)  //$NON-NLS-1$
+                            || desc.getType().equals(pType)) {
                         state = ConvValidationState.valid;
                     } else {
                         state = ConvValidationState.invalid;
