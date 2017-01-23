@@ -62,6 +62,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.ui.controllers.propertysources.AbstractPropertySource;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
@@ -954,6 +955,9 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                     if (m_currentEditor.getEditorHelper().requestEditableState()
                             == EditableState.OK) {
                         
+                        if (LOG.isDebugEnabled()) {
+                            logChange(propDesc, oldValue, value);
+                        }
                         m_propSource.setPropertyValue(propDesc.getId(), value);
                         if (getCurrentEditor() != null) {
                             getCurrentEditor().getEditorHelper().setDirty(true);
@@ -961,6 +965,36 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                     }
                 }
             }
+        }
+        
+        /**
+         * Logs the change
+         * @param desc the property descriptor
+         * @param old the old value
+         * @param val the new value
+         */
+        @SuppressWarnings("nls")
+        private void logChange(IPropertyDescriptor desc,
+                Object old, Object val) {
+            if (!(m_propSource instanceof AbstractPropertySource)) {
+                return;
+            }
+            INodePO node = ((AbstractPropertySource) m_propSource).
+                    getNodeOrNull();
+            if (node == null) {
+                return;
+            }
+            StringBuilder str = new StringBuilder();
+            str.append("\nProperty change of the node ");
+            str.append(node.getName());
+            str.append("\nThe property descriptor: ");
+            str.append(desc.getDisplayName());
+            str.append("\nThe old value: ");
+            str.append(old.toString());
+            str.append("\nThe new value: ");
+            str.append(val.toString());
+            str.append("\n");
+            LOG.debug(str.toString());
         }
         
     }

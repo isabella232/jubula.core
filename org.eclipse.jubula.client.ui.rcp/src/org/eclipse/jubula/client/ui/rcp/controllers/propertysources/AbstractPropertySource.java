@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 import java.util.Iterator;
 
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
@@ -201,5 +202,13 @@ public abstract class AbstractPropertySource <NODE_TYPE>
         public Image getImage() {
             return DEFAULT_IMAGE;
         }
+    }
+    
+    /** {@inheritDoc} */
+    public INodePO getNodeOrNull() {
+        if (getNode() instanceof INodePO) {
+            return (INodePO) getNode();
+        }
+        return null;
     }
 }

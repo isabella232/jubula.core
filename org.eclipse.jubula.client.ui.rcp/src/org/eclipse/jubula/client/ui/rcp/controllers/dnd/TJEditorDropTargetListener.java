@@ -53,9 +53,10 @@ public class TJEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
         }
         if (selection instanceof StructuredSelection 
                 && target instanceof INodePO) {
-            return TJEditorDndSupport.performDrop(m_editor, 
-                    selection, (INodePO)target, 
-                    location);
+            boolean succ = TJEditorDndSupport.performDrop(m_editor, 
+                    selection, (INodePO)target, location);
+            logDrop(selection, (INodePO) target, succ);
+            return succ;
         }
 
         return false;

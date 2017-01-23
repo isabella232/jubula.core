@@ -54,8 +54,11 @@ public class TestExecDropTargetListener extends ViewerDropAdapter {
         }
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
         IPersistentObject target = (IPersistentObject)getCurrentTarget();
-        List <INodePO> nodesToBeMoved = transfer.getSelection().toList();
-        if (!TSBrowserDndSupport.moveNodes(nodesToBeMoved, target)) {
+        List <INodePO> toMove = transfer.getSelection().toList();
+        boolean succ = TSBrowserDndSupport.moveNodes(toMove, target);
+        TestSpecDropTargetListener.logDrop("Test Suite Browser", //$NON-NLS-1$
+                toMove, target, succ);
+        if (!succ) {
             return false;
         }
         transfer.setSelection(null);

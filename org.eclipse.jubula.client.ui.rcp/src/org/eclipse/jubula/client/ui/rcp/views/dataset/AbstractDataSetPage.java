@@ -42,6 +42,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.IProjectLoadedL
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -118,11 +119,16 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractDataSetPage extends Page 
     implements ISelectionListener, IAdaptable, IParamChangedListener,
                IProjectLoadedListener, IDataChangedListener {
+
     /** Constant for the width of the DataSet column in the table */
     protected static final int DATASET_NUMBER_COLUMNWIDTH = 30;
     /** Constant for the default column width */ 
     protected static final int COLUMN_WIDTH = 140;
-    
+
+    /** The log */
+    private static final Logger LOG = LoggerFactory.getLogger(
+            AbstractDataSetPage.class);
+
     /** Search delay in millisecond */
     private static final long SEARCH_DELAY = 200;
     
@@ -138,7 +144,6 @@ public abstract class AbstractDataSetPage extends Page
     private static Image pressedImage = null;
     
     static {
-        Logger logger = LoggerFactory.getLogger(AbstractDataSetPage.class);
         ImageRegistry imgReg = JFaceResources.getImageRegistry();
         Display display = getDisplay();
         
@@ -151,7 +156,7 @@ public abstract class AbstractDataSetPage extends Page
             if (disabledClearIcon != null) {
                 inactiveImage = disabledClearIcon.createImage();
             } else {
-                logger.error("Filter: \"Disabled Clear Icon\"-Descriptor could not be found!"); //$NON-NLS-1$
+                LOG.error("Filter: \"Disabled Clear Icon\"-Descriptor could not be found!"); //$NON-NLS-1$
             }
             
             if (clearIcon != null) {
@@ -161,10 +166,10 @@ public abstract class AbstractDataSetPage extends Page
                     pressedImage = new Image(display, activeImage,
                             SWT.IMAGE_GRAY);
                 } else {
-                    logger.error("Filter: \"Pressed Clear Icon\" could not be created!"); //$NON-NLS-1$
+                    LOG.error("Filter: \"Pressed Clear Icon\" could not be created!"); //$NON-NLS-1$
                 }
             } else {
-                logger.error("Filter: \"Clear Icon\"-Descriptor could not be found!"); //$NON-NLS-1$
+                LOG.error("Filter: \"Clear Icon\"-Descriptor could not be found!"); //$NON-NLS-1$
             }
         }
     }
@@ -676,6 +681,32 @@ public abstract class AbstractDataSetPage extends Page
     }
     
     /**
+     * Logs a button pressed event
+     * @param but the button
+     */
+    @SuppressWarnings("nls")
+    private void logButton(Button but) {
+        if (!LOG.isDebugEnabled()) {
+            return;
+        }
+        StringBuilder str = new StringBuilder();
+        str.append("\nData Set View button \"");
+        if (but == getDownButton()) {
+            str.append("Down");
+        } else if (but == getUpButton()) {
+            str.append("Up");
+        } else {
+            str.append(but.getText());
+        }
+        str.append("\" pressed. The row number: ");
+        str.append(getSelectedDataSet());
+        str.append("\nThe data set owner is the node ");
+        str.append(getParamInterfaceObj().getSpecificationUser().toString());
+        str.append(".\n");
+        LOG.debug(str.toString());
+    }
+    
+    /**
      * add listener to buttons
      */
     private void addListenerToButtons() {
@@ -686,6 +717,7 @@ public abstract class AbstractDataSetPage extends Page
                 checkComboSelection(TestDataRowAction.ADDED, index);
                 getControlEnabler().selectionChanged(m_currentPart,
                         m_currentSelection);
+                logButton(getAddButton());
             }
         });
         getInsertButton().addSelectionListener(new SelectionAdapter() {
@@ -700,6 +732,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 removeDataSet();
                 checkComboSelection(TestDataRowAction.DELETED, index);
+                logButton(getDeleteButton());
             }
         });
         getUpButton().addSelectionListener(new SelectionAdapter() {
@@ -707,6 +740,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 moveDataSetUp();
                 checkComboSelection(TestDataRowAction.MOVED_UP, index);
+                logButton(getUpButton());
             }
         });
         getDownButton().addSelectionListener(new SelectionAdapter() {
@@ -714,6 +748,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 moveDataSetDown();
                 checkComboSelection(TestDataRowAction.MOVED_DOWN, index);
+                logButton(getDownButton());
             }
         });
     }
@@ -1360,7 +1395,38 @@ public abstract class AbstractDataSetPage extends Page
             if (value != null && value.equals(StringConstants.EMPTY)) {
                 value = null;
             }
+            if (LOG.isDebugEnabled()) {
+                logDataChange(property, value, m_oldValue,
+                        getParamInterfaceObj().getSpecificationUser());
+            }
             writeDataSetData(property, value, m_tcEditor);
+            
+        }
+        
+        /**
+         * @param col column
+         * @param newV new value
+         * @param oldV old value
+         * @param node node
+         */
+        @SuppressWarnings("nls")
+        private void logDataChange(String col, String newV,
+                String oldV, INodePO node) {
+            StringBuilder str = new StringBuilder();
+            str.append("\nData Set value changed. Data owner node: ");
+            str.append(node.toString());
+            str.append(".\nEditor node: ");
+            str.append(node.getSpecAncestor().toString());
+            str.append("\nColumn: ");
+            str.append(col);
+            str.append(", Row: ");
+            str.append(m_currentSelectionIndex);
+            str.append(".\nValue change: \"");
+            str.append(oldV);
+            str.append("\" -> \"");
+            str.append(newV);
+            str.append("\".\n");
+            LOG.debug(str.toString());
         }
         
         /**

@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
@@ -107,4 +108,11 @@ public abstract class AbstractPropertySource implements IPropertySource {
      * Inits the PropertyDescriptors
      */
     protected abstract void initPropDescriptor();
+    
+    /**
+     * @return node data or null...
+     */
+    public INodePO getNodeOrNull() {
+        return null;
+    }
 }

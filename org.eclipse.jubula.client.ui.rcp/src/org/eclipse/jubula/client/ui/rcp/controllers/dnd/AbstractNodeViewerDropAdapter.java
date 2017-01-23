@@ -12,15 +12,23 @@ package org.eclipse.jubula.client.ui.rcp.controllers.dnd;
 
 import java.util.List;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author BREDEX GmbH
  * @created Sep 16, 2010
  */
 public abstract class AbstractNodeViewerDropAdapter extends ViewerDropAdapter {
+    
+    /** The logger */
+    private static final Logger LOG = LoggerFactory.getLogger(
+            AbstractNodeViewerDropAdapter.class);
+    
     /**
      * @param viewer
      *            the viewer
@@ -54,5 +62,30 @@ public abstract class AbstractNodeViewerDropAdapter extends ViewerDropAdapter {
             return fallbackTarget;
         }
         return null;
+    }
+    
+    /**
+     * Logs the drop
+     * @param sel the selection
+     * @param target the target
+     * @param succ whether successful
+     */
+    @SuppressWarnings("nls")
+    void logDrop(IStructuredSelection sel, INodePO target, boolean succ) {
+        if (!LOG.isDebugEnabled()) {
+            return;
+        }
+        INodePO par = target.getSpecAncestor();
+        StringBuilder str = new StringBuilder();
+        str.append("\nDropping in an Editor.\nThe root node is: ");
+        str.append(par.toString());
+        str.append("\nThe drop target is: ");
+        str.append(target.toString());
+        str.append("\nThe dropped nodes are:\n");
+        str.append(sel.toList().toString());
+        str.append("\nSuccess: ");
+        str.append(succ);
+        str.append("\n");
+        LOG.debug(str.toString());
     }
 }

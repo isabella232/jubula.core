@@ -56,8 +56,10 @@ public class TCEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
                 location = ViewerDropAdapter.LOCATION_AFTER;
             }
             if (target instanceof INodePO) {
-                return TCEditorDndSupport.performDrop(m_editor, selection,
-                        (INodePO)target, location);
+                boolean succ = TCEditorDndSupport.performDrop(m_editor,
+                        selection, (INodePO)target, location);
+                logDrop(selection, (INodePO) target, succ);
+                return succ;
             }
         }
 

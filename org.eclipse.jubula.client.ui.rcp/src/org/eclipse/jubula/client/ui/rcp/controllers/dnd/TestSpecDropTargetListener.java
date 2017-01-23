@@ -22,6 +22,8 @@ import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.TransferData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -30,6 +32,10 @@ import org.eclipse.swt.dnd.TransferData;
  */
 public class TestSpecDropTargetListener extends ViewerDropAdapter {
 
+    /** The log */
+    private static final Logger LOG = LoggerFactory.getLogger(
+            TestSpecDropTargetListener.class);
+    
     /**
      * @param view the depending view.
      */
@@ -48,11 +54,38 @@ public class TestSpecDropTargetListener extends ViewerDropAdapter {
         LocalSelectionTransfer transfer = LocalSelectionTransfer.getInstance();
         IPersistentObject target = (IPersistentObject)getCurrentTarget();
         List <INodePO> nodesToBeMoved = transfer.getSelection().toList();
-        if (!TCBrowserDndSupport.moveNodes(nodesToBeMoved, target)) {
+        boolean succ = TCBrowserDndSupport.moveNodes(nodesToBeMoved, target);
+        logDrop("Test Case Browser", nodesToBeMoved, target, succ); //$NON-NLS-1$
+        if (!succ) {
             return false;
         }
         LocalSelectionTransfer.getInstance().setSelection(null);
         return true;
+    }
+    
+    /**
+     * @param browser the browser
+     * @param toMove to move
+     * @param target target
+     * @param succ whether drop was successful
+     */
+    @SuppressWarnings("nls")
+    public static void logDrop(String browser, List<INodePO> toMove,
+            IPersistentObject target, boolean succ) {
+        if (!LOG.isDebugEnabled()) {
+            return;
+        }
+        StringBuilder str = new StringBuilder();
+        str.append("\nDropping nodes in the ");
+        str.append(browser);
+        str.append(".\n The nodes:\n");
+        str.append(toMove.toString());
+        str.append("\nThe target: ");
+        str.append(target.getName());
+        str.append("\nSuccess: ");
+        str.append(succ);
+        str.append("\n");
+        LOG.debug(str.toString());
     }
 
     /**

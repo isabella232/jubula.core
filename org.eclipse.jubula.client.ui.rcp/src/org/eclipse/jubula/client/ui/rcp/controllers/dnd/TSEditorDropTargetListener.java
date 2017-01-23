@@ -54,9 +54,10 @@ public class TSEditorDropTargetListener extends AbstractNodeViewerDropAdapter {
         if (target instanceof INodePO) {
             INodePO targetGuiNode = (INodePO)target;
             IStructuredSelection toDrop = transfer.getSelection();
-            return TSEditorDndSupport.performDrop(m_editor, toDrop,
+            boolean succ = TSEditorDndSupport.performDrop(m_editor, toDrop,
                     targetGuiNode, location);
-
+            logDrop(toDrop, targetGuiNode, succ);
+            return succ;
         }
 
         return false;
