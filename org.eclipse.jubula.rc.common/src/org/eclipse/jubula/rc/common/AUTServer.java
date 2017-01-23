@@ -213,9 +213,7 @@ public abstract class AUTServer {
                 }
             });
             if (res == null) {
-                String s = "Could not load the external jars. The directory " //$NON-NLS-1$
-                        + start + " does not exist"; //$NON-NLS-1$
-                log.error(s);
+                // Can't load the external jars. Just ignore them...
                 return;
             }
             ArrayList<URL> urls = new ArrayList<URL>();
@@ -230,8 +228,7 @@ public abstract class AUTServer {
                 m_externalLoader = new URLClassLoader(urls.toArray(new URL[0]));
             }
         } catch (Exception e) {
-            String s = "Unable to load the external jars: " + e.getMessage(); //$NON-NLS-1$
-            log.info(s);
+            // Could not load the external jars. Just ignore them...
         }
     }
     
