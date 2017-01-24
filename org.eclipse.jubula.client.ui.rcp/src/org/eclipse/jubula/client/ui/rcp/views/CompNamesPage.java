@@ -31,18 +31,6 @@ import org.eclipse.ui.part.Page;
  * @created Sep 10, 2008
  */
 public class CompNamesPage extends Page implements ISelectionListener {
-    /**
-     * The currently selected test execution node, may be <code>null</code>,
-     * if no test execution node ist selected.
-     */
-    private IExecTestCasePO m_oldSelectedExecNode;
-    
-    /**
-     * The owner of the currently selected test execution node, may be
-     * <code>null</code>, if no test execution node ist selected or if the
-     * part has been closed.
-     */
-    private IWorkbenchPart m_oldSelectedExecNodeOwner;
     
     /** the primary control for this page */
     private ComponentNamesTableComposite m_control;
@@ -58,7 +46,6 @@ public class CompNamesPage extends Page implements ISelectionListener {
      * {@inheritDoc}
      */
     public void handleEditorSaved(IWorkbenchPart part, ISelection selection) {
-        m_oldSelectedExecNode = null;
         selectionChanged(part, selection);
     }
 
@@ -93,25 +80,18 @@ public class CompNamesPage extends Page implements ISelectionListener {
             selectedExecNode = (IExecTestCasePO)sel.getFirstElement();
             selectedExecNodeOwner = part;
         }
-        if ((selectedExecNode == null) || (selectedExecNode != null 
-                && !(selectedExecNode.equals(m_oldSelectedExecNode)))
-                || (!(selectedExecNodeOwner.equals(
-                        m_oldSelectedExecNodeOwner)))) {
             
-            if (part instanceof IJBEditor) {
-                m_control.getCellEdit().setComponentNameCache(
-                    ((IJBEditor)part).getCompNameCache());
-            }
-            m_control.setSelectedExecNodeOwner(selectedExecNodeOwner);
-            m_control.setSelectedExecNode(selectedExecNode);
-            if (part instanceof AbstractTestCaseEditor) {
-                AbstractTestCaseEditor editor = (AbstractTestCaseEditor)part;
-                if (editor.getEditorInput() instanceof ITestSuitePO) {
-                    m_control.controlPropagation(false);
-                }
+        if (part instanceof IJBEditor) {
+            m_control.getCellEdit().setComponentNameCache(
+                ((IJBEditor)part).getCompNameCache());
+        }
+        m_control.setSelectedExecNodeOwner(selectedExecNodeOwner);
+        m_control.setSelectedExecNode(selectedExecNode);
+        if (part instanceof AbstractTestCaseEditor) {
+            AbstractTestCaseEditor editor = (AbstractTestCaseEditor)part;
+            if (editor.getEditorInput() instanceof ITestSuitePO) {
+                m_control.controlPropagation(false);
             }
         }
-        m_oldSelectedExecNode = selectedExecNode;
-        m_oldSelectedExecNodeOwner = selectedExecNodeOwner;
     }
 }

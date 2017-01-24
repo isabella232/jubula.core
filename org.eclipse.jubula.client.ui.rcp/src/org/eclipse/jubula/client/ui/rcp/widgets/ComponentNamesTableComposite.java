@@ -829,7 +829,11 @@ public class ComponentNamesTableComposite extends Composite implements
      * {@inheritDoc}
      */
     public void handleDataChanged(IPersistentObject po, DataState dataState) {
-        IExecTestCasePO selectedExecNode = getSelectedExecNode();
+        IExecTestCasePO exec = getSelectedExecNode();
+        if (po != null && exec != null && po.equals(exec.getSpecAncestor())) {
+            updateTableInput();
+            return;
+        }
         if (po instanceof IExecTestCasePO || po instanceof ISpecTestCasePO
                 || po instanceof IComponentNamePO
                 || po instanceof ICompNamesPairPO) {
