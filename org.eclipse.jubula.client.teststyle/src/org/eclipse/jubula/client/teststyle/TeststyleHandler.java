@@ -99,8 +99,10 @@ public final class TeststyleHandler implements IDataChangedListener,
             monitor.beginTask(Messages.TestStyleRunningOperation,
                     IProgressMonitor.UNKNOWN);
             for (DataChangedEvent e : m_events) {
-                handleChangedPo(e.getPo(), e.getDataState(),
-                        e.getUpdateState());
+                if (e.getUpdateState() != UpdateState.onlyInEditor) {
+                    handleChangedPo(e.getPo(), e.getDataState(),
+                            e.getUpdateState());
+                }
             }
             if (monitor.isCanceled()) {
                 return new Status(IStatus.CANCEL, Activator.PLUGIN_ID,
@@ -216,19 +218,23 @@ public final class TeststyleHandler implements IDataChangedListener,
         boolean isUpdateInEditor = true;
         for (DataChangedEvent e : events) {
             if (e.getUpdateState() != UpdateState.onlyInEditor) {
-                TestStyleJob tj = new TestStyleJob("Teststyle", events); //$NON-NLS-1$
-                tj.setRule(
-                        new MultiRule(new ISchedulingRule[]{
-                            SingleJobRule.COMPLETENESSRULE,
-                            SingleJobRule.TESTSTYLERULE}));
-                JobUtils.executeJob(tj, null);
-                for (Job job : Job.getJobManager().find(tj)) {
-                    if (job != tj) {
-                        job.cancel();
-                    }
-                }
-                return;
+                isUpdateInEditor = false;
+                break;
             }
+        }
+        if (!isUpdateInEditor) {
+            TestStyleJob tj = new TestStyleJob("Teststyle", events); //$NON-NLS-1$
+            tj.setRule(
+                    new MultiRule(new ISchedulingRule[]{
+                        SingleJobRule.COMPLETENESSRULE,
+                        SingleJobRule.TESTSTYLERULE}));
+            JobUtils.executeJob(tj, null);
+            for (Job job : Job.getJobManager().find(tj)) {
+                if (job != tj) {
+                    job.cancel();
+                }
+            }
+            return;
         }
     }
     
@@ -241,15 +247,17 @@ public final class TeststyleHandler implements IDataChangedListener,
         UpdateState updateState) {
         // FIXME mbs Need a event for closing a project
         // Clean up first
-        ProblemCont.instance.remove(po);
         switch (dataState) {
             case Renamed: // fall through
             case Added: // fall through
             case StructureModified: // fall through
             case ReuseChanged:
+            case Saved:
+                ProblemCont.instance.remove(po);
                 check(po);
                 break;
             case Deleted: // fall through
+                ProblemCont.instance.remove(po);
             default:
                 break;
         }

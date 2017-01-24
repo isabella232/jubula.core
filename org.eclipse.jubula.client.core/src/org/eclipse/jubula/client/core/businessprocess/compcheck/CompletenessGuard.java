@@ -31,8 +31,8 @@ import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
@@ -59,9 +59,9 @@ public final class CompletenessGuard {
             return !alreadyVisited;
         }
     }
-    
+
     /**
-     * Operation to reflect the activity status of a node
+     * Operation to remove problems from inactive nodes
      */
     private static class InactiveNodesOperation extends
             AbstractNonPostOperatingTreeNodeOperation<INodePO> {
@@ -81,6 +81,27 @@ public final class CompletenessGuard {
     }
 
     /**
+     * Operation to check for empty conditions
+     */
+    private static class CheckEmptyConditions extends
+            AbstractNonPostOperatingTreeNodeOperation<INodePO> {
+
+        /** {@inheritDoc} */
+        public boolean operate(ITreeTraverserContext<INodePO> ctx,
+                INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (alreadyVisited) {
+                return false;
+            }
+            if (node instanceof ITestSuitePO
+                    || node instanceof ISpecTestCasePO) {
+                checkEmptyContainer(node);
+                return false; // We stop...
+            }
+            return true;
+        }
+    }
+
+    /**
      * Operation to set the CompleteTestData flag at TDManager.
      * 
      * @author BREDEX GmbH
@@ -94,8 +115,11 @@ public final class CompletenessGuard {
          */
         public boolean operate(ITreeTraverserContext<INodePO> ctx,
                 INodePO parent, INodePO node, boolean alreadyVisited) {
+            if (alreadyVisited) {
+                return false;
+            }
             checkLocalTestData(node);
-            return !alreadyVisited;
+            return true;
         }
     }
 
@@ -117,22 +141,21 @@ public final class CompletenessGuard {
     public static void checkAll(INodePO root, IProgressMonitor monitor) {
         // Iterate Execution tree
         TreeTraverser traverser = new TreeTraverser(root);
+        traverser.setTraverseSpecPart(true);
         traverser.setMonitor(monitor);
+        traverser.setTraverseIntoExecs(false);
+        traverser.setTraverseSpecPart(true);
         traverser.addOperation(new CheckTestDataCompleteness());
         traverser.addOperation(new CheckMissingTestCaseReferences());
         traverser.addOperation(new InactiveNodesOperation());
+        traverser.addOperation(new CheckEmptyConditions());
         traverser.traverse(true);
         
-        for (ISpecPersistable spec : GeneralStorage.getInstance().getProject().
-                getSpecObjCont().getSpecObjList()) {
-            if (spec instanceof ISpecTestCasePO) {
-                checkEmptyContainer(spec);
-            }
+        if (root.equals(GeneralStorage.getInstance().getProject())) {
+            CompCheck check = new CompCheck(TestSuiteBP.getListOfTestSuites());
+            check.traverse();
+            check.addProblems();
         }
-        
-        CompCheck check = new CompCheck(TestSuiteBP.getListOfTestSuites());
-        check.traverse();
-        check.addProblems();
     }
 
     /**
@@ -187,25 +210,6 @@ public final class CompletenessGuard {
     }
 
     /**
-     * clear all test data related problems for the given node
-     * 
-     * @param node
-     *            the node
-     */
-    private static void resetTestDataCompleteness(INodePO node) {
-        Set<IProblem> toRemove = new HashSet<IProblem>();
-        for (IProblem problem : node.getProblems()) {
-            if (problem.getProblemType().equals(
-                    ProblemType.REASON_TD_INCOMPLETE)) {
-                toRemove.add(problem);
-            }
-        }
-        for (IProblem problem : toRemove) {
-            node.removeProblem(problem);
-        }
-    }
-
-    /**
      * @param node
      *            the node to check
      */
@@ -224,10 +228,8 @@ public final class CompletenessGuard {
                 nodeToModify = node;
             }
             if (nodeToModify != null)  {
-                resetTestDataCompleteness(nodeToModify);
                 setCompletenessTestData(nodeToModify,
                         dataSourceNode.isTestDataComplete());
-                
             }
         }
     }
@@ -263,10 +265,6 @@ public final class CompletenessGuard {
                             new Status(IStatus.ERROR,
                                     Activator.PLUGIN_ID, message), message,
                             child, ProblemType.REASON_IF_WITHOUT_TEST));
-                    // Problem Propagation works through ExecTestCasePOs
-                    // So we have to mark the SpecTC here
-                    ProblemPropagator.setProblem(child.getParentNode(),
-                            IStatus.ERROR);
                 }
             }
         }

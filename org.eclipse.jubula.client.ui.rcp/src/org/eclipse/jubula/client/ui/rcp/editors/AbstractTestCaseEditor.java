@@ -273,10 +273,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     public void runLocalChecks() {
         INodePO node = (INodePO) getEditorHelper().getEditSupport()
                 .getWorkVersion();
-        checkForEmptyControllers(node);
-        for (Iterator it = node.getAllNodeIter(); it.hasNext(); ) {
-            CompletenessGuard.checkLocalTestData((INodePO) it.next());
-        }
+        CompletenessGuard.checkAll(node, new NullProgressMonitor());
     }
     
     /**

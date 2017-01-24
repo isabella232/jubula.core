@@ -179,7 +179,6 @@ public class CompCheck {
      * is still a chance to correct the map by changing a corresponding CNPair 
      */
     public void addProblems() {
-        long time = System.currentTimeMillis();
         m_autProblems = new HashMap<>();
         for (ITestSuitePO ts : m_suites) {
             m_aut = ts.getAut();

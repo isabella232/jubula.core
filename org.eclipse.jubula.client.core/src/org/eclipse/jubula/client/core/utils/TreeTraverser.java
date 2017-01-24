@@ -79,6 +79,9 @@ public class TreeTraverser {
      */
     private boolean m_traverseReused = true;
     
+    /** Traverses through ExecTCs */
+    private boolean m_traverseIntoExecs = true;
+    
     /** 
      * The maximum traversal depth. <code>NO_DEPTH_LIMIT</code> by default. 
      */
@@ -215,9 +218,13 @@ public class TreeTraverser {
                     IProjectPO project = (IProjectPO)node;
                     traverseProject(context, project);
                 } else {
-                    for (Iterator<INodePO> it = node.getNodeListIterator(); 
-                            it.hasNext();) {
-                        traverseImpl(context, node, it.next());
+                    if (!(node instanceof IExecTestCasePO)
+                            || m_traverseIntoExecs) {
+                        // ExecTCs' getNodeListIterator returns the corresponding SpecTestCasePO's node list!
+                        for (Iterator<INodePO> it = node.getNodeListIterator(); 
+                                it.hasNext();) {
+                            traverseImpl(context, node, it.next());
+                        }
                     }
                     if (node instanceof IControllerPO) {
                         for (INodePO child : node.getUnmodifiableNodeList()) {
@@ -412,5 +419,19 @@ public class TreeTraverser {
      */
     public void setTraverseReused(boolean reused) {
         m_traverseReused = reused;
+    }
+    
+    /**
+     * @param spec whether to traverse the Spec part (TCB)
+     */
+    public void setTraverseSpecPart(boolean spec) {
+        m_traverseSpecPart = spec;
+    }
+    
+    /**
+     * @param bool whether to traverse through ExecTCs (that is, into the corresponding SpecTC)
+     */
+    public void setTraverseIntoExecs(boolean bool) {
+        m_traverseIntoExecs = bool;
     }
 }

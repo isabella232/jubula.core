@@ -95,7 +95,7 @@ public enum ProblemPropagator {
             int status = IStatus.OK;
             try {
                 TreeTraverser treeTraverser = new TreeTraverser(m_project,
-                        new ProblemPropagationOperation(), false, true);
+                        new ProblemPropagationOperation(), true, true);
                 treeTraverser.setMonitor(monitor);
                 treeTraverser.traverse(true);
                 
