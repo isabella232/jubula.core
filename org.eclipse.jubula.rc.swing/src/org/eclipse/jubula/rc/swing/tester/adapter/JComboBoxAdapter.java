@@ -72,14 +72,19 @@ public class JComboBoxAdapter extends JComponentAdapter implements
         } else {
             final int selIndex = getSelectedIndex();
             if (selIndex == -1) {
-                comboBoxText = getEventThreadQueuer().invokeAndWait(
-                        "getSelectedItemText", //$NON-NLS-1$
-                        new IRunnable<String>() {
-                            public String run() {
-                                return String.valueOf(m_comboBox
-                                        .getSelectedItem());
-                            }
-                        });
+                try {
+                    comboBoxText = getTextForSelectedItem();
+                } catch (Exception e) {
+                    comboBoxText = getEventThreadQueuer().invokeAndWait(
+                            "getSelectedItemText", //$NON-NLS-1$
+                            new IRunnable<String>() {
+                                public String run() {
+                                    return String.valueOf(
+                                            m_comboBox.getSelectedItem());
+                                }
+                            });
+
+                }
             } else {
                 final JList jlist = new JList(m_comboBox.getModel());
                 String o = getEventThreadQueuer().invokeAndWait(
@@ -97,6 +102,24 @@ public class JComboBoxAdapter extends JComponentAdapter implements
         }
         return comboBoxText;
     
+    }
+    
+    /**
+     * gets the text from the renderer for the selected Item
+     * @return the text of the selected item
+     */
+    private String getTextForSelectedItem() {
+        String o = getEventThreadQueuer().invokeAndWait("getText", //$NON-NLS-1$
+                new IRunnable<String>() {
+                    public String run() {
+                        Component disp = m_comboBox.getRenderer()
+                                .getListCellRendererComponent(new JList(),
+                                        m_comboBox.getSelectedItem(), 0, true,
+                                        m_comboBox.hasFocus());
+                        return TesterUtil.getRenderedText(disp, false);
+                    }
+                });
+        return String.valueOf(o);
     }
 
     /**
