@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
+import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -121,22 +122,29 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
     }
     
     /**
-     * @param node the currently selected node: we insert below this or at the end of the SpecTC
+     * @param node the currently selected node: we insert below this or at the end of the branch
      * @param exp whether node is expanded
      * @return the position to add
      */
     public static NodeTarget getPositionToInsert(INodePO node, boolean exp) {
-
-        if (!Plugin.getDefault().getPreferenceStore()
+        /* Insert the node after the selected node? */
+        if (Plugin.getDefault().getPreferenceStore()
                 .getBoolean(Constants.NODE_INSERT_KEY)) {
-
-            INodePO top = node.getSpecAncestor();
-            if (top == null) {
-                return null;
-            }
-            return new NodeTarget(top.getNodeListSize(), top);
+            return NodeTargetCalculator.calcNodeTarget(null, node,
+                    ViewerDropAdapter.LOCATION_AFTER, exp);
         }
-        return NodeTargetCalculator.calcNodeTarget(null, node,
-                ViewerDropAdapter.LOCATION_AFTER, exp);
+        /* Is the top node of a branch selected? */
+        if (node instanceof IAbstractContainerPO
+                || node instanceof ISpecTestCasePO) {
+            return new NodeTarget(node.getNodeListSize(), node);
+        }
+        /* Is a node within a branch selected? */
+        if (node.getParentNode() != null) {
+            return new NodeTarget(node.getParentNode().getNodeListSize(),
+                    node.getParentNode());
+        }
+        /* Something went wrong here. */
+        return null;
     }
+
 }
