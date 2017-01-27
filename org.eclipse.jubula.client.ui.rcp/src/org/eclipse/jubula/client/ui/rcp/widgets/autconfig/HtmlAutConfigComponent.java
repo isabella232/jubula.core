@@ -368,14 +368,15 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         boolean isIE = m_browserCombo.getSelectedObject().equals(
                 Browser.InternetExplorer);
         boolean isFF = m_browserCombo.getSelectedObject().equals(
-                Browser.Firefox);
+                Browser.Firefox) || m_browserCombo.getSelectedObject().equals(
+                        Browser.Firefox47);
         m_browserPathButton.setEnabled(!isIE && browseEnabled);
         m_browserTextField.setEnabled(!isIE && browseEnabled);
         boolean isWebDriver = m_webdriverCheckBox.getSelection();
         if (isWebDriver) {
             if (isFF) {
-                m_driverPathButton.setEnabled(false);
-                m_driverTextField.setEnabled(false);
+                m_driverPathButton.setEnabled(true);
+                m_driverTextField.setEnabled(true);
             } else {
                 m_driverPathButton.setEnabled(browseEnabled);
                 m_driverTextField.setEnabled(browseEnabled);

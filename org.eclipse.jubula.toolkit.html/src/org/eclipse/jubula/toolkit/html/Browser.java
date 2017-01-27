@@ -16,6 +16,8 @@ public enum Browser {
     InternetExplorer,
     /** Firefox */
     Firefox,
+    /** Firefox < 47 **/
+    Firefox47,
     /** Safari */
     Safari,
     /** Chrome */
