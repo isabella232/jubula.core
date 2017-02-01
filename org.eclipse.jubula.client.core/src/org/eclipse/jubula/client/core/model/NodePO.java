@@ -398,7 +398,14 @@ abstract class NodePO implements INodePO {
      * @param childNode reference to the childnode
      */
     public void removeNode(INodePO childNode) {
-        getNodeList().remove(childNode);
+        ((NodePO)childNode).removeMe(this);   
+    }
+    
+    /**
+     * @param parent removes the node from childrenList or eventhandlerMap
+     */
+    protected void removeMe(INodePO parent) {
+        ((NodePO)parent).getNodeList().remove(this);
     }
     
     /**
