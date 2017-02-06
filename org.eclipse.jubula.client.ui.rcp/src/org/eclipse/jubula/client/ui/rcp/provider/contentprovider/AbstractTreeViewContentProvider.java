@@ -51,6 +51,8 @@ public abstract class AbstractTreeViewContentProvider extends
     /** {@inheritDoc} */
     public Object getParent(Object element) {
         if (element instanceof INodePO) {
+            // This bit of code is wrong for not correct in every case.
+            // it is used e.g. for show specification
             INodePO node = ((INodePO)element);
             INodePO parent = node.getParentNode();
             Long nodeProjId = node.getParentProjectId();

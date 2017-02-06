@@ -18,7 +18,8 @@ import javax.persistence.EntityManager;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -49,21 +50,19 @@ public abstract class AbstractNewHandler extends AbstractHandler {
     protected INodePO getParentNode(ExecutionEvent event) {
         INodePO parentNode = null;
         ISelection selection = HandlerUtil.getCurrentSelection(event);
-        if (selection instanceof IStructuredSelection) {
-            IStructuredSelection sselection = (IStructuredSelection) selection;
+        if (selection instanceof ITreeSelection) {
+            TreePath[] paths = ((ITreeSelection) selection).getPaths();
             
-            if (!sselection.isEmpty()) {
-                Object selectedNode = sselection.getFirstElement();
-                if (selectedNode instanceof INodePO) {
-                    parentNode = (INodePO) selectedNode;
-                    while (!(parentNode instanceof ICategoryPO 
-                            || parentNode == null)) {
-                        parentNode = parentNode.getParentNode();
-                    }
-                } else if (selectedNode instanceof IExecObjContPO) {
-                    parentNode = IExecObjContPO.TSB_ROOT_NODE;
-                } else if (selectedNode instanceof ISpecObjContPO) {
-                    parentNode = ISpecObjContPO.TCB_ROOT_NODE;
+            if (paths.length > 0) {
+                int ind = paths[0].getSegmentCount();
+                // We need a CategoryPO or the Browser root - the latter is
+                // selected by default later, so we ignore that case here
+                do {
+                    ind--;
+                } while (ind > 0
+                        && !(paths[0].getSegment(ind) instanceof ICategoryPO));
+                if (ind > 0) {
+                    parentNode = (INodePO) paths[0].getSegment(ind);
                 }
             }
         }
@@ -86,7 +85,6 @@ public abstract class AbstractNewHandler extends AbstractHandler {
      */
     public void addCreatedNode(final INodePO created, ExecutionEvent ev) {
         INodePO parent = getParentNode(ev);
-        IWorkbenchPart activePart = HandlerUtil.getActivePart(ev);
 
         final List<IPersistentObject> toLock = new ArrayList<>();
         IProjectPO pr = GeneralStorage.getInstance().getProject();
