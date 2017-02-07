@@ -272,7 +272,7 @@ abstract class NodePO implements INodePO {
      * 
      * @return the current value of the m_nodeList property
      */
-    @OneToMany(fetch = FetchType.EAGER, 
+    @OneToMany(fetch = FetchType.LAZY, 
                 cascade = CascadeType.ALL, 
                 targetEntity = NodePO.class)
     @JoinColumn(name = "PARENT")
