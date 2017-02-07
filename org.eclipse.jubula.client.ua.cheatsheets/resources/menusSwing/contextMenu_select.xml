@@ -81,7 +81,7 @@ Open the Test Case Editor for this Test Case.
          The Test Case to select from a context menu has three parameters.
       </description>
       <subitem
-            label="In In the &quot;Textpath&quot; parameter field, enter: Add category.*">
+            label="In the &quot;Textpath&quot; parameter field, enter: Add category.*">
       </subitem>
       <subitem
             label="In the &quot;Operator&quot; parameter field, enter: matches">

@@ -24,7 +24,7 @@ If you have not already logged into the database, do so when prompted.
  In the import dialog browse to:<br/>
 <b>InstallationDirectory/examples/projects</b>
 <br/><br/>
-Select <b>Samples.xml</b> and <b>bound_modules_samples.xml</b> and import them into the database.
+Select <b>Samples.jub</b> and <b>bound_modules_samples.jub</b> and import them into the database.
       </description>
    </item>
    <item title="Open the Samples Project" dialog="true" skip="false">
