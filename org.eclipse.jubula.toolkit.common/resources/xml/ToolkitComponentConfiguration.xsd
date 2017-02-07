@@ -42,6 +42,7 @@
 			<xs:attribute name="deprecated" default="false" type="xs:boolean" />
             <xs:attribute name="since" use="optional" type="xs:string" />
             <xs:attribute name="supported" default="true" type="xs:boolean" />
+            <xs:attribute name="apiMostConcrete" default="false" type="xs:boolean" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="abstractComponent">

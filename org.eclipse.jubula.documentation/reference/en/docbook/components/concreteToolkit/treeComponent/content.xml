@@ -114,7 +114,7 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionMoveInTablesAndTreesTreeComponent" xrefstyle="template:%t"/>
+  			<xref linkend="actionMoveTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -143,10 +143,15 @@
   		</para>
   	</listitem>
   	<listitem>
+        <para>
+            <xref linkend="actionForStoringPropertiesTreeComponents" xrefstyle="template:%t"/>
+        </para>
+    </listitem>
+  	<listitem>
   		<para>
   			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
- </itemizedlist>
+  </itemizedlist>
   
 </section>

@@ -527,18 +527,6 @@ public class TreeTableViewTester extends AbstractTreeTableTester {
     public String rcReadValueAtMousePosition() {
         return rcReadValueAtMousePosition(null);
     }
-
-    /**
-     * Store the string representation of the value of the property of the given Node
-     * @param variableName the name of the variable
-     * @param propertyName the name of the property
-     * @return string representation of the property value
-     */
-    public String rcStorePropertyValueAtMousePosition(String variableName,
-            final String propertyName) {
-        return getContext().getPropteryValue(getNodeAtMousePosition(),
-                propertyName);
-    }
     
     /**
      * Selects a table cell in the given row and column via click in the middle of the cell.

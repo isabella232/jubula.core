@@ -1185,6 +1185,22 @@ public abstract class AbstractTableTester
     }
     
     /**
+     * Stores the string representation of the value of the property of the
+     * given Node
+     * 
+     * @param variableName
+     *            the name of the variable
+     * @param propertyName
+     *            the name of the property
+     * @return string representation of the property value
+     */
+    public String rcStorePropertyValueAtMousePosition(String variableName,
+            final String propertyName) {
+        return getTableAdapter().getPropertyValueOfCell(propertyName,
+                getNodeAtMousePosition());
+    }
+    
+    /**
      * Checks if a given column exists, respectively does not exist
      * @param column the column
      * @param columnOperator the operator to find the column

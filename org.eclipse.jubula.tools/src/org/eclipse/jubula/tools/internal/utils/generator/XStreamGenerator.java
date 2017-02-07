@@ -66,6 +66,7 @@ public class XStreamGenerator {
         stream.aliasField("type", Component.class, "m_type"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.aliasField("descriptionKey", Component.class, "m_descriptionKey"); //$NON-NLS-1$ //$NON-NLS-2$
         stream.addImplicitCollection(Component.class, "m_actions", "action", Action.class); //$NON-NLS-1$ //$NON-NLS-2$
+        stream.aliasField("apiMostConcrete", Component.class, "m_apiMostConcrete"); //$NON-NLS-1$ //$NON-NLS-2$        
         stream.aliasField("since", Component.class, "m_since"); //$NON-NLS-1$ //$NON-NLS-2$        
         
         stream.alias("abstractComponent", AbstractComponent.class); //$NON-NLS-1$
@@ -121,7 +122,7 @@ public class XStreamGenerator {
     private static void registerConverter(XStream stream) {
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             Component.class, 
-            new String[] {"m_type", "m_descriptionKey", "m_visible", "m_observable", "m_deprecated", "m_since"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            new String[] {"m_type", "m_descriptionKey", "m_visible", "m_observable", "m_deprecated", "m_since", "m_apiMostConcrete"})); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$
         stream.registerConverter(XStreamXmlAttributeConverter.create(stream,
             AbstractComponent.class, 
             new String[] {"m_type", "m_descriptionKey", "m_visible", "m_observable", "m_deprecated", "m_since"}));  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$

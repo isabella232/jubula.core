@@ -293,20 +293,8 @@
 		<componentClass name="org.eclipse.swt.widgets.Table" />
 	</toolkitComponent>
 	
-	<toolkitComponent type="org.eclipse.swt.widgets.Tree" visible="false">
+	<toolkitComponent type="org.eclipse.swt.widgets.Tree">
 		<realizes>guidancer.concrete.Tree</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
-		<componentClass name="org.eclipse.swt.widgets.Tree" />
-	</toolkitComponent>
-	
-	<toolkitComponent type="org.eclipse.swt.widgets.TreeTable" visible="false">
-		<realizes>guidancer.concrete.TreeTable</realizes>
-		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
-		<componentClass name="org.eclipse.swt.widgets.Tree" />
-	</toolkitComponent>
-	
-	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
-		<realizes>org.eclipse.swt.widgets.Tree</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.VerifyCheckboxOfSelectedEntry">
@@ -462,8 +450,8 @@
 		</action>
 	</toolkitComponent>
 	
-	<toolkitComponent type="org.eclipse.swt.widgets.SwtTreeTable">
-		<realizes>org.eclipse.swt.widgets.TreeTable</realizes>
+	<toolkitComponent type="org.eclipse.swt.widgets.SwtTree">
+		<realizes>guidancer.concrete.TreeTable</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.VerifyCheckboxOfSelectedEntry" since="4.1">

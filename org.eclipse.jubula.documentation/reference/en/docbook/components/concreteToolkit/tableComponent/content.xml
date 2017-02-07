@@ -122,7 +122,7 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionMoveInTablesAndTreesTableComponent" xrefstyle="template:%t"/>
+  			<xref linkend="actionMoveTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -150,6 +150,11 @@
   			<xref linkend="actionForStoringValuesTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
+  	  	<listitem>
+        <para>
+            <xref linkend="actionForStoringPropertiesTableComponents" xrefstyle="template:%t"/>
+        </para>
+    </listitem>
   	<listitem>
   		<para>
   			<xref linkend="actionToggleCheckboxInTableComponents" xrefstyle="template:%t"/>
@@ -160,6 +165,6 @@
   			<xref linkend="actionWaitForComponentGeneral" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
- </itemizedlist>
+  </itemizedlist>
   
 </section>

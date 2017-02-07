@@ -13,5 +13,6 @@
   <title>Toggle checkbox</title>
   
   <xi:include href="trees.xml"/>
+  <xi:include href="treeTables.xml"/>
   
 </section>

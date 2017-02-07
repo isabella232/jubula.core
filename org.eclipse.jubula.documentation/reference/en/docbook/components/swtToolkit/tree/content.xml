@@ -91,7 +91,7 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionMoveInTablesAndTreesTreeComponent" xrefstyle="template:%t"/>
+  			<xref linkend="actionMoveTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -121,7 +121,7 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionToggleCheckboxTrees" xrefstyle="template:%t"/>
+  			<xref linkend="actionToggleCheckboxSWTTrees" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>

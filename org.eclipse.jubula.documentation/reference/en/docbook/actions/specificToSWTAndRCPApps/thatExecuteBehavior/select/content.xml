@@ -13,6 +13,5 @@
   <title>Select</title>
   
   <xi:include href="toolbarItems.xml"/>
-  <xi:include href="treeTables.xml"/>
   
 </section>

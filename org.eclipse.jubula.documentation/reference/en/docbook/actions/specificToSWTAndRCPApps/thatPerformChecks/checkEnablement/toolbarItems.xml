@@ -6,22 +6,23 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="actionSelectSWTToolbarItems" version="5.0" xmlns="http://docbook.org/ns/docbook"
-                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
-                                                        xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Select Menu Entry in Toolbar Items (SWT)</title>
+<section xml:id="actionCheckEnablementSWTToolbarItems" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
   
-  <para><emphasis>Select Menu Entry by Indexpath</emphasis></para>
+  <title>Check Enablement in Toolbar Items (SWT)</title>
+  
+  <para><emphasis>Check Enablement of Entry by Indexpath</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          Use this action to select an item from a menu belonging to a toolbar item.
+          Use this action to check the enablement status of an item in the menu belonging to the toolbar item.
         </para>
       </listitem>
       <listitem>
         <para>
-          The item you want to select is given using the indexpath to the item.
+          The item to check is given using the indexpath to the item.
         </para>
       </listitem>
       <listitem>
@@ -34,23 +35,28 @@
                 <xref linkend="indexpath" xrefstyle="template:%t"/>
               </para>
             </listitem>
+            <listitem>
+              <para>
+                <xref linkend="enabled" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
   </para>
   
-  <para><emphasis>Select Menu Entry by Textpath</emphasis></para>
+  <para><emphasis>Check Enablement of Entry by Textpath</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          Use this action to select an item from a menu belonging to a toolbar item.
+          Use this action to check the enablement status of an item in the menu belonging to the toolbar item.
         </para>
       </listitem>
       <listitem>
         <para>
-          The item you want to select is given using the textpath to the item.
+          The item to check is given using the textpath to the item.
         </para>
       </listitem>
       <listitem>
@@ -68,9 +74,14 @@
                 <xref linkend="operator" xrefstyle="template:%t"/>
               </para>
             </listitem>
+            <listitem>
+              <para>
+                <xref linkend="enabled" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
           </itemizedlist>
         </para>
       </listitem>
     </itemizedlist>
-  </para>
+  </para>  
 </section>

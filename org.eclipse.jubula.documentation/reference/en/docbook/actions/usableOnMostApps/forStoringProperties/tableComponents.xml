@@ -6,10 +6,10 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="actionForStoringPropertiesTreeTables" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="actionForStoringPropertiesTableComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                   xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                   xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Store Property in Tree Tables</title>
+  <title>Store Property in Tables</title>
   
   <para><emphasis>Store Property at Mouse Position</emphasis></para>
   <para>

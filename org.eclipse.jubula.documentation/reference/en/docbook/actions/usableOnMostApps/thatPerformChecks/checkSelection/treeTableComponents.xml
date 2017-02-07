@@ -6,19 +6,17 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="actionCheckExistenceJavaFXTreeTables" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="actionCheckSelectionTreeTableComponents" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                  xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                  xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Check Existence of Column</title>
+  <title>Check Selection by Value(s) - Specify Column</title>
   
-  <para><emphasis>Check Existence of Column</emphasis></para>
+  <para><emphasis>Check Selection by Value(s) - Specify Column</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-            Use this action to check whether a specific column exist, respectively
-            does not exist. Columns count as not existent if their with is equal or
-            smaller than 0
+          Use this item to check the text of the currently selected node in the specified column.
         </para>
       </listitem>
       <listitem>
@@ -28,17 +26,22 @@
           <itemizedlist>
             <listitem>
               <para>
+                <xref linkend="text" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
                 <xref linkend="column" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
                 <xref linkend="column_operator" xrefstyle="template:%t"/>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <xref linkend="exists" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

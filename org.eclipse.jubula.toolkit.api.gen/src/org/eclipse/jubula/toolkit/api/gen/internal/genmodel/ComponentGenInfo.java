@@ -156,7 +156,7 @@ public class ComponentGenInfo {
      * @return the name of the most specific visible super type
      */
     private String findMostSpecificVisibleSuperTypeName(Component component) {
-        if (component.isVisible()) {
+        if (component.isVisible() || component.isAPIMostConcrete()) {
             return getFqInterfaceName();
         }
         // search for the most specific visible super type of the component

@@ -6,22 +6,23 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="actionCheckSelectionSWTTreeTables" version="5.0" xmlns="http://docbook.org/ns/docbook"
-                                                         xmlns:xi="http://www.w3.org/2001/XInclude"
-                                                         xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Check Selection in Tree Tables (SWT)</title>
+<section xml:id="actionCheckExistenceSWTToolbarItems" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
   
-  <para><emphasis>Check Selection of Checkbox by Indexpath</emphasis></para>
+  <title>Check Existence of entry in Toolbar Items (SWT)</title>
+  
+  <para><emphasis>Check Existence of Entry by Indexpath</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          This action checks whether a checkbox on a node in the tree table is selected.
+          Use this action to check the existence of an item in a menu belonging to a toolbar item.
         </para>
       </listitem>
       <listitem>
         <para>
-          You give the path to the node whose checkbox you want to check as an indexpath.
+          The item to check is given using the indexpath to the item.
         </para>
       </listitem>
       <listitem>
@@ -31,22 +32,12 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="path_type" xrefstyle="template:%t"/>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <xref linkend="pre_ascend" xrefstyle="template:%t"/>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
                 <xref linkend="indexpath" xrefstyle="template:%t"/>
               </para>
             </listitem>
             <listitem>
               <para>
-                <xref linkend="selected" xrefstyle="template:%t"/>
+                <xref linkend="exists" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -55,17 +46,17 @@
     </itemizedlist>
   </para>
   
-  <para><emphasis>Check Selection of Checkbox by Textpath</emphasis></para>
+  <para><emphasis>Check Existence of Entry by Textpath</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          This action checks whether a checkbox on a node in the tree table is selected.
+          Use this action to check the existence of an item in a menu belonging to a toolbar item.
         </para>
       </listitem>
       <listitem>
         <para>
-          You give the path to the node whose checkbox you want to check as a textpath.
+          The item to check is given using the textpath to the item.
         </para>
       </listitem>
       <listitem>
@@ -73,16 +64,6 @@
           Parameters:
           
           <itemizedlist>
-            <listitem>
-              <para>
-                <xref linkend="path_type" xrefstyle="template:%t"/>
-              </para>
-            </listitem>
-            <listitem>
-              <para>
-                <xref linkend="pre_ascend" xrefstyle="template:%t"/>
-              </para>
-            </listitem>
             <listitem>
               <para>
                 <xref linkend="textpath" xrefstyle="template:%t"/>
@@ -95,7 +76,7 @@
             </listitem>
             <listitem>
               <para>
-                <xref linkend="selected" xrefstyle="template:%t"/>
+                <xref linkend="exists" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>
@@ -103,13 +84,14 @@
       </listitem>
     </itemizedlist>
   </para>
-  
-  <para><emphasis>Check Selection of Checkbox on Selected Node</emphasis></para>
+  <para><emphasis>Check Existence of Column</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          Use this action to check whether the checkbox on the currently selected node is selected or not.
+            Use this action to check whether a specific column exist, respectively
+            does not exist. Columns count as not existent if their with is equal or
+            smaller than 0
         </para>
       </listitem>
       <listitem>
@@ -119,7 +101,17 @@
           <itemizedlist>
             <listitem>
               <para>
-                <xref linkend="selected" xrefstyle="template:%t"/>
+                <xref linkend="column" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="column_operator" xrefstyle="template:%t"/>
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                <xref linkend="exists" xrefstyle="template:%t"/>
               </para>
             </listitem>
           </itemizedlist>

@@ -19,5 +19,6 @@
   <xi:include href="forSynchronization/content.xml"/>
   <xi:include href="forStoringValues/content.xml"/>
   <xi:include href="forComparingValues/content.xml"/>
+  <xi:include href="forStoringProperties/content.xml"/>
   
 </section>

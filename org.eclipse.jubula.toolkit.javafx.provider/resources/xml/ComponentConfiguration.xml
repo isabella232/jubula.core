@@ -115,7 +115,7 @@
 		<componentClass name="javafx.scene.control.TableView" />
 	</toolkitComponent>	
 	
-	<toolkitComponent type="javafx.scene.control.TreeView" visible="false">
+	<toolkitComponent type="javafx.scene.control.TreeView" visible="false" apiMostConcrete="true">
 		<realizes>guidancer.concrete.Tree</realizes>
 		<testerClass>org.eclipse.jubula.rc.javafx.tester.TreeViewTester</testerClass>
 		<componentClass name="javafx.scene.control.TreeView" />

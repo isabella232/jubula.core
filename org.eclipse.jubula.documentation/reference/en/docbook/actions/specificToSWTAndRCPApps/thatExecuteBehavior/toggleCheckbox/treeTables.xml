@@ -6,10 +6,10 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="actionToggleCheckboxSWTTrees" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="actionToggleCheckboxSWTTreeTables" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                       xmlns:xi="http://www.w3.org/2001/XInclude"
                                                       xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Toggle Checkbox in Trees (SWT)</title>
+  <title>Toggle Checkbox in Tree Tables (SWT)</title>
   
   <para><emphasis>Toggle Checkbox on Node by Indexpath</emphasis></para>
   <para>

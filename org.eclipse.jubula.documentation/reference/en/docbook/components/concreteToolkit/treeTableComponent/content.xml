@@ -6,14 +6,14 @@
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="ConcreteToolkitTreeTableComponent" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="JavaFXTreeTable" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                             xmlns:xi="http://www.w3.org/2001/XInclude"
                                                             xmlns:xl="http://www.w3.org/1999/xlink" >
   
   <title>Concrete toolkit tree table component</title>
   <para>
-  	A <emphasis>tree table</emphasis> component is a component which has some of the properties of a tree
-  	(e.g. nodes which can be expanded or collapsed) and some of the properties of a table (e.g. rows and columns). 
+  	A tree table is a component which has some of the properties of a tree (e.g. nodes which can be expanded or 
+  	collapsed) and some of the properties of a table (e.g. rows and columns). 
   </para>
   <para>
   	Because the forward slash (/) is a special symbol for trees, if you want to use a slash as part of your parameter value,
@@ -23,9 +23,6 @@
   	Please keep in mind that it is not possible to object map nodes/cells within the tree table but to object map the tree table 
   	as a whole only. In order to interact with single nodes/cells you have to use the according actions.
   </para>
-  <para role="warning">
-    Actions on tree tables are only supported in the JavaFX and SWT toolkits.
-  </para>
   <para><emphasis role="strong">Example Mockups</emphasis></para>
   <figure>
   	<title>
@@ -33,7 +30,7 @@
   	</title>
   	<mediaobject>
   		<imageobject>
-  			<imagedata fileref="images/component/concrete/treeTableComponent.png" format="PNG"/>
+  			<imagedata fileref="images/component/SWT/treeTable.png" format="PNG"/>
   		</imageobject>
   	</mediaobject>
   </figure>
@@ -41,7 +38,7 @@
   <itemizedlist>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckEditabilityTreeTables" xrefstyle="template:%t"/>
+  			<xref linkend="actionCheckEditabilityTreeTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -81,12 +78,12 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckSelectionJavaFXTreeTables" xrefstyle="template:%t"/>
+  			<xref linkend="actionCheckSelectionTreeTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionCheckTextTreeTables" xrefstyle="template:%t"/>
+  			<xref linkend="actionCheckTextTreeTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -116,7 +113,7 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionMoveInTablesAndTreesTreeComponent" xrefstyle="template:%t"/>
+  			<xref linkend="actionMoveTreeComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -126,7 +123,7 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionSelectJavaFXTreeTables" xrefstyle="template:%t"/>
+  			<xref linkend="actionSelectTreeTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -151,7 +148,7 @@
   	</listitem>
   	<listitem>
   		<para>
-  			<xref linkend="actionForStoringValuesTreeTables" xrefstyle="template:%t"/>
+  			<xref linkend="actionForStoringValuesTreeTableComponents" xrefstyle="template:%t"/>
   		</para>
   	</listitem>
   	<listitem>
@@ -161,7 +158,7 @@
   	</listitem>
   	<listitem>
         <para>
-            <xref linkend="actionForStoringPropertiesTreeTables" xrefstyle="template:%t"/>
+            <xref linkend="actionForStoringPropertiesTreeTableComponents" xrefstyle="template:%t"/>
         </para>
     </listitem>
   	<listitem>
@@ -170,4 +167,5 @@
   		</para>
   	</listitem>
   </itemizedlist>
+  
 </section>

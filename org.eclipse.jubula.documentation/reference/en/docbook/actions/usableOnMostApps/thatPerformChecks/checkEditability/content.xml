@@ -14,5 +14,6 @@
   
   <xi:include href="generalComponents.xml"/>
   <xi:include href="tableComponents.xml"/>
+  <xi:include href="treeTableComponents.xml"/>
   
 </section>

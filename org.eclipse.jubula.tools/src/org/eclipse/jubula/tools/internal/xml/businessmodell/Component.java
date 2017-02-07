@@ -112,6 +112,14 @@ public abstract class Component {
     private boolean m_observable = true;
     
     /**
+     * Set this true if the API representation has to be the most concrete class.
+     * This means that the Factory responsible for creating the component will
+     * return the corresponding most concrete component class instead of the most
+     * concrete visible one.
+     */
+    private boolean m_apiMostConcrete = false;
+    
+    /**
      * The version of the bundle (important for semantic versions) that's
      * initially been present for that new component
      */
@@ -573,6 +581,12 @@ public abstract class Component {
      */
     public void setDescriptionKey(String descriptionKey) {
         m_descriptionKey = descriptionKey;
+    }
+    /**
+     * @return the APIMostConcrete flag
+     */
+    public boolean isAPIMostConcrete() {
+        return m_apiMostConcrete;
     }
     /**
      * @return the since

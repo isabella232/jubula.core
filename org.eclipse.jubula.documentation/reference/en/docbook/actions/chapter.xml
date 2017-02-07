@@ -14,7 +14,6 @@
   
   <xi:include href="usableOnMostApps/content.xml"/>
   <xi:include href="specificToSWTAndRCPApps/content.xml"/>
-  <xi:include href="specificToJavaFXApps/content.xml"/>
   <xi:include href="specificToHTMLApps/content.xml"/>
   
 </chapter>

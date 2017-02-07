@@ -1413,8 +1413,18 @@
 				</valueSet>
 			</param>
 		</action>
-		
-		
+		<action name="CompSystem.StorePropertyValueAtMousePosition" descriptionKey="CompSystem.StorePropertyValueAtMousePosition.descr" since="4.1">
+            <method>rcStorePropertyValueAtMousePosition</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>
+        </action>
 		<action name="CompSystem.ReplaceTextInTableCellNew">
 			<method>rcReplaceText</method>
 			<param name="CompSystem.Text"
@@ -3201,6 +3211,18 @@
 			</param>
 			<postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>	
 		</action>
+		<action name="CompSystem.StorePropertyValueAtMousePosition" descriptionKey="CompSystem.StorePropertyValueAtMousePosition.descr" since="4.1">
+            <method>rcStorePropertyValueAtMousePosition</method>
+            <param name="CompSystem.Variable"
+                   descriptionKey="CompSystem.Variable.descr" >
+                <type>guidancer.datatype.Variable</type>
+            </param>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>
+        </action>
 		<action name="CompSystem.CheckPropertyAtMousePosition" since="4.1">
             <method>rcCheckPropertyAtMousePosition</method>
             <param name="CompSystem.PropertyName"
@@ -3539,18 +3561,6 @@
             </param>
         </action>
         <!-- JavaFX only, must be implemented for SWT in the future! -->
-        <action name="CompSystem.StorePropertyValueAtMousePosition" descriptionKey="CompSystem.StorePropertyValueAtMousePosition.descr" since="4.1">
-            <method>rcStorePropertyValueAtMousePosition</method>
-            <param name="CompSystem.Variable"
-                   descriptionKey="CompSystem.Variable.descr" >
-                <type>guidancer.datatype.Variable</type>
-            </param>
-            <param name="CompSystem.PropertyName"
-                   descriptionKey="CompSystem.PropertyName.descr" >
-                <type>java.lang.String</type>
-            </param>
-            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$VariableStorerCmd</postExecutionCommand>
-        </action>
         <action name="CompSystem.VerifyTreeTableCellTextAtMousePosition" descriptionKey="CompSystem.VerifyTreeTableCellTextAtMousePosition.descr" since="4.1">
             <method>rcVerifyCellTextAtMousePosition</method>
             <param name="CompSystem.Text"

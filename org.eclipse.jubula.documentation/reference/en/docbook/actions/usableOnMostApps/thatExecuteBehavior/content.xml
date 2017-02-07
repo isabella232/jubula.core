@@ -21,7 +21,7 @@
   <xi:include href="executeExternalCommandOperatingSystem/content.xml"/>
   <xi:include href="invokeMethod/content.xml"/>
   <xi:include href="manualTestStep/content.xml"/>
-  <xi:include href="moveInTablesAndTrees/content.xml"/>
+  <xi:include href="move/content.xml"/>
   <xi:include href="pauseTestExecution/content.xml"/>
   <xi:include href="select/content.xml"/>
   <xi:include href="setPosition/content.xml"/>

@@ -623,6 +623,22 @@ public abstract class AbstractTreeTester extends WidgetTester {
     }
 
     /**
+     * Stores the string representation of the value of the property of the
+     * given Node
+     * 
+     * @param variableName
+     *            the name of the variable
+     * @param propertyName
+     *            the name of the property
+     * @return string representation of the property value
+     */
+    public String rcStorePropertyValueAtMousePosition(String variableName,
+            final String propertyName) {
+        return getTreeAdapter().getPropertyValueOfCell(propertyName,
+                getNodeAtMousePosition());
+    }
+
+    /**
      * Verifies whether the first selection in the tree has a rendered text that is
      * equal to <code>pattern</code>.
      *
