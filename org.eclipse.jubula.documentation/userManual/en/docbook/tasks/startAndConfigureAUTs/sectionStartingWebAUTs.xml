@@ -67,6 +67,78 @@
       browser (not available for Internet Explorer).
     </para>
     <para>
+	Determine whether you want Selenium to use Webdriver technology
+	during test execution. Keep in mind that this mode is experimental!
+	If you want to use Webdriver technology, you also have to specify
+	the path to the Webdriver on your machine, depending on your browser:
+	<table>
+		<title>
+			References for specific Webdrivers
+		</title>
+		<tgroup cols="2">
+			<colspec align="left" />
+			<colspec align="left" />
+			<thead>
+				<row>
+					<entry>
+						<emphasis role="strong">Browser</emphasis>
+					</entry>
+					<entry>
+						<emphasis role="strong">Driver</emphasis>
+					</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+					<entry>
+						Internet Explorer
+					</entry>
+					<entry>
+						Internet Explorer drivers are available <link xl:href="https://selenium-release.storage.googleapis.com/index.html">here</link>.
+					</entry>
+				</row>
+				<row>
+					<entry>
+						Firefox Version 46 and below
+					</entry>
+					<entry>
+						Firefox Version 46 and below provides an integrated driver.
+					</entry>
+				</row>
+				<row>
+					<entry>
+						Firefox Version 47 and above
+					</entry>
+					<entry>
+						Firefox Version 47 and above drivers are available <link xl:href="https://github.com/mozilla/geckodriver/releases">here</link>.
+					</entry>
+				</row>
+				<row>
+					<entry>
+						Safari
+					</entry>
+					<entry>
+						Safari provides an integrated driver.
+					</entry>
+				</row>
+				<row>
+					<entry>
+						Chrome
+					</entry>
+					<entry>
+						Chrome drivers are available <link xl:href="https://chromedriver.storage.googleapis.com/index.html">here</link>.
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+	</table>
+	In Internet Explorer, you also have to disable the options
+	"Display intranet sites in Compatibility View" and
+	"Use Microsoft compatibility lists"
+	in the Compatibility View Settings, and
+	"Protected Mode" in the Internet Security Options.
+    </para>
+    <para>
       You can also specify whether you want to be able to use the
       multi-window support in your tests for this AUT. If your AUT
       has functions that open new windows, then deactivate the
