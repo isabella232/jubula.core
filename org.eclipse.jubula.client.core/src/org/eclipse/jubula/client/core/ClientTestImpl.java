@@ -29,12 +29,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.event.EventListenerList;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
@@ -215,11 +217,14 @@ public class ClientTestImpl implements IClientTest {
     /** true if the report testresult Job is running */
     private AtomicBoolean m_isReportRunning = new AtomicBoolean(false);
 
+    /** whether we are trimming the test result tree */
+    private boolean m_trimming;
     /**
      * empty default constructor
      */
     public ClientTestImpl() {
         super();
+        m_trimming = ArrayUtils.contains(Platform.getCommandLineArgs(), "-trimtree"); //$NON-NLS-1$
     }
 
     /**
@@ -1558,5 +1563,9 @@ public class ClientTestImpl implements IClientTest {
         return m_isReportRunning.get();
     }
 
-   
+    /** {@inheritDoc} */
+    public boolean isTrimming() {
+        return m_trimming;
+    }
+
 }

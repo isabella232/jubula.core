@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
@@ -42,6 +43,8 @@ public class ResultTreeTracker implements IExecStackModificationListener {
     private static Logger log = 
         LoggerFactory.getLogger(ResultTreeTracker.class);
 
+    /** Whether to throw away children of successful Test Result Nodes */
+    private boolean m_trimTree;
     
     /**
      * <code>m_endNode</code> last result node in resultTree, which is associated 
@@ -72,6 +75,7 @@ public class ResultTreeTracker implements IExecStackModificationListener {
         m_endNode = root;
         m_lastNonCap = root;
         m_externalTestDataBP = externalTestDataBP;
+        m_trimTree = ClientTest.instance().isTrimming();
     }
     
     /** 
@@ -137,6 +141,10 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                 m_lastNonCap.setResult(TestResultNode.SUCCESS, null);
             }
 
+            if (m_trimTree) {
+                m_lastNonCap.removeChildren();
+            }
+
             if (m_endNode.getStatus() == TestResultNode.NOT_YET_TESTED
                     || m_endNode.getStatus() == TestResultNode.TESTING) {
             
@@ -179,6 +187,10 @@ public class ResultTreeTracker implements IExecStackModificationListener {
                         null);
             } else {
                 m_lastNonCap.setResult(TestResultNode.SUCCESS, null);
+            }
+            
+            if (m_trimTree) {
+                m_lastNonCap.removeChildren();
             }
 
             if (m_endNode.getStatus() == TestResultNode.NOT_YET_TESTED

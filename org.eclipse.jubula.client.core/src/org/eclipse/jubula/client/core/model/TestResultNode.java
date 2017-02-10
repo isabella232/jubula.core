@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.businessprocess.ITestResultEventListener;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.propertytester.NodePropertyTester;
@@ -623,7 +624,7 @@ public class TestResultNode {
         if (parent != null) {
             List<TestResultNode> siblingList = parent.getResultNodeList();
             int nodeIndex = siblingList.indexOf(this);
-            if (nodeIndex == -1) {
+            if (nodeIndex == -1 && !ClientTest.instance().isTrimming()) {
                 LOG.error(NLS.bind(
                         Messages.ParentChildInconsistency, getName()));
             } else {
@@ -782,5 +783,10 @@ public class TestResultNode {
     public void setCommandLog(String commandLog) {
         this.m_commandLog = commandLog;
     }
-    
+
+    /** Removes all children of the node */
+    public void removeChildren() {
+        m_resultNodeList.clear();
+        m_childIndex = -1;
+    }
 }

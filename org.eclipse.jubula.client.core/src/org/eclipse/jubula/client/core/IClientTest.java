@@ -372,4 +372,9 @@ public interface IClientTest {
      * @return <code>true</code> if report testresults is running
      */
     public boolean isReportingRunning();
+
+    /**
+     * @return whether successful parts of the TestResultTree should be trimmed
+     */
+    public boolean isTrimming();
 }
