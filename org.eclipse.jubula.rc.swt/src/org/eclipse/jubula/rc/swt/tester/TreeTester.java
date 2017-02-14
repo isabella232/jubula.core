@@ -18,7 +18,6 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
-import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.implclasses.tree.ExpandCollapseTreeNodeOperation;
@@ -29,7 +28,6 @@ import org.eclipse.jubula.rc.common.tester.AbstractTreeTableTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
-import org.eclipse.jubula.rc.swt.components.SWTCell;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.util.ToggleCheckboxOperation;
@@ -142,134 +140,61 @@ public class TreeTester extends AbstractTreeTableTester {
     public void rcDragByTextPath(int mouseButton, String modifier,
             String pathType, int preAscend, String treeTextPath,
             String operator) {
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        postMouseMovementEvent();
         super.rcDragByTextPath(mouseButton, modifier, pathType, preAscend,
                 treeTextPath, operator);
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        postMouseMovementEvent();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void rcDropByTextPath(final String pathType, final int preAscend,
             final String treePath, final String operator, int delayBeforeDrop) {
-        // Post a MouseMove event in order to break the Display out of its
-        // post-drag "freeze". It appears as though the mouse position 
-        // change needs to be extreme in order to nudge the Display back 
-        // into action (i.e. (<mouse-location> + 1) was insufficient), 
-        // so the default Event values (x, y = 0) are used.
-        Event wakeEvent = new Event();
-        wakeEvent.type = SWT.MouseMove;
-        getTreeTable().getDisplay().post(wakeEvent);
-        waitForDisplayUpdate();
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        postMouseMovementEvent();
         super.rcDropByTextPath(pathType, preAscend, treePath, operator,
                 delayBeforeDrop);
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        postMouseMovementEvent();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void rcDragByIndexPath(int mouseButton, String modifier, 
+    public void rcDragByIndexPath(int mouseButton, String modifier,
             String pathType, int preAscend, String treeIndexPath) {
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        postMouseMovementEvent();
         super.rcDragByIndexPath(mouseButton, modifier, pathType, preAscend,
                 treeIndexPath);
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        postMouseMovementEvent();
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void rcDropByIndexPath(final String pathType, final int preAscend,
             final String indexPath, int delayBeforeDrop) {
-        // Post a MouseMove event in order to break the Display out of its
-        // post-drag "freeze". It appears as though the mouse position 
-        // change needs to be extreme in order to nudge the Display back 
-        // into action (i.e. (<mouse-location> + 1) was insufficient), 
-        // so the default Event values (x, y = 0) are used.
+        postMouseMovementEvent();
+        super.rcDropByIndexPath(pathType, preAscend, indexPath,
+                delayBeforeDrop);
+        postMouseMovementEvent();
+    }
+
+    /**
+     * Post a MouseMove event in order to break the Display out of its post-drag
+     * "freeze". It appears as though the mouse position change needs to be
+     * extreme in order to nudge the Display back into action (i.e.
+     * (<mouse-location> + 1) was insufficient), so the default Event values (x,
+     * y = 0) are used.
+     */
+    private void postMouseMovementEvent() {
         Event wakeEvent = new Event();
         wakeEvent.type = SWT.MouseMove;
         getTreeTable().getDisplay().post(wakeEvent);
         waitForDisplayUpdate();
         SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
-        super.rcDropByIndexPath(pathType, preAscend, indexPath,
-                delayBeforeDrop);
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
-    }
-    
-    /**
-     * 
-     * @return return
-     * @throws StepExecutionException
-     */
-    private Cell getCellAtMousePosition() throws StepExecutionException {
-        // FIXME bjoern do we need this?
-        
-        final Tree tree = getTreeTable();
-        final java.awt.Point awtMousePos = getRobot().getCurrentMousePosition();
-        Cell returnvalue = getEventThreadQueuer().invokeAndWait(
-                "getCellAtMousePosition",  //$NON-NLS-1$
-                new IRunnable<Cell>() {
-                    private int m_rowCount = 0;
-
-                    public Cell run() throws StepExecutionException {
-                        Cell cell = null;
-                        for (TreeItem item : tree.getItems()) {
-                            cell = findCell(item);
-                            if (cell != null) {
-                                break;
-                            }
-                        }
-                        if (cell == null) {
-                            throw new StepExecutionException(
-                                "No cell under mouse position found!", //$NON-NLS-1$
-                                EventFactory.createActionError(
-                                        TestErrorEvent.NOT_FOUND));
-                        }
-                        return cell;
-                    }
-
-                    /**
-                     * This method tries to find the cell which is under the current mouse position
-                     * belonging to a given tree item or its sub items
-                     * @param item the tree item
-                     * @return the cell if found, <code>null</code> if not
-                     */
-                    private Cell findCell(TreeItem item) {
-                        Cell cell = null;
-                        for (int col = 0; col < tree.getColumnCount(); col++) {
-                            final Rectangle itemBounds = getCellBounds(
-                                    getEventThreadQueuer(), tree,
-                                    m_rowCount, col, item);
-                            final org.eclipse.swt.graphics.Point 
-                                absItemBounds = tree.toDisplay(itemBounds.x,
-                                            itemBounds.y);
-                            final java.awt.Rectangle absRect =
-                                new java.awt.Rectangle(absItemBounds.x,
-                                    absItemBounds.y, itemBounds.width,
-                                    itemBounds.height);
-                            if (absRect.contains(awtMousePos)) {
-                                cell = new SWTCell(m_rowCount, col, item);
-                            }
-                        }
-                        m_rowCount++;
-                        if (cell == null && item.getExpanded()) {
-                            for (TreeItem subItem : item.getItems()) {
-                                cell = findCell(subItem);
-                                if (cell != null) {
-                                    break;
-                                }
-                            }
-                        }
-                        return cell;
-                    }
-                });
-        return returnvalue;
     }
 
     /**
