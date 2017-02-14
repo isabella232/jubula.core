@@ -84,6 +84,8 @@ public class PropertyUtil {
                 } else {
                     propertyValue = String.valueOf(prop);
                 }
+            } else {
+                propertyValue = String.valueOf(prop);
             }
         } catch (IllegalAccessException e) {
             throw new RobotException(e);
