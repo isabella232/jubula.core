@@ -172,7 +172,14 @@ public class JsonStorage {
         
         ArrayList<String> fileList = new ArrayList<String>();
         ObjectMapper mapper = new ObjectMapper(); 
-        mapper.setSerializationInclusion(Include.NON_EMPTY);
+        // changed when upgrading Jackson to 2.6.2 to 2.5
+        // previously it was NON_EMPTY, but that resulted in 0 Integers
+        // being not serialised with 2.6.2, so they behaved the same way as null
+        // Integers. Non-serialised fields are initialised by the
+        // default () constructor of DTOs.
+        // NON-EMPTY: empty and null Strings, empty and null Collections and null Integers / Doubles are not serialised
+        // NON-NULL: null Objects are not serialised
+        mapper.setSerializationInclusion(Include.NON_NULL);
 
         ExportInfoDTO exportDTO = new ExportInfoDTO();
         exportDTO.setQualifier(
