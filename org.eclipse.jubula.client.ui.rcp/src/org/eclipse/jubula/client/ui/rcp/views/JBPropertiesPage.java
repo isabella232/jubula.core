@@ -379,29 +379,29 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         tree.setHeaderVisible(true);
         tree.setLinesVisible(true);
         m_treeViewer = new TreeViewer(tree);
+        final int width = m_treeViewer.getTree().getParent()
+                .getClientArea().width;
+        /* We make sure to have an initial size, just in case. */
+        final int area = (width < 100) ? 100 : width;
+        
         // add expand/collapse column
         TreeViewerColumn expandCollapseColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         expandCollapseColumn.getColumn().setText(StringConstants.EMPTY);
-        expandCollapseColumn.getColumn().setWidth(20);
+        expandCollapseColumn.getColumn().setWidth((int) (area * 0.05));
         expandCollapseColumn.getColumn().setResizable(false);
         expandCollapseColumn.setLabelProvider(new CellLabelProvider() {
             public void update(ViewerCell cell) {
                 // Nothing to display. Nothing to update.
             }
         });
-        final int width = m_treeViewer.getTree().getParent()
-                .getClientArea().width;
-        
-        /* We make sure to have an initial size, just in case. */
-        final int area = (width <= 100) ? 100 : width;
 
         // add property name column
         TreeViewerColumn propertyNameColumn = 
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyNameColumn.getColumn().setText(
                 Messages.JubulaPropertiesViewProperty);
-        propertyNameColumn.getColumn().setWidth((int) (width * 0.36));
+        propertyNameColumn.getColumn().setWidth((int) (area * 0.35));
         propertyNameColumn.setLabelProvider(new PropertyNameLabelProvider());
         
         // add property value column
@@ -409,7 +409,7 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
             new TreeViewerColumn(m_treeViewer, SWT.NONE);
         propertyValueColumn.getColumn().setText(
                 Messages.JubulaPropertiesViewValue);
-        propertyValueColumn.getColumn().setWidth((int) (width * 0.54));
+        propertyValueColumn.getColumn().setWidth((int) (area * 0.55));
         propertyValueColumn.setLabelProvider(new PropertyValueLabelProvider());
         propertyValueColumn.setEditingSupport(
                 new PropertiesEditingSupport(m_treeViewer));
