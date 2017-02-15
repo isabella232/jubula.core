@@ -1663,25 +1663,32 @@ public class RobotSwtImpl implements IRobot<Rectangle> {
      * {@inheritDoc}
      */
     public void shakeMouse() {
-        /**
-         * number of pixels by which a "mouse shake" offsets the mouse cursor
-         */
-        final int mouseShakeOffset = 10;
+        m_queuer.invokeAndWait("shakeMouse", new IRunnable<Void>() { //$NON-NLS-1$
+            public Void run() throws StepExecutionException {
+                /**
+                 * number of pixels by which a "mouse shake" offsets the mouse
+                 * cursor
+                 */
+                final int mouseShakeOffset = 10;
 
-        java.awt.Point origin =
-                AUTServer.getInstance().getRobot().getCurrentMousePosition();
-        SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
-        lowLevelRobot.mouseMove(origin.x + mouseShakeOffset,
-                origin.y + mouseShakeOffset);
-        lowLevelRobot.mouseMove(origin.x - mouseShakeOffset,
-                origin.y - mouseShakeOffset);
-        lowLevelRobot.mouseMove(origin.x, origin.y);
-        if (!EnvironmentUtils.isWindowsOS() && !EnvironmentUtils.isMacOS()) {
-            boolean moreEvents = true;
-            while (moreEvents) {
-                moreEvents = Display.getDefault().readAndDispatch();
+                java.awt.Point origin = AUTServer.getInstance().getRobot()
+                        .getCurrentMousePosition();
+                SwtRobot lowLevelRobot = new SwtRobot(Display.getDefault());
+                lowLevelRobot.mouseMove(origin.x + mouseShakeOffset,
+                        origin.y + mouseShakeOffset);
+                lowLevelRobot.mouseMove(origin.x - mouseShakeOffset,
+                        origin.y - mouseShakeOffset);
+                lowLevelRobot.mouseMove(origin.x, origin.y);
+                if (!EnvironmentUtils.isWindowsOS()
+                        && !EnvironmentUtils.isMacOS()) {
+                    boolean moreEvents = true;
+                    while (moreEvents) {
+                        moreEvents = Display.getDefault().readAndDispatch();
+                    }
+                }
+                return null;
             }
-        }
+        });
     }
 
 }
