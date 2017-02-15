@@ -14,12 +14,20 @@ package org.eclipse.jubula.toolkit.html;
 public enum Browser {
     /** InternetExplorer */
     InternetExplorer,
-    /** Firefox */
+    /** Firefox < 47 */
     Firefox,
-    /** Firefox < 47 **/
-    Firefox47,
+    /** Firefox >= 47 **/
+    FirefoxOver47,
     /** Safari */
     Safari,
     /** Chrome */
-    Chrome
+    Chrome;
+
+    /**
+     * @return guess what!
+     */
+    public boolean isFirefox() {
+        return this.equals(Firefox) || this.equals(FirefoxOver47);
+    }
+
 }

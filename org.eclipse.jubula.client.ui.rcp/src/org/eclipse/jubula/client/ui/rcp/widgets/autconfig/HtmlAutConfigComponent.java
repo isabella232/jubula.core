@@ -367,16 +367,14 @@ public class HtmlAutConfigComponent extends AutConfigComponent {
         boolean browseEnabled = enable || isRemoteRequest();
         boolean isIE = m_browserCombo.getSelectedObject().equals(
                 Browser.InternetExplorer);
-        boolean isFF = m_browserCombo.getSelectedObject().equals(
-                Browser.Firefox) || m_browserCombo.getSelectedObject().equals(
-                        Browser.Firefox47);
+        Browser browser = m_browserCombo.getSelectedObject();
         m_browserPathButton.setEnabled(!isIE && browseEnabled);
         m_browserTextField.setEnabled(!isIE && browseEnabled);
         boolean isWebDriver = m_webdriverCheckBox.getSelection();
         if (isWebDriver) {
-            if (isFF) {
-                m_driverPathButton.setEnabled(true);
-                m_driverTextField.setEnabled(true);
+            if (browser.equals(Browser.Firefox)) {
+                m_driverPathButton.setEnabled(false);
+                m_driverTextField.setEnabled(false);
             } else {
                 m_driverPathButton.setEnabled(browseEnabled);
                 m_driverTextField.setEnabled(browseEnabled);
