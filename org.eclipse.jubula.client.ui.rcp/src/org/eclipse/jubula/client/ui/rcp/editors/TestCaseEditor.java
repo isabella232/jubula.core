@@ -20,8 +20,11 @@ import javax.persistence.EntityManager;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
@@ -57,6 +60,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.actions.ActivateEditorForSpecTCAction;
 import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.controllers.TestExecutionContributor;
@@ -69,6 +73,7 @@ import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.EventHandlerCon
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.TooltipLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.selectionprovider.SelectionProviderIntermediate;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
+import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
@@ -99,7 +104,7 @@ import org.eclipse.ui.IWorkbenchPartConstants;
  */
 @SuppressWarnings("synthetic-access")
 public class TestCaseEditor extends AbstractTestCaseEditor 
-    implements IRecordListener {
+    implements IRecordListener, IDoubleClickListener {
     
     /** Constants for the editor segmentation */
     private static final int[] SASH_WEIGHT = {75, 25};
@@ -120,6 +125,7 @@ public class TestCaseEditor extends AbstractTestCaseEditor
     /** {@inheritDoc} */
     public void createPartControlImpl(Composite parent) {
         super.createPartControlImpl(parent);
+        getMainTreeViewer().addDoubleClickListener(this);
         m_eventHandlerTreeViewer.setContentProvider(
                 new EventHandlerContentProvider());
         m_eventHandlerTreeViewer.getControl().setMenu(
@@ -584,4 +590,24 @@ public class TestCaseEditor extends AbstractTestCaseEditor
         m_currentTreeViewer.getTree().setFocus();
         Plugin.showStatusLine(this);
     }
+
+    @Override
+    public void doubleClick(DoubleClickEvent event) {
+        if ((event.getSelection() instanceof IStructuredSelection)) {
+            Object selObj = ((IStructuredSelection) event.getSelection()).
+                    getFirstElement();
+            if (selObj != null && selObj.equals(getWorkVersion())) {
+                ActivateEditorForSpecTCAction.activateEditor(
+                        getWorkVersion());
+            }
+        }
+        CommandHelper.executeCommand(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID,
+                getSite());
+    }
+
+    /** {@inheritDoc} */
+    public Image getIcon() {
+        return IconConstants.TC_EDITOR_IMAGE;
+    }
+
 }

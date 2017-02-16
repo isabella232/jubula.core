@@ -56,6 +56,8 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
     /** {@inheritDoc} */
     public void createPartControlImpl(Composite parent) {
         super.createPartControlImpl(parent);
+        addDoubleClickListener(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID, 
+                getMainTreeViewer());
         if (!Plugin.getDefault().anyDirtyStar())  {
             checkAndRemoveUnusedTestData();
         }
@@ -273,5 +275,10 @@ public class TestSuiteEditor extends AbstractTestCaseEditor {
      */
     protected DropTargetListener getViewerDropAdapter() {
         return new TSEditorDropTargetListener(this);
+    }
+
+    /** {@inheritDoc} */
+    public Image getIcon() {
+        return IconConstants.TS_EDITOR_IMAGE;
     }
 }

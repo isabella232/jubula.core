@@ -17,6 +17,7 @@
   
   <xi:include href="sectionIntroEditors.xml"/>
   <xi:include href="sectionOpeningItemsInEditors.xml"/>
+  <xi:include href="sectionNavigatingBetweenEditors.xml"/>
   <xi:include href="sectionAddingItemsToEditors.xml"/>
   <xi:include href="sectionDeletingItemsFromEditors.xml"/>
   <xi:include href="sectionRenamingItemsInEditors.xml"/>

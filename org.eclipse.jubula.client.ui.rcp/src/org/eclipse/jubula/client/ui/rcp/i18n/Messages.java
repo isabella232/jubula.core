@@ -144,6 +144,10 @@ public class Messages extends NLS {
     public static String CapGUIType;
     public static String CategoryGUIPropertySourceName;
     public static String CentralTestDataEditorName;
+    public static String ChooseEditorFromList;
+    public static String ChooseEditorTitle;
+    public static String ChooseReferrerTitle;
+    public static String ChooseReferrerText;
     public static String ClassPathDialogAddDir;
     public static String ClassPathDialogDir;
     public static String ClassPathDialogFile;

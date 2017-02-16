@@ -53,10 +53,14 @@ public class IconConstants {
     public static final Image INFO_IMAGE = INFO_IMAGE_DESCRIPTOR.createImage();
     /** testSuiteeditor image */
     public static final Image DISABLED_TS_EDITOR_IMAGE = getImage("testSuiteEditor_disabled.gif"); //$NON-NLS-1$
+    /** testSuiteeditor image */
+    public static final Image TS_EDITOR_IMAGE = getImage("testSuiteEditor.gif"); //$NON-NLS-1$
     /** long running image */
     public static final Image LONG_RUNNING_IMAGE = getImage("longRunning.gif"); //$NON-NLS-1$
     /** testCaseEditor image */
     public static final Image DISABLED_TC_EDITOR_IMAGE = getImage("specTcEditor_disabled.gif"); //$NON-NLS-1$
+    /** testCaseEditor image */
+    public static final Image TC_EDITOR_IMAGE = getImage("specTcEditor.gif"); //$NON-NLS-1$
     /** disabled test job editor image */
     public static final Image DISABLED_TJ_EDITOR_IMAGE = getImage("tjEditor_disabled.gif"); //$NON-NLS-1$
     /** disabled central test data editor image */

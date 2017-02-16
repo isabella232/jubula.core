@@ -65,4 +65,17 @@
       </para>
     </listitem>
   </itemizedlist>
+  <para>
+    <emphasis role="strong">Double clicking on Test Case Editor root nodes</emphasis>
+  </para>
+  <itemizedlist>
+    <listitem>
+      <para>
+        To help navigating between Editors, we added a new feature: when double-clicking a Test Case Editor's root node, if
+        there is a single Editor open which references the given Test Case, that Editor is activated. If there are more than one
+        such Editors open, you can choose one to activate in a dialog. And if there is no such Editor open, you can
+        choose a Test Case or Test Suite which references the Test Case, and open its Editor. 
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>

@@ -107,6 +107,7 @@ import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -151,8 +152,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 new Transfer[] {LocalSelectionTransfer.getInstance()});
         getEditorHelper().addListeners();
         setActionHandlers();
-        addDoubleClickListener(CommandIDs.OPEN_SPECIFICATION_COMMAND_ID, 
-                getMainTreeViewer());
 
         GuiEventDispatcher.getInstance()
             .addEditorDirtyStateListener(this, true);
@@ -1027,4 +1026,9 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
             }
         }
     }
+
+    /**
+     * @return the icon of the editor
+     */
+    public abstract Image getIcon();
 }

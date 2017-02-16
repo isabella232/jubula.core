@@ -27,11 +27,11 @@ import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.ICommentPO;
+import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IDoWhilePO;
-import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.ICondStructPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecObjContPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
@@ -54,6 +54,7 @@ import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.dnd.LocalSelectionClipboardTransfer;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -297,6 +298,11 @@ public class GeneralLabelProvider extends ColumnLabelProvider
             
             LOG.error(Messages.GeneralLabelProvier_NoActiveProject);
         }
+        if (element instanceof AbstractTestCaseEditor) {
+            return getTextImpl(
+                    ((AbstractTestCaseEditor) element).getEditorHelper().
+                    getEditSupport().getWorkVersion());
+        }
         return element == null ? StringConstants.EMPTY : element.toString();
     }
     
@@ -369,7 +375,10 @@ public class GeneralLabelProvider extends ColumnLabelProvider
         if (element instanceof IIteratePO) {
             return IconConstants.ITERATE;
         }
-        
+
+        if (element instanceof AbstractTestCaseEditor) {
+            return ((AbstractTestCaseEditor) element).getIcon();
+        }
         return null;
     }
 

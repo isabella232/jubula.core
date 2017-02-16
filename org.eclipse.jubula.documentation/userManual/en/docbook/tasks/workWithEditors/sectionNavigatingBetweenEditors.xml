@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="navigating-between-editors" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                     xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                     xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Navigating between Editors</title>
+  <para>
+    Double clicking a Test Case Editor root node helps in navigating to a Test Suite or Test Case
+    referencing the edited Test Case: 
+  </para>
+  <orderedlist>
+    <listitem>
+      <para>
+        If there is a single Editor open which references the Test Case, that Editor is activated.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If there are more than one such Editors open, then a dialog pops where you can choose
+        which one to activate.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        If there are no Editors referencing the Test Case, then the list of Test Suites and Test Cases
+        referencing the given Test Case is shown, and you can choose one to open its Editor.
+      </para>
+    </listitem>
+  </orderedlist>
+</section>
