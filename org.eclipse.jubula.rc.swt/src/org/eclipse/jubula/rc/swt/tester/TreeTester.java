@@ -18,6 +18,7 @@ import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeNodeOperation;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeOperationContext;
 import org.eclipse.jubula.rc.common.implclasses.tree.ExpandCollapseTreeNodeOperation;
@@ -28,6 +29,7 @@ import org.eclipse.jubula.rc.common.tester.AbstractTreeTableTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.rc.swt.components.SWTCell;
 import org.eclipse.jubula.rc.swt.driver.KeyCodeConverter;
 import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.tester.util.ToggleCheckboxOperation;
@@ -131,6 +133,35 @@ public class TreeTester extends AbstractTreeTableTester {
      */
     private Tree getTreeTable() {
         return (Tree) getComponent().getRealComponent();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void rcCheckPropertyAtMousePosition(final String name,
+            final String value, final String operator, int timeout) {
+        invokeAndWait("rcCheckPropertyAtMousePosition", timeout, //$NON-NLS-1$
+            new Runnable() {
+                public void run() {
+                    Object cell = null;
+                    int numColumns = getEventThreadQueuer().invokeAndWait(
+                            "checkColumnIndex", //$NON-NLS-1$
+                            new IRunnable<Integer>() {
+            
+                                public Integer run() {
+                                    return getTreeTable().getColumnCount();
+                                }
+                            });
+                    if (numColumns > 0) {            
+                        cell = getCellAtMousePosition();
+                    } else {
+                        cell = getNodeAtMousePosition();
+                    }
+                    final ITreeComponent bean = getTreeAdapter();
+                    final String propToStr =
+                            bean.getPropertyValueOfCell(name, cell);
+                    Verifier.match(propToStr, value, operator);
+                }
+            });
     }
 
     /**
@@ -240,6 +271,77 @@ public class TreeTester extends AbstractTreeTableTester {
             }
         });
     }
+    
+    /**
+     *
+     * @return the table cell at the current mouse position.
+     * @throws StepExecutionException If no table cell can be found at the
+     *                                current mouse position.
+     */
+    private Cell getCellAtMousePosition() throws StepExecutionException {
+        
+        final Tree tree = getTreeTable();
+        final java.awt.Point awtMousePos = getRobot().getCurrentMousePosition();
+        Cell returnvalue = getEventThreadQueuer().invokeAndWait(
+                "getCellAtMousePosition",  //$NON-NLS-1$
+                new IRunnable<Cell>() {
+                    private int m_rowCount = 0;
+
+                    public Cell run() throws StepExecutionException {
+                        Cell cell = null;
+                        for (TreeItem item : tree.getItems()) {
+                            cell = findCell(item);
+                            if (cell != null) {
+                                break;
+                            }
+                        }
+                        if (cell == null) {
+                            throw new StepExecutionException(
+                                "No cell under mouse position found!", //$NON-NLS-1$
+                                EventFactory.createActionError(
+                                        TestErrorEvent.NOT_FOUND));
+                        }
+                        return cell;
+                    }
+
+                    /**
+                     * This method tries to find the cell which is under the current mouse position
+                     * belonging to a given tree item or its sub items
+                     * @param item the tree item
+                     * @return the cell if found, <code>null</code> if not
+                     */
+                    private Cell findCell(TreeItem item) {
+                        Cell cell = null;
+                        for (int col = 0; col < tree.getColumnCount(); col++) {
+                            final Rectangle itemBounds = getCellBounds(
+                                    getEventThreadQueuer(), tree,
+                                    m_rowCount, col, item);
+                            final org.eclipse.swt.graphics.Point 
+                                absItemBounds = tree.toDisplay(itemBounds.x,
+                                            itemBounds.y);
+                            final java.awt.Rectangle absRect =
+                                new java.awt.Rectangle(absItemBounds.x,
+                                    absItemBounds.y, itemBounds.width,
+                                    itemBounds.height);
+                            if (absRect.contains(awtMousePos)) {
+                                cell = new SWTCell(m_rowCount, col, item);
+                            }
+                        }
+                        m_rowCount++;
+                        if (cell == null && item.getExpanded()) {
+                            for (TreeItem subItem : item.getItems()) {
+                                cell = findCell(subItem);
+                                if (cell != null) {
+                                    break;
+                                }
+                            }
+                        }
+                        return cell;
+                    }
+                });
+        return returnvalue;
+    }
+    
     
     /**
      * @param etq
