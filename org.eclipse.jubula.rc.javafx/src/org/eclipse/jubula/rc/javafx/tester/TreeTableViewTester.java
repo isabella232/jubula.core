@@ -426,6 +426,26 @@ public class TreeTableViewTester extends AbstractTreeTableTester {
     }
     
     /**
+     * Verifies the text of the cell under the mouse
+     * @param txt the text
+     * @param operator the operator
+     * @param timeout the timeout for the check
+     */
+    public void rcVerifyCellTextAtMousePosition(String txt, String operator,
+            int timeout) {
+        invokeAndWait("rcVerifyCellTextAtMousePosition", //$NON-NLS-1$
+                timeout, new Runnable() {
+                    @Override
+                    public void run() {
+                        TreeTableCell<?, ?> cell = 
+                                (TreeTableCell<?, ?>) getNodeAtMousePosition();
+                        String result = getContext().getRenderedText(cell);
+                        Verifier.match(result, txt, operator);
+                    }
+                });
+    }
+    
+    /**
      * Checks if the passed row and column are inside the bounds of the Table. 
      * @param row The row
      * @param column The column
