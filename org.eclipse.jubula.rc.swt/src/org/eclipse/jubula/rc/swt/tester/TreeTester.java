@@ -140,10 +140,10 @@ public class TreeTester extends AbstractTreeTableTester {
     public void rcDragByTextPath(int mouseButton, String modifier,
             String pathType, int preAscend, String treeTextPath,
             String operator) {
-        postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
         super.rcDragByTextPath(mouseButton, modifier, pathType, preAscend,
                 treeTextPath, operator);
-        postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
@@ -153,9 +153,10 @@ public class TreeTester extends AbstractTreeTableTester {
     public void rcDropByTextPath(final String pathType, final int preAscend,
             final String treePath, final String operator, int delayBeforeDrop) {
         postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
         super.rcDropByTextPath(pathType, preAscend, treePath, operator,
                 delayBeforeDrop);
-        postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
@@ -164,10 +165,10 @@ public class TreeTester extends AbstractTreeTableTester {
     @Override
     public void rcDragByIndexPath(int mouseButton, String modifier,
             String pathType, int preAscend, String treeIndexPath) {
-        postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
         super.rcDragByIndexPath(mouseButton, modifier, pathType, preAscend,
                 treeIndexPath);
-        postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
@@ -177,9 +178,10 @@ public class TreeTester extends AbstractTreeTableTester {
     public void rcDropByIndexPath(final String pathType, final int preAscend,
             final String indexPath, int delayBeforeDrop) {
         postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
         super.rcDropByIndexPath(pathType, preAscend, indexPath,
                 delayBeforeDrop);
-        postMouseMovementEvent();
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
@@ -190,11 +192,11 @@ public class TreeTester extends AbstractTreeTableTester {
      * y = 0) are used.
      */
     private void postMouseMovementEvent() {
+        getRobot().shakeMouse();
         Event wakeEvent = new Event();
         wakeEvent.type = SWT.MouseMove;
         getTreeTable().getDisplay().post(wakeEvent);
         waitForDisplayUpdate();
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
