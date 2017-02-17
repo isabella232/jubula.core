@@ -25,10 +25,10 @@ public class Messages extends NLS {
     public static String CantLoadMetadataFromDatabase;
     public static String CapGUIPropertySourceAction;
     public static String CapGUIPropertySourceActionType;
+    public static String CapGUIPropertySourceCompMatch;
     public static String CapGUIPropertySourceComponent;
     public static String CapGUIPropertySourceComponentName;
     public static String CapGUIPropertySourceCompType;
-    public static String CapGUIPropertySourceCompMatch;
     public static String CapGUIPropertySourceParameter;
     public static String CapGUIPropertySourceParamName;
     public static String CapGUIPropertySourceParams;
@@ -39,8 +39,12 @@ public class Messages extends NLS {
     public static String DatabaseConnectionDialogTitle;
     public static String DatabaseConnectionErrorMessage;
     public static String DatabaseConnectionPreferencePageAddButtonLabel;
+    public static String DatabaseConnectionPreferencePageDatabaseEmpty;
     public static String DatabaseConnectionPreferencePageEditButtonLabel;
+    public static String DatabaseConnectionPreferencePageHostnameEmpty;
+    public static String DatabaseConnectionPreferencePageLocationEmpty;
     public static String DatabaseConnectionPreferencePageRemoveButtonLabel;
+    public static String DatabaseConnectionPreferencePageSIDEmpty;
     public static String DatabaseConnectionPrefPageSelecObjIsOfIncorrectType;
     public static String DBLoginDialogAutoDbConnection;
     public static String DBLoginDialogConnectionLabel;
@@ -75,21 +79,22 @@ public class Messages extends NLS {
     public static String SelectedElementIsNotTestResultSummary;
     public static String SetItemsNotValidForThisSubclass;
     public static String TestresultDetailsForSummaryNotFound;
-    public static String TestResultNodePropertySourceCapDetail;
-    public static String TestResultNodePropertySourceDataCat;
-    public static String TestResultNodePropertySourceDataParameter;
-    public static String TestResultNodePropertySourceComment;
-    public static String TestResultNodePropertySourceErrorDetail;
-    public static String TestResultNodePropertySourceErrorType;
     public static String TestResultNodeGUIPropertySourceEventhandler;
     public static String TestResultNodeGUIPropertySourceNegated;
     public static String TestResultNodeGUIPropertySourceReentry;
+    public static String TestResultNodePropertySourceCapDetail;
+    public static String TestResultNodePropertySourceComment;
+    public static String TestResultNodePropertySourceDataCat;
+    public static String TestResultNodePropertySourceDataParameter;
+    public static String TestResultNodePropertySourceErrorDetail;
+    public static String TestResultNodePropertySourceErrorType;
     public static String TestResultNodePropertySourceResultStep;
     public static String TestResultNodePropertySourceStepName;
     public static String TestResultNodePropertySourceStepStatus;
     public static String TestResultNodePropertySourceStepType;
     public static String TestResultNodePropertySourceTestResult;
     public static String TestResultNodePropertySourceTimeStamp;
+    public static String TestresultSummaryAlmReportState;
     public static String TestresultSummaryAutAgentHostname;
     public static String TestresultSummaryAutConf;
     public static String TestresultSummaryAutHostname;
@@ -125,15 +130,14 @@ public class Messages extends NLS {
     public static String TestresultSummaryTestJobStartTime;
     public static String TestresultSummaryTestrunID;
     public static String TestresultSummaryTestrunRelevant;
-    public static String TestresultSummaryAlmReportState;
     public static String TestresultSummaryTestrunState;
     public static String TestresultSummaryTestsuite;
     public static String TestresultSummaryTestsuiteStatus;
     public static String TestresultSummaryToolkit;
-    public static String TestResultViewerDetailsLoadingJobName;
     public static String TestResultViewerDetailsLoading1SubTask;
     public static String TestResultViewerDetailsLoading2SubTask;
     public static String TestResultViewerDetailsLoading3SubTask;
+    public static String TestResultViewerDetailsLoadingJobName;
     public static String UIJobDeletingTestResultFromDB;
     public static String UIJobLoadingImage;
     public static String UnknownTypeOfElementInTreeOfType;
@@ -141,15 +145,14 @@ public class Messages extends NLS {
     public static String UtilsErrorOccurred;
     public static String UtilsInfo1;
     public static String UtilsInfo2;
+    public static String UtilsOpenViewTitle;
+    public static String UtilsRemember;
     public static String UtilsRequest1;
     public static String UtilsRequest2;
+    public static String UtilsViewQuestion;
     public static String UtilsWarning1;
     public static String UtilsWarning2;
-    public static String WrongElementType;    
-    
-    public static String UtilsOpenViewTitle;
-    public static String UtilsViewQuestion;
-    public static String UtilsRemember;
+    public static String WrongElementType;
     
     static {
         // initialize resource bundle
