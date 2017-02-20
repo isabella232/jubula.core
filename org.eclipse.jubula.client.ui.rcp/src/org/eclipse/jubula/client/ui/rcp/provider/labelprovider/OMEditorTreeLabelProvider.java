@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.provider.labelprovider;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -183,7 +184,9 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
             IComponentIdentifier compId = 
                 ((IObjectMappingAssoziationPO)element).getTechnicalName();
             if (compId != null) {
-                return compId.getComponentNameToDisplay();
+                String res = compId.getComponentNameToDisplay();
+                return StringUtils.abbreviate(res.replace(
+                        StringConstants.NEWLINE, StringConstants.SPACE), 200);
             }
         } else if (element instanceof IComponentNamePO) {
             return m_compCache.getNameByGuid(
