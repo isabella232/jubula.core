@@ -25,7 +25,7 @@ import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.wiki.ui.i18n.Messages;
 import org.eclipse.jubula.client.wiki.ui.utils.DescriptionUtil;
 import org.eclipse.jubula.client.wiki.ui.utils.ProjectMarkupUtil;
-import org.eclipse.mylyn.wikitext.core.parser.MarkupParser;
+import org.eclipse.mylyn.wikitext.parser.MarkupParser;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationEvent;

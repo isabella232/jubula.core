@@ -14,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.mylyn.wikitext.ui.WikiText;
-import org.eclipse.mylyn.wikitext.core.parser.markup.MarkupLanguage;
+import org.eclipse.mylyn.wikitext.parser.markup.MarkupLanguage;
 import org.eclipse.jubula.client.ui.constants.Constants;
 /**
  * 
