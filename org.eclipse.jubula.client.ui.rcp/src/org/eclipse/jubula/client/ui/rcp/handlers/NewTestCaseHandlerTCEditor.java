@@ -25,6 +25,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.ISpecObjContPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -135,7 +136,8 @@ public class NewTestCaseHandlerTCEditor extends AbstractNewHandler {
         }
         /* Is the top node of a branch selected? */
         if (node instanceof IAbstractContainerPO
-                || node instanceof ISpecTestCasePO) {
+                || node instanceof ISpecTestCasePO
+                || node instanceof ITestSuitePO) {
             return new NodeTarget(node.getNodeListSize(), node);
         }
         /* Is a node within a branch selected? */
