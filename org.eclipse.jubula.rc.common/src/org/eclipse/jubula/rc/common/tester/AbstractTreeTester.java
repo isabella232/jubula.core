@@ -791,6 +791,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
             rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
+            getRobot().shakeMouse();
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
@@ -839,6 +840,7 @@ public abstract class AbstractTreeTester extends WidgetTester {
             rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
+            getRobot().shakeMouse();
         } finally {
             final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
