@@ -42,6 +42,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -168,7 +169,6 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                 ILabelProvider labelProvider = propDesc.getLabelProvider();
                 return labelProvider.getImage(propDesc.getId());
             }
-
             return super.getImage(element);
         }
         
@@ -1175,4 +1175,10 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         return m_currentEditor;
     }
 
+    /**
+     * @return the current selection
+     */
+    public ITreeSelection getCurrentTreeSelection() {
+        return m_treeViewer.getStructuredSelection();
+    }
 }

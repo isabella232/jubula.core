@@ -239,4 +239,11 @@
       </para>
     </listitem>
   </itemizedlist>
+  <para>
+    To simplify navigation, the toolbar of the Properties View contains the Jump to Central Test Data Set command.
+    If the currently selected parameter references a central data set through a getCentralTestDataSetValue function call
+    (see in <xref linkend="using-functions-as-data-for-test-cases"/>) then this command tries to identify the data set and opens
+    its Editor. In case the referenced row and cell are identifiable, these are automatically selected in the
+    Data Sets View (<xref linkend="the-data-sets-view"/>).
+  </para>
 </section>

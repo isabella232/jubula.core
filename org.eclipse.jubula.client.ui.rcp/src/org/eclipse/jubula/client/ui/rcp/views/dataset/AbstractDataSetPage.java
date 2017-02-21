@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -1899,5 +1900,53 @@ public abstract class AbstractDataSetPage extends Page
      */
     public DSVTableCursor getTableCursor() {
         return m_tableCursor;
+    }
+
+    /**
+     * Attempts to activate a cell determined by parameters of the getCentralTestDataSetValue function
+     * @param keyCol the key column name
+     * @param keyVal the key value
+     * @param valCol the value column name
+     */
+    public void navigateToCell(String keyCol, String keyVal, String valCol) {
+        getTable().setFocus();
+        int keyColInd = getColumnIndexByParamName(keyCol);
+        if (keyColInd == -1) {
+            return;
+        }
+        int rowNum = 0;
+        ITDManager man = getParamInterfaceObj().getDataManager();
+        for (IDataSetPO row : man.getDataSets()) {
+            if (StringUtils.equals(row.getColumnStringValues().get(keyColInd),
+                    keyVal)) {
+                break;
+            }
+            rowNum++;
+        }
+        if (rowNum >= man.getDataSetCount()) {
+            // could not find the correct row
+            return;
+        }
+        // if the value column is not found, the 0th column (row number) is chosen
+        int valColNum = getColumnIndexByParamName(valCol) + 1; 
+        getTable().setSelection(rowNum);
+        getTableCursor().setSelection(rowNum, valColNum);
+    }
+
+    /**
+     * Returns the column index by column name
+     * @param name the column name
+     * @return the index
+     */
+    public int getColumnIndexByParamName(String name) {
+        int keyColInd = 0;
+        for (IParamDescriptionPO desc : getParamInterfaceObj().
+                getParameterList()) {
+            if (StringUtils.equals(name, desc.getName())) {
+                return keyColInd;
+            }
+            keyColInd++;
+        }
+        return -1;
     }
 }

@@ -843,6 +843,11 @@
       name="%CollapseTree" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      description="%JumpToCTDSDesc"
+      id="org.eclipse.jubula.client.ui.commands.JumpToCTDS"
+      name="%JumpToCTDS" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.filter.reusedData"
       name="reused" />
     <command
@@ -1114,6 +1119,11 @@
       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
       sequence="M1+M2+C" />
     <key
+      commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="M1+G" />
+    <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportProject"
       contextId="org.eclipse.ui.contexts.window"
       schemeId="org.eclipse.jubula.client.ui.rcp.defaultKeyScheme"
@@ -1285,6 +1295,13 @@
         <command
             commandId="org.eclipse.jubula.client.ui.commands.SaveLogAs"
             id="org.eclipse.jubula.client.ui.toolbar.LogViewToolbar.SaveLogAs"
+            style="push">
+        </command>
+    </menuContribution>
+    <menuContribution
+        locationURI="toolbar:org.eclipse.ui.views.PropertySheet">
+        <command
+            commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS"
             style="push">
         </command>
     </menuContribution>
@@ -2161,6 +2178,10 @@
             </iterate>
         </with>     
      </enabledWhen>
+   </handler>
+   <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.JumpToCTDSHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS">
    </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.AddTestResultSummaryCommentHandler"
@@ -3129,6 +3150,10 @@
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CollapseAll"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/collapse_disabled.gif"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/collapse.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS"
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/collapse_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/centralTestData.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ClearTestResultView"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/view_disabled.gif"

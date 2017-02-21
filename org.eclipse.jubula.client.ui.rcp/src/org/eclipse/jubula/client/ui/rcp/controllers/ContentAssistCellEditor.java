@@ -54,7 +54,6 @@ public class ContentAssistCellEditor extends TextCellEditor {
             IContentProposalProvider contentProposalProvider,
             IValidator validator, int proposalAcceptanceStyle) {
         super(parent);
-        
         Validate.notNull(text);
         enableValidation(validator);
         enableContentProposal(contentProposalProvider, proposalAcceptanceStyle);

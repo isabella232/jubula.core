@@ -19,21 +19,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.PoMaker;
-import org.eclipse.jubula.client.core.utils.FunctionToken;
-import org.eclipse.jubula.client.core.utils.IParamValueToken;
-import org.eclipse.jubula.client.core.utils.LiteralToken;
-import org.eclipse.jubula.client.core.utils.ParamValueConverter;
-import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
-import org.eclipse.jubula.client.core.utils.SimpleValueToken;
-import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 /**
  * PM to handle all test data cube related Persistence (JPA / EclipseLink)
@@ -103,58 +96,21 @@ public class TestDataCubePM {
         for (IParameterInterfacePO pio : queryResult) {
             search: if (pio instanceof IParamNodePO) {
                 IParamNodePO pn = (IParamNodePO) pio;
+                if (areEqual(pn.getReferencedDataCube(), pioToSearch)) {
+                    result.add(pn);
+                    continue;
+                }
                 /*
-                 * Start search for function call ?getCentralTestDataSetValue()
+                 * Search for function call ?getCentralTestDataSetValue()
                  */
                 for (IDataSetPO dataSet : pn.getDataManager().getDataSets()) {
                     for (int i = 0; i < dataSet.getColumnCount(); i++) {
-                        String testData = dataSet.getValueAt(i);
-                        ParamValueConverter conv = new SimpleStringConverter(
-                                testData);
-                        for (IParamValueToken token : conv.getTokens()) {
-                            if (!(token instanceof FunctionToken)) {
-                                continue;
-                            }
-                            FunctionToken funct = (FunctionToken) token;
-                            if (!StringUtils.equals(funct.getFunctionName(),
-                                    "getCentralTestDataSetValue") //$NON-NLS-1$
-                                    || funct.getArguments().length < 1) {
-                                continue;
-                            }
-                            try {
-                                IParamValueToken[] args = funct.getArguments();
-                                StringBuilder build = new StringBuilder();
-                                int nextArg = 0;
-                                while (nextArg < args.length
-                                        && (args[nextArg]
-                                            instanceof LiteralToken
-                                        || args[nextArg]
-                                            instanceof SimpleValueToken)) {
-                                    build.append(args[nextArg]
-                                            .getExecutionString(null));
-                                    nextArg++;
-                                }
-                                /*
-                                 * The CentralTestDataSet is used here. We stop
-                                 * searching, because if it is also referenced
-                                 * as a whole, it would be added twice.
-                                 */
-                                if (StringUtils.equals(build.toString(),
-                                        pioToSearch.getName())) {
-                                    result.add(pn);
-                                    break search;
-                                }
-                            } catch (InvalidDataException e) {
-                                // no success...
-                            }
+                        if (TestDataBP.isCTDSReferenced(pioToSearch.getName(),
+                                dataSet.getValueAt(i))) {
+                            result.add(pn);
+                            break search;
                         }
                     }
-                }
-                /*
-                 * End search for function call ?getCentralTestDataSetValue()
-                 */
-                if (areEqual(pn.getReferencedDataCube(), pioToSearch)) {
-                    result.add(pn);
                 }
             }
         }

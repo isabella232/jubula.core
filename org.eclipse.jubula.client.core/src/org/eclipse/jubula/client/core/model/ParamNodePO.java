@@ -284,7 +284,7 @@ abstract class ParamNodePO extends NodePO implements IParamNodePO {
                     }
                    
                     
-                    String value = TestDataBP.INSTANCE.getTestData(
+                    String value = TestDataBP.getTestData(
                             this, testDataManager, paramDesc, i);
                     if (StringUtils.isBlank(value) && column >= -1) {
                         if (this instanceof IExecTestCasePO) {

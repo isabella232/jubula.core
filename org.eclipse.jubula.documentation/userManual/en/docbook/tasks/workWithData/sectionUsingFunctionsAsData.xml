@@ -337,6 +337,12 @@
       column – Alice Super.
     </para>
     <para>
+      If you use this function, then it is possible to try to jump to the
+      referenced data set using the Jump to Central Test Data Set command in the
+      Properties View (<xref linkend="the-properties-view"/>).
+    </para>
+    
+    <para>
       <emphasis role="strong">Wrapped functions from other libraries</emphasis><?linebreak?>
       You can also use the following functions in your tests. For full documentation on them, please refer to the respective library.
     </para>

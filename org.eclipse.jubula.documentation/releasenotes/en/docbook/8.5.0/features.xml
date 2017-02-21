@@ -78,4 +78,16 @@
       </para>
     </listitem>
   </itemizedlist>
+  <para>
+    <emphasis role="strong">Added the possibility to jump to a referenced data set from the Properties View.</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
+    <para>
+        It is now possible to try to jump to a data set which is referenced by a parameter through the getCentralTestDataSetValue
+        function. In case the row and cell are identifiable from the arguments of the function then they are also selected in the Data
+        Sets View.
+    </para>
+  </listitem>
+</itemizedlist>
 </section>

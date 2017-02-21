@@ -125,4 +125,34 @@ public class TestDataCubeBP {
                 .computeParamNodeReuser(
                         pio, gs.getMasterSession(), proj);
     }
+
+    /**
+     * @param po a Test Data Category
+     * @return the used CTDS names
+     */
+    public static Set<String> getSetOfUsedNames(ITestDataCategoryPO po) {
+        Set<String> usedNames = new HashSet<String>();
+
+        getSetOfUsedNames(po, usedNames);
+        
+        return usedNames;
+    }
+
+    /**
+     * Recursively adds the names of all contained Central Test Data instances
+     * to the provided collection.
+     * 
+     * @param category The category containing the Central Test Data.
+     * @param usedNames The collection to modify.
+     */
+    private static void getSetOfUsedNames(
+            ITestDataCategoryPO category, Set<String> usedNames) {
+        
+        for (ITestDataCategoryPO subCategory : category.getCategoryChildren()) {
+            getSetOfUsedNames(subCategory, usedNames);
+        }
+        for (ITestDataCubePO cube : category.getTestDataChildren()) {
+            usedNames.add(cube.getName());
+        }
+    }
 }

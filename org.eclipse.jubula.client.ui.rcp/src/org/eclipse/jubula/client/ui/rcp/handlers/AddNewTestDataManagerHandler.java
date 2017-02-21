@@ -10,13 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
@@ -80,31 +80,9 @@ public class AddNewTestDataManagerHandler extends AbstractHandler {
             CentralTestDataEditor ctdEditor) {
         ITestDataCategoryPO po = (ITestDataCategoryPO)ctdEditor
                 .getEditorHelper().getEditSupport().getWorkVersion();
-        Set<String> usedNames = new HashSet<String>();
-
-        getSetOfUsedNames(po, usedNames);
-        
-        return usedNames;
+        return TestDataCubeBP.getSetOfUsedNames(po);
     }
 
-    /**
-     * Recursively adds the names of all contained Central Test Data instances
-     * to the provided collection.
-     * 
-     * @param category The category containing the Central Test Data.
-     * @param usedNames The collection to modify.
-     */
-    private static void getSetOfUsedNames(
-            ITestDataCategoryPO category, Set<String> usedNames) {
-        
-        for (ITestDataCategoryPO subCategory : category.getCategoryChildren()) {
-            getSetOfUsedNames(subCategory, usedNames);
-        }
-        for (ITestDataCubePO cube : category.getTestDataChildren()) {
-            usedNames.add(cube.getName());
-        }
-    }
-    
     /**
      * Opens the "New Test Data Set..." dialog.
      * 
