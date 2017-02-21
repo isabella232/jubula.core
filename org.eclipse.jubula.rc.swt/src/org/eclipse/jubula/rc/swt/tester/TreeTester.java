@@ -14,6 +14,7 @@ import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeA
 
 import java.util.StringTokenizer;
 
+import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
@@ -36,6 +37,7 @@ import org.eclipse.jubula.rc.swt.tester.util.ToggleCheckboxOperation;
 import org.eclipse.jubula.rc.swt.tester.util.TreeOperationContext;
 import org.eclipse.jubula.rc.swt.tester.util.VerifyCheckboxOperation;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
@@ -167,50 +169,95 @@ public class TreeTester extends AbstractTreeTableTester {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void rcDragByTextPath(int mouseButton, String modifier,
-            String pathType, int preAscend, String treeTextPath,
-            String operator) {
-        postMouseMovementEvent();
-        super.rcDragByTextPath(mouseButton, modifier, pathType, preAscend,
-                treeTextPath, operator);
-        postMouseMovementEvent();
+            String pathType, int preAscend, String treePath, String operator) {
+        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        dndHelper.setMouseButton(mouseButton);
+        dndHelper.setModifier(modifier);
+        dndHelper.setDragComponent(null);
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        rcSelect(pathType, preAscend, treePath, operator, 0, 1,
+                ValueSets.BinaryChoice.no.rcValue());
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void rcDropByTextPath(final String pathType, final int preAscend,
             final String treePath, final String operator, int delayBeforeDrop) {
-        postMouseMovementEvent();
-        super.rcDropByTextPath(pathType, preAscend, treePath, operator,
-                delayBeforeDrop);
-        postMouseMovementEvent();
+        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        final IRobot robot = getRobot();
+        try {
+            pressOrReleaseModifiers(dndHelper.getModifier(), true);
+            getEventThreadQueuer().invokeAndWait(
+                    "rcDropByTextPath - perform drag", new IRunnable<Void>() { //$NON-NLS-1$
+                        public Void run() throws StepExecutionException {
+                            // drag
+                            robot.mousePress(dndHelper.getDragComponent(), null,
+                                    dndHelper.getMouseButton());
+                            CAPUtil.shakeMouse();
+                            return null;
+                        }
+                    });
+            postMouseMovementEvent();
+            // drop
+            rcSelect(pathType, preAscend, treePath, operator, 0, 1,
+                    ValueSets.BinaryChoice.no.rcValue());
+            SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+            waitBeforeDrop(delayBeforeDrop);
+        } finally {
+            robot.mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        }
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void rcDragByIndexPath(int mouseButton, String modifier,
-            String pathType, int preAscend, String treeIndexPath) {
-        postMouseMovementEvent();
-        super.rcDragByIndexPath(mouseButton, modifier, pathType, preAscend,
-                treeIndexPath);
-        postMouseMovementEvent();
+            String pathType, int preAscend, String indexPath) {
+        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        dndHelper.setMouseButton(mouseButton);
+        dndHelper.setModifier(modifier);
+        dndHelper.setDragComponent(null);
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        rcSelectByIndices(pathType, preAscend, indexPath, 0, 1,
+                ValueSets.BinaryChoice.no.rcValue());
+        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
      * {@inheritDoc}
      */
-    @Override
     public void rcDropByIndexPath(final String pathType, final int preAscend,
             final String indexPath, int delayBeforeDrop) {
-        postMouseMovementEvent();
-        super.rcDropByIndexPath(pathType, preAscend, indexPath,
-                delayBeforeDrop);
-        postMouseMovementEvent();
+        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
+        final IRobot robot = getRobot();
+        try {
+            pressOrReleaseModifiers(dndHelper.getModifier(), true);
+            getEventThreadQueuer().invokeAndWait(
+                    "rcDropByIndexPath - perform drag", new IRunnable<Void>() { //$NON-NLS-1$
+                        public Void run() throws StepExecutionException {
+                            // drag
+                            robot.mousePress(dndHelper.getDragComponent(), null,
+                                    dndHelper.getMouseButton());
+                            CAPUtil.shakeMouse();
+                            return null;
+                        }
+                    });
+            postMouseMovementEvent();
+            // drop
+            rcSelectByIndices(pathType, preAscend, indexPath, 0, 1,
+                    ValueSets.BinaryChoice.no.rcValue());
+            SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+            waitBeforeDrop(delayBeforeDrop);
+        } finally {
+            robot.mouseRelease(null, null, dndHelper.getMouseButton());
+            pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
+        }
     }
 
     /**
@@ -225,7 +272,6 @@ public class TreeTester extends AbstractTreeTableTester {
         wakeEvent.type = SWT.MouseMove;
         getTreeTable().getDisplay().post(wakeEvent);
         waitForDisplayUpdate();
-        SwtUtils.waitForDisplayIdle(getTreeTable().getDisplay());
     }
 
     /**
