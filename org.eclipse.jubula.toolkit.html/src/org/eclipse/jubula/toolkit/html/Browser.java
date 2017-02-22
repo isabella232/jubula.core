@@ -16,7 +16,8 @@ public enum Browser {
     InternetExplorer,
     /** Firefox < 47 */
     Firefox,
-    /** Firefox >= 47 **/
+    /** Firefox >= 47 
+     * @since 3.3 **/
     FirefoxOver47,
     /** Safari */
     Safari,
@@ -24,7 +25,8 @@ public enum Browser {
     Chrome;
 
     /**
-     * @return guess what!
+     * @return is it Firefox?
+     * @since 3.3
      */
     public boolean isFirefox() {
         return this.equals(Firefox) || this.equals(FirefoxOver47);
