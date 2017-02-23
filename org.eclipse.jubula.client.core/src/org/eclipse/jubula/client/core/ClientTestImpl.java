@@ -118,6 +118,7 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
 import org.eclipse.jubula.tools.internal.objects.MonitoringValue;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.internal.utils.MonitoringUtil;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.eclipse.jubula.tools.internal.utils.ZipUtil;
@@ -289,6 +290,19 @@ public class ClientTestImpl implements IClientTest {
             Map<String, String> autConfigMap = createAutConfigMap(conf);
             autConfigMap.put(AutConfigConstants.NAME_TECHNICAL_COMPONENTS,
                 String.valueOf(aut.isGenerateNames()));
+            //add AUT properties to the config map
+            if (!aut.getPropertyMap().isEmpty()) {
+                String currentEnv = StringUtils.defaultIfEmpty(
+                        autConfigMap.get(AutConfigConstants.ENVIRONMENT),
+                        StringConstants.EMPTY);
+                for (String autProp : aut.getPropertyMap().keySet()) {
+                    String property = EnvironmentUtils.toPropertyString(autProp,
+                            aut.getPropertyMap().get(autProp));
+                    currentEnv = currentEnv
+                            .concat(System.lineSeparator() + property);
+                }
+                autConfigMap.put(AutConfigConstants.ENVIRONMENT, currentEnv);
+            }
             StartAUTServerMessage startAUTServerMessage = 
                 new StartAUTServerMessage(autConfigMap, autToolkit);
             AutAgentConnection.getInstance().send(startAUTServerMessage);

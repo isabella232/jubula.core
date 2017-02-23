@@ -278,4 +278,14 @@ public class EnvironmentUtils {
         }
         return value;
     }
+
+    /**
+     * Concatenates two given string values to a property string, i.e. "property=value"
+     * @param property the property
+     * @param value the value for the property
+     * @return the concatenated string
+     */
+    public static String toPropertyString(String property, String value) {
+        return property + StringConstants.EQUALS_SIGN + value;
+    }
 }
