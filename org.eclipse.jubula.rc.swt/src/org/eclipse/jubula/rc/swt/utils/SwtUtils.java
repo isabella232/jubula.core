@@ -188,7 +188,7 @@ public class SwtUtils {
         while (!(wdgt instanceof Control) && wdgt != null) {
             wdgt = getWidgetParent(wdgt);
         }
-        if (wdgt != null) {
+        if (wdgt != null && !wdgt.isDisposed()) {
             return ((Control)wdgt).getShell();
         }
         return null;
