@@ -35,7 +35,14 @@ public class ChildListChangeHandler implements ListChangeListener<EventTarget> {
         for (EventTarget o : changedObjects) {
             m_hierarchy.removeComponentFromHierarchy(o);
         }
-        changedObjects = c.getAddedSubList();
+        // Needed for the fact that sometimes the change getTo() has a higher value than the list itself
+        List<? extends EventTarget> list =  c.getList();
+        int size = list.size();
+        if (c.wasAdded() && c.getTo() > size) {
+            changedObjects = list.subList(c.getFrom(), size);
+        } else {
+            changedObjects = c.getAddedSubList();
+        }
         for (EventTarget o : changedObjects) {
             m_hierarchy.createHierarchyFrom(o);
         }
