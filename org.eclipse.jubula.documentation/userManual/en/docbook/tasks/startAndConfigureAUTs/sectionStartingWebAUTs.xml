@@ -151,6 +151,13 @@
       to allow you to switch between windows during the test.
     </para>
     <para>
+      Note that currently some webdrivers (notably Mozilla's geckodriver)
+      has some issues with using multiple windows. Using these webdrivers
+      may unexpectedly hang the tests, especially if popup windows are closed
+      by user actions. In order to still be able to work with newer versions
+      of Firefox, we introduced the action <emphasis>Close window</emphasis>.
+    </para>
+    <para>
       For information on the expert properties for the HTML AUT
       configuration, see the next
       <xref linkend="expert-html-aut-config"/>.

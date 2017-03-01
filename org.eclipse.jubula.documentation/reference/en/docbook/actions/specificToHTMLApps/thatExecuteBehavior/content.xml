@@ -18,6 +18,7 @@
   <xi:include href="interactAlert/content.xml"/>
   <xi:include href="openURL/content.xml"/>
   <xi:include href="reloadPage/content.xml"/>
+  <xi:include href="closePage/content.xml"/>
   <xi:include href="selectWindowWithID/content.xml"/>
   <xi:include href="selectWindowByTitle/content.xml"/>
   

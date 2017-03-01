@@ -258,6 +258,9 @@
 		<action name="html.BrowserBackAction">
 			<method>rcBack</method>
 		</action>
+		<action name="html.BrowserCloseAction">
+            <method>rcClose</method>
+        </action>
 		<action name="html.BrowserReloadAction">
 			<method>rcReload</method>	
 		</action>

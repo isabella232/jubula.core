@@ -33,8 +33,9 @@
   		</tgroup>
   	</table>
   	<itemizedlist>
-  		<listitem><para>Enter the identifier (title, name, variable) of the window that you would like
+  		<listitem><para>Enter the identifier (title, name, or special expression) of the window that you would like
   		to switch to in your test.</para></listitem>
+  		<listitem>Special expressions must be of the form <literal>'var=vable_name'</literal>, see <xref linkend="actionSelectWindowWithID"/> for the details.</listitem>
   	</itemizedlist>
   
   

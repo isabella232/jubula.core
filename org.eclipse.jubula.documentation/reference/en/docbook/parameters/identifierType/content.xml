@@ -47,7 +47,7 @@
   		<listitem><para><emphasis role="strong">name:</emphasis> You can enter the internal javascript name
   		for the window, if it has one.</para></listitem>
   		<listitem><para><emphasis role="strong">any:</emphasis> Use this option to be able to enter a
-  		javascript variable for the window. You must enter the variable name and the value.</para></listitem>
+  		javascript variable containing the window reference. See <xref linkend="actionSelectWindowWithID" /> for the details.</para></listitem>
   	</itemizedlist>
   
   
