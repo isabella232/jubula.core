@@ -469,21 +469,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         /**
          * {@inheritDoc}
          */
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (!(obj instanceof Parameter)) {
-                return false;
-            }
-            final Parameter param = (Parameter)obj;
-            
-            return m_name.equals(param.m_name);
-        }
-        
-        /**
-         * {@inheritDoc}
-         */
         public int hashCode() {
             return m_name.hashCode();
         }
@@ -1207,7 +1192,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
     private boolean isDuplicate(Parameter parameter) {
         int occurences = 0;
         for (Parameter param : m_parameters) {
-            if (param.equals(parameter)) {
+            if (param.getName().equals(parameter.getName())) {
                 occurences++;
             }
             if (occurences > 1) {
@@ -1226,7 +1211,7 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         final List<Integer> occurenceIndices = new ArrayList<Integer>();
         int index = 0;
         for (Parameter param : m_parameters) {
-            if (param.equals(parameter)) {
+            if (param.getName().equals(parameter.getName())) {
                 occurenceIndices.add(index);
             }
             index++;

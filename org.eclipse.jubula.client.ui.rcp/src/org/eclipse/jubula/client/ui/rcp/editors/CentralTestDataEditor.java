@@ -505,6 +505,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
         
         switch (dataState) {
             case Added:
+                getTreeViewer().refresh();
                 getTreeViewer().add(testData.getParent(), testData);
                 getTreeViewer().setSelection(new StructuredSelection(testData));
                 break;

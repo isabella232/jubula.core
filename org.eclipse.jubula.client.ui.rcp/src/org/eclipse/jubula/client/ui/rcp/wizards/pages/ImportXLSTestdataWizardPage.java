@@ -14,6 +14,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +33,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
+import org.eclipse.jubula.client.core.businessprocess.MapCounter;
 import org.eclipse.jubula.client.core.businessprocess.ParameterInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.DataTable;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -51,6 +53,7 @@ import org.eclipse.jubula.client.ui.rcp.handlers.AddNewTestDataManagerHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.exception.DuplicateColumnNameException;
 import org.eclipse.jubula.tools.internal.exception.IncompleteDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.osgi.util.NLS;
@@ -109,6 +112,12 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
          */
         private CentralTestDataEditor m_ctde;
 
+        /** All parameter names used */
+        private Set<String> m_parNames;
+
+        /** Map to count the occurrences of the same parameter name */
+        private MapCounter m_counter;
+
         /**
          * @param fileSystemObjects fileSystemObjects
          * @param selection the current selection
@@ -119,83 +128,101 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             m_fileSystemObjects = fileSystemObjects;
             m_selection = selection;
             m_ctde = ctde;
+            m_counter = new MapCounter();
+            m_parNames = new HashSet<>();
         }
 
         /**
          * {@inheritDoc}
          */
         public void run(IProgressMonitor monitor) {
-            Plugin p = Plugin.getDefault();
             int numerOfFilesToImport = m_fileSystemObjects.size();
             String operationDescription = 
                 Messages.ImportXLSTestDataWizardImportOperationName;
             monitor.beginTask(operationDescription, numerOfFilesToImport);
-            p.writeLine(operationDescription);
+            Plugin.getDefault().writeLine(operationDescription);
             boolean merge = m_selection != null && m_selection.size() == 1
                     && numerOfFilesToImport == 1;
             for (Object o : m_fileSystemObjects) {
                 if (o instanceof File) {
                     File f = (File)o;
-                    String absoluteFilePath = f.getAbsolutePath();
-                    try {
-                        EditSupport es = m_ctde.getEditorHelper()
-                                .getEditSupport();
-                        ITestDataCategoryPO cont = 
-                                (ITestDataCategoryPO)es.getWorkVersion();
-                        Set<String> usedNames = AddNewTestDataManagerHandler
-                                .getSetOfUsedNames(m_ctde);
-                        if (merge) {
-                            Object selectedObject = m_selection
-                                    .getFirstElement();
-                            if (selectedObject instanceof ITestDataCubePO) {
-                                ITestDataCubePO tdc = 
-                                    (ITestDataCubePO)selectedObject;
-                                tdc.getDataManager().clear();
-                                fillCentralTestDataSet(f, tdc);
-                                fireDataChangedEvent(tdc, 
-                                        DataState.StructureModified,
-                                        UpdateState.onlyInEditor);
-                                p.writeLine(NLS.bind(Messages
-                                        .ImportXLSTestDataSuccessfullMerge,
-                                        new Object[] { absoluteFilePath, 
-                                            tdc.getName() }));
-                            }
-                        } else {
-                            // ensure name uniqueness
-                            String name = f.getName().trim();
-                            TestDataManagerNameValidator nameValidator = 
-                                new TestDataManagerNameValidator(
-                                    name, usedNames);
-                            int counter = 1;
-                            while (!nameValidator.validate(name).isOK()) {
-                                name += "_0"; //$NON-NLS-1$
-                                name = name.replaceAll(
-                                        "(_[0-9]+)+$", "_" + counter++); //$NON-NLS-1$ //$NON-NLS-2$
-                            }
-                            ITestDataCubePO testdata = PoMaker
-                                    .createTestDataCubePO(name);
-                            fillCentralTestDataSet(f, testdata);
-                            cont.addTestData(testdata);
-                            p.writeLine(NLS.bind(Messages
-                                    .ImportXLSTestDataWizardSuccessfullImport,
-                                    new Object[] { absoluteFilePath }));
-                            fireDataChangedEvent(testdata, DataState.Added,
-                                    UpdateState.onlyInEditor);
-                        }
-                    } catch (IncompleteDataException e) {
-                        p.writeErrorLine(absoluteFilePath 
-                                + StringConstants.NEWLINE
-                                + e.getLocalizedMessage());
-                    } catch (JBException e) {
-                        p.writeErrorLine(e.getLocalizedMessage());
-                    } finally {
-                        monitor.worked(1);
-                    }
+                    importOneFile(monitor, merge, f);
                 }
             }
-            p.writeLine(Messages.ImportXLSTestDataWizardImportOperationFinished 
+            Plugin.getDefault().writeLine(
+                    Messages.ImportXLSTestDataWizardImportOperationFinished 
                     + StringConstants.NEWLINE);
             monitor.done();
+        }
+
+        /**
+         * Imports a single file
+         * @param monitor the progress monitor
+         * @param merge whether we import into an existing DS
+         * @param f the file
+         */
+        private void importOneFile(IProgressMonitor monitor,
+                boolean merge, File f) {
+            Plugin p = Plugin.getDefault();
+            String absoluteFilePath = f.getAbsolutePath();
+            try {
+                EditSupport es = m_ctde.getEditorHelper()
+                        .getEditSupport();
+                ITestDataCategoryPO cont = 
+                        (ITestDataCategoryPO)es.getWorkVersion();
+                Set<String> usedNames = AddNewTestDataManagerHandler
+                        .getSetOfUsedNames(m_ctde);
+                if (merge) {
+                    Object selectedObject = m_selection
+                            .getFirstElement();
+                    if (selectedObject instanceof ITestDataCubePO) {
+                        ITestDataCubePO tdc = 
+                            (ITestDataCubePO)selectedObject;
+                        tdc.getDataManager().clear();
+                        fillCentralTestDataSet(f, tdc);
+                        fireDataChangedEvent(tdc, 
+                                DataState.StructureModified,
+                                UpdateState.onlyInEditor);
+                        p.writeLine(NLS.bind(Messages
+                                .ImportXLSTestDataSuccessfullMerge,
+                                new Object[] { absoluteFilePath, 
+                                    tdc.getName() }));
+                    }
+                } else {
+                    // ensure name uniqueness
+                    String name = f.getName().trim();
+                    TestDataManagerNameValidator nameValidator = 
+                        new TestDataManagerNameValidator(
+                            name, usedNames);
+                    int counter = 1;
+                    while (!nameValidator.validate(name).isOK()) {
+                        name += "_0"; //$NON-NLS-1$
+                        name = name.replaceAll(
+                                "(_[0-9]+)+$", "_" + counter++); //$NON-NLS-1$ //$NON-NLS-2$
+                    }
+                    ITestDataCubePO testdata = PoMaker
+                            .createTestDataCubePO(name);
+                    fillCentralTestDataSet(f, testdata);
+                    cont.addTestData(testdata);
+                    p.writeLine(NLS.bind(Messages
+                            .ImportXLSTestDataWizardSuccessfullImport,
+                            new Object[] { absoluteFilePath }));
+                    fireDataChangedEvent(testdata, DataState.Added,
+                            UpdateState.onlyInEditor);
+                }
+            } catch (DuplicateColumnNameException e) {
+                p.writeErrorLine(NLS.bind(
+                        Messages.ImportXLSTDWizDupColName,
+                        new Object[] {f.getName()}));
+            } catch (IncompleteDataException e) {
+                p.writeErrorLine(absoluteFilePath 
+                        + StringConstants.NEWLINE
+                        + e.getLocalizedMessage());
+            } catch (JBException e) {
+                p.writeErrorLine(e.getLocalizedMessage());
+            } finally {
+                monitor.worked(1);
+            }
         }
 
         /**
@@ -207,7 +234,8 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
          *             in case of data retrieval problems
          */
         private void fillCentralTestDataSet(File f,
-                ITestDataCubePO testdata) throws JBException {
+                ITestDataCubePO testdata) throws JBException,
+                DuplicateColumnNameException {
             ExternalTestDataBP bp = new ExternalTestDataBP();
             String absoluteFilePath = f.getAbsoluteFile()
                     .getAbsolutePath();
@@ -218,9 +246,14 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             // get all parameters from first data table row
             List<Parameter> listOfParameters = new ArrayList<Parameter>();
             for (int i = 0; i < dtParamInterface.getColumnCount(); i++) {
+                String colName = dtParamInterface.getData(0, i);
+                if (m_parNames.contains(colName)) {
+                    throw new DuplicateColumnNameException();
+                }
+                m_parNames.add(colName);
                 // there is currently no way other than guessing the parameter type
-                listOfParameters.add(new Parameter(dtParamInterface
-                        .getData(0, i), TestDataConstants.STR));
+                listOfParameters.add(
+                        new Parameter(colName, TestDataConstants.STR));
             }
 
             // create interface for central test data set
@@ -234,6 +267,27 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             DataTable dt = bp.createDataTable(
                     null, absoluteFilePath);
             bp.parseTable(dt, testdata, true);
+        }
+
+        /**
+         * Extends non-unique column names 
+         * @param name the column name
+         * @return the new column name if there is a duplication
+         */
+        private String getParamName(String name) {
+            String currName = name;
+            String addOneTo = name;
+            while (m_parNames.contains(currName)) {
+                addOneTo = currName;
+                if (m_counter.get(currName) == null) {
+                    currName += "_1"; //$NON-NLS-1$
+                } else {
+                    currName += "_" + (m_counter.get(currName) + 1); //$NON-NLS-1$
+                }
+            }
+            m_parNames.add(currName);
+            m_counter.add(addOneTo, 1);
+            return currName;
         }
 
         /**

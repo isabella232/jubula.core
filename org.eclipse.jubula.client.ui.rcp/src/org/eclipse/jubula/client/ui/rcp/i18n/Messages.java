@@ -383,6 +383,7 @@ public class Messages extends NLS {
     public static String ImportProjectDialogTitle;
     public static String ImportTestDataSetsWizardWindowTitle;
     public static String ImportXLSTestDataSuccessfullMerge;
+    public static String ImportXLSTDWizDupColName;
     public static String ImportXLSTestDataWizardImportOperationFinished;
     public static String ImportXLSTestDataWizardImportOperationName;
     public static String ImportXLSTestDataWizardSuccessfullImport;
