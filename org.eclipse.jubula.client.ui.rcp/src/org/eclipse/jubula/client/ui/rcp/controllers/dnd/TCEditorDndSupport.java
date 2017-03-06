@@ -224,7 +224,7 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 List<INodePO> contList = controller.getUnmodifiableNodeList();
                 if (node instanceof IParamNodePO) {
                     fillParamNode((IParamNodePO) node,
-                            (IParamNodePO) controller, false);
+                            (IParamNodePO) controller);
                     checkParentParameters((ISpecTestCasePO) target.
                             getSpecAncestor(), (IParamNodePO) controller,
                             pMapper, true);
@@ -233,9 +233,10 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
                 }
                 target.addNode(pos, controller);
                 for (int i = 0; i < nodeList.size(); i++) {
-                    last = copyPasteNodes(editor, contList.get(i),
-                            nodeList.get(i).getUnmodifiableNodeList(), 0);
+                    copyPasteNodes(editor, contList.get(i),
+                        nodeList.get(i).getUnmodifiableNodeList(), 0);
                 }
+                last = controller;
             }
             pos++;
         }

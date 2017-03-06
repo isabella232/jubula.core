@@ -87,7 +87,7 @@ public abstract class AbstractEditorDndSupport {
      */
     protected static void fillExec(IExecTestCasePO origExec, 
         IExecTestCasePO newExec, boolean deleteRefDatas) {
-        fillParamNode(origExec, newExec, deleteRefDatas);
+        fillParamNode(origExec, newExec);
         newExec.setName(origExec.getRealName());
         ISpecTestCasePO origSpecTC = origExec.getSpecTestCase();
         
@@ -100,6 +100,10 @@ public abstract class AbstractEditorDndSupport {
             }
         } else {
             newExec.setHasReferencedTD(true);
+        }
+        
+        if (deleteRefDatas) {
+            deleteRefDatas(newExec);
         }
         
         for (ICompNamesPairPO origPair : origExec.getCompNamesPairs()) {
@@ -159,7 +163,7 @@ public abstract class AbstractEditorDndSupport {
      * @param newCap    The new Test step
      */
     protected static void fillCap(ICapPO origCap, ICapPO newCap) {
-        fillParamNode(origCap, newCap, false);
+        fillParamNode(origCap, newCap);
         newCap.setComponentName(origCap.getComponentName());
         newCap.setComponentType(origCap.getComponentType());
         newCap.setActionName(origCap.getActionName());
@@ -199,15 +203,11 @@ public abstract class AbstractEditorDndSupport {
      * 
      * @param origNode  The original parameter node.
      * @param newNode   The new parameter node.
-     * @param delRef whether to delete data references
      */
     protected static void fillParamNode(IParamNodePO origNode,
-            IParamNodePO newNode, boolean delRef) {
+            IParamNodePO newNode) {
 
         fillNode(origNode, newNode);
-        if (delRef) {
-            deleteRefDatas(newNode);
-        }
         newNode.setName(origNode.getName());
         newNode.setDataFile(origNode.getDataFile());
         newNode.setReferencedDataCube(origNode.getReferencedDataCube());

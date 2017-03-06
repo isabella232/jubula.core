@@ -46,7 +46,7 @@ import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
  */
 public class TSEditorDndSupport extends AbstractEditorDndSupport {
 
-    /** for copy actions */
+    /** For copy actions the last copied node */
     private INodePO m_last = null;
     
     /** Constructor */
@@ -133,7 +133,6 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
             int pos) {
         int position = pos;
         int msg = 0;
-        INodePO last = null;
         for (INodePO node : nodes) {
             if (node instanceof IParamNodePO
                     && ((IParamNodePO) node).getParamReferencesIterator().
@@ -153,7 +152,8 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
                 List<INodePO> contList = controller.getUnmodifiableNodeList();
                 if (node instanceof IParamNodePO) {
                     fillParamNode((IParamNodePO) node,
-                            (IParamNodePO) controller, true);
+                            (IParamNodePO) controller);
+                    deleteRefDatas((IParamNodePO) controller);
                 } else {
                     fillNode(node, controller);
                 }
@@ -162,6 +162,7 @@ public class TSEditorDndSupport extends AbstractEditorDndSupport {
                     copyPasteNodes(contList.get(i),
                             nodeList.get(i).getUnmodifiableNodeList(), 0);
                 }
+                m_last = controller;
             } else if (node instanceof ICommentPO) {
                 INodePO comm = NodeMaker.createCommentPO(
                         ((ICommentPO) node).getName());
