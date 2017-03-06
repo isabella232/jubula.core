@@ -102,6 +102,7 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.WorkbenchMessages;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.progress.WorkbenchJob;
@@ -1163,15 +1164,20 @@ public abstract class AbstractDataSetPage extends Page
      * Updates this view. Causes the view to get and display its data.
      */
     private void updateView() {
-        clearTableViewer();
-        IParameterInterfacePO paramObj = getParamInterfaceObj();
-        if (paramObj != null && isNodeValid(paramObj)) {
-            getTableViewer().setInput(getInputForTable(paramObj));
-            createTable();
-        } else {
-            getTableViewer().setInput(null);
-        }
-        getTableViewer().refresh();
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                clearTableViewer();
+                IParameterInterfacePO paramObj = getParamInterfaceObj();
+                if (paramObj != null && isNodeValid(paramObj)) {
+                    getTableViewer().setInput(getInputForTable(paramObj));
+                    createTable();
+                } else {
+                    getTableViewer().setInput(null);
+                }
+                getTableViewer().refresh();
+            }
+        });
     }
     
     /**

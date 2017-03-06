@@ -23,6 +23,9 @@ public enum ProgressMonitorTracker {
     /** The monitor to which the interceptor reports progress */
     private IProgressMonitor m_monitor;
 
+    /** The thread which created the monitor */
+    private Thread m_creator;
+
     /**
      * Private constructor
      */
@@ -35,16 +38,21 @@ public enum ProgressMonitorTracker {
      *                <code>null</code> clears the monitor, meaning that the
      *                database access will no longer issue progress updates.
      */
-    public void setProgressMonitor(IProgressMonitor monitor) {
+    public synchronized void setProgressMonitor(IProgressMonitor monitor) {
         m_monitor = monitor;
+        m_creator = Thread.currentThread();
     }
 
     /**
      * 
      * @return the progress monitor currently being used to monitor 
-     *         database access. 
+     *         database access or null if the caller thread is
+     *         not the thread having created the monitor.
      */
-    public IProgressMonitor getProgressMonitor() {
-        return m_monitor;
+    public synchronized IProgressMonitor getProgressMonitor() {
+        if (m_creator == Thread.currentThread()) {
+            return m_monitor;
+        }
+        return null;
     }
 }

@@ -811,29 +811,34 @@ public class ComponentNamesTableComposite extends Composite implements
     }
 
     /** {@inheritDoc} */
-    public void handleDataChanged(DataChangedEvent... events) {
-        for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState());
-        }
+    public void handleDataChanged(final DataChangedEvent... events) {
+        Plugin.getDisplay().syncExec(new Runnable() {
+            @Override
+            public void run() {
+                for (DataChangedEvent e : events) {
+                    handleDataChanged(e.getPo(), e.getDataState());
+                }
+            }
+            
+        });
     }
     
     /**
      * {@inheritDoc}
      */
-    public void handleDataChanged(IPersistentObject po, DataState dataState) {
+    public void handleDataChanged(final IPersistentObject po,
+            DataState dataState) {
         IExecTestCasePO exec = getSelectedExecNode();
-        if (po != null && exec != null && po.equals(exec.getSpecAncestor())) {
+        if (po != null && exec != null
+                && po.equals(exec.getSpecAncestor())) {
             updateTableInput();
             return;
         }
-        if (po instanceof IExecTestCasePO || po instanceof ISpecTestCasePO
+        if (po instanceof IExecTestCasePO
+                || po instanceof ISpecTestCasePO
                 || po instanceof IComponentNamePO
                 || po instanceof ICompNamesPairPO) {
-            Plugin.getDisplay().syncExec(new Runnable() {
-                public void run() {
-                    m_tableViewer.refresh();
-                }
-            });
+            m_tableViewer.refresh();
         }
     }
 

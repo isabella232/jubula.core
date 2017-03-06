@@ -200,10 +200,15 @@ public class TestJobEditor extends AbstractJBEditor {
     }
 
     /** {@inheritDoc} */
-    public void handleDataChanged(DataChangedEvent... events) {
-        for (DataChangedEvent e : events) {
-            handleDataChanged(e.getPo(), e.getDataState());
-        }
+    public void handleDataChanged(final DataChangedEvent... events) {
+        Plugin.getDisplay().syncExec(new Runnable() {
+            @Override
+            public void run() {
+                for (DataChangedEvent e : events) {
+                    handleDataChanged(e.getPo(), e.getDataState());
+                }
+            }
+        });
     }
     
     /**
