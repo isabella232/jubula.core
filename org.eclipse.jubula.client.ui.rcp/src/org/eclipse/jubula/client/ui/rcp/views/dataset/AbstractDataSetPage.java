@@ -838,7 +838,8 @@ public abstract class AbstractDataSetPage extends Page
                 getTableCursor().setSelection(toIndex,
                         getTableCursor().getColumn());
                 getTableViewer().refresh();
-                DataEventDispatcher.getInstance().fireParamChangedListener();
+                DataEventDispatcher.getInstance().
+                    fireParamChangedListener(this);
                 editor.getEditorHelper().setDirty(true);
             }
         }
@@ -894,7 +895,7 @@ public abstract class AbstractDataSetPage extends Page
                 setFocus();
             }
             getTable().setSelection(rowToSelect);
-            DataEventDispatcher.getInstance().fireParamChangedListener();
+            DataEventDispatcher.getInstance().fireParamChangedListener(this);
         }
     }
     
@@ -1289,9 +1290,11 @@ public abstract class AbstractDataSetPage extends Page
     }
     
     /** {@inheritDoc} */
-    public void handleParamChanged() {
-        initTableViewerParameterColumns();
-        updateView();            
+    public void handleParamChanged(Object caller) {
+        if (caller != this) {
+            initTableViewerParameterColumns();
+            updateView();
+        }
     }
     
     /** {@inheritDoc} */
@@ -1504,7 +1507,8 @@ public abstract class AbstractDataSetPage extends Page
                                     DataEventDispatcher ded = 
                                             DataEventDispatcher.getInstance();
                                     ded.firePropertyChanged(false);
-                                    ded.fireParamChangedListener();
+                                    ded.fireParamChangedListener(
+                                            AbstractDataSetPage.this);
                                 }
                             });
                         }
@@ -1787,7 +1791,7 @@ public abstract class AbstractDataSetPage extends Page
                     }
                     setFocus();
                     DataEventDispatcher.getInstance()
-                            .fireParamChangedListener();
+                            .fireParamChangedListener(this);
                 }
             } catch (PMException pme) {
                 PMExceptionHandler.handlePMExceptionForEditor(pme, editor);

@@ -180,10 +180,10 @@ public class DataSetView extends PageBookView
     /**
      * {@inheritDoc}
      */
-    public void handleParamChanged() {
-        if (!(Plugin.getActivePart() == this) 
-                && getCurrentPage() instanceof IParamChangedListener) {
-            ((IParamChangedListener)getCurrentPage()).handleParamChanged();
+    public void handleParamChanged(Object caller) {
+        if (getCurrentPage() instanceof IParamChangedListener) {
+            ((IParamChangedListener)getCurrentPage()).
+                handleParamChanged(caller);
         }
     }
 

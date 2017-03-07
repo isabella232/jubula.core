@@ -732,7 +732,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     }
     
     /** {@inheritDoc} */
-    public void handleParamChanged() {
+    public void handleParamChanged(Object caller) {
         runLocalChecks();
         refresh();
     }

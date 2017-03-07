@@ -364,7 +364,6 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
         checkParentParameters((ISpecTestCasePO) targetNode.getSpecAncestor(),
                 newCap, pMapper, true);
         targetEditor.getTreeViewer().expandToLevel(targetNode, 1);
-        targetEditor.handleParamChanged();
         DataEventDispatcher.getInstance().fireParamChangedListener();
         
         return newCap;

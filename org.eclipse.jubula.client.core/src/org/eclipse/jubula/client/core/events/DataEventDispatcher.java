@@ -143,8 +143,9 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         
         /**
          * callback method
+         * @param caller the caller method or null
          */
-        public void handleParamChanged();
+        public void handleParamChanged(Object caller);
     }
     
     /**
@@ -685,17 +686,22 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         m_paramChangedListeners.remove(l);
         m_paramChangedListenersPost.remove(l);
     }
-    
+
+    /** Wrapper method for null call */
+    public void fireParamChangedListener() {
+        fireParamChangedListener(null);
+    }
     /**
      * notify listener about param modification
+     * @param caller the caller object or null if not interesting
      */
-    public void fireParamChangedListener() {        
+    public void fireParamChangedListener(Object caller) {
         // model updates
         final Set<IParamChangedListener> stableListeners = 
             new HashSet<IParamChangedListener>(m_paramChangedListeners);
         for (IParamChangedListener l : stableListeners) {
             try {
-                l.handleParamChanged();
+                l.handleParamChanged(caller);
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }
@@ -706,7 +712,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             new HashSet<IParamChangedListener>(m_paramChangedListenersPost);
         for (IParamChangedListener l : stableListenersPost) {
             try {
-                l.handleParamChanged();
+                l.handleParamChanged(caller);
             } catch (Throwable t) {
                 LOG.error(Messages.UnhandledExceptionWhileCallListeners, t);
             }

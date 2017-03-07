@@ -433,7 +433,7 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
     }
 
     /** {@inheritDoc} */
-    public void handleParamChanged() {
+    public void handleParamChanged(Object caller) {
         // assuming that the currently selected element (or rather, 
         // all currently selected elements) have had some kind of param change
         Plugin.getDisplay().syncExec(new Runnable() {

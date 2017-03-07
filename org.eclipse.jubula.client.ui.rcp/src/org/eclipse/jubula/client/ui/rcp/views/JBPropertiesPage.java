@@ -105,6 +105,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
+import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySheetPage;
@@ -577,10 +578,12 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
     /**
      * {@inheritDoc}
      */
-    public void handleParamChanged() {
+    public void handleParamChanged(Object caller) {
         if (Plugin.getActivePart() instanceof PropertySheet) {
             if (((PropertySheet)Plugin
                     .getActivePart()).getCurrentPage() != this) {
+                IPage pag = ((PropertySheet)Plugin
+                        .getActivePart()).getCurrentPage();
                 return;
             }
         }
