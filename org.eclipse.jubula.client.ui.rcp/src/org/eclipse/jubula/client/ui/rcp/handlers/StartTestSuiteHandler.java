@@ -56,6 +56,9 @@ public class StartTestSuiteHandler extends AbstractStartTestHandler
      * {@inheritDoc}
      */
     public Object executeImpl(final ExecutionEvent event) {
+        if (!canStartTestExecution()) {
+            return null;
+        }
         Object testSuiteToStartObj = null;
         Object runningAutObj = null;
         ITestSuitePO testSuiteToStart = null;

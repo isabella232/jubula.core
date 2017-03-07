@@ -236,6 +236,7 @@ public class Messages extends NLS {
     public static String MissingParameterType;
     public static String MissingParameterTypeForTestcase;
     public static String MissingPermission;
+    public static String MissingTestData;
     public static String NeitherValueNorReferenceForNode;
     public static String Na;
     public static String Node;
@@ -243,7 +244,6 @@ public class Messages extends NLS {
     public static String NodeForGivenParameterValueMustNotBeNull;
     public static String NodeMismatch;
     public static String NodeWithReferenceIsNotChildOfParamNode;
-    public static String NoEntryFor;
     public static String NoJavaFound;
     public static String NoLogicalNameForDefaultMapping;
     public static String NonRecoverableError;
@@ -293,7 +293,6 @@ public class Messages extends NLS {
     public static String ProblemMissingReferencedTestCaseTooltip;
     public static String ProblemWithDatabaseSchemeConf;
     public static String ProblemWithInstallingDBScheme;
-    public static String ProfessionalName;
     public static String Project;
     public static String ProjectNotInDB;
     public static String ProjectWasDeleted;
@@ -341,7 +340,6 @@ public class Messages extends NLS {
     public static String Success;
     public static String SyntaxErrorInReference;
     public static String RefTestSuitePOMissingReference;
-    public static String TechnicalName;
     public static String TestDataNotAvailable;
     public static String TestErrorEventAction;
     public static String TestErrorEventCompNotFound;

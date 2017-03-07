@@ -638,7 +638,12 @@ public class TestExecution {
                     testSuite.getName()));
             firstCap = m_trav.next();
         } catch (JBException e) {
-            LOG.error(Messages.IncompleteTestdata, e);
+            LOG.error(e.getLocalizedMessage(), e);
+            fireError(e);
+        } catch (Exception e) {
+            // should properly catch all exceptions,
+            // fireError finishes all processes properly...
+            LOG.error(e.getLocalizedMessage(), e);
             fireError(e);
         }
         if (firstCap != null) {
@@ -924,22 +929,6 @@ public class TestExecution {
             }
             return messageCap;
         } catch (LogicComponentNotManagedException blcnme) {
-            StringBuilder msg = new StringBuilder();
-            msg.append(Messages.NoEntryFor);
-            msg.append(StringConstants.SPACE);
-            msg.append(cap.getComponentName());
-            msg.append(StringConstants.LEFT_PARENTHESIS);
-            msg.append(StringConstants.EQUALS_SIGN);
-            msg.append(Messages.ProfessionalName);
-            msg.append(StringConstants.RIGHT_PARENTHESIS);
-            msg.append(StringConstants.SPACE);
-            msg.append(StringConstants.SLASH);
-            msg.append(StringConstants.SPACE);
-            msg.append(StringConstants.LEFT_PARENTHESIS);
-            msg.append(StringConstants.EQUALS_SIGN);
-            msg.append(Messages.TechnicalName);
-            msg.append(StringConstants.RIGHT_PARENTHESIS);
-            LOG.error(msg.toString(), blcnme);
             throw blcnme;
         } catch (InvalidDataException e) {
             if (runIncomplete) {

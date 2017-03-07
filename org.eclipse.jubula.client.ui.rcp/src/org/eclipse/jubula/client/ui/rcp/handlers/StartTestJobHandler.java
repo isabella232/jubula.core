@@ -41,6 +41,9 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
      */
     public Object executeImpl(final ExecutionEvent event) 
         throws ExecutionException {
+        if (!canStartTestExecution()) {
+            return null;
+        }
         Object testJobToStartObj = null;
         ITestJobPO testJobToStart = null;
         testJobToStartObj = 

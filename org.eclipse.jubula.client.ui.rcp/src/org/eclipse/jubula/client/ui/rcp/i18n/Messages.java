@@ -237,6 +237,7 @@ public class Messages extends NLS {
     public static String DeleteUnusedActionShellTitle;
     public static String DeleteUnusedProgress;
     public static String DeselectAll;
+    public static String DirtyEditorBeforeTestExec;
     public static String DirtyStarListLabelProviderAlreadySaved;
     public static String DisconnectedFromAUT;
     public static String DoesNotExist;
@@ -812,8 +813,8 @@ public class Messages extends NLS {
     public static String SpecTestCaseGUIPropertySourceTrackedChangesCategory;
     public static String StartAutBPLocalhost;
     public static String StartAutJobJobName;
-    public static String StartSuiteActionMessage;
-    public static String StartSuiteActionTitle;
+    public static String SelectEditorsToSave;
+    public static String SaveEditorsTitle;
     public static String StatusLine_NotConnected;
     public static String StopAUTActionQuestionText;
     public static String StopAUTActionQuestionTextIfcollecting;

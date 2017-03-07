@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.businessprocess.TestResultBP;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.CompletenessBP;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.internal.exception.JBException;
@@ -129,7 +130,7 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                     @Override
                     public void receiveExecutionNotification(
                             String notification) {
-                        
+                        // empty
                     }
                 };
                 ClientTest.instance()
@@ -137,6 +138,25 @@ public abstract class AbstractStartTestHandler extends AbstractHandler {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * Checks whether there are dirty editors.
+     *      If yes, the user is notified and can save them.
+     *      Once saved, the user has to restart test execution manually.
+     * @return whether there were dirty editors
+     */
+    boolean canStartTestExecution() {
+        if (!Plugin.getDefault().anyDirtyStar()) {
+            return true;
+        }
+        // we ask the user to save the editors, and then
+        // restart the test manually
+        Plugin.getDefault().showSaveEditorDialogWithMessage(
+                Messages.DirtyEditorBeforeTestExec, getActiveShell());
+        // CC is not automatically started in this case...
+        CompletenessBP.getInstance().completeProjectCheck();
         return false;
     }
 

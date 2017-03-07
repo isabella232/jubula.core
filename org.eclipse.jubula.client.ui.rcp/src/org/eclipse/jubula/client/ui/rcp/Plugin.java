@@ -921,14 +921,31 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      *         editors have been saved, otherwise false.
      */
     public boolean showSaveEditorDialog(Shell parentShell) {
+        return showSaveEditorDialogWithMessage(
+                Messages.SelectEditorsToSave, parentShell);
+    }
+    
+    /**
+     * Opens the {@link ListSelectionDialog} with a preselected list of all
+     * project dependent dirty editors. If the list is empty, the dialog is not
+     * shown.
+     * 
+     * @param parentShell
+     *            the parent shell to show the dialog for
+     * @param msg
+     *            the message to display
+     * @return True, if there are not dirty editors or all preselected dirty
+     *         editors have been saved, otherwise false.
+     */
+    public boolean showSaveEditorDialogWithMessage(String msg,
+            Shell parentShell) {
         List<IEditorReference> dirtyEditors = getProjectDependentDirtyEditors();
         boolean hasDirtyEditors = !dirtyEditors.isEmpty();
         if (hasDirtyEditors) {
             ListSelectionDialog dialog = new ListSelectionDialog(parentShell,
                     dirtyEditors.toArray(), new DirtyStarListContentProvider(),
-                    new DirtyStarListLabelProvider(),
-                    Messages.StartSuiteActionMessage);
-            dialog.setTitle(Messages.StartSuiteActionTitle);
+                    new DirtyStarListLabelProvider(), msg);
+            dialog.setTitle(Messages.SaveEditorsTitle);
             dialog.setInitialElementSelections(dirtyEditors);
             dialog.open();
             if (dialog.getReturnCode() == Window.OK) {

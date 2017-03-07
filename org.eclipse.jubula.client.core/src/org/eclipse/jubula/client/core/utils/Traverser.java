@@ -59,7 +59,6 @@ import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.exception.IncompleteDataException;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.JBException;
-import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.osgi.util.NLS;
@@ -352,7 +351,8 @@ public class Traverser {
      * @return the associated reentryProperty in case of eventExecTestCaseNode 
      * or null in case of execTestCaseNode
      */
-    private ReentryProperty decrementStack(INodePO node) {
+    private ReentryProperty decrementStack(INodePO node)
+            throws IncompleteDataException {
         ReentryProperty prop = null;
         if (isEventHandler(node)) {
             IEventExecTestCasePO eventExec = (IEventExecTestCasePO)node; 
@@ -394,7 +394,8 @@ public class Traverser {
      * A sub-branch of a Conditional Statement is finished
      * @param node the sub-branch
      */
-    private void decrementCondStatementCont(INodePO node) {
+    private void decrementCondStatementCont(INodePO node)
+            throws IncompleteDataException {
         IConditionalStatementPO par =
                 (IConditionalStatementPO) node.getParentNode();
         if (node.equals(par.getCondition())) {
@@ -414,7 +415,8 @@ public class Traverser {
      * A sub-branch of a Do-While or While-Do is finished
      * @param node the sub-branch
      */
-    private void decrementDoWhileDoCont(INodePO node) {
+    private void decrementDoWhileDoCont(INodePO node)
+            throws IncompleteDataException {
         ICondStructPO par =
                 (ICondStructPO) node.getParentNode();
         if (node.equals(par.getCondition())) {
@@ -450,7 +452,7 @@ public class Traverser {
      * The Do block of an Iterate is finished
      * @param node the Do block
      */
-    public void decrementIterate(INodePO node) {
+    public void decrementIterate(INodePO node) throws IncompleteDataException {
         IIteratePO iter = (IIteratePO) node.getParentNode();
         ExecObject top = m_execStack.peek();
         int limit = 0;
@@ -586,7 +588,8 @@ public class Traverser {
      *  event for push-operation on execStack
      *  @param node node, which was added to stack
      */
-    private void fireExecStackIncremented(INodePO node) {
+    private void fireExecStackIncremented(INodePO node)
+            throws IncompleteDataException {
         addParameters(m_execStack.peek());
         executeLogging();
         Iterator<IExecStackModificationListener> it = 
@@ -670,7 +673,7 @@ public class Traverser {
     /**
      *  event for next dataset iteration
      */
-    private void fireNextDataSetIteration() {
+    private void fireNextDataSetIteration() throws IncompleteDataException {
         addParameters(m_execStack.peek());
         
         Iterator<IExecStackModificationListener> it = 
@@ -1142,7 +1145,8 @@ public class Traverser {
      * @param execObject The execution object to which the parameters will
      *                   be added.
      */
-    private void addParameters(ExecObject execObject) {
+    private void addParameters(ExecObject execObject)
+            throws IncompleteDataException {
         INodePO execNode = execObject.getExecNode();
         if (execNode instanceof IParamNodePO) {
             IParamNodePO paramNode = (IParamNodePO)execNode;
@@ -1193,9 +1197,10 @@ public class Traverser {
                 String date =
                         getDataForExec(execNode, desc, tdManager, dataSetIndex);
                 if (StringUtils.isBlank(date)) {
-                    throw new JBFatalException(
-                            "Data for node " + execNode.getName(), //$NON-NLS-1$
-                            MessageIDs.E_UNEXPECTED_EXCEPTION);
+                    throw new IncompleteDataException(
+                        NLS.bind(Messages.MissingTestData,
+                                execNode.getName()),
+                        MessageIDs.E_MISSING_DATA);
                 }
                 ParamValueConverter conv = new ModelParamValueConverter(
                         date, paramNode,  desc);

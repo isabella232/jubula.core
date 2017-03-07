@@ -18,6 +18,7 @@ import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.IClientTest;
+import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.ITestExecutionEventListener;
 import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
@@ -552,11 +553,12 @@ public class TestExecutionContributor
                 break;
             case TEST_EXEC_COMPONENT_FAILED:
                 cap = TestExecution.getInstance().getActualCap();
-                final String componentName = cap.getComponentName();
+                final String compName = CompNameManager.getInstance().
+                        getNameByGuid(cap.getComponentName());
                 testCaseName = cap.getSpecAncestor().getName();
                 capName = cap.getName();
                 error = NLS.bind(Messages.TestExecutionContributorCompFailure,
-                        new Object[]{componentName, testCaseName, capName});
+                        new Object[]{compName, testCaseName, capName});
                 message = Messages.TestExecutionContributorSuiteFailed;
                 break;
             case TEST_EXEC_PAUSED:

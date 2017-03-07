@@ -329,6 +329,8 @@ public class MessageIDs {
     public static final Integer E_UNSUPPORTED_TOOLKIT = new Integer(4055);
     /** if a Function is not available */
     public static final Integer E_NO_FUNCTION = new Integer(4056);
+    /** If test data is missing during test execution */
+    public static final Integer E_MISSING_DATA = new Integer(4057);
     // -- CONNECTION ERROR IDs ---------------------------------------------
     /** if problem occurred, during AUT connection initialization */
     public static final Integer E_AUT_CONNECTION_INIT = new Integer(5000);
@@ -775,6 +777,7 @@ public class MessageIDs {
         messageMap.put(E_TOOLKIT_COMPSYS_ERROR, e, "ErrorMessage.TOOLKIT_COMPSYS_ERROR", null); //$NON-NLS-1$
         messageMap.put(E_CONVERSION_ABORTED_ERROR, e, "ErrorMessage.CONVERSION_ABORTED_ERROR", null); //$NON-NLS-1$
         messageMap.put(E_UNSUPPORTED_TOOLKIT, e,  "ErrorMessage.UNSUPPORTED_TOOLKIT", null); //$NON-NLS-1$
+        messageMap.put(E_MISSING_DATA, e,  "ErrorMessage.MISSING_DATA", null); //$NON-NLS-1$
         
     }
     
