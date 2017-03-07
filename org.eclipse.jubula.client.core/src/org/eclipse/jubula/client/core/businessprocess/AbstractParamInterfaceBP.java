@@ -389,15 +389,11 @@ public abstract class AbstractParamInterfaceBP<T> {
             return new IntegerParamValueValidator(Integer.MIN_VALUE, 
                 Integer.MAX_VALUE, values);
         }
+        if (values.length > 0) {
+            return new ComboParamValidator(values, valuesAreCombinable);
+        }
         if (TestDataConstants.VARIABLE.equals(type)) {
             return new VariableParamValueValidator();
-        }
-        if (TestDataConstants.STR.equals(type)) {
-            return new NullValidator();
-        }
-        if (TestDataConstants.COMBO.equals(type)
-            || TestDataConstants.BOOLEAN.equals(type)) {
-            return new ComboParamValidator(values, valuesAreCombinable);
         }
         return new NullValidator();
     }

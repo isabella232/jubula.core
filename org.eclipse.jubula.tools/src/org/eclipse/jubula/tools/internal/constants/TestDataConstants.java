@@ -61,8 +61,6 @@ public interface TestDataConstants {
     
     /** Constant for a String as parameter value */
     public static final String STR = "java.lang.String";  //$NON-NLS-1$
-    /** Constant for a value set as possible parameter values */
-    public static final String COMBO = "Combo"; //$NON-NLS-1$
     /** Constant for a parameter of type Boolean */
     public static final String BOOLEAN = "java.lang.Boolean"; //$NON-NLS-1$
 

@@ -98,7 +98,7 @@ public class TestDataControlFactory {
             }
             if (!values.isEmpty()) {
                 return new CheckedParamText(parent, style, cap, paramDesc,
-                        createParamValueValidator(TestDataConstants.COMBO,
+                        createParamValueValidator(TestDataConstants.STR,
                                 param.getValueSet().isCombinable(),
                                 values.toArray(new String[values.size()])));
             }
@@ -171,13 +171,13 @@ public class TestDataControlFactory {
         if (values.length > 0) {
             return new ParamComboPropertyDescriptor(paramValController,
                     displayName, values, createParamValueValidator(
-                            TestDataConstants.COMBO, valuesAreCombinable, 
+                            TestDataConstants.STR, valuesAreCombinable, 
                             values));
         }
         if (TestDataConstants.BOOLEAN.equals(paramType)) {
             return new ParamTextPropertyDescriptor(paramValController,
                     displayName, createParamValueValidator(
-                            TestDataConstants.COMBO, valuesAreCombinable, 
+                            TestDataConstants.STR, valuesAreCombinable, 
                             BOOLEAN_VALUES));
         }
         return new ParamTextPropertyDescriptor(paramValController,
