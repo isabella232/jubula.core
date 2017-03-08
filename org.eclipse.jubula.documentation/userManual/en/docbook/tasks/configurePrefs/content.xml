@@ -19,6 +19,7 @@
   <xi:include href="sectionEmbeddedAUTAgentPreferences.xml"/>
   <xi:include href="sectionDatabasePreferences.xml"/>
   <xi:include href="sectionEditorPreferences.xml"/>
+  <xi:include href="sectionBrowserPreferences.xml"/>
   <xi:include href="sectionObjectMappingPreferences.xml"/>
   <xi:include href="sectionObservationModePreferences.xml"/>
   <xi:include href="sectionTestResultPreferences.xml"/>

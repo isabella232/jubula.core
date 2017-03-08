@@ -364,6 +364,11 @@
       name="%Editor"
       id="org.eclipse.jubula.client.ui.rcp.preferences.EditorPrefPage" />
     <page
+      class="org.eclipse.jubula.client.ui.rcp.preferences.BrowserPreferencePage"
+      category="org.eclipse.jubula.client.ui.rcp.preferences.mainPrefPage"
+      name="%Browser"
+      id="org.eclipse.jubula.client.ui.rcp.preferences.BrowserPrefPage" />
+    <page
       class="org.eclipse.jubula.client.ui.rcp.preferences.ObservationPreferencePage"
       category="org.eclipse.jubula.client.ui.rcp.preferences.mainPrefPage"
       id="org.eclipse.jubula.client.ui.rcp.preferences.ObservPrefPage"

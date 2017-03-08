@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.views;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -30,6 +31,7 @@ import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
@@ -39,10 +41,15 @@ import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.ComponentNameBrowserContentProvider;
 import org.eclipse.jubula.client.ui.rcp.sorter.ComponentNameNameViewerSorter;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
+import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.client.ui.views.ITreeViewerContainer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.dialogs.FilteredTree;
@@ -69,8 +76,14 @@ public class ComponentNameBrowser extends ViewPart implements
     public static final String CONTEXT_MENU_ID = 
         "ComponentNameBrowserContextMenuID"; //$NON-NLS-1$
     
+    /** the filtered tree */
+    private FilteredTree m_filteredTree;
+    
     /** the tree viewer */
     private TreeViewer m_treeViewer;
+    
+    /** The preference store to hold the existing preference values. */
+    private IPreferenceStore m_store = Plugin.getDefault().getPreferenceStore();
 
     /**
      * {@inheritDoc}
@@ -86,6 +99,7 @@ public class ComponentNameBrowser extends ViewPart implements
         ComponentNameBrowserContentProvider cp = 
             new ComponentNameBrowserContentProvider();
 
+        setFilteredTree(ft);
         setTreeViewer(ft.getViewer());
 
         getTreeViewer().setContentProvider(cp);
@@ -113,10 +127,37 @@ public class ComponentNameBrowser extends ViewPart implements
         ded.addProjectLoadedListener(this, true);
         ded.addDataChangedListener(this, true);
         ded.addProblemPropagationListener(this);
-
+        
         if (GeneralStorage.getInstance().getProject() != null) {
             handleProjectLoaded();
         }
+        
+        addFilterBackgroundColoring();
+    }
+
+    /**
+     * Adds Filter Background Coloring functionality
+     */
+    private void addFilterBackgroundColoring() {
+        getFilteredTree().getFilterControl()
+            .addModifyListener(new ModifyListener() {
+                public void modifyText(ModifyEvent e) {
+                    if (!getFilteredTree().getFilterControl()
+                            .getText().isEmpty() 
+                        && m_store.getBoolean(
+                                Constants.BACKGROUND_COLORING_KEY)) {
+                            getFilteredTree().getViewer()
+                                .getControl().setBackground(
+                                    new Color(Display.getCurrent(),
+                                        Utils.intToRgb(m_store.getInt(
+                                            Constants.BACKGROUND_COLOR_KEY))));
+                    } else {
+                        getFilteredTree().getViewer().getControl()
+                            .setBackground(Display.getCurrent()
+                                    .getSystemColor(SWT.COLOR_WHITE));
+                    }
+                }
+            });
     }
 
     /**
@@ -186,6 +227,20 @@ public class ComponentNameBrowser extends ViewPart implements
      */
     public TreeViewer getTreeViewer() {
         return m_treeViewer;
+    }
+    
+    /**
+     * @return the filtered tree
+     */
+    private FilteredTree getFilteredTree() {
+        return m_filteredTree;
+    }
+    
+    /**
+     * @param ft the filtered tree
+     */
+    private void setFilteredTree(FilteredTree ft) {
+        m_filteredTree = ft;
     }
 
     /**

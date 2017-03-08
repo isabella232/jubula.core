@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="browser-preferences" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                               xmlns:xi="http://www.w3.org/2001/XInclude"
+                                               xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Browser preferences</title>
+  <anchor role="helpid" condition="editorPrefPageContextId" xml:id="editor-preferences.editorPrefPageContextId" xreflabel="Editor Preferences"/>
+  <para>
+    In the <emphasis>Test - Browsers</emphasis> preferences,
+    you can alter your preferences for:
+  </para>
+  <variablelist>
+    <varlistentry>
+      <term>
+        Filter coloring 
+      </term>
+      <listitem>
+        <para>
+          Here you can configure if you want the background of a browser to be
+          colored when the filter is active. This helps to remind you that
+          a filter is active and not all components are shown.
+          The used background color can be changed as well.
+        </para>
+      </listitem>
+    </varlistentry>
+  </variablelist>
+</section>

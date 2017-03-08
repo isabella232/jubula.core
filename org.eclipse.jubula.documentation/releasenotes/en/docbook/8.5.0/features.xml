@@ -82,18 +82,28 @@
     <emphasis role="strong">Added the possibility to jump to a referenced data set from the Properties View.</emphasis>
   </para>
   <itemizedlist>
-  <listitem>
-    <para>
+    <listitem>
+      <para>
         It is now possible to try to jump to a data set which is referenced by a parameter through the getCentralTestDataSetValue
         function. In case the row and cell are identifiable from the arguments of the function then they are also selected in the Data
         Sets View.
-    </para>
-  </listitem>
-  <listitem><para>
-     We improved the Check / Store Property actions for HTML AUTs using a Webdriver.
-     It is now possible to access any (specifically, CSS) attributes and properties of HTML elements.
-     To access a CSS property, simply use its name (e.g. <literal>background-color</literal>).
-     Please note that the actual value returned is strongly browser-dependent.
-  </para></listitem>
-</itemizedlist>
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+         We improved the Check / Store Property actions for HTML AUTs using a Webdriver.
+         It is now possible to access any (specifically, CSS) attributes and properties of HTML elements.
+         To access a CSS property, simply use its name (e.g. <literal>background-color</literal>).
+         Please note that the actual value returned is strongly browser-dependent.
+      </para>
+    </listitem>
+  </itemizedlist>
+  <itemizedlist>
+    <listitem>
+      <para>
+        The background of browsers now change their color when filtering is active. We introduced this to remind you about the active filtering so you don't get confused about not finding elements that are
+        currently hidden by the filter.
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>

@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.resource.JFaceResources;
@@ -51,6 +52,7 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -61,6 +63,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.rcp.filter.DataSetFilter;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamTextContentAssisted;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -143,6 +146,8 @@ public abstract class AbstractDataSetPage extends Page
     private static Image activeImage = null;
     /** Image for the bressed clear button */
     private static Image pressedImage = null;
+    /** The preference store to hold the existing preference values. */
+    private IPreferenceStore m_store = Plugin.getDefault().getPreferenceStore();
     
     static {
         ImageRegistry imgReg = JFaceResources.getImageRegistry();
@@ -613,7 +618,6 @@ public abstract class AbstractDataSetPage extends Page
         m_searchText.setMessage(WorkbenchMessages.FilteredTree_FilterMessage);
         final Job searchJob = createSearchJob();
         m_searchText.addModifyListener(new ModifyListener() {
-            @Override
             public void modifyText(ModifyEvent e) {
                 if (m_currentPart instanceof AbstractJBEditor) {
                     if (m_searchText.getText().isEmpty()) {
@@ -623,6 +627,7 @@ public abstract class AbstractDataSetPage extends Page
                         m_deleteButton.setEnabled(true);
                         m_upButton.setEnabled(true);
                         m_downButton.setEnabled(true);
+                        updateBackgroundColor(false);
                     } else {
                         updateClearButtonVisibility(true);
                         m_addButton.setEnabled(false);
@@ -630,6 +635,7 @@ public abstract class AbstractDataSetPage extends Page
                         m_deleteButton.setEnabled(false);
                         m_upButton.setEnabled(false);
                         m_downButton.setEnabled(false);
+                        updateBackgroundColor(true);
                     }
                 } else {
                     updateClearButtonVisibility(!m_searchText
@@ -654,6 +660,21 @@ public abstract class AbstractDataSetPage extends Page
         getTableViewer().setLabelProvider(new GeneralLabelProvider());
         getTableViewer().addFilter(m_filter);
         setTableCursor(new DSVTableCursor(getTable(), SWT.NONE));
+    }
+    
+    /**
+     * Updates the background color when filtering
+     * @param isActive whether filtering is active or not
+     */
+    private void updateBackgroundColor(boolean isActive) {
+        if (isActive && m_store.getBoolean(Constants.BACKGROUND_COLORING_KEY)) {
+            getTableViewer().getControl().setBackground(
+                new Color(Display.getCurrent(), Utils.intToRgb(
+                    m_store.getInt(Constants.BACKGROUND_COLOR_KEY))));
+        } else {
+            getTableViewer().getControl().setBackground(
+                Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+        }
     }
 
     /**
