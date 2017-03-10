@@ -26,6 +26,7 @@ import javax.persistence.Version;
 
 import org.apache.commons.lang.Validate;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.persistence.annotations.Index;
 
 
 /**
@@ -39,6 +40,7 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 @DiscriminatorColumn(name = "CLASS_ID", 
                      discriminatorType = DiscriminatorType.CHAR)
 @DiscriminatorValue(value = "P")
+@Index(name = "PARAM_NODE_IDX", columnNames = "PARAM_NODE")
 @Table(name = "PARAM_DESC")
 abstract class ParamDescriptionPO {
     /** Persistence (JPA / EclipseLink) OID */

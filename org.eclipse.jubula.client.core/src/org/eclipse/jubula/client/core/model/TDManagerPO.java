@@ -506,7 +506,9 @@ class TDManagerPO implements ITDManager {
      * @return the uniqueIds
      */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "TD_MANAGER_PARAM_ID")
+    @CollectionTable(name = "TD_MANAGER_PARAM_ID",
+        indexes = {@javax.persistence.Index(
+                name = "TDMPO_IDX", columnList = "TDManagerPO_ID")})
     @Column(name = "UNIQUE_ID")
     @OrderColumn(name = "IDX")
     @JoinColumn(name = "FK_TD_MANAGER")

@@ -18,10 +18,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.eclipse.persistence.annotations.Index;
+
 /**
  * Representing data values, see http://bugs.eclipse.org/488218
  */
 @Entity
+@Index(name = "FK_DSID_idx", columnNames = {"FK_DATASET_ID"})
 @Table(name = "TEST_DATA_CELL")
 class DataCellPO implements IDataCellPO {
 
