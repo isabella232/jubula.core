@@ -22,7 +22,8 @@
       Names Browser and the Object Mapping Editor (in the tree view)
       all contain a filter area at the top. You can enter a filter
       text into this area to show matches to the text in the browser
-      or editor. Use star (*) as a wildcard.
+      or editor. Use star (*) as a wildcard and question mark (?) to
+      substitute a single character.
     </para>
     <para>
       In the Test Case Browser, the Component Names Browser and the
@@ -33,6 +34,21 @@
       In the Object Mapping Editor, the names and
       <emphasis>types</emphasis> of the components are considered
       for the filter.
+    </para>
+    <para>
+      The Data Sets View also has a filter, but it is based on regular
+      expressions as opposed to the filters mentioned above.
+      We add a <literal>.*</literal> expression to the beginning and end of
+      the string you enter. So for example if you entered <literal>a[b]</literal>,
+      then the used regular expression would be <literal>.*a[b].*</literal>.
+      If the resulting expression is not a valid regular expression,
+      then your original expression is interpreted as a simple expression used in
+      the other filters.
+    </para>
+    <para>
+      On the Browser preferences page (see <xref linkend="browser-preferences" />)
+      you can set a background color to be used when a filter is applied to any browser
+      or view. 
     </para>
   </section>
 </section>

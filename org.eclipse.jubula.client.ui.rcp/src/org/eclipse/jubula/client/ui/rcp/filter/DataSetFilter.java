@@ -10,59 +10,70 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.filter;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.ui.internal.misc.StringMatcher;
 
 /** This class has implemented the searching on data set view */
 public class DataSetFilter extends ViewerFilter {
 
-    /** <code>.*</code> */
-    private final String m_dotStar = StringConstants.DOT + StringConstants.STAR;
-    
-    /** the pattern */
-    private String m_searchString;
+    /** .* */
+    private static final String DOTSTAR = StringConstants.DOT
+            + StringConstants.STAR;
+
+    /** The search text */
+    private String m_search = null;
+
+    /** The matcher */
+    private StringMatcher m_matcher = null;
+
+    /** The regular matcher */
+    private Matcher m_regMatcher;
 
     /**
      * @param origText is the new pattern
      */
     public void setSearchText(String origText) {
-        String text = cleanText(origText);
-        this.m_searchString = text == null ? null
-                : m_dotStar + text + m_dotStar;
+        if (origText != null) {
+            m_search = DOTSTAR + origText + DOTSTAR;
+            try {
+                Pattern p = Pattern.compile(m_search);
+                m_regMatcher = p.matcher(StringConstants.EMPTY);
+            } catch (PatternSyntaxException e) {
+                m_regMatcher = null;
+            }
+        }
+        String text = origText == null ? StringConstants.STAR
+                : StringConstants.STAR + origText + StringConstants.STAR;
+        m_matcher = new StringMatcher(text, true, false);
     }
 
     @Override
     public boolean select(Viewer viewer, Object parentElement, Object element) {
-        if (m_searchString == null || m_searchString.length() == 0
-                || !(element instanceof IDataSetPO)) {
+        if (StringUtils.isEmpty(m_search) || !(element instanceof IDataSetPO)) {
             return true;
         }
+
         for (String value : ((IDataSetPO)element).getColumnStringValues()) {
-            if (value != null && value.matches(m_searchString)) {
+            if (value == null) {
+                continue;
+            }
+            if (m_regMatcher != null) {
+                m_regMatcher.reset(value);
+                if (m_regMatcher.matches()) {
+                    return true;
+                }
+            } else if (m_matcher != null && m_matcher.match(value)) {
                 return true;
             }
         }
         return false;
-    }
-    
-    /**
-     * @param searchString what would have to checking and cleaning
-     * @return cleaned string from stars
-     */
-    private String cleanText(String searchString) {
-        if (searchString == null || searchString.isEmpty()) {
-            return null;
-        }
-        String result = searchString;
-        while (result.startsWith(StringConstants.STAR)) {
-            result = result.substring(1, result.length());
-        }
-        while (result.endsWith(StringConstants.STAR)) {
-            result = result.substring(0, result.length() - 1);
-        }
-        result = result.replace(StringConstants.STAR, m_dotStar);
-        return result;
     }
 }
