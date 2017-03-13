@@ -35,7 +35,9 @@
   	<itemizedlist>
   		<listitem><para>Enter the identifier (title, name, or special expression) of the window that you would like
   		to switch to in your test.</para></listitem>
-  		<listitem>Special expressions must be of the form <literal>'var=vable_name'</literal>, see <xref linkend="actionSelectWindowWithID"/> for the details.</listitem>
+  		<listitem><para>
+  		  Special expressions must be of the form <literal>'var=vable_name'</literal>, see <xref linkend="actionSelectWindowWithID"/> for the details.
+  		</para></listitem>
   	</itemizedlist>
   
   

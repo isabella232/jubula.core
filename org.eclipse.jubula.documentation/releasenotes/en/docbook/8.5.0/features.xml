@@ -89,5 +89,11 @@
         Sets View.
     </para>
   </listitem>
+  <listitem><para>
+     We improved the Check / Store Property actions for HTML AUTs using a Webdriver.
+     It is now possible to access any (specifically, CSS) attributes and properties of HTML elements.
+     To access a CSS property, simply use its name (e.g. <literal>background-color</literal>).
+     Please note that the actual value returned is strongly browser-dependent.
+  </para></listitem>
 </itemizedlist>
 </section>
