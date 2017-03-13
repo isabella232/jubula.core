@@ -87,6 +87,15 @@
 		</modules>
 	</profile>
 
+   <profile>
+      <id>rc-webdriver</id>
+      <modules>
+        <module>../../com.bredexsw.jubula.core/com.bredexsw.jubula.rc.html.webdriver</module>
+        <module>../../com.bredexsw.jubula.core/com.bredexsw.jubula.rc.common</module>
+        <module>../../com.bredexsw.jubula.core/com.bredexsw.jubula.rc.html</module>
+        <module>../org.eclipse.jubula.toolkit.html</module>
+      </modules>
+   </profile>
 	
   </profiles>
 </project>
