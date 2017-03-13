@@ -54,7 +54,15 @@
                 <artifactId>tycho-p2-director-plugin</artifactId>
                 <version>${tycho-version}</version>
                 <configuration>
-                    <includeAllDependencies>true</includeAllDependencies>
+                 <includeAllDependencies>true</includeAllDependencies>
+                 <products>
+                  <product>
+                   <id>org.eclipse.jubula.product</id>
+                   <rootFolders>
+                    <macosx>jubula.app</macosx>
+                   </rootFolders>
+                  </product>
+                 </products>
                 </configuration>
                 <executions>
                     <execution>
@@ -64,6 +72,7 @@
                         </goals>
                     </execution>
                 </executions>
+
             </plugin>
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>

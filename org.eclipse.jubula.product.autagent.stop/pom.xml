@@ -20,6 +20,14 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<includeAllDependencies>true</includeAllDependencies>
+                 <products>
+                  <product>
+                   <id>org.eclipse.jubula.product.autagent.stop</id>
+                   <rootFolders>
+                    <macosx>stopautagent.app</macosx>
+                   </rootFolders>
+                  </product>
+                 </products>
 				</configuration>
 				<executions>
 					<execution>

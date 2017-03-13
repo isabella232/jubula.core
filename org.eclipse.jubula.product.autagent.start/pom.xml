@@ -20,6 +20,14 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<includeAllDependencies>true</includeAllDependencies>
+                 <products>
+                  <product>
+                   <id>org.eclipse.jubula.product.autagent.start</id>
+                   <rootFolders>
+                    <macosx>autagent.app</macosx>
+                   </rootFolders>
+                  </product>
+                 </products>
 				</configuration>
 				<executions>
 					<execution>

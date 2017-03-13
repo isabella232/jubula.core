@@ -36,6 +36,7 @@
                             <scope>system</scope>
                         </extraClasspathElement>
                     </extraClasspathElements>
+                    <useProjectSettings>false</useProjectSettings>
                 </configuration>
             </plugin>
         </plugins>
