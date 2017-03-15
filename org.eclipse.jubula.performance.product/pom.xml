@@ -57,6 +57,14 @@
 				<version>${tycho-version}</version>
 				<configuration>
 					<includeAllDependencies>true</includeAllDependencies>
+					<products>
+					<product>
+						<id>org.eclipse.jubula.performance.product</id>
+						<rootFolders>
+							<macosx>jubula.app</macosx>
+						</rootFolders>
+					</product>
+					</products>
 				</configuration>
 				<executions>
 					<execution>
