@@ -1185,7 +1185,7 @@ public abstract class AbstractDataSetPage extends Page
      * Updates this view. Causes the view to get and display its data.
      */
     private void updateView() {
-        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             @Override
             public void run() {
                 clearTableViewer();
