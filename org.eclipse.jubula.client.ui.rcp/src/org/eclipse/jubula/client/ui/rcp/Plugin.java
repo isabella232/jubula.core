@@ -19,6 +19,7 @@ import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -72,12 +73,14 @@ import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.StatusLineContributionItem;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.views.IJBPart;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.JBRuntimeException;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.IQueryListener;
@@ -1165,6 +1168,24 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
             m_projectLifecycleLister, true);
         ProgressConsoleRegistry.INSTANCE.register(this);
         ClientTest.instance().addAutAgentEventListener(m_agentCloseListener);
+        parseCommandLine();
+    }
+
+    /**
+     * Parses the command line for some options
+     */
+    private void parseCommandLine() {
+        String[] args = Platform.getCommandLineArgs();
+        String ip = EnvironmentUtils.getArgValue(args,
+                EnvConstants.CLIENTIP_KEY);
+        if (StringUtils.isNotEmpty(ip)) {
+            System.setProperty(EnvConstants.CLIENTIP_KEY, ip);
+        }
+        String port = EnvironmentUtils.getArgValue(args,
+                EnvConstants.CLIENTPORT_KEY);
+        if (StringUtils.isNotEmpty(port)) {
+            System.setProperty(EnvConstants.CLIENTPORT_KEY, port);
+        }
     }
 
     /**

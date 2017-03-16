@@ -52,6 +52,7 @@ import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
+import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.messagehandling.Message;
@@ -226,6 +227,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                 noRunValue = true;
             }
             m_job.parseJobOptions(m_cmd);
+            handleCmdLineToProcessOptions();
             // check if all needed attributes are set
             // and if port number is valid
             preValidate(m_job);
@@ -239,6 +241,22 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             throw new ParseException(StringConstants.EMPTY);
         }
         return true;
+    }
+
+    /**
+     * To unify ITE and cmd-line tools, some options / properties
+     *      can be provided through both command-line and other means.
+     *      These are simply stored as process properties.
+     */
+    private void handleCmdLineToProcessOptions() {
+        if (m_cmd.hasOption(EnvConstants.CLIENTIP_KEY)) {
+            System.setProperty(EnvConstants.CLIENTIP_KEY, m_cmd
+                    .getOptionValue(EnvConstants.CLIENTIP_KEY));
+        }
+        if (m_cmd.hasOption(EnvConstants.CLIENTPORT_KEY)) {
+            System.setProperty(EnvConstants.CLIENTPORT_KEY, m_cmd
+                    .getOptionValue(EnvConstants.CLIENTPORT_KEY));
+        }
     }
 
     /**

@@ -62,6 +62,7 @@
       <para>
         This is possible by setting the JVM properties <emphasis>jubClientAddr</emphasis> and <emphasis>jubClientPort</emphasis> in either
         the <emphasis>jubula.ini</emphasis> or the <emphasis>testexec.vmoptions</emphasis> configuration files.
+        You can also use command-line arguments to achieve the same (e.g. by something like <literal>testexec.exe -jubClientPort 11111</literal>).
       </para>
     </listitem>
   </itemizedlist>

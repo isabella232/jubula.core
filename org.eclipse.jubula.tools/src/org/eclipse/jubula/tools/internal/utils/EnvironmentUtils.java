@@ -16,6 +16,7 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
@@ -287,5 +288,25 @@ public class EnvironmentUtils {
      */
     public static String toPropertyString(String property, String value) {
         return property + StringConstants.EQUALS_SIGN + value;
+    }
+
+    /**
+     * Returns null if -key is not present in the String
+     *         empty String if it is present, but not followed by a value
+     *         the value otherwise
+     * @param args the arguments
+     * @param key the key
+     * @return the value
+     */
+    public static String getArgValue(String[] args, String key) {
+        int pos = ArrayUtils.indexOf(args, StringConstants.MINUS + key);
+        if (pos < 0 || pos >= args.length) {
+            return null;
+        }
+        if (pos == args.length - 1 || args[pos + 1] == null
+                || args[pos + 1].startsWith(StringConstants.MINUS)) {
+            return StringConstants.EMPTY;
+        }
+        return args[pos + 1];
     }
 }
