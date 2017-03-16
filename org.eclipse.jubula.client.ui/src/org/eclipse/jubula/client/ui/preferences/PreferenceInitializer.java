@@ -189,6 +189,11 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
                 Constants.SINGLELINETRIGGER_KEY_DEFAULT);
         prefStore.setDefault(Constants.MULTILINETRIGGER_KEY,
                 Constants.MULTILINETRIGGER_KEY_DEFAULT);
+        
+        prefStore.setDefault(Constants.BACKGROUND_COLORING_KEY,
+                Constants.BACKGROUND_COLORING_KEY_DEFAULT);
+        prefStore.setDefault(Constants.BACKGROUND_COLOR_KEY,
+                Constants.BACKGROUND_COLOR_KEY_DEFAULT);
     }
 
     /**

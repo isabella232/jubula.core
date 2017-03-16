@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.utils;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -47,6 +48,7 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.NewSearchUI;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPerspectiveDescriptor;
@@ -346,5 +348,24 @@ public class Utils {
                 autConfigCopy.put(key, value);
             }
         }
+    }
+    
+    /**
+     * Converts a given int color to a SWT RGB color object
+     * @param intColor the int color
+     * @return the RGB color object
+     */
+    public static RGB intToRgb(int intColor) {
+        Color color = new Color(intColor);
+        return new RGB(color.getRed(), color.getGreen(), color.getBlue());
+    }
+    
+    /**
+     * Converts a given SWT RGB color object to an int color
+     * @param color the RGB color object
+     * @return the int color
+     */
+    public static int rgbToInt(RGB color) {
+        return new Color(color.red, color.green, color.blue).getRGB();
     }
 }

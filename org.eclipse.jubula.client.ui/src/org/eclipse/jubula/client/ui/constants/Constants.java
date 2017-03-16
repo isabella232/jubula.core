@@ -322,6 +322,11 @@ public interface Constants {
     public static final String LINK_WITH_EDITOR_TCVIEW_KEY = "LINK_WITH_EDITOR_TCVIEW_KEY"; //$NON-NLS-1$
     /** Key for the mode of the AUT Config dialog */
     public static final String AUT_CONFIG_DIALOG_MODE = "AUT_CONFIG_DIALOG_MODE"; //$NON-NLS-1$
+    /** Key for the mode of background color filtering */
+    public static final String BACKGROUND_COLORING_KEY = "BACKGROUND_COLORING_KEY"; //$NON-NLS-1$
+    /** Key for the mode of background color filtering color */
+    public static final String BACKGROUND_COLOR_KEY = "BACKGROUND_COLOR_KEY"; //$NON-NLS-1$
+    
     /** 
      * Key for preference whether Test Results opened in the Test Result Viewer
      * should be cached in the master session (even after closing the viewer) 
@@ -504,6 +509,10 @@ public interface Constants {
     public static final boolean LOAD_DEFAULT_PROJECT_KEY_DEFAULT = false;
     /** default value of show update reused projects dialog */
     public static final boolean UPDATE_REUSED_PROJECTS_KEY_DEFAULT = false;
+    /** default value for filter background coloring */
+    public static final boolean BACKGROUND_COLORING_KEY_DEFAULT = true;
+    /** default value for filter background color */
+    public static final int BACKGROUND_COLOR_KEY_DEFAULT = 14609407;
 
     // --------------------------------------------------------------------
     

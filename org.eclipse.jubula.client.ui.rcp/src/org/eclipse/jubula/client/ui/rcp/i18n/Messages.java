@@ -133,6 +133,11 @@ public class Messages extends NLS {
     public static String AUTSettingWizardPageToolkit;
     public static String AUTSettingWizardPageUpperLabel;
     public static String AUTSettingWizardPageUpToolTip;
+    public static String BrowserPreferencePageDescription;
+    public static String BrowserPreferencePageFilterColoringButton;
+    public static String BrowserPreferencePageFilterColoringColorFieldLabel;
+    public static String BrowserPreferencePageFilterColoringDescription;
+    public static String BrowserPreferencePageFilterColoringGroup;
     public static String Bytes;
     public static String CannotFindReusableProjects;
     public static String CannotOpenThePerspective;

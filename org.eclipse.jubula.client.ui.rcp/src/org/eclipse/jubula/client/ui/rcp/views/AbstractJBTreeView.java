@@ -18,6 +18,7 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
@@ -40,10 +41,15 @@ import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.sorter.NodeNameViewerSorter;
 import org.eclipse.jubula.client.ui.rcp.utils.UIIdentitiyElementComparer;
+import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchActionConstants;
@@ -89,6 +95,9 @@ public abstract class AbstractJBTreeView extends ViewPart implements
 
     /** The partListener of this view */
     private PartListener m_partListener = new PartListener();
+    
+    /** The preference store to hold the existing preference values. */
+    private IPreferenceStore m_store = Plugin.getDefault().getPreferenceStore();
 
     /**
      * This listener updates the selection of the view based on the activated
@@ -252,6 +261,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
 
         getSite().setSelectionProvider(getTreeViewer());
         getTreeViewer().setAutoExpandLevel(DEFAULT_EXPANSION);
+        addFilterBackgroundColoring(ft);
         
         final DataEventDispatcher ded = DataEventDispatcher.getInstance();
         ded.addProjectLoadedListener(this, false);
@@ -264,6 +274,27 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         
         setFocus();
         registerContextMenu();
+    }
+
+    /**
+     * Adds Filter Background Coloring functionality
+     * @param ft the Filtered Tree the functionality is supposed to be added to
+     */
+    private void addFilterBackgroundColoring(final FilteredTree ft) {
+        ft.getFilterControl().addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                if (!getTreeFilterText().getText().isEmpty()
+                    && m_store.getBoolean(Constants.BACKGROUND_COLORING_KEY)) {
+                        getTreeViewer().getControl().setBackground(
+                            new Color(Display.getCurrent(),
+                                Utils.intToRgb(m_store.getInt(
+                                    Constants.BACKGROUND_COLOR_KEY))));
+                } else {
+                    getTreeViewer().getControl().setBackground(
+                        Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+                }
+            }
+        });
     }
     
     /**
@@ -305,7 +336,6 @@ public abstract class AbstractJBTreeView extends ViewPart implements
             dispatcher.firePartClosed(this);
             dispatcher.removeProjectLoadedListener(this);
         } finally {
-            getTreeViewer().getTree().dispose();
             getSite().setSelectionProvider(null);
             super.dispose();
         }

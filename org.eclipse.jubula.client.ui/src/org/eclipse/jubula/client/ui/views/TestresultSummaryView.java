@@ -80,13 +80,18 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
@@ -373,8 +378,11 @@ public class TestresultSummaryView extends ViewPart implements
     /** combobox for filter type */
     private Combo m_filterCombo;
 
-    /** search string textfield for filter*/
+    /** search string text field for filter*/
     private Text m_searchText;
+
+    /** The preference store to hold the existing preference values. */
+    private IPreferenceStore m_store = Plugin.getDefault().getPreferenceStore();
     
     /**
      * <code>m_filterJob</code>
@@ -461,7 +469,7 @@ public class TestresultSummaryView extends ViewPart implements
         
         DatabaseStateDispatcher.addDatabaseStateListener(this);
         addDoubleClickListener(m_tableViewer);
-
+        
         loadViewInput();
         restoreViewStatus();
     }
@@ -797,6 +805,37 @@ public class TestresultSummaryView extends ViewPart implements
                 }
             }
         });
+        
+        addFilterBackgroundColoring();
+    }
+
+    /**
+     * Adds Filter Background Coloring functionality
+     */
+    private void addFilterBackgroundColoring() {
+        m_searchText.addModifyListener(new ModifyListener() {
+            public void modifyText(ModifyEvent e) {
+                if (!m_searchText.getText().isEmpty() 
+                    && m_store.getBoolean(Constants.BACKGROUND_COLORING_KEY)) {
+                    m_tableViewer.getControl().setBackground(
+                        new Color(Display.getCurrent(), intToRgb(
+                            m_store.getInt(Constants.BACKGROUND_COLOR_KEY))));
+                } else {
+                    m_tableViewer.getControl().setBackground(
+                        Display.getCurrent().getSystemColor(SWT.COLOR_WHITE));
+                }
+            }
+        });
+    }
+    
+    /**
+     * Converts a given int color to a SWT RGB color object
+     * @param intColor the int color
+     * @return the RGB color object
+     */
+    public static RGB intToRgb(int intColor) {
+        java.awt.Color color = new java.awt.Color(intColor);
+        return new RGB(color.getRed(), color.getGreen(), color.getBlue());
     }
     
     /**
