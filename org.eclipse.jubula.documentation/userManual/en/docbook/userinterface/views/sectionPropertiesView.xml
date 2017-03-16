@@ -91,6 +91,23 @@
         in the Test Case.
       </para>
     </listitem>
+    <listitem>
+      <para>
+        When selecting a reference to a Test Case the Properties View
+        will have an additional field for a parameter called "JUnitTestSuite"
+        with the default value "false". 
+      </para>
+      <para>
+        Selecting "true" for this will cause the refenced Test Case to be used a
+        Test Suite for the generation of the lightweight JUnit report.
+      </para>
+      <para>
+      Any children of a referenced Test Case with the paramter
+      JUnitTestSutie with the value "true" will be treated as
+      Test Cases regardless of the value of the JUnitTestSuite
+      parameter they may have.
+      </para>
+    </listitem>
   </itemizedlist>
   <para>
     <emphasis role="strong">Test Step details</emphasis>

@@ -11,8 +11,10 @@
 package org.eclipse.jubula.client.core.utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Traverses a tree of <code>T</code> instances top-down. The traversal starts 
@@ -103,9 +105,21 @@ public abstract class AbstractTreeTraverser<T> {
         if (m_maxDepth == NO_DEPTH_LIMIT 
                 || m_maxDepth > context.getCurrentTreePath().size()) {
             context.append(node);
+            Set<ITreeNodeOperation<T>> suspendedOps = null;
                 
             for (ITreeNodeOperation<T> operation : m_operations) {
-                operation.operate(context, parent, node, false);
+                boolean continueWork =
+                        operation.operate(context, parent, node, false);
+                if (!continueWork) {
+                    if (suspendedOps ==  null) {
+                        suspendedOps = new HashSet<ITreeNodeOperation<T>>(
+                                m_operations.size());
+                    }
+                    suspendedOps.add(operation);
+                }
+            }
+            if (suspendedOps != null) {
+                m_operations.removeAll(suspendedOps);
             }
             
             if (context.isContinue() && !m_operations.isEmpty()) {
@@ -114,12 +128,16 @@ public abstract class AbstractTreeTraverser<T> {
                     traverseImpl(context, node, iter.next());
                 }
             
+            }
+            if (suspendedOps != null) {
+                m_operations.addAll(suspendedOps);
+            }
+            if (context.isContinue()) {
                 for (ITreeNodeOperation<T> operation : m_operations) {
                     operation.postOperate(context, parent, node, 
                             false);
-                }
+                }                
             }
-
             context.removeLast();
         }
     }

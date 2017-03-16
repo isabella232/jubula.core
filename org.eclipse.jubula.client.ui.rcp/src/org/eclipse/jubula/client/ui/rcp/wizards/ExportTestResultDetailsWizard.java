@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.SummarizedTestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.client.core.testresult.export.ExporterRegistry;
 import org.eclipse.jubula.client.ui.editors.TestResultViewer.GenerateTestResultTreeOperation;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -142,6 +143,10 @@ public class ExportTestResultDetailsWizard extends Wizard
 
                     exportDocument(generator.generateXmlReport(), summary,
                             subMonitor);
+                    
+                    ExporterRegistry.exportTestResult(new SummarizedTestResult(
+                            summary, rootDetailNode), m_destinationPage.
+                            getDestination(), getFileNameForSummary(summary));
                 }
             } finally {
                 persistor.dropSession(session);
@@ -162,7 +167,7 @@ public class ExportTestResultDetailsWizard extends Wizard
             try {
                 File fileToWrite = new File(
                     m_destinationPage.getDestination(), 
-                        summary.getTestsuiteName() + "_" + summary.getTestsuiteStartTime().getTime()); //$NON-NLS-1$
+                        getFileNameForSummary(summary)); 
                 FileXMLReportWriter reportWriter = 
                         new FileXMLReportWriter(fileToWrite.getAbsolutePath());
 
@@ -222,6 +227,15 @@ public class ExportTestResultDetailsWizard extends Wizard
             } catch (IOException ioe) {
                 Plugin.getDefault().handleError(ioe);
             }
+        }
+
+        /**
+         * @param summary {@link ITestResultSummaryPO}
+         * @return filename for the testresult report
+         */
+        private String getFileNameForSummary(ITestResultSummaryPO summary) {
+            return summary.getTestsuiteName() + StringConstants.UNDERSCORE 
+                    + summary.getTestsuiteStartTime().getTime();
         }
 
         /**

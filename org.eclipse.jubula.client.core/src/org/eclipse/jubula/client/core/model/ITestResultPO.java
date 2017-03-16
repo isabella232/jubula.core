@@ -341,4 +341,14 @@ public interface ITestResultPO {
      * @return gets the complete list of {@link ITestResultAdditionPO}
      */
     public List<ITestResultAdditionPO> getTestResultAdditions();
+    
+    /**
+     * @param isJUnitTestSuite wether a TestCase should be handeled as a TestSuite in JUnit
+     */
+    public void setIsJUnitSuite(boolean isJUnitTestSuite);
+    
+    /**
+     * @return a boolean to determine wether a TestCase should be handeled as a TestSuite in JUnit
+     */
+    public boolean getIsJUnitSuite();
 }

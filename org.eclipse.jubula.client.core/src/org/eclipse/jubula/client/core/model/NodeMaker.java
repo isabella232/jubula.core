@@ -407,6 +407,17 @@ public abstract class NodeMaker {
             String commandLineText) {
         return new TestResultAdditionPO(commandLineText);
     }
+    
+    
+    /**
+     * creates a new instance of {@link TestResultAdditionPO}
+     * @param isJunitTestSuite boolean ofr determining wether the Testcase is to be used as a JUnitTestSuite
+     * @return new instance of {@link TestResultAdditionPO} 
+     */
+    public static ITestResultAdditionPO creaTestResultAdditionPO(
+            boolean isJunitTestSuite) {
+        return new TestResultAdditionPO(isJunitTestSuite);
+    }
 
     /**
      * factory method to replace constructor

@@ -160,6 +160,9 @@ abstract class NodePO implements INodePO {
     /** string for description */
     private String m_description;
 
+    /** */
+    private boolean m_isJUnitSuite;
+    
     /**
      * constructor for a node with a pre-existing GUID
      * @param name of the node
@@ -872,5 +875,21 @@ abstract class NodePO implements INodePO {
     public void goingToBeDeleted(EntityManager sess) {
         removeNodeChildren(sess);
         removeTrackChildren(sess);
+    }
+
+    /**
+     * @return return wether the Node acts as a JUnit testsuite
+     */
+    @Basic
+    @Column(name = "JUNITTESTSUITE")
+    public boolean isJUnitTestSuite() {
+        return m_isJUnitSuite;
+    }
+    
+    /**
+     * @param isJUnitSuite true = node is viewed as a testsuite
+     */
+    public void setJUnitTestSuite(boolean isJUnitSuite) {
+        m_isJUnitSuite = isJUnitSuite;
     }
 }

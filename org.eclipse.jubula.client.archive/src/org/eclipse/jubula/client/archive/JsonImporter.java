@@ -1651,6 +1651,7 @@ public class JsonImporter {
         exec.setTaskId(dto.getTaskId());
         exec.setActive(dto.isActive());
         exec.setDataFile(dto.getDatafile());
+        exec.setJUnitTestSuite(dto.isJunitSuite());
         if (dto.getReferencedTestData() != null) {
             String referencedDataName = dto.getReferencedTestData();
             for (IParameterInterfacePO testDataCube 

@@ -21,8 +21,12 @@ public interface ITestResultAdditionPO {
      */
     public static enum TYPE {
         /** output and error log */
-        OUT_AND_ERR
+        OUT_AND_ERR,
+        /** is this a JUNIT testsuite*/
+        JUNIT_TEST_SUITE;
     }
+    
+    
     /**
      * only for Persistence (JPA / EclipseLink)
      * @return Returns the id.

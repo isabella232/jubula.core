@@ -139,6 +139,12 @@ class TestResultPO implements ITestResultPO {
     private String m_taskId;
     
     /**
+     * the boolean value to decide wether a TestCase
+     * should be handeled as a TestSuite in JUnit
+     */
+    private boolean m_isJUnitTestSuite;
+    
+    /**
      * <code>m_omHeuristicEquivalence</code>
      */
     private double m_omHeuristicEquivalence = -1.0d;
@@ -781,5 +787,39 @@ class TestResultPO implements ITestResultPO {
      */
     public void addAdditon(ITestResultAdditionPO addition) {
         m_additions.add(addition);
+    }
+
+    @Override
+    public void setIsJUnitSuite(boolean isJUnitTestSuite) {
+        if (!isJUnitTestSuite) {
+            for (ITestResultAdditionPO iTestResultAdditionPO : m_additions) {
+                if (iTestResultAdditionPO.getType().
+                        equals(ITestResultAdditionPO.TYPE.JUNIT_TEST_SUITE)) {
+                    m_additions.remove(iTestResultAdditionPO);
+                }
+            }
+        } else if (isJUnitTestSuite) {
+            for (ITestResultAdditionPO iTestResultAdditionPO : m_additions) {
+                if (iTestResultAdditionPO.getType().
+                        equals(ITestResultAdditionPO.TYPE.JUNIT_TEST_SUITE)) {
+                    m_additions.remove(iTestResultAdditionPO);
+                }
+            }
+            m_additions.add(new TestResultAdditionPO(isJUnitTestSuite));
+        }
+    }
+
+    /** 
+     * @return wether the testcase is to be treated as a JUnitTestsuite
+     */
+    @Transient
+    public boolean getIsJUnitSuite() {
+        for (ITestResultAdditionPO iTestResultAdditionPO : m_additions) {
+            if (iTestResultAdditionPO.getType().
+                    equals(ITestResultAdditionPO.TYPE.JUNIT_TEST_SUITE)) {
+                return (boolean)iTestResultAdditionPO.getData();
+            }
+        }
+        return false;
     }
 }

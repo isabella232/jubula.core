@@ -145,6 +145,13 @@ public class TestResultNode {
 
     /** the Component Name type for this result node */
     private String m_componentType;
+    
+    /**
+     * wether the Node acts as a JUnit testsuite
+     * true = this testResultNode wll be used as a testsuite
+     * false = testResultNode is treated as the kind of node it is normally
+     */
+    private boolean m_isJunitTestSuite;
 
     /**
      * <code>m_resultNodeList</code> childList
@@ -218,6 +225,7 @@ public class TestResultNode {
         m_status = NOT_YET_TESTED;
         m_event = null;
         m_hasBackingNode = hasBackingNode;
+        m_isJunitTestSuite = node.isJUnitTestSuite();
     }
     
     
@@ -256,6 +264,7 @@ public class TestResultNode {
         m_event = null;
         m_hasBackingNode = true;
         m_taskId = NodePropertyTester.getTaskIdforNode(node);
+        m_isJunitTestSuite = node.isJUnitTestSuite();
     }
 
     /**
@@ -788,5 +797,21 @@ public class TestResultNode {
     public void removeChildren() {
         m_resultNodeList.clear();
         m_childIndex = -1;
+    }
+
+    /**
+     * @return wether the Node acts as a JUnit testsuite
+     */
+    public boolean isJunitTestSuite() {
+        return m_isJunitTestSuite;
+    }
+
+
+    /**
+     * @param isJunitTestSuite wether the Node acts as a JUnit testsuite
+     * true = the Node is used as a JUnitTestSuite
+     */
+    public void setJunitTestSuite(boolean isJunitTestSuite) {
+        m_isJunitTestSuite = isJunitTestSuite;
     }
 }

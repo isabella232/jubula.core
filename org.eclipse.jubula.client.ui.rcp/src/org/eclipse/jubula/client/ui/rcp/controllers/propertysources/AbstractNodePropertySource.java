@@ -400,6 +400,7 @@ public abstract class AbstractNodePropertySource
         }
         return cache;
     }
+    
 
     /**
      * Class to control the element name.

@@ -47,7 +47,7 @@ public class NodeDTO {
     /** */
     private String m_name, m_comment, m_uuid, m_taskId, m_description;
     /** */
-    private boolean m_generated, m_active;
+    private boolean m_generated, m_active, m_isJunitSuite;
     /** */
     private SortedMap<Long, String> m_trackedModifications =
             new TreeMap<Long, String>();
@@ -67,6 +67,7 @@ public class NodeDTO {
         this.setActive(node.isActive());
         this.setTaskId(node.getTaskId());
         this.setTrackedModifications(node.getTrackedChanges());
+        this.setJunitSuite(node.isJUnitTestSuite());
     }
 
     /**
@@ -210,5 +211,20 @@ public class NodeDTO {
      */
     public void addNode(NodeDTO node) {
         this.m_nodes.add(node);
+    }
+
+    /**
+     * @return boolean
+     */
+    @JsonProperty("isJunitSuite")
+    public boolean isJunitSuite() {
+        return m_isJunitSuite;
+    }
+
+    /**
+     * @param isJunitSuite boolean value
+     */
+    public void setJunitSuite(boolean isJunitSuite) {
+        m_isJunitSuite = isJunitSuite;
     }
 }

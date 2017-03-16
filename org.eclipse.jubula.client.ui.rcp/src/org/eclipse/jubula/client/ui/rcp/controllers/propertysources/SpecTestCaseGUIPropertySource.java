@@ -192,6 +192,7 @@ public class SpecTestCaseGUIPropertySource
 
         initTrackedChangesPropDescriptor();
     }
+       
 
     /**
      * Initializes the parameter property descriptors, if needed, and adds

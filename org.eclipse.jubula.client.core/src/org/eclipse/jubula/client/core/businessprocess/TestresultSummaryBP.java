@@ -330,6 +330,8 @@ public class TestresultSummaryBP {
                     resultNode.getOmHeuristicEquivalence());
         } else if (node instanceof ITestCasePO) {
             keyword.setInternalKeywordType(TYPE_TEST_CASE);
+            //setting the JUnitsuite
+            keyword.setIsJUnitSuite(node.isJUnitTestSuite());
         } else if (node instanceof ITestSuitePO) {
             keyword.setInternalKeywordType(TYPE_TEST_SUITE);
         } else if (node instanceof ICommentPO) {

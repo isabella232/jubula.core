@@ -231,6 +231,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     createdNode.setResult(result.getInternalKeywordStatus(), 
                             generateTestErrorEvent(result));
                     createdNode.setScreenshot(result.getImage());
+                    createdNode.setJunitTestSuite(result.getIsJUnitSuite());
                     setAdditionsToTestResultNode(createdNode, result);
                     createdNode.setTimestamp(result.getTimestamp());
                     createdNode.setOmHeuristicEquivalence(result
@@ -274,6 +275,10 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
                     if (data instanceof String) {
                         createdNode.setCommandLog((String) data);
                     }
+                }
+                if (addition.getType().equals(ITestResultAdditionPO.
+                        TYPE.JUNIT_TEST_SUITE)) {
+                    createdNode.setJunitTestSuite(true);
                 }
             }
         }

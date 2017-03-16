@@ -28,6 +28,7 @@
         <module>../org.eclipse.jubula.client.api.converter.ui</module>
         <module>../org.eclipse.jubula.client.api.converter.annotations</module>
         <module>../org.eclipse.jubula.client.core</module>
+        <module>../org.eclipse.jubula.client.core.exporter.junit</module>
         <module>../org.eclipse.jubula.client.ui</module>
         <module>../org.eclipse.jubula.client.stats</module>
         <module>../org.eclipse.jubula.mylyn</module>

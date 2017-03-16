@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
@@ -25,7 +26,6 @@ import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
-import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.contentassist.TestDataCubeRefContentProposalProvider;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ContentAssistedTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
@@ -37,31 +37,25 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.ParameterValueLab
 import org.eclipse.jubula.client.ui.rcp.validator.TestDataCubeReferenceValidator;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedText.IValidator;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ParamValueSet;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
-
 /**
- * This class is the PropertySource of an ExecTestCase.
- * Its used to display and edit the properties in the Properties View.
+ * This class is the PropertySource of an ExecTestCase. Its used to display and
+ * edit the properties in the Properties View.
+ * 
  * @author BREDEX GmbH
  * @created 23.02.2005
  */
 public class ExecTestCaseGUIPropertySource extends 
     SpecTestCaseGUIPropertySource {
 
-    /** Image for original Data */ 
-    public static final Image ORIGINAL_DATA_IMAGE = 
-        IconConstants.ORIGINAL_DATA_IMAGE;
-       
-    /** Image for overwritten Data */ 
-    public static final Image OVERWRITTEN_DATA_IMAGE = 
-        IconConstants.OVERWRITTEN_DATA_IMAGE;
-   
     /** Constant for the String Specification Name */
     public static final String P_SPECNAME_DISPLAY_NAME =
         Messages.ExecTestCaseGUIPropertySourceSpecificationName;
@@ -89,6 +83,16 @@ public class ExecTestCaseGUIPropertySource extends
     /** cached property descriptors for parameters */
     private List<IPropertyDescriptor> m_paramPropDescList = 
         new ArrayList<IPropertyDescriptor>();
+
+    /**
+     * ComboBox for the boolean values that determine if a TestCase is handeled as a JUnit TestSuite by the report generation
+     */
+    private ComboBoxPropertyDescriptor m_comBoxJUnitTestSuite;
+
+    /**
+     * 
+     */
+    private boolean m_isTestSuite;
     
     /**
      * Constructor
@@ -112,7 +116,7 @@ public class ExecTestCaseGUIPropertySource extends
                     new ExecNameController(), P_REFERNCE_DISPLAY_NAME);
         }
         addPropertyDescriptor(m_namePropDesc);
-        
+
         // Specification Name
         if (m_specNamePropDesc == null) {
             JBPropertyDescriptor propDes = new JBPropertyDescriptor(
@@ -130,18 +134,17 @@ public class ExecTestCaseGUIPropertySource extends
         addPropertyDescriptor(m_commentPropDesc);
         // Task ID
         if (getTaskIdPropDesc() == null) {
-            JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
-                new ReadOnlyTaskIdController(),
-                org.eclipse.jubula.client.ui.i18n.Messages
-                    .AbstractGuiNodePropertySourceTaskId);
-            taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
-            setTaskIdPropDesc(taskIdPropDesc);
+            createJPropertyDescriptor();
         }
         addPropertyDescriptor(getTaskIdPropDesc());
         
         // Data Source
         addPropertyDescriptor(getDataSourcePropertyDescr(
                 new ExecTestCaseTestDataSourceController(this)));
+        
+        //JUnitTestSuite
+        final JUnitTestSuiteController jsC = new JUnitTestSuiteController();
+        createJUnitComboBox(jsC);
         
         // External data file
         if (m_extDataPropDesc == null) {
@@ -177,12 +180,47 @@ public class ExecTestCaseGUIPropertySource extends
         // Parameters
         addPropertyDescriptor(createParamDescriptors());
     }
-    
+
+    /**
+     * Property Descriptor for the Task ID
+     */
+    private void createJPropertyDescriptor() {
+        JBPropertyDescriptor taskIdPropDesc = 
+                new JBPropertyDescriptor(new ReadOnlyTaskIdController(),
+                org.eclipse.jubula.client.ui.i18n.
+                Messages.AbstractGuiNodePropertySourceTaskId);
+        taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());
+        setTaskIdPropDesc(taskIdPropDesc);
+    }
+
+    /**
+     * @param jsC instance of {@link JUnitTestSuiteController}
+     */
+    private void createJUnitComboBox(final JUnitTestSuiteController jsC) {
+        m_comBoxJUnitTestSuite = new ComboBoxPropertyDescriptor(jsC,
+                Messages.SpecTestCaseGUIPropertySourceJUnitTestSuite,
+                jsC.getLabelList());
+        addPropertyDescriptor(m_comBoxJUnitTestSuite);
+        m_comBoxJUnitTestSuite.setLabelProvider(new LabelProvider() {
+            public String getText(Object element) {
+                if (element instanceof Integer) {
+                    if (((Integer) element).intValue() == -1) {
+                        return Boolean.toString(false);
+                    }
+                    return jsC.getLabelList()[((Integer) element)];
+                }
+                Assert.notReached(Messages.WrongAUT + StringConstants.DOT);
+                return String.valueOf(element);
+            }
+        });
+
+    }
+
     /**
      * 
      * @return a List of PropertyDescriptors of parameters.
      */
-    protected List< IPropertyDescriptor > createParamDescriptors() {
+    protected List<IPropertyDescriptor> createParamDescriptors() {
         if (m_paramPropDescList.isEmpty()) {
             PropertyDescriptor propDes;
             //      init Parameters
@@ -210,9 +248,67 @@ public class ExecTestCaseGUIPropertySource extends
 
         return m_paramPropDescList;
     }
-    
+
     /**
-     * Class to control the name of the depending SpecTestCasePO. 
+     * @author marcelk
+     *
+     */
+    protected class JUnitTestSuiteController 
+        extends AbstractPropertyController {
+
+        /**
+         * the dropdownlist that will be displayed
+         */
+        @SuppressWarnings("nls")
+        private String m_labelList[] = { "false", "true" };
+
+        @Override
+        public boolean setProperty(Object value) {
+            if (value instanceof Integer) {
+                Integer integer = (Integer) value;
+                if (integer.intValue() == 0 || integer.intValue() == 1) {
+                    boolean isJUnitTestSuite = Boolean.
+                            valueOf(m_labelList[integer.intValue()]);
+                    getPoNode().setJUnitTestSuite(isJUnitTestSuite);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        @Override
+        public Object getProperty() {
+            Integer labelIDs = getLabelIDs();
+            return labelIDs;
+        }
+
+        /**
+         * @return List of potential
+         */
+        public String[] getLabelList() {
+            return m_labelList;
+        }
+
+        /**
+         * @return ID
+         */
+        Integer getLabelIDs() {
+            Boolean boolJUnitSuite = getPoNode().isJUnitTestSuite();
+            int autListLength = m_labelList.length;
+            for (int i = 0; i < autListLength; i++) {
+                if (Boolean.parseBoolean(m_labelList[i]) 
+                        == boolJUnitSuite.booleanValue()) {
+                    return Integer.valueOf(i);
+                }
+            }
+            return new Integer(0);
+        }
+    }
+
+    /**
+     * Class to control the name of the depending SpecTestCasePO.
+     * 
      * @author BREDEX GmbH
      * @created 23.02.2005
      */
@@ -233,8 +329,6 @@ public class ExecTestCaseGUIPropertySource extends
             if (exTc.getSpecTestCase() != null) {
                 return exTc.getSpecTestCase().getName(); 
             }
-            
-            // FIXME zeb Provide an appropriate display string
             return StringConstants.EMPTY;
         }
         
@@ -348,7 +442,7 @@ public class ExecTestCaseGUIPropertySource extends
             return getUserChoosableValues().toArray(
                     new String[getUserChoosableValues().size()]);
         }
-        
+
         /**
          * {@inheritDoc}
          */
@@ -356,9 +450,8 @@ public class ExecTestCaseGUIPropertySource extends
             if (getPoNode() instanceof IParamNodePO) {
                 IParamNodePO node = (IParamNodePO)getPoNode();
                 if (node instanceof IExecTestCasePO) {
-                    IExecTestCasePO exec = (IExecTestCasePO)node;
-                    int index = Integer.valueOf(
-                            String.valueOf(value));
+                    IExecTestCasePO exec = (IExecTestCasePO) node;
+                    int index = Integer.valueOf(String.valueOf(value));
                     if (index >= 0) {
                         final String newDataSource = 
                             getUserChoosableValues().get(index);
@@ -382,5 +475,35 @@ public class ExecTestCaseGUIPropertySource extends
             }
             return false;
         }
+    }
+
+    /**
+     * @return the value for determining wether the testcase is viewed as a
+     *         testsuite
+     */
+    public boolean getIsTestSuite() {
+        return m_isTestSuite;
+    }
+
+    /**
+     * @param isTestSuite boolean value that determines wether a TestCase is to be handeled as a TestSuite
+     */
+    public void setTestSuite(boolean isTestSuite) {
+        m_isTestSuite = isTestSuite;
+    }
+
+    /**
+     * @return JUnitComboBox
+     */
+    public ComboBoxPropertyDescriptor getComBoxJUnitTestSuite() {
+        return m_comBoxJUnitTestSuite;
+    }
+
+    /**
+     * @param comBoxJUnitTestSuite a combobox
+     */
+    public void setComBoxJUnitTestSuite(
+            ComboBoxPropertyDescriptor comBoxJUnitTestSuite) {
+        this.m_comBoxJUnitTestSuite = comBoxJUnitTestSuite;
     }
 }

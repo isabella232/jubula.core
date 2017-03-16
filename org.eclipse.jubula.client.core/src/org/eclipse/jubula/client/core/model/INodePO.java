@@ -126,8 +126,17 @@ public interface INodePO extends ITimestampPO {
      */
     public Iterator<INodePO> getAllNodeIter();
 
+    
+    /**
+     * @return boolean that shows wether a testcase is used as a JUnitTestcase
+     */
+    public abstract boolean isJUnitTestSuite();
 
-
+    /**
+     * @param isJUnitTestsuite sets the value of the m_isJUnitTestSuite property 
+     */
+    public abstract void setJUnitTestSuite(boolean isJUnitTestsuite);
+    
     /**
      * @return size of nodeList
      */

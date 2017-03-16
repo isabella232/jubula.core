@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.event.EventListenerList;
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.dom4j.Document;
@@ -84,6 +83,7 @@ import org.eclipse.jubula.client.core.model.TestResult;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
+import org.eclipse.jubula.client.core.testresult.export.ExporterRegistry;
 import org.eclipse.jubula.client.core.utils.NodeNameUtil;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
 import org.eclipse.jubula.client.internal.BaseConnection;
@@ -1289,7 +1289,11 @@ public class ClientTestImpl implements IClientTest {
             } else {
                 generator = new CompleteXMLReportGenerator(result);
             }
-            writeReport(generator);
+            String filename = createFilename(result);
+            writeReport(generator, filename);
+            
+            ExporterRegistry.exportTestResult(result, m_logPath,
+                    filename);
         }
     }
 
@@ -1298,15 +1302,15 @@ public class ClientTestImpl implements IClientTest {
      * 
      * @param generator
      *            generates the XML that will be written to disk.
+     * @param filenameGenerated 
      */
-    private void writeReport(AbstractXMLReportGenerator generator) {
+    private void writeReport(AbstractXMLReportGenerator generator,
+            String filenameGenerated) {
         Document document = generator.generateXmlReport();
         String fileName;
-        if (StringUtils.isBlank(m_fileName)) {
-            fileName = createFilename(generator.getTestResult());  
-        } else {
-            fileName = m_logPath + StringConstants.SLASH + m_fileName;
-        }
+        fileName = m_logPath + StringConstants.SLASH 
+                + filenameGenerated;  
+
         try {
             new FileXMLReportWriter(fileName).write(document);
         } catch (IOException e) {
@@ -1319,7 +1323,10 @@ public class ClientTestImpl implements IClientTest {
      * @return a suitable filename for the given test result model.
      */
     private String createFilename(ITestResult result) {
-        StringBuilder sb = new StringBuilder(m_logPath);
+        if (StringUtils.isNotBlank(m_fileName)) {
+            return m_fileName;
+        }
+        StringBuilder sb = new StringBuilder();
         sb.append(StringConstants.SLASH);
         sb.append(Messages.ExecutionLog);
         sb.append(StringConstants.MINUS);
@@ -1336,10 +1343,11 @@ public class ClientTestImpl implements IClientTest {
             sb.append(TEST_FAILED);
         }
 
-        if (new File(sb.toString() + XML_FILE_EXT).exists()) {
+        if (new File(m_logPath, sb.toString() + XML_FILE_EXT).exists()) {
             int postfix = 1;
             sb.append(StringConstants.MINUS);
-            while (new File(sb.toString() + postfix + XML_FILE_EXT).exists()) {
+            while (new File(m_logPath, sb.toString()
+                    + postfix + XML_FILE_EXT).exists()) {
                 postfix++;
             }
             sb.append(postfix);

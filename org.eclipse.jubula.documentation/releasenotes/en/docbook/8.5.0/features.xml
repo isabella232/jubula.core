@@ -13,6 +13,19 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
 <para>
+ <emphasis role="strong">Export JUnit reports</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        When generating TestResult XML/HTML files from Test Results, the generated files
+        will now include an additional lightweight JUnit report.
+        You can now define referenced Test Cases as TestSuites for the generation of the
+        JUnit report with a newly added parameter called "JUnitTestSuite".
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
  <emphasis role="strong">Deletion with Orphans</emphasis>
 </para>
 <itemizedlist>

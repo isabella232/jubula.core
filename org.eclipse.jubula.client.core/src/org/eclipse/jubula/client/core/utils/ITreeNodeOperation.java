@@ -36,7 +36,7 @@ public interface ITreeNodeOperation<T> {
      * @param node
      *            The node
      * @param alreadyVisited
-     *              true if this node has be visited by the traverser before
+     *              true if this node has been visited by the traverser before
      * @return true if the children of this node shall be visited, false if this
      *              branch shall be cut
      */
@@ -54,7 +54,7 @@ public interface ITreeNodeOperation<T> {
      * @param node
      *            The node
      * @param alreadyVisited
-     *              true if this node has be visited by the traverser before
+     *              true if this node has been visited by the traverser before
      */
     public void postOperate(ITreeTraverserContext<T> ctx, T parent,
         T node, boolean alreadyVisited);

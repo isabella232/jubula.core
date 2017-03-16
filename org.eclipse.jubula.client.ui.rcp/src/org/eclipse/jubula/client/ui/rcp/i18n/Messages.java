@@ -19,6 +19,7 @@ import org.eclipse.osgi.util.NLS;
 public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.rcp.i18n.messages"; //$NON-NLS-1$
 
+
     public static String AbstractGuiNodePropertySourceComment;
     public static String Action;
     public static String ActionBuilderExportAll;
@@ -801,6 +802,7 @@ public class Messages extends NLS {
     public static String SimpleSearchPageSearchForGroupHeader;
     public static String SimpleSearchPageSearchInGroupHeader;
     public static String SpecTestCaseGUIPropertySourceDataSource;
+    public static String SpecTestCaseGUIPropertySourceJUnitTestSuite;
     public static String SpecTestCaseGUIPropertySourceLockedParameters;
     public static String SpecTestCaseGUIPropertySourceParameter;
     public static String SpecTestCaseGUIPropertySourceTestCaseFileName;

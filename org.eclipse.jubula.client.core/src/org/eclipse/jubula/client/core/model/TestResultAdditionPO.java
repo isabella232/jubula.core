@@ -57,6 +57,14 @@ class TestResultAdditionPO implements ITestResultAdditionPO {
     }
     
     /**
+     * @param isJunitTestSuite dummy
+     */
+    TestResultAdditionPO(Boolean isJunitTestSuite) {
+        setData(isJunitTestSuite);
+        setType(TYPE.JUNIT_TEST_SUITE);
+    }
+    
+    /**
      * 
      * only for Persistence (JPA / EclipseLink)
      * @return Returns the id.
