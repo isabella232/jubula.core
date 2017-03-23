@@ -14,7 +14,7 @@ import java.util.Map;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.State;
+import org.eclipse.jubula.client.core.commands.SelectedWindowCommand;
 import org.eclipse.jubula.client.core.communication.AUTConnection;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.ui.rcp.utils.HTMLAutWindowManager;
@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class OMChooseWindow extends AbstractHandler implements IElementUpdater {
+    /** Timeout for the response */
+    private static final int TIMEOUT = 3000;
     /** name of the parameter used by the client */
     private static final String WINDOW_TITLE_PARAMETER = "org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.parameter.openWindow"; //$NON-NLS-1$
-    /** */
-    private static final String LAST_SELECTED_WINDOW = "org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.state.lastSelectedWindow"; //$NON-NLS-1$
     /** The logger */
     private static final Logger LOG = 
         LoggerFactory.getLogger(OMChooseWindow.class);
@@ -42,20 +42,17 @@ public class OMChooseWindow extends AbstractHandler implements IElementUpdater {
      * {@inheritDoc}
      */
     public Object execute(ExecutionEvent event) {
-        State lastSelectedWindowState = 
-                event.getCommand().getState(LAST_SELECTED_WINDOW);
         Map map = event.getParameters();
         String name = (String) map.get(WINDOW_TITLE_PARAMETER);
-        if (lastSelectedWindowState != null && name == null) {
-            name = (String) lastSelectedWindowState.getValue();
+        if (name == null) {
+            name = HTMLAutWindowManager.getInstance().getLastSelectedWindow();
         }
-        lastSelectedWindowState.setValue(name);
-        HTMLAutWindowManager.getInstance().setLastSelectedWindow(name);
         OMSelectWindowMessage message = new OMSelectWindowMessage();
         message.setWindowTitle(name);
         try {
             if (name != null) {                
-                AUTConnection.getInstance().send(message);
+                AUTConnection.getInstance().request(message,
+                        new SelectedWindowCommand(), TIMEOUT);
             }
         } catch (NotConnectedException nce) {
             if (LOG.isErrorEnabled()) {

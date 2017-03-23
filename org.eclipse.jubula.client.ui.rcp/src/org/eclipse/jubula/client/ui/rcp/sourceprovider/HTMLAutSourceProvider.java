@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.utils.HTMLAutWindowManager;
+import org.eclipse.jubula.communication.internal.message.html.OMSelWinResponseMessage;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.ISources;
@@ -138,6 +139,11 @@ public class HTMLAutSourceProvider extends AbstractJBSourceProvider implements
             listOfTitles.add(windowTitles[i]);
         }
         gdFireSourceChanged(ISources.WORKBENCH, WINDOW_TITLES, listOfTitles);
+    }
+
+    /** {@inheritDoc} */
+    public void handleNewWindowSelected(OMSelWinResponseMessage msg) {
+        // we aren't interested yet...
     }
 
 }

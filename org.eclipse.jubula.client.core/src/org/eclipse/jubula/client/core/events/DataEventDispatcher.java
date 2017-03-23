@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage.IDataModifiedLi
 import org.eclipse.jubula.client.core.persistence.GeneralStorage.IReloadedSessionListener;
 import org.eclipse.jubula.client.core.utils.IGenericListener;
 import org.eclipse.jubula.client.core.utils.ListenerManager;
+import org.eclipse.jubula.communication.internal.message.html.OMSelWinResponseMessage;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.IWorkbenchPart;
@@ -254,6 +255,12 @@ public class DataEventDispatcher implements IReloadedSessionListener,
          * @param windowTitles identification of the different windows
          */
         public void handleAUTChanged(String[] windowTitles);
+
+        /**
+         * Notifies the listener that a new window has been selected
+         * @param msg the response from the AUT
+         */
+        public void handleNewWindowSelected(OMSelWinResponseMessage msg);
     }
     
     /** to notify clients about modification of Record Mode */
@@ -1355,7 +1362,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             }
         }
     }
-    
+
     /**
      * @param l listener for OM Mode aut
      * @param guiMode
@@ -1393,7 +1400,24 @@ public class DataEventDispatcher implements IReloadedSessionListener,
             }
         }
     }
-    
+
+    /**
+     * notifies listeners about switching to a new window
+     * @param msg the response message from the AUT containing the title
+     *        and an error code
+     */
+    public void fireWindowTitleChanged(OMSelWinResponseMessage msg) {
+        final Set<IOMWindowsListener> stableListeners = 
+                new HashSet<IOMWindowsListener>(m_omWindowListeners);
+        for (IOMWindowsListener l : stableListeners) {
+            try {
+                l.handleNewWindowSelected(msg);
+            } catch (Throwable t) {
+                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
+            }
+        }
+    }
+
     /**
      * @param l listener for OM Mode windows (HTML)
      * @param guiMode

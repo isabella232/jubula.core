@@ -395,6 +395,10 @@ public class MessageIDs {
     public static final Integer E_COMMUNICATOR_CONNECTION = new Integer(6016);
     /** if there is no command for receiving response */
     public static final Integer E_NO_RECEIVING_COMMAND = new Integer(6017);
+    /** if could not activate the window during OM */
+    public static final Integer E_OM_NO_SUCH_WIN = new Integer(6018);
+    /** if switching windows failed during OM */
+    public static final Integer E_OM_WINDOW_SWITCH_FAILED = new Integer(6019);
     // -- RUNTIME ERROR IDs -------------------------------------------------
     /** if an editor cannot openend */
     public static final Integer E_CANNOT_OPEN_EDITOR = new Integer(7000);
@@ -816,6 +820,8 @@ public class MessageIDs {
         messageMap.put(E_MESSAGE_REQUEST, e, "ErrorMessage.MESSAGE_REQUEST", null); //$NON-NLS-1$
         messageMap.put(E_COMMUNICATOR_CONNECTION, e, "ErrorMessage.COMMUNICATOR_CONNECTION", null); //$NON-NLS-1$
         messageMap.put(E_NO_RECEIVING_COMMAND, e, "ErrorMessage.NO_RECEIVING_COMMAND", null); //$NON-NLS-1$
+        messageMap.put(E_OM_NO_SUCH_WIN, e, "ErrorMessage.OM_NO_SUCH_WIN", null); //$NON-NLS-1$
+        messageMap.put(E_OM_WINDOW_SWITCH_FAILED, e, "ErrorMessage.OM_WINDOWSWITCH_FAILED", null); //$NON-NLS-1$
     }
 
     /**

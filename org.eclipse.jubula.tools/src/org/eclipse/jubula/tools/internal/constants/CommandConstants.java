@@ -254,6 +254,8 @@ public abstract class CommandConstants {
     public static final String HTML_GET_WINDOW_TITLES_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.WindowTitlesChangedCommand"; //$NON-NLS-1$
     /** AUT Server (HTML) - in OMM selection of a specific window for the OMM */
     public static final String HTML_OMM_SELECT_WINDOW_COMMAND = "com.bredexsw.jubula.rc.html.commands.OMSelectWindowCommand"; //$NON-NLS-1$
+    /** AUT Server (HTML) - in OMM selection of a specific window for the OMM, response */
+    public static final String HTML_OMM_SEL_WIN_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.SelectedWindowCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.javafx.JavaFXAUTServer" */
     public static final String AUT_JAVAFX_SERVER = "org.eclipse.jubula.rc.javafx.JavaFXAUTServer"; //$NON-NLS-1$
     /** ID of the JavaFX RC bundle */

@@ -12,6 +12,9 @@ package org.eclipse.jubula.client.ui.rcp.utils;
 
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IOMWindowsListener;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.communication.internal.message.html.OMSelWinResponseMessage;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 /**
  * The {@link HTMLAutWindowManager} tracks the open browser windows with their titles
  * @author BREDEX GmbH
@@ -55,7 +58,7 @@ public class HTMLAutWindowManager implements IOMWindowsListener {
      * {@inheritDoc}
      */
     public void handleAUTChanged(String[] windowTitles) {
-        m_windowTitles  = windowTitles;        
+        m_windowTitles  = windowTitles;
     }
     
     /**
@@ -72,5 +75,17 @@ public class HTMLAutWindowManager implements IOMWindowsListener {
      */
     public void setLastSelectedWindow(String lastSelectedWindowTitle) {
         this.m_lastSelectedWindow = lastSelectedWindowTitle;
-    }    
+    }
+
+    /** {@inheritDoc} */
+    public void handleNewWindowSelected(OMSelWinResponseMessage msg) {
+        m_lastSelectedWindow = msg.getTitle();
+        if (msg.getCode() == OMSelWinResponseMessage.NO_SUCH_WINDOW) {
+            ErrorHandlingUtil.createMessageDialog(MessageIDs.E_OM_NO_SUCH_WIN,
+                    new String[] {m_lastSelectedWindow}, null);
+        } else if (msg.getCode() == OMSelWinResponseMessage.UNEXPECTED_ERROR) {
+            ErrorHandlingUtil.createMessageDialog(
+                    MessageIDs.E_OM_WINDOW_SWITCH_FAILED);
+        }
+    }
 }

@@ -731,9 +731,6 @@
         name="Open Windows"
         optional="false"
         typeId="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.WindowTitle" />
-      <state
-        class="org.eclipse.core.commands.State"
-        id="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.state.lastSelectedWindow" />    
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
