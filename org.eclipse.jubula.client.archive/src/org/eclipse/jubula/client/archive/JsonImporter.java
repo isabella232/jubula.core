@@ -484,6 +484,7 @@ public class JsonImporter {
         con.setComment(dto.getComment());
         con.setTaskId(dto.getTaskId());
         con.setDescription(dto.getDescription());
+        con.setActive(dto.isActive());
         
         List<NodeDTO> nodes = dto.getNodes();
         
@@ -998,6 +999,7 @@ public class JsonImporter {
         whilePO.setComment(dto.getComment());
         whilePO.setTaskId(dto.getTaskId());
         whilePO.setDescription(dto.getDescription());
+        whilePO.setActive(dto.isActive());
 
         List<NodeDTO> nodes = dto.getNodes();
         if (nodes != null && nodes.size() == 2) {
@@ -1038,6 +1040,7 @@ public class JsonImporter {
         iteratePO.setComment(dto.getComment());
         iteratePO.setTaskId(dto.getTaskId());
         iteratePO.setDescription(dto.getDescription());
+        iteratePO.setActive(dto.isActive());
         
         iteratePO.setDataManager(createTDManager(iteratePO, dto.getTDManager(),
                 assignNewGuid));
