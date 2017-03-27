@@ -48,11 +48,11 @@ public class ComboParamValidator implements IParamValueValidator {
         if (m_values.length == 0) {
             return state;
         }
-
         StringBuilder evalBuilder = new StringBuilder();
         for (IParamValueToken token : tokens) {
             if (token instanceof RefToken 
-                    || token instanceof VariableToken) {
+                    || token instanceof VariableToken
+                    || token instanceof FunctionToken) {
                 // Since we don't want to evaluate the reference/variable, 
                 // we can't verify whether or not it creates a valid value.
                 // Just assume that the value is fine.
