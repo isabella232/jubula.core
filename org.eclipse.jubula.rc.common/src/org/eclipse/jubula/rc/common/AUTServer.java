@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.common;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -45,6 +46,7 @@ import org.eclipse.jubula.rc.common.listener.BaseAUTListener;
 import org.eclipse.jubula.rc.common.listener.IAutListenerAppender;
 import org.eclipse.jubula.rc.common.registration.AgentRegisterAut;
 import org.eclipse.jubula.rc.common.registration.IRegisterAut;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -174,6 +176,9 @@ public abstract class AUTServer {
     
     /** ClassLoader to load external (user-supplied) jars */
     private ClassLoader m_externalLoader = null;
+    
+    /** reference to the component at which an error occured */
+    private WeakReference<IComponent> m_errorComponent = null;
     
     /** 
      * private constructor instantiates the listeners
@@ -1349,5 +1354,19 @@ public abstract class AUTServer {
      */
     public ClassLoader getExternalLoader() {
         return m_externalLoader;
+    }
+
+    /**
+     * @return the reference to the component at which an error occured
+     */
+    public WeakReference<IComponent> getErrorComponent() {
+        return m_errorComponent;
+    }
+
+    /**
+     * @param errorComponent reference to the component at which an error occured
+     */
+    public void setErrorComponent(WeakReference<IComponent> errorComponent) {
+        m_errorComponent = errorComponent;
     }
 }

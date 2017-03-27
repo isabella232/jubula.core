@@ -44,6 +44,19 @@
   </listitem>
 </itemizedlist>
 <para>
+  <emphasis role="strong">Highlight components at which an error occures</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+     <para>
+       It is now possible to highlight the component at which an error occured in
+       the screenshot, that is being taken when an error occurs.
+       This will only happen if the corresponding checkbox in the
+       expert section of the AUT configuration window is selected.
+     </para>
+  </listitem>
+</itemizedlist>
+<para>
 <emphasis role="strong">Improved Replace Test Case References operation</emphasis>
 </para>
 <itemizedlist>

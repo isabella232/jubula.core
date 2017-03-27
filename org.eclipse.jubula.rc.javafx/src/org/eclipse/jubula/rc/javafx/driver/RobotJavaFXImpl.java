@@ -64,6 +64,7 @@ import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.PointUtil;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
@@ -635,7 +636,8 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
             }
         } else {
             final Node node = (Node) comp;
-            if (clickOp.isScrollToVisible()) {
+            if (clickOp != null 
+                    && clickOp.isScrollToVisible()) {
                 ensureComponentVisible(node);
             }
             bounds = EventThreadQueuerJavaFXImpl.invokeAndWait(
@@ -1128,6 +1130,11 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
         } finally {
             m_robot.mouseMove(origin.x, origin.y);
         }
+    }
+
+    @Override
+    public Rectangle getComponentBounds(IComponent component) {
+        return getComponentBounds(component.getRealComponent(), null);
     }
 
 }

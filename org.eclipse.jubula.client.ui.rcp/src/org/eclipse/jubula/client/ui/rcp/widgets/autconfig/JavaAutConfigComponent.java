@@ -116,6 +116,8 @@ public class JavaAutConfigComponent extends AutConfigComponent {
     private WidgetFocusListener m_focusListener;
     /** the the WidgetSelectionListener */
     private WidgetSelectionListener m_selectionListener;
+    /** Button to toggle the error highlighting of components */
+    private Button m_errorHighlightButton;
     
     /**
      * @param parent {@inheritDoc}
@@ -228,6 +230,7 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         m_execTextField.addModifyListener(modifyListener);
         m_execButton.addSelectionListener(selectionListener);
         m_monitoringCombo.addSelectionListener(selectionListener);
+        m_errorHighlightButton.addSelectionListener(selectionListener);
         
     }
 
@@ -433,6 +436,8 @@ public class JavaAutConfigComponent extends AutConfigComponent {
         m_activationMethodCombo.setSelectedObject(
                 ActivationMethod.getEnum(data
                         .get(AutConfigConstants.ACTIVATION_METHOD)));
+        m_errorHighlightButton.setSelection(Boolean.valueOf(
+                data.get(AutConfigConstants.ERROR_HIGHLIGHT)));
         
         String monitoringAgentId = data.get(
                 AutConfigConstants.MONITORING_AGENT_ID);
@@ -875,7 +880,13 @@ public class JavaAutConfigComponent extends AutConfigComponent {
             } else if (source.equals(m_monitoringCombo)) {
                 handleMonitoringComboEvent();
                 return;
-            } 
+            } else if (source.equals(m_errorHighlightButton)) {
+                boolean errorHighlightSelesctState = 
+                        m_errorHighlightButton.getSelection();
+                putConfigValue(AutConfigConstants.ERROR_HIGHLIGHT,
+                     Boolean.toString(errorHighlightSelesctState));
+                return;
+            }
 
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
                     + StringConstants.LEFT_PARENTHESIS + source 
@@ -995,8 +1006,23 @@ public class JavaAutConfigComponent extends AutConfigComponent {
                 MonitoringRegistry.getAllRegisteredMonitoringIds(), 
                 MonitoringRegistry.getAllRegisteredMonitoringNames(), true); 
         
+        createErrorHighlightButton(expertAreaComposite);
+        
         super.createExpertArea(expertAreaComposite);
        
+    }
+    
+    /**
+     * @param composite The parent composite
+     */
+    private void createErrorHighlightButton(Composite composite) {
+        m_errorHighlightButton = UIComponentHelper.
+                createToggleButton(composite, composite.getBorderWidth());
+        m_errorHighlightButton.setText(Messages.JubulaErrorHighlight);
+        m_errorHighlightButton.setTextDirection(SWT.LEFT);
+        m_errorHighlightButton.setSelection(false);
+        ControlDecorator.createInfo(m_errorHighlightButton,
+                Messages.JubulaErrorHighlightDetails, false);
     }
 
     /**

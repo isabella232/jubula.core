@@ -10,9 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.lang.ref.WeakReference;
 
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.Message;
@@ -20,6 +24,8 @@ import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotResponseMessage;
 import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
+import org.eclipse.jubula.rc.common.driver.RobotConfiguration;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.tools.internal.serialisation.SerializedImage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,11 +81,49 @@ public class TakeScreenshotCommand implements ICommand {
                 }
             }
         }
+        if (RobotConfiguration.getInstance().isErrorHighlighting()) {
+            WeakReference<IComponent> errorComponent = 
+                    AUTServer.getInstance().getErrorComponent();
+            if (errorComponent != null) {
+                try {
+                    highlightErrorComponent(errorComponent,
+                            robot, createScreenCapture);
+                } catch (RuntimeException e) {
+                    LOG.error("Highlighting component during screenshot failed", e); //$NON-NLS-1$
+                }
+            }
+        }
         
         final SerializedImage computedSerializeImage = SerializedImage
                 .computeSerializeImage(createScreenCapture);
         response.setScreenshot(computedSerializeImage);
         return response;
+    }
+
+    /**
+     * @param weakRefError weak reference to the component at which an error occured
+     * @param robot the robot
+     * @param screenCapture the screeenshot that was taken
+     */
+    private void highlightErrorComponent(
+            WeakReference<IComponent> weakRefError,
+            IRobot robot, BufferedImage screenCapture) {
+        IComponent errorComp = weakRefError.get();
+        IRobot roboter = robot;
+        if (errorComp != null) {
+            BufferedImage image = screenCapture;
+            Graphics2D graphic = image.createGraphics();
+            Color recColor = new Color(0, 128, 0);
+            graphic.setColor(recColor);
+            graphic.setStroke(new BasicStroke(3));
+            Rectangle recErrorComp = robot.getComponentBounds(errorComp);
+            if (recErrorComp != null) {
+                graphic.drawRect((int)recErrorComp.getX() - 2,
+                        (int)recErrorComp.getY() - 2,
+                        (int)recErrorComp.getWidth() + 2,
+                        (int)recErrorComp.getHeight() + 2);
+            }
+        }
     }
 
     /**

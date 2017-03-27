@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.commands;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 
 import org.apache.commons.lang.Validate;
@@ -29,7 +30,9 @@ import org.eclipse.jubula.rc.common.exception.MethodParamException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.exception.StepVerifyFailedException;
 import org.eclipse.jubula.rc.common.exception.UnsupportedComponentException;
+import org.eclipse.jubula.rc.common.tester.AbstractUITester;
 import org.eclipse.jubula.rc.common.tester.WidgetTester;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.tools.internal.constants.TimingConstantsServer;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
@@ -141,6 +144,10 @@ public class CapTestCommand implements ICommand {
                             timeout);
                     implClass = rcConfig.prepareImplementationClass(component,
                             component.getClass());
+                    if (implClass instanceof AbstractUITester) {
+                        saveErrorComponent(((AbstractUITester) implClass)
+                                .getComponent());
+                    }
                 }
              
             } else {
@@ -176,6 +183,18 @@ public class CapTestCommand implements ICommand {
         return implClass;
     }
     
+    /**
+     * @param componentAdapter the adapter for the component at which the error occured
+     */
+    private void saveErrorComponent(IComponent componentAdapter) {
+        if (componentAdapter != null) {
+            WeakReference<IComponent> errorCompRef =
+                    new WeakReference<IComponent>(
+                        componentAdapter);
+            AUTServer.getInstance().
+                setErrorComponent(errorCompRef);
+        }
+    }
     /**
      * Delay action on waiting for component
      * @param messageCap the CAP message data.
@@ -305,6 +324,7 @@ public class CapTestCommand implements ICommand {
      */
     public Message execute() {
         AUTServer autServer = AUTServer.getInstance();
+        autServer.setErrorComponent(null);
         final int oldMode = autServer.getMode();
         TestErrorEvent event = null;
         CAPTestResponseMessage response = new CAPTestResponseMessage();

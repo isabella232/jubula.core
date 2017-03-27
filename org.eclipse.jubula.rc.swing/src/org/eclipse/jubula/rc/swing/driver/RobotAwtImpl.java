@@ -51,6 +51,7 @@ import org.eclipse.jubula.rc.common.driver.RobotTiming;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.PointUtil;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
@@ -936,6 +937,15 @@ public class RobotAwtImpl implements IRobot<Rectangle> {
         } finally {
             m_robot.mouseMove(origin.x, origin.y);
         }
+    }
+
+    /** {@inheritDoc} */
+    public Rectangle getComponentBounds(IComponent component) {
+        Component realComponent = (Component) component.getRealComponent();
+        Point screenLocation = realComponent.getLocationOnScreen();
+        Rectangle rec = realComponent.getBounds();
+        rec.setLocation(screenLocation.x, screenLocation.y);
+        return rec;
     }
 
 }

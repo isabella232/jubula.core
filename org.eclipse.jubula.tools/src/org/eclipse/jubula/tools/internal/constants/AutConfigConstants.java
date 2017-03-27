@@ -57,6 +57,8 @@ public class AutConfigConstants {
     public static final String AUT_TYPE = "AUT_TYPE"; //$NON-NLS-1$
     /** The key for the name of the executable file used to start the AUT. */
     public static final String EXECUTABLE = "EXECUTABLE"; //$NON-NLS-1$
+    /** The key for the name of property used to highlight error components during test execution. */
+    public static final String ERROR_HIGHLIGHT = "ERROR_HIGHLIGHTING"; //$NON-NLS-1$
     /** The key for the name of the Modern UI app used to start the AUT. */
     public static final String APP_NAME = "APP_NAME"; //$NON-NLS-1$
     /** The executable jar file of the AUT */

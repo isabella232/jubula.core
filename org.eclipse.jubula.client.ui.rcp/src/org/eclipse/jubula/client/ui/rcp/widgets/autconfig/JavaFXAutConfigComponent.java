@@ -88,6 +88,8 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
     private WidgetFocusListener m_focusListener;
     /** the the WidgetSelectionListener */
     private WidgetSelectionListener m_selectionListener;
+    /** GUI component */
+    private Button m_errorHighlightButton;
     
     /**
      * @param parent
@@ -177,6 +179,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_execTextField.addFocusListener(getFocusListener());
         m_execTextField.addModifyListener(modifyListener);
         m_execButton.addSelectionListener(selectionListener);
+        m_errorHighlightButton.addSelectionListener(selectionListener);
         m_monitoringCombo.addSelectionListener(selectionListener);
     }
 
@@ -199,6 +202,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_execTextField.removeFocusListener(getFocusListener());
         m_execTextField.removeModifyListener(modifyListener);
         m_execButton.removeSelectionListener(selectionListener);
+        m_errorHighlightButton.removeSelectionListener(selectionListener);
         m_monitoringCombo.removeSelectionListener(selectionListener);
     }
     
@@ -276,6 +280,8 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_activationMethodCombo.setSelectedObject(
                 ActivationMethod.getEnum(data
                         .get(AutConfigConstants.ACTIVATION_METHOD)));
+        m_errorHighlightButton.setSelection(Boolean.valueOf(
+                data.get(AutConfigConstants.ERROR_HIGHLIGHT)));
         
         String monitoringAgentId = data.get(
                 AutConfigConstants.MONITORING_AGENT_ID);
@@ -303,6 +309,21 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
             m_envTextArea.setText(StringUtils.defaultString(data
                     .get(AutConfigConstants.ENVIRONMENT)));
         }
+    }
+    
+    /**creates a Button to toggle wether or not the screenshot that
+     * is taken when an error at a component occures will be edited
+     * to highlight the component at which the error occured
+     * @param parent the composite the button is being addet to
+     */
+    public void createErrorHighlighting(Composite parent) {
+        m_errorHighlightButton = UIComponentHelper.
+                createToggleButton(parent, parent.getBorderWidth());
+        m_errorHighlightButton.setText(Messages.JubulaErrorHighlight);
+        m_errorHighlightButton.setTextDirection(SWT.LEFT);
+        m_errorHighlightButton.setSelection(false);
+        ControlDecorator.createInfo(m_errorHighlightButton,
+                Messages.JubulaErrorHighlightDetails, false);
     }
 
     /**
@@ -620,7 +641,12 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
             } else if (source.equals(m_monitoringCombo)) {
                 handleMonitoringComboEvent();
                 return;
-            } 
+            } else if (source.equals(m_errorHighlightButton)) {
+                putConfigValue(AutConfigConstants.ERROR_HIGHLIGHT,   
+                        Boolean.toString(
+                                m_errorHighlightButton.getSelection()));
+                return;
+            }
 
             Assert.notReached(Messages.EventActivatedByUnknownWidget 
                     + StringConstants.LEFT_PARENTHESIS + source 
@@ -701,6 +727,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
                 expertAreaComposite, 2, 
                 MonitoringRegistry.getAllRegisteredMonitoringIds(), 
                 MonitoringRegistry.getAllRegisteredMonitoringNames(), true); 
+        createErrorHighlighting(expertAreaComposite);
         
         super.createExpertArea(expertAreaComposite);
     }

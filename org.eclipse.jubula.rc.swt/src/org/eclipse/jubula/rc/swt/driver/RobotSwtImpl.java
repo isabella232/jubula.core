@@ -42,6 +42,7 @@ import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.util.LocalScreenshotUtil;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
@@ -1689,6 +1690,15 @@ public class RobotSwtImpl implements IRobot<Rectangle> {
                 return null;
             }
         });
+    }
+
+
+    /** {@inheritDoc} */
+    public java.awt.Rectangle getComponentBounds(IComponent component) {
+        Rectangle swtRec = getBounds((Widget) component.getRealComponent());
+        java.awt.Rectangle rectangle = new java.awt.Rectangle(
+                    swtRec.x, swtRec.y, swtRec.width, swtRec.height);
+        return rectangle;
     }
 
 }

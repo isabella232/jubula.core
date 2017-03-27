@@ -21,6 +21,9 @@ import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 public class InitTestExecutionMessage extends Message {
     /** default activation method */
     private String m_defaultActivationMethod;
+    /** wether to highlight the component at which an error occured
+     * when testing*/
+    private Boolean m_errorHighlighting;
 
     /** {@inheritDoc} */
     public String getCommandClass() {
@@ -38,5 +41,19 @@ public class InitTestExecutionMessage extends Message {
      */
     public void setDefaultActivationMethod(String defaultActivationMethod) {
         m_defaultActivationMethod = defaultActivationMethod;
+    }
+
+    /**
+     * @return boolean value to decide wether to highlight the component at which an error occured
+     * when testing*/
+    public Boolean isErrorHighlighting() {
+        return m_errorHighlighting;
+    }
+
+    /**
+     * @param getErrorHighlighting to decide wether to highlight the component at which an error occured
+     * when testing*/
+    public void setErrorHighlighting(Boolean getErrorHighlighting) {
+        this.m_errorHighlighting = getErrorHighlighting;
     }
 }

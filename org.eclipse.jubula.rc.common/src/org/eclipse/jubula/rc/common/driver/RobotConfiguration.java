@@ -24,6 +24,10 @@ public class RobotConfiguration {
     /** window activation method */
     private String m_activationMethod =
             ValueSets.AUTActivationMethod.none.rcValue();
+    /**
+     * wether to highlight erros that occur at a component
+     */
+    private Boolean m_errorHighlighting = false;
     
     /**
      * @return instance
@@ -39,9 +43,23 @@ public class RobotConfiguration {
         return m_activationMethod;
     }
     /**
+     * @return wether to highlight errors that occur when testing
+     * a component
+     */
+    public Boolean isErrorHighlighting() {
+        return m_errorHighlighting;
+    }
+    /**
      * @param activationMethod window activation method
      */
     public void setDefaultActivationMethod(String activationMethod) {
         m_activationMethod = activationMethod;
+    }
+    /**
+     * @param errorHighlighting wether to highlight errors that occur when testing
+     * a component
+     */
+    public void setErrorHighlighting(Boolean errorHighlighting) {
+        m_errorHighlighting = errorHighlighting;
     }
 }

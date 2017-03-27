@@ -354,6 +354,8 @@ public class Messages extends NLS {
     public static String JubulaPrefPageBasicMinimize;
     public static String JubulaPrefPageBasicScroll;
     public static String JubulaPrefPageBasicShowOrig;
+    public static String JubulaErrorHighlight;
+    public static String JubulaErrorHighlightDetails;
     public static String JubulaPropertiesViewProperty;
     public static String JubulaPropertiesViewValue;
     public static String HandleAUTAgentEvent;

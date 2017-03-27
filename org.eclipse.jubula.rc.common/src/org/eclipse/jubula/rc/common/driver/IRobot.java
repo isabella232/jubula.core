@@ -11,10 +11,11 @@
 package org.eclipse.jubula.rc.common.driver;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
 import org.eclipse.jubula.rc.common.exception.OsNotSupportedException;
 import org.eclipse.jubula.rc.common.exception.RobotException;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 
 
 /**
@@ -273,6 +274,15 @@ public interface IRobot <CONSTRAINT_TYPE> {
      */
     public String getPropertyValue(Object graphicsComponent,
         String propertyName) throws RobotException;
+    
+    /**
+     * 
+     * @param component the component for which the information
+     *            about its bounds is seeked
+     * @return an Rectangle object containing the x, y, height
+     *            and width value of the component
+     */
+    public Rectangle getComponentBounds (IComponent component);
     
     /**
      * Create an image containing pixels read from the full screen.

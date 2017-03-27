@@ -1306,6 +1306,8 @@ public class TestExecution {
                 msg.setDefaultActivationMethod(ActivationMethod
                         .getRCString(autConfigMap
                                 .get(AutConfigConstants.ACTIVATION_METHOD)));
+                msg.setErrorHighlighting(Boolean.valueOf(autConfigMap.get(
+                        AutConfigConstants.ERROR_HIGHLIGHT)));
                 AUTConnection.getInstance().send(msg);
             }
         } catch (CommunicationException exc) {

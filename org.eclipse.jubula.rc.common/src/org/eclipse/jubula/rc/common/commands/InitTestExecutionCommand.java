@@ -37,6 +37,7 @@ public class InitTestExecutionCommand implements ICommand {
         final RobotConfiguration robotConfig = RobotConfiguration.getInstance();
         robotConfig.setDefaultActivationMethod(m_message
             .getDefaultActivationMethod());
+        robotConfig.setErrorHighlighting(m_message.isErrorHighlighting());
 
         try {
             IRobot robot = AUTServer.getInstance().getRobot();
