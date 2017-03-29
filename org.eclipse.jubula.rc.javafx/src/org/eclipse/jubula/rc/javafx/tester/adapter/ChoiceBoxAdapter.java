@@ -31,6 +31,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.MenuTester;
+import org.eclipse.jubula.rc.javafx.tester.util.WindowsUtil;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 
 /**
@@ -143,14 +144,14 @@ public class ChoiceBoxAdapter extends JavaFXComponentAdapter<ChoiceBox<?>>
                     @Override
                     public MenuTester call() throws Exception {
                         MenuTester menuTester = null;
-                        Iterator<Window> iter = Window.impl_getWindows();
+                        Iterator<Window> iter = WindowsUtil.getWindowIterator();
                         long timeout = TimeoutConstants.
                                 SERVER_TIMEOUT_WAIT_FOR_POPUP;
                         long done = System.currentTimeMillis() + timeout;
                         long now;
                         do {
                             if (!iter.hasNext()) {
-                                iter = Window.impl_getWindows();
+                                iter = WindowsUtil.getWindowIterator();
                             }
                             Window w = iter.next();
                             if (w instanceof ContextMenu

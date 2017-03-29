@@ -70,6 +70,7 @@ import org.eclipse.jubula.rc.common.util.PointUtil;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
 import org.eclipse.jubula.rc.javafx.components.CurrentStages;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
+import org.eclipse.jubula.rc.javafx.tester.util.KeyCodeUtil;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
@@ -427,16 +428,20 @@ public class RobotJavaFXImpl implements IRobot<Rectangle> {
     private int[] getModifierMask(ClickModifier clickModifier) {
         int[] modifier = new int[0];
         if (clickModifier.hasModifiers(ClickModifier.M1)) {
-            modifier = ArrayUtils.add(modifier, KeyCode.CONTROL.impl_getCode());
+            modifier = ArrayUtils.add(modifier, 
+                    KeyCodeUtil.getKeyCode(KeyCode.CONTROL));
         }
         if (clickModifier.hasModifiers(ClickModifier.M2)) {
-            modifier = ArrayUtils.add(modifier, KeyCode.SHIFT.impl_getCode());
+            modifier = ArrayUtils.add(modifier, 
+                    KeyCodeUtil.getKeyCode(KeyCode.SHIFT));
         }
         if (clickModifier.hasModifiers(ClickModifier.M3)) {
-            modifier = ArrayUtils.add(modifier, KeyCode.ALT.impl_getCode());
+            modifier = ArrayUtils.add(modifier, 
+                    KeyCodeUtil.getKeyCode(KeyCode.ALT));
         }
         if (clickModifier.hasModifiers(ClickModifier.M4)) {
-            modifier = ArrayUtils.add(modifier, KeyCode.META.impl_getCode());
+            modifier = ArrayUtils.add(modifier, 
+                    KeyCodeUtil.getKeyCode(KeyCode.META));
         }
         return modifier;
     }

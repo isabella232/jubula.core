@@ -41,6 +41,7 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.MenuTester;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
+import org.eclipse.jubula.rc.javafx.tester.util.WindowsUtil;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
@@ -205,7 +206,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
                     @Override
                     public MenuTester call() throws Exception {
                         MenuTester menuTester = null;
-                        Iterator<Window> iter = Window.impl_getWindows();
+                        Iterator<Window> iter = WindowsUtil.getWindowIterator();
                         
                         ArrayList<ContextMenu> result = new ArrayList<>();
                         
@@ -215,7 +216,7 @@ public class JavaFXComponentAdapter<T extends Node> extends
                         long now;
                         do {
                             if (!iter.hasNext()) {
-                                iter = Window.impl_getWindows();
+                                iter = WindowsUtil.getWindowIterator();
                             }
                             Window w = iter.next();
                             if (w instanceof ContextMenu 

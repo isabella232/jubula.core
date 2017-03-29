@@ -15,6 +15,7 @@ import java.util.concurrent.Callable;
 
 import org.eclipse.jubula.rc.common.tester.AbstractTooltipTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.tester.util.WindowsUtil;
 
 import javafx.scene.control.Tooltip;
 import javafx.stage.Window;
@@ -35,7 +36,7 @@ public class TooltipTester extends AbstractTooltipTester {
         return EventThreadQueuerJavaFXImpl.invokeAndWait("getTooltipText", //$NON-NLS-1$
                 new Callable<String>() {
                     public String call() {
-                        Iterator<Window> iter = Window.impl_getWindows();
+                        Iterator<Window> iter = WindowsUtil.getWindowIterator();
                         while (iter.hasNext()) {
                             Window window = iter.next();
                             if (window instanceof Tooltip) {
