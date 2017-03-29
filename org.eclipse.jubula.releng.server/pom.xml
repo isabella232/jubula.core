@@ -32,6 +32,8 @@
         <module>../org.eclipse.jubula.feature.rc</module>
         <module>../org.eclipse.jubula.product.autagent.start</module>
         <module>../org.eclipse.jubula.product.autagent.stop</module>
+        <module>../org.eclipse.jubula.rc.rcp.accessor.site</module>
+        <module>../org.eclipse.jubula.rc.rcp.accessor.feature</module>
 	</modules>
 
 </project>

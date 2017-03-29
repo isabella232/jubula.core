@@ -84,6 +84,8 @@
 			<module>../org.eclipse.jubula.rc.swing</module>
 			<module>../org.eclipse.jubula.rc.javafx</module>
 			<module>../org.eclipse.jubula.rc.javafx.j8u40</module>
+			<module>../org.eclipse.jubula.rc.rcp.accessor.site</module>
+			<module>../org.eclipse.jubula.rc.rcp.accessor.feature</module>
 		</modules>
 	</profile>
 
@@ -96,6 +98,5 @@
         <module>../org.eclipse.jubula.toolkit.html</module>
       </modules>
    </profile>
-	
   </profiles>
 </project>
