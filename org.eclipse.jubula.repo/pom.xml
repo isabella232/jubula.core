@@ -43,7 +43,8 @@
                                             algorithm="SHA-512" fileext=".sha" />
                                         <delete includeemptydirs="false">
                                             <fileset dir="${targetDir}">
-                                                <include name="**" />
+                                                <include name="repo/**" />
+                                                <include name="${project.artifactId}-${project.version}.zip*" />
                                             </fileset>
                                         </delete>
                                         <move todir="${targetDir}">
