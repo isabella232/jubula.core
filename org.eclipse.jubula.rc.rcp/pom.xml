@@ -76,13 +76,6 @@
                     </filesets>
                 </configuration>
             </plugin>
-            <plugin>
-               <groupId>org.sonatype.tycho</groupId>
-               <artifactId>maven-osgi-packaging-plugin</artifactId>
-               <configuration>
-                  <deployableFeature>true</deployableFeature>
-               </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>

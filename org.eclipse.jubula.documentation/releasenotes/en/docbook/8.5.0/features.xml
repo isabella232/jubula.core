@@ -113,8 +113,8 @@
 <itemizedlist>
   <listitem>
      <para>
-       We added a P2 update site for the RCP Accessor to the directory
-       <emphasis>&lt;installation-directory&gt;/development/rcp-accessor-site</emphasis>.
+       We added a P2 update site for the RCP Accessor to the file
+       <emphasis>&lt;installation-directory&gt;/development/rcp-accessor-repo.zip</emphasis>.
        You can use this site in the <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">
        Install new software...</emphasis> menu of an RCP AUT to
        add the RCP Accessor. Of course this option is only available if your AUT provides

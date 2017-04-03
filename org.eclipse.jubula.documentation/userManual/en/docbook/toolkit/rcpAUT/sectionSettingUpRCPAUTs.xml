@@ -175,8 +175,8 @@
         </term>
         <listitem>
           <para>
-            The directory <emphasis>&lt;installation-directory&gt;/development/rcp-accessor-site</emphasis>
-            contains a P2 update site from where you can easily install the Accessor through the
+            The file <emphasis>&lt;installation-directory&gt;/development/rcp-accessor-site.zip</emphasis>
+            is a P2 update site from where you can easily install the Accessor through the
             <emphasis role="menuPath">Help</emphasis>--&gt;<emphasis role="menuPath">Install new software...</emphasis>
             menu. Note that the availability of this menu depends on the setup of your RCP application.
           </para>
