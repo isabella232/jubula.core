@@ -43,16 +43,16 @@ public class AUTConnection extends BaseAUTConnection {
 
     /** the singleton instance */
     private static AUTConnection instance = null;
-
+    
     /**
      * private constructor. creates a communicator
-     * 
+     * @param port the port or 0 if automatically a port should be assigned
      * @throws ConnectionException
      *             containing a detailed message why the connection could not
      *             initialized
      */
-    private AUTConnection() throws ConnectionException {
-        super();
+    private AUTConnection(int port) throws ConnectionException {
+        super(port);
     }
 
     /**
@@ -64,9 +64,8 @@ public class AUTConnection extends BaseAUTConnection {
      */
     public static synchronized AUTConnection getInstance()
         throws ConnectionException {
-
         if (instance == null) {
-            instance = new AUTConnection();
+            instance = new AUTConnection(0);
         }
         return instance;
     }
