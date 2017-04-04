@@ -54,6 +54,7 @@ public class JTreeTester extends AbstractTreeTester {
     public void rcDropByTextPath(String pathType, int preAscend,
             String treeTextPath, String operator, int delayBeforeDrop) {
         try {
+            getRobot().shakeMouse();
             rcSelect(pathType, preAscend, treeTextPath, operator, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
@@ -87,6 +88,7 @@ public class JTreeTester extends AbstractTreeTester {
     public void rcDropByIndexPath(String pathType, int preAscend,
             String treeIndexPath, int delayBeforeDrop) {
         try {
+            getRobot().shakeMouse();
             rcSelectByIndices(pathType, preAscend, treeIndexPath, 0, 1,
                     ValueSets.BinaryChoice.no.rcValue());
             waitBeforeDrop(delayBeforeDrop);
