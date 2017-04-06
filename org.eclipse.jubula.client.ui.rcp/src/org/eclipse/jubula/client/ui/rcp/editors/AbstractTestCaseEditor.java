@@ -656,8 +656,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 CommandIDs.SHOW_SPECIFICATION_COMMAND_ID);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.SHOW_WHERE_USED);
-        CommandHelper.createContributionPushItem(mgr,
-                CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
+        
+        collapseExpandItems(mgr);
         
         CommandHelper.createContributionPushItem(submenuAdd,
                 RCPCommandIDs.NEW_CONDITIONAL_STATEMENT);
@@ -683,6 +683,19 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 RCPCommandIDs.NEW_COMMENT);
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.EDIT_COMMENT);
+    }
+
+    /**
+     * Adds the collapse and expand items
+     * @param mgr the menu manager
+     */
+    private void collapseExpandItems(IMenuManager mgr) {
+        mgr.add(new Separator());
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
+        CommandHelper.createContributionPushItem(mgr,
+                CommandIDs.COLLAPSE_TREE_ITEM_COMMAND_ID);
+        mgr.add(new Separator());
     }
 
     /**
