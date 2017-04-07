@@ -156,6 +156,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
                         addCloneToNode(newNode.getUnmodifiableNodeList().get(i),
                                 node2, pMapper, oldToNewGuids, specTC);
                     }
+                    i++;
                 }
             }
             if (newNode != null) {
