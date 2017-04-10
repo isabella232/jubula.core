@@ -340,7 +340,9 @@ public class CapTestCommand implements ICommand {
             }
             MethodInvoker invoker = new MethodInvoker(messageCap);
             Object returnValue = invoker.invoke(implClass);
-            response.setReturnValue((String)returnValue);
+            if (returnValue != null) {
+                response.setReturnValue(String.valueOf(returnValue));
+            }
             if ("true".equals(System.getenv("LogExecutedCaps")) //$NON-NLS-1$ //$NON-NLS-2$
                     && messageCap != null
                     && messageCap.getCi() != null
