@@ -39,13 +39,13 @@ public class KeyCodeUtil {
     public static int getKeyCode(KeyCode keyCode) {
         try {
             // java 8
-            return getKeyCodeViaReflection("impl_getCode"); //$NON-NLS-1$
+            return getKeyCodeViaReflection("impl_getCode", keyCode); //$NON-NLS-1$
         } catch (Exception e) {
             // ignore it because might be java 9
         }
         try {
             // java9
-            return getKeyCodeViaReflection("getCode"); //$NON-NLS-1$
+            return getKeyCodeViaReflection("getCode", keyCode); //$NON-NLS-1$
         } catch (Exception e) {
             // empty
         }
@@ -58,7 +58,9 @@ public class KeyCodeUtil {
      * 
      * @param string
      *            the method name
-     * @return the keycode
+     * @param keyCode
+     *            the {@link KeyCode} where we need the integer code from
+     * @return the integer code
      * @throws NoSuchMethodException
      *             {@link Class#getMethod(String, Class...)}
      * @throws IllegalAccessException
@@ -66,12 +68,12 @@ public class KeyCodeUtil {
      * @throws InvocationTargetException
      *             {@link Method#invoke(Object, Object...)}
      */
-    private static int getKeyCodeViaReflection(String string)
+    private static int getKeyCodeViaReflection(String string, KeyCode keyCode)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         Class<KeyCode> clazz = KeyCode.class;
         Method method = clazz.getMethod(string);
-        Object o = method.invoke(null);
+        Object o = method.invoke(keyCode);
         if (o instanceof Integer) {
             return ((Integer) o);
         }
