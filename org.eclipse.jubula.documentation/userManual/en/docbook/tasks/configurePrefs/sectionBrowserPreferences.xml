@@ -11,7 +11,7 @@
                                                xmlns:xi="http://www.w3.org/2001/XInclude"
                                                xmlns:xl="http://www.w3.org/1999/xlink" >
   <title>Browser preferences</title>
-  <anchor role="helpid" condition="editorPrefPageContextId" xml:id="editor-preferences.editorPrefPageContextId" xreflabel="Editor Preferences"/>
+  <anchor role="helpid" condition="editorPrefPageContextId" xml:id="browser-preferences.browserPrefPageContextId" xreflabel="Browser Preferences"/>
   <para>
     In the <emphasis>Test - Browsers</emphasis> preferences,
     you can alter your preferences for:

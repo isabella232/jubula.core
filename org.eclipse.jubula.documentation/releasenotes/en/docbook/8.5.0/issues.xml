@@ -13,8 +13,22 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>Known issues and other information</title>
 
-  <para>
-    There are no known issues or additional information for this version.
-  </para>
+<para>
+ <emphasis role="strong">Known Issues with Java 9</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        Starting AUTs will not work without <emphasis>--permit-illegal-acces</emphasis>
+        set for the java virtual machine. Sometimes also 
+        <emphasis>--add-modules=ALL-SYSTEM</emphasis> is necessary.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+        JavaFx testing ComboBox, Slider, TableView and TreeTableViews will not work.
+    </para>
+  </listitem>
+</itemizedlist>
 
 </section>
