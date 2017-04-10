@@ -1116,6 +1116,14 @@
                 <defaultValue>3000</defaultValue>
             </param>
 		</action>
+        <action name="CompSystem.getPropertyValueApi" since="5.0" apiAction="true"
+            descriptionKey="CompSystem.getPropertyValueApi.desc">
+            <method>rcGetPropertyValue</method>
+            <param name="CompSystem.PropertyName"
+                   descriptionKey="CompSystem.PropertyName.descr" >
+                <type>java.lang.String</type>
+            </param>
+        </action>
 	</abstractComponent>
 	
 	<abstractComponent type="guidancer.abstract.TextInputSupport">
@@ -1212,6 +1220,10 @@
                 <defaultValue>0</defaultValue>
             </param>
 		</action>
+        <action name="CompSystem.IsSelectedApi" apiAction="true" since="5.0"
+                  descriptionKey="CompSystem.IsSelectedApi.descr">
+            <method>rcIsSelected</method>
+        </action>
 	</abstractComponent>
 
 </compSystem>

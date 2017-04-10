@@ -48,6 +48,14 @@ public class ButtonTester extends AbstractTextVerifiableTester {
                     }
                 });
     }
+    
+    /**
+     * Gets the selection property
+     * @return the selection property
+     */
+    public Boolean rcIsSelected() {
+        return getButtonAdapter().isSelected();
+    }
 
     /** {@inheritDoc} */
     public String[] getTextArrayFromComponent() {

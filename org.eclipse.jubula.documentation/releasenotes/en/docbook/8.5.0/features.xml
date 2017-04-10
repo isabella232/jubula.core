@@ -174,4 +174,23 @@
      </para>
   </listitem>
 </itemizedlist>
+<para>
+  <emphasis role="strong">Update in the Jubula API</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+     <para>
+       ActionHandlers are now returning Result objects so the return value can be
+       extracted. This is useful for actions like readValue which e.g. has the text of
+       a component as return value.
+     </para>
+  </listitem>
+  <listitem>
+     <para>
+       Two new actions have been added to the Jubula API. <emphasis>getProperty</emphasis> can now
+       be used to get a property of a component and <emphasis>isSelected</emphasis> can be used to
+       check whether a checkbox or a toggle button is selected.
+     </para>
+  </listitem>
+</itemizedlist>
 </section>

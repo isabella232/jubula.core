@@ -240,6 +240,20 @@ public class WidgetTester extends AbstractUITester {
      */
     public String rcStorePropertyValue(String variableName, 
         final String propertyName) {
+        return rcGetPropertyValue(propertyName);
+    }
+    
+    /**
+     * Gets the value of the property with the name <code>propertyName</code>.
+     * The name of the property has be specified according to the JavaBean
+     * specification. The value returned by the property is converted into a
+     * string by calling <code>toString()</code>.
+     * 
+     * @param propertyName The name of the property
+     * @return the property value.
+     */
+    public String rcGetPropertyValue(
+        final String propertyName) {
         IWidgetComponent bean = (IWidgetComponent) getComponent();
 
         return bean.getPropteryValue(propertyName);
