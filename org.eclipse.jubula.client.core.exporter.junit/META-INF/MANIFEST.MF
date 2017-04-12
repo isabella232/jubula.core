@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: JunitxmlExporter
 Bundle-SymbolicName: org.eclipse.jubula.client.core.exporter.junit;singleton:=true
 Bundle-Version: 5.0.0.qualifier
-Bundle-Vendor: Jubula
+Bundle-Vendor: Eclipse Jubula
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.6.0,3.0.0)",
  org.apache.commons.io;bundle-version="[2.2.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
