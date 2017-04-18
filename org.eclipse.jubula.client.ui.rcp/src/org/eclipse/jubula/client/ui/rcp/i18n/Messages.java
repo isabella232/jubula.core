@@ -311,6 +311,7 @@ public class Messages extends NLS {
     public static String ExportFileActionExporting;
     public static String ExportFileActionWaitWhileExporting;
     public static String ExportTestResultDetailsConfirmOverwriteTitle;
+    public static String ExportTestResultDetailsConfirmOverwriteDetails;
     public static String ExportTestResultDetailsWizardDestinationPageBrowseBtnText;
     public static String ExportTestResultDetailsWizardDestinationPageDestinationLabelText;
     public static String ExportTestResultDetailsWizardDestinationPageDialogTitle;

@@ -179,7 +179,7 @@ public class ExportTestResultDetailsWizard extends Wizard
                             getContainer().getShell(), Messages
                                 .ExportTestResultDetailsConfirmOverwriteTitle,
                             null, NLS.bind(Messages
-                                .ExportTestResultDetailsWizardPageDescription,
+                                .ExportTestResultDetailsConfirmOverwriteDetails,
                                 fileToWrite.getCanonicalPath()),
                             MessageDialog.QUESTION,
                             OVERWRITE_DIALOG_BUTTON_LABELS, 0);

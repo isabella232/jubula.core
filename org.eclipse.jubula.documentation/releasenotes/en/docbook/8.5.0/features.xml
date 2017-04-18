@@ -162,4 +162,16 @@
      </para>
   </listitem>
 </itemizedlist>
+<para>
+  <emphasis role="strong">New navigation feature in HTML reports</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+     <para>
+       Similarly to the ITE, it is now possible to navigate between errors in an HTML report.
+       The navigation always starts from the active (currently selected)
+       node of the result tree. This active node is distinguished by a lightgray background.
+     </para>
+  </listitem>
+</itemizedlist>
 </section>

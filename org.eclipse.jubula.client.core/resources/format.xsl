@@ -123,7 +123,7 @@
 				}
 				
 				big.inf {
-                    color: darkgreen;
+                    color: #DD0000;
                 }
                 
                 big.inf::after {
@@ -144,6 +144,15 @@
                 
                 big.chs::after {
                     content: " (all child nodes were skipped)";
+                }
+                
+                /* failed condition */
+                big.fail {
+                    color: #DD0000;
+                }
+                
+                big.fail::after {
+                    content: " (failed condition)";
                 }
 				
 				/* testing */
@@ -175,10 +184,19 @@
 				ul.report li.c ul {
 					display: none;
 				}
+				
+				#prev, #next {
+					margin-left:5px;
+					margin-right:5px;
+				}
 				</style>
 				<script type="text/javascript">
+					var lis=[],currentLI;
 					/* toggle expansion state */
 				    function t(element) {
+				    	if (currentLI) currentLI.querySelector("a").style["background-color"]="white";
+						currentLI = element.parentNode;
+						element.style["background-color"]="lightgray";
 					    var sibling = element.nextSibling;
 					    var parent = element.parentNode;
 					    if (parent.className =='o') {
@@ -199,6 +217,67 @@
 				           element.width = defaultSize;
 				       }
 				   }
+
+					function isError(LI) {
+						var cl = LI.querySelector("a big").className;
+						return (cl == "nok" || cl == "abo" || cl == "inf" || cl == "fail");
+					}
+
+					function move(dir) {
+						if (!currentLI) currentLI = lis[0];
+						var start = 0;
+						do {
+							if (start == lis.length || lis[start] == currentLI) break;
+							start++;
+						} while (true);
+						start = start + dir;
+						if (start == -1) start = lis.length - 1;
+						if (start == lis.length) start = 0;
+						var next = start;
+						do {
+							if (isError(lis[next])) {
+								unfoldAndSetCurrent(lis[next]);
+								return;
+							}
+							next += dir;
+							if (next == lis.length) next = 0;
+							if (next == -1) next = lis.length - 1;
+						} while (next != start);
+					}
+
+					function unfoldAndSetCurrent(node) {
+						currentLI.querySelector("a").style["background-color"] = "white";
+						currentLI = node;
+						var currNode = currentLI;
+						currentLI.querySelector("a").style["background-color"] = "lightgray";
+						do {
+							if (currNode.nodeName == "LI") currNode.className = "o";
+							currNode = currNode.parentNode;
+						} while (currNode.className != "report");
+						node.scrollIntoView();
+					}
+					
+					function init() {
+						lis = document.querySelectorAll('.report li');
+						var c = 0, i = 0;
+						while (i != lis.length) {
+							if (isError(lis[i])) c++;
+							i++;
+					   	}
+						if (c == 0 || lis.length == 0) {
+							document.querySelector("#prev").disabled=true;
+							document.querySelector("#next").disabled=true;
+							return;
+						}
+						currentLI = lis[0];
+                        currentLI.querySelector("a").style["background-color"]="lightgray";
+						document.body.addEventListener("keydown", function(e) {
+							if (e.altKey) {
+							if (e.keyCode == 37 || e.keyCode == 38) move(-1);
+							if (e.keyCode == 39 || e.keyCode == 40) move(1);
+						}
+						});
+					}
 				</script>
 				<title>
 					Test Result Report
@@ -207,7 +286,7 @@
 					</xsl:if>
 				</title>
 			</HEAD>
-			<body>
+			<body onload="init();">
 				<table border="0" width="95%" align="center"><tr><td>
 					<h1>Test Result Report
 						<xsl:if test="report/@style">
@@ -334,6 +413,13 @@
 		<table border="0">
 			<tr bgcolor="#DDDDDD">
 				<th colspan="2" align="left"><h2>Execution Stack</h2></th>
+			</tr>
+			<tr>
+				<td>Navigation:
+					<input id ="prev" type="button" value="Prev" onclick="move(-1);"/>
+					<input id ="next" type="button" value="Next" onclick="move(1);"/>
+					Error (ALT - Left, ALT - Right)
+				</td>
 			</tr>
 			<tr>
 				<td>
@@ -758,6 +844,9 @@
                 </xsl:when>
                 <xsl:when test="status = 21">
                     <xsl:attribute name="class">chs</xsl:attribute>
+                </xsl:when>
+                <xsl:when test="status = 10">
+                    <xsl:attribute name="class">fail</xsl:attribute>
                 </xsl:when>
 				<xsl:otherwise>
 					<xsl:attribute name="class">tst</xsl:attribute>
