@@ -262,7 +262,7 @@ public class CalcTypes {
                 }
                 guid = CompNameManager.getInstance().resolveGuid(guid);
                 String type = ((ICapPO) child).getComponentType();
-                updateType(guid, type, localType, node);
+                updateType(guid, type, localType, child);
             } else if (child instanceof IExecTestCasePO) {
                 // for ExecTestCasePOs we first handle the SpecTestCasePO
                 ISpecTestCasePO spec = ((IExecTestCasePO) child)
@@ -284,7 +284,7 @@ public class CalcTypes {
                         guid = pair.getSecondName();
                         guid = CompNameManager.getInstance().resolveGuid(guid);
                     }
-                    updateType(guid, mapLocal.get(gui), localType, node);
+                    updateType(guid, mapLocal.get(gui), localType, child);
                 }
                 setCompNamePairTypes((IExecTestCasePO) child, mapLocal);
             }

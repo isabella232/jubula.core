@@ -232,6 +232,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
     /** {@inheritDoc} */
     public void setSelection(ISelection selection) {
         ISelection newSelection = getMainTreeViewer().getSelection();
+        INodePO child = null;
         if (selection instanceof StructuredSelection) {
             Object firstElement = ((StructuredSelection) selection)
                     .getFirstElement();
@@ -244,7 +245,7 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
                     Iterator<? extends INodePO> nodeListIterator = 
                             ((INodePO) editorRoot).getAllNodeIter();
                     while (nodeListIterator.hasNext()) {
-                        INodePO child = nodeListIterator.next();
+                        child = nodeListIterator.next();
                         if (node.getGuid().equals(child.getGuid())) {
                             newSelection = new StructuredSelection(child);
                             break;
@@ -254,6 +255,9 @@ public abstract class AbstractJBEditor extends EditorPart implements IJBEditor,
             }
         }
         setSelectionImpl(newSelection);
+        if (child != null) {
+            getMainTreeViewer().setExpandedState(child, true);
+        }
     }
     
     /**

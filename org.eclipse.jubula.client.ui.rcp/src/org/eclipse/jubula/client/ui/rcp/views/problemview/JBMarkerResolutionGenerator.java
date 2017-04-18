@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
 import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
@@ -37,6 +38,7 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.ProjectPropertiesHandler;
@@ -44,6 +46,7 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 import org.eclipse.ui.dialogs.PreferencesUtil;
@@ -99,20 +102,32 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
         public void run(IMarker marker) {
             INodePO node = NodePM.getNode(GeneralStorage.getInstance()
                     .getProject().getId(), m_nodeGUID);
-            if (node != null) {
-                while (node != null && !(NodeBP.isEditable(node) 
-                        && (node instanceof ITestSuitePO
-                        || node instanceof ITestJobPO
-                        || node instanceof ISpecTestCasePO))) {
-                    node = node.getParentNode();
-                }
-                if (node != null) {
-                    AbstractOpenHandler.openEditor(node);
-                }
+            INodePO editorRoot = node;
+            while (editorRoot != null && !(NodeBP.isEditable(editorRoot) 
+                    && (editorRoot instanceof ITestSuitePO
+                    || editorRoot instanceof ITestJobPO
+                    || editorRoot instanceof ISpecTestCasePO))) {
+                editorRoot = editorRoot.getParentNode();
+            }
+            openEditorAndSelectNode(editorRoot, node);
+        }
+    }
+
+    /**
+     * Opens the editor for the root, and if possible, selects the child
+     * @param root the root node of the editor
+     * @param child the child to select
+     */
+    private static void openEditorAndSelectNode(INodePO root, INodePO child) {
+        if (root != null && NodeBP.isEditable(root)) {
+            IEditorPart ed = AbstractOpenHandler.openEditor(root);
+            if (ed instanceof AbstractJBEditor) {
+                ((AbstractJBEditor) ed).setSelection(
+                        new StructuredSelection(child));
             }
         }
     }
-    
+
     /**
      * Opens two editors to resolve an incompatibility
      * @author BREDEX GmbH
@@ -147,10 +162,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             if (node == null) {
                 return;
             }
-            node = node.getSpecAncestor();
-            if (NodeBP.isEditable(node)) {
-                AbstractOpenHandler.openEditor(node);
-            }
+            openEditorAndSelectNode(node.getSpecAncestor(), node);
             if (m_cN.getTypeProblem().getProblemType().equals(
                     ProblemType.REASON_INCOMPATIBLE_MAP_TYPE)) {
                 for (IAUTMainPO aut : GeneralStorage.getInstance().
@@ -166,10 +178,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 if (node == null) {
                     return;
                 }
-                node = node.getSpecAncestor();
-                if (NodeBP.isEditable(node)) {
-                    AbstractOpenHandler.openEditor(node);
-                }   
+                openEditorAndSelectNode(node.getSpecAncestor(), node);
             }
         }
     }
