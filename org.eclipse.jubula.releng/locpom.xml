@@ -98,5 +98,54 @@
         <module>../org.eclipse.jubula.toolkit.html</module>
       </modules>
    </profile>
+
+    <profile>
+       <id>api</id>
+       <modules>
+          <module>../org.eclipse.jubula.toolkit.api.gen</module>
+          <module>../org.eclipse.jubula.toolkit.api</module>
+         <module>../org.eclipse.jubula.client.ui</module>
+         <module>../org.eclipse.jubula.client.api</module>
+         <module>../org.eclipse.jubula.client.core</module>
+         <module>../org.eclipse.jubula.mylyn</module>
+         <module>../org.eclipse.jubula.logging</module>
+         <module>../org.eclipse.jubula.communication</module>
+         <module>../org.eclipse.jubula.tools</module>
+         <module>../org.eclipse.jubula.tools.exec</module>
+         <module>../org.eclipse.jubula.version</module>
+         <module>../org.eclipse.jubula.client.archive</module>
+         <module>../org.eclipse.jubula.client.alm.mylyn.core</module>
+         <module>../org.eclipse.jubula.toolkit.base.provider</module>
+         <module>../org.eclipse.jubula.toolkit.common</module>
+         <module>../org.eclipse.jubula.toolkit.html.api</module>
+         <module>../org.eclipse.jubula.toolkit.html</module>
+         <module>../org.eclipse.jubula.toolkit.base.api</module>
+         <module>../org.eclipse.jubula.toolkit.javafx.api</module>
+         <module>../org.eclipse.jubula.toolkit.gef.api</module>
+         <module>../org.eclipse.jubula.toolkit.swing.api</module>
+         <module>../org.eclipse.jubula.toolkit.swt.api</module>
+         <module>../org.eclipse.jubula.toolkit.concrete.api</module>
+         <module>../org.eclipse.jubula.toolkit.concrete.provider</module>
+         <module>../org.eclipse.jubula.toolkit.html.provider</module>
+         <module>../org.eclipse.jubula.toolkit.javafx.provider</module>
+         <module>../org.eclipse.jubula.toolkit.gef.provider</module>
+         <module>../org.eclipse.jubula.toolkit.rcp.provider</module>
+         <module>../org.eclipse.jubula.toolkit.swing.provider</module>
+         <module>../org.eclipse.jubula.toolkit.swt.provider</module>
+         <module>../org.eclipse.jubula.client.ui.rcp</module>
+      </modules>
+   </profile>
+   
+   <!-- Just to test the generated api structure - manually remove toolkit.*.provider dependencies form the api.gen MANIFEST.MF before using this profile -->
+   <profile>
+       <id>apiskel</id>
+       <modules>
+          <module>../org.eclipse.jubula.toolkit.api.gen</module>
+          <module>../org.eclipse.jubula.tools</module>
+         <module>../org.eclipse.jubula.toolkit.api</module>
+       <module>../org.eclipse.jubula.communication</module>
+         <module>../org.eclipse.jubula.toolkit.common</module>
+      </modules>
+   </profile>
   </profiles>
 </project>
