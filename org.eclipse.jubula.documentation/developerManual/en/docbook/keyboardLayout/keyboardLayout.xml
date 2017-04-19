@@ -45,7 +45,7 @@
     <listitem>
       <para>
         The following symbols must be escaped with a backslash:<?linebreak?>
-        <literal>! = : \ ,</literal><?linebreak?>
+        <literal>! = : \ , #</literal><?linebreak?>
         e.g. <literal>\!=shift+1</literal> for !
       </para>
     </listitem>

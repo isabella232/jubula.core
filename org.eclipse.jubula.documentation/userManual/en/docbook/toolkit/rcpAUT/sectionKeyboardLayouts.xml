@@ -17,9 +17,6 @@
     and English (US) are provided as standard keyboard layouts.
   </para>
   <para>
-    If you require a different keyboard layout, you must create a mapping file for the new language and place it in the server/resources directory. You also have to put this mapping file into the RCP Remote Control plug-in of your AUT:
-  </para>
-  <para>
-    &lt;RCPAUT&gt;/plugins/org.eclipse.jubula.rc.rcp_&lt;Version&gt;/resources
+    If you require a different keyboard layout, please refer to the Jubula Developer Manual.
   </para>
 </section>
