@@ -13,6 +13,20 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
 <para>
+ <emphasis role="strong">Upgrading Selenium to 3.3.1</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        We have upgraded the used Selenium Webdriver version to 3.3.1.
+        As a consequence, the browser webdrivers may also need upgrading.
+        The new Selenium version has been tested using ChromeDriver
+        version 2.28, GeckoDriver (Firefox) version 0.15 and IEDriver
+        version 3.3.0.
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
  <emphasis role="strong">Export JUnit reports</emphasis>
 </para>
 <itemizedlist>
