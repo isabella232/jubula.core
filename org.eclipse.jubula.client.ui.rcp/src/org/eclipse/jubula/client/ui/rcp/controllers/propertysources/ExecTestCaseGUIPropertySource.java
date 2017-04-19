@@ -198,7 +198,7 @@ public class ExecTestCaseGUIPropertySource extends
      */
     private void createJUnitComboBox(final JUnitTestSuiteController jsC) {
         m_comBoxJUnitTestSuite = new ComboBoxPropertyDescriptor(jsC,
-                Messages.SpecTestCaseGUIPropertySourceJUnitTestSuite,
+                Messages.ExecTestCaseGUIPropertySourceJUnitTestSuite,
                 jsC.getLabelList());
         addPropertyDescriptor(m_comBoxJUnitTestSuite);
         m_comBoxJUnitTestSuite.setLabelProvider(new LabelProvider() {

@@ -301,6 +301,7 @@ public class Messages extends NLS {
     public static String EventWasCreatedByAnUnknownWidget;
     public static String ExecTestCaseGUIPropertySourceSpecificationName;
     public static String ExecTestCaseGUIPropertySourceTestCaseReferenceName;
+    public static String ExecTestCaseGUIPropertySourceJUnitTestSuite;
     public static String ExportAborted;
     public static String ExportAllActionDirectoryNotEmpty;
     public static String ExportAllBPErrorExportFailed;
@@ -804,7 +805,6 @@ public class Messages extends NLS {
     public static String SimpleSearchPageSearchForGroupHeader;
     public static String SimpleSearchPageSearchInGroupHeader;
     public static String SpecTestCaseGUIPropertySourceDataSource;
-    public static String SpecTestCaseGUIPropertySourceJUnitTestSuite;
     public static String SpecTestCaseGUIPropertySourceLockedParameters;
     public static String SpecTestCaseGUIPropertySourceParameter;
     public static String SpecTestCaseGUIPropertySourceTestCaseFileName;
