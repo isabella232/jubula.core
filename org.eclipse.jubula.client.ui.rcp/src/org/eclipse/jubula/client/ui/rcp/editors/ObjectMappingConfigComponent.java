@@ -429,7 +429,7 @@ public class ObjectMappingConfigComponent {
         linkFactorSliders(m_bindingContext, m_factorSliders.keySet(), editor);
 
         createThresholdSlider(m_sliderComposite, m_bindingContext,
-                m_profileObservable);
+                m_profileObservable, editor);
 
         m_bindingContext.updateTargets();
 
@@ -811,10 +811,12 @@ public class ObjectMappingConfigComponent {
      * @param masterObservable Observable value used to determine
      *                         which model object is currently
      *                         being observed in detail.
+     * @param editor the editor
      */
     private void createThresholdSlider(Composite parent,
             DataBindingContext bindingContext, 
-            IObservableValue masterObservable) {
+            IObservableValue masterObservable,
+            final IJBEditor editor) {
         
         String boundProperty = 
             IObjectMappingProfilePO.PROP_THRESHOLD;
@@ -863,6 +865,20 @@ public class ObjectMappingConfigComponent {
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), 
                 new UpdateValueStrategy().setConverter(
                         m_modelToEnablementConverter));
+        m_threshold.addSelectionListener(new SelectionListener() {
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // Do nothing
+            }
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                if (editor.getEditorHelper().requestEditableState() 
+                        == EditableState.OK && !editor.isDirty()) {
+                        editor.getEditorHelper().setDirty(true);
+                }
+            }
+        });
     }
 
     /**
