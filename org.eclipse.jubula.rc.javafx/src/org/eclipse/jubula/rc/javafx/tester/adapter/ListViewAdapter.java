@@ -233,7 +233,8 @@ public class ListViewAdapter<T extends ListView<?>> extends
                                     (IComponent) AdapterFactoryRegistry
                                     .getInstance()
                                     .getAdapter(IComponent.class, cell);
-                            if (adapter != null) {
+                            if (adapter != null
+                                    && adapter instanceof ITextComponent) {
                                 return ((ITextComponent) adapter)
                                         .getPropteryValue(name);
                             }

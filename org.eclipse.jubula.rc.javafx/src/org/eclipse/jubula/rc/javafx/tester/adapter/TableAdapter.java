@@ -569,7 +569,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                             IComponent adapter = (IComponent) 
                                     AdapterFactoryRegistry.getInstance()
                                     .getAdapter(IComponent.class, cell);
-                            if (adapter != null) {
+                            if (adapter != null
+                                    && adapter instanceof ITextComponent) {
                                 return ((ITextComponent) adapter)
                                         .getPropteryValue(name);
                             }

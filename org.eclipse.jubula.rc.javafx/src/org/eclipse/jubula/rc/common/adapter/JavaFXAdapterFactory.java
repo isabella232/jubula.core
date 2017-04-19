@@ -101,16 +101,16 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
     @Override
     public Object getAdapter(Class targetAdapterClass, Object objectToAdapt) {
         IComponent returnvalue = null;
-        if (targetAdapterClass.isAssignableFrom(IComponent.class)) {
+        if (targetAdapterClass.equals(IComponent.class)) {
             returnvalue = getComponentAdapter(objectToAdapt);
         }
-        if (returnvalue == null && targetAdapterClass.isAssignableFrom(
+        if (returnvalue == null && targetAdapterClass.equals(
                 IContainerAdapter.class)) {
             returnvalue = getContainerAdapter(objectToAdapt);
         }
         // FALLBACK! Leave at the end
         if (returnvalue == null
-                && targetAdapterClass.isAssignableFrom(IComponent.class)
+                && targetAdapterClass.equals(IComponent.class)
                 && objectToAdapt instanceof Node) {
             return new JavaFXComponentAdapter<Node>(
                     (Node) objectToAdapt);
@@ -171,6 +171,8 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
         } else if (objectToAdapt instanceof ImageView) {
             return new JavaFXComponentAdapter<ImageView>(
                     (ImageView) objectToAdapt);
+        } else if (objectToAdapt instanceof TabPane) {
+            return new TabPaneAdapter((TabPane) objectToAdapt);
         } else if (objectToAdapt instanceof TitledPane) {
             return new LabeledAdapter<TitledPane>(
                     (TitledPane) objectToAdapt);
@@ -190,11 +192,15 @@ public class JavaFXAdapterFactory implements IAdapterFactory {
                     (TreeTableView<?>) objectToAdapt);
         } else if (objectToAdapt instanceof Cell) {
             return new CellAdapter((Cell<?>) objectToAdapt);
+        } else if (objectToAdapt instanceof SplitPane) {
+            return new SplitPaneAdapter((SplitPane) objectToAdapt);
         } else if (objectToAdapt instanceof Slider) {
             return new SliderAdapter((Slider) objectToAdapt);
+        } else if (objectToAdapt instanceof ToolBar) {
+            return new ToolBarAdapter((ToolBar) objectToAdapt);
         } else if (objectToAdapt instanceof Shape) {
             return new JavaFXComponentAdapter<Shape>((Shape) objectToAdapt);
-        } 
+        }
         return null;
     }
 

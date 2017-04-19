@@ -158,6 +158,7 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
                     /** {@inheritDoc} **/
                     public ListView<?> call() throws Exception {
                         T comboBox = getRealComponent();
+                        @SuppressWarnings("rawtypes")
                         List<ListView> listViewList = NodeTraverseHelper
                                 .getInstancesOf(comboBox, ListView.class);
                         if (listViewList.size() == 1) {
