@@ -254,7 +254,7 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
          %>* <%=sinceA%>
          */<%}%>
         <%if (action.isDeprecated()) {%>@Deprecated<%}%>
-        public void <%=methodName%>(
+        public Result <%=methodName%>(
         <%    
         // add parameters to method signature
         Iterator<Param> paramIterator = params.iterator();
@@ -286,11 +286,11 @@ public <%if (genInterface) {%>interface<%} else {%>class<%}%> <%=className%>Acti
             }%>
             <%String translatedParamName = nameLoader.translateFromCompSystem(paramName);%>
             <%if (!isOptional) {%>
-            if (<%=translatedParamName%> == null) return;
+            if (<%=translatedParamName%> == null) return null;
             <%}%>
             
             <%}%>
-            AUTRegistry.INSTANCE.get().execute(
+            return AUTRegistry.INSTANCE.get().execute(
                 new CapBuilder("<%=action.getMethod()%>")
                             .setDefaultMapping(<%=hasDefaultMapping%>)
             <%if (!hasDefaultMapping) {%>
