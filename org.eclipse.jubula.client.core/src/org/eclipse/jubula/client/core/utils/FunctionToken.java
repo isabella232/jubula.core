@@ -131,10 +131,10 @@ public class FunctionToken extends AbstractParamValueToken
                 && stack.size() > 0) {
             AbstractFunctionEvaluator aEvaluator = 
                     (AbstractFunctionEvaluator) evaluator;
-            ExecObject currentExecObject = stack.get(stack.size() - 1);
+            ExecObject currentExecObject = getLastExecTCFromStack(stack);
+            INodePO execNode = currentExecObject.getExecNode();
             INodePO actualNode;
             int innerIndex = currentExecObject.getIndex();
-            INodePO execNode = currentExecObject.getExecNode();
             if (innerIndex < 0) {
                 actualNode = execNode;
             } else {
@@ -167,6 +167,22 @@ public class FunctionToken extends AbstractParamValueToken
             throw new InvalidDataException(t.getLocalizedMessage(), 
                     MessageIDs.E_FUNCTION_EVAL_ERROR);
         }
+    }
+
+    /**
+     * Returns the last IExecTestCasePO from the stack
+     * @param stack the stack
+     * @return the last ExecTestCasePO (or null if none exists)
+     */
+    private ExecObject getLastExecTCFromStack(List<ExecObject> stack) {
+        ExecObject currentExecObject = null;
+        int posInStack = stack.size();
+        do {
+            posInStack--;
+            currentExecObject = stack.get(posInStack);
+        } while (!(currentExecObject.getExecNode() instanceof IExecTestCasePO)
+                && posInStack > 0);
+        return currentExecObject;
     }
 
     /**

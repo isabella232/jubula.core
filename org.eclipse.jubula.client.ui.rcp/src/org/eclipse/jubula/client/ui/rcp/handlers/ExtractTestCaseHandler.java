@@ -194,10 +194,13 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
             if (m_modNodes.isEmpty()) {
                 return;
             }
-            INodePO par = m_modNodes.get(0).getParentNode();
-            par = s.find(par.getClass(), par.getId());
-            // we have to set the children's parent node...
-            par.getUnmodifiableNodeList();
+            // we have to load all parent-child relationships
+            // of the SpecTC / TestSuite into the new session
+            INodePO spec = m_modNodes.get(0).getSpecAncestor();
+            spec = s.find(spec.getClass(), spec.getId());
+            for (Iterator<INodePO> it = spec.getAllNodeIter(); it.hasNext(); ) {
+                it.next();
+            }
             for (INodePO node : m_modNodes) {
                 INodePO object = s.find(node.getClass(), node.getId());
                 if (object != null) {

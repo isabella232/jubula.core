@@ -51,6 +51,8 @@ import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO.ActivationMethod;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
+import org.eclipse.jubula.client.core.model.ICondStructPO;
+import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IEventStackModificationListener;
 import org.eclipse.jubula.client.core.model.IExecStackModificationListener;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -76,11 +78,11 @@ import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.Traverser;
 import org.eclipse.jubula.client.internal.AutAgentConnection;
-import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.BaseConnection;
+import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand;
-import org.eclipse.jubula.client.internal.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.internal.commands.TakeScreenshotAUTAgentResponseCommand;
+import org.eclipse.jubula.client.internal.commands.TakeScreenshotResponseCommand;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.ICommand;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
@@ -95,8 +97,8 @@ import org.eclipse.jubula.communication.internal.message.NullMessage;
 import org.eclipse.jubula.communication.internal.message.PrepareForShutdownMessage;
 import org.eclipse.jubula.communication.internal.message.ResetMonitoringDataMessage;
 import org.eclipse.jubula.communication.internal.message.RestartAutMessage;
-import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
 import org.eclipse.jubula.communication.internal.message.TakeScreenshotAUTAgentMessage;
+import org.eclipse.jubula.communication.internal.message.TakeScreenshotMessage;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.toolkit.internal.CSConstants;
@@ -1154,8 +1156,10 @@ public class TestExecution {
         } else {
             m_stepCounter.incrementNumberOfFailedSteps();
             if (reentry.equals(ReentryProperty.CONDITION)) {
-                resultNode.setResult(TestResultNode.CONDITION_FAILED,
-                        event);
+                if (isNodeWithinCondStatement(resultNode)) {
+                    resultNode.setResult(TestResultNode.CONDITION_FAILED,
+                            event);
+                }
             } else {            
                 resultNode.setResult(TestResultNode.ERROR, event);
                 if (m_autoScreenshot) {
@@ -1167,6 +1171,20 @@ public class TestExecution {
                 }
             }
         }
+    }
+
+    /**
+     * Determines whether a node is contained within a Conditional statement
+     * @param node the node to check
+     * @return whether is a descendant of a Conditional Statement
+     */
+    private boolean isNodeWithinCondStatement(TestResultNode node) {
+        TestResultNode realNode = node;
+        do {
+            realNode = realNode.getParent();
+        } while (realNode.getNode() != null
+                && !(realNode.getNode() instanceof ICondStructPO));
+        return realNode.getNode() instanceof IConditionalStatementPO;
     }
     
 
