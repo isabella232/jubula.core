@@ -80,8 +80,8 @@ public class CAPTestResponseCommand implements APICommand {
         logResult();
         Thread t = new IsAliveThread("Execute Test Step") { //$NON-NLS-1$
             public void run() {
-                TestExecution.getInstance().processServerResponse(
-                        (CAPTestResponseMessage)getMessage());            
+                TestExecution.getInstance().processServerResponseWrapper(
+                        (CAPTestResponseMessage)getMessage());
             }
         };
         t.start();

@@ -1067,6 +1067,19 @@ public class TestExecution {
         return messageParam;
     }
 
+    /**
+     * A wrapper method to catch all exceptions in the test execution thread
+     *      Uncaught exceptions would result in hanging test executions
+     * @param msg the response message
+     */
+    public void processServerResponseWrapper(
+            CAPTestResponseMessage msg) {
+        try {
+            processServerResponse(msg);
+        } catch (Exception e) {
+            fireError(e);
+        }
+    }
 
     /**
      * verifies the response of server for execution of a cap
