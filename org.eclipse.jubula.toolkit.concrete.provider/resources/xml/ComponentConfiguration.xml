@@ -2565,7 +2565,7 @@
                 <defaultValue>0</defaultValue>
             </param>
         </action>
-        <action name="CompSystem.CheckExistenceOfColumn" since="4.1">
+        <action name="CompSystem.CheckExistenceOfColumn" since="5.0">
             <method>rcCheckExistenceOfColumn</method>
             <param name="CompSystem.Column"
                    descriptionKey="CompSystem.Column.descr" >
@@ -3252,7 +3252,7 @@
         </action>
 	</concreteComponent>
 	
-	<concreteComponent type="guidancer.concrete.TreeTable">
+	<concreteComponent type="guidancer.concrete.TreeTable" since="5.0">
 		<realizes>guidancer.concrete.Tree</realizes>
 		<action name="CompSystem.CheckExistenceOfColumn" since="4.1">
             <method>rcCheckExistenceOfColumn</method>

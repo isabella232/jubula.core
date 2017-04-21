@@ -100,16 +100,30 @@ public class <%=factoryName%> {
         return new <%=fqClassName%>(componentIdentifier);
     }<%}%>
     
-    <%if (hasDefaultMapping) {%>
+    <%
+    String sinceHandler = "@since 4.0";
+    try{
+    String[] sinceValues = sinceCVersion.split("\\.");
+    if(sinceValues.length == 2){
+        if(Integer.parseInt(sinceValues[0]) > 4){
+            sinceHandler = sinceC;
+        } else if(Integer.parseInt(sinceValues[1]) > 0){
+            sinceHandler = "@since " + "4."+sinceValues[1];
+        }
+    }
+    } catch(Exception e){
+    
+    }
+    if (hasDefaultMapping) {%>
     /** create a new instance of <%=componentName%>ActionHandler 
-     * @since 4.0
+     * <%=sinceHandler%>
      */
     @Beta
     @NonNull public static <%=returnTypeActionHandler%> create<%=componentName%>ActionHandler () {
         return new <%=fqClassNameActionHandler%>();
     }<%} else {%>
     /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.
-     * @since 4.0
+     * <%=sinceHandler%>
      */
     @Beta
     @NonNull public static <%=returnTypeActionHandler%> create<%=componentName%>ActionHandler (@NonNull ComponentIdentifier<? extends <%=returnType%>> componentIdentifier) {

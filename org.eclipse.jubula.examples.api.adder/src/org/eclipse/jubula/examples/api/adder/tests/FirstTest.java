@@ -19,6 +19,10 @@ import org.junit.Test;
  * @author BREDEX GmbH
  */
 public class FirstTest {
+    /**
+     * 
+     * @param sa the SimpleAdder class
+     */
     @Test
     private void test1(SimpleAdder sa) {
         sa.getValue1().replaceText("1"); //$NON-NLS-1$

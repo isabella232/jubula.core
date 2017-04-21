@@ -16,16 +16,20 @@ import org.eclipse.jubula.toolkit.concrete.components.TextInputComponent;
 
 /** @author BREDEX GmbH */
 public class SimpleAdder {
+    /** first text input field */
     private TextInputComponent m_value1;
+    /** second text input field */
     private TextInputComponent m_value2;
+    /** calculate button */
     private GraphicsComponent m_calculate;
+    /** result text field */
     private TextComponent m_result;
 
     /**
-     * @param value1
-     * @param value2
-     * @param calculate
-     * @param result
+     * @param value1 first text input field
+     * @param value2 second text input field
+     * @param calculate calculate button
+     * @param result result text field
      */
     public SimpleAdder(TextInputComponent value1, TextInputComponent value2,
             GraphicsComponent calculate, TextComponent result) {
