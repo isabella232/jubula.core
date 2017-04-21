@@ -17,13 +17,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.iterators.IteratorChain;
 import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
 import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
-import org.eclipse.jubula.client.core.model.IConditionalStatementPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
@@ -40,8 +40,18 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
  */
 public class CompCheck {
 
-    /** Map Node Id => Set of Component Name guids which must be mapped in order to use the node */
+    /** Map Node Id => Set of propagated Component Name guids which must be mapped in order to use the node */
     private Map<Long, Set<String>> m_mustMap;
+
+    /** Map Node Id => Set of unpropagated Component Name guids
+     * which must be mapped in order to use the node.
+     * These CNs are not propagated from the Node, so they
+     * themselves will have to be mapped finally.
+     * The only way to get here: a CN has to be the second CN in a
+     *      an unpropagated persisted CNPair, transient CNPairs just
+     *      let the second CN fall through like they were propagated...
+     */
+    private Map<Long, Set<String>> m_mustMapNoProp;
     
     /** The original Test Suites */
     private List<ITestSuitePO> m_suites;
@@ -61,6 +71,7 @@ public class CompCheck {
      **/
     public CompCheck(List<ITestSuitePO> suites) {
         m_mustMap = new HashMap<>();
+        m_mustMapNoProp = new HashMap<>();
         m_suites = suites;
     }
 
@@ -99,47 +110,49 @@ public class CompCheck {
                 traverseImpl(next);
             }
         }
-        // Finished with all children (Node and Event), next step is to fill the node's guid set
+        // Finished with all children (Node and Event), next step is to fill the node's guid sets
         Set<String> nodeGuids = new HashSet<>();
+        Set<String> nodeGuidsNoProp = new HashSet<>();
         Long id = getId(node);
         String guid;
         for (Iterator<INodePO> it = node.getAllNodeIter(); it.hasNext();) {
-            handleNext(nodeGuids, it.next());
+            handleNext(nodeGuids, nodeGuidsNoProp, it.next());
         }
         m_mustMap.put(id, nodeGuids);
+        m_mustMapNoProp.put(id, nodeGuidsNoProp);
     }
-    
+
     /**
      * Puts the used guids to the given set
-     * @param nodeGuids the set of used Guids
+     * @param nodeGuids the set of used and propagated Guids
+     * @param nodeGuidsNoProp the set of used and unpropagated Guids
      * @param child the child of the SpecTC
      */
-    private void handleNext(Set<String> nodeGuids, INodePO child) {
+    private void handleNext(Set<String> nodeGuids, Set<String> nodeGuidsNoProp,
+            INodePO child) {
         if (!child.isActive()) {
             return;
         }
         String guid;
         if (child instanceof IExecTestCasePO) {
-            handleExecTestCasePO(nodeGuids, (IExecTestCasePO) child);
+            handleExecTestCasePO(nodeGuids, nodeGuidsNoProp,
+                    (IExecTestCasePO) child);
         } else if (child instanceof ICapPO && isRelevant((ICapPO) child)) {
             guid = ((ICapPO) child).getComponentName();
             if (guid != null) {
                 nodeGuids.add(CompNameManager.getInstance().resolveGuid(guid));
-            }
-        } else if (child instanceof IConditionalStatementPO) {
-            for (Iterator<INodePO> it = child.getAllNodeIter(); it.hasNext();) {
-                handleNext(nodeGuids, it.next());
             }
         }
     }
     
     /**
      * Handles an ExecTestCase child: we have to alter the Comp Names by the child's Comp Names Pairs
-     * @param guids the guids
+     * @param guids the set of used and propagated guids of the parent
+     * @param guidsNoProp the set of used and unpropagated guids of the parent
      * @param child the child
      */
     private void handleExecTestCasePO(Set<String> guids,
-            IExecTestCasePO child) {
+            Set<String> guidsNoProp, IExecTestCasePO child) {
         // We designed the traverse such that the corresponding SpecTC must have been traversed before
         ISpecTestCasePO childSpecTC = child.getSpecTestCase();
         if (childSpecTC != null) {
@@ -147,13 +160,20 @@ public class CompCheck {
             ICompNamesPairPO pair;
             for (String guid : childSpecGuids) {
                 pair = child.getCompNamesPair(guid);
-                if (pair != null) {
+                if (pair == null) {
+                    // transient pairs are propagating as long as
+                    // a non-propagating one is found
+                    guids.add(guid);
+                } else if (pair.isPropagated()) {
                     guids.add(CompNameManager.getInstance().
                             resolveGuid(pair.getSecondName()));
                 } else {
-                    guids.add(guid);
+                    guidsNoProp.add(CompNameManager.getInstance().
+                            resolveGuid(pair.getSecondName()));
                 }
             }
+            // Non-propagated CNs from the child just fall through...
+            guidsNoProp.addAll(m_mustMapNoProp.get(childSpecTC.getId()));
         }
     }
     
@@ -176,7 +196,7 @@ public class CompCheck {
     /**
      * Adds Problem markers to Nodes: exactly those paths are marked
      * which start in a problematic TS and end at the last node where there
-     * is still a chance to correct the map by changing a corresponding CNPair 
+     * is still a chance to correct the map by changing the corresponding CNPair
      */
     public void addProblems() {
         m_autProblems = new HashMap<>();
@@ -202,10 +222,9 @@ public class CompCheck {
      * @param node the starting node
      * @param problemGuids the problematic guids at this node
      *      - these are not mapped, should be, and still has a chance to be corrected
+     *        by changing a CNPair
      */
     private void addProblemsImpl(INodePO node, Set<String> problemGuids) {
-        // ExecTestCasePOs are marked problematic even if the problemGuids is empty
-        
         if (problemGuids.size() == 0 || !node.isActive()) {
             return;
         }
@@ -214,94 +233,56 @@ public class CompCheck {
         
         INodePO child;
         for (Iterator<INodePO> it = node.getAllNodeIter(); it.hasNext();) {
-            // adding problematic guids to Node children
+            // adding problematic guids to ExecTestCase children
+            // other children cannot change CNs in the chain, so they are irrelevant
             child = it.next();
-            addProblemsImpl(child, problemHandleChild(child, problemGuids));
-        }
-    }
-    
-    /**
-     * Calculates the problematic guids for a node
-     * @param child the node
-     * @param guids the problematic guids of the parent
-     *        (these are not mapped by the AUT at the top of the current tree path)
-     * @return the Set of problematic guids for the Node
-     */
-    private Set<String> problemHandleChild(INodePO child, Set<String> guids) {
-        Set<String> result = new HashSet<String>(guids.size());
-        if (child instanceof ICapPO && isRelevant((ICapPO) child)) {
-            String guid = CompNameManager.getInstance().
-                    resolveGuid(((ICapPO) child).getComponentName());
-            if (guids.contains(guid)) {
-                result.add(guid);
-            }
-        } else if (child instanceof IExecTestCasePO) {
-            problemHandleExecTC((IExecTestCasePO) child, guids, result);
-        } else if (child instanceof IConditionalStatementPO) {
-            for (Iterator<INodePO> iterator = child.getAllNodeIter(); iterator
-                    .hasNext();) {
-                INodePO node = iterator.next();
-                if (node instanceof IExecTestCasePO) {
-                    problemHandleExecTC((IExecTestCasePO) node, guids, result);
-                }
+            if (child instanceof IExecTestCasePO) {
+                addProblemsImpl(child, problemHandleExecTC(
+                        (IExecTestCasePO) child, problemGuids));
             }
         }
-        return result;
     }
-    
+
     /**
      * Collecting the problematic guids for an ExecTC
      * @param child the ExecTC
      * @param problemGuids the problematic guids of the parent
      *        (these are not mapped by the AUT at the top of the current tree path)
-     * @param result the problematic guids for the ExecTC
+     * @return the problematic guids for the ExecTC
      *        these are guids that are mapped to the problemGuids Set by the CompName
      *        pairs of the ExecTC
      */
-    private void problemHandleExecTC(IExecTestCasePO child,
-            Set<String> problemGuids, Set<String> result) {
+    private Set<String> problemHandleExecTC(IExecTestCasePO child,
+            Set<String> problemGuids) {
         ISpecTestCasePO spec = child.getSpecTestCase();
+        Set<String> result = new HashSet<>();
         if (spec == null) {
-            return;
+            return result;
+        }
+        for (String guid : m_mustMapNoProp.get(spec.getId())) {
+            // Nonpropagated CNs are carried forward into the child
+            if (problemGuids.contains(guid)) {
+                result.add(guid);
+            }
         }
         for (String guid : m_mustMap.get(spec.getId())) {
-            ICompNamesPairPO pair = child.getCompNamesPair(guid); 
+            ICompNamesPairPO pair = child.getCompNamesPair(guid);
             if (pair == null
-                    && problemGuids.contains(guid)
-                    && !specTCHasAutoGenPair(spec, guid)) {
+                    && problemGuids.contains(guid)) {
+                // Nonpropagated CNs are carried forward into the child
+                // Since result is non-empty, child will have a Problem marker later
                 result.add(guid);
-            } else if (pair != null 
+            } else if (pair != null
+                    && !pair.isPropagated()
                     && problemGuids.contains(pair.getSecondName())) {
+                // This particular problem could be resolved here by changing the CNPair
+                // So we don't add this guid instance to the result
+                // Instead we mark the child - this is necessary, because if result remains
+                // empty, then the child won't get its own marker.
                 child.addProblem(m_autProblem);
             }
         }
-    }
-    
-    /**
-     * Decides whether the SpecTestCasePO has an auto-generated Comp Names Pair for the guid
-     * @param spec the SpecTestCasePO
-     * @param guid the guid
-     * @return whether there is a Comp Names Pair
-     */
-    private boolean specTCHasAutoGenPair(ISpecTestCasePO spec, String guid) {
-        for (Iterator<INodePO> it = spec.getAllNodeIter(); it.hasNext(); ) {
-            INodePO node = it.next();
-            if (node instanceof ICapPO) {
-                String cNGuid = ((ICapPO) node).getComponentName();
-                if (cNGuid != null && cNGuid.equals(guid)) {
-                    return true;
-                }
-            } else if (node instanceof IExecTestCasePO) {
-                for (ICompNamesPairPO pair : ((IExecTestCasePO) node)
-                        .getCompNamesPairs()) {
-                    if (pair.isPropagated() && guid.equals(
-                            pair.getSecondName())) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        return result;
     }
     
     /**
@@ -313,7 +294,11 @@ public class CompCheck {
         Set<String> problemGuids = new HashSet<>();
         IComponentIdentifier id;
         IAUTMainPO aut = ts.getAut();
-        for (String guid : m_mustMap.get(ts.getId())) {
+        IteratorChain it = new IteratorChain(
+                m_mustMap.get(ts.getId()).iterator(),
+                m_mustMapNoProp.get(ts.getId()).iterator());
+        while (it.hasNext()) {
+            String guid = (String) it.next();
             id = null;
             try {
                 id = aut.getObjMap().getTechnicalName(guid);
@@ -351,6 +336,7 @@ public class CompCheck {
         for (ITestSuitePO ts : m_suites) {
             if (ts.getAut() != null) {
                 result.put(ts.getId(), m_mustMap.get(ts.getId()));
+                result.put(ts.getId(), m_mustMapNoProp.get(ts.getId()));
             }
         }
         return result;
