@@ -19,7 +19,7 @@
     There is a simple way to extend your Jubula ITE to add support for a previously
     unsupported component on a <emphasis>graphics component</emphasis> level, e.g.
     if you only want to execute a click on that component. All you have to do is
-    to add <emphasis>"SimpleExtenions"</emphasis> as a key to the property map of an
+    to add <emphasis>"SimpleExtensions"</emphasis> as a key to the property map of an
     AUT and a comma-separated list of fully qualified classnames as the value
     (<xref linkend="define-aut"/>).
   </para>
