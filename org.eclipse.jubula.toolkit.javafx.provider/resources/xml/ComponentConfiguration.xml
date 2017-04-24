@@ -115,13 +115,13 @@
 		<componentClass name="javafx.scene.control.TableView" />
 	</toolkitComponent>	
 	
-	<toolkitComponent type="javafx.scene.control.TreeView" visible="false" apiMostConcrete="true">
+	<toolkitComponent type="javafx.scene.control.TreeView" visible="false">
 		<realizes>guidancer.concrete.Tree</realizes>
 		<testerClass>org.eclipse.jubula.rc.javafx.tester.TreeViewTester</testerClass>
 		<componentClass name="javafx.scene.control.TreeView" />
 	</toolkitComponent>
 	
-	<toolkitComponent type="javafx.scene.control.TreeTableView" visible="false">
+	<toolkitComponent type="javafx.scene.control.TreeTableView" visible="false" apiMostConcrete="true" since="5.0">
 		<realizes>guidancer.concrete.TreeTable</realizes>
 		<testerClass>org.eclipse.jubula.rc.javafx.tester.TreeTableViewTester</testerClass>
 		<componentClass name="javafx.scene.control.TreeTableView"/>
