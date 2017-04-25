@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.dialogs;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -130,7 +131,8 @@ public class NewCommentDialog extends TitleAreaDialog {
         m_commentTextField = new Text(area, SWT.MULTI | SWT.BORDER | SWT.WRAP
                 | SWT.V_SCROLL);
         if (m_comment != null) {
-            m_commentTextField.setText(m_comment.getName());
+            m_commentTextField.setText(StringUtils
+                    .defaultIfBlank(m_comment.getName(), StringUtils.EMPTY));
         }
         GridData gridData = newGridData();
         gridData.grabExcessVerticalSpace = true;
