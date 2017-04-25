@@ -167,8 +167,9 @@ public class TableTester extends AbstractTableTester {
             String regexOp, String searchType, int delayBeforeDrop) {
         try {
             ITableComponent adapter = (ITableComponent) getComponent();
-            int implRow = adapter.getRowFromString(value, regexOp);
             int implCol = adapter.getColumnFromString(col, colOperator);
+            int implRow = super.findRow(value, regexOp, searchType, adapter,
+                    implCol);
             TableCell targetCell = getCellAt(implRow + 1, implCol + 1);
             if (targetCell == null) {
                 throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$
@@ -182,7 +183,7 @@ public class TableTester extends AbstractTableTester {
             table.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
             DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
-            pressOrReleaseModifiers(dndHelper.getModifier(), false); 
+            pressOrReleaseModifiers(dndHelper.getModifier(), false);
             dndHelper.setDragMode(false);
         }
     }
@@ -220,7 +221,8 @@ public class TableTester extends AbstractTableTester {
         try {
             ITableComponent adapter = (ITableComponent) getComponent();
             int implRow = adapter.getRowFromString(row, rowOperator);
-            int implCol = adapter.getColumnFromString(value, regex);
+            int implCol = super.findColumn(value, regex, searchType, adapter,
+                    implRow);
             TableCell targetCell = getCellAt(implRow + 1, implCol + 1);
             if (targetCell == null) {
                 throw new StepExecutionException("Drop target not visible", //$NON-NLS-1$

@@ -508,12 +508,35 @@ public abstract class AbstractTableTester
         final String searchType, ClickOptions co) {
         ITableComponent adapter = getTableAdapter();
         final int implCol = adapter.getColumnFromString(col, colOperator);
+        Integer implRow = findRow(value, regexOp, searchType, adapter, implCol);
+        
+        String  userIdxRow = new Integer(IndexConverter.toUserIndex(
+                implRow.intValue())).toString();
+        String  userIdxCol = new Integer(IndexConverter.toUserIndex(
+                implCol)).toString();            
+        
+        selectCell(userIdxRow, MatchUtil.EQUALS, userIdxCol, colOperator, co,
+                extendSelection);
+    }
+
+    /**
+     * Find the row containing the given value in the given column
+     * @param value the value
+     * @param regexOp the regular expression
+     * @param searchType relative or absolute
+     * @param adapter the adapter
+     * @param implCol the implementation column index
+     * @return the implementation row index
+     */
+    protected Integer findRow(final String value, final String regexOp,
+            final String searchType, ITableComponent adapter,
+            final int implCol) {
         Integer implRow = null;
         final int rowCount = adapter.getRowCount();
-        
+
         for (int i = getStartingRowIndex(searchType); i < rowCount; ++i) {
-            if (MatchUtil.getInstance().match(getCellText(i, implCol), 
-                    value, regexOp)) {
+            if (MatchUtil.getInstance().match(getCellText(i, implCol), value,
+                    regexOp)) {
 
                 implRow = new Integer(i);
                 break;
@@ -530,14 +553,7 @@ public abstract class AbstractTableTester
             throw new StepExecutionException("no such row found", //$NON-NLS-1$
                     EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
         }
-        
-        String  userIdxRow = new Integer(IndexConverter.toUserIndex(
-                implRow.intValue())).toString();
-        String  userIdxCol = new Integer(IndexConverter.toUserIndex(
-                implCol)).toString();            
-        
-        selectCell(userIdxRow, MatchUtil.EQUALS, userIdxCol, colOperator, co,
-                extendSelection);
+        return implRow;
     }
     
     /**
@@ -575,44 +591,62 @@ public abstract class AbstractTableTester
      * @param co the click options to use
      */
     protected void selectCellByColValue(String row, String rowOperator,
-        final String value, final String regex, final String extendSelection,
-        final String searchType, ClickOptions co) { 
+            final String value, final String regex,
+            final String extendSelection, final String searchType,
+            ClickOptions co) {
         ITableComponent adapter = getTableAdapter();
         final int implRow = adapter.getRowFromString(row, rowOperator);
+        Integer implCol = findColumn(value, regex, searchType, adapter,
+                implRow);
+
+        String usrIdxRowStr = new Integer(IndexConverter.toUserIndex(implRow))
+                .toString();
+        String usrIdxColStr = new Integer(
+                IndexConverter.toUserIndex(implCol.intValue())).toString();
+
+        selectCell(usrIdxRowStr, rowOperator, usrIdxColStr, MatchUtil.EQUALS,
+                co, extendSelection);
+
+    }
+
+    /**
+     * Determines the column, within the given row, containing the cell or header text equal to value. 
+     * @param value the value
+     * @param regex the regular expression
+     * @param searchType absolute or relative search
+     * @param adapter the table adapter
+     * @param implRow the row using the implementation index, starts at 0
+     * @return the implementation index of the column
+     */
+    protected Integer findColumn(final String value, final String regex,
+            final String searchType, ITableComponent adapter,
+            final int implRow) {
         int colCount = adapter.getColumnCount();
         Integer implCol = null;
         if (implRow == -1) {
-            
+
             for (int i = getStartingColIndex(searchType); i < colCount; ++i) {
-                if (MatchUtil.getInstance().match(
-                        adapter.getColumnHeaderText(i), value, regex)) {
+                if (MatchUtil.getInstance()
+                        .match(adapter.getColumnHeaderText(i), value, regex)) {
                     implCol = new Integer(i);
                     break;
                 }
-            }           
+            }
         } else {
             for (int i = getStartingColIndex(searchType); i < colCount; ++i) {
-                if (MatchUtil.getInstance().match(getCellText(implRow, i), 
+                if (MatchUtil.getInstance().match(getCellText(implRow, i),
                         value, regex)) {
 
                     implCol = new Integer(i);
                     break;
                 }
-            } 
+            }
         }
         if (implCol == null) {
             throw new StepExecutionException("no such cell found", EventFactory //$NON-NLS-1$
                     .createActionError(TestErrorEvent.NOT_FOUND));
         }
-        
-        String usrIdxRowStr = new Integer(IndexConverter.toUserIndex(
-                implRow)).toString();
-        String usrIdxColStr = new Integer(IndexConverter.toUserIndex(
-                implCol.intValue())).toString();
-        
-        selectCell(usrIdxRowStr, rowOperator, usrIdxColStr, MatchUtil.EQUALS,
-                co, extendSelection);
-        
+        return implCol;
     }
     
     /**
