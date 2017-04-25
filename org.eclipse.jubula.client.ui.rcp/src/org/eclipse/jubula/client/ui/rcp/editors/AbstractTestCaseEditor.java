@@ -689,7 +689,7 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
      * Adds the collapse and expand items
      * @param mgr the menu manager
      */
-    private void collapseExpandItems(IMenuManager mgr) {
+    protected void collapseExpandItems(IMenuManager mgr) {
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.EXPAND_TREE_ITEM_COMMAND_ID);
