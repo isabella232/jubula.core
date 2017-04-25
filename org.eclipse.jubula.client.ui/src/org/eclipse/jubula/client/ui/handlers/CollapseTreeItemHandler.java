@@ -25,6 +25,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public class CollapseTreeItemHandler extends AbstractHandler {
 
+    /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) {
         IWorkbenchPart part = HandlerUtil.getActivePart(event);
         TreeViewer activeTreeViewer = null;
