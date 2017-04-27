@@ -36,6 +36,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.jubula.client.core.businessprocess.CleanupObjectMapping;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
@@ -298,6 +299,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 IObjectMappingAssoziationPO assoc = 
                     PoMaker.createObjectMappingAssoziationPO(
                             null, new HashSet<String>());
+                assoc.setParentProjectId(GeneralStorage.getInstance().
+                        getProject().getId());
                 getCompNameCache().changeReuse(
                         assoc, null, compNamePo.getGuid());
                 getAut().getObjMap().getUnmappedLogicalCategory()
@@ -311,9 +314,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         /**
          * Checks whether a Component Name with the given logical name is already created in this editor
          * In this case the cache version has a different guid than the main session version
-         * If yes, replaces the cache version by the main session version
+         * If yes, replaces the cache version by the main session version, so we don't have to add this CN
+         *      to the to-be-mapped list...
          * @param cN the Component Name
-         * @return whether a locally created CN existed with the same logical name
+         * @return whether a locally created CN existed with the same logical name but different guid
          */
         private boolean checkForExistingLogicalName(IComponentNamePO cN) {
             Map<String, IComponentNamePO> localChanges = getCompNameCache().
@@ -324,6 +328,10 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             for (String guid : localChanges.keySet()) {
                 IComponentNamePO localCN = localChanges.get(guid);
                 if (localCN.getName().equals(cN.getName())) {
+                    if (localCN.getId() != null) {
+                        // The CN is already persisted - it may be from a different project
+                        continue;
+                    }
                     IObjectMappingAssoziationPO assoc = getAut().getObjMap()
                             .getLogicalNameAssoc(localCN.getGuid());
                     // this should not be null, because the CN should have
@@ -440,6 +448,8 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
 
         isChanged |= fixCompNameReferences(objMap, getCompNameCache());
         isChanged |= removeDeletedCompNames(objMap, getCompNameCache());
+        isChanged |= CleanupObjectMapping.cleanupObjectMapping(
+                getAut().getObjMap());
         
         if (isChanged) {
             try {

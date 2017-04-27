@@ -530,22 +530,26 @@ public class CompNamePM extends AbstractNamePM {
         List<IComponentNamePO> resList;
         for (String guid : localChanges.keySet()) {
             
-            // First we check whether a Component Name with the same logical name already exists in the DB
+            // First we check whether a Component Name with the same logical name
+            //     and current projectId already exists in the DB
             // If it does and has a different guid, we are going to use the DB version everywhere
             newCN = localChanges.get(guid);
-            q.setParameter(P_NAME, newCN.getName());
-            resList = q.getResultList();
-            if (!resList.isEmpty()) {
-                if (!resList.get(0).getGuid().equals(guid)) {
-                    newCN = resList.get(0);
-                    guidsToSwap.put(guid, resList.get(0).getGuid());
-                } else {
-                    // Component Name with the same guid exists in DB
-                    // If it was created parallelly in separate editors
-                    // Then the current one may have a null id
-                    newCN.setId(resList.get(0).getId());
+            if (newCN.getParentProjectId() == null
+                    || projId.equals(newCN.getParentProjectId())) {
+                q.setParameter(P_NAME, newCN.getName());
+                resList = q.getResultList();
+                if (!resList.isEmpty()) {
+                    if (!resList.get(0).getGuid().equals(guid)) {
+                        newCN = resList.get(0);
+                        guidsToSwap.put(guid, resList.get(0).getGuid());
+                    } else {
+                        // Component Name with the same guid exists in DB
+                        // If it was created parallelly in separate editors
+                        // Then the current one may have a null id
+                        newCN.setId(resList.get(0).getId());
+                    }
+                    sess.detach(resList.get(0));
                 }
-                sess.detach(resList.get(0));
             }
             
             // If Component Name has been removed from the DB by another user
