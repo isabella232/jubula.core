@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.wiki.ui.handlers;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -22,6 +23,8 @@ import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
+import org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor;
+import org.eclipse.jubula.client.ui.rcp.editors.TestSuiteEditor;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.OpenViewUtils;
 import org.eclipse.jubula.client.wiki.ui.dialogs.DescriptionEditDialog;
@@ -60,6 +63,9 @@ public class EditDescriptionHandler extends AbstractSelectionBasedHandler {
                         performChanges(editor, workNode, dialog);
                     }
                     checkAndAskForDescriptionView();
+                    editor.getTreeViewer().getTree().setFocus();
+                    editor.getTreeViewer().setSelection(
+                            new StructuredSelection(workNode), true);
                 }
 
 
