@@ -463,7 +463,8 @@ public class ExecutionController implements IAUTServerEventListener,
                                 m_job.getTestJob().getNodeListSize()}));
         List<INodePO> executedTestSuites = ClientTest.instance().startTestJob(
                 m_job.getTestJob(), m_job.isAutoScreenshot(),
-                m_job.getIterMax(), m_job.getNoRunOptMode());
+                m_job.getIterMax(), m_job.getIncompleteTSs(),
+                m_job.getNoRunOptMode());
         sysOut(NLS.bind(Messages.ExecutionControllerTestJobExecutedTestSuites,
                 new Object[] { tjName,
                         executedTestSuites.size()}));
@@ -799,6 +800,7 @@ public class ExecutionController implements IAUTServerEventListener,
                     sysOut(problem.getUserMessage());
                 }
                 noError = false;
+                m_job.removeTestSuites(ts);
             }
             if (noError) {
                 sysOut(Messages.ExecutionControllerTestSuiteCompletenessOk);
@@ -807,8 +809,15 @@ public class ExecutionController implements IAUTServerEventListener,
                 noErrors = false;
             }
         }
-        Validate.isTrue(noErrors, 
-                Messages.ExecutionControllerProjectCompletenessFailed);
+        if (!noErrors && m_job.isExecuteJobsPartly()) {
+            sysOut(NLS.bind(
+                    Messages.ExecutionControllerTestSuiteCompletenessNOkSkipp,
+                    StringUtils.join(m_job.getIncompleteTSs(),
+                            StringConstants.COMMA + StringConstants.SPACE)));
+        } else {
+            Validate.isTrue(noErrors, 
+                    Messages.ExecutionControllerProjectCompletenessFailed);
+        }
     }
 
     /**

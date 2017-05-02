@@ -132,6 +132,9 @@ public class TestexecClient extends AbstractCmdlineClient {
         options.addOption(createOption(ClientTestStrings.DATA_DIR, true, 
                 ClientTestStrings.DATA_DIR_EX, 
                 Messages.ClientDataFile, false));
+        options.addOption(createOption(ClientTestStrings.INCOMPLETE_TJ, false,
+                ClientTestStrings.INCOMPLETE_TJ,
+                Messages.ClientPartlyTestJob, false));
     }
 
     /**

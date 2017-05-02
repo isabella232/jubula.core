@@ -74,7 +74,7 @@ public class StartTestJobHandler extends AbstractStartTestHandler {
                     if (prepareOk.get()) {
                         ClientTest.instance().startTestJob(
                                 finalTestJob, autoScreenshots,
-                                iterMax, null);
+                                iterMax, null, null);
                     }
                     monitor.done();
                     return Status.OK_STATUS;

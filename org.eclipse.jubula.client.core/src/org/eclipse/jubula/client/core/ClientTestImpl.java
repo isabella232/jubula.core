@@ -598,7 +598,8 @@ public class ClientTestImpl implements IClientTest {
 
     /** {@inheritDoc} */
     public List<INodePO> startTestJob(ITestJobPO testJob,
-            boolean autoScreenshot, int iterMax, String noRunOptMode) {
+            boolean autoScreenshot, int iterMax, List<String> skippTSnames,
+            String noRunOptMode) {
         TestExecution.getInstance().setStartedTestJob(testJob);
         List<INodePO> executedTestSuites = new ArrayList<INodePO>();
         m_testjobStartTime = new Date();
@@ -623,6 +624,10 @@ public class ClientTestImpl implements IClientTest {
                     continue;
                 } else if (node instanceof IRefTestSuitePO) {
                     IRefTestSuitePO refTestSuite = (IRefTestSuitePO)node;
+                    if (skippTSnames != null 
+                            && skippTSnames.contains(refTestSuite.getName())) {
+                        continue;
+                    }
                     isTestExecutionFailed.set(false);
                     isTestExecutionFinished.set(false);
                     addTestExecutionEventListener(executionListener);

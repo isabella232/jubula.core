@@ -159,11 +159,13 @@ public interface IClientTest {
      *            whether screenshots should be automatically taken in case of
      *            test execution errors
      * @param iterMax maximum number of iterations
+     * @param skippTSnames List of TestSuite names which should be skipped
      * @param noRunOptMode The mode of no run-option if it was specified or null otherwise
      * @return list of actually executed test suites
      */
     public abstract List<INodePO> startTestJob(ITestJobPO testJob,
-            boolean autoScreenshot, int iterMax, String noRunOptMode);
+            boolean autoScreenshot, int iterMax, List<String> skippTSnames,
+            String noRunOptMode);
     
     /**
      * Stops test execution.

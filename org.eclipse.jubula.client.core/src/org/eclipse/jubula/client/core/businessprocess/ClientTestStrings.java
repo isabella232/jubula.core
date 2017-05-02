@@ -28,6 +28,8 @@ public class ClientTestStrings {
     /** constant string */
     public static final String HOSTNAME = "hostname"; //$NON-NLS-1$
     /** object attribute */
+    public static final String INCOMPLETE_TJ = "incompleteTJ"; //$NON-NLS-1$
+    /** object attribute */
     public static final String PORT = "port"; //$NON-NLS-1$
     /** constant string */
     public static final String PORT_NUMBER = "port_number"; //$NON-NLS-1$

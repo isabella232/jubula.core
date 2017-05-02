@@ -99,6 +99,8 @@ public class JobConfiguration {
     private String m_testJobName;
     /** list for Test Suites */
     private List<ITestSuitePO> m_testSuites = new ArrayList<ITestSuitePO>();
+    /** list of Test Suites names which failed to check completeness*/
+    private List<String> m_incompleteTestSuites = new ArrayList<String>(0);
     /** the Test Job to execute */
     private ITestJobPO m_testJob;
     /** list for Test Suites */
@@ -121,6 +123,8 @@ public class JobConfiguration {
     private int m_iterMax = 100;
     /** flag to save screenshots in XML and HTML */
     private boolean m_xmlScreenshot = true;
+    /** flag to execute jobs even if some Testsuites are not complete*/
+    private boolean m_executeJobsPartly;
     /** file name for the xml and html document */
     private String m_fileName;
     /** flag to generate monitoring report */
@@ -471,6 +475,9 @@ public class JobConfiguration {
         if (cmd.hasOption(ClientTestStrings.NO_XML_SCREENSHOT)) { 
             setXMLScreenshot(false);
         }
+        if (cmd.hasOption(ClientTestStrings.INCOMPLETE_TJ)) {
+            setExecuteJobsPartly(true);
+        }
         if (cmd.hasOption(ClientTestStrings.TIMEOUT)) {
             try {
                 setTimeout(Integer.parseInt(cmd
@@ -748,6 +755,16 @@ public class JobConfiguration {
      */
     public List<ITestSuitePO> getTestSuites() {
         return Collections.unmodifiableList(m_testSuites);
+    }
+    
+    /**
+     * removes a testSuite from the list of executedTestSuites
+     * @param testsuite the {@link ITestSuitePO} to remove from test execution
+     * @return true if the object was in the list
+     */
+    public boolean removeTestSuites(ITestSuitePO testsuite) {
+        m_incompleteTestSuites.add(testsuite.getName());
+        return m_testSuites.remove(testsuite);
     }
 
     /** 
@@ -1027,6 +1044,21 @@ public class JobConfiguration {
     }
     
     /**
+     * @return should a job be executed even there is a incomplete TestSuite in it
+     */
+    public boolean isExecuteJobsPartly() {
+        return m_executeJobsPartly;
+    }
+
+    /**
+     * @param executeJobsPartly should a job be executed even there 
+     *                          is a incomplete TestSuite in it
+     */
+    public void setExecuteJobsPartly(boolean executeJobsPartly) {
+        m_executeJobsPartly = executeJobsPartly;
+    }
+
+    /**
      * 
      * @param name The name of the info to find.
      * @return the DatabaseConnectionInfo (from the Preferences) that matches 
@@ -1074,6 +1106,13 @@ public class JobConfiguration {
         } else {
             m_fileName = fileName;
         }
+    }
+
+    /**
+     * @return the list of TestSuitesNames which failed in the completenessCheck
+     */
+    public List<String> getIncompleteTSs() {
+        return m_incompleteTestSuites;
     }
     
 }
