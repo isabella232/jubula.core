@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess.compcheck;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -131,7 +132,7 @@ public final class CompletenessGuard {
     }
 
     /**
-     * checks OM and TD Completeness of all TS
+     * Runs all relevant checks for a single node (can be the Project itself)
      * 
      * @param root
      *            INodePO
@@ -150,9 +151,16 @@ public final class CompletenessGuard {
         traverser.addOperation(new InactiveNodesOperation());
         traverser.addOperation(new CheckEmptyConditions());
         traverser.traverse(true);
-        
+
+        List<ITestSuitePO> tsList = null;
         if (root.equals(GeneralStorage.getInstance().getProject())) {
-            CompCheck check = new CompCheck(TestSuiteBP.getListOfTestSuites());
+            tsList = TestSuiteBP.getListOfTestSuites();
+        } else if (root instanceof ITestSuitePO) {
+            tsList = new ArrayList<>();
+            tsList.add((ITestSuitePO) root);
+        }
+        if (!tsList.isEmpty()) {
+            CompCheck check = new CompCheck(tsList);
             check.traverse();
             check.addProblems();
         }
