@@ -159,7 +159,7 @@ public final class CompletenessGuard {
             tsList = new ArrayList<>();
             tsList.add((ITestSuitePO) root);
         }
-        if (!tsList.isEmpty()) {
+        if (tsList != null && !tsList.isEmpty()) {
             CompCheck check = new CompCheck(tsList);
             check.traverse();
             check.addProblems();
