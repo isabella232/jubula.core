@@ -75,7 +75,7 @@ public class CleanupObjectMapping {
         boolean wasChange = false;
         for (IObjectMappingCategoryPO child
             : cat.getUnmodifiableCategoryList()) {
-            wasChange |= recRemoveDoubledCNs(existing, cat);
+            wasChange |= recRemoveDoubledCNs(existing, child);
         }
         List<IObjectMappingAssoziationPO> toRemove = new ArrayList<>();
         for (IObjectMappingAssoziationPO assoc
