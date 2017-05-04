@@ -35,6 +35,9 @@
   	</mediaobject>
   </figure>
   <para><emphasis role="strong">Available Actions</emphasis></para>
+  <para>Note that some of these actions (e.g. some Check Existence actions) are still only implemented for the JavaFX toolkit.
+  Executing these on SWT tree tables results in an <emphasis>Action not supported by selected
+        toolkit</emphasis> error.</para>
   <itemizedlist>
   	<listitem>
   		<para>

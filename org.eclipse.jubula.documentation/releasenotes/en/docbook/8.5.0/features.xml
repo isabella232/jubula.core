@@ -13,6 +13,22 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
 <para>
+ <emphasis role="strong">Moving tree table actions to the concrete toolkit</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        We have moved the JavaFX and SWT tree table actions to the concrete toolkit.
+        As a consequence, the relevant modules in the <emphasis>unbound_modules_javafx</emphasis>
+        and <emphasis>unbound_modules_swt</emphasis> projects have been deprecated. Please
+        replace these modules by their counterparts from the project <emphasis>unbound_modules_concrete</emphasis>.
+        Also note that some of the tree table actions are still only implemented for the JavaFX toolkit (e.g. Check
+        Existence of Value in Column). These actions now result in an <emphasis>Action not supported by selected
+        toolkit</emphasis> error if executed on SWT Tree Tables.
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
  <emphasis role="strong">Upgrading Selenium to 3.3.1</emphasis>
 </para>
 <itemizedlist>
