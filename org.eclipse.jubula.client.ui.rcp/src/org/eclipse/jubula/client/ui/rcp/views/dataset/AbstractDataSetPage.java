@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views.dataset;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,9 +26,11 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jubula.client.core.businessprocess.AbstractParamInterfaceBP;
@@ -324,7 +325,7 @@ public abstract class AbstractDataSetPage extends Page
          * {@inheritDoc}
          */
         public Color getForeground(Object element) {
-            if (!getControlEnabler().areControlsEnabled()) {
+            if (!getControlEnabler().canEdit()) {
                 return LayoutUtil.GRAY_COLOR;
             }
             return null;
@@ -425,8 +426,6 @@ public abstract class AbstractDataSetPage extends Page
         GridData gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
         getAddButton().setLayoutData(gridData);
-        getAddButton().setEnabled(false);
-        getControlEnabler().addControl(getAddButton());
         
         // Create and configure the "Insert" button
         setInsertButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
@@ -435,8 +434,6 @@ public abstract class AbstractDataSetPage extends Page
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_BEGINNING);
         gridData.widthHint = 80;
         getInsertButton().setLayoutData(gridData);
-        getInsertButton().setEnabled(false);
-        getControlEnabler().addControl(getInsertButton());
         
         //  Create and configure the "Delete" button
         setDeleteButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
@@ -446,8 +443,6 @@ public abstract class AbstractDataSetPage extends Page
         gridData.grabExcessHorizontalSpace = true;
         gridData.widthHint = 80; 
         getDeleteButton().setLayoutData(gridData); 
-        getDeleteButton().setEnabled(false);
-        getControlEnabler().addControl(getDeleteButton());
         
         // Create and configure the "Down" button
         setDownButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
@@ -455,8 +450,6 @@ public abstract class AbstractDataSetPage extends Page
         getDownButton().setImage(IconConstants.DOWN_ARROW_IMAGE);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_END);
         getDownButton().setLayoutData(gridData);
-        getDownButton().setEnabled(false);
-        getControlEnabler().addControl(getDownButton());
 
         // Create and configure the "Up" button
         setUpButton(new Button(bottomComp, SWT.PUSH | SWT.CENTER));
@@ -464,10 +457,9 @@ public abstract class AbstractDataSetPage extends Page
         getUpButton().setImage(IconConstants.UP_ARROW_IMAGE);
         gridData = new GridData (GridData.HORIZONTAL_ALIGN_END);
         getUpButton().setLayoutData(gridData);
-        getUpButton().setEnabled(false);
-        getControlEnabler().addControl(getUpButton());
         
         addListenerToButtons();
+        getControlEnabler().setControlsEnabled();
     }
 
     /**
@@ -607,7 +599,7 @@ public abstract class AbstractDataSetPage extends Page
         filterComposite.setLayoutData(new GridData(SWT.FILL, SWT.BEGINNING,
                 true, false));
     }
-
+    
     /**
      * Creates the TableViewer
      * @param parent the parent composite
@@ -622,21 +614,12 @@ public abstract class AbstractDataSetPage extends Page
                 if (m_currentPart instanceof AbstractJBEditor) {
                     if (m_searchText.getText().isEmpty()) {
                         updateClearButtonVisibility(false);
-                        m_addButton.setEnabled(true);
-                        m_insertButton.setEnabled(true);
-                        m_deleteButton.setEnabled(true);
-                        m_upButton.setEnabled(true);
-                        m_downButton.setEnabled(true);
                         updateBackgroundColor(false);
                     } else {
                         updateClearButtonVisibility(true);
-                        m_addButton.setEnabled(false);
-                        m_insertButton.setEnabled(false);
-                        m_deleteButton.setEnabled(false);
-                        m_upButton.setEnabled(false);
-                        m_downButton.setEnabled(false);
                         updateBackgroundColor(true);
                     }
+                    getControlEnabler().setControlsEnabled();
                 } else {
                     updateClearButtonVisibility(!m_searchText
                             .getText().isEmpty());
@@ -645,7 +628,12 @@ public abstract class AbstractDataSetPage extends Page
                 searchJob.schedule(SEARCH_DELAY);
             }
         });
-        
+        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            @Override
+            public void selectionChanged(SelectionChangedEvent event) {
+                getControlEnabler().setControlsEnabled();
+            }
+        });
         setTableViewer(viewer);
         Table table = getTable();
         table.setData(SwtToolkitConstants.WIDGET_NAME, "DataSetView.DataTable"); //$NON-NLS-1$
@@ -737,8 +725,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 addDataSet();
                 checkComboSelection(TestDataRowAction.ADDED, index);
-                getControlEnabler().selectionChanged(m_currentPart,
-                        m_currentSelection);
+                getControlEnabler().setControlsEnabled();
                 logButton(getAddButton());
             }
         });
@@ -747,6 +734,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 insertDataSetAtCurrentSelection();
                 checkComboSelection(TestDataRowAction.INSERTED, index);
+                getControlEnabler().setControlsEnabled();
             }
         });
         getDeleteButton().addSelectionListener(new SelectionAdapter() {
@@ -754,6 +742,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 removeDataSet();
                 checkComboSelection(TestDataRowAction.DELETED, index);
+                getControlEnabler().setControlsEnabled();
                 logButton(getDeleteButton());
             }
         });
@@ -762,6 +751,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 moveDataSetUp();
                 checkComboSelection(TestDataRowAction.MOVED_UP, index);
+                getControlEnabler().setControlsEnabled();
                 logButton(getUpButton());
             }
         });
@@ -770,6 +760,7 @@ public abstract class AbstractDataSetPage extends Page
                 final int index = getSelectedDataSet();
                 moveDataSetDown();
                 checkComboSelection(TestDataRowAction.MOVED_DOWN, index);
+                getControlEnabler().setControlsEnabled();
                 logButton(getDownButton());
             }
         });
@@ -859,7 +850,9 @@ public abstract class AbstractDataSetPage extends Page
      */
     private void insertDataSetAtCurrentSelection() {
         final int row = getSelectedDataSet();
-        insertDataSet(row);
+        if (row >= 0) {
+            insertDataSet(row);
+        }
     }
     
     /**
@@ -1014,63 +1007,6 @@ public abstract class AbstractDataSetPage extends Page
         return m_clearButton;
     }
 
-    /**
-     * Class for En-/Disabling swt.Controls depending of active WorkbenchPart
-     * and selection
-     * @author BREDEX GmbH
-     * @created 06.04.2006
-     */
-    private abstract class AbstractControlEnabler {
-        /** List of Controls */
-        private List<Control> m_controlList = new ArrayList<Control>();
-        
-        /** 
-         * tracks whether managed controls were most recently 
-         * enabled or disabled 
-         */
-        private boolean m_areControlsEnabled = true;
-        
-        /**
-         * Adds the given Control to this Listener
-         * @param control the Control
-         */
-        public void addControl(Control control) {
-            if (!getControlList().contains(control)) {
-                getControlList().add(control);
-            }
-        }
-        
-        /**
-         * @return the controlList
-         */
-        protected List<Control> getControlList() {
-            return m_controlList;
-        }
-        
-        /**
-         * Enables or disables all controls managed by the receiver.
-         * 
-         * @param enabled <code>true</code> if all managed components should be
-         *                enabled. <code>false</code> if all managed components
-         *                should be disabled.
-         */
-        public void setControlsEnabled(boolean enabled) {
-            m_areControlsEnabled = enabled;
-            for (Control control : getControlList()) {
-                control.setEnabled(enabled);
-            }
-        }
-
-        /**
-         * 
-         * @return <code>true</code> if all managed components are enabled. 
-         *         <code>false</code> if all managed components are disabled.
-         */
-        public boolean areControlsEnabled() {
-            return m_areControlsEnabled;
-        }
-    }
-    
     /**
      * Clears the m_tableViewer
      */
@@ -1467,6 +1403,7 @@ public abstract class AbstractDataSetPage extends Page
          */
         private void writeDataSetData(String property, Object value, 
                 AbstractJBEditor edit) {
+            int rowind = getSelectedDataSet();
             final int langIndex = getColumnIndexOfProperty(property);
             getTable().getItem(m_currentSelectionIndex).setText(langIndex, 
                     value == null ? StringConstants.EMPTY : (String) value);
@@ -1543,7 +1480,7 @@ public abstract class AbstractDataSetPage extends Page
             boolean isEditor = (edit != null);
 
             return !isFirstColumn && isEditor 
-                && getControlEnabler().areControlsEnabled();
+                && getControlEnabler().canEdit();
         }
         
         /** {@inheritDoc} */
@@ -1783,12 +1720,8 @@ public abstract class AbstractDataSetPage extends Page
                             getTable().setSelection(row);
                         }
                         getTableCursor().setSelection(row, 1);
-                    } else {
-                        getDeleteButton().setEnabled(false);
-                        getInsertButton().setEnabled(false);
-                        getUpButton().setEnabled(false);
-                        getDownButton().setEnabled(false);
                     }
+                    getControlEnabler().setControlsEnabled();
                     setFocus();
                     DataEventDispatcher.getInstance()
                             .fireParamChangedListener(this);
@@ -1849,20 +1782,23 @@ public abstract class AbstractDataSetPage extends Page
      * @author BREDEX GmbH
      * @created 06.04.2006
      */
-    protected class ControlEnabler extends AbstractControlEnabler 
-            implements ISelectionListener {
+    protected class ControlEnabler implements ISelectionListener {
+
+        /** Whether the data cells are editable */
+        private boolean m_canEdit = false;
+        
+        /**
+         * @return whether the data cells are editable
+         */
+        public boolean canEdit() {
+            return m_canEdit;
+        }
         
         /** {@inheritDoc} */
         public void selectionChanged(IWorkbenchPart part, 
             ISelection selection) {
-            if (!(selection instanceof IStructuredSelection)) { 
-                // e.g. in Jubula plugin-version you can open an java editor, 
-                // that reacts on org.eclipse.jface.text.TextSelection, which
-                // is not a StructuredSelection
-                return;
-            }
-            if (getTable().isDisposed()) {
-                // Check if the Table is disposed to prevent SWTExceptions.
+            if (!(selection instanceof IStructuredSelection)
+                    || getTable().isDisposed()) { 
                 return;
             }
             IStructuredSelection strucSelection = 
@@ -1894,10 +1830,36 @@ public abstract class AbstractDataSetPage extends Page
             }
             // En-/disable controls
             boolean isCAP = paramNode instanceof ICapPO;
-            m_buttonEnabled = correctPart && hasInput && isEditorOpen
+            m_canEdit = correctPart && hasInput && isEditorOpen
                 && !isCAP && !hasExcelFile && !hasReferencedDataCube 
                 && hasParameter;
-            setControlsEnabled(m_buttonEnabled);
+            setControlsEnabled();
+        }
+
+        /**
+         * Sets enablement of the buttons
+         */
+        public void setControlsEnabled() {
+            m_addButton.setEnabled(false);
+            m_insertButton.setEnabled(false);
+            m_deleteButton.setEnabled(false);
+            m_upButton.setEnabled(false);
+            m_downButton.setEnabled(false);
+            if (!m_canEdit || StringUtils.isNotEmpty(m_searchText.getText())) {
+                return;
+            }
+            m_addButton.setEnabled(true);
+            int rowind = getSelectedDataSet();
+            if (rowind > -1) {
+                m_insertButton.setEnabled(true);
+                m_deleteButton.setEnabled(true);
+                if (rowind > 0) {
+                    m_upButton.setEnabled(true);
+                }
+                if (rowind < getTable().getItemCount() - 1) {
+                    m_downButton.setEnabled(true);
+                }
+            }
         }
     }
     /**
@@ -1910,7 +1872,6 @@ public abstract class AbstractDataSetPage extends Page
     /** {@inheritDoc} */
     public void selectionChanged(IWorkbenchPart part,
             ISelection selection) {
-            
         if (!(selection instanceof IStructuredSelection)) { 
             // e.g. in Jubula plugin-version you can open an java editor, 
             // that reacts on org.eclipse.jface.text.TextSelection, which
@@ -2046,4 +2007,5 @@ public abstract class AbstractDataSetPage extends Page
         }
         return -1;
     }
+
 }
