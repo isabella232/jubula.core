@@ -1368,6 +1368,14 @@ public abstract class AbstractDataSetPage extends Page
             writeDataSetData(property, value, m_tcEditor);
             
         }
+
+        @Override
+        public Object getData() {
+            if (getRow() == null) {
+                return null;
+            }
+            return getRow().getText(getColumn());
+        }
         
         /**
          * @param col column

@@ -25,8 +25,10 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNode
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.views.JBPropertiesPage;
+import org.eclipse.jubula.client.ui.rcp.views.dataset.AbstractDataSetPage;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.DataSetView;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.TestDataCubeDataSetPage;
+import org.eclipse.swt.SWTException;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.part.IPage;
@@ -53,11 +55,22 @@ public class JumpToCTDSHandler extends AbstractHandler {
      * @return the string...
      */
     private String mineString() {
-        IViewPart v = Plugin.getActivePage().findView("org.eclipse.ui.views.PropertySheet"); //$NON-NLS-1$
-        if (!(v instanceof PropertySheet)) {
-            return null;
+        IViewPart v = Plugin.getActiveView();
+        if (v instanceof PropertySheet) {
+            return mineFromPropertyView((PropertySheet) v);
         }
-        PropertySheet p = (PropertySheet) v;
+        if (v instanceof DataSetView) {
+            return mineFromDataSetView((DataSetView) v);
+        }
+        return null;
+    }
+
+    /**
+     * Tries to extract the selection from the Property View
+     * @param p the Property View
+     * @return the parameter String or null
+     */
+    private String mineFromPropertyView(PropertySheet p) {
         if (!(p.getCurrentPage() instanceof JBPropertiesPage)) {
             return null;
         }
@@ -76,6 +89,28 @@ public class JumpToCTDSHandler extends AbstractHandler {
         }
         return ((AbstractParamValueController) pd.getId()).
                 getProperty();
+    }
+
+    /**
+     * Tries to extract the selected parameter value from the DataSetView
+     * @param view the DataSetView
+     * @return the parameter value or null
+     */
+    private String mineFromDataSetView(DataSetView view) {
+        if (!(view.getCurrentPage() instanceof AbstractDataSetPage)) {
+            return null;
+        }
+        AbstractDataSetPage page = (AbstractDataSetPage) view.getCurrentPage();
+        Object res = null;
+        try {
+            res = page.getTableCursor().getData();
+        } catch (SWTException e) {
+            // widget is disposed or other problems
+        }
+        if (!(res instanceof String)) {
+            return null;
+        }
+        return (String) res;
     }
 
     /**

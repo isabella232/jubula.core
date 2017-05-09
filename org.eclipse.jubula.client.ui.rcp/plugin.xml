@@ -1308,6 +1308,13 @@
         </command>
     </menuContribution>
     <menuContribution
+        locationURI="toolbar:org.eclipse.jubula.client.ui.rcp.views.DataSetView">
+        <command
+            commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS"
+            style="push">
+        </command>
+    </menuContribution>
+    <menuContribution
       locationURI="menu:org.eclipse.jubula.client.ui.rcp.views.ComponentNameBrowser?after=additions">
       <menu label="&amp;Sort by">
         <command
