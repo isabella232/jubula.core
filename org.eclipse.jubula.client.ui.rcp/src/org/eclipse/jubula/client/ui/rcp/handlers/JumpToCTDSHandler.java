@@ -98,7 +98,9 @@ public class JumpToCTDSHandler extends AbstractHandler {
                 max = num;
             }
         }
-        openCTDS(best);
+        if (best != null) {
+            openCTDS(best);
+        }
     }
 
     /**
