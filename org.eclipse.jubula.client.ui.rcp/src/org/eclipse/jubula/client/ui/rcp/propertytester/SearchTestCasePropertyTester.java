@@ -62,8 +62,11 @@ public class SearchTestCasePropertyTester
     public boolean testImpl(Object receiver, String property, Object[] args) {
         if (receiver instanceof SearchResultElement) {
             @SuppressWarnings("unchecked")
-            SearchResultElement<Long> searchResult = 
-                    (SearchResultElement<Long>) receiver;
+            SearchResultElement searchResult = 
+                    (SearchResultElement) receiver;
+            if (!(searchResult.getData() instanceof Long)) {
+                return false;
+            }
             IProjectPO project = GeneralStorage.getInstance().getProject();
             if (project != null && !project.getIsProtected()) {
                 try {

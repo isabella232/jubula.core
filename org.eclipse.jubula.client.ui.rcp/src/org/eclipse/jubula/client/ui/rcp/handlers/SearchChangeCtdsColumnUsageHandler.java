@@ -54,11 +54,14 @@ public class SearchChangeCtdsColumnUsageHandler
         }
         // create list of selected Test Cases
         @SuppressWarnings("unchecked")
-        List<SearchResultElement<Long>> oldSelection =
+        List<SearchResultElement> oldSelection =
                 getSelection().toList();
         Set<ITestCasePO> testCases = new HashSet<ITestCasePO>();
         EntityManager session = GeneralStorage.getInstance().getMasterSession();
-        for (SearchResultElement<Long> searchResult: oldSelection) {
+        for (SearchResultElement searchResult: oldSelection) {
+            if (!(searchResult.getData() instanceof Long)) {
+                continue;
+            }
             INodePO nodePO = session.find(NodeMaker.getNodePOClass(),
                     searchResult.getData());
             if (nodePO instanceof ITestCasePO) {

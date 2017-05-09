@@ -123,7 +123,10 @@ public class TestDataBP {
     /**
      * Returns all resolvable CTDS references
      * @param value the parameter value
-     * @return the CTDS references
+     * @return the CTDS references: 4-element String arrays
+     *      containing the 4 arguments of a ?getCTDSValue function.
+     *      Only purely literal references are resolved, any other references are
+     *      replaced by nulls.
      */
     public static List<String[]> getAllCTDSReferences(String value) {
         List<String[]> res = new ArrayList<>();
@@ -144,7 +147,7 @@ public class TestDataBP {
 
     /**
      * Searches through CTDS references within a list of tokens
-     * @param res the resulting list of CTDS refs
+     * @param res the resulting list of CTDS refs (4-element String arrays containing the arguments)
      * @param tokens the tokens
      */
     private static void addAllCTDSRefsNotGetCTDS(List<String[]> res,
@@ -165,7 +168,7 @@ public class TestDataBP {
 
     /**
      * Searches through CTDS references within argument tokens of a getCTDSValue function
-     * @param res the resulting list of CTDS refs
+     * @param res the resulting list of CTDS refs (4-element String arrays, containing the 4 arguments)
      * @param tokens the tokens
      */
     private static void addAllCTDSRefsGetCTDS(List<String[]> res,

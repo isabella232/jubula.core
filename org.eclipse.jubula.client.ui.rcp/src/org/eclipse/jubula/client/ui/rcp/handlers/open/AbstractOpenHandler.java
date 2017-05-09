@@ -192,4 +192,27 @@ public abstract class AbstractOpenHandler extends AbstractHandler {
         Assert.notReached();
         return StringUtils.EMPTY;
     }
+
+    /**
+     * Opens the editor for the root, and if possible, selects the child
+     * @param root the root node of the editor
+     * @param child the child to select
+     * @return the editor (or null if the operation failed)
+     */
+    public static IEditorPart openEditorAndSelectNode(
+            INodePO root, INodePO child) {
+        if (root != null && NodeBP.isEditable(root)) {
+            IEditorPart ed = AbstractOpenHandler.openEditor(root);
+            if (ed instanceof AbstractJBEditor) {
+                INodePO edChild = ((AbstractJBEditor) ed).getEntityManager().
+                        find(child.getClass(), child.getId());
+                if (edChild != null) {
+                    ((AbstractJBEditor) ed).setSelection(
+                            new StructuredSelection(edChild));
+                }
+            }
+            return ed;
+        }
+        return null;
+    }
 }

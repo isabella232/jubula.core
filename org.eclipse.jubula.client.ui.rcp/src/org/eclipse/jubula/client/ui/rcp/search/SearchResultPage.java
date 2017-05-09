@@ -183,9 +183,8 @@ public class SearchResultPage extends AbstractSearchResultPage
             if (!(event.getSelection() instanceof IStructuredSelection)) {
                 return;
             }
-            @SuppressWarnings("unchecked")
-            SearchResultElement<Long> element = 
-                (SearchResultElement<Long>)((IStructuredSelection)event
+            SearchResultElement element = 
+                (SearchResultElement)((IStructuredSelection)event
                     .getSelection()).getFirstElement();
             if (element != null) {
                 element.jumpToResult();

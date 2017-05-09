@@ -61,13 +61,15 @@ public class SearchPageUtils {
      * @param testCases The list of valid Test Cases.
      */
     public static void selectTestCases(SearchResultPage page,
-            List<SearchResultElement<Long>> oldSelection,
+            List<SearchResultElement> oldSelection,
             List<ITestCasePO> testCases) {
         // create a new list for selection
-        List<SearchResultElement<Long>> newSelection =
-                new ArrayList<SearchResultElement<Long>>();
-        for (SearchResultElement<Long> resultElement: oldSelection) {
-            if (testCasesContainId(testCases, resultElement.getData())) {
+        List<SearchResultElement> newSelection =
+                new ArrayList<SearchResultElement>();
+        for (SearchResultElement resultElement: oldSelection) {
+            if (resultElement.getData() instanceof Long
+                    && testCasesContainId(testCases,
+                            (Long) resultElement.getData())) {
                 newSelection.add(resultElement);
             }
         }

@@ -28,4 +28,21 @@
     <emphasis role="input">»Tab«</emphasis> key springs to the
     ”<emphasis>Add</emphasis>” button.
   </para>
+  <para>
+    To simplify navigation, the toolbar of the Data Sets View contains the <emphasis role="strong">Jump to Central Test Data Set</emphasis> command.
+    If the currently selected cell references a central data set through a <emphasis role="strong">?getCentralTestDataSetValue</emphasis>
+    function call (see in <xref linkend="using-functions-as-data-for-test-cases"/>) then this command tries to identify the data set and opens
+    its Editor. In case the referenced row and cell are identifiable, these are automatically selected in the
+    Data Sets View (<xref linkend="the-data-sets-view"/>).
+  </para>
+  <para>
+    The toolbar also contains the <emphasis role="strong">Show Where Used CTDS</emphasis> command.
+    This can be used when a certain cell of a Central Test Data Set is selected.
+    In this case all resolvable references through the <emphasis role="strong">?getCentralTestDataSetValue</emphasis> function call
+    are found, and listed in the Search Result View.
+    Those references which exact reference the given cell are marked by the icon <imagedata fileref="images/startOM.png"/>,
+    and those which only reference the column are marked by the icon <imagedata fileref="images/stopOM.png"/>.
+    Please note that only the literal references are found (e.g. those which do not use parameters, variables or other function calls).
+  </para>
+  
 </section>

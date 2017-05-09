@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.preference.PreferenceManager;
 import org.eclipse.jface.preference.PreferenceNode;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.CalcTypes;
 import org.eclipse.jubula.client.core.businessprocess.CompNameManager;
 import org.eclipse.jubula.client.core.businessprocess.db.NodeBP;
@@ -38,7 +37,6 @@ import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
-import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.handlers.project.ProjectPropertiesHandler;
@@ -46,7 +44,6 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 import org.eclipse.ui.dialogs.PreferencesUtil;
@@ -109,22 +106,7 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                     || editorRoot instanceof ISpecTestCasePO))) {
                 editorRoot = editorRoot.getParentNode();
             }
-            openEditorAndSelectNode(editorRoot, node);
-        }
-    }
-
-    /**
-     * Opens the editor for the root, and if possible, selects the child
-     * @param root the root node of the editor
-     * @param child the child to select
-     */
-    private static void openEditorAndSelectNode(INodePO root, INodePO child) {
-        if (root != null && NodeBP.isEditable(root)) {
-            IEditorPart ed = AbstractOpenHandler.openEditor(root);
-            if (ed instanceof AbstractJBEditor) {
-                ((AbstractJBEditor) ed).setSelection(
-                        new StructuredSelection(child));
-            }
+            AbstractOpenHandler.openEditorAndSelectNode(editorRoot, node);
         }
     }
 
@@ -162,7 +144,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
             if (node == null) {
                 return;
             }
-            openEditorAndSelectNode(node.getSpecAncestor(), node);
+            AbstractOpenHandler.openEditorAndSelectNode(
+                    node.getSpecAncestor(), node);
             if (m_cN.getTypeProblem().getProblemType().equals(
                     ProblemType.REASON_INCOMPATIBLE_MAP_TYPE)) {
                 for (IAUTMainPO aut : GeneralStorage.getInstance().
@@ -178,7 +161,8 @@ public class JBMarkerResolutionGenerator implements IMarkerResolutionGenerator {
                 if (node == null) {
                     return;
                 }
-                openEditorAndSelectNode(node.getSpecAncestor(), node);
+                AbstractOpenHandler.openEditorAndSelectNode(
+                        node.getSpecAncestor(), node);
             }
         }
     }

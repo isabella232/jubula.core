@@ -37,12 +37,15 @@ import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingMultiPageEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
+import org.eclipse.jubula.client.ui.rcp.search.query.ShowWhereReferencedCTDSValueQuery.CTDSReference;
 import org.eclipse.jubula.client.ui.rcp.views.AbstractJBTreeView;
+import org.eclipse.jubula.client.ui.rcp.views.dataset.DataSetView;
 import org.eclipse.search.ui.ISearchQuery;
 import org.eclipse.search.ui.ISearchResult;
 import org.eclipse.search.ui.ISearchResultListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IViewPart;
 
 
 /**
@@ -367,6 +370,40 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
             
             return null;
         }
+    }
+
+    /**
+     * Opens the Editor for a Test Data Cube, and selects a cell
+     *      if it is given
+     * @author BREDEX GmbH
+     */
+    public static class TestDataCubeExtendedAction
+        implements ISearchResultElementAction<CTDSReference> {
+
+        @Override
+        public void jumpTo(CTDSReference data) {
+            if (data.getNode() == null) {
+                return;
+            }
+            INodePO spec = data.getNode().getSpecAncestor();
+            if (spec == null) {
+                return;
+            }
+            IEditorPart ed = AbstractOpenHandler.openEditorAndSelectNode(
+                    data.getNode().getSpecAncestor(), data.getNode());
+            IViewPart v = Plugin.showView(DataSetView.ID);
+            if (!(v instanceof DataSetView)) {
+                return;
+            }
+            ((DataSetView) v).navigateToCellUsingRowCol(
+                    data.getRow(), data.getColumn());
+        }
+
+        @Override
+        public void openView(String viewId) {
+            // empty, the jumpTo is responsible for all actions
+        }
+        
     }
     
     /**

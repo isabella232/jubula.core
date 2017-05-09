@@ -1918,7 +1918,7 @@ public abstract class AbstractDataSetPage extends Page
     /**
      * @return the paramInterfaceObj
      */
-    private IParameterInterfacePO getParamInterfaceObj() {
+    public IParameterInterfacePO getParamInterfaceObj() {
         return m_paramInterfaceObj;
     }
     
@@ -2016,4 +2016,46 @@ public abstract class AbstractDataSetPage extends Page
         return -1;
     }
 
+    /**
+     * Returns the currently selected row's index or -1 if none is selected
+     * @return the index or -1
+     */
+    public int getCurrentRow() {
+        if (getTable().isDisposed()) {
+            return -1;
+        }
+        return getTable().getSelectionIndex();
+    }
+
+    /**
+     * Returns the currently selected column's index or -1 if none is selected
+     * @return the index or -1
+     */
+    public int getCurrentCol() {
+        if (getTable().isDisposed()) {
+            return -1;
+        }
+        return getTableCursor().getColumn();
+    }
+
+    /**
+     * Activates a cell in the underlying Table
+     * @param row the row
+     * @param col the data column (not counting the first column of the table)
+     */
+    public void navigateToCellUsingRowCol(int row, int col) {
+        if (getTable().isDisposed()) {
+            return;
+        }
+        int newRow = Math.max(0, row);
+        if (newRow >= getTable().getItemCount()) {
+            newRow = 0;
+        }
+        getTable().setFocus();
+        getTable().setSelection(newRow);
+        if (col < 0 || col + 1 >= getTable().getColumnCount()) {
+            return;
+        }
+        getTableCursor().setSelection(newRow, col + 1);
+    }
 }

@@ -27,11 +27,9 @@ import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.views.JBPropertiesPage;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.AbstractDataSetPage;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.DataSetView;
-import org.eclipse.jubula.client.ui.rcp.views.dataset.TestDataCubeDataSetPage;
 import org.eclipse.swt.SWTException;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 
 /**
@@ -140,7 +138,8 @@ public class JumpToCTDSHandler extends AbstractHandler {
 
     /**
      * Opens an Editor to edit the CTDS
-     * @param data the CTDS data
+     * @param data the CTDS data: a String array of length 4,
+     *      corresponding to the 4 arguments of the ?getCTDSValue function
      */
     private void openCTDS(String[] data) {
         IProjectPO proj = GeneralStorage.getInstance().getProject();
@@ -160,16 +159,11 @@ public class JumpToCTDSHandler extends AbstractHandler {
         CentralTestDataEditor ctdsEd = (CentralTestDataEditor) part;
         po = ctdsEd.getEntityManager().find(po.getClass(), po.getId());
         ctdsEd.getTreeViewer().setSelection(new StructuredSelection(po));
-        IViewPart view = Plugin.showView("org.eclipse.jubula.client.ui.rcp.views.DataSetView"); //$NON-NLS-1$
+        IViewPart view = Plugin.showView(DataSetView.ID);
         if (!(view instanceof DataSetView)) {
             return;
         }
-        IPage page = ((DataSetView) view).getCurrentPage();
-        if (!(page instanceof TestDataCubeDataSetPage)) {
-            return;
-        }
-        ((TestDataCubeDataSetPage) page).navigateToCell(
-                data[1], data[2], data[3]);
+        ((DataSetView) view).navigateToCell(data[1], data[2], data[3]);
     }
 
 }

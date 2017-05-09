@@ -850,6 +850,11 @@
       name="%JumpToCTDS" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      description="%ShowWhereUsedCTDSDesc"
+      id="org.eclipse.jubula.client.ui.commands.ShowWhereUsedCTDS"
+      name="%ShowWhereUsedCTDS" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.filter.reusedData"
       name="reused" />
     <command
@@ -1126,6 +1131,11 @@
       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
       sequence="M1+G" />
     <key
+      commandId="org.eclipse.jubula.client.ui.commands.ShowWhereUsedCTDS"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="M1+U" />
+    <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ImportProject"
       contextId="org.eclipse.ui.contexts.window"
       schemeId="org.eclipse.jubula.client.ui.rcp.defaultKeyScheme"
@@ -1311,6 +1321,13 @@
         locationURI="toolbar:org.eclipse.jubula.client.ui.rcp.views.DataSetView">
         <command
             commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS"
+            style="push">
+        </command>
+    </menuContribution>
+    <menuContribution
+        locationURI="toolbar:org.eclipse.jubula.client.ui.rcp.views.DataSetView">
+        <command
+            commandId="org.eclipse.jubula.client.ui.commands.ShowWhereUsedCTDS"
             style="push">
         </command>
     </menuContribution>
@@ -2191,6 +2208,10 @@
    <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.JumpToCTDSHandler"
       commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS">
+   </handler>
+   <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.ShowWhereUsedCTDSHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.ShowWhereUsedCTDS">
    </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.AddTestResultSummaryCommentHandler"
@@ -3163,6 +3184,10 @@
       commandId="org.eclipse.jubula.client.ui.commands.JumpToCTDS"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/collapse_disabled.gif"
       icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/centralTestData.gif" />
+    <image
+      commandId="org.eclipse.jubula.client.ui.commands.ShowWhereUsedCTDS"
+      disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/collapse_disabled.gif"
+      icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/showSpecification.gif" />
     <image
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ClearTestResultView"
       disabledIcon="platform:/plugin/org.eclipse.jubula.client.ui/icons/view_disabled.gif"

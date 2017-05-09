@@ -361,6 +361,10 @@ public class IconConstants {
     public static final Image TRSV_DETAILS = getImage("TRSV_Details.png"); //$NON-NLS-1$
     /** TestResultSummaryView no details image */
     public static final Image TRSV_NODETAILS = getImage("TRSV_NoDetails.png"); //$NON-NLS-1$
+    /** Start OM gif, used for CTDS search result decoration as well */
+    public static final Image START_OM = getImage("startOM.gif"); //$NON-NLS-1$
+    /** Stop OM gif, used for CTDS search result decoration as well */
+    public static final Image STOP_OM = getImage("stopOM.gif"); //$NON-NLS-1$
     /** icon for specific profile **/
     public static final ImageDescriptor TRIANGLE_OVERLAY = getImageDescriptor("triangleOverlay.gif"); //$NON-NLS-1$
     

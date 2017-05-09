@@ -15,4 +15,18 @@
   <para>
     <emphasis role="strong">Removed support to import xml files</emphasis>
   </para>
+<para>
+ <emphasis role="strong">Search where Central Test Data is referenced</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        We added the possibility to search for places where a given cell in a Central Test
+        Data is referenced through the <emphasis role="strong">?getCentralTestDataValue</emphasis>
+        function. The results are classified as being exact (when the exact cell is referenced) and
+        approximate (when the column of the cell is referenced). Please note that only the literal
+        references are found (e.g. those which do not use parameters, variables or other function calls).
+    </para>
+  </listitem>
+</itemizedlist>
 </section>

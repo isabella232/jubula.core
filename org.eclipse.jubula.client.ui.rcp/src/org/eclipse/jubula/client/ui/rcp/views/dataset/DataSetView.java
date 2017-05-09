@@ -46,6 +46,9 @@ public class DataSetView extends PageBookView
     implements IProjectLoadedListener, IParamChangedListener, 
         IContributedContentsView, ISelectionListener {
 
+    /** The ID of the DSV */
+    public static final String ID = "org.eclipse.jubula.client.ui.rcp.views.DataSetView"; //$NON-NLS-1$
+    
     /**
      * {@inheritDoc}
      */
@@ -203,5 +206,33 @@ public class DataSetView extends PageBookView
     public void setFocus() {
         Plugin.showStatusLine(this);
         super.setFocus();
+    }
+
+    /**
+     * Attempts to activate a cell determined by parameters of the getCentralTestDataSetValue function
+     * @param keyCol the key column name
+     * @param keyVal the key value
+     * @param valCol the value column name
+     */
+    public void navigateToCell(String keyCol, String keyVal,
+            String valCol) {
+        if (!(getCurrentPage() instanceof AbstractDataSetPage)) {
+            return;
+        }
+        ((AbstractDataSetPage) getCurrentPage()).navigateToCell(
+                keyCol, keyVal, valCol);
+    }
+
+    /**
+     * Activates a cell in the underlying Table
+     * @param row the row
+     * @param col the data column (not counting the first column of the table)
+     */
+    public void navigateToCellUsingRowCol(int row, int col) {
+        if (!(getCurrentPage() instanceof AbstractDataSetPage)) {
+            return;
+        }
+        ((AbstractDataSetPage) getCurrentPage()).navigateToCellUsingRowCol(
+                row, col);
     }
 }

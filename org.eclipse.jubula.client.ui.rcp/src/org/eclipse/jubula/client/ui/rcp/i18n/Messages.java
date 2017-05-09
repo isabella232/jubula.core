@@ -773,6 +773,7 @@ public class Messages extends NLS {
     public static String SaveProjectAsActionTitle;
     public static String SaveProjectAsActionWaitWhileSaving;
     public static String SaveProjectAsOperationSavingProject;
+    public static String SearchingForCTDSRefs;
     public static String SearchingIn;
     public static String SearchResultPageResultPageLabel;
     public static String SearchResultPageElementLabel;
