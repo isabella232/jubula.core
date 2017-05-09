@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -23,6 +24,7 @@ import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceledUtil;
@@ -681,4 +683,26 @@ public class CompNamePM extends AbstractNamePM {
         lockObj = null;
     }
 
+    /**
+     * Returns the CompNamePO -> parent projectPO map for the given CompNamePO guids
+     *     Without GUID duplication, all CNs which have the same GUID should also have the
+     *     same ParentProject GUID.
+     * @param guids the CompNamePO guids
+     * @param sess the session to use
+     * @return the resulting map
+     */
+    public static Map<String, String> getGuidToProjGuidMap(
+            Set<String> guids, EntityManager sess) {
+        TypedQuery<Object[]> q = sess.createQuery("select compName.hbmGuid, proj.guid from " //$NON-NLS-1$
+                + "ComponentNamePO compName, ProjectPO proj " //$NON-NLS-1$
+                + "where compName.hbmParentProjectId = proj.id and " //$NON-NLS-1$
+                + "compName.hbmGuid in :compNameGuids", Object[].class); //$NON-NLS-1$
+        q.setParameter("compNameGuids", guids); //$NON-NLS-1$
+        Map<String, String> result = new HashMap<>();
+        for (Object[] entry : q.getResultList()) {
+            // we assume that the DB is consitent, and doesn't already contain duplicated GUIDs
+            result.put((String) entry[0], (String) entry[1]);
+        }
+        return result;
+    }
 }
