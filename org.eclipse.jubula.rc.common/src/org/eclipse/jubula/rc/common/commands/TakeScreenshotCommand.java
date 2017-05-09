@@ -63,23 +63,26 @@ public class TakeScreenshotCommand implements ICommand {
                 .getRobot();
         final BufferedImage createScreenCapture = robot
                 .createFullScreenCapture();
-        Point currentPointingDevicePosition = robot
-                .getCurrentMousePosition();
-        
-        if (currentPointingDevicePosition != null) {
-            final int pdX = currentPointingDevicePosition.x;
-            final int pdY = currentPointingDevicePosition.y;
-    
-            final int xStart = pdX - LINE_LENGTH_PER_DIRECTION;
-            final int yStart = pdY - LINE_LENGTH_PER_DIRECTION;
-            
-            for (int i = 0; i < TOTAL_LINE_LENGTH; i++) {
-                for (int j = 0; j < TOTAL_LINE_LENGTH; j++) {
-                    invertPixelAtPoint(createScreenCapture, 
-                            xStart + i, 
-                            yStart + j);
+        try {
+            Point currentPointingDevicePosition =
+                    robot.getCurrentMousePosition();
+
+            if (currentPointingDevicePosition != null) {
+                final int pdX = currentPointingDevicePosition.x;
+                final int pdY = currentPointingDevicePosition.y;
+
+                final int xStart = pdX - LINE_LENGTH_PER_DIRECTION;
+                final int yStart = pdY - LINE_LENGTH_PER_DIRECTION;
+
+                for (int i = 0; i < TOTAL_LINE_LENGTH; i++) {
+                    for (int j = 0; j < TOTAL_LINE_LENGTH; j++) {
+                        invertPixelAtPoint(createScreenCapture, xStart + i,
+                                yStart + j);
+                    }
                 }
             }
+        } catch (Exception e) {
+            // ignore so the mouse position will not be visible
         }
         if (RobotConfiguration.getInstance().isErrorHighlighting()) {
             WeakReference<IComponent> errorComponent = 
