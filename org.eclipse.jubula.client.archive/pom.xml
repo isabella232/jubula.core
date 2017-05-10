@@ -11,26 +11,4 @@
     </parent>
     <artifactId>org.eclipse.jubula.client.archive</artifactId>
     <packaging>eclipse-plugin</packaging>
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>gen-parser</id>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <target>
-                                <ant antfile="genXMLBean.xml" />
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 </project>

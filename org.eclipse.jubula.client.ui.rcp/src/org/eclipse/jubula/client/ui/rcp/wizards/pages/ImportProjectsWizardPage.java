@@ -432,8 +432,7 @@ public class ImportProjectsWizardPage extends WizardPage
                 String file;
                 fileDialog.setText(Messages.ImportProjectDialogFileSelector);
                 String[] extension = new String[]{
-                    StringConstants.STAR + ExportProjectHandler.JUB,
-                    StringConstants.STAR + ExportProjectHandler.XML};
+                    StringConstants.STAR + ExportProjectHandler.JUB};
                 fileDialog.setFilterExtensions(extension);
                 fileDialog.setFilterPath(Utils.getLastDirPath());
                 file = fileDialog.open();

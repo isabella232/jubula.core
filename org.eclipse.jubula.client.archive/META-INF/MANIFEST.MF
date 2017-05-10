@@ -4,7 +4,6 @@ Bundle-Name: Jubula Archive
 Bundle-SymbolicName: org.eclipse.jubula.client.archive;singleton:=true
 Bundle-Version: 5.0.0.qualifier
 Bundle-ClassPath: .,
- lib/org.apache.xmlbeans.jar,
  lib/javax.xml.stream_1.0.1.v201004272200.jar,
  lib/xml/
 Bundle-Vendor: Eclipse Jubula

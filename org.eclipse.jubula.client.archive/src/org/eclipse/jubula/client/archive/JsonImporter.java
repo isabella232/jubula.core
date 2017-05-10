@@ -912,9 +912,8 @@ public class JsonImporter {
         }
         fillExecTestCase(proj, dto, evTc, assignNewGuid);
         evTc.setEventType(dto.getEventType());
-        ReentryProperty reentryProperty = ReentryProperty.getProperty(
-                org.eclipse.jubula.client.archive.schema.ReentryProperty
-                .Enum.forString(dto.getReentryProperty()).intValue());
+        ReentryProperty reentryProperty = 
+                ReentryProperty.getPropertyFromName(dto.getReentryProperty());
         evTc.setReentryProp(reentryProperty);
         if (reentryProperty == ReentryProperty.RETRY) {
             evTc.setMaxRetries(dto.getMaxRetries() != null
@@ -1575,8 +1574,9 @@ public class JsonImporter {
             new HashMap<String, Integer>();
         for (DefaultEventHandlerDTO evh : dto.getEventHandlers()) {
             defaultEventHandler.put(evh.getEvent(),
-                    org.eclipse.jubula.client.archive.schema.ReentryProperty
-                    .Enum.forString(evh.getReentryProperty()).intValue());
+                    ReentryProperty.getPropertyFromName(
+                            evh.getReentryProperty()).getValue());
+            
         }
         ts.setDefaultEventHandler(defaultEventHandler);
         ts.setStepDelay(dto.getStepDelay());

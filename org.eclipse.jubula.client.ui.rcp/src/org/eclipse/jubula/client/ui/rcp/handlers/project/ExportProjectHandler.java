@@ -37,9 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ExportProjectHandler extends AbstractProjectHandler {
     
-    /** Extension of XML */
-    public static final String XML = ".xml"; //$NON-NLS-1$
-    
     /** Extension of JUB. It is an zip file which contain a project and a test result json file*/
     public static final String JUB = ".jub"; //$NON-NLS-1$
 

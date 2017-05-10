@@ -62,7 +62,6 @@ import org.eclipse.jubula.client.archive.dto.TestresultSummaryDTO;
 import org.eclipse.jubula.client.archive.dto.UsedToolkitDTO;
 import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
-import org.eclipse.jubula.client.archive.schema.ReentryProperty;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
@@ -105,6 +104,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.IWhileDoPO;
+import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.IExecPersistable;
 import org.eclipse.jubula.client.core.persistence.ISpecPersistable;
@@ -113,6 +113,7 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
@@ -885,13 +886,15 @@ public class JsonExporter {
             IEventExecTestCasePO po) {
         fillRefTestCase(evDTO, po);
         evDTO.setEventType(po.getEventType());
-        ReentryProperty.Enum reentryProperty = ReentryProperty.Enum.forInt(po
-                .getReentryProp().getValue());
-        evDTO.setReentryProperty(reentryProperty.toString());
-        if (reentryProperty == ReentryProperty.RETRY) {
-            Integer maxRetries = po.getMaxRetries();
-            if (maxRetries != null) {
-                evDTO.setMaxRetries(maxRetries);
+        ReentryProperty reentryProp =
+                po.getReentryProp();
+        if (reentryProp != null) {
+            evDTO.setReentryProperty(reentryProp.getName());
+            if (reentryProp == ReentryProperty.RETRY) {
+                Integer maxRetries = po.getMaxRetries();
+                if (maxRetries != null) {
+                    evDTO.setMaxRetries(maxRetries);
+                }
             }
         }
     }
@@ -995,19 +998,24 @@ public class JsonExporter {
         for (Object o : po.getDefaultEventHandler().keySet()) {
             String eventType = (String)o;
             Integer evProp = po.getDefaultEventHandler().get(eventType);
-            ReentryProperty.Enum reentryProperty = ReentryProperty.Enum
-                    .forInt(evProp);
-            DefaultEventHandlerDTO ehDTO = new DefaultEventHandlerDTO();
-            ehDTO.setEvent(eventType);
-            ehDTO.setReentryProperty(reentryProperty.toString());
-
-            // Trac#1908
-            // since EventHandler on TestSuites are fakes, we can not
-            // use the real data. The default for this is set to 1.
-            if (reentryProperty == ReentryProperty.RETRY) {
-                ehDTO.setMaxRetries(1);
+            ReentryProperty reentryProperty;
+            try {
+                reentryProperty = ReentryProperty.getProperty(evProp);
+                DefaultEventHandlerDTO ehDTO = new DefaultEventHandlerDTO();
+                ehDTO.setEvent(eventType);
+                ehDTO.setReentryProperty(reentryProperty.getName());
+                
+                // Trac#1908
+                // since EventHandler on TestSuites are fakes, we can not
+                // use the real data. The default for this is set to 1.
+                if (reentryProperty == ReentryProperty.RETRY) {
+                    ehDTO.setMaxRetries(1);
+                }
+                tsDTO.addEventHandler(ehDTO);
+            } catch (InvalidDataException e) {
+                throw new RuntimeException(e); 
+                // Should not happen therefore throw a RuntimeException
             }
-            tsDTO.addEventHandler(ehDTO);
         }
     }
 

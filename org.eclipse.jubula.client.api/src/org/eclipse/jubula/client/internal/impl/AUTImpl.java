@@ -355,8 +355,10 @@ public class AUTImpl implements AUT {
         }
         return null;
     }
-
-    @Override
+    
+    /**
+     * {@inheritDoc}
+     */
     public void setProfile(Profile profile) throws IllegalArgumentException,
             IllegalStateException, CommunicationException {
         if (profile == null) {

@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.archive.JsonStorage;
-import org.eclipse.jubula.client.archive.XmlStorage;
 import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.errorhandling.NullProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.i18n.Messages;
@@ -80,9 +79,6 @@ import org.slf4j.LoggerFactory;
  * @created Jun 4, 2010
  */
 public class FileStorageBP {
-    
-    /** Extension of XML */
-    public static final String XML = ".xml"; //$NON-NLS-1$
     
     /** Extension of JUB. It is an zip file which contain a project and a test result json file*/
     public static final String JUB = ".jub"; //$NON-NLS-1$
@@ -228,11 +224,7 @@ public class FileStorageBP {
                     fileName.lastIndexOf(StringConstants.DOT),
                     fileName.length());
             IProjectPO proj = null;
-            if (fileExt.equals(XML)) {
-                proj = new XmlStorage().readProject(fileURL, paramNameMapper,
-                        compNameCache, subMonitor.newChild(1), m_console);
-
-            } else if (fileExt.equals(JUB)) {
+            if (fileExt.equals(JUB)) {
                 proj = new JsonStorage().readProject(fileURL, paramNameMapper,
                         compNameCache, false, false, subMonitor.newChild(1),
                         m_console);
@@ -1011,7 +1003,7 @@ public class FileStorageBP {
 
         SubMonitor subMonitor = SubMonitor.convert(monitor, 
                 Messages.ExportAllBPExporting,
-                XmlStorage.getWorkToSave(projectList));
+                JsonStorage.getWorkToSave(projectList));
         
         for (IProjectPO proj : projectList) {
             if (subMonitor.isCanceled()) {

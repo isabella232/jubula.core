@@ -36,50 +36,50 @@ public final class ReentryProperty {
      * <code>CONTINUE</code> continue testexecution with next step
      */
     public static final ReentryProperty CONTINUE = 
-        new ReentryProperty(1);
+        new ReentryProperty(1, "CONTINUE"); //$NON-NLS-1$
 
     /**
      * <code>REPEAT</code> continue testexecution with actual step (which
      * caused the error)
      */
-    public static final ReentryProperty REPEAT = new ReentryProperty(2);
+    public static final ReentryProperty REPEAT = new ReentryProperty(2, "REPEAT"); //$NON-NLS-1$
 
     /**
      * <code>BREAK</code> continue testexecution with next testcase
      */
-    public static final ReentryProperty BREAK = new ReentryProperty(3);
+    public static final ReentryProperty BREAK = new ReentryProperty(3, "BREAK"); //$NON-NLS-1$
 
     /**
      * <code>GOTO</code> continue testexecution with next nested testcase
      */
-    public static final ReentryProperty GOTO = new ReentryProperty(4);
+    public static final ReentryProperty GOTO = new ReentryProperty(4, "GO TO"); //$NON-NLS-1$
 
     /**
      * <code>RETURN</code> continue testexecution with next step (Cap or testcase)
      * in testcase, which contains the actual eventhandler
      */
-    public static final ReentryProperty RETURN = new ReentryProperty(5);
+    public static final ReentryProperty RETURN = new ReentryProperty(5, "RETURN"); //$NON-NLS-1$
 
     /**
      * <code>STOP</code> stop testexecution after execution of
      * errorHandler
      */
-    public static final ReentryProperty STOP = new ReentryProperty(6);
+    public static final ReentryProperty STOP = new ReentryProperty(6, "PAUSE"); //$NON-NLS-1$
 
     /**
      * <code>EXIT</code> cancel testexecution
      */
-    public static final ReentryProperty EXIT = new ReentryProperty(7);
+    public static final ReentryProperty EXIT = new ReentryProperty(7, "EXIT"); //$NON-NLS-1$
     
     /**
      * <code>RETRY</code> retry test step
      */
-    public static final ReentryProperty RETRY = new ReentryProperty(8);
+    public static final ReentryProperty RETRY = new ReentryProperty(8, "RETRY"); //$NON-NLS-1$
     
     /**
      * <code>CONDITION</code> placeholder to indicate a condition
      */
-    public static final ReentryProperty CONDITION = new ReentryProperty(9);
+    public static final ReentryProperty CONDITION = new ReentryProperty(9, "CONDITION"); //$NON-NLS-1$
 
     /** Array of existing Reentry Properties */
     public static final ReentryProperty[] REENTRY_PROP_ARRAY = 
@@ -97,12 +97,20 @@ public final class ReentryProperty {
      * <code>m_value</code> reentry property
      */
     private int m_value = 0;
+    
+    /**
+     * <code>m_internalName</code> fixed name for property
+     */
+    private String m_name;
 
     /**
+     * both values should not be changed!
      * @param value status for Reentry Property
+     * @param name the internal name
      */
-    private ReentryProperty(int value) {
+    private ReentryProperty(int value, String name) {
         m_value = value;
+        m_name = name;
     }
     
     /**
@@ -116,7 +124,7 @@ public final class ReentryProperty {
      * get the Proeprty for an specific int value, used by persistence layer.
      * @param reentryPropValue int value from DB
      * @return the property for the supplied int value
-     * {@inheritDoc}
+     * * @throws InvalidDataException if the integer is not known
      */
     public static ReentryProperty getProperty(Integer reentryPropValue)
         throws InvalidDataException {
@@ -150,28 +158,60 @@ public final class ReentryProperty {
      * get the Proeprty for an specific int value, used by persistence layer.
      * @param reentryPropValue string value
      * @return the property(Integer) for the supplied string value
-     * {@inheritDoc}
+     * @throws InvalidDataException if the i18n name is not known
      */
     public static Integer getProperty(String reentryPropValue) 
         throws InvalidDataException {
-        String val = reentryPropValue == null 
-            ? StringConstants.EMPTY : reentryPropValue;
+        String val = StringUtils.defaultIfBlank(reentryPropValue,
+                StringConstants.EMPTY);
         if (val.equals(Messages.EventExecTestCasePOCONTINUE)) { 
-            return 1;
+            return CONTINUE.getValue();
         } else if (val.equals(Messages.EventExecTestCasePOREPEAT)) { 
-            return 2;
+            return REPEAT.getValue();
         } else if (val.equals(Messages.EventExecTestCasePOBREAK)) { 
-            return 3;
+            return BREAK.getValue();
         } else if (val.equals(Messages.EventExecTestCasePOGOTO)) { 
-            return 4;
+            return GOTO.getValue();
         } else if (val.equals(Messages.EventExecTestCasePORETURN)) { 
-            return 5;
+            return RETURN.getValue();
         } else if (val.equals(Messages.EventExecTestCasePOSTOP)) { 
-            return 6;
+            return STOP.getValue();
         } else if (val.equals(Messages.EventExecTestCasePOEXIT)) { 
-            return 7;
+            return EXIT.getValue();
         } else if (val.equals(Messages.EventExecTestCasePORETRY)) { 
-            return 8;
+            return RETRY.getValue();
+        } 
+        LOG.error(Messages.UnsupportedReentryProperty + StringConstants.SPACE 
+            + val); 
+        throw new InvalidDataException(Messages.UnsupportedReentryProperty 
+            + StringConstants.SPACE + val, MessageIDs.E_UNSUPPORTED_REENTRY);
+    }
+    
+    /**
+     * 
+     * @param name the fixed name of a {@link ReentryProperty}
+     * @return the reentryProperty based on the {@link ReentryProperty#getValue()}
+     * @throws InvalidDataException if the name is not known
+     */
+    public static ReentryProperty getPropertyFromName(String name)
+            throws InvalidDataException {
+        String val = StringUtils.defaultIfBlank(name, StringConstants.EMPTY);
+        if (val.equalsIgnoreCase(CONTINUE.getName())) {
+            return CONTINUE;
+        } else if (val.equalsIgnoreCase(REPEAT.getName())) {
+            return REPEAT;
+        } else if (val.equalsIgnoreCase(BREAK.getName())) {
+            return BREAK;
+        } else if (val.equalsIgnoreCase(GOTO.getName())) {
+            return GOTO;
+        } else if (val.equalsIgnoreCase(RETURN.getName())) {
+            return RETURN;
+        } else if (val.equalsIgnoreCase(STOP.getName()) || val.equalsIgnoreCase("STOP")) { //$NON-NLS-1$
+            return STOP;
+        } else if (val.equalsIgnoreCase(EXIT.getName())) {
+            return EXIT;
+        } else if (val.equalsIgnoreCase(RETRY.getName())) {
+            return RETRY;
         } 
         LOG.error(Messages.UnsupportedReentryProperty + StringConstants.SPACE 
             + val); 
@@ -228,6 +268,13 @@ public final class ReentryProperty {
     public int getValue() {
         return m_value;
     }
+    /**
+     * @return the name of the {@link ReentryProperty}
+     */
+    public String getName() {
+        return m_name;
+    }
+
     /**
     * @return a String representation of this object.
     */

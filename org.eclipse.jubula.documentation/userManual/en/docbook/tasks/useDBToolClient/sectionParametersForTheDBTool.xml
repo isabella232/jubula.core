@@ -156,7 +156,7 @@
             <entry>Import Project</entry>
             <entry>
               <emphasis role="input">-import &lt;import-file&gt;</emphasis><?linebreak?>
-              e.g. <emphasis>-import &lt;ExampleProject.xml&gt;</emphasis>
+              e.g. <emphasis>-import &lt;ExampleProject.jub&gt;</emphasis>
             </entry>
           </row>
           <row>
