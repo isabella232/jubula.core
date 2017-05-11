@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views.dataset;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -68,10 +69,12 @@ import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchRe
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamTextContentAssisted;
+import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.tools.internal.constants.CharacterConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
+import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.utils.IsAliveThread;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -190,9 +193,6 @@ public abstract class AbstractDataSetPage extends Page
     
     /** The current IParameterInterfacePO */
     private IParameterInterfacePO m_paramInterfaceObj;
-
-    /** The state of the buttons for the current editor selection */
-    private boolean m_buttonEnabled;
     
     /** the primary control for this page */
     private Control m_control;
@@ -1365,6 +1365,19 @@ public abstract class AbstractDataSetPage extends Page
             if (LOG.isDebugEnabled()) {
                 logDataChange(property, value, m_oldValue,
                         getParamInterfaceObj().getSpecificationUser());
+            }
+            // Not perfect, because the actual value being persisted is not exactly 'value'...
+            if (value.length() > IPersistentObject.MAX_STR_LGT_CHAR) {
+                value = value.substring(0, IPersistentObject.MAX_STR_LGT_CHAR);
+                if (value.getBytes(StandardCharsets.UTF_8).length
+                        > IPersistentObject.MAX_STRING_LENGTH) {
+                    value = m_oldValue;
+                }
+                TextControlBP.setText(value, editor);
+                ErrorHandlingUtil.createMessageDialog(
+                    MessageIDs.W_MAX_CHAR, 
+                    new Object[] {IPersistentObject.MAX_STR_LGT_CHAR}, null);
+                return;
             }
             writeDataSetData(property, value, m_tcEditor);
             

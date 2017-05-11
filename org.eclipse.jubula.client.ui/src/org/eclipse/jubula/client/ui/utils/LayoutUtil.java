@@ -167,10 +167,10 @@ public class LayoutUtil {
             public void modifyText(ModifyEvent e) {
                 Text theWidget = ((Text)e.widget);
                 if (theWidget.getCharCount() >= maxLength) {
+                    theWidget.setText(m_oldValue);
                     ErrorHandlingUtil.createMessageDialog(
                             MessageIDs.W_MAX_CHAR, 
                             new Object[] {maxLength}, null);
-                    theWidget.setText(m_oldValue);
                 }
                 m_oldValue = theWidget.getText();
             }

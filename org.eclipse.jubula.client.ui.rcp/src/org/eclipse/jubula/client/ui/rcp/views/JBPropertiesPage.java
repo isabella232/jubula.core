@@ -66,6 +66,7 @@ import org.eclipse.jubula.client.ui.controllers.propertysources.AbstractProperty
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ActionTypeController;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ComponentNameController;
@@ -726,7 +727,9 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         if (!m_isEditable) {
             return;
         }
-        if (propD instanceof TextPropertyDescriptor) {
+        if (propD instanceof ParamTextPropertyDescriptor) {
+            LayoutUtil.setMaxChar(text, IPersistentObject.MAX_STR_LGT_CHAR);
+        } else if (propD instanceof TextPropertyDescriptor) {
             LayoutUtil.setMaxChar(text);
         }
     }
