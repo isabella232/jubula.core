@@ -294,7 +294,7 @@
 	</toolkitComponent>
 	
 	<toolkitComponent type="org.eclipse.swt.widgets.Tree">
-		<realizes>guidancer.concrete.Tree</realizes>
+		<realizes>org.eclipse.swt.widgets.SwtTree</realizes>
 		<testerClass>org.eclipse.jubula.rc.swt.tester.TreeTester</testerClass>
 		<componentClass name="org.eclipse.swt.widgets.Tree" />
 		<action name="CompSystem.VerifyCheckboxOfSelectedEntry">
