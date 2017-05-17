@@ -60,9 +60,18 @@ public class CalcTypes {
     /** The local version of the edited node */
     private INodePO m_localNode;
     
-    /** The (NodeID = (Guid => type)) map of local usage types */
-    private Map<Long, Map<String, String>> m_localType = new HashMap<>();
-    
+    /**
+     * The (NodeID = (Guid => type)) map of local propagated usage types
+     */
+    private Map<Long, Map<String, String>> m_localPropTypes = new HashMap<>();
+
+    /**
+     * The (NodeID = (Guid => type)) map of local final usage types
+     * These are CNs which come from an unpropagated persistent CNPair
+     *      so they will never agan be 'captured' up the CNPair chain
+     */
+    private Map<Long, Map<String, String>> m_localFinalTypes = new HashMap<>();
+
     /** The Guid => calculated usage type map */
     private Map<String, String> m_usageType = new HashMap<>();
     
@@ -118,7 +127,7 @@ public class CalcTypes {
             // SpecTestCasePOs
             for (ISpecPersistable node : proj.getSpecObjCont()
                     .getSpecObjList()) {
-                if (!m_localType.containsKey(node.getId())) {
+                if (!m_localPropTypes.containsKey(node.getId())) {
                     traverse(node);
                 }
             }
@@ -148,7 +157,7 @@ public class CalcTypes {
                     "Node can only be a Spec Test Case or a Test Suite"); //$NON-NLS-1$
         }
         traverse(node);
-        return m_localType.get(node.getId()).get(guid);
+        return m_localPropTypes.get(node.getId()).get(guid);
     }
     
     /** Collects usage incompatibility problems */
@@ -237,11 +246,9 @@ public class CalcTypes {
      * @param nodeOld the node
      */
     public void traverse(INodePO nodeOld) {
-        String guid;
-        ICompNamesPairPO pair;
-        Map<String, String> mapLocal;
         // the type of the CN at this node
         HashMap<String, String> localType = new HashMap<String, String>();
+        HashMap<String, String> locFinType = new HashMap<String, String>();
         INodePO node = nodeOld;
         if (m_guidToSwap != null 
                 && m_guidToSwap.equals(node.getGuid())) {
@@ -256,57 +263,81 @@ public class CalcTypes {
                 traverse(child);
             } else if (child instanceof ICapPO) {
                 // ...for CAPs, we simply add the usage type to the CN
-                guid = ((ICapPO) child).getComponentName();
-                if (guid == null) {
-                    continue;
+                String guid = ((ICapPO) child).getComponentName();
+                if (guid != null) {
+                    guid = CompNameManager.getInstance().resolveGuid(guid);
+                    String type = ((ICapPO) child).getComponentType();
+                    updateType(guid, type, localType, child);
                 }
-                guid = CompNameManager.getInstance().resolveGuid(guid);
-                String type = ((ICapPO) child).getComponentType();
-                updateType(guid, type, localType, child);
             } else if (child instanceof IExecTestCasePO) {
-                // for ExecTestCasePOs we first handle the SpecTestCasePO
-                ISpecTestCasePO spec = ((IExecTestCasePO) child)
-                        .getSpecTestCase();
-                if (spec == null) {
-                    continue;
-                }
-                if (!m_localType.containsKey(spec.getId())) {
-                    traverse(spec);
-                }
-                // ...and then we add the usages to the 'new' CNs
-                // indicated by the CompNamePairPOs
-                mapLocal = m_localType.get(spec.getId());
-                for (String gui : mapLocal.keySet()) {
-                    pair = ((IExecTestCasePO) child).getCompNamesPair(gui);
-                    if (pair == null) {
-                        guid = gui;
-                    } else {
-                        guid = pair.getSecondName();
-                        guid = CompNameManager.getInstance().resolveGuid(guid);
-                    }
-                    updateType(guid, mapLocal.get(gui), localType, child);
-                }
-                setCompNamePairTypes((IExecTestCasePO) child, mapLocal);
+                handleExecTC((IExecTestCasePO) child, localType, locFinType);
             }
         }
-        m_localType.put(node.getId(), localType);
+        m_localPropTypes.put(node.getId(), localType);
+        m_localFinalTypes.put(node.getId(), locFinType);
+    }
+
+    /**
+     * Processes an ExecTC child by updating the parent SpecTC's local type maps
+     * @param child the ExecTC child
+     * @param localType the local types map of the parent SpecTC
+     * @param locFinType the local final types map of the parent SpecTC
+     */
+    private void handleExecTC(IExecTestCasePO child,
+            Map<String, String> localType, Map<String, String> locFinType) {
+     // for ExecTestCasePOs we first handle the SpecTestCasePO
+        ISpecTestCasePO spec = child.getSpecTestCase();
+        if (spec == null) {
+            return;
+        }
+        if (!m_localPropTypes.containsKey(spec.getId())) {
+            traverse(spec);
+        }
+        // ...and then we add the usages to the 'new' CNs
+        // indicated by the CompNamePairPOs
+        Map<String, String> mapLocalFinal = m_localFinalTypes.
+                get(spec.getId());
+        for (String gui : mapLocalFinal.keySet()) {
+            updateType(gui, mapLocalFinal.get(gui), locFinType, child);
+        }
+        Map<String, String> specLocalTypes = m_localPropTypes.
+                get(spec.getId());
+        for (String gui : specLocalTypes.keySet()) {
+            ICompNamesPairPO pair = child.getCompNamesPair(gui);
+            String guid;
+            if (pair == null) {
+                guid = gui;
+            } else {
+                guid = pair.getSecondName();
+                guid = CompNameManager.getInstance().resolveGuid(guid);
+            }
+            if (pair == null || pair.isPropagated()) {
+                // nonexistent pairs keep propagating the CNs due to the bug
+                //    https://bugs.eclipse.org/bugs/show_bug.cgi?id=515641
+                updateType(guid, specLocalTypes.get(gui), localType, child);
+            } else {
+                // a nonpropagating persisted pair puts the guid in the final map
+                updateType(guid, specLocalTypes.get(gui), locFinType, child);
+            }
+        }
+        setCompNamePairTypes(child, specLocalTypes);
     }
     
     /**
-     * Puts the type into the local and global type maps
+     * Applies the given type to the local and global type maps
      * @param guid the guid
      * @param type the type
-     * @param localType the local type map
-     * @param node the node
+     * @param localTypes the local type map to be updated (propagated or final)
+     * @param node the node - used only for collecting information
      */
     private void updateType(String guid, String type,
-            Map<String, String> localType, INodePO node) {
+            Map<String, String> localTypes, INodePO node) {
         // Calculating the local type for the CN
-        if (localType.containsKey(guid)) {
-            localType.put(guid, CompNameTypeManager.calcUsageType(
-                    localType.get(guid), type));
+        if (localTypes.containsKey(guid)) {
+            localTypes.put(guid, CompNameTypeManager.calcUsageType(
+                    localTypes.get(guid), type));
         } else {
-            localType.put(guid, type);
+            localTypes.put(guid, type);
         }
         String currentType = m_usageType.get(guid);
         String currentTypeDisp = CompSystemI18n.getString(currentType);
@@ -321,6 +352,8 @@ public class CalcTypes {
         // Calculating the global type for the CN
         String newType = CompNameTypeManager.calcUsageType(
                 currentType, type);
+        // Collecting information on the conflicting usages
+        // This can be used for example in the QuickFix
         if (newType.equals(ComponentNamesBP.UNKNOWN_COMPONENT_TYPE)) {
             List<String> info = new ArrayList<String>(2);
             info.add(typeDisp);
@@ -432,11 +465,13 @@ public class CalcTypes {
     }
     
     /**
-     * Returns the local types at a given node
+     * Returns the local propagated types at a given node.
+     * (That is, the types that are 'seen' by CNPairs of ExecTCs
+     *      referencing this node (of course if it is a SpecTC)
      * @param node the node
      * @return the (CN Guid) => (local type) map
      */
-    public Map<String, String> getLocalTypes(INodePO node) {
-        return m_localType.get(node.getId());
+    public Map<String, String> getLocalPropTypes(INodePO node) {
+        return m_localPropTypes.get(node.getId());
     }
 }

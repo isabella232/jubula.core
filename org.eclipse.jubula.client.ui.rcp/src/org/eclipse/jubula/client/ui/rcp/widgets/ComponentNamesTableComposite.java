@@ -546,7 +546,7 @@ public class ComponentNamesTableComposite extends Composite implements
         }
         CalcTypes calc = new CalcTypes(cache, null);
         calc.calculateLocalType(spec, null);
-        Map<String, String> locMap = calc.getLocalTypes(spec);
+        Map<String, String> locMap = calc.getLocalPropTypes(spec);
         for (ICompNamesPairPO pair : cNPairs) {
             pair.setType(locMap.get(CompNameManager.getInstance().
                     resolveGuid(pair.getFirstName())));
