@@ -34,4 +34,11 @@
       </para>
     </listitem>
   </orderedlist>
+    <para>
+      Jubula maintains a list of all previously visited Editors, and it is possible to navigate between
+      them using the <literal>Previous / Next Editor</literal> toolbar items. The default shortkeys for these
+      are <emphasis role="input">Ctrl + Left</emphasis> and <emphasis role="input">Ctrl + Right</emphasis>, respectively.
+      There are also two similar toolbar items, <literal>Previous / Next Edited Editors</literal> which navigate between
+      those Editors which have been edited.
+    </para>
 </section>

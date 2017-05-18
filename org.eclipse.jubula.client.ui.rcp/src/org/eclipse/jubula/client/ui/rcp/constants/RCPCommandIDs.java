@@ -197,4 +197,17 @@ public interface RCPCommandIDs {
 
     /** the ID of the "collapse all" command */
     public static final String COLLAPSE_ALL = "org.eclipse.jubula.client.ui.rcp.commands.CollapseAll"; //$//$NON-NLS-1$
+
+    /** The ID of the "Go Back" command */
+    public static final String GO_BACK = "org.eclipse.jubula.client.ui.rcp.commands.navigation.GoBack"; //$NON-NLS-1$
+
+    /** The ID of the "Go Forward" command */
+    public static final String GO_FORWARD = "org.eclipse.jubula.client.ui.rcp.commands.navigation.GoForward"; //$NON-NLS-1$
+
+    /** The ID of the "Go Back" command */
+    public static final String EDITED_GO_BACK = "org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoBack"; //$NON-NLS-1$
+
+    /** The ID of the "Go Forward" command */
+    public static final String EDITED_GO_FORWARD = "org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoForward"; //$NON-NLS-1$
+
 }

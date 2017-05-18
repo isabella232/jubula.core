@@ -43,4 +43,15 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+ <emphasis role="strong">Go To Previous / Next (Edited) Editor</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+      We added a new navigation feature. Jubula now maintains a history of visited Editors, and it is possible
+      to navigate between these, or only those which have been edited.
+    </para>
+  </listitem>
+</itemizedlist>
 </section>

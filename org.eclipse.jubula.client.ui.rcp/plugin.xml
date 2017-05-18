@@ -974,6 +974,42 @@
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      description="%GoBack"
+      id="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoBack"
+      name="Go Back">
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+        name="Navigate Item" />
+    </command>
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      description="%GoForward"
+      id="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoForward"
+      name="Go Forward">
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+        name="Navigate Item" />
+    </command>
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      description="%GoForward"
+      id="org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoForward"
+      name="Edited Go Forward">
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+        name="Navigate Item" />
+    </command>
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      description="%GoForward"
+      id="org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoBack"
+      name="Edited Go Back">
+      <commandParameter
+        id="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+        name="Navigate Item" />
+    </command>
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.CreateAutDefinitionCommand"
       name="Create AUT Definition" />
     <command
@@ -1096,10 +1132,15 @@
   </extension>
   <extension point="org.eclipse.ui.bindings">
     <key
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoBack"
       contextId="org.eclipse.ui.contexts.window"
       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-      sequence="M1+M2+Y" />
+      sequence="M1+ARROW_LEFT" />
+    <key
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoForward"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="M1+ARROW_RIGHT" />
     <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.StartTestSuiteCommand"
       contextId="org.eclipse.ui.contexts.window"
@@ -1648,6 +1689,48 @@
           </visibleWhen>
         </command>
       </toolbar>
+      <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar">
+        <command
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoBack"
+          id="org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.EditedGoBack"
+          style="pulldown"
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/leftArrowStar.gif"
+          tooltip="%EditedGoBack">
+          <parameter
+            name="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+            value="Edited,-1" />
+        </command>
+        <command
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoBack"
+          id="org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.GoBack"
+          style="pulldown"
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/leftArrow.gif"
+          tooltip="%GoBack">
+          <parameter
+            name="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+            value="-1" />
+        </command>
+        <command
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoForward"
+          id="org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.GoForward"
+          style="pulldown"
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/rightArrow.gif"
+          tooltip="%GoForward">
+          <parameter
+            name="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+            value="1" />
+        </command>
+        <command
+          commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoForward"
+          id="org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.EditedGoForward"
+          style="pulldown"
+          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/rightArrowStar.gif"
+          tooltip="%EditedGoForward">
+          <parameter
+            name="org.eclipse.jubula.client.ui.rcp.commands.navigation.Navigate.parameter.NavigateItem"
+            value="Edited,1" />
+        </command>
+      </toolbar>
     </menuContribution>
     <menuContribution
       locationURI="toolbar:org.eclipse.jubula.client.ui.rcp.views.TestResultTreeView?after=additions">
@@ -1817,6 +1900,30 @@
       <dynamic
         class="org.eclipse.jubula.client.ui.rcp.contributionitems.ChooseHTMLWindowContributionItem"
         id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand.dropdown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.GoForward">
+      <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.NavGoForwardContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.GoForward.dropdown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.GoBack">
+      <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.NavGoBackContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.GoBack.dropdown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.EditedGoBack">
+      <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.NavEditedGoBackContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.EditedGoBack.dropdown" />
+    </menuContribution>
+    <menuContribution
+      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.EditedGoForward">
+      <dynamic
+        class="org.eclipse.jubula.client.ui.rcp.contributionitems.NavEditedGoForwardContributionItem"
+        id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.EditedGoForward.dropdown" />
     </menuContribution>
     <menuContribution
       allPopups="false"
@@ -2771,6 +2878,42 @@
       <enabledWhen>
         <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
           <equals value="true" />
+        </with>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NavigateHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoForward">
+      <enabledWhen>
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.navCanGoForward">
+            <equals value="true" />
+        </with>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NavigateHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoBack">
+      <enabledWhen>
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.navCanGoBack">
+            <equals value="true" />
+        </with>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NavigateHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoBack">
+      <enabledWhen>
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.navCanEditedGoBack">
+            <equals value="true" />
+        </with>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.NavigateHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.EditedGoForward">
+      <enabledWhen>
+        <with variable="org.eclipse.jubula.client.ui.rcp.variable.navCanEditedGoForward">
+            <equals value="true" />
         </with>
       </enabledWhen>
     </handler>
@@ -4244,6 +4387,21 @@
     </handler>
   </extension>
   <extension point="org.eclipse.ui.services">
+    <sourceProvider
+      provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.NavigationSourceProvider">
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.navCanGoBack"
+        priorityLevel="workbench" />
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.navCanGoForward"
+        priorityLevel="workbench" />
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.navCanEditedGoBack"
+        priorityLevel="workbench" />
+      <variable
+        name="org.eclipse.jubula.client.ui.rcp.variable.navCanEditedGoForward"
+        priorityLevel="workbench" />
+    </sourceProvider>
     <sourceProvider
       provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.AutStateSourceProvider">
       <variable

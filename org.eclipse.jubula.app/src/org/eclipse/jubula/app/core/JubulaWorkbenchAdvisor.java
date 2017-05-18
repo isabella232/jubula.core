@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.businessprocess.progress.OperationCanceled
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.Plugin.ClientStatus;
+import org.eclipse.jubula.client.ui.rcp.businessprocess.JBNavigationHistory;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
@@ -211,6 +212,9 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
      */
     public void postStartup() {
         Platform.addLogListener(m_runtimeLogger);
+        PlatformUI.getWorkbench().getActiveWorkbenchWindow().
+            getSelectionService().addSelectionListener(
+                    JBNavigationHistory.getInstance());
     }
 
     /**
