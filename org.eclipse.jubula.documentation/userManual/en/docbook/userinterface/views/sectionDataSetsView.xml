@@ -40,8 +40,6 @@
     This can be used when a certain cell of a Central Test Data Set is selected.
     In this case all resolvable references through the <emphasis role="strong">?getCentralTestDataSetValue</emphasis> function call
     are found, and listed in the Search Result View.
-    Those references which exact reference the given cell are marked by the icon <imagedata fileref="images/startOM.png"/>,
-    and those which only reference the column are marked by the icon <imagedata fileref="images/stopOM.png"/>.
     Please note that only the literal references are found (e.g. those which do not use parameters, variables or other function calls).
   </para>
   
