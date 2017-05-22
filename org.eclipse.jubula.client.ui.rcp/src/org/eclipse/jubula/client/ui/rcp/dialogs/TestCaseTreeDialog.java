@@ -10,27 +10,38 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.dialogs;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.TestCaseTreeComposite;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.ISelectionListener;
 
 
@@ -68,14 +79,38 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
     
     /** the TestCase which should be parent of the shown TestCases */
     private ISpecTestCasePO m_parentTestCase;
-    
+
+    /** The last selection to allow simple (non-listener) usage of the dialog */
+    private ISelection m_lastSel;
+
     /** the style of the tree */
     private int m_treeStyle = SWT.SINGLE;
     /** the add button */
     private Button m_addButton;
     /** the image of the title area */
-    private Image m_image = IconConstants.ADD_TC_DIALOG_IMAGE; 
-    
+    private Image m_image = IconConstants.ADD_TC_DIALOG_IMAGE;
+
+    /** Whether to show only categories */
+    private boolean m_onlyCategories = false;
+
+    /** Whether to show reused projects */
+    private boolean m_reuseds = true;
+
+    /** The node to select upon opening the dialog */
+    private Object m_preSelect = null;
+
+    /**
+     * The text shown above the optional Text field.
+     * If null, the text field is not shown.
+     */
+    private String m_enterTextLabel = null;
+
+    /** The text entered into the optional text field */
+    private String m_enteredText = null;
+
+    /** The preset text */
+    private String m_presetText = null;
+
     /**
      * <code>testcaseTreeComposite</code>
      */
@@ -156,10 +191,44 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         parent.setLayout(gridLayoutParent);
         
         LayoutUtil.createSeparator(parent);
+        if (m_enterTextLabel != null) {
+            Composite textPar = new Composite(parent, SWT.NONE);
+            textPar.setLayoutData(
+                    new GridData(SWT.FILL, SWT.FILL, true, false));
+            GridLayout gr = new GridLayout();
+            gr.numColumns = NUM_COLUMNS_1;
+            gr.marginWidth = 5;
+            textPar.setLayout(gr);
+            Label lab = new Label(textPar, SWT.NONE);
+            lab.setText(m_enterTextLabel);
+            Text text = new Text(textPar, SWT.SINGLE | SWT.BORDER);
+            GridData dat = new GridData(SWT.FILL, SWT.FILL, true, false);
+            LayoutUtil.addToolTipAndMaxWidth(dat, text);
+            text.setLayoutData(dat);
+            if (m_presetText != null) {
+                text.setText(m_presetText);
+                m_enteredText = m_presetText;
+            }
+            text.addModifyListener(new ModifyListener() {
 
-        m_testcaseTreeComposite = new TestCaseTreeComposite(parent, 
+                @Override
+                public void modifyText(ModifyEvent e) {
+                    m_enteredText = ((Text) e.getSource()).getText();
+                    m_addButton.setEnabled(
+                            checkDataValidityAndSetErrorMessage());
+                }
+                
+            });
+            LayoutUtil.createSeparator(parent);
+        }
+
+        if (m_parentTestCase != null) {
+            m_testcaseTreeComposite = new TestCaseTreeComposite(parent, 
                 m_treeStyle, m_parentTestCase);
-
+        } else {
+            m_testcaseTreeComposite = new TestCaseTreeComposite(parent,
+                    m_treeStyle, m_reuseds, m_onlyCategories);
+        }
         LayoutUtil.createSeparator(parent);
         return m_testcaseTreeComposite;
     }
@@ -171,7 +240,6 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
     protected void createButtonsForButtonBar(Composite parent) {
         // Add-Button
         m_addButton = createButton(parent, ADD, m_addButtonText, true);
-        m_addButton.setEnabled(false);
         m_addButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 notifyListener();
@@ -179,7 +247,8 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
                 close();
             }
         });
-        m_testcaseTreeComposite.getTreeViewer().addSelectionChangedListener(
+        TreeViewer tv = m_testcaseTreeComposite.getTreeViewer(); 
+        tv.addSelectionChangedListener(
                 new ISelectionChangedListener() {
                     public void selectionChanged(SelectionChangedEvent e) {
                         if (e.getSelection() != null) {
@@ -188,14 +257,14 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
                     }
                 });
         
-        m_testcaseTreeComposite.getTreeViewer().addSelectionChangedListener(
+        tv.addSelectionChangedListener(
                 new ISelectionChangedListener() {
                     public void selectionChanged(SelectionChangedEvent event) {
-                        m_addButton.setEnabled(m_testcaseTreeComposite
-                                .hasValidSelection());
+                        m_addButton.setEnabled(
+                                checkDataValidityAndSetErrorMessage());
                     }
                 });
-        m_testcaseTreeComposite.getTreeViewer().addDoubleClickListener(
+        tv.addDoubleClickListener(
             new IDoubleClickListener() {
                 public void doubleClick(DoubleClickEvent event) {
                     if (!m_addButton.getEnabled()) {
@@ -207,6 +276,10 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
                 }
             });
 
+        if (m_preSelect != null) {
+            tv.getControl().setFocus();
+            tv.setSelection(new StructuredSelection(m_preSelect));
+        }
         // Cancel-Button
         Button cancelButton = createButton(parent, CANCEL,
                 Messages.TestCaseTableDialogCancel, false);
@@ -216,7 +289,24 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
                 close();
             }
         });
-    }       
+        m_addButton.setEnabled(checkDataValidityAndSetErrorMessage());
+    }
+
+    /**
+     * @return whether the data entered to the dialog is valid. 
+     */
+    private boolean checkDataValidityAndSetErrorMessage() {
+        boolean nameValid = true;
+        if (m_enterTextLabel != null) {
+            nameValid = InputDialog.validateTCName(m_enteredText);
+            if (!nameValid) {
+                setErrorMessage(Messages.RenameActionTCError);
+            } else {
+                setErrorMessage(null);
+            }
+        }
+        return nameValid && m_testcaseTreeComposite.hasValidSelection();
+    }
     
     /**
      * Adds the given ISelectionListener to this dialog
@@ -242,9 +332,67 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      * Note: The IWorkbenchPart-Parameter of the listener is set to null!
      */
     void notifyListener() {
+        m_lastSel = m_testcaseTreeComposite.getTreeViewer().getSelection();
         for (ISelectionListener listener : m_selectionListenerList) {
-            listener.selectionChanged(null, m_testcaseTreeComposite
-                    .getTreeViewer().getSelection());
+            listener.selectionChanged(null, m_lastSel);
         }
+    }
+
+    /**
+     * @param onlyCats whether to show only categories
+     */
+    public void setOnlyCategories(boolean onlyCats) {
+        m_onlyCategories = onlyCats;
+    }
+
+    /**
+     * @param reuseds whether to show reused projects
+     */
+    public void setReuseds(boolean reuseds) {
+        m_reuseds = reuseds;
+    }
+
+    /**
+     * Sets the node to be selected upon opening the dialog
+     * @param pre the Node to be pre-selected.
+     */
+    public void setPreSelect(Object pre) {
+        m_preSelect = pre;
+    }
+
+    /**
+     * Sets the label text above the optional Text field.
+     *    If null, no Text field is shown.
+     * @param label the label text
+     * @param preset text to preset the text field
+     */
+    public void setEnterTextLabel(String label, String preset) {
+        m_enterTextLabel = label;
+        m_presetText = preset;
+    }
+
+    /**
+     * @return the list of the selected nodes
+     */
+    public List<INodePO> getSelection() {
+        List<INodePO> res = new ArrayList<>();
+        if (m_lastSel instanceof IStructuredSelection) {
+            for (Iterator it = ((IStructuredSelection) m_lastSel).iterator();
+                    it.hasNext(); ) {
+                Object next = it.next();
+                if (next instanceof INodePO) {
+                    res.add((INodePO) next);
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * Returns the optional entered text (can be null)
+     * @return the text
+     */
+    public String getEnteredText() {
+        return m_enteredText;
     }
 }

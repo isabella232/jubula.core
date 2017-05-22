@@ -246,13 +246,7 @@ public class InputDialog extends TitleAreaDialog {
      * @return false, if the name field contents an error: the name starts or end with a blank, or the field is empty
      */
     boolean modifyNameFieldAction() {
-        boolean isCorrect = true;
-        int nameLength = m_nameField.getText().length();
-        if ((nameLength == 0) || (m_nameField.getText().startsWith(
-                StringConstants.SPACE)) 
-                || (m_nameField.getText().charAt(nameLength - 1) == ' ')) {
-            isCorrect = false;
-        }
+        boolean isCorrect = validateTCName(m_nameField.getText());
         if (isCorrect) {
             enableOKButton();
             if (!isInputAllowed()) {
@@ -266,6 +260,16 @@ public class InputDialog extends TitleAreaDialog {
             setErrorMessage(m_wrongNameError);
         }
         return isCorrect;
+    }
+
+    /**
+     * A simple TC name validator - should not be empty or start / end with space
+     * @param name the TC name
+     * @return whether the name is valid
+     */
+    public static boolean validateTCName(String name) {
+        return name.length() > 0 && !name.startsWith(StringConstants.SPACE)
+                && !name.endsWith(StringConstants.SPACE);
     }
 
     /**

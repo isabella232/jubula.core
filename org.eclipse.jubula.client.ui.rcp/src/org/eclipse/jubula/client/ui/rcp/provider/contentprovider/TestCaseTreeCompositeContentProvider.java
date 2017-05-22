@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
@@ -27,6 +28,24 @@ import org.eclipse.jubula.tools.internal.exception.JBException;
  */
 public class TestCaseTreeCompositeContentProvider 
     extends AbstractTreeViewContentProvider {
+
+    /** Whether to show only categories */
+    private boolean m_onlyCategories = false;
+
+    /** Whether to show reused projects */
+    private boolean m_showReusedProjects = true;
+
+    /**
+     * Constructor
+     * @param reuseds whether to show reused projects
+     * @param categories whether to only show categories
+     */
+    public TestCaseTreeCompositeContentProvider(boolean reuseds,
+            boolean categories) {
+        m_showReusedProjects = reuseds;
+        m_onlyCategories = categories;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -34,14 +53,32 @@ public class TestCaseTreeCompositeContentProvider
         if (parentElement instanceof IProjectPO) {
             IProjectPO project = (IProjectPO)parentElement;
             List<Object> elements = new ArrayList<Object>();
-            elements.addAll(project.getUnmodSpecList());
-            elements.addAll(project.getUsedProjects());
+            if (m_onlyCategories) {
+                elements.add(((IProjectPO) parentElement).getSpecObjCont());
+            } else {
+                for (INodePO child : project.getUnmodSpecList()) {
+                    elements.add(child);
+                }
+            }
+            if (m_showReusedProjects) {
+                elements.addAll(project.getUsedProjects());
+            }
             return elements.toArray();
         }
         
         if (parentElement instanceof ICategoryPO) {
-            return ((ICategoryPO)parentElement)
-                .getUnmodifiableNodeList().toArray();
+            List<INodePO> allChildren = ((ICategoryPO)parentElement)
+                    .getUnmodifiableNodeList(); 
+            if (!m_onlyCategories) {
+                return allChildren.toArray();
+            }
+            List<INodePO> onlyCategories = new ArrayList<>();
+            for (INodePO child : allChildren) {
+                if (child instanceof ICategoryPO) {
+                    onlyCategories.add(child);
+                }
+            }
+            return onlyCategories.toArray();
         }
         
         if (parentElement instanceof IReusedProjectPO) {
@@ -50,17 +87,21 @@ public class TestCaseTreeCompositeContentProvider
                     ProjectPM.loadReusedProjectInMasterSession(
                             (IReusedProjectPO)parentElement);
 
-                if (reusedProject != null) {
-                    return reusedProject.getUnmodSpecList().toArray();
+                if (reusedProject == null) {
+                    return ArrayUtils.EMPTY_OBJECT_ARRAY;
                 }
 
-                return ArrayUtils.EMPTY_OBJECT_ARRAY;
+                List<Object> res = new ArrayList<>();
+                for (INodePO spec : reusedProject.getUnmodSpecList()) {
+                    if (!m_onlyCategories || (spec instanceof ICategoryPO)) {
+                        res.add(spec);
+                    }
+                }
+                return res.toArray();                
             } catch (JBException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
-                return ArrayUtils.EMPTY_OBJECT_ARRAY;
             }
         }
-        
         return ArrayUtils.EMPTY_OBJECT_ARRAY;
-    }  
+    }
 }

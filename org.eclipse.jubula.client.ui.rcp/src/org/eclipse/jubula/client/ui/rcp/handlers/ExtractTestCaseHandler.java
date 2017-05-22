@@ -58,20 +58,23 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public class ExtractTestCaseHandler extends AbstractRefactorHandler {
     /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
-        final AbstractTestCaseEditor editor = (AbstractTestCaseEditor) 
-                HandlerUtil.getActivePart(event);
-        String newTestCaseName = getNewTestCaseName(event);
-        if (newTestCaseName == null) {
+        if (!prepareForRefactoring(event)) {
             return null;
         }
-
+        final AbstractTestCaseEditor editor = (AbstractTestCaseEditor) 
+                HandlerUtil.getActivePart(event);
+        if (!askNewNameAndCategory(editor)) {
+            return null;
+        }
+        // we have a non-null name and category
+        
         editor.getEditorHelper().getClipboard().clearContents();
         final INodePO node = (INodePO) editor.getEditorHelper()
                 .getEditSupport().getOriginal();
         if (node != null) {
             validateNode(node);
-            IExecTestCasePO exec = performExtraction(newTestCaseName, node,
-                    getSelection());
+            IExecTestCasePO exec = performExtraction(getNewTCName(), node,
+                    getSelection(), getCategory());
             try {
                 editor.reOpenEditor(node);
                 editor.getTreeViewer().setSelection(
@@ -131,27 +134,28 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         private ParamNameBPDecorator m_mapper = new ParamNameBPDecorator(
                 ParamNameBP.getInstance());
 
-        /** The SpecObjCont */
-        private INodePO m_cont = GeneralStorage.getInstance().
-                getProject().getSpecObjCont();
+        /** The category where the new SpecTC should be added */
+        private INodePO m_category;
         
         /**
          * Constructor
          * @param owner the Spec TC containing the extracted nodes 
          * @param modNodes the extracted nodes (they must have the same parent)
          * @param name the name of the new Spec TC
+         * @param category the category where the new Spec TC should be added
          */
         public ExtractOperation(INodePO owner, List<INodePO> modNodes,
-                String name) {
+                String name, INodePO category) {
             m_modNodes = modNodes;
             m_owner = owner;
             m_specName = name;
+            m_category = category;
         }
         
         /** {@inheritDoc} */
         public Collection<? extends IPersistentObject> getToLock() {
             m_lock = new ArrayList<>(2);
-            m_lock.add(m_cont);
+            m_lock.add(m_category);
             m_lock.add(m_owner);
             return m_lock;
         }
@@ -180,7 +184,7 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
             m_mapper.persist(sess, GeneralStorage.getInstance().getProject()
                     .getId());
             NativeSQLUtils.addNodeAFFECTS(sess, m_exec.getSpecTestCase(),
-                    m_cont);
+                    m_category);
         }
         
         /**
@@ -233,10 +237,12 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
      *            the edited {@link INodePO} from which to extract
      * @param selection
      *            the nodes to be extracted
+     * @param category the category to put the new node into
      * @return an error message or null.
      */
     private IExecTestCasePO performExtraction(final String newTcName,
-            final INodePO node, final IStructuredSelection selection) {
+            final INodePO node, final IStructuredSelection selection,
+            final INodePO category) {
 
         final List<INodePO> modNodes = new ArrayList<INodePO>(
                 selection.size());
@@ -252,7 +258,7 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
         }
         
         ExtractOperation op = new ExtractOperation(node, modNodes,
-                newTcName);
+                newTcName, category);
 
         boolean succ = TransactionWrapper.executeOperation(op);
         if (!succ) {

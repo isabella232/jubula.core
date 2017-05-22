@@ -49,8 +49,13 @@
     </listitem>
     <listitem>
       <para>
-        The Test Cases you selected will be extracted into this new
-        Test Case.
+        In the following dialog, select the Category where the new Test Case should be added.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        The Test Cases you selected will be extracted into the new
+        Test Case and will be added to the selected Category.
       </para>
     </listitem>
     <listitem>

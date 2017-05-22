@@ -51,6 +51,11 @@
     </listitem>
     <listitem>
       <para>
+        In the following dialog, select the Category where the new Test Case should be added.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
         A new Test Case will be created containing the Test Cases
         you selected, with the data and component names they used in
         the current editor.

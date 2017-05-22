@@ -40,15 +40,17 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.model.TDCell;
-import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
+import org.eclipse.jubula.client.core.persistence.TransactionSupport.ITransaction;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.client.core.utils.RefToken;
 import org.eclipse.jubula.client.ui.rcp.actions.TransactionWrapper;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * @author Markus Tiede
@@ -76,7 +78,8 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
         
         /** The editor root node */
         private IPersistentObject m_oldRoot = null;
-        
+        /** the category where the new Spec TC should be added */
+        private INodePO m_category;
         /**
          * Constructor
          * 
@@ -84,12 +87,14 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
          *            the name of the new test case
          * @param nodesToClone
          *            the param nodes to clone
+         * @param cat the category where the new Spec TC should be added
          */
         public CloneTransaction(String newTestCaseName,
-                List<INodePO> nodesToClone) {
+                List<INodePO> nodesToClone, INodePO cat) {
             m_newTestCaseName = newTestCaseName;
             m_nodesToClone = nodesToClone;
             m_oldRoot = m_nodesToClone.get(0).getSpecAncestor();
+            m_category = cat;
         }
 
         /** {@inheritDoc} */
@@ -107,8 +112,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
             s.merge(newTc);
             pMapper.persist(s, GeneralStorage.getInstance().getProject()
                     .getId());
-            NativeSQLUtils.addNodeAFFECTS(s, newTc,
-                    GeneralStorage.getInstance().getProject().getSpecObjCont());
+            NativeSQLUtils.addNodeAFFECTS(s, newTc, m_category);
             setNewSpecTC(newTc);
         }
         
@@ -288,8 +292,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
         /** {@inheritDoc} */
         public Collection<? extends IPersistentObject> getToLock() {
             List<IPersistentObject> list = new ArrayList<>();
-            list.add(GeneralStorage.getInstance().getProject().
-                    getSpecObjCont());
+            list.add(m_category);
             list.add(m_oldRoot);
             return list;
         }
@@ -297,8 +300,7 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
         /** {@inheritDoc} */
         public Collection<? extends IPersistentObject> getToRefresh() {
             List<IPersistentObject> list = new ArrayList<>();
-            list.add(GeneralStorage.getInstance().getProject().
-                    getSpecObjCont());
+            list.add(m_category);
             return list;
         }
 
@@ -312,31 +314,37 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
 
     /** {@inheritDoc} */
     public Object executeImpl(ExecutionEvent event) {
-        String newTestCaseName = getNewTestCaseName(event);
-        if (newTestCaseName != null) {
-            ISpecTestCasePO newSpecTC = null;
-            IStructuredSelection ss = getSelection();
-            final List<INodePO> nodesToClone =
-                    new ArrayList<INodePO>(ss.size());
-            Iterator it = ss.iterator();
-            while (it.hasNext()) {
-                nodesToClone.add((INodePO) it.next());
-            }
-            newSpecTC = createAndPerformNodeDuplication(newTestCaseName,
-                    nodesToClone);
-            if (newSpecTC == null) {
-                return null;
-            }
-            newSpecTC = GeneralStorage.getInstance().getMasterSession().find(
-                    newSpecTC.getClass(), newSpecTC.getId());
+        if (!prepareForRefactoring(event)) {
+            return null;
+        }
+        final AbstractTestCaseEditor editor = (AbstractTestCaseEditor) 
+                HandlerUtil.getActivePart(event);
+        if (!askNewNameAndCategory(editor)) {
+            return null;
+        }
 
-            DataEventDispatcher.getInstance().fireDataChangedListener(
-                    newSpecTC, DataState.Added, UpdateState.all);
-            TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
-            if (tcb != null) {
-                tcb.getTreeViewer().setSelection(
-                        new StructuredSelection(newSpecTC), true);
-            }
+        ISpecTestCasePO newSpecTC = null;
+        IStructuredSelection ss = getSelection();
+        final List<INodePO> nodesToClone =
+                new ArrayList<INodePO>(ss.size());
+        Iterator it = ss.iterator();
+        while (it.hasNext()) {
+            nodesToClone.add((INodePO) it.next());
+        }
+        newSpecTC = createAndPerformNodeDuplication(getNewTCName(),
+                nodesToClone, getCategory());
+        if (newSpecTC == null) {
+            return null;
+        }
+        newSpecTC = GeneralStorage.getInstance().getMasterSession().find(
+                newSpecTC.getClass(), newSpecTC.getId());
+
+        DataEventDispatcher.getInstance().fireDataChangedListener(
+                newSpecTC, DataState.Added, UpdateState.all);
+        TestCaseBrowser tcb = MultipleTCBTracker.getInstance().getMainTCB();
+        if (tcb != null) {
+            tcb.getTreeViewer().setSelection(
+                    new StructuredSelection(newSpecTC), true);
         }
         return null;
     }
@@ -346,13 +354,15 @@ public class SaveAsNewTestCaseHandler extends AbstractRefactorHandler {
      *            the new test case name
      * @param nodesToClone
      *            the nodes to clone
+     * @param category the category where the new Spec TC should be added
      * @return the new spec test case with cloned param nodes
      *         or null if something went wrong
      */
     private ISpecTestCasePO createAndPerformNodeDuplication(
-            String newTestCaseName, List<INodePO> nodesToClone) {
+            String newTestCaseName, List<INodePO> nodesToClone,
+            INodePO category) {
         final CloneTransaction op = 
-                new CloneTransaction(newTestCaseName, nodesToClone);
+                new CloneTransaction(newTestCaseName, nodesToClone, category);
         
         if (TransactionWrapper.executeOperation(op)) {
             return op.getNewSpecTC();

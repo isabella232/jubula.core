@@ -62,23 +62,33 @@
     <para>
         SWT Tree Tables support the following table-like actions from now on:
         <itemizedlist>
-          <listitem>Check Editability (Specify Cell)</listitem>
-          <listitem>Check Existence of a Column</listitem>
-          <listitem>Check Existence of Value in Column</listitem>
-          <listitem>Check Existence of Value in Row</listitem>
-          <listitem>Check Text (Specify Cell)</listitem>
-          <listitem>Check Text (Mouse Position)</listitem>
-          <listitem>Select Cell</listitem>
-          <listitem>Select Value from Column</listitem>
-          <listitem>Select Value from Row</listitem>
-          <listitem>Store Value (Specify Cell)</listitem>
-          <listitem>Store Value at Mouse Position</listitem>
+          <listitem><para>Check Editability (Specify Cell)</para></listitem>
+          <listitem><para>Check Existence of a Column</para></listitem>
+          <listitem><para>Check Existence of Value in Column</para></listitem>
+          <listitem><para>Check Existence of Value in Row</para></listitem>
+          <listitem><para>Check Text (Specify Cell)</para></listitem>
+          <listitem><para>Check Text (Mouse Position)</para></listitem>
+          <listitem><para>Select Cell</para></listitem>
+          <listitem><para>Select Value from Column</para></listitem>
+          <listitem><para>Select Value from Row</para></listitem>
+          <listitem><para>Store Value (Specify Cell)</para></listitem>
+          <listitem><para>Store Value at Mouse Position</para></listitem>
         </itemizedlist> 
     </para>
   </listitem>
   <listitem>
-    We also corrected the <literal>Check Property at Mouse Position</literal> and <literal>Check Text (Mouse Position)</literal> actions.
+    <para>We also corrected the <literal>Check Property at Mouse Position</literal> and <literal>Check Text (Mouse Position)</literal> actions.</para>
   </listitem>
 </itemizedlist>
-
+<para>
+ <emphasis role="strong">Improving the Save As New / Extract Test Case operations</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        We added the possibility to choose the Category where the new Test Case should be added for
+        these operations.
+    </para>
+  </listitem>
+</itemizedlist>
 </section>

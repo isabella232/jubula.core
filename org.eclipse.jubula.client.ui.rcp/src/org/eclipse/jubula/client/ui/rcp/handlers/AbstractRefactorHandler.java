@@ -19,19 +19,19 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.constants.InitialValueConstants;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
-import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
+import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.handlers.AbstractSelectionBasedHandler;
-import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.dialogs.InputDialog;
+import org.eclipse.jubula.client.ui.rcp.dialogs.TestCaseTreeDialog;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
-import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -41,55 +41,19 @@ import org.eclipse.ui.handlers.HandlerUtil;
  */
 public abstract class AbstractRefactorHandler 
     extends AbstractSelectionBasedHandler {
-    /**
-     * @param event
-     *            the execution event
-     * @return the new name for the test case or <code>null</code> to indicate
-     *         that this action has been canceled
-     */
-    protected String getNewTestCaseName(ExecutionEvent event) {
-        String newTcName = null;
-        IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
-        if (activePart instanceof AbstractTestCaseEditor) {
-            final AbstractTestCaseEditor editor = (AbstractTestCaseEditor) 
-                    activePart;
-            if (editor.isDirty()) {
-                Dialog editorDirtyDlg = ErrorHandlingUtil
-                        .createMessageDialog(MessageIDs.Q_SAVE_AND_EXTRACT);
-                if (editorDirtyDlg.getReturnCode() != Window.OK) {
-                    return null;
-                }
-                editor.doSave(new NullProgressMonitor());
-            }
-            String extractedTCName = getNewName(editor);
-            InputDialog dialog = new InputDialog(getActiveShell(),
-                    Messages.NewTestCaseActionTCTitle, extractedTCName,
-                    Messages.NewTestCaseActionTCMessage,
-                    Messages.RenameActionTCLabel, Messages.RenameActionTCError,
-                    Messages.NewTestCaseActionDoubleTCName,
-                    IconConstants.NEW_TC_DIALOG_STRING,
-                    Messages.NewTestCaseActionTCShell, false);
-            dialog.setHelpAvailable(true);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(),
-                    ContextHelpIds.DIALOG_TESTCASE_EXTRACT);
-            dialog.open();
-            int retCode = dialog.getReturnCode();
-            dialog.close();
-            if (retCode == Window.OK) {
-                newTcName = dialog.getName();
-            }
-        }
-        return newTcName;
-    }
-    
+
+    /** The name of the new TC */
+    private String m_newTCName = null;
+
+    /** The category where to store the new TC */
+    private INodePO m_selectedCategory = null;
+
     /**
      * @param editor
      *            the current editor
      * @return the new extracted test case name
      */
-    private String getNewName(AbstractTestCaseEditor editor) {
+    private String getSuggestedName(AbstractTestCaseEditor editor) {
         String newName = InitialValueConstants.DEFAULT_TEST_CASE_NAME;
         final IStructuredSelection cs = (IStructuredSelection) editor
                 .getTreeViewer().getSelection();
@@ -116,5 +80,75 @@ public abstract class AbstractRefactorHandler
         for (IParamDescriptionPO desc : newSpecTc.getParameterList()) {
             mapper.registerParamDescriptions((ITcParamDescriptionPO) desc);
         }
+    }
+
+    /**
+     * Asks from the user the new TC name and the category where to save it.
+     *    Includes business logic to handle 'Back' button when choosing Category.
+     * @param editor the Test Case Editor
+     * @return whether the operation can commence
+     */
+    protected boolean askNewNameAndCategory(AbstractTestCaseEditor editor) {
+        TestCaseTreeDialog dialog = new TestCaseTreeDialog(
+                getActiveShell(),
+                Messages.SelectCategoryDialogTitle,
+                Messages.SelectCategoryDialogMessage,
+                null,
+                Messages.SelectCategoryDialogTitle,
+                SWT.SINGLE, IconConstants.OPEN_TC_DIALOG_IMAGE);
+        dialog.setReuseds(false);
+        dialog.setOnlyCategories(true);
+        dialog.setEnterTextLabel(Messages.RefactorTCOptTextLabel,
+                getSuggestedName(editor));
+        // not very nice, but at this point we make use of the knowledge
+        // that what nodes are in the TreeViewer (we told this to the Dialog...)
+        dialog.setPreSelect(GeneralStorage.getInstance().
+                getProject().getSpecObjCont());
+        dialog.open();
+        if (dialog.getReturnCode() != TestCaseTreeDialog.ADD
+                || dialog.getSelection().isEmpty()) {
+            return false;
+        }
+        m_newTCName = dialog.getEnteredText();
+        m_selectedCategory = dialog.getSelection().get(0);
+        return m_newTCName != null && m_selectedCategory != null;
+    }
+
+    /**
+     * @return the name of the new TC
+     */
+    protected String getNewTCName() {
+        return m_newTCName;
+    }
+
+    /**
+     * @return the category where to save the new TC
+     */
+    protected INodePO getCategory() {
+        return m_selectedCategory;
+    }
+
+    /**
+     * Performs preliminary checks
+     * @param event the ExecutionEvent
+     * @return whether the operation can commence
+     */
+    protected boolean prepareForRefactoring(ExecutionEvent event) {
+        String newTcName = null;
+        IWorkbenchPart activePart = HandlerUtil.getActivePart(event);
+        if (!(activePart instanceof AbstractTestCaseEditor)) {
+            return false;
+        }
+        final AbstractTestCaseEditor editor = (AbstractTestCaseEditor) 
+                activePart;
+        if (editor.isDirty()) {
+            Dialog editorDirtyDlg = ErrorHandlingUtil
+                    .createMessageDialog(MessageIDs.Q_SAVE_AND_EXTRACT);
+            if (editorDirtyDlg.getReturnCode() != Window.OK) {
+                return false;
+            }
+            editor.doSave(new NullProgressMonitor());
+        }
+        return true;
     }
 }

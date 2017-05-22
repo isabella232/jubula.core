@@ -678,6 +678,7 @@ public class Messages extends NLS {
     public static String RecordTestCaseActionTCMessage;
     public static String RecordTestCaseActionTCShell;
     public static String RecordTestCaseActionTCTitle;
+    public static String RefactorTCOptTextLabel;
     public static String RefreshProjectOperationRefreshing;
     public static String RefreshTSBrowserActionProgressMessage;
     public static String RefTestSuiteGUIPropertySourceAutIdName;
@@ -778,6 +779,8 @@ public class Messages extends NLS {
     public static String SearchResultPageResultPageLabel;
     public static String SearchResultPageElementLabel;
     public static String SelectAll;
+    public static String SelectCategoryDialogTitle;
+    public static String SelectCategoryDialogMessage;
     public static String ServerLogViewerName;
     public static String ServerName;
     public static String ServerObjectMustNotBeNull;

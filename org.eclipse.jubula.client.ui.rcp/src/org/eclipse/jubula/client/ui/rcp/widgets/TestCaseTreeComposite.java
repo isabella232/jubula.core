@@ -49,6 +49,10 @@ import org.eclipse.ui.dialogs.FilteredTree;
 
 
 /**
+ * A tree viewer wrapper to show a mildly configurable subtree of the
+ *      SpecTC tree
+ * Currently either SpecTestCases referencable from certain SpecTCs are shown
+ *      or only categories either including reused projects or not
  * @author Markus Tiede
  * @created Jul 20, 2011
  */
@@ -60,14 +64,16 @@ public class TestCaseTreeComposite extends Composite {
     private TreeViewer m_treeViewer;
 
     /**
-     * <code>m_parentTestCase</code>
-     */
-    private INodePO m_setOfParentTestCase;
-    
-    /**
      * <code>m_parentTestCases</code>
+     * Used to exclude TestCases which might cause circular dependencies.
      */
     private Set<INodePO> m_parentTestCases;
+
+    /** Whether to show only categories */
+    private boolean m_onlyCategories = false;
+
+    /** Whether to show reused projects */
+    private boolean m_reusedProjects = true;
     
     /** a list with the item numbers of circular dependend test cases */
     private Set < INodePO > m_circDependList = new HashSet < INodePO > ();
@@ -134,7 +140,22 @@ public class TestCaseTreeComposite extends Composite {
     public TestCaseTreeComposite(Composite parent, int treeStyle, 
         INodePO parentTestCase) {
         this(parent, treeStyle);
-        m_setOfParentTestCase = parentTestCase;
+        m_parentTestCases = new HashSet<INodePO>();
+        m_parentTestCases.add(parentTestCase);
+        initTreeViewer();
+    }
+
+    /**
+     * @param parent the parent composite
+     * @param treeStyle the style of the tre
+     * @param reuseds whether to show reused projects
+     * @param onlyCategories whether to show only categories
+     */
+    public TestCaseTreeComposite(Composite parent, int treeStyle,
+            boolean reuseds, boolean onlyCategories) {
+        this(parent, treeStyle);
+        m_reusedProjects = reuseds;
+        m_onlyCategories = onlyCategories;
         initTreeViewer();
     }
     /**
@@ -145,7 +166,8 @@ public class TestCaseTreeComposite extends Composite {
         getInitialInput();
         m_treeViewer.setLabelProvider(new LabelProvider());
         m_treeViewer.setContentProvider(
-                new TestCaseTreeCompositeContentProvider());
+                new TestCaseTreeCompositeContentProvider(
+                        m_reusedProjects, m_onlyCategories));
         m_treeViewer.setInput(GeneralStorage.getInstance().getProject());
         m_treeViewer.setComparator(new NodeNameViewerSorter());
     }
@@ -169,13 +191,6 @@ public class TestCaseTreeComposite extends Composite {
                     m_circDependList.addAll(op.getDependentNodes());
                 }
             }
-        } else if (m_setOfParentTestCase != null) {
-            DependencyFinderOp op = 
-                    new DependencyFinderOp(m_setOfParentTestCase);
-            TreeTraverser traverser = new TreeTraverser(GeneralStorage.
-                getInstance().getProject(), op, true);
-            traverser.traverse(true);
-            m_circDependList = op.getDependentNodes();
         }
     }
 
@@ -192,7 +207,11 @@ public class TestCaseTreeComposite extends Composite {
      */
     public boolean hasValidSelection() {
         IStructuredSelection selection = 
-            (IStructuredSelection)getTreeViewer().getSelection();
+                (IStructuredSelection)getTreeViewer().getSelection();
+        if (m_onlyCategories) {
+            return (selection.size() == 1)
+                    && (selection.getFirstElement() instanceof ICategoryPO);
+        }
         for (Object selectedObj : selection.toArray()) {
             if (m_circDependList.contains(selectedObj)
                     || selectedObj instanceof ICategoryPO
@@ -200,7 +219,7 @@ public class TestCaseTreeComposite extends Composite {
                 return false;
             }
         }
-        return true;
+        return !selection.isEmpty();
     }
     
     /**
@@ -252,6 +271,15 @@ public class TestCaseTreeComposite extends Composite {
          * {@inheritDoc}
          */
         public String getText(Object element) {
+            if (element instanceof INodePO
+                    && ((INodePO) element).isSpecObjCont()) {
+                // A bit weird, but the GeneralLabelProvider is
+                // designed for the TSB / TCB, so its returned String
+                // (Test Cases:) is not suitable here - we'll rather use
+                // the project's name
+                return GeneralLabelProvider.getTextImpl(
+                        ((INodePO) element).getParentNode());
+            }
             return GeneralLabelProvider.getTextImpl(element);
         }
 
