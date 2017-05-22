@@ -29,4 +29,18 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+ <emphasis role="strong">Try AUT from the AUT Config Dialog</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        It is now possible to check if an AUT is startable directly from the AUT Config Dialog.
+        You can use the <literal>Try AUT</literal> button for this. When clicked, the ITE tries to
+        start the AUT (if the ITE is already connected to an AUT Agent, that is used, otherwise
+        the embedded Agent is started). In case of a successful AUT start, the AUT is kept running,
+        otherwise the user is notified of the reasons why starting the AUT failed.
+    </para>
+  </listitem>
+</itemizedlist>
 </section>

@@ -28,6 +28,7 @@ import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
 import org.eclipse.jubula.client.ui.rcp.handlers.AUTAgentConnectHandler;
 import org.eclipse.jubula.client.ui.utils.CommandHelper;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -45,7 +46,7 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
 
     /** ID of "Connect to Embedded AUT Agent" command */
     public static final String CONNECT_TO_EMBEDDED_AGENT_CMD_ID = 
-        "org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"; //$NON-NLS-1$
+            CommandConstants.CONNECT_TO_EMBEDDED_AGENT_CMD_ID;
     
     /** the logger */
     protected static final Logger LOG = LoggerFactory

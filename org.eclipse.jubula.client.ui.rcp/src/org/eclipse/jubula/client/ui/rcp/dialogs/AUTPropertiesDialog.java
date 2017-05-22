@@ -757,8 +757,8 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
         }
         String[] selection = m_autConfigList.getSelection();
         AUTConfigPropertiesDialog dialog = new AUTConfigPropertiesDialog(
-                m_addButton.getShell(), autConfig, getAutToolkit(), autName, 
-                new AutIdValidator(m_project, m_autMain, 
+                m_addButton.getShell(), autConfig, getAutToolkit(), autName,
+                m_autMain, new AutIdValidator(m_project, m_autMain, 
                         autConfig), 
                 new AutConfigNameValidator(m_autMain, autConfig));
         dialog.create();
@@ -798,7 +798,7 @@ public class AUTPropertiesDialog extends TitleAreaDialog {
                 preEditConfig);
             AUTConfigPropertiesDialog dialog = new AUTConfigPropertiesDialog(
                 m_editButton.getShell(), autConfig, getAutToolkit(), 
-                m_autMain.getName(), 
+                m_autMain.getName(), m_autMain,
                 new AutIdValidator(m_project, m_autMain, 
                         autConfig),
                 new AutConfigNameValidator(m_autMain, autConfig));

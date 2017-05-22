@@ -1747,4 +1747,5 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         resize();
         getShell().pack();
     }
+
 }

@@ -927,6 +927,7 @@ public class Messages extends NLS {
     public static String ToolkitVersionConflictWhileCreatingNewProjectVersion;
     public static String ToolkitVersionConflictWhileSaveProjectAsAction;
     public static String TreeBuilderTestCases;
+    public static String TryAUTButton;
     public static String UIJobCleaningTestResultFromDB;
     public static String UIJobConnectToAUTAgent;
     public static String UIJobDeletingTestResultDetails;

@@ -270,7 +270,9 @@ public abstract class CommandConstants {
     public static final String SET_PROFILE_COMMAND = "org.eclipse.jubula.rc.common.commands.SetProfileCommand"; //$NON-NLS-1$
     /** ID of the Toolkit HTML bundle */
     public static final String TOOLKIT_HTML_BUNDLE_ID = "org.eclipse.jubula.toolkit.html"; //$NON-NLS-1$
-   
+    /** Connect to AUT Agent Command */
+    public static final String CONNECT_TO_EMBEDDED_AGENT_CMD_ID = 
+            "org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"; //$NON-NLS-1$
     /** to prevent instantiation */
     private CommandConstants() {
         // do nothing

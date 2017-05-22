@@ -29,6 +29,12 @@
     working directories, AUT arguments, Java versions, browser
     choices and activation methods.
   </para>
+  <para>
+    In the AUT Configuration Dialog, it is possible to try to start the AUT using the entered
+    configuration. This way it is possible to quickly check whether the configuration is correct.
+    Use the <literal>Try AUT</literal> button for this. If the ITE is connected to an AUT Agent,
+    that agent is used to start the AUT, otherwise the embedded Agent is started.
+  </para>
   <para role="tip">
     If you want to start your Java AUT yourself, and have the ITE connect to it, then use the <emphasis>autrun</emphasis> command to start the AUT (<xref linkend="starting-java-with-the-command"/>). In this case, you do not need to create an AUT configuration.
   </para>

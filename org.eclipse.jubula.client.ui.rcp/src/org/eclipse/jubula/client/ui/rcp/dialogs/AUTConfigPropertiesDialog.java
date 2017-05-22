@@ -20,15 +20,20 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDialogStatusListener;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
+import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.internal.AutAgentConnection;
+import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.AutConfigNameValidator;
+import org.eclipse.jubula.client.ui.rcp.handlers.StartAutHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.rcp.widgets.autconfig.AutConfigComponent;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
+import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.UnexpectedGenericTypeException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -38,6 +43,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +58,8 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
     /** The logger */
     private static Logger log = LoggerFactory.getLogger(
             AUTConfigPropertiesDialog.class);
+    /** Try AUT button id - should be different from IDialogConstants.ID_OK and ID_CANCEL */
+    private static final int TRY_AUTID = 1234;
     
     /** the name of the selected aut configuration */
     private IAUTConfigPO m_autConfig;
@@ -60,6 +69,9 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
 
     /** The name of the AUT that will be using this configuration */
     private String m_autName;
+
+    /** The AUT  that will be using this configuration */
+    private IAUTMainPO m_aut;
     
     /** validator for the AUT ID text field */
     private IValidator m_autIdValidator;
@@ -76,18 +88,20 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
      * @param autConfig The selected AUTConfiguration in the AUTPropertiesDialog.
      * @param toolkit the toolkit.
      * @param autName The name of the AUT that will be using this configuration.
+     * @param aut The AUT that will be using this configuration.
      * @param autIdValidator The validator for the AUT ID text field.
      * @param autConfigNameValidator The validator for the AUT Config Name
      */
     public AUTConfigPropertiesDialog(Shell parentShell, 
-            IAUTConfigPO autConfig, String toolkit, String autName, 
-            IValidator autIdValidator, 
+            IAUTConfigPO autConfig, String toolkit, String autName,
+            IAUTMainPO aut, IValidator autIdValidator, 
             AutConfigNameValidator autConfigNameValidator) {
         
         super(parentShell);
         m_autConfig = autConfig;
         m_toolkit = toolkit;
         m_autName = autName;
+        m_aut = aut;
         m_autIdValidator = autIdValidator;
         m_autConfigNameValidator = autConfigNameValidator;
     }
@@ -201,6 +215,45 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
                 .append(StringConstants.DOT);
             throw new UnexpectedGenericTypeException(msg.toString(),
                     MessageIDs.E_UNEXPECTED_EXCEPTION);
+        }
+    }
+
+    /** {@inheritDoc} */
+    protected void createButtonsForButtonBar(Composite parent) {
+        createButton(parent, TRY_AUTID, Messages.TryAUTButton, false);
+        super.createButtonsForButtonBar(parent);
+    }
+
+    /** {@inheritDoc} */
+    protected void buttonPressed(int buttonId) {
+        if (buttonId == TRY_AUTID) {
+            tryToStartAUT();
+        } else {
+            super.buttonPressed(buttonId);
+        }
+    }
+
+    /**
+     * Tries to start the AUT using the current configuration.
+     * The user is notified of any errors during startup.
+     * After a successful start, the AUT is not shut down.
+     */
+    private void tryToStartAUT() {
+        boolean conn = false;
+        try {
+            conn = AutAgentConnection.getInstance().isConnected();
+        } catch (ConnectionException e) {
+            // nothing - we will try to connect to the agent
+        }
+        try {
+            if (!conn) {
+                PlatformUI.getWorkbench().getService(IHandlerService.class).
+                    executeCommand(CommandConstants.
+                            CONNECT_TO_EMBEDDED_AGENT_CMD_ID, null);
+            }
+            StartAutHandler.startAut(m_aut, m_autConfig);
+        } catch (Exception e) {
+            ErrorHandlingUtil.createMessageDialogException(e);
         }
     }
 }

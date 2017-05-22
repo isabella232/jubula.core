@@ -148,7 +148,7 @@ public class StartAutHandler extends AbstractHandler
      * @param aut AUT to start
      * @param conf corresponding configuration
      */
-    private void startAut(IAUTMainPO aut, IAUTConfigPO conf) {
+    public static void startAut(IAUTMainPO aut, IAUTConfigPO conf) {
         if (aut.getToolkit().equals(CommandConstants.RCP_TOOLKIT)) {
             NagDialog.runNagDialog(null, "InfoNagger.RunRcpAut",  //$NON-NLS-1$
                     ContextHelpIds.AUT_CONFIG_SETTING_WIZARD_PAGE);
