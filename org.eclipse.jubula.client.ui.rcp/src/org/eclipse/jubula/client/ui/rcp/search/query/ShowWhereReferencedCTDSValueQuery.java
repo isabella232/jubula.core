@@ -33,6 +33,7 @@ import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.TestDataCubeExtendedAction;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 
 /**
@@ -178,8 +179,10 @@ public class ShowWhereReferencedCTDSValueQuery
         Image img = exact ? IconConstants.START_OM
                 : IconConstants.STOP_OM;
         SearchResultElement<CTDSReference> result =
-                new SearchResultElement<CTDSReference>(
-                    pNode.getName(), new CTDSReference(pNode, row, col),
+                new SearchResultElement<CTDSReference>(NLS.bind(
+                    Messages.SearchResultPageElementLabel, new Object[] {
+                        pNode.getParentNode().getName(), pNode.getName()}),
+                    new CTDSReference(pNode, row, col),
                     img, new TestDataCubeExtendedAction());
         if (exact) {
             m_exactResults.add(result);
@@ -194,7 +197,7 @@ public class ShowWhereReferencedCTDSValueQuery
         m_exactResults = new ArrayList<>();
         m_columnResults = new ArrayList<>();
         TreeTraverser trav = new TreeTraverser(
-                GeneralStorage.getInstance().getProject(), this, true);
+                GeneralStorage.getInstance().getProject(), this, true, true);
         trav.setTraverseIntoExecs(false);
         trav.setTraverseReused(false);
         long time = System.currentTimeMillis();

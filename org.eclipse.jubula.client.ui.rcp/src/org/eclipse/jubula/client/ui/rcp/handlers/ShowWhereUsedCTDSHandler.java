@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -31,8 +30,7 @@ import org.eclipse.ui.part.IPage;
 public class ShowWhereUsedCTDSHandler extends AbstractHandler {
 
     /** {@inheritDoc} */
-    protected Object executeImpl(ExecutionEvent event)
-            throws ExecutionException {
+    protected Object executeImpl(ExecutionEvent event) {
         IViewPart part = Plugin.getActiveView();
         if (!(part instanceof DataSetView)) {
             return null;
