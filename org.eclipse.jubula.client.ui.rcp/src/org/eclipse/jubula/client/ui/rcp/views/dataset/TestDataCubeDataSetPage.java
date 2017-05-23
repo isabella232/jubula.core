@@ -27,8 +27,8 @@ public class TestDataCubeDataSetPage extends AbstractDataSetPage {
     }
 
     /** {@inheritDoc} */
-    protected boolean isEditorOpen(IParameterInterfacePO paramNode) {
-        // Test Data Cubes can only be seen in the editor --> implies editor open
+    protected boolean isEditorOpenOrIsPageTestDataCube(
+            IParameterInterfacePO paramNode) {
         return true;
     }
 

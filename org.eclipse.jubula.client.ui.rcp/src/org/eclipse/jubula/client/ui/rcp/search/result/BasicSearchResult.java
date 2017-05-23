@@ -14,8 +14,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -27,11 +25,10 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
-import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.businessprocess.UINodeBP;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
@@ -274,6 +271,13 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
         public String getViewId() {
             return m_viewId;
         }
+
+        /**
+         * @return the relevant object (can be null!)
+         */
+        public Object getObject() {
+            return m_action.getObject(m_data);
+        }
     }
     
     /**
@@ -300,6 +304,12 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
          * @param viewId the view id
          */
         public void openView(String viewId);
+
+        /**
+         * @param data the data
+         * @return the relevant object (can be null)
+         */
+        public Object getObject(DATATYPE data);
     }
 
     /**
@@ -310,6 +320,9 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
      */
     public static class ObjectMappingSearchResultElementAction 
             implements ISearchResultElementAction <Long>, Serializable {
+
+        /** Field to transfer data between two methods... */
+        private IAUTMainPO m_aut = null;
         /**
          * {@inheritDoc}
          */
@@ -321,31 +334,44 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
          * {@inheritDoc}
          */
         public void jumpTo(Long id) {
+            // if we haven't yet identified the AUT...
+            if (m_aut == null) {
+                getObject(id);
+            }
+            // AUT may still be null due to the assoc having been deleted, etc.
+            if (m_aut != null) {
+                IEditorPart editor = 
+                    AbstractOpenHandler.openEditor(m_aut);
+                if (editor instanceof ObjectMappingMultiPageEditor) {
+                    ObjectMappingMultiPageEditor omEditor =
+                        (ObjectMappingMultiPageEditor)editor;
+                    IObjectMappingAssoziationPO editorAssoc = 
+                        getAssocForId(omEditor.getAut(), id);
+                    if (editorAssoc != null) {
+                        for (TreeViewer viewer 
+                                : omEditor.getTreeViewers()) {
+                            viewer.reveal(editorAssoc);
+                            viewer.setSelection(
+                                new StructuredSelection(editorAssoc));
+                        }
+                    }
+                }
+            }
+        }
+
+        /** {@inheritDoc} */
+        public Object getObject(Long id) {
             for (IAUTMainPO aut : GeneralStorage.getInstance()
                     .getProject().getAutMainList()) {
                 for (IObjectMappingAssoziationPO assoc 
                         : aut.getObjMap().getMappings()) {
                     if (id.equals(assoc.getId())) {
-                        IEditorPart editor = 
-                            AbstractOpenHandler.openEditor(aut);
-                        if (editor instanceof ObjectMappingMultiPageEditor) {
-                            ObjectMappingMultiPageEditor omEditor =
-                                (ObjectMappingMultiPageEditor)editor;
-                            IObjectMappingAssoziationPO editorAssoc = 
-                                getAssocForId(omEditor.getAut(), id);
-                            if (editorAssoc != null) {
-                                for (TreeViewer viewer 
-                                        : omEditor.getTreeViewers()) {
-                                    viewer.reveal(editorAssoc);
-                                    viewer.setSelection(
-                                        new StructuredSelection(editorAssoc));
-                                }
-                            }
-                        }
-                        return;
+                        m_aut = aut;
+                        return assoc;
                     }
                 }
             }
+            return null;
         }
 
         /**
@@ -382,15 +408,13 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
 
         @Override
         public void jumpTo(CTDSReference data) {
-            if (data.getNode() == null) {
+            Object res = getObject(data);
+            if (!(res instanceof INodePO)) {
                 return;
             }
-            INodePO spec = data.getNode().getSpecAncestor();
-            if (spec == null) {
-                return;
-            }
+            INodePO spec = ((INodePO) res).getSpecAncestor();
             IEditorPart ed = AbstractOpenHandler.openEditorAndSelectNode(
-                    data.getNode().getSpecAncestor(), data.getNode());
+                    spec, data.getNode());
             IViewPart v = Plugin.showView(DataSetView.ID);
             if (!(v instanceof DataSetView)) {
                 return;
@@ -403,7 +427,11 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
         public void openView(String viewId) {
             // empty, the jumpTo is responsible for all actions
         }
-        
+
+        /** {@inheritDoc} */
+        public Object getObject(CTDSReference data) {
+            return data.getNode();
+        }
     }
     
     /**
@@ -425,25 +453,35 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
          * {@inheritDoc}
          */
         public void jumpTo(Long id) {
+            Object obj = getObject(id);
+            if (!(obj instanceof ITestDataCubePO)) {
+                return;
+            }
+            ITestDataCubePO testdatacube = (ITestDataCubePO) obj; 
+            IEditorPart editor = AbstractOpenHandler
+                    .openEditor(GeneralStorage.getInstance().
+                            getProject().getTestDataCubeCont());
+            if (editor instanceof CentralTestDataEditor) {
+                CentralTestDataEditor ctdEditor = 
+                    (CentralTestDataEditor)editor;
+                ctdEditor.getTreeViewer().setSelection(
+                    new StructuredSelection(ctdEditor.getEditorHelper()
+                            .getEditSupport().getSession().find(
+                                    testdatacube.getClass(), id)));
+            }
+        }
+
+        /** {@inheritDoc} */
+        public Object getObject(Long id) {
             IProjectPO activeProject = 
                     GeneralStorage.getInstance().getProject();
             for (ITestDataCubePO testdatacube 
                     : TestDataCubeBP.getAllTestDataCubesFor(activeProject)) {
-                
                 if (id.equals(testdatacube.getId())) {
-                    IEditorPart editor = AbstractOpenHandler
-                            .openEditor(activeProject.getTestDataCubeCont());
-                    if (editor instanceof CentralTestDataEditor) {
-                        CentralTestDataEditor ctdEditor = 
-                            (CentralTestDataEditor)editor;
-                        ctdEditor.getTreeViewer().setSelection(
-                            new StructuredSelection(ctdEditor.getEditorHelper()
-                                    .getEditSupport().getSession().find(
-                                            testdatacube.getClass(), id)));
-                    }
-                    return;
+                    return testdatacube;
                 }
             }
+            return null;
         }
     }
     
@@ -472,44 +510,27 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
             } else {
                 Plugin.activate(jbtv);
             }
-            INodePO node = retrieveNodeForId(id, jbtv);
-            if (node != null) {
-                INodePO specNode = node.getSpecAncestor();
-                if (specNode != null && NodeBP.isEditable(specNode)) {
-                    IEditorPart openEditor = AbstractOpenHandler
-                            .openEditor(specNode);
-                    if (openEditor instanceof AbstractJBEditor) {
-                        AbstractJBEditor jbEditor =
-                                (AbstractJBEditor) openEditor;
-                        jbEditor.setSelection(
-                                new StructuredSelection(node));
-                    }
+            Object ob = getObject(id);
+            if (!(ob instanceof INodePO)) {
+                return;
+            }
+            INodePO node = (INodePO) ob;
+            INodePO specNode = node.getSpecAncestor();
+            if (specNode != null && NodeBP.isEditable(specNode)) {
+                IEditorPart openEditor = AbstractOpenHandler
+                        .openEditor(specNode);
+                if (openEditor instanceof AbstractJBEditor) {
+                    AbstractJBEditor jbEditor =
+                            (AbstractJBEditor) openEditor;
+                    jbEditor.setSelection(
+                            new StructuredSelection(node));
                 }
             }
         }
 
-        /**
-         * Retrieves the node for the specivied ID and TreeView
-         * @param id the id of the node
-         * @param jbtv the TreeView the node is to be retrieved for
-         * @return the retrieved node, otherwise null
-         */
-        private INodePO retrieveNodeForId(Long id, AbstractJBTreeView jbtv) {
-            AbstractJBTreeView currentJbtv = jbtv;
-            TreeViewer tv = currentJbtv.getTreeViewer();
-            EntityManager em = currentJbtv.getEntityManager();
-            INodePO node = UINodeBP.selectNodeInTree(id, tv, em);
-            if (node == null) {
-                currentJbtv = (AbstractJBTreeView) Plugin
-                        .showView(Constants.TS_BROWSER_ID);
-                tv = currentJbtv.getTreeViewer();
-                node = UINodeBP.selectNodeInTree(id, tv, em);
-                if (node == null) {
-                    node  = em.find(NodeMaker.getNodePOClass(), id);
-                }
-            }
-            return node;
+        /** {@inheritDoc} */
+        public Object getObject(Long id) {
+            return NodePM.findNodeById(id);
         }
     }
-
 }

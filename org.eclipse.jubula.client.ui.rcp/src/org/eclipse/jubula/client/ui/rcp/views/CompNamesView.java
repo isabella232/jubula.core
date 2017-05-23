@@ -16,6 +16,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.DataSetView;
 import org.eclipse.jubula.client.ui.views.IJBPart;
+import org.eclipse.search2.internal.ui.SearchView;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IViewSite;
@@ -58,7 +59,8 @@ public class CompNamesView extends PageBookView
      */
     protected PageRec doCreatePage(IWorkbenchPart part) {
         if (part instanceof AbstractJBTreeView
-                || part instanceof IJBEditor) {
+                || part instanceof IJBEditor
+                || part instanceof SearchView) {
                 
             CompNamesPage page = new CompNamesPage();
             initPage(page);

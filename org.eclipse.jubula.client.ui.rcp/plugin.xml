@@ -242,6 +242,11 @@
       class="org.eclipse.jubula.client.ui.rcp.adapter.PropertySourceAdapterFactory">
       <adapter type="org.eclipse.ui.views.properties.IPropertySource" />
     </factory>
+    <factory
+      adaptableType="org.eclipse.search.ui.ISearchResultViewPart"
+      class="org.eclipse.jubula.client.ui.rcp.adapter.PropertyPageAdapterFactory">
+      <adapter type="org.eclipse.ui.views.properties.IPropertySheetPage" />
+    </factory>
   </extension>
   <extension point="org.eclipse.ui.perspectives">
     <perspective

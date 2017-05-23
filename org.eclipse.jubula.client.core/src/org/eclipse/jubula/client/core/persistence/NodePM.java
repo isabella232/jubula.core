@@ -1297,4 +1297,25 @@ public class NodePM extends PersistenceManager {
         monitor.done();
         return nodeToWasLockedMap;
     }
+
+    /**
+     * Returns a node by its id. The node is managed by the master (RO) session
+     * @param id the id
+     * @return the node or null if not found
+     */
+    public static INodePO findNodeById(Long id) {
+        EntityManager em = GeneralStorage.getInstance().getEntityManager();
+        Query q = em.createQuery("select node from NodePO node where node.id =:id"); //$NON-NLS-1$
+        q.setParameter("id", id); //$NON-NLS-1$
+        Object res = null;
+        try {
+            res = q.getSingleResult();
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+        if (res != null) {
+            return (INodePO) res;
+        }
+        return null;
+    }
 }

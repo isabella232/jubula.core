@@ -17,6 +17,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
+import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.widgets.ComponentNamesTableComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -76,8 +77,12 @@ public class CompNamesPage extends Page implements ISelectionListener {
         IStructuredSelection sel = (IStructuredSelection)selection;
         IExecTestCasePO selectedExecNode = null;
         IWorkbenchPart selectedExecNodeOwner = null;
-        if (sel.getFirstElement() instanceof IExecTestCasePO) {
-            selectedExecNode = (IExecTestCasePO)sel.getFirstElement();
+        Object selected = sel.getFirstElement();
+        if (selected instanceof SearchResultElement) {
+            selected = ((SearchResultElement) selected).getObject();
+        }
+        if (selected instanceof IExecTestCasePO) {
+            selectedExecNode = (IExecTestCasePO) selected;
             selectedExecNodeOwner = part;
         }
             

@@ -69,7 +69,8 @@ public class ParamNodeDataSetPage extends AbstractDataSetPage {
     }
 
     /** {@inheritDoc} */
-    protected boolean isEditorOpen(IParameterInterfacePO paramObj) {
+    protected boolean isEditorOpenOrIsPageTestDataCube(
+            IParameterInterfacePO paramObj) {
         if (paramObj != null) {
             Object inputNode = paramObj;
             if (paramObj instanceof ICapPO 

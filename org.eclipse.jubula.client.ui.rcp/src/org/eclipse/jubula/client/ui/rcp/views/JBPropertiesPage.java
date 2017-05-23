@@ -78,6 +78,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper.EditableState;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contextprovider.JBContextProvider;
+import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.views.IJBPart;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
@@ -89,6 +90,7 @@ import org.eclipse.jubula.tools.internal.utils.generator.ParamInfo;
 import org.eclipse.jubula.tools.internal.utils.generator.ToolkitInfo;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
+import org.eclipse.search.ui.ISearchResultViewPart;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.HelpEvent;
 import org.eclipse.swt.events.HelpListener;
@@ -611,13 +613,18 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         
         Plugin.getDisplay().syncExec(new Runnable() {
             public void run() {
-                if (firstElement == null) {
+                Object el = firstElement;
+                if (el == null) {
                     // e.g. when a project was opened and no view has a selection
                     m_treeViewer.setSelection(null);
                     m_treeViewer.setInput(null);
                 } else { // TestResultNodes must be excluded
-                    if (firstElement instanceof IPersistentObject) {
-                        m_treeViewer.setInput(firstElement);
+                    if (el instanceof SearchResultElement) {
+                        el = ((SearchResultElement) el).
+                                getObject();
+                    }
+                    if (el instanceof IPersistentObject) {
+                        m_treeViewer.setInput(el);
                         workaroundSpringySelection(m_focusCellManager);
                     }
                 }
@@ -634,7 +641,8 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         
         expandTrackedChanges();
 
-        setViewEnabled(!(part instanceof TestCaseBrowser
+        setViewEnabled(part instanceof IJBPart
+                && !(part instanceof TestCaseBrowser
             || part instanceof TestSuiteBrowser
             || part instanceof JBPropertiesPage
             || part instanceof TestResultTreeView 
@@ -1192,7 +1200,7 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
      * {@inheritDoc}
      */
     public void selectionChanged(IWorkbenchPart part, ISelection selection) {
-        if (part instanceof IJBPart
+        if ((part instanceof IJBPart || part instanceof ISearchResultViewPart)
                 && selection instanceof IStructuredSelection) {
             reactOnChange(part, (IStructuredSelection)selection);
         }

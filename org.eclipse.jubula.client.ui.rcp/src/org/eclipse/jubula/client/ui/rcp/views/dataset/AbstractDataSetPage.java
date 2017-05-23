@@ -64,6 +64,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.JBEditorHelper;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.rcp.filter.DataSetFilter;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
+import org.eclipse.jubula.client.ui.rcp.search.result.BasicSearchResult.SearchResultElement;
 import org.eclipse.jubula.client.ui.rcp.utils.Utils;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamTextContentAssisted;
@@ -1768,6 +1769,9 @@ public abstract class AbstractDataSetPage extends Page
             IStructuredSelection selection) {
         IParameterInterfacePO paramInterfacePO = null;
         Object firstSel = selection.getFirstElement();
+        if (firstSel instanceof SearchResultElement) {
+            firstSel = ((SearchResultElement) firstSel).getObject();
+        }
         if (firstSel instanceof IParameterInterfacePO) {
             paramInterfacePO = (IParameterInterfacePO)firstSel;
         }
@@ -1825,7 +1829,7 @@ public abstract class AbstractDataSetPage extends Page
                 getTable().setForeground(LayoutUtil.DEFAULT_OS_COLOR);
             }
             boolean hasInput = !strucSelection.isEmpty();
-            boolean isEditorOpen = isEditorOpen(paramNode);
+            boolean isEditorOpen = isEditorOpenOrIsPageTestDataCube(paramNode);
             boolean hasParameter = false; 
             boolean hasExcelFile = false;
             boolean hasReferencedDataCube = false;
@@ -1872,10 +1876,15 @@ public abstract class AbstractDataSetPage extends Page
     }
     /**
      * Checks if the given IParameterInterfacePO is in an open editor.
+     *      Returns true for TestDataCubeDataSetPage due to complications.
+     *      Currently this method is only used to decide if the DataSetView
+     *      is editable. If it will be used anywhere else, the TDCDataSetPage
+     *      method must be corrected.
      * @param paramObj the object to check
      * @return true if the given node is in an open editor, false otherwise.
      */
-    protected abstract boolean isEditorOpen(IParameterInterfacePO paramObj);
+    protected abstract boolean isEditorOpenOrIsPageTestDataCube(
+            IParameterInterfacePO paramObj);
     
     /** {@inheritDoc} */
     public void selectionChanged(IWorkbenchPart part,

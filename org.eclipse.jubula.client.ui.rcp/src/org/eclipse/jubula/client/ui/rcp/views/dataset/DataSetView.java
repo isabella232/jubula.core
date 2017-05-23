@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.views.AbstractJBTreeView;
 import org.eclipse.jubula.client.ui.rcp.views.CompNamesView;
 import org.eclipse.jubula.client.ui.views.IJBPart;
+import org.eclipse.search2.internal.ui.SearchView;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IViewSite;
@@ -64,20 +65,25 @@ public class DataSetView extends PageBookView
      * {@inheritDoc}
      */
     protected PageRec doCreatePage(IWorkbenchPart part) {
+        AbstractDataSetPage page = null;
         if (part instanceof AbstractJBTreeView
             || part.getAdapter(IJBEditor.class) != null) {
-            AbstractDataSetPage page;
             if (part instanceof CentralTestDataEditor) {
                 page = new TestDataCubeDataSetPage();
             } else {
                 page = new ParamNodeDataSetPage();
             }
+        } else if (part instanceof SearchView) {
+            page = new TestDataCubeDataSetPage();
+        }
+        if (page != null) {
             initPage(page);
             page.createControl(getPageBook());
             DataEventDispatcher.getInstance().addDataChangedListener(
                     page, true);
             return new PageRec(part, page);
-        } else if (part instanceof IJBPart) {
+        }
+        if (part instanceof IJBPart) {
             return new PageRec(part, createDefaultPage(getPageBook()));
         }
 
