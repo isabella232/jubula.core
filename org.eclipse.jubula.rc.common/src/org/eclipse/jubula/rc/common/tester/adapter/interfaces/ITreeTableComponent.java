@@ -8,10 +8,8 @@ import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeTableOperationC
  *
  * @param <T>
  */
-public interface ITreeTableComponent<T> extends ITreeComponent<T> {
-
-    // FIXME bjoern maybe it is better to
-    // extend ITreeComponent<T>, ITableComponent<T>
+public interface ITreeTableComponent<T>
+    extends ITreeComponent<T>, ITableComponent<T> {
 
     /**
      * Gets the TreeTableOperationContext which is created through an toolkit

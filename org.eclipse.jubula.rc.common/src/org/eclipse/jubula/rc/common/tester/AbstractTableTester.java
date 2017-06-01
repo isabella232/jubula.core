@@ -10,15 +10,19 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.common.tester;
 
+import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
+
 import java.awt.Rectangle;
 
 import org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
+import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
+import org.eclipse.jubula.rc.common.tester.interfaces.ITableActions;
 import org.eclipse.jubula.rc.common.util.IndexConverter;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
@@ -28,15 +32,13 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
-import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
-
 /**
  * General implementation for tables.
  * 
  * @author BREDEX GmbH
  */
 public abstract class AbstractTableTester 
-    extends AbstractTextInputSupportTester {
+    extends AbstractTextInputSupportTester implements ITableActions {
     
     /** the logger */
     private static AutServerLogger log = new AutServerLogger(
@@ -106,18 +108,7 @@ public abstract class AbstractTableTester
         });
     }
     
-    /**
-     * Verifies the rendered text inside the passed cell.
-     * @param row The row of the cell.
-     * @param rowOperator The row header operator
-     * @param col The column of the cell.
-     * @param colOperator The column header operator
-     * @param text The cell text to verify.
-     * @param operator The operation used to verify
-     * @param timeout the amount of time to wait for the text in the passed
-     *          cell to be verified
-     * @throws StepExecutionException If the row or the column is invalid, or if the rendered text cannot be extracted.
-     */
+    /** {@inheritDoc} */
     public void rcVerifyText(final String text, final String operator,
             final String row, final String rowOperator, final String col,
             final String colOperator, int timeout)
@@ -125,12 +116,12 @@ public abstract class AbstractTableTester
         invokeAndWait("rcVerifyText", timeout, new Runnable() { //$NON-NLS-1$
             public void run() {
                 ITableComponent adapter = getTableAdapter();
-                final int implRow = adapter.getRowFromString(row, rowOperator);
-                final int implCol =
-                        adapter.getColumnFromString(col, colOperator);
+                final int implRow = getRowFromStringAbstract(row, rowOperator);
+                final int implCol = getColumnFromStringAbstract(
+                        col, colOperator);
                 String current;
-                //if row is header and column is existing
-                if (implRow == -1 && implCol > -1) {
+                //if row is header
+                if (implRow == -1) {
                     current = adapter.getColumnHeaderText(implCol);        
                 } else {
                     checkRowColBounds(implRow, implCol);
@@ -143,22 +134,7 @@ public abstract class AbstractTableTester
         
     }
     
-    /**
-     * Selects the cell of the Table.<br>
-     * With the xPos, yPos, xunits and yUnits the click position inside the cell can be defined.
-     * @param row The row of the cell.
-     * @param rowOperator The row header operator
-     * @param col The column of the cell.
-     * @param colOperator The column header operator
-     * @param clickCount The number of clicks with the right mouse button
-     * @param xPos what x position
-     * @param xUnits should x position be pixel or percent values
-     * @param yPos what y position
-     * @param yUnits should y position be pixel or percent values
-     * @param extendSelection Should this selection be part of a multiple selection
-     * @param button what mouse button should be used
-     * @throws StepExecutionException If the row or the column is invalid
-     */
+    /** {@inheritDoc} */
     public void rcSelectCell(final String row, final String rowOperator,
         final String col, final String colOperator,
         final int clickCount, final int xPos, final String xUnits,
@@ -166,8 +142,8 @@ public abstract class AbstractTableTester
         int button) 
         throws StepExecutionException {
         ITableComponent adapter = getTableAdapter();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implRow = getRowFromStringAbstract(row, rowOperator);
+        final int implCol = getColumnFromStringAbstract(col, colOperator);
         final boolean isExtendSelection = extendSelection.equals(
                 ValueSets.BinaryChoice.yes.rcValue()); 
         if (log.isDebugEnabled()) {
@@ -176,17 +152,19 @@ public abstract class AbstractTableTester
         
         Rectangle cellBounds;
         Object source = getRealTable();
-        //if row is header and col is existing
-        if (implRow == -1 && implCol > -1) {
+        ClickOptions clickOptions = ClickOptions.create();
+        clickOptions.setClickCount(clickCount).setScrollToVisible(false);
+        clickOptions.setMouseButton(button);
+        //if row is header
+        if (implRow == -1) {
             cellBounds = adapter.getHeaderBounds(implCol);
             source = adapter.getTableHeader();
+            // clicking on headers sometimes don't make the Table generate the click event
+            clickOptions.setConfirmClick(false);
         } else {
             cellBounds = adapter.scrollCellToVisible(implRow, implCol);
         }        
         Object o = getSpecificRectangle(cellBounds);
-        ClickOptions clickOptions = ClickOptions.create();
-        clickOptions.setClickCount(clickCount).setScrollToVisible(false);
-        clickOptions.setMouseButton(button);
         try {
             if (isExtendSelection) {
                 getRobot().keyPress(getRealTable(),
@@ -214,21 +192,7 @@ public abstract class AbstractTableTester
     protected Object getSpecificRectangle(Rectangle rectangle) {
         return rectangle;
     }
-    /**
-     * Verifies, if value exists in column.
-     *
-     * @param col The column of the cell.
-     * @param colOperator the column header operator
-     * @param value The cell text to verify.
-     * @param operator The operation used to verify
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @param exists true if value exists, false otherwise
-     * @param timeout the maximum amount of time to wait to verify if the
-     *          value exists in the specified column
-     * @throws StepExecutionException
-     *             If the row or the column is invalid, or if the rendered text
-     *             cannot be extracted.
-     */
+    /** {@inheritDoc} */
     public void rcVerifyValueInColumn(final String col,
             final String colOperator, final String value,
             final String operator, final String searchType,
@@ -238,9 +202,8 @@ public abstract class AbstractTableTester
             public void run() {
                 ITableComponent adapter = getTableAdapter();
                 final int implCol =
-                        adapter.getColumnFromString(col, colOperator);
-                
-                
+                        getColumnFromStringAbstract(col, colOperator);
+
                 boolean valueExists = isValueExisting(adapter, implCol,
                         value, operator, searchType);
 
@@ -281,21 +244,7 @@ public abstract class AbstractTableTester
     
     
     
-    /**
-     * Verifies, if value exists in row..
-     *
-     * @param row The row of the cell.
-     * @param rowOperator the row header operator
-     * @param value The cell text to verify.
-     * @param operator The operation used to verify
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @param exists true if value exists, false otherwise
-     * @param timeout the maximum amount of time to wait to verify whether the
-     *          value exists in the row
-     * @throws StepExecutionException
-     *             If the row or the column is invalid, or if the rendered text
-     *             cannot be extracted.
-     */
+    /** {@inheritDoc} */
     public void rcVerifyValueInRow(final String row, final String rowOperator,
             final String value, final String operator, final String searchType,
             final boolean exists, int timeout)
@@ -303,7 +252,7 @@ public abstract class AbstractTableTester
         invokeAndWait("rcVerifyValueInRow", timeout, new Runnable() { //$NON-NLS-1$
             public void run() {
                 final ITableComponent adapter = getTableAdapter();
-                final int implRow = adapter.getRowFromString(row, rowOperator);
+                final int implRow = getRowFromStringAbstract(row, rowOperator);
                 boolean valueIsExisting = false;
                 //if row is header
                 if (implRow == -1) {
@@ -362,20 +311,23 @@ public abstract class AbstractTableTester
      */
     public void rcVerifyEditable(final boolean editable, String row,
             String rowOperator, String col, String colOperator, int timeout) {
+        final int rowInd = getRowFromStringAbstract(row, rowOperator);
+        final int colInd = getColumnFromStringAbstract(col, colOperator);
         //if row is header row
-        
-        if (getTableAdapter().getRowFromString(row, rowOperator) == -1) {
+        if (rowInd == -1) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
-        }        
+        }
         selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
                 ValueSets.BinaryChoice.no.rcValue());
-        invokeAndWait("rcVerifyEditable", timeout, new Runnable() { //$NON-NLS-1$
-            public void run() {
-                rcVerifyEditable(editable, 0);
-            }
-        });
+        CheckWithTimeoutQueuer.invokeAndWait("rcVerifyEditable", timeout, //$NON-NLS-1$
+            new Runnable() {
+                public void run() {
+                    Verifier.equals(editable, getTableAdapter()
+                            .isCellEditable(rowInd, colInd));
+                }
+            });
     }
     
     
@@ -399,16 +351,7 @@ public abstract class AbstractTableTester
     }
     
     
-    /**
-     * Verifies the rendered text inside cell at the mouse position on screen.
-     *
-     * @param text The cell text to verify.
-     * @param operator The operation used to verify
-     * @param timeout the maximum amount of time to wait for the text at mouse
-     *          position to be verified
-     * @throws StepExecutionException If there is no selected cell, or if the
-     *                              rendered text cannot be extracted.
-     */
+    /** {@inheritDoc} */
     public void rcVerifyTextAtMousePosition(final String text,
             final String operator, int timeout) throws StepExecutionException {
         if (isMouseOnHeader()) {
@@ -443,14 +386,7 @@ public abstract class AbstractTableTester
                 });
     }
     
-    /**
-     * Verifies the editable property of the cell under current mouse position.
-     *
-     * @param editable the editable property to verify.
-     * @param timeout the maximum amount of time to wait to verify whether
-     *          the property of the cell under current mosue position is
-     *          editable
-     */
+    /** {@inheritDoc} */
     public void rcVerifyEditableMousePosition(final boolean editable,
             int timeout) {
         //if row is header row
@@ -470,18 +406,7 @@ public abstract class AbstractTableTester
                 }
             });
     }
-    /**
-     * Finds the first row which contains the value <code>value</code>
-     * in column <code>col</code> and selects this row.
-     * @param col the column
-     * @param colOperator the column header operator
-     * @param value the value
-     * @param clickCount the number of clicks.
-     * @param regexOp the regex operator
-     * @param extendSelection Should this selection be part of a multiple selection
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @param button what mouse button should be used
-     */
+    /** {@inheritDoc} */
     public void rcSelectRowByValue(String col, String colOperator,
             final String value, final String regexOp, int clickCount,
             final String extendSelection, final String searchType, int button) {
@@ -507,7 +432,7 @@ public abstract class AbstractTableTester
         final String value, final String regexOp, final String extendSelection,
         final String searchType, ClickOptions co) {
         ITableComponent adapter = getTableAdapter();
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implCol = getColumnFromStringAbstract(col, colOperator);
         Integer implRow = findRow(value, regexOp, searchType, adapter, implCol);
         
         String  userIdxRow = new Integer(IndexConverter.toUserIndex(
@@ -556,19 +481,7 @@ public abstract class AbstractTableTester
         return implRow;
     }
     
-    /**
-     * Finds the first column which contains the value <code>value</code>
-     * in the given row and selects the cell.
-     *
-     * @param row the row to select
-     * @param rowOperator the row header operator
-     * @param value the value
-     * @param clickCount the number of clicks
-     * @param regex search using regex
-     * @param extendSelection Should this selection be part of a multiple selection
-     * @param searchType Determines where the search begins ("relative" or "absolute")
-     * @param button what mouse button should be used
-     */
+    /** {@inheritDoc} */
     public void rcSelectCellByColValue(String row, String rowOperator,
         final String value, final String regex, int clickCount,
         final String extendSelection, final String searchType, int button) {
@@ -595,7 +508,7 @@ public abstract class AbstractTableTester
             final String extendSelection, final String searchType,
             ClickOptions co) {
         ITableComponent adapter = getTableAdapter();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
+        final int implRow = getRowFromStringAbstract(row, rowOperator);
         Integer implCol = findColumn(value, regex, searchType, adapter,
                 implRow);
 
@@ -649,41 +562,25 @@ public abstract class AbstractTableTester
         return implCol;
     }
     
-    /**
-     * Action to read the value of the passed cell of the JTable
-     * to store it in a variable in the Client
-     * @param variable the name of the variable
-     * @param row the row to select
-     * @param rowOperator the row header operator
-     * @param col the column to select
-     * @param colOperator the column header operator
-     * @return the text value.
-     */
+    /** {@inheritDoc} */
     public String rcReadValue(String variable, String row, String rowOperator,
             String col, String colOperator) {
         ITableComponent adapter = getTableAdapter();
-        final int implRow = adapter.getRowFromString(row, rowOperator);
-        final int implCol = adapter.getColumnFromString(col, colOperator);
+        final int implRow = getRowFromStringAbstract(row, rowOperator);
+        final int implCol = getColumnFromStringAbstract(col, colOperator);
         
-        //if row is header and column is existing
-        if (implRow == -1 && implCol > -1) {
+        //if row is header
+        if (implRow == -1) {
             return adapter.getColumnHeaderText(implCol); 
         }
-        
+
         checkRowColBounds(implRow, implCol);
 
         adapter.scrollCellToVisible(implRow, implCol);
         return getCellText(implRow, implCol);
     }
     
-    /**
-     * @see {@link AbstractTableTester#rcReadValue(String, String, String, String)}
-     * @param row the row to select
-     * @param rowOperator the row header operator
-     * @param col the column to select
-     * @param colOperator the column header operator
-     * @return the text value at the defined position.
-     */
+    /** {@inheritDoc} */
     public String rcReadValue(String row, String rowOperator,
             String col, String colOperator) {
         return rcReadValue(null, row, rowOperator, col, colOperator);
@@ -810,7 +707,7 @@ public abstract class AbstractTableTester
             String col, String colOperator)
         throws StepExecutionException {
         //if row is header row
-        if (getTableAdapter().getRowFromString(row, rowOperator) == -1) {
+        if (getRowFromStringAbstract(row, rowOperator) == -1) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
@@ -845,7 +742,7 @@ public abstract class AbstractTableTester
     public void rcReplaceText(String text, String row, String rowOperator,
             String col, String colOperator) {
         //if row is header row
-        if (getTableAdapter().getRowFromString(row, rowOperator) == -1) {
+        if (getRowFromStringAbstract(row, rowOperator) == -1) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
@@ -1190,20 +1087,7 @@ public abstract class AbstractTableTester
      */
     protected abstract boolean isMouseOnHeader();
     
-    /**
-     * Verifies the value of the property with the name <code>name</code>
-     * of the tree item at the current mouse position.
-     * The name of the property has be specified according to the JavaBean
-     * specification. The value returned by the property is converted into a
-     * string by calling <code>toString()</code> and is compared to the passed
-     * <code>value</code>.
-     * 
-     * @param name The name of the property
-     * @param value The value of the property as a string
-     * @param operator The operator used to verify
-     * @param timeout the maximum amount of time to wait for the property
-     *          at mouse position to be checked
-     */
+    /** {@inheritDoc} */
     public void rcCheckPropertyAtMousePosition(final String name,
             final String value, final String operator, int timeout) {
         invokeAndWait("rcCheckPropertyAtMousePosition", timeout, //$NON-NLS-1$
@@ -1218,43 +1102,30 @@ public abstract class AbstractTableTester
             });
     }
     
-    /**
-     * Stores the string representation of the value of the property of the
-     * given Node
-     * 
-     * @param variableName
-     *            the name of the variable
-     * @param propertyName
-     *            the name of the property
-     * @return string representation of the property value
-     */
+    /** {@inheritDoc} */
     public String rcStorePropertyValueAtMousePosition(String variableName,
             final String propertyName) {
         return getTableAdapter().getPropertyValueOfCell(propertyName,
                 getNodeAtMousePosition());
     }
     
-    /**
-     * Checks if a given column exists, respectively does not exist
-     * @param column the column
-     * @param columnOperator the operator to find the column
-     * @param exists true when the column should be found
-     * @param timeout the maximum amount of time to wait for the check whether
-     *          the given column exists to be performed
-     */
+    /** {@inheritDoc} */
     public void rcCheckExistenceOfColumn(final String column,
             final String columnOperator, final boolean exists, int timeout) {
         invokeAndWait("rcCheckExistenceOfColumn", timeout, new Runnable() { //$NON-NLS-1$
             public void run() {
-                int index = getTableAdapter().getColumnFromString(column,
-                        columnOperator);
-                if (index >= 0) {
+                boolean existsValue = true;
+                try {
+                    int index = getColumnFromStringAbstract(
+                            column, columnOperator);
                     Rectangle bounds = getTableAdapter().getHeaderBounds(index);
                     if (bounds == null || bounds.getWidth() <= 0) {
-                        index = -2;
+                        existsValue = false;
                     }
+                } catch (StepExecutionException e) {
+                    existsValue = false;
                 }
-                Verifier.equals(exists, index >= 0);
+                Verifier.equals(exists, existsValue);
             }
         });
     }
@@ -1271,4 +1142,100 @@ public abstract class AbstractTableTester
         rcVerifyEditable(editable, timeout);
     }
 
+    /**
+     * Gets a column index in a TableComponent
+     * @param col the column string
+     * @param operator the operator
+     * @return the column index
+     * @throws StepExecutionException if column cannot be found
+     */
+    public int getColumnFromStringAbstract(final String col,
+            final String operator) {
+        try {
+            int usrIdxCol = Integer.parseInt(col);
+            if (usrIdxCol == 0) {
+                usrIdxCol = usrIdxCol + 1;
+            }
+            int colInd = IndexConverter.toImplementationIndex(usrIdxCol);
+            if (colInd < 0 || colInd >= getTableAdapter().getColumnCount()) {
+                throw new StepExecutionException("Column with index " + colInd + " does not exist", //$NON-NLS-1$ //$NON-NLS-2$
+                        EventFactory.createActionError(
+                                TestErrorEvent.NOT_FOUND));
+            }
+            return colInd;
+        } catch (NumberFormatException nfe) {
+            // empty
+        }
+        Boolean isVisible = getEventThreadQueuer().invokeAndWait("getColumnFromString", //$NON-NLS-1$
+            new IRunnable<Boolean>() {
+                public Boolean run() {
+                    return getTableAdapter().isHeaderVisible();
+                }
+            });
+        if (!isVisible) {
+            throw new StepExecutionException("No Header", //$NON-NLS-1$
+                EventFactory.createActionError(TestErrorEvent.NO_HEADER));
+        }
+
+        Integer implCol = getEventThreadQueuer().invokeAndWait("getColumnFromString", new IRunnable<Integer>() { //$NON-NLS-1$
+            public Integer run() throws StepExecutionException {
+                for (int i = 0; i < getTableAdapter().getColumnCount(); i++) {
+                    String colHeader = getTableAdapter().getColumnHeaderText(i);
+                    if (MatchUtil.getInstance().match(
+                            colHeader, col, operator)) {
+                        return i;
+                    }
+                }
+                throw new StepExecutionException("Column does not exist", //$NON-NLS-1$
+                    EventFactory.createActionError(TestErrorEvent.NOT_FOUND));
+            }
+        });                
+        return implCol;
+    }
+
+    /**
+     * Converts a row string + operator to index
+     * @param row the row index or text
+     *      The index is amongst the visible rows (w.r.t unfolded / folded)
+     *      as in case of JavaFX. The header has index -1.
+     * 
+     * @param operator the operator
+     * @return the row index
+     */
+    public int getRowFromStringAbstract(final String row,
+            final String operator) {
+        return getEventThreadQueuer().invokeAndWait("getRowFromString", new IRunnable<Integer>() { //$NON-NLS-1$
+            public Integer run() throws StepExecutionException {
+                try {
+                    int rowInt = IndexConverter.toImplementationIndex(
+                            Integer.parseInt(row));                       
+                    if (rowInt == -1) {
+                        if (!getTableAdapter().isHeaderVisible()) {
+                            throw new StepExecutionException("Header not visible", //$NON-NLS-1$
+                                    EventFactory.createActionError(
+                                            TestErrorEvent.NO_HEADER));
+                        }
+                    } else if (!getTableAdapter().doesRowExist(rowInt)) {
+                        throw new StepExecutionException("Row with index " + rowInt + " does not exist.", //$NON-NLS-1$ //$NON-NLS-2$
+                                EventFactory.createActionError(
+                                        TestErrorEvent.NOT_FOUND));
+                    }
+                    return rowInt;
+                } catch (NumberFormatException nfe) {
+                    // nothing
+                }
+                int i = 0;
+                while (getTableAdapter().doesRowExist(i)) {
+                    String cellTxt = getCellText(i, 0);
+                    if (MatchUtil.getInstance().match(cellTxt, row, operator)) {
+                        return i;
+                    }
+                    i++;
+                }
+                throw new StepExecutionException("Row does not exist.", //$NON-NLS-1$
+                    EventFactory.createActionError(
+                            TestErrorEvent.NOT_FOUND));
+            }
+        });
+    }
 }

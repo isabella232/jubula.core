@@ -190,7 +190,7 @@ public class TreeTableViewTester extends AbstractTreeTableTester {
         }        
         selectCell(row, rowOperator, col, colOperator, ClickOptions.create(),
                 ValueSets.BinaryChoice.no.rcValue());
-        rcVerifySelectedEditable(editable, timeout);
+        rcVerifyEditableSelected(editable, timeout);
     }
     
     /**
@@ -200,9 +200,9 @@ public class TreeTableViewTester extends AbstractTreeTableTester {
      * @param timeout the maximum amount of time to wait for the check to be
      *          performed
      */
-    public void rcVerifySelectedEditable(final boolean editable,
+    public void rcVerifyEditableSelected(final boolean editable,
             int timeout) {
-        invokeAndWait("rcVerifySelectedEditable", timeout, new Runnable() { //$NON-NLS-1$
+        invokeAndWait("rcVerifyEditableSelected", timeout, new Runnable() { //$NON-NLS-1$
             @Override
             public void run() {
                 Cell cell = getContext().getSelectedCell();
@@ -220,7 +220,7 @@ public class TreeTableViewTester extends AbstractTreeTableTester {
      * @param timeout the maximum amount of time to wait for the check to be
      *          performed
      */
-    public void rcVerifyEditableAtMousePosition(boolean editable, int timeout) {
+    public void rcVerifyEditableMousePosition(boolean editable, int timeout) {
         invokeAndWait("rcVerisfEditableAtMousePosition", timeout, new Runnable() { //$NON-NLS-1$
             public void run() {
                 TreeTableCell<?, ?> cell = 

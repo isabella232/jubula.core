@@ -3644,7 +3644,7 @@
             </param>
         </action>
         <action name="CompSystem.VerifyTableCellEditableMousePosition" descriptionKey="CompSystem.VerifyTableCellEditableMousePosition.descr" since="4.1">
-            <method>rcVerifyEditableAtMousePosition</method>
+            <method>rcVerifyEditableMousePosition</method>
             <param name="CompSystem.IsEditable"
                    descriptionKey="CompSystem.IsEditable.descr" >
                 <type>java.lang.Boolean</type>

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester;
 
-import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
-
 import java.awt.Point;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -50,20 +48,6 @@ public class TreeViewTester extends AbstractTreeTester {
             event.consume();
         }
     };
-
-    @Override
-    public void rcVerifyTextAtMousePosition(final String txt,
-            final String operator, int timeout) {
-        invokeAndWait("rcVerifyTextAtMousePosition", //$NON-NLS-1$
-                timeout,
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        checkNodeText(new Object[] { getNodeAtMousePosition() },
-                                txt, operator);
-                    }
-                });
-    }
     
     @Override
     public void rcDragByTextPath(int mouseButton, String modifier,

@@ -546,7 +546,6 @@ public class RobotSwtImpl implements IRobot<Rectangle> {
             final Rectangle constraints, final int xPos, 
             final boolean xAbsolute, final int yPos, final boolean yAbsolute, 
             ClickOptions clickOptions) throws StepExecutionException {
-        
         if (clickOptions.isScrollToVisible() 
                 && graphicsComponent instanceof Control) {
             ensureComponentVisible((Control)graphicsComponent, constraints);

@@ -31,6 +31,7 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
+import org.eclipse.jubula.rc.javafx.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.javafx.tester.util.AbstractTraverser;
 import org.eclipse.jubula.rc.javafx.tester.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
@@ -113,7 +114,7 @@ public class TableTester extends AbstractTableTester {
             String colOperator, int xPos, String xUnits, int yPos,
             String yUnits, int delayBeforeDrop) throws StepExecutionException {
         try {
-            ITableComponent adapter = (ITableComponent) getComponent();
+            TableAdapter adapter = (TableAdapter) getComponent();
             int implRow = adapter.getRowFromString(row, rowOperator);
             int implCol = adapter.getColumnFromString(col, colOperator);
             TableCell targetCell = getCellAt(implRow + 1, implCol + 1);
@@ -166,7 +167,7 @@ public class TableTester extends AbstractTableTester {
     public void rcDropRowByValue(String col, String colOperator, String value,
             String regexOp, String searchType, int delayBeforeDrop) {
         try {
-            ITableComponent adapter = (ITableComponent) getComponent();
+            TableAdapter adapter = (TableAdapter) getComponent();
             int implCol = adapter.getColumnFromString(col, colOperator);
             int implRow = super.findRow(value, regexOp, searchType, adapter,
                     implCol);
@@ -219,7 +220,7 @@ public class TableTester extends AbstractTableTester {
             String value, String regex, String searchType,
             int delayBeforeDrop) {
         try {
-            ITableComponent adapter = (ITableComponent) getComponent();
+            TableAdapter adapter = (TableAdapter) getComponent();
             int implRow = adapter.getRowFromString(row, rowOperator);
             int implCol = super.findColumn(value, regex, searchType, adapter,
                     implRow);
@@ -614,8 +615,7 @@ public class TableTester extends AbstractTableTester {
         invokeAndWait("rcVerifyValueInRow", timeout, new Runnable() { //$NON-NLS-1$
             @Override
             public void run() {
-                final ITableComponent adapter =
-                        (ITableComponent) getComponent();
+                final TableAdapter adapter = (TableAdapter) getComponent();
                 final int implRow = adapter.getRowFromString(row, rowOperator);
                 // if row is header
                 boolean result = EventThreadQueuerJavaFXImpl.invokeAndWait(
@@ -744,7 +744,7 @@ public class TableTester extends AbstractTableTester {
      * @return String with the column path or null
      */
     private String getColumnByValue(final String value, final String operator,
-            final String searchType, final ITableComponent adapter,
+            final String searchType, final TableAdapter adapter,
             final int implRow) {
         return EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getColumnByValue", new Callable<String>() { //$NON-NLS-1$
@@ -787,7 +787,8 @@ public class TableTester extends AbstractTableTester {
             final String operator, int clickCount,
             final String extendSelection, final String searchType,
             final int button) {
-        final ITableComponent adapter = (ITableComponent) getComponent();
+        final TableAdapter adapter =
+                (TableAdapter) getComponent();
         final int implRow = adapter.getRowFromString(row, rowOperator);
         // if row is header
         String result = EventThreadQueuerJavaFXImpl.invokeAndWait(
@@ -864,4 +865,17 @@ public class TableTester extends AbstractTableTester {
                 });
         return result;
     }
+
+    /**
+     * JavaFX-specific method, to deal with nested columns.
+     * @param col the column(path) string
+     * @param operator the operator to use
+     * @return the column index
+     */
+    public int getColumnFromStringAbstract(final String col,
+            final String operator) {
+        return ((TableAdapter) getComponent()).
+                getColumnFromString(col, operator);
+    }
+
 }

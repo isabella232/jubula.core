@@ -54,4 +54,31 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+ <emphasis role="strong">SWT Tree Table actions</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        SWT Tree Tables support the following table-like actions from now on:
+        <itemizedlist>
+          <listitem>Check Editability (Specify Cell)</listitem>
+          <listitem>Check Existence of a Column</listitem>
+          <listitem>Check Existence of Value in Column</listitem>
+          <listitem>Check Existence of Value in Row</listitem>
+          <listitem>Check Text (Specify Cell)</listitem>
+          <listitem>Check Text (Mouse Position)</listitem>
+          <listitem>Select Cell</listitem>
+          <listitem>Select Value from Column</listitem>
+          <listitem>Select Value from Row</listitem>
+          <listitem>Store Value (Specify Cell)</listitem>
+          <listitem>Store Value at Mouse Position</listitem>
+        </itemizedlist> 
+    </para>
+  </listitem>
+  <listitem>
+    We also corrected the <literal>Check Property at Mouse Position</literal> and <literal>Check Text (Mouse Position)</literal> actions.
+  </listitem>
+</itemizedlist>
+
 </section>

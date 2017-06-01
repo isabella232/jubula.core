@@ -28,6 +28,7 @@ import org.eclipse.jubula.rc.common.implclasses.tree.StandardDepthFirstTraverser
 import org.eclipse.jubula.rc.common.implclasses.tree.TreeNodeOperation;
 import org.eclipse.jubula.rc.common.tester.AbstractTreeTableTester;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITreeComponent;
+import org.eclipse.jubula.rc.common.tester.interfaces.ITableActions;
 import org.eclipse.jubula.rc.common.util.KeyStrokeUtil;
 import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.rc.swt.components.SWTCell;
@@ -59,7 +60,8 @@ import org.eclipse.swt.widgets.TreeItem;
  *
  * @author BREDEX GmbH
  */
-public class TreeTester extends AbstractTreeTableTester {
+public class TreeTester extends AbstractTreeTableTester
+    implements ITableActions {
 
     /**
      * Finds the item at a given position in the tree.
@@ -164,6 +166,30 @@ public class TreeTester extends AbstractTreeTableTester {
                     Verifier.match(propToStr, value, operator);
                 }
             });
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void rcVerifyTextAtMousePosition(final String pattern,
+            final String operator, int timeout) {
+        // AbstractTreeTester.rcVerifyTextAtMousePosition uses TreeTableOperationContext.getNodeTextList
+        // which is wrongly implemented since a long time ago. Unfortunately, that method is used during
+        // expanding by Textpaths, so it shouldn't be altered due to backward compatibility.
+        // That's why TableTester is used here...
+        TableTester tableTester = new TableTester(getTreeAdapter());
+        tableTester.rcVerifyTextAtMousePosition(pattern, operator, timeout);
+    }
+
+    /**
+     * Same as Check Text At Mouse Position...
+     * @param pattern the pattern
+     * @param operator the operator
+     * @param timeout the timeout
+     */
+    public void rcVerifyCellTextAtMousePosition(final String pattern,
+            final String operator, int timeout) {
+        rcVerifyTextAtMousePosition(pattern, operator, timeout);
     }
 
     /**
@@ -356,10 +382,10 @@ public class TreeTester extends AbstractTreeTableTester {
                      */
                     private Cell findCell(TreeItem item) {
                         Cell cell = null;
+                        int lim = tree.getColumnCount() == 0
+                                ? 1 : tree.getColumnCount();
                         for (int col = 0; col < tree.getColumnCount(); col++) {
-                            final Rectangle itemBounds = getCellBounds(
-                                    getEventThreadQueuer(), tree,
-                                    m_rowCount, col, item);
+                            Rectangle itemBounds = item.getBounds(col);
                             final org.eclipse.swt.graphics.Point 
                                 absItemBounds = tree.toDisplay(itemBounds.x,
                                             itemBounds.y);
@@ -654,4 +680,117 @@ public class TreeTester extends AbstractTreeTableTester {
             }
         }
     }
+
+    /**
+     * @return the TableTester used to execute Table actions
+     */
+    private TableTester getTableTester() {
+        return new TableTester(getTreeAdapter());
+    }
+
+    /** {@inheritDoc} */
+    public String rcStorePropertyValueAtMousePosition(String variableName,
+            final String propertyName) {
+        return getTableTester().rcStorePropertyValueAtMousePosition(
+                variableName, propertyName);
+    }
+
+    /** {@inheritDoc} */
+    public void rcSelectCell(final String row, final String rowOperator,
+        final String col, final String colOperator,
+        final int clickCount, final int xPos, final String xUnits,
+        final int yPos, final String yUnits, final String extendSelection,
+        int button) 
+        throws StepExecutionException {
+        getTableTester().rcSelectCell(row, rowOperator, col, colOperator,
+            clickCount, xPos, xUnits, yPos, yUnits, extendSelection, button);
+    }
+
+    /** {@inheritDoc} */
+    public void rcVerifyEditable(final boolean editable, String row,
+            String rowOperator, String col, String colOperator, int timeout) {
+        getTableTester().rcVerifyEditable(editable, row, rowOperator,
+                col, colOperator, timeout);
+    }
+
+    /** {@inheritDoc} */
+    public void rcVerifyEditableMousePosition(final boolean editable,
+            int timeout) {
+        getTableTester().rcVerifyEditableMousePosition(editable, timeout);
+    }
+
+    /** {@inheritDoc} */
+    public void rcVerifyText(final String text, final String operator,
+            final String row, final String rowOperator, final String col,
+            final String colOperator, int timeout)
+            throws StepExecutionException {
+        getTableTester().rcVerifyText(text, operator, row, rowOperator,
+                col, colOperator, timeout);
+    }
+
+    /** {@inheritDoc} */
+    public void rcVerifyValueInColumn(final String col,
+            final String colOperator, final String value,
+            final String operator, final String searchType,
+            final boolean exists, int timeout)
+        throws StepExecutionException {
+        getTableTester().rcVerifyValueInColumn(col, colOperator,
+                value, operator, searchType, exists, timeout);
+    }
+
+    /** {@inheritDoc} */
+    public void rcVerifyValueInRow(final String row, final String rowOperator,
+            final String value, final String operator, final String searchType,
+            final boolean exists, int timeout)
+                    throws StepExecutionException {
+        getTableTester().rcVerifyValueInRow(row, rowOperator, value, operator,
+                searchType, exists, timeout);
+    }
+
+    /** {@inheritDoc} */
+    public void rcSelectRowByValue(String col, String colOperator,
+            final String value, final String regexOp, int clickCount,
+            final String extendSelection, final String searchType, int button) {
+        getTableTester().rcSelectRowByValue(col, colOperator, value, regexOp,
+                clickCount, extendSelection, searchType, button);
+    }
+
+    /** {@inheritDoc} */
+    public void rcSelectCellByColValue(String row, String rowOperator,
+        final String value, final String regex, int clickCount,
+        final String extendSelection, final String searchType, int button) {
+        getTableTester().rcSelectCellByColValue(row, rowOperator, value, regex,
+                clickCount, extendSelection, searchType, button);
+    }
+
+    /** {@inheritDoc} */
+    public String rcReadValue(String variable, String row, String rowOperator,
+            String col, String colOperator) {
+        return getTableTester().rcReadValue(variable, row, rowOperator,
+                col, colOperator);
+    }
+
+    /** {@inheritDoc} */
+    public String rcReadValue(String row, String rowOperator,
+            String col, String colOperator) {
+        return getTableTester().rcReadValue(row, rowOperator, col, colOperator);
+    }
+
+    /** {@inheritDoc} */
+    public void rcCheckExistenceOfColumn(final String column,
+            final String columnOperator, final boolean exists, int timeout) {
+        getTableTester().rcCheckExistenceOfColumn(column, columnOperator,
+                exists, timeout);
+    }
+
+    /** {@inheritDoc} */
+    public String rcReadValueAtMousePosition(String variable) {
+        return getTableTester().rcReadValueAtMousePosition(variable);
+    }
+
+    /** {@inheritDoc} */
+    public String rcReadValueAtMousePosition() {
+        return getTableTester().rcReadValueAtMousePosition();
+    }
+
 }

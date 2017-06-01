@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.swing.tester;
 
-import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
-
 import java.awt.Point;
 
 import javax.swing.JTree;
@@ -98,20 +96,6 @@ public class JTreeTester extends AbstractTreeTester {
             pressOrReleaseModifiers(dndHelper.getModifier(), false);
         }
         
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public void rcVerifyTextAtMousePosition(final String text,
-            final String operator,
-            int timeout) {
-        invokeAndWait("rcVerifyTextAtMousePosition", //$NON-NLS-1$
-                timeout, new Runnable() {
-                    public void run() {
-                        checkNodeText(new Object[] { getNodeAtMousePosition() },
-                                text, operator);
-                    }
-                });
     }
     
     /**

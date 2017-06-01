@@ -175,40 +175,6 @@ public class JTableAdapter extends JComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public int getRowFromString(final String row, final String operator) {
-        return getEventThreadQueuer().invokeAndWait(
-                "getRowFromString", new IRunnable<Integer>() { //$NON-NLS-1$
-                    public Integer run() {
-                        int rowInt = -2;        
-                        try {
-                            rowInt = IndexConverter.toImplementationIndex(
-                                    Integer.parseInt(row));
-                            if (rowInt == -1) {
-                                if (m_table.getTableHeader() == null
-                                        || !(m_table.getTableHeader()
-                                                .isShowing())) {
-                                    throw new StepExecutionException("No Header", //$NON-NLS-1$
-                                            EventFactory.createActionError(
-                                                TestErrorEvent.NO_HEADER));
-                                }                
-                            }
-                        } catch (NumberFormatException nfe) {
-                            for (int i = 0; i < m_table.getRowCount(); i++) {
-                                String cellTxt = getCellText(i, 0);
-                                if (MatchUtil.getInstance().match(cellTxt, row,
-                                        operator)) {
-                                    return new Integer(i);
-                                }
-                            }
-                        }        
-                        return rowInt;
-                    }
-                });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public Rectangle getBounds() {
         return getEventThreadQueuer().invokeAndWait("getBounds", //$NON-NLS-1$
                 new IRunnable<Rectangle>() {
@@ -283,13 +249,11 @@ public class JTableAdapter extends JComponentAdapter
     /**
      * {@inheritDoc}
      */
-    public boolean isCellEditable(int row, int col) {
+    public boolean isCellEditable(final int row, final int col) {
         return getEventThreadQueuer().invokeAndWait("isCellEditable", //$NON-NLS-1$
                 new IRunnable<Boolean>() {
                     public Boolean run() {
-                        Cell cell = getSelectedCell();
-                        return m_table.isCellEditable(cell.getRow(),
-                                cell.getCol());
+                        return m_table.isCellEditable(row, col);
                     }
                 });
     }
@@ -382,5 +346,22 @@ public class JTableAdapter extends JComponentAdapter
     public String getPropertyValueOfCell(String name, Object cell) {
         StepExecutionException.throwUnsupportedAction();
         return null;
+    }
+
+    /** {@inheritDoc} */
+    public boolean doesRowExist(int rowInd) {
+        return rowInd >= 0 && rowInd < m_table.getRowCount(); 
+    }
+
+    /** {@inheritDoc} */
+    public int getTopIndex() {
+        throw new UnsupportedOperationException("Swing table adapter does not implement getTopIndex."); //$NON-NLS-1$
+        // and we don't need it currently...
+    }
+
+    /** {@inheritDoc} */
+    public Rectangle getCellBounds(int row, int col, boolean restr) {
+        throw new UnsupportedOperationException("Swing table adapter does not implement getCellBounds."); //$NON-NLS-1$
+        // and we don't need it currently...
     }
 }

@@ -10,11 +10,13 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.awt.Rectangle;
 import java.util.concurrent.Callable;
 
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
+import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.implclasses.tree.AbstractTreeTableOperationContext;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
@@ -126,6 +128,99 @@ public class TreeTableViewAdapter
                     }
                 });
         return result;
+    }
+
+    /** {@inheritDoc} */
+    public int getColumnCount() {
+        return 0;
+    }
+
+    /** {@inheritDoc} */
+    public int getRowCount() {
+        return 0;
+    }
+
+    /** {@inheritDoc} */
+    public String getCellText(int row, int column) {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public String getColumnHeaderText(int column) {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public int getColumnFromString(String col, String operator) {
+        return 0;
+    }
+
+    /** {@inheritDoc} */
+    public String getRowText(int row) {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public int getRowFromString(String row, String operator) {
+        return 0;
+    }
+
+    /** {@inheritDoc} */
+    public Rectangle getHeaderBounds(int col) {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public Cell getSelectedCell() throws StepExecutionException {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public boolean isHeaderVisible() {
+        return false;
+    }
+
+    /** {@inheritDoc} */
+    public boolean isCellEditable(int row, int col) {
+        return false;
+    }
+
+    /** {@inheritDoc} */
+    public boolean hasCellSelection() {
+        return false;
+    }
+
+    /** {@inheritDoc} */
+    public Rectangle scrollCellToVisible(int row, int col)
+            throws StepExecutionException {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public Object getTableHeader() {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public String getText() {
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    public boolean doesRowExist(int row) {
+        return row >= 0 && row < getRowCount();
+    }
+
+    /** {@inheritDoc} */
+    public int getTopIndex() {
+        throw new UnsupportedOperationException("JavaFX treetable does not implement getTopIndex."); //$NON-NLS-1$
+        // and we don't need it currently...
+    }
+
+    /** {@inheritDoc} */
+    public Rectangle getCellBounds(int row, int col, boolean restr) {
+        throw new UnsupportedOperationException("JavaFX tree table adapter does not implement getCellBounds."); //$NON-NLS-1$
+        // and we don't need it currently...
     }
 
 }

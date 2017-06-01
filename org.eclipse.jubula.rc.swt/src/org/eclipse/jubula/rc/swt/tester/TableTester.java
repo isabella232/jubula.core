@@ -17,37 +17,35 @@ import java.awt.Rectangle;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
-import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
 import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.tester.AbstractTableTester;
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextInputComponent;
 import org.eclipse.jubula.rc.common.util.Verifier;
+import org.eclipse.jubula.rc.swt.components.ISWTTableComponent;
 import org.eclipse.jubula.rc.swt.components.SWTCell;
 import org.eclipse.jubula.rc.swt.tester.adapter.StyledTextAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TableAdapter;
 import org.eclipse.jubula.rc.swt.tester.adapter.TextComponentAdapter;
+import org.eclipse.jubula.rc.swt.tester.adapter.TreeAdapter;
 import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
-import org.eclipse.jubula.tools.internal.constants.SwtToolkitConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.graphics.FontMetrics;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.Widget;
 /**
  * Toolkit specific commands for the <code>Table</code>
@@ -56,19 +54,32 @@ import org.eclipse.swt.widgets.Widget;
  */
 public class TableTester extends AbstractTableTester {
     /**
-     *  Gets the real table component
-     * @return the table
+     * Simple constructor
      */
-    private Table getTable() {
-        return (Table)getComponent().getRealComponent();
+    public TableTester() {
+        super();
     }
-    
+    /**
+     * Used in emulating multiple inheritance for SWT Tree Tables
+     * @param adapter the (Tree)Table adapter
+     */
+    public TableTester(IComponent adapter) {
+        super();
+        setAdapter(adapter);
+    }
+
+    /**
+     * @return the Tree and Table adapter
+     */
+    private ISWTTableComponent getSWTAdapter() {
+        return (ISWTTableComponent) getComponent();
+    }
     /**
      * {@inheritDoc}
      */
     public String[] getTextArrayFromComponent() {
         final String[] componentTextArray;
-        Item[] itemArray = getTable().getColumns();
+        Item[] itemArray = getSWTAdapter().getColumnItems();
         componentTextArray = getTextArrayFromItemArray(itemArray);         
         return componentTextArray;
     }
@@ -125,67 +136,54 @@ public class TableTester extends AbstractTableTester {
      * {@inheritDoc}
      */
     protected Cell getCellAtMousePosition() throws StepExecutionException {
-        
-        final Table table = getTable();
         final Point awtMousePos = getRobot().getCurrentMousePosition();
-        Cell returnvalue = getEventThreadQueuer().invokeAndWait(
-                "getCellAtMousePosition",  //$NON-NLS-1$
-                new IRunnable<Cell>() {
-                    public Cell run() throws StepExecutionException {
-                        Cell cell = null;
-                        final int itemCount = table.getItemCount();
-                        for (int rowCount = table.getTopIndex(); 
-                                rowCount < itemCount; rowCount++) {
-                            if (cell != null) {
-                                break;
-                            }
-                            final int columnCount = table.getColumnCount();
-                            if (columnCount > 0) {
-                                for (int col = 0; col < columnCount; col++) {
-                                    checkRowColBounds(rowCount, col);
-                                    final Rectangle itemBounds = getCellBounds(
-                                            getEventThreadQueuer(), getTable(),
-                                            rowCount, col);
-                                    final org.eclipse.swt.graphics.Point 
-                                        absItemBounds = table
-                                            .toDisplay(itemBounds.x,
-                                                    itemBounds.y);
-                                    final Rectangle absRect = new Rectangle(
-                                            absItemBounds.x, absItemBounds.y,
-                                            itemBounds.width,
-                                            itemBounds.height);
-                                    if (absRect.contains(awtMousePos)) {
-                                        cell = new SWTCell(rowCount, col,
-                                                table.getItem(rowCount));
-                                        break;
-                                    }
-                                }
-                            } else {
-                                checkRowColBounds(rowCount, 0);
-                                final Rectangle itemBounds = getCellBounds(
-                                        getEventThreadQueuer(), getTable(),
-                                        rowCount, 0);
-                                final org.eclipse.swt.graphics.Point 
-                                    absItemBounds = table
-                                        .toDisplay(itemBounds.x, itemBounds.y);
-                                final Rectangle absRect = new Rectangle(
-                                        absItemBounds.x, absItemBounds.y,
-                                        itemBounds.width, itemBounds.height);
-                                if (absRect.contains(awtMousePos)) {
-                                    cell = new Cell(rowCount, 0);
-                                }
-                            }
-                        }
-                        if (cell == null) {
-                            throw new StepExecutionException(
-                                    "No cell under mouse position found!", //$NON-NLS-1$
-                                    EventFactory
-                                            .createActionError(
-                                                    TestErrorEvent.NOT_FOUND));
-                        }
-                        return cell;
+        Cell returnvalue = getEventThreadQueuer().invokeAndWait("getCellAtMousePosition", new IRunnable<Cell>() { //$NON-NLS-1$
+            public Cell run() throws StepExecutionException {
+                ITableComponent adapter = (ITableComponent) getComponent();
+                Control comp = (Control) adapter.getRealComponent();
+                Cell cell = null;
+                final int itemCount = adapter.getRowCount();
+                for (int rowCount = adapter.getTopIndex(); 
+                        rowCount < itemCount; rowCount++) {
+                    if (cell != null) {
+                        break;
                     }
-                });
+                    final int columnCount = adapter.getColumnCount() == 0
+                            ? 1 : adapter.getColumnCount();
+                    for (int col = 0; col < columnCount; col++) {
+                        checkRowColBounds(rowCount, col);
+                        final Rectangle itemBounds = adapter.getCellBounds(
+                                rowCount, col, false);
+                        final org.eclipse.swt.graphics.Point 
+                            absItemBounds = comp
+                                .toDisplay(itemBounds.x, itemBounds.y);
+                        final Rectangle absRect = new Rectangle(
+                                absItemBounds.x, absItemBounds.y,
+                                itemBounds.width,
+                                itemBounds.height);
+                        if (absRect.contains(awtMousePos)) {
+                            // not very nice, but this was the simplest...
+                            if (comp instanceof Table) {
+                                cell = new SWTCell(rowCount, col,
+                                    ((Table) comp).getItem(rowCount));
+                            } else if (comp instanceof Tree) {
+                                cell = new SWTCell(rowCount, col,
+                                    ((TreeAdapter) getComponent()).
+                                    getRow(rowCount));
+                            }
+                            break;
+                        }
+                    }
+                }
+                if (cell == null) {
+                    throw new StepExecutionException(
+                            "No cell under mouse position found!", //$NON-NLS-1$
+                            EventFactory.createActionError(
+                                            TestErrorEvent.NOT_FOUND));
+                }
+                return cell;
+            }
+        });
         return returnvalue;
     }
 
@@ -193,16 +191,8 @@ public class TableTester extends AbstractTableTester {
      * {@inheritDoc}
      */
     protected boolean isMouseOnHeader() {
-        final Table table = getTable();
         final ITableComponent adapter = (ITableComponent)getComponent();
-        Boolean isVisible = getEventThreadQueuer().invokeAndWait("isMouseOnHeader", //$NON-NLS-1$
-                new IRunnable<Boolean>() {
-                    public Boolean run() {
-                        return table.getHeaderVisible();
-                    }
-                });
-        
-        if (!(isVisible.booleanValue())) {
+        if (!adapter.isHeaderVisible()) {
             return false;
         }
         
@@ -217,13 +207,13 @@ public class TableTester extends AbstractTableTester {
                             new org.eclipse.swt.graphics.Point(
                                 awtMousePos.x, awtMousePos.y);
 
-                        for (int j = 0; j < table.getColumnCount(); j++) {
+                        for (int j = 0; j < adapter.getColumnCount(); j++) {
                             final Rectangle constraints = 
                                     adapter.getHeaderBounds(j);
                             
                             org.eclipse.swt.graphics.Rectangle bounds = 
                                     SwtUtils.getWidgetBounds(
-                                    table);
+                                    (Control) adapter.getRealComponent());
                             
                             if (constraints != null) {
                                 // Use SWT's mapping function, if possible, as it is more
@@ -282,77 +272,15 @@ public class TableTester extends AbstractTableTester {
      */
     private org.eclipse.swt.graphics.Point getConvertedLocation(
             final Rectangle constraints) {
-        org.eclipse.swt.graphics.Point convertedLocation = 
-                getEventThreadQueuer().invokeAndWait("toDisplay", new IRunnable<org.eclipse.swt.graphics.Point>() { //$NON-NLS-1$
-                        public org.eclipse.swt.graphics.Point run()
-                                throws StepExecutionException {
-                            return getTable().toDisplay(constraints.x,
-                                    constraints.y);
-                        }
-                    });
-        return convertedLocation;
+        return getEventThreadQueuer().invokeAndWait("toDisplay", new IRunnable<org.eclipse.swt.graphics.Point>() { //$NON-NLS-1$
+            public org.eclipse.swt.graphics.Point run()
+                    throws StepExecutionException {
+                Control cont = (Control) getComponent().getRealComponent();
+                return cont.toDisplay(constraints.x, constraints.y);
+            }
+        });
     }
-        
-    /**
-     * @param etq
-     *            the EventThreadQueuer to use
-     * @param table
-     *            the table to use
-     * @param row
-     *            The row of the cell
-     * @param col
-     *            The column of the cell
-     * @return The bounding rectangle for the cell, relative to the table's
-     *         location.
-     */
-    public static Rectangle getCellBounds(IEventThreadQueuer etq,
-        final Table table, final int row, final int col) {
-        Rectangle cellBounds = etq.invokeAndWait(
-                "getCellBounds", //$NON-NLS-1$
-                new IRunnable<Rectangle>() {
-                    public Rectangle run() {
-                        TableItem ti = table.getItem(row); 
-                        int column = (table.getColumnCount() > 0 || col > 0) 
-                            ? col : 0;
-                        org.eclipse.swt.graphics.Rectangle r = 
-                                ti.getBounds(column);
-                        String text = CAPUtil.getWidgetText(ti,
-                                SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
-                                        + column, ti.getText(column));
-                        Image image = ti.getImage(column);
-                        if (text != null && text.length() != 0) {
-                            GC gc = new GC(table);
-                            int charWidth = 0; 
-                            try {
-                                FontMetrics fm = gc.getFontMetrics();
-                                charWidth = fm.getAverageCharWidth();
-                            } finally {
-                                gc.dispose();
-                            }
-                            r.width = text.length() * charWidth;
-                            if (image != null) {
-                                r.width += image.getBounds().width;
-                            }
-                        } else if (image != null) {
-                            r.width = image.getBounds().width;
-                        }
-                        if (column > 0) {
-                            TableColumn tc = table.getColumn(column);
-                            int alignment = tc.getAlignment();
-                            if (alignment == SWT.CENTER) {
-                                r.x += ((double)tc.getWidth() / 2) 
-                                        - ((double)r.width / 2);
-                            }
-                            if (alignment == SWT.RIGHT) {
-                                r.x += tc.getWidth() - r.width;
-                            }
-                        }
-                        
-                        return new Rectangle(r.x, r.y, r.width, r.height);
-                    }
-                });
-        return cellBounds;
-    }
+
     /**
      * {@inheritDoc}
      */
@@ -711,14 +639,15 @@ public class TableTester extends AbstractTableTester {
         Boolean checkIndex = getEventThreadQueuer().invokeAndWait(
                 "rcVerifyTableCheckboxIndex", new IRunnable<Boolean>() { //$NON-NLS-1$
                     public Boolean run() throws StepExecutionException {
-                        Table table = getTable();
-                        if ((table.getStyle() & SWT.CHECK) == 0) {
+                        Control cont = (Control) getComponent().
+                                getRealComponent();
+                        if ((cont.getStyle() & SWT.CHECK) == 0) {
                             throw new StepExecutionException(
                                     "No checkbox found", //$NON-NLS-1$
                                     EventFactory.createActionError(
                                             TestErrorEvent.CHECKBOX_NOT_FOUND));
                         }
-                        return table.getItem(row).getChecked();
+                        return getSWTAdapter().isChecked(row);
                     }
                 });
         Verifier.equals(checked, checkIndex.booleanValue());
@@ -738,7 +667,7 @@ public class TableTester extends AbstractTableTester {
         int row = getEventThreadQueuer().invokeAndWait(
                 "get Selection index", new IRunnable<Integer>() { //$NON-NLS-1$
                     public Integer run() throws StepExecutionException {
-                        return getTable().getSelectionIndex();
+                        return getSWTAdapter().getSelectionIndex();
                     }
                 });
         toggleCheckboxInRow(row);
@@ -762,34 +691,30 @@ public class TableTester extends AbstractTableTester {
                 });
         }
         
-        ((ITableComponent) getComponent()).scrollCellToVisible(row, 0);
+        Rectangle rect = ((ITableComponent) getComponent()).
+                scrollCellToVisible(row, 0);
 
-        final Table table = getTable();
-        
-        org.eclipse.swt.graphics.Rectangle itemBounds = getEventThreadQueuer()
-                .invokeAndWait(
-                        "getTableItem", new IRunnable<org.eclipse.swt.graphics.Rectangle>() { //$NON-NLS-1$
-                            public org.eclipse.swt.graphics.Rectangle run()
-                                    throws StepExecutionException {
-                                return table.getItem(row).getBounds();
-                            }
-                        });
-        
-        int itemHeight = itemBounds.height;
-        
         // Creates a Rectangle with bounds around the checkbox of the row
         org.eclipse.swt.graphics.Rectangle cbxBounds = 
                 new org.eclipse.swt.graphics.Rectangle(0,
-                        itemBounds.y, itemBounds.x, itemHeight);
+                        rect.y, rect.width, rect.height);
         
         // Performs a click in the middle of the Rectangle
-        getRobot().click(table, cbxBounds, ClickOptions.create().left().
-                setScrollToVisible(false),
-                itemBounds.x / 2, true, itemHeight / 2, true);
+        getRobot().click(getComponent().getRealComponent(), cbxBounds,
+                ClickOptions.create().left().setScrollToVisible(false),
+                rect.width / 2, true, rect.height / 2, true);
     }
 
     /** {@inheritDoc} */
     protected Object getNodeAtMousePosition() throws StepExecutionException {
         return getCellAtMousePosition();
+    }
+
+    /**
+     * Used in emulating multiple inheritance for SWT TreeTables
+     * @param adapter the (Tree)Table adapter
+     */
+    public void setAdapter(TableAdapter adapter) {
+        setAdapter(adapter);
     }
 }

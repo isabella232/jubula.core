@@ -18,7 +18,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.IEventThreadQueuer;
+import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.driver.IRunnable;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
@@ -1356,5 +1358,28 @@ public class SwtUtils {
             && shell.getChildren() != null
             && shell.getChildren().length == 1
             && shell.getChildren()[0] instanceof org.eclipse.swt.widgets.List;
+    }
+
+    /**
+     * Clicks somewhere and checks if an editor was present
+     * @param toClick the component to click in
+     * @param rect the rectangle where to click
+     * @param robot the robot to click with
+     * @return the Editor if there was any
+     */
+    public static Control getEditor(Widget toClick, Rectangle rect,
+            IRobot<Rectangle> robot) {
+        org.eclipse.swt.graphics.Rectangle swtRect = 
+                new org.eclipse.swt.graphics.Rectangle(rect.x, rect.y, 
+                        rect.width, rect.height);
+        ClickOptions co = ClickOptions.create().
+                setClickCount(1).setScrollToVisible(false);
+        robot.click(toClick, swtRect, co);
+        Control cont = getCursorControl();
+        if (cont != null) {
+            return cont;
+        }
+        robot.click(toClick, swtRect, co.setClickCount(2));
+        return getCursorControl();
     }
 }

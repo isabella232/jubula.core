@@ -196,7 +196,13 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
         return result;
     }
 
-    @Override
+    /**
+     * Gets column index from string with header name or index
+     * 
+     * @param colPath Column index or path
+     * @param op the operation used to verify
+     * @return column index
+     */
     public int getColumnFromString(final String colPath, final String op) {
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getColumnFromString", new Callable<Integer>() { //$NON-NLS-1$
@@ -306,7 +312,15 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
         return null;
     }
 
-    @Override
+    /**
+     * Gets row index from string with index or text of first row
+     * 
+     * @param row
+     *            index or value in first col
+     * @param operator
+     *            the operation used to verify
+     * @return integer of String of row
+     */
     public int getRowFromString(final String row, final String operator) {
         Integer result = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "getRowFromString", new Callable<Integer>() { //$NON-NLS-1$
@@ -586,4 +600,20 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
         return String.valueOf(prop);
     }
 
+    /** {@inheritDoc} */
+    public boolean doesRowExist(int row) {
+        return row >= 0 && row < getRowCount();
+    }
+
+    /** {@inheritDoc} */
+    public int getTopIndex() {
+        throw new UnsupportedOperationException("JavaFX table adapter does not implement getTopIndex."); //$NON-NLS-1$
+        // and we don't need it currently...
+    }
+
+    /** {@inheritDoc} */
+    public Rectangle getCellBounds(int row, int col, boolean restr) {
+        throw new UnsupportedOperationException("JavaFX table adapter does not implement getCellBounds."); //$NON-NLS-1$
+        // and we don't need it currently...
+    }
 }

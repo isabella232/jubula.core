@@ -59,17 +59,6 @@ public interface ITableComponent<T> extends ITextComponent {
     public String getColumnHeaderText(int column);
 
     /**
-     * Gets column index from string with header name or index
-     * 
-     * @param col
-     *            Headername or index of column
-     * @param operator
-     *            the operation used to verify
-     * @return column index
-     */
-    public int getColumnFromString(String col, String operator);
-    
-    /**
      * This is only for a specific case where tables could act like lists. And
      * the getText is not working. If this is not the case for the component
      * return <code>null</code>
@@ -80,26 +69,6 @@ public interface ITableComponent<T> extends ITextComponent {
      */
     public String getRowText(int row);
     
-    /**
-     * Gets row index from string with index or text of first row
-     * 
-     * @param row
-     *            index or value in first col
-     * @param operator
-     *            the operation used to verify
-     * @return integer of String of row
-     */
-    public int getRowFromString(String row, String operator);
-    
-    /**
-     * gets header bounds for column
-     * 
-     * @param col
-     *            the zero based index of the column.
-     * @return The rectangle of the header
-     */
-    public Rectangle getHeaderBounds(int col);
-
     /**
      * @return The currently selected cell of the Table.
      * @throws StepExecutionException
@@ -152,11 +121,44 @@ public interface ITableComponent<T> extends ITextComponent {
     public Object getTableHeader();
 
     /**
+     * gets header bounds for column within the object returned
+     *    by getTableHeader()
+     * 
+     * @param col
+     *            the zero based index of the column.
+     * @return The rectangle of the header
+     */
+    public Rectangle getHeaderBounds(int col);
+
+    /**
      * Gets the property value of a table cell
      * @param name the name of the property
      * @param cell the cell
      * @return the value
      */
     public String getPropertyValueOfCell(String name, T cell);
+
+    /**
+     * Required for SWT - we don't want to unnecessarily
+     *      scan the whole tree
+     * @param rowInd the row index
+     * @return whether the row exists
+     */
+    public boolean doesRowExist(int rowInd);
+
+    /**
+     * Returns the top element's index
+     * @return the index
+     */
+    public int getTopIndex();
+
+    /**
+     * @param row the row index
+     * @param col the column index
+     * @param restr whether to return the approximate bounds
+     *        for the text or the whole cell
+     * @return the cell bounds within the Tree / Table
+     */
+    public Rectangle getCellBounds(int row, int col, boolean restr);
 
 }
