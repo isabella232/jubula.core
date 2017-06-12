@@ -68,7 +68,7 @@
 <unit id="org.eclipse.mylyn.trac_feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.mylyn.wikitext_feature.feature.group" version="0.0.0"/>
 <!-- Mylyn END -->
-<repository location="http://download.eclipse.org/mylyn/drops/3.22.0/v20170216-0940"/>
+<repository location="http://download.eclipse.org/mylyn/releases/3.22/"/>
 </location>
 </locations>
 </target>
