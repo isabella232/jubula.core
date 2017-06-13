@@ -1254,6 +1254,12 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             getEditorHelper().setDirty(true);
         }
         if (!isDirty()) {
+            // The AUTMainPO may have changed in the DB
+            // In this case the reinitalizeEditSupport can do ugly things
+            // Since the Editor is not dirty, it is safe to simply refresh
+            // the work version.
+            getEntityManager().refresh(getEditorHelper().
+                    getEditSupport().getWorkVersion());
             try {
                 getEditorHelper().getEditSupport().reinitializeEditSupport();
                 getEditorHelper().resetEditableState();
