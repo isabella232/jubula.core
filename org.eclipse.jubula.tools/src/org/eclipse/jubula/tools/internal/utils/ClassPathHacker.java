@@ -158,15 +158,17 @@ public class ClassPathHacker {
      * @throws IOException 
      * @throws ClassNotFoundException 
      */
+    @SuppressWarnings("nls")
     public static List<Class> findClassesInJar(URL resource, String pkgname,
             ClassLoader classLoader) 
             throws IOException, ClassNotFoundException {
         String relPath = pkgname.replace('.', '/');
         String path = resource.getPath()
-                .replaceFirst("[.]jar[!].*", ".jar") //$NON-NLS-1$ //$NON-NLS-2$
-                .replaceFirst("file:", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        
-        path = URLDecoder.decode(path, "utf-8"); //$NON-NLS-1$
+                .replaceFirst("[.]jar[!].*", ".jar")
+                .replaceFirst("file:", "");
+        path = path.replaceFirst("bundleFile[!].*", "bundleFile");
+            //Important for RCP accessor bundles
+        path = URLDecoder.decode(path, "utf-8");
         List<Class> classes = new ArrayList<Class>();
         JarFile jarFile = null;
         try {            
@@ -176,10 +178,10 @@ public class ClassPathHacker {
                 JarEntry entry = entries.nextElement();
                 String entryName = entry.getName();
                 String className = null;
-                if (entryName.endsWith(".class")  //$NON-NLS-1$
+                if (entryName.endsWith(".class")
                         && entryName.startsWith(relPath)) {
                     className = entryName.replace('/', '.').replace('\\', '.')
-                            .replaceAll(".class", ""); //$NON-NLS-1$ //$NON-NLS-2$
+                            .replaceAll(".class", "");
                 
                     if (className != null) {
                         classes.add(Class.forName(

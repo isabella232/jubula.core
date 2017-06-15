@@ -68,6 +68,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SwtUtils {
 
+    /** full qualified class name for TabbedPropertyList*/
+    private static final String TABBED_PROPERTY_LIST_FQN = "org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyList"; //$NON-NLS-1$
+
     /** Constant for identification of win32 graphics toolkit */
     private static final String WIN32 = "win32"; //$NON-NLS-1$
     
@@ -207,7 +210,10 @@ public class SwtUtils {
      */
     private static Widget checkControlChildrenAtCursorLocation(
             final Control control) {
-
+        if (control != null && TABBED_PROPERTY_LIST_FQN.equals(
+                control.getClass().getName())) {
+            return control;
+        }
         Item[] items = getMappableItems(control);
         if (items == null) {
             return control;
@@ -249,12 +255,14 @@ public class SwtUtils {
             new IRunnable<Control>() {
 
                 public Control run() throws StepExecutionException {
-                    if (control != null && !control.isDisposed()) {
-                        Control parent = control.getParent();
-                        if (parent instanceof CCombo 
-                            || parent instanceof Table) { // children could be a
-                                                          // TableEditor?
-                            return parent;
+                        if (control != null && !control.isDisposed()) {
+                            Control parent = control.getParent();
+                            if (parent != null && (parent instanceof CCombo
+                                    || parent instanceof Table
+                                    || TABBED_PROPERTY_LIST_FQN.equals(
+                                            parent.getClass().getName()))) {
+                                // children could be a TableEditor?
+                                return parent;
                         }
                     }
                     return control;
