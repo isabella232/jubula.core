@@ -13,60 +13,6 @@
     <packaging>eclipse-repository</packaging>
     <name>Jubula p2-repository for Eclipse</name>
 
-    <profiles>
-        <profile>
-            <id>build-eclipse-org</id>
-            <activation>
-                <property>
-                    <name>build.env</name>
-                    <value>eclipse.org</value>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <!-- deploy "development" p2 repository -->
-                    <plugin>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>deploy</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                                <configuration>
-                                    <tasks>
-                                        <property name="targetDir" value="/home/data/httpd/download.eclipse.org/jubula/oxygen-nightly"/>
-                                        <checksum
-                                            file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
-                                            forceOverwrite="yes"
-                                            algorithm="SHA-512" fileext=".sha" />
-                                        <delete includeemptydirs="false">
-                                            <fileset dir="${targetDir}">
-                                                <include name="repo/**" />
-                                                <include name="${project.artifactId}-${project.version}.zip*" />
-                                            </fileset>
-                                        </delete>
-                                        <copy todir="${targetDir}">
-                                            <fileset dir="${project.build.directory}">
-                                                <include name="${project.artifactId}-${project.version}.zip*" />
-                                            </fileset>
-                                        </copy>
-                                        <copy includeemptydirs="false" todir="${targetDir}/repo">
-                                            <fileset dir="target/repository">
-                                                <include name="**" />
-                                            </fileset>
-                                        </copy>
-                                    </tasks>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
     <build>
         <plugins>
             <plugin>
