@@ -128,7 +128,7 @@ public interface INodePO extends ITimestampPO {
 
     
     /**
-     * @return boolean that shows wether a testcase is used as a JUnitTestcase
+     * @return boolean that shows whether a testcase is used as a JUnitTestcase
      */
     public abstract boolean isJUnitTestSuite();
 

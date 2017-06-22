@@ -64,7 +64,7 @@ public class Assert {
     }
     
     /** Throws always an AssertException. Use this method for
-     * exceptions that must be catched, but never expected to be thrown
+     * exceptions that must be caught, but never expected to be thrown
      * @param t exception or error
      */
     public static void notThrown(Throwable t) {

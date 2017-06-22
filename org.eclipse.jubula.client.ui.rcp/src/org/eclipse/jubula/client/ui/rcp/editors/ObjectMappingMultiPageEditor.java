@@ -817,7 +817,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     public void doSave(IProgressMonitor monitor) {
         monitor.beginTask(Messages.EditorsSaveEditors,
                 IProgressMonitor.UNKNOWN);
-        boolean errorOccured = false;
+        boolean errorOccurred = false;
         IObjectMappingPO objMap = getAut().getObjMap();
         TimestampBP.refreshTimestamp(objMap);
         try {
@@ -826,13 +826,13 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
             }
         } catch (PMException e) {
             PMExceptionHandler.handlePMExceptionForEditor(e, this);
-            errorOccured = true;
+            errorOccurred = true;
         } catch (ProjectDeletedException e) {
             PMExceptionHandler.handleProjectDeletedException();
-            errorOccured = true;
+            errorOccurred = true;
         } finally {
             monitor.done();
-            if (!errorOccured) {
+            if (!errorOccurred) {
                 try {
                     reOpenEditor(((PersistableEditorInput)getEditorInput())
                         .getNode());

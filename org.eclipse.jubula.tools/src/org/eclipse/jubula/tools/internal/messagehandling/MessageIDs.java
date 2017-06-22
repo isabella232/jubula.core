@@ -150,7 +150,7 @@ public class MessageIDs {
     public static final Integer E_DELETE_TESTRESULT = new Integer(2061);
     /** if testresult can't be stored */
     public static final Integer E_STORE_TESTRESULT = new Integer(2062);
-    /** if sql exception occured */
+    /** if sql exception occurred */
     public static final Integer E_SQL_EXCEPTION = new Integer(2063);
     /** if the database profile does not exits anymore */
     public static final Integer E_DB_PROFILE_NOT_EXIST = new Integer(2064);
@@ -183,7 +183,7 @@ public class MessageIDs {
     public static final Integer E_NO_PERSPECTIVE = new Integer(3009);
     /** if there is a problem while refreshing problemView */ 
     public static final Integer E_PROBLEM_VIEW_REFRESH = new Integer(3011);
-    /** if an error occured while gui-synchronization */
+    /** if an error occurred while gui-synchronization */
     public static final Integer E_SYNCHRONIZATION = new Integer(3012);
     /** if the current OS is not supported by GUIdancer */
     public static final Integer E_UNSUPPORTED_OS = new Integer(3013);

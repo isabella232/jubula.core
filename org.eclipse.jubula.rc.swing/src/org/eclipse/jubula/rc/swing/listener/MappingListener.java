@@ -165,7 +165,7 @@ public class MappingListener extends AbstractAutSwingEventListener {
                 break;
             default:
                 if (log.isDebugEnabled()) {
-                    log.debug("event occured: " + event.paramString());  //$NON-NLS-1$
+                    log.debug("event occurred: " + event.paramString());  //$NON-NLS-1$
                 }
         }
         final int eventId = event.getID();
@@ -188,7 +188,7 @@ public class MappingListener extends AbstractAutSwingEventListener {
      * a message with the identifier to the client.
      * 
      * @param event
-     *            the occured KeyEvent
+     *            the occurred KeyEvent
      */
     private void handleInputEvent(InputEvent event) {
         if (event.getID() != KeyEvent.KEY_PRESSED

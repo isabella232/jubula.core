@@ -376,7 +376,7 @@ public class Messages extends NLS {
     public static String TheUniqueIdMustNotBeNull;
     public static String TimeoutCalled;
     public static String TimeoutExpired;
-    public static String TimeoutOccuredGettingCompAUT;
+    public static String TimeoutOccurredGettingCompAUT;
     public static String Timestamp;
     public static String TriedFindProjectsForNonExistantProject;
     public static String UnableToAppendAUTAgent;

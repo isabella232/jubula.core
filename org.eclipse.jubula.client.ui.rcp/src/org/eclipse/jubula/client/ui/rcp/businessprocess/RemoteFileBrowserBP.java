@@ -46,7 +46,7 @@ public class RemoteFileBrowserBP {
     private boolean m_timeOut;
     /** result of remote browsing */
     private SendDirectoryResponseMessage m_responseMsg;
-    /** convenience: no error occured */
+    /** convenience: no error occurred */
     private boolean m_isDataValid;
     
     /**

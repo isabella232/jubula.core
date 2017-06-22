@@ -88,11 +88,11 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     /** be quiet during processing */
     private static boolean quiet = false;
     /** did an error occur during processing */
-    private static boolean errorOccured = false;
+    private static boolean errorOccurred = false;
     /** did a validation error occur during processing */
-    private static boolean validationErrorOccured = false;
+    private static boolean validationErrorOccurred = false;
     /** did a missing argument error occur during processing */
-    private static boolean missingArgErrorOccured = false;
+    private static boolean missingArgErrorOccurred = false;
     /** is this a dry run* */
     private static boolean noRunValue = false;
     /** the command line representation */
@@ -400,7 +400,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      *      the message to log and println to sys.err
      */
     public static void printlnConsoleError(String text) {
-        errorOccured = true;
+        errorOccurred = true;
         log.error(Messages.AnErrorOcurred + StringConstants.COLON
                 + StringConstants.SPACE + text);
         System.err.println(Messages.ClientError + StringConstants.NEWLINE
@@ -461,7 +461,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
         try {
             int exitCode = doRun();
 
-            if (isErrorOccured()) {
+            if (isErrorOccurred()) {
                 exitCode = EXIT_CODE_ERROR;
             }
             
@@ -520,7 +520,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
                     ClientTestStrings.PASSWORD);
         }
         extendValidate(job, errorMsg, errorInvalidArgsMsg);
-        if (missingArgErrorOccured) {
+        if (missingArgErrorOccurred) {
             errorMsg.append(Messages.ClientReadUserManual);
             throw new PreValidateException(errorMsg.toString());
         }
@@ -537,7 +537,7 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
             throw new PreValidateException(
                     Messages.NoPlatformInstanceLocation);
         }
-        if (validationErrorOccured) {
+        if (validationErrorOccurred) {
             errorInvalidArgsMsg.append(Messages.ClientReadUserManual);
             throw new PreValidateException(errorInvalidArgsMsg.toString());
         }
@@ -650,8 +650,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      */
     protected void appendError(StringBuilder errorMsg, String msg1, 
             String msg2) {
-        missingArgErrorOccured = true;
-        errorOccured = true;
+        missingArgErrorOccurred = true;
+        errorOccurred = true;
         errorMsg.append(StringConstants.TAB);
         errorMsg.append(StringConstants.MINUS);
         errorMsg.append(msg1);
@@ -668,8 +668,8 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
      */
     protected void appendValidationError(StringBuilder validationErrorMsg, 
             String msg1, String msg2) {
-        validationErrorOccured = true;
-        errorOccured = true;
+        validationErrorOccurred = true;
+        errorOccurred = true;
         validationErrorMsg.append(StringConstants.TAB);
         validationErrorMsg.append(StringConstants.MINUS);
         validationErrorMsg.append(msg1);
@@ -716,24 +716,24 @@ public abstract class AbstractCmdlineClient implements IProgressConsole {
     }
 
     /**
-     * @return the errorOccured
+     * @return the errorOccurred
      */
-    public static boolean isErrorOccured() {
-        return errorOccured;
+    public static boolean isErrorOccurred() {
+        return errorOccurred;
     }
 
     /**
-     * @return the validationErrorOccured
+     * @return the validationErrorOccurred
      */
-    public static boolean isValidationErrorOccured() {
-        return validationErrorOccured;
+    public static boolean isValidationErrorOccurred() {
+        return validationErrorOccurred;
     }
     
     /**
-     * @return the missingArgErrorOccured
+     * @return the missingArgErrorOccurred
      */
-    public static boolean isMissingArgErrorOccured() {
-        return missingArgErrorOccured;
+    public static boolean isMissingArgErrorOccurred() {
+        return missingArgErrorOccurred;
     }
     
     /**

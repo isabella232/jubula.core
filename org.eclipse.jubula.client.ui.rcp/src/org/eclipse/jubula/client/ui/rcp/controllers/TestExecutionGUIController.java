@@ -112,7 +112,7 @@ public class TestExecutionGUIController {
             }
 
             @Override
-            protected void errorOccured() {
+            protected void errorOccurred() {
                 if (m_infoRCPTask != null) {
                     m_infoRCPTask.cancel();
                 }
@@ -145,7 +145,7 @@ public class TestExecutionGUIController {
             }
 
             @Override
-            protected void errorOccured() {
+            protected void errorOccurred() {
                 // do nothing
             }
         };
@@ -170,7 +170,7 @@ public class TestExecutionGUIController {
             }
 
             @Override
-            protected void errorOccured() {
+            protected void errorOccurred() {
                 // nothing
 
             }
@@ -251,7 +251,7 @@ public class TestExecutionGUIController {
             }
 
             @Override
-            protected void errorOccured() {
+            protected void errorOccurred() {
                 // empty
             }
         };

@@ -171,7 +171,7 @@ public class ReflectionUtil {
                             new String[] {cause.toString()}));
         }
         if (e instanceof NullPointerException) {
-            log.warn("Nullpointer occured trying to invoke a method", e); //$NON-NLS-1$
+            log.warn("Nullpointer occurred trying to invoke a method", e); //$NON-NLS-1$
             throw new StepExecutionException(e.toString(),
                     EventFactory.createActionError(
                             TestErrorEvent.EXECUTION_ERROR,

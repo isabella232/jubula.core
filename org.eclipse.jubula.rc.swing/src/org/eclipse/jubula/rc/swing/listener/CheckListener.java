@@ -537,7 +537,7 @@ public class CheckListener extends AbstractAutSwingEventListener {
                 break;
             default:
                 if (log.isDebugEnabled()) {
-                    log.debug("event occured: " + event.paramString());  //$NON-NLS-1$
+                    log.debug("event occurred: " + event.paramString());  //$NON-NLS-1$
                 }
         }
         final int eventId = event.getID();

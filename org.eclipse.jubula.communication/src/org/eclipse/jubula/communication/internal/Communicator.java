@@ -491,7 +491,7 @@ public class Communicator {
         } catch (IOException ioe) {
             log.debug(ioe.getLocalizedMessage(), ioe);
             throw new CommunicationException(
-                "io error occured during sending a message:" //$NON-NLS-1$
+                "io error occurred during sending a message:" //$NON-NLS-1$
                     + ioe.getMessage(), ioe, MessageIDs.E_MESSAGE_SEND);
         } catch (IllegalArgumentException iae) {
             log.debug(iae.getLocalizedMessage(), iae);
@@ -657,7 +657,7 @@ public class Communicator {
                 m_awaitingCommands.remove(messageIdentifier);
             }
             throw new CommunicationException(
-                    "io error occured during requesting a message: "//$NON-NLS-1$
+                    "io error occurred during requesting a message: "//$NON-NLS-1$
                             + ioe.getMessage(), MessageIDs.E_MESSAGE_REQUEST);
         } catch (IllegalArgumentException iae) {
             log.error(iae.getLocalizedMessage(), iae);
@@ -1045,7 +1045,7 @@ public class Communicator {
                     try {
                         m_command.timeout();
                     } catch (Exception e) {
-                        log.error("catched exception from '" //$NON-NLS-1$
+                        log.error("caught exception from '" //$NON-NLS-1$
                                 + m_command.getClass().getName()
                                 + ".timeout()'", e); //$NON-NLS-1$
                     }

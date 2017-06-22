@@ -88,7 +88,7 @@ public class ExternalTestDataBP {
      *      directory for data files
      * @param file data source File
      * @param node ParamNode
-     * @throws JBException error occured while reading data source
+     * @throws JBException error occurred while reading data source
      * @return filled TestDataManager
      */
     private ITDManager createFilledTDManager(File dataDir, String file, 
@@ -239,7 +239,7 @@ public class ExternalTestDataBP {
      *            falso to create a new one
      * @return filled TestDataManager with new data
      * @throws JBException
-     *             error occured while reading data source
+     *             error occurred while reading data source
      */
     public ITDManager parseTable(DataTable filledTable,
         IParameterInterfacePO paramPo, boolean useParamInterfaceTDMan)

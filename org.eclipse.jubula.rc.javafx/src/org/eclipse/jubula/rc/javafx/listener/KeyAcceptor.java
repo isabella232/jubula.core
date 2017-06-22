@@ -60,7 +60,7 @@ public class KeyAcceptor {
      * <code>RecordListener</code>.
      *
      * @param event
-     *            the occured key event
+     *            the occurred key event
      * @return true if the combination Ctrl+Alt+<a> or Ctrl+Shift+<a> was
      *         pressed, false otherwise
      */

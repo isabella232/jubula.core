@@ -81,7 +81,7 @@ public class JUnitXMLGeneratorOperations implements
                         fail.setContent(sb.toString());
                         m_testCase.getSkippedOrErrorOrFailure().add(fail);
                     }
-                //an error occured
+                //an error occurred
                     return false;
                 
                 case TestResultNode.ERROR_IN_CHILD:
@@ -100,8 +100,8 @@ public class JUnitXMLGeneratorOperations implements
     /**
      * generates the String that is being used for the content
      * (the part of the testcase, that is displayed in the Failure trace) of the Testcase
-     * @param node the node at which the Error or Failure occured
-     * @param errorOrFailure true when an Error occured and fales when a Failure occured
+     * @param node the node at which the Error or Failure occurred
+     * @param errorOrFailure true when an Error occurred and fales when a Failure occurred
      * @return the collect information in a String
      */
     private String collectInformationForMessage(TestResultNode node,
@@ -166,9 +166,9 @@ public class JUnitXMLGeneratorOperations implements
     }
     
     /**Collects and returns the information of the properties for the
-     * given occured Error/Failure
+     * given occurred Error/Failure
      * 
-     * @param errorEvent the Error/Failure that occured during the test execution
+     * @param errorEvent the Error/Failure that occurred during the test execution
      * @return a String of the collected information
      */
     private String collectPropertyInformation(TestErrorEvent errorEvent) {

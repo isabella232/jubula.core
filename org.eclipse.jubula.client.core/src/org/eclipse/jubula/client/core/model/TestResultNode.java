@@ -147,7 +147,7 @@ public class TestResultNode {
     private String m_componentType;
     
     /**
-     * wether the Node acts as a JUnit testsuite
+     * whether the Node acts as a JUnit testsuite
      * true = this testResultNode wll be used as a testsuite
      * false = testResultNode is treated as the kind of node it is normally
      */
@@ -800,7 +800,7 @@ public class TestResultNode {
     }
 
     /**
-     * @return wether the Node acts as a JUnit testsuite
+     * @return whether the Node acts as a JUnit testsuite
      */
     public boolean isJunitTestSuite() {
         return m_isJunitTestSuite;
@@ -808,7 +808,7 @@ public class TestResultNode {
 
 
     /**
-     * @param isJunitTestSuite wether the Node acts as a JUnit testsuite
+     * @param isJunitTestSuite whether the Node acts as a JUnit testsuite
      * true = the Node is used as a JUnitTestSuite
      */
     public void setJunitTestSuite(boolean isJunitTestSuite) {

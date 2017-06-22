@@ -156,7 +156,7 @@ public class AutConfigSettingWizardPage extends WizardPage
     /**
      * {@inheritDoc}
      */
-    public void eventOccured(List< ? extends Object> list) {
+    public void eventOccurred(List< ? extends Object> list) {
         DialogStatusParameter param = (DialogStatusParameter)list.get(0);
         setMessage(param.getMessage(), param.getStatusType());
         setPageComplete(param.getButtonState());

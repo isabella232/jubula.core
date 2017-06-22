@@ -151,7 +151,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                     throw new InterruptedException();
                 }
             } catch (final JBException e) {
-                errorOccured();
+                errorOccurred();
                 Display.getDefault().asyncExec(new Runnable() {
                     public void run() {
                         ErrorHandlingUtil.createMessageDialog(e, null, null);
@@ -427,7 +427,7 @@ public class OpenProjectHandler extends AbstractProjectHandler {
         /**
          * {@inheritDoc}
          */
-        protected void errorOccured() {
+        protected void errorOccurred() {
             Plugin.stopLongRunning();
         }
 

@@ -24,8 +24,8 @@ public interface IExceptionHandler {
      * handle the exception
      * 
      * @param t
-     *            the occured exception, throwable, this means every!!!
-     *            Exception/Error was catched
+     *            the occurred exception, throwable, this means every!!!
+     *            Exception/Error was caught
      * @return false if the execution should stopped, true otherwise.
      */
     public boolean handle(Throwable t);

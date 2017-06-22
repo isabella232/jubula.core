@@ -44,7 +44,7 @@ public class RemoteFileStore extends FileStore {
     private RemoteFileBrowserBP m_remBrowser;
     /** is this entry a directory */
     private boolean m_isDirectory;
-    /** is the content valid or has some error occured */
+    /** is the content valid or has some error occurred */
     private boolean m_isContentValid;
 
     /**

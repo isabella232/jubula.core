@@ -152,7 +152,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
         m_popupText.addKeyListener(new KeyAdapter() {
             // hook key pressed - see PR 14201  
             public void keyPressed(KeyEvent e) {
-                keyReleaseOccured(e);
+                keyReleaseOccurred(e);
 
                 // as a result of processing the above call, clients may have
                 // disposed this cell editor
@@ -174,7 +174,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
         });
         // We really want a selection listener but it is not supported so we
         // use a key listener and a mouse listener to know when selection changes
-        // may have occured
+        // may have occurred
         m_popupText.addMouseListener(new MouseAdapter() {
             public void mouseUp(MouseEvent e) {
                 checkSelection();
@@ -249,7 +249,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
      * may extend or reimplement.
      *
      */
-    protected void editOccured() {
+    protected void editOccurred() {
         
         String value = m_popupText.getText();
         if (value == null) {
@@ -304,7 +304,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
         if (m_modifyListener == null) {
             m_modifyListener = new ModifyListener() {
                 public void modifyText(ModifyEvent e) {
-                    editOccured();
+                    editOccurred();
                 }
             };
         }
@@ -317,7 +317,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
      * 
      */
     protected void handleDefaultSelection() {
-        // same with enter-key handling code in keyReleaseOccured(e);
+        // same with enter-key handling code in keyReleaseOccurred(e);
         fireApplyEditorValue();
         deactivate();
     }
@@ -417,7 +417,7 @@ public class CompNamePopupTextCellEditor extends CellEditor {
      *
      * @param keyEvent the key event
      */
-    protected void keyReleaseOccured(KeyEvent keyEvent) {
+    protected void keyReleaseOccurred(KeyEvent keyEvent) {
         if (keyEvent.character == CharacterConstants.RETURN) {
             // Enter is handled in handleDefaultSelection.
             // Do not apply the editor value in response to an Enter key event

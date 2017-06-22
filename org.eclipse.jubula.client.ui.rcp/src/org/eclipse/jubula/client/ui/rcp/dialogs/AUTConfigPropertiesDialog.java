@@ -180,7 +180,7 @@ public class AUTConfigPropertiesDialog extends TitleAreaDialog
     /**
      * {@inheritDoc}
      */
-    public void eventOccured(List< ? extends Object> params) {
+    public void eventOccurred(List< ? extends Object> params) {
         DialogStatusParameter parameter = (DialogStatusParameter)params.get(0);
         setMessage(parameter.getMessage(), parameter.getStatusType());
         Button okButton = getButton(IDialogConstants.OK_ID);

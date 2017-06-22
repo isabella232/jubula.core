@@ -17,7 +17,7 @@ import org.eclipse.jubula.rc.common.driver.IEventMatcher;
 
 
 /**
- * This matcher checks wether the AWT event has a given event ID.
+ * This matcher checks whether the AWT event has a given event ID.
  *
  * @author BREDEX GmbH
  * @created 21.03.2005

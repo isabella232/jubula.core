@@ -613,7 +613,7 @@ public class TestExecutionContributor
     }
 
     /**
-     * Gets the I18N-String of an error occured in an incomplete TestSuite-Run
+     * Gets the I18N-String of an error occurred in an incomplete TestSuite-Run
      * depending of the given TestExecutionEvent-ID
      * @param testExecEventID the TestExecutionEvent-ID
      * @return the I18N-String of the error description.

@@ -20,7 +20,7 @@ package org.eclipse.jubula.client.cmd.constants;
  */
 public final class ClientStrings {
     /** Error message */
-    public static final String ERR_UNEXPECTED = "An unexpected error occured in command-line-client: "; //$NON-NLS-1$
+    public static final String ERR_UNEXPECTED = "An unexpected error occurred in command-line-client: "; //$NON-NLS-1$
 
     /** object attribute */
     public static final String QUIET = "q"; //$NON-NLS-1$

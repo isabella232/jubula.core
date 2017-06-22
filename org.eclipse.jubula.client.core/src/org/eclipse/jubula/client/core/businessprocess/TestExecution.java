@@ -1104,7 +1104,7 @@ public class TestExecution {
         if (testOk) {
             processResultOk(msg, resultNode);
         } else {
-            processErrorEventOccured(msg, resultNode);
+            processErrorEventOccurred(msg, resultNode);
         }
         while (isPaused()) {
             testConnection();
@@ -1147,14 +1147,14 @@ public class TestExecution {
     }
     
     /**
-     * Processes the result if an error event occured.
+     * Processes the result if an error event occurred.
      * @param msg the CAPTestResponseMessage of the CAP
      * @param resultNode the resultNode of the CAP
      */
-    private void processErrorEventOccured(final CAPTestResponseMessage msg,
+    private void processErrorEventOccurred(final CAPTestResponseMessage msg,
             TestResultNode resultNode) {
 
-        // ErrorEvent has occured
+        // ErrorEvent has occurred
         TestErrorEvent event = msg.getTestErrorEvent();
         if (StringUtils.isEmpty(resultNode.getCommandLog())) {
             String commandLogKey = TestErrorEvent.Property.COMMAND_LOG_KEY;

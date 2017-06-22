@@ -187,7 +187,7 @@ public class DeleteTreeItemHandlerOMEditor
      * Checks, if the deleted node was the current category to map into.
      * <br>If <code>true</code>, set category to "unassigned".
      * 
-     * @param editor The editor in which the delete occured.
+     * @param editor The editor in which the delete occurred.
      */
     private void checkCategoryToMapInto(ObjectMappingMultiPageEditor editor) {
         

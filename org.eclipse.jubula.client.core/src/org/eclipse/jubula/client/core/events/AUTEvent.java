@@ -11,7 +11,7 @@
 package org.eclipse.jubula.client.core.events;
 
 /**
- * This class contains detailed information about the occured event. 
+ * This class contains detailed information about the occurred event. 
  * (IAUTEventListener.stateChanged())
  *
  * @author BREDEX GmbH

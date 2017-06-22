@@ -177,7 +177,7 @@ public abstract class AUTServer {
     /** ClassLoader to load external (user-supplied) jars */
     private ClassLoader m_externalLoader = null;
     
-    /** reference to the component at which an error occured */
+    /** reference to the component at which an error occurred */
     private WeakReference<IComponent> m_errorComponent = null;
     
     /** 
@@ -1357,14 +1357,14 @@ public abstract class AUTServer {
     }
 
     /**
-     * @return the reference to the component at which an error occured
+     * @return the reference to the component at which an error occurred
      */
     public WeakReference<IComponent> getErrorComponent() {
         return m_errorComponent;
     }
 
     /**
-     * @param errorComponent reference to the component at which an error occured
+     * @param errorComponent reference to the component at which an error occurred
      */
     public void setErrorComponent(WeakReference<IComponent> errorComponent) {
         m_errorComponent = errorComponent;

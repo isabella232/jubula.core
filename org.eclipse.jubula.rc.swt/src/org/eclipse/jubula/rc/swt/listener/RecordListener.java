@@ -68,7 +68,7 @@ public class RecordListener extends AbstractAutSwtEventListener {
     private static AutServerLogger log = new AutServerLogger(
         RecordListener.class);
     
-    /** widget the popup is occured on */
+    /** widget the popup is occurred on */
     private Widget m_popupSource = null;
     
     /** The RecordActions */

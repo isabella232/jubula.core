@@ -21,7 +21,7 @@ import org.eclipse.jubula.rc.swing.listener.ComponentHandler;
 
 
 /**
- * This event matcher checks wether a mouse click event matches the
+ * This event matcher checks whether a mouse click event matches the
  * requested properties. The properties are defined by a
  * <code>ClickOptions</code> instance.
  * @author BREDEX GmbH
@@ -90,7 +90,7 @@ public class ClickAwtEventMatcher extends DefaultAwtEventMatcher {
         
         try {
             // checks if the component is visible (= in hierarchy conatiner)
-            // and if the key-released event occured
+            // and if the key-released event occurred
             if ((ComponentHandler.getAutHierarchy().getHierarchyContainer(
                             (Component)graphicsComponent) == null)
                 && (m_clickOptions.getClickType() == ClickOptions.ClickType

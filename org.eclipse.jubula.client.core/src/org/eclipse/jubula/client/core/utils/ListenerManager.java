@@ -33,7 +33,7 @@ public class ListenerManager <TYPE extends IGenericListener> {
         LoggerFactory.getLogger(ListenerManager.class);
     
     /**
-     * <code>m_listeners</code> listener for occured events
+     * <code>m_listeners</code> listener for occurred events
      */
     private Set<TYPE> m_listeners = new HashSet<TYPE>();
     
@@ -52,7 +52,7 @@ public class ListenerManager <TYPE extends IGenericListener> {
     }
     
     /**
-     * notify listener about occured event
+     * notify listener about occurred event
      * @param params list of parameters
      */
     public void fireNotification(List< ? extends Object> params) {
@@ -60,7 +60,7 @@ public class ListenerManager <TYPE extends IGenericListener> {
         for (TYPE l : stableListeners) {
             try {
                 l.checkGenericListElementType(params);
-                l.eventOccured(params);
+                l.eventOccurred(params);
             } catch (UnexpectedGenericTypeException u) {
                 LOG.error(u.getMessage());
             } catch (Throwable t) {

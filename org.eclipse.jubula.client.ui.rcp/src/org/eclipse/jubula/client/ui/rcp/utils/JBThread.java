@@ -43,7 +43,7 @@ public abstract class JBThread extends IsAliveThread {
             super.start();
         } catch (RuntimeException e) {
             Plugin.getDefault().handleError(e);
-            errorOccured();
+            errorOccurred();
         }
     }
 
@@ -51,7 +51,7 @@ public abstract class JBThread extends IsAliveThread {
      * do sth after an error occurred.
      *
      */
-    protected abstract void errorOccured();
+    protected abstract void errorOccurred();
 
     /**
      * adds a ErrorHandler
@@ -61,7 +61,7 @@ public abstract class JBThread extends IsAliveThread {
         setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
             public void uncaughtException(Thread t, Throwable e) {
                 Plugin.getDefault().handleError(e);
-                errorOccured();
+                errorOccurred();
             }
         });
     }

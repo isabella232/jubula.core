@@ -311,9 +311,9 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         }
     }
     
-    /**creates a Button to toggle wether or not the screenshot that
+    /**creates a Button to toggle whether or not the screenshot that
      * is taken when an error at a component occures will be edited
-     * to highlight the component at which the error occured
+     * to highlight the component at which the error occurred
      * @param parent the composite the button is being addet to
      */
     public void createErrorHighlighting(Composite parent) {

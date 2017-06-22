@@ -878,7 +878,7 @@ abstract class NodePO implements INodePO {
     }
 
     /**
-     * @return return wether the Node acts as a JUnit testsuite
+     * @return return whether the Node acts as a JUnit testsuite
      */
     @Basic
     @Column(name = "JUNITTESTSUITE")

@@ -977,9 +977,9 @@ public class MultipleNodePM  extends PersistenceManager {
      * @param cmds
      *      List<AbstractCmdHandle>
      * @throws PMException
-     *      error occured
+     *      error occurred
      * @throws ProjectDeletedException
-     *      error occured
+     *      error occurred
      * @return a message containing information about the error that 
      *         occurred during execution, or <code>null</code> if no error
      *         occurred.
@@ -1000,9 +1000,9 @@ public class MultipleNodePM  extends PersistenceManager {
      *      List<AbstractCmdHandle>
      * @param sess The session in which to execute the commands.
      * @throws PMException
-     *      error occured
+     *      error occurred
      * @throws ProjectDeletedException
-     *      error occured
+     *      error occurred
      * @return a message containing information about the error that 
      *         occurred during execution, or <code>null</code> if no error
      *         occurred.

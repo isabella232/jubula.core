@@ -90,7 +90,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
      */
     private Clipboard m_clipboard;
     
-    /** flag wether the view is linked with the editor or not */
+    /** flag whether the view is linked with the editor or not */
     private boolean m_isLinkedWithEditor = false;
 
     /** The partListener of this view */

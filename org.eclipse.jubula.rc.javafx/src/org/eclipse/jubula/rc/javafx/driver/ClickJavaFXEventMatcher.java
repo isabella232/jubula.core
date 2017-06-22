@@ -20,7 +20,7 @@ import javafx.scene.input.MouseEvent;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 
 /**
- * This event matcher checks wether a mouse click event matches the requested
+ * This event matcher checks whether a mouse click event matches the requested
  * properties. The properties are defined by a <code>ClickOptions</code>
  * instance.
  *
@@ -99,20 +99,20 @@ public class ClickJavaFXEventMatcher extends
     public boolean isFallBackEventMatching(List eventObjects,
             Object graphicsComponent) {
 
-        List<MouseEvent> catchedEvents = new ArrayList<MouseEvent>();
+        List<MouseEvent> caughtEvents = new ArrayList<MouseEvent>();
         for (Object object : eventObjects) {
             Event e = (Event)object;
             if (e != null && e.getEventType().
                     equals(MouseEvent.MOUSE_CLICKED)) {
-                catchedEvents.add((MouseEvent) e);
+                caughtEvents.add((MouseEvent) e);
             }
         }
-        for (int i = 0; i < catchedEvents.size(); i++) {
-            int clickEventCount = getClickCount(catchedEvents.get(i));
-            for (int j = (i + 1); j < catchedEvents.size(); j++) {
-                if (catchedEvents.get(i).getSource()
-                        .equals(catchedEvents.get(j).getSource())) {
-                    clickEventCount += getClickCount(catchedEvents.get(j));  
+        for (int i = 0; i < caughtEvents.size(); i++) {
+            int clickEventCount = getClickCount(caughtEvents.get(i));
+            for (int j = (i + 1); j < caughtEvents.size(); j++) {
+                if (caughtEvents.get(i).getSource()
+                        .equals(caughtEvents.get(j).getSource())) {
+                    clickEventCount += getClickCount(caughtEvents.get(j));  
                 }
             }
             if (clickEventCount == m_clickOptions.getClickCount()) {

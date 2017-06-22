@@ -25,7 +25,7 @@ public class RobotConfiguration {
     private String m_activationMethod =
             ValueSets.AUTActivationMethod.none.rcValue();
     /**
-     * wether to highlight erros that occur at a component
+     * whether to highlight erros that occur at a component
      */
     private Boolean m_errorHighlighting = false;
     
@@ -43,7 +43,7 @@ public class RobotConfiguration {
         return m_activationMethod;
     }
     /**
-     * @return wether to highlight errors that occur when testing
+     * @return whether to highlight errors that occur when testing
      * a component
      */
     public Boolean isErrorHighlighting() {
@@ -56,7 +56,7 @@ public class RobotConfiguration {
         m_activationMethod = activationMethod;
     }
     /**
-     * @param errorHighlighting wether to highlight errors that occur when testing
+     * @param errorHighlighting whether to highlight errors that occur when testing
      * a component
      */
     public void setErrorHighlighting(Boolean errorHighlighting) {

@@ -1154,7 +1154,7 @@ public class ProjectPM extends PersistenceManager
      * 
      * @param name
      *            Name to check
-     * @return wether the name denotes a ProjectPO in the DB
+     * @return whether the name denotes a ProjectPO in the DB
      */
     public static synchronized boolean doesProjectNameExist(String name) {
         EntityManager session = null;
@@ -1188,7 +1188,7 @@ public class ProjectPM extends PersistenceManager
      * 
      * @param guid GUID to check
      * @param projectVersion to check
-     * @return wether the ProjectPO currently exists in the DB
+     * @return whether the ProjectPO currently exists in the DB
      */
     public static synchronized boolean doesProjectVersionExist(String guid,
             ProjectVersion projectVersion) {
@@ -1211,7 +1211,7 @@ public class ProjectPM extends PersistenceManager
      *            Micro version number of check
      * @param versionQualifier
      *            Version qualifier of the project to check
-     * @return wether the ProjectPO currently exists in the DB
+     * @return whether the ProjectPO currently exists in the DB
      */
     public static synchronized boolean doesProjectVersionExist(String guid,
             Integer majorNumber, Integer minorNumber, Integer microNumber,
@@ -1335,7 +1335,7 @@ public class ProjectPM extends PersistenceManager
      *            Name to check
      * @param projectId
      *            Long
-     * @return wether the name denotes a ProjectPO in the DB
+     * @return whether the name denotes a ProjectPO in the DB
      */
     public static synchronized boolean doesTestSuiteExists(
         Long projectId, String name) {

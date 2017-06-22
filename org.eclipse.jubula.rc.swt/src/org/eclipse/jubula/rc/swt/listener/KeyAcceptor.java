@@ -49,7 +49,7 @@ public class KeyAcceptor {
     
     /**
      * The method queried by the <code>MappingListener</code>. 
-     * @param event the occured key event
+     * @param event the occurred key event
      * @return 1, if the combination Ctrl+Alt+A or Ctrl+Shift+A was pressed<p>
      * 2, if Ctrl+Alt+S was pressed <p>
      * 0, otherwise
@@ -112,7 +112,7 @@ public class KeyAcceptor {
     }
     
     /**
-     * @param event the occured key event
+     * @param event the occurred key event
      * @return true if the pressed key combination is a singleLineTrigger, false
      *         otherwise
      */
@@ -129,7 +129,7 @@ public class KeyAcceptor {
     }
     
     /**
-     * @param event the occured key event
+     * @param event the occurred key event
      * @return true if the pressed key combination is a multiLineTrigger, false
      *         otherwise
      */

@@ -224,7 +224,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     public interface ITestSuiteStateListener {
         
         /**
-         * @param event occured event
+         * @param event occurred event
          */
         public void handleTSStateChanged(TestExecutionEvent event);
     }
@@ -1267,7 +1267,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
     
     /**
      * notify listener about modification of testsuite state
-     * @param event occured event
+     * @param event occurred event
      */
     public void fireTestSuiteStateChanged(TestExecutionEvent event) {
         // model updates

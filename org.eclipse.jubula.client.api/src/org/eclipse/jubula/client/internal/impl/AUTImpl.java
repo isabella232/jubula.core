@@ -232,15 +232,15 @@ public class AUTImpl implements AUT {
     /**
      * this logs the occurred Exception to the console
      * @param exec the {@link ExecutionException}
-     * @param catched if the exception was already handled via the {@link IExceptionHandler}
+     * @param caught if the exception was already handled via the {@link IExceptionHandler}
      */
     private void logExecutionException(ExecutionException exec,
-            boolean catched) {
+            boolean caught) {
         StringBuilder builder = new StringBuilder();
-        if (catched) {
+        if (caught) {
             builder.append("Handled" + StringConstants.SPACE); //$NON-NLS-1$
         }
-        builder.append("Error occured" + StringConstants.SPACE); //$NON-NLS-1$
+        builder.append("Error occurred" + StringConstants.SPACE); //$NON-NLS-1$
         builder.append(exec.getClass().getSimpleName());
         if (exec instanceof CheckFailedException) {
             CheckFailedException cfe = (CheckFailedException) exec;

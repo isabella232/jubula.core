@@ -478,7 +478,7 @@ public class ExecTestCaseGUIPropertySource extends
     }
 
     /**
-     * @return the value for determining wether the testcase is viewed as a
+     * @return the value for determining whether the testcase is viewed as a
      *         testsuite
      */
     public boolean getIsTestSuite() {
@@ -486,7 +486,7 @@ public class ExecTestCaseGUIPropertySource extends
     }
 
     /**
-     * @param isTestSuite boolean value that determines wether a TestCase is to be handeled as a TestSuite
+     * @param isTestSuite boolean value that determines whether a TestCase is to be handeled as a TestSuite
      */
     public void setTestSuite(boolean isTestSuite) {
         m_isTestSuite = isTestSuite;

@@ -1414,7 +1414,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
      * @param configVarKey key for storing the result
      * @param textfield control for visualizing the value
      * @param title window title
-     * @return true if the user selected a new entry and no error occured
+     * @return true if the user selected a new entry and no error occurred
      */
     protected boolean remoteBrowse(boolean folderSelection,
             String configVarKey, Text textfield, String title) {

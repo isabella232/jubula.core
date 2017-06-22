@@ -151,7 +151,7 @@ public class DirectAUTConnection extends BaseAUTConnection {
                         MessageIDs.E_COMMUNICATOR_CONNECTION);
             }
         } catch (UnknownMessageException ume) {
-            LOG.error("An exception occured during sending the message", ume); //$NON-NLS-1$
+            LOG.error("An exception occurred during sending the message", ume); //$NON-NLS-1$
         } 
     }
     

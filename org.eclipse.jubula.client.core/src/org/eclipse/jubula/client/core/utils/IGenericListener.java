@@ -24,7 +24,7 @@ public interface IGenericListener {
      * generic callback method
      * @param params list of parameters
      */
-    public void eventOccured(List< ? extends Object> params);
+    public void eventOccurred(List< ? extends Object> params);
     
     /**
      * Method to check the generic types of the list-elements of the callbackMethod.

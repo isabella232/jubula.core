@@ -779,7 +779,7 @@ public class Persistor {
         try {
             tx.commit();
         } catch (PersistenceException e) {
-            log.error("persistence exception occured", e); //$NON-NLS-1$
+            log.error("persistence exception occurred", e); //$NON-NLS-1$
             if (s != null
                     && s.equals(GeneralStorage.getInstance().
                         getMasterSession())) {

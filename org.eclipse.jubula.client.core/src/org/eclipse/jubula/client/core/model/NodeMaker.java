@@ -411,7 +411,7 @@ public abstract class NodeMaker {
     
     /**
      * creates a new instance of {@link TestResultAdditionPO}
-     * @param isJunitTestSuite boolean ofr determining wether the Testcase is to be used as a JUnitTestSuite
+     * @param isJunitTestSuite boolean ofr determining whether the Testcase is to be used as a JUnitTestSuite
      * @return new instance of {@link TestResultAdditionPO} 
      */
     public static ITestResultAdditionPO creaTestResultAdditionPO(

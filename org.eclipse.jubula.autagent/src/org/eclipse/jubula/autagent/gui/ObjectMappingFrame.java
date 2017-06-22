@@ -268,7 +268,7 @@ public enum ObjectMappingFrame  implements IObjectMappingObserver {
                 try {
                     m_componentIdentfier.setText(SerilizationUtils.encode(id));
                 } catch (IOException e) {
-                    LOG.error("error occured during generation of Identifier", //$NON-NLS-1$
+                    LOG.error("error occurred during generation of Identifier", //$NON-NLS-1$
                             e);
                     m_componentIdentfier.setText(
                             "error generating Identifier please see logs"); //$NON-NLS-1$

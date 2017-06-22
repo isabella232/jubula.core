@@ -52,7 +52,7 @@ public class KeyAcceptor {
      * or <code>RecordListener</code>.
      * 
      * @param event
-     *            the occured key event
+     *            the occurred key event
      * @return true if the combination Ctrl+Alt+<a> or Ctrl+Shift+<a> was pressed, false
      *         otherwise
      */
@@ -114,7 +114,7 @@ public class KeyAcceptor {
     }
     
     /**
-     * @param event the occured key event
+     * @param event the occurred key event
      * @return true if the pressed key combination is a singleLineTrigger, false
      *         otherwise
      */
@@ -129,7 +129,7 @@ public class KeyAcceptor {
     }
     
     /**
-     * @param event the occured key event
+     * @param event the occurred key event
      * @return true if the pressed key combination is a multiLineTrigger, false
      *         otherwise
      */

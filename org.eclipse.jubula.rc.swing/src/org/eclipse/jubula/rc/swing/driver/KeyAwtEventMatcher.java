@@ -44,7 +44,7 @@ public class KeyAwtEventMatcher extends DefaultAwtEventMatcher {
         
         try {
             // checks if the component is visible (= in hierarchy conatiner)
-            // and if the key-released event occured
+            // and if the key-released event occurred
             if ((ComponentHandler.getAutHierarchy().getHierarchyContainer(
                             (Component)graphicsComponent) == null)
                 && (KeyEvent.KEY_RELEASED == getEventId())) {

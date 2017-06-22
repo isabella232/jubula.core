@@ -104,7 +104,7 @@ public class TakeScreenshotCommand implements ICommand {
     }
 
     /**
-     * @param weakRefError weak reference to the component at which an error occured
+     * @param weakRefError weak reference to the component at which an error occurred
      * @param robot the robot
      * @param screenCapture the screeenshot that was taken
      */

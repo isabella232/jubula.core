@@ -184,7 +184,7 @@ public class CapTestCommand implements ICommand {
     }
     
     /**
-     * @param componentAdapter the adapter for the component at which the error occured
+     * @param componentAdapter the adapter for the component at which the error occurred
      */
     private void saveErrorComponent(IComponent componentAdapter) {
         if (componentAdapter != null) {

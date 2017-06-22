@@ -183,7 +183,7 @@ public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
      * @param path 
      *      the path
      * @param shared 
-     *      wether it's shared or not
+     *      whether it's shared or not
      */
     private void declareWorkbenchImage(IWorkbenchConfigurer configurerP, 
             Bundle ideBundle, String symbolicName, 

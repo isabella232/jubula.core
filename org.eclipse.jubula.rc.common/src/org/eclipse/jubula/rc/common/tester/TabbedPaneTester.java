@@ -227,7 +227,7 @@ public class TabbedPaneTester extends WidgetTester {
      *
      * @param title The tab title
      * @param operator operation to be executed
-     * @param isEnabled wether to test if the tab  is enabled or not
+     * @param isEnabled whether to test if the tab  is enabled or not
      * @param timeout the maximum amount of time to wait for the check whether
      *            the tab has the specified enabled status
      * @throws StepExecutionException

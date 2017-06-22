@@ -222,7 +222,7 @@ public class JunitXMLWriter implements ITestResultExporter {
      * 
      * @param node the rootnode for the resultNodetraverser
      * @param testCase the testcase that is to receive information
-     * @param skipped boolean value wether the TestCase was skipped
+     * @param skipped boolean value whether the TestCase was skipped
      */
     private void testCaseHandling(TestResultNode node,
             Testcase testCase, boolean skipped) {

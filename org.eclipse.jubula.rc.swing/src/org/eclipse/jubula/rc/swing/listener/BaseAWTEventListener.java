@@ -33,11 +33,11 @@ public abstract class BaseAWTEventListener implements IEventListener {
         BaseAWTEventListener.class); 
     
     /**
-     * Returns the component on which the event initially occured. <br>
+     * Returns the component on which the event initially occurred. <br>
      * For JPopupMenu the invoker is returned.
      * 
      * @param event
-     *            the occured event
+     *            the occurred event
      * @return the event source or null if the source is not an instance of
      *         <code>Component</code>.
      */

@@ -139,7 +139,7 @@ class TestResultPO implements ITestResultPO {
     private String m_taskId;
     
     /**
-     * the boolean value to decide wether a TestCase
+     * the boolean value to decide whether a TestCase
      * should be handeled as a TestSuite in JUnit
      */
     private boolean m_isJUnitTestSuite;
@@ -810,7 +810,7 @@ class TestResultPO implements ITestResultPO {
     }
 
     /** 
-     * @return wether the testcase is to be treated as a JUnitTestsuite
+     * @return whether the testcase is to be treated as a JUnitTestsuite
      */
     @Transient
     public boolean getIsJUnitSuite() {

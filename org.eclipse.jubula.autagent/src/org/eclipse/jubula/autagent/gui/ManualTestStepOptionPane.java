@@ -205,7 +205,7 @@ public class ManualTestStepOptionPane extends JOptionPane {
                     ((StepStatus)value) == StepStatus.Passed);
         }
 
-        return new ManualTestStepResult("timeout occured", false); //$NON-NLS-1$
+        return new ManualTestStepResult("timeout occurred", false); //$NON-NLS-1$
     }
     
     /**
