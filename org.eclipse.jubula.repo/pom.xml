@@ -36,7 +36,7 @@
                                 </goals>
                                 <configuration>
                                     <tasks>
-                                        <property name="targetDir" value="/home/data/httpd/download.eclipse.org/jubula/nightly"/>
+                                        <property name="targetDir" value="/home/data/httpd/download.eclipse.org/jubula/oxygen-nightly"/>
                                         <checksum
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
                                             forceOverwrite="yes"
@@ -47,16 +47,16 @@
                                                 <include name="${project.artifactId}-${project.version}.zip*" />
                                             </fileset>
                                         </delete>
-                                        <move todir="${targetDir}">
+                                        <copy todir="${targetDir}">
                                             <fileset dir="${project.build.directory}">
                                                 <include name="${project.artifactId}-${project.version}.zip*" />
                                             </fileset>
-                                        </move>
-                                        <move includeemptydirs="false" todir="${targetDir}/repo">
+                                        </copy>
+                                        <copy includeemptydirs="false" todir="${targetDir}/repo">
                                             <fileset dir="target/repository">
                                                 <include name="**" />
                                             </fileset>
-                                        </move>
+                                        </copy>
                                     </tasks>
                                 </configuration>
                             </execution>
