@@ -22,7 +22,9 @@ public interface IPersistentObject extends Serializable {
      * max length of a string in the database
      */
     public static final int MAX_STRING_LENGTH = 4000;
-    
+
+    /** Max length of strings in character (roughly MAX_STRING_LENGTH / 3) */
+    public static final int MAX_STR_LGT_CHAR = 1300;
     /**
      * @return version
      */
