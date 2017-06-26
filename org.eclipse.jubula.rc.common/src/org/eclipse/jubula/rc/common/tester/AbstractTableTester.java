@@ -794,7 +794,7 @@ public abstract class AbstractTableTester
      *             or if the table cell editor permits the text to be written.
      */
     public void rcInputText(final String text) throws StepExecutionException {
-        inputText(text, false);
+        inputText(text, false, getTableAdapter().getSelectedCell());
     }
     
     /**
@@ -831,7 +831,7 @@ public abstract class AbstractTableTester
      *  or if the table cell editor permits the text to be written.
      */
     public void rcReplaceText(String text) throws StepExecutionException {
-        inputText(text, true);
+        inputText(text, true, getTableAdapter().getSelectedCell());
     }
     
     /**
@@ -853,7 +853,7 @@ public abstract class AbstractTableTester
         selectCell(row, rowOperator, col, colOperator, 
                 ClickOptions.create().setClickCount(1), 
                 ValueSets.BinaryChoice.no.rcValue());
-        inputText(text, true);
+        inputText(text, true, getCellAtMousePosition());
     }
     
     /**
@@ -1112,15 +1112,15 @@ public abstract class AbstractTableTester
      * inputs/replaces the given text
      * @param text the text to input
      * @param replace whether to replace or not
+     * @param cell {@link Cell} the location of a Cell
      * @throws StepExecutionException If there is no selected cell,
      * or if the cell is not editable, or if the table cell editor permits
      * the text to be written.
      */
-    private void inputText(final String text, boolean replace) 
+    private void inputText(final String text, boolean replace, Cell cell) 
         throws StepExecutionException {
         ITableComponent adapter = getTableAdapter();
-        
-        final Cell cell = adapter.getSelectedCell();
+
         // Ensure that the cell is visible.
         Rectangle rectangle = 
                 adapter.scrollCellToVisible(cell.getRow(), cell.getCol());
