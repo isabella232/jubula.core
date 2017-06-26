@@ -449,6 +449,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
         final IProjectPO currenProject = GeneralStorage.getInstance()
                 .getProject();
         final Long projId = currenProject.getId();
+        List<String> specTCGUIDs = new ArrayList<>();
         for (INodePO selNode : selectionList) {
             commands.add(new MultipleNodePM.MoveNodeHandle(selNode, selNode
                     .getParentNode(), newParent));
@@ -457,6 +458,7 @@ public class MoveTestCaseHandler extends AbstractHandler {
             List<ISpecTestCasePO> specTcPOs = new ArrayList<ISpecTestCasePO>();
             addCatChildren(selNode, specTcs);
             for (INodePO spec : specTcs) {
+                specTCGUIDs.add(spec.getGuid());
                 ISpecTestCasePO specTestCasePo = (ISpecTestCasePO) spec;
                 specTcPOs.add(specTestCasePo);
                 CollectComponentNameUsersOp op = 
@@ -476,7 +478,10 @@ public class MoveTestCaseHandler extends AbstractHandler {
         }
         commands.add(new MultipleNodePM.TransferCompNameHandle(usageMap,
                 projId, extProject));
-
+        if (!specTCGUIDs.isEmpty()) {
+            commands.add(new MultipleNodePM.UpdateReferencesHandler(
+                   specTCGUIDs, extProject.getGuid()));
+        }
         return commands;
     }
     

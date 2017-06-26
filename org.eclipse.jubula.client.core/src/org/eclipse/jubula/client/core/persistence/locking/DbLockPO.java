@@ -24,8 +24,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-import org.eclipse.jubula.client.core.model.IPersistentObject;
-
 
 /**
  * @author BREDEX GmbH
@@ -57,13 +55,13 @@ public class DbLockPO {
      * 
      * @param appl Which application instance is running?
      * @param sess Session for which the PO should be locked.
-     * @param po PO to be locked
+     * @param id the id of the PO to be locked
      */
     public DbLockPO(ApplicationPO appl, EntityManager sess, 
-            IPersistentObject po) {
+            Long id) {
         setApplication(appl);
         setSessionId(System.identityHashCode(sess));
-        setPoId(po.getId());
+        setPoId(id);
     }
     /**
      * @return Returns the id.

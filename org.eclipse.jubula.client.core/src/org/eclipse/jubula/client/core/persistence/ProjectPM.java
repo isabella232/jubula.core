@@ -24,6 +24,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.Validate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -43,6 +44,7 @@ import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectNamePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -67,6 +69,12 @@ import org.slf4j.LoggerFactory;
 public class ProjectPM extends PersistenceManager 
     implements IProjectLoadedListener {
 
+    /** Constant to look for all user projects */
+    public static final int DEPPROJECT_USERS = 1;
+
+    /** Constant to look for all used projects */
+    public static final int DEPPROJECT_USEDS = 2;
+
     /** 
      * number of add/insert-related Persistence event types with 
      * progress listeners 
@@ -84,6 +92,7 @@ public class ProjectPM extends PersistenceManager
     /** reused projects cache */
     private static Map<Long, List<IReusedProjectPO>> rpCache = 
             new HashMap<Long, List<IReusedProjectPO>>(17);
+
     /**
      * constructor must be hidden for class utilities (per CheckStyle)
      */
@@ -717,7 +726,7 @@ public class ProjectPM extends PersistenceManager
      * @param check the current set of reused project under inspection
      * @throws JBException in case of DB problem
      */
-    private static void findReusedProjects(Set<Long> reused,
+    public static void findReusedProjects(Set<Long> reused,
             Set<IReusedProjectPO> check) throws JBException {
         for (IReusedProjectPO ru : check) {
             IProjectPO ruP = loadProjectFromMaster(ru);
@@ -1947,5 +1956,96 @@ public class ProjectPM extends PersistenceManager
             persistor.dropSessionWithoutLockRelease(session);
         }
         return ((hits != null) && (hits.size() > 0));
-    }    
+    }
+
+    /**
+     * Transitively collects all used or user project ids of a given project
+     * @param projectId the projectId
+     * @param used bitmask showing whether to collect user or used projects (or both).
+     *      Use the constants DEPPROJECT_USEDS and DEPPROJECT_USERS.
+     * @return the set of project ids
+     */
+    @SuppressWarnings("unchecked")
+    public static Set<Long> findUsedOrUserProjects(Long projectId,
+            int used) {
+        EntityManager s = null;
+        Persistor per = Persistor.instance();
+        Set<Long> result = new HashSet<>();
+        result.add(projectId);
+        try {
+            s = per.openSession();
+            Query q = s.createQuery("select proj from ProjectPO proj"); //$NON-NLS-1$
+            List<IProjectPO> projs = q.getResultList();
+            List<IProjectPropertiesPO> properties = new ArrayList<>();
+            for (IProjectPO proj : projs) {
+                proj.getProjectProperties().setParentProjectId(proj.getId());
+                properties.add(proj.getProjectProperties());
+            }
+            Map<Long, Long> reusedToProjId = new HashMap<>();
+            for (IProjectPropertiesPO prop : properties) {
+                for (IReusedProjectPO reuse : prop.getUsedProjects()) {
+                    reusedToProjId.put(reuse.getId(),
+                        findProjectIdUsingSuppliedProjProps(properties,
+                        reuse.getProjectGuid(), reuse.getProjectVersion()));
+                }
+            }
+            int safe = 0;
+            boolean wasChange;
+            // not very efficient, but rarely used, on probably very small trees
+            do {
+                wasChange = false;
+                for (IProjectPropertiesPO prop : properties) {
+                    for (IReusedProjectPO reused : prop.getUsedProjects()) {
+                        if (reused == null) {
+                            continue;
+                        }
+                        Long reusedId = reusedToProjId.get(reused.getId());
+                        if (((used & DEPPROJECT_USERS) != 0)
+                                && result.contains(reusedId)) {
+                            wasChange |= result.add(prop.getParentProjectId());
+                        }
+                        if (((used & DEPPROJECT_USEDS) != 0)
+                                && result.contains(prop.getParentProjectId())) {
+                            wasChange |= result.add(reusedId);
+                        }
+                    }
+                }
+                safe++;
+            } while (wasChange && safe < 10000);
+            if (safe == 10000) {
+                // unless there exists a 10000-node tree of reused projects, something went really bad
+                log.error("Possibly infinite loop encountered in ProjectPM.findReuserProjectIds."); //$NON-NLS-1$
+            }
+        } finally {
+            per.dropSession(s);
+        }
+        result.remove(projectId);
+        return result;
+    }
+
+    /**
+     * Searches for the project ID corresponding to the given guid and ProjectVersion
+     *      (Uses the supplied list of ProjectProperties in contrast to
+     *      findProjectIdByGuidAndVersion, which queries the DB).
+     * @param props the list of all project properties in the DB
+     * @param guid the project guid
+     * @param ver the project version
+     * @return the project id (or null if none found)
+     */
+    private static Long findProjectIdUsingSuppliedProjProps(
+            List<IProjectPropertiesPO> props,
+            String guid, ProjectVersion ver) {
+        for (IProjectPropertiesPO p : props) {
+            if (p.getGuid().equals(guid)
+                && ObjectUtils.equals(p.getMajorNumber(), ver.getMajorNumber())
+                && ObjectUtils.equals(p.getMinorNumber(), ver.getMinorNumber())
+                && ObjectUtils.equals(p.getMicroNumber(), ver.getMicroNumber())
+                && ObjectUtils.equals(
+                        p.getVersionQualifier(), ver.getVersionQualifier())) {
+                return p.getParentProjectId();
+            }
+        }
+        return null;
+    }
+
 }

@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @created 07.10.2004
  */
 @Entity
-@DiscriminatorValue(value = "S")
+@DiscriminatorValue(value = ISpecTestCasePO.DISCRIMINATOR)
 class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
     
     /** The logger */

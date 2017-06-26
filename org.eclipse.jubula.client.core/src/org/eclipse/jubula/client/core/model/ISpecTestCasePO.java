@@ -16,7 +16,12 @@ package org.eclipse.jubula.client.core.model;
  */
 public interface ISpecTestCasePO extends ITestCasePO,
     IEventHandlerContainer, IModifiableParameterInterfacePO {
-    
+
+    /** The discriminator value of SpecTestCasePOs */
+    public static final String DISCRIMINATOR = "S"; //$NON-NLS-1$
+    /** The simple class name of SpecTestCasePOs */
+    public static final String SPEC_TC_CLASSNAME =
+            SpecTestCasePO.class.getSimpleName();
     /**
      * @return the isInterfaceLocked
      */

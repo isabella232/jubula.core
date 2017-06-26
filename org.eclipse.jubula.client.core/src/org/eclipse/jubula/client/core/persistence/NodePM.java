@@ -23,6 +23,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -55,6 +56,7 @@ import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.exception.JBFatalException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
+import org.eclipse.jubula.tools.internal.utils.ValueListIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1206,4 +1208,34 @@ public class NodePM extends PersistenceManager {
         }
         return null;
     }
+
+    /**
+     * @param projIds the project ids to search in
+     * @param specTCGuids spec TC guids
+     * @param sess the EntityManager to use
+     * @return all ExecTCs from the given projects which reference
+     *      one of the given SpecTCs
+     */
+    @SuppressWarnings("nls")
+    public static List<IExecTestCasePO> findExecTCsByRefSpecTCAndProject(
+            Set<Long> projIds, List<String> specTCGuids,
+            EntityManager sess) {
+        TypedQuery<IExecTestCasePO> q = sess.createQuery(
+                "select exec from ExecTestCasePO exec "
+                + "where exec.hbmParentProjectId in :projIds "
+                + "and exec.specTestCaseGuid in :specTCGuids "
+                + "and exec.projectGuid = :currProjGuid",
+                IExecTestCasePO.class);
+        q.setParameter("projIds", projIds);
+        q.setParameter("currProjGuid",
+                GeneralStorage.getInstance().getProject().getGuid());
+        ValueListIterator listIter = new ValueListIterator(specTCGuids);
+        List<IExecTestCasePO> result = new ArrayList<>();
+        while (listIter.hasNext()) {
+            q.setParameter("specTCGuids", listIter.nextList());
+            result.addAll(q.getResultList());
+        }
+        return result;
+    }
+
 }

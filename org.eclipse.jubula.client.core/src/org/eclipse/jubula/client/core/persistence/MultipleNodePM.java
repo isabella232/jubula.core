@@ -48,6 +48,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.persistence.locking.LockManager;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
@@ -667,6 +668,62 @@ public class MultipleNodePM  extends PersistenceManager {
             execTc.setSpecTestCase(specTc);
             return null;
         }
+    }
+
+    /**
+     * Command to update ExecTCs in other projects referencing the moved SpecTCs
+     * @author BREDEX GmbH
+     *
+     */
+    public static class UpdateReferencesHandler extends AbstractCmdHandle {
+
+        /** The GUIDs of the moved SpecTCs */
+        private List<String> m_specGUIDs;
+
+        /** The GUID of the new project */
+        private String m_newProjGuid;
+
+        /**
+         * @param specGUIDs the list of GUIDs of the moved SpecTCs
+         * @param newProjGuid the new project's guid
+         */
+        public UpdateReferencesHandler(List<String> specGUIDs,
+                String newProjGuid) {
+            m_specGUIDs = specGUIDs;
+            m_newProjGuid = newProjGuid;
+        }
+
+        @Override
+        public MessageInfo execute(EntityManager sess) {
+            IProjectPO currProj = GeneralStorage.getInstance().getProject();
+            Set<Long> userProjects = ProjectPM.findUsedOrUserProjects(
+                    currProj.getId(), ProjectPM.DEPPROJECT_USERS);
+            if (userProjects.isEmpty()) {
+                return null;
+            }
+            List<IExecTestCasePO> toModify =
+                NodePM.findExecTCsByRefSpecTCAndProject(
+                        userProjects, m_specGUIDs, sess);
+            Set<Long> specTCsToLock = NativeSQLUtils.getSpecTCParentIds(
+                    toModify, sess);
+            try {
+                for (Long id : specTCsToLock) {
+                    if (!LockManager.instance().lockPOById(sess, id,
+                            ISpecTestCasePO.SPEC_TC_CLASSNAME)) {
+                        return new MessageInfo(
+                            MessageIDs.E_CANNOT_UPDATE_MOVETOEXTERNAL, null);
+                    }
+                }
+                for (IExecTestCasePO exec : toModify) {
+                    exec.setProjectGuid(m_newProjGuid);
+                }
+            } catch (PMException e) {
+                return new MessageInfo(
+                        MessageIDs.E_CANNOT_UPDATE_MOVETOEXTERNAL, null);
+            }
+            return null;
+        }
+        
     }
 
     /**

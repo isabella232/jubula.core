@@ -13,10 +13,10 @@ package org.eclipse.jubula.client.core.persistence;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -939,7 +939,7 @@ public class Persistor {
      *             if the po was deleted by another app
      */
     public void lockPOSet(EntityManager sess,
-            Set<? extends IPersistentObject> objectsToLock)
+            Collection<? extends IPersistentObject> objectsToLock)
         throws PMAlreadyLockedException, PMDirtyVersionException,
         PMObjectDeletedException {
         boolean unlock = true;

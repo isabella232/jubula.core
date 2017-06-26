@@ -61,6 +61,12 @@ public interface IExecTestCasePO extends ITestCasePO {
      * @return the GUID of the parent project of the referenced test case.
      */
     public abstract String getProjectGuid();
+
+    /**
+     * Stores the referenced SpecTC's parent project guid
+     * @param projectGuid the guid
+     */
+    public abstract void setProjectGuid(String projectGuid);
     
     /**
      * 

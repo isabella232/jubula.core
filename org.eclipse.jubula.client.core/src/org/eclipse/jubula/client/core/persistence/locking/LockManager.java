@@ -379,7 +379,77 @@ public final class LockManager {
                                 : Result.FAILED;
                     } catch (NoResultException nre) {
                         DbLockPO lock = new DbLockPO(m_application, userSess,
-                                po);
+                                po.getId());
+                        sess.persist(lock);
+                        lockOK = Result.OK;
+                    }
+
+                    return lockOK;
+                }
+            });
+        }
+        return false;
+    }
+
+    /**
+     * Mark a PO as locked for a given session.
+     *     Should only be used where the PO is not available.
+     * @param userSess Lock the PO for this session.
+     * @param id The id of the PO to be locked.
+     * @param className the simple class name of the po
+     * @return true if the lock attempt was successful
+     * @throws PMObjectDeletedException if the object was deleted.
+     *      The PO of this exception will be null!
+     */
+    public synchronized boolean lockPOById(final EntityManager userSess,
+            final Long id, final String className)
+        throws PMObjectDeletedException {
+        // check for disposed LockManager
+        if (LockManager.isRunning() && m_application != null) {
+
+            final DBRunnable checkForDirty = new DBRunnable() {
+
+                public Result run(EntityManager sess) {
+                    Result result = Result.OK;
+                    try {
+                        Query countQuery = sess
+                                .createQuery("select count(obj.id) from " //$NON-NLS-1$
+                                        + className
+                                        + " as obj where obj.id = :poID"); //$NON-NLS-1$
+                        countQuery.setParameter("poID", id); //$NON-NLS-1$
+                        Long count = (Long) countQuery.getSingleResult();
+                        if (count == 0) {
+                            result = Result.OBJECT_DELETED;
+                        }
+                    } catch (NoResultException nre) {
+                        result = Result.OBJECT_DELETED;
+                    }
+
+                    return result;
+                }
+            };
+            final Result runResult = runInSession(checkForDirty);
+            if (runResult == Result.OBJECT_DELETED) {
+                throw new PMObjectDeletedException(null,
+                        Messages.LockFailedDueToDeletedPO,
+                        MessageIDs.E_DELETED_OBJECT);
+            }
+            return Result.OK == runInSession(new DBRunnable() {
+                public Result run(EntityManager sess) {
+                    Result lockOK;
+                    Query lockQuery = sess
+                            .createQuery("select lock from DbLockPO as lock where lock.poId = :poID"); //$NON-NLS-1$
+                    lockQuery.setParameter("poID", id); //$NON-NLS-1$
+
+                    try {
+                        DbLockPO lock = (DbLockPO) lockQuery.getSingleResult();
+                        lockOK = (lock.getApplication().equals(m_application) 
+                                && lock.getSessionId().intValue() == System
+                                .identityHashCode(userSess)) ? Result.OK
+                                : Result.FAILED;
+                    } catch (NoResultException nre) {
+                        DbLockPO lock = new DbLockPO(m_application, userSess,
+                                id);
                         sess.persist(lock);
                         lockOK = Result.OK;
                     }

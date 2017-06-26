@@ -507,7 +507,9 @@ public class MessageIDs {
             new Integer(9523);
     /** References are not allowed in the given context */
     public static final Integer E_NO_REF_ALLOWED = new Integer(9524);
-
+    /** Cannot update user projects' referencing ExecTCs */
+    public static final Integer E_CANNOT_UPDATE_MOVETOEXTERNAL =
+            new Integer(9525);
     
     
     // ---------------------------------------------------------------------
@@ -778,6 +780,7 @@ public class MessageIDs {
         messageMap.put(E_CONVERSION_ABORTED_ERROR, e, "ErrorMessage.CONVERSION_ABORTED_ERROR", null); //$NON-NLS-1$
         messageMap.put(E_UNSUPPORTED_TOOLKIT, e,  "ErrorMessage.UNSUPPORTED_TOOLKIT", null); //$NON-NLS-1$
         messageMap.put(E_MISSING_DATA, e,  "ErrorMessage.MISSING_DATA", null); //$NON-NLS-1$
+        messageMap.put(E_CANNOT_UPDATE_MOVETOEXTERNAL, e, "ErrorMessage.CANNOT_UPDATE_MOVETOEXTERNAL", null); //$NON-NLS-1$
         
     }
     

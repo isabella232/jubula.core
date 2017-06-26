@@ -237,29 +237,32 @@ class ExecTestCasePO extends TestCasePO implements
         ISpecTestCasePO specTc = null;
         // Search by GUID
         
+        if (getParentProjectId() == null) {
+            return null;
+        }
+        String specGuid = getSpecTestCaseGuid();
+        
         try {
-            if (getParentProjectId() != null) {
-                if (getProjectGuid() == null
-                        || getProjectGuid().equals(
-                                ProjectPM.getGuidOfProjectId(
-                                        getParentProjectId()))) {
-    
-                    // Referenced TC is in the same project
-                    specTc = NodePM.getSpecTestCase(getParentProjectId(), 
-                        getSpecTestCaseGuid());
-                    
-                } else {
-                    // Referenced TC is in a different project
-                    Set<IReusedProjectPO> reusedProjects = 
-                        new HashSet<IReusedProjectPO>();
-                    reusedProjects
-                            .addAll(
-                            ProjectPM.loadReusedProjectsRO(
-                                    getParentProjectId()));
-                    specTc = NodePM.getSpecTestCase(
-                            reusedProjects, getProjectGuid(), 
-                            getSpecTestCaseGuid());
-                }
+            if (getProjectGuid() == null
+                    || getProjectGuid().equals(
+                            ProjectPM.getGuidOfProjectId(
+                                    getParentProjectId()))) {
+
+                // Referenced TC is in the same project
+                specTc = NodePM.getSpecTestCase(getParentProjectId(), 
+                    specGuid);
+                
+            } else {
+                // Referenced TC is in a different project
+                Set<IReusedProjectPO> reusedProjects = 
+                    new HashSet<IReusedProjectPO>();
+                reusedProjects
+                        .addAll(
+                        ProjectPM.loadReusedProjectsRO(
+                                getParentProjectId()));
+                specTc = NodePM.getSpecTestCase(
+                        reusedProjects, getProjectGuid(), 
+                        specGuid);
             }
         } catch (JBException e) {
             LOG.warn("Could not retrieve referenced Test Case.", e); //$NON-NLS-1$
@@ -640,7 +643,7 @@ class ExecTestCasePO extends TestCasePO implements
      * For Persistence (JPA / EclipseLink).
      * @param projectGuid The GUID of the parent project of the referenced test case.
      */
-    private void setProjectGuid(String projectGuid) {
+    public void setProjectGuid(String projectGuid) {
         m_projectGuid = projectGuid;
     }
     

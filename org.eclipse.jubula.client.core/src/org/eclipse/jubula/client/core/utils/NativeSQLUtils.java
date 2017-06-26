@@ -12,16 +12,20 @@ package org.eclipse.jubula.client.core.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 
 /**
@@ -181,5 +185,47 @@ public class NativeSQLUtils {
             IPersistentObject target) {
         removeNodeAFFECTS(sess, toMove);
         addNodeAFFECTS(sess, toMove, target);
+    }
+
+    /**
+     * Finds the IDs of SpecTCs which contain any children from the supplied
+     *    Nodes.
+     * @param nodes the nodes
+     * @param sess An EntityManager
+     * @return the set of ids
+     */
+    @SuppressWarnings("unchecked")
+    public static Set<Long> getSpecTCParentIds(
+            Collection<? extends INodePO> nodes,
+            EntityManager sess) {
+        Set<Long> result = new HashSet<>();
+        // IDs of non-SpecTC NodePOs - we have to collect the
+        //   SpecTC ancestors of these.
+        List<Long> extendingListOfIDs = new ArrayList<>();
+        for (INodePO node : nodes) {
+            extendingListOfIDs.add(node.getId());
+        }
+        int nextToHandle = 0;
+        // We have to collect recursively more and more ancient ancestors,
+        //   stopping at SpecTCPOs, as long as there are any more
+        //   'unhandled' nodes.
+        while (nextToHandle < extendingListOfIDs.size()) {
+            int notYetHandled = Math.min(extendingListOfIDs.size(),
+                    nextToHandle + MAXLGT);
+            String listIDs = StringUtils.join(extendingListOfIDs.subList(
+                    nextToHandle, notYetHandled), ","); //$NON-NLS-1$
+            Query q = sess.createNativeQuery("select CLASS_ID, ID, PARENT from NODE where ID in (" + listIDs + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+            List<Object[]> res = q.getResultList();
+            for (Object[] next : res) {
+                if (StringUtils.equals((String) next[0],
+                        ISpecTestCasePO.DISCRIMINATOR)) {
+                    result.add((Long) next[1]);
+                } else {
+                    extendingListOfIDs.add((Long) next[2]);
+                }
+            }
+            nextToHandle = notYetHandled;
+        }
+        return result;
     }
 }

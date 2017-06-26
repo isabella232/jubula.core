@@ -163,4 +163,10 @@ public interface IProjectPropertiesPO extends IPersistentObject,
      * @return the markup language used for the description text
      */
     public String getMarkupLanguage();
+
+    /**
+     * @return the GUID.
+     */
+    public String getGuid();
+
 }
