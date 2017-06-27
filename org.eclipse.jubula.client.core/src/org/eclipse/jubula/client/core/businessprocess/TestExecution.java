@@ -758,6 +758,7 @@ public class TestExecution {
             }
         } catch (NotConnectedException bnce) {
             LOG.error(Messages.AUTConnectionFails, bnce);
+            fireError(bnce);
         } catch (CommunicationException bce) {
             LOG.error(Messages.CommunicationWithAUTFails, bce);
             fireError(bce);
