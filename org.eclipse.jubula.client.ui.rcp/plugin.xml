@@ -2063,11 +2063,25 @@
              commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
              style="push">
        </command>
+       <separator name="separator2"
+             visible="true">
+       </separator>
        <command
              commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
-             style="push">
+             style="push"
+             label="%Expand">
        </command>
-       <separator name="separator2"
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.ExpandBranch"
+             style="push"
+             label="%ExpandBranch">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.CollapseBranch"
+             style="push"
+             label="%CollapseBranch">
+       </command>
+       <separator name="separator3"
              visible="true">
        </separator>
        <command
@@ -2079,14 +2093,14 @@
              style="push">
        </command>
        <separator
-             name="separator3"
+             name="separator4"
              visible="true">
        </separator>
        <command
              commandId="org.eclipse.ui.file.refresh"
              style="push">
        </command>
-       <separator name="separator4"
+       <separator name="separator5"
              visible="true">
        </separator>
        <menu id="org.eclipse.jubula.client.ui.rcp.views.TestSuiteBrowser.menu.open"
@@ -2108,7 +2122,7 @@
                 style="push">
           </command>
        </menu>
-       <separator name="separator5"
+       <separator name="separator6"
              visible="true">
        </separator>
        <command
@@ -2174,11 +2188,25 @@
              commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowWhereUsed"
              style="push">
        </command>
+       <separator name="separator2"
+             visible="true">
+       </separator>
        <command
              commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
-             style="push">
+             style="push"
+             label="%Expand">
        </command>
-       <separator name="separator2"
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.ExpandBranch"
+             style="push"
+             label="%ExpandBranch">
+       </command>
+       <command
+             commandId="org.eclipse.jubula.client.ui.commands.CollapseBranch"
+             style="push"
+             label="%CollapseBranch">
+       </command>
+       <separator name="separator3"
              visible="true">
        </separator>
        <command
@@ -2189,7 +2217,7 @@
              commandId="org.eclipse.jubula.client.ui.commands.AddComment"
              style="push">
        </command>
-       <separator name="separator3"
+       <separator name="separator4"
              visible="true">
        </separator>
        <menu id="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser.menu.open"
@@ -2234,7 +2262,8 @@
        </command>
        <command
              commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
-             style="push">
+             style="push"
+             label="%Expand">
        </command>
        <command
              commandId="org.eclipse.jubula.client.ui.rcp.commands.RevertChanges"

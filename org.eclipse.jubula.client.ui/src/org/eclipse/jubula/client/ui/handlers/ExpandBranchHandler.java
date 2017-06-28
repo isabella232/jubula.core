@@ -20,12 +20,15 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
+ * 
  * @author BREDEX GmbH
- * @created 05.04.2017
+ * @created 28.06.2017
  */
-public class CollapseTreeItemHandler extends AbstractHandler {
+public class ExpandBranchHandler extends AbstractHandler {
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public Object execute(ExecutionEvent event) {
         IWorkbenchPart part = HandlerUtil.getActivePart(event);
         TreeViewer activeTreeViewer = null;
@@ -36,7 +39,7 @@ public class CollapseTreeItemHandler extends AbstractHandler {
             activeTreeViewer = ((ITreeViewerContainer) part).getTreeViewer();
         }
 
-        TreeViewContainerGUIController.collapseExpandTree(activeTreeViewer);
+        TreeViewContainerGUIController.expandBranch(activeTreeViewer);
 
         return null;
     }

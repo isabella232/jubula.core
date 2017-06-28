@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.controllers;
 
+import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 
@@ -41,7 +42,7 @@ public class TreeViewContainerGUIController {
             IStructuredSelection selection = (IStructuredSelection) tv
                     .getSelection();
             for (Object obj : selection.toArray()) {
-                tv.collapseToLevel(obj, 1);
+                tv.collapseToLevel(obj, AbstractTreeViewer.ALL_LEVELS);
             }
         }
     }
@@ -57,7 +58,21 @@ public class TreeViewContainerGUIController {
             IStructuredSelection selection = (IStructuredSelection) tv
                     .getSelection();
             for (Object obj : selection.toArray()) {
-                tv.expandToLevel(obj, 3);
+                tv.expandToLevel(obj, 1);
+            }
+        }
+    }
+    
+    /**
+     * Expands the selected branch
+     * @param tv the TreeViewer to use
+     */
+    public static void expandBranch(TreeViewer tv) {
+        if (tv != null && tv.getSelection() instanceof IStructuredSelection) {
+            IStructuredSelection selection = 
+                    (IStructuredSelection) tv.getSelection();
+            for (Object obj: selection.toArray()) {
+                tv.expandToLevel(obj, AbstractTreeViewer.ALL_LEVELS);
             }
         }
     }

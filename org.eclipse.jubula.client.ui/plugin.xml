@@ -97,36 +97,39 @@
         commandId="org.eclipse.jubula.client.ui.commands.OpenTestResultViewer"
         icon="icons/testResultTree.gif">
   </image>
-  <image
+    <image
         commandId="org.eclipse.jubula.client.ui.commands.AutoSizeColumnsTestResultSummaryView"
         icon="icons/arrangeTable.png">
-  </image>
-  <image
+    </image>
+    <image
         commandId="org.eclipse.jubula.client.ui.commands.AddComment"
         icon="icons/addComment.gif">
-  </image>
-  <image
+    </image>
+    <image
         commandId="org.eclipse.jubula.client.ui.commands.SelectDatabase"
         icon="icons/selectDB.gif">
-  </image>
-	<image commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
-		icon="icons/expand.png">
-	</image>
-	<image commandId="org.eclipse.jubula.client.ui.commands.CollapseTreeItem"
+    </image>
+    <image commandId="org.eclipse.jubula.client.ui.commands.ExpandTreeItem"
+        icon="icons/expand_single.png">
+    </image>
+    <image commandId="org.eclipse.jubula.client.ui.commands.ExpandBranch"
+        icon="icons/expand.png">
+    </image>
+    <image commandId="org.eclipse.jubula.client.ui.commands.CollapseBranch"
         icon="icons/collapse.png">
     </image>
-	<image commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
-			icon="icons/showSpecification.gif">
-		</image>
-	  <image
+    <image commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
+            icon="icons/showSpecification.gif">
+    </image>
+    <image
         commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
         icon="icons/openSpecification.gif">
-  </image>
+    </image>
     <image
         commandId="org.eclipse.jubula.client.ui.commands.GoToNextError"
         icon="icons/goToNextError.gif">
-  </image>
-  <image
+     </image>
+     <image
         commandId="org.eclipse.jubula.client.ui.commands.GoToPreviousError"
         icon="icons/goToPreviousError.gif">
   </image>
@@ -178,14 +181,33 @@
 						<instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
 						<instanceof	value="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO" />
 						<instanceof	value="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO" />
+						<instanceof	value="org.eclipse.jubula.client.core.model.IReusedProjectPO" />
+					</or>
+				</iterate>
+			</and>
+		</activeWhen>
+	</handler>
+    <handler
+		class="org.eclipse.jubula.client.ui.handlers.ExpandBranchHandler"
+		commandId="org.eclipse.jubula.client.ui.commands.ExpandBranch">
+		<activeWhen>
+			<and>
+				<count value="+" />
+				<iterate>
+					<or>
+						<instanceof value="org.eclipse.jubula.client.core.model.INodePO" />
+						<instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
+						<instanceof	value="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO" />
+						<instanceof	value="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO" />
+						<instanceof	value="org.eclipse.jubula.client.core.model.IReusedProjectPO" />
 					</or>
 				</iterate>
 			</and>
 		</activeWhen>
 	</handler>
 	<handler
-        class="org.eclipse.jubula.client.ui.handlers.CollapseTreeItemHandler"
-        commandId="org.eclipse.jubula.client.ui.commands.CollapseTreeItem">
+        class="org.eclipse.jubula.client.ui.handlers.CollapseBranchHandler"
+        commandId="org.eclipse.jubula.client.ui.commands.CollapseBranch">
         <activeWhen>
             <and>
                 <count value="+" />
@@ -195,6 +217,7 @@
                         <instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
                         <instanceof value="org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO" />
                         <instanceof value="org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO" />
+                        <instanceof	value="org.eclipse.jubula.client.core.model.IReusedProjectPO" />
                     </or>
                 </iterate>
             </and>
@@ -277,9 +300,13 @@
 			categoryId="org.eclipse.jubula.client.ui.commands"
 			id="org.eclipse.jubula.client.ui.commands.ExpandTreeItem" name="%Expand">
 		</command>
-		<command
+        <command
             categoryId="org.eclipse.jubula.client.ui.commands"
-            id="org.eclipse.jubula.client.ui.commands.CollapseTreeItem" name="%Collapse">
+            id="org.eclipse.jubula.client.ui.commands.ExpandBranch" name="%ExpandBranch">
+        </command>
+        <command
+            categoryId="org.eclipse.jubula.client.ui.commands"
+            id="org.eclipse.jubula.client.ui.commands.CollapseBranch" name="%CollapseBranch">
         </command>
 		<command
 			categoryId="org.eclipse.jubula.client.ui.commands"
