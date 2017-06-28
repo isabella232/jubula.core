@@ -298,6 +298,13 @@ public class JBNavigationHistory implements ISelectionListener,
     @Override
     public synchronized void handleEditorDirtyStateChanged(IJBEditor editor,
             boolean isDirty) {
+        if (m_current < 0 || m_current >= m_navHistory.size()) {
+            // sometimes an Editor can become dirty before the history is filled
+            // (e.g. when we open an OME which becomes dirty instantly due
+            // to to-be-mapped CNs...)
+            // in such a case an exception would be thrown, so we just quit instead
+            return;
+        }
         NavHistEntry curr = m_navHistory.get(m_current);
         IPersistentObject editedPo = editor.getEditorHelper().
                 getEditSupport().getWorkVersion();
