@@ -1131,6 +1131,11 @@
       name="%SetAsMainViewInstance" />
   </extension>
   <extension point="org.eclipse.ui.bindings">
+  <key
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+      sequence="M1+M2+Y" />
     <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.navigation.GoBack"
       contextId="org.eclipse.ui.contexts.window"
