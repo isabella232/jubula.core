@@ -12,8 +12,11 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.swt;bundle-version="[3.3.0,5.0.0)",
  org.eclipse.jface;bundle-version="[3.3.0,5.0.0)",
- org.eclipse.jubula.rc.rcp.common;bundle-version="[5.0.0,5.1.0)"
-Export-Package: org.eclipse.jubula.rc.swt,
+ org.eclipse.jubula.rc.rcp.common;bundle-version="[5.0.0,5.1.0)",
+ org.eclipse.ui.views.properties.tabbed;resolution:=optional
+Export-Package: org.eclipse.jubula.rc.rcp.tabbedproperties.adapter,
+ org.eclipse.jubula.rc.rcp.swt.aut,
+ org.eclipse.jubula.rc.swt,
  org.eclipse.jubula.rc.swt.commands,
  org.eclipse.jubula.rc.swt.components,
  org.eclipse.jubula.rc.swt.driver,
@@ -21,5 +24,4 @@ Export-Package: org.eclipse.jubula.rc.swt,
  org.eclipse.jubula.rc.swt.tester,
  org.eclipse.jubula.rc.swt.tester.adapter,
  org.eclipse.jubula.rc.swt.tester.util,
- org.eclipse.jubula.rc.swt.utils,
- org.eclipse.jubula.rc.rcp.swt.aut
+ org.eclipse.jubula.rc.swt.utils

@@ -168,10 +168,11 @@ public class AdapterFactoryRegistry {
             try {
                 IAdapterFactory factory = (IAdapterFactory) c.newInstance();
                 getInstance().registerFactory(factory);
-            } catch (IllegalAccessException e) {
+            } catch (Exception e) {
                 log.error(e.getLocalizedMessage(), e);
-            } catch (InstantiationException e) {
-                log.error(e.getLocalizedMessage(), e);
+            } catch (NoClassDefFoundError e) {
+                log.error(e.getLocalizedMessage(), e); 
+                // because there might be classes which are not available in a specific AUT
             }
         }
     }
@@ -212,6 +213,7 @@ public class AdapterFactoryRegistry {
         } catch (ClassNotFoundException e) {
             return new Class[0];
         } catch (IOException e) {
+            log.warn("error", e);
             return new Class[0];
         }
     }

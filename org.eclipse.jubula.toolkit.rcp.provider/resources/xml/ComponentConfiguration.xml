@@ -9,6 +9,12 @@
 <compSystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../org.eclipse.jubula.toolkit.common/resources/xml/ToolkitComponentConfiguration.xsd">
 	<configVersion>
 		<majorVersion>2</majorVersion>
-		<minorVersion>0</minorVersion>
+		<minorVersion>1</minorVersion>
 	</configVersion>
+ 
+    <toolkitComponent type="org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyList" visible="false">
+        <realizes>guidancer.concrete.List</realizes>
+        <testerClass>org.eclipse.jubula.rc.common.tester.ListTester</testerClass>
+        <componentClass name="org.eclipse.ui.internal.views.properties.tabbed.view.TabbedPropertyList" />
+    </toolkitComponent>
 </compSystem>
