@@ -15,7 +15,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.databinding.preference.PreferencePageSupport;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.preference.PreferencePage;
@@ -83,7 +83,7 @@ public class EmbeddedAutAgentPreferencePage extends PreferencePage
             .setConverter(new SimpleStringToIntegerConverter())
             .setAfterGetValidator(new StringToPortValidator(
                     I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
-        m_dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
+        m_dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(portText),
                 m_portNumber, portTargetToModelUpdateStrategy,
                 new UpdateValueStrategy().setConverter(
                         new SimpleIntegerToStringConverter()));

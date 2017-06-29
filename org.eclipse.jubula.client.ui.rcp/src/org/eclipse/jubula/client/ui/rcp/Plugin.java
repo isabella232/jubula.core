@@ -502,7 +502,6 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
      * @param id The ID of the view to find.
      * @return A <code>IViewReference</code> value. The view or null.
      **/
-    @Deprecated
     public static IViewPart getView(String id) {
         Validate.notEmpty(id, Messages.Missing_ID);
         if (getActivePage() != null) {

@@ -17,8 +17,8 @@ import java.util.List;
 
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.viewers.ViewerSorter;
 
 /**
  * Iterator over the elements contained in a tree viewer.
@@ -120,7 +120,7 @@ public class TreeViewerIterator {
             children = vf.filter(m_viewer, root, children);
         }
         // Sort elements like sorted in GUI to obtain correct traversal order
-        ViewerSorter sorter = m_viewer.getSorter();
+        ViewerComparator sorter = m_viewer.getSorter();
         if (sorter != null) {
             sorter.sort(m_viewer, children);
         }

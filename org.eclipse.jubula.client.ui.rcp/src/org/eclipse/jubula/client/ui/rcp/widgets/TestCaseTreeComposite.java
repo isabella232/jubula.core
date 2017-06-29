@@ -147,7 +147,7 @@ public class TestCaseTreeComposite extends Composite {
         m_treeViewer.setContentProvider(
                 new TestCaseTreeCompositeContentProvider());
         m_treeViewer.setInput(GeneralStorage.getInstance().getProject());
-        m_treeViewer.setSorter(new NodeNameViewerSorter());
+        m_treeViewer.setComparator(new NodeNameViewerSorter());
     }
 
     /**

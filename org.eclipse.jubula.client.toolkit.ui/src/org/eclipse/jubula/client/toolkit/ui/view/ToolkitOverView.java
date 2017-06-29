@@ -15,7 +15,7 @@ import java.util.Iterator;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.filter.JBPatternFilter;
@@ -221,7 +221,7 @@ public class ToolkitOverView extends ViewPart {
         final TreeViewer treeViewer = getTreeViewer();
         treeViewer.setContentProvider(new OverViewContentProvider());
         treeViewer.setLabelProvider(new OverViewLabelProvider());
-        treeViewer.setSorter(new ViewerSorter());
+        treeViewer.setComparator(new ViewerComparator());
         treeViewer.setInput(COMP_SYSTEM);
         
         getSite().setSelectionProvider(treeViewer);

@@ -15,7 +15,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -68,8 +68,8 @@ public class EnterCommentAndDetailsDialog extends EnterCommentDialog {
         LayoutUtil.addToolTipAndMaxWidth(gridData, commentDetailField);
         commentDetailField.setLayoutData(gridData);
 
-        IObservableValue commentDetailFieldText = SWTObservables.observeText(
-                commentDetailField, SWT.Modify);
+        IObservableValue commentDetailFieldText =
+                WidgetProperties.text(SWT.Modify).observe(commentDetailField);
         m_commentDetail = WritableValue.withValueType(String.class);
 
         getValidationContext().bindValue(commentDetailFieldText,

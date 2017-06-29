@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.search.page;
 import java.util.List;
 
 import org.eclipse.core.databinding.DataBindingContext;
-import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.DialogPage;
@@ -248,8 +248,8 @@ public abstract class AbstractSearchPage extends DialogPage implements
 
         IObservableValue guiElement = WidgetProperties.selection()
                 .observe(check);
-        IObservableValue modelElement = PojoObservables.observeValue(
-                searchableType, "selected"); //$NON-NLS-1$
+        IObservableValue modelElement = 
+                PojoProperties.value("selected").observe(searchableType); //$NON-NLS-1$
         dbc.bindValue(guiElement, modelElement);
     }
     
@@ -270,8 +270,8 @@ public abstract class AbstractSearchPage extends DialogPage implements
 
         IObservableValue guiElement = WidgetProperties.selection()
                 .observe(check);
-        IObservableValue modelElement = PojoObservables.observeValue(
-                searchableField, "selected"); //$NON-NLS-1$
+        IObservableValue modelElement = 
+                PojoProperties.value("selected").observe(searchableField); //$NON-NLS-1$
         dbc.bindValue(guiElement, modelElement);
     }
 

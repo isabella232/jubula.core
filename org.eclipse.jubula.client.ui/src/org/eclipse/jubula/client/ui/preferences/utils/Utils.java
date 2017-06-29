@@ -78,7 +78,7 @@ public class Utils {
      * @throws JBException if the prefrence is not base64-coded.
      */
     public static void checkPreferences(String pref) throws JBException {
-        if (!Base64.isArrayByteBase64(pref.getBytes())) {
+        if (!Base64.isBase64(pref.getBytes())) {
             throw new JBException(StringConstants.EMPTY, new Integer(0));
         }
     }

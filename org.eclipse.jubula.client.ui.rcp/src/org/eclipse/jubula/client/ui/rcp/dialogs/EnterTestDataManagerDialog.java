@@ -15,7 +15,7 @@ import java.util.Set;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jubula.client.ui.dialogs.AbstractValidatedDialog;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.TestDataManagerNameValidator;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -89,7 +89,7 @@ public abstract class EnterTestDataManagerDialog
         LayoutUtil.setMaxChar(testDataCubeNameField);
         
         IObservableValue nameFieldText = 
-            SWTObservables.observeText(testDataCubeNameField, SWT.Modify);
+            WidgetProperties.text(SWT.Modify).observe(testDataCubeNameField);
         m_name = WritableValue.withValueType(String.class);
         
         getValidationContext().bindValue(

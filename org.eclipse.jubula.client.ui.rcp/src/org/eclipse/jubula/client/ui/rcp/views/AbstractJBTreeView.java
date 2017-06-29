@@ -256,7 +256,7 @@ public abstract class AbstractJBTreeView extends ViewPart implements
         setTreeFilterText(ft.getFilterControl());
         addTreeListener();
         getTreeViewer().setUseHashlookup(true);
-        getTreeViewer().setSorter(new NodeNameViewerSorter());
+        getTreeViewer().setComparator(new NodeNameViewerSorter());
         getTreeViewer().setComparer(new UIIdentitiyElementComparer());
 
         getSite().setSelectionProvider(getTreeViewer());

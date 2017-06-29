@@ -14,7 +14,7 @@ import org.eclipse.core.databinding.AggregateValidationStatus;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jubula.client.ui.databinding.DialogStatusMessageListener;
@@ -58,7 +58,8 @@ public abstract class AbstractValidatedDialog extends TitleAreaDialog {
     protected void createButtonsForButtonBar(Composite parent) {
         super.createButtonsForButtonBar(parent);
         IObservableValue okButtonEnablement = 
-            SWTObservables.observeEnabled(getButton(IDialogConstants.OK_ID));
+            WidgetProperties.enabled()
+                .observe(getButton(IDialogConstants.OK_ID));
         AggregateValidationStatus validationStatus = 
             new AggregateValidationStatus(
                     m_validationContext.getValidationStatusProviders(),

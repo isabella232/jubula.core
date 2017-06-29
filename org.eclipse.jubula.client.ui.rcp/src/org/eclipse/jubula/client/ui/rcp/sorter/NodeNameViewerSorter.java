@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
@@ -29,7 +29,7 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
  * @author BREDEX GmbH
  * @created 18.02.2009
  */
-public class NodeNameViewerSorter extends ViewerSorter {
+public class NodeNameViewerSorter extends ViewerComparator {
     /** {@inheritDoc} */
     public int compare(Viewer viewer, Object e1, Object e2) {
         List<Class<?>> preferredTypes = new ArrayList<>(3);

@@ -13,14 +13,13 @@ package org.eclipse.jubula.client.ui.wizards.pages;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeansObservables;
-import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -138,9 +137,10 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     parent, I18n.getString("DatabaseConnection.H2.Location"), SWT.NONE); //$NON-NLS-1$
             final Text locationText = createDetailText(parent);
             DialogUtils.setWidgetName(locationText, "H2.Location"); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(locationText, SWT.Modify), 
-                PojoObservables.observeValue(
-                    m_connInfo, H2ConnectionInfo.PROP_NAME_LOCATION),
+            dbc.bindValue(
+                    WidgetProperties.text(SWT.Modify).observe(locationText),
+                    BeanProperties.value(H2ConnectionInfo.PROP_NAME_LOCATION)
+                    .observe(m_connInfo),
                         new UpdateValueStrategy()
                         .setAfterGetValidator(new IValidator() {
                             public IStatus validate(Object value) {
@@ -193,9 +193,11 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
             DialogUtils.setWidgetName(hostnameText, "Oracle.Hostname"); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
-                BeansObservables.observeValue(m_connInfo, 
-                    AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME),
+            dbc.bindValue(
+                    WidgetProperties.text(SWT.Modify).observe(hostnameText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME)
+                    .observe(m_connInfo),
                         new UpdateValueStrategy()
                         .setAfterGetValidator(new IValidator() {
                             public IStatus validate(Object value) {
@@ -217,9 +219,10 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 .setConverter(new SimpleStringToIntegerConverter())
                 .setAfterGetValidator(new StringToPortValidator(
                         I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
-                    BeansObservables.observeValue(m_connInfo, 
-                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT),
+            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(portText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT)
+                    .observe(m_connInfo),
                     portTargetToModelUpdateStrategy,
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
@@ -228,9 +231,10 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     I18n.getString("DatabaseConnection.Oracle.SID"), SWT.NONE); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
             DialogUtils.setWidgetName(schemaText, "Oracle.SID"); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
-                BeansObservables.observeValue(m_connInfo, 
-                    AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME),
+            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(schemaText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME)
+                    .observe(m_connInfo),
                         new UpdateValueStrategy()
                         .setAfterGetValidator(new IValidator() {
                             public IStatus validate(Object value) {
@@ -294,9 +298,11 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
             DialogUtils.setWidgetName(hostnameText, "PostGreSQL.Hostname"); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
-                BeansObservables.observeValue(m_connInfo, 
-                    AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME),
+            dbc.bindValue(
+                    WidgetProperties.text(SWT.Modify).observe(hostnameText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME)
+                    .observe(m_connInfo),
                     new UpdateValueStrategy()
                     .setAfterGetValidator(new IValidator() {
                         public IStatus validate(Object value) {
@@ -318,9 +324,10 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 .setConverter(new SimpleStringToIntegerConverter())
                 .setAfterGetValidator(new StringToPortValidator(
                         I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
-                    BeansObservables.observeValue(m_connInfo, 
-                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT),
+            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(portText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT)
+                    .observe(m_connInfo),
                     portTargetToModelUpdateStrategy,
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
@@ -329,9 +336,10 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     I18n.getString("DatabaseConnection.PostGreSQL.Database"), SWT.NONE); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
             DialogUtils.setWidgetName(schemaText, "PostGreSQL.Database"); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
-                BeansObservables.observeValue(m_connInfo, 
-                    AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME),
+            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(schemaText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME)
+                    .observe(m_connInfo),
                         new UpdateValueStrategy()
                         .setAfterGetValidator(new IValidator() {
                             public IStatus validate(Object value) {
@@ -395,9 +403,11 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
             DialogUtils.setWidgetName(hostnameText, "MySQL.Hostname"); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(hostnameText, SWT.Modify), 
-                BeansObservables.observeValue(m_connInfo, 
-                    AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME),
+            dbc.bindValue(
+                    WidgetProperties.text(SWT.Modify).observe(hostnameText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME)
+                    .observe(m_connInfo),
                     new UpdateValueStrategy()
                         .setAfterGetValidator(new IValidator() {
                             public IStatus validate(Object value) {
@@ -425,9 +435,10 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                 .setAfterGetValidator(new StringToPortValidator(
                         I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
             
-            dbc.bindValue(SWTObservables.observeText(portText, SWT.Modify), 
-                    BeansObservables.observeValue(m_connInfo, 
-                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT),
+            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(portText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT)
+                    .observe(m_connInfo),
                     portTargetToModelUpdateStrategy,
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
@@ -437,9 +448,10 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     I18n.getString("DatabaseConnection.MySQL.Database"), SWT.NONE); //$NON-NLS-1$
             final Text schemaText = createDetailText(parent);
             DialogUtils.setWidgetName(schemaText, "MySQL.Database"); //$NON-NLS-1$
-            dbc.bindValue(SWTObservables.observeText(schemaText, SWT.Modify), 
-                BeansObservables.observeValue(m_connInfo, 
-                AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME),
+            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(schemaText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME)
+                    .observe(m_connInfo),
                 new UpdateValueStrategy().setAfterGetValidator(
                     new IValidator() {
                         public IStatus validate(Object value) {
@@ -540,9 +552,11 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         Text nameText = new Text(composite, SWT.BORDER);
         DialogUtils.setWidgetName(nameText, "DatabaseConnection.Name"); //$NON-NLS-1$
         nameText.setLayoutData(textGridDataFactory.create());
-        dbc.bindValue(SWTObservables.observeText(nameText, SWT.Modify), 
-            BeansObservables.observeValue(m_connectionToEdit, 
-            DatabaseConnection.PROP_NAME_NAME), new UpdateValueStrategy()
+        dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(nameText),
+            BeanProperties.value(
+                    DatabaseConnection.PROP_NAME_NAME)
+            .observe(m_connectionToEdit),
+            new UpdateValueStrategy()
                 .setAfterGetValidator(new IValidator() {
                     public IStatus validate(Object value) {
                         if (StringUtils.isEmpty((String)value)) {
@@ -566,13 +580,13 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         typeComboViewer.setInput(m_detailAreaBuilders);
         typeComboViewer.getControl().setLayoutData(
                 textGridDataFactory.create());
-
         final Composite detailArea = createDetailArea(composite, 
                 nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT).y);
         DialogUtils.setWidgetName(detailArea, "DatabaseConnection.DetailArea"); //$NON-NLS-1$
-        IObservableValue connectionInfoObservable = BeansObservables
-            .observeValue(m_connectionToEdit, 
-                    DatabaseConnection.PROP_NAME_CONN_INFO);
+        IObservableValue<DatabaseConnection> connectionInfoObservable = 
+                BeanProperties.value(
+                        DatabaseConnection.PROP_NAME_CONN_INFO)
+                .observe(m_connectionToEdit);
         bindComboViewer(dbc, typeComboViewer, detailArea,
                 connectionInfoObservable);
         
@@ -580,13 +594,12 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         DialogUtils.setWidgetName(url, "DatabaseConnection.URL"); //$NON-NLS-1$
         url.setEditable(false);
         url.setBackground(composite.getBackground());
-        url.setLayoutData(
-                GridDataFactory.fillDefaults().grab(true, false)
+        url.setLayoutData(GridDataFactory.fillDefaults().grab(true, false)
                     .span(2, 1).create());
-        dbc.bindValue(SWTObservables.observeText(url), 
-            BeansObservables.observeDetailValue(
-                connectionInfoObservable, 
-                DatabaseConnectionInfo.PROP_NAME_CONN_URL, null),
+        dbc.bindValue(WidgetProperties.text().observe(url),
+            BeanProperties.value(
+                    DatabaseConnectionInfo.PROP_NAME_CONN_URL)
+            .observeDetail(connectionInfoObservable),
                 new UpdateValueStrategy().setAfterGetValidator(
                     new IValidator() {
                         public IStatus validate(Object value) {
@@ -596,8 +609,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                                 }
                             return ValidationStatus.ok();
                         } }),  new UpdateValueStrategy());
-        PlatformUI.getWorkbench().getHelpSystem().setHelp(
-                composite, 
+        PlatformUI.getWorkbench().getHelpSystem().setHelp(composite, 
                 ContextHelpIds.DATABASE_CONNECTION_CONFIGURATION_DIALOG);
     }
 
@@ -618,7 +630,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
      */
     private void bindComboViewer(final DataBindingContext dbc,
             ComboViewer typeComboViewer, final Composite detailArea,
-            IObservableValue connectionInfoObservable) {
+            IObservableValue<DatabaseConnection> connectionInfoObservable) {
         dbc.bindValue(
                 ViewersObservables.observeSingleSelection(typeComboViewer), 
                 connectionInfoObservable, 

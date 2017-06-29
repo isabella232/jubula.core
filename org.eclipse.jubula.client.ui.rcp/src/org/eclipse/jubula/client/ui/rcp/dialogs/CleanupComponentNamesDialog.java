@@ -19,7 +19,7 @@ import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -118,7 +118,7 @@ public class CleanupComponentNamesDialog extends TitleAreaDialog {
                 IComponentNamePO.class);
         ViewerSupport.bind(getCbtv(), wl, PojoProperties.value("name")); //$NON-NLS-1$
         
-        getCbtv().setSorter(new ViewerSorter() {
+        getCbtv().setComparator(new ViewerComparator() {
             public int compare(Viewer viewer, Object e1, Object e2) {
                 if (e1 instanceof String && e2 instanceof String) {
                     ((String)e1).compareTo((String)e2);

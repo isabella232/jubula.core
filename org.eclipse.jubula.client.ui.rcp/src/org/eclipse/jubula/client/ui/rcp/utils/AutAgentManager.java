@@ -146,7 +146,7 @@ public class AutAgentManager {
      * @throws JBException in case of not base64 encoded string
      */
     String decodeString(String encodedString) throws JBException {
-        if (!Base64.isArrayByteBase64(encodedString.getBytes())) {
+        if (!Base64.isBase64(encodedString.getBytes())) {
             throw new JBException(StringConstants.EMPTY, new Integer(0));
         }
         return new String(Base64.decodeBase64(encodedString.getBytes()));

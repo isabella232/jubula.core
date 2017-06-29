@@ -15,11 +15,11 @@ import java.io.IOException;
 
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -106,8 +106,8 @@ public class ExportTestResultDetailsDestinationWizardPage
         });
 
         dbc.bindValue(
-                SWTObservables.observeText(destinationNameField, SWT.Modify), 
-                PojoObservables.observeValue(this, PROP_NAME_DESTINATION), 
+                WidgetProperties.text(SWT.Modify).observe(destinationNameField),
+                PojoProperties.value(PROP_NAME_DESTINATION).observe(this),
                 targetToModelUpdateStrategy, 
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
         

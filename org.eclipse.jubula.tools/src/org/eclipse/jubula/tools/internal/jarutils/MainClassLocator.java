@@ -59,7 +59,7 @@ public class MainClassLocator {
      */
     private List<String> getMainClassName(File url) throws IOException {
         URL u = new URL("jar", //$NON-NLS-1$
-                StringConstants.EMPTY, url.toURL()
+                StringConstants.EMPTY, url.toURI().toURL()
                 + "!/"); //$NON-NLS-1$
         JarURLConnection uc = (JarURLConnection) u.openConnection();
         Attributes attr = uc.getMainAttributes();
@@ -71,7 +71,7 @@ public class MainClassLocator {
                 return returnValue;
             }
             if (returnValue.isEmpty()) {
-                return getMainClassNameParse(url.toURL());
+                return getMainClassNameParse(url.toURI().toURL());
             }
             return returnValue;
         } finally {

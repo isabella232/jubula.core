@@ -303,7 +303,7 @@ public class AutServerLauncher {
             try {
                 for (int i = 0; i < pathLength; i++) {
                     File file = new File(paths[i]);
-                    URL url = file.toURL();
+                    URL url = file.toURI().toURL();
                     urls[i] = url;
                 }
             } catch (MalformedURLException e) {

@@ -15,7 +15,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -123,7 +123,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         commentTitleField.setLayoutData(gridData);
         
         IObservableValue commentTitleFieldText = 
-            SWTObservables.observeText(commentTitleField, SWT.Modify);
+                WidgetProperties.text(SWT.Modify).observe(commentTitleField);
         m_commentTitle = WritableValue.withValueType(String.class);
         getValidationContext().bindValue(
                 commentTitleFieldText,

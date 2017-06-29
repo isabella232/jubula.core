@@ -22,7 +22,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.utils.Languages;
 import org.eclipse.jubula.client.ui.rcp.utils.DialogStatusParameter;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -73,7 +73,7 @@ public class SwtAutConfigComponent extends JavaAutConfigComponent {
         m_keyboardLayoutCombo.setContentProvider(new ArrayContentProvider());
         m_keyboardLayoutCombo.setLabelProvider(
                 new KeyboardLayoutLabelProvider());
-        m_keyboardLayoutCombo.setSorter(new ViewerSorter());
+        m_keyboardLayoutCombo.setComparator(new ViewerComparator());
         m_keyboardLayoutCombo.setInput(
                 Languages.getInstance().getKeyboardLayouts());
         

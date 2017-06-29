@@ -21,14 +21,14 @@ import java.util.Set;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
-import org.eclipse.core.databinding.beans.BeansObservables;
-import org.eclipse.core.databinding.beans.PojoObservables;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.beans.PojoProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.databinding.swt.ISWTObservableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jubula.client.core.model.ClientProfileNames;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
@@ -408,8 +408,8 @@ public class ObjectMappingConfigComponent {
 
         m_sliderComposite = createSliderComposite(composite);
         m_factorSliders = new HashMap<Scale, String>();
-        m_profileObservable = PojoObservables.observeValue(input,
-                IObjectMappingPO.PROP_PROFILE);
+        m_profileObservable = PojoProperties
+                .value(IObjectMappingPO.PROP_PROFILE).observe(input);
         m_factorSliders.put(createFactorSlider(m_sliderComposite,
                 Messages.ObjectMappingPreferencePagePathFactor,
                 IObjectMappingProfilePO.PROP_PATH_FACTOR, m_bindingContext,
@@ -573,11 +573,10 @@ public class ObjectMappingConfigComponent {
             IObservableValue masterObservable, IJBEditor editor) {
         
         IObservableValue uiElement = 
-            SWTObservables.observeSelection(factorScale);
-        IObservableValue modelElement = 
-            BeansObservables.observeDetailValue(masterObservable, 
-                    boundProperty, 
-                    double.class);
+                WidgetProperties.selection().observe(factorScale);
+        IObservableValue<?> modelElement = 
+                BeanProperties.value(double.class, boundProperty)
+                .observeDetail(masterObservable);
 
         bindingContext.bindValue(uiElement, modelElement, 
                 new JBEditorUpdateValueStrategy(
@@ -585,8 +584,7 @@ public class ObjectMappingConfigComponent {
                             .setConverter(m_sliderToModelConverter),
                 new UpdateValueStrategy()
                     .setConverter(m_modelToSliderConverter));
-        uiElement = 
-            SWTObservables.observeText(factorText);
+        uiElement = WidgetProperties.text().observe(factorText);
         bindingContext.bindValue(uiElement, modelElement, 
                 new UpdateValueStrategy()
                         .setConverter(m_labelToModelConverter),
@@ -594,9 +592,10 @@ public class ObjectMappingConfigComponent {
                         .setConverter(m_modelToLabelConverter));
 
         IObservableValue checkboxSelection = 
-            SWTObservables.observeSelection(lockCheckbox);
+                WidgetProperties.selection().observe(lockCheckbox);
 
-        uiElement = SWTObservables.observeEnabled(factorScale);
+        uiElement = WidgetProperties.enabled().observe(factorScale);
+                
         bindingContext.bindValue(uiElement, masterObservable, 
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), 
                 new UpdateValueStrategy().setConverter(
@@ -607,7 +606,7 @@ public class ObjectMappingConfigComponent {
                 new UpdateValueStrategy().setConverter(
                         m_inverseBooleanConverter));
 
-        uiElement = SWTObservables.observeEnabled(factorText);
+        uiElement = WidgetProperties.enabled().observe(factorText);
         bindingContext.bindValue(uiElement, masterObservable, 
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), 
                 new UpdateValueStrategy().setConverter(
@@ -618,7 +617,7 @@ public class ObjectMappingConfigComponent {
                 new UpdateValueStrategy().setConverter(
                         m_inverseBooleanConverter));
 
-        uiElement = SWTObservables.observeEnabled(lockCheckbox);
+        uiElement = WidgetProperties.enabled().observe(lockCheckbox);
         bindingContext.bindValue(uiElement, masterObservable, 
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), 
                 new UpdateValueStrategy().setConverter(
@@ -640,9 +639,10 @@ public class ObjectMappingConfigComponent {
             IObservableValue masterObservable) {
         
         IObservableValue uiElement = 
-                SWTObservables.observeSelection(factorScale);
-        IObservableValue modelElement = BeansObservables.observeDetailValue(
-                masterObservable, boundProperty, double.class);
+                WidgetProperties.selection().observe(factorScale);
+        IObservableValue modelElement = 
+                BeanProperties.value(double.class, boundProperty)
+                    .observeDetail(masterObservable);
         
         removeBinding(uiElement, modelElement);
         bindingContext.bindValue(uiElement, modelElement, 
@@ -653,14 +653,14 @@ public class ObjectMappingConfigComponent {
                         .setConverter(m_modelToSliderConverter));
 
         Label factorText = m_factorLabels.get(factorScale);
-        uiElement = SWTObservables.observeText(factorText);
+        uiElement = WidgetProperties.text().observe(factorText);
         removeBinding(uiElement, modelElement);
         bindingContext.bindValue(uiElement, modelElement,
                 new UpdateValueStrategy().setConverter(m_labelToModelConverter),
                 new UpdateValueStrategy()
                         .setConverter(m_modelToLabelConverter));
 
-        uiElement = SWTObservables.observeEnabled(factorScale);
+        uiElement = WidgetProperties.selection().observe(factorScale);
         removeBinding(uiElement, masterObservable);
         bindingContext.bindValue(uiElement, masterObservable,
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
@@ -679,9 +679,9 @@ public class ObjectMappingConfigComponent {
         IObservableValue modelElement;
         String boundProperty = 
                 IObjectMappingProfilePO.PROP_THRESHOLD;
-        uiElement = SWTObservables.observeSelection(m_threshold);
-        modelElement = BeansObservables.observeDetailValue(masterObservable,
-                boundProperty, double.class);
+        uiElement = WidgetProperties.selection().observe(m_threshold);
+        modelElement = BeanProperties.value(double.class, boundProperty)
+                .observe(masterObservable);
         removeBinding(uiElement, masterObservable);
         bindingContext.bindValue(uiElement, modelElement,
                 new UpdateValueStrategy()
@@ -689,7 +689,7 @@ public class ObjectMappingConfigComponent {
                 new UpdateValueStrategy()
                         .setConverter(m_modelToSliderConverter));
 
-        uiElement = SWTObservables.observeText(m_thresholdText);
+        uiElement = WidgetProperties.text().observe(m_thresholdText);
         removeBinding(uiElement, masterObservable);
         bindingContext.bindValue(uiElement, modelElement,
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
@@ -835,32 +835,30 @@ public class ObjectMappingConfigComponent {
         new Label(parent, SWT.NONE);
 
         ISWTObservableValue uiElement = 
-            SWTObservables.observeSelection(m_threshold);
+                WidgetProperties.selection().observe(m_threshold);
         IObservableValue modelElement = 
-            BeansObservables.observeDetailValue(masterObservable, 
-                    boundProperty, 
-                    double.class);
+                BeanProperties.value(double.class, boundProperty)
+                    .observeDetail(masterObservable);
         bindingContext.bindValue(uiElement, modelElement, 
                 new UpdateValueStrategy()
                     .setConverter(m_sliderToModelConverter),
                 new UpdateValueStrategy()
                     .setConverter(m_modelToSliderConverter));
 
-        uiElement = 
-            SWTObservables.observeText(m_thresholdText);
+        uiElement = WidgetProperties.text().observe(m_thresholdText);
         bindingContext.bindValue(uiElement, modelElement, 
                 new UpdateValueStrategy(
                         UpdateValueStrategy.POLICY_NEVER), 
                 new UpdateValueStrategy().setConverter(
                         m_modelToLabelConverter));
 
-        uiElement = SWTObservables.observeEnabled(m_threshold);
+        uiElement = WidgetProperties.enabled().observe(m_threshold);
         bindingContext.bindValue(uiElement, masterObservable, 
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), 
                 new UpdateValueStrategy().setConverter(
                         m_modelToEnablementConverter));
 
-        uiElement = SWTObservables.observeEnabled(m_thresholdText);
+        uiElement = WidgetProperties.enabled().observe(m_thresholdText);
         bindingContext.bindValue(uiElement, masterObservable, 
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER), 
                 new UpdateValueStrategy().setConverter(

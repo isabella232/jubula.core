@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jubula.client.core.Activator;
 import org.eclipse.jubula.client.core.ClientTest;
 import org.eclipse.jubula.client.core.ClientTestImpl;
@@ -388,7 +388,7 @@ public class TestExecution {
             final IProgressMonitor monitor, String noRunOptMode) {
         try {
             IStatus connected = AUTConnection.getInstance().connectToAut(
-                    autId, new SubProgressMonitor(monitor, 0));
+                    autId, SubMonitor.convert(monitor, 0));
             
             if (connected.getCode() == IStatus.OK) {
                 if (TestExecution.shouldExecutionStop (noRunOptMode, 
@@ -621,7 +621,7 @@ public class TestExecution {
             
             m_resultTreeTracker = new ResultTreeTracker(resultTreeBuilder.
                     getRootNode(), m_externalTestDataBP);
-            IProgressMonitor subMonitor = new SubProgressMonitor(monitor,
+            IProgressMonitor subMonitor = SubMonitor.convert(monitor,
                     ClientTestImpl.TEST_SUITE_EXECUTION_RELATIVE_WORK_AMOUNT);
             subMonitor.beginTask(
                     NLS.bind(Messages.StartWorkingWithTestSuite,

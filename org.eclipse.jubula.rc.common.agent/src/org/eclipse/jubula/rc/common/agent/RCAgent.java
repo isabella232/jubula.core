@@ -87,7 +87,7 @@ public class RCAgent {
                 System.getProperty("path.separator")); //$NON-NLS-1$
         URL [] urls = new URL[fileNames.length];
         for (int i = 0; i < fileNames.length; i++) {
-            urls[i] = new File(fileNames[i]).toURL();
+            urls[i] = new File(fileNames[i]).toURI().toURL();
         }
         
         final ClassLoader oldContextClassLoader = Thread.currentThread()

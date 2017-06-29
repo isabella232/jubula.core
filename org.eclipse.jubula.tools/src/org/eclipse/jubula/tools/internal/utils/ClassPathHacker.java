@@ -51,7 +51,7 @@ public class ClassPathHacker {
      * @throws IOException Error
      */
     public static void addFile(File f) throws IOException {
-        addURL(f.toURL());
+        addURL(f.toURI().toURL());
     }
 
     /**

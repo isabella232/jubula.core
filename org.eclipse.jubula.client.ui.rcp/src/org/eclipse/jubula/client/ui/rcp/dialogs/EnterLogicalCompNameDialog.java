@@ -13,7 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.dialogs;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jubula.client.ui.dialogs.AbstractValidatedDialog;
 import org.eclipse.jubula.client.ui.rcp.databinding.validators.ComponentNameValidator;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
@@ -80,7 +80,7 @@ public abstract class EnterLogicalCompNameDialog
         LayoutUtil.setMaxChar(componentNameField);
         
         IObservableValue nameFieldText = 
-            SWTObservables.observeText(componentNameField, SWT.Modify);
+                WidgetProperties.text(SWT.Modify).observe(componentNameField);
         m_name = WritableValue.withValueType(String.class);
         
         getValidationContext().bindValue(

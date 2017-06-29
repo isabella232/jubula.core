@@ -176,7 +176,6 @@ public class JubulaWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         config.setShowCoolBar(true);
         config.setShowStatusLine(true);
         config.setShowProgressIndicator(true);
-        config.setShowFastViewBars(false);
     }
     
     /**
