@@ -47,7 +47,7 @@ public class ControlledCache<TKey, TValue> implements IDataChangedListener,
      * @see ControlledCache#ControlledCache(long, int)
      * @param controlledBy the events which will invalidate the cache
      */
-    public ControlledCache(ControlTypes ... controlledBy) {
+    public ControlledCache(ControlTypes... controlledBy) {
         this(17, controlledBy);
     }
     
@@ -55,7 +55,7 @@ public class ControlledCache<TKey, TValue> implements IDataChangedListener,
      * @param controlledByList the events which will invalidate the cache
      * @param size the initial size of the Map
      */
-    public ControlledCache(int size, ControlTypes ... controlledByList) {
+    public ControlledCache(int size, ControlTypes... controlledByList) {
         m_cache = new HashMap<TKey, TValue>(size);
         
         for (ControlTypes controlledBy : controlledByList) {

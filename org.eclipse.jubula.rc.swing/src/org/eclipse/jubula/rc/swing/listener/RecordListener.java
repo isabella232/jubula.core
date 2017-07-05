@@ -237,9 +237,7 @@ public class RecordListener extends AbstractAutSwingEventListener {
                                 Action a = m_recordHelper.compSysToAction(id, "CompSystem.SelectValue"); //$NON-NLS-1$
                                 m_recordActions.selectCbxValue(jcbx, id, a);
                                 m_recordActions.setSelectionState(true);
-                            } catch (
-                                    NoIdentifierForComponentException 
-                                    nifce) {
+                            } catch (NoIdentifierForComponentException nifce) {
                                 // no identifier for the component, log this as an error
                                 log.error("no identifier for '" + getCurrentComponent()); //$NON-NLS-1$
                             }
@@ -259,7 +257,6 @@ public class RecordListener extends AbstractAutSwingEventListener {
             return;
         }
         if (getEventSource(event) == null 
-                //|| isComboPopup(getEventSource(event))
                 || event.getID() == MouseEvent.MOUSE_EXITED) {
             return;
         }
