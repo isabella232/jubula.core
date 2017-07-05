@@ -413,7 +413,7 @@ public class JavaFXApplicationTester extends AbstractApplicationTester {
                     + title + "operator: " + operator); //$NON-NLS-1$
             throw new StepExecutionException("no Window found!", //$NON-NLS-1$
                     EventFactory
-                            .createActionError(TestErrorEvent.EXECUTION_ERROR));
+                            .createActionError(TestErrorEvent.COMP_NOT_FOUND));
         }
         final Stage stage = s;
         final CountDownLatch signal = new CountDownLatch(1);
