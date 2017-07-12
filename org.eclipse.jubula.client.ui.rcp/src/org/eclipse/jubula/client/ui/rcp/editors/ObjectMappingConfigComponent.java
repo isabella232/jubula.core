@@ -574,8 +574,8 @@ public class ObjectMappingConfigComponent {
         
         IObservableValue uiElement = 
                 WidgetProperties.selection().observe(factorScale);
-        IObservableValue<?> modelElement = 
-                BeanProperties.value(double.class, boundProperty)
+        IObservableValue<?> modelElement =
+                BeanProperties.value(boundProperty, double.class)
                 .observeDetail(masterObservable);
 
         bindingContext.bindValue(uiElement, modelElement, 
@@ -641,7 +641,7 @@ public class ObjectMappingConfigComponent {
         IObservableValue uiElement = 
                 WidgetProperties.selection().observe(factorScale);
         IObservableValue modelElement = 
-                BeanProperties.value(double.class, boundProperty)
+                BeanProperties.value(boundProperty, double.class)
                     .observeDetail(masterObservable);
         
         removeBinding(uiElement, modelElement);
@@ -680,7 +680,7 @@ public class ObjectMappingConfigComponent {
         String boundProperty = 
                 IObjectMappingProfilePO.PROP_THRESHOLD;
         uiElement = WidgetProperties.selection().observe(m_threshold);
-        modelElement = BeanProperties.value(double.class, boundProperty)
+        modelElement = BeanProperties.value(boundProperty, double.class)
                 .observe(masterObservable);
         removeBinding(uiElement, masterObservable);
         bindingContext.bindValue(uiElement, modelElement,
@@ -837,7 +837,7 @@ public class ObjectMappingConfigComponent {
         ISWTObservableValue uiElement = 
                 WidgetProperties.selection().observe(m_threshold);
         IObservableValue modelElement = 
-                BeanProperties.value(double.class, boundProperty)
+                BeanProperties.value(boundProperty, double.class)
                     .observeDetail(masterObservable);
         bindingContext.bindValue(uiElement, modelElement, 
                 new UpdateValueStrategy()
