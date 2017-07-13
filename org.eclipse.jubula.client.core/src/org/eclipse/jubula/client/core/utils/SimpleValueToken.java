@@ -27,6 +27,18 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
  */
 public class SimpleValueToken extends AbstractParamValueToken {
 
+    /** Starting symbol for variables */
+    public static final char VARIABLE_START = '$';
+
+    /** Starting symbol for parameters */
+    public static final char PARAMETER_START = '=';
+
+    /** Starting symbol for delimiter */
+    public static final char DELIMITER_START = '{';
+
+    /** Ending symbol for delimiter */
+    public static final char DELIMITER_END = '}';
+
     /**
      * @param s string represents the token
      * @param pos index of first character of token in entire string
@@ -77,7 +89,8 @@ public class SimpleValueToken extends AbstractParamValueToken {
                 if (index + 1 < getValue().length()) {
                     index++;
                     c = getValue().charAt(index);
-                    char[] validChars = {'\\', '=', '{', '}', '$', '\''};
+                    char[] validChars = {'\\', PARAMETER_START,
+                        DELIMITER_START, DELIMITER_END, VARIABLE_START, '\''};
                     boolean isValid = false;
                     for (char validChar : validChars) {
                         if (validChar == c) {

@@ -12,7 +12,10 @@ package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -20,8 +23,16 @@ import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.utils.IParamValueToken;
+import org.eclipse.jubula.client.core.utils.LiteralToken;
+import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
+import org.eclipse.jubula.client.core.utils.SimpleValueToken;
+import org.eclipse.jubula.client.core.utils.VariableToken;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
+import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
 
 /**
@@ -32,9 +43,6 @@ import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
  * @created Apr 7, 2010
  */
 public class ParamProposalProvider implements IContentProposalProvider {
-    
-    /** prefix for parameter reference content proposals */
-    private static final String PARAMETER_PREFIX = "="; //$NON-NLS-1$
     
     /**
      * @author BREDEX GmbH
@@ -153,6 +161,8 @@ public class ParamProposalProvider implements IContentProposalProvider {
         }
 
         proposals.addAll(getParentParamProposals(contents));
+        proposals.addAll(getParentVariableProposals(contents,
+                TestDataConstants.VARIABLE.equals(m_paramDesc.getType())));
         
         return proposals.toArray(new IContentProposal[proposals.size()]);
     }
@@ -174,7 +184,7 @@ public class ParamProposalProvider implements IContentProposalProvider {
         while ((node != null) && !(node instanceof ISpecTestCasePO)) {
             node = node.getParentNode();
         }
-        if (node == null) {
+        if (node == null || contents == null) {
             return proposals;
         }
         ISpecTestCasePO paramNode = (ISpecTestCasePO)node;
@@ -185,10 +195,8 @@ public class ParamProposalProvider implements IContentProposalProvider {
                 if (!paramNode.isInterfaceLocked()
                         && !paramNode.getParamNames().contains(
                                 m_paramDesc.getName())) {
-                    String p = PARAMETER_PREFIX + m_paramDesc.getName();
-                    p = StringUtils.replaceChars(p, ' ', '_');
-                    p = StringUtils.replaceChars(p, '-', '_');
-                    p = p.toUpperCase();
+                    String p = SimpleValueToken.PARAMETER_START
+                            + getPredefinedParamName();
                     if (p.startsWith(contents)) {
                         proposals.add(new ParamProposal(
                                 p.substring(contents.length()), p));
@@ -203,7 +211,8 @@ public class ParamProposalProvider implements IContentProposalProvider {
                     String parType = m_paramDesc.getType();
                     if ("java.lang.String".equals(parType) //$NON-NLS-1$
                             || param.getType().equals(parType)) {
-                        String p = PARAMETER_PREFIX + param.getName();
+                        String p = SimpleValueToken.PARAMETER_START
+                                + param.getName();
                         if (p.startsWith(contents)) {
                             proposals.add(new ParamProposal(
                                     p.substring(contents.length()), p));
@@ -213,8 +222,139 @@ public class ParamProposalProvider implements IContentProposalProvider {
 
             }
         }
-
         return proposals;
+    }
+
+    /**
+     * @return the auto-generated param name
+     */
+    private String getPredefinedParamName() {
+        String p = m_paramDesc.getName();
+        p = StringUtils.replaceChars(p, ' ', '_');
+        p = StringUtils.replaceChars(p, '-', '_');
+        p = p.toUpperCase();
+        return p;
+    }
+
+    /**
+     * Gets proposals for variables
+     * @param content the current content of the text field
+     * @param varTypeParam Whether the parameter's type is 'Variable'.
+     *     These are special, because can contain only the name of
+     *     the variables, nothing else.
+     * @return the collection of proposals
+     */
+    private Collection<IContentProposal> getParentVariableProposals(
+            String content, boolean varTypeParam) {
+        List<IContentProposal> props = new ArrayList<>();
+        INodePO spec = m_node.getSpecAncestor();
+        if (spec == null || content == null) {
+            return props;
+        }
+        // we determine the position where the variable name starts 
+        // after the last variable start symbol
+        // possible cases: '', '$', '$a', '${', '${a' if the parameter is normal
+        // for 'Variable' type parameters, '$' should not appear anywhere
+        int varNameStart = content.lastIndexOf(SimpleValueToken.VARIABLE_START);
+        if ((varNameStart == -1 && !varTypeParam && content.length() > 0)
+                || (varNameStart != -1 && varTypeParam)) {
+            return props;
+        }
+        String proposalStart = (varNameStart == -1 && !varTypeParam)
+                ? String.valueOf(SimpleValueToken.VARIABLE_START)
+                        : StringUtils.EMPTY;
+        varNameStart++;
+        boolean needClose = false;
+        if (varNameStart < content.length() && !varTypeParam) {
+            if (content.charAt(varNameStart)
+                    == SimpleValueToken.DELIMITER_START) {
+                varNameStart++;
+                needClose = true;
+            }
+        } else {
+            if (!varTypeParam) {
+                proposalStart += SimpleValueToken.DELIMITER_START;
+                needClose = true;
+            }
+        }
+        // we finally have the variable name part...
+        String varNamePart = varNameStart < content.length()
+                ? content.substring(varNameStart) : StringUtils.EMPTY;
+        Set<String> varNames = collectVariableNames(spec);
+        for (String varName : varNames) {
+            if (!(varName.startsWith(varNamePart))) {
+                continue;
+            }
+            String proposal = proposalStart;
+            if (!varName.equals(varNamePart)) {
+                proposal += varName.substring(varNamePart.length());
+            }
+            if (needClose) {
+                proposal += SimpleValueToken.DELIMITER_END;
+            }
+            props.add(new ParamProposal(proposal, content + proposal));
+        }
+        return props;
+    }
+
+    /**
+     * Collects all variable names appearing within the edited node
+     * @param spec the edited node
+     * @return the variable names
+     */
+    private Set<String> collectVariableNames(INodePO spec) {
+        Set<String> varNames = new HashSet<>();
+        for (Iterator<INodePO> it = spec.getAllNodeIter(); it.hasNext(); ) {
+            INodePO next = it.next();
+            if (!(next instanceof IParamNodePO)) {
+                continue;
+            }
+            IParamNodePO paramNode = (IParamNodePO) next;
+            ITDManager man = paramNode.getDataManager();
+            // More convenient, but slower way to iterate
+            // (we need the ParamDescPO's type)
+            for (IParamDescriptionPO param : paramNode.getParameterList()) {
+                for (int i = 0; i < man.getDataSetCount(); i++) {
+                    String data = man.getCell(i, param);
+                    if (data == null) {
+                        continue;
+                    }
+                    SimpleStringConverter conv =
+                            new SimpleStringConverter(data);
+                    if (TestDataConstants.VARIABLE.equals(param.getType())) {
+                        List<IParamValueToken> toks = conv.getTokens();
+                        // we ignore more complicated cases, e.g. 'VAR''IA'BLE...
+                        if (toks.size() != 1) {
+                            continue;
+                        }
+                        IParamValueToken token = toks.get(0);
+                        if (token instanceof LiteralToken
+                                || token instanceof SimpleValueToken) {
+                            try {
+                                varNames.add(token.getExecutionString(null));
+                            } catch (InvalidDataException e) {
+                                // Improbable, but if happens, we just ignore it
+                            }
+                        }
+                        continue;
+                    }
+                    for (IParamValueToken token : conv.getTokens()) {
+                        if (!(token instanceof VariableToken)) {
+                            continue;
+                        }
+                        String varName = ((VariableToken) token).getGuiString();
+                        if (varName.length() > 1 && varName.charAt(1)
+                                == SimpleValueToken.DELIMITER_START) {
+                            varNames.add(varName.substring(2,
+                                    varName.length() - 1));
+                        } else {
+                            varNames.add(varName.substring(1));
+                        }
+                    }
+                }
+            }
+        }
+        return varNames;
     }
 
     /**

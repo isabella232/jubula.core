@@ -41,7 +41,8 @@ public interface IParamValueToken {
      * get the real values for this token, e.g. for testexecution or
      * completeness check
      * 
-     * @param stack current execution stack
+     * @param stack Current execution stack. Value is ignored by
+     *     Literal and SimpleValueToken!
      * @return the resolved token for given locale
      */
     public abstract String getExecutionString(List<ExecObject> stack) 
