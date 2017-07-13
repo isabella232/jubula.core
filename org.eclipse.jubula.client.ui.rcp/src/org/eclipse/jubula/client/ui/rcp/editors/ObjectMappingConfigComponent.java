@@ -660,7 +660,7 @@ public class ObjectMappingConfigComponent {
                 new UpdateValueStrategy()
                         .setConverter(m_modelToLabelConverter));
 
-        uiElement = WidgetProperties.selection().observe(factorScale);
+        uiElement = WidgetProperties.enabled().observe(factorScale);
         removeBinding(uiElement, masterObservable);
         bindingContext.bindValue(uiElement, masterObservable,
                 new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
@@ -681,7 +681,7 @@ public class ObjectMappingConfigComponent {
                 IObjectMappingProfilePO.PROP_THRESHOLD;
         uiElement = WidgetProperties.selection().observe(m_threshold);
         modelElement = BeanProperties.value(boundProperty, double.class)
-                .observe(masterObservable);
+                .observeDetail(masterObservable);
         removeBinding(uiElement, masterObservable);
         bindingContext.bindValue(uiElement, modelElement,
                 new UpdateValueStrategy()
