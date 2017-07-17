@@ -47,12 +47,6 @@ public class TestErrorEvent {
         "TestErrorEvent.ClickPointInvalid"; //$NON-NLS-1$
 
     /**
-     * click point outside of screen bounds
-     */
-    public static final String CLICKPOINT_OFFSCREEN =
-        "TestErrorEvent.ClickPointOffscreen"; //$NON-NLS-1$
-    
-    /**
      * tree node not found
      */
     public static final String TREE_NODE_NOT_FOUND =

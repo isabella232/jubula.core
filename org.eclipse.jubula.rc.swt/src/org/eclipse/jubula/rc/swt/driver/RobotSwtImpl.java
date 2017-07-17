@@ -584,16 +584,6 @@ public class RobotSwtImpl implements IRobot<Rectangle> {
                         }
                     });
 
-            if (pointToGo != null && (pointToGo.x < 0 || pointToGo.y < 0)) {
-                throw new RobotException(
-                    "Error occurred while attempting to move the mouse pointer.",  //$NON-NLS-1$
-                    EventFactory.createActionError(
-                            TestErrorEvent.CLICKPOINT_OFFSCREEN, 
-                            new String[] {
-                                    String.valueOf(pointToGo.x), 
-                                    String.valueOf(pointToGo.y)}));
-            }
-            
             java.awt.Point [] path = 
                 MouseMovementStrategy.getMovementPath(
                         new java.awt.Point(initialPoint.x, initialPoint.y), 
