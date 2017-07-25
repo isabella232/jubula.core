@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -76,6 +77,23 @@ public final class MakeR {
         return identifier;
     }
     
+    /**
+     * 
+     * @param id the id set for the component
+     * @return a {@link ComponentIdentifier} with the given ID and the profile {@link StandardProfiles#GIVEN_NAMES}
+     */
+    public static ComponentIdentifier createCIWithName(String id) {
+        // CHECKSTYLE:OFF
+        org.eclipse.jubula.tools.internal.objects.ComponentIdentifier componentIdentifier =
+                new org.eclipse.jubula.tools.internal.objects.ComponentIdentifier();
+        // CHECKSTYLE:ON
+        ArrayList<String> hierarchyNames = new ArrayList<String>();
+        hierarchyNames.add(id);
+        componentIdentifier.setHierarchyNames(hierarchyNames);
+        componentIdentifier.setComponentClassName(""); //$NON-NLS-1$
+        componentIdentifier.setProfile(StandardProfiles.GIVEN_NAMES.instance());
+        return componentIdentifier;
+    }
     /**
      * Get the factory for heuristic profiles
      * @return the profile factory instance

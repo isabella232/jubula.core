@@ -16,6 +16,17 @@
     <emphasis role="strong">Removed support to import xml files</emphasis>
   </para>
 <para>
+ <emphasis role="strong">Jubula API</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        The class MakeR has now the method <literal>createCIWithName</literal> which is creating
+        a Component Identifier with just a given name(ID).
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
  <emphasis role="strong">Search where Central Test Data is referenced</emphasis>
 </para>
 <itemizedlist>
