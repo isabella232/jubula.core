@@ -1156,13 +1156,7 @@ public abstract class AbstractTableTester
             if (usrIdxCol == 0) {
                 usrIdxCol = usrIdxCol + 1;
             }
-            int colInd = IndexConverter.toImplementationIndex(usrIdxCol);
-            if (colInd < 0 || colInd >= getTableAdapter().getColumnCount()) {
-                throw new StepExecutionException("Column with index " + colInd + " does not exist", //$NON-NLS-1$ //$NON-NLS-2$
-                        EventFactory.createActionError(
-                                TestErrorEvent.NOT_FOUND));
-            }
-            return colInd;
+            return IndexConverter.toImplementationIndex(usrIdxCol);
         } catch (NumberFormatException nfe) {
             // empty
         }
