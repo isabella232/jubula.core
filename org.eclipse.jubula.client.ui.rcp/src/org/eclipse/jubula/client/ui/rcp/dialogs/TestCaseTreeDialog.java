@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -50,8 +51,6 @@ import org.eclipse.ui.ISelectionListener;
  * @since 12.10.2004
  */
 public class TestCaseTreeDialog extends TitleAreaDialog {
-    /** Add constant. */
-    public static final int ADD = 9999;
     /** number of columns = 1 */
     private static final int NUM_COLUMNS_1 = 1;    
     /** vertical spacing = 2 */
@@ -239,11 +238,15 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
      */
     protected void createButtonsForButtonBar(Composite parent) {
         // Add-Button
-        m_addButton = createButton(parent, ADD, m_addButtonText, true);
+        String buttonText = m_addButtonText;
+        if (m_onlyCategories) {
+            buttonText = IDialogConstants.OK_LABEL;
+        }
+        m_addButton = createButton(parent, IDialogConstants.OK_ID,
+                buttonText, true);
         m_addButton.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
-                notifyListener();
-                setReturnCode(ADD);
+                setReturnCode(IDialogConstants.OK_ID);
                 close();
             }
         });
@@ -251,7 +254,9 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
         tv.addSelectionChangedListener(
                 new ISelectionChangedListener() {
                     public void selectionChanged(SelectionChangedEvent e) {
-                        if (e.getSelection() != null) {
+                        if (e.getSelection() != null
+                                && !e.getSelection().isEmpty()) {
+                            m_lastSel = e.getSelection();
                             m_addButton.setEnabled(true);
                         }
                     }
@@ -271,7 +276,7 @@ public class TestCaseTreeDialog extends TitleAreaDialog {
                         return;
                     }
                     notifyListener();
-                    setReturnCode(ADD);
+                    setReturnCode(IDialogConstants.OK_ID);
                     close();
                 }
             });

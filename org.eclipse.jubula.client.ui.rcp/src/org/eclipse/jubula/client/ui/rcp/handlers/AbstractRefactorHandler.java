@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
@@ -105,7 +106,7 @@ public abstract class AbstractRefactorHandler
         dialog.setPreSelect(GeneralStorage.getInstance().
                 getProject().getSpecObjCont());
         dialog.open();
-        if (dialog.getReturnCode() != TestCaseTreeDialog.ADD
+        if (dialog.getReturnCode() != IDialogConstants.OK_ID
                 || dialog.getSelection().isEmpty()) {
             return false;
         }

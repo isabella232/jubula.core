@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
@@ -120,7 +121,7 @@ public class AddExistingEventHandlerHandler extends AbstractHandler {
         Plugin.getHelpSystem().setHelp(dialog.getShell(), 
             ContextHelpIds.EVENT_HANDLER_ADD);
         int returnCode = dialog.open();
-        if (returnCode == TestCaseTreeDialog.ADD) {
+        if (returnCode == IDialogConstants.OK_ID) {
             addEventHandler(selTransferObj.getSelection(), parentNode, editor);
         }
         dialog.removeSelectionListener(selListener);
