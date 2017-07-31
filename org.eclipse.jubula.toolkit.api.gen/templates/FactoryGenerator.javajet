@@ -118,14 +118,12 @@ public class <%=factoryName%> {
     /** create a new instance of <%=componentName%>ActionHandler 
      * <%=sinceHandler%>
      */
-    @Beta
     @NonNull public static <%=returnTypeActionHandler%> create<%=componentName%>ActionHandler () {
         return new <%=fqClassNameActionHandler%>();
     }<%} else {%>
     /** create a new representative for a <%if (hasComponentClass) {%>{@link <%=componentClassName%>}<%} else {%><%=componentName%><%}%> UI component.
      * <%=sinceHandler%>
      */
-    @Beta
     @NonNull public static <%=returnTypeActionHandler%> create<%=componentName%>ActionHandler (@NonNull ComponentIdentifier<? extends <%=returnType%>> componentIdentifier) {
         Validate.notNull(componentIdentifier);
         return new <%=fqClassNameActionHandler%>(componentIdentifier);

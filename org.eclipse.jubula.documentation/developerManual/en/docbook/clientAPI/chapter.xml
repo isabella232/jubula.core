@@ -275,10 +275,10 @@
                 of the API:</para>
                 <itemizedlist>
                     <listitem>
-                        <para>Apache Commons Lang 2.4</para>
+                        <para>Apache Commons Lang 2.6</para>
                     </listitem>
                     <listitem>
-                        <para>Apache Commons Codec 1.4</para>
+                        <para>Apache Commons Codec 1.6</para>
                     </listitem>
                     <listitem>
                         <para>SLF4j API</para>

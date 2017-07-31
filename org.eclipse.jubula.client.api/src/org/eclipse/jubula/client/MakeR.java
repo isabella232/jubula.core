@@ -81,8 +81,9 @@ public final class MakeR {
      * 
      * @param id the id set for the component
      * @return a {@link ComponentIdentifier} with the given ID and the profile {@link StandardProfiles#GIVEN_NAMES}
+     * @since 3.4
      */
-    public static ComponentIdentifier createCIWithName(String id) {
+    public static ComponentIdentifier createCIWithGivenName(String id) {
         // CHECKSTYLE:OFF
         org.eclipse.jubula.tools.internal.objects.ComponentIdentifier componentIdentifier =
                 new org.eclipse.jubula.tools.internal.objects.ComponentIdentifier();
