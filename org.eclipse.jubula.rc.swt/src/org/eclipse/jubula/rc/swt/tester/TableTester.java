@@ -690,19 +690,36 @@ public class TableTester extends AbstractTableTester {
                     }
                 });
         }
-        
         Rectangle rect = ((ITableComponent) getComponent()).
                 scrollCellToVisible(row, 0);
+
+        org.eclipse.swt.graphics.Rectangle itemBounds =
+                getEventThreadQueuer().invokeAndWait("getTableItem", //$NON-NLS-1$
+                        new IRunnable<org.eclipse.swt.graphics.Rectangle>() {
+                            public org.eclipse.swt.graphics.Rectangle run()
+                                    throws StepExecutionException {
+                                Control comp = (Control) getRealComponent();
+                                if (comp instanceof Table) {
+                                    return ((Table) comp).getItem(row)
+                                            .getBounds();
+                                }
+                                if (comp instanceof Tree) {
+                                    return ((Tree) comp).getItem(row)
+                                            .getBounds();
+                                }
+                                return null;
+                            }
+                        });
 
         // Creates a Rectangle with bounds around the checkbox of the row
         org.eclipse.swt.graphics.Rectangle cbxBounds = 
                 new org.eclipse.swt.graphics.Rectangle(0,
-                        rect.y, rect.width, rect.height);
+                        itemBounds.y, rect.x, itemBounds.height);
         
         // Performs a click in the middle of the Rectangle
         getRobot().click(getComponent().getRealComponent(), cbxBounds,
                 ClickOptions.create().left().setScrollToVisible(false),
-                rect.width / 2, true, rect.height / 2, true);
+                rect.x / 2, true, itemBounds.height / 2, true);
     }
 
     /** {@inheritDoc} */
