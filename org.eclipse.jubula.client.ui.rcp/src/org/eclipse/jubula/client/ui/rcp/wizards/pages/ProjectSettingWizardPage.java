@@ -298,7 +298,7 @@ public class ProjectSettingWizardPage extends WizardPage {
     private void createProjectTemplateCheckBox(Composite parent) {
         m_projectTemplate = new Button(parent, SWT.CHECK);
         m_projectTemplate.setText(Messages.ProjectWizardProjectTemplate);
-        m_projectTemplate.setSelection(true);
+        m_projectTemplate.setSelection(false);
         m_projectTemplate.addSelectionListener(m_selectionListener);
         ControlDecorator.createInfo(m_projectTemplate,
                 Messages.ProjectWizardProjectTemplateInfo, false);
