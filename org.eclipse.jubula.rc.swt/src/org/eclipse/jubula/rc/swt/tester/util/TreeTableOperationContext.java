@@ -597,22 +597,14 @@ public class TreeTableOperationContext
             new IRunnable<Void>() {
 
                 public Void run() {
-                    int colCount = getTree().getColumnCount();
-                    
-                    for (int i = 0; i < colCount; i++) {
-                        String textAtColumn = CAPUtil.getWidgetText(node,
-                                SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
-                                + i, node.getText(i));
+                        String textAtColumn = getRenderedText(node);
                         if (textAtColumn != null) {
                             res.add(textAtColumn);
-                        }
                     }
-                    
-                    String text = CAPUtil.getWidgetText(node, node.getText());
+                    String text = node.getText(getColumn());
                     if (text != null) {
                         res.add(text);
                     }
-                    
                     return null;
                 }
 
