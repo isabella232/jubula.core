@@ -35,7 +35,6 @@ import org.eclipse.jubula.client.archive.errorhandling.IProjectNameConflictResol
 import org.eclipse.jubula.client.archive.errorhandling.NullProjectNameConflictResolver;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.Activator;
-import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.INameMapper;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBP;
@@ -46,7 +45,6 @@ import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.errorhandling.ErrorMessagePresenter;
-import org.eclipse.jubula.client.core.model.IComponentNamePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
@@ -54,7 +52,6 @@ import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
-import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.persistence.PMException;
@@ -63,7 +60,6 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
-import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ConfigXmlException;
@@ -381,9 +377,6 @@ public class FileStorageBP {
             try {
                 if (checkNameGuidConflict(guidToNameMap)) {
                     return true;
-                }
-                if (!checkCompNamePOGuidConflict()) {
-                    checkNodePOGuidConflict();
                 }
     
                 // check for reusable project problems (circular dependencies)
@@ -812,92 +805,7 @@ public class FileStorageBP {
                     MessageIDs.E_PROJ_GUID_CONFLICT, 
                     new String [0], new String [] {importName, existingName});
         }
-
-        /**
-         * Checks whether there is a GUID conflict for CompNamePOs
-         * @return whether there is a conflict
-         */
-        private boolean checkCompNamePOGuidConflict() {
-            Map<String, String> importMap = new HashMap<>();
-            for (IProjectPO proj : m_projectToCompCacheMap.keySet()) {
-                IComponentNameCache cache = m_projectToCompCacheMap.get(proj);
-                for (IComponentNamePO cN : cache.getAllCompNamePOs()) {
-                    String prev = importMap.put(cN.getGuid(),
-                            proj.getGuid());
-                    if (prev != null && !prev.equals(proj.getGuid())) {
-                        // Conflict within the imported projects
-                        showError(MessageIDs.E_GUID_DUPLICATION_IMP);
-                        return true;
-                    }
-                }
-            }
-            Map<String, String> databaseMap = CompNamePM.getGuidToProjGuidMap(
-                    importMap.keySet(),
-                    GeneralStorage.getInstance().getMasterSession());
-            return compareMaps(databaseMap, importMap,
-                    MessageIDs.E_GUID_DUPLICATION_DB);
-        }
-
-        /**
-         * Shows an error message
-         * @param msgId the MessageID to use, we assume that
-         *    there are no details and params.
-         */
-        private void showError(Integer msgId) {
-            Status s = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                    MessageIDs.getMessageString(msgId, null));
-            m_console.writeStatus(s);
-            ErrorMessagePresenter.getPresenter().showErrorMessage(
-                    msgId, null, null);
-        }
-
-        /**
-         * @return whether there is any NodePO guid conflict
-         */
-        private boolean checkNodePOGuidConflict() {
-            Map<String, String> importMap = new HashMap<>();
-            for (IProjectPO proj : m_projectToCompCacheMap.keySet()) {
-                CollectAllNodeGuidsOperation op =
-                        new CollectAllNodeGuidsOperation();
-                TreeTraverser trav = new TreeTraverser(proj, op, true, true);
-                trav.setTraverseReused(false);
-                trav.traverse(true);
-                for (String guid : op.getGuids()) {
-                    String prev = importMap.put(guid, proj.getGuid());
-                    if (prev != null && !prev.equals(proj.getGuid())) {
-                        showError(MessageIDs.E_GUID_DUPLICATION_IMP);
-                        return true;
-                    }
-                }
-            }
-            Map<String, String> databaseMap = NodePM.getGuidToProjGuidMap(
-                    importMap.keySet(),
-                    GeneralStorage.getInstance().getMasterSession());
-            return compareMaps(databaseMap, importMap,
-                    MessageIDs.E_GUID_DUPLICATION_DB);
-        }
-
-        /**
-         * Utility method for comparing two guid-to-project guid maps
-         * @param map1 the first map
-         * @param map2 the second map
-         * @param messId the error message ID to show
-         * @return whether there were any problems
-         */
-        private boolean compareMaps(Map<String, String> map1,
-                Map<String, String> map2, Integer messId) {
-            for (String guid : map1.keySet()) {
-                String str1 = map1.get(guid);
-                String str2 = map2.get(guid);
-                if (str1 != null && str2 != null
-                        && !str1.equals(str2)) {
-                    showError(messId);
-                    return true;
-                }
-            }
-            return false;
-        }
-
+        
         /**
          * Checks whether the currently imported project already exists in the
          * database.
