@@ -12,9 +12,11 @@ package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.search.query.ShowWhereReferencedCTDSValueQuery;
+import org.eclipse.jubula.client.ui.rcp.search.query.ShowWhereUsedTestDataCubeQuery;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.DataSetView;
 import org.eclipse.jubula.client.ui.rcp.views.dataset.TestDataCubeDataSetPage;
 import org.eclipse.search.ui.NewSearchUI;
@@ -45,6 +47,12 @@ public class ShowWhereUsedCTDSHandler extends AbstractHandler {
         int col = dsPage.getCurrentCol();
         if (row < 0 || col < 1) {
             // The first column is the row number
+            // instead search for the complete reuse of the CTDS
+            if (param instanceof ITestDataCubePO) {
+                NewSearchUI.runQueryInBackground(
+                        new ShowWhereUsedTestDataCubeQuery(
+                                (ITestDataCubePO) param));
+            }
             return null;
         }
         NewSearchUI.runQueryInBackground(new ShowWhereReferencedCTDSValueQuery(
