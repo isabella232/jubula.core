@@ -407,11 +407,15 @@ public class TableAdapter extends ControlAdapter
                 TableItem ti = m_table.getItem(row); 
                 int column = (m_table.getColumnCount() > 0 || col > 0) 
                     ? col : 0;
-                org.eclipse.swt.graphics.Rectangle r = 
+                org.eclipse.swt.graphics.Rectangle cellbound =
                         ti.getBounds(column);
                 if (!restr) {
-                    return SwtPointUtil.toAwtRectangle(r);
+                    return SwtPointUtil.toAwtRectangle(cellbound);
                 }
+                org.eclipse.swt.graphics.Rectangle calculatedBounds =
+                                new org.eclipse.swt.graphics.Rectangle(
+                                        cellbound.x, cellbound.y,
+                                        cellbound.width, cellbound.height);
                 String text = CAPUtil.getWidgetText(ti,
                         SwtToolkitConstants.WIDGET_TEXT_KEY_PREFIX
                                 + column, ti.getText(column));
@@ -425,26 +429,27 @@ public class TableAdapter extends ControlAdapter
                     } finally {
                         gc.dispose();
                     }
-                    r.width = text.length() * charWidth;
+                    calculatedBounds.width = text.length() * charWidth;
                     if (image != null) {
-                        r.width += image.getBounds().width;
+                        calculatedBounds.width += image.getBounds().width;
                     }
                 } else if (image != null) {
-                    r.width = image.getBounds().width;
+                    calculatedBounds.width = image.getBounds().width;
                 }
                 if (column > 0) {
                     TableColumn tc = m_table.getColumn(column);
                     int alignment = tc.getAlignment();
                     if (alignment == SWT.CENTER) {
-                        r.x += ((double)tc.getWidth() / 2) 
-                                - ((double)r.width / 2);
+                        calculatedBounds.x += ((double)tc.getWidth() / 2)
+                                - ((double)calculatedBounds.width / 2);
                     }
                     if (alignment == SWT.RIGHT) {
-                        r.x += tc.getWidth() - r.width;
+                        calculatedBounds.x += tc.getWidth()
+                                - calculatedBounds.width;
                     }
                 }
-                
-                return new Rectangle(r.x, r.y, r.width, r.height);
+                return SwtPointUtil.toAwtRectangle(
+                        cellbound.intersection(calculatedBounds));
             }
         });
     }
