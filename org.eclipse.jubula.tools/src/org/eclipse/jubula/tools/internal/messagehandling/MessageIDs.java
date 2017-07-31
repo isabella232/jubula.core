@@ -331,6 +331,13 @@ public class MessageIDs {
     public static final Integer E_NO_FUNCTION = new Integer(4056);
     /** If test data is missing during test execution */
     public static final Integer E_MISSING_DATA = new Integer(4057);
+    /** If two imported projects have guid conflicts */
+    public static final Integer E_GUID_DUPLICATION_IMP =
+        new Integer(4058);
+    /** If an imported project has a guid conflict with a project in DB*/
+    public static final Integer E_GUID_DUPLICATION_DB =
+        new Integer(4059);
+
     // -- CONNECTION ERROR IDs ---------------------------------------------
     /** if problem occurred, during AUT connection initialization */
     public static final Integer E_AUT_CONNECTION_INIT = new Integer(5000);
@@ -778,7 +785,8 @@ public class MessageIDs {
         messageMap.put(E_CONVERSION_ABORTED_ERROR, e, "ErrorMessage.CONVERSION_ABORTED_ERROR", null); //$NON-NLS-1$
         messageMap.put(E_UNSUPPORTED_TOOLKIT, e,  "ErrorMessage.UNSUPPORTED_TOOLKIT", null); //$NON-NLS-1$
         messageMap.put(E_MISSING_DATA, e,  "ErrorMessage.MISSING_DATA", null); //$NON-NLS-1$
-        
+        messageMap.put(E_GUID_DUPLICATION_IMP, e, "ErrorMessage.GUID_DUPLICATION_IMP", null); //$NON-NLS-1$
+        messageMap.put(E_GUID_DUPLICATION_DB, e, "ErrorMessage.GUID_DUPLICATION_DB", null); //$NON-NLS-1$
     }
     
     /**
@@ -1071,6 +1079,16 @@ public class MessageIDs {
     public static Map<Integer, Message> getMessageMap() {
         initErrorMap();
         return messageMap;
+    }
+
+    /**
+     * @param id the message id
+     * @param params the parameters
+     * @return the message string
+     */
+    public static String getMessageString(Integer id, Object[] params) {
+        Message msg = getMessageMap().get(id);
+        return msg.getMessage(params);
     }
     
     /**
