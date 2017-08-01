@@ -16,8 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.db.TestCaseBP;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
@@ -38,8 +37,6 @@ import org.eclipse.jubula.client.ui.rcp.handlers.NewTestCaseHandlerTCEditor;
 import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator.NodeTarget;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.swt.SWT;
-import org.eclipse.ui.ISelectionListener;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 
@@ -63,22 +60,20 @@ public class ReferenceExistingTestCase
                 if (node == null) { // check for existing selection
                     return;
                 }
-                ISelectionListener listener = 
-                        getSelectionListener(tce, editorNode, node);
                 ISpecTestCasePO specTC = null;
                 if (editorNode instanceof ISpecTestCasePO) {
                     specTC = (ISpecTestCasePO)editorNode;
                 }
                 TestCaseTreeDialog dialog = new TestCaseTreeDialog(
                         getActiveShell(), specTC, SWT.MULTI);
-                dialog.addSelectionListener(listener);
                 dialog.setHelpAvailable(true);
                 dialog.create();
                 DialogUtils.setWidgetNameForModalDialog(dialog);
                 Plugin.getHelpSystem().setHelp(dialog.getShell(),
                         ContextHelpIds.TESTCASE_ADD_EXISTING);
-                dialog.open();
-                dialog.removeSelectionListener(listener);
+                if (dialog.open() == IDialogConstants.OK_ID) {
+                    addNewNodes(tce, node, dialog.getSelection());
+                }
             }
         });
 
@@ -86,66 +81,48 @@ public class ReferenceExistingTestCase
     }
 
     /**
-     * @param tce
-     *            the test case editor
-     * @param editorNode
-     *            the editor node
-     * @param selected
-     *            the currently selected node
-     * @return the selection listener
+     * 
+     * @param tce the {@link AbstractTestCaseEditor}
+     * @param selected the node after which to add
+     * @param listOfNodes the list of nodes to add
      */
-    private ISelectionListener getSelectionListener(
-            final AbstractTestCaseEditor tce, final INodePO editorNode,
-            final INodePO selected) {
-        return new ISelectionListener() {
-            public void selectionChanged(IWorkbenchPart part,
-                    ISelection selection) {
-                if (!(selection instanceof IStructuredSelection)) {
-                    return;
-                }
-                List<Object> selectedElements = 
-                    ((IStructuredSelection)selection).toList();
-                Collections.reverse(selectedElements);
-                Iterator iter = selectedElements.iterator();
-                List<IExecTestCasePO> addedElements = 
-                    new ArrayList<IExecTestCasePO>();
-                NodeTarget place = NewTestCaseHandlerTCEditor.
-                        getPositionToInsert(selected, tce.getTreeViewer().
-                                getExpandedState(selected));
-                if (place == null) {
-                    return;
-                }
+    public void addNewNodes(final AbstractTestCaseEditor tce,
+            final INodePO selected, List<INodePO> listOfNodes) {
+        List<INodePO> selectedElements = listOfNodes;
+        Collections.reverse(selectedElements);
+        Iterator iter = selectedElements.iterator();
+        List<IExecTestCasePO> addedElements = new ArrayList<IExecTestCasePO>();
+        NodeTarget place = NewTestCaseHandlerTCEditor.getPositionToInsert(
+                selected, tce.getTreeViewer().getExpandedState(selected));
+        if (place == null) {
+            return;
+        }
+        try {
+            while (iter.hasNext()) {
+                ISpecTestCasePO specTcToInsert = (ISpecTestCasePO) iter.next();
                 try {
-                    while (iter.hasNext()) {
-                        ISpecTestCasePO specTcToInsert = (ISpecTestCasePO)iter
-                                .next();
-                        try {
-                            addedElements.add(TestCaseBP.addReferencedTestCase(
-                                    tce.getEditorHelper().getEditSupport(),
-                                    place.getNode(), specTcToInsert,
-                                    place.getPos()));
-                        } catch (PMException e) {
-                            NodeEditorInput inp = (NodeEditorInput)tce
-                                    .getAdapter(NodeEditorInput.class);
-                            INodePO inpNode = inp.getNode();
-                            PMExceptionHandler
-                                    .handlePMExceptionForMasterSession(e);
-                            tce.reOpenEditor(inpNode);
-                        }
-                        InteractionEventDispatcher.getDefault()
-                            .fireProgammableSelectionEvent(
-                                new StructuredSelection(specTcToInsert));
-                    }
-                    tce.getEditorHelper().getEditSupport().lockWorkVersion();
-                    tce.getEditorHelper().setDirty(true);
-                    tce.refresh();
-                    tce.getTreeViewer().setExpandedState(place.getNode(), true);
-                    tce.setSelection(new StructuredSelection(addedElements));
-                } catch (PMException e1) {
-                    PMExceptionHandler.handlePMExceptionForEditor(e1, tce);
+                    addedElements.add(TestCaseBP.addReferencedTestCase(
+                            tce.getEditorHelper().getEditSupport(),
+                            place.getNode(), specTcToInsert, place.getPos()));
+                } catch (PMException e) {
+                    NodeEditorInput inp = (NodeEditorInput) tce
+                            .getAdapter(NodeEditorInput.class);
+                    INodePO inpNode = inp.getNode();
+                    PMExceptionHandler.handlePMExceptionForMasterSession(e);
+                    tce.reOpenEditor(inpNode);
                 }
+                InteractionEventDispatcher.getDefault()
+                        .fireProgammableSelectionEvent(
+                                new StructuredSelection(specTcToInsert));
             }
-        };
+            tce.getEditorHelper().getEditSupport().lockWorkVersion();
+            tce.getEditorHelper().setDirty(true);
+            tce.refresh();
+            tce.getTreeViewer().setExpandedState(place.getNode(), true);
+            tce.setSelection(new StructuredSelection(addedElements));
+        } catch (PMException e1) {
+            PMExceptionHandler.handlePMExceptionForEditor(e1, tce);
+        }
     }
 
 }
