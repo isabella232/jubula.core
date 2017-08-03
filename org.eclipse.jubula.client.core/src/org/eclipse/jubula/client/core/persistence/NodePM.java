@@ -23,6 +23,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -1205,5 +1206,28 @@ public class NodePM extends PersistenceManager {
             return (INodePO) res;
         }
         return null;
+    }
+
+    /**
+     * Returns the CompNamePO -> parent projectPO map for the given NodePO guids
+     *     Without GUID duplication, all nodes which have the same GUID should also have the
+     *     same ParentProject GUID.
+     * @param guids the NodePO guids
+     * @param sess the session to use
+     * @return the resulting map
+     */
+    public static Map<String, String> getGuidToProjGuidMap(
+            Set<String> guids, EntityManager sess) {
+        TypedQuery<Object[]> q = sess.createQuery("select node.guid, proj.guid from " //$NON-NLS-1$
+                + "NodePO node, ProjectPO proj " //$NON-NLS-1$
+                + "where node.hbmParentProjectId = proj.id and " //$NON-NLS-1$
+                + "node.guid in :nodeGuids", Object[].class); //$NON-NLS-1$
+        q.setParameter("nodeGuids", guids); //$NON-NLS-1$
+        Map<String, String> result = new HashMap<>();
+        for (Object[] entry : q.getResultList()) {
+            // we assume that the DB is consistent, and doesn't already contain duplicated GUIDs
+            result.put((String) entry[0], (String) entry[1]);
+        }
+        return result;
     }
 }

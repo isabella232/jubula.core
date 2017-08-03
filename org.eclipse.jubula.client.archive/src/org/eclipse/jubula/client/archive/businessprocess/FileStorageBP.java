@@ -60,6 +60,7 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
+import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.ConfigXmlException;
@@ -378,6 +379,8 @@ public class FileStorageBP {
                 if (checkNameGuidConflict(guidToNameMap)) {
                     return true;
                 }
+                checkNodePOGuidConflict();
+                
     
                 // check for reusable project problems (circular dependencies)
                 if (checkCircularDependencies(circularDependencyCheckSess)) {
@@ -805,7 +808,87 @@ public class FileStorageBP {
                     MessageIDs.E_PROJ_GUID_CONFLICT, 
                     new String [0], new String [] {importName, existingName});
         }
-        
+
+        /**
+         * Shows an error message
+         * @param msgId the MessageID to use, we assume that
+         *    there are no details and params.
+         */
+        private void showError(Integer msgId) {
+            Status s = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    MessageIDs.getMessageString(msgId, null));
+            m_console.writeStatus(s);
+            ErrorMessagePresenter.getPresenter().showErrorMessage(
+                    msgId, null, null);
+        }
+
+        /**
+         * @return whether there is any NodePO guid conflict
+         */
+        private boolean checkNodePOGuidConflict() {
+            Map<String, String> importMap = new HashMap<>();
+            boolean error = false;
+            for (IProjectPO proj : m_projectToCompCacheMap.keySet()) {
+                CollectAllNodeGuidsOperation op =
+                        new CollectAllNodeGuidsOperation();
+                TreeTraverser trav = new TreeTraverser(proj, op, true, true);
+                trav.setTraverseReused(false);
+                trav.traverse(true);
+                for (String guid : op.getGuids()) {
+                    String prev = importMap.put(guid, proj.getGuid());
+                    if (prev != null && !prev.equals(proj.getGuid())) {
+                        error = true;
+                        writeGUIDDuplicationStatus(prev);
+                    }
+                }
+            }
+            if (error) {
+                showError(MessageIDs.E_GUID_DUPLICATION_IMP);
+                return true;
+            }
+            Map<String, String> databaseMap = NodePM.getGuidToProjGuidMap(
+                    importMap.keySet(),
+                    GeneralStorage.getInstance().getMasterSession());
+            return compareMaps(databaseMap, importMap,
+                    MessageIDs.E_GUID_DUPLICATION_DB);
+        }
+
+        /**
+         * Utility method for comparing two guid-to-project guid maps
+         * @param map1 the first map
+         * @param map2 the second map
+         * @param messId the error message ID to show
+         * @return whether there were any problems
+         */
+        private boolean compareMaps(Map<String, String> map1,
+                Map<String, String> map2, Integer messId) {
+            boolean error = false;
+            for (String guid : map1.keySet()) {
+                String str1 = map1.get(guid);
+                String str2 = map2.get(guid);
+                if (str1 != null && str2 != null
+                        && !str1.equals(str2)) {
+                    error = true;
+                    writeGUIDDuplicationStatus(guid);
+                }
+            }
+            if (error) {
+                showError(messId);
+                return true;
+            }
+            return false;
+        }
+
+        /**
+         * write an warning to the console that UIDs are doubled
+         * @param uuid the identifier
+         */
+        private void writeGUIDDuplicationStatus(String uuid) {
+            m_console.writeStatus(new Status(IStatus.WARNING,
+                    "org.eclipse.jubula.client.archive", //$NON-NLS-1$
+                    NLS.bind(Messages.GuidUsedMultiple, uuid)));
+        }
+
         /**
          * Checks whether the currently imported project already exists in the
          * database.
