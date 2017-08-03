@@ -134,8 +134,6 @@ import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.part.MultiPageEditorPart;
 import org.eclipse.ui.services.IEvaluationService;
 import org.eclipse.ui.swt.IFocusService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Editor for managing Object Mapping in Jubula.
@@ -153,10 +151,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /** default sash weights */
     private static final int[] DEFAULT_SASH_WEIGHTS = new int[] { 25, 100 };
 
-    /** the logger */
-    private static final Logger LOG = 
-        LoggerFactory.getLogger(ObjectMappingMultiPageEditor.class);
-    
     /** page index of the split view */
     private static final int SPLIT_PAGE_IDX = 0;
 
@@ -351,13 +345,6 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
          */
         public int getAddedNodeCount() {
             return m_addedNodeCount;
-        }
-        
-        /**
-         * @return Returns the addedNodeCount.
-         */
-        public List<IObjectMappingAssoziationPO> getAddedNodes() {
-            return m_addedNodes;
         }
     }
     

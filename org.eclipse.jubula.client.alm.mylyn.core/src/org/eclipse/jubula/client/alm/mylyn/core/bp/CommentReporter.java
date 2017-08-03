@@ -352,11 +352,15 @@ public class CommentReporter implements ITestresultSummaryEventListener {
      */
     private void writeStatus(IProgressConsole c, String taskId,
             int changeAmount, String one, String mult) {
+        IStatus status = null;
         if (changeAmount > 1) {
-            c.writeWarningLine(NLS.bind(mult, changeAmount, taskId));
+            status = new Status(IStatus.WARNING, Activator.ID,
+                    NLS.bind(mult, changeAmount, taskId));
         } else {
-            c.writeLine(NLS.bind(one, taskId));
+            status = new Status(IStatus.OK, Activator.ID,
+                    NLS.bind(one, taskId));
         }
+        c.writeStatus(status);
     }
 
     /**

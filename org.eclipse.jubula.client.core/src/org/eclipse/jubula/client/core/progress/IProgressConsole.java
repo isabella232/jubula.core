@@ -23,17 +23,8 @@ public interface IProgressConsole {
      * Writes a single line to the console.
      * 
      * @param line The text to write to the console.
-     * @deprecated
      */
     public void writeLine(String line);
-    
-    /**
-     * Writes a single warning line to the console.
-     * 
-     * @param line The text to write as a warning to the console.
-     * @deprecated
-     */
-    public void writeWarningLine(String line);
     
     /**
      * Writes a single error line to the console.

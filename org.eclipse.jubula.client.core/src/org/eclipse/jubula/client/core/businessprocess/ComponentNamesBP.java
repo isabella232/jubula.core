@@ -28,8 +28,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -42,11 +40,6 @@ public class ComponentNamesBP {
     
     /** i18n key for the "unknown" component type */
     public static final String UNKNOWN_COMPONENT_TYPE = "guidancer.abstract.Unknown"; //$NON-NLS-1$
-    
-    /**
-     * <code>log</code> logger for class
-     */
-    private static Logger log = LoggerFactory.getLogger(ComponentNamesBP.class);
     
     /**
      * @author BREDEX GmbH

@@ -83,9 +83,6 @@ public class CompSystem {
     /** A List of all DataTypes */
     private Set<String> m_dataTypes = null;
 
-    /** Set of all parameter */
-    private Set<Param> m_parameter = null;
-    
     /** Default constructor */
     public CompSystem() {
         init();

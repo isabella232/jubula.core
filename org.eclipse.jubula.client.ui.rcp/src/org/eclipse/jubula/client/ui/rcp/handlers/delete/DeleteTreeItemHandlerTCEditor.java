@@ -28,8 +28,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.IEditorOperation;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -38,11 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DeleteTreeItemHandlerTCEditor 
         extends AbstractDeleteTreeItemHandler {
-    /**
-     * <code>log</code> logger for class
-     */
-    private static Logger log = LoggerFactory.getLogger(
-            DeleteTreeItemHandlerTCEditor.class);
     
     /**
      * {@inheritDoc}

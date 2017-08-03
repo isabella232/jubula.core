@@ -64,6 +64,7 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created May 19, 2010
  */
+@SuppressWarnings("unchecked")
 public class DatabaseConnectionWizardPage extends WizardPage {
 
     /**
@@ -186,6 +187,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
          * 
          * {@inheritDoc}
          */
+        
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
 

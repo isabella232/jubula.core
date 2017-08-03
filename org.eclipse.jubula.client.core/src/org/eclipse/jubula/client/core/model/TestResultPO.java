@@ -139,12 +139,6 @@ class TestResultPO implements ITestResultPO {
     private String m_taskId;
     
     /**
-     * the boolean value to decide whether a TestCase
-     * should be handeled as a TestSuite in JUnit
-     */
-    private boolean m_isJUnitTestSuite;
-    
-    /**
      * <code>m_omHeuristicEquivalence</code>
      */
     private double m_omHeuristicEquivalence = -1.0d;

@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -515,9 +514,6 @@ public class ComponentNameBrowserContentProvider extends TooltipLabelProvider
      * @created 16.02.2009
      */
     public class UnusedCompnamesCategory extends AbstractCompNamesCategory {
-        
-        /** The children component names */
-        private Set<IComponentNamePO> m_compNames;
         
         /**
          * @param parentID

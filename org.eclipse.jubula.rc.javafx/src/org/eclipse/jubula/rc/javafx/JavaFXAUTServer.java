@@ -33,8 +33,6 @@ import org.eclipse.jubula.tools.internal.constants.AUTServerExitConstants;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -63,8 +61,6 @@ import javafx.stage.Window;
  * @created 24.09.2013
  */
 public class JavaFXAUTServer extends AUTServer {
-    /** the logger */
-    private static Logger log = LoggerFactory.getLogger(AUTServer.class);
     /**
      * constructor instantiates the listeners
      */

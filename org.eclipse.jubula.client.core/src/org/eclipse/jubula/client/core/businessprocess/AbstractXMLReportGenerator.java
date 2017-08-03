@@ -75,9 +75,6 @@ public abstract class AbstractXMLReportGenerator {
      */
     public static final String NUM_EVENT_HANDLER_STEPS = "numEventHandlerSteps"; //$NON-NLS-1$
 
-    /** Postfix used to indicate a negated CondStruct */
-    private static final String NEGATED_POSTFIX = " - NEGATED"; //$NON-NLS-1$
-    
     /** The logger */
     private static final Logger LOG = LoggerFactory.getLogger(
         AbstractXMLReportGenerator.class);

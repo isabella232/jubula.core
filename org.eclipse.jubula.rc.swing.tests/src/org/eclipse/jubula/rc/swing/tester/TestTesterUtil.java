@@ -33,7 +33,7 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.junit.After;
 import org.junit.Test;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial","nls"})
 public class TestTesterUtil {
 
     private static class CanvasWithPublicGetText extends Canvas {

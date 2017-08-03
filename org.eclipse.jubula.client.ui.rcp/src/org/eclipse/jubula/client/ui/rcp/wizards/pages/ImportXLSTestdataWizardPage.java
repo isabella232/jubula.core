@@ -33,7 +33,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.ExternalTestDataBP;
-import org.eclipse.jubula.client.core.businessprocess.MapCounter;
 import org.eclipse.jubula.client.core.businessprocess.ParameterInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.importfilter.DataTable;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -115,9 +114,6 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
         /** All parameter names used */
         private Set<String> m_parNames;
 
-        /** Map to count the occurrences of the same parameter name */
-        private MapCounter m_counter;
-
         /**
          * @param fileSystemObjects fileSystemObjects
          * @param selection the current selection
@@ -128,7 +124,6 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             m_fileSystemObjects = fileSystemObjects;
             m_selection = selection;
             m_ctde = ctde;
-            m_counter = new MapCounter();
             m_parNames = new HashSet<>();
         }
 
@@ -267,27 +262,6 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
             DataTable dt = bp.createDataTable(
                     null, absoluteFilePath);
             bp.parseTable(dt, testdata, true);
-        }
-
-        /**
-         * Extends non-unique column names 
-         * @param name the column name
-         * @return the new column name if there is a duplication
-         */
-        private String getParamName(String name) {
-            String currName = name;
-            String addOneTo = name;
-            while (m_parNames.contains(currName)) {
-                addOneTo = currName;
-                if (m_counter.get(currName) == null) {
-                    currName += "_1"; //$NON-NLS-1$
-                } else {
-                    currName += "_" + (m_counter.get(currName) + 1); //$NON-NLS-1$
-                }
-            }
-            m_parNames.add(currName);
-            m_counter.add(addOneTo, 1);
-            return currName;
         }
 
         /**
@@ -709,7 +683,7 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
         saveWidgetValues();
 
         Iterator resourcesEnum = getSelectedResources().iterator();
-        List fileSystemObjects = new ArrayList();
+        List<Object> fileSystemObjects = new ArrayList<Object>();
         while (resourcesEnum.hasNext()) {
             fileSystemObjects.add(((FileSystemElement)resourcesEnum.next())
                     .getFileSystemObject());
@@ -1050,7 +1024,8 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
     protected void setupSelectionsBasedOnSelectedTypes() {
         ProgressMonitorDialog dialog = new ProgressMonitorJobsDialog(
                 getContainer().getShell());
-        final Map selectionMap = new Hashtable();
+        final Map<FileSystemElement, List<FileSystemElement>> selectionMap = 
+                new Hashtable<FileSystemElement, List<FileSystemElement>>();
         final IElementFilter filter = new IElementFilter() {
             public void filterElements(Collection files,
                     IProgressMonitor monitor) throws InterruptedException {
@@ -1081,10 +1056,11 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
                 MinimizedFileSystemElement file = 
                     (MinimizedFileSystemElement)fileElement;
                 if (isExportableExtension(file.getFileNameExtension())) {
-                    List elements = new ArrayList();
+                    List<FileSystemElement> elements = 
+                            new ArrayList<FileSystemElement>();
                     FileSystemElement parent = file.getParent();
                     if (selectionMap.containsKey(parent)) {
-                        elements = (List)selectionMap.get(parent);
+                        elements = selectionMap.get(parent);
                     }
                     elements.add(file);
                     selectionMap.put(parent, elements);
@@ -1109,14 +1085,11 @@ public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
         }
         // make sure that all paint operations caused by closing the progress
         // dialog get flushed, otherwise extra pixels will remain on the screen
-        // until
-        // updateSelections is completed
+        // until updateSelections is completed
         getShell().update();
-        // The updateSelections method accesses SWT widgets so cannot be
-        // executed
+        // The updateSelections method accesses SWT widgets so cannot be executed
         // as part of the above progress dialog operation since the operation
-        // forks
-        // a new process.
+        // forks a new process.
         if (selectionMap != null) {
             updateSelections(selectionMap);
         }
