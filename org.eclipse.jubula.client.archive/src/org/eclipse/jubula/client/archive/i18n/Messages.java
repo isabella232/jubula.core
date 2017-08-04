@@ -42,9 +42,7 @@ public class Messages extends NLS {
     public static String ExportProjectInfo;
     public static String Failed;
     public static String File;
-    public static String GatheringProjectData;
     public static String GeneralIoExeption;
-    public static String GuidUsedMultiple;
     public static String ImportEmptyName;
     public static String ImportFailed;
     public static String ImportFileActionDoubleProjName;
@@ -112,7 +110,7 @@ public class Messages extends NLS {
     public static String XmlImporterToolkitVersionConflict3a;
     public static String XmlImporterToolkitVersionConflict3b;
     public static String XmlImporterToolkitVersionConversion;
-    
+    public static String GatheringProjectData;
     
     static {
         // initialize resource bundle

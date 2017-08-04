@@ -308,6 +308,15 @@ public class CompNamePM extends AbstractNamePM {
     }
 
     /**
+     * Releases the lock of the ComponentNames Table in database.
+     */
+    private static final void unlockComponentNames() {
+        if (lockObj != null) {
+            LockManager.instance().unlockPO(lockObj);
+        }
+    }
+
+    /**
      * Initializes the locking of the CompNames table
      */
     private static void loadLockedObj() {
