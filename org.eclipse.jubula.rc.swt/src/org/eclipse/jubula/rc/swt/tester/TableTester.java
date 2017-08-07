@@ -672,7 +672,23 @@ public class TableTester extends AbstractTableTester {
                 });
         toggleCheckboxInRow(row);
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void rcReplaceText(String text) throws StepExecutionException {
+        rcReplaceText(text);
+        getRobot().keyType(null, SWT.CR);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void rcReplaceText(String text, String row, String rowOperator,
+            String col, String colOperator) {
+        rcReplaceText(text, row, rowOperator, col, colOperator);
+        getRobot().keyType(null, SWT.CR);
+    }
     /**
      * Toggles the checkbox in the row with the given index
      * @param row the index

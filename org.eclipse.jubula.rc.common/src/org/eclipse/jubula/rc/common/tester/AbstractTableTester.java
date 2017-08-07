@@ -31,7 +31,6 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
-import org.eclipse.swt.SWT;
 
 /**
  * General implementation for tables.
@@ -1027,9 +1026,6 @@ public abstract class AbstractTableTester
         editor = setEditorToReplaceMode(editor, replace);
         
         getRobot().type(editor, text);
-        if (replace) {
-            getRobot().keyType(null, SWT.CR);
-        }
     }
     
     /**
