@@ -12,7 +12,7 @@ package org.eclipse.jubula.rc.javafx.components;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.value.WeakChangeListener;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventTarget;
 import javafx.scene.Node;
@@ -26,6 +26,10 @@ import org.eclipse.jubula.rc.common.components.AUTComponent;
  * @created 10.10.2013
  */
 public class JavaFXComponent extends AUTComponent<EventTarget> {
+    /** listener which updates the hierarchy if there is a change in the ID */
+    private ChangeListener<String> m_iDChangeListener =
+            new UpdateHierachryChangeListener<String>();
+    
     /**
      * create an instance from a JavaFX component. This constructor is used when
      * working with real instances.
@@ -44,11 +48,13 @@ public class JavaFXComponent extends AUTComponent<EventTarget> {
      * @param component
      *            the component
      */
+    @SuppressWarnings("unchecked")
     public void addChangeListener(EventTarget component) {
         if (component instanceof Node) {
             ((Node)component).visibleProperty()
-                .addListener(new WeakChangeListener<Boolean>(
-                        VisibleChangeHandler.INSTACE));
+                .addListener(VisibleChangeHandler.INSTACE);
+            ((Node) component).idProperty()
+                    .addListener(m_iDChangeListener);
         }
         Object children = ChildrenGetter.getAsRealType(component);
         if (children instanceof ReadOnlyObjectProperty) {
@@ -63,12 +69,16 @@ public class JavaFXComponent extends AUTComponent<EventTarget> {
     /**
      * Remove a change Listener
      */
+    @SuppressWarnings("unchecked")
     public void removeChangeListener() {
         Object children = ChildrenGetter.getAsRealType(getComponent());
         EventTarget component = getComponent();
         if (component instanceof Node) {
-            ((Node)component).visibleProperty()
+            Node node = (Node)component;
+            node.visibleProperty()
                 .removeListener(VisibleChangeHandler.INSTACE);
+            node.idProperty()
+                .removeListener(m_iDChangeListener);
         }
         if (children instanceof ObjectProperty) {
             ChildrenListenerHelper.removeListener(
