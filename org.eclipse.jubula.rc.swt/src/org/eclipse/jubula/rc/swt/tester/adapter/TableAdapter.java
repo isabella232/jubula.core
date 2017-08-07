@@ -19,7 +19,6 @@ import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITableComponent;
 import org.eclipse.jubula.rc.swt.components.ISWTTableComponent;
-import org.eclipse.jubula.rc.swt.driver.SwtRobot;
 import org.eclipse.jubula.rc.swt.listener.TableSelectionTracker;
 import org.eclipse.jubula.rc.swt.tester.util.CAPUtil;
 import org.eclipse.jubula.rc.swt.utils.SwtPointUtil;
@@ -206,7 +205,6 @@ public class TableAdapter extends ControlAdapter
                     }
                 });
 
-        ((SwtRobot) getRobot()).waitForIdle();
         checkRowColBounds(row, col);
         final org.eclipse.swt.graphics.Rectangle cBoundsRelToParent = 
                 SwtPointUtil.toSwtRectangle(getCellBounds(row, col, true));
@@ -234,7 +232,6 @@ public class TableAdapter extends ControlAdapter
                 });
             
         getRobot().scrollToVisible(parent, cBoundsRelToParent);
-        ((SwtRobot) getRobot()).waitForIdle();
         return getVisibleBounds(getCellBounds(row, col, true));
     }
     
