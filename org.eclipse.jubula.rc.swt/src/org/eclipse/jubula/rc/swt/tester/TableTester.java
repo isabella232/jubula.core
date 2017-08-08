@@ -677,7 +677,7 @@ public class TableTester extends AbstractTableTester {
      * {@inheritDoc}
      */
     public void rcReplaceText(String text) throws StepExecutionException {
-        rcReplaceText(text);
+        super.rcReplaceText(text);
         getRobot().keyType(null, SWT.CR);
     }
     
@@ -686,7 +686,7 @@ public class TableTester extends AbstractTableTester {
      */
     public void rcReplaceText(String text, String row, String rowOperator,
             String col, String colOperator) {
-        rcReplaceText(text, row, rowOperator, col, colOperator);
+        super.rcReplaceText(text, row, rowOperator, col, colOperator);
         getRobot().keyType(null, SWT.CR);
     }
     /**
