@@ -182,7 +182,9 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
     private void setOpenedStatus(T comboBox, boolean openStatus) {
         if (comboBox.isShowing() != openStatus) {
             getRobot().click(getArrowButton(comboBox), null,
-                    ClickOptions.create().setClickCount(1).setMouseButton(1));
+                    ClickOptions.create().setClickCount(1).setMouseButton(1)
+                    .setConfirmClick(false));
+            // in some cases the event is lost but the combobox closed
         }
     }
 
