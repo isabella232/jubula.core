@@ -111,7 +111,7 @@ public class EventHandlerDropTargetListener extends ViewerDropAdapter {
                 return false;
             }
             INodePO parent = (INodePO)getViewer().getInput();
-            if (node.hasCircularDependences(parent)) {
+            if (node.hasCircularDependencies(parent)) {
                 return false;
             }
         }

@@ -69,7 +69,7 @@ public class TCBrowserDndSupport extends AbstractBrowserDndSupport {
             }
             if (target instanceof INodePO
                     && ((INodePO) obj)
-                            .hasCircularDependences(((INodePO) target))) {
+                            .hasCircularDependencies(((INodePO) target))) {
                 return false;
             }
         }

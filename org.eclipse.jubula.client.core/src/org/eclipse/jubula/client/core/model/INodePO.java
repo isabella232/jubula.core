@@ -157,8 +157,15 @@ public interface INodePO extends ITimestampPO {
      * @param parent the parent to check
      * @return true if there is a circular dependence, false otherwise.
      */
-    public abstract boolean hasCircularDependences(INodePO parent);
+    public abstract boolean hasCircularDependencies(INodePO parent);
 
+    /**
+     * @param parent the parent to check
+     * @return the path where the dependenvcy occurs
+     * 
+     */
+    public abstract String collectPathtoConflictNode(INodePO parent);
+    
     /**
      * Checks the equality of the given Object with this Object.
      * {@inheritDoc}
