@@ -3,7 +3,7 @@ Created-By: Eclipse Jubula
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula RC Java Agent
 Bundle-SymbolicName: org.eclipse.jubula.rc.common.agent
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Premain-Class: org.eclipse.jubula.rc.common.agent.RCAgent
@@ -11,4 +11,4 @@ Class-Path: lib/org.eclipse.jubula.rc.common.jar
 Export-Package: org.eclipse.jubula.rc.common.agent
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.jubula.rc.common;bundle-version="[5.0.0,5.1.0)"
+ org.eclipse.jubula.rc.common;bundle-version="[6.0.0,7.0.0)"

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Launch Eclipse RCP UI
 Bundle-SymbolicName: org.eclipse.jubula.launch.rcp.ui;singleton:=true
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-Activator: org.eclipse.jubula.launch.rcp.ui.Activator
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
@@ -14,10 +14,10 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.6.0,4.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.jubula.client.ui;bundle-version="[5.0.0,5.1.0)",
- org.eclipse.jubula.client.ui.rcp;bundle-version="[5.0.0,5.1.0)",
- org.eclipse.jubula.launch;bundle-version="[5.0.0,5.1.0)",
- org.eclipse.jubula.launch.ui;bundle-version="[5.0.0,5.1.0)"
+ org.eclipse.jubula.client.ui;bundle-version="[6.0.0,7.0.0)",
+ org.eclipse.jubula.client.ui.rcp;bundle-version="[6.0.0,7.0.0)",
+ org.eclipse.jubula.launch;bundle-version="[6.0.0,7.0.0)",
+ org.eclipse.jubula.launch.ui;bundle-version="[6.0.0,7.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: .

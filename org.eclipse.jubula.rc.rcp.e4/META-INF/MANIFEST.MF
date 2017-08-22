@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Remote Control - RCP e4
 Bundle-SymbolicName: org.eclipse.jubula.rc.rcp.e4; singleton:=true
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.osgi.services;bundle-version="[3.3.0,5.0.0)",
- org.eclipse.jubula.rc.rcp.common;bundle-version="[5.0.0,5.1.0)",
+ org.eclipse.jubula.rc.rcp.common;bundle-version="[6.0.0,7.0.0)",
  org.eclipse.e4.core.di;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.e4.core.services;bundle-version="[1.0.0,3.0.0)",
  org.eclipse.e4.ui.workbench;bundle-version="[0.10.2,2.0.0)",

@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for Jubula Core
 Bundle-SymbolicName: org.eclipse.jubula.client.core.tests
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Fragment-Host: org.eclipse.jubula.client.core;bundle-version="[5.0.0,5.1.0)"
+Fragment-Host: org.eclipse.jubula.client.core;bundle-version="[6.0.0,7.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit;bundle-version="[4.8.2,5.0.0)"

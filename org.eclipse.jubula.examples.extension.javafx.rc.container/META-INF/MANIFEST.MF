@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Extension Example - JavaFX - RC - Container
 Bundle-SymbolicName: org.eclipse.jubula.examples.extension.javafx.rc.container
-Bundle-Version: 5.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Fragment-Host: org.eclipse.jubula.rc.javafx;bundle-version="2.3.0"
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

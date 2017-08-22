@@ -5,7 +5,7 @@
      at http://www.eclipse.org/legal/epl-v10.html 
 -->
 <site>
-   <feature url="features/org.eclipse.jubula.rc.rcp.feature_5.0.0.qualifier.jar" id="org.eclipse.jubula.rc.rcp.feature" version="5.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.rc.rcp.feature_6.0.0.qualifier.jar" id="org.eclipse.jubula.rc.rcp.feature" version="6.0.0.qualifier">
       <category name="org.eclipse.jubula.rc.rcp"/>
    </feature>
    <category-def name="org.eclipse.jubula.rc.rcp" label="Testing"/>
