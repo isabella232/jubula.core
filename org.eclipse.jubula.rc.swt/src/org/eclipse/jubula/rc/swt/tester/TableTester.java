@@ -154,6 +154,10 @@ public class TableTester extends AbstractTableTester {
                         checkRowColBounds(rowCount, col);
                         final Rectangle itemBounds = adapter.getCellBounds(
                                 rowCount, col, false);
+                        if (col == 0
+                                && (comp.getStyle() & SWT.CHECK) == SWT.CHECK) {
+                            itemBounds.x = 0;
+                        }
                         final org.eclipse.swt.graphics.Point 
                             absItemBounds = comp
                                 .toDisplay(itemBounds.x, itemBounds.y);
