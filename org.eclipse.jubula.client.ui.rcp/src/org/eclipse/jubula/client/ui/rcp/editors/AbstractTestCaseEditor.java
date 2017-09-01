@@ -11,15 +11,18 @@
 package org.eclipse.jubula.client.ui.rcp.editors;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+
+import javax.persistence.EntityManager;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.ICoreRunnable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -36,9 +39,6 @@ import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.compcheck.CompletenessGuard;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
-import org.eclipse.jubula.client.core.businessprocess.problems.IProblem;
-import org.eclipse.jubula.client.core.businessprocess.problems.ProblemFactory;
-import org.eclipse.jubula.client.core.businessprocess.problems.ProblemType;
 import org.eclipse.jubula.client.core.commands.CAPRecordedCommand;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
@@ -50,11 +50,11 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.ICompNamesPairPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
-import org.eclipse.jubula.client.core.model.IControllerPO;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -81,6 +81,7 @@ import org.eclipse.jubula.client.core.utils.ParamValueConverter;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.CommandIDs;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.provider.DecoratingCellLabelProvider;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
@@ -111,8 +112,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IDecoratorManager;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchCommandConstants;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.menus.CommandContributionItem;
 
 
@@ -127,7 +130,26 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     /** central test data update listener */
     private CentralTestDataUpdateListener m_ctdUpdateListener =
             new CentralTestDataUpdateListener();
-
+    /** update job for renewing the decorator*/
+    private Job m_decoraterUpdateJob =
+            Job.create("Update decoraters", new ICoreRunnable() { //$NON-NLS-1$
+                @Override
+                public void run(IProgressMonitor monitor) {
+                    Plugin.getDisplay().asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            IDecoratorManager dm = PlatformUI.getWorkbench()
+                                    .getDecoratorManager();
+                            try {
+                                dm.setEnabled(Constants.CC_DECORATOR_ID, true);
+                                dm.update(Constants.CC_DECORATOR_ID);
+                            } catch (CoreException e) {
+                                LOG.error(e.getLocalizedMessage(), e);
+                            }
+                        }
+                    });
+                }
+            });
     /**
      * Creates the initial Context of this Editor.<br>
      * Subclasses may override this method. 
@@ -273,7 +295,16 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     public void runLocalChecks() {
         INodePO node = (INodePO) getEditorHelper().getEditSupport()
                 .getWorkVersion();
+        node.clearProblems();
+        for (Iterator<INodePO> childIterator =
+                node.getAllNodeIter(); childIterator.hasNext();) {
+            INodePO next = childIterator.next();
+            next.clearProblems();
+        }
         CompletenessGuard.checkAll(node, new NullProgressMonitor());
+        m_decoraterUpdateJob.setPriority(Job.DECORATE);
+        m_decoraterUpdateJob.schedule(300);
+
     }
     
     /**
@@ -798,6 +829,16 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         } else if (po instanceof IComponentNamePO
                 && updState != UpdateState.onlyInEditor) {
             handleCompNameChanged((IComponentNamePO) po, dataState);
+        } else if (po instanceof IObjectMappingPO 
+                && updState != UpdateState.onlyInEditor) {
+            IPersistentObject workversion =
+                    getEditorHelper().getEditSupport().getWorkVersion();
+            if (workversion instanceof ITestSuitePO) {
+                EntityManager session =
+                        getEditorHelper().getEditSupport().getSession();
+                session.refresh(session.find(po.getClass(), po.getId()));
+            }
+            runLocalChecks();
         }
     }
     
@@ -998,43 +1039,6 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     private void handleNodeAdded(INodePO addedNode) {
         refresh();
         setSelection(new StructuredSelection(addedNode));
-    }
-    
-    /**
-     * Checks for empty controllers
-     * @param node the node
-     */
-    private void checkForEmptyControllers(INodePO node) {
-        for (Iterator<INodePO> it = node.getNodeListIterator();
-                it.hasNext(); ) {
-            INodePO next = it.next();
-            if (next instanceof IControllerPO) {
-                removeIncompleteProblems((IControllerPO) next);
-            }
-        }
-        Set<IProblem> copy = new HashSet<IProblem>(node.getProblems());
-        for (IProblem problem : copy) {
-            if (problem.equals(ProblemFactory.ERROR_IN_CHILD)) {
-                node.removeProblem(problem);
-                break;
-            }
-        }
-        CompletenessGuard.checkEmptyContainer(node);
-    }
-    
-    /**
-     * Removes empty controller error markers from a node
-     * @param cont the ConditionPO node
-     */
-    private void removeIncompleteProblems(IControllerPO cont) {
-        Set<IProblem> copy = new HashSet<IProblem>(cont.getProblems());
-        for (IProblem problem : copy) {
-            if (problem.getProblemType().equals(
-                    ProblemType.REASON_IF_WITHOUT_TEST)) {
-                cont.removeProblem(problem);
-                return;
-            }
-        }
     }
 
     /**

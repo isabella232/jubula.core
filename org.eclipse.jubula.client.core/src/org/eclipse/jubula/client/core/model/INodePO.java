@@ -241,6 +241,11 @@ public interface INodePO extends ITimestampPO {
     public boolean removeProblem(IProblem problem);
     
     /**
+     * clears the problem list which is necessary for local (editor) use of the Problems
+     */
+    public void clearProblems();
+  
+    /**
      * Returns an immutable list of problems. To remove or add problems, please
      * use addProblem and removeProblem.
      * 
