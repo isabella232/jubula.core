@@ -80,6 +80,7 @@ public class ListViewTester extends ListTester {
             }
             rcSelectValue(value, operator, searchType,
                     BinaryChoice.no.rcValue(), dndHelper.getMouseButton(), 0);
+            getRobot().shakeMouse();
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
@@ -121,6 +122,7 @@ public class ListViewTester extends ListTester {
             }
             rcSelectIndex(String.valueOf(index), BinaryChoice.no.rcValue(),
                     dndHelper.getMouseButton(), 0);
+            getRobot().shakeMouse();
             waitBeforeDrop(delayBeforeDrop);
         } finally {
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());

@@ -23,6 +23,7 @@ import java.util.concurrent.Callable;
 
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
+import org.eclipse.jubula.rc.common.exception.RobotException;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
@@ -41,6 +42,7 @@ import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 import com.sun.javafx.scene.control.skin.TableHeaderRow;
 
@@ -130,7 +132,13 @@ public class TableTester extends AbstractTableTester {
             table.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
             DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
-            pressOrReleaseModifiers(dndHelper.getModifier(), false); 
+            try {
+                pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            } catch (RobotException e) {
+                if (!EnvironmentUtils.isLinuxOS()) {
+                    throw e;
+                }
+            }
             dndHelper.setDragMode(false);
         }
     }
@@ -184,7 +192,13 @@ public class TableTester extends AbstractTableTester {
             table.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
             DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
-            pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            try {
+                pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            } catch (RobotException e) {
+                if (!EnvironmentUtils.isLinuxOS()) {
+                    throw e;
+                }
+            }
             dndHelper.setDragMode(false);
         }
     }
@@ -237,7 +251,13 @@ public class TableTester extends AbstractTableTester {
             table.removeEventFilter(ScrollToEvent.ANY, m_scrollConsumer);
             DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
             getRobot().mouseRelease(null, null, dndHelper.getMouseButton());
-            pressOrReleaseModifiers(dndHelper.getModifier(), false); 
+            try {
+                pressOrReleaseModifiers(dndHelper.getModifier(), false);
+            } catch (RobotException e) {
+                if (!EnvironmentUtils.isLinuxOS()) {
+                    throw e;
+                }
+            }
             dndHelper.setDragMode(false);
         }
     }
