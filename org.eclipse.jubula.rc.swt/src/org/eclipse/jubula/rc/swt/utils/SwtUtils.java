@@ -1060,7 +1060,7 @@ public class SwtUtils {
         // Works around an issue where
         // the width of the item is computed as "1" by SWT when the 
         // columns are actually the only elements that have width.
-        if (item.getParent().getColumnCount() > 0) {
+        if (item.getParent().getColumnCount() > 0 && bounds.width <= 1) {
             bounds.width = item.getParent().getBounds().width;
         }
 
