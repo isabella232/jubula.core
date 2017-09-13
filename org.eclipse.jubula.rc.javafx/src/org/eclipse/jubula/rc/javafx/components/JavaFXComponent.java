@@ -27,7 +27,7 @@ import org.eclipse.jubula.rc.common.components.AUTComponent;
  */
 public class JavaFXComponent extends AUTComponent<EventTarget> {
     /** listener which updates the hierarchy if there is a change in the ID */
-    private ChangeListener<String> m_iDChangeListener =
+    private static ChangeListener<String> idChangeListener =
             new UpdateHierachryChangeListener<String>();
     
     /**
@@ -51,10 +51,9 @@ public class JavaFXComponent extends AUTComponent<EventTarget> {
     @SuppressWarnings("unchecked")
     public void addChangeListener(EventTarget component) {
         if (component instanceof Node) {
-            ((Node)component).visibleProperty()
-                .addListener(VisibleChangeHandler.INSTACE);
-            ((Node) component).idProperty()
-                    .addListener(m_iDChangeListener);
+            Node node = (Node) component;
+            node.visibleProperty().addListener(VisibleChangeHandler.INSTACE);
+            node.idProperty().addListener(idChangeListener);
         }
         Object children = ChildrenGetter.getAsRealType(component);
         if (children instanceof ReadOnlyObjectProperty) {
@@ -73,13 +72,6 @@ public class JavaFXComponent extends AUTComponent<EventTarget> {
     public void removeChangeListener() {
         Object children = ChildrenGetter.getAsRealType(getComponent());
         EventTarget component = getComponent();
-        if (component instanceof Node) {
-            Node node = (Node)component;
-            node.visibleProperty()
-                .removeListener(VisibleChangeHandler.INSTACE);
-            node.idProperty()
-                .removeListener(m_iDChangeListener);
-        }
         if (children instanceof ObjectProperty) {
             ChildrenListenerHelper.removeListener(
                 (ObjectProperty<? extends EventTarget>) children);

@@ -14,6 +14,7 @@
 package org.eclipse.jubula.rc.javafx.components;
 
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
+import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
 import javafx.beans.property.ReadOnlyProperty;
@@ -41,9 +42,15 @@ public class UpdateHierachryChangeListener<T> implements ChangeListener<T> {
                 EventTarget eventTarget = (EventTarget) bean;
                 AUTJavaFXHierarchy hierarchy =
                         ComponentHandler.getAutHierarchy();
-                hierarchy.removeComponentFromHierarchy(
-                        eventTarget);
-                hierarchy.createHierarchyFrom(eventTarget);
+                try {
+                    if (hierarchy.getComponentIdentifier(eventTarget) != null) {
+                        hierarchy.removeComponentFromHierarchy(eventTarget);
+                        hierarchy.createHierarchyFrom(eventTarget);
+                    }
+                } catch (ComponentNotManagedException e) {
+                    // ignore this since it is not managed it should not be
+                    // refreshed
+                }
             }
         }
     }
