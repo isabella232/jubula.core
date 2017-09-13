@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.SerializationUtils;
 
 /**
  * Containing encoded object mapping and information about
@@ -136,6 +136,6 @@ public class OMExport {
      */
     public static String getSerialization(ComponentIdentifier identifier)
             throws IOException {
-        return SerilizationUtils.encode(identifier);
+        return SerializationUtils.encode(identifier);
     }
 }

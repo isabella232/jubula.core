@@ -392,6 +392,6 @@
             </mediaobject>
         </figure>
     </section>
-    
+    <xi:include href="sectionEmbeddedAgent.xml"/>
     <xi:include href="sectionConverter.xml"/>
 </chapter>

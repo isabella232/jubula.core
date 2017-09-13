@@ -10,11 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.constants;
 
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
-
-import org.eclipse.jubula.tools.internal.constants.InputConstants;
-
 /**
  * Constants
  * 
@@ -29,15 +24,6 @@ public final class Constants {
 
     /** exit code in case of invalid options */
     public static final int INVALID_VALUE = -2;
-    /** Key for int value to be stored as a resource property */
-    public static final int MAPPINGMOD1_KEY_DEFAULT = 
-        InputEvent.SHIFT_DOWN_MASK | InputEvent.CTRL_DOWN_MASK;
-    /** Key for int value to be stored as a resource property */
-    public static final int MAPPING_TRIGGER_DEFAULT = KeyEvent.VK_Q;
-    
-    /** Default value for Object Mapping trigger type */
-    public static final int MAPPING_TRIGGER_TYPE_DEFAULT = 
-        InputConstants.TYPE_KEY_PRESS;
     /**
      * Private constructor to avoid instantiation of constants class.
      */

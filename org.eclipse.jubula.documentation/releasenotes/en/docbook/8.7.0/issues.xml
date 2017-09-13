@@ -27,5 +27,18 @@
     </para>
   </listitem>
 </itemizedlist>
+  <para>
+    <emphasis role="strong">Object Mapping(OM) via AUTAgent</emphasis>
+  </para>
+    <itemizedlist>
+  <listitem>
+    <para>
+ There is a problem that extensions are not loaded if using the OM via
+ the AUTAgent context menu. If you are using the embedded agent for API
+ you can register new Testerclasses to the ToolkitInformation and than
+ start the Embedded agent.
+    </para>
+  </listitem>
+</itemizedlist>
 
 </section>

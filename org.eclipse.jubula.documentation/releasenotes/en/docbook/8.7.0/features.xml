@@ -27,4 +27,32 @@
     </para>
   </listitem>
 </itemizedlist>
+  <para>
+    <emphasis role="strong">Embedded AUTAgent for API</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
+    <para>
+    It is now possible to start an AUTAgent within the API. Therefore you do not need any Jubula installation to run a test.
+    
+    For more information see the developer manual.
+    </para>
+  </listitem>
+</itemizedlist>
+  <para>
+    <emphasis role="strong">Getting ComponentIdentifier from AUTAgent</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
+    <para>
+ The component name and the encoded ComponentIdentifier can be easily
+ get from and external or the embedded API AUTAgent. It is possible to
+ start an simple Component collecting mode via the context menu on the
+ AUTAgent. This is only possible if no ITE/testexec/API is connected to
+ the agent.
+ 
+ For more information see the developer manual.
+    </para>
+  </listitem>
+</itemizedlist>
 </section>

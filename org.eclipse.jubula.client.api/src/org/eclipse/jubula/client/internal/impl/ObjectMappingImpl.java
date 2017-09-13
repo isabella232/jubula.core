@@ -21,8 +21,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jubula.client.ObjectMapping;
 import org.eclipse.jubula.client.exceptions.LoadResourceException;
-import org.eclipse.jubula.client.internal.utils.SerilizationUtils;
 import org.eclipse.jubula.tools.ComponentIdentifier;
+import org.eclipse.jubula.tools.internal.utils.SerializationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,7 +97,7 @@ public class ObjectMappingImpl implements ObjectMapping {
             throws LoadResourceException {
         try {
             if (encodedString != null) {
-                Object decodedObject = SerilizationUtils.decode(encodedString);
+                Object decodedObject = SerializationUtils.decode(encodedString);
                 if (decodedObject instanceof ComponentIdentifier) {
                     return (ComponentIdentifier<T>) decodedObject;
                 }

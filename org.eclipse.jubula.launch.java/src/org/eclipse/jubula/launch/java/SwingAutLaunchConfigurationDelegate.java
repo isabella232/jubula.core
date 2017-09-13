@@ -21,8 +21,8 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jdt.launching.IJavaLaunchConfigurationConstants;
 import org.eclipse.jdt.launching.JavaLaunchDelegate;
-import org.eclipse.jubula.autagent.commands.IStartAut;
-import org.eclipse.jubula.autagent.commands.StartSwingAutServerCommand;
+import org.eclipse.jubula.autagent.common.commands.IStartAut;
+import org.eclipse.jubula.autagent.common.commands.StartSwingAutServerCommand;
 import org.eclipse.jubula.launch.AutLaunchUtils;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 

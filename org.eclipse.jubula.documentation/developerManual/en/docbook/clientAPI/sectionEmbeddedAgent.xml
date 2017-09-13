@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2018 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
+
+<section xml:id="embeddedAgent" xmlns="http://docbook.org/ns/docbook"
+ xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
+ <title>Using the Embedded Agent for tests with API</title>
+ <section>
+  <title>General Information and setup for the Embedded Agent for tests
+   with API
+  </title>
+  <para>It is possible that a AUT agent could be started within a Test.
+   Therefore a test can be written and executed completely without an
+   other Jubula application. All Toolkits, except HTML are supported.
+  </para>
+  <para>General setup information</para>
+  <para>
+   The following section describes where to find the relevant JARs /
+   artifacts to use the EmbeddedAgent for API.
+   The provided EmbeddedAgent
+   has a minimum required runtime environment of
+   <emphasis role="strong">Java 8</emphasis>
+   .
+  </para>
+  <para>Following JARs / maven artifacts
+   / OSGi bundles must be used in
+   addition to the client API jars(see <xref linkend="clientAPI" />.). These Jars must be on the classpath:
+  </para>
+  <orderedlist>
+   <listitem>
+    <para>
+     Each project requires dependencies to
+     <emphasis role="strong">all</emphasis>
+     of the
+     <emphasis role="strong">toolkit neutral parts</emphasis>
+     of the API:
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>org.eclipse.jubula.autagent.api</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.autagent.common</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.client.api</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.toolkit.api</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.rc.common.agent</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.tools</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.tools.exec</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.communication</para>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+   <listitem>
+   <para>The following are 3rd party libaries which are needed on the classpath.
+   <itemizedlist>
+     <listitem>
+      <para>org.apache.commons.lang</para>
+     </listitem>
+     <listitem>
+      <para>org.apache.commons.io</para>
+     </listitem>
+     <listitem>
+      <para>org.apache.commons.exec</para>
+     </listitem>
+     <listitem>
+      <para>org.apache.commons.codec</para>
+     </listitem>
+     <listitem>
+      <para>org.apache.commons.beanutils</para>
+     </listitem></itemizedlist></para>
+     </listitem>
+   <listitem>
+    <para>
+ The following jars can be on the classpath but are not mandatory. But it is
+ important that they are located in the same directory as the
+ org.eclipse.jubula.autagent.api.
+ 
+ The following is needed independent on the toolkit:
+    <itemizedlist>
+     <listitem>
+      <para>org.eclipse.jubula.rc.common</para>
+     </listitem>
+    </itemizedlist>
+ Each project requires dependencies to
+     <emphasis role="strong">individual</emphasis>
+     parts of the
+     <emphasis role="strong">toolkit specific elements</emphasis>
+     dependent from the used toolkit of the API:
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>org.eclipse.jubula.rc.javafx</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.rc.javafx.j8u40</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.rc.swing</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.jubula.rc.swt</para>
+     </listitem>
+    </itemizedlist>
+    <para>RCP is not listed because the rc.rcp plugin is deployed into
+     the AUT
+    </para>
+   </listitem>
+   <listitem>
+    <para>
+     Each project also requires dependencies to
+     <emphasis role="strong">all</emphasis>
+     of the
+     <emphasis role="strong">3rd party dependencies</emphasis>
+     of the API:
+    </para>
+    <itemizedlist>
+     <listitem>
+      <para>org.apache.oro</para>
+     </listitem>
+     <listitem>
+      <para>javax.xml</para>
+     </listitem>
+     <listitem>
+      <para>javax.xml.stream</para>
+     </listitem>
+     <listitem>
+      <para>org.slf4j.api</para>
+     </listitem>
+     <listitem>
+      <para>ch.logback.classic</para>
+     </listitem>
+     <listitem>
+      <para>ch.logback.core</para>
+     </listitem>
+     <listitem>
+      <para>org.xmlpull</para>
+     </listitem>
+     <listitem>
+      <para>com.thoughtworks.xstream</para>
+     </listitem>
+    </itemizedlist>
+   </listitem>
+  </orderedlist>
+  <para>
+   You can find the artifacts in different shapes (plain JAR and maven
+   artifact) within
+   the
+   <emphasis>&lt;ITEInstallationFolder&gt;/development/api</emphasis>
+   folder. To define OSGi dependencies to the API artifacts
+   you can
+   simply include the
+   <emphasis>&lt;ITEInstallationFolder&gt;/development/org.eclipse.jubula.repo.zip
+   </emphasis>
+   in
+   your target platform (definition) and define a dependency to the
+   "Jubula
+   Functional Testing - API Embedded"-feature.
+  </para>
+  <para>
+   A list of changes which happened over time in the API is located
+   <link xl:href="../../api-comparison/index.html">here</link>
+   .
+  </para>
+ </section>
+ <section>
+  <title>Sample execution</title>
+  <para>
+ The following Code shows a simple example how the embedded Agent can be
+ used. The class
+ <emphasis>org.eclipse.jubula.autagent.Embedded</emphasis>
+ is responsible for the AutAgents lifecycle. The agent can be started
+ with
+ <emphasis>Embedded.INSTANCE.agent()</emphasis>
+ or with an integer parameter for the port number. Only one Agent could
+ be started and must be stopped with
+ <emphasis>shutdown()</emphasis>
+ before any other agent could be run.
+
+ If a Embedded Agent is already started, you can get the AUTAgent
+ instance again with
+   <emphasis>Embedded.INSTANCE.agent()</emphasis>
+   .
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/embeddedAgent.png" />
+    </imageobject>
+   </mediaobject>
+  </para>
+ </section>
+ <section>
+ <title>Mapping with the embedded or external Agent for the API</title>
+ 
+ <para>
+ There are multiple ways to get an object mapped. Either you can use the
+ mapping vie ITE and export the mapping for API (see
+ <xref linkend="export-om" />
+ ), or you can use the object Mapping from the Agent. To do this the
+ embedded agent must be started and an AUT should be connected to it.
+ Also there must be no connection to the Agent, otherwise the Object
+ Mapping mode will be disabled. To start the Object Mapping follow the
+ instructions. 
+ <itemizedlist>
+  <listitem>
+   <para>Open the context menu of the Agent from the task bar
+   </para>
+  </listitem>
+  <listitem>
+   <para>Select Object Mapping
+   </para>
+  </listitem>
+  <listitem>
+   <para>Select Start and the AUT the object Mapping should be started for
+   </para>
+  </listitem>
+ </itemizedlist>
+ After the connection is successfully established the Object Mapping
+ window will be opened. In this Window you get the Component Name, the
+ type of the Component and the Encoded ComponentIdentifier. 
+ 
+ The default shortcut for Mapping an component is <emphasis>Control + Schift + Q</emphasis>.
+ It can be changed in the menu <emphasis role="menupath">File -> Settings</emphasis> .
+    <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/agentomm.png" />
+    </imageobject>
+   </mediaobject>
+ </para>
+ <para role="warning">When using this kind of Mapping you can not have any
+  other client (API or ITE) connected to the agent.
+ </para>
+ <para role="warning">Extensions are not working for an external AUTAgent.
+  This can only be achieved with an embedded agent for API. Before you
+  start the embedded Agent, register the Testerclasses. 
+  
+  For mapping purpose it is recommended to have small java application which only starts the
+  embedded agent, so it can be used as "external" agent.
+ </para>
+ </section>
+ <section>
+ <title>Extensions with the embedded Agent</title>
+ <para>
+  The embedded Agent can also be customized. The extensions are written
+  in the same way as described in 
+  <xref linkend="remoteControlExtension" />
+  and
+  <xref linkend="apiExtension" />.
+  </para>
+  <para>
+  To deploy the extension for the embedded AutAgent for the API you must
+  create a
+  <emphasis>"ext"</emphasis>
+  directory into the directory where the used
+  <emphasis>org.eclipse.jubula.autagent.api.jar</emphasis> is located. After
+  that you can put your rc extension into the
+  <emphasis>"ext"</emphasis>
+  directory and the extension will be used.
+ </para>
+ </section>
+</section>

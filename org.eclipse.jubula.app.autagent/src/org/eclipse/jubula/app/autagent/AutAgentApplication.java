@@ -34,10 +34,12 @@ import org.apache.commons.cli.PosixParser;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jubula.app.autagent.i18n.Messages;
-import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.autagent.AutStarter.Verbosity;
-import org.eclipse.jubula.autagent.agent.AutAgent;
-import org.eclipse.jubula.autagent.desktop.DesktopIntegration;
+import org.eclipse.jubula.autagent.OsgiAUTStartHelper;
+import org.eclipse.jubula.autagent.common.AutStarter;
+import org.eclipse.jubula.autagent.common.AutStarter.Verbosity;
+import org.eclipse.jubula.autagent.common.agent.AutAgent;
+import org.eclipse.jubula.autagent.common.utils.AutStartHelperRegister;
+import org.eclipse.jubula.autagent.desktop.CoreDesktopIntegration;
 import org.eclipse.jubula.communication.internal.connection.ConnectionState;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.exception.JBVersionException;
@@ -148,7 +150,9 @@ public class AutAgentApplication implements IApplication {
         }
 
         // create the single instance here
-        final AutStarter server = AutStarter.getInstance();
+        AutStartHelperRegister.INSTANCE.setAutStartHelper(
+                new OsgiAUTStartHelper());
+
         CommandLineParser parser = new PosixParser();
         try {
             CommandLine cmd = parser.parse(createOptions(false), args);
@@ -158,37 +162,9 @@ public class AutAgentApplication implements IApplication {
                 return EXIT_HELP_OPTION;
             }
 
-            int port = getPortNumber(cmd);
-            if (cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
-                String hostname = EnvConstants.LOCALHOST_ALIAS;
-                if (cmd.getOptionValue(COMMANDLINE_OPTION_STOP) != null) {
-                    hostname = cmd.getOptionValue(COMMANDLINE_OPTION_STOP);
-                }
-                stopAutAgent(hostname, port);
-            } else {
-                boolean killDuplicateAuts = 
-                    !cmd.hasOption(COMMANDLINE_OPTION_LENIENT);
-                Verbosity verbosity = Verbosity.NORMAL;
-                if (cmd.hasOption(COMMANDLINE_OPTION_VERBOSE)) {
-                    verbosity = Verbosity.VERBOSE;
-                } else if (cmd.hasOption(COMMANDLINE_OPTION_QUIET)) {
-                    verbosity = Verbosity.QUIET;
-                }
-                boolean objectMapping = false;
-                if (cmd.hasOption(COMMANDLINE_OPTION_OBJECTMAPPING)) {
-                    objectMapping = true;
-                }
-                DesktopIntegration di = 
-                    new DesktopIntegration(server.getAgent(), objectMapping);
-                di.setPort(port);
-                server.getAgent().addPropertyChangeListener(
-                        AutAgent.PROP_NAME_AUTS, di);
-
-                server.start(port, killDuplicateAuts, verbosity, true);
-            }
+            startOrStopAgent(cmd);
         } catch (ParseException pe) {
-            String message = Messages.ParseExceptionInvalidOption;
-            LOG.error(message, pe);
+            LOG.error(Messages.ParseExceptionInvalidOption, pe);
             printHelp();
             return EXIT_INVALID_OPTIONS;
         } catch (SecurityException se) {
@@ -212,6 +188,42 @@ public class AutAgentApplication implements IApplication {
         }
 
         return IApplication.EXIT_OK;
+    }
+    /**
+     * starts or stops the autagent depending if the {@link this#COMMANDLINE_OPTION_STOP} is set
+     * @param cmd the  commandline options
+     * @throws UnknownHostException could occur during the stop or start of the agent
+     * @throws IOException IO problems during start or stop
+     * @throws JBVersionException if the client and server version are not compatible
+     */
+    private void startOrStopAgent(CommandLine cmd)
+            throws UnknownHostException, IOException, JBVersionException {
+        final AutStarter server = AutStarter.getInstance();
+        int port = getPortNumber(cmd);
+        if (cmd.hasOption(COMMANDLINE_OPTION_STOP)) {
+            String hostname = EnvConstants.LOCALHOST_ALIAS;
+            if (cmd.getOptionValue(COMMANDLINE_OPTION_STOP) != null) {
+                hostname = cmd.getOptionValue(COMMANDLINE_OPTION_STOP);
+            }
+            stopAutAgent(hostname, port);
+        } else {
+            boolean killDuplicateAuts = 
+                !cmd.hasOption(COMMANDLINE_OPTION_LENIENT);
+            Verbosity verbosity = Verbosity.NORMAL;
+            if (cmd.hasOption(COMMANDLINE_OPTION_VERBOSE)) {
+                verbosity = Verbosity.VERBOSE;
+            } else if (cmd.hasOption(COMMANDLINE_OPTION_QUIET)) {
+                verbosity = Verbosity.QUIET;
+            }
+            
+            CoreDesktopIntegration di = new CoreDesktopIntegration(
+                    server.getAgent());
+            di.setPort(port);
+            server.getAgent().addPropertyChangeListener(
+                    AutAgent.PROP_NAME_AUTS, di);
+
+            server.start(port, killDuplicateAuts, verbosity, true);
+        }
     }
 
     /**

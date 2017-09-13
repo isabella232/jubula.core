@@ -46,7 +46,7 @@
     <target name="setProxyAndGetRNG">
         <setproxy proxyhost="gatekeeper.dev.bredex.local" proxyport="3128" />
         <mkdir dir="resources/validation/lib/" />
-        <get src="http://docbook.org/xml/5.0/rng/docbook.rng" dest="resources/validation/lib/docbook.rng" />
+        <get src="https://docbook.org/xml/5.0/rng/docbook.rng" dest="resources/validation/lib/docbook.rng" />
     </target>
 
     <target name="getJing">

@@ -54,6 +54,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          version="1.7.2.v20121108-1250"
          unpack="false"/>
 
+
    <plugin
          id="org.eclipse.jubula.communication"
          download-size="0"
@@ -154,6 +155,56 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
 
    <plugin
          id="org.eclipse.jubula.client.api.converter.annotations"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.autagent.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.common.agent"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.javafx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.javafx.j8u40"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.swing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+    <plugin
+         id="org.eclipse.jubula.rc.swt"
          download-size="0"
          install-size="0"
          version="0.0.0"

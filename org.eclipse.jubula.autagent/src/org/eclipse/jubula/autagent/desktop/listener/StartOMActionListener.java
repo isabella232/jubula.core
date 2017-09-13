@@ -8,26 +8,23 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-/**
- * 
- */
 package org.eclipse.jubula.autagent.desktop.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.autagent.agent.AutAgent;
-import org.eclipse.jubula.autagent.desktop.DesktopIntegration;
+import org.eclipse.jubula.autagent.common.AutStarter;
+import org.eclipse.jubula.autagent.common.agent.AutAgent;
+import org.eclipse.jubula.autagent.common.desktop.DesktopIntegration;
+import org.eclipse.jubula.autagent.common.gui.ObjectMappingFrame;
+import org.eclipse.jubula.autagent.common.gui.utils.AgentOMKeyProperitesUtils;
 import org.eclipse.jubula.autagent.desktop.connection.DirectAUTConnection;
-import org.eclipse.jubula.autagent.gui.ObjectMappingFrame;
-import org.eclipse.jubula.autagent.gui.utils.AgentOMKeyProperitesUtils;
-import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
-import org.eclipse.jubula.client.core.constants.InputCodeHelper.UserInput;
+import org.eclipse.jubula.tools.internal.constants.InputCodeHelper.UserInput;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
+import org.eclipse.jubula.tools.internal.om.ObjectMappingDispatcher;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -108,10 +105,10 @@ public class StartOMActionListener implements ActionListener {
                     break;
             }
             connection.send(message);
-            ObjectMappingEventDispatcher
+            ObjectMappingDispatcher
                 .removeObserver(ObjectMappingFrame.INSTANCE);
             ObjectMappingFrame.INSTANCE.showObjectMappingPanel();
-            ObjectMappingEventDispatcher
+            ObjectMappingDispatcher
             .addObserver(ObjectMappingFrame.INSTANCE);
             DesktopIntegration.setObjectMappingAUT(id);
         } catch (CommunicationException | IllegalArgumentException ex) {

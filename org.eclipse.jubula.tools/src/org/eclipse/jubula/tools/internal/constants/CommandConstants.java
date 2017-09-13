@@ -58,6 +58,10 @@ public abstract class CommandConstants {
     public static final String LOGBACK_CORE_BUNDLE_ID = "ch.qos.logback.core"; //$NON-NLS-1$
     /** ID of the logback slf4j bundle */
     public static final String LOGBACK_SLF4J_BUNDLE_ID = "ch.qos.logback.slf4j"; //$NON-NLS-1$
+    /** ID of the logback xmlpull bundle */
+    public static final String XMLPULL_BUNDLE_ID = "org.xmlpull"; //$NON-NLS-1$
+    /** ID of the logback xstream bundle */
+    public static final String XSTREAM_BUNDLE_ID = "com.thoughtworks.xstream"; //$NON-NLS-1$
     /** ID of the Apache Commons Lang bundle */
     public static final String COMMONS_LANG_BUNDLE_ID = "org.apache.commons.lang"; //$NON-NLS-1$
     /** ID of the Apache ORO bundle */
@@ -122,10 +126,10 @@ public abstract class CommandConstants {
     public static final String AUT_STARTED_COMMAND = "org.eclipse.jubula.client.internal.commands.AUTStartedCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.CAPRecordedCommand" */
     public static final String CAP_RECORDED_COMMAND = "org.eclipse.jubula.client.core.commands.CAPRecordedCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.ShowRecordedActionCommand" */
-    public static final String SHOW_RECORDED_ACTION_COMMAND = "org.eclipse.jubula.autagent.commands.ShowRecordedActionCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.ShowObservInfoCommand" */
-    public static final String SHOW_OBSERVE_INFO_COMMAND = "org.eclipse.jubula.autagent.commands.ShowObservInfoCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.ShowRecordedActionCommand" */
+    public static final String SHOW_RECORDED_ACTION_COMMAND = "org.eclipse.jubula.autagent.common.commands.ShowRecordedActionCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.ShowObservInfoCommand" */
+    public static final String SHOW_OBSERVE_INFO_COMMAND = "org.eclipse.jubula.autagent.common.commands.ShowObservInfoCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.CAPTestResponseCommand" */
     public static final String CAP_TEST_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.CAPTestResponseCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.RcpAccessorStartedCommand" */
@@ -133,25 +137,25 @@ public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.rc.common.commands.NullCommand" */
     public static final String NULL_COMMAND = "org.eclipse.jubula.rc.common.commands.NullCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.ObjectMappedCommand" */
-    public static final String OBJECT_MAPPED_COMMAND = "org.eclipse.jubula.client.core.commands.ObjectMappedCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.SendServerLogCommand" */
-    public static final String SEND_SERVER_LOG_COMMAND = "org.eclipse.jubula.autagent.commands.SendServerLogCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.ServerShowDialogCommand" */
-    public static final String SERVER_SHOW_OBSERV_CONSOLE_COMMAND = "org.eclipse.jubula.autagent.commands.ServerShowObservConsoleCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.ServerShowActionShellCommand" */
-    public static final String SERVER_SHOW_DIALOG_COMMAND = "org.eclipse.jubula.autagent.commands.ServerShowDialogCommand"; //$NON-NLS-1$
+    public static final String OBJECT_MAPPED_COMMAND = "org.eclipse.jubula.communication.internal.commands.ObjectMappedCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.SendServerLogCommand" */
+    public static final String SEND_SERVER_LOG_COMMAND = "org.eclipse.jubula.autagent.common.commands.SendServerLogCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.ServerShowDialogCommand" */
+    public static final String SERVER_SHOW_OBSERV_CONSOLE_COMMAND = "org.eclipse.jubula.autagent.common.commands.ServerShowObservConsoleCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.ServerShowActionShellCommand" */
+    public static final String SERVER_SHOW_DIALOG_COMMAND = "org.eclipse.jubula.autagent.common.commands.ServerShowDialogCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.ShowDialogResultCommand" */
     public static final String SERVER_SHOW_DIALOG_RESULT_COMMAND = "org.eclipse.jubula.rc.common.commands.ShowDialogResultCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.RecordActionCommand" */
-    public static final String RECORD_ACTION_COMMAND = "org.eclipse.jubula.autagent.commands.RecordActionCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.RecordActionCommand" */
+    public static final String RECORD_ACTION_COMMAND = "org.eclipse.jubula.autagent.common.commands.RecordActionCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.inspector.ui.commands.InspectorComponentSelectedCommand" */
     public static final String INSPECTOR_COMPONENT_SELECTED_COMMAND = "org.eclipse.jubula.client.inspector.ui.commands.InspectorComponentSelectedCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.StartAUTServerCommand" */
-    public static final String START_AUT_SERVER_COMMAND = "org.eclipse.jubula.autagent.commands.StartAUTServerCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.StartAUTServerCommand" */
+    public static final String START_AUT_SERVER_COMMAND = "org.eclipse.jubula.autagent.common.commands.StartAUTServerCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.StartAUTServerStateCommand" */
     public static final String START_AUT_SERVER_STATE_COMMAND = "org.eclipse.jubula.client.internal.commands.StartAUTServerStateCommand"; //$NON-NLS-1$
-    /** constant: "org.eclipse.jubula.autagent.commands.StopAUTServerCommand" */
-    public static final String STOP_AUT_SERVER_COMMAND = "org.eclipse.jubula.autagent.commands.StopAUTServerCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.StopAUTServerCommand" */
+    public static final String STOP_AUT_SERVER_COMMAND = "org.eclipse.jubula.autagent.common.commands.StopAUTServerCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.StopAUTServerStateCommand" */
     public static final String STOP_AUT_SERVER_STATE_COMMAND = "org.eclipse.jubula.client.core.commands.StopAUTServerStateCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.common.commands.ActivateInspectorCommand" */
@@ -178,13 +182,13 @@ public abstract class CommandConstants {
     /** constant: "org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand"  */
     public static final String END_TESTEXECUTION_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.EndTestExecutionResponseCommand"; //$NON-NLS-1$
 
-    /** constant: "org.eclipse.jubula.autagent.commands.DisconnectFromAutAgentCommand" */
-    public static final String DISCONNECT_FROM_AUT_AGENT_COMMAND = "org.eclipse.jubula.autagent.commands.DisconnectFromAutAgentCommand"; //$NON-NLS-1$
+    /** constant: "org.eclipse.jubula.autagent.common.commands.DisconnectFromAutAgentCommand" */
+    public static final String DISCONNECT_FROM_AUT_AGENT_COMMAND = "org.eclipse.jubula.autagent.common.commands.DisconnectFromAutAgentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.core.commands.DisconnectFromAutAgentResponseCommand" */
     public static final String DISCONNECT_FROM_AUT_AGENT_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.DisconnectFromAutAgentResponseCommand"; //$NON-NLS-1$
     
     /** remotely browse for files/directories */
-    public static final String SEND_DIRECTORY_COMMAND = "org.eclipse.jubula.autagent.commands.SendDirectoryCommand"; //$NON-NLS-1$
+    public static final String SEND_DIRECTORY_COMMAND = "org.eclipse.jubula.autagent.common.commands.SendDirectoryCommand"; //$NON-NLS-1$
     /** process the directory/files list */
     public static final String PROCESS_DIR_COMMAND = "org.eclipse.jubula.client.ui.rcp.businessprocess.HandleRemoteFileBrowsing"; //$NON-NLS-1$
 
@@ -194,12 +198,12 @@ public abstract class CommandConstants {
     public static final String AUT_DEREGISTERED_COMMAND = "org.eclipse.jubula.client.core.commands.AutDeregisteredCommand"; //$NON-NLS-1$
 
     /** server-side handling to gather a list of AUTs currently registered with the AUT Agent */
-    public static final String GET_REGISTERED_AUTS_COMMAND = "org.eclipse.jubula.autagent.commands.GetRegisteredAutListCommand"; //$NON-NLS-1$
+    public static final String GET_REGISTERED_AUTS_COMMAND = "org.eclipse.jubula.autagent.common.commands.GetRegisteredAutListCommand"; //$NON-NLS-1$
     /** client-side handling to gather a list of AUTs currently registered with the AUT Agent */
     public static final String REGISTERED_AUTS_COMMAND = "org.eclipse.jubula.client.internal.commands.RegisteredAutListCommand"; //$NON-NLS-1$
 
     /** sends a message for a Running AUT to connect to a Client */
-    public static final String CONNECT_TO_AUT_COMMAND = "org.eclipse.jubula.autagent.commands.ConnectToAutCommand"; //$NON-NLS-1$
+    public static final String CONNECT_TO_AUT_COMMAND = "org.eclipse.jubula.autagent.common.commands.ConnectToAutCommand"; //$NON-NLS-1$
     /** client-side handling for the result of an attempt to connect to an AUT */
     public static final String CONNECT_TO_AUT_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.ConnectToAutResponseCommand"; //$NON-NLS-1$
 
@@ -210,19 +214,19 @@ public abstract class CommandConstants {
     public static final String PREPARE_FOR_SHUTDOWN_COMMAND = "org.eclipse.jubula.rc.common.commands.PrepareForShutdownCommand"; //$NON-NLS-1$
     
     /** AUT Server - prepares for shutdown via Stop AUT */
-    public static final String PREPARE_FOR_SHUTDOWN_RESPONSE_COMMAND = "org.eclipse.jubula.autagent.commands.PrepareForShutdownResponseCommand"; //$NON-NLS-1$
+    public static final String PREPARE_FOR_SHUTDOWN_RESPONSE_COMMAND = "org.eclipse.jubula.autagent.common.commands.PrepareForShutdownResponseCommand"; //$NON-NLS-1$
     
     /** AUT Server - restarts an AUT */
-    public static final String RESTART_AUT_COMMAND = "org.eclipse.jubula.autagent.commands.RestartAutCommand"; //$NON-NLS-1$
+    public static final String RESTART_AUT_COMMAND = "org.eclipse.jubula.autagent.common.commands.RestartAutCommand"; //$NON-NLS-1$
     
     /** AUT Server - wait for termination and restart an AUT */
-    public static final String WAIT_FOR_AUT_TERMINATION_AND_RESTART_COMMAND = "org.eclipse.jubula.autagent.commands.WaitForAUTTerminationAndRestartCommand"; //$NON-NLS-1$
+    public static final String WAIT_FOR_AUT_TERMINATION_AND_RESTART_COMMAND = "org.eclipse.jubula.autagent.common.commands.WaitForAUTTerminationAndRestartCommand"; //$NON-NLS-1$
     
     /** AUT Agent - display the manual test step to perform */
-    public static final String DISPLAY_MANUAL_TEST_STEP_COMMAND = "org.eclipse.jubula.autagent.commands.DisplayManualTestStepCommand"; //$NON-NLS-1$
+    public static final String DISPLAY_MANUAL_TEST_STEP_COMMAND = "org.eclipse.jubula.autagent.common.commands.DisplayManualTestStepCommand"; //$NON-NLS-1$
     
     /** AUT Agent - take a screenshot */
-    public static final String TAKE_SCREENSHOT_AUTAGENT_COMMAND = "org.eclipse.jubula.autagent.commands.TakeScreenshotAUTAgentCommand"; //$NON-NLS-1$
+    public static final String TAKE_SCREENSHOT_AUTAGENT_COMMAND = "org.eclipse.jubula.autagent.common.commands.TakeScreenshotAUTAgentCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.client.internal.commands.TakeScreenshotAUTAgentResponseCommand"  */
     public static final String TAKE_SCREENSHOT_AUTAGENT_RESPONSE_COMMAND = "org.eclipse.jubula.client.internal.commands.TakeScreenshotAUTAgentResponseCommand"; //$NON-NLS-1$
 
@@ -235,13 +239,13 @@ public abstract class CommandConstants {
     /** the generated report will be send to the client */   
     public static final String GET_MONITORING_REPORT_COMMAND = "org.eclipse.jubula.client.core.commands.GetMonitoringReportCommand"; //$NON-NLS-1$
     /** forces the profiling agent to send his execution data  */  
-    public static final String GET_MONITORING_DATA_COMMAND = "org.eclipse.jubula.autagent.monitoring.GetMonitoringDataCommand"; ////$NON-NLS-1$
+    public static final String GET_MONITORING_DATA_COMMAND = "org.eclipse.jubula.autagent.common.monitoring.GetMonitoringDataCommand"; ////$NON-NLS-1$
     /** this command will build the (HTML) report*/
-    public static final String BUILD_MONITORING_REPORT_COMMAND = "org.eclipse.jubula.autagent.monitoring.BuildMonitoringReportCommand"; //$NON-NLS-1$
+    public static final String BUILD_MONITORING_REPORT_COMMAND = "org.eclipse.jubula.autagent.common.monitoring.BuildMonitoringReportCommand"; //$NON-NLS-1$
     /** forces the profiling agent to reset the collected execution data */
-    public static final String RESET_MONITORING_DATA_COMMAND = "org.eclipse.jubula.autagent.monitoring.ResetMonitoringDataCommand"; //$NON-NLS-1$
+    public static final String RESET_MONITORING_DATA_COMMAND = "org.eclipse.jubula.autagent.common.monitoring.ResetMonitoringDataCommand"; //$NON-NLS-1$
     /** AUT Agent - returns the autConfigMap */
-    public static final String GET_AUT_CONFIGMAP_COMMAND = "org.eclipse.jubula.autagent.commands.GetAutConfigMapCommand"; //$NON-NLS-1$
+    public static final String GET_AUT_CONFIGMAP_COMMAND = "org.eclipse.jubula.autagent.common.commands.GetAutConfigMapCommand"; //$NON-NLS-1$
     /** Client - handling of the returned autConfigMap */
     public static final String GET_AUT_CONFIGMAP_COMMAND_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.GetAutConfigMapResponseCommand"; //$NON-NLS-1$
     /** AUT Agent - returns the keyboard layout name */
@@ -260,6 +264,8 @@ public abstract class CommandConstants {
     public static final String AUT_JAVAFX_SERVER = "org.eclipse.jubula.rc.javafx.JavaFXAUTServer"; //$NON-NLS-1$
     /** ID of the JavaFX RC bundle */
     public static final String RC_JAVAFX_BUNDLE_ID = "org.eclipse.jubula.rc.javafx"; //$NON-NLS-1$
+    /** ID of the JavaFX  update bundle RC bundle */
+    public static final String RC_JAVAFX_J8U40_BUNDLE_ID = "org.eclipse.jubula.rc.javafx.j8u40"; //$NON-NLS-1$
     /** constant: "JavaFX" */
     public static final String JAVAFX_TOOLKIT = "org.eclipse.jubula.JavaFXToolkitPlugin"; //$NON-NLS-1$
     /** response command which will be executed on the client side */

@@ -8,15 +8,12 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-/**
- * 
- */
 package org.eclipse.jubula.autagent.desktop.connection;
 
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jubula.autagent.AutStarter;
+import org.eclipse.jubula.autagent.common.AutStarter;
 import org.eclipse.jubula.client.core.commands.AUTStateCommand;
 import org.eclipse.jubula.client.core.i18n.Messages;
 import org.eclipse.jubula.client.internal.BaseAUTConnection;

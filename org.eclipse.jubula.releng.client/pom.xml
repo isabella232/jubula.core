@@ -20,6 +20,7 @@
         <module>../org.eclipse.jubula.app.dbtool</module>
         <module>../org.eclipse.jubula.feature.api</module>
         <module>../org.eclipse.jubula.feature.api.core</module>
+        <module>../org.eclipse.jubula.feature.api.embedded</module>
         <module>../org.eclipse.jubula.feature.api.converter</module>
         <module>../org.eclipse.jubula.client.api</module>
         <module>../org.eclipse.jubula.client.api.commands</module>

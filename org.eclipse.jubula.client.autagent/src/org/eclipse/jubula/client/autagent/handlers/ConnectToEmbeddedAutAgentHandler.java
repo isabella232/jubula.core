@@ -21,8 +21,10 @@ import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jubula.autagent.AutStarter;
-import org.eclipse.jubula.autagent.AutStarter.Verbosity;
+import org.eclipse.jubula.autagent.OsgiAUTStartHelper;
+import org.eclipse.jubula.autagent.common.AutStarter;
+import org.eclipse.jubula.autagent.common.AutStarter.Verbosity;
+import org.eclipse.jubula.autagent.common.utils.AutStartHelperRegister;
 import org.eclipse.jubula.client.autagent.Activator;
 import org.eclipse.jubula.client.autagent.preferences.PreferenceInitializer;
 import org.eclipse.jubula.client.ui.rcp.constants.RCPCommandIDs;
@@ -54,7 +56,8 @@ public class ConnectToEmbeddedAutAgentHandler extends AbstractHandler
 
     /** {@inheritDoc} */
     public Object execute(ExecutionEvent event) {
-        
+        AutStartHelperRegister.INSTANCE.setAutStartHelper(
+                new OsgiAUTStartHelper());
         AutStarter autAgentInstance = AutStarter.getInstance();
         if (autAgentInstance.getCommunicator() == null) {
             // Embedded Agent is not running. We need to start it before

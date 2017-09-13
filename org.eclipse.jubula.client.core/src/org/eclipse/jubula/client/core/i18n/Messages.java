@@ -64,7 +64,6 @@ public class Messages extends NLS {
     public static String CompNameUnknownTypeDetail;
     public static String Component;
     public static String ComponentId;
-    public static String ComponentIdentifiersDoes;
     public static String ComponentIsNotSupported;
     public static String ComponentNotFound;
     public static String ComponentTypeIsNull;
@@ -194,7 +193,6 @@ public class Messages extends NLS {
     public static String IncompatibleType;
     public static String IncompleteTestdata;
     public static String InDataSource;
-    public static String InHierachy;
     public static String InNode;
     public static String InvalidUuidInReference;
     public static String InvalidCharacter;
@@ -222,7 +220,6 @@ public class Messages extends NLS {
     public static String LoggingConfigurationError;
     public static String LongerThanExpected;
     public static String MajorVersionInvalid;
-    public static String MappedObject;
     public static String MessageCap;
     public static String Method;
     public static String MethodNotAccesible;
@@ -263,7 +260,6 @@ public class Messages extends NLS {
     public static String ObjectMappingPreferencePageMouseButton1;
     public static String ObjectMappingPreferencePageMouseButton2;
     public static String ObjectMappingPreferencePageMouseButton3;
-    public static String OfType;
     public static String OK;
     public static String OperationFailed;
     public static String OrginalTestcaseLocked;

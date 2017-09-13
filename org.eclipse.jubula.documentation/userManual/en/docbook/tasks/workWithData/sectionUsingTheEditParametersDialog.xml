@@ -62,10 +62,10 @@
     </listitem>
   </orderedlist>
   <section xml:id="editing-value-sets-for-parameter">
+    <title>Add and edit ValueSets for Parameters</title>
     <anchor role="helpid" condition="editParameterValuesSetsDialogContextId" 
       xml:id="using-the-edit-parameters-dialog-to-add-edit-and-delete-references.editParameterValuesSetsDialogContextId" 
       xreflabel="Editing Parameter value sets"/>
-    <title>Add and edit ValueSets for Parameters</title>
   <para>
    After Selecting a Parameter in the Edit Parameters Dialog,
    you can edit the allowed values for this parameter. Therefore the

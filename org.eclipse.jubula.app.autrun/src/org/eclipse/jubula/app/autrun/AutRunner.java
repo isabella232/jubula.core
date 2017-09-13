@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jubula.app.autrun.i18n.Messages;
-import org.eclipse.jubula.autagent.commands.IStartAut;
+import org.eclipse.jubula.autagent.common.commands.IStartAut;
 import org.eclipse.jubula.communication.internal.connection.ConnectionState;
 import org.eclipse.jubula.communication.internal.connection.RestartAutProtocol;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
@@ -147,7 +147,7 @@ public class AutRunner {
             InetSocketAddress agentAddr, Map<String, String> autConfiguration) 
         throws ClassNotFoundException, InstantiationException, 
                IllegalAccessException {
-        String className = "org.eclipse.jubula.autagent.commands.Start" //$NON-NLS-1$
+        String className = "org.eclipse.jubula.autagent.common.commands.Start" //$NON-NLS-1$
             + autToolkit + "AutServerCommand"; //$NON-NLS-1$
         Class< ? > autServerClass = Class.forName(className);
         m_agentAddr = agentAddr;

@@ -43,9 +43,7 @@ import org.eclipse.jubula.client.core.businessprocess.CleanupObjectMapping;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
 import org.eclipse.jubula.client.core.businessprocess.CompNamesBP;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.IObjectMappingObserver;
 import org.eclipse.jubula.client.core.businessprocess.IWritableComponentNameCache;
-import org.eclipse.jubula.client.core.businessprocess.ObjectMappingEventDispatcher;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.businessprocess.db.TimestampBP;
@@ -114,6 +112,8 @@ import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
+import org.eclipse.jubula.tools.internal.om.IObjectMappingObserver;
+import org.eclipse.jubula.tools.internal.om.ObjectMappingDispatcher;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ConcreteComponent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -425,7 +425,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         getSite().setSelectionProvider(m_selectionProvider);
         getEditorSite().registerContextMenu(menuMgr, m_selectionProvider);
         
-        ObjectMappingEventDispatcher.addObserver(this);
+        ObjectMappingDispatcher.addObserver(this);
         checkAndFixInconsistentData();
         OpenOMETracker.INSTANCE.addOME(this);
         DataEventDispatcher.getInstance().addDataChangedListener(this, false);
@@ -1379,7 +1379,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      */
     public void dispose() {
         DataEventDispatcher.getInstance().removeDataChangedListener(this);
-        ObjectMappingEventDispatcher.removeObserver(this);
+        ObjectMappingDispatcher.removeObserver(this);
         OpenOMETracker.INSTANCE.removeOME(this);
         getEditorSite().getActionBars().setGlobalActionHandler(
                 ActionFactory.REFRESH.getId(), null);

@@ -12,6 +12,7 @@ Export-Package: com.thoughtworks.xstream;x-internal:=true,
  com.thoughtworks.xstream.converters;x-internal:=true,
  com.thoughtworks.xstream.io;x-internal:=true,
  org.eclipse.jubula.tools,
+ org.eclipse.jubula.tools.internal.om,
  org.eclipse.jubula.tools.internal.constants;
   x-friends:="com.bredexsw.jubula.rc.common,
    com.bredexsw.jubula.rc.html,
@@ -316,4 +317,5 @@ Export-Package: com.thoughtworks.xstream;x-internal:=true,
    org.eclipse.jubula.rc.swt"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
+ org.apache.commons.codec;bundle-version="[1.9.0,2.0.0)";resolution:=optional,
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)"

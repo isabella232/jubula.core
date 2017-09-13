@@ -83,6 +83,8 @@
 								<plugin id="javax.xml.stream" />
 								<plugin id="org.xmlpull" />
 								<plugin id="com.thoughtworks.xstream" />
+                                <plugin id="org.eclipse.jdt.annotation" />
+                                <plugin id="org.slf4j.jcl" />
 							</excludes>
 						</configuration>
 					</execution>

@@ -15,7 +15,7 @@
       license-feature-version="0.0.0">
 
    <description url="http://www.eclipse.org/jubula">
-      Eclipse functional UI testing environment - API. This feature contains the API core bundles and its transitive dependencies. Its artefacts can thereby also be used without a running OSGi container.
+      Eclipse functional UI testing environment - API. This feature contains the API embedded bundles and its transitive dependencies. Its artefacts can thereby also be used without a running OSGi container.
    </description>
 
    <copyright url="http://www.eclipse.org/jubula">
@@ -34,7 +34,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
    </license>
 
    <includes
-         id="org.eclipse.jubula.feature.api.core"
+         id="org.eclipse.jubula.feature.api.embedded"
          version="0.0.0"/>
 
    <plugin
@@ -56,6 +56,20 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          download-size="0"
          install-size="0"
          version="1.3.1.v201111240924"
+         unpack="false"/>
+         
+   <plugin
+         id="org.slf4j.jcl"
+         download-size="0"
+         install-size="0"
+         version="1.7.2.v20130115-1340"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jdt.annotation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

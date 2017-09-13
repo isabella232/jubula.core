@@ -17,6 +17,7 @@
 
 	<modules>
         <module>../org.eclipse.jubula.autagent</module>
+        <module>../org.eclipse.jubula.autagent.common</module>
         <module>../org.eclipse.jubula.autagent.api</module>
         <module>../org.eclipse.jubula.rc.common</module>
         <module>../org.eclipse.jubula.rc.common.agent</module>

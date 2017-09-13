@@ -19,6 +19,9 @@ import java.util.Map;
 import org.apache.commons.lang.Validate;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jubula.autagent.common.desktop.DesktopIntegration;
+import org.eclipse.jubula.autagent.common.gui.ObjectMappingFrame;
+import org.eclipse.jubula.autagent.common.gui.utils.AgentOMKeyProperitesUtils;
 import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.Result;
 import org.eclipse.jubula.client.exceptions.ActionException;
@@ -36,6 +39,7 @@ import org.eclipse.jubula.communication.CAP;
 import org.eclipse.jubula.communication.internal.IExceptionHandler;
 import org.eclipse.jubula.communication.internal.message.CAPTestMessage;
 import org.eclipse.jubula.communication.internal.message.CAPTestResponseMessage;
+import org.eclipse.jubula.communication.internal.message.ChangeAUTModeMessage;
 import org.eclipse.jubula.communication.internal.message.Message;
 import org.eclipse.jubula.communication.internal.message.MessageCap;
 import org.eclipse.jubula.communication.internal.message.MessageParam;
@@ -47,9 +51,12 @@ import org.eclipse.jubula.toolkit.ToolkitInfo;
 import org.eclipse.jubula.toolkit.internal.AbstractToolkitInfo;
 import org.eclipse.jubula.tools.AUTIdentifier;
 import org.eclipse.jubula.tools.Profile;
+import org.eclipse.jubula.tools.internal.constants.InputConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.jubula.tools.internal.constants.InputCodeHelper.UserInput;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.om.ObjectMappingDispatcher;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.serialisation.SerializedImage;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ComponentClass;
@@ -404,5 +411,89 @@ public class AUTImpl implements AUT {
      */
     public void setCAPtoConsoleLogging(boolean logCapToConsole) {
         m_logToConsole = logCapToConsole;
+    }
+    
+    /**
+     * starts the object Mapping mode in a non blocking way
+     */
+    public void startOMM() {
+        if (!isConnected()) {
+            return;
+        }
+        ChangeAUTModeMessage message = 
+                new ChangeAUTModeMessage();
+        message.setMode(
+                ChangeAUTModeMessage.AGENT_OBJECT_MAPPING);
+        int modifier = AgentOMKeyProperitesUtils.getModifier();
+        UserInput userInput = AgentOMKeyProperitesUtils.getInput();
+        int input = userInput.getCode();
+        int inputType = userInput.getType();
+        message.setMappingKeyModifier(modifier);
+        switch (inputType) {
+            case InputConstants.TYPE_MOUSE_CLICK:
+                message.setMappingMouseButton(input);
+                message.setMappingKey(InputConstants.NO_INPUT);
+                break;
+            case InputConstants.TYPE_KEY_PRESS:
+                // fall through
+            default:
+                message.setMappingKey(input);
+                message.setMappingMouseButton(InputConstants.NO_INPUT);
+                break;
+        }
+        message.setMappingWithParentsKeyModifier(192);
+        switch (1) {
+            case InputConstants.TYPE_MOUSE_CLICK:
+                message.setMappingWithParentsMouseButton(65);
+                message.setMappingWithParentsKey(InputConstants.NO_INPUT);
+                break;
+            case InputConstants.TYPE_KEY_PRESS:
+                // fall through
+            default:
+                message.setMappingWithParentsKey(65);
+                message.setMappingWithParentsMouseButton(
+                        InputConstants.NO_INPUT);
+                break;
+        }
+        try {
+            m_instance.send(message);
+        } catch (NotConnectedException e) {
+            throw new CommunicationException(e);
+        } catch (IllegalArgumentException e) {
+            throw new CommunicationException(e);
+        } catch (org.eclipse.jubula.tools.internal.exception.
+                CommunicationException e) {
+            throw new CommunicationException(e);
+        }
+        ObjectMappingDispatcher.removeObserver(ObjectMappingFrame.INSTANCE);
+        ObjectMappingDispatcher.addObserver(ObjectMappingFrame.INSTANCE);
+
+    }
+
+    /**
+     * 
+     */
+    public void stopOMM() {
+        try {
+            ChangeAUTModeMessage message = new ChangeAUTModeMessage();
+            message.setMode(ChangeAUTModeMessage.TESTING);
+
+            m_instance.send(message);
+
+            ObjectMappingDispatcher
+            .removeObserver(ObjectMappingFrame.INSTANCE);
+            
+        } catch (CommunicationException e) {
+            // ignore
+        } catch (IllegalArgumentException ex) {
+            // ignore
+        } catch (NotConnectedException e) {
+            // ignore
+        } catch (org.eclipse.jubula.tools.internal.exception
+                .CommunicationException e) { 
+            // ignore
+        } finally {
+            DesktopIntegration.setObjectMappingAUT(null);
+        }
     }
 }

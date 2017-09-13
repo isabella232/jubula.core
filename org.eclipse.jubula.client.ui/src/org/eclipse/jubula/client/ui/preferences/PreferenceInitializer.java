@@ -17,6 +17,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jubula.client.ui.Plugin;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
+import org.eclipse.jubula.tools.internal.constants.MappingKeyConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
@@ -141,14 +142,11 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     private static void initializeDefaultPreferencesKeyBoardShortCuts(
             IPreferenceStore prefStore) {
         prefStore.setDefault(Constants.MAPPING_MOD_KEY,
-                org.eclipse.jubula.client.core.constants.Constants
-                .MAPPINGMOD1_KEY_DEFAULT);
+                MappingKeyConstants.MAPPINGMOD1_KEY_DEFAULT);
         prefStore.setDefault(Constants.MAPPING_TRIGGER_KEY,
-                org.eclipse.jubula.client.core.constants.Constants
-                .MAPPING_TRIGGER_DEFAULT);
+                MappingKeyConstants.MAPPING_TRIGGER_DEFAULT);
         prefStore.setDefault(Constants.MAPPING_TRIGGER_TYPE_KEY,
-                org.eclipse.jubula.client.core.constants.Constants
-                .MAPPING_TRIGGER_TYPE_DEFAULT);
+                MappingKeyConstants.MAPPING_TRIGGER_TYPE_DEFAULT);
 
         prefStore.setDefault(Constants.MAPPING_WITH_PARENTS_MOD_KEY,
                 Constants.MAPPING_WP_MOD1_KEY_DEFAULT);
