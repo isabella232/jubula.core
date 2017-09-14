@@ -79,7 +79,9 @@
             <entry>
               <emphasis role="input">-deletesummaries</emphasis><?linebreak?>
               e.g. <emphasis>-deletesummaries</emphasis><?linebreak?>
-              Delete test result summaries and their details. <?linebreak?>
+              Deletes all test result summaries and their details.
+              To specify a certain group of summaries and their details that should deleted use
+              the additional parameters: -days, -project and -version. <?linebreak?>
               (<xref linkend="delete-test-result-summaries"/>)
             </entry>
           </row>
@@ -88,7 +90,9 @@
             <entry>
               <emphasis role="input">-deleteresultdetails</emphasis><?linebreak?>
               e.g. <emphasis>-deleteresultdetails</emphasis><?linebreak?>
-               Delete test results. Test result summaries will not be deleted. <?linebreak?>
+               Deletes all test result details. Test result summaries will not be deleted.
+               To specify a certain group of details that should be deleted use
+               the additional parameters: -days, -project and -version. <?linebreak?>
               (<xref linkend="delete-test-result-details"/>)
             </entry>
           </row>
