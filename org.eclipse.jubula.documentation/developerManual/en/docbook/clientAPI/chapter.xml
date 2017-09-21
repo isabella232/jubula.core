@@ -357,10 +357,37 @@
             </listitem>
         </itemizedlist>
         <figure xml:id="test-execution">
-            <title>Exectuing a first test</title>
+            <title>Executing a first test</title>
             <mediaobject>
                 <imageobject>
                     <imagedata fileref="images/test-execution.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    
+    <section>
+        <title>Working with Actionhandlers</title>
+        <para>Actionhandlers are a way to execute actions without creating a CAP
+            manually first, they create and validate the CAP internally
+            when a method is called.</para>
+        <para>
+            The idea behind using Actionhandlers is to easier modularize tests.
+            If a parameter of a method is null the action will not be executed,
+            you can therefore create modules where not all actions are executed if the
+            data for them is null.
+            This allows to cover a wide range of potential tests with a single method call.
+        </para>
+        <para>
+            The general setup for API usage is the same as in the previous section.
+            However beign able to execute a test we need to first register the AUT
+            at the AUTRegistry, otherwise upon executing a test an Exception will occur.
+        </para>
+        <figure xml:id="actionhandler-test-execution">
+            <title>Executing a test using an Actionhandler</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/actionhandler-test.png" />
                 </imageobject>
             </mediaobject>
         </figure>
