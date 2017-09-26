@@ -156,6 +156,7 @@ public class TableTester extends AbstractTableTester {
                                 rowCount, col, false);
                         if (col == 0
                                 && (comp.getStyle() & SWT.CHECK) == SWT.CHECK) {
+                            itemBounds.width += itemBounds.x;
                             itemBounds.x = 0;
                         }
                         final org.eclipse.swt.graphics.Point 
