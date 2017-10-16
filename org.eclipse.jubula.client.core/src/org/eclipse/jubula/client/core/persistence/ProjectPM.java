@@ -1738,10 +1738,8 @@ public class ProjectPM extends PersistenceManager
                     // if the project uses an illegal project, then it is also illegal
                 for (IProjectPO project : illegalProjects) {
                     if (project.getGuid().equals(reused.getProjectGuid())
-                            && project.getMajorProjectVersion().equals(
-                                reused.getMajorNumber())
-                            && project.getMinorProjectVersion().equals(
-                                reused.getMinorNumber())) {
+                            && project.getProjectVersion().equals(
+                                reused.getProjectVersion())) {
                         
                         illegalProjects.add(projectToCheck);
                         
