@@ -8,13 +8,9 @@
  * Contributors:
  *     BREDEX GmbH - initial API and implementation and/or initial documentation
  *******************************************************************************/
-/**
- * 
- */
 package org.eclipse.jubula.rc.javafx.components;
 
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
-import org.eclipse.jubula.rc.common.exception.ComponentNotManagedException;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
 import javafx.beans.property.ReadOnlyProperty;
@@ -30,7 +26,7 @@ import javafx.event.EventTarget;
  * 
  * @param <T> the Type the listener should be for
  */
-public class UpdateHierachryChangeListener<T> implements ChangeListener<T> {
+public class UpdateHierachyChangeListener<T> implements ChangeListener<T> {
    
     @Override
     public void changed(ObservableValue<? extends T> observable,
@@ -42,14 +38,9 @@ public class UpdateHierachryChangeListener<T> implements ChangeListener<T> {
                 EventTarget eventTarget = (EventTarget) bean;
                 AUTJavaFXHierarchy hierarchy =
                         ComponentHandler.getAutHierarchy();
-                try {
-                    if (hierarchy.getComponentIdentifier(eventTarget) != null) {
-                        hierarchy.removeComponentFromHierarchy(eventTarget);
-                        hierarchy.createHierarchyFrom(eventTarget);
-                    }
-                } catch (ComponentNotManagedException e) {
-                    // ignore this since it is not managed it should not be
-                    // refreshed
+                if (hierarchy.getHierarchyContainer(eventTarget) != null) {
+                    hierarchy.removeComponentFromHierarchy(eventTarget);
+                    hierarchy.createHierarchyFrom(eventTarget);
                 }
             }
         }

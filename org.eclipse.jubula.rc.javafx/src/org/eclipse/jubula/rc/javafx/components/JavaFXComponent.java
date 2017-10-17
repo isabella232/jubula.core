@@ -28,7 +28,7 @@ import org.eclipse.jubula.rc.common.components.AUTComponent;
 public class JavaFXComponent extends AUTComponent<EventTarget> {
     /** listener which updates the hierarchy if there is a change in the ID */
     private static ChangeListener<String> idChangeListener =
-            new UpdateHierachryChangeListener<String>();
+            new UpdateHierachyChangeListener<String>();
     
     /**
      * create an instance from a JavaFX component. This constructor is used when
