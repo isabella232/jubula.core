@@ -533,12 +533,27 @@ abstract class NodePO implements INodePO {
      * @param parent the parent to check
      * @return true if there is a circular dependence, false otherwise.
      */
-    public boolean hasCircularDependences(INodePO parent) {
+    public boolean hasCircularDependencies(INodePO parent) {
 
         DependencyCheckerOp op = new DependencyCheckerOp(parent);
         TreeTraverser traverser = new TreeTraverser(this, op);
         traverser.traverse(true);
         return op.hasDependency();
+    }
+    
+    /**
+     * @param parent the parent to check
+     * @return the path where the dependency occurs
+     * 
+     */
+    public String collectPathtoConflictNode(INodePO parent) {
+        
+        DependencyCheckerOp op = 
+                new DependencyCheckerOp(parent);
+        TreeTraverser traverser = new TreeTraverser(this, op);
+        traverser.traverse(true);
+        String dependencyPath = op.getDependencyPath();
+        return dependencyPath;
     }
     
     /**

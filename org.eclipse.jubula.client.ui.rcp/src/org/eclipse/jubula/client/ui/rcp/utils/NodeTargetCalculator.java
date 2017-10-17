@@ -95,7 +95,7 @@ public class NodeTargetCalculator {
             }
             res = new NodeTarget(newPos, target.getParentNode());
         }
-        if (res != null && source != null && source.hasCircularDependences(
+        if (res != null && source != null && source.hasCircularDependencies(
                 res.getNode().getSpecAncestor())) {
             return null;
         }

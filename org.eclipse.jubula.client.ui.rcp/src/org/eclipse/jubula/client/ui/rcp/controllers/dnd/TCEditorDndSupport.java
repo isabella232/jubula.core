@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.map.HashedMap;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
@@ -47,6 +48,8 @@ import org.eclipse.jubula.client.core.persistence.PMDirtyVersionException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
 import org.eclipse.jubula.client.core.utils.RefToken;
+import org.eclipse.jubula.client.ui.constants.Constants;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.MultipleTCBTracker;
 import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractTestCaseEditor;
@@ -57,6 +60,7 @@ import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator;
 import org.eclipse.jubula.client.ui.rcp.utils.NodeTargetCalculator.NodeTarget;
 import org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -71,6 +75,11 @@ import org.eclipse.osgi.util.NLS;
  * @created 25.03.2008
  */
 public class TCEditorDndSupport extends AbstractEditorDndSupport {
+    
+    /**
+     * String to compare if the Message for a circular Dependency was already reported
+     */
+    private static String reportMessage = StringConstants.EMPTY;
 
     /**
      * Private constructor
@@ -564,13 +573,14 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
             } else if (dropNode instanceof IExecTestCasePO) {
                 dropSpecTC = ((IExecTestCasePO)dropNode).getSpecTestCase();
             }
-            if (dropSpecTC.hasCircularDependences(targSpecTC)) {
+            if (dropSpecTC.hasCircularDependencies(targSpecTC)) {
                 return false;
             }
         }
         return true;
     }
-    
+
+
     /**
      * Returns the full list of nodes by adding grandchildren of ControllerPOs
      * @param nodes the list of nodes
@@ -645,11 +655,35 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
             }
             ISpecTestCasePO specTcGUI = (ISpecTestCasePO) dropTarget.
                     getSpecAncestor();
-            if (transferGUI.hasCircularDependences(specTcGUI)) {
+            if (transferGUI.hasCircularDependencies(specTcGUI)) {
+                reportCircularDependencies(transferGUI, specTcGUI);
                 return false;
             }
         }
         return true;
+    }
+    
+    /**
+     * write a message to the console to notify the user of an attempt
+     * to add a TestCase that would result in a recursive call
+     * @param transferGUI the node at which a circular dependency would occur by performing the drop
+     * @param specTcGUI 
+     * 
+     */
+    private static void reportCircularDependencies(
+            INodePO transferGUI, ISpecTestCasePO specTcGUI) {
+        Plugin plugin = Plugin.getDefault();
+        if (transferGUI.getParentNode() != null) {
+            String path = transferGUI.collectPathtoConflictNode(specTcGUI);
+            String message = "CIRCULAR DEPENDENCIES AT " + path + //$NON-NLS-1$
+                " FOUND TESTCASE NOT APPLIED"; //$NON-NLS-1$
+            if (getReportedMessage().equals(message)) {
+                return;
+            }
+            setReportedMessage(message);
+            Status status = new Status(2, Constants.PLUGIN_ID, message);
+            plugin.writeStatus(status, Constants.PLUGIN_ID);
+        }
     }
 
     /**
@@ -710,5 +744,19 @@ public class TCEditorDndSupport extends AbstractEditorDndSupport {
             PMDirtyVersionException, PMException {
         return TestCaseBP.addReferencedTestCase(editSupport, target, 
                 (ISpecTestCasePO) node, pos);
+    }
+
+    /**
+     * @return the last reported circular dependecy  message
+     */
+    public static String getReportedMessage() {
+        return reportMessage;
+    }
+
+    /**
+     * @param message reported circular dependecy  message
+     */
+    public static void setReportedMessage(String message) {
+        reportMessage = message;
     }
 }

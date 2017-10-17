@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.util.List;
+
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * checks for nodes if they have dependencies with a certain parent
@@ -24,6 +27,11 @@ public class DependencyCheckerOp
      * dependency finder implementation
      */
     private DependencyFinderOp m_dependencyFinder;
+    
+    /**
+     * the path to the node that would cause circular dependencies
+     */
+    private String m_dependencyPath;
 
     /**
      * contructor
@@ -54,8 +62,23 @@ public class DependencyCheckerOp
         }
 
         m_dependencyFinder.operate(ctx, parent, node, alreadyVisited);
+        if (hasDependency()) {
+            buildPathString(ctx.getCurrentTreePath());
+        }
         
         return true;
+    }
+
+    /**
+     * @param currentTreePath List of all nodes visited
+     */
+    private void buildPathString(List<INodePO> currentTreePath) {
+        StringBuilder sb =  new StringBuilder();
+        for (INodePO node : currentTreePath) {
+            sb.append(StringConstants.SLASH);
+            sb.append(node.getName());
+        }
+        m_dependencyPath = sb.toString();
     }
 
     /**
@@ -65,5 +88,12 @@ public class DependencyCheckerOp
      */
     public boolean hasDependency() {
         return !m_dependencyFinder.getDependentNodes().isEmpty();
+    }
+
+    /**
+     * @return the path where the dependency is located
+     */
+    public String getDependencyPath() {
+        return m_dependencyPath;
     }
 }
