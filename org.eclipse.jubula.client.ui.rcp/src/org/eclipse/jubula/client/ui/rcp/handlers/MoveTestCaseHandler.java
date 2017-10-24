@@ -23,6 +23,7 @@ import javax.persistence.EntityTransaction;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.window.Window;
@@ -209,34 +210,13 @@ public class MoveTestCaseHandler extends AbstractHandler {
             for (IReusedProjectPO project : reusedProjects) {
                 projectNamesList.add(project.getName());
             }
-
-            String [] projectNames = 
-                projectNamesList.toArray(new String [projectNamesList.size()]);
-            ReusedProjectSelectionDialog dialog;
-            if (hasRefDataCube(selectionList)) {
-                dialog = 
-                        new ReusedProjectSelectionDialog(
-                            getActiveShell(), projectNames, 
-                            Messages.MoveTestCaseDialogShellTitle,
-                            Messages.MoveTestCaseDialogCTDHint,
-                            true,
-                            IconConstants.MOVE_TC_DIALOG_STRING, 
-                            Messages.MoveTestCaseDialogShellTitle);
-            } else {
-                dialog = 
-                        new ReusedProjectSelectionDialog(
-                            getActiveShell(), projectNames, 
-                            Messages.MoveTestCaseDialogShellTitle,
-                            Messages.MoveTestCaseDialogMessage,
-                            IconConstants.MOVE_TC_DIALOG_STRING, 
-                            Messages.MoveTestCaseDialogShellTitle);
+            boolean emptyList = checkForEmptyProjectList(projectNamesList);
+            if (emptyList) {
+                return null;
             }
-            dialog.setHelpAvailable(true);
-            dialog.create();
-            DialogUtils.setWidgetNameForModalDialog(dialog);
-            Plugin.getHelpSystem().setHelp(dialog.getShell(), 
-                ContextHelpIds.TESTCASE_MOVE_EXTERNAL);
-            dialog.open();
+
+            ReusedProjectSelectionDialog dialog = 
+                    openDialog(selectionList, projectNamesList);
             if (dialog.getReturnCode() == Window.OK) {
                 // Check which project was selected
                 String selectedName = dialog.getSelectedName();
@@ -255,7 +235,65 @@ public class MoveTestCaseHandler extends AbstractHandler {
 
         return null;
     }
+
+    /**
+     * @param selectionList List of selcted Nodes
+     * @param projectNamesList List of referenced
+     * @return the dialog window
+     */
+    private ReusedProjectSelectionDialog openDialog(
+            List<INodePO> selectionList, List<String> projectNamesList) {
+        String [] projectNames = 
+            projectNamesList.toArray(new String [projectNamesList.size()]);
+        ReusedProjectSelectionDialog dialog;
+        if (hasRefDataCube(selectionList)) {
+            dialog = 
+                    new ReusedProjectSelectionDialog(
+                        getActiveShell(), projectNames, 
+                        Messages.MoveTestCaseDialogShellTitle,
+                        Messages.MoveTestCaseDialogCTDHint,
+                        true,
+                        IconConstants.MOVE_TC_DIALOG_STRING, 
+                        Messages.MoveTestCaseDialogShellTitle);
+        } else {
+            dialog = 
+                    new ReusedProjectSelectionDialog(
+                        getActiveShell(), projectNames, 
+                        Messages.MoveTestCaseDialogShellTitle,
+                        Messages.MoveTestCaseDialogMessage,
+                        IconConstants.MOVE_TC_DIALOG_STRING, 
+                        Messages.MoveTestCaseDialogShellTitle);
+        }
+        dialog.setHelpAvailable(true);
+        dialog.create();
+        DialogUtils.setWidgetNameForModalDialog(dialog);
+        Plugin.getHelpSystem().setHelp(dialog.getShell(), 
+            ContextHelpIds.TESTCASE_MOVE_EXTERNAL);
+        dialog.open();
+        return dialog;
+    }
     
+    /**
+     * @param projectNamesList the list of referenced projects
+     * @return wether the list is empty or not
+     */
+    private boolean checkForEmptyProjectList(List<String> projectNamesList) {
+        
+        if (projectNamesList.size() == 0) {
+            MessageDialog dialog =  new MessageDialog(getActiveShell(),
+                    Messages.MoveTestCaseDialogShellTitle,
+                    Window.getDefaultImage(),
+                    Messages.NoReferencedProject,
+                    MessageDialog.INFORMATION,
+                    new String[] {
+                        Messages.UtilsOk},
+                    0);
+            dialog.open();
+            return true;
+        }
+        return false;
+    }
+
     /** {@inheritDoc} */
     public void setEnabled(boolean enabled) {
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();

@@ -471,6 +471,7 @@ public class Messages extends NLS {
     public static String NoAUTConfigPageForToolkit;
     public static String NoComponentNames;
     public static String NoNullConnectionAllowed;
+    public static String NoReferencedProject;
     public static String NoServer;
     public static String NotOfCorrectType;
     public static String NotSupported;
@@ -971,6 +972,7 @@ public class Messages extends NLS {
     public static String UtilsLocalhost2;
     public static String UtilsLocalhost3;
     public static String UtilsNo;
+    public static String UtilsOk;
     public static String UtilsQuestion;
     public static String UtilsRemember;
     public static String UtilsSpecPerspective;
