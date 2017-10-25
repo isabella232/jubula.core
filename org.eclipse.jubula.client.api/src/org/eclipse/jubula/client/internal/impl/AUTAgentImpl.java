@@ -171,6 +171,7 @@ public class AUTAgentImpl implements AUTAgent {
         } else {
             throw new IllegalStateException("AUT-Agent connection is already disconnected"); //$NON-NLS-1$
         }
+        Thread.interrupted();
     }
 
     /** {@inheritDoc} */

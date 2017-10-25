@@ -131,6 +131,7 @@ public class AUTImpl implements AUT {
         } else {
             throw new IllegalStateException("AUT connection is already disconnected"); //$NON-NLS-1$
         }
+        Thread.interrupted();
     }
 
     /** {@inheritDoc} */
