@@ -127,6 +127,7 @@ public class AUTImpl implements AUT {
     /** {@inheritDoc} */
     public void disconnect() {
         if (isConnected()) {
+            m_instance.getCommunicator().setIsServerSocketClosable(true);
             m_instance.close();
         } else {
             throw new IllegalStateException("AUT connection is already disconnected"); //$NON-NLS-1$
