@@ -21,7 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jubula.app.autrun.i18n.Messages;
+import org.eclipse.jubula.autagent.OsgiAUTStartHelper;
 import org.eclipse.jubula.autagent.common.commands.IStartAut;
+import org.eclipse.jubula.autagent.common.utils.AutStartHelperRegister;
 import org.eclipse.jubula.communication.internal.connection.ConnectionState;
 import org.eclipse.jubula.communication.internal.connection.RestartAutProtocol;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
@@ -150,6 +152,8 @@ public class AutRunner {
         String className = "org.eclipse.jubula.autagent.common.commands.Start" //$NON-NLS-1$
             + autToolkit + "AutServerCommand"; //$NON-NLS-1$
         Class< ? > autServerClass = Class.forName(className);
+        AutStartHelperRegister.INSTANCE.setAutStartHelper(
+                new OsgiAUTStartHelper());
         m_agentAddr = agentAddr;
         m_autConfiguration = new HashMap<String, String>(autConfiguration);
         m_autConfiguration.put(AutConfigConstants.AUT_AGENT_HOST, 
@@ -159,6 +163,7 @@ public class AutRunner {
         m_autConfiguration.put(AutConfigConstants.AUT_NAME, 
                 autIdentifier.getExecutableName());
         m_startAut = (IStartAut)autServerClass.newInstance();
+        
     }
     
     /**

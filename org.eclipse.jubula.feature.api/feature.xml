@@ -43,6 +43,13 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="1.0.1.v201004272200"
          unpack="false"/>
+      
+   <plugin
+         id="ch.qos.logback.slf4j" 
+         download-size="0"
+         install-size="0"
+         version="1.0.7.v201505121915"
+         unpack="false"/>
 
    <plugin
          id="org.xmlpull"
