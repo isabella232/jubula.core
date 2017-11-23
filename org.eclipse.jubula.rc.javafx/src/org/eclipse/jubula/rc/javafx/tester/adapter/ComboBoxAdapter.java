@@ -14,6 +14,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.common.driver.ClickOptions;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
@@ -22,6 +23,9 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
+import org.eclipse.jubula.toolkit.enums.ValueSets;
+import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 
 import com.sun.javafx.scene.control.skin.ComboBoxBaseSkin;
 import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
@@ -96,7 +100,9 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
 
     @Override
     public void selectAll() {
-        StepExecutionException.throwUnsupportedAction();
+        getRobot().clickAtCurrentPosition(getRealComponent(), 1, 1);
+        TimeUtil.delay(100);
+        getRealComponent().getEditor().selectAll();
     }
 
     @Override
@@ -129,7 +135,23 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
     @Override
     public void input(String text, boolean replace)
         throws StepExecutionException, IllegalArgumentException {
-        StepExecutionException.throwUnsupportedAction();
+        if (!hasFocus()) {
+            TimeUtil.delay(100);
+            getRobot().clickAtCurrentPosition(getRealComponent(), 1, 1);
+        }
+        if (isEditable()) {
+            if (replace) {
+                selectAll();
+                if (StringUtils.EMPTY.equals(text)) {
+                    getRobot().keyStroke(ValueSets.KeyStroke.delete.rcValue());
+                }
+            }
+            getRobot().type(getRealComponent(), text);
+        } else {
+            throw new StepExecutionException(
+                    "The combobox is not editable", EventFactory //$NON-NLS-1$
+                        .createActionError("The combobox is not editable")); //$NON-NLS-1$
+        }
     }
 
     @Override
