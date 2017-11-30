@@ -36,6 +36,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Skin;
+import javafx.scene.control.TextField;
 
 /**
  * ComboBox Adapter
@@ -68,13 +69,21 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
 
                     @Override
                     public String call() throws Exception {
-                        ObservableList<Node> children = getRealComponent()
-                                .getChildrenUnmodifiable();
+                        T comboBox = getRealComponent();
+                        if (comboBox.isEditable()) {
+                            TextField editor = comboBox.getEditor();
+                            if (editor != null) {
+                                return editor.getText();
+                            }
+                        }
+                        ObservableList<Node> children =
+                                comboBox.getChildrenUnmodifiable();
                         for (Node node : children) {
                             if (node instanceof ListCell) {
-                                IComponent adapter = (IComponent) 
-                                        AdapterFactoryRegistry.getInstance()
-                                        .getAdapter(IComponent.class, node);
+                                IComponent adapter =
+                                        (IComponent) AdapterFactoryRegistry
+                                                .getInstance().getAdapter(
+                                                        IComponent.class, node);
                                 if (adapter != null
                                         && adapter instanceof ITextComponent) {
                                     return ((ITextComponent) adapter).getText();
