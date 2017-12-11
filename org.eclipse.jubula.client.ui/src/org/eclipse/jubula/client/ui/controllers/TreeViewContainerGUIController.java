@@ -72,7 +72,7 @@ public class TreeViewContainerGUIController {
             IStructuredSelection selection = 
                     (IStructuredSelection) tv.getSelection();
             for (Object obj: selection.toArray()) {
-                tv.expandToLevel(obj, AbstractTreeViewer.ALL_LEVELS);
+                tv.expandToLevel(obj, 10);
             }
         }
     }

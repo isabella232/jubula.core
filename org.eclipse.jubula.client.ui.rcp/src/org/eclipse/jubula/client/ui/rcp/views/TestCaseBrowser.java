@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.action.GroupMarker;
@@ -231,10 +234,25 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     protected void rebuildTree() {
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
+        Object[] expandedElements = getTreeViewer().getExpandedElements();
+        List<Object> objectsToExpand = new ArrayList<>();
+        for (Object object : expandedElements) {
+            if (object instanceof IPersistentObject) {
+                IPersistentObject cat = (IPersistentObject) object;
+                Object find = GeneralStorage.getInstance().getMasterSession()
+                        .find(object.getClass(), cat.getId());
+                objectsToExpand.add(find);
+            }
+        }
         if (activeProject != null) {
-            getTreeViewer().setInput(
-                    new INodePO[] {activeProject.getSpecObjCont()});
-            getTreeViewer().expandToLevel(DEFAULT_EXPANSION);
+            getTreeViewer()
+                    .setInput(new INodePO[] { activeProject.getSpecObjCont() });
+            if (objectsToExpand.size() > 0) {
+                getTreeViewer().setExpandedElements(objectsToExpand
+                        .toArray(new Object[objectsToExpand.size()]));
+            } else {
+                getTreeViewer().expandToLevel(DEFAULT_EXPANSION);
+            }
         } else {
             getTreeViewer().setInput(null);
         }

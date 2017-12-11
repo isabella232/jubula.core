@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
@@ -226,7 +229,21 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      * {@inheritDoc}
      */
     protected void rebuildTree() {
+        Object[] expandedElements = getTreeViewer().getExpandedElements();
+        List<Object> objectsToExpand = new ArrayList<>();
+        for (Object object : expandedElements) {
+            if (object instanceof IPersistentObject) {
+                IPersistentObject cat = (IPersistentObject) object;
+                Object find = GeneralStorage.getInstance().getMasterSession()
+                        .find(object.getClass(), cat.getId());
+                objectsToExpand.add(find);
+            }
+        }
         setViewerInput();
+        if (objectsToExpand.size() > 0) {
+            getTreeViewer().setExpandedElements(objectsToExpand
+                    .toArray(new Object[objectsToExpand.size()]));
+        }
     }
 
     /**

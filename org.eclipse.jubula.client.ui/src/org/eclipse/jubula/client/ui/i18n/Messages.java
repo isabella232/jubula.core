@@ -67,6 +67,7 @@ public class Messages extends NLS {
     public static String EnterCommentDialogTitleLabel;
     public static String ErrorFetchingTestResultInformation;
     public static String ErrorOccurredWhileExecutingCommand;
+    public static String ExpandBranchMessage;
     public static String InputElementHasInvalidTypeReturningEmptyArray;
     public static String JobFilterSummaryView;
     public static String NoEditorInputCouldBeCreated;
