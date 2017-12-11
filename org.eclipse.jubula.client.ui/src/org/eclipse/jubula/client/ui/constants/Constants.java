@@ -211,6 +211,12 @@ public interface Constants {
     /** Key for report generator style to be stored as a resource property */
     public static final String REPORTGENERATORSTYLE_KEY = "REPORTGENERATORSTYLE_KEY"; //$NON-NLS-1$
     
+    /** Key for the first value of the ObjectMapping Sash weight to be stored as a resource property */
+    public static final String OME_SASH_WEIGHT_0 = "OME_SASH0_PREF_KEY"; //$NON-NLS-1$
+    
+    /** Key for the second value of the ObjectMapping Sash weight to be stored as a resource property */
+    public static final String OME_SASH_WEIGHT_1 = "OME_SASH1_PREF_KEY"; //$NON-NLS-1$
+    
     /** Key for m_text value to be stored as a resource property */
     public static final String MAPPING_MOD_KEY = "MAPPINGMOD1_PREF_KEY"; //$NON-NLS-1$
 

@@ -27,6 +27,7 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -75,6 +76,7 @@ import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
+import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -111,6 +113,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.graphics.Image;
@@ -366,6 +370,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
      * {@inheritDoc}
      */
     protected void createPages() {
+        
         if (m_editorHelper == null) {
             m_editorHelper = new JBEditorHelper(this);
         }
@@ -551,7 +556,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         layout.marginWidth = 1;
         layout.marginHeight = 1;
         parent.setLayout(layout);
-        SashForm mainSash = new SashForm(parent, SWT.VERTICAL);
+        final SashForm mainSash = new SashForm(parent, SWT.VERTICAL);
         SashForm topSash = new SashForm(mainSash, SWT.HORIZONTAL);
     
         m_compNameTreeViewer = createSplitPaneViewer(topSash, 
@@ -576,7 +581,24 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         
         Plugin.getHelpSystem().setHelp(parent,
             ContextHelpIds.OBJECT_MAP_EDITOR);
-        mainSash.setWeights(DEFAULT_SASH_WEIGHTS);
+        final IPreferenceStore prefStore = Plugin.getDefault()
+                .getPreferenceStore();
+        int divider = prefStore.getInt(Constants.OME_SASH_WEIGHT_0);
+        int dividerSecond = prefStore.getInt(Constants.OME_SASH_WEIGHT_1);
+        if (divider > 0 && dividerSecond > 0) {
+            mainSash.setWeights(new int[] { divider, dividerSecond });
+        } else {
+            mainSash.setWeights(DEFAULT_SASH_WEIGHTS);
+        }
+        mainSash.addDisposeListener(new DisposeListener() {
+            
+            @Override
+            public void widgetDisposed(DisposeEvent e) {
+                int[] weights = mainSash.getWeights();
+                prefStore.setValue(Constants.OME_SASH_WEIGHT_0, weights[0]);
+                prefStore.setValue(Constants.OME_SASH_WEIGHT_1, weights[1]);
+            }
+        });
         return mainSash;
     }
 
@@ -1312,6 +1334,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     public Object getAdapter(Class adapter) {
         Object superAdapter = super.getAdapter(adapter);
         if (superAdapter != null) {
