@@ -3704,6 +3704,7 @@
               <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
               <instanceof value="org.eclipse.jubula.client.core.model.ICapPO" />
               <instanceof value="org.eclipse.jubula.client.core.model.IControllerPO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.ICommentPO" />
             </or>
           </iterate>
           <not>
