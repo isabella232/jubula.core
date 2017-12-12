@@ -12,6 +12,23 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
+    <para>
+    <emphasis role="strong">UI improvements</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
+    <para>
+        After refreshing the project the Test Case Browser and the Test Suite Browser
+    have the same expanded state as before.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+        The horizontal divider in the Object Mapping Editor is now remembered after closing the editor or the application.
+        This setting is saved in the workspace.
+    </para>
+  </listitem>
+</itemizedlist>
   <para>
     <emphasis role="strong">Removed support to import xml files</emphasis>
   </para>
