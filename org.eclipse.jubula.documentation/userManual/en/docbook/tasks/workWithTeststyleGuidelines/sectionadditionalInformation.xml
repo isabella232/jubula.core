@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="additional-information-for-specific-teststyles" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                                                              xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                                                              xmlns:xl="http://www.w3.org/1999/xlink" >
+  <title>Additional information for Teststyles</title>
+  <section xml:id="todo-teststyle">
+    <title>TODO Teststyle</title>
+    <para>The Todo Testyle is searching for a text in the name of
+     nodes in the specified context. It cannot be searched for ”<emphasis>;</emphasis>” since this is used to split into multiple search text.</para>
+     <para>If you want to search for multiple texts at the same time you can divide them by using a semicolon ”<emphasis>;</emphasis>”.
+      If this is done e.g. ”<emphasis>#TODO;%TODO</emphasis>” for both of the texts is searched.
+      That means one of them must exist in the name and a problem will be generated for it so you see it in the problems view.</para>
+  </section>
+</section>

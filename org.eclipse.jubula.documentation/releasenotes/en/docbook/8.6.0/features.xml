@@ -12,7 +12,20 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
+  <para>
+    <emphasis role="strong">New Teststyle to gather TODO's in the problems view</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
     <para>
+        The Teststyle searches for a specific text (default <literal>#TODO</literal>) in names of nodes e.g. Test Cases.
+        It can be adjusted to search for other text, in specific context, cases sensitive or also in inactive Nodes.
+        See the documentation for more information.
+    </para>
+  </listitem>
+</itemizedlist>
+  
+  <para>
     <emphasis role="strong">UI improvements</emphasis>
   </para>
   <itemizedlist>
@@ -29,6 +42,7 @@
     </para>
   </listitem>
 </itemizedlist>
+
   <para>
     <emphasis role="strong">Removed support to import xml files</emphasis>
   </para>

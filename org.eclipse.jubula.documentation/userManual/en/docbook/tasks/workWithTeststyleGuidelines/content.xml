@@ -17,5 +17,6 @@
   <xi:include href="sectionActivatingTeststyleForAProject.xml"/>
   <xi:include href="sectionConfiguringTeststyleForAProject.xml"/>
   <xi:include href="sectionWorkingWithTheProblemsViewToViewAndFixTeststyleProblems.xml"/>
+  <xi:include href="sectionadditionalInformation.xml"/>
   
 </section>

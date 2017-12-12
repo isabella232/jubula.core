@@ -34,6 +34,64 @@
             <attributes></attributes>
          </check>
       </category>
+      <category
+            description="ToDo Rules"
+            name="ToDo Rules">
+            <check
+               activeByDefault="false"
+               class="org.eclipse.jubula.client.teststyle.impl.standard.checks.TodoCheck"
+               defaultSeverity="INFO"
+               description="%check.todo.description"
+               id="org.eclipse.jubula.client.teststyle.impl.standard.checks.TodoCheck"
+               name="%check.todo.name">
+            <contexts>
+            <ExecTestCase
+                  id="ExecTestCaseContext">
+            </ExecTestCase>
+            <Caps
+                  id="CapContext">
+            </Caps>
+            <EventHandler
+                  id="EventHandlerContext">
+            </EventHandler>
+            <TestSuites
+                  id="TestSuiteContext">
+            </TestSuites>
+            <TestJobs
+                  id="TestJobContext">
+            </TestJobs>
+            <SpecTestCases
+                  id="SpecTestCaseContext">
+            </SpecTestCases>
+            <ObjectMappingCategory
+                  id="ObjectMappingCategoryContext">
+            </ObjectMappingCategory>
+            <Categories
+                  id="CategoryContext">
+            </Categories>
+            <Comment
+                  id="CommentContext">
+            </Comment>
+            </contexts>
+            <attributes>
+               <Attribute
+                     defaultValue="#TODO"
+                     description="%check.todo.annotation.description"
+                     name="annotation">
+               </Attribute>
+               <Attribute
+                     defaultValue="true"
+                     description="%check.todo.case.sensitive.description"
+                     name="caseSensitive">
+               </Attribute>
+               <Attribute
+                     defaultValue="false"
+                     description="%check.todo.inactive.nodes.description"
+                     name="inactive">
+               </Attribute>
+            </attributes>
+         </check>
+      </category>
    </extension>
 
 </plugin>

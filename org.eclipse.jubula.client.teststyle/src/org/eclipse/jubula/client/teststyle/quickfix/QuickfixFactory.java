@@ -14,6 +14,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.events.InteractionEventDispatcher;
 import org.eclipse.jubula.client.core.model.ICategoryPO;
+import org.eclipse.jubula.client.core.model.ICommentPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
@@ -70,9 +71,10 @@ public class QuickfixFactory {
          */
         public void run(IMarker marker) {
             Object obj = getObject(marker);
-            if (obj instanceof IExecTestCasePO) {
-                IExecTestCasePO execTestCase = (IExecTestCasePO) obj;
-                AbstractOpenHandler.openEditor(execTestCase.getSpecAncestor());
+            if (obj instanceof INodePO) {
+                INodePO execTestCase = (INodePO) obj;
+                AbstractOpenHandler.openEditorAndSelectNode(
+                        execTestCase.getSpecAncestor(), execTestCase);
             } else {
                 AbstractOpenHandler.openEditor((IPersistentObject)obj);
             }
@@ -246,6 +248,8 @@ public class QuickfixFactory {
         } else if (obj instanceof ITestJobPO) {
             return new Quickfix[] { new QuickfixOpenTestJob() };
         } else if (obj instanceof IExecTestCasePO) {
+            return new Quickfix[] { new QuickfixOpenTestCase() };
+        } else if (obj instanceof ICommentPO) {
             return new Quickfix[] { new QuickfixOpenTestCase() };
         }
         return new Quickfix[] { }; 

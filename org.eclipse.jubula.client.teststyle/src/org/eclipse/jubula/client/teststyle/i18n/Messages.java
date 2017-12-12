@@ -26,6 +26,8 @@ public class Messages extends NLS {
     public static String ContextCapDescription;
     public static String ContextCentralTestDataName;
     public static String ContextCentralTestDataDescription;
+    public static String ContextCommentName;
+    public static String ContextCommentDescription;
     public static String ContextComponentName;
     public static String ContextComponentDescription;
     public static String ContextEventHandlerName;

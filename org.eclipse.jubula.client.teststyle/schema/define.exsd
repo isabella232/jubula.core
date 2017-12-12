@@ -206,6 +206,7 @@
             <element ref="ExecTestCase" minOccurs="0" maxOccurs="1"/>
             <element ref="EventHandler" minOccurs="0" maxOccurs="1"/>
             <element ref="ObjectMappingCategory" minOccurs="0" maxOccurs="1"/>
+            <element ref="Comment" minOccurs="0" maxOccurs="1"/>
          </sequence>
       </complexType>
    </element>
@@ -424,6 +425,24 @@
             <simpleType>
                <restriction base="string">
                   <enumeration value="ExecTestCaseContext">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+      </complexType>
+   </element>
+   
+   <element name="Comment">
+      <complexType>
+         <attribute name="id" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="CommentContext">
                   </enumeration>
                </restriction>
             </simpleType>

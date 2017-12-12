@@ -21,6 +21,7 @@ public class Messages extends NLS {
     
     public static String NoEmptyTestSuitesProblemDescription;
     public static String TestSuiteHasAUTProblemDescription;
+    public static String ToDoCheckDescription;
     
     static {
         // initialize resource bundle

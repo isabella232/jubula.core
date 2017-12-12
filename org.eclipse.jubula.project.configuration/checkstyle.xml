@@ -13,6 +13,7 @@
   <module name="TreeWalker">
     <module name="FileContentsHolder"/>
     <module name="Regexp">
+      <property name="id" value="mustdo"/>
       <property name="severity" value="error"/>
       <property name="format" value="(?i)to *do"/>
       <property name="message" value="Keine Todo's im Code!"/>
@@ -191,11 +192,11 @@
     </module>
   </module>
   <module name="SuppressionCommentFilter">
-    <property name="offCommentFormat" value="DOTNETDECLARE\:BEGIN"/>
-    <property name="onCommentFormat" value="DOTNETDECLARE\:END"/>
-    <metadata name="com.atlassw.tools.eclipse.checkstyle.comment" value="Allow public property variables in Message classes"/>
+    <metadata name="com.atlassw.tools.eclipse.checkstyle.comment" value="Sometimes API names force a line length violation"/>
   </module>
   <module name="SuppressionCommentFilter">
-    <metadata name="com.atlassw.tools.eclipse.checkstyle.comment" value="Sometimes API names force a line length violation"/>
+    <property name="offCommentFormat" value="CHECKSTYLE\:OFF\: ([\w\|]+)"/>
+    <property name="onCommentFormat" value="CHECKSTYLE\:ON\: ([\w\|]+)"/>
+    <property name="checkFormat" value="$1"/>
   </module>
 </module>
