@@ -595,10 +595,14 @@ public class JsonImporter {
      */
     private ICommentPO createComment(CommentDTO dto,
             boolean assignNewUuid) {
+        ICommentPO comment;
         if (dto.getUuid() != null && !assignNewUuid) {
-            return NodeMaker.createCommentPO(dto.getName(), dto.getUuid());
+            comment = NodeMaker.createCommentPO(dto.getName(), dto.getUuid());
+        } else {
+            comment = NodeMaker.createCommentPO(dto.getName());
         }
-        return NodeMaker.createCommentPO(dto.getName());
+        comment.setActive(dto.isActive());
+        return comment;
     }
     
     /**
