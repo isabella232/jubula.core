@@ -104,8 +104,6 @@ public class ListViewAdapter<T extends ListView<?>> extends
                 new Callable<Rectangle>() {
                     public Rectangle call() throws Exception {
                         final T listView = getRealComponent();
-                        listView.scrollTo(0);
-                        listView.layout();
                         listView.scrollTo(index.intValue());
                         listView.layout();
 
