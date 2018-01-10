@@ -80,6 +80,7 @@ import org.eclipse.ui.PlatformUI;
  * @created 18.04.2005
  */
 public class OpenProjectHandler extends AbstractProjectHandler {
+
     /**
      * @author BREDEX GmbH
      * @created Jan 2, 2008
@@ -225,9 +226,9 @@ public class OpenProjectHandler extends AbstractProjectHandler {
                         Messages.UIJobCleaningTestResultFromDB,
                         project.getName())) {
                     public IStatus run(IProgressMonitor monitor) {
-                        TestResultPM.cleanTestresultDetails(cleanupInterval,
-                                projGUID, projMajVer, projMinVer, projMicVer,
-                                projVerQual);
+                        TestResultPM.cleanTestresultDetails(project.getId(),
+                                cleanupInterval, projGUID, projMajVer,
+                                projMinVer, projMicVer, projVerQual);
                         monitor.done();
                         return Status.OK_STATUS;
                     }

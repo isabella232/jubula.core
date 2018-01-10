@@ -312,6 +312,16 @@ public abstract class PoMaker {
     public static ITestResultPO createTestResultPO() {
         return new TestResultPO();
     }
+
+    /**
+     * factory method for {@link TestResultCleanupInfoPO}
+     * @param parentProjectID the project id the entry is for
+     * @return new instance of {@link TestResultCleanupInfoPO}
+     */
+    public static ITestResultCleanupInfoPO createTestResultCleanupPO(
+            long parentProjectID) {
+        return new TestResultCleanupInfoPO(parentProjectID);
+    }
     
     /**
      * factory method to replace constructor
@@ -720,6 +730,13 @@ public abstract class PoMaker {
      */
     public static ICheckConfContPO createCheckConfContPO() {
         return new CheckConfContPO();
+    }
+    
+    /**
+     * @return the class of the PO
+     */
+    public static Class<TestResultCleanupInfoPO> getTestResultCleanupClass() {
+        return TestResultCleanupInfoPO.class;
     }
 
 }

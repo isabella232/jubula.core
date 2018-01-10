@@ -60,5 +60,6 @@
 	<entity class="org.eclipse.jubula.client.core.model.MonitoringReportPO" />
 	<entity class="org.eclipse.jubula.client.core.model.TestResultAdditionPO" />
 	<entity class="org.eclipse.jubula.client.core.model.DataCellPO" />
+    <entity class="org.eclipse.jubula.client.core.model.TestResultCleanupInfoPO" />
 	<embeddable class="org.eclipse.jubula.client.core.model.MonitoringValuePO" />
 </entity-mappings>

@@ -25,6 +25,7 @@ import org.apache.commons.lang.time.DateUtils;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.i18n.Messages;
+import org.eclipse.jubula.client.core.model.ITestResultCleanupInfoPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -43,6 +44,8 @@ import org.slf4j.LoggerFactory;
  */
 public class TestResultPM {
     
+    /** 6 h in ms */
+    private static final int TIME_UNTIL_NEXT_CLEANUP = 6 * 60 * 60 * 1000;
     /** the logger */
     private static Logger log = LoggerFactory.getLogger(TestResultPM.class);
     
@@ -218,6 +221,7 @@ public class TestResultPM {
     /**
      * clean test result details by age (days of existence)
      * testrun summaries will not be deleted
+     * @param projectId the projectId to check if an other cleanup may be running
      * @param days days
      * @param projGUID the project guid
      * @param majorVersion the project major version number
@@ -225,10 +229,14 @@ public class TestResultPM {
      * @param microVersion the project major version number
      * @param versionQualifier the project version qualifier
      */
-    public static final void cleanTestresultDetails(int days, String projGUID,
-        Integer majorVersion, Integer minorVersion,
-        Integer microVersion, String versionQualifier) {
+    public static final void cleanTestresultDetails(long projectId, int days,
+            String projGUID, Integer majorVersion, Integer minorVersion,
+            Integer microVersion, String versionQualifier) {
         Date cleanDate = DateUtils.addDays(new Date(), days * -1);
+        
+        if (!updateCleanupTracking(projectId)) {
+            return;
+        }
         try {
             Set<Long> summaries = TestResultSummaryPM
                     .findTestResultSummariesIfHasTestResultsByDate(cleanDate,
@@ -245,6 +253,43 @@ public class TestResultPM {
         } 
     }
     
+    /**
+     * @param projectId the project id of the project to check
+     * @return <code>true</code> if the cleanup should be done
+     */
+    @SuppressWarnings("unchecked")
+    private static boolean updateCleanupTracking(long projectId) {
+        EntityManager session = Persistor.instance().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery query = builder.createQuery();
+        Root from = query.from(PoMaker.getTestResultCleanupClass());
+        query.select(from).where(
+                builder.equal(from.get("parentProjectId"), projectId)); //$NON-NLS-1$
+        List<ITestResultCleanupInfoPO> result = session
+                .createQuery(query).getResultList();
+        if (!result.isEmpty()) {
+            ITestResultCleanupInfoPO value = result.get(0);
+            long timestamp = value.getTimestamp();
+            if (System.currentTimeMillis()
+                    < (timestamp + TIME_UNTIL_NEXT_CLEANUP)) {
+                return false;
+            }
+            EntityTransaction transaction = session.getTransaction();
+            transaction.begin();
+            value.setTimestamp(System.currentTimeMillis());
+            session.merge(value);
+            transaction.commit();
+            return true;
+        }
+        EntityTransaction transaction = session.getTransaction();
+        transaction.begin();
+        ITestResultCleanupInfoPO createTestResultCleanupPO =
+                PoMaker.createTestResultCleanupPO(projectId);
+        session.persist(createTestResultCleanupPO);
+        transaction.commit();
+        return true;
+    }
+
     /**
      * @param session The session in which to execute the Persistence (JPA / EclipseLink) query.
      * @param summaryId The database ID of the summary for which to compute the
