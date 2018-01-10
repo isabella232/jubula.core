@@ -74,7 +74,15 @@ public interface IParameterDetailsPO {
      */
     public abstract void setParameterValue(String parameterValue);
     
+    /**
+     * @return the test result Summary ID
+     */
+    public Long getInternalTestResultSummaryID();
     
+    /**
+     * @param testResultSummaryId the test result Summary ID
+     */
+    public void setInternalTestResultSummaryID(Long testResultSummaryId);
     
     /**
      * Checks the equality of the given Object with this Object.

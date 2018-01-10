@@ -173,7 +173,7 @@ public class TestResultPM {
         //delete parameter details of test results
         String paramQueryBaseString = 
             "delete from PARAMETER_DETAILS"; //$NON-NLS-1$
-        String queryExtension = " where FK_TESTRESULT in (select ID from TESTRESULT where INTERNAL_TESTRUN_ID = #summaryId)"; //$NON-NLS-1$
+        String queryExtension = " where INTERNAL_TESTRUN_ID = #summaryId"; //$NON-NLS-1$
         if (isDeleteAll) {
             session.createNativeQuery(paramQueryBaseString).executeUpdate();
         } else {

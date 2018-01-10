@@ -42,4 +42,14 @@ public interface ITestResultAdditionPO {
      * @return the type for the saved object
      */
     public TYPE getType();
+    
+    /**
+     * @return the m_testResultSummaryId
+     */
+    public Long getInternalTestResultSummaryID();
+    
+    /**
+     * @param testResultSummaryId the testResultSummaryId to set
+     */
+    public void setInternalTestResultSummaryID(Long testResultSummaryId);
 }

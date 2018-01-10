@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestResultAdditionPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
@@ -256,10 +257,10 @@ public class TestresultSummaryBP {
         int nodeSequence = startingNodeSequence;
         TestResultNode resultNode = result;
         ITestResultPO keyword = PoMaker.createTestResultPO();
+        keyword.setInternalTestResultSummaryID(summaryId);
         fillNode(keyword, resultNode);
         keyword.setKeywordLevel(nodeLevel);
         keyword.setKeywordSequence(nodeSequence);
-        keyword.setInternalTestResultSummaryID(summaryId);
         keyword.setInternalParentKeywordID(m_parentKeyWordId);
         sess.persist(keyword);
         for (TestResultNode node : resultNode.getResultNodeList()) {
@@ -313,8 +314,11 @@ public class TestresultSummaryBP {
                     cap.getActionName()));
             String commandlog = resultNode.getCommandLog();
             if (StringUtils.isNotBlank(commandlog)) {
-                keyword.addAdditon(
-                        NodeMaker.createTestResultAddtionPO(commandlog));
+                ITestResultAdditionPO testResultAddition = 
+                        NodeMaker.createTestResultAddtionPO(commandlog);
+                testResultAddition.setInternalTestResultSummaryID(
+                        keyword.getInternalTestResultSummaryID());
+                keyword.addAdditon(testResultAddition);
             }
             
             //add screenshot if exists
@@ -359,6 +363,8 @@ public class TestresultSummaryBP {
             IParameterDetailsPO parameter = PoMaker.createParameterDetailsPO();
             parameter.setParameterName(param.getName());
             parameter.setParameterType(param.getType());
+            parameter.setInternalTestResultSummaryID(
+                    keyword.getInternalTestResultSummaryID());
             String value = param.getValue();
             if (value.length() >= 3500) {
                 log.warn("Parameter value to long: " + value); //$NON-NLS-1$

@@ -24,6 +24,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.SerializationUtils;
+import org.eclipse.persistence.annotations.Index;
 
 /**
  * 
@@ -40,6 +41,9 @@ class TestResultAdditionPO implements ITestResultAdditionPO {
     private ITestResultAdditionPO.TYPE m_type;
     /** data */
     private byte[] m_data;
+    /** testresult summary id*/
+    private Long m_testResultSummaryId;
+    
     
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -132,6 +136,23 @@ class TestResultAdditionPO implements ITestResultAdditionPO {
      */
     public void setType(ITestResultAdditionPO.TYPE type) {
         this.m_type = type;
+    }
+    
+    /**
+     * @return the m_testResultSummaryId
+     */
+    @Basic
+    @Column(name = "INTERNAL_TESTRUN_ID")
+    @Index(name = "PI_TESTRUN_ID")
+    public Long getInternalTestResultSummaryID() {
+        return m_testResultSummaryId;
+    }
+    
+    /**
+     * @param testResultSummaryId the testResultSummaryId to set
+     */
+    public void setInternalTestResultSummaryID(Long testResultSummaryId) {
+        m_testResultSummaryId = testResultSummaryId;
     }
     
 }

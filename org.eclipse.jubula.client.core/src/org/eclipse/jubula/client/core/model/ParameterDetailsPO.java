@@ -48,6 +48,8 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
     /** parameter value */
     private String m_parameterValue;
     
+    /** summary id*/
+    private long m_testResultSummaryId;
     
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -167,6 +169,23 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      */
     public void setParameterValue(String parameterValue) {
         m_parameterValue = parameterValue;
+    }
+    
+    /**
+     * @return the m_testResultSummaryId
+     */
+    @Basic
+    @Column(name = "INTERNAL_TESTRUN_ID")
+    @Index(name = "PI_TESTRUN_ID")
+    public Long getInternalTestResultSummaryID() {
+        return m_testResultSummaryId;
+    }
+    
+    /**
+     * @param testResultSummaryId the testResultSummaryId to set
+     */
+    public void setInternalTestResultSummaryID(Long testResultSummaryId) {
+        m_testResultSummaryId = testResultSummaryId;
     }
 
     /**
