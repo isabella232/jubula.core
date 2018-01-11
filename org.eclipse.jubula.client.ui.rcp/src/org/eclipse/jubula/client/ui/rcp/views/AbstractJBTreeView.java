@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -388,7 +391,29 @@ public abstract class AbstractJBTreeView extends ViewPart implements
             previousEvent = e;
         }
     }
-    
+
+    /**
+     * 
+     * @param objects the objects to search the object in the current master 
+     *        session, should be of type {@link IPersistentObject} all other are ignored
+     * @return a {@link List} of found items in the master session
+     */
+    protected List<Object> getListOfItemsFromOldPO(Object[] objects) {
+        EntityManager masterSession = GeneralStorage.getInstance()
+                .getMasterSession();
+        List<Object> foundObjects = new ArrayList<>();
+        for (Object object : objects) {
+            if (object instanceof IPersistentObject) {
+                IPersistentObject cat = (IPersistentObject) object;
+                Object find =
+                        masterSession.find(object.getClass(), cat.getId());
+                if (find != null) {
+                    foundObjects.add(find);
+                }
+            }
+        }
+        return foundObjects;
+    }
     /**
      * handle a single data changed event
      * 

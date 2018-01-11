@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -234,16 +233,10 @@ public class TestCaseBrowser extends AbstractJBTreeView
      */
     protected void rebuildTree() {
         IProjectPO activeProject = GeneralStorage.getInstance().getProject();
-        Object[] expandedElements = getTreeViewer().getExpandedElements();
-        List<Object> objectsToExpand = new ArrayList<>();
-        for (Object object : expandedElements) {
-            if (object instanceof IPersistentObject) {
-                IPersistentObject cat = (IPersistentObject) object;
-                Object find = GeneralStorage.getInstance().getMasterSession()
-                        .find(object.getClass(), cat.getId());
-                objectsToExpand.add(find);
-            }
-        }
+        Object[] expandedPO = getTreeViewer().getExpandedElements();
+        List<Object> objectsToExpand = getListOfItemsFromOldPO(expandedPO);
+        Object[] selection = getTreeViewer().getStructuredSelection().toArray();
+        List<Object> objectsToSelect = getListOfItemsFromOldPO(selection);
         if (activeProject != null) {
             getTreeViewer()
                     .setInput(new INodePO[] { activeProject.getSpecObjCont() });
@@ -252,6 +245,10 @@ public class TestCaseBrowser extends AbstractJBTreeView
                         .toArray(new Object[objectsToExpand.size()]));
             } else {
                 getTreeViewer().expandToLevel(DEFAULT_EXPANSION);
+            }
+            if (objectsToSelect != null && objectsToSelect.size() > 0) {
+                getTreeViewer().setSelection(
+                        new StructuredSelection(objectsToSelect), true);
             }
         } else {
             getTreeViewer().setInput(null);

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.views;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -230,19 +229,18 @@ public class TestSuiteBrowser extends AbstractJBTreeView implements
      */
     protected void rebuildTree() {
         Object[] expandedElements = getTreeViewer().getExpandedElements();
-        List<Object> objectsToExpand = new ArrayList<>();
-        for (Object object : expandedElements) {
-            if (object instanceof IPersistentObject) {
-                IPersistentObject cat = (IPersistentObject) object;
-                Object find = GeneralStorage.getInstance().getMasterSession()
-                        .find(object.getClass(), cat.getId());
-                objectsToExpand.add(find);
-            }
-        }
+        List<Object> objectsToExpand =
+                getListOfItemsFromOldPO(expandedElements);
+        Object[] selection = getTreeViewer().getStructuredSelection().toArray();
+        List<Object> objectsToSelect = getListOfItemsFromOldPO(selection);
         setViewerInput();
         if (objectsToExpand.size() > 0) {
             getTreeViewer().setExpandedElements(objectsToExpand
                     .toArray(new Object[objectsToExpand.size()]));
+        }
+        if (objectsToSelect.size() > 0) {
+            getTreeViewer().setSelection(
+                    new StructuredSelection(objectsToSelect), true);
         }
     }
 
