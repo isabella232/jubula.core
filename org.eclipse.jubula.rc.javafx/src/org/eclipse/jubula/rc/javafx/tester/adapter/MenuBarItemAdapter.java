@@ -19,6 +19,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.SkinBase;
 
+import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
@@ -56,8 +57,17 @@ public class MenuBarItemAdapter extends MenuItemAdapter<Menu> {
                                 getSkin();
                         Parent buttonBox = (Parent) menuBarSkin.
                                 getChildren().get(0);
-                        return buttonBox.getChildrenUnmodifiable().get(
-                                menuBar.getMenus().indexOf(getRealComponent()));
+                        IMenuItemComponent[] items =
+                                new MenuBarAdapter(menuBar).getItems();
+                        int index = -1;
+                        for (int i = 0; i < items.length; i++) {
+                            if (getRealComponent()
+                                    .equals(items[i].getRealComponent())) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        return buttonBox.getChildrenUnmodifiable().get(index);
                     }
                 });
         getRobot().click(menuButton, null);

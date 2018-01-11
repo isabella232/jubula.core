@@ -10,12 +10,12 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IMenuItemComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -52,13 +52,17 @@ public class MenuBarAdapter extends JavaFXComponentAdapter<MenuBar> implements
                     public IMenuItemComponent[] call() throws Exception {
                         List<Menu> menus = getRealComponent().getMenus();
                         if (menus.size() > 0) {
-                            IMenuItemComponent[] itemAdapters = 
-                                    new IMenuItemComponent[menus.size()];
+                            List<IMenuItemComponent> adapters =
+                                    new ArrayList<>();
                             for (int i = 0; i < menus.size(); i++) {
-                                itemAdapters[i] = new MenuBarItemAdapter(menus
-                                        .get(i));
+                                Menu item = menus.get(i);
+                                if (item.isVisible()) {
+                                    adapters.add(new MenuBarItemAdapter(
+                                            item));
+                                }
                             }
-                            return itemAdapters;
+                            return adapters.toArray(
+                                    new IMenuItemComponent[adapters.size()]);
                         }
 
                         return null;
@@ -68,15 +72,7 @@ public class MenuBarAdapter extends JavaFXComponentAdapter<MenuBar> implements
 
     @Override
     public int getItemCount() {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getItemCount", //$NON-NLS-1$
-                new Callable<Integer>() {
-
-                    @Override
-                    public Integer call() throws Exception {
-                        return getRealComponent().getMenus().size();
-                    }
-
-                });
+        return getItems().length;
     }
 
 }

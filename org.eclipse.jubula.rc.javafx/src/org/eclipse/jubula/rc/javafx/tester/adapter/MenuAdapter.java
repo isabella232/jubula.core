@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -49,15 +50,18 @@ public class MenuAdapter extends AbstractMenuAdapter<Menu> implements
                     public IMenuItemComponent[] call() throws Exception {
                         List<MenuItem> items = getRealComponent().getItems();
                         if (items.size() > 0) {
-                            IMenuItemComponent[] itemAdapters = 
-                                    new IMenuItemComponent[items.size()];
+                            List<IMenuItemComponent> adapters =
+                                    new ArrayList<>();
                             for (int i = 0; i < items.size(); i++) {
-                                itemAdapters[i] = new MenuItemAdapter<MenuItem>(
-                                        items.get(i));
+                                MenuItem item = items.get(i);
+                                if (item.isVisible()) {
+                                    adapters.add(new MenuItemAdapter<MenuItem>(
+                                            item));
+                                }
                             }
-                            return itemAdapters;
+                            return adapters.toArray(
+                                    new IMenuItemComponent[adapters.size()]);
                         }
-
                         return null;
                     }
                 });
@@ -65,15 +69,7 @@ public class MenuAdapter extends AbstractMenuAdapter<Menu> implements
 
     @Override
     public int getItemCount() {
-        return EventThreadQueuerJavaFXImpl.invokeAndWait("getItemCount", //$NON-NLS-1$
-                new Callable<Integer>() {
-
-                    @Override
-                    public Integer call() throws Exception {
-                        return getRealComponent().getItems().size();
-                    }
-
-                });
+        return getItems().length;
     }
 
 }
