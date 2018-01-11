@@ -176,7 +176,7 @@ public class ParameterDetailsPO implements IParameterDetailsPO {
      */
     @Basic
     @Column(name = "INTERNAL_TESTRUN_ID")
-    @Index(name = "PI_TESTRUN_ID")
+    @Index(name = "PD_TESTRUN_ID")
     public Long getInternalTestResultSummaryID() {
         return m_testResultSummaryId;
     }

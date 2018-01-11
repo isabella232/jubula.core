@@ -143,7 +143,7 @@ class TestResultAdditionPO implements ITestResultAdditionPO {
      */
     @Basic
     @Column(name = "INTERNAL_TESTRUN_ID")
-    @Index(name = "PI_TESTRUN_ID")
+    @Index(name = "TRA_TESTRUN_ID")
     public Long getInternalTestResultSummaryID() {
         return m_testResultSummaryId;
     }
