@@ -1441,11 +1441,8 @@ public class ClientTestImpl implements IClientTest {
         this.m_generateMonitoringReport = generateMonitoringReport;
     }
 
-    /**
-     * @return the Test Result Summary for the current test execution, or for
-     *         the previous test execution if no test is currently running.
-     */
-    private ITestResultSummaryPO getTestresultSummary() {
+    /** {@inheritDoc} */
+    public ITestResultSummaryPO getTestresultSummary() {
         return m_summary;
     }
     

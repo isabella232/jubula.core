@@ -81,4 +81,14 @@ public interface ITestResultSummaryPO extends IArchivableTestResultSummary,
      * @return whether this result has corresponding test result details
      */
     public boolean hasTestResultDetails();
+    
+    /**
+     * @return additional information
+     */
+    public String getAdditionalInformation();
+    
+    /**
+     * @param info the information to add
+     */
+    public void addAdditionalInformation(String info);
 }

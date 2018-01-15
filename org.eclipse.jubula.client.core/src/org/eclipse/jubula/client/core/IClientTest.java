@@ -30,6 +30,7 @@ import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
+import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.internal.BaseConnection.NotConnectedException;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
@@ -314,6 +315,13 @@ public interface IClientTest {
      * @return Returns the test job startTime.
      */
     public Date getTestjobStartTime();
+    
+    
+    /**
+     * @return the Test Result Summary for the current test execution, or for
+     *         the previous test execution if no test is currently running.
+     */
+    public ITestResultSummaryPO getTestresultSummary();
     
     /**
      * @param logPath The logPath to set.
