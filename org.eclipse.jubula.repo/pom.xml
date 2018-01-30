@@ -41,18 +41,22 @@
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
                                             forceOverwrite="yes"
                                             algorithm="SHA-512" fileext=".sha" />
-                                        <delete includeemptydirs="false">
+                                        <checksum
+                                            file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
+                                            forceOverwrite="yes"
+                                            algorithm="SHA-512" fileext=".sha512" />
+                                        <delete includeemptydirs="false" verbose="true">
                                             <fileset dir="${targetDir}">
                                                 <include name="repo/**" />
                                                 <include name="${project.artifactId}-${project.version}.zip*" />
                                             </fileset>
                                         </delete>
-                                        <move todir="${targetDir}">
+                                        <move todir="${targetDir}" verbose="true">
                                             <fileset dir="${project.build.directory}">
                                                 <include name="${project.artifactId}-${project.version}.zip*" />
                                             </fileset>
                                         </move>
-                                        <move includeemptydirs="false" todir="${targetDir}/repo">
+                                        <move includeemptydirs="false" todir="${targetDir}/repo" verbose="true">
                                             <fileset dir="target/repository">
                                                 <include name="**" />
                                             </fileset>
