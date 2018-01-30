@@ -2056,6 +2056,24 @@ public class TestExecution {
     
     /**
      * @author BREDEX GmbH
+     *
+     */
+    public class SaveAdditionalSummaryInformation
+        extends AbstractPostExecutionCommand {
+
+        /** {@inheritDoc}  */
+        public TestErrorEvent execute() throws JBException {
+            String value = getValueForParam("CompSystem.Value"); //$NON-NLS-1$
+            if (StringUtils.isNotBlank(value)) {
+                ITestResultSummaryPO summary = ClientTest.instance()
+                        .getTestresultSummary();
+                summary.addAdditionalInformation(value);
+            }
+            return null;
+        }
+    }
+    /**
+     * @author BREDEX GmbH
      * @created 30.04.2013
      */
     public abstract class AbstractRestartCmd 

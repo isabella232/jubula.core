@@ -95,6 +95,7 @@ public class Messages extends NLS {
     public static String TestResultNodePropertySourceStepType;
     public static String TestResultNodePropertySourceTestResult;
     public static String TestResultNodePropertySourceTimeStamp;
+    public static String TestresultSummaryAdditionalInfo;
     public static String TestresultSummaryAlmReportState;
     public static String TestresultSummaryAutAgentHostname;
     public static String TestresultSummaryAutConf;

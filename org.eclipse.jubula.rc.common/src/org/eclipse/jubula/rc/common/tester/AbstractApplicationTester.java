@@ -546,6 +546,15 @@ public abstract class AbstractApplicationTester implements ITester {
     }
     
     /**
+     * Dummy method for client side action
+     * @param value value
+     * @return the value
+     */
+    public String rcSetValue(String value) {
+        return value;
+    }
+    
+    /**
      * @return The Robot instance
      */
     protected abstract IRobot getRobot();

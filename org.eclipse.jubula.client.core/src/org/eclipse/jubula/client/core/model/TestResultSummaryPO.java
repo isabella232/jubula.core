@@ -39,6 +39,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.TestResultPM;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -201,6 +202,8 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private String m_almRepositoryName = null;
     /** the URL of the dashboard */
     private String m_dashboardURL = null;
+    /** additional information which are saved with a CAP */
+    private String m_additionalInformation;
     
     /** whether this report has test result details */
     private Boolean m_hasDetails = null;
@@ -1146,5 +1149,32 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
         }
 
         return m_hasDetails;
+    }
+    
+    /**
+     * @return additional information
+     */
+    @Basic
+    @Column(name = "OTHER_INFO", length = 1000)
+    public String getAdditionalInformation() {
+        return m_additionalInformation;
+    }
+
+    /**
+     * @param additionalInformation additional information
+     */
+    public void setAdditionalInformation(String additionalInformation) {
+        m_additionalInformation = additionalInformation;
+    }
+    
+    /**
+     * @param info the information to add
+     */
+    public void addAdditionalInformation(String info) {
+        if (StringUtils.isNotBlank(m_additionalInformation)) {
+            m_additionalInformation += StringConstants.SEMICOLON + info;
+        } else {
+            m_additionalInformation = info;
+        }
     }
 }

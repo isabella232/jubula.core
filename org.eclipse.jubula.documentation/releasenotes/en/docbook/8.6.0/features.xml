@@ -123,6 +123,18 @@
   </listitem>
 </itemizedlist>
 <para>
+ <emphasis role="strong">New CAP which can save data into the testresult summary</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        We added the possibility to add Information the the testresult summary.
+        A new Action (<literal> Store value in Testresult Summary (ub_app_storeValueInSummary)</literal>)
+        is introduced which saves Strings into the Additional Information section of the testresult summary.
+    </para>
+  </listitem>
+</itemizedlist>
+<para>
  <emphasis role="strong">Improving the Save As New / Extract Test Case operations</emphasis>
 </para>
 <itemizedlist>

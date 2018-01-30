@@ -14,6 +14,7 @@
   
   <xi:include href="generalComponents.xml"/>
   <xi:include href="application.xml"/>
+  <xi:include href="application2.xml"/>
   <xi:include href="tableComponents.xml"/>
   <xi:include href="treeComponents.xml"/>
   <xi:include href="treeTableComponents.xml"/>

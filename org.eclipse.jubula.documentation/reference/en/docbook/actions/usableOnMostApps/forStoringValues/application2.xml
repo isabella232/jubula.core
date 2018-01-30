@@ -1,22 +1,24 @@
 <!-- 
-  Copyright (c) 2014 BREDEX GmbH.
+  Copyright (c) 2018 BREDEX GmbH.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
   http://www.eclipse.org/legal/epl-v10.html
 -->
 
-<section xml:id="actionForStoringValuesApplication" version="5.0" xmlns="http://docbook.org/ns/docbook"
+<section xml:id="actionForStoringValueInSummary" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                               xmlns:xi="http://www.w3.org/2001/XInclude"
                                                               xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Store value</title>
+  <title>Store value in Testresult Summary</title>
   
-  <para><emphasis>Store Value (by declaring the value and the variable)</emphasis></para>
+  <para><emphasis>Store Value in the Testresult Summary(by declaring the value)</emphasis></para>
   <para>
     <itemizedlist>
       <listitem>
         <para>
-          Use this action to store a value you specify so that you can use it as data for other actions.
+          Use this action to store a value you specify into the Testresult Summary. This value is added at the end of the 
+          <literal>Additional Info</literal> section in the testresult summary view. It is divided by a semicolon <literal>;</literal> .
+          This is useful if you want to give specific information which you can filter.
         </para>
       </listitem>
     <listitem>
@@ -24,11 +26,6 @@
           Parameters:
           
           <itemizedlist>
-            <listitem>
-              <para>
-                <xref linkend="variable_name" xrefstyle="template:%t"/>
-              </para>
-            </listitem>
             <listitem>
               <para>
                 <xref linkend="value" xrefstyle="template:%t"/>

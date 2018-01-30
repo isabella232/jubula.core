@@ -72,7 +72,7 @@ import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import static org.eclipse.jubula.tools.internal.constants.StringConstants.EMPTY;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
@@ -144,6 +144,11 @@ public class TestresultSummaryView extends ViewPart implements
     private static final String NO_DATA_AVAILABLE = 
         Messages.TestresultSummaryNoData;
 
+    /**
+     * <code>TESTRESULT_SUMMARY_ADDITIONAL_INFO</code>
+     */
+    private static final String TESTRESULT_SUMMARY_ADDITIONAL_INFO = 
+            Messages.TestresultSummaryAdditionalInfo;
     /**
      * <code>TESTRESULT_SUMMARY_NUMBER_OF_FAILED_CAPS</code>
      */
@@ -389,7 +394,7 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private TestresultFilterJob m_filterJob = new TestresultFilterJob(
             Messages.JobFilterSummaryView,
-            StringConstants.EMPTY);
+            EMPTY);
 
     /**
      * The constructor.
@@ -449,6 +454,7 @@ public class TestresultSummaryView extends ViewPart implements
         addMonitoringIdColumn(m_tableViewer);
         addMonitoringValueColumn(m_tableViewer);
         addMonitoringReportColumn(m_tableViewer);
+        addAdditonalInfoColumn(m_tableViewer);
         
         getSite().setSelectionProvider(m_tableViewer);
         m_tableViewer.setContentProvider(new ArrayContentProvider());
@@ -737,7 +743,6 @@ public class TestresultSummaryView extends ViewPart implements
         // "filter by" label
         Label searchLabel = new Label(parent, SWT.NONE);
         searchLabel.setText(Messages.TestresultSummaryFilterLabel);
-
         // combo box to change column for filter
         m_filterCombo = new Combo(parent, SWT.DROP_DOWN | SWT.READ_ONLY);
         String[] items = new String[] { TESTRESULT_SUMMARY_TESTRUN_ID,
@@ -767,7 +772,8 @@ public class TestresultSummaryView extends ViewPart implements
             TESTRESULT_SUMMARY_CMD_PARAM,
             TESTRESULT_SUMMARY_TESTRUN_RELEVANT,
             TESTRESULT_SUMMARY_DETAILS_AVAILABLE,
-            TESTRESULT_SUMMARY_NUMBER_OF_FAILED_CAPS };
+            TESTRESULT_SUMMARY_NUMBER_OF_FAILED_CAPS,
+            TESTRESULT_SUMMARY_ADDITIONAL_INFO};
         Arrays.sort(items);
         m_filterCombo.setItems(items);
         m_filterCombo.addListener(SWT.Selection, new Listener() {
@@ -989,6 +995,33 @@ public class TestresultSummaryView extends ViewPart implements
     }
     
     /**
+     * Adds a "AutServer" column to the given viewer.
+     * @param tableViewer The viewer to which the column will be added.
+     */
+    private void addAdditonalInfoColumn(
+            TableViewer tableViewer) {
+        TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
+        column.getColumn().setWidth(0);
+        column.getColumn().setText(TESTRESULT_SUMMARY_ADDITIONAL_INFO);
+        column.getColumn().setMoveable(true);
+        column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
+            public String getText(Object element) {
+                return StringUtils.defaultString(
+                    ((ITestResultSummaryPO)element).getAdditionalInformation());
+            }
+        });
+        new ColumnViewerSorter(tableViewer, column) {
+            @Override
+            protected int doCompare(Viewer viewer, Object e1, Object e2) {
+                return getCommonsComparator().compare(
+                        ((ITestResultSummaryPO)e1).getAdditionalInformation(), 
+                        ((ITestResultSummaryPO)e2).getAdditionalInformation());
+            }
+        };
+        createMenuItem(m_headerMenu, column.getColumn());
+    }
+    
+    /**
      * Adds a "Testjob name" column to the given viewer.
      * @param tableViewer The viewer to which the column will be added.
      */
@@ -1033,7 +1066,7 @@ public class TestresultSummaryView extends ViewPart implements
                 if (date != null) {
                     return DTF_LONG.format(date);
                 }
-                return ObjectUtils.toString(date, StringConstants.EMPTY);
+                return ObjectUtils.toString(date, EMPTY);
             }
         });
         createMenuItem(m_headerMenu, column.getColumn());
@@ -1993,7 +2026,7 @@ public class TestresultSummaryView extends ViewPart implements
         /**
          * <code>m_filterText</code>
          */
-        private String m_filterText = StringConstants.EMPTY;
+        private String m_filterText = EMPTY;
         
         /**
          * @param name the name of the job
@@ -2034,7 +2067,7 @@ public class TestresultSummaryView extends ViewPart implements
         @SuppressWarnings("synthetic-access")
         public boolean isElementVisible(Viewer viewer, Object element) {
             ITestResultSummaryPO m = (ITestResultSummaryPO) element;
-            String metaValue = StringConstants.EMPTY;
+            String metaValue = EMPTY;
             if (m_filterType.equals(TESTRESULT_SUMMARY_DATE)) {
                 metaValue = DTF_DEFAULT.format(m.getTestsuiteDate());
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_ID)) {
@@ -2042,8 +2075,7 @@ public class TestresultSummaryView extends ViewPart implements
             } else if (m_filterType
                     .equals(TESTRESULT_SUMMARY_TEST_JOB_START_TIME)) {
                 Date date = m.getTestJobStartTime();
-                metaValue = date != null ? DTF_LONG.format(date) 
-                    : StringUtils.EMPTY;
+                metaValue = date != null ? DTF_LONG.format(date) : EMPTY;
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TEST_JOB)) {
                 metaValue = m.getTestJobName();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
@@ -2101,6 +2133,10 @@ public class TestresultSummaryView extends ViewPart implements
             } else if (m_filterType
                     .equals(TESTRESULT_SUMMARY_COMMENT_TITLE)) {
                 metaValue = StringUtils.defaultString(m.getCommentTitle());
+            } else if (m_filterType
+                    .equals(TESTRESULT_SUMMARY_ADDITIONAL_INFO)) {
+                metaValue = StringUtils.defaultString(
+                        m.getAdditionalInformation());
             }
             return wordMatches(metaValue);
         }
