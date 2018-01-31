@@ -51,11 +51,11 @@
                                                 <include name="${project.artifactId}-${project.version}.zip*" />
                                             </fileset>
                                         </delete>
-                                        <move todir="${targetDir}" verbose="true">
+                                        <copy todir="${targetDir}" verbose="true" overwrite="true">
                                             <fileset dir="${project.build.directory}">
                                                 <include name="${project.artifactId}-${project.version}.zip*" />
                                             </fileset>
-                                        </move>
+                                        </copy>
                                         <move includeemptydirs="false" todir="${targetDir}/repo" verbose="true">
                                             <fileset dir="target/repository">
                                                 <include name="**" />
