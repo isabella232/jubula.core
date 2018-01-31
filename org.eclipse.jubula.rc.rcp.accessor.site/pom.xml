@@ -51,6 +51,10 @@
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
                                             forceOverwrite="yes"
                                             algorithm="SHA-512" fileext=".sha" />
+                                        <checksum
+                                            file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
+                                            forceOverwrite="yes"
+                                            algorithm="SHA-512" fileext=".sha512" />
                                         <delete includeemptydirs="false">
                                             <fileset dir="${targetDir}">
                                                 <include name="repo_accessor/**" />
