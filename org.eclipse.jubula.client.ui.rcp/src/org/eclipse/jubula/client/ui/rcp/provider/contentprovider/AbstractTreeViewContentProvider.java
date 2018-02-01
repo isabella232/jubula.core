@@ -61,7 +61,8 @@ public abstract class AbstractTreeViewContentProvider extends
             
             IProjectPO activeProject = 
                 GeneralStorage.getInstance().getProject();
-            if (activeProject != null && nodeProjId != null) {
+            if (activeProject != null && nodeProjId != null 
+                    && parent != null) {
                 if (!nodeProjId.equals(activeProject.getId())
                         && parent.isSpecObjCont()) {
                     // Parent is a TCB_ROOT_NODE, but node is not from the
