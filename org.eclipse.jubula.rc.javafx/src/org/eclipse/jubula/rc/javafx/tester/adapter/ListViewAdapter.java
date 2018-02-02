@@ -30,6 +30,7 @@ import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
+import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
@@ -98,7 +99,28 @@ public class ListViewAdapter<T extends ListView<?>> extends
                     EventFactory
                             .createActionError(TestErrorEvent.INVALID_INDEX));
         }
+        EventThreadQueuerJavaFXImpl.invokeAndWait("scrollIndexVisible", //$NON-NLS-1$
+                new Callable<Rectangle>() {
+                    public Rectangle call() throws Exception {
+                        final T listView = getRealComponent();
+                        listView.layout();
+                        listView.scrollTo(index.intValue());
+                        return null;
+                    }
+                });
+        TimeUtil.delay(100); // wait a little bit for layout to be done
+        Rectangle r = scrollToAndGetRectangle(index);
 
+        getRobot().click(getRealComponent(), r,
+                co.setClickType(ClickOptions.ClickType.RELEASED));
+    }
+
+    /**
+     * scrolls to the specified intex and returns the target {@link Rectangle}
+     * @param index the index
+     * @return the target {@link Rectangle}
+     */
+    private Rectangle scrollToAndGetRectangle(final Integer index) {
         Rectangle r = EventThreadQueuerJavaFXImpl.invokeAndWait(
                 "scrollIndexVisible", //$NON-NLS-1$
                 new Callable<Rectangle>() {
@@ -131,20 +153,23 @@ public class ListViewAdapter<T extends ListView<?>> extends
                                 if (StringUtils.isBlank(cell.getText())) {
                                     widthOfClickableRectangle = b.getWidth();
                                 }
+                                double bHeight = b.getHeight();
+                                if ((b.y - tableB.y) < 0) { 
+                                    // calculate height of the cell if its at the beginning of the list
+                                    bHeight = b.getHeight() + (tableB.y - b.y);
+                                } 
                                 return new Rectangle(Math.abs(tableB.x - b.x),
                                         Math.abs(tableB.y - b.y),
                                         Rounding.round(
                                                 widthOfClickableRectangle),
-                                        Rounding.round(b.getHeight()));
+                                        Rounding.round(bHeight));
 
                             }
                         }
                         return null;
                     }
                 });
-
-        getRobot().click(getRealComponent(), r,
-                co.setClickType(ClickOptions.ClickType.RELEASED));
+        return r;
     }
 
     /** {@inheritDoc} **/
