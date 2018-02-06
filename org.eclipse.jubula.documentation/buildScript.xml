@@ -379,12 +379,11 @@
     </target>
     
     <target name="checkImages">
-        <java jar="HtmlImageLister.jar" outputProperty="imageList" failonerror="true" fork="true">
+        <java jar="HtmlImageLister.jar" outputProperty="imageListOld" failonerror="true" fork="true">
             <arg value="${basedir}/${dir}/en/build/${output}"/>
         </java>
         <loadfile property="imageList"
               srcFile="imageList.txt"/>
-        <delete file="imageList.txt" failonerror="false"></delete>
         <filelist id="files" dir="./${dir}/en/docbook" files="${imageList}" />
         
         <restrict id="missing.files">
@@ -417,6 +416,7 @@
             Missing Image Files:${line.separator}${missingFilesFormatted}
         </fail>
             
+        <delete file="imageList.txt" failonerror="false"></delete>
         <delete file="imagesMissing.log"/>
     </target>
     
