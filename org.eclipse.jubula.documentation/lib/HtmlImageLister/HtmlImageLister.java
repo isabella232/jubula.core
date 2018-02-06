@@ -7,6 +7,7 @@
 */
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -52,10 +53,12 @@ public class HtmlImageLister {
                     imageSet.add((f.getParentFile() + "/").concat(el.attr("src")));
                 }
             }
-            
+            PrintWriter out = new PrintWriter("imageList.txt");
             for(String s : imageSet) {
+                out.println(s);
                 System.out.println(s);
             }
+            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
