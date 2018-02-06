@@ -97,6 +97,7 @@ class ComponentNamePO extends AbstractGuidNamePO
         m_creationContext = toClone.getHbmCreationContext();
         m_version = toClone.getVersion();
         m_typeProblem = toClone.getTypeProblem();
+        m_usageType = toClone.getUsageType();
         setId(toClone.getId());
     }
 

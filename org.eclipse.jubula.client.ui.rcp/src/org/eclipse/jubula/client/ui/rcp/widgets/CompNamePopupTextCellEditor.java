@@ -14,6 +14,7 @@ import java.text.MessageFormat;
 
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.constants.CharacterConstants;
@@ -543,5 +544,15 @@ public class CompNamePopupTextCellEditor extends CellEditor {
         // activation of the completion proposal popup. See also bug
         // http://eclip.se/58777.
         return false;
+    }
+
+    /**
+     * @param selectedExecNode the selected {@link IExecTestCasePO}
+     */
+    public void setSelectedNode(IExecTestCasePO selectedExecNode) {
+        if (m_popupText != null) {
+            m_popupText.setSelectedNode(selectedExecNode);
+        }
+        
     }
 }

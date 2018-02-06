@@ -62,7 +62,9 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
 
     /** parent of this category */
     private IObjectMappingCategoryPO m_parent = null;
-
+    
+    /** {@link IAUTMainPO}  */
+    private IAUTMainPO m_autMainParent = null;
     /**
      * Default constructor (for Persistence (JPA / EclipseLink)).
      */
@@ -75,9 +77,11 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
      * Constructor
      * 
      * @param name The name of the category.
+     * @param aut the {@link IAUTMainPO}
      */
-    ObjectMappingCategoryPO(String name) {
+    ObjectMappingCategoryPO(String name, IAUTMainPO aut) {
         setName(name);
+        setAutMainParent(aut);
     }
     
     /**
@@ -313,6 +317,21 @@ public class ObjectMappingCategoryPO implements IObjectMappingCategoryPO {
         }
 
         return section;
+    }
+    /**
+     * @return the {@link IAUTMainPO} where the category is from
+     */
+    @ManyToOne(targetEntity = AUTMainPO.class)
+    @JoinColumn(name = "AUTMAIN_ID")
+    public IAUTMainPO getAutMainParent() {
+        return m_autMainParent;
+    }
+
+    /**
+     * @param autMainParent the {@link IAUTMainPO} where the category is from
+     */
+    public void setAutMainParent(IAUTMainPO autMainParent) {
+        m_autMainParent = autMainParent;
     }
 
     /**

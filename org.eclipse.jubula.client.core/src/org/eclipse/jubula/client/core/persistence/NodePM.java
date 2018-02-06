@@ -39,6 +39,7 @@ import org.eclipse.jubula.client.core.model.ICategoryPO;
 import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
@@ -1236,6 +1237,25 @@ public class NodePM extends PersistenceManager {
             result.addAll(q.getResultList());
         }
         return result;
+    }
+
+    /**
+     * @param spec the {@link ISpecTestCasePO}
+     * @param selectedItems the new {@link IObjectMappingCategoryPO} to set
+     */
+    public static void setOMAssoc(ISpecTestCasePO spec,
+            Collection<IObjectMappingCategoryPO> selectedItems) 
+                    throws PMException, ProjectDeletedException {
+        EntityTransaction tx = null;
+        Persistor per = Persistor.instance();
+        EntityManager session = per.openSession(); 
+        ISpecTestCasePO sessionSpec =
+                session.find(spec.getClass(), spec.getId());
+        tx = per.getTransaction(session);
+        per.lockPO(session, spec);
+        sessionSpec.setOmCategoryAssoc(new ArrayList<>(selectedItems));
+        per.commitTransaction(session, tx);
+        refreshMasterSession(spec);
     }
 
 }

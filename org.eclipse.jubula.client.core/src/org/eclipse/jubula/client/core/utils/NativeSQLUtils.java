@@ -10,23 +10,29 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.Persistor;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 
 /**
  * Class helping handling native SQL queries
@@ -227,5 +233,50 @@ public class NativeSQLUtils {
             nextToHandle = notYetHandled;
         }
         return result;
+    }
+    
+    /**
+     * @param omc the {@link IObjectMappingCategoryPO} which association should be removed
+     */
+    public static void removeOMCatAssoc(
+            IObjectMappingCategoryPO omc) {
+        EntityManager session = Persistor.instance().openSession();
+        EntityTransaction transaction = session.getTransaction();
+        transaction.begin();
+        Query query = session.createNativeQuery(
+                "DELETE FROM SPEC_OM_CATEGORIES WHERE OMC_ID = ?1"); //$NON-NLS-1$
+        query.setParameter(1, omc.getId());
+        query.executeUpdate();
+        transaction.commit();
+    }
+
+    /**
+     * 
+     * @param sess the session
+     * @param deletedOMC the {@link IObjectMappingCategoryPO} which should be deleted
+     * @return the ids for the spec TC used in the specified OM association
+     */
+    public static List<BigDecimal> getSpecIdsforAssoc(EntityManager sess,
+            Set<IObjectMappingCategoryPO> deletedOMC) {
+        StringBuilder builder = new StringBuilder();
+        for (Iterator iterator = deletedOMC.iterator(); iterator.hasNext();) {
+            IObjectMappingCategoryPO cat =
+                    (IObjectMappingCategoryPO) iterator.next();
+            if (cat != null && cat.getId() != null && cat.getId() > 0) {
+                builder.append(cat.getId());
+                if (iterator.hasNext()) {
+                    builder.append(StringConstants.COMMA);
+                }
+            }
+        }
+        String string = builder.toString();
+        if (StringUtils.isBlank(string)) {
+            return new ArrayList<>();
+        }
+        Query query = sess.createNativeQuery(
+                "SELECT SPEC_ID FROM SPEC_OM_CATEGORIES WHERE OMC_ID in( ?1 )"); //$NON-NLS-1$
+        query.setParameter(1, string);
+        List resultList = query.getResultList();
+        return resultList;
     }
 }

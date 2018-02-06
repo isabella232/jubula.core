@@ -129,11 +129,12 @@ public abstract class PoMaker {
     /**
      * factory method to replace constructor
      * @param name name
+     * @param aut the {@link IAUTMainPO}
      * @return ObjectMappingCategoryPO
      */
     public static IObjectMappingCategoryPO createObjectMappingCategoryPO(
-            String name) {
-        return new ObjectMappingCategoryPO(name);
+            String name, IAUTMainPO aut) {
+        return new ObjectMappingCategoryPO(name, aut);
     }
 
     /**
@@ -170,29 +171,31 @@ public abstract class PoMaker {
     
     /**
      * factory method to replace constructor
+     * @param aut the {@link IAUTMainPO} the category belongs to
      * @return ObjectMappingPO
      */
-    public static IObjectMappingPO createObjectMappingPO() {
-        return createObjectMappingPO(createObjectMappingProfile()); 
+    public static IObjectMappingPO createObjectMappingPO(IAUTMainPO aut) {
+        return createObjectMappingPO(createObjectMappingProfile(), aut); 
     }
 
     /**
      * factory method to replace constructor
      * @param profilePo profilePo
+     * @param aut the {@link IAUTMainPO} the category belongs to
      * @return ObjectMappingProfilePO
      */
     public static IObjectMappingPO createObjectMappingPO(
-            IObjectMappingProfilePO profilePo) {
+            IObjectMappingProfilePO profilePo, IAUTMainPO aut) {
        
         IObjectMappingCategoryPO mappedCategory =
             createObjectMappingCategoryPO(
-                    IObjectMappingCategoryPO.MAPPEDCATEGORY);
+                    IObjectMappingCategoryPO.MAPPEDCATEGORY, aut);
         IObjectMappingCategoryPO unmappedLogicalCategory =
             createObjectMappingCategoryPO(
-                    IObjectMappingCategoryPO.UNMAPPEDLOGICALCATEGORY);
+                    IObjectMappingCategoryPO.UNMAPPEDLOGICALCATEGORY, aut);
         IObjectMappingCategoryPO unmappedTechnicalCategory =
             createObjectMappingCategoryPO(
-                    IObjectMappingCategoryPO.UNMAPPEDTECHNICALCATEGORY);
+                    IObjectMappingCategoryPO.UNMAPPEDTECHNICALCATEGORY, aut);
         
         IObjectMappingPO map = new ObjectMappingPO(
                 mappedCategory, unmappedLogicalCategory, 

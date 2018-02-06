@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
@@ -160,6 +161,9 @@ public class JsonImporter {
     /** Mapping between old and new GUIDs. Only used when assigning new GUIDs */
     private Map<String, String> m_oldToNewGuids = 
         new HashMap<String, String>();
+    /** old IDs to new {@link IObjectMappingCategoryPO}*/
+    private Map<Long, IObjectMappingCategoryPO> m_omCategories =
+            new HashMap<>();
 
     /** The progress monitor for this importer. */
     private IProgressMonitor m_monitor;
@@ -437,6 +441,10 @@ public class JsonImporter {
         try {
             ISpecTestCasePO tc = !newGuid && stcPo != null ? stcPo
                     : m_tcRef.get(m_oldToNewGuids.get(dto.getUuid()));
+            List<Long> omCategoryAssoc = dto.getAssocOMCategories();
+            tc.setOmCategoryAssoc(omCategoryAssoc.stream()
+                    .map(m_omCategories::get)
+                    .collect(Collectors.toList()));
             for (NodeDTO stepDto : dto.getTestSteps()) {
                 if (stepDto instanceof CapDTO) {
                     tc.addNode(createCap(proj, (CapDTO)stepDto, newGuid));
@@ -1172,7 +1180,7 @@ public class JsonImporter {
         aut.setToolkit(dto.getToolkit());
         aut.setGenerateNames(dto.isGenerateNames());
         m_autRef.put(dto.getId(), aut);
-        aut.setObjMap(createOM(dto));
+        aut.setObjMap(createOM(dto, aut));
         for (AutConfigDTO confdto : dto.getConfigs()) {
             aut.addAutConfigToSet(createAUTConfig(confdto, assignNewGuid));
         }
@@ -1220,11 +1228,13 @@ public class JsonImporter {
      * DTO element used as parameter. The method generates all dependent objects
      * as well.
      * @param dto Abstraction of the DTO element
+     * @param aut 
      * @return a persistent object generated from the information in the DTO
      *              element
      */
-    private IObjectMappingPO createOM(AutDTO dto) {
-        IObjectMappingPO om = PoMaker.createObjectMappingPO();
+    private IObjectMappingPO createOM(AutDTO dto, IAUTMainPO aut) {
+        IObjectMappingPO om = PoMaker.createObjectMappingPO(
+                m_autRef.get(dto.getId()));
         ObjectMappingDTO omDto = dto.getObjectMapping();
         ObjectMappingProfileDTO profileSto = omDto.getProfile();
         if (profileSto != null) {
@@ -1241,19 +1251,19 @@ public class JsonImporter {
         OmCategoryDTO mappedCategoryDto = omDto.getMapped();
         if (mappedCategoryDto != null) {
             fillObjectMappingCategory(
-                    mappedCategoryDto, om.getMappedCategory());
+                    mappedCategoryDto, om.getMappedCategory(), aut);
         }
 
         OmCategoryDTO unmappedComponentCategory = omDto.getUnmappedComponent();
         if (unmappedComponentCategory != null) {
             fillObjectMappingCategory(unmappedComponentCategory, 
-                    om.getUnmappedLogicalCategory());
+                    om.getUnmappedLogicalCategory(), aut);
         }
         
         OmCategoryDTO unmappedTechnicalCategory = omDto.getUnmappedTechnical();
         if (unmappedTechnicalCategory != null) {
             fillObjectMappingCategory(unmappedTechnicalCategory, 
-                    om.getUnmappedTechnicalCategory());
+                    om.getUnmappedTechnicalCategory(), aut);
         }
         
         return om;
@@ -1263,17 +1273,21 @@ public class JsonImporter {
      * Write the information from the DTO element to its corresponding Object.
      * @param categoryDto The DTO element which contains the information
      * @param category The persistent object Object
+     * @param aut 
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     private void fillObjectMappingCategory(OmCategoryDTO categoryDto,
-            IObjectMappingCategoryPO category) {
+            IObjectMappingCategoryPO category, IAUTMainPO aut) {
 
         category.setName(categoryDto.getName());
+        category.setAutMainParent(aut);
+        m_omCategories.put(categoryDto.getId(), category);
         for (OmCategoryDTO subcategoryDto : categoryDto.getCategories()) {
             IObjectMappingCategoryPO subcategory = 
-                PoMaker.createObjectMappingCategoryPO(subcategoryDto.getName());
+                PoMaker.createObjectMappingCategoryPO(subcategoryDto.getName(),
+                        m_autRef.get(categoryDto.getAut()));
             category.addCategory(subcategory);
-            fillObjectMappingCategory(subcategoryDto, subcategory);
+            fillObjectMappingCategory(subcategoryDto, subcategory, aut);
         }
         
         for (OmEntryDTO assocDTO : categoryDto.getAssociations()) {

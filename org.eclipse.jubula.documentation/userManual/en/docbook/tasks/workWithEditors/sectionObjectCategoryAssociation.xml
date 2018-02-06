@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (c) 2014 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+-->
+
+<section xml:id="associating-om-categories" version="5.0" xmlns="http://docbook.org/ns/docbook"
+                                                        xmlns:xi="http://www.w3.org/2001/XInclude"
+                                                        xmlns:xl="http://www.w3.org/1999/xlink" >,
+    <title>Object Mapping Cagegory Association</title>
+    <anchor role="helpid" condition="assignOMCategoriesToSpec" xml:id="associating-om-categories.assignOMCategoriesToSpec" xreflabel="Assign OM Categories to TC"/>
+    <para>
+    Using Object Mapping Category association will reduce the proposed component 
+    names for the Component Names View to only the restricted Object Mapping categories and their children.
+    
+    This is only working for all the children of a test case.
+  </para>
+  <para>
+   There are two ways to assign Object Mapping Categories to a test case.
+   Either in the Test Case Browser select a test case from the project and 
+   select <emphasis>Edit OM association</emphasis> in the context menu.
+   You can also do the same within the Test Case Editor when selecting the root node.
+  </para>
+  <para>
+   The Dialog which is opening is having one combobox and two trees with buttons between them.
+   The Combobox shows which AUT is used for using the categories.
+   Only one AUT can be selected at any time, if it is switched to another AUT all selected Categories will be removed.
+   The left tree shows the available categories and the
+   right shows the categories which are already selected.
+   You can move the categories between  both trees with the buttons between them.
+  </para>
+</section>

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import java.util.List;
+
 /**
  * @author BREDEX GmbH
  * @created 19.12.2005
@@ -31,4 +33,16 @@ public interface ISpecTestCasePO extends ITestCasePO,
      * @param isInterfaceLocked the isInterfaceLocked to set
      */
     public void setInterfaceLocked(Boolean isInterfaceLocked);
+    
+    /**
+     * Object Mapping category association are used to reduce the amount of proposals for component names
+     * @return a List of {@link IObjectMappingCategoryPO}
+     */
+    public List<IObjectMappingCategoryPO> getOmCategoryAssoc();
+    
+    /**
+     * @param omCategoryAssoc a List of {@link IObjectMappingCategoryPO}
+     */
+    public void setOmCategoryAssoc(
+            List<IObjectMappingCategoryPO> omCategoryAssoc);
 }

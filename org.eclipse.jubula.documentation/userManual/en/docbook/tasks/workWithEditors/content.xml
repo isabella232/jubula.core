@@ -29,6 +29,7 @@
   <xi:include href="sectionExtractingTestCasesFromEditors.xml"/>
   <xi:include href="sectionReplacingTestCasesInEditors.xml"/>
   <xi:include href="sectionSavingTestCasesFromAnEditorAsNewTestCase.xml"/>
+  <xi:include href="sectionObjectCategoryAssociation.xml"/>
   <xi:include href="sectionRevertingChangesInAnEditor.xml"/>
   
 </section>

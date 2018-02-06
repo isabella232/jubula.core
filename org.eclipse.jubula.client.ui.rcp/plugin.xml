@@ -2173,6 +2173,7 @@
        </command>
        <command
              commandId="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc"
+             label="%EditOMAssoc"
              style="push">
        </command>
        <command
@@ -2672,7 +2673,7 @@
       </enabledWhen>
     </handler>
     <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.TCBEditOmAssocHandler"
+      class="org.eclipse.jubula.client.ui.rcp.handlers.edit.TCBEditOmAssocHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc">
       <activeWhen>
         <with variable="activePartId">
@@ -3858,7 +3859,7 @@
       </activeWhen>
     </handler>
     <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.EditorOMAssocHandler"
+      class="org.eclipse.jubula.client.ui.rcp.handlers.edit.EditorOMAssocHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc">
       <activeWhen>
         <and>

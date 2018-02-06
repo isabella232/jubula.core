@@ -12,6 +12,20 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
+    
+  <para>
+    <emphasis role="strong">Possibility to reduce the amount of component name proposals</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
+    <para>
+        You can now reduce the amount of proposed component names.
+        This can be done by setting Object Mapping Categories in Specification Test Cases. The association can be done with a dialog
+        which opens when you open the context menu on a specification of a test case and use Edit OM association.
+    </para>
+  </listitem>
+</itemizedlist>
+    
   <para>
     <emphasis role="strong">New Teststyle to gather TODO's in the problems view</emphasis>
   </para>

@@ -19,6 +19,7 @@ import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -323,6 +324,15 @@ public final class CompNamePopUpTextField extends CheckedCompNameText {
             triggerEvent.widget = this;
             
             notifyListeners(SWT.KeyDown, triggerEvent);
+        }
+    }
+
+    /**
+     * @param selectedExecNode the selected {@link IExecTestCasePO}
+     */
+    public void setSelectedNode(IExecTestCasePO selectedExecNode) {
+        if (m_contentProposalProvider != null) {
+            m_contentProposalProvider.setSelectedNode(selectedExecNode);
         }
     }
 }

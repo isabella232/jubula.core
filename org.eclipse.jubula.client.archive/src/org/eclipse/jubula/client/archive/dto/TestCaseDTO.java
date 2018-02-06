@@ -28,7 +28,8 @@ public class TestCaseDTO extends ParameterDTO {
             new ArrayList<EventTestCaseDTO>(4);
     /** */
     private boolean m_interfaceLocked = false;
-    
+    /** id list of object mapping categories*/
+    private List<Long> m_assocOMCategories = new ArrayList<>();
     
     /** needed because JSON mapping */
     public TestCaseDTO() { }
@@ -92,5 +93,20 @@ public class TestCaseDTO extends ParameterDTO {
      */
     public void setInterfaceLocked(boolean interfaceLocked) {
         this.m_interfaceLocked = interfaceLocked;
+    }
+    
+    /**
+     * @return the id list of Object Mapping categoires
+     */
+    @JsonProperty("omCategoryList")
+    public List<Long> getAssocOMCategories() {
+        return m_assocOMCategories;
+    }
+
+    /**
+     * @param categoryList the id list of Object Mapping categoires
+     */
+    public void setAssocOMCategories(List<Long> categoryList) {
+        m_assocOMCategories = categoryList;
     }
 }

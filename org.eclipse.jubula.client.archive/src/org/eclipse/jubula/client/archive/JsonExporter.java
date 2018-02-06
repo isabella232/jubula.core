@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -510,12 +511,17 @@ public class JsonExporter {
     private void fillObjectMappingCategory(OmCategoryDTO categoryDTO,
             IObjectMappingCategoryPO category) {
         categoryDTO.setName(category.getName());
+        categoryDTO.setId(category.getId());
         for (IObjectMappingCategoryPO subcategory : category
                 .getUnmodifiableCategoryList()) {
 
             OmCategoryDTO mappedDTO = new OmCategoryDTO();
             fillObjectMappingCategory(mappedDTO, subcategory);
             categoryDTO.addCategories(mappedDTO);
+            IAUTMainPO aut = subcategory.getAutMainParent();
+            if (aut != null) {
+                categoryDTO.setAut(ImportExportUtil.i2str(aut.getId()));
+            }
         }
         for (IObjectMappingAssoziationPO assoc : category
                 .getUnmodifiableAssociationList()) {
@@ -662,6 +668,9 @@ public class JsonExporter {
         addParamDesc(tcDTO, po);
 
         tcDTO.setInterfaceLocked(po.isInterfaceLocked());
+        tcDTO.setAssocOMCategories(po.getOmCategoryAssoc().stream()
+                .map(IObjectMappingCategoryPO::getId)
+                .collect(Collectors.toList()));
 
         addTestDataManager(tcDTO, po);
 

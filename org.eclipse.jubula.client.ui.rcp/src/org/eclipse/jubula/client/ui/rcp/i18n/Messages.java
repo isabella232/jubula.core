@@ -20,6 +20,7 @@ public class Messages extends NLS {
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.rcp.i18n.messages"; //$NON-NLS-1$
 
 
+
     public static String AbstractGuiNodePropertySourceComment;
     public static String Action;
     public static String ActionBuilderExportAll;
@@ -134,6 +135,10 @@ public class Messages extends NLS {
     public static String AUTSettingWizardPageToolkit;
     public static String AUTSettingWizardPageUpperLabel;
     public static String AUTSettingWizardPageUpToolTip;
+    public static String AssocOMtoSpecTCDialogAvailableCat;
+    public static String AssocOMtoSpecTCDialogMessage;
+    public static String AssocOMtoSpecTCDialogSelectedCat;
+    public static String AssocOMtoSpecTCDialogTitle;
     public static String BrowserPreferencePageDescription;
     public static String BrowserPreferencePageFilterColoringButton;
     public static String BrowserPreferencePageFilterColoringColorFieldLabel;
@@ -811,6 +816,7 @@ public class Messages extends NLS {
     public static String SimpleSearchPageSearchInGroupHeader;
     public static String SpecTestCaseGUIPropertySourceDataSource;
     public static String SpecTestCaseGUIPropertySourceLockedParameters;
+    public static String SpecTestCaseGUIPropertySourceOMCat;
     public static String SpecTestCaseGUIPropertySourceParameter;
     public static String SpecTestCaseGUIPropertySourceTestCaseFileName;
     public static String SpecTestCaseGUIPropertySourceTestCaseName;

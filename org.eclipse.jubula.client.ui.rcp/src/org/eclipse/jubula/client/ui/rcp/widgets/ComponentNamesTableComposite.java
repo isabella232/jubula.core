@@ -734,6 +734,7 @@ public class ComponentNamesTableComposite extends Composite implements
      */
     public void setSelectedExecNode(IExecTestCasePO selectedExecNode) {
         m_selectedExecNode = selectedExecNode;
+        getCellEdit().setSelectedNode(selectedExecNode);
         updateTableInput();
     }
 

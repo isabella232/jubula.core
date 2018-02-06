@@ -61,7 +61,7 @@ public interface IModifiableParameterInterfacePO extends IParameterInterfacePO {
      *            times, if <code>false</code>, it will not be added if the
      *            <code>userDefName</code> already exists
      * @param mapper mapper to resolve param names
-     * * @return The new parameter description or null
+     * @return The new parameter description or null
      */
     public abstract IParamDescriptionPO addParameter(
         String type, String userDefName,

@@ -315,7 +315,12 @@ public class ParamProposalProvider implements IContentProposalProvider {
             // (we need the ParamDescPO's type)
             for (IParamDescriptionPO param : paramNode.getParameterList()) {
                 for (int i = 0; i < man.getDataSetCount(); i++) {
-                    String data = man.getCell(i, param);
+                    String data = null;
+                    try {
+                        data = man.getCell(i, param);
+                    } catch (IndexOutOfBoundsException ioobe) {
+                        // ignore we will continue with other data
+                    }
                     if (data == null) {
                         continue;
                     }

@@ -29,6 +29,10 @@ public interface ContextHelpIds {
     /** Praefix = Plugin_id + . */
     public static final String PRAEFIX = HELP_PLUGIN_ID + "."; //$NON-NLS-1$
     
+    /** ContextHelpId for assigning om to spec TC */
+    public static final String ASSIGN_OM_CAT_SPEC =
+            PRAEFIX + "assignOMCategoriesToSpec"; //$NON-NLS-1$
+
     /** ContextHelpId for adding existing test cases */
     public static final String TESTCASE_ADD_EXISTING = PRAEFIX
         + "testCaseAddExistingContextId"; //$NON-NLS-1$

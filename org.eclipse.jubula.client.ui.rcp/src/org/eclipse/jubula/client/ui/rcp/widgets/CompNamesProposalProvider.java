@@ -11,9 +11,12 @@
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.IContentProposal;
@@ -21,6 +24,11 @@ import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jubula.client.core.businessprocess.CompNameTypeManager;
 import org.eclipse.jubula.client.core.businessprocess.IComponentNameCache;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
+import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.INodePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
+import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -80,6 +88,9 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
      * initialization is complete.
      */
     private String m_typeFilter = StringConstants.EMPTY;
+    
+    /** selected Node */
+    private IExecTestCasePO m_selectedExecNode;
 
     /**
      * Constructor
@@ -108,8 +119,30 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
         } else {
             subString = contents.substring(0, position);
         }
-        
-        for (IComponentNamePO cN : m_compNameCache.getAllCompNamePOs()) {
+        Set<String> logicalNames = new HashSet<>();
+        if (m_selectedExecNode != null) {
+            INodePO specAncestor = m_selectedExecNode.getSpecAncestor();
+            if (specAncestor instanceof ISpecTestCasePO) {
+                ISpecTestCasePO spec = (ISpecTestCasePO) specAncestor;
+                List<IObjectMappingCategoryPO> omCategoryAssoc =
+                        spec.getOmCategoryAssoc();
+                for (IObjectMappingCategoryPO omCategory : omCategoryAssoc) {
+                    getLogicalNames(logicalNames, omCategory);
+                }
+            }
+        }
+        Collection<IComponentNamePO> pos = m_compNameCache.getAllCompNamePOs();
+        if (logicalNames.size() > 0) {
+            pos = new HashSet<>();
+            for (String guid : logicalNames) {
+                IComponentNamePO compNamePo =
+                        m_compNameCache.getResCompNamePOByGuid(guid);
+                if (compNamePo != null) {
+                    pos.add(compNamePo);
+                }
+            }
+        }
+        for (IComponentNamePO cN : pos) {
             if (StringUtils.isEmpty(cN.getName()) 
                     || !cN.getName().startsWith(subString)
                     || cN.getParentProjectId() == null
@@ -135,6 +168,26 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
     }
 
     /**
+     * searches recursively through {@link IObjectMappingCategoryPO}s to search for logical names
+     * @param logicalNames the {@link Set} Logical Names to add the new ones to
+     * @param iObjectMappingCategoryPO the {@link IObjectMappingCategoryPO} to get the logical names from
+     */
+    private void getLogicalNames(Set<String> logicalNames,
+            IObjectMappingCategoryPO iObjectMappingCategoryPO) {
+        List<IObjectMappingAssoziationPO> unmodifiableAssociationList =
+                iObjectMappingCategoryPO.getUnmodifiableAssociationList();
+        for (IObjectMappingAssoziationPO assoc : unmodifiableAssociationList) {
+            logicalNames.addAll(assoc.getLogicalNames());
+        }
+
+        List<IObjectMappingCategoryPO> unmodifiableCategoryList =
+                iObjectMappingCategoryPO.getUnmodifiableCategoryList();
+        for (IObjectMappingCategoryPO subCat : unmodifiableCategoryList) {
+            getLogicalNames(logicalNames, subCat);
+        }
+    }
+
+    /**
      * 
      * @param typeFilter The new filter to use. Only Component Names 
      *                   with a type that is compatible with the given type 
@@ -150,5 +203,12 @@ public class CompNamesProposalProvider implements IContentProposalProvider {
      */
     public void setComponentNameCache(IComponentNameCache compNameCache) {
         m_compNameCache = compNameCache;
+    }
+
+    /**
+     * @param selectedExecNode the selected {@link IExecTestCasePO}
+     */
+    public void setSelectedNode(IExecTestCasePO selectedExecNode) {
+        m_selectedExecNode = selectedExecNode;
     }
 }

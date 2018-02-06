@@ -15,6 +15,10 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang.Validate;
@@ -54,6 +58,10 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
      * reserved flag for user defined InterfaceLocked state contrary to isReused state
      */
     private Boolean m_isInterfaceLocked = false;
+    /** list of {@link IObjectMappingCategoryPO} to reduce the amount in the component name proposal*/
+    private List<IObjectMappingCategoryPO> m_omCategoryAssoc;
+    
+
     
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -265,6 +273,28 @@ class SpecTestCasePO extends TestCasePO implements ISpecTestCasePO {
             name, PersistenceUtil.generateUUID(), mapper);
         super.addParameter(desc);
         return desc;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @OneToMany(
+            targetEntity = ObjectMappingCategoryPO.class,
+            fetch = FetchType.EAGER)
+    @JoinTable(name = "SPEC_OM_CATEGORIES", joinColumns = {
+            @JoinColumn(name = "SPEC_ID", referencedColumnName = "ID") },
+        inverseJoinColumns = 
+        @JoinColumn(name = "OMC_ID", referencedColumnName = "ID"))
+    public List<IObjectMappingCategoryPO> getOmCategoryAssoc() {
+        return m_omCategoryAssoc;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setOmCategoryAssoc(
+            List<IObjectMappingCategoryPO> omCategoryAssoc) {
+        m_omCategoryAssoc = omCategoryAssoc;
     }
     
 }

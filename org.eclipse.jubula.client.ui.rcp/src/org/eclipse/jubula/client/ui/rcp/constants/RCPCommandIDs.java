@@ -46,6 +46,9 @@ public interface RCPCommandIDs {
     /** the ID of the "edit parameters" command */
     public static final String EDIT_PARAMETERS = "org.eclipse.jubula.client.ui.rcp.commands.EditParameters"; //$NON-NLS-1$
     
+    /** the ID of the "edit OM Assoc" command */
+    public static final String EDIT_OM_ASSOC = "org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc"; //$NON-NLS-1$
+    
     /** the ID of the "extract test case" command */
     public static final String EXTRACT_TESTCASE = "org.eclipse.jubula.client.ui.rcp.commands.ExtractTestCase"; //$NON-NLS-1$
 

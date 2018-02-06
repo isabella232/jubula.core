@@ -55,6 +55,7 @@ import org.eclipse.jubula.client.core.model.IEventExecTestCasePO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
+import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -669,6 +670,8 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.EDIT_PARAMETERS);
+        CommandHelper.createContributionPushItem(mgr,
+                RCPCommandIDs.EDIT_OM_ASSOC);
         mgr.add(new GroupMarker("editing")); //$NON-NLS-1$
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.REVERT_CHANGES);
@@ -787,10 +790,11 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
     public void handleDataChanged(IPersistentObject po, DataState dataState,
             UpdateState updState) {
         
+        IPersistentObject workVersion = getEditorHelper().getEditSupport()
+                        .getWorkVersion();
         if (po instanceof INodePO) {
             INodePO changedNode = (INodePO)po;
-            INodePO editorNode = (INodePO)getEditorHelper().getEditSupport()
-                    .getWorkVersion();
+            INodePO editorNode = (INodePO)workVersion;
             boolean isVisibleInEditor = editorNode.indexOf(changedNode) > -1;
             isVisibleInEditor |= contains(editorNode, changedNode);
             if (editorNode instanceof ISpecTestCasePO) {
@@ -839,6 +843,21 @@ public abstract class AbstractTestCaseEditor extends AbstractJBEditor
                 session.refresh(session.find(po.getClass(), po.getId()));
             }
             runLocalChecks();
+        } else if (po instanceof IObjectMappingCategoryPO
+                && updState == UpdateState.all) {
+            if (workVersion instanceof ISpecTestCasePO) {
+                ISpecTestCasePO spec = (ISpecTestCasePO) workVersion;
+                List<IObjectMappingCategoryPO> omCategoryAssoc =
+                        spec.getOmCategoryAssoc();
+                for (Iterator<IObjectMappingCategoryPO> iterator =
+                        omCategoryAssoc.iterator(); iterator.hasNext();) {
+                    IObjectMappingCategoryPO cat = iterator.next();
+                    if (po.getId().equals(cat.getId())) {
+                        iterator.remove();
+                    }
+
+                }
+            }
         }
     }
     

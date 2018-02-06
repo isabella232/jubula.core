@@ -114,7 +114,7 @@ public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
                     if (dialog.open() == Window.OK) {
                         IObjectMappingCategoryPO newCategory = 
                             PoMaker.createObjectMappingCategoryPO(
-                                    dialog.getName());
+                                    dialog.getName(), editor.getAut());
                         node.addCategory(newCategory);
                         editor.getEditorHelper().setDirty(true);
 

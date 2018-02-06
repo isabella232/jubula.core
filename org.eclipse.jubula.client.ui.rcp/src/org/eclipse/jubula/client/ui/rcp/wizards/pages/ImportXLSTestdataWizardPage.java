@@ -91,6 +91,7 @@ import org.eclipse.ui.wizards.datatransfer.IImportStructureProvider;
  * @author BREDEX GmbH
  * @created Oct 19, 2010
  */
+@SuppressWarnings("restriction")
 public class ImportXLSTestdataWizardPage extends WizardResourceImportPage {
     /**
      * @author BREDEX GmbH

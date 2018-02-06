@@ -149,7 +149,8 @@ public class OMEditorBP {
                     if (subcategory == null) {
                         // Create new category
                         subcategory = 
-                            PoMaker.createObjectMappingCategoryPO(catName);
+                            PoMaker.createObjectMappingCategoryPO(catName,
+                                    getEditor().getAut());
                         newCategory.addCategory(subcategory);
                     }
                     newCategory = subcategory;
@@ -321,7 +322,8 @@ public class OMEditorBP {
             }
             if (!childExists) {
                 IObjectMappingCategoryPO newCat = 
-                    PoMaker.createObjectMappingCategoryPO(pathEntry);
+                    PoMaker.createObjectMappingCategoryPO(pathEntry,
+                            getEditor().getAut());
                 curCat.addCategory(newCat);
                 curCat = newCat;
             }

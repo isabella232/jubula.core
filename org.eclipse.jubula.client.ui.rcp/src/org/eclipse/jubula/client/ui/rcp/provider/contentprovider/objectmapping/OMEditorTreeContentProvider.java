@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,9 @@ public class OMEditorTreeContentProvider extends
     /** listener for updates to the model */
     private IDataChangedListener m_modelListener;
     
+    /** which {@link IObjectMappingCategoryPO} should be ignored during proposal generation */
+    private Collection<IObjectMappingCategoryPO> m_categoriesToIgnore;
+    
     /**
      * Constructor.
      * 
@@ -62,6 +66,18 @@ public class OMEditorTreeContentProvider extends
      */
     public OMEditorTreeContentProvider(IComponentNameCache compNameCache) {
         m_compNameCache = compNameCache;
+    }
+    
+    /**
+     * Constructor.
+     * 
+     * @param compNameCache The cache to use for finding Component Names.
+     * @param categoriesToIgnore which {@link IObjectMappingCategoryPO} should be ignored during proposal generation
+     */
+    public OMEditorTreeContentProvider(IComponentNameCache compNameCache,
+            Collection<IObjectMappingCategoryPO> categoriesToIgnore) {
+        m_compNameCache = compNameCache;
+        m_categoriesToIgnore = categoriesToIgnore;
     }
 
     /**
@@ -99,16 +115,21 @@ public class OMEditorTreeContentProvider extends
             Validate.noNullElements(componentNamePoList);
             return componentNamePoList.toArray();
         }
-
         if (parentElement instanceof IComponentNamePO) {
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
         }
-        
+        if (parentElement instanceof Collection) {
+            return ((Collection<?>) parentElement).toArray();
+        }
         if (parentElement instanceof IObjectMappingCategoryPO) {
             List<Object> childList = new ArrayList<Object>();
             IObjectMappingCategoryPO category = 
                 (IObjectMappingCategoryPO)parentElement;
             childList.addAll(category.getUnmodifiableCategoryList());
+            if (m_categoriesToIgnore != null
+                    && m_categoriesToIgnore.size() > 0) {
+                childList.removeAll(m_categoriesToIgnore);
+            }
             for (IObjectMappingAssoziationPO assoc 
                     : category.getUnmodifiableAssociationList()) {
                 if (assoc.getTechnicalName() != null) {

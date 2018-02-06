@@ -105,7 +105,7 @@ class AUTMainPO implements IAUTMainPO {
      */
     AUTMainPO(String autName, String guid) {
         m_autName = autName;
-        m_objMap = PoMaker.createObjectMappingPO();
+        m_objMap = PoMaker.createObjectMappingPO(this);
         m_objMap.setParentProjectId(getParentProjectId());
         m_guid = guid;
         m_generateNames = false;

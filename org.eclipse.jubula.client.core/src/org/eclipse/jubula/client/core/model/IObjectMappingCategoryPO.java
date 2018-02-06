@@ -114,4 +114,14 @@ public interface IObjectMappingCategoryPO extends IPersistentObject {
      *         top-level category (has no parent category).
      */
     public IObjectMappingCategoryPO getSection();
+
+    /**
+     * @return the {@link IAUTMainPO} where the category is from
+     */
+    public IAUTMainPO getAutMainParent();
+
+    /**
+     * @param autMainParent the {@link IAUTMainPO} where the category is from
+     */
+    public void setAutMainParent(IAUTMainPO autMainParent);
 }

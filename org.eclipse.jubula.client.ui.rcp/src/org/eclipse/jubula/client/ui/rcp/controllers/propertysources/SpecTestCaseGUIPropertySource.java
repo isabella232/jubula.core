@@ -13,6 +13,7 @@ package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
+import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
@@ -104,7 +106,9 @@ public class SpecTestCaseGUIPropertySource
 
     /** cached property descriptor for referenced Test Data Cube */
     private PropertyDescriptor m_referencedCubePropDesc = null;
-
+    /** cached property descriptor for om categories */
+    private IPropertyDescriptor m_oMCatPropDesc;
+    
     /**
      * Constructor.
      * Use this only for ISpecTestCasePO!
@@ -187,13 +191,26 @@ public class SpecTestCaseGUIPropertySource
             m_lockPropDesc = propDes;
         }
         addPropertyDescriptor(m_lockPropDesc);
-        
+        addPropertyDescriptor(getOMCategorieDescriptor());
         initParameterPropDescriptors();
 
         initTrackedChangesPropDescriptor();
     }
        
-
+    /**
+     * @return the OM association {@link IPropertyDescriptor}
+     */
+    private IPropertyDescriptor getOMCategorieDescriptor() {
+        if (m_oMCatPropDesc == null) {
+            JBPropertyDescriptor cbpd = new JBPropertyDescriptor(
+                    new OMCategorieController(),
+                    Messages.SpecTestCaseGUIPropertySourceOMCat);
+            cbpd.setLabelProvider(new DisabledLabelProvider());
+            m_oMCatPropDesc = cbpd;
+        }
+        return m_oMCatPropDesc;
+    }
+    
     /**
      * Initializes the parameter property descriptors, if needed, and adds
      * them to the given list. The contents of the list are then added to
@@ -220,7 +237,31 @@ public class SpecTestCaseGUIPropertySource
 
         addPropertyDescriptor(paramPropDescList);
     }
+    
+    /**
+     *  for the associated {@link IObjectMappingCategoryPO}
+     */
+    protected class OMCategorieController extends AbstractPropertyController {
 
+        /** {@inheritDoc} */
+        public boolean setProperty(Object value) {
+            return false;
+        }
+
+        /** {@inheritDoc} */
+        public Object getProperty() {
+            ISpecTestCasePO poNode = (ISpecTestCasePO) getNode();
+            List<IObjectMappingCategoryPO> omCategoryAssoc =
+                    poNode.getOmCategoryAssoc();
+            if (omCategoryAssoc != null) {
+                return omCategoryAssoc.stream()
+                        .map(IObjectMappingCategoryPO::getName)
+                        .collect(Collectors.joining(",")); //$NON-NLS-1$
+            }
+            return StringConstants.EMPTY;
+        }
+    }
+    
     /**
      * This controllers allows to set FileName for external datas
      * @author BREDEX GmbH

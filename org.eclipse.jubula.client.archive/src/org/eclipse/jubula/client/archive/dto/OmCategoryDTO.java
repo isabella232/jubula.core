@@ -19,15 +19,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author BREDEX GmbH
  */
 public class OmCategoryDTO {
-    
+    /** the old database id */
+    private Long m_id;
     /** */
     private String m_name;
     /** */
     private List<OmEntryDTO> m_associations = new ArrayList<OmEntryDTO>();
     /** */
     private List<OmCategoryDTO> m_categories = new ArrayList<OmCategoryDTO>();
+    /** */
+    private String m_aut;
     
-    
+    /**
+     * @return the id
+     */
+    @JsonProperty("id")
+    public Long getId() {
+        return m_id;
+    }
+
+    /**
+     * 
+     * @param id the id
+     */
+    public void setId(Long id) {
+        m_id = id;
+    }
+
     /**
      * @return name
      */
@@ -71,5 +89,18 @@ public class OmCategoryDTO {
      */
     public void addCategories(OmCategoryDTO categorie) {
         this.m_categories.add(categorie);
+    }
+    /**
+     * @return the id of{@link AutDTO}
+     */
+    public String getAut() {
+        return m_aut;
+    }
+    
+    /**
+     * @param aut a id of a{@link AutDTO}
+     */
+    public void setAut(String aut) {
+        m_aut = aut;
     }
 }

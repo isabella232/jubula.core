@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.editors;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -51,9 +52,9 @@ import org.eclipse.jubula.client.core.commands.AUTModeChangedCommand;
 import org.eclipse.jubula.client.core.events.DataChangedEvent;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
+import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.OMState;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.UpdateState;
-import org.eclipse.jubula.client.core.events.DataEventDispatcher.IDataChangedListener;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IComponentNamePO;
@@ -63,18 +64,22 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.model.IPersistentObject;
+import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.ITimestampPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
+import org.eclipse.jubula.client.core.persistence.NodePM;
+import org.eclipse.jubula.client.core.persistence.ObjectMappingPM;
 import org.eclipse.jubula.client.core.persistence.PMAlreadyLockedException;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.persistence.PMReadException;
 import org.eclipse.jubula.client.core.persistence.PMSaveException;
 import org.eclipse.jubula.client.core.utils.AbstractNonPostOperatingTreeNodeOperation;
 import org.eclipse.jubula.client.core.utils.ITreeTraverserContext;
+import org.eclipse.jubula.client.core.utils.NativeSQLUtils;
 import org.eclipse.jubula.client.core.utils.TreeTraverser;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -172,6 +177,9 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
     
     /** the tree viewer for mapped Component Names in the Split Pane view */
     private TreeViewer m_mappedComponentTreeViewer;
+    
+    /** deleted object mapping categories*/
+    private Set<IObjectMappingCategoryPO> m_deletedOMC = new HashSet<>();
     
     /** 
      * the component responsible for handling the profile 
@@ -377,7 +385,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         m_omEditorBP = new OMEditorBP(this);
         IObjectMappingPO objMap = getAut().getObjMap();
         if (objMap == null) {
-            objMap = PoMaker.createObjectMappingPO();
+            objMap = PoMaker.createObjectMappingPO(getAut());
             getAut().setObjMap(objMap);
         }
         
@@ -869,17 +877,27 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
         fixCompNameReferences(getAut().getObjMap(), 
                 compNameCache);
         
+        List<DataChangedEvent> datachanged = new ArrayList<>();
         editSupport.saveWorkVersion();
+        List<BigDecimal> specIdsforAssoc = NativeSQLUtils
+                .getSpecIdsforAssoc(getEntityManager(), m_deletedOMC);
+        for (IObjectMappingCategoryPO omc : m_deletedOMC) {
+            NativeSQLUtils.removeOMCatAssoc(omc);
+            datachanged.add(new DataChangedEvent(omc, DataState.Deleted,
+                    UpdateState.all));
+        }
         compNameCache.clear();
-        
+        refreshInMasterSession(specIdsforAssoc);
         DataEventDispatcher.getInstance().fireDataChangedListener(
                 this.getAut().getObjMap(), 
                 DataState.StructureModified, 
                 UpdateState.all);
-        
+        ObjectMappingPM.deleteOMCategories(m_deletedOMC);
+        m_deletedOMC.clear();
+        datachanged.add(new DataChangedEvent(getAut().getObjMap(),
+                DataState.Saved, UpdateState.all));
         DataEventDispatcher.getInstance().fireDataChangedListener(
-                getAut().getObjMap(), DataState.Saved, UpdateState.all);
-        
+                datachanged.toArray(new DataChangedEvent[datachanged.size()]));
         if (getAut().equals(
                 TestExecution.getInstance().getConnectedAut())
                 && !workProfile.equals(origProfile)) {
@@ -888,6 +906,16 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                     Plugin.getActiveWorkbenchWindowShell(),
                     "InfoNagger.ObjectMappingProfileChanged", //$NON-NLS-1$
                     ContextHelpIds.OBJECT_MAP_EDITOR); 
+        }
+    }
+
+    /**
+     * @param specIdsforAssoc the {@link ISpecTestCasePO} ids
+     */
+    private void refreshInMasterSession(List<BigDecimal> specIdsforAssoc) {
+        for (BigDecimal id : specIdsforAssoc) {
+            INodePO find = NodePM.findNodeById(id.longValue());
+            NodePM.refreshMasterSession(find);
         }
     }
 
@@ -1361,9 +1389,21 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 handleOneChange((IComponentNamePO) e.getPo(), e.getDataState());
                 break;
             }
+            if (e.getUpdateState() == UpdateState.onlyInEditor
+                    && e.getPo() instanceof IObjectMappingCategoryPO
+                    && e.getDataState() == DataState.Deleted) {
+                handleOMdeleted((IObjectMappingCategoryPO) e.getPo());
+            }
         }
     }
     
+    /**
+     * @param po the {@link IObjectMappingCategoryPO}
+     */
+    private void handleOMdeleted(IObjectMappingCategoryPO po) {
+        m_deletedOMC.add(po);
+    }
+
     /**
      * Deals with a single data change event
      * @param compName the Component Name
