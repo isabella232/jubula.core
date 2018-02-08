@@ -4,7 +4,7 @@ Bundle-Name: Jubula UI - API Export
 Bundle-SymbolicName: org.eclipse.jubula.client.api.ui; singleton:=true
 Bundle-Version: 4.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.jface;bundle-version="[3.6.1,4.0.0)",

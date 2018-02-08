@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Jubula - Client - Statistics
 Bundle-SymbolicName: org.eclipse.jubula.client.stats
 Bundle-Vendor: Eclipse Jubula
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.jubula.client.stats.Mn

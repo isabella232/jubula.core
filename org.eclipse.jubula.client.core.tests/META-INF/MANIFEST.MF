@@ -5,5 +5,5 @@ Bundle-SymbolicName: org.eclipse.jubula.client.core.tests
 Bundle-Version: 6.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Fragment-Host: org.eclipse.jubula.client.core;bundle-version="[6.0.0,7.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.junit;bundle-version="[4.8.2,5.0.0)"

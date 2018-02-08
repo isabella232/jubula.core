@@ -2172,6 +2172,10 @@
              style="push">
        </command>
        <command
+             commandId="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc"
+             style="push">
+       </command>
+       <command
              commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
              style="push">
        </command>
@@ -2647,6 +2651,29 @@
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.delete.DeleteUnusedHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.DeleteUnused">
+      <activeWhen>
+        <with variable="activePartId">
+          <equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
+        </with>
+      </activeWhen>
+      <enabledWhen>
+        <and>
+          <count value="1" />
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
+            <test property="org.eclipse.jubula.client.core.model.isEditable" />
+          </iterate>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectProtected">
+            <equals value="false" />
+          </with>
+        </and>
+      </enabledWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.TCBEditOmAssocHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc">
       <activeWhen>
         <with variable="activePartId">
           <equals value="org.eclipse.jubula.client.ui.rcp.views.TestCaseBrowser" />
@@ -3813,6 +3840,26 @@
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.EditParametersHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.EditParameters">
+      <activeWhen>
+        <and>
+          <with variable="activePartId">
+            <equals value="org.eclipse.jubula.client.ui.rcp.editors.TestCaseEditor" />
+          </with>
+          <count value="1" />
+          <iterate
+            ifEmpty="false"
+            operator="and">
+            <instanceof value="org.eclipse.jubula.client.core.model.ISpecTestCasePO" />
+          </iterate>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectProtected">
+            <equals value="false" />
+          </with>
+        </and>
+      </activeWhen>
+    </handler>
+    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.EditorOMAssocHandler"
+      commandId="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc">
       <activeWhen>
         <and>
           <with variable="activePartId">

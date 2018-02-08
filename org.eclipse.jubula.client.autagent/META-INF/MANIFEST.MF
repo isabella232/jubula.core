@@ -17,6 +17,6 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.6.1,4.0.0)",
  org.eclipse.jubula.autagent;bundle-version="[6.0.0,7.0.0)",
  org.eclipse.jubula.client.ui;bundle-version="[6.0.0,7.0.0)",
  org.eclipse.jubula.client.ui.rcp;bundle-version="[6.0.0,7.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.jubula.client.autagent.handlers

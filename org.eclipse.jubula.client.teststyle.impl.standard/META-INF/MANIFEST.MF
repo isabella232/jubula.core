@@ -12,5 +12,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jubula.client.teststyle;bundle-version="[6.0.0,7.0.0)",
  org.eclipse.jubula.client.core;bundle-version="[6.0.0,7.0.0)",
  org.eclipse.jubula.client.ui.rcp;bundle-version="[6.0.0,7.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
