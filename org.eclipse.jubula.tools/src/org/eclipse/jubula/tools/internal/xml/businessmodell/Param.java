@@ -11,6 +11,7 @@
 package org.eclipse.jubula.tools.internal.xml.businessmodell;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -57,6 +58,18 @@ public class Param {
     public Param(String name, String type) {
         m_name = name;
         m_type = type;
+    }
+    
+    /**
+     * Sets the member-variables m_name and m_type
+     * @param name A <code>String</code> value.
+     * @param type A <code>String</code> value.
+     * @param valueSet a ValueSet
+     */
+    public Param(String name, String type, Map<String, String> valueSet) {
+        m_name = name;
+        m_type = type;
+        m_valueSet = new ParamValueSet(valueSet);
     }
     /**
      * @return The set of predefined values, may be of length <code>0</code>
@@ -105,7 +118,7 @@ public class Param {
      * @return The iterator of the value set.<br>
      * The elements of the Iterator are of the type <code>ValueSetElement</code>
      */
-    public Iterator valueSetIterator() {
+    public Iterator<ValueSetElement> valueSetIterator() {
         return getValueSet().iterator();
     }
     /**

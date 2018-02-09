@@ -14,14 +14,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.jubula.client.core.businessprocess.AbstractParamInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.CapBP;
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IParamValueSetPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
+import org.eclipse.jubula.client.core.model.IValueCommentPO;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ParamComboPropertyDescriptor;
@@ -30,7 +34,6 @@ import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNode
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamTextContentAssisted;
-import org.eclipse.jubula.client.ui.rcp.widgets.FunctionProposalProvider;
 import org.eclipse.jubula.client.ui.rcp.widgets.ParamProposalProvider;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
@@ -93,8 +96,9 @@ public class TestDataControlFactory {
             Action action = CapBP.getAction(cap);
             List<String> values = new ArrayList<String>();
             Param param = action.findParam(paramDesc.getUniqueId());
-            for (Iterator iter = param.valueSetIterator(); iter.hasNext();) {
-                values.add(map.get(((ValueSetElement)iter.next()).getValue()));
+            for (Iterator<ValueSetElement> iter = param.valueSetIterator(); iter
+                    .hasNext();) {
+                values.add(map.get((iter.next()).getValue()));
             }
             if (!values.isEmpty()) {
                 return new CheckedParamText(parent, style, cap, paramDesc,
@@ -109,8 +113,13 @@ public class TestDataControlFactory {
                 ParamTextPropertyDescriptor.getValuesSet(
                         paramNode, paramDesc.getUniqueId());
             String [] values = ParamTextPropertyDescriptor.getValues(valueSet);
+            Map<String, String> valuesWithComment = 
+                    ParamTextPropertyDescriptor.getValuesWithComment(valueSet);
             if (TestDataConstants.BOOLEAN.equals(paramDesc.getType())) {
                 values = BOOLEAN_VALUES;
+                valuesWithComment.clear();
+                valuesWithComment.put(BOOLEAN_VALUES[0], StringConstants.EMPTY);
+                valuesWithComment.put(BOOLEAN_VALUES[1], StringConstants.EMPTY);
             }
 
             return new CheckedParamTextContentAssisted(parent, style,
@@ -120,28 +129,49 @@ public class TestDataControlFactory {
                             valueSet != null ? valueSet.isCombinable() : false, 
                                     values), 
                     new ParamProposalProvider(
-                            values, paramNode, paramDesc));
+                            valuesWithComment, paramNode, paramDesc));
         }
 
         if (paramObj instanceof ITestDataCubePO) {
             ITestDataCubePO tdc = (ITestDataCubePO)paramObj;
+            String[] values = getValuesFromValueSet(paramDesc);
             if (TestDataConstants.BOOLEAN.equals(paramDesc.getType())) {
                 return new CheckedParamTextContentAssisted(parent, style,
                         tdc, paramDesc, 
                         createParamValueValidator(
                                 paramDesc.getType(), 
                                 false, BOOLEAN_VALUES), 
-                        new FunctionProposalProvider());
+                        new ParamProposalProvider(BOOLEAN_VALUES,
+                                null, paramDesc));
             }
-            return new CheckedParamTextContentAssisted(parent, style,
-                    tdc, paramDesc, 
-                    createParamValueValidator(paramDesc.getType(), false), 
-                    new FunctionProposalProvider());
+            return new CheckedParamTextContentAssisted(parent, style, tdc,
+                    paramDesc,
+                    createParamValueValidator(paramDesc.getType(), false,
+                            values),
+                    new ParamProposalProvider(values, null, paramDesc));
         }
         
         Assert.notReached(Messages.ImplementFor + StringConstants.SPACE 
                 + paramObj.getClass().getName());
         return null;
+    }
+
+    /**
+     * 
+     * @param paramDesc the {@link IParamDescriptionPO} should be of type {@link ITcParamDescriptionPO}
+     * @return the values from the {@link IParamValueSetPO}
+     */
+    private static String[] getValuesFromValueSet(
+            IParamDescriptionPO paramDesc) {
+        String [] values = new String[0];
+        if (paramDesc instanceof ITcParamDescriptionPO) {
+            ITcParamDescriptionPO desc = (ITcParamDescriptionPO) paramDesc;
+            List<String> collect = desc.getValueSet().getValues().stream()
+                    .map(IValueCommentPO::getValue)
+                    .collect(Collectors.toList());
+            values = collect.toArray(new String[collect.size()]);
+        }
+        return values;
     }
     
     /**

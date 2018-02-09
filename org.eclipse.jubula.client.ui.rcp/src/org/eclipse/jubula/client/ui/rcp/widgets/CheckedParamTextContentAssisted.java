@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.IContentProposal;
+import org.eclipse.jface.fieldassist.IContentProposalListener;
 import org.eclipse.jface.fieldassist.IContentProposalListener2;
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
@@ -51,6 +53,10 @@ public class CheckedParamTextContentAssisted extends CheckedParamText {
 
     /** is this content assistent active? */
     private boolean m_popupOpen = false;
+    /** the accepted state*/
+    private boolean m_accepted;
+
+
     /** controller for popupOpen */
     private IContentProposalListener2Implementation m_popupListener;
     
@@ -82,6 +88,14 @@ public class CheckedParamTextContentAssisted extends CheckedParamText {
         cpa.setFilterStyle(ContentProposalAdapter.FILTER_NONE);
         cpa.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_INSERT);
         cpa.addContentProposalListener(m_popupListener);
+        cpa.addContentProposalListener(new IContentProposalListener() {
+            
+            @Override
+            public void proposalAccepted(IContentProposal proposal) {
+                m_accepted = true;
+                
+            }
+        });
     }
 
     /**
@@ -89,5 +103,18 @@ public class CheckedParamTextContentAssisted extends CheckedParamText {
      */
     public boolean isPopupOpen() {
         return m_popupOpen;
+    }
+    /**
+     * @return if the content was accepted
+     */
+    public boolean isAccepted() {
+        return m_accepted;
+    }
+    /**
+     * 
+     * @param accepted the sccepted state
+     */
+    public void setAccepted(boolean accepted) {
+        m_accepted = accepted;
     }
 }

@@ -20,6 +20,8 @@
     section is concerned with using the dialog for editing
     parameters in a Test Case. For editing parameters for a central
     test data set, see the section later (<xref linkend="using-central-data-sets"/>).
+    
+    Also there is the possibility to restrict the values which could be used in the data <xref linkend="editing-value-sets-for-parameter"/>.
   </para>
   <para>
     To edit the parameters for a Test Case:
@@ -59,4 +61,16 @@
       </para>
     </listitem>
   </orderedlist>
+  <section xml:id="editing-value-sets-for-parameter">
+    <anchor role="helpid" condition="editParameterValuesSetsDialogContextId" 
+      xml:id="using-the-edit-parameters-dialog-to-add-edit-and-delete-references.editParameterValuesSetsDialogContextId" 
+      xreflabel="Editing Parameter value sets"/>
+    <title>Add and edit ValueSets for Parameters</title>
+  <para>
+   After Selecting a Parameter in the Edit Parameters Dialog,
+   you can edit the allowed values for this parameter. Therefore the
+   Edit Value Set Dialog will be opened. You can add and remove values
+   in the allowed Values Table and select a default value in the combobox.
+  </para>
+  </section>
 </section>

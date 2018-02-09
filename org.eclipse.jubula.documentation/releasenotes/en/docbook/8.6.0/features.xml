@@ -12,7 +12,18 @@
     xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
-    
+  <para>
+    <emphasis role="strong">Value sets for parameter</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
+    <para>
+        The data for new data set rows can now restricted to specific values.
+        Also it is possible to set a default value, so that new data sets begin with this value.
+        This is possible in the Edit Parameters dialog.
+    </para>
+  </listitem>
+</itemizedlist>
   <para>
     <emphasis role="strong">Possibility to reduce the amount of component name proposals</emphasis>
   </para>
@@ -25,7 +36,6 @@
     </para>
   </listitem>
 </itemizedlist>
-    
   <para>
     <emphasis role="strong">New Teststyle to gather TODO's in the problems view</emphasis>
   </para>

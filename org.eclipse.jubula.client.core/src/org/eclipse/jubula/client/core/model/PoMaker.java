@@ -495,6 +495,23 @@ public abstract class PoMaker {
     }
     
     /**
+     * @return a new {@link ParamValueSetPO}
+     */
+    public static IParamValueSetPO createParamValueSet() {
+        return new ParamValueSetPO();
+    }
+    
+    /**
+     * 
+     * @param value the value
+     * @param comment the comment
+     * @return a new instance of {@link ValueCommentPO}
+     */
+    public static IValueCommentPO createValueComment(
+            String value, String comment) {
+        return new ValueCommentPO(value, comment);
+    }
+    /**
      * get the class instance of the PO (needed by Persistor)
      * @return the class instance of the PO
      */

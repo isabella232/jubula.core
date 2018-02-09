@@ -10,8 +10,8 @@ Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.toolkit,
  org.eclipse.jubula.toolkit.annotations,
  org.eclipse.jubula.toolkit.enums,
- org.eclipse.jubula.toolkit.internal;x-internal:=true,
- org.eclipse.jubula.toolkit.internal.annotations;x-internal:=true
+ org.eclipse.jubula.toolkit.internal;x-friends:="org.eclipse.jubula.client.core",
+ org.eclipse.jubula.toolkit.internal.annotations;x-friends:="org.eclipse.jubula.client.core"
 Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jubula.communication;bundle-version="[4.0.0,5.0.0)",

@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Container for permitted values.
@@ -37,6 +39,19 @@ public class ParamValueSet {
      */
     public ParamValueSet() {
         this(false);
+    }
+    
+    /**
+     * Constructor. Equivalent to calling 
+     * {@link ParamValueSet#ParamValueSet(boolean)} with <code>false</code>.
+     * @param valueSet a valueSet with comment
+     */
+    public ParamValueSet(Map<String, String> valueSet) {
+        this(false);
+        for (Entry<String, String> entry : valueSet.entrySet()) {
+            getValueSet().add(new ValueSetElement(entry.getKey(),
+                    entry.getKey(), entry.getValue()));
+        }
     }
 
     /**

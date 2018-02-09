@@ -15,8 +15,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -32,10 +34,12 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IParamValueSetPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IValueCommentPO;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
@@ -104,7 +108,13 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
     /** Name of the type-column */
     private static final String TYPE_COL_NAME = 
         Messages.EditParametersDialogTypeTableColumnName;
-    
+    /** Name of the default Value Column */
+    private static final String DEFAULT_VAL_COL_NAME =
+            Messages.EditParametersDialogDefaultValueTableColumnName;
+    /** Name of the Allowed Value Colum */
+    private static final String ALLOWED_VAL_COL_NAME =
+            Messages.EditParametersDialogValueSetTableColumnName;
+
     /** Constant for an empty Cell entry */
     private static final String EMPTY_ENTRY = StringUtils.EMPTY;
     
@@ -125,12 +135,16 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
     
     /** Constant for the index of the type column of the table */
     private static final int TYPE_TABLE_COLUMN = 1;
+    /** Constant for the index of the default value column of the table */
+    private static final int DEFAULT_TABLE_COLUMN = 2;
+    /** Constant for the index of the valueSet column of the table */
+    private static final int ALLOWED_TABLE_COLUMN = 3;
     
     /**
      * <code>TABLE_COLUMNS</code>
      */
-    private static final String[] TABLE_COLUMNS = 
-        new String[]{NAME_COL_NAME, TYPE_COL_NAME};
+    private static final String[] TABLE_COLUMNS = new String[] { NAME_COL_NAME,
+        TYPE_COL_NAME, DEFAULT_VAL_COL_NAME, ALLOWED_VAL_COL_NAME };
 
     /** The IParameterInterfacePO */
     private IParameterInterfacePO m_paramInterfaceObj;
@@ -219,17 +233,6 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         /** {@inheritDoc} */
         public Object[] getElements(Object inputElement) {
             return ((List)inputElement).toArray();
-        }
-
-        /** {@inheritDoc} */
-        public void dispose() {
-            // nothing
-        }
-
-        /** {@inheritDoc} */
-        public void inputChanged(Viewer viewer, Object oldInput, 
-            Object newInput) {
-            // nothing
         }
     }
     
@@ -378,7 +381,50 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         
     }
     
-    
+    /**
+     * a value comment object for the valueSets
+     * @author BREDEX GmbH
+     */
+    public static final class ValueComment {
+        /** value */
+        private String m_value;
+        /** comment */
+        private String m_comment;
+        /**
+         * @param value value
+         * @param comment comment
+         */
+        public ValueComment(String value, String comment) {
+            super();
+            m_value = value;
+            m_comment = comment;
+        }
+        /**
+         * @return value
+         */
+        public String getValue() {
+            return m_value;
+        }
+        /**
+         * @param value value
+         */
+        public void setValue(String value) {
+            m_value = value;
+        }
+        /**
+         * @return comment
+         */
+        public String getComment() {
+            return StringUtils.defaultIfBlank(m_comment,
+                    StringConstants.SPACE);
+        }
+        /**
+         * @param comment comment
+         */
+        public void setComment(String comment) {
+            m_comment = comment;
+        }
+    }
     /**
      * Inner data model for parameter
      * @author BREDEX GmbH
@@ -392,6 +438,10 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         private String m_name = StringConstants.EMPTY;
         /** The type */
         private String m_type = StringConstants.EMPTY;
+        /** the Value sets with its comments */
+        private List<ValueComment> m_valueSet = new ArrayList<>();
+        /** the default value*/
+        private String m_defaultValue = StringConstants.EMPTY;
 
         
         /**
@@ -421,6 +471,14 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
          */
         public Parameter(IParamDescriptionPO descr) {
             this(descr.getUniqueId(), descr.getName(), descr.getType());
+            if (descr instanceof ITcParamDescriptionPO) {
+                IParamValueSetPO valueSet =
+                        ((ITcParamDescriptionPO) descr).getValueSet();
+                if (valueSet != null) {
+                    setDefaultValue(valueSet.getDefaultValue());
+                    setPersistenceValueSet(valueSet.getValues());
+                }
+            }
         }
 
         /**
@@ -465,7 +523,42 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         public String getGuid() {
             return m_guid;
         }
+        /**
+         * @return the ValueSet with its comments to each value
+         */
+        public List<ValueComment> getValueSet() {
+            return m_valueSet;
+        }
+        /**
+         * @param valueSet the ValueSet with its comments to each value
+         */
+        public void setPersistenceValueSet(List<IValueCommentPO> valueSet) {
+            m_valueSet.clear();
+            for (IValueCommentPO entry : valueSet) {
+                m_valueSet.add(
+                        new ValueComment(entry.getValue(), entry.getComment()));
+            }
+        }
         
+        /**
+         * @param list the ValueSet with its comments to each value
+         */
+        public void setValueSet(List<ValueComment> list) {
+            m_valueSet = list;
+        }
+        /**
+         * @return default value
+         */
+        public String getDefaultValue() {
+            return m_defaultValue;
+        }
+        /**
+         * @param defaultValue default value
+         */
+        public void setDefaultValue(String defaultValue) {
+            m_defaultValue = defaultValue;
+        }
+
         /**
          * {@inheritDoc}
          */
@@ -677,8 +770,11 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         final GridData buttonsGridData = new GridData();
         buttonsGridData.grabExcessHorizontalSpace = true;
         buttonsGridData.horizontalAlignment = GridData.FILL;
+        buttonsGridData.widthHint = 110;
+        buttonsGridData.minimumWidth = 110;
         createAddButton(tableButtonArea, buttonsGridData);
         createDeleteButton(tableButtonArea, buttonsGridData);
+        createEditValueSetButton(tableButtonArea, buttonsGridData);
         LayoutUtil.createSeparator(tableButtonArea);
         createUpButton(tableButtonArea, buttonsGridData);
         createDownButton(tableButtonArea, buttonsGridData);
@@ -853,6 +949,55 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         afterAddButtonCreation(addButton);
         return addButton;
     }
+    /**
+     * @param parent parent
+     * @param layoutData the {@link GridData}
+     * @return the edit value set {@link Button}
+     */
+    private Button createEditValueSetButton(Composite parent,
+            GridData layoutData) {
+        final Button editButton = new Button(parent, SWT.NONE);
+        editButton.setText(Messages.EditParametersDialogEditValueSet);
+        editButton.setLayoutData(layoutData);
+        editButton.addSelectionListener(new SelectionListener() {
+            
+            public void widgetSelected(SelectionEvent e) {
+                handleSelection(e);
+            }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+                handleSelection(e);
+            }
+            
+            /**
+             * Handles the selection
+             * @param e SelectionEvent
+             */
+            private void handleSelection(SelectionEvent e) {
+                IStructuredSelection structuredSelection =
+                        m_paramTableViewer.getStructuredSelection();
+                Object firstElement = structuredSelection.getFirstElement();
+                if (firstElement instanceof Parameter) {
+                    Parameter param = (Parameter) firstElement;
+                    EditParametersValueSetDialog editDialog =
+                            new EditParametersValueSetDialog(getShell(), param);
+                    int status = editDialog.open();
+                    if (status == Status.OK) {
+                        param.setValueSet(editDialog.getValueSets());
+                        param.setDefaultValue(editDialog.getDefaultValue());
+                        getParamTableViewer().refresh();
+                    }
+
+                }
+            }
+        });
+        final SelectionBasedButtonEnabler buttonEnabler = 
+                new SelectionBasedButtonEnabler(editButton);
+        getParamTableViewer().addSelectionChangedListener(buttonEnabler);
+        editButton.setEnabled(!getParamTableViewer().getSelection().isEmpty());
+        return editButton;
+        
+    }
     
     /**
      * subclasses may override
@@ -1026,7 +1171,12 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
             case TYPE_TABLE_COLUMN:
                 final String paramType = parameter.getType();
                 return CompSystemI18n.getString(paramType, true);
-
+            case DEFAULT_TABLE_COLUMN:
+                return parameter.getDefaultValue();
+            case ALLOWED_TABLE_COLUMN:
+                return parameter.getValueSet().stream()
+                        .map(value -> value.getValue())
+                        .collect(Collectors.toList()).toString();
             default:
                 StringBuilder msg = new StringBuilder();
                 msg.append(Messages.ColumnIndex)
@@ -1117,6 +1267,8 @@ public abstract class AbstractEditParametersDialog extends TitleAreaDialog {
         }
         if (isNewParameter(parameter)) {
             parameter.setType(type);
+            parameter.setDefaultValue(StringConstants.EMPTY);
+            parameter.getValueSet().clear();
         } else if (confirmChangeParamType()) { // already used Parameter
             final int index = m_parameters.indexOf(parameter);
             final Parameter newParam = new Parameter(parameter.getName(), type);

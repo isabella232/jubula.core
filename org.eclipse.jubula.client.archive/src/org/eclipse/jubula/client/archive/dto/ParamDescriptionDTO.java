@@ -18,6 +18,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ParamDescriptionDTO {
     /** */
     private String m_name, m_type, m_uuid;
+    /** */
+    private ValueSetDTO m_valueSet;
     
     /**
      * @return name
@@ -62,5 +64,20 @@ public class ParamDescriptionDTO {
      */
     public void setUuid(String uuid) {
         this.m_uuid = uuid;
+    }
+
+    /**
+     * @return the {@link ValueSetDTO} or null
+     */
+    @JsonProperty("valueSetData")
+    public ValueSetDTO getValueSet() {
+        return m_valueSet;
+    }
+
+    /**
+     * @param valueSet the {@link ValueSetDTO}
+     */
+    public void setValueSet(ValueSetDTO valueSet) {
+        m_valueSet = valueSet;
     }
 }

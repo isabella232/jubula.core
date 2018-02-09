@@ -15,17 +15,25 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.jubula.client.core.businessprocess.AbstractParamInterfaceBP;
 import org.eclipse.jubula.client.core.businessprocess.ParamNameBPDecorator;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
 import org.eclipse.jubula.client.core.model.IModifiableParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IParamValueSetPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
+import org.eclipse.jubula.client.core.model.IValueCommentPO;
+import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.Parameter;
+import org.eclipse.jubula.client.ui.rcp.dialogs.AbstractEditParametersDialog.ValueComment;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -106,12 +114,10 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
      *            the param interface business process to use for model changes
      * @return if occurs any modification of parameters
      */
-    protected static
-        <T extends IModifiableParameterInterfacePO> boolean editParameters(
-            T paramIntObj,
-            List<Parameter> parameters,
-            boolean isInterfaceLocked,
-            ParamNameBPDecorator mapper,
+    protected static <T extends IModifiableParameterInterfacePO> 
+        boolean editParameters(
+            T paramIntObj, List<Parameter> parameters,
+            boolean isInterfaceLocked, ParamNameBPDecorator mapper,
             AbstractParamInterfaceBP<T> paramInterfaceBP) {
         Map<String, IParamDescriptionPO> oldParamsMap =
                 createOldParamsMap(paramIntObj);
@@ -130,6 +136,48 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
             new HashMap<IParamDescriptionPO, String>();
         Map<IParamDescriptionPO, String> paramsToChangeUsage =
                 new HashMap<IParamDescriptionPO, String>();
+        Map<IParamDescriptionPO, Parameter> paramsToUpdate = new HashMap<>();
+        fillMapsWithChanges(oldParamsMap, params, paramsToRename,
+                paramsToChangeUsage, paramsToUpdate);
+        // find parameters to remove
+        List<IParamDescriptionPO> paramsToRemove = findParamsToRemove(
+                parameters, oldParamsMap);
+        boolean isInterfaceLockedChanged = false;
+        ISpecTestCasePO specTc = null;
+        if (paramIntObj instanceof ISpecTestCasePO) {
+            specTc = (ISpecTestCasePO)paramIntObj;
+            isInterfaceLockedChanged = !((specTc).isInterfaceLocked() 
+                    == isInterfaceLocked);
+            TestCaseParamBP.setInterfaceLocked(specTc, isInterfaceLocked);
+        }
+        // update model
+        updateModel(paramIntObj, mapper, paramInterfaceBP, paramsToAdd,
+                paramsToRename, paramsToChangeUsage, paramsToRemove,
+                paramsToUpdate);
+        final boolean moved = moveParameters(paramIntObj, parameters);
+        // changes have been made, if one or more lists/maps are not empty
+        return     !paramsToRemove.isEmpty()
+                || !paramsToAdd.isEmpty()
+                || !paramsToRename.isEmpty()
+                || !paramsToChangeUsage.isEmpty()
+                || !paramsToUpdate.isEmpty()
+                || moved
+                || isInterfaceLockedChanged;
+    }
+    /**
+     * 
+     * @param oldParamsMap the old parameters for comparison
+     * @param params the maybe changed parmaters
+     * @param paramsToRename the map which parameter should be renamed
+     * @param paramsToChangeUsage the map which parameter should the usage be updated
+     * @param paramsToUpdate the map which parameter should the value set be updated
+     */
+    private static void fillMapsWithChanges(
+            Map<String, IParamDescriptionPO> oldParamsMap,
+            List<Parameter> params,
+            Map<IParamDescriptionPO, String> paramsToRename,
+            Map<IParamDescriptionPO, String> paramsToChangeUsage,
+            Map<IParamDescriptionPO, Parameter> paramsToUpdate) {
         for (Parameter param : params) {
             IParamDescriptionPO paramDescr = oldParamsMap.get(param.getGuid());
             if (paramDescr != null) {
@@ -145,6 +193,37 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
                                 paramNotRenamed.getGuid());
                     }
                 }
+                if (paramDescr instanceof ITcParamDescriptionPO) {
+                    ITcParamDescriptionPO tcdesc =
+                            (ITcParamDescriptionPO) paramDescr;
+                    IParamValueSetPO valueSet = tcdesc.getValueSet();
+                    List<IValueCommentPO> values = valueSet.getValues();
+                    List<ValueComment> paramValues = param.getValueSet();
+                    String paramDefault = param.getDefaultValue();
+                    String valueSetDefault = valueSet.getDefaultValue();
+                    if (!StringUtils.equals(valueSetDefault, paramDefault)) {
+                        paramsToUpdate.put(tcdesc, param);
+                    } else if (values.size() != paramValues.size()) {
+                        paramsToUpdate.put(tcdesc, param);
+                    } else {
+                        for (ValueComment vcParam : paramValues) {
+                            boolean found = false;
+                            for (IValueCommentPO vc : values) {
+                                if (StringUtils.equals(vcParam.getValue(),
+                                        (vc.getValue()))) {
+                                    found = true;
+                                    if (StringUtils.equals(vcParam.getComment(),
+                                            vc.getComment())) {
+                                        paramsToUpdate.put(tcdesc, param);
+                                    }
+                                }
+                            }
+                            if (!found) {
+                                paramsToUpdate.put(tcdesc, param);
+                            }
+                        }
+                    }
+                }
             } else {
                 Assert.notReached(Messages.UnexpectedError 
                     + StringConstants.COLON + StringConstants.SPACE
@@ -152,28 +231,6 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
                     + StringConstants.DOT);
             }
         }
-        // find parameters to remove
-        List<IParamDescriptionPO> paramsToRemove = findParamsToRemove(
-                parameters, oldParamsMap);
-        boolean isInterfaceLockedChanged = false;
-        ISpecTestCasePO specTc = null;
-        if (paramIntObj instanceof ISpecTestCasePO) {
-            specTc = (ISpecTestCasePO)paramIntObj;
-            isInterfaceLockedChanged = !((specTc).isInterfaceLocked() 
-                    == isInterfaceLocked);
-            TestCaseParamBP.setInterfaceLocked(specTc, isInterfaceLocked);
-        }
-        // update model
-        updateModel(paramIntObj, mapper, paramInterfaceBP, paramsToAdd,
-                paramsToRename, paramsToChangeUsage, paramsToRemove);
-        final boolean moved = moveParameters(paramIntObj, parameters);
-        // changes have been made, if one or more lists/maps are not empty
-        return     !paramsToRemove.isEmpty()
-                || !paramsToAdd.isEmpty()
-                || !paramsToRename.isEmpty()
-                || !paramsToChangeUsage.isEmpty()
-                || moved
-                || isInterfaceLockedChanged;
     }
 
     /**
@@ -187,6 +244,7 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
      * @param paramsToRename The map of renamed parameters.
      * @param paramsToChangeUsage The map of changed parameters.
      * @param paramsToRemove The list of removed parameter descriptions.
+     * @param paramsToUpdate The list of updated value sets
      */
     private static <T extends IModifiableParameterInterfacePO> void updateModel(
             T paramIntObj, ParamNameBPDecorator mapper,
@@ -194,11 +252,16 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
             List<Parameter> paramsToAdd,
             Map<IParamDescriptionPO, String> paramsToRename,
             Map<IParamDescriptionPO, String> paramsToChangeUsage,
-            List<IParamDescriptionPO> paramsToRemove) {
+            List<IParamDescriptionPO> paramsToRemove,
+            Map<IParamDescriptionPO, Parameter> paramsToUpdate) {
         // add
         for (Parameter addParam : paramsToAdd) {
-            paramInterfaceBP.addParameter(addParam.getName(), addParam
-                    .getType(), paramIntObj, mapper);
+            paramInterfaceBP.addParameter(addParam.getName(),
+                    addParam.getType(),
+                    addParam.getValueSet().stream()
+                            .collect(Collectors.toMap(ValueComment::getValue,
+                                    ValueComment::getComment)),
+                    addParam.getDefaultValue(), paramIntObj, mapper);
         }
         // remove
         for (IParamDescriptionPO desc : paramsToRemove) {
@@ -213,6 +276,24 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
         for (IParamDescriptionPO desc : paramsToChangeUsage.keySet()) {
             paramInterfaceBP.changeUsageParameter(paramIntObj,
                     desc, paramsToChangeUsage.get(desc), mapper);
+        }
+        for (Entry<IParamDescriptionPO, Parameter> entry : paramsToUpdate
+                .entrySet()) {
+            if (entry.getKey() instanceof ITcParamDescriptionPO) {
+                ITcParamDescriptionPO tcDesc =
+                        (ITcParamDescriptionPO) entry.getKey();
+                IParamValueSetPO valueSet = tcDesc.getValueSet();
+                Parameter param = entry.getValue();
+                valueSet.setDefaultValue(param.getDefaultValue());
+                List<IValueCommentPO> values = valueSet.getValues();
+                values.clear();
+                List<ValueComment> paramValues = param.getValueSet();
+                for (ValueComment valueComment : paramValues) {
+                    values.add(
+                            PoMaker.createValueComment(valueComment.getValue(),
+                                    valueComment.getComment()));
+                }
+            }
         }
     }
 

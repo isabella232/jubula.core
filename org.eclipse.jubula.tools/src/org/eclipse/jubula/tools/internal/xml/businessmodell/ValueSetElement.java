@@ -26,6 +26,8 @@ public class ValueSetElement {
     
     /** The value of the element. */
     private String m_value;
+    /** a comment value of the element*/
+    private String m_comment;
 
     /** Constructor. Used by deserialization only. */
     public ValueSetElement() {
@@ -42,6 +44,17 @@ public class ValueSetElement {
         m_name = name;
         m_value = value;
     }
+    /**
+     * The constructor.
+     * @param name The name (I18N key) of the element.
+     * @param value The value of the element.
+     * @param comment The comment to the value
+     */
+    public ValueSetElement(String name, String value, String comment) {
+        this(name, value);
+        m_comment = comment;
+    }
+
 
     /** @return Returns the value. */
     public String getValue() {
@@ -53,6 +66,20 @@ public class ValueSetElement {
         return m_name;
     }
     
+    /**
+     * @return the comment to the value
+     */
+    public String getComment() {
+        return m_comment;
+    }
+
+    /**
+     * @param comment the comment to the value
+     */
+    public void setComment(String comment) {
+        m_comment = comment;
+    }
+
     /** {@inheritDoc} */
     public boolean equals(Object obj) {
         if (!(obj instanceof ValueSetElement)) {

@@ -1624,7 +1624,7 @@ public class TestExecution {
                 LOG.error("ClassNotFoundException", e); //$NON-NLS-1$
                 fireError(e);
             }
-            Constructor constructor = null;
+            Constructor<?> constructor = null;
             try {
                 constructor = cmdClazz.getConstructor(new Class[0]);
                 cmdInstance = constructor.newInstance(new Object[0]);

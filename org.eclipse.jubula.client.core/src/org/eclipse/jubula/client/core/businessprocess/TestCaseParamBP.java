@@ -17,15 +17,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.eclipse.jubula.client.core.model.ICapPO;
 import org.eclipse.jubula.client.core.model.IExecTestCasePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
+import org.eclipse.jubula.client.core.model.IParamValueSetPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IValueCommentPO;
 import org.eclipse.jubula.client.core.model.TDCell;
 import org.eclipse.jubula.client.core.persistence.NodePM;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
@@ -35,6 +39,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 
 
 /**
@@ -100,9 +105,13 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * @param result storage for results, owned by caller
      */
     private static void getValuesForParameterImp(IParamNodePO node,
-            String paramGUID, boolean isFirstCall, 
-            Set<Param> result) {
+            String paramGUID, boolean isFirstCall, Set<Param> result) {
         if (node instanceof ISpecTestCasePO) {
+            ISpecTestCasePO spec = (ISpecTestCasePO) node;
+            boolean found = getParameterValueSet(paramGUID, result, spec);
+            if (found) {
+                return;
+            }
             Iterator<INodePO> it = node.getNodeListIterator();
             while (it.hasNext()) {
                 INodePO next = it.next();
@@ -127,19 +136,24 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                 }
             }
         } else if (node instanceof ICapPO) {
-            ICapPO cap = (ICapPO)node;
-            final CompSystem compSystem = ComponentBuilder.getInstance()
-                    .getCompSystem();
+            ICapPO cap = (ICapPO) node;
+            final CompSystem compSystem =
+                    ComponentBuilder.getInstance().getCompSystem();
             for (IParamDescriptionPO pd : cap.getParameterList()) {
                 try {
-                    String pID = 
-                        cap.getDataManager().getCell(0, pd);
-                    if ((pID != null)  // check for unset data
+                    String pID = cap.getDataManager().getCell(0, pd);
+                    if ((pID != null) // check for unset data
                             && pID.endsWith(paramGUID)) {
-                        Component c = compSystem.findComponent(cap
-                                .getComponentType());
+                        Component c = compSystem
+                                .findComponent(cap.getComponentType());
                         Action a = c.findAction(cap.getActionName());
-                        result.add(a.findParam(pd.getUniqueId()));
+                        Param findParam = a.findParam(pd.getUniqueId());
+                        for (Iterator<ValueSetElement> iterator =
+                                findParam.getValueSet().iterator(); iterator
+                                        .hasNext();) {
+                            ValueSetElement param = iterator.next();
+                        }
+                        result.add(findParam);
                     }
                 } catch (IndexOutOfBoundsException e) {
                     // Cell for the given row and column does not exist
@@ -147,6 +161,41 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
                 }
             }
         }
+    }
+
+    /**
+     * 
+     * @param paramGUID the parameter to check
+     * @param result result storage for results, owned by caller
+     * @param spec the {@link ISpecTestCasePO}
+     * @return if there has a result been found <code>true</code>
+     */
+    private static boolean getParameterValueSet(String paramGUID,
+            Set<Param> result, ISpecTestCasePO spec) {
+        boolean found = false;
+        for (Iterator<IParamDescriptionPO> iterator =
+                spec.getParameterListIter(); iterator.hasNext();) {
+            IParamDescriptionPO param = iterator.next();
+            if (param.getUniqueId().equals(paramGUID)) {
+                if (param instanceof ITcParamDescriptionPO) {
+                    IParamValueSetPO valueSet =
+                            ((ITcParamDescriptionPO) param).getValueSet();
+                    if ((valueSet != null)
+                            && valueSet.getValues().size() > 0) {
+                        Param param2 = new Param(param.getName(),
+                                param.getType(),
+                                valueSet.getValues().stream()
+                                        .collect(Collectors.toMap(
+                                                IValueCommentPO::getValue,
+                                                IValueCommentPO::getComment)));
+                        result.add(param2);
+                        param2.setOptional(false);
+                        found = true;
+                    }
+                }
+            }
+        }
+        return found;
     }
 
 
@@ -257,7 +306,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
      * @param newGuid The new GUID to change the reference to.
      * @param mapper The parameter name mapping used here to persist test data.
      */
-    private void changeUsageReferences(Iterator childrenIt,
+    private void changeUsageReferences(Iterator<?> childrenIt,
             IParamDescriptionPO desc, String newGuid,
             ParamNameBPDecorator mapper) {
         while (childrenIt.hasNext()) {
@@ -297,7 +346,7 @@ public class TestCaseParamBP extends AbstractParamInterfaceBP<ISpecTestCasePO> {
         
         List<IExecTestCasePO> unusedTDExecList = 
             new LinkedList<IExecTestCasePO>();
-        for (Iterator nodeIt = nodePO.getNodeListIterator(); 
+        for (Iterator<?> nodeIt = nodePO.getNodeListIterator(); 
             nodeIt.hasNext();) {
 
             final INodePO childNode = (INodePO)nodeIt.next();

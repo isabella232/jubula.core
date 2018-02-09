@@ -327,6 +327,7 @@ class TDManagerPO implements ITDManager {
     private String getCell(int dataSetRow, String uniqueId)
         throws IllegalArgumentException {
         int index = getUniqueIds().indexOf(uniqueId);
+        System.out.println(index);
         if (index == -1) {
             throw new IndexOutOfBoundsException(Messages.ParameterWithUniqueId 
                     + StringConstants.SPACE + uniqueId + StringConstants.SPACE 

@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
@@ -80,6 +82,24 @@ public class ParamTextPropertyDescriptor extends TextPropertyDescriptor
 
         return values.toArray(new String[values.size()]);
     }
+    
+    /**
+     * @param valueSet alueSet Source for returned values. May be <code>null</code>.
+     * @return a {@link Map} with values as key and comments as value
+     */
+    public static Map<String, String> getValuesWithComment(
+            ParamValueSet valueSet) {
+        Map<String, String> valueToComment = new HashMap<>();
+        if (valueSet == null) {
+            return valueToComment;
+        }
+        Iterator<ValueSetElement> valueSetIter = valueSet.iterator();
+        while (valueSetIter.hasNext()) {
+            ValueSetElement value = valueSetIter.next();
+            valueToComment.put(value.getValue(), value.getComment());
+        }
+        return valueToComment;
+    }
 
     /**
      * 
@@ -108,10 +128,11 @@ public class ParamTextPropertyDescriptor extends TextPropertyDescriptor
     public CellEditor createPropertyEditor(Composite parent) {
         AbstractParamValueController contr = 
             (AbstractParamValueController)getId();
+        ParamValueSet valuesSet = getValuesSet(contr.getParamNode(), 
+                contr.getParamDesc().getUniqueId());
         return new ContentAssistCellEditor(
                 parent, new ParamProposalProvider(
-                        getValues(getValuesSet(contr.getParamNode(), 
-                                contr.getParamDesc().getUniqueId())), 
+                        getValuesWithComment(valuesSet), 
                         contr.getParamNode(), contr.getParamDesc()),
                 new CheckedParamText.StringTextValidator(
                         contr.getParamNode(), contr.getParamDesc(), 

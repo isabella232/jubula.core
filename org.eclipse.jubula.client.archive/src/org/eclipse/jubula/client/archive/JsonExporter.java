@@ -61,6 +61,7 @@ import org.eclipse.jubula.client.archive.dto.TestJobDTO;
 import org.eclipse.jubula.client.archive.dto.TestSuiteDTO;
 import org.eclipse.jubula.client.archive.dto.TestresultSummaryDTO;
 import org.eclipse.jubula.client.archive.dto.UsedToolkitDTO;
+import org.eclipse.jubula.client.archive.dto.ValueSetDTO;
 import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
@@ -90,6 +91,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IParamValueSetPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
@@ -97,6 +99,7 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
@@ -104,6 +107,7 @@ import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
+import org.eclipse.jubula.client.core.model.IValueCommentPO;
 import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.persistence.CompNamePM;
@@ -383,6 +387,20 @@ public class JsonExporter {
             pdDTO.setName(po.getUniqueId());
         } else {
             pdDTO.setName(po.getName());
+        }
+        if (po instanceof ITcParamDescriptionPO) {
+            ITcParamDescriptionPO tcParamPo = (ITcParamDescriptionPO) po;
+            IParamValueSetPO valueSet = tcParamPo.getValueSet();
+            if (valueSet != null) {
+                List<IValueCommentPO> values = valueSet.getValues();
+                List<MapEntryDTO> valueDTOs = new ArrayList<>();
+                for (IValueCommentPO iValueCommentPO : values) {
+                    valueDTOs.add(new MapEntryDTO(iValueCommentPO.getValue(),
+                            iValueCommentPO.getComment()));
+                }
+                pdDTO.setValueSet(
+                        new ValueSetDTO(valueSet.getDefaultValue(), valueDTOs));
+            }
         }
         pdDTO.setType(po.getType());
         pdDTO.setUuid(po.getUniqueId());

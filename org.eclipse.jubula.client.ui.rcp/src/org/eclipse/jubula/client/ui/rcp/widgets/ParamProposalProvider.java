@@ -15,6 +15,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -31,6 +33,7 @@ import org.eclipse.jubula.client.core.utils.LiteralToken;
 import org.eclipse.jubula.client.core.utils.SimpleStringConverter;
 import org.eclipse.jubula.client.core.utils.SimpleValueToken;
 import org.eclipse.jubula.client.core.utils.VariableToken;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.exception.InvalidDataException;
 
@@ -55,7 +58,8 @@ public class ParamProposalProvider implements IContentProposalProvider {
 
         /** the content that will be inserted if this proposal is selected */
         private String m_content;
-        
+        /** description */
+        private String m_description;
         /**
          * Constructor
          * 
@@ -77,6 +81,19 @@ public class ParamProposalProvider implements IContentProposalProvider {
         }
         
         /**
+         * Constructor
+         * 
+         * @param content The content of the proposal.
+         * @param displayValue The label for the proposal.
+         * @param description the description text.
+         */
+        public ParamProposal(String content, String displayValue,
+                String description) {
+            this(content, displayValue);
+            m_description = description;
+        }
+        
+        /**
          * {@inheritDoc}
          */
         public String getContent() {
@@ -94,7 +111,7 @@ public class ParamProposalProvider implements IContentProposalProvider {
          * {@inheritDoc}
          */
         public String getDescription() {
-            return null;
+            return StringUtils.defaultIfBlank(m_description, null);
         }
 
         /**
@@ -106,9 +123,8 @@ public class ParamProposalProvider implements IContentProposalProvider {
 
     }
 
-    /** fixed values */
-    private String[] m_valueSet;
-    
+    /** a map with values as key and comment as value */
+    private Map<String, String> m_valueToComment;
     /** the node for which to provide proposals */
     private INodePO m_node;
     
@@ -131,7 +147,26 @@ public class ParamProposalProvider implements IContentProposalProvider {
      */
     public ParamProposalProvider(String[] valueSet, INodePO node, 
             IParamDescriptionPO paramDesc) {
-        m_valueSet = valueSet;
+        for (String string : valueSet) {
+            m_valueToComment.put(string, StringConstants.EMPTY);
+        }
+        m_node = node;
+        m_paramDesc = paramDesc;
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param valueSet Fixed values to propose (for example, "true" and "false"
+     *                 for a boolean parameter).
+     * @param node The node to use as a base for dynamically generating 
+     *             proposals.
+     * @param paramDesc The param description to use as a base for dynamically 
+     *                  generating proposals.
+     */
+    public ParamProposalProvider(Map<String, String> valueSet, INodePO node, 
+            IParamDescriptionPO paramDesc) {
+        m_valueToComment = valueSet;
         m_node = node;
         m_paramDesc = paramDesc;
     }
@@ -156,7 +191,7 @@ public class ParamProposalProvider implements IContentProposalProvider {
         
         
         // if there are predefined values offer them first
-        if (m_valueSet != null) {
+        if (m_valueToComment != null) {
             proposals.addAll(getValueSetProposals(contents, position));
         }
 
@@ -247,6 +282,9 @@ public class ParamProposalProvider implements IContentProposalProvider {
     private Collection<IContentProposal> getParentVariableProposals(
             String content, boolean varTypeParam) {
         List<IContentProposal> props = new ArrayList<>();
+        if (m_node == null) {
+            return props;
+        }
         INodePO spec = m_node.getSpecAncestor();
         if (spec == null || content == null) {
             return props;
@@ -378,14 +416,18 @@ public class ParamProposalProvider implements IContentProposalProvider {
         sb.delete(position, sb.length());
         sb.delete(0, 
             sb.lastIndexOf(TestDataConstants.COMBI_VALUE_SEPARATOR) + 1);
-        for (String predefValue : m_valueSet) {
+        for (Entry<String, String> entry: m_valueToComment.entrySet()) {
+            String predefValue = entry.getKey();
+            String comment = entry.getValue();
             if (predefValue.startsWith(sb.toString())) {
                 proposals.add(new ParamProposal(
-                        predefValue.substring(sb.length()), predefValue));
+                        predefValue.substring(sb.length()), predefValue,
+                        comment));
             } else if (predefValue.startsWith(contents)) {
                 proposals.add(new ParamProposal(
                         predefValue.substring(
-                                contents.length()), predefValue));
+                                contents.length()), predefValue,
+                        comment));
             }
         }
 

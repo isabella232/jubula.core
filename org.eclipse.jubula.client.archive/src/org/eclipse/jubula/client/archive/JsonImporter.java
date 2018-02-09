@@ -69,6 +69,7 @@ import org.eclipse.jubula.client.archive.dto.TestJobDTO;
 import org.eclipse.jubula.client.archive.dto.TestSuiteDTO;
 import org.eclipse.jubula.client.archive.dto.TestresultSummaryDTO;
 import org.eclipse.jubula.client.archive.dto.UsedToolkitDTO;
+import org.eclipse.jubula.client.archive.dto.ValueSetDTO;
 import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.Activator;
@@ -103,6 +104,7 @@ import org.eclipse.jubula.client.core.model.IObjectMappingCategoryPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.IObjectMappingProfilePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.IParamValueSetPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
@@ -110,12 +112,14 @@ import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.IReusedProjectPO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
+import org.eclipse.jubula.client.core.model.IValueCommentPO;
 import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
 import org.eclipse.jubula.client.core.model.PoMaker;
@@ -845,9 +849,9 @@ public class JsonImporter {
         }
         for (ParamDescriptionDTO pdDto : dto.getParameterDescription()) {
             String uniqueId = pdDto.getUuid();
-
+            IParamDescriptionPO paramDesc = null;
             if (assignNewGuid) {
-                IParamDescriptionPO paramDesc = 
+                paramDesc = 
                     tc.addParameter(pdDto.getType(), pdDto.getName(), mapper);
                 m_oldToNewGuids.put(uniqueId, paramDesc.getUniqueId());
             } else {
@@ -855,13 +859,20 @@ public class JsonImporter {
                     && Pattern.matches(
                         "[0-9a-fA-F]{" + ImportExportUtil.UUID_LENGTH + "}", uniqueId)) { //$NON-NLS-1$ //$NON-NLS-2$
                     // use the existent guid for parameter
-                    tc.addParameter(pdDto.getType(), pdDto.getName(), uniqueId,
-                        mapper);
+                    paramDesc = tc.addParameter(pdDto.getType(),
+                            pdDto.getName(), uniqueId, mapper);
                 } else {
                     // creates a new GUID for parameter (only for conversion of
                     // old projects)
-                    tc.addParameter(pdDto.getType(), pdDto.getName(), mapper);
+                    paramDesc = tc.addParameter(pdDto.getType(),
+                            pdDto.getName(), mapper);
                 }
+            }
+            ValueSetDTO valueSetDto = pdDto.getValueSet();
+            if (paramDesc != null && valueSetDto != null 
+                    && paramDesc instanceof ITcParamDescriptionPO) {
+                fillValueSetToParamDesc((ITcParamDescriptionPO) paramDesc,
+                        valueSetDto);
             }
         }
         
@@ -872,6 +883,25 @@ public class JsonImporter {
             generateRefTestCase(dto, proj, tc, assignNewGuid);
         }
         return tc;
+    }
+
+    /**
+     * @param paramDesc the {@link ITcParamDescriptionPO} to fill
+     * @param valueSetDto the {@link ValueSetDTO}
+     */
+    private void fillValueSetToParamDesc(ITcParamDescriptionPO paramDesc,
+            ValueSetDTO valueSetDto) {
+        String defaultValue = valueSetDto.getDefaultValue();
+        List<MapEntryDTO> valueComment = valueSetDto.getValueComment();
+        List<IValueCommentPO> valuePos = new ArrayList<>();
+        for (MapEntryDTO mapEntryDTO : valueComment) {
+            valuePos.add(PoMaker.createValueComment(
+                    mapEntryDTO.getKey(), mapEntryDTO.getValue()));
+        }
+        IParamValueSetPO valueSetPO = PoMaker.createParamValueSet();
+        valueSetPO.setDefaultValue(defaultValue);
+        valueSetPO.getValues().addAll(valuePos);
+        paramDesc.setValueSet(valueSetPO);
     }
     
     /**
@@ -1092,15 +1122,22 @@ public class JsonImporter {
             PoMaker.createTestDataCubePO(dto.getName());
         for (ParamDescriptionDTO dtoParamDesc 
                 : dto.getParameterDescriptions()) {
+            IParamDescriptionPO paramDesc = null;
             if (assignNewGuids) {
-                IParamDescriptionPO paramDesc = 
+                paramDesc = 
                     testDataCube.addParameter(dtoParamDesc.getType(), 
                             dtoParamDesc.getName(), mapper);
                 m_oldToNewGuids.put(dtoParamDesc.getUuid(), 
                         paramDesc.getUniqueId());
             } else {
-                testDataCube.addParameter(dtoParamDesc.getType(), dtoParamDesc
-                        .getName(), dtoParamDesc.getUuid(), mapper);
+                paramDesc = testDataCube.addParameter(dtoParamDesc.getType(),
+                        dtoParamDesc.getName(), dtoParamDesc.getUuid(), mapper);
+            }
+            ValueSetDTO valueSetDto = dtoParamDesc.getValueSet();
+            if (paramDesc instanceof ITcParamDescriptionPO
+                    && valueSetDto != null) {
+                fillValueSetToParamDesc((ITcParamDescriptionPO) paramDesc,
+                        valueSetDto);
             }
         }
         testDataCube.setDataManager(createTDManager(testDataCube,

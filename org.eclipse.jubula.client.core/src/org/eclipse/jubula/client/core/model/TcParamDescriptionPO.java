@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
@@ -31,6 +34,8 @@ class TcParamDescriptionPO extends ParamDescriptionPO implements
      * <code>m_mapper</code>mapper for resolving of param names
      */
     private IParamNameMapper m_mapper = null;
+    /** the {@link IParamValueSetPO} for restricting values for a parameter */
+    private IParamValueSetPO m_paramValueSet = null;
 
     /**
      * only for Persistence (JPA / EclipseLink)
@@ -76,6 +81,41 @@ class TcParamDescriptionPO extends ParamDescriptionPO implements
             m_mapper = ParamNameBP.getInstance();
         }
         return m_mapper;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @OneToOne(targetEntity = ParamValueSetPO.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "VALUE_SET_ID")
+    protected IParamValueSetPO getPersistenceValueSet() {
+        return m_paramValueSet;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Transient
+    public IParamValueSetPO getValueSet() {
+        if (m_paramValueSet == null) {
+            m_paramValueSet = new ParamValueSetPO();
+            m_paramValueSet.setParentProjectId(getParentProjectId());
+        }
+        return m_paramValueSet;
+    }
+    /**
+     * persistence method
+     * @param valueSet the value set
+     */
+    void setPersistenceValueSet(IParamValueSetPO valueSet) {
+        m_paramValueSet = valueSet;
+    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setValueSet(IParamValueSetPO valueSet) {
+        setPersistenceValueSet(valueSet);
     }
 
 }

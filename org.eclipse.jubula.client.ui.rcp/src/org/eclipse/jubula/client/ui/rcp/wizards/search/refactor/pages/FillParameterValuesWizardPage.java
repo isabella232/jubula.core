@@ -114,7 +114,10 @@ public class FillParameterValuesWizardPage extends AbstractMatchSelectionPage
                     SWT.NONE, null, paramDesc,
                     AbstractParamInterfaceBP.createParamValueValidator(
                     paramDesc.getType(), false, values),
-                    new ParamProposalProvider(values, null, paramDesc));
+                            new ParamProposalProvider(
+                                    ParamTextPropertyDescriptor
+                                            .getValuesWithComment(valSet),
+                                    null, paramDesc));
             fieldEditor.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
             fieldEditor.addModifyListener(this);
             m_valueTexts.put(paramDesc, fieldEditor);

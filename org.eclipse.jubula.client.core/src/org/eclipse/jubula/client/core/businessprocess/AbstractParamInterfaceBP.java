@@ -12,6 +12,8 @@ package org.eclipse.jubula.client.core.businessprocess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -23,6 +25,9 @@ import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
 import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ITDManager;
+import org.eclipse.jubula.client.core.model.ITcParamDescriptionPO;
+import org.eclipse.jubula.client.core.model.ITestDataCubePO;
+import org.eclipse.jubula.client.core.model.IValueCommentPO;
 import org.eclipse.jubula.client.core.model.PoMaker;
 import org.eclipse.jubula.client.core.utils.ComboParamValidator;
 import org.eclipse.jubula.client.core.utils.GuiParamValueConverter;
@@ -63,6 +68,8 @@ public abstract class AbstractParamInterfaceBP<T> {
         } else if (obj instanceof ISpecTestCasePO) {
             spec = (ISpecTestCasePO) obj;
             dataManager = spec.getDataManager();
+        } else if (obj instanceof ITestDataCubePO) {
+            dataManager = obj.getDataManager();
         }
         if (dataManager != null && spec != null) {
             List<String> uniqueIds = dataManager.getUniqueIds();
@@ -71,6 +78,20 @@ public abstract class AbstractParamInterfaceBP<T> {
                 IParamDescriptionPO uniqueID = obj
                         .getParameterForUniqueId(uuid);
                 String value = getValueForSpecNodeWithParamDesc(uniqueID, spec);
+                list.add(value);
+            }
+        }
+        if (dataManager != null && spec == null) {
+            List<String> uniqueIds = dataManager.getUniqueIds();
+            for (int i = 0; i < uniqueIds.size(); i++) {
+                String uuid = uniqueIds.get(i);
+                IParamDescriptionPO uniqueID = obj
+                        .getParameterForUniqueId(uuid);
+                String value = StringConstants.EMPTY;
+                if (uniqueID instanceof ITcParamDescriptionPO) {
+                    value = ((ITcParamDescriptionPO) uniqueID).getValueSet()
+                            .getDefaultValue();
+                }
                 list.add(value);
             }
         }
@@ -240,6 +261,17 @@ public abstract class AbstractParamInterfaceBP<T> {
             }
 
         }
+        IParamDescriptionPO paramForID =
+                specNode.getParameterForUniqueId(srcDesc.getUniqueId());
+        if (paramForID != null) {
+            if (paramForID instanceof ITcParamDescriptionPO) {
+                String defaultValue = ((ITcParamDescriptionPO) paramForID)
+                        .getValueSet().getDefaultValue();
+                if (StringUtils.isNotEmpty(defaultValue)) {
+                    return defaultValue;
+                }
+            }
+        }
         return null;
     }
     /**
@@ -339,6 +371,29 @@ public abstract class AbstractParamInterfaceBP<T> {
     public void addParameter(String name, String type,
             IModifiableParameterInterfacePO obj, IParamNameMapper mapper) {
         obj.addParameter(type, name, mapper);
+    }
+    
+    /**
+     * @param name the new name of the parameter
+     * @param type the type of the parameter
+     * @param values the valuesets (value,comment)
+     * @param defaultValue the default value
+     * @param obj the object to add the parameter for
+     * @param mapper the mapper to resolve param names
+     */
+    public void addParameter(String name, String type,
+            Map<String, String> values, String defaultValue,
+            IModifiableParameterInterfacePO obj, IParamNameMapper mapper) {
+        IParamDescriptionPO addParameter = obj.addParameter(type, name, mapper);
+        if (addParameter instanceof ITcParamDescriptionPO) {
+            ITcParamDescriptionPO tcd = (ITcParamDescriptionPO) addParameter;
+            tcd.getValueSet().setDefaultValue(defaultValue);
+            List<IValueCommentPO> valueSet = tcd.getValueSet().getValues();
+            for (Entry<String, String> element : values.entrySet()) {
+                valueSet.add(PoMaker.createValueComment(element.getKey(),
+                        element.getValue()));
+            }
+        }
     }
 
     /**

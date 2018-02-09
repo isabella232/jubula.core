@@ -22,4 +22,14 @@ public interface ITcParamDescriptionPO extends IParamDescriptionPO {
      * important for resolving of parameter names 
      */
     public void setParamNameMapper(IParamNameMapper mapper);
+    
+    /**
+     * @return {@link IParamValueSetPO} for Value Sets and default value
+     */
+    public IParamValueSetPO getValueSet();
+    
+    /**
+     * @param valueSet {@link IParamValueSetPO} for Value Sets and default value
+     */
+    public void setValueSet(IParamValueSetPO valueSet);
 }

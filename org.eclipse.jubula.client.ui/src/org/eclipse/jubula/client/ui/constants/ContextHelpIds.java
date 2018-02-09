@@ -298,7 +298,11 @@ public interface ContextHelpIds {
 
     /** help context id for the edit parameters dialog */
     public static final String EDIT_PARAMETERS = PRAEFIX
-        + "editParametersDialogContextId"; //$NON-NLS-1$
+        + "editParameterValuesSetsDialogContextId"; //$NON-NLS-1$
+    
+    /** help context id for the edit parameters dialog */
+    public static final String EDIT_PARAMETER_VALUESSETS = PRAEFIX
+        + "editParameterValueSetDialogContextId"; //$NON-NLS-1$
     
     /** help context id for the edit parameters dialog */
     public static final String EDIT_DESCRIPTION = PRAEFIX

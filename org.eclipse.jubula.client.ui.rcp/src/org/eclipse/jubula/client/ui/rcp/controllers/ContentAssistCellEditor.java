@@ -106,6 +106,7 @@ public class ContentAssistCellEditor extends TextCellEditor {
                         @SuppressWarnings("synthetic-access")
                         public void proposalPopupClosed(
                                 ContentProposalAdapter adapter) {
+                            setFocus();
                             m_popupOpen = false;
                         }
 
