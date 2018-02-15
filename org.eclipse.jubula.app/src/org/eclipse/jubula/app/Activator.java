@@ -100,6 +100,9 @@ public class Activator extends AbstractUIPlugin {
         plugin = this;
         System.setProperty(VERSION_PROPERTY_KEY, 
                 Vn.getDefault().getVersion().toString());
+        System.setProperty("org.eclipse.jetty.util.log.class", //$NON-NLS-1$
+                "org.eclipse.jetty.util.log.StdErrLog"); //$NON-NLS-1$
+        System.setProperty("org.eclipse.jetty.LEVEL", "WARN"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**

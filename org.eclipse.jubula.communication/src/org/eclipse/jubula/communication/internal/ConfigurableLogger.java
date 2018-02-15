@@ -397,7 +397,12 @@ public class ConfigurableLogger implements Logger {
     /** {@inheritDoc} */
     public void error(String msg, Throwable t) {
         if (isEnabled()) {
-            m_logger.error(msg, t);
+            try {
+                m_logger.error(msg, t);
+            } catch (IllegalArgumentException e) {
+                // something went wrong (happening during synchronize restart)
+                System.err.println(t);
+            }
         }
     }
 
