@@ -688,6 +688,11 @@ abstract class NodePO implements INodePO {
     }
     
     /** {@inheritDoc} */
+    public void clearProblems() {
+        m_problems.clear();
+    }
+    
+    /** {@inheritDoc} */
     public boolean removeProblem(IProblem problem) {
         return m_problems.remove(problem);
     }

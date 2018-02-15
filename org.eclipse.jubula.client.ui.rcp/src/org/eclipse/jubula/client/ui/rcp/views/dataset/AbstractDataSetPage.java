@@ -1367,7 +1367,8 @@ public abstract class AbstractDataSetPage extends Page
                         getParamInterfaceObj().getSpecificationUser());
             }
             // Not perfect, because the actual value being persisted is not exactly 'value'...
-            if (value.length() > IPersistentObject.MAX_STR_LGT_CHAR) {
+            if (value != null 
+                    && value.length() > IPersistentObject.MAX_STR_LGT_CHAR) {
                 value = value.substring(0, IPersistentObject.MAX_STR_LGT_CHAR);
                 if (value.getBytes(StandardCharsets.UTF_8).length
                         > IPersistentObject.MAX_STRING_LENGTH) {
