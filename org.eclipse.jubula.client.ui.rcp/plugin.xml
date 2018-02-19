@@ -617,6 +617,10 @@
       name="%ShowAutStarterLog" />
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
+      id="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc"
+      name="%EditOMAssoc" />
+    <command
+      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       description="%StartMappingToolTip"
       id="org.eclipse.jubula.client.ui.rcp.commands.OMStartMappingModeCommand"
       name="Start Object Mapping Mode">
@@ -2173,7 +2177,6 @@
        </command>
        <command
              commandId="org.eclipse.jubula.client.ui.rcp.commands.EditOMAssoc"
-             label="%EditOMAssoc"
              style="push">
        </command>
        <command
