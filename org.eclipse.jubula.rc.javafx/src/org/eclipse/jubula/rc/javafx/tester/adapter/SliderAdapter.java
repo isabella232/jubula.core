@@ -10,18 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
-import java.awt.Rectangle;
-import java.lang.reflect.Field;
 import java.util.concurrent.Callable;
 
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
-import javafx.scene.control.Slider;
-import javafx.util.StringConverter;
-
-import org.eclipse.jubula.rc.common.driver.ClickOptions;
-import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
-import org.eclipse.jubula.rc.common.driver.IRobot;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ISliderComponent;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
@@ -29,11 +19,11 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
-import org.eclipse.jubula.tools.internal.utils.TimeUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.javafx.scene.control.skin.SliderSkin;
+import javafx.scene.control.Slider;
+import javafx.util.StringConverter;
 
 /**
  * Slider Adapter
@@ -78,102 +68,6 @@ public class SliderAdapter extends
             });
     }
 
-    /**
-     * tries to set the position via drag & drop
-     * @param units the units (percent or value)
-     * @param value the value
-     */
-    private void setPositionViaDragAndDrop(String units, Double value) {
-        Slider slider = getRealComponent();
-        double min = slider.getMin();
-        double max = slider.getMax();
-        double currentRelPos = 100 * (slider.getValue() - min) / (max - min);
-        double futureRelPos = value;
-        if (ValueSets.Measure.value.rcValue().equalsIgnoreCase(units)) {
-            futureRelPos = 100 * (value - min) / (max - min);
-        }
-        final DragAndDropHelper dndHelper = DragAndDropHelper.getInstance();
-        int mouseButton = ValueSets.InteractionMode.primary.rcIntValue();
-        dndHelper.setMouseButton(mouseButton);
-        final IRobot<Rectangle> robot = getRobot();
-        boolean horizontal = slider.getOrientation().equals(
-                Orientation.HORIZONTAL);
-        if (horizontal) {
-            moveHorizontal(currentRelPos, mouseButton);
-        } else {
-            moveVertical(currentRelPos, mouseButton);
-        }
-        robot.mousePress(null, null, mouseButton);
-        try {
-            if (horizontal) {
-                // This is a workaround for problems which lead to leaving behind the button
-                moveHorizontal(futureRelPos - 2.0, mouseButton);
-                TimeUtil.delay(200);
-                moveHorizontal(futureRelPos, mouseButton);
-                TimeUtil.delay(200);
-                moveHorizontal(futureRelPos + 2.0, mouseButton);
-                TimeUtil.delay(200);
-                moveHorizontal(futureRelPos, mouseButton);
-            } else {
-                moveVertical(futureRelPos - 2.0, mouseButton);
-                TimeUtil.delay(200);
-                moveVertical(futureRelPos, mouseButton);
-                TimeUtil.delay(200);
-                moveVertical(futureRelPos + 2.0, mouseButton);
-                TimeUtil.delay(200);
-                moveVertical(futureRelPos, mouseButton);
-            }
-            TimeUtil.delay(200);
-        } finally {
-            getRobot().mouseRelease(null, null, mouseButton);
-        }
-    }
-
-    /**
-     * 
-     * @param targetPos target position
-     * @param mouseButton mouse Button
-     */
-    private void moveHorizontal(double targetPos, int mouseButton) {
-        getRobot().click(
-                getTrack(),
-                null,
-                ClickOptions.create().setClickCount(0)
-                .setMouseButton(mouseButton),
-                (int)Math.round(targetPos), false, 50, false);
-    }
-
-    /**
-     * 
-     * @param targetPos target position
-     * @param mouseButton mouse Button
-     */
-    private void moveVertical(double targetPos, int mouseButton) {
-        getRobot().click(
-                getTrack(),
-                null,
-                ClickOptions.create().setClickCount(0)
-                .setMouseButton(mouseButton),
-                50, false, 100 - (int)Math.round(targetPos), false);
-    }
-
-    /**
-     * @return the track of the slider
-     */
-    private Node getTrack() {
-        SliderSkin skin = (SliderSkin)getRealComponent().getSkin();
-        try {
-            Field trackField = skin.getClass().getDeclaredField("track"); //$NON-NLS-1$
-            trackField.setAccessible(true);
-            Node track = (Node) trackField.get(skin);
-            return track;
-        } catch (NoSuchFieldException | SecurityException
-                | IllegalArgumentException | IllegalAccessException e) {
-            throw new StepExecutionException("Track not found", //$NON-NLS-1$
-                    EventFactory.createActionError(
-                            TestErrorEvent.NOT_FOUND));
-        }
-    }
     
     /** {@inheritDoc} */
     public void setPosition(String position, String operator,
@@ -220,11 +114,7 @@ public class SliderAdapter extends
                 }
             }
         }
-        try {
-            setPositionViaDragAndDrop(units, value);
-        } catch (StepExecutionException ste) {
-            setValueProgrammatically(units, value);
-        }
+        setValueProgrammatically(units, value);
     }
 
     /** throws message that input was invalid */

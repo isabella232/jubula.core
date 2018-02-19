@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.tester.adapter;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -23,19 +22,16 @@ import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
+import org.eclipse.jubula.rc.javafx.tester.util.compatibility.ComboBoxUtils;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.utils.TimeUtil;
-
-import com.sun.javafx.scene.control.skin.ComboBoxBaseSkin;
-import com.sun.javafx.scene.control.skin.ComboBoxListViewSkin;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Skin;
 import javafx.scene.control.TextField;
 
 /**
@@ -197,10 +193,7 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
                         }
                         // If there is not exactly one list inside the combo box,
                         // then use internal API
-                        ComboBoxListViewSkin<?> comboBoxListViewSkin = 
-                                (ComboBoxListViewSkin<?>) comboBox.getSkin();
-                        return (ListView<?>)comboBoxListViewSkin
-                            .getPopupContent();
+                        return ComboBoxUtils.getPopUpContent(comboBox);
                     }
                 });
     }
@@ -225,17 +218,6 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
      *         if the arrow was not found
      */
     private Node getArrowButton(T comboBox) {
-        Skin<?> skin = comboBox.getSkin();
-        if (skin instanceof ComboBoxBaseSkin) {
-            try {
-                Field arrowButton = ComboBoxBaseSkin.class
-                        .getDeclaredField(ARROW_BUTTON_FIELD_NAME);
-                arrowButton.setAccessible(true);
-                return (Node) arrowButton.get(skin);
-            } catch (Exception e) {
-                // ignore, return combo box
-            }
-        }
-        return comboBox;
+        return ComboBoxUtils.getArrowButton(comboBox);
     }
 }

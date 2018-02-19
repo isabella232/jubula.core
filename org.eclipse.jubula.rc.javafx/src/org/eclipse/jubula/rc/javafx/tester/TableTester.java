@@ -44,8 +44,6 @@ import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
-
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -397,8 +395,8 @@ public class TableTester extends AbstractTableTester {
                         // Update the layout coordinates otherwise
                         // we would get old position values
                         table.layout();
-                        Parent header = (Parent) table.lookup(
-                                TableHeaderRow.class.getSimpleName());
+                        Parent header = (Parent) table.lookup("TableHeaderRow"); //$NON-NLS-1$
+                        // using the String because of different package in java 8/9
                         return NodeBounds.checkIfContains(pos, header);
                     }
                 });

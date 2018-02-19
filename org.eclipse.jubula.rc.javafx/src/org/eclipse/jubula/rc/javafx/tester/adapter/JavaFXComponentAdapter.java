@@ -41,7 +41,7 @@ import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.MenuTester;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
-import org.eclipse.jubula.rc.javafx.tester.util.WindowsUtil;
+import org.eclipse.jubula.rc.javafx.tester.util.compatibility.WindowsUtil;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.tools.internal.constants.TimeoutConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;

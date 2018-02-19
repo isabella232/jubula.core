@@ -10,7 +10,7 @@
 /**
  * 
  */
-package org.eclipse.jubula.rc.javafx.tester.util;
+package org.eclipse.jubula.rc.javafx.tester.util.compatibility;
 
 import java.lang.reflect.Method;
 import java.util.Iterator;

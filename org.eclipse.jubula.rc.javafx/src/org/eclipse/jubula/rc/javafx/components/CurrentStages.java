@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.jubula.rc.javafx.tester.util.WindowsUtil;
+import org.eclipse.jubula.rc.javafx.tester.util.compatibility.WindowsUtil;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

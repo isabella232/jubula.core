@@ -15,7 +15,7 @@ import java.util.concurrent.Callable;
 
 import org.eclipse.jubula.rc.common.tester.AbstractTooltipTester;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
-import org.eclipse.jubula.rc.javafx.tester.util.WindowsUtil;
+import org.eclipse.jubula.rc.javafx.tester.util.compatibility.WindowsUtil;
 
 import javafx.scene.control.Tooltip;
 import javafx.stage.Window;

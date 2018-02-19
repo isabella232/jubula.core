@@ -31,13 +31,11 @@ import org.eclipse.jubula.rc.javafx.tester.util.GenericTraverseHelper;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeBounds;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.tester.util.Rounding;
+import org.eclipse.jubula.rc.javafx.tester.util.compatibility.TableUtils;
 import org.eclipse.jubula.tools.internal.constants.TestDataConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 import org.eclipse.jubula.tools.internal.utils.StringParsing;
-
-import com.sun.javafx.scene.control.skin.TableColumnHeader;
-import com.sun.javafx.scene.control.skin.TableHeaderRow;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
@@ -382,22 +380,8 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         table.scrollToColumn(col);
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        table.layout();
-                     // DEPENDENCY TO INTERNAL API
-                        // This should only be one node, but who knows what
-                        // people do
-                        List<? extends TableHeaderRow> headerRow = 
-                                NodeTraverseHelper.getInstancesOf(
-                                        table, TableHeaderRow.class);
-                        TableColumnHeader colH = null;
-                        for (TableHeaderRow tableHeaderRow : headerRow) {
-                            colH = tableHeaderRow.getColumnHeaderFor(col);
-                            if (colH != null) {
-                                return NodeBounds.getRelativeBounds(colH,
-                                        tableHeaderRow);
-                            }
-                        }
-                        return null;
+                        return TableUtils.getNodeBoundsofHeader(table, column,
+                                true);
                     }
                 });
         return result;
