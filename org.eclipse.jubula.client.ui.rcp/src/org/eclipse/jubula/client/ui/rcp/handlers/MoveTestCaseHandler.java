@@ -72,6 +72,7 @@ import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageInfo;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
 
@@ -159,14 +160,19 @@ public class MoveTestCaseHandler extends AbstractHandler {
             ProgressMonitorTracker instance = ProgressMonitorTracker.SINGLETON;
             instance.setProgressMonitor(monitor);
             try {
-                IProjectPO referencedProject = ProjectPM
+                final IProjectPO referencedProject = ProjectPM
                         .loadReusedProjectInMasterSession(m_selectedProject);
                 GeneralStorage.getInstance().getMasterSession().refresh(
                       referencedProject.getSpecObjCont());
-                DataEventDispatcher.getInstance()
-                    .fireDataChangedListener(new DataChangedEvent(
-                            referencedProject,
-                        DataState.StructureModified, UpdateState.all));
+                Display.getDefault().asyncExec(new Runnable() {
+                    public void run() {
+                        DataEventDispatcher.getInstance()
+                                .fireDataChangedListener(
+                                        new DataChangedEvent(referencedProject,
+                                                DataState.StructureModified,
+                                                UpdateState.all));
+                    }
+                });
             } catch (ProjectDeletedException e) {
                 PMExceptionHandler.handleProjectDeletedException();
             } catch (JBException e) {

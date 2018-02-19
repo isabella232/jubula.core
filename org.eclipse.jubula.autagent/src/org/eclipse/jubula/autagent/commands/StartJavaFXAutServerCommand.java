@@ -116,6 +116,9 @@ public class StartJavaFXAutServerCommand extends AbstractStartJavaAutServer {
          * JavaFX loader class has slashes but for the Classloader we need the
          * qualified class name with dots.
          */
-        return attr.replace("/", ".");  //$NON-NLS-1$//$NON-NLS-2$
+        if (attr != null) {
+            return attr.replace("/", ".");  //$NON-NLS-1$//$NON-NLS-2$
+        }
+        return null;
     }
 }

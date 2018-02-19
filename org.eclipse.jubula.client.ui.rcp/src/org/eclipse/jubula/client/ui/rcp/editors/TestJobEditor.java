@@ -244,7 +244,10 @@ public class TestJobEditor extends AbstractJBEditor {
                     }
                     break;
                 case ReuseChanged:
-                    // nothing yet!
+                    // nothing yet
+                    break;
+                case Saved:
+                    // nothing yet
                     break;
                 default:
                     Assert.notReached();
@@ -305,7 +308,7 @@ public class TestJobEditor extends AbstractJBEditor {
     @SuppressWarnings("unchecked")
     private static boolean containsWorkVersionReuses(INodePO root,
             ITestSuitePO ts) {
-        final Iterator it = root.getNodeListIterator();
+        final Iterator<INodePO> it = root.getNodeListIterator();
         final List<INodePO> childList = IteratorUtils.toList(it);
         for (INodePO child : childList) {
             if (child instanceof IRefTestSuitePO) {
