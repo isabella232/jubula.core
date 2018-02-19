@@ -1626,10 +1626,6 @@ public abstract class AbstractDataSetPage extends Page
                         instanceof CheckedParamTextContentAssisted) {
                     CheckedParamTextContentAssisted ed = 
                         (CheckedParamTextContentAssisted)m_editor.getEditor();
-                    if (ed.isAccepted()) {
-                        ed.setAccepted(false);
-                        return;
-                    }
                 }
                 final Control editorControl = m_editor.getEditor();
                 if (!editorControl.isDisposed()) {

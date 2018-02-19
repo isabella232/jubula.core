@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.ui.rcp.widgets;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -124,7 +125,7 @@ public class ParamProposalProvider implements IContentProposalProvider {
     }
 
     /** a map with values as key and comment as value */
-    private Map<String, String> m_valueToComment;
+    private Map<String, String> m_valueToComment = new HashMap<>();
     /** the node for which to provide proposals */
     private INodePO m_node;
     
@@ -148,7 +149,9 @@ public class ParamProposalProvider implements IContentProposalProvider {
     public ParamProposalProvider(String[] valueSet, INodePO node, 
             IParamDescriptionPO paramDesc) {
         for (String string : valueSet) {
-            m_valueToComment.put(string, StringConstants.EMPTY);
+            if (string != null) {
+                m_valueToComment.put(string, StringConstants.EMPTY);
+            }
         }
         m_node = node;
         m_paramDesc = paramDesc;
