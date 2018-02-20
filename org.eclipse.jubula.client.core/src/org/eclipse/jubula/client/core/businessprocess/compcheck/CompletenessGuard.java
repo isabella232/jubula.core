@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -225,6 +226,9 @@ public final class CompletenessGuard {
         INodePO possibleDataSourceNode = node;
         if (node instanceof IExecTestCasePO) {
             IExecTestCasePO execTc = (IExecTestCasePO) node;
+            if (StringUtils.isNotBlank(execTc.getDataFile())) {
+                return;
+            }
             if (execTc.getHasReferencedTD()) {
                 possibleDataSourceNode = execTc.getSpecTestCase();
             }

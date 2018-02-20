@@ -101,10 +101,13 @@ public class MarkerHandler {
      */
     public void remove(Problem problem) {
         try {
-            IMarker marker = m_res.findMarker(m_problems.get(problem).getId());
-            marker.delete();
+            IMarker problemMarker = m_problems.get(problem);
+            if (problemMarker != null) {
+                IMarker marker = m_res.findMarker(problemMarker.getId());
+                marker.delete();
+                m_markers.remove(marker);
+            }
             m_problems.remove(problem);
-            m_markers.remove(marker);
         } catch (CoreException e) {
             e.printStackTrace();
         }

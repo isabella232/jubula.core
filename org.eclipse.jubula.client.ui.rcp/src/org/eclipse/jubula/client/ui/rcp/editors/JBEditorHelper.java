@@ -273,7 +273,11 @@ public class JBEditorHelper implements ILockedObjects,
      */
     public void handleDataChanged(final IPersistentObject po, 
         final DataState dataState) {
-        IPersistentObject workVersion = getEditSupport().getWorkVersion();
+        EditSupport editSupport = getEditSupport();
+        if (editSupport == null) {
+            return;
+        }
+        IPersistentObject workVersion = editSupport.getWorkVersion();
         switch (dataState) {
             case Added:
                 

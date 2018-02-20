@@ -1059,6 +1059,7 @@ public class FileStorageBP {
                                         e.getMessage()})));
             }
             exportSession.detach(projectToExport);
+            exportSession.clear();
         }
         
     }
