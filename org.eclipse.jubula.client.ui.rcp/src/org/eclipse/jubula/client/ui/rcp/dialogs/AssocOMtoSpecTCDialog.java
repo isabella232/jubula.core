@@ -50,6 +50,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.dialogs.FilteredTree;
+import org.eclipse.ui.dialogs.PatternFilter;
 
 /**
  * @author BREDEX GmbH
@@ -326,8 +328,9 @@ public class AssocOMtoSpecTCDialog extends TitleAreaDialog {
         Label label = createLabel(firstComposite, labelText);
         secondComposite.setLayoutData(createGrabAllGridData());
         composite.setLayoutData(createGrabAllGridData());
-        TreeViewer tree =
-                new TreeViewer(secondComposite, LayoutUtil.MULTI_TEXT_STYLE);
+        FilteredTree filtered = new FilteredTree(secondComposite,
+                LayoutUtil.MULTI_TEXT_STYLE, new PatternFilter(), true);
+        TreeViewer tree = filtered.getViewer();
         tree.setAutoExpandLevel(3);
         tree.setData("Label", label); //$NON-NLS-1$
         GridData treeGridData = createGrabAllGridData();
