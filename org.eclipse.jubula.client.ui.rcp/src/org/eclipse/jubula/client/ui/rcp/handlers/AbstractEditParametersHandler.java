@@ -212,7 +212,8 @@ public abstract class AbstractEditParametersHandler extends AbstractHandler {
                                 if (StringUtils.equals(vcParam.getValue(),
                                         (vc.getValue()))) {
                                     found = true;
-                                    if (StringUtils.equals(vcParam.getComment(),
+                                    if (!StringUtils.equals(
+                                            vcParam.getComment(),
                                             vc.getComment())) {
                                         paramsToUpdate.put(tcdesc, param);
                                     }
