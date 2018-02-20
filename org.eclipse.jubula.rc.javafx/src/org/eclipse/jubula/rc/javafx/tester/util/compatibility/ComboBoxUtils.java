@@ -60,6 +60,7 @@ public class ComboBoxUtils {
      */
     public static ListView<?> getPopUpContent(ComboBox<?> combobox) {
         Class<?> clazz = null;
+        Object skin = combobox.getSkin();
         try {
             clazz = Class.forName(JAVA8_COMBO_LISTVIEWSKIN);
         } catch (ClassNotFoundException e) {
@@ -71,7 +72,7 @@ public class ComboBoxUtils {
         }
         try {
             Method method = clazz.getMethod(GET_POPUP_CONTENT);
-            Object o = method.invoke(combobox);
+            Object o = method.invoke(skin);
             if (o instanceof ListView<?>) {
                 return (ListView<?>) o;
             }

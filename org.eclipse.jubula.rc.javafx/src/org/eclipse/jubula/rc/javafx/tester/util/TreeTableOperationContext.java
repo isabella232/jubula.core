@@ -859,7 +859,7 @@ public class TreeTableOperationContext
                         // we would get old position values
                         treeTable.layout();
                         Rectangle b = TableUtils.getNodeBoundsofHeader(
-                                treeTable, column, false);
+                                treeTable, col, false);
                         Rectangle tableB = NodeBounds
                                 .getAbsoluteBounds(treeTable);
                         return new Rectangle(Math.abs(tableB.x - b.x),

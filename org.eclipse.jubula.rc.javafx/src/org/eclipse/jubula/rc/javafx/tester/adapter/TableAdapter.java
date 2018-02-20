@@ -380,7 +380,7 @@ public class TableAdapter extends JavaFXComponentAdapter<TableView<?>>
                         table.scrollToColumn(col);
                         // Update the layout coordinates otherwise
                         // we would get old position values
-                        return TableUtils.getNodeBoundsofHeader(table, column,
+                        return TableUtils.getNodeBoundsofHeader(table, col,
                                 true);
                     }
                 });

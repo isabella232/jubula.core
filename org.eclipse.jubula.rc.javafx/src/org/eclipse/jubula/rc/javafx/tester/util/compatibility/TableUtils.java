@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 
 /**
@@ -53,7 +54,7 @@ public class TableUtils {
      * @return the {@link Rectangle} or null if it is not found
      */
     public static Rectangle getNodeBoundsofHeader(Parent table,
-            int column, boolean relative) {
+            TableColumnBase<?, ?> column, boolean relative) {
         Class<?> clazz = null;
         try {
             clazz = Class.forName(
@@ -74,8 +75,8 @@ public class TableUtils {
             List<?> headerRow = NodeTraverseHelper.getInstancesOf(table, clazz);
             Object colH = null;
             for (Object tableHeaderRow : headerRow) {
-                Method method =
-                        clazz.getMethod(GET_COLUMN_HEADER_FOR, Integer.class);
+                Method method = clazz.getMethod(GET_COLUMN_HEADER_FOR,
+                        TableColumnBase.class);
                 colH = method.invoke(tableHeaderRow, column);
                 if (colH != null) {
                     if (relative) {
