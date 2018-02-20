@@ -72,7 +72,6 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.dialogs.FilteredTree;
-import org.eclipse.ui.menus.CommandContributionItem;
 
 
 /**
@@ -303,10 +302,6 @@ public class CentralTestDataEditor extends AbstractJBEditor implements
                 RCPCommandIDs.REVERT_CHANGES);
         CommandHelper.createContributionPushItem(mgr,
                 CommandIDs.DELETE_COMMAND_ID);
-        mgr.add(CommandHelper.createContributionItem(
-                RCPCommandIDs.FIND,
-                null, Messages.FindContextMenu,
-                CommandContributionItem.STYLE_PUSH));
         mgr.add(new Separator());
         CommandHelper.createContributionPushItem(mgr,
                 RCPCommandIDs.IMPORT_TEST_DATA_SET);
