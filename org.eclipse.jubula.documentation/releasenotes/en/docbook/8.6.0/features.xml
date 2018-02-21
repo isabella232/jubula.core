@@ -169,4 +169,14 @@
     </para>
   </listitem>
 </itemizedlist>
+<para>
+ <emphasis role="strong">JavaFX - java 9 support</emphasis>
+</para>
+<itemizedlist>
+  <listitem>
+    <para>
+        JavaFX should now be working with java 9
+    </para>
+  </listitem>
+</itemizedlist>
 </section>
