@@ -217,7 +217,7 @@ public abstract class AbstractDataSetPage extends Page
     /** En-/Disabler for swt.Controls */
     private ControlEnabler m_controlEnabler;
     /** bp class */
-    private AbstractParamInterfaceBP m_paramBP;
+    private AbstractParamInterfaceBP<?> m_paramBP;
     
     /** the corresponding part */
     private IWorkbenchPart m_currentPart;
@@ -249,7 +249,7 @@ public abstract class AbstractDataSetPage extends Page
      *  The constructor
      *  @param bp the business process to use for this page
      */
-    public AbstractDataSetPage(AbstractParamInterfaceBP bp) {
+    public AbstractDataSetPage(AbstractParamInterfaceBP<?> bp) {
         setParamBP(bp);
     }
 
@@ -1789,7 +1789,7 @@ public abstract class AbstractDataSetPage extends Page
         IParameterInterfacePO paramInterfacePO = null;
         Object firstSel = selection.getFirstElement();
         if (firstSel instanceof SearchResultElement) {
-            firstSel = ((SearchResultElement) firstSel).getObject();
+            firstSel = ((SearchResultElement<?>) firstSel).getObject();
         }
         if (firstSel instanceof IParameterInterfacePO) {
             paramInterfacePO = (IParameterInterfacePO)firstSel;
@@ -1924,14 +1924,14 @@ public abstract class AbstractDataSetPage extends Page
      * @param paramBP
      *            the paramBP to set
      */
-    private void setParamBP(AbstractParamInterfaceBP paramBP) {
+    private void setParamBP(AbstractParamInterfaceBP<?> paramBP) {
         m_paramBP = paramBP;
     }
 
     /**
      * @return the paramBP
      */
-    private AbstractParamInterfaceBP getParamBP() {
+    private AbstractParamInterfaceBP<?> getParamBP() {
         return m_paramBP;
     }
 

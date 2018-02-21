@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.factory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -134,7 +135,7 @@ public class TestDataControlFactory {
 
         if (paramObj instanceof ITestDataCubePO) {
             ITestDataCubePO tdc = (ITestDataCubePO)paramObj;
-            String[] values = getValuesFromValueSet(paramDesc);
+            Map<String, String> values = getValuesFromValueSet(paramDesc);
             if (TestDataConstants.BOOLEAN.equals(paramDesc.getType())) {
                 return new CheckedParamTextContentAssisted(parent, style,
                         tdc, paramDesc, 
@@ -147,7 +148,7 @@ public class TestDataControlFactory {
             return new CheckedParamTextContentAssisted(parent, style, tdc,
                     paramDesc,
                     createParamValueValidator(paramDesc.getType(), false,
-                            values),
+                            values.keySet().toArray(new String[values.size()])),
                     new ParamProposalProvider(values, null, paramDesc));
         }
         
@@ -161,17 +162,19 @@ public class TestDataControlFactory {
      * @param paramDesc the {@link IParamDescriptionPO} should be of type {@link ITcParamDescriptionPO}
      * @return the values from the {@link IParamValueSetPO}
      */
-    private static String[] getValuesFromValueSet(
+    private static Map<String, String> getValuesFromValueSet(
             IParamDescriptionPO paramDesc) {
-        String [] values = new String[0];
         if (paramDesc instanceof ITcParamDescriptionPO) {
             ITcParamDescriptionPO desc = (ITcParamDescriptionPO) paramDesc;
-            List<String> collect = desc.getValueSet().getValues().stream()
-                    .map(IValueCommentPO::getValue)
-                    .collect(Collectors.toList());
-            values = collect.toArray(new String[collect.size()]);
+            IParamValueSetPO valueSet = desc.getValueSet();
+            List<IValueCommentPO> values = valueSet.getValues();
+            if (valueSet != null && values != null && values.size() > 0) {
+                return values.stream()
+                        .collect(Collectors.toMap(IValueCommentPO::getValue,
+                                IValueCommentPO::getComment));
+            }
         }
-        return values;
+        return new HashMap<>();
     }
     
     /**
