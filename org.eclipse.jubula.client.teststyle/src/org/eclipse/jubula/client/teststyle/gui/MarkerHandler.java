@@ -104,8 +104,10 @@ public class MarkerHandler {
             IMarker problemMarker = m_problems.get(problem);
             if (problemMarker != null) {
                 IMarker marker = m_res.findMarker(problemMarker.getId());
-                marker.delete();
-                m_markers.remove(marker);
+                if (marker != null) {
+                    marker.delete();
+                    m_markers.remove(marker);
+                }
             }
             m_problems.remove(problem);
         } catch (CoreException e) {
