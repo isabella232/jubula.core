@@ -184,7 +184,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.eclipse.jubula.client.core.exporter.junit"
          download-size="0"
@@ -558,7 +558,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.eclipse.jdt.annotation"
          download-size="0"
          install-size="0"
-         version="1.1.100.v20160418-1457"
+         version="1.1.150.v20180322-1206"
          unpack="false"/>
 
    <plugin
@@ -574,17 +574,15 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="true"
-         unpack="true"/>
+         fragment="true"/>
 
    <plugin
          id="org.apache.commons.exec"
          download-size="0"
          install-size="0"
          version="1.1.0.v201301240602"
-         fragment="true"
-         unpack="true"/>
-         
+         fragment="true"/>
+
    <plugin
          id="com.fasterxml.jackson.core.jackson-annotations"
          download-size="0"
