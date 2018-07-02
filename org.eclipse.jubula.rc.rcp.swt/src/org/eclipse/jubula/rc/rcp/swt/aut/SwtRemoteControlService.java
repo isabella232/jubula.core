@@ -11,6 +11,7 @@
 package org.eclipse.jubula.rc.rcp.swt.aut;
 
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.rcp.common.classloader.EclipseUrlLocator;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
@@ -88,6 +89,8 @@ public class SwtRemoteControlService extends SwtAUTServer {
                         AutConfigConstants.AUT_AGENT_PORT));
                 setAutID(EnvironmentUtils.getProcessOrSystemProperty(
                         AutConfigConstants.AUT_NAME));
+                setInstallationDir(EnvironmentUtils.getProcessOrSystemProperty(
+                        Constants.AUT_JUB_INSTALL_DIRECTORY));
                 setDisplay(display);
                 start(true); // true = start an RCP accessor
                 m_hasRemoteControlServiceStarted = true;

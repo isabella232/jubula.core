@@ -77,7 +77,7 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
             env += ENV_SEPARATOR + Constants.AUT_SERVER_PORT + "=" + serverPort; ////$NON-NLS-1$
             env += ENV_SEPARATOR + Constants.AUT_SERVER_CLASSPATH + "=" + autServerClasspath; //$NON-NLS-1$
             env += ENV_SEPARATOR + Constants.AUT_SERVER_NAME + "=" + getServerClassName(); //$NON-NLS-1$
-        
+            env += ENV_SEPARATOR + Constants.AUT_JUB_INSTALL_DIRECTORY + "=" + getInstallDir(); //$NON-NLS-1$
             // AUT-Agent variables
             env += ENV_SEPARATOR + AutConfigConstants.AUT_AGENT_HOST + "=" + parameters.get(AutConfigConstants.AUT_AGENT_HOST); //$NON-NLS-1$
             env += ENV_SEPARATOR + AutConfigConstants.AUT_AGENT_PORT + "=" + parameters.get(AutConfigConstants.AUT_AGENT_PORT); //$NON-NLS-1$

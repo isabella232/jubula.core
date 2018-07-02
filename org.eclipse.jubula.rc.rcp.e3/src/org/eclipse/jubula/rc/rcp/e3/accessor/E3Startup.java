@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.rcp.common.classloader.EclipseUrlLocator;
 import org.eclipse.jubula.rc.rcp.e3.gef.inspector.GefInspectorListenerAppender;
@@ -293,6 +294,8 @@ public abstract class E3Startup implements IStartup {
                 .getProcessOrSystemProperty(AutConfigConstants.AUT_AGENT_PORT));
         instance.setAutID(EnvironmentUtils
                 .getProcessOrSystemProperty(AutConfigConstants.AUT_NAME));
+        instance.setInstallationDir(EnvironmentUtils.getProcessOrSystemProperty(
+                Constants.AUT_JUB_INSTALL_DIRECTORY));
         instance.start(true);
         return instance;
     }

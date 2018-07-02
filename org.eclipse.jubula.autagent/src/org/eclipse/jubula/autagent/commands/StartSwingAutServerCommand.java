@@ -63,6 +63,7 @@ public class StartSwingAutServerCommand extends AbstractStartJavaAutServer {
             m_autServerClasspath = autServerClasspath.toString();
                        
         }
+        cmds.add(getInstallDir().getAbsolutePath());
         cmds.addAll(createAutArguments(parameters));
         return cmds.toArray(new String[cmds.size()]);
     }

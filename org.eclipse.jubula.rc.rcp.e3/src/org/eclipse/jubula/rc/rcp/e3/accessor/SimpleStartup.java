@@ -16,6 +16,7 @@ import org.osgi.framework.BundleContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.eclipse.jubula.rc.common.AUTServer;
+import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.adaptable.AdapterFactoryRegistry;
 import org.eclipse.jubula.rc.rcp.common.classloader.EclipseUrlLocator;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
@@ -117,6 +118,9 @@ public class SimpleStartup implements BundleActivator {
                             AutConfigConstants.AUT_AGENT_PORT));
             instance.setAutID(EnvironmentUtils
                     .getProcessOrSystemProperty(AutConfigConstants.AUT_NAME));
+            instance.setInstallationDir(
+                    EnvironmentUtils.getProcessOrSystemProperty(
+                            Constants.AUT_JUB_INSTALL_DIRECTORY));
             instance.start(true);
             return instance;
         }

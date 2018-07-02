@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.apache.commons.lang.LocaleUtils;
+import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -241,6 +242,10 @@ public class StartRcpAutServerCommand extends AbstractStartJavaAut {
             .append(parameters.get(AutConfigConstants.AUT_NAME));
         props.add(sb.toString());
 
+        sb = new StringBuffer();
+        sb.append(Constants.AUT_JUB_INSTALL_DIRECTORY).append(valueSeparator)
+            .append(getInstallDir());
+        props.add(sb.toString());
         return props;
     }
     

@@ -115,6 +115,8 @@ public class Constants {
     public static final int ARG_AUT_NAME = ARG_REG_PORT + 1;
     /** position number for information if agent is activated */
     public static final int ARG_AGENT_SET = ARG_AUT_NAME + 1;
+    /** position number for information where the installation Directory is */
+    public static final int ARG_INSTALLATION_DIR = ARG_AGENT_SET + 1;
     
     /** classpath of the AutServer */
     public static final String AUT_SERVER_CLASSPATH = "AUT_SERVER_CLASSPATH"; //$NON-NLS-1$
@@ -122,16 +124,21 @@ public class Constants {
     public static final String AUT_SERVER_NAME = "AUT_SERVER_NAME"; //$NON-NLS-1$
     /**the port */
     public static final String AUT_SERVER_PORT = "AUT_SERVER_PORT"; //$NON-NLS-1$
-    /** */
-    public static final String AUT_MAIN = "AutMain";
+    /** AutMain */
+    public static final String AUT_MAIN = "AutMain"; //$NON-NLS-1$
+    /** jubula installation directory */
+    public static final String AUT_JUB_INSTALL_DIRECTORY = "org.eclipse.jubula.STARTED_ROOT_DIRECTORY"; //$NON-NLS-1$
     /** the Method name for public static void main(String[] args) */
     public static final String MAIN_METHOD_NAME = "main"; //$NON-NLS-1$
+    
+    /** the name of the externaljars directory */
+    public static final String EXTERNAL_JARS_NAME = "externaljars"; //$NON-NLS-1$
 
     /** 
      * the minimum number of arguments in args, see class description, 
      * also position number of the first argument for the AUT in args
      */
-    public static final int MIN_ARGS_REQUIRED = ARG_AGENT_SET + 1;
+    public static final int MIN_ARGS_REQUIRED = ARG_INSTALLATION_DIR + 1;
     
     /** classname of autServer */
     public static final String AUTSERVER_CLASSNAME = "org.eclipse.jubula.rc.common.AUTServer"; //$NON-NLS-1$

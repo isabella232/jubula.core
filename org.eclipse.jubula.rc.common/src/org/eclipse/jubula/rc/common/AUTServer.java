@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.communication.internal.Communicator;
 import org.eclipse.jubula.communication.internal.listener.ICommunicationErrorListener;
 import org.eclipse.jubula.communication.internal.message.AUTServerStateMessage;
@@ -179,6 +180,9 @@ public abstract class AUTServer {
     
     /** reference to the component at which an error occurred */
     private WeakReference<IComponent> m_errorComponent = null;
+
+    /** the installation directory of the application which started the AUT */
+    private String m_installationDir;
     
     /** 
      * private constructor instantiates the listeners
@@ -202,14 +206,22 @@ public abstract class AUTServer {
     /** Initializes the classloader of the user-supplied jars */
     private void initExternalLoader() {
         try {
-            // The location of the rc.common_*.jar:
-            String start = AUTServer.class.getProtectionDomain()
-                    .getCodeSource().getLocation().getPath();
-            if (System.getProperty("os.name").startsWith("Win")) { //$NON-NLS-1$ //$NON-NLS-2$
-                // Java cannot properly determine the path for Windows
-                start = start.substring(1, start.length());
+            String start = null;
+            if (StringUtils.isNotEmpty(m_installationDir)) {
+                start = m_installationDir + StringConstants.SLASH
+                        + Constants.EXTERNAL_JARS_NAME;
             }
-            start = start.replaceFirst("plugins/[^/]*$", "externaljars"); //$NON-NLS-1$ //$NON-NLS-2$
+            if (StringUtils.isBlank(start)) {
+                // FALLBACK
+                // The location of the rc.common_*.jar:
+                start = AUTServer.class.getProtectionDomain().getCodeSource()
+                        .getLocation().getPath();
+                if (System.getProperty("os.name").startsWith("Win")) { //$NON-NLS-1$ //$NON-NLS-2$
+                    // Java cannot properly determine the path for Windows
+                    start = start.substring(1, start.length());
+                }
+                start = start.replaceFirst("plugins/[^/]*$", Constants.EXTERNAL_JARS_NAME); //$NON-NLS-1$
+            }
             // The location of the externaljars:
             File dir = new File(start);
             File[] res = dir.listFiles(new FilenameFilter() {
@@ -245,7 +257,8 @@ public abstract class AUTServer {
         m_autMainClassName = args[Constants.ARG_AUTMAIN];
         m_autAgentHost = args[Constants.ARG_REG_HOST];
         m_autAgentPort = args[Constants.ARG_REG_PORT];
-        m_autID = args[Constants.ARG_AUT_NAME]; 
+        m_autID = args[Constants.ARG_AUT_NAME];
+        m_installationDir = args[Constants.ARG_INSTALLATION_DIR];
         // arguments for the AUT, is >= 0, see definition of the constants
         int numberAutArgs = args.length - Constants.MIN_ARGS_REQUIRED;
         m_autArgs = new String[numberAutArgs];
@@ -265,6 +278,20 @@ public abstract class AUTServer {
      */
     public String[] getAutArgs() {
         return m_autArgs;
+    }
+
+    /**
+     * @return the installation directory of the application which started the AUT
+     */
+    public String getInstallationDir() {
+        return m_installationDir;
+    }
+
+    /**
+     * @param installationDir the installation directory of the application which started the AUT
+     */
+    public void setInstallationDir(String installationDir) {
+        m_installationDir = installationDir;
     }
 
     /**
@@ -443,6 +470,7 @@ public abstract class AUTServer {
      * @param isRcpAccessible true, if this method was called by RcpAccessor Plug-in
      */
     public void start(boolean isRcpAccessible) {
+        initExternalLoader();
         m_isRcpAccessible = isRcpAccessible;
         try {
             IRegisterAut autReg = parseAutReg();
@@ -849,7 +877,7 @@ public abstract class AUTServer {
         }
         m_autMainClass = ClassLoader.getSystemClassLoader()
             .loadClass(m_autMainClassName);
-        m_autMainMethod = m_autMainClass.getMethod(Constants.MAIN_METHOD_NAME, //$NON-NLS-1$
+        m_autMainMethod = m_autMainClass.getMethod(Constants.MAIN_METHOD_NAME,
             new Class[] { m_autArgs.getClass() });
     
         // make the main method accessible

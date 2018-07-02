@@ -84,6 +84,9 @@ public class RCAgent {
             System.getenv(AutConfigConstants.AUT_NAME);
         // true for agent is activated
         args[Constants.ARG_AGENT_SET] = CommandConstants.RC_COMMON_AGENT_ACTIVE;
+        
+        args[Constants.ARG_INSTALLATION_DIR] = 
+                System.getenv(Constants.AUT_JUB_INSTALL_DIRECTORY);
 
         String [] fileNames = autServerClassPath.split(
                 System.getProperty("path.separator")); //$NON-NLS-1$
