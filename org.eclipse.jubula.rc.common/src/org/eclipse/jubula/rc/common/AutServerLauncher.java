@@ -91,8 +91,9 @@ public class AutServerLauncher {
             // the AUT MUST NOT know the classpath of the AUTServer!!!
             Class autServerClass = autServerClassLoader
                 .loadClass(Constants.AUTSERVER_CLASSNAME);
-            Method mainMethod = autServerClass.getMethod("main",  //$NON-NLS-1$
-                new Class[] {args.getClass()});
+            Method mainMethod =
+                    autServerClass.getMethod(Constants.MAIN_METHOD_NAME,
+                            new Class[] { args.getClass() });
             mainMethod.invoke(null, new Object[] {args});            
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -280,9 +281,8 @@ public class AutServerLauncher {
          * @return an Array of split paths
          */
         private static String[] split(String paths) {
-            String pathSeparator = System.getProperty("path.separator"); //$NON-NLS-1$
             StringTokenizer pathElems = new StringTokenizer(paths, 
-                    pathSeparator);
+                    PATH_SEPARATOR);
             String[] pathElements = new String[pathElems.countTokens()];
             int i = 0;
             while (pathElems.hasMoreTokens()) {

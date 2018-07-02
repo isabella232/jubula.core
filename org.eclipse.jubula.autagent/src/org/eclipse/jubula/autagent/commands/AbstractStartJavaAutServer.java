@@ -22,6 +22,7 @@ import org.apache.commons.lang.LocaleUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.autagent.AutStarter;
 import org.eclipse.jubula.communication.internal.Communicator;
+import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -73,9 +74,9 @@ public abstract class AbstractStartJavaAutServer extends AbstractStartJavaAut {
                 serverPort = String.valueOf(autCommunicator.getLocalPort());
             }
         
-            env += ENV_SEPARATOR + "AUT_SERVER_PORT=" + serverPort; ////$NON-NLS-1$
-            env += ENV_SEPARATOR + "AUT_SERVER_CLASSPATH=" + autServerClasspath; //$NON-NLS-1$
-            env += ENV_SEPARATOR + "AUT_SERVER_NAME=" + getServerClassName(); //$NON-NLS-1$
+            env += ENV_SEPARATOR + Constants.AUT_SERVER_PORT + "=" + serverPort; ////$NON-NLS-1$
+            env += ENV_SEPARATOR + Constants.AUT_SERVER_CLASSPATH + "=" + autServerClasspath; //$NON-NLS-1$
+            env += ENV_SEPARATOR + Constants.AUT_SERVER_NAME + "=" + getServerClassName(); //$NON-NLS-1$
         
             // AUT-Agent variables
             env += ENV_SEPARATOR + AutConfigConstants.AUT_AGENT_HOST + "=" + parameters.get(AutConfigConstants.AUT_AGENT_HOST); //$NON-NLS-1$

@@ -61,17 +61,19 @@ public class RCAgent {
             MalformedURLException {  
         
         String autServerClassPath =
-            System.getenv("AUT_SERVER_CLASSPATH"); //$NON-NLS-1$
+            System.getenv(Constants.AUT_SERVER_CLASSPATH);
         
         // create AutServer arguments
         String[] args = 
             new String[Constants.MIN_ARGS_REQUIRED];
         
-        args[Constants.ARG_SERVERPORT] = System.getenv("AUT_SERVER_PORT"); //$NON-NLS-1$
+        args[Constants.ARG_SERVERPORT] =
+                System.getenv(Constants.AUT_SERVER_PORT);
         // placeholder
-        args[Constants.ARG_AUTMAIN] = "AutMain"; //$NON-NLS-1$
+        args[Constants.ARG_AUTMAIN] = Constants.AUT_MAIN;
         args[Constants.ARG_AUTSERVER_CLASSPATH] = autServerClassPath;
-        args[Constants.ARG_AUTSERVER_NAME] = System.getenv("AUT_SERVER_NAME"); //$NON-NLS-1$
+        args[Constants.ARG_AUTSERVER_NAME] =
+                System.getenv(Constants.AUT_SERVER_NAME);
 
         // Aut Agent arguments
         args[Constants.ARG_REG_HOST] = 
@@ -98,8 +100,8 @@ public class RCAgent {
             Class<?> autServerLauncherClass = 
                 autServerLauncherLoader.loadClass(
                         CommandConstants.AUT_SERVER_LAUNCHER);
-            Method mainMethod = 
-                autServerLauncherClass.getMethod("main", String[].class); //$NON-NLS-1$
+            Method mainMethod = autServerLauncherClass
+                    .getMethod(Constants.MAIN_METHOD_NAME, String[].class);
             mainMethod.invoke(null, new Object[] {args});
         } finally {
             Thread.currentThread().setContextClassLoader(oldContextClassLoader);

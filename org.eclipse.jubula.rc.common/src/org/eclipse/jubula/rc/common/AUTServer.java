@@ -849,7 +849,7 @@ public abstract class AUTServer {
         }
         m_autMainClass = ClassLoader.getSystemClassLoader()
             .loadClass(m_autMainClassName);
-        m_autMainMethod = m_autMainClass.getMethod("main", //$NON-NLS-1$
+        m_autMainMethod = m_autMainClass.getMethod(Constants.MAIN_METHOD_NAME, //$NON-NLS-1$
             new Class[] { m_autArgs.getClass() });
     
         // make the main method accessible

@@ -115,6 +115,17 @@ public class Constants {
     public static final int ARG_AUT_NAME = ARG_REG_PORT + 1;
     /** position number for information if agent is activated */
     public static final int ARG_AGENT_SET = ARG_AUT_NAME + 1;
+    
+    /** classpath of the AutServer */
+    public static final String AUT_SERVER_CLASSPATH = "AUT_SERVER_CLASSPATH"; //$NON-NLS-1$
+    /** aut server name */
+    public static final String AUT_SERVER_NAME = "AUT_SERVER_NAME"; //$NON-NLS-1$
+    /**the port */
+    public static final String AUT_SERVER_PORT = "AUT_SERVER_PORT"; //$NON-NLS-1$
+    /** */
+    public static final String AUT_MAIN = "AutMain";
+    /** the Method name for public static void main(String[] args) */
+    public static final String MAIN_METHOD_NAME = "main"; //$NON-NLS-1$
 
     /** 
      * the minimum number of arguments in args, see class description, 
