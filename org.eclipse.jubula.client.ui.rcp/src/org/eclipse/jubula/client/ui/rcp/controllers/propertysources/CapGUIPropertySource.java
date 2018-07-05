@@ -47,6 +47,7 @@ import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.ParameterValueLab
 import org.eclipse.jubula.toolkit.common.xml.businessprocess.ComponentBuilder;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.Assert;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Action;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Component;
@@ -392,19 +393,19 @@ public class CapGUIPropertySource extends AbstractNodePropertySource  {
                             activeParamNameMapper);
                 m_paramValueControllerList.add(paramCtrl);
                 Action action = CapBP.getAction((ICapPO)getPoNode());
-                final List<String> values = new ArrayList<String>();
+                final Map<String, String> values =
+                        new HashMap<String, String>();
                 Param param = action.findParam(desc.getUniqueId());
-                for (Iterator iter = param.valueSetIterator(); 
-                        iter.hasNext();) {
-                    values.add(map.get(((ValueSetElement)iter.next())
-                            .getValue()));
+                for (Iterator<ValueSetElement> iter =
+                        param.valueSetIterator(); iter.hasNext();) {
+                    ValueSetElement next = iter.next();
+                    values.put(map.get(next.getValue()),
+                            CompSystemI18n.getString(next.getDescriptionKey()));
                 }
-                final String[] valArray = 
-                    values.toArray(new String[values.size()]);
                 PropertyDescriptor descr = 
                     TestDataControlFactory.createValuePropertyDescriptor(
                             paramCtrl, getParameterNameDescr(desc), 
-                            valArray, param.getValueSet().isCombinable());
+                            values, param.getValueSet().isCombinable());
                 ILabelProvider labelProvider;
                 if (param.isOptional()) {
                     labelProvider = new ParameterValueLabelProvider(

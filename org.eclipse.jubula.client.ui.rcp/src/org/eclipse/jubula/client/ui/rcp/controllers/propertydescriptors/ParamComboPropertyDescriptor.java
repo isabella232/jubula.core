@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors;
 
+import java.util.Map;
+
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jubula.client.core.utils.IParamValueValidator;
@@ -33,7 +35,7 @@ public class ParamComboPropertyDescriptor extends
     private IParamValueValidator m_dataValidator;
 
     /** values to use as content proposals */
-    private String [] m_proposals;
+    private Map<String, String> m_proposals;
     
     /**
      * Constructor
@@ -43,7 +45,7 @@ public class ParamComboPropertyDescriptor extends
      * @param validator for parameter value validation
      */
     public ParamComboPropertyDescriptor(IPropertyController id,
-        String displayName, String[] valuesArray,
+        String displayName, Map<String, String> valuesArray,
         IParamValueValidator validator) {
         super(id, displayName);
         m_dataValidator = validator;

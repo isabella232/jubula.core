@@ -233,12 +233,12 @@ public class ExecTestCaseGUIPropertySource extends
                     ParamTextPropertyDescriptor.getValuesSet(
                             paramNodePO, paramDescr.getUniqueId());
                 propDes = TestDataControlFactory.createValuePropertyDescriptor(
-                        new ParameterValueController(this, 
-                                paramDescr, activeParamNameMapper), 
-                                getParameterNameDescr(paramDescr), 
-                                ParamTextPropertyDescriptor.getValues(valueSet),
-                                valueSet != null 
-                                    ? valueSet.isCombinable() : false);
+                        new ParameterValueController(this, paramDescr,
+                                activeParamNameMapper),
+                        getParameterNameDescr(paramDescr),
+                        ParamTextPropertyDescriptor
+                                .getValuesWithComment(valueSet),
+                        valueSet != null ? valueSet.isCombinable() : false);
                 propDes.setCategory(P_PARAMETER_CAT);
                 propDes.setLabelProvider(
                         new ParameterValueLabelProvider(INCOMPL_DATA_IMAGE));

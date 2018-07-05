@@ -11,6 +11,7 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -227,7 +228,7 @@ public class SpecTestCaseGUIPropertySource
                     .createValuePropertyDescriptor(
                             new ParameterValueController(this, paramDescr,
                                     activeParamNameMapper),
-                            getParameterNameDescr(paramDescr), new String[0],
+                            getParameterNameDescr(paramDescr), new HashMap<>(),
                             false);
             propDes.setCategory(P_PARAMETER_CAT);
             propDes.setLabelProvider(new ParameterValueLabelProvider(

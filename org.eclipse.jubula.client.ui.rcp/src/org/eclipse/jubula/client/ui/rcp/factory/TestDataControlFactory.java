@@ -188,9 +188,9 @@ public class TestDataControlFactory {
      * @param paramValController an AbstractParamValueController.
      * @param displayName the display name of the PropertyDescriptor
      * @param values The values parameter is to get a ComboBoxPropertyDescriptor
-     *               if values.length > 0.<br>
+     *               if values are not empty<br>
      *               For all other PropertyDescriptors set an empty 
-     *               String-Array into this parameter!
+     *               String,String Map into this parameter!
      * @param valuesAreCombinable Whether combinations of the 
      *                            supplied values are allowed.
      *                            
@@ -198,14 +198,15 @@ public class TestDataControlFactory {
      */
     public static PropertyDescriptor createValuePropertyDescriptor(
             AbstractParamValueController paramValController,
-            String displayName, String[] values, boolean valuesAreCombinable) {
+            String displayName, Map<String, String> values,
+            boolean valuesAreCombinable) {
 
         final String paramType = paramValController.getParamDesc().getType();
-        if (values.length > 0) {
+        if (!values.isEmpty()) {
             return new ParamComboPropertyDescriptor(paramValController,
                     displayName, values, createParamValueValidator(
                             TestDataConstants.STR, valuesAreCombinable, 
-                            values));
+                            values.keySet().toArray(new String[0])));
         }
         if (TestDataConstants.BOOLEAN.equals(paramType)) {
             return new ParamTextPropertyDescriptor(paramValController,

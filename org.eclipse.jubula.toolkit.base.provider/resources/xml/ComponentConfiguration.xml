@@ -150,9 +150,9 @@
 				<type>java.lang.Integer</type>
 				<defaultValue>1</defaultValue>
 				<valueSet>
-					<element name="CompSystem.MouseButtonLeft" value="1"/>
-					<element name="CompSystem.MouseButtonMiddle" value="2"/>
-					<element name="CompSystem.MouseButtonRight" value="3"/>
+					<element name="CompSystem.MouseButtonLeft" value="1" descriptionKey="CompSystem.MouseButtonLeft.descr"/>
+					<element name="CompSystem.MouseButtonMiddle" value="2" descriptionKey="CompSystem.MouseButtonMiddle.descr"/>
+					<element name="CompSystem.MouseButtonRight" value="3" descriptionKey="CompSystem.MouseButtonRight.descr"/>
 				</valueSet>
 			</param>
 		</action>

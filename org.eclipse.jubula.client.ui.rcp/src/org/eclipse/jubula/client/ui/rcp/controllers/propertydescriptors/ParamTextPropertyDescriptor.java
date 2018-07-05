@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jubula.client.core.businessprocess.TestCaseParamBP;
@@ -26,6 +27,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.ContentAssistCellEditor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.AbstractParamValueController;
 import org.eclipse.jubula.client.ui.rcp.widgets.CheckedParamText;
 import org.eclipse.jubula.client.ui.rcp.widgets.ParamProposalProvider;
+import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ParamValueSet;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
@@ -96,7 +98,11 @@ public class ParamTextPropertyDescriptor extends TextPropertyDescriptor
         Iterator<ValueSetElement> valueSetIter = valueSet.iterator();
         while (valueSetIter.hasNext()) {
             ValueSetElement value = valueSetIter.next();
-            valueToComment.put(value.getValue(), value.getComment());
+            String comment = value.getComment();
+            if (StringUtils.isEmpty(comment)) {
+                comment = CompSystemI18n.getString(value.getDescriptionKey());
+            }
+            valueToComment.put(value.getValue(), comment);
         }
         return valueToComment;
     }

@@ -26,6 +26,8 @@ public class ValueSetElement {
     
     /** The value of the element. */
     private String m_value;
+    /** */
+    private String m_descriptionKey;
     /** a comment value of the element*/
     private String m_comment;
 
@@ -94,5 +96,19 @@ public class ValueSetElement {
     public int hashCode() {
         return new HashCodeBuilder().append(m_name).append(m_value)
             .toHashCode();
+    }
+
+    /**
+     * @return the description key for the element( if you want to get the description use the CompSystemI18n)
+     */
+    public String getDescriptionKey() {
+        return m_descriptionKey;
+    }
+
+    /**
+     * @param descriptionKey the description key for the element
+     */
+    public void setDescriptionKey(String descriptionKey) {
+        m_descriptionKey = descriptionKey;
     }
 }

@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.ui.rcp.controllers.propertysources;
 
 
+import java.util.HashMap;
+
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.model.INodePO;
@@ -52,7 +54,7 @@ public class IterateGUIPropertySource extends AbstractNodePropertySource {
             PropertyDescriptor descr = 
                 TestDataControlFactory.createValuePropertyDescriptor(
                         paramCtrl, getParameterNameDescr(desc), 
-                        new String[0], false);
+                        new HashMap<>(), false);
             ILabelProvider labelProvider;
             labelProvider = new ParameterValueLabelProvider(
                     INCOMPL_DATA_IMAGE);
