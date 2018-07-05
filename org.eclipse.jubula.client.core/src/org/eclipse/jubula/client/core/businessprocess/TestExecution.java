@@ -2063,10 +2063,18 @@ public class TestExecution {
 
         /** {@inheritDoc}  */
         public TestErrorEvent execute() throws JBException {
+            String key = null;
+            try {
+                key = getValueForParam("CompSystem.Key"); //$NON-NLS-1$
+            } catch (Exception e) {
+                // ignore this method is used for two actions
+            }
             String value = getValueForParam("CompSystem.Value"); //$NON-NLS-1$
-            if (StringUtils.isNotBlank(value)) {
-                ITestResultSummaryPO summary = ClientTest.instance()
-                        .getTestresultSummary();
+            ITestResultSummaryPO summary =
+                    ClientTest.instance().getTestresultSummary();
+            if (StringUtils.isNotBlank(key)) {
+                summary.addKeyValuePair(key, value);
+            } else if (StringUtils.isNotBlank(value)) {
                 summary.addAdditionalInformation(value);
             }
             return null;

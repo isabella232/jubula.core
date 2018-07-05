@@ -1268,6 +1268,7 @@ public class ClientTestImpl implements IClientTest {
      */
     public ITestResultSummaryPO writeTestresultToDB(TestResult result) {
         ITestResultSummaryPO summary = getTestresultSummary();
+        summary.writeKeyValuePairsIntoAdditionalInformation();
         TestresultSummaryBP instance = TestresultSummaryBP.getInstance();
         instance.fillTestResultSummary(result, summary);
 

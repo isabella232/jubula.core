@@ -363,6 +363,18 @@
             </param>
             <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$SaveAdditionalSummaryInformation</postExecutionCommand> 
         </action>
+        <action name="CompSystem.StoreValueIntoSummaryKeyValue">
+            <method>rcSetValue</method>
+            <param name="CompSystem.Key"
+                   descriptionKey="CompSystem.Key.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <param name="CompSystem.Value"
+                   descriptionKey="CompSystem.Value.descr" >
+                <type>java.lang.String</type>
+            </param>
+            <postExecutionCommand>org.eclipse.jubula.client.core.businessprocess.TestExecution$SaveAdditionalSummaryInformation</postExecutionCommand> 
+        </action>
 		<action name="CompSystem.CopyToClipboard">
 			<method>rcCopyToClipboard</method>
 			<param name="CompSystem.Text"

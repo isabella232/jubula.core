@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -204,6 +205,8 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
     private String m_dashboardURL = null;
     /** additional information which are saved with a CAP */
     private String m_additionalInformation;
+    /** */
+    private Map<String, String> m_keyValuePairs = new HashMap<>();
     
     /** whether this report has test result details */
     private Boolean m_hasDetails = null;
@@ -1175,6 +1178,43 @@ class TestResultSummaryPO implements ITestResultSummaryPO {
             m_additionalInformation += StringConstants.SEMICOLON + info;
         } else {
             m_additionalInformation = info;
+        }
+    }
+    
+    /**
+     * internal key values pairs
+     * 
+     * @return the key value pairs which should be saved as additional
+     *         information
+     */
+    @Transient
+    private Map<String, String> getKeyValuePairs() {
+        return m_keyValuePairs;
+    }
+    
+    /** {@inheritDoc} */
+    public void addKeyValuePair(String key, String value) {
+        m_keyValuePairs.put(key, value);
+    }
+
+    /** {@inheritDoc} */
+    public void writeKeyValuePairsIntoAdditionalInformation() {
+        StringBuilder sb = new StringBuilder();
+        for (Iterator<Entry<String, String>> iterator =
+                m_keyValuePairs.entrySet().iterator(); iterator.hasNext();) {
+            Entry<String, String> entry = iterator.next();
+            if (m_additionalInformation != null
+                    && m_additionalInformation.length() > 0
+                    || sb.length() > 0) {
+                sb.append(StringConstants.SEMICOLON);
+            }
+            sb.append(entry.getKey()).append(StringConstants.EQUALS_SIGN)
+                    .append(entry.getValue());
+        }
+        if (m_additionalInformation == null) {
+            m_additionalInformation = sb.toString();
+        } else {
+            m_additionalInformation = m_additionalInformation + sb.toString();
         }
     }
 }

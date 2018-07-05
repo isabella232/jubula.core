@@ -91,4 +91,15 @@ public interface ITestResultSummaryPO extends IArchivableTestResultSummary,
      * @param info the information to add
      */
     public void addAdditionalInformation(String info);
+    
+    /**
+     * @param key the key
+     * @param value the value
+     */
+    public void addKeyValuePair(String key, String value);
+    
+    /**
+     * writes the Key Values pair added via {@link #addKeyValuePair(String, String)} to the {@link #addAdditionalInformation(String)}
+     */
+    public void writeKeyValuePairsIntoAdditionalInformation();
 }
