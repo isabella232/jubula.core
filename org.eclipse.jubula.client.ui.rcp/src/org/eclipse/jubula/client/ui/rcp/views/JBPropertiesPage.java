@@ -621,7 +621,7 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
                     m_treeViewer.setInput(null);
                 } else { // TestResultNodes must be excluded
                     if (el instanceof SearchResultElement) {
-                        el = ((SearchResultElement) el).
+                        el = ((SearchResultElement<?>) el).
                                 getObject();
                     }
                     if (el instanceof IPersistentObject) {
@@ -667,8 +667,8 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
             TreeViewerFocusCellManager focusCellManager) {
         try {
             if (focusCellManager.getFocusCell() == null) {
-                Class focusManagerClass = focusCellManager.getClass();
-                Class abstractFocusManagerClass = 
+                Class<?> focusManagerClass = focusCellManager.getClass();
+                Class<?> abstractFocusManagerClass = 
                     focusManagerClass.getSuperclass();
                 Method getInitialFocusCellMethod = 
                     focusManagerClass.getDeclaredMethod("getInitialFocusCell",  //$NON-NLS-1$
@@ -1160,14 +1160,15 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
     /**
      * {@inheritDoc}
      */
-    public Object getAdapter(Class adapter) {
+    @SuppressWarnings("unchecked")
+    public <T> T getAdapter(Class<T> adapter) {
         if (adapter.equals(IContextProvider.class)) {
-            return m_contextProvider;
+            return (T) m_contextProvider;
         } else if (adapter.equals(IPropertySheetPage.class)) {
-            return this;
+            return (T) this;
         } else if (adapter.equals(IComponentNameCache.class) 
                 && m_compCache != null) {
-            return m_compCache;
+            return (T) m_compCache;
         }
         return null;
     }

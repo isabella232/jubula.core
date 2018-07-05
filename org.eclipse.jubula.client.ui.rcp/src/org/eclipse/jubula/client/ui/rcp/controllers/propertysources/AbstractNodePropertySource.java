@@ -44,6 +44,7 @@ import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Param;
+import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
@@ -231,7 +232,8 @@ public abstract class AbstractNodePropertySource
          * The elements of the Iterator are of the type <code>ValueSetElement</code> <br>  
          * If there is no value set the Iterator has no elements!
          */
-        protected Iterator getValueSetIterator() {
+        @SuppressWarnings("unchecked")
+        protected Iterator<ValueSetElement> getValueSetIterator() {
             INodePO node = getPoNode();
             if (!(node instanceof ICapPO)) {
                 return IteratorUtils.EMPTY_ITERATOR;
@@ -275,23 +277,27 @@ public abstract class AbstractNodePropertySource
                 propSet = true;
                 return propSet;
             }
-            
-            Object val = ((List)value).get(0);
-
-            IParamNodePO node = (IParamNodePO)getPoNode();
-            IParamNameMapper mapper = 
-                (IParamNameMapper)((List)value).get(1);
-            GuiParamValueConverter conv = new GuiParamValueConverter(
-                (String)val, node, getParamDesc(), 
-                getValidatorForConverter(getParamDesc()));
-            if (conv.getErrors().isEmpty()) {
-                getTestCaseParamBP().startParameterUpdate(
-                    conv, 0, mapper);
-                DataEventDispatcher.getInstance().firePropertyChanged(false);
+            if (value instanceof List) {
+                List<?> list = (List<?>)value;
+                Object val = list.get(0);
+                
+                IParamNodePO node = (IParamNodePO)getPoNode();
+                IParamNameMapper mapper = 
+                        (IParamNameMapper)list.get(1);
+                GuiParamValueConverter conv = new GuiParamValueConverter(
+                        (String)val, node, getParamDesc(), 
+                        getValidatorForConverter(getParamDesc()));
+                if (conv.getErrors().isEmpty()) {
+                    getTestCaseParamBP().startParameterUpdate(
+                            conv, 0, mapper);
+                    DataEventDispatcher.getInstance()
+                            .firePropertyChanged(false);
+                }
+                checkEntrySets(node);
+                propSet = true;
+                return propSet;
             }
-            checkEntrySets(node);
-            propSet = true;
-            return propSet;
+            return false;
         }
         
         /**
@@ -597,7 +603,7 @@ public abstract class AbstractNodePropertySource
                 SortedMap<Long, String> changes = getPoNode()
                         .getTrackedChanges();
                 if (changes != null) {
-                    List values =
+                    List<String> values =
                             new ArrayList<String>(changes.values());
                     return values.get(m_index);
                 }

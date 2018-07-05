@@ -14,7 +14,7 @@ package org.eclipse.jubula.tools.internal.xml.businessmodell;
  * @author BREDEX GmbH
  * @created 24.05.2007
  */
-public class ToolkitDescriptor implements Comparable {
+public class ToolkitDescriptor implements Comparable<ToolkitDescriptor> {
     /** m_toolkitID */
     private String m_toolkitID;
     
@@ -129,12 +129,8 @@ public class ToolkitDescriptor implements Comparable {
     }
 
     /** {@inheritDoc} */
-    public int compareTo(Object o) {
-        if (!(o instanceof ToolkitDescriptor)) {
-            return 0;            
-        }
-        ToolkitDescriptor descr = (ToolkitDescriptor)o;
-        return getToolkitID().compareTo(descr.getToolkitID());
+    public int compareTo(ToolkitDescriptor o) {
+        return getToolkitID().compareTo(o.getToolkitID());
     }
 
     /** {@inheritDoc} */
