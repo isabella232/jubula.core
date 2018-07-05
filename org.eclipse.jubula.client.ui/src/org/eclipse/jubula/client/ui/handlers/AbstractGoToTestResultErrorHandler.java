@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -38,8 +37,7 @@ public abstract class AbstractGoToTestResultErrorHandler
     /**
      * {@inheritDoc}
      */
-    public final Object execute(ExecutionEvent event) 
-        throws ExecutionException {
+    public final Object execute(ExecutionEvent event) {
 
         List<IWorkbenchPart> listOfPossibleParts =
                 new LinkedList<IWorkbenchPart>();
@@ -97,7 +95,6 @@ public abstract class AbstractGoToTestResultErrorHandler
         if (resultNodeList != null) {
             return (status == TestResultNode.ERROR)
                     || (status == TestResultNode.ABORT) 
-                    || status == TestResultNode.CONDITION_FAILED
                     || status == TestResultNode.INFINITE_LOOP
                     || ((status == TestResultNode.TESTING)
                             && (node.getResultNodeList().size() == 0));
