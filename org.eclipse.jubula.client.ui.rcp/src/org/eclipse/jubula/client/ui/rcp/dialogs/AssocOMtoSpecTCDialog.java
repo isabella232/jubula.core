@@ -374,7 +374,9 @@ public class AssocOMtoSpecTCDialog extends TitleAreaDialog {
             }
         }
         ITreeSelection usedSelection = m_usedTree.getStructuredSelection();
-        enableRemoveUsedButton(!usedSelection.isEmpty());
+        Object firstElement = usedSelection.getFirstElement();
+        enableRemoveUsedButton(!usedSelection.isEmpty()
+                && m_selectedCat.contains(firstElement));
         for (Iterator<?> iterator = usedSelection.iterator(); iterator
                 .hasNext();) {
             Object type = iterator.next();
