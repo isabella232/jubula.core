@@ -48,7 +48,7 @@ public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
             ((ObjectMappingMultiPageEditor)
                     HandlerUtil.getActivePartChecked(event));
         IStructuredSelection selection = getSelection();
-        if (selection.size() == 1) { 
+        if (selection.size() <= 1) { 
             ISelectionProvider selectionProvider = 
                 HandlerUtil.getActiveSiteChecked(event)
                     .getSelectionProvider();
@@ -79,7 +79,24 @@ public class OMNewCategoryHandler extends AbstractSelectionBasedHandler {
             category = editor.getOmEditorBP().getCategory(
                     (IComponentNamePO)selElement);
         }
-        final IObjectMappingCategoryPO node = category;
+        if (category == null) {
+            Object input = editor.getActiveTreeViewer().getInput();
+            if (input instanceof IObjectMappingCategoryPO) {
+                category = (IObjectMappingCategoryPO)input;
+            }
+        }
+        createNewCategoryOperation(editor, selectionProvider, category);
+    }
+    /**
+     * 
+     * @param editor the {@link ObjectMappingMultiPageEditor}
+     * @param selectionProvider the selectionProvider for the given selection
+     * @param node the {@link IObjectMappingCategoryPO} where the new category should be added to
+     */
+    private void createNewCategoryOperation(
+            final ObjectMappingMultiPageEditor editor,
+            final ISelectionProvider selectionProvider,
+            final IObjectMappingCategoryPO node) {
         if (node != null) {
             editor.getEditorHelper().doEditorOperation(new IEditorOperation() {
                 public void run(IPersistentObject workingPo) {

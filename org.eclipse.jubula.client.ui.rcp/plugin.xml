@@ -3753,9 +3753,9 @@
       commandId="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand">
       <activeWhen>
         <and>
-          <count value="1" />
+          <count value="?" />
           <iterate
-            ifEmpty="false"
+            ifEmpty="true"
             operator="and">
             <instanceof value="org.eclipse.jubula.client.core.model.INodePO" />
             <or>
@@ -3837,7 +3837,7 @@
           <with variable="activePartId">
             <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
           </with>
-          <count value="1" />
+          <count value="?" />
         </and>
       </activeWhen>
     </handler>

@@ -37,6 +37,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jubula.client.core.businessprocess.CleanupObjectMapping;
 import org.eclipse.jubula.client.core.businessprocess.CompNameResult;
@@ -122,7 +123,10 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -694,8 +698,47 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 m_activeTreeViewer = viewer;
             }
         });
-        
+        MouseListener mouseRemoveSelectionListener =
+                createSelectionMouseListener(viewer);
+        viewer.getTree().addMouseListener(mouseRemoveSelectionListener);
         return viewer;
+    }
+
+    /**
+     * removes the selection if the white space is selected (no node is under the mouse)
+     * @param viewer the {@link TreeViewer} so check if there is a node under the mouse click
+     * @return a {@link MouseListener}
+     */
+    private MouseListener createSelectionMouseListener(
+            final TreeViewer viewer) {
+        MouseListener mouseRemoveSelectionListener = new MouseListener() {
+            
+            @Override
+            public void mouseUp(MouseEvent e) {
+                //Not used
+            }
+            
+            @Override
+            public void mouseDown(MouseEvent e) {
+                ViewerCell cell = viewer.getCell(new Point(e.x, e.y));
+                if (cell == null) {
+                    if (viewer.getCell(new Point(e.x + 50, e.y)) == null) {
+                        m_compNameTreeViewer
+                                .setSelection(StructuredSelection.EMPTY);
+                        m_mappedComponentTreeViewer
+                                .setSelection(StructuredSelection.EMPTY);
+                        m_uiElementTreeViewer
+                                .setSelection(StructuredSelection.EMPTY);
+                    }
+                }
+            }
+            
+            @Override
+            public void mouseDoubleClick(MouseEvent e) {
+              //Not used
+            }
+        };
+        return mouseRemoveSelectionListener;
     }
     
     /**
@@ -753,7 +796,7 @@ public class ObjectMappingMultiPageEditor extends MultiPageEditorPart
                 m_activeTreeViewer = viewer;
             }
         });
-        
+        viewer.getTree().addMouseListener(createSelectionMouseListener(viewer));
         return viewer;
     }
     
