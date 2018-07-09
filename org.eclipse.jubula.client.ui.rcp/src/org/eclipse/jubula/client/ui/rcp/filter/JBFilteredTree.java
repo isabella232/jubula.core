@@ -11,8 +11,14 @@
 package org.eclipse.jubula.client.ui.rcp.filter;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.IJobChangeListener;
+import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
@@ -27,7 +33,10 @@ public class JBFilteredTree extends FilteredTree {
      * <code>REFRESH_DELAY</code>
      */
     private static final int REFRESH_DELAY = 500;
-
+    /** the previous filte Text */
+    private String m_previousFilterText = StringConstants.EMPTY;
+    /** the array of expanded elements */
+    private Object[] m_expandedElements = null;
     /**
      * @param parent
      *            the parent
@@ -79,6 +88,11 @@ public class JBFilteredTree extends FilteredTree {
                 } else {
                     wj.removeJobChangeListener(this);
                 }
+                if (StringUtils.isEmpty(getFilterString())
+                        && event.getResult().isOK()
+                        && m_expandedElements != null) {
+                    createExpanderJob().schedule(100);
+                }
             }
 
             public void awake(IJobChangeEvent event) {
@@ -90,5 +104,31 @@ public class JBFilteredTree extends FilteredTree {
             }
         });
         return wj;
+    }
+
+    /** creates a job which expands the viewer to its old state 
+     * @return the job
+     */
+    private Job createExpanderJob() {
+        return new WorkbenchJob("ExpandToOldValues") { //$NON-NLS-1$
+            public IStatus runInUIThread(IProgressMonitor monitor) {
+                getViewer().setExpandedElements(m_expandedElements);
+                return new Status(Status.OK, Plugin.PLUGIN_ID,
+                        StringConstants.EMPTY);
+            }
+
+        };
+    }
+
+    /**
+     * Update the receiver after the text has changed.
+     */
+    protected void textChanged() {
+        if (StringUtils.isEmpty(m_previousFilterText)
+                && StringUtils.isNotEmpty(getFilterString())) {
+            m_expandedElements = getViewer().getExpandedElements();
+        }
+        m_previousFilterText = getFilterString();
+        super.textChanged();
     }
 }
