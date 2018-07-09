@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -32,7 +33,9 @@ import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 
@@ -40,13 +43,19 @@ import org.eclipse.ui.PlatformUI;
  * @author BREDEX GmbH
  * @created 15.10.2004
  */
-public class OMEditorTreeLabelProvider extends LabelProvider {
+public class OMEditorTreeLabelProvider extends LabelProvider
+        implements IColorProvider {
     /** 
      * mapping from top-level category name to i18n key for top-level
      * category name 
      */
     private static Map<String, String> topLevelCategoryToNameKey =
         new HashMap<String, String>();
+    
+    /**
+     * defines if the {@link IComponentNamePO} and {@link IObjectMappingAssoziationPO} should be greyed out
+     */
+    private boolean m_coloring = false;
     
     static {
         topLevelCategoryToNameKey.put(
@@ -75,6 +84,20 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
      */
     public OMEditorTreeLabelProvider(IComponentNameCache compCache) {
         m_compCache = compCache;
+    }
+    
+    /**
+     * Constructor
+     * 
+     * @param compCache The component cache to use for finding and modifying
+     *            Component Names.
+     * @param coloring defines if the {@link IComponentNamePO} and
+     *            {@link IObjectMappingAssoziationPO} should be greyed out
+     */
+    public OMEditorTreeLabelProvider(IComponentNameCache compCache,
+            boolean coloring) {
+        m_compCache = compCache;
+        m_coloring = coloring;
     }
     
     /**
@@ -238,6 +261,26 @@ public class OMEditorTreeLabelProvider extends LabelProvider {
             return I18n.getString(topLevelCategoryToNameKey.get(key));
         }
         
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Color getForeground(Object element) {
+        if (m_coloring) {
+            if (element instanceof IObjectMappingAssoziationPO
+                    || element instanceof IComponentNamePO) {
+                return new Color(Display.getCurrent(), 169, 169, 169);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Color getBackground(Object element) {
         return null;
     }
 }

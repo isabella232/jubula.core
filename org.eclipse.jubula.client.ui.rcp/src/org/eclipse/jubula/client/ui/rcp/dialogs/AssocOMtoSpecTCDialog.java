@@ -336,7 +336,8 @@ public class AssocOMtoSpecTCDialog extends TitleAreaDialog {
         GridData treeGridData = createGrabAllGridData();
         treeGridData.widthHint = 300;
         IComponentNameCache activeCompCache = Plugin.getActiveCompCache();
-        tree.setLabelProvider(new OMEditorTreeLabelProvider(activeCompCache));
+        tree.setLabelProvider(
+                new OMEditorTreeLabelProvider(activeCompCache, true));
         tree.setContentProvider(
                 new OMEditorTreeContentProvider(activeCompCache));
         tree.getTree().setLayoutData(treeGridData);
