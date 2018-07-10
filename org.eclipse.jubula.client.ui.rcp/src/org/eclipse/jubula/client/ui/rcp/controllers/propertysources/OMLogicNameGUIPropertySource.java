@@ -18,13 +18,13 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.ProjectPM;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.PropertyControllerLabelProvider;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.exception.JBException;
 import org.eclipse.jubula.tools.internal.i18n.CompSystemI18n;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 
 /**
@@ -63,23 +63,23 @@ public class OMLogicNameGUIPropertySource
      */
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
-        JBPropertyDescriptor propDes = null;
+        PropertyDescriptor propDes = null;
         // Component Name
-        propDes = new JBPropertyDescriptor(
+        propDes = new PropertyDescriptor(
             new ComponentNameController(), P_ELEMENT_DISPLAY_COMPNAME);
         propDes.setCategory(P_COMPONENT_CAT); 
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
 
         // Component Type
-        propDes = new JBPropertyDescriptor(
+        propDes = new PropertyDescriptor(
             new ComponentTypeController(), P_ELEMENT_DISPLAY_COMPTYPE);
         propDes.setCategory(P_COMPONENT_CAT); 
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
 
         // Parent Project
-        propDes = new JBPropertyDescriptor(
+        propDes = new PropertyDescriptor(
                 new ParentProjectController(), P_ELEMENT_DISPLAY_PARENTPROJECT);
         propDes.setCategory(P_COMPONENT_CAT); 
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
