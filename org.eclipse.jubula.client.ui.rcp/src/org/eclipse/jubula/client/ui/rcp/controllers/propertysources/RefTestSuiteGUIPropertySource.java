@@ -22,6 +22,7 @@ import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IRefTestSuitePO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
@@ -30,7 +31,6 @@ import org.eclipse.jubula.tools.internal.exception.Assert;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.properties.ComboBoxPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
-import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 
@@ -110,7 +110,7 @@ public class RefTestSuiteGUIPropertySource
         addPropertyDescriptor(m_namePropDesc);
         
         if (m_specNameDesc == null) {
-            PropertyDescriptor specNameDesc = new PropertyDescriptor(
+            JBPropertyDescriptor specNameDesc = new JBPropertyDescriptor(
                     new SpecNameController(), P_SPEC_TS_DISPLAY_NAME);
             specNameDesc.setLabelProvider(new DisabledLabelProvider());
             m_specNameDesc = specNameDesc;
@@ -120,7 +120,7 @@ public class RefTestSuiteGUIPropertySource
         
         // Task ID
         if (getTaskIdPropDesc() == null) {
-            PropertyDescriptor taskIdPropDesc = new PropertyDescriptor(
+            JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
                 new ReadOnlyTaskIdController(),
                 org.eclipse.jubula.client.ui.i18n.Messages
                     .AbstractGuiNodePropertySourceTaskId);

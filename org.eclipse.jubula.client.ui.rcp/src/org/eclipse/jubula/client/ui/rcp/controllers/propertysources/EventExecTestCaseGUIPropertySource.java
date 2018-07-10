@@ -19,6 +19,7 @@ import org.eclipse.jubula.client.core.model.ISpecTestCasePO;
 import org.eclipse.jubula.client.core.model.ReentryProperty;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IntegerTextPropertyDescriptor;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.DisabledLabelProvider;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
@@ -99,7 +100,7 @@ public class EventExecTestCaseGUIPropertySource extends
      * @return a String-Array of Event Types.
      */
     private static String[] initEventTypes() {
-        Set<?> mapKeySet = ComponentBuilder.getInstance().getCompSystem()
+        Set mapKeySet = ComponentBuilder.getInstance().getCompSystem()
             .getEventTypes().keySet(); 
         String[] eventTypes = new String[mapKeySet.size()];
         int i = 0;
@@ -141,7 +142,7 @@ public class EventExecTestCaseGUIPropertySource extends
         
         // Event Types
         if (m_eventTypePropDesc == null) {
-            PropertyDescriptor cbpd = new PropertyDescriptor(
+            PropertyDescriptor cbpd = new JBPropertyDescriptor(
                     new EventTypeController(), P_ELEMENT_DISPLAY_EVENTTYPE);
             cbpd.setLabelProvider(new LabelProvider() {
                 public String getText(Object element) {
@@ -194,7 +195,7 @@ public class EventExecTestCaseGUIPropertySource extends
     /** create property descriptor */
     private void createTaskIdPropertyDescriptor() {
         if (getTaskIdPropDesc() == null) {
-            PropertyDescriptor taskIdPropDesc = new PropertyDescriptor(
+            JBPropertyDescriptor taskIdPropDesc = new JBPropertyDescriptor(
                 new ReadOnlyTaskIdController(),
                 org.eclipse.jubula.client.ui.i18n.Messages
                     .AbstractGuiNodePropertySourceTaskId);
@@ -218,7 +219,7 @@ public class EventExecTestCaseGUIPropertySource extends
         /** create property descriptor */
     private void createSpecNamePropertyDescriptor() {
         if (m_specNamePropDesc == null) {
-            PropertyDescriptor propDes = new PropertyDescriptor(
+            PropertyDescriptor propDes = new JBPropertyDescriptor(
                     new SpecNameController(),
                     P_SPECNAME_DISPLAY_NAME);
             propDes.setLabelProvider(new DisabledLabelProvider());

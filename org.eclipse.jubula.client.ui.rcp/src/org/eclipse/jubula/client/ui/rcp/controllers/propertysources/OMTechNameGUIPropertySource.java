@@ -17,12 +17,12 @@ import java.util.Map;
 
 import org.eclipse.jubula.client.core.model.IObjectMappingAssoziationPO;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.PropertyControllerLabelProvider;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 
 /**
@@ -82,23 +82,23 @@ public class OMTechNameGUIPropertySource
     @SuppressWarnings("synthetic-access")
     protected void initPropDescriptor() {
         clearPropertyDescriptors();
-        PropertyDescriptor propDes = null;
+        JBPropertyDescriptor propDes = null;
         // Component Name
-        propDes = new PropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentNameController(), P_ELEMENT_DISPLAY_COMPNAME);
         propDes.setCategory(P_ELEMENT_DISPLAY_COMP);
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
 
         // Component Class
-        propDes = new PropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentClassController(), P_ELEMENT_DISPLAY_COMPCLASS);
         propDes.setCategory(P_ELEMENT_DISPLAY_COMP);
         propDes.setLabelProvider(new PropertyControllerLabelProvider());
         addPropertyDescriptor(propDes);
         
         // Component SuppClass
-        propDes = new PropertyDescriptor(
+        propDes = new JBPropertyDescriptor(
             new ComponentSuppClassController(), 
                 P_ELEMENT_DISPLAY_COMPSUPPCLASS);
         propDes.setCategory(P_ELEMENT_DISPLAY_COMPADDINFO);
@@ -120,7 +120,7 @@ public class OMTechNameGUIPropertySource
                     compId.getComponentPropertiesMap();
             if (componentProperties != null) {
                 for (String key : componentProperties.keySet()) {
-                    PropertyDescriptor propDes = new PropertyDescriptor(
+                    JBPropertyDescriptor propDes = new JBPropertyDescriptor(
                         new ComponentPropertiesController(
                                 key, compId), key);
                     propDes.setCategory(
@@ -136,17 +136,17 @@ public class OMTechNameGUIPropertySource
      *
      */
     private void initHierarchy() {
-        PropertyDescriptor propDes = null;
+        JBPropertyDescriptor propDes = null;
         IComponentIdentifier compId = getNode().getTechnicalName();
         if (compId != null) {
-            List<?> hierarchy = compId.getHierarchyNames();
+            List hierarchy = compId.getHierarchyNames();
             for (int i = 0; i < hierarchy.size(); i++) {
                 if (i == 0) {
-                    propDes = new PropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentHierarchyController(i), 
                             P_ELEMENT_DISPLAY_HIERARCHY);
                 } else {
-                    propDes = new PropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentHierarchyController(i), 
                             StringConstants.EMPTY);
                 }
@@ -160,17 +160,17 @@ public class OMTechNameGUIPropertySource
      *
      */
     private void initContext() {
-        PropertyDescriptor propDes = null;
+        JBPropertyDescriptor propDes = null;
         IComponentIdentifier compId = getNode().getTechnicalName();
         if (compId != null) {
             List context = compId.getNeighbours();
             for (int i = 0; i < context.size(); i++) {
                 if (i == 0) {
-                    propDes = new PropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentContextController(i), 
                             P_ELEMENT_DISPLAY_CONTEXT);
                 } else {
-                    propDes = new PropertyDescriptor(
+                    propDes = new JBPropertyDescriptor(
                             new ComponentContextController(i), 
                             StringConstants.EMPTY);
                 }

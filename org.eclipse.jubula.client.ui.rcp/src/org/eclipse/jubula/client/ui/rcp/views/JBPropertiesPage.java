@@ -65,6 +65,7 @@ import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.controllers.propertysources.AbstractPropertySource;
 import org.eclipse.jubula.client.ui.controllers.propertysources.IPropertyController;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.CapGUIPropertySource.ActionTypeController;
@@ -276,7 +277,8 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
         public int hashCode(Object element) {
             // ignore JBPropertyDescriptor as this leads to incorrect behavior
             // e.g. when deleting params from a spec tc via edit parameters
-            if (element instanceof IPropertyDescriptor) { // TODO Sinvoll?
+            if (element instanceof IPropertyDescriptor 
+                    && !(element instanceof JBPropertyDescriptor)) {
                 IPropertyDescriptor pd = (IPropertyDescriptor)element;
                 HashCodeBuilder hb = new HashCodeBuilder();
                 hb.append(pd.getCategory());
@@ -298,7 +300,9 @@ public class JBPropertiesPage extends Page implements IDataChangedListener,
             // ignore JBPropertyDescriptor as this leads to incorrect behavior
             // e.g. when deleting params from a spec tc via edit parameters
             if (a instanceof IPropertyDescriptor
-                    && b instanceof IPropertyDescriptor) { // TODO noch sinnvoll?
+                    && b instanceof IPropertyDescriptor
+                    && !(a instanceof JBPropertyDescriptor 
+                            || b instanceof JBPropertyDescriptor)) {
                 IPropertyDescriptor pd1 = (IPropertyDescriptor)a;
                 IPropertyDescriptor pd2 = (IPropertyDescriptor)b;
                 EqualsBuilder eb = new EqualsBuilder();

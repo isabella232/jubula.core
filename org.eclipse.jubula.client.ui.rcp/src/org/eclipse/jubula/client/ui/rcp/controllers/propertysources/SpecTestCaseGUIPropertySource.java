@@ -40,6 +40,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.contentassist.TestDataCubeRefContentProposalProvider;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ContentAssistedTextPropertyDescriptor;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -184,7 +185,7 @@ public class SpecTestCaseGUIPropertySource
         addPropertyDescriptor(m_referencedCubePropDesc);
 
         if (m_lockPropDesc == null) {
-            PropertyDescriptor propDes = new PropertyDescriptor(
+            JBPropertyDescriptor propDes = new JBPropertyDescriptor(
                     new LockInterfaceController(), 
                     P_ELEMENT_DISPLAY_PARAM_LOCKED);
             propDes.setLabelProvider(new DisabledLabelProvider());
@@ -202,7 +203,7 @@ public class SpecTestCaseGUIPropertySource
      */
     private IPropertyDescriptor getOMCategorieDescriptor() {
         if (m_oMCatPropDesc == null) {
-            PropertyDescriptor cbpd = new PropertyDescriptor(
+            JBPropertyDescriptor cbpd = new JBPropertyDescriptor(
                     new OMCategorieController(),
                     Messages.SpecTestCaseGUIPropertySourceOMCat);
             cbpd.setLabelProvider(new DisabledLabelProvider());

@@ -27,7 +27,7 @@ public abstract class AbstractCutTreeItemAction extends Action {
      * Constructor
      */
     public AbstractCutTreeItemAction() {
-        super();
+                super();
         IWorkbenchAction cutAction = ActionFactory.CUT.create(
                 PlatformUI.getWorkbench().getActiveWorkbenchWindow());
 

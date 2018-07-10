@@ -15,6 +15,7 @@ import java.util.Map;
 import org.eclipse.jubula.client.inspector.ui.model.InspectedComponent;
 import org.eclipse.jubula.client.inspector.ui.model.InspectorTreeNode;
 import org.eclipse.jubula.client.ui.controllers.propertysources.AbstractPropertySource;
+import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.OMTechNameGUIPropertySource;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
@@ -56,7 +57,7 @@ public class InspectedPropertySource extends AbstractPropertySource {
                     .getComponentPropertiesMap();
             if (componentProperties != null) {
                 for (String key : componentProperties.keySet()) {
-                    PropertyDescriptor propDes = new PropertyDescriptor(
+                    PropertyDescriptor propDes = new JBPropertyDescriptor(
                         new OMTechNameGUIPropertySource
                             .ComponentPropertiesController(key, compId),
                         key);
