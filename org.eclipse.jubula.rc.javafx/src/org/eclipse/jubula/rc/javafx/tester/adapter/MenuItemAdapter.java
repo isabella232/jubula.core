@@ -208,8 +208,7 @@ public class MenuItemAdapter<M extends MenuItem>
         } catch (InterruptedException e) {
             // ignore
         } finally {
-            result = EventThreadQueuerJavaFXImpl.
-                    invokeAndWait("openSubMenu", //$NON-NLS-1$
+            result = EventThreadQueuerJavaFXImpl.invokeAndWait("openSubMenu", //$NON-NLS-1$
                     new Callable<Boolean>() {
 
                         @Override

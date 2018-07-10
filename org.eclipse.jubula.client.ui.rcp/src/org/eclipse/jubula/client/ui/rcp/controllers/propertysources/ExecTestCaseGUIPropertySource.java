@@ -28,7 +28,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.rcp.contentassist.TestDataCubeRefContentProposalProvider;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ContentAssistedTextPropertyDescriptor;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.factory.TestDataControlFactory;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -119,7 +118,7 @@ public class ExecTestCaseGUIPropertySource extends
 
         // Specification Name
         if (m_specNamePropDesc == null) {
-            JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+            PropertyDescriptor propDes = new PropertyDescriptor(
                     new SpecNameController(), P_SPECNAME_DISPLAY_NAME);
             propDes.setLabelProvider(new DisabledLabelProvider());
             m_specNamePropDesc = propDes;
@@ -185,8 +184,8 @@ public class ExecTestCaseGUIPropertySource extends
      * Property Descriptor for the Task ID
      */
     private void createJPropertyDescriptor() {
-        JBPropertyDescriptor taskIdPropDesc = 
-                new JBPropertyDescriptor(new ReadOnlyTaskIdController(),
+        PropertyDescriptor taskIdPropDesc = 
+                new PropertyDescriptor(new ReadOnlyTaskIdController(),
                 org.eclipse.jubula.client.ui.i18n.
                 Messages.AbstractGuiNodePropertySourceTaskId);
         taskIdPropDesc.setLabelProvider(new DisabledLabelProvider());

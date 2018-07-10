@@ -38,7 +38,6 @@ import org.eclipse.jubula.client.core.utils.NullValidator;
 import org.eclipse.jubula.client.core.utils.StringHelper;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.IVerifiable;
-import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.JBPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.IParameterPropertyController.ParameterInputType;
 import org.eclipse.jubula.client.ui.rcp.editors.IJBEditor;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
@@ -48,6 +47,7 @@ import org.eclipse.jubula.tools.internal.xml.businessmodell.ValueSetElement;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.eclipse.ui.views.properties.TextPropertyDescriptor;
 
 
@@ -541,7 +541,7 @@ public abstract class AbstractNodePropertySource
         for (Object o : changes.keySet()) {
             if (o instanceof Long) {
                 Long key = (Long)o;
-                JBPropertyDescriptor propDes = new JBPropertyDescriptor(
+                PropertyDescriptor propDes = new PropertyDescriptor(
                         new TrackedChangesValueController(i),
                         formatDateForTrackedChanges(key));
                 propDes.setCategory(P_TRACKED_CHANGES_CAT);
