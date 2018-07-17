@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.jobs.IJobChangeListener;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
@@ -112,7 +113,13 @@ public class JBFilteredTree extends FilteredTree {
     private Job createExpanderJob() {
         return new WorkbenchJob("ExpandToOldValues") { //$NON-NLS-1$
             public IStatus runInUIThread(IProgressMonitor monitor) {
-                getViewer().setExpandedElements(m_expandedElements);
+                try {
+                    if (!getViewer().getTree().isDisposed()) {
+                        getViewer().setExpandedElements(m_expandedElements);
+                    }
+                } catch (SWTException e) {
+                    // ignore widget disposed since items also could be disposed
+                }
                 return new Status(Status.OK, Plugin.PLUGIN_ID,
                         StringConstants.EMPTY);
             }
