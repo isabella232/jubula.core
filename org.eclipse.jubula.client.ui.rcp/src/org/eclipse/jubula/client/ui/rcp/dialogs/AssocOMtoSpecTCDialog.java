@@ -32,6 +32,7 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
 import org.eclipse.jubula.client.ui.constants.IconConstants;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
+import org.eclipse.jubula.client.ui.rcp.filter.JBFilteredTree;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.rcp.provider.contentprovider.objectmapping.OMEditorTreeContentProvider;
 import org.eclipse.jubula.client.ui.rcp.provider.labelprovider.OMEditorTreeLabelProvider;
@@ -50,6 +51,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 
@@ -328,7 +330,7 @@ public class AssocOMtoSpecTCDialog extends TitleAreaDialog {
         Label label = createLabel(firstComposite, labelText);
         secondComposite.setLayoutData(createGrabAllGridData());
         composite.setLayoutData(createGrabAllGridData());
-        FilteredTree filtered = new FilteredTree(secondComposite,
+        FilteredTree filtered = new JBFilteredTree(secondComposite,
                 LayoutUtil.MULTI_TEXT_STYLE, new PatternFilter(), true);
         TreeViewer tree = filtered.getViewer();
         tree.setAutoExpandLevel(3);

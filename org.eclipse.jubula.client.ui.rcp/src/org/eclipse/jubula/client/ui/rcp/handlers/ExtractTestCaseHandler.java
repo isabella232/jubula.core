@@ -246,7 +246,7 @@ public class ExtractTestCaseHandler extends AbstractRefactorHandler {
 
         final List<INodePO> modNodes = new ArrayList<INodePO>(
                 selection.size());
-        Iterator it = selection.iterator();
+        Iterator<?> it = selection.iterator();
         while (it.hasNext()) {
             Object next = it.next();
             if (next instanceof INodePO) {
