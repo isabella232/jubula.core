@@ -71,7 +71,10 @@ public class ComboBoxUtils {
             }
         }
         try {
-            Method method = clazz.getMethod(GET_POPUP_CONTENT);
+            Method method = clazz.getDeclaredMethod(GET_POPUP_CONTENT);
+            if (!method.isAccessible()) {
+                method.setAccessible(true);
+            }
             Object o = method.invoke(skin);
             if (o instanceof ListView<?>) {
                 return (ListView<?>) o;

@@ -75,8 +75,11 @@ public class TableUtils {
             List<?> headerRow = NodeTraverseHelper.getInstancesOf(table, clazz);
             Object colH = null;
             for (Object tableHeaderRow : headerRow) {
-                Method method = clazz.getMethod(GET_COLUMN_HEADER_FOR,
+                Method method = clazz.getDeclaredMethod(GET_COLUMN_HEADER_FOR,
                         TableColumnBase.class);
+                if (!method.isAccessible()) {
+                    method.setAccessible(true);
+                }
                 colH = method.invoke(tableHeaderRow, column);
                 if (colH != null) {
                     if (relative) {
