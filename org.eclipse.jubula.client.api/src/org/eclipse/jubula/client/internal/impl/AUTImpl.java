@@ -95,6 +95,14 @@ public class AUTImpl implements AUT {
     
     /** {@inheritDoc} */
     public void connect(int timeOut) throws CommunicationException {
+        try {
+            AUTConnection autconnection = AUTConnection.getInstance();
+            if (autconnection != null) {
+                autconnection.reset();
+            }
+        } catch (ConnectionException e) {
+            // ignore
+        }
         connectImpl(timeOut);
     }
     
