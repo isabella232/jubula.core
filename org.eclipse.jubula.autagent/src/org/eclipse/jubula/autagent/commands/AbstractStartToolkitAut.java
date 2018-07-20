@@ -63,6 +63,10 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
     private static final String SOURCE_BUNDLE_MANIFEST_ATTR = 
             "Eclipse-SourceBundle"; //$NON-NLS-1$
     
+    /** defines if eclipse directory is used instead of jar files */
+    private static String developer =
+            EnvironmentUtils.getProcessOrSystemProperty("JubulaRCDeveloperMode"); //$NON-NLS-1$
+    
     /**
      * the message to send back if the command for starting the AUTServer could
      * not created
@@ -71,6 +75,8 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
 
     /** true if executable file and -javaagent are set */
     private boolean m_isAgentSet = false;
+    
+
 
     /**
      *
@@ -497,18 +503,53 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
 
     /**
      * Creates a class path sting for a given string array
+     * 
      * @param classPath the array
      * @return a the class path in the same order as the array
      */
     protected static String createClassPath(String[] classPath) {
         StringBuilder pathBuilder = new StringBuilder();
         for (String entry : classPath) {
-            pathBuilder.append(entry).append(PATH_SEPARATOR);
+            String jarless = convertToDirectories(entry);
+            if (jarless == null) {
+                pathBuilder.append(entry).append(PATH_SEPARATOR);
+            } else {
+                pathBuilder.append(jarless);
+            }
         }
-        
+
         return pathBuilder.length() == 0 ? "" //$NON-NLS-1$
                 : pathBuilder.substring(0,
                         pathBuilder.lastIndexOf(PATH_SEPARATOR));
+    }
+
+    /**
+     * This is used for development only. The jar pathes are changed to use the
+     * compiled classes from eclipse instead
+     * 
+     * @param entry the jar entry
+     * @return the class folder from eclipse
+     */
+    private static String convertToDirectories(String entry) {
+        if (developer == null) {
+            return null;
+        }
+        if (entry.contains("target") && !entry.contains("agent") && entry.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            // the agentjar must be a jar, therefore ignore the entry
+            // Developer mode uses the class files instead of the jar files
+            // works at this moment only for the org.eclips.jubula rc jars and Linux
+            String withoutJar = entry;
+            int lastIndex = withoutJar.lastIndexOf(StringConstants.SLASH);
+            String toTest =
+                    withoutJar.substring(lastIndex, withoutJar.length());
+            String jubulaBeginning = "org.eclipse.jubula"; //$NON-NLS-1$
+            if (toTest.contains(jubulaBeginning)) {
+                withoutJar = withoutJar.substring(0, lastIndex + 1);
+                withoutJar = withoutJar.replace("/target/", "/bin/");  //$NON-NLS-1$//$NON-NLS-2$
+                return withoutJar + PATH_SEPARATOR;
+            }
+        }
+        return null;
     }
  
     /**
