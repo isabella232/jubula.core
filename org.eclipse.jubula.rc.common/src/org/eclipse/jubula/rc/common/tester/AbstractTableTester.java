@@ -29,6 +29,7 @@ import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -116,19 +117,32 @@ public abstract class AbstractTableTester
         invokeAndWait("rcVerifyText", timeout, new Runnable() { //$NON-NLS-1$
             public void run() {
                 ITableComponent adapter = getTableAdapter();
-                final int implRow = getRowFromStringAbstract(row, rowOperator);
-                final int implCol = getColumnFromStringAbstract(
-                        col, colOperator);
                 String current;
-                //if row is header
-                if (implRow == -1) {
-                    current = adapter.getColumnHeaderText(implCol);        
-                } else {
-                    checkRowColBounds(implRow, implCol);
-                    adapter.scrollCellToVisible(implRow, implCol);
-                    current = getCellText(implRow, implCol);
-                }
-                Verifier.match(current, text, operator);
+                int startRowIndex = 0;
+                Integer oldImplRow = null;
+                do {
+                    final int implRow = getRowFromStringAbstract(row,
+                            rowOperator, startRowIndex);
+
+                    if (oldImplRow != null
+                            && implRow == oldImplRow.intValue()) {
+                        Verifier.match(StringConstants.EMPTY, text, operator);
+                    }
+
+                    final int implCol =
+                            getColumnFromStringAbstract(col, colOperator);
+                    // if row is header
+                    if (implRow == -1) {
+                        current = adapter.getColumnHeaderText(implCol);
+                    } else {
+                        checkRowColBounds(implRow, implCol);
+                        adapter.scrollCellToVisible(implRow, implCol);
+                        current = getCellText(implRow, implCol);
+                    }
+                    oldImplRow = new Integer(implRow);
+                    startRowIndex = implRow + 1;
+                } while (!MatchUtil.getInstance().match(current, text,
+                        operator));
             }
         });
         
@@ -142,7 +156,7 @@ public abstract class AbstractTableTester
         int button) 
         throws StepExecutionException {
         ITableComponent adapter = getTableAdapter();
-        final int implRow = getRowFromStringAbstract(row, rowOperator);
+        final int implRow = getRowFromStringAbstract(row, rowOperator, 0);
         final int implCol = getColumnFromStringAbstract(col, colOperator);
         final boolean isExtendSelection = extendSelection.equals(
                 ValueSets.BinaryChoice.yes.rcValue()); 
@@ -252,7 +266,8 @@ public abstract class AbstractTableTester
         invokeAndWait("rcVerifyValueInRow", timeout, new Runnable() { //$NON-NLS-1$
             public void run() {
                 final ITableComponent adapter = getTableAdapter();
-                final int implRow = getRowFromStringAbstract(row, rowOperator);
+                final int implRow =
+                        getRowFromStringAbstract(row, rowOperator, 0);
                 boolean valueIsExisting = false;
                 //if row is header
                 if (implRow == -1) {
@@ -311,7 +326,7 @@ public abstract class AbstractTableTester
      */
     public void rcVerifyEditable(final boolean editable, String row,
             String rowOperator, String col, String colOperator, int timeout) {
-        final int rowInd = getRowFromStringAbstract(row, rowOperator);
+        final int rowInd = getRowFromStringAbstract(row, rowOperator, 0);
         final int colInd = getColumnFromStringAbstract(col, colOperator);
         //if row is header row
         if (rowInd == -1) {
@@ -406,6 +421,7 @@ public abstract class AbstractTableTester
                 }
             });
     }
+
     /** {@inheritDoc} */
     public void rcSelectRowByValue(String col, String colOperator,
             final String value, final String regexOp, int clickCount,
@@ -508,7 +524,7 @@ public abstract class AbstractTableTester
             final String extendSelection, final String searchType,
             ClickOptions co) {
         ITableComponent adapter = getTableAdapter();
-        final int implRow = getRowFromStringAbstract(row, rowOperator);
+        final int implRow = getRowFromStringAbstract(row, rowOperator, 0);
         Integer implCol = findColumn(value, regex, searchType, adapter,
                 implRow);
 
@@ -566,7 +582,7 @@ public abstract class AbstractTableTester
     public String rcReadValue(String variable, String row, String rowOperator,
             String col, String colOperator) {
         ITableComponent adapter = getTableAdapter();
-        final int implRow = getRowFromStringAbstract(row, rowOperator);
+        final int implRow = getRowFromStringAbstract(row, rowOperator, 0);
         final int implCol = getColumnFromStringAbstract(col, colOperator);
         
         //if row is header
@@ -707,7 +723,7 @@ public abstract class AbstractTableTester
             String col, String colOperator)
         throws StepExecutionException {
         //if row is header row
-        if (getRowFromStringAbstract(row, rowOperator) == -1) {
+        if (getRowFromStringAbstract(row, rowOperator, 0) == -1) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
@@ -741,8 +757,8 @@ public abstract class AbstractTableTester
      */
     public void rcReplaceText(String text, String row, String rowOperator,
             String col, String colOperator) {
-        //if row is header row
-        if (getRowFromStringAbstract(row, rowOperator) == -1) {
+        // if row is header row
+        if (getRowFromStringAbstract(row, rowOperator, 0) == -1) {
             throw new StepExecutionException("Unsupported Header Action", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
@@ -1189,47 +1205,83 @@ public abstract class AbstractTableTester
 
     /**
      * Converts a row string + operator to index
-     * @param row the row index or text
-     *      The index is amongst the visible rows (w.r.t unfolded / folded)
-     *      as in case of JavaFX. The header has index -1.
      * 
+     * @param row the row string or number
      * @param operator the operator
+     * @param startRowIndex the starting row index. This is used to search
+     *            further for a wanted row.
      * @return the row index
      */
-    public int getRowFromStringAbstract(final String row,
-            final String operator) {
-        return getEventThreadQueuer().invokeAndWait("getRowFromString", new IRunnable<Integer>() { //$NON-NLS-1$
-            public Integer run() throws StepExecutionException {
-                try {
-                    int rowInt = IndexConverter.toImplementationIndex(
-                            Integer.parseInt(row));                       
-                    if (rowInt == -1) {
-                        if (!getTableAdapter().isHeaderVisible()) {
-                            throw new StepExecutionException("Header not visible", //$NON-NLS-1$
-                                    EventFactory.createActionError(
-                                            TestErrorEvent.NO_HEADER));
+    public int getRowFromStringAbstract(final String row, final String operator,
+            final int startRowIndex) {
+        return getEventThreadQueuer().invokeAndWait("getRowFromString", //$NON-NLS-1$
+                new IRunnable<Integer>() {
+                    public Integer run() throws StepExecutionException {
+                        try {
+                            int rowInt = IndexConverter.toImplementationIndex(
+                                    Integer.parseInt(row));
+                            checkValidIndex(rowInt);
+                            // after first loop, error
+                            return rowInt;
+                        } catch (NumberFormatException nfe) {
+                            // nothing
                         }
-                    } else if (!getTableAdapter().doesRowExist(rowInt)) {
-                        throw new StepExecutionException("Row with index " + rowInt + " does not exist.", //$NON-NLS-1$ //$NON-NLS-2$
-                                EventFactory.createActionError(
-                                        TestErrorEvent.NOT_FOUND));
+                        return getRowFromName(row, operator, startRowIndex);
                     }
-                    return rowInt;
-                } catch (NumberFormatException nfe) {
-                    // nothing
-                }
-                int i = 0;
-                while (getTableAdapter().doesRowExist(i)) {
-                    String cellTxt = getCellText(i, 0);
-                    if (MatchUtil.getInstance().match(cellTxt, row, operator)) {
-                        return i;
-                    }
-                    i++;
-                }
-                throw new StepExecutionException("Row does not exist.", //$NON-NLS-1$
+                });
+    }
+    
+    /**
+     * 
+     * @param rowInt the integer which should be checked
+     * @throws StepExecutionException if the header does not exist or the row index does not exist
+     */
+    private void checkValidIndex(final int rowInt)
+            throws StepExecutionException {
+        if (rowInt == -1) {
+            if (!getTableAdapter().isHeaderVisible()) {
+                throw new StepExecutionException(
+                        "Header not visible", //$NON-NLS-1$
+                        EventFactory.createActionError(
+                                TestErrorEvent.NO_HEADER));
+            }
+        } else if (!getTableAdapter()
+                .doesRowExist(rowInt)) {
+            throw new StepExecutionException(
+                    "Row with index " + rowInt //$NON-NLS-1$
+                            + " does not exist.", //$NON-NLS-1$
                     EventFactory.createActionError(
                             TestErrorEvent.NOT_FOUND));
-            }
-        });
+        }
     }
+
+    /**
+     * 
+     * @param row the row name
+     * @param operator the row operator
+     * @param startRowIndex the starting row index to search further
+     * @return the row index
+     */
+    private int getRowFromName(final String row,
+            final String operator, final int startRowIndex) {
+        int i = startRowIndex;
+        while (getTableAdapter().doesRowExist(i)) {
+            String cellTxt = getCellText(i, 0);
+            if (MatchUtil.getInstance().match(cellTxt, row,
+                    operator)) {
+                return i;
+            }
+            i++;
+        }
+        if (startRowIndex > 0) {
+            throw new StepExecutionException("Row not found", //$NON-NLS-1$
+                    EventFactory.createVerifyFailed(
+                            "Cell matching all values not found", row, //$NON-NLS-1$
+                            operator));
+        }
+        throw new StepExecutionException("Row does not exist.", //$NON-NLS-1$
+                EventFactory.createActionError(
+                        TestErrorEvent.NOT_FOUND));
+    }
+
 }
