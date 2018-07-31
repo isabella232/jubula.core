@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.examples.extension.swing.feature"
       label="Jubula Example - Toolkit Extension - Swing: JSpinner"
-      version="6.0.0.qualifier"
+      version="7.0.0.qualifier"
       provider-name="Eclipse Jubula"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">

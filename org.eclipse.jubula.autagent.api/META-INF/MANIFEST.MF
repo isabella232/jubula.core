@@ -4,7 +4,7 @@ Bundle-Name: Jubula AUT Agent - API
 Bundle-SymbolicName: org.eclipse.jubula.autagent.api
 Bundle-Version: 4.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Require-Bundle: org.eclipse.jubula.autagent;bundle-version="[6.0.0,7.0.0)",
+Require-Bundle: org.eclipse.jubula.autagent;bundle-version="[7.0.0,8.0.0)",
  org.eclipse.jubula.tools;bundle-version="[4.0.0,4.1.0)",
  org.eclipse.jubula.client.api;bundle-version="[3.1.0,4.0.0)",
  org.eclipse.jubula.toolkit.api;bundle-version="[4.0.0,5.0.0)"
