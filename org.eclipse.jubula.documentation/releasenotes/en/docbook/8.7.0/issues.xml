@@ -1,0 +1,31 @@
+<!-- 
+  Copyright (c) 2016 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+  
+  Contributors:
+      BREDEX GmbH - initial API and implementation and/or initial documentation
+-->
+<section xml:id="known-issues-and-other-information-8.7.0"
+    version="5.0" xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xl="http://www.w3.org/1999/xlink">
+    <title>Known issues and other information</title>
+
+  <para>
+    <emphasis role="strong">Java 9 and later</emphasis>
+  </para>
+    <itemizedlist>
+  <listitem>
+    <para>
+     Java 9 and later applications must be started with the jvm arguments
+     '--add-opens=javafx.controls/javafx.scene.control.skin=ALL-UNNAMED-illegal-access=permit'.
+     This is necessary because we are using
+     internal information to get e.g. some position information of
+     components.
+    </para>
+  </listitem>
+</itemizedlist>
+
+</section>

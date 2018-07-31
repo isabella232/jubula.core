@@ -3,7 +3,7 @@ Created-By: Eclipse Jubula
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Example AUT - DVDTool
 Bundle-SymbolicName: org.eclipse.jubula.examples.aut.dvdtool
-Bundle-Version: 6.0.0.qualifier
+Bundle-Version: 7.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Localization: plugin

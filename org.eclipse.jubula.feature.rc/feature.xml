@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.rc"
       label="Jubula Remote Control SDK"
-      version="6.0.0.qualifier"
+      version="7.0.0.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.client.ui.rcp"
       license-feature="org.eclipse.license"
