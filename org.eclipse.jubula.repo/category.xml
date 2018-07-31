@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.jubula.feature_6.0.0.qualifier.jar" id="org.eclipse.jubula.feature" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature" version="7.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.source_6.0.0.qualifier.jar" id="org.eclipse.jubula.feature.source" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.source_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature.source" version="7.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.java_6.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.launch.java_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.java" version="7.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.launch.rcp_6.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.launch.rcp_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature.launch.rcp" version="7.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
    <feature url="features/org.eclipse.jubula.feature.api_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api" version="4.0.0.qualifier">
@@ -27,25 +27,25 @@
    <feature url="features/org.eclipse.jubula.feature.api.converter_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.converter" version="4.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.rc_6.0.0.qualifier.jar" id="org.eclipse.jubula.feature.rc" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.rc_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature.rc" version="7.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.examples.extension.swing.feature_6.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.swing.feature_7.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.swing.feature" version="7.0.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.source_6.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.swing.feature.source" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.swing.feature.source_7.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.swing.feature.source" version="7.0.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_6.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature_7.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature" version="7.0.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature.source_6.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature.source" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.javafx.feature.source_7.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.javafx.feature.source" version="7.0.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.examples.extension.rcp.feature_6.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.rcp.feature" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.rcp.feature_7.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.rcp.feature" version="7.0.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.examples.extension.rcp.feature.source_6.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.rcp.feature.source" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.examples.extension.rcp.feature.source_7.0.0.qualifier.jar" id="org.eclipse.jubula.examples.extension.rcp.feature.source" version="7.0.0.qualifier">
       <category name="org.eclipse.jubula.examples.extension.repo"/>
    </feature>
    <bundle id="org.eclipse.jubula.examples.extension.rcp.aut" version="7.0.0.qualifier">
