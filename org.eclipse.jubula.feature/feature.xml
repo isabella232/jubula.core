@@ -385,7 +385,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.dom4j"
          download-size="0"
          install-size="0"
-         version="1.6.1.v201312101416"
+         version="1.6.1.v20170815-1500"
          unpack="false"/>
 
    <plugin
@@ -587,21 +587,21 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="com.fasterxml.jackson.core.jackson-annotations"
          download-size="0"
          install-size="0"
-         version="2.6.2.v20161117-2150"
+         version="2.9.2.v20180207-1730"
          unpack="false"/>
 
    <plugin
          id="com.fasterxml.jackson.core.jackson-core"
          download-size="0"
          install-size="0"
-         version="2.6.2.v20161117-2150"
+         version="2.9.2.v20180207-1730"
          unpack="false"/>
 
    <plugin
          id="com.fasterxml.jackson.core.jackson-databind"
          download-size="0"
          install-size="0"
-         version="2.6.2.v20161117-2150"
+         version="2.9.2.v20180207-1730"
          unpack="false"/>
 
 </feature>
