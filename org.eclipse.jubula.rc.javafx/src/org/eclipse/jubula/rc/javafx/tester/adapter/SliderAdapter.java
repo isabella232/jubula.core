@@ -160,8 +160,6 @@ public class SliderAdapter extends
         EventThreadQueuerJavaFXImpl.invokeAndWait("setSliderValue", //$NON-NLS-1$
             (Callable<Void>) () -> {
                 slider.setValue(valueToSet);
-                LOG.warn("Fallback - Value of slider was set programmatically for " //$NON-NLS-1$
-                        + getRealComponent());
                 return null;
             });
     }

@@ -214,6 +214,18 @@ public class TreeTableViewTester extends AbstractTreeTableTester {
     }
     
     /**
+     * Verifies the editable property of the current selected cell.
+     *
+     * @param editable The editable property to verify.
+     * @param timeout the maximum amount of time to wait for the check to be
+     *          performed
+     */
+    public void rcVerifySelectedEditable(final boolean editable,
+            int timeout) {
+        rcVerifyEditableSelected(editable, timeout);
+    }
+    
+    /**
      * Verifies the editable property of the cell under the mouse.
      *
      * @param editable The editable property to verify.
