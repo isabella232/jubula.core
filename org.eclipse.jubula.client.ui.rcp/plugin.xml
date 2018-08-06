@@ -3763,6 +3763,9 @@
               <test property="org.eclipse.jubula.client.core.model.isRootContainer" />
             </or>
           </iterate>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+              <equals value="true" />
+          </with>
         </and>
       </activeWhen>
     </handler>
@@ -3836,6 +3839,9 @@
         <and>
           <with variable="activePartId">
             <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
+          </with>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+              <equals value="true" />
           </with>
           <count value="?" />
         </and>
@@ -4003,6 +4009,9 @@
                 value="true" />
             </and>
           </iterate>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+              <equals value="true" />
+          </with>
         </and>
       </activeWhen>
     </handler>
