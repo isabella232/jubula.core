@@ -21,6 +21,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.views.ContextBasedView;
 import org.eclipse.jubula.client.ui.views.IJBPart;
+import org.eclipse.jubula.client.ui.views.NonSortedPropertySheetPage;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -28,6 +29,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
 /**
  * View for log entries in TestResultNodes
  * @author BREDEX GmbH
@@ -96,7 +98,7 @@ public class LogView extends ContextBasedView
         m_logWidget.setMenu(contextMenu);
         // Register context menu
         getSite().registerContextMenu(contextManager, this);
-
+        super.createPartControl(parent);
         handleSelection(getSelectionService().getSelection());
         getSite().setSelectionProvider(this);
     }
@@ -157,6 +159,7 @@ public class LogView extends ContextBasedView
                                         .getFirstElement())) {
                     return;
                 }
+                m_currSelection = ss;
                 provider = Platform.getAdapterManager().getAdapter(
                         object, LogProvider.class);
             }
@@ -209,5 +212,13 @@ public class LogView extends ContextBasedView
      */
     public String getCommandLog() {
         return m_commandLog;
+    }
+    
+    /** {@inheritDoc} */
+    public Object getAdapter(Class key) {
+        if (key.equals(IPropertySheetPage.class)) {
+            return new NonSortedPropertySheetPage();
+        }
+        return super.getAdapter(key);
     }
 }
