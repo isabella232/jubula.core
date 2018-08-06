@@ -177,9 +177,10 @@ public class CapTestCommand implements ICommand {
             if (LOG.isErrorEnabled()) {
                 LOG.error(e.getLocalizedMessage(), e);
             }
-            response.setTestErrorEvent(
-                    EventFactory.createImplClassErrorEvent());
-        } 
+            response.setTestErrorEvent(EventFactory.createConfigErrorEvent(
+                    TestErrorEvent.EXECUTION_ERROR,
+                    new Object[] { e.getMessage() }));
+        }
         return implClass;
     }
     
