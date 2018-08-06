@@ -23,6 +23,7 @@ import javafx.scene.control.SkinBase;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+import org.apache.commons.lang.SystemUtils;
 import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITabbedComponent;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
@@ -54,6 +55,13 @@ public class TabPaneAdapter extends JavaFXComponentAdapter<TabPane>
      */
     private static final String TAB_HEADER_AREA_CLASSNAME = 
             "com.sun.javafx.scene.control.skin.TabPaneSkin$TabHeaderArea"; //$NON-NLS-1$
+
+    /**
+     * Name of the class containing the method to retrieve a Tab Header Skin.
+     * This is the new classname where it is located after java 8
+     */
+    private static final String TAB_HEADER_AREA_CLASSNAME_JAVA9 =
+            "javafx.scene.control.skin.TabPaneSkin$TabHeaderArea"; //$NON-NLS-1$
 
     /**
      * 
@@ -163,11 +171,17 @@ public class TabPaneAdapter extends JavaFXComponentAdapter<TabPane>
                     EventFactory.createActionError(
                             TestErrorEvent.RENDERER_NOT_SUPPORTED));
         }
-        
         ClassLoader skinClassLoader = targetTab.getClass().getClassLoader();
         try {
-            Class<?> tabHeaderAreaClass = 
-                    skinClassLoader.loadClass(TAB_HEADER_AREA_CLASSNAME);
+            Class<?> tabHeaderAreaClass = null;
+            // after Java 8 the classes changed package
+            if (SystemUtils.JAVA_VERSION_FLOAT > 1.8f) {
+                tabHeaderAreaClass = skinClassLoader
+                        .loadClass(TAB_HEADER_AREA_CLASSNAME_JAVA9);
+            } else {
+                tabHeaderAreaClass =
+                        skinClassLoader.loadClass(TAB_HEADER_AREA_CLASSNAME);
+            }
             for (Node tabPaneSkinChild 
                     : ((SkinBase<?>)tabPaneSkin).getChildren()) {
                 
