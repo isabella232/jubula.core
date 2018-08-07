@@ -184,4 +184,16 @@ public enum ProblemPropagator {
                 break;
         }
     }
+    
+    /**
+     * Cancels all propagation Jobs
+     */
+    public void cancelPropagationJobs() {
+        Job[] find = Job.getJobManager().find(new ProblemPropagationJob(
+                Messages.ProblemPropagationJobName, null));
+        for (int i = 0; i < find.length; i++) {
+            Job job = find[i];
+            job.cancel();
+        }
+    }
 }

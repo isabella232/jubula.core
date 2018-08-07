@@ -19,6 +19,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jubula.client.core.businessprocess.compcheck.ProblemPropagator;
 import org.eclipse.jubula.client.core.businessprocess.progress.ProgressMonitorTracker;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ProjectState;
@@ -144,6 +145,7 @@ public class RefreshProjectHandler extends AbstractProjectHandler {
     public IStatus refreshProject() {
         Plugin.startLongRunning(Messages
                 .RefreshTSBrowserActionProgressMessage);
+        ProblemPropagator.INSTANCE.cancelPropagationJobs();
         try {
             PlatformUI.getWorkbench().getProgressService().run(true, false,
                     new RefreshProjectOperation());
