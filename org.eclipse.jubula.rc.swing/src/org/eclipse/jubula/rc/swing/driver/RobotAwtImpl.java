@@ -153,11 +153,11 @@ public class RobotAwtImpl implements IRobot<Rectangle> {
                 aRect.x += dx;
                 aRect.y += dy;
                 if (parent instanceof JComponent) {
-                    ((JComponent)parent).scrollRectToVisible(aRect);
-                    Point p1 = getLocation(m_component, null);
-                    Point p2 = parent.getLocationOnScreen();
-                    aRect.x = p1.x - p2.x;
-                    aRect.y = p1.y - p2.y;
+                    Rectangle target = new Rectangle((int) aRect.getCenterX(),
+                            (int) aRect.getY(), 1, 1);
+                    ((JComponent) parent).scrollRectToVisible(aRect);
+                    aRect.setBounds(SwingUtilities.convertRectangle(component,
+                            aRect, parent));
                 }
             }
             if (parent != null) {
@@ -412,8 +412,8 @@ public class RobotAwtImpl implements IRobot<Rectangle> {
             ClickOptions clickOptions)
         throws StepExecutionException {
         if (clickOptions.isScrollToVisible()) {
-            ensureComponentVisible((Component)graphicsComponent, constraints);
-            m_eventFlusher.flush();
+            ensureComponentVisibility(graphicsComponent, constraints, xPos,
+                    xAbsolute, yPos, yAbsolute);
         }
         
         Component component = (Component)graphicsComponent;
@@ -479,6 +479,36 @@ public class RobotAwtImpl implements IRobot<Rectangle> {
                         new MouseMovedAwtEventMatcher());
             }
         }
+    }
+
+    /**
+     * uses the position as constraints if there is no constraint
+     * @param graphicsComponent the component
+     * @param constraints the constraints 
+     * @param xPos the x position
+     * @param xAbsolute is x absolute or percentage
+     * @param yPos the y position
+     * @param yAbsolute is y absolute or percentage
+     */
+    private void ensureComponentVisibility(Object graphicsComponent,
+            final Rectangle constraints, final int xPos,
+            final boolean xAbsolute, final int yPos, final boolean yAbsolute) {
+        if (constraints == null) {
+            // this is to ensure the wanted click area is visible
+            Rectangle localBounds = SwingUtilities
+                    .getLocalBounds((Component) graphicsComponent);
+            Point calculateAwtPointToGo = PointUtil.calculateAwtPointToGo(
+                    xPos, xAbsolute, yPos, yAbsolute, localBounds);
+            localBounds.setLocation(calculateAwtPointToGo);
+            localBounds.width = 0;
+            localBounds.height = 0;
+            ensureComponentVisible((Component) graphicsComponent,
+                    localBounds);
+        } else {
+            ensureComponentVisible((Component) graphicsComponent,
+                    constraints);
+        }
+        m_eventFlusher.flush();
     }
 
     /**
