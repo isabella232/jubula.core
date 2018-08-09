@@ -12,6 +12,7 @@ package org.eclipse.jubula.rc.swt.tester;
 
 import static org.eclipse.jubula.rc.common.driver.CheckWithTimeoutQueuer.invokeAndWait;
 
+import java.awt.MouseInfo;
 import java.util.StringTokenizer;
 
 import org.eclipse.jubula.rc.common.driver.DragAndDropHelper;
@@ -292,9 +293,20 @@ public class TreeTester extends AbstractTreeTableTester
      * extreme in order to nudge the Display back into action (i.e.
      * (<mouse-location> + 1) was insufficient), so the default Event values (x,
      * y = 0) are used.
+     * 
+     * The problem re-occurred if something was drag and dropped in the upper left
+     * corner. So the observation that the change must be extreme is still correct
      */
     private void postMouseMovementEvent() {
         Event wakeEvent = new Event();
+        java.awt.Point location = MouseInfo.getPointerInfo().getLocation();
+        final int minimaloffset = 300;
+        if (location.x - minimaloffset < 0) {
+            wakeEvent.x = location.x + minimaloffset;
+        }
+        if (location.y - minimaloffset < 0) {
+            wakeEvent.y = location.y + minimaloffset;
+        }
         wakeEvent.type = SWT.MouseMove;
         getTreeTable().getDisplay().post(wakeEvent);
         waitForDisplayUpdate();
