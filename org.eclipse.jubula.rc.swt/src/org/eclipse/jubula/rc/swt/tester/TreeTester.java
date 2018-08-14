@@ -300,7 +300,7 @@ public class TreeTester extends AbstractTreeTableTester
     private void postMouseMovementEvent() {
         Event wakeEvent = new Event();
         java.awt.Point location = MouseInfo.getPointerInfo().getLocation();
-        final int minimaloffset = 300;
+        final int minimaloffset = 400;
         if (location.x - minimaloffset < 0) {
             wakeEvent.x = location.x + minimaloffset;
         }
