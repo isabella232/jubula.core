@@ -35,7 +35,7 @@ public class JBFilteredTree extends FilteredTree {
      */
     private static final int REFRESH_DELAY = 500;
     /** the previous filte Text */
-    private String m_previousFilterText = StringConstants.EMPTY;
+    private String m_previousFilterText = null;
     /** the array of expanded elements */
     private Object[] m_expandedElements = null;
     /**
@@ -89,9 +89,11 @@ public class JBFilteredTree extends FilteredTree {
                 } else {
                     wj.removeJobChangeListener(this);
                 }
-                if (StringUtils.isEmpty(getFilterString())
+                if (!getFilterControl().isDisposed()
+                        && StringUtils.isEmpty(getFilterString())
                         && event.getResult().isOK()
-                        && m_expandedElements != null) {
+                        && m_expandedElements != null
+                        && m_previousFilterText != null) {
                     createExpanderJob().schedule(100);
                 }
             }
@@ -133,7 +135,13 @@ public class JBFilteredTree extends FilteredTree {
     protected void textChanged() {
         if (StringUtils.isEmpty(m_previousFilterText)
                 && StringUtils.isNotEmpty(getFilterString())) {
-            m_expandedElements = getViewer().getExpandedElements();
+            Object[] expandedElements = getViewer().getExpandedElements();
+            System.out.println(expandedElements.length);
+            if (expandedElements.length > 0) {
+                m_expandedElements = expandedElements;
+            } else {
+                m_expandedElements = null;
+            }
         }
         m_previousFilterText = getFilterString();
         super.textChanged();
