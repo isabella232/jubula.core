@@ -11,6 +11,8 @@
 package org.eclipse.jubula.client.ui.rcp.handlers;
 
 import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jubula.client.core.businessprocess.TestDataBP;
@@ -22,6 +24,7 @@ import org.eclipse.jubula.client.ui.handlers.AbstractHandler;
 import org.eclipse.jubula.client.ui.rcp.Plugin;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertydescriptors.ParamTextPropertyDescriptor;
 import org.eclipse.jubula.client.ui.rcp.controllers.propertysources.AbstractNodePropertySource.AbstractParamValueController;
+import org.eclipse.jubula.client.ui.rcp.editors.AbstractJBEditor;
 import org.eclipse.jubula.client.ui.rcp.editors.CentralTestDataEditor;
 import org.eclipse.jubula.client.ui.rcp.handlers.open.AbstractOpenHandler;
 import org.eclipse.jubula.client.ui.rcp.views.JBPropertiesPage;
@@ -42,6 +45,9 @@ public class JumpToCTDSHandler extends AbstractHandler {
     @Override
     public Object executeImpl(ExecutionEvent event) {
         String mined = mineString();
+        if (mined == null) {
+            jumpToCTDSEditorByReferenceCube();
+        }
         if (mined != null) {
             jumpToCTDSEditor(mined);
         }
@@ -166,4 +172,49 @@ public class JumpToCTDSHandler extends AbstractHandler {
         ((DataSetView) view).navigateToCell(data[1], data[2], data[3]);
     }
 
+    /**
+     * Jumps to the CTDS editor, if there is a referenced Data Cube
+     */
+    private void jumpToCTDSEditorByReferenceCube() {
+        Object firstElement = getSelectionFromActiveEditor();
+        if (firstElement instanceof IParameterInterfacePO) {
+            IParameterInterfacePO referencedDataCube =
+                    ((IParameterInterfacePO) firstElement)
+                            .getReferencedDataCube();
+            if (referencedDataCube == null) {
+                return;
+            }
+            IProjectPO proj = GeneralStorage.getInstance().getProject();
+            IEditorPart part =
+                    AbstractOpenHandler.openEditor(proj.getTestDataCubeCont());
+            CentralTestDataEditor ctdsEd = (CentralTestDataEditor) part;
+            IParameterInterfacePO find =
+                    ctdsEd.getEditorHelper().getEditSupport().getSession().find(
+                            referencedDataCube.getClass(),
+                            referencedDataCube.getId());
+            if (find == null) {
+                return;
+            }
+            ctdsEd.getTreeViewer().setSelection(new StructuredSelection(find));
+            IViewPart view = Plugin.showView(DataSetView.ID);
+        }
+    }
+    
+    /**
+     * @return the selected Object or Null if none is selected
+     */
+    private Object getSelectionFromActiveEditor() {
+        AbstractJBEditor activeJBEditor =
+                Plugin.getDefault().getActiveJBEditor();
+        if (activeJBEditor == null) {
+            return null;
+        }
+        ISelection selection = activeJBEditor.getSelection();
+        if (selection instanceof IStructuredSelection) {
+            IStructuredSelection structSelection =
+                    (IStructuredSelection) selection;
+            return structSelection.getFirstElement();
+        }
+        return null;
+    }
 }
