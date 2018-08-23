@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.rcp.handlers.project;
 
+import java.io.File;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -19,6 +21,7 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jubula.client.archive.JsonStorage;
 import org.eclipse.jubula.client.core.Activator;
+import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PMException;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
@@ -27,6 +30,7 @@ import org.eclipse.jubula.client.ui.rcp.controllers.PMExceptionHandler;
 import org.eclipse.jubula.client.ui.rcp.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.ErrorHandlingUtil;
 import org.eclipse.jubula.tools.internal.exception.ProjectDeletedException;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * @author BREDEX GmbH
@@ -60,7 +64,8 @@ public final class ExportFileOperation implements
                     Activator.PLUGIN_ID, Messages
                             .RefreshProjectOperationRefreshing));
                 GeneralStorage gstorage = GeneralStorage.getInstance();
-                gstorage.validateProjectExists(gstorage.getProject());
+                IProjectPO project = gstorage.getProject();
+                gstorage.validateProjectExists(project);
                 final AtomicReference<IStatus> statusOfRefresh =
                     new AtomicReference<IStatus>();
                 Plugin.getDisplay().syncExec(new Runnable() {
@@ -81,8 +86,16 @@ public final class ExportFileOperation implements
                     SubMonitor subMonitor = SubMonitor.convert(monitor,
                             Messages.ExportFileActionExporting, 1);
                     
-                    JsonStorage.save(gstorage.getProject(), m_fileName,
+                    JsonStorage.save(project, m_fileName,
                             true, subMonitor.newChild(1), m_console);
+                    m_console.writeStatus(new Status(IStatus.INFO,
+                            Activator.PLUGIN_ID,
+                            NLS.bind(org.eclipse.jubula.client
+                                    .archive.i18n.Messages
+                                    .ExportAllBPInfoFinishedExportProject,
+                                    StringUtils.substringAfterLast(
+                                            m_fileName, File.separator))));
+
                 }
             } catch (final PMException e) {
                 ErrorHandlingUtil.createMessageDialog(e, null, null);
