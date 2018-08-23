@@ -410,6 +410,10 @@ public abstract class AutConfigComponent extends ScrolledComposite {
 
     /** initialize the GUI components */
     private void createGUI() {
+        this.setExpandHorizontal(true);
+        this.setExpandVertical(true);
+        this.setMinWidth(500);
+        this.setMinHeight(600);
         m_contentComposite = new Composite(this, SWT.NONE);
         initGuiLayout(m_contentComposite);
         if (m_isMultiMode) {
@@ -441,7 +445,7 @@ public abstract class AutConfigComponent extends ScrolledComposite {
     protected void createLayout(Composite areaComposite) {
         areaComposite.setLayout(
             createDefaultGridLayout(NUM_COLUMNS));
-        GridData gridData = new GridData(GridData.BEGINNING);
+        GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
         gridData.horizontalSpan = NUM_COLUMNS;
         areaComposite.setLayoutData(gridData);
     }
@@ -712,9 +716,8 @@ public abstract class AutConfigComponent extends ScrolledComposite {
         compositeLayout.marginHeight = LayoutUtil.SMALL_MARGIN_HEIGHT;
         compositeLayout.marginWidth = LayoutUtil.SMALL_MARGIN_WIDTH;
         comp.setLayout(compositeLayout);
-        GridData compositeData = new GridData(SWT.FILL, SWT.FILL, true, true);
-        compositeData.grabExcessHorizontalSpace = false;
-        compositeData.grabExcessVerticalSpace = true;
+        GridData compositeData =
+                new GridData(SWT.FILL, SWT.BEGINNING, true, false);
         comp.setLayoutData(compositeData);
     }
 
