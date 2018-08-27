@@ -27,7 +27,7 @@
       <feature url="features/org.eclipse.jubula.feature.api.embedded_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.embedded" version="7.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
-   <feature url="features/org.eclipse.jubula.feature.api.core.embedded_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.embedded.source" version="7.0.0.qualifier">
+   <feature url="features/org.eclipse.jubula.feature.api.core_7.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.core.source" version="7.0.0.qualifier">
       <category name="org.eclipse.test"/>
    </feature>
    <feature url="features/org.eclipse.jubula.feature.api.converter_4.0.0.qualifier.jar" id="org.eclipse.jubula.feature.api.converter" version="4.0.0.qualifier">
