@@ -282,8 +282,8 @@ public abstract class AbstractStartToolkitAut implements IStartAut {
         IAUTStartHelper helper =
                 AutStartHelperRegister.INSTANCE.getAutStartHelper();
         if (helper == null) {
-            log.error("No AUTStartHelper registered"); //$NON-NLS-1$
-            return null;
+            log.error("No AUTStartHelper registered "); //$NON-NLS-1$
+            throw new IllegalStateException("No AUTStartHelper registered"); //$NON-NLS-1$
         }
         return helper.getClasspathEntriesForBundleId(bundleId);
     }

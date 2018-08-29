@@ -11,6 +11,8 @@
 package org.eclipse.jubula.app.testexec;
 
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.jubula.autagent.OsgiAUTStartHelper;
+import org.eclipse.jubula.autagent.common.utils.AutStartHelperRegister;
 import org.eclipse.jubula.client.cmd.AbstractCmdlineClient;
 import org.osgi.framework.BundleContext;
 
@@ -37,6 +39,8 @@ public class Activator extends Plugin {
     public void start(BundleContext context) throws Exception {
         try {
             super.start(context);
+            AutStartHelperRegister.INSTANCE.setAutStartHelper(
+                    new OsgiAUTStartHelper());
         } catch (IllegalArgumentException iae) {
             AbstractCmdlineClient.printlnConsoleError(iae.getMessage());
             throw iae;
