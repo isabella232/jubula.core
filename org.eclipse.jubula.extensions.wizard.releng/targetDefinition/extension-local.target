@@ -3,7 +3,7 @@
     and the accompanying materials are made available under the terms of the 
     Eclipse Public License v1.0 which accompanies this distribution, and is available 
     at http://www.eclipse.org/legal/epl-v10.html -->
-<?pde version="3.8"?><target name="extension" sequenceNumber="159">
+<?pde version="3.8"?><target name="extension" sequenceNumber="160">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jubula.feature.rc.feature.group" version="0.0.0"/>
@@ -21,10 +21,6 @@
 <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.mwe.core.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/mars"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtend.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
@@ -33,11 +29,14 @@
 <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.emf.mwe2.runtime" version="0.0.0"/>
-<unit id="org.eclipse.xpand" version="0.0.0"/>
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
 <unit id="org.eclipse.help.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/oxygen"/>
+<unit id="org.eclipse.emf.mwe.core.feature.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.ecore.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.fx.ide.rrobot.feature.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/photon"/>
 </location>
 </locations>
 </target>
