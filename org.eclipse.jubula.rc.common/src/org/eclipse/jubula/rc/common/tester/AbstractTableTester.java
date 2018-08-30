@@ -29,7 +29,6 @@ import org.eclipse.jubula.rc.common.util.Verifier;
 import org.eclipse.jubula.toolkit.enums.ValueSets;
 import org.eclipse.jubula.toolkit.enums.ValueSets.InteractionMode;
 import org.eclipse.jubula.toolkit.enums.ValueSets.SearchType;
-import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.objects.event.EventFactory;
 import org.eclipse.jubula.tools.internal.objects.event.TestErrorEvent;
 
@@ -126,7 +125,7 @@ public abstract class AbstractTableTester
 
                     if (oldImplRow != null
                             && implRow == oldImplRow.intValue()) {
-                        Verifier.match(StringConstants.EMPTY, text, operator);
+                        Verifier.match(null, text, operator);
                     }
 
                     final int implCol =
@@ -375,11 +374,13 @@ public abstract class AbstractTableTester
                             TestErrorEvent.UNSUPPORTED_HEADER_ACTION));
         }
         Cell cell = getCellAtMousePosition();
-        rcVerifyText(text, operator, 
-                Integer.toString(IndexConverter.toUserIndex(cell.getRow())),
-                MatchUtil.EQUALS, 
-                Integer.toString(IndexConverter.toUserIndex(cell.getCol())),
-                MatchUtil.EQUALS, timeout);
+        String cellText = null;
+        if (cell.getRow() == -1) {
+            cellText = getTableAdapter().getColumnHeaderText(cell.getCol());
+        } else {
+            cellText = getCellText(cell.getRow(), cell.getCol());
+        }
+        MatchUtil.getInstance().match(cellText, text, operator);
     }
     
     /**
