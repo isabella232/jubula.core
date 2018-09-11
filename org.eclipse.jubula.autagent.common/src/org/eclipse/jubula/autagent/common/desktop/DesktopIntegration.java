@@ -104,8 +104,7 @@ public abstract class DesktopIntegration implements PropertyChangeListener {
         if (m_isSystraySupported) {
 
             SystemTray tray = SystemTray.getSystemTray();
-            final ClassLoader classLoader = this.getClass().getClassLoader();
-            URL imageURL = classLoader.getResource("resources/autagent.png"); //$NON-NLS-1$
+            URL imageURL = DesktopIntegration.class.getResource("/resources/autagent.png"); //$NON-NLS-1$
             Image image = Toolkit.getDefaultToolkit().getImage(imageURL);
 
             ActionListener exitListener = new ActionListener() {

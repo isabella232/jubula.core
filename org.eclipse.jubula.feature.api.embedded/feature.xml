@@ -39,16 +39,68 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.eclipse.jubula.feature.api.core"
          version="0.0.0"/>
 
-   <requires>
-      <import plugin="org.eclipse.jubula.autagent.common"/>
-      <import plugin="org.eclipse.jubula.rc.common.agent"/>
-      <import plugin="org.eclipse.jubula.tools.exec"/>
-      <import plugin="org.eclipse.jubula.autagent.api"/>
-      <import plugin="org.eclipse.jubula.client.api.converter.annotations"/>
-      <import plugin="org.eclipse.jubula.rc.common"/>
-      <import plugin="org.eclipse.jubula.rc.swt"/>
-      <import plugin="org.eclipse.jubula.rc.swing"/>
-      <import plugin="org.eclipse.jubula.rc.javafx"/>
-   </requires>
+   <plugin
+         id="org.eclipse.jubula.autagent.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.common.agent"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.tools.exec"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.autagent.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.javafx"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.javafx.j8u40"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.swing"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.jubula.rc.swt"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
