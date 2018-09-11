@@ -272,16 +272,17 @@ ${Methods}
 }'
                     }
                 },
-                "${BundleProject_ID}.rc.common.adapter" in "source fragment" {
+                "org.eclipse.jubula.ext.rc.common.adapter" in "source fragment" {
                     DataFile "${ToolkitName}ExtensionAdapterFactory.java" {
                         content =
-'package ${BundleProject_ID}.rc.common.adapter;
+'package org.eclipse.jubula.ext.rc.common.adapter;
 
 ${AdditionalImports}
 import ${ComponentQualifier};
 
 import org.eclipse.jubula.rc.common.adaptable.IAdapterFactory;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
+import ${BundleProject_ID}.rc.common.adapter
 import ${AdapterPackage};
 
 
