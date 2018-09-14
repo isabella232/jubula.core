@@ -31,3 +31,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  icons/
+Automatic-Module-Name: org.eclipse.jubula.client.alm.mylyn.ui.bridge

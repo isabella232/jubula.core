@@ -21,3 +21,4 @@ Export-Package: org.eclipse.jubula.toolkit.common,
  org.eclipse.jubula.toolkit.common.utils,
  org.eclipse.jubula.toolkit.common.xml.businessprocess
 Bundle-ClassPath: .
+Automatic-Module-Name: org.eclipse.jubula.toolkit.common

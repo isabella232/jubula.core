@@ -21,3 +21,4 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.6.1,4.0.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.jubula.client.autagent.handlers
+Automatic-Module-Name: org.eclipse.jubula.client.autagent

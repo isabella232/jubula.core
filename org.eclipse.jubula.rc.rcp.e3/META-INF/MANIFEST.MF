@@ -19,3 +19,4 @@ Export-Package: org.eclipse.jubula.rc.rcp.e3.accessor,
  org.eclipse.jubula.rc.rcp.e3.gef.tester,
  org.eclipse.jubula.rc.rcp.e3.gef.util
 Eclipse-RegisterBuddy: org.eclipse.jubula.rc.rcp.common
+Automatic-Module-Name: org.eclipse.jubula.rc.rcp.e3

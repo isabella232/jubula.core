@@ -22,3 +22,4 @@ Export-Package: org.eclipse.jubula.rc.swing,
  org.eclipse.jubula.rc.swing,
  org.eclipse.jubula.rc.swing.tester,
  org.eclipse.jubula.rc.swing.utils
+Automatic-Module-Name: org.eclipse.jubula.rc.swing

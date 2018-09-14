@@ -51,6 +51,7 @@ import org.eclipse.ui.internal.ide.StatusUtil;
  * @author BREDEX GmbH
  * @created 24.03.2005
  */
+@SuppressWarnings("restriction")
 public class Launcher implements IApplication {
     /** The name of the folder containing metadata information for the workspace. */
     public static final String METADATA_FOLDER = ".metadata"; //$NON-NLS-1$

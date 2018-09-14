@@ -54,3 +54,4 @@ Export-Package: org.eclipse.jubula.client.ui.adapter,
  org.eclipse.jubula.client.ui.views.logview,
  org.eclipse.jubula.client.ui.widgets
 Bundle-Activator: org.eclipse.jubula.client.ui.Plugin
+Automatic-Module-Name: org.eclipse.jubula.client.ui

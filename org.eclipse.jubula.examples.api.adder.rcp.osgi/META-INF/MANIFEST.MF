@@ -21,3 +21,4 @@ Bundle-ClassPath: .,
  shared/resources/
 Bundle-Name: Examples - API - SimpleAdder - RCP - OSGi
 Export-Package: org.eclipse.jubula.examples.api.adder.rcp
+Automatic-Module-Name: org.eclipse.jubula.examples.api.adder.rcp.osgi

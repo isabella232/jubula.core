@@ -14,3 +14,4 @@ Require-Bundle: org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",
  org.eclipse.jubula.communication;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jubula.rc.common;bundle-version="[7.0.0,8.0.0)",
  org.eclipse.jubula.toolkit.api;bundle-version="[4.0.0,5.0.0)"
+Automatic-Module-Name: org.eclipse.jubula.rc.javafx

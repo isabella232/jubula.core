@@ -8,38 +8,28 @@ Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Export-Package: org.eclipse.jubula.communication,
  org.eclipse.jubula.communication.internal;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.communication.internal.commands;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp",
+  x-friends:="org.eclipse.jubula.rc.javafx,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.ui.rcp,
+   org.eclipse.jubula.autagent",
+ org.eclipse.jubula.communication.internal.commands;x-friends:="org.eclipse.jubula.rc.javafx,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
  org.eclipse.jubula.communication.internal.connection;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.communication.internal.listener;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp",
+  x-friends:="org.eclipse.jubula.rc.javafx,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.ui.rcp,
+   org.eclipse.jubula.app.autagent",
+ org.eclipse.jubula.communication.internal.listener;x-friends:="org.eclipse.jubula.rc.javafx,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
  org.eclipse.jubula.communication.internal.message;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.communication.internal.message.html;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.communication.internal.parser;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.communication.internal.writer;
- x-friends:="org.eclipse.jubula.rc.javafx,
- org.eclipse.jubula.client.core,
- org.eclipse.jubula.client.ui.rcp"
+  x-friends:="org.eclipse.jubula.rc.javafx,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.inspector.ui,
+   org.eclipse.jubula.client.ui.rcp,
+   org.eclipse.jubula.autagent",
+ org.eclipse.jubula.communication.internal.message.html;x-friends:="org.eclipse.jubula.rc.javafx,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
+ org.eclipse.jubula.communication.internal.parser;x-friends:="org.eclipse.jubula.rc.javafx,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
+ org.eclipse.jubula.communication.internal.writer;x-friends:="org.eclipse.jubula.rc.javafx,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp"
 Require-Bundle: org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
  org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Automatic-Module-Name: org.eclipse.jubula.communication

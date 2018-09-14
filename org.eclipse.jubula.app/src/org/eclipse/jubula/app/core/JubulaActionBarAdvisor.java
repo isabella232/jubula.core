@@ -44,6 +44,7 @@ import org.eclipse.ui.menus.CommandContributionItemParameter;
  * @author BREDEX GmbH
  * @created 23.08.2005
  */
+@SuppressWarnings("restriction")
 public class JubulaActionBarAdvisor extends ActionBarAdvisor {
     /** WorkbenchWindow */
     private IWorkbenchWindow m_window;

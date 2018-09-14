@@ -17,9 +17,28 @@ Require-Bundle: org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  org.eclipse.jubula.autagent.common;bundle-version="[7.0.0,8.0.0)"
 Export-Package: org.eclipse.jubula.client,
  org.eclipse.jubula.client.exceptions,
- org.eclipse.jubula.client.internal;x-friends:="org.eclipse.jubula.autagent,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.client.internal.commands;x-friends:="org.eclipse.jubula.client.core,org.eclipse.jubula.autagent,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.client.internal.exceptions;x-friends:="org.eclipse.jubula.autagent,org.eclipse.jubula.client.core,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
- org.eclipse.jubula.client.internal.impl;x-friends:="org.eclipse.jubula.client.core,org.eclipse.jubula.autagent,org.eclipse.jubula.client.core,org.eclipse.jubula.client.ui.rcp",
+ org.eclipse.jubula.client.internal;
+  x-friends:="org.eclipse.jubula.autagent,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.ui.rcp,
+   org.eclipse.jubula.client.cmd",
+ org.eclipse.jubula.client.internal.commands;
+  x-friends:="org.eclipse.jubula.client.core,
+   org.eclipse.jubula.autagent,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.ui.rcp",
+ org.eclipse.jubula.client.internal.exceptions;
+  x-friends:="org.eclipse.jubula.autagent,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.ui.rcp,
+   org.eclipse.jubula.client.cmd,
+   org.eclipse.jubula.client.inspector.ui",
+ org.eclipse.jubula.client.internal.impl;
+  x-friends:="org.eclipse.jubula.client.core,
+   org.eclipse.jubula.autagent,
+   org.eclipse.jubula.client.core,
+   org.eclipse.jubula.client.ui.rcp",
  org.eclipse.jubula.client.launch
 Eclipse-BuddyPolicy: registered
+Automatic-Module-Name: org.eclipse.jubula.client.api

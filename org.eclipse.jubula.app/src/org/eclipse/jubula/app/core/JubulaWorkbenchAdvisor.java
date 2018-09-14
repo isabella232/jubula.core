@@ -63,6 +63,7 @@ import org.slf4j.LoggerFactory;
  * @author BREDEX GmbH
  *  
  */
+@SuppressWarnings("restriction")
 public class JubulaWorkbenchAdvisor extends WorkbenchAdvisor {
     /** the logger */
     private static Logger log = 

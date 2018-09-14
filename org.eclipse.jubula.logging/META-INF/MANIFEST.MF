@@ -11,3 +11,4 @@ Export-Package: org.eclipse.jubula.logging
 Require-Bundle: org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  ch.qos.logback.classic;bundle-version="[1.0.0,2.0.0)",
  ch.qos.logback.core;bundle-version="[1.0.0,2.0.0)"
+Automatic-Module-Name: org.eclipse.jubula.logging

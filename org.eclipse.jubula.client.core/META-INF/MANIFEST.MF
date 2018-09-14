@@ -78,3 +78,4 @@ Bundle-Activator: org.eclipse.jubula.client.core.Activator
 Bundle-ActivationPolicy: lazy
 JPA-PersistenceUnits: org.eclipse.jubula
 Eclipse-RegisterBuddy: org.eclipse.jubula.client.api
+Automatic-Module-Name: org.eclipse.jubula.client.core

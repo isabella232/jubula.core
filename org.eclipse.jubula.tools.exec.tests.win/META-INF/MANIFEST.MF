@@ -7,3 +7,4 @@ Bundle-Vendor: Eclipse Jubula
 Fragment-Host: org.eclipse.jubula.tools.exec;bundle-version="[4.0.0,4.1.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.junit;bundle-version="[4.8.2,5.0.0)"
+Automatic-Module-Name: org.eclipse.jubula.tools.exec.tests.win

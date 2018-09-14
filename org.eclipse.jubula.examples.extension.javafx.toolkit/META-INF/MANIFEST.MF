@@ -13,3 +13,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-Vendor: Eclipse Jubula
 Bundle-ClassPath: .
+Automatic-Module-Name: org.eclipse.jubula.examples.extension.javafx.toolkit

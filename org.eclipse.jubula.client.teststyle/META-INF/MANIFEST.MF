@@ -26,3 +26,4 @@ Export-Package: org.eclipse.jubula.client.teststyle.analyze,
  org.eclipse.jubula.client.teststyle.exceptions,
  org.eclipse.jubula.client.teststyle.quickfix
 Bundle-ClassPath: .
+Automatic-Module-Name: org.eclipse.jubula.client.teststyle

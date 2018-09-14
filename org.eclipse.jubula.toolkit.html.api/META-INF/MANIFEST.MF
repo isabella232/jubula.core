@@ -21,3 +21,4 @@ Export-Package: org.eclipse.jubula.toolkit.html,
  org.eclipse.jubula.toolkit.html.components,
  org.eclipse.jubula.toolkit.html.components.handler,
  org.eclipse.jubula.toolkit.html.config
+Automatic-Module-Name: org.eclipse.jubula.toolkit.html.api

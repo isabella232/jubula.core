@@ -14,3 +14,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.toolkit.swt.provider
+Automatic-Module-Name: org.eclipse.jubula.toolkit.swt.provider

@@ -26,3 +26,4 @@ Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
+Automatic-Module-Name: org.eclipse.jubula.autagent.common

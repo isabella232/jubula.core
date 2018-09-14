@@ -18,3 +18,4 @@ Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
 Export-Package: org.eclipse.jubula.toolkit.gef,
  org.eclipse.jubula.toolkit.gef.components,
  org.eclipse.jubula.toolkit.gef.components.handler
+Automatic-Module-Name: org.eclipse.jubula.toolkit.gef.api

@@ -21,3 +21,4 @@ Bundle-ClassPath: .,
  ./icons
 Export-Package: org.eclipse.jubula.client.inspector.ui.commands
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.jubula.client.inspector.ui

@@ -12,3 +12,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.jubula.toolkit.javafx.provider.Activator
+Automatic-Module-Name: org.eclipse.jubula.toolkit.javafx.provider

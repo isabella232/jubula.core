@@ -26,3 +26,4 @@ Export-Package: org.eclipse.jubula.rc.common.adapter,
  org.eclipse.jubula.rc.swt.tester.adapter,
  org.eclipse.jubula.rc.swt.tester.util,
  org.eclipse.jubula.rc.swt.utils
+Automatic-Module-Name: org.eclipse.jubula.rc.swt

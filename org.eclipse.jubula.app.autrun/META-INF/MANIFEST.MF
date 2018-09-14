@@ -20,3 +20,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.jubula.app.autrun.Activator
 Import-Package: org.eclipse.jubula.autagent
+Automatic-Module-Name: org.eclipse.jubula.app.autrun

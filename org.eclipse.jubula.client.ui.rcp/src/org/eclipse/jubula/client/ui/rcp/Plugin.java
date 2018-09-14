@@ -1518,6 +1518,7 @@ public class Plugin extends AbstractUIPlugin implements IProgressConsole {
                 if (query instanceof AbstractQuery) {
                     PlatformUI.getWorkbench().getDisplay().syncExec(
                             new Runnable() {
+                                @SuppressWarnings("restriction")
                                 public void run() {
                                     // see 
                                     // http://eclip.se/72661 and 

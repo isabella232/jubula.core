@@ -18,3 +18,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Export-Package: org.eclipse.jubula.autagent
 Bundle-Localization: plugin
+Automatic-Module-Name: org.eclipse.jubula.autagent.api

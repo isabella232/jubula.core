@@ -12,3 +12,4 @@ Export-Package: org.eclipse.jubula.rc.common.agent
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.eclipse.jubula.tools;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.jubula.rc.common;bundle-version="[7.0.0,8.0.0)"
+Automatic-Module-Name: org.eclipse.jubula.rc.common.agent

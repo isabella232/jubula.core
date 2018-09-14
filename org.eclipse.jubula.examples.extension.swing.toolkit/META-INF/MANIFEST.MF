@@ -13,3 +13,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-Vendor: %Bundle-Provider.0
 Bundle-ClassPath: .
+Automatic-Module-Name: org.eclipse.jubula.examples.extension.swing.toolkit

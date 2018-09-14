@@ -19,3 +19,4 @@ Require-Bundle: org.apache.commons.lang;bundle-version="[2.4.0,3.0.0)",
 Export-Package: org.eclipse.jubula.toolkit.swing,
  org.eclipse.jubula.toolkit.swing.components,
  org.eclipse.jubula.toolkit.swing.config
+Automatic-Module-Name: org.eclipse.jubula.toolkit.swing.api

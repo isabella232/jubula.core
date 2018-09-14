@@ -21,3 +21,4 @@ Require-Bundle: org.junit;bundle-version="[4.0.0,5.0.0)";resolution:=optional,
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",
  org.apache.commons.codec;bundle-version="[1.4.0,2.0.0)",
  org.apache.commons.lang;bundle-version="[2.6.0,3.0.0)"
+Automatic-Module-Name: org.eclipse.jubula.examples.extension.swing.api.test
