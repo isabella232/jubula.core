@@ -54,13 +54,14 @@ public abstract class AbstractQuery implements ISearchQuery {
     private Set<INodePO> m_resultNodeSet = new HashSet<INodePO>();
 
     /** The list of result test data cubes. */
-    private List<SearchResultElement> m_resultTestDataCubes =
-            new ArrayList<SearchResultElement>();
+    private List<SearchResultElement<?>> m_resultTestDataCubes =
+            new ArrayList<SearchResultElement<?>>();
 
     /**
      * <code>m_searchResult</code>
      */
-    private BasicSearchResult m_searchResult = new BasicSearchResult(this);
+    private BasicSearchResult<SearchResultElement<?>> m_searchResult =
+            new BasicSearchResult<>(this);
 
     /**
      * Default constructor sets the time stamp.
@@ -151,7 +152,7 @@ public abstract class AbstractQuery implements ISearchQuery {
     /**
      * @param reuseLoc the list of reuse locations
      */
-    protected void setSearchResult(List<SearchResultElement> reuseLoc) {
+    protected void setSearchResult(List<SearchResultElement<?>> reuseLoc) {
         m_searchResult.setResultList(reuseLoc);
     }
 
@@ -162,7 +163,7 @@ public abstract class AbstractQuery implements ISearchQuery {
      * @see #add(IParameterInterfacePO)
      */
     protected void finished() {
-        List<SearchResultElement> result = getSearchResultListFromNodes(
+        List<SearchResultElement<?>> result = getSearchResultListFromNodes(
                 m_resultNodeSet);
         result.addAll(m_resultTestDataCubes);
         setSearchResult(result);
@@ -174,10 +175,10 @@ public abstract class AbstractQuery implements ISearchQuery {
      *            the reusing node po's
      * @return a list of SearchResultElements for the given NodePOs
      */
-    protected List<SearchResultElement> getSearchResultListFromNodes(
+    protected List<SearchResultElement<?>> getSearchResultListFromNodes(
             Set<INodePO> reuse) {
-        final List<SearchResultElement> searchResult =
-            new ArrayList<SearchResultElement>(
+        final List<SearchResultElement<?>> searchResult =
+            new ArrayList<SearchResultElement<?>>(
                 reuse.size());
         for (INodePO node : reuse) {
             INodePO parent = node.getSpecAncestor();

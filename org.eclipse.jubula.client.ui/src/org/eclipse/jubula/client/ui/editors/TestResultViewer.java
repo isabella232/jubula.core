@@ -433,6 +433,7 @@ public class TestResultViewer extends EditorPart implements ISelectionProvider,
     }
     
     /** {@inheritDoc} */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Object getAdapter(Class key) {
         if (key.equals(IPropertySheetPage.class)) {
             return new NonSortedPropertySheetPage();

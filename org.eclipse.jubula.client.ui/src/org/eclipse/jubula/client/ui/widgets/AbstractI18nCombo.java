@@ -126,7 +126,7 @@ public abstract class AbstractI18nCombo<TheObject> extends
      * @return a List of keys 
      */
     private static List<String> buildI18nKeys(String baseKey,
-        List keys, IKeyMaker keyMaker) {
+        List<?> keys, IKeyMaker keyMaker) {
         List<String> result = new ArrayList<String>(keys.size());
         String startOfKey = baseKey + '.';
         for (Object key : keys) {

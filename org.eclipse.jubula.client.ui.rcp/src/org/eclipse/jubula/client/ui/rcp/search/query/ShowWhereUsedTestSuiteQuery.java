@@ -70,8 +70,8 @@ public class ShowWhereUsedTestSuiteQuery
         INodePO[] reuse = new INodePO[reuseList.size()];
         reuseList.toArray(reuse);
         monitor.beginTask("Searching for reusage of Test Suite", reuseList.size()); //$NON-NLS-1$
-        final List<SearchResultElement> reuseLoc = getResultElementsFromNodes(
-                monitor, reuse);
+        final List<SearchResultElement<?>> reuseLoc =
+                getResultElementsFromNodes(monitor, reuse);
 
         setSearchResult(reuseLoc);
         monitor.done();

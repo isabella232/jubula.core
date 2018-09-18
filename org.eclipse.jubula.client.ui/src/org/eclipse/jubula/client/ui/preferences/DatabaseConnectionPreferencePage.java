@@ -104,7 +104,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
         };
     
     /** list of managed connections */
-    private IObservableList m_connectionList;
+    private IObservableList<DatabaseConnection> m_connectionList;
 
     /**
      * 
@@ -121,7 +121,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
         GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
         GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
 
-        m_connectionList = new WritableList(
+        m_connectionList = new WritableList<DatabaseConnection>(
                 parsePreferences(getPreferenceStore()),
                 DatabaseConnection.class);
         final ListViewer connectionViewer = new ListViewer(composite);
@@ -269,7 +269,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
      *                         pressing the created button.
      */
     private void createRemoveButton(Composite parent,
-            final IObservableList existingConnections,
+            final IObservableList<DatabaseConnection> existingConnections,
             final ListViewer connectionViewer) {
         final Button removeButton = new Button(parent, SWT.NONE);
         BUTTON_DATA_FACTORY.applyTo(removeButton);
@@ -299,7 +299,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
      * @param existingConnections List of connections contained in the viewer.
      */
     private void createAddButton(Composite parent,
-            final IObservableList existingConnections) {
+            final IObservableList<DatabaseConnection> existingConnections) {
         Button addButton = new Button(parent, SWT.NONE);
         BUTTON_DATA_FACTORY.applyTo(addButton);
         addButton.setText(
@@ -324,7 +324,7 @@ public class DatabaseConnectionPreferencePage extends PreferencePage
         getPreferenceStore().setValue(
             DatabaseConnectionConverter.PREF_DATABASE_CONNECTIONS, 
             DatabaseConnectionConverter.convert(
-                    (DatabaseConnection[])m_connectionList.toArray(
+                    m_connectionList.toArray(
                             new DatabaseConnection[m_connectionList.size()])));
         return super.performOk();
     }

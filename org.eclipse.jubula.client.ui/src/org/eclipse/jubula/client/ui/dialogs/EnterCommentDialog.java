@@ -43,7 +43,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
     private IValidator m_validator;
 
     /** observable (bindable) value for comment title */
-    private WritableValue m_commentTitle;
+    private WritableValue<String> m_commentTitle;
 
     /**
      * <code>m_initialTitle</code>
@@ -122,7 +122,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
         LayoutUtil.addToolTipAndMaxWidth(gridData, commentTitleField);
         commentTitleField.setLayoutData(gridData);
         
-        IObservableValue commentTitleFieldText = 
+        IObservableValue<?> commentTitleFieldText = 
                 WidgetProperties.text(SWT.Modify).observe(commentTitleField);
         m_commentTitle = WritableValue.withValueType(String.class);
         getValidationContext().bindValue(
@@ -156,7 +156,7 @@ public class EnterCommentDialog extends AbstractValidatedDialog {
      * @return the comment title
      */
     public String getCommentTitle() {
-        return (String)m_commentTitle.getValue();
+        return m_commentTitle.getValue();
     }
 
     /**

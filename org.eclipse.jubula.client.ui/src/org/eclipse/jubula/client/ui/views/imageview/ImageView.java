@@ -288,6 +288,7 @@ public class ImageView extends ContextBasedView
     }
     
     /** {@inheritDoc} */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Object getAdapter(Class key) {
         if (key.equals(IPropertySheetPage.class)) {
             return new NonSortedPropertySheetPage();

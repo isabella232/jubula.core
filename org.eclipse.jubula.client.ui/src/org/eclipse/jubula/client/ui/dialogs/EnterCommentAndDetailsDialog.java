@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Text;
  */
 public class EnterCommentAndDetailsDialog extends EnterCommentDialog {
     /** observable (bindable) value for comment detail */
-    private WritableValue m_commentDetail;
+    private WritableValue<String> m_commentDetail;
 
     /**
      * <code>m_initialDetail</code>
@@ -68,7 +68,7 @@ public class EnterCommentAndDetailsDialog extends EnterCommentDialog {
         LayoutUtil.addToolTipAndMaxWidth(gridData, commentDetailField);
         commentDetailField.setLayoutData(gridData);
 
-        IObservableValue commentDetailFieldText =
+        IObservableValue<?> commentDetailFieldText =
                 WidgetProperties.text(SWT.Modify).observe(commentDetailField);
         m_commentDetail = WritableValue.withValueType(String.class);
 
@@ -100,6 +100,6 @@ public class EnterCommentAndDetailsDialog extends EnterCommentDialog {
      * @return the comment detail
      */
     public String getCommentDetail() {
-        return (String)m_commentDetail.getValue();
+        return m_commentDetail.getValue();
     }
 }

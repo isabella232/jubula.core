@@ -57,10 +57,10 @@ public class ShowWhereReferencedCTDSValueQuery
     private String m_colStr;
 
     /** The exact Search Results */
-    private List<SearchResultElement> m_exactResults;
+    private List<SearchResultElement<?>> m_exactResults;
 
     /** The column-only Search Results */
-    private List<SearchResultElement> m_columnResults;
+    private List<SearchResultElement<?>> m_columnResults;
 
     /** The progress monitor */
     private IProgressMonitor m_monitor;
@@ -209,7 +209,7 @@ public class ShowWhereReferencedCTDSValueQuery
         monitor.beginTask(Messages.SearchingForCTDSRefs, m_counter);
         trav.traverse(false);
         monitor.done();
-        List<SearchResultElement> results = new ArrayList<>();
+        List<SearchResultElement<?>> results = new ArrayList<>();
         results.addAll(m_exactResults);
         results.addAll(m_columnResults);
         setSearchResult(results);

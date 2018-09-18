@@ -57,7 +57,7 @@ public abstract class AbstractValidatedDialog extends TitleAreaDialog {
      */
     protected void createButtonsForButtonBar(Composite parent) {
         super.createButtonsForButtonBar(parent);
-        IObservableValue okButtonEnablement = 
+        IObservableValue<?> okButtonEnablement = 
             WidgetProperties.enabled()
                 .observe(getButton(IDialogConstants.OK_ID));
         AggregateValidationStatus validationStatus = 

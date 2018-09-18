@@ -27,6 +27,7 @@ import org.eclipse.ui.views.properties.PropertySheetEntry;
  * @author BREDEX GmbH
  * @created 27.06.2016
  */
+@SuppressWarnings("restriction")
 public class CopyPropertyValueHandler extends Action {
 
     /** The system clipboard */

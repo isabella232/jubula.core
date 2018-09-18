@@ -1377,7 +1377,7 @@ public class ProjectPM extends PersistenceManager
         Long projectId, String name) {
         
         EntityManager session = null;
-        List hits = null;
+        List<?> hits = null;
         try {
             session = Persistor.instance().openSession();
             Query q = session.createQuery("select node from TestJobPO as node where node.hbmName = ?1 and node.hbmParentProjectId = ?2"); //$NON-NLS-1$

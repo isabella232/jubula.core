@@ -59,7 +59,8 @@ public class DecoratingCellLabelProvider extends CellLabelProvider implements
      * Need to keep our own list of listeners
      * <code>listeners</code>
      */
-    private ListenerList m_listeners = new ListenerList();
+    private ListenerList<ILabelProviderListener> m_listeners =
+            new ListenerList<>();
 
     /**
      * <code>decorationContext</code>

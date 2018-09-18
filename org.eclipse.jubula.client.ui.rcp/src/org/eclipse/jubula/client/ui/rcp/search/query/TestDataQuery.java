@@ -24,6 +24,7 @@ import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParamDescriptionPO;
 import org.eclipse.jubula.client.core.model.IParamNodePO;
 import org.eclipse.jubula.client.core.model.IParameterInterfacePO;
+import org.eclipse.jubula.client.core.model.IPersistentObject;
 import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.model.ITDManager;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
@@ -105,7 +106,7 @@ public class TestDataQuery
         Set<IParameterInterfacePO> centralTestData =
                 new HashSet<IParameterInterfacePO>();
         for (TypeName type : types) {
-            Class searchType = type.getType();
+            Class<? extends IPersistentObject> searchType = type.getType();
             if (!INodePO.class.isAssignableFrom(searchType)
                     && ITestDataCubePO.class.isAssignableFrom(searchType)) {
                 IProjectPO cProject = GeneralStorage.getInstance().getProject();

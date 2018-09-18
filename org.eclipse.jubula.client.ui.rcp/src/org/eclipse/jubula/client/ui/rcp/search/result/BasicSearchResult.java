@@ -321,6 +321,8 @@ public class BasicSearchResult<DATATYPE> implements ISearchResult {
     public static class ObjectMappingSearchResultElementAction 
             implements ISearchResultElementAction <Long>, Serializable {
 
+        /**  */
+        private static final long serialVersionUID = 8171916234693719204L;
         /** Field to transfer data between two methods... */
         private IAUTMainPO m_aut = null;
         /**

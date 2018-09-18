@@ -53,8 +53,8 @@ public class DeprecatedModulesQuery extends AbstractQuery {
      */
     public IStatus run(IProgressMonitor monitor) {
         setMonitor(monitor);
-        final List<SearchResultElement> deprecatedModules = 
-                new ArrayList<SearchResultElement>();
+        final List<SearchResultElement<?>> deprecatedModules = 
+                new ArrayList<SearchResultElement<?>>();
         IProjectPO currentProject = GeneralStorage.getInstance().getProject();
         CheckIfCAPisDeprecated op = new CheckIfCAPisDeprecated();
         TreeTraverser traverser =

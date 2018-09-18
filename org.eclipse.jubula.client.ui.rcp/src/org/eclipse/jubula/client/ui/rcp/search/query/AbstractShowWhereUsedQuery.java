@@ -47,10 +47,10 @@ public abstract class AbstractShowWhereUsedQuery extends AbstractQuery {
      *              the array containing the INodePOs
      * @return the search result
      */
-    protected List<SearchResultElement> getResultElementsFromNodes(
+    protected List<SearchResultElement<?>> getResultElementsFromNodes(
             IProgressMonitor monitor, INodePO[] reuse) {
-        final List<SearchResultElement> reuseLoc =
-            new ArrayList<SearchResultElement>(reuse.length);
+        final List<SearchResultElement<?>> reuseLoc =
+            new ArrayList<SearchResultElement<?>>(reuse.length);
 
         for (INodePO node : reuse) {
             INodePO parent = node.getSpecAncestor();

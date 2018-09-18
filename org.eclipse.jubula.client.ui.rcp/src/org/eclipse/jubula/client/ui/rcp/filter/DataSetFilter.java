@@ -19,6 +19,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jubula.client.core.model.IDataSetPO;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
+
 import org.eclipse.ui.internal.misc.StringMatcher;
 
 /** This class has implemented the searching on data set view */

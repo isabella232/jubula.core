@@ -101,6 +101,7 @@ public class TestResultEditorInput implements IEditorInput {
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Object getAdapter(Class adapter) {
         if (adapter == TestResultEditorInput.class) {
             return this;

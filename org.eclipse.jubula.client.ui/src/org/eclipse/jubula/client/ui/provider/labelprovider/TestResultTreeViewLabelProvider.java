@@ -59,8 +59,8 @@ public class TestResultTreeViewLabelProvider extends CellLabelProvider
      * dispose images
      */
     public void dispose() {
-        for (Iterator i = imageCache.values().iterator(); i.hasNext();) {
-            ((Image)i.next()).dispose();
+        for (Iterator<Image> i = imageCache.values().iterator(); i.hasNext();) {
+            i.next().dispose();
         }
         imageCache.clear();
     }

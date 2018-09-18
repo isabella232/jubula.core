@@ -27,14 +27,13 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public class TestResultNodeAdapterFactory implements IAdapterFactory {
     /** types for which adapters are available */
-    private final Class[] m_types = { ImageProvider.class,
-                                      LogProvider.class,
-                                      TestResultNode.class, 
-                                      IPropertySource.class};
+    private final Class<?>[] m_types = { ImageProvider.class, LogProvider.class,
+        TestResultNode.class, IPropertySource.class };
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Object getAdapter(Object adaptableObject, Class adapterType) {
         if (adapterType == LogProvider.class) {
             return new TestResultNodeLogProvider(
@@ -56,7 +55,7 @@ public class TestResultNodeAdapterFactory implements IAdapterFactory {
     /**
      * {@inheritDoc}
      */
-    public Class[] getAdapterList() {
+    public Class<?>[] getAdapterList() {
         return m_types;
     }
 }

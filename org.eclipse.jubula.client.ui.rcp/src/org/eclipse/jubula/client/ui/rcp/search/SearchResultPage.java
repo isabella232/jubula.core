@@ -119,7 +119,7 @@ public class SearchResultPage extends AbstractSearchResultPage
          */
         public String getText(Object element) {
             if (element instanceof SearchResultElement) {
-                return ((SearchResultElement)element).getName();
+                return ((SearchResultElement<?>)element).getName();
             }
             return super.getText(element);
         }
@@ -129,7 +129,7 @@ public class SearchResultPage extends AbstractSearchResultPage
          */
         public Image getImage(Object element) {
             if (element instanceof SearchResultElement) {
-                SearchResultElement elem = (SearchResultElement)element;
+                SearchResultElement<?> elem = (SearchResultElement<?>)element;
                 return elem.getImage();
             }
             return super.getImage(element);
@@ -140,7 +140,7 @@ public class SearchResultPage extends AbstractSearchResultPage
          */
         public String getToolTipText(Object element) {
             if (element instanceof SearchResultElement) {
-                SearchResultElement sr = (SearchResultElement)element;
+                SearchResultElement<?> sr = (SearchResultElement<?>)element;
                 String comment = sr.getComment();
                 if (comment != null) {
                     return comment;
@@ -163,7 +163,7 @@ public class SearchResultPage extends AbstractSearchResultPage
         /** {@inheritDoc} */
         public Object[] getChildren(Object parentElement) {
             if (parentElement instanceof BasicSearchResult) {
-                BasicSearchResult sr = (BasicSearchResult)parentElement;
+                BasicSearchResult<?> sr = (BasicSearchResult<?>)parentElement;
                 return sr.getResultList().toArray();
             }
             return ArrayUtils.EMPTY_OBJECT_ARRAY;
@@ -183,8 +183,8 @@ public class SearchResultPage extends AbstractSearchResultPage
             if (!(event.getSelection() instanceof IStructuredSelection)) {
                 return;
             }
-            SearchResultElement element = 
-                (SearchResultElement)((IStructuredSelection)event
+            SearchResultElement<?> element = 
+                (SearchResultElement<?>)((IStructuredSelection)event
                     .getSelection()).getFirstElement();
             if (element != null) {
                 element.jumpToResult();
@@ -207,7 +207,7 @@ public class SearchResultPage extends AbstractSearchResultPage
         String queryLabel = StringConstants.EMPTY;
         Object viewerInput = getTreeViewer().getInput();
         if (viewerInput != null) {
-            BasicSearchResult sr = (BasicSearchResult) viewerInput;
+            BasicSearchResult<?> sr = (BasicSearchResult<?>) viewerInput;
             resultSize = sr.getResultList().size();
             ISearchQuery query = sr.getQuery();
             if (query != null) {

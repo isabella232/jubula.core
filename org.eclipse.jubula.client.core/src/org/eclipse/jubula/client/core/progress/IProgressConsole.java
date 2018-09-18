@@ -30,7 +30,6 @@ public interface IProgressConsole {
      * Writes a single error line to the console.
      * 
      * @param line The text to write to the console as an error.
-     * @deprecated
      */
     public void writeErrorLine(String line);
     

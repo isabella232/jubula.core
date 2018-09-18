@@ -215,6 +215,7 @@ public class LogView extends ContextBasedView
     }
     
     /** {@inheritDoc} */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Object getAdapter(Class key) {
         if (key.equals(IPropertySheetPage.class)) {
             return new NonSortedPropertySheetPage();

@@ -962,7 +962,7 @@ public class TestresultSummaryView extends ViewPart implements
             availableWidth -= verticalBar.getSize().x + 5;            
         }
         TableColumn[] columns = m_tableViewer.getTable().getColumns();
-        List<TableColumn> columnsWithVariableWidth = new ArrayList();
+        List<TableColumn> columnsWithVariableWidth = new ArrayList<>();
         for (TableColumn column : columns) {
             String columnName = column.getText();
             if (columnName.equals(TESTRESULT_ALM_REPORT_STATE)

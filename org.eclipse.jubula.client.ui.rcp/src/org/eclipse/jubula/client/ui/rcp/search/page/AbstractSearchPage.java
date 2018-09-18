@@ -246,9 +246,11 @@ public abstract class AbstractSearchPage extends DialogPage implements
         check.setLayoutData(gd);
         check.setText(searchableType.getName());
 
-        IObservableValue guiElement = WidgetProperties.selection()
+        IObservableValue<?> guiElement = WidgetProperties.selection()
                 .observe(check);
-        IObservableValue modelElement = 
+        // PojoProperties does not implement generics
+        @SuppressWarnings("unchecked") 
+        IObservableValue<?> modelElement = 
                 PojoProperties.value("selected").observe(searchableType); //$NON-NLS-1$
         dbc.bindValue(guiElement, modelElement);
     }
@@ -268,9 +270,11 @@ public abstract class AbstractSearchPage extends DialogPage implements
         check.setLayoutData(gd);
         check.setText(searchableField.getDescName());
 
-        IObservableValue guiElement = WidgetProperties.selection()
+        IObservableValue<?> guiElement = WidgetProperties.selection()
                 .observe(check);
-        IObservableValue modelElement = 
+        // PojoProperties does not implement generics
+        @SuppressWarnings("unchecked") 
+        IObservableValue<?> modelElement = 
                 PojoProperties.value("selected").observe(searchableField); //$NON-NLS-1$
         dbc.bindValue(guiElement, modelElement);
     }

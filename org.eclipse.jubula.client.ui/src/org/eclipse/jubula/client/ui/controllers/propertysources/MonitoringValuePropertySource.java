@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
@@ -65,12 +66,13 @@ public class MonitoringValuePropertySource implements IPropertySource {
 
         List<IPropertyDescriptor> tmpList = 
             new LinkedList<IPropertyDescriptor>();
-        Iterator it = m_monitoringValueMap.entrySet().iterator();
+        Iterator<Entry<String, IMonitoringValue>> it =
+                m_monitoringValueMap.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry)it.next();
+            Entry<String, IMonitoringValue> pairs = it.next();
             MonitoringValue tmp = (MonitoringValue)pairs.getValue();
             PropertyDescriptor p = new PropertyDescriptor(pairs.getKey(),
-                    (String)pairs.getKey());
+                    pairs.getKey());
             if (!tmp.getCategory().equals(MonitoringConstants.NO_CATEGORY)) {
                 p.setCategory(tmp.getCategory());
             }

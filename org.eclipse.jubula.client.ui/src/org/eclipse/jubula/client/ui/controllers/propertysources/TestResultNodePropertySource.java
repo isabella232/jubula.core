@@ -399,13 +399,13 @@ public class TestResultNodePropertySource extends AbstractPropertySource {
         addPropertyDescriptor(propDes);
         final TestErrorEvent event = m_node.getEvent();
         if (event.getId().equals(TestErrorEvent.ID.VERIFY_FAILED)) {
-            Set keys = event.getProps().keySet();
-            for (final Object key : keys) {
+            Set<String> keys = event.getProps().keySet();
+            for (final String key : keys) {
                 propDes = new PropertyDescriptor(new PropertyController() {
                     public Object getProperty() {
                         return event.getProps().get(key);
                     }
-                }, I18n.getString((String)key));
+                }, I18n.getString(key));
                 propDes.setCategory(P_TESTERROR_CAT);
                 addPropertyDescriptor(propDes);
             }

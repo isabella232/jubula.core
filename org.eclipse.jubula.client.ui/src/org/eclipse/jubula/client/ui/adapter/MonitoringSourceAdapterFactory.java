@@ -20,11 +20,12 @@ import org.eclipse.jubula.client.ui.controllers.propertysources.MonitoringValueP
 public class MonitoringSourceAdapterFactory implements IAdapterFactory {
 
     /** types for which adapters are available */
-    private final Class[] m_types = { ITestResultSummaryPO.class };
+    private final Class<?>[] m_types = { ITestResultSummaryPO.class };
 
     /**
      * {@inheritDoc}
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public Object getAdapter(Object adaptableObject, Class adapterType) {
         
         if (adaptableObject instanceof ITestResultSummaryPO) {            
@@ -37,7 +38,7 @@ public class MonitoringSourceAdapterFactory implements IAdapterFactory {
     /**
      * {@inheritDoc}
      */
-    public Class[] getAdapterList() {
+    public Class<?>[] getAdapterList() {
 
         return m_types;
     }

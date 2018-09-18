@@ -89,8 +89,8 @@ public class ShowWhereUsedComponentNameQuery
     protected void calculateUseOfLogicalName(String logicalName, 
         IProgressMonitor monitor) {
         Set<INodePO> reuse = findNodes(logicalName, monitor);
-        final List<SearchResultElement> reuseLoc = 
-            new ArrayList<SearchResultElement>(
+        final List<SearchResultElement<?>> reuseLoc = 
+            new ArrayList<SearchResultElement<?>>(
                 reuse.size());
         reuseLoc.addAll(getSearchResultListFromNodes(reuse));
         Set<IObjectMappingAssoziationPO> reuseAssocs = 

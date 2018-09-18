@@ -22,13 +22,14 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
  * @author BREDEX GmbH
  * @created Dec 16, 2008
  */
-public class DialogStatusMessageListener implements IValueChangeListener {
+public class DialogStatusMessageListener 
+    implements IValueChangeListener<IStatus> {
     
     /** the dialog whose error message should be updated */
     private TitleAreaDialog m_dialog;
     
     /**
-     * Constrcutor
+     * Constructor
      * 
      * @param dialog The dialog whose error message should be updated.
      */
@@ -40,8 +41,8 @@ public class DialogStatusMessageListener implements IValueChangeListener {
      * 
      * {@inheritDoc}
      */
-    public void handleValueChange(ValueChangeEvent event) {
-        IStatus status = (IStatus)event.diff.getNewValue();
+    public void handleValueChange(ValueChangeEvent<? extends IStatus> event) {
+        IStatus status = event.diff.getNewValue();
         m_dialog.setErrorMessage(null);
         if (status.getSeverity() == IStatus.ERROR) {
             m_dialog.setErrorMessage(status.getMessage());
