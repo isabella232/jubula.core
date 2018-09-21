@@ -89,15 +89,15 @@ public class FindSWTComponentBP extends FindComponentBP {
     public static String getComponentName(Widget w) {
         String compName = null;
         Object o = w.getData(SwtToolkitConstants.WIDGET_NAME);
+        if (o == null) {
+            o = w.getData(SwtToolkitConstants.WIDGET_NAME_FALLBACK);
+        }
+        if (o == null) {
+            o = w.getData(SwtToolkitConstants.RCP_NAME);
+        }
         if (o != null) {
             compName = o.toString();
-        } else {
-            o = w.getData(SwtToolkitConstants.WIDGET_NAME_FALLBACK);
-            if (o != null) {
-                compName = o.toString();
-            }
         }
-
         return compName;
     }
 }
