@@ -26,6 +26,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 import javax.swing.event.EventListenerList;
 import org.apache.commons.lang.ArrayUtils;
@@ -1011,11 +1012,16 @@ public class ClientTestImpl implements IClientTest {
                 try {
                     monitor.beginTask(Messages.ClientWritingReportToDB,
                             IProgressMonitor.UNKNOWN);
-                    writeTestresultToDB(result);
+                    Exception e = secureExecution(monitor, result,
+                        r -> writeTestresultToDB(r));
                     if (m_logPath != null) {
                         monitor.beginTask(Messages.ClientWritingReport,
                                 IProgressMonitor.UNKNOWN);
-                        writeReportToFileSystem(result);
+                        e = secureExecution(monitor, result,
+                            r -> writeReportToFileSystem(r));
+                    }
+                    if (e != null) {
+                        throw e;
                     }
                     monitor.done();
                     m_isReportRunning.set(false);
@@ -1025,6 +1031,7 @@ public class ClientTestImpl implements IClientTest {
                     // will otherwise not be logged (like memory Exception)
                     log.error(Messages.ClientWritingReportError, t);
                     m_isReportRunning.set(false);
+                    monitor.done();
                     return Status.CANCEL_STATUS;
                 }
             }
@@ -1591,6 +1598,26 @@ public class ClientTestImpl implements IClientTest {
     /** {@inheritDoc} */
     public boolean isTrimming() {
         return m_trimming;
+    }
+    
+    /**
+     * 
+     * @param monitor the {@link IProgressMonitor}
+     * @param result the {@link TestResult}
+     * @param consumer the {@link Consumer} to execute
+     * @return the exception if one did occur
+     */
+    private Exception secureExecution(IProgressMonitor monitor,
+            TestResult result, Consumer<TestResult> consumer) {
+        try {
+            consumer.accept(result);
+        } catch (Exception e) {
+            log.error(Messages.ClientWritingReportError, e);
+            monitor.subTask("Failed writing see logs:" //$NON-NLS-1$
+                    + e.getMessage());
+            return e;
+        }
+        return null;
     }
 
 }
