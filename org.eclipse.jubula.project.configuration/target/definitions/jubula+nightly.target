@@ -30,7 +30,7 @@
 <unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.9.2.v20180207-1730"/>
 <unit id="com.fasterxml.jackson.core.jackson-core" version="2.9.2.v20180207-1730"/>
 <unit id="com.fasterxml.jackson.core.jackson-databind" version="2.9.2.v20180207-1730"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.platform.ide" version="0.0.0"/>
@@ -41,8 +41,8 @@
 <unit id="org.eclipse.emf.rap.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.help.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.jdt.annotation" version="1.1.150.v20180322-1206"/>
-<repository location="http://download.eclipse.org/releases/oxygen"/>
+<unit id="org.eclipse.jdt.annotation" version="1.1.300.v20180905-0314"/>
+<repository location="http://download.eclipse.org/releases/2018-09"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jubula.feature.feature.group" version="0.0.0"/>
