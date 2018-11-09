@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (c) 2014 BREDEX GmbH.
-    All rights reserved. This program and the accompanying materials
-    are made available under the terms of the Eclipse Public License v1.0
-    which accompanies this distribution, and is available at
-    http://www.eclipse.org/legal/epl-v10.html
- -->
 <?pde version="3.5"?>
 
 <product name="Jubula" uid="org.eclipse.jubula.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="7.0.0.qualifier" useFeatures="true" includeLaunchers="true">
@@ -23,34 +16,17 @@
    <launcherArgs>
       <programArgs>-clean
 -name Jubula
-#PARGS_2INSERT</programArgs>
+#PARGS_2INSERT
+      </programArgs>
       <programArgsLin>-vm
-../jre/bin/java</programArgsLin>
+../jre/bin/java
+      </programArgsLin>
       <programArgsWin>-vm
-../jre/bin/javaw.exe</programArgsWin>
-      <vmArgs><vmArgsLin>
-         <argsX86_64>-server</argsX86_64>
-         -Duser.language=en
-         -Duser.country=US
-         -Dorg.osgi.service.http.port=60002
-         #VMARGS_2INSERT
-         -Xss1m
-      </vmArgsLin>
-      <vmArgsWin>
-         <argsX86_64>-server</argsX86_64>
-         -Duser.language=en
-         -Duser.country=US
-         -Dorg.osgi.service.http.port=60002
-         #VMARGS_2INSERT
-         -Xss1m
-      </vmArgsWin>
--Duser.language=en
--Duser.country=US
--Dorg.osgi.service.http.port=60002
-#VMARGS_2INSERT
--Xss1m</vmArgs>
+../jre/bin/javaw.exe
+      </programArgsWin>
       <vmArgsMac>-XstartOnFirstThread 
--Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+-Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
@@ -60,9 +36,9 @@
    <launcher name="jubula">
       <linux icon="icons/jubula.xpm"/>
       <macosx icon="icons/jubula.icns"/>
-      <solaris/>
       <win useIco="true">
-          <ico path="icons/jubula.ico"/>
+         <ico path="icons/jubula.ico"/>
+         <bmp/>
       </win>
    </launcher>
 
@@ -80,13 +56,15 @@
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.http.jetty" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="4" />
+      <plugin id="org.eclipse.equinox.p2.reconciler.dropins" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.jubula.rc.rcp" autoStart="true" startLevel="4" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="4" />
-      <plugin id="org.eclipse.equinox.http.jetty" autoStart="true" startLevel="4" />
-      <plugin id="org.eclipse.equinox.http.registry" autoStart="true" startLevel="4" />
-      <property name="osgi.splashPath" value="platform:/base/plugins/org.eclipse.jubula.app" />
       <property name="osgi.instance.area.default" value="@user.home/workspace" />
+      <property name="osgi.splashPath" value="platform:/base/plugins/org.eclipse.jubula.app" />
    </configurations>
 
 </product>
