@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2014 BREDEX GmbH.
+    All rights reserved. This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License v1.0
+    which accompanies this distribution, and is available at
+    http://www.eclipse.org/legal/epl-v10.html
+ -->
 <?pde version="3.5"?>
 
 <product name="Jubula" uid="org.eclipse.jubula.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="7.0.0.qualifier" useFeatures="true" includeLaunchers="true">
@@ -22,8 +29,28 @@
 ../jre/bin/java
       </programArgsLin>
       <programArgsWin>-vm
-../jre/bin/javaw.exe
-      </programArgsWin>
+../jre/bin/javaw.exe</programArgsWin>
+      <vmArgs><vmArgsLin>
+         <argsX86_64>-server</argsX86_64>
+         -Duser.language=en
+         -Duser.country=US
+         -Dorg.osgi.service.http.port=60002
+         #VMARGS_2INSERT
+         -Xss1m
+      </vmArgsLin>
+      <vmArgsWin>
+         <argsX86_64>-server</argsX86_64>
+         -Duser.language=en
+         -Duser.country=US
+         -Dorg.osgi.service.http.port=60002
+         #VMARGS_2INSERT
+         -Xss1m
+      </vmArgsWin>
+-Duser.language=en
+-Duser.country=US
+-Dorg.osgi.service.http.port=60002
+#VMARGS_2INSERT
+-Xss1m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread 
 -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
