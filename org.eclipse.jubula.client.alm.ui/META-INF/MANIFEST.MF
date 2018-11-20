@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula ALM - Integration UI
 Bundle-SymbolicName: org.eclipse.jubula.client.alm.ui;singleton:=true
-Bundle-Version: 7.0.0.qualifier
+Bundle-Version: 7.0.1.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.equinox.http.registry;bundle-version="[1.0.0,2.0.0)",

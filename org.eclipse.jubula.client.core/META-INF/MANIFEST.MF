@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Core
 Bundle-SymbolicName: org.eclipse.jubula.client.core;singleton:=true
-Bundle-Version: 7.0.0.qualifier
+Bundle-Version: 7.0.1.qualifier
 Eclipse-BuddyPolicy: registered
 Bundle-ClassPath: .,
  resources/,

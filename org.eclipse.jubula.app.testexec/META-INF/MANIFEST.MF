@@ -1,7 +1,7 @@
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.jubula.app.testexec;singleton:=true
 Bundle-Name: Jubula Commandline Client
-Bundle-Version: 7.0.0.qualifier
+Bundle-Version: 7.0.1.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.jubula.app.testexec.Activator

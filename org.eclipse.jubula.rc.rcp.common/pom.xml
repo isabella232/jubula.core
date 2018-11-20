@@ -10,7 +10,7 @@
     <parent>
         <artifactId>org.eclipse.jubula.releng.server.rc.rcp</artifactId>
         <groupId>org.eclipse.jubula</groupId>
-        <version>7.0.0-SNAPSHOT</version>
+        <version>7.0.1-SNAPSHOT</version>
         <relativePath>../org.eclipse.jubula.releng.server.rc.rcp</relativePath>
     </parent>
     <artifactId>org.eclipse.jubula.rc.rcp.common</artifactId>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>org.eclipse.jubula</groupId>
             <artifactId>org.eclipse.jubula.rc.common.orbit</artifactId>
-            <version>7.0.0-SNAPSHOT</version>
+            <version>7.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jubula</groupId>
