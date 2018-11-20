@@ -26,18 +26,18 @@ public class FileUtils {
     /** checks if the given URI is relative and resolve it to the absolute against the base URL
      * @param basePath the base directory
      * @param path a text path given by user
-     * @return absolute against the base URL path or EXIT_INVALID_ARG_VALUE ("-2") if invalid URL was given
+     * @return the path if is absolute otherwise a resolved absolute path based on the basePath.
+     * Or null if it is not resolvable
      */
-    public static String resolveAgainstBasePath(
-            String path, String basePath) {
-        if (path == null || basePath == null) {
+    public static String resolveAgainstBasePath(String path, String basePath) {
+        if (path == null && basePath == null) {
             return null;
         }
-        File baseDir = new File(basePath);
-        File fpath = new File(path);
-        if (!fpath.isAbsolute()) {
+        File baseDir = basePath != null ? new File(basePath) : null;
+        File fpath = path != null ? new File(path) : null;
+        if (baseDir != null && fpath != null && !fpath.isAbsolute()) {
             fpath = new File(baseDir, path);
         }
-        return fpath.toString();
+        return fpath != null ? fpath.toString() : null;
     }
 }

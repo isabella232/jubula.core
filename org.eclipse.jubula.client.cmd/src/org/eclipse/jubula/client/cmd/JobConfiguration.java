@@ -52,6 +52,7 @@ import org.eclipse.jubula.client.core.utils.FileUtils;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.jubula.tools.internal.utils.NetUtil;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.osgi.util.NLS;
 
 import com.thoughtworks.xstream.XStream;
@@ -569,9 +570,9 @@ public class JobConfiguration {
      * @param cmd CommandLine
      */
     private void parseResultDirOptions(CommandLine cmd) {
-        if (cmd.hasOption(ClientTestStrings.RESULTDIR)) { 
+        if (cmd.hasOption(ClientTestStrings.RESULTDIR)) {
             setResultDir(FileUtils.resolveAgainstBasePath(
-                    cmd.getOptionValue(ClientTestStrings.RESULTDIR), 
+                    cmd.getOptionValue(ClientTestStrings.RESULTDIR),
                     getDefaultDataDirPath()));
         }
     }
@@ -971,12 +972,24 @@ public class JobConfiguration {
         }
         return Platform.getInstanceLocation().getURL().getFile();
     }
+
+    /**
+     * @return see {@link Platform#getInstallLocation()}
+     */
+    private static String getInstallLocationPath() {
+        Location installLocation = Platform.getInstallLocation();
+        if (installLocation != null) {
+            return installLocation.getURL().getFile();
+        }
+        return null;
+    }
     
     /**
      * @return default datadir path
      */
     public static String getDefaultDataDirPath() {
-        return getInstanceLocationPath();
+        return getInstanceLocationPath() != null ? getInstanceLocationPath()
+                : getInstallLocationPath();
     }
 
     /**
