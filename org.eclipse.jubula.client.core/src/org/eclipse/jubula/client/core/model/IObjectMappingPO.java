@@ -145,4 +145,9 @@ public interface IObjectMappingPO extends ITimestampPO {
      * @param assoc the assoc to add
      */
     public void addAssociationToCache(IObjectMappingAssoziationPO assoc);
+    
+    /**
+     * removes all AutMains from the categories needed for deletion 
+     */
+    public void removeAllAutMains();
 }

@@ -18,6 +18,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.jubula.client.core.businessprocess.TestExecution;
 import org.eclipse.jubula.client.core.businessprocess.db.TestSuiteBP;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
+import org.eclipse.jubula.client.core.model.IObjectMappingPO;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.persistence.EditSupport;
 import org.eclipse.jubula.client.ui.constants.ContextHelpIds;
@@ -302,6 +303,8 @@ public class AUTPropertyPage extends AbstractProjectPropertyPage {
                     return;
                 }
                 closeEquivalentOMEditor(autMain);
+                IObjectMappingPO objMap = autMain.getObjMap();
+                objMap.removeAllAutMains();
                 getProject().removeAUTMain(autMain);
                 m_autList.remove(autMain.getName());
                 if (m_autList.getItemCount() > 0) {

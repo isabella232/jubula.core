@@ -12,6 +12,7 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -327,7 +328,9 @@ class ObjectMappingPO implements IObjectMappingPO {
      * clears the precomputed mappings cache
      */
     private void clearMappingsCache() {
-        m_logicalNameToAssoc.clear();
+        if (m_logicalNameToAssoc != null) {
+            m_logicalNameToAssoc.clear();
+        }
         m_mappings = null;
     }
 
@@ -559,6 +562,28 @@ class ObjectMappingPO implements IObjectMappingPO {
             IObjectMappingCategoryPO unmappedTechnicalCategory) {
         m_unmappedTechnicalCategory = unmappedTechnicalCategory;
         clearMappingsCache();
+    }
+
+    @Override
+    public void removeAllAutMains() {
+        setAutMainToNull(getMappedCategory());
+        setAutMainToNull(getUnmappedLogicalCategory());
+        setAutMainToNull(getUnmappedTechnicalCategory());
+    }
+    
+    /**
+     * sets the {@link ObjectMappingCategoryPO#getAutMainParent()} to null of
+     * the specified {@link ObjectMappingCategoryPO} and all its children and childs children
+     * 
+     * @param category the category to set the {@link ObjectMappingCategoryPO#getAutMainParent()} to null
+     */
+    private void setAutMainToNull(IObjectMappingCategoryPO category) {
+        List<IObjectMappingCategoryPO> unmodifiableCategoryList =
+                category.getUnmodifiableCategoryList();
+        category.setAutMainParent(null);
+        for (IObjectMappingCategoryPO cat : unmodifiableCategoryList) {
+            setAutMainToNull(cat);
+        }
     }
 
 }
