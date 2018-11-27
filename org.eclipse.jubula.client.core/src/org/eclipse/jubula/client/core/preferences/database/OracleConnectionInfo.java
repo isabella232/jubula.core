@@ -30,8 +30,15 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
      */
     public static final String JDBC_PRE = "jdbc:oracle:thin:@"; //$NON-NLS-1$
 
+    /** name of <code>isService</code> property */
+    public static final String PROP_NAME_SERVICE = "service"; //$NON-NLS-1$
+
     /** do batch writes in large chunks */
     private static final String ORACLE_BATCH_WRITING_SIZE = "1000"; //$NON-NLS-1$
+
+
+    /** should be connect using a service url or a SID one */
+    private boolean m_isService = false;
 
     /**
      * Constructor
@@ -43,11 +50,14 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
     @Override
     public String getConnectionUrl() {
         StringBuilder sb = new StringBuilder(JDBC_PRE);
+        if (m_isService) {
+            sb.append(StringConstants.SLASH).append(StringConstants.SLASH);
+        }
         sb.append(StringUtils.defaultString(getHostname()))
-            .append(StringConstants.COLON)
-            .append(getPort())
-            .append(StringConstants.COLON)
-            .append(StringUtils.defaultString(getDatabaseName()));
+                .append(StringConstants.COLON).append(getPort())
+                .append(m_isService ? StringConstants.SLASH
+                        : StringConstants.COLON)
+                .append(StringUtils.defaultString(getDatabaseName()));
         return sb.toString();
     }
 
@@ -77,5 +87,22 @@ public class OracleConnectionInfo extends AbstractHostBasedConnectionInfo {
             "end loop;\n" + //$NON-NLS-1$
             "end;\n"; //$NON-NLS-1$
     }
+
+    /**
+     * @return the url should connect to a service
+     */
+    public boolean isService() {
+        return m_isService;
+    }
+
+    /**
+     * 
+     * @param isService should it use a service url
+     */
+    public void setService(boolean isService) {
+        m_isService = isService;
+        fireConnectionUrlChanged();
+    }
+
      
 }

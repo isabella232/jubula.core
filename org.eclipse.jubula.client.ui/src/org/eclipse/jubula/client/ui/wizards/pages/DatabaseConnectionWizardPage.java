@@ -19,6 +19,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.databinding.swt.ISWTObservableValue;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
@@ -42,12 +43,17 @@ import org.eclipse.jubula.client.ui.databinding.validators.StringToPortValidator
 import org.eclipse.jubula.client.ui.i18n.Messages;
 import org.eclipse.jubula.client.ui.utils.DialogUtils;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
+import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 
@@ -190,7 +196,16 @@ public class DatabaseConnectionWizardPage extends WizardPage {
         
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
-
+            UIComponentHelper.createLabel(parent, 
+                    I18n.getString("DatabaseConnection.Oracle.Service"), SWT.NONE); //$NON-NLS-1$
+            final Button isServiceCheckBox = new Button(parent, SWT.CHECK);
+            ISWTObservableValue selection =
+                    WidgetProperties.selection().observe(isServiceCheckBox);
+            dbc.bindValue(selection,
+                    BeanProperties.value(OracleConnectionInfo.PROP_NAME_SERVICE)
+                    .observe(m_connInfo));
+            GridDataFactory.fillDefaults().grab(true, false)
+                .align(SWT.FILL, SWT.CENTER).applyTo(isServiceCheckBox);
             UIComponentHelper.createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
             final Text hostnameText = createDetailText(parent);
@@ -210,7 +225,6 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                                 return ValidationStatus.ok();
                             }
                         }), new UpdateValueStrategy());
-
             UIComponentHelper.createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
@@ -228,9 +242,23 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     portTargetToModelUpdateStrategy,
                     new UpdateValueStrategy().setConverter(
                             new SimpleIntegerToStringConverter()));
-            
-            UIComponentHelper.createLabel(parent, 
-                    I18n.getString("DatabaseConnection.Oracle.SID"), SWT.NONE); //$NON-NLS-1$
+            String sidLabelText = I18n.getString("DatabaseConnection.Oracle.SID"); //$NON-NLS-1$
+            String serviceLabelText = I18n.getString("DatabaseConnection.Oracle.Service"); //$NON-NLS-1$
+            Label label = UIComponentHelper.createLabel(parent,
+                    m_connInfo.isService()
+                        ? serviceLabelText : sidLabelText, SWT.NONE);
+            isServiceCheckBox.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    if (m_connInfo.isService()) {
+                        label.setText(
+                                serviceLabelText + StringConstants.COLON);
+                    } else {
+                        label.setText(sidLabelText + StringConstants.COLON);
+                    }
+                    parent.layout();
+                }
+            });
             final Text schemaText = createDetailText(parent);
             DialogUtils.setWidgetName(schemaText, "Oracle.SID"); //$NON-NLS-1$
             dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(schemaText),
@@ -511,15 +539,6 @@ public class DatabaseConnectionWizardPage extends WizardPage {
      * Constructor
      * 
      * @param pageName The name of the page.
-     */
-    public DatabaseConnectionWizardPage(String pageName) {
-        super(pageName);
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param pageName The name of the page.
      * @param connectionToEdit The object that will be modified based on the
      *                         data entered on this page.
      */
@@ -714,7 +733,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             Composite parent, int fieldHeight) {
         final GridLayout detailAreaLayout = new GridLayout(2, false);
         final Group detailArea = new Group(parent, SWT.NONE);
-        final int numberOfDetailFields = 3;
+        final int numberOfDetailFields = 4;
         final int totalFieldHeight = fieldHeight * numberOfDetailFields;
         final int totalVerticalSpacing = 
             detailAreaLayout.verticalSpacing * (numberOfDetailFields - 1);
