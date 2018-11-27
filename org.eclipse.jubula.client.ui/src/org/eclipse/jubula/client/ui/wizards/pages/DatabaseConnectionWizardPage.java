@@ -148,8 +148,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     WidgetProperties.text(SWT.Modify).observe(locationText),
                     BeanProperties.value(H2ConnectionInfo.PROP_NAME_LOCATION)
                     .observe(m_connInfo),
-                        new UpdateValueStrategy()
-                        .setAfterGetValidator(new IValidator() {
+                        new UpdateValueStrategy<>()
+                        .setAfterGetValidator(new IValidator<Object>() {
                             public IStatus validate(Object value) {
                                 if (StringUtils.isEmpty((String)value)) {
                                     return ValidationStatus.error(
@@ -157,7 +157,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                                 }
                                 return ValidationStatus.ok();
                             }
-                        }), new UpdateValueStrategy());
+                        }), 
+                        new UpdateValueStrategy<>());
         }
 
         /**
@@ -193,7 +194,6 @@ public class DatabaseConnectionWizardPage extends WizardPage {
          * 
          * {@inheritDoc}
          */
-        
         public void createDetailArea(Composite parent, 
                 DataBindingContext dbc) {
             UIComponentHelper.createLabel(parent, 
@@ -206,42 +206,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     .observe(m_connInfo));
             GridDataFactory.fillDefaults().grab(true, false)
                 .align(SWT.FILL, SWT.CENTER).applyTo(isServiceCheckBox);
-            UIComponentHelper.createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
-            final Text hostnameText = createDetailText(parent);
-            DialogUtils.setWidgetName(hostnameText, "Oracle.Hostname"); //$NON-NLS-1$
-            dbc.bindValue(
-                    WidgetProperties.text(SWT.Modify).observe(hostnameText),
-                    BeanProperties.value(
-                            AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME)
-                    .observe(m_connInfo),
-                        new UpdateValueStrategy()
-                        .setAfterGetValidator(new IValidator() {
-                            public IStatus validate(Object value) {
-                                if (StringUtils.isEmpty((String)value)) {
-                                    return ValidationStatus.error(
-                        Messages.DatabaseConnectionPreferencePageHostnameEmpty);
-                                }
-                                return ValidationStatus.ok();
-                            }
-                        }), new UpdateValueStrategy());
-            UIComponentHelper.createLabel(parent, 
-                    I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
-            final Text portText = createDetailText(parent);
-            DialogUtils.setWidgetName(portText, "Oracle.Port"); //$NON-NLS-1$
-            UpdateValueStrategy portTargetToModelUpdateStrategy =
-                new UpdateValueStrategy();
-            portTargetToModelUpdateStrategy
-                .setConverter(new SimpleStringToIntegerConverter())
-                .setAfterGetValidator(new StringToPortValidator(
-                        I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
-            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(portText),
-                    BeanProperties.value(
-                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT)
-                    .observe(m_connInfo),
-                    portTargetToModelUpdateStrategy,
-                    new UpdateValueStrategy().setConverter(
-                            new SimpleIntegerToStringConverter()));
+            createHostnameAndPort(parent, dbc);
             String sidLabelText = I18n.getString("DatabaseConnection.Oracle.SID"); //$NON-NLS-1$
             String serviceLabelText = I18n.getString("DatabaseConnection.Oracle.Service"); //$NON-NLS-1$
             Label label = UIComponentHelper.createLabel(parent,
@@ -265,8 +230,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     BeanProperties.value(
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME)
                     .observe(m_connInfo),
-                        new UpdateValueStrategy()
-                        .setAfterGetValidator(new IValidator() {
+                        new UpdateValueStrategy<>()
+                        .setAfterGetValidator(new IValidator<Object>() {
                             public IStatus validate(Object value) {
                                 if (StringUtils.isEmpty((String)value)) {
                                     return ValidationStatus.error(
@@ -274,7 +239,53 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                                 }
                                 return ValidationStatus.ok();
                             }
-                        }), new UpdateValueStrategy());
+                        }), new UpdateValueStrategy<>());
+        }
+
+        /**
+         * creates the hostname and the port area for the oracle details
+         * @param parent the details area
+         * @param dbc the {@link DataBindingContext}
+         */
+        private void createHostnameAndPort(Composite parent,
+                DataBindingContext dbc) {
+            UIComponentHelper.createLabel(parent,
+                    I18n.getString("DatabaseConnection.HostBased.Hostname"), SWT.NONE); //$NON-NLS-1$
+            final Text hostnameText = createDetailText(parent);
+            DialogUtils.setWidgetName(hostnameText, "Oracle.Hostname"); //$NON-NLS-1$
+            dbc.bindValue(
+                    WidgetProperties.text(SWT.Modify).observe(hostnameText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME)
+                    .observe(m_connInfo),
+                        new UpdateValueStrategy<>()
+                        .setAfterGetValidator(new IValidator<Object>() {
+                            public IStatus validate(Object value) {
+                                if (StringUtils.isEmpty((String)value)) {
+                                    return ValidationStatus.error(
+                        Messages.DatabaseConnectionPreferencePageHostnameEmpty);
+                                }
+                                return ValidationStatus.ok();
+                            }
+                        }), new UpdateValueStrategy<>());
+            UIComponentHelper.createLabel(parent,
+                    I18n.getString("DatabaseConnection.HostBased.Port"), //$NON-NLS-1$
+                    SWT.NONE);
+            final Text portText = createDetailText(parent);
+            DialogUtils.setWidgetName(portText, "Oracle.Port"); //$NON-NLS-1$
+            UpdateValueStrategy<Object, Object> portModelUpdateStrategy =
+                    new UpdateValueStrategy<>();
+            portModelUpdateStrategy
+                    .setConverter(new SimpleStringToIntegerConverter())
+                    .setAfterGetValidator(new StringToPortValidator(I18n
+                            .getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
+            dbc.bindValue(WidgetProperties.text(SWT.Modify).observe(portText),
+                    BeanProperties.value(
+                            AbstractHostBasedConnectionInfo.PROP_NAME_PORT)
+                            .observe(m_connInfo),
+                    portModelUpdateStrategy,
+                    new UpdateValueStrategy<>().setConverter(
+                            new SimpleIntegerToStringConverter()));
         }
 
         /**
@@ -333,8 +344,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     BeanProperties.value(
                             AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME)
                     .observe(m_connInfo),
-                    new UpdateValueStrategy()
-                    .setAfterGetValidator(new IValidator() {
+                    new UpdateValueStrategy<>()
+                    .setAfterGetValidator(new IValidator<Object>() {
                         public IStatus validate(Object value) {
                             if (StringUtils.isEmpty((String)value)) {
                                 return ValidationStatus.error(
@@ -342,15 +353,15 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                             }
                             return ValidationStatus.ok();
                         }
-                    }), new UpdateValueStrategy());
+                    }), new UpdateValueStrategy<>());
 
             UIComponentHelper.createLabel(parent, 
                     I18n.getString("DatabaseConnection.HostBased.Port"), SWT.NONE); //$NON-NLS-1$
             final Text portText = createDetailText(parent);
             DialogUtils.setWidgetName(portText, "PostGreSQL.Port"); //$NON-NLS-1$
-            UpdateValueStrategy portTargetToModelUpdateStrategy =
-                new UpdateValueStrategy();
-            portTargetToModelUpdateStrategy
+            UpdateValueStrategy<Object, Object> portModelUpdateStragety =
+                new UpdateValueStrategy<>();
+            portModelUpdateStragety
                 .setConverter(new SimpleStringToIntegerConverter())
                 .setAfterGetValidator(new StringToPortValidator(
                         I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
@@ -358,8 +369,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     BeanProperties.value(
                             AbstractHostBasedConnectionInfo.PROP_NAME_PORT)
                     .observe(m_connInfo),
-                    portTargetToModelUpdateStrategy,
-                    new UpdateValueStrategy().setConverter(
+                    portModelUpdateStragety,
+                    new UpdateValueStrategy<>().setConverter(
                             new SimpleIntegerToStringConverter()));
             
             UIComponentHelper.createLabel(parent, 
@@ -370,8 +381,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     BeanProperties.value(
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME)
                     .observe(m_connInfo),
-                        new UpdateValueStrategy()
-                        .setAfterGetValidator(new IValidator() {
+                        new UpdateValueStrategy<>()
+                        .setAfterGetValidator(new IValidator<Object>() {
                             public IStatus validate(Object value) {
                                 if (StringUtils.isEmpty((String)value)) {
                                     return ValidationStatus.error(
@@ -379,7 +390,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                                 }
                                 return ValidationStatus.ok();
                             }
-                        }), new UpdateValueStrategy());
+                        }), new UpdateValueStrategy<>());
         }
 
         /**
@@ -438,8 +449,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     BeanProperties.value(
                             AbstractHostBasedConnectionInfo.PROP_NAME_HOSTNAME)
                     .observe(m_connInfo),
-                    new UpdateValueStrategy()
-                        .setAfterGetValidator(new IValidator() {
+                    new UpdateValueStrategy<>()
+                        .setAfterGetValidator(new IValidator<Object>() {
                             public IStatus validate(Object value) {
                                 if (StringUtils.isEmpty((String)value)) {
                                     return ValidationStatus.error(
@@ -447,7 +458,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                                 }
                                 return ValidationStatus.ok();
                             }
-                        }), new UpdateValueStrategy());
+                        }), new UpdateValueStrategy<>());
 
             
             UIComponentHelper.createLabel(parent, 
@@ -457,10 +468,9 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             
             DialogUtils.setWidgetName(portText, "MySQL.Port"); //$NON-NLS-1$
             
-            UpdateValueStrategy portTargetToModelUpdateStrategy =
-                new UpdateValueStrategy();
-            
-            portTargetToModelUpdateStrategy
+            UpdateValueStrategy<Object, Object> portModelUpdateStrategy =
+                    new UpdateValueStrategy<>();
+            portModelUpdateStrategy
                 .setConverter(new SimpleStringToIntegerConverter())
                 .setAfterGetValidator(new StringToPortValidator(
                         I18n.getString("DatabaseConnection.HostBased.Port"))); //$NON-NLS-1$
@@ -469,8 +479,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     BeanProperties.value(
                             AbstractHostBasedConnectionInfo.PROP_NAME_PORT)
                     .observe(m_connInfo),
-                    portTargetToModelUpdateStrategy,
-                    new UpdateValueStrategy().setConverter(
+                    portModelUpdateStrategy,
+                    new UpdateValueStrategy<>().setConverter(
                             new SimpleIntegerToStringConverter()));
             
             
@@ -482,8 +492,8 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                     BeanProperties.value(
                             AbstractHostBasedConnectionInfo.PROP_NAME_DB_NAME)
                     .observe(m_connInfo),
-                new UpdateValueStrategy().setAfterGetValidator(
-                    new IValidator() {
+                new UpdateValueStrategy<>().setAfterGetValidator(
+                    new IValidator<Object>() {
                         public IStatus validate(Object value) {
                             if (StringUtils.isEmpty((String)value)) {
                                 return ValidationStatus.error(
@@ -491,7 +501,7 @@ public class DatabaseConnectionWizardPage extends WizardPage {
                             }
                             return ValidationStatus.ok();
                         }
-                    }), new UpdateValueStrategy());
+                    }), new UpdateValueStrategy<>());
             
         }
 
@@ -577,15 +587,15 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             BeanProperties.value(
                     DatabaseConnection.PROP_NAME_NAME)
             .observe(m_connectionToEdit),
-            new UpdateValueStrategy()
-                .setAfterGetValidator(new IValidator() {
+            new UpdateValueStrategy<>()
+                .setAfterGetValidator(new IValidator<Object>() {
                     public IStatus validate(Object value) {
                         if (StringUtils.isEmpty((String)value)) {
                             return ValidationStatus.error(
                                     I18n.getString("DatabaseConnectionWizardPage.Error.emptyName")); //$NON-NLS-1$
                         }
                         return ValidationStatus.ok();
-                    } }), new UpdateValueStrategy());
+                    } }), new UpdateValueStrategy<>());
         nameText.setFocus();
         nameText.selectAll();
         
@@ -621,15 +631,15 @@ public class DatabaseConnectionWizardPage extends WizardPage {
             BeanProperties.value(
                     DatabaseConnectionInfo.PROP_NAME_CONN_URL)
             .observeDetail(connectionInfoObservable),
-                new UpdateValueStrategy().setAfterGetValidator(
-                    new IValidator() {
+                new UpdateValueStrategy<>().setAfterGetValidator(
+                    new IValidator<Object>() {
                         public IStatus validate(Object value) {
                             if (StringUtils.isEmpty((String)value)) {
                                 return ValidationStatus.error(
                                     I18n.getString("DatabaseConnectionWizardPage.Error.emptyName")); //$NON-NLS-1$
                                 }
                             return ValidationStatus.ok();
-                        } }),  new UpdateValueStrategy());
+                        } }),  new UpdateValueStrategy<>());
         PlatformUI.getWorkbench().getHelpSystem().setHelp(composite, 
                 ContextHelpIds.DATABASE_CONNECTION_CONFIGURATION_DIALOG);
     }
