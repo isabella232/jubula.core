@@ -799,7 +799,10 @@ class TestResultPO implements ITestResultPO {
                     m_additions.remove(iTestResultAdditionPO);
                 }
             }
-            m_additions.add(new TestResultAdditionPO(isJUnitTestSuite));
+            TestResultAdditionPO addition = new TestResultAdditionPO(
+                    isJUnitTestSuite);
+            addition.setInternalTestResultSummaryID(m_testResultSummaryId);
+            m_additions.add(addition);
         }
     }
 
