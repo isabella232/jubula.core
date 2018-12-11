@@ -72,8 +72,8 @@ public abstract class AbstractTreeViewContentProvider extends
                                 .getGuidOfProjectId(nodeProjId);
                         for (IReusedProjectPO reusedProject : activeProject
                                 .getUsedProjects()) {
-                            if (nodeProjGUID.equals(reusedProject
-                                    .getProjectGuid())) {
+                            if (nodeProjGUID != null && nodeProjGUID
+                                    .equals(reusedProject.getProjectGuid())) {
                                 return reusedProject;
                             }
                         }
