@@ -84,7 +84,35 @@
      </listitem>
      <listitem>
       <para>org.apache.commons.beanutils</para>
-     </listitem></itemizedlist></para>
+     </listitem>
+     <listitem>
+      <para>org.apache.oro</para>
+     </listitem>
+     <listitem>
+      <para>org.eclipse.osgi</para>
+     </listitem>
+     <listitem>
+      <para>javax.xml</para>
+     </listitem>
+     <listitem>
+      <para>javax.xml.stream</para>
+     </listitem>
+     <listitem>
+      <para>org.slf4j.api</para>
+     </listitem>
+     <listitem>
+      <para>ch.logback.classic</para>
+     </listitem>
+     <listitem>
+      <para>ch.logback.core</para>
+     </listitem>
+     <listitem>
+      <para>org.xmlpull</para>
+     </listitem>
+     <listitem>
+      <para>com.thoughtworks.xstream</para>
+     </listitem>
+     </itemizedlist></para>
      </listitem>
    <listitem>
     <para>
@@ -121,41 +149,6 @@
     <para>RCP is not listed because the rc.rcp plugin is deployed into
      the AUT
     </para>
-   </listitem>
-   <listitem>
-    <para>
-     Each project also requires dependencies to
-     <emphasis role="strong">all</emphasis>
-     of the
-     <emphasis role="strong">3rd party dependencies</emphasis>
-     of the API:
-    </para>
-    <itemizedlist>
-     <listitem>
-      <para>org.apache.oro</para>
-     </listitem>
-     <listitem>
-      <para>javax.xml</para>
-     </listitem>
-     <listitem>
-      <para>javax.xml.stream</para>
-     </listitem>
-     <listitem>
-      <para>org.slf4j.api</para>
-     </listitem>
-     <listitem>
-      <para>ch.logback.classic</para>
-     </listitem>
-     <listitem>
-      <para>ch.logback.core</para>
-     </listitem>
-     <listitem>
-      <para>org.xmlpull</para>
-     </listitem>
-     <listitem>
-      <para>com.thoughtworks.xstream</para>
-     </listitem>
-    </itemizedlist>
    </listitem>
   </orderedlist>
   <para>
