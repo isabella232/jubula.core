@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.Validate;
+import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 
 /**
  * Encapsulates the pathing for the mouse pointer during testing. 
@@ -23,7 +24,18 @@ import org.apache.commons.lang.Validate;
  * @created Oct 13, 2008
  */
 public class MouseMovementStrategy {
+    
+    /** */
+    private static boolean isMouseMovementDisabled = false;
+    /** */
+    private static String disableMouseMovement = "TEST_DISABLE_MOUSE_MOVEMENT"; //$NON-NLS-1$
 
+    
+    static {
+        String value = EnvironmentUtils
+                .getProcessOrSystemProperty(disableMouseMovement);
+        isMouseMovementDisabled = Boolean.valueOf(value).booleanValue();
+    }
     /**
      * Private constructor for utility class
      */
@@ -51,11 +63,13 @@ public class MouseMovementStrategy {
      */
     public static Point [] getMovementPath(Point from, Point to, 
             boolean isMoveInSteps, boolean firstHorizontal) {
-        
-        Validate.notNull(from, "Initial point must not be null."); //$NON-NLS-1$
         Validate.notNull(to, "End point must not be null."); //$NON-NLS-1$
         Validate.isTrue(to.x >= 0, "End x-coordinate must not be negative."); //$NON-NLS-1$
         Validate.isTrue(to.y >= 0, "End y-coordinate must not be negative."); //$NON-NLS-1$
+        if (isMouseMovementDisabled) {
+            return new Point[] {to};
+        }
+        Validate.notNull(from, "Initial point must not be null."); //$NON-NLS-1$
         Validate.isTrue(from.x >= 0, "Initial x-coordinate must not be negative."); //$NON-NLS-1$
         Validate.isTrue(from.y >= 0, "Initial y-coordinate must not be negative."); //$NON-NLS-1$
         

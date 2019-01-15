@@ -55,4 +55,16 @@
     </para>
   </listitem>
 </itemizedlist>
+
+<para>
+    <emphasis role="strong">Disable mouse movement strategy is possible</emphasis>
+  </para>
+  <itemizedlist>
+  <listitem>
+    <para>
+  It is now possible to disable the mouse movement strategy with the environment variable <literal>TEST_DISABLE_MOUSE_MOVEMENT=true</literal>.
+  But beware it might break tests because some events are not triggered due to the missing mouse movement.
+    </para>
+  </listitem>
+</itemizedlist>
 </section>
