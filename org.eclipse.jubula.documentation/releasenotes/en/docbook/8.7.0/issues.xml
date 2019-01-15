@@ -40,5 +40,15 @@
     </para>
   </listitem>
 </itemizedlist>
+  <para>
+    <emphasis role="strong">Execute external command in Windows</emphasis>
+  </para>
+    <itemizedlist>
+  <listitem>
+    <para>
+ There is a problem that sometimes we cannot kill the started Process which was started via execute external command.
+    </para>
+  </listitem>
+</itemizedlist>
 
 </section>

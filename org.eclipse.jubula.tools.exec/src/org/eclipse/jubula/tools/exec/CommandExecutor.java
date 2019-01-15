@@ -262,31 +262,17 @@ public class CommandExecutor {
             }
         }
         
-        CommandLine cmdLine = new CommandLine(executable);
-        String[] arguments;
-        if (splitCharacter != null) {
-            arguments = StringUtils.split(rawArguments, splitCharacter);
-        } else {
-            if (StringUtils.isNotEmpty(rawArguments)) {
-                arguments = new String[] { rawArguments };
-            } else {
-                arguments = null;
-            }
-        }
-        
-        if (arguments != null) {
-            for (String argument : arguments) {
-                cmdLine.addArgument(argument, true);
-            }
-        }
+        CommandLine cmdLine =
+                createCommandLine(executable, rawArguments, splitCharacter);
 
         Executor executor = new ExtendedDefaultExecutor();
         executor.setWorkingDirectory(
                 new File(StringUtils.isNotBlank(workingDir) 
                         ? workingDir  : ".")); //$NON-NLS-1$
         
-        ByteArrayOutputStream combinedStream = new ByteArrayOutputStream();
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        final ByteArrayOutputStream combinedStream =
+                new ByteArrayOutputStream();
+        final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         TeeOutputStream outStreamTee = new TeeOutputStream(
                 outStream, combinedStream);
         ByteArrayOutputStream errStream = new ByteArrayOutputStream();
@@ -313,10 +299,15 @@ public class CommandExecutor {
         }
         removeJavaOptions(environment);
         executor.execute(cmdLine, environment, resultHandler);
-        
-        resultHandler.waitFor();
+        if (timeout > 0) {
+            resultHandler.waitFor(timeout + 200);
+        } else {
+            resultHandler.waitFor();
+        }
+        String combinedOutput = r.getCombinedOutput();
+        closeStreams(combinedStream, outStream, resultHandler);
         if (watchdog.killedProcess()) {
-            throw new TimeoutException(r.getCombinedOutput());
+            throw new TimeoutException(combinedOutput);
         }
         int exitValue = resultHandler.getExitValue();
         if (Executor.INVALID_EXITVALUE == exitValue) {
@@ -324,6 +315,58 @@ public class CommandExecutor {
         }
         r.setReturnValue(exitValue);
         return r;
+    }
+
+    /**
+     * 
+     * @param combinedStream the combinedStream
+     * @param outStream the outStream
+     * @param resultHandler the DefaultExecuteResultHandler
+     */
+    private static void closeStreams(final ByteArrayOutputStream combinedStream,
+            final ByteArrayOutputStream outStream,
+            DefaultExecuteResultHandler resultHandler) {
+        if (!resultHandler.hasResult()) {
+            Thread streamkillThread = new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        combinedStream.close();
+                        outStream.close();
+                    } catch (IOException e) {
+                        // do Nothing
+                    }
+                }
+            });
+            streamkillThread.start();
+        }
+    }
+
+    /**
+     * @param executable the executable
+     * @param rawArguments the raw arguments
+     * @param splitCharacter the plitcharachter
+     * @return the commandline
+     */
+    private static CommandLine createCommandLine(final String executable,
+            final String rawArguments, final Character splitCharacter) {
+        CommandLine cmdLine = new CommandLine(executable);
+        String[] arguments;
+        if (splitCharacter != null) {
+            arguments = StringUtils.split(rawArguments, splitCharacter);
+        } else {
+            if (StringUtils.isNotEmpty(rawArguments)) {
+                arguments = new String[] { rawArguments };
+            } else {
+                arguments = null;
+            }
+        }
+        
+        if (arguments != null) {
+            for (String argument : arguments) {
+                cmdLine.addArgument(argument, true);
+            }
+        }
+        return cmdLine;
     }
 
     /**
