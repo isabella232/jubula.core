@@ -162,7 +162,7 @@ public class TestDataBP {
             if (!StringUtils.equals(funct.getFunctionName(), CTDS)) {
                 continue;
             }
-            addAllCTDSRefsGetCTDS(res, funct.getArguments());
+            addAllCTDSRefsGetCTDS(res, funct.getNestedTokens());
         }
     }
 
@@ -194,9 +194,9 @@ public class TestDataBP {
                 FunctionToken next = (FunctionToken) tokens[ind++];
                 curr = null; // no longer a literal parameter
                 if (StringUtils.equals(next.getFunctionName(), CTDS)) {
-                    addAllCTDSRefsGetCTDS(res, next.getArguments());
+                    addAllCTDSRefsGetCTDS(res, next.getNestedTokens());
                 } else {
-                    addAllCTDSRefsNotGetCTDS(res, next.getArguments());
+                    addAllCTDSRefsNotGetCTDS(res, next.getNestedTokens());
                 }
                 ind++;
                 continue;
