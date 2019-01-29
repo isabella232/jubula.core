@@ -14,6 +14,27 @@
     <title>Known issues and other information</title>
 
   <para>
+    <emphasis role="strong">HTML support will be removed in the next release</emphasis>
+  </para>
+ <itemizedlist>
+  <listitem>
+    <para>
+     Due to the fast development in the Browser segment, we have decided that in the next release
+     we will drop the support for the HTML Toolkit. We recommend that you use Selenium directly.
+    </para>
+  </listitem>
+ </itemizedlist>
+  <para>
+    <emphasis role="strong">ALM support will be removed in the next release</emphasis>
+  </para>
+ <itemizedlist>
+  <listitem>
+    <para>
+     The reporting to an ALM system(like Bugzilla) after a test execution will be removed with the next release.
+    </para>
+  </listitem>
+ </itemizedlist>
+  <para>
     <emphasis role="strong">Java 9 and later</emphasis>
   </para>
     <itemizedlist>
