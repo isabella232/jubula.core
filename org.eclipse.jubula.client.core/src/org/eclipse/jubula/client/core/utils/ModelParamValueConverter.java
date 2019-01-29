@@ -94,6 +94,13 @@ public class ModelParamValueConverter extends ParamValueConverter {
                 String refGuid = 
                     RefToken.extractCore(refToken.getModelString());
                 if (refGuid.equals(guid)) {
+                    List<IParamValueToken> tokens = getTokens();
+                    for (IParamValueToken iParamValueToken : tokensCopy) {
+                        if (iParamValueToken instanceof FunctionToken) {
+                            removeTokenFromFunction(
+                                    (FunctionToken) iParamValueToken, token);
+                        }
+                    }
                     getTokens().remove(token);
                     isRefRemoved = true;
                 }                
@@ -107,6 +114,29 @@ public class ModelParamValueConverter extends ParamValueConverter {
     
     
     
+    /**
+     * recursive going through the functions and deleting all nested tokens
+     * @param ftoken the function token
+     * @param tokenToDelete the token which should be removed
+     */
+    private void removeTokenFromFunction(FunctionToken ftoken,
+            IParamValueToken tokenToDelete) {
+        IParamValueToken[] nestedTokens = ftoken.getNestedTokens();
+        for (int i = 0; i < nestedTokens.length; i++) {
+            IParamValueToken valueToken = nestedTokens[i];
+            if (valueToken instanceof FunctionToken) {
+                removeTokenFromFunction((FunctionToken) valueToken,
+                        tokenToDelete);
+            }
+            if (valueToken.equals(tokenToDelete)) {
+                nestedTokens[i] = new SimpleValueToken("DELETED", i, //$NON-NLS-1$
+                        ftoken.getParamDescription());
+            }
+
+        }
+
+    }
+
     /**
      * replaces an old guid with a new guid in all available RefTokens, which
      * contain a modelstring containing the given old guid
