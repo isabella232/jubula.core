@@ -197,7 +197,7 @@ public class UINodeBP {
      * @param trNode the testResult node
      * @return an {@link INodePO} which can be of any kind and from any project
      */
-    private static INodePO getExecFromTestResultNode(TestResultNode trNode) {
+    public  static INodePO getExecFromTestResultNode(TestResultNode trNode) {
         INodePO nodePO = trNode.getNode();
         String guid = nodePO.getGuid();
         if (nodePO instanceof ITestCasePO 

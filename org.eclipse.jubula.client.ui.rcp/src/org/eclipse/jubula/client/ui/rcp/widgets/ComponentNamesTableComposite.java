@@ -387,7 +387,7 @@ public class ComponentNamesTableComposite extends Composite implements
          * {@inheritDoc}
          */
         public Object[] getElements(Object inputElement) {
-            return ((List)inputElement).toArray();
+            return ((List<?>)inputElement).toArray();
         }
         
         /**

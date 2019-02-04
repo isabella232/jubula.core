@@ -581,6 +581,10 @@
     </commandParameter>
 </command>
     <command
+      categoryId="org.eclipse.jubula.client.ui.commands"
+      id="org.eclipse.jubula.client.ui.commands.OpenReferencedPlace"
+      name="%OpenReferencedLocation"/>
+    <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.CreateNewCategoryCommand"
       name="%Category" />
@@ -1286,6 +1290,11 @@
       schemeId="org.eclipse.jubula.client.ui.rcp.defaultKeyScheme"
       sequence="F3" />
     <key
+      commandId="org.eclipse.jubula.client.ui.commands.OpenReferencedPlace"
+      contextId="org.eclipse.ui.contexts.window"
+      schemeId="org.eclipse.jubula.client.ui.rcp.defaultKeyScheme"
+      sequence="M1+F3" />
+    <key
       commandId="org.eclipse.jubula.client.ui.rcp.commands.AddEventHandler"
       contextId="org.eclipse.ui.contexts.window"
       schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
@@ -1436,6 +1445,9 @@
       locationURI="popup:org.eclipse.jubula.client.ui.editors.TestResultViewer?after=additions">
       <command
         commandId="org.eclipse.jubula.client.ui.commands.OpenSpecification"
+        style="push" />
+      <command
+        commandId="org.eclipse.jubula.client.ui.commands.OpenReferencedPlace"
         style="push" />
       <command
         commandId="org.eclipse.jubula.client.ui.commands.ShowSpecification"
@@ -2344,6 +2356,25 @@
      </enabledWhen>
    </handler>
    <handler
+      class="org.eclipse.jubula.client.ui.rcp.handlers.open.OpenReferencedTCHandler"
+      commandId="org.eclipse.jubula.client.ui.commands.OpenReferencedPlace">
+      <activeWhen>
+        <and>
+          <with variable="org.eclipse.jubula.client.ui.rcp.variable.isProjectActive">
+            <equals value="true" />
+          </with>
+          <count value="1" />
+          <iterate operator="and">
+            <or>
+              <instanceof value="org.eclipse.jubula.client.core.model.IExecTestCasePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.IEventExecTestCasePO" />
+              <instanceof value="org.eclipse.jubula.client.core.model.TestResultNode" />
+            </or>
+          </iterate>
+        </and>
+      </activeWhen>
+   </handler>
+   <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.SaveLogAsHandler"
       commandId="org.eclipse.jubula.client.ui.commands.SaveLogAs">
      <enabledWhen>
@@ -2353,6 +2384,14 @@
             </iterate>
         </with>     
      </enabledWhen>
+     <activeWhen>
+        <and>
+          <count value="+" />
+          <with variable="activePartId">
+            <equals value="org.eclipse.jubula.client.ui.views.TestresultSummaryView" />
+          </with>
+        </and>
+      </activeWhen>
    </handler>
    <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.JumpToCTDSHandler"
