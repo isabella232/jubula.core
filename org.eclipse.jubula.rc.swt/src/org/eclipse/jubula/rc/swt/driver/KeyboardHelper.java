@@ -122,8 +122,11 @@ public class KeyboardHelper {
      * @return the KeyStroke for the given character.
      */
     public KeyStroke getKeyStroke(char character) {
-        KeyStroke keyStroke = null;
-        
+        KeyStroke keyStroke = m_mapping.get(new Character(character));
+        // the mapping file goes first after this the default behavior
+        if (keyStroke != null) {
+            return keyStroke;
+        }
         if (Character.isUpperCase(character)) {
             final char lowChar = Character.toLowerCase(character);
             keyStroke = new KeyStroke(lowChar);
@@ -133,7 +136,6 @@ public class KeyboardHelper {
         if (isSingleKey(character)) {
             return new KeyStroke(character);
         }
-        keyStroke = m_mapping.get(new Character(character));
         
         // if no KeyStroke was found, return a KeyStroke with the given 
         // character and log in debug.
