@@ -58,9 +58,10 @@
     <listitem>
       <para>
         To add the keyboard layout file, you must create a fragment containing your newly added keyboard layout file(s). The host plugin for the fragment is:<?linebreak?>
-        <emphasis>org.eclipse.jubula.client.core</emphasis><?linebreak?>
+        <emphasis>org.eclipse.jubula.client.api</emphasis><?linebreak?>
         The path within the fragment must be:<?linebreak?>
-        <emphasis>resources/keyboard_mapping/&lt;name&gt;.properties</emphasis>
+        <emphasis>resources/keyboard_mapping/&lt;name&gt;.properties</emphasis><?linebreak?>
+        Also the resources folder must be in the bin.includes in the build.properties
       </para>
 
       <para role="tip">If you name the file with the locale code, then the keyboard layout will be displayed in plain text in the AUT configuration dialog.</para>
