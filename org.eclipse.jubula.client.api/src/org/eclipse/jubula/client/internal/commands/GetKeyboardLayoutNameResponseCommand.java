@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.eclipse.jubula.client.RCPKeyboardRegistry;
 import org.eclipse.jubula.client.internal.BaseConnection;
 import org.eclipse.jubula.client.internal.exceptions.ConnectionException;
 import org.eclipse.jubula.communication.internal.APICommand;
@@ -66,15 +67,24 @@ public class GetKeyboardLayoutNameResponseCommand implements APICommand {
     public Message execute() {
         String layoutName = m_message.getKeyboardLayoutName();
         if (layoutName != null && layoutName.length() > 0) {
-            String filename = SwtToolkitConstants.KEYBOARD_MAPPING_FILE_PREFIX
-                + layoutName
-                + SwtToolkitConstants.KEYBOARD_MAPPING_FILE_POSTFIX;
-            final InputStream stream = getClass().getClassLoader()
-                .getResourceAsStream(filename);
+            Properties prop = RCPKeyboardRegistry.INSTANCE
+                    .getPropertiesForLocalCode(layoutName);
+            InputStream stream = null;
             try {
-                if (stream != null) {
-                    Properties prop = new Properties();
-                    prop.load(stream);
+                if (prop == null) {
+                    String filename =
+                            SwtToolkitConstants.KEYBOARD_MAPPING_FILE_PREFIX
+                                    + layoutName
+                                    + SwtToolkitConstants
+                                    .KEYBOARD_MAPPING_FILE_POSTFIX;
+                    stream = getClass().getClassLoader()
+                            .getResourceAsStream(filename);
+                    if (stream != null) {
+                        prop = new Properties();
+                        prop.load(stream);
+                    }
+                }
+                if (prop != null) {
                     m_connection.send(new SetKeyboardLayoutMessage(prop));
                 } else {
                     LOG.error("Mapping for '" + layoutName + "' could not be found."); //$NON-NLS-1$//$NON-NLS-2$
