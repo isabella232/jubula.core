@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>com.bredexsw.jubula</groupId>
 		<artifactId>com.bredexsw.jubula.releng.client</artifactId>
-		<version>7.0.1-SNAPSHOT</version>
+		<version>7.0.2-SNAPSHOT</version>
 		<relativePath>../../com.bredexsw.jubula.core/com.bredexsw.jubula.releng.client</relativePath>
 	</parent>
 	<properties>

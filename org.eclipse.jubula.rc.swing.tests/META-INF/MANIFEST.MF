@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for Jubula Swing RC
 Bundle-SymbolicName: org.eclipse.jubula.rc.swing.tests;singleton:=true
-Bundle-Version: 7.0.1.qualifier
+Bundle-Version: 7.0.2.qualifier
 Bundle-Vendor: Eclipse Jubula
 Fragment-Host: org.eclipse.jubula.rc.swing;bundle-version="[7.0.0,8.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

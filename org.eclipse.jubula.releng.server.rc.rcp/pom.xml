@@ -10,14 +10,14 @@
     <parent>
         <artifactId>org.eclipse.jubula.releng.server</artifactId>
         <groupId>org.eclipse.jubula</groupId>
-        <version>7.0.1-SNAPSHOT</version>
+        <version>7.0.2-SNAPSHOT</version>
         <relativePath>../org.eclipse.jubula.releng.server</relativePath>
     </parent>
     <groupId>org.eclipse.jubula</groupId>
     <artifactId>org.eclipse.jubula.releng.server.rc.rcp</artifactId>
     <name>Eclipse Jubula Server Remote Control Components</name>
     <description>Release engineering for Jubula server remote control components.</description>
-    <version>7.0.1-SNAPSHOT</version>
+    <version>7.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>../org.eclipse.jubula.rc.rcp.feature</module>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Stop AUT Agent" uid="org.eclipse.jubula.product.autagent.stop" id="org.eclipse.jubula.app.autagent.product" application="org.eclipse.jubula.app.autagent" version="7.0.1.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="Stop AUT Agent" uid="org.eclipse.jubula.product.autagent.stop" id="org.eclipse.jubula.app.autagent.product" application="org.eclipse.jubula.app.autagent" version="7.0.2.qualifier" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
