@@ -52,14 +52,7 @@ public class ObjectMappingPM {
         q.setParameter("ids", //$NON-NLS-1$
                 categories.stream().map(IObjectMappingCategoryPO::getId)
                         .collect(Collectors.toList()));
-        final Query q2 = session.createQuery("DELETE FROM " //$NON-NLS-1$
-                + PoMaker.getObjectMappingCategoryClass().getSimpleName()
-                + " omc WHERE omc.id IN :ids"); //$NON-NLS-1$
-        q2.setParameter("ids", //$NON-NLS-1$
-                categories.stream().map(IObjectMappingCategoryPO::getId)
-                        .collect(Collectors.toList()));
         q.executeUpdate();
-        q2.executeUpdate();
         transaction.commit();
     }
 }
