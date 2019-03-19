@@ -67,4 +67,19 @@
       <para role="tip">If you name the file with the locale code, then the keyboard layout will be displayed in plain text in the AUT configuration dialog.</para>
     </listitem>
   </orderedlist>
+    <section xml:id="keyboard-layout-files-api">
+    <title>Keyboard layout files for API</title>
+    
+      <para>
+    For the API there is the class <emphasis>RCPKeyboardRegistry</emphasis> where you can add the properties for a specified Locale(see <xref linkend="api-keyboard-layout" />).
+    <figure xml:id="api-keyboard-layout">
+            <title>Example for Czech locale</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/api-keyboard-layout.png" />
+                </imageobject>
+            </mediaobject>
+        </figure>
+  </para>
+    </section>
 </chapter>
