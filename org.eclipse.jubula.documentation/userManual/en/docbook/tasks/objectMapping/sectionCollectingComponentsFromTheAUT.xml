@@ -183,43 +183,6 @@
       </listitem>
     </itemizedlist>
   </section>
-  <section xml:id="for-html-auts">
-    <title>For HTML AUTs:</title>
-    <itemizedlist>
-      <listitem>
-        <para>
-          While the Object Mapping Mode is active, the AUT cannot be
-          used.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          To collect a technical name for a component, click the
-          component whose name you want to collect.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          If the AUT you are mapping has been specified as a
-          multi-window AUT in the AUT configuration
-          (<xref linkend="advanced-html-aut-config"/>), then you will see an extra
-          button in the Object Mapping Editor. When multiple windows
-          are open, then you can choose between the windows – the
-          window you choose is the window in which the mapping will
-          take place. You should open the new window before starting
-          the Object Mapping Mode. You can switch back and forth
-          between windows by selecting them in the Object Mapping
-          Editor.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          You will also need to use the HTML actions to switch
-          between windows in your test.
-        </para>
-      </listitem>
-    </itemizedlist>
-  </section>
   <section xml:id="understanding-the-colored-dots-when-collecting-component-names-in-the-object-mapping-editor">
     <title>Understanding the colored dots when collecting component names in the Object Mapping Editor</title>
     <anchor role="helpid" condition="objectMapEditorContextId" xml:id="understanding-the-colored-dots-when-collecting-component-names-in-the-object-mapping-editor.objectMapEditorContextId" xreflabel="Object Mapping"/>

@@ -18,7 +18,6 @@
   <xi:include href="sectionUsingWorkingDir.xml"/>
   <xi:include href="sectionStartingJavaAUTs.xml"/>
   <xi:include href="sectionStartingJavaFXAUTs.xml"/>
-  <xi:include href="sectionStartingWebAUTs.xml"/>
   <xi:include href="sectionStartingOtherAUTs.xml"/>
   
 </section>

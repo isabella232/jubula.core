@@ -48,8 +48,7 @@
       <listitem>
         <para>
           are the most specific components. They are only available
-          for certain toolkits. For example, a HTML link is a
-          component which is only available in Web applications.
+          for certain toolkits.
         </para>
       </listitem>
     </varlistentry>

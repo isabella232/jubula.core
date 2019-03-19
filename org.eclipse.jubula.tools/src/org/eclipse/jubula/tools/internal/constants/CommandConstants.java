@@ -44,8 +44,6 @@ public abstract class CommandConstants {
     public static final String SWING_TOOLKIT = "com.bredexsw.guidancer.SwingToolkitPlugin"; //$NON-NLS-1$
     /** constant: "Rcp" */
     public static final String RCP_TOOLKIT = "com.bredexsw.guidancer.RcpToolkitPlugin"; //$NON-NLS-1$
-    /** constant: "Html" */
-    public static final String HTML_TOOLKIT = "com.bredexsw.guidancer.HtmlToolkitPlugin"; //$NON-NLS-1$
     /** ID of the SLF4J API bundle */
     public static final String SLF4J_API_BUNDLE_ID = "org.slf4j.api"; //$NON-NLS-1$
     /** ID of the SLF4J JCL bundle */
@@ -96,12 +94,6 @@ public abstract class CommandConstants {
     public static final String RC_SWT_BUNDLE_ID = "org.eclipse.jubula.rc.swt"; //$NON-NLS-1$
     /** ID of the RCP RC bundle */
     public static final String RC_RCP_BUNDLE_ID = "org.eclipse.jubula.rc.rcp.swt"; //$NON-NLS-1$
-    /** ID of the HTML RC bundle */
-    public static final String RC_HTML_BUNDLE_ID = "com.bredexsw.jubula.rc.html"; //$NON-NLS-1$
-    /** ID of the HTML RC Selenium2 bundle */
-    public static final String RC_HTML_SELENIUM2_BUNDLE_ID = "com.bredexsw.jubula.rc.html.selenium2"; //$NON-NLS-1$
-    /** ID of the HTML RC WebDriver bundle */
-    public static final String RC_HTML_WEBDRIVER_BUNDLE_ID = "com.bredexsw.jubula.rc.html.webdriver"; //$NON-NLS-1$
     /** ID of the Win RC bundle */
     public static final String EXT_IMPLCLASSES_PATH = "./lib/extImplClasses"; //$NON-NLS-1$
     /** constant: "./lib/ext" - path name for extension jars like monitoring */
@@ -256,10 +248,6 @@ public abstract class CommandConstants {
     public static final String SET_KEYBOARD_LAYOUT_COMMAND = "org.eclipse.jubula.rc.swt.commands.SetKeyboardLayoutCommand"; //$NON-NLS-1$
     /** Client - handling of the send window titles from the browser */
     public static final String HTML_GET_WINDOW_TITLES_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.WindowTitlesChangedCommand"; //$NON-NLS-1$
-    /** AUT Server (HTML) - in OMM selection of a specific window for the OMM */
-    public static final String HTML_OMM_SELECT_WINDOW_COMMAND = "com.bredexsw.jubula.rc.html.commands.OMSelectWindowCommand"; //$NON-NLS-1$
-    /** AUT Server (HTML) - in OMM selection of a specific window for the OMM, response */
-    public static final String HTML_OMM_SEL_WIN_RESPONSE_COMMAND = "org.eclipse.jubula.client.core.commands.SelectedWindowCommand"; //$NON-NLS-1$
     /** constant: "org.eclipse.jubula.rc.javafx.JavaFXAUTServer" */
     public static final String AUT_JAVAFX_SERVER = "org.eclipse.jubula.rc.javafx.JavaFXAUTServer"; //$NON-NLS-1$
     /** ID of the JavaFX RC bundle */
@@ -274,8 +262,6 @@ public abstract class CommandConstants {
     public static final String AUT_ERRORS_COMMAND = "org.eclipse.jubula.rc.common.commands.AUTErrorsCommand"; //$NON-NLS-1$
     /** command which sets the profile of the AUT Server **/
     public static final String SET_PROFILE_COMMAND = "org.eclipse.jubula.rc.common.commands.SetProfileCommand"; //$NON-NLS-1$
-    /** ID of the Toolkit HTML bundle */
-    public static final String TOOLKIT_HTML_BUNDLE_ID = "org.eclipse.jubula.toolkit.html"; //$NON-NLS-1$
     /** Connect to AUT Agent Command */
     public static final String CONNECT_TO_EMBEDDED_AGENT_CMD_ID = 
             "org.eclipse.jubula.client.autagent.commands.ConnectToEmbeddedAutAgent"; //$NON-NLS-1$

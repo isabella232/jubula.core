@@ -11,8 +11,7 @@ Require-Bundle: org.eclipse.jubula.autagent.common;bundle-version="[7.0.0,8.0.0)
  org.eclipse.jubula.toolkit.javafx.api;resolution:=optional,
  org.eclipse.jubula.toolkit.swing.api;resolution:=optional,
  org.eclipse.jubula.toolkit.rcp.api;resolution:=optional,
- org.eclipse.jubula.toolkit.swt.api;resolution:=optional,
- org.eclipse.jubula.toolkit.html.api;resolution:=optional
+ org.eclipse.jubula.toolkit.swt.api;resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .

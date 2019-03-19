@@ -35,10 +35,8 @@ import org.eclipse.jubula.client.ui.rcp.widgets.CheckedProjectNameText;
 import org.eclipse.jubula.client.ui.rcp.wizards.ProjectWizard;
 import org.eclipse.jubula.client.ui.utils.LayoutUtil;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.client.ui.widgets.I18nEnumCombo;
 import org.eclipse.jubula.client.ui.widgets.UIComponentHelper;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
-import org.eclipse.jubula.toolkit.html.Browser;
 import org.eclipse.jubula.tools.internal.constants.AutConfigConstants;
 import org.eclipse.jubula.tools.internal.constants.CommandConstants;
 import org.eclipse.jubula.tools.internal.constants.EnvConstants;
@@ -97,16 +95,6 @@ public class ProjectSettingWizardPage extends WizardPage {
     private Composite m_autToolkit;
     /** the combo box for the aut toolkit */
     private DirectCombo<String> m_autToolKitComboBox;
-    /** Browser label container */
-    private Composite m_browser;
-    /** the combo box for browser */
-    private I18nEnumCombo<Browser> m_browserComboBox;
-    /** Browser path label container */
-    private Composite m_browserPath;
-    /** the text field for browser path*/
-    private Text m_browserPathTF;
-    /** browse button for the executable */
-    private Button m_browserPathButton;
     /** the selectionListener */
     private final WidgetSelectionListener m_selectionListener = 
             new WidgetSelectionListener();
@@ -156,8 +144,6 @@ public class ProjectSettingWizardPage extends WizardPage {
             .PROJECT_WIZARD);
         createAutToolKit();
         createExecutableCommandField();
-        createBrowserCombo();
-        createBrowserPathField();
         validation();
         createProjectTemplateCheckBox(bottomComp);
         createNextLabel(bottomComp);
@@ -256,39 +242,6 @@ public class ProjectSettingWizardPage extends WizardPage {
             e.printStackTrace();
             removeAutToolKit();
         } 
-        refresh();
-    }
-
-    /** Creates the browser combo line */
-    private void createBrowserCombo() {
-        m_browser = createLineComposite();
-        Composite leftComp = createLeftComposite(m_browser,
-                I18n.getString("WebAutConfigComponent.browser")); //$NON-NLS-1$
-        Composite rightComp = createRightComposite(m_browser);
-        m_browserComboBox = UIComponentHelper.createEnumCombo(rightComp, 2,
-                "WebAutConfigComponent.Browser", Browser.class); //$NON-NLS-1$
-        GridData comboGridData = new GridData();
-        comboGridData.grabExcessHorizontalSpace = true;
-        LayoutUtil.addToolTipAndMaxWidth(comboGridData, m_browserComboBox);
-        m_browserComboBox.setLayoutData(comboGridData);
-        m_browserComboBox.addSelectionListener(m_selectionListener);
-        m_browserComboBox.setData(SwtToolkitConstants.WIDGET_NAME,
-                "NewProjectWizard.BrowserComboBox"); //$NON-NLS-1$
-        refresh();
-    }
-
-    /** Creates the browser path line */
-    private void createBrowserPathField() {
-        m_browserPath = createLineComposite();
-        Composite leftComp = createLeftComposite(m_browserPath,
-                I18n.getString("WebAutConfigComponent.browserPath")); //$NON-NLS-1$
-        Composite rightComp = createRightComposite(m_browserPath,
-                NUM_COLUMNS_2);
-        m_browserPathTF = createTextField(rightComp, null, false);
-        m_browserPathTF.addModifyListener(m_modifyListener);
-        m_browserPathButton = createBrowseButton(rightComp);
-        m_browserPathTF.setData(SwtToolkitConstants.WIDGET_NAME,
-                "NewProjectWizard.BrowserPathField"); //$NON-NLS-1$
         refresh();
     }
 
@@ -457,28 +410,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         refresh();
     }
     
-    /** remove the aut browser combo line */
-    private void removeBrowserCombo() {
-        if (m_browser != null) {
-            m_browser.dispose();
-            m_browser = null;
-        }
-        m_browserComboBox = null;
-        putConfigValue(AutConfigConstants.BROWSER, EMPTY);
-        refresh();
-    }
-    
-    /** remove the aut browser path line */
-    private void removeBrowserPathField() {
-        if (m_browserPath != null) {
-            m_browserPath.dispose();
-            m_browserPath = null;
-        }
-        m_browserPathTF = null;
-        putConfigValue(AutConfigConstants.BROWSER_PATH, EMPTY);
-        refresh();
-    }
-    
     /** Handle aut config */
     private void handleAutConfig() {
         String projectToolkit = m_projectToolKitComboBox.getSelectedObject();
@@ -585,16 +516,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         }
     }
     
-    /** Handle the browser path button */
-    private void handleBrowserPathButtonEvent() {
-        String directory = fileBrowser(
-                I18n.getString("WebAutConfigComponent.SelectBrowserPath"), //$NON-NLS-1$
-                m_browserPathTF, null);
-        if (directory != null) {
-            m_browserPathTF.setText(directory);
-            validation();
-        }
-    }
 
     /**
      * Writes the path of the executable file in the AUT Working Dir field.
@@ -645,27 +566,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         putConfigValue(AutConfigConstants.AUT_URL, urlText);
     }
     
-    /** Modify the browser */
-    private void modifyBrowser() {
-        final String browser = (m_browserComboBox == null || m_browserComboBox
-                .getSelectedObject() == null ? EMPTY
-                        : m_browserComboBox.getSelectedObject().toString());
-        putConfigValue(AutConfigConstants.BROWSER, browser);
-    }
-    
-    /** Check and modify the browser path */
-    private void modifyBrowserPathTextField() {
-        String txt = EMPTY;
-        if (m_browserPathTF != null && !m_browserPathTF.getText().isEmpty()) {
-            txt = m_browserPathTF.getText();
-            File file = new File(txt);
-            if (!file.exists()) {
-                warningMessage(Messages.AUTConfigComponentFileNotFound);
-            }
-        }
-        putConfigValue(AutConfigConstants.BROWSER_PATH, txt);
-    }
-    
     /** set default message */
     private void noMessage() {
         setMessage(Messages.ProjectWizardNewProject);
@@ -699,8 +599,6 @@ public class ProjectSettingWizardPage extends WizardPage {
             modifyProjectNameField();
             modifyUrlTextField();
             modifyExecutableTextField();
-            modifyBrowser();
-            modifyBrowserPathTextField();
             setPageComplete(true);
         } catch (DialogValidationException e) {
             e.errorMessageHandling();
@@ -741,8 +639,6 @@ public class ProjectSettingWizardPage extends WizardPage {
         m_autMain.setToolkit(toolkit);
         removeAutExecutable();
         removeAutUrl();
-        removeBrowserCombo();
-        removeBrowserPathField();
         if (toolkit == null) {
             return;
         }
@@ -754,25 +650,12 @@ public class ProjectSettingWizardPage extends WizardPage {
             case CommandConstants.JAVAFX_TOOLKIT:
                 createExecutableCommandField();
                 break;
-            case CommandConstants.HTML_TOOLKIT:
-                createUrlField();
-                createBrowserCombo();
-                break;
             default:
                 m_autMain.setToolkit(null);
                 createAutToolKit();
                 break;
         }
         validation();
-    }
-    
-    /** Handle the combobox of browser */
-    private void handleBrowserCombo() {
-        Browser browser = m_browserComboBox.getSelectedObject();
-        removeBrowserPathField();
-        if (!browser.equals(Browser.InternetExplorer)) {
-            createBrowserPathField();
-        }
     }
     
     /** Set the default keyboard layout on */
@@ -803,17 +686,12 @@ public class ProjectSettingWizardPage extends WizardPage {
             Object o = e.getSource();
             if (o.equals(m_autExecButton)) {
                 handleExecButtonEvent();
-            } else if (o.equals(m_browserPathButton)) {
-                handleBrowserPathButtonEvent();
             } else if (o.equals(m_projectToolKitComboBox)) {
                 handleProjectToolkitCombo();
                 validation();
             } else if (o.equals(m_autToolKitComboBox)) {
                 handleAutToolkitCombo(m_autToolKitComboBox
                         .getSelectedObject());
-                validation();
-            } else if (o.equals(m_browserComboBox)) {
-                handleBrowserCombo();
                 validation();
             }
         }

@@ -30,7 +30,6 @@ import org.eclipse.jubula.client.core.persistence.GeneralStorage.IDataModifiedLi
 import org.eclipse.jubula.client.core.persistence.GeneralStorage.IReloadedSessionListener;
 import org.eclipse.jubula.client.core.utils.IGenericListener;
 import org.eclipse.jubula.client.core.utils.ListenerManager;
-import org.eclipse.jubula.communication.internal.message.html.OMSelWinResponseMessage;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.jubula.tools.internal.registration.AutIdentifier;
 import org.eclipse.ui.IWorkbenchPart;
@@ -245,22 +244,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
          * @param identifier current AUT identifier of OM Mode
          */
         public void handleAUTChanged(AutIdentifier identifier);
-    }
-    
-    /** to notify clients about modification of the Windows in the AUT
-     * mostly used in HTML */
-    public interface IOMWindowsListener {
-        
-        /**
-         * @param windowTitles identification of the different windows
-         */
-        public void handleAUTChanged(String[] windowTitles);
-
-        /**
-         * Notifies the listener that a new window has been selected
-         * @param msg the response from the AUT
-         */
-        public void handleNewWindowSelected(OMSelWinResponseMessage msg);
     }
     
     /** to notify clients about modification of Record Mode */
@@ -535,12 +518,6 @@ public class DataEventDispatcher implements IReloadedSessionListener,
      */
     private Set<IOMAUTListener> m_omAUTListeners =
         new HashSet<IOMAUTListener>();
-    
-    /**
-     * <code>m_omAutListeners</code> listener for the Windows in OM Mode (HTML)
-     */
-    private Set<IOMWindowsListener> m_omWindowListeners =
-        new HashSet<IOMWindowsListener>();
     
     /**
      * <code>m_testresultSummaryListener</code> listener for test result summary
@@ -1384,61 +1361,7 @@ public class DataEventDispatcher implements IReloadedSessionListener,
         m_omAUTListeners.remove(l);
     }
     
-    /**
-     * notify listener about modification of changes of the window titles in OMM
-     * @param windowTitles of AUT in OM Mode
-     */
-    public void fireWindowsChanged(String[] windowTitles) {
-        // model updates
-        final Set<IOMWindowsListener> stableListeners = 
-            new HashSet<IOMWindowsListener>(m_omWindowListeners);
-        for (IOMWindowsListener l : stableListeners) {
-            try {
-                l.handleAUTChanged(windowTitles);
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-    }
 
-    /**
-     * notifies listeners about switching to a new window
-     * @param msg the response message from the AUT containing the title
-     *        and an error code
-     */
-    public void fireWindowTitleChanged(OMSelWinResponseMessage msg) {
-        final Set<IOMWindowsListener> stableListeners = 
-                new HashSet<IOMWindowsListener>(m_omWindowListeners);
-        for (IOMWindowsListener l : stableListeners) {
-            try {
-                l.handleNewWindowSelected(msg);
-            } catch (Throwable t) {
-                LOG.error(Messages.UnhandledExceptionWhileCallListeners, t); 
-            }
-        }
-    }
-
-    /**
-     * @param l listener for OM Mode windows (HTML)
-     * @param guiMode
-     *      should this listener be called after the model listener 
-     */
-    public void addAUTWindowsListener(IOMWindowsListener l, 
-        boolean guiMode) {
-        if (guiMode) {
-            m_omWindowListeners.add(l);
-        } else {
-            m_omWindowListeners.add(l);
-        }
-    }
-    
-    /**
-     * @param l listener for OM Mode windows
-     */
-    public void removeAUTWindowsListener(IOMWindowsListener l) {
-        m_omWindowListeners.remove(l);
-    }
-    
     /**
      * notify listener about changes of test result summary
      * 

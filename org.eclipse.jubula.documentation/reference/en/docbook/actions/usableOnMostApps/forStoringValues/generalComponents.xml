@@ -36,22 +36,6 @@
       </listitem>
       <listitem>
         <para>
-          For HTML AUTs using a Webdriver you can use this action to test CSS attributes or any other property of an element.
-          This is how the action works on such AUTs:
-            <itemizedlist>
-                <listitem><para>First the attributes of the element are searched, and if the property is found there, its value is returned.</para></listitem>
-                <listitem><para>If the property is not yet found, the element's CSS properties are searched.</para></listitem>
-                <listitem><para>If the property is still not found, the HTML element's properties are searched, using <literal>/</literal> as a separator.</para></listitem>
-            </itemizedlist>
-        </para>
-        <para>
-          As an example, there are two ways to check the color of an HTML element: either by checking the property <literal>color</literal>, or the property <literal>style/color</literal>.
-          Please note that the actual value returned is strongly browser-dependent, e.g. for color, Firefox would return something like <literal>rgb(255, 0, 0)</literal> and Chrome <literal>rgba(255, 0, 0, 0)</literal>.
-        </para>
-      </listitem>
-      
-      <listitem>
-        <para>
           Parameters:
           
           <itemizedlist>

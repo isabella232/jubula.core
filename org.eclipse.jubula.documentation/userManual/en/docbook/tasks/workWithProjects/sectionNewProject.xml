@@ -65,14 +65,13 @@
       </para>
       <para>
         Choose another toolkit if you want to write Test Cases just
-        for a JavaFX, Swing, SWT, RCP or HTML application.
+        for a JavaFX, Swing, SWT and RCP application.
       </para>
       <para>
         The choice of toolkit you make here will determine what
         actions are available to you to specify your tests. If you
         choose <emphasis>concrete</emphasis>, you will not be able
-        to specify tests for components specific to e.g. HTML or
-        SWT.
+        to specify tests for components specific to e.g. SWT.
       </para>
       <para>
         Furthermore, if you choose <emphasis>concrete</emphasis> as toolkit

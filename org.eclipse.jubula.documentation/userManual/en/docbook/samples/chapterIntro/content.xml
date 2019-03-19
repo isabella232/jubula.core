@@ -25,8 +25,8 @@
       <listitem>
         <para>
            A simple calculator tool, <emphasis>Adder</emphasis>. This
-          tool is available as a Swing AUT, a JavaFX AUT, an SWT AUT and
-          as a HTML AUT. 
+          tool is available as a Swing AUT, a JavaFX AUT and
+          as a SWT AUT. 
         </para>
       </listitem>
     </varlistentry>

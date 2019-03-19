@@ -21,10 +21,6 @@
   	value, you have to mask it.
   </para>
   		
-  <para role="warning">
-    Actions on tree components (as a hierarchical component) are not supported in the HTML toolkit. Individual nodes must be addressed
-    as single links.
-  </para>
   <para role="tip">
   	Please keep in mind that it is not possible to object map single nodes within a tree component but to object map the tree component 
   	as a whole only. In order to interact with certain nodes within the tree component you have to use the according actions.

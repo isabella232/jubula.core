@@ -231,7 +231,6 @@
        <para>
        If you want the component at which an error occurs to get highlighted in
        the screenshot that is being taken, select the checkbox <emphasis>Component highlighting</emphasis>.
-       (Not available for HTML AUTs)
        </para>
       </listitem>
     </orderedlist>
@@ -248,7 +247,7 @@
     </para>
     <para role="warning">
       The <emphasis>autrun</emphasis> command cannot be used
-      for HTML or pure SWT AUTs.
+      for pure SWT AUTs.
     </para>
     <para>
       The command allows you to start your AUT independently, on a

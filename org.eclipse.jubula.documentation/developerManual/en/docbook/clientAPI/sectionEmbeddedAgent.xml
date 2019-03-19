@@ -16,7 +16,7 @@
   </title>
   <para>It is possible that a AUT agent could be started within a Test.
    Therefore a test can be written and executed completely without an
-   other Jubula application. All Toolkits, except HTML are supported.
+   other Jubula application.
   </para>
   <para>General setup information</para>
   <para>

@@ -152,12 +152,12 @@
         <para>
           You can change at any time from the
           <emphasis>concrete</emphasis> toolkits to a more specific
-          toolkit (e.g. RCP, HTML).
+          toolkit (e.g. RCP).
         </para>
       </listitem>
       <listitem>
         <para>
-          If your previous choice of toolkit was RCP, SWT or HTML,
+          If your previous choice of toolkit was RCP or SWT,
           you can only change to another toolkit if your Project
           does not use any components specific to the originally
           chosen toolkit.

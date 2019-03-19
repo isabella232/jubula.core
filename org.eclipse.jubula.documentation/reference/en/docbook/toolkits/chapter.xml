@@ -28,7 +28,7 @@
     <para>
   		The concrete toolkit contains components and actions which are available in most
   		toolkits. An action from the concrete toolkit may therefore be used in a test 
-  		for Swing, SWT, JavaFX and HTML applications. 
+  		for Swing, SWT and JavaFX applications. 
   	</para>
   </section>
   <section>
@@ -38,25 +38,6 @@
   		You must set the toolkit to 
   		<emphasis>RCP</emphasis> 
   		in the Project properties to be able to use the GEF actions. 
-  	</para>
-  </section>
-  <section>
-  	<title>HTML Toolkit</title>
-    <para>
-  		The HTML toolkit contains components that are specific to HTML applications. You will only 
-  		have access to these components in your tests if you select HTML as your AUT Toolkit.
-  	</para>
-  	<para>
-  		<emphasis role="strong">Unsupported components and actions in the web toolkit:</emphasis>
-  	</para>
-  	<para>
-  		Some components are not supported in web applications because they are either not present 
-  		or not meaningful in web applications. The unsupported components are:
-  			<itemizedlist>
-  				<listitem><para>Menus</para></listitem>
-  				<listitem><para>Tabbed panes</para></listitem>
-  				<listitem><para>Trees</para></listitem>
-  			</itemizedlist>
   	</para>
   </section>
   <section>

@@ -82,20 +82,6 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          unpack="false"/>
 
    <plugin
-         id="org.eclipse.jubula.toolkit.html"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.jubula.toolkit.html.provider"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="org.eclipse.jubula.toolkit.rcp.provider"
          download-size="0"
          install-size="0"

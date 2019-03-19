@@ -21,7 +21,6 @@
   	<xi:include href="abstractToolkit/content.xml"/>
   	<xi:include href="concreteToolkit/content.xml"/>
    	<xi:include href="gefToolkit/content.xml"/>
-   	<xi:include href="htmlToolkit/content.xml"/>
    	<xi:include href="swtToolkit/content.xml"/>
   
 </chapter>

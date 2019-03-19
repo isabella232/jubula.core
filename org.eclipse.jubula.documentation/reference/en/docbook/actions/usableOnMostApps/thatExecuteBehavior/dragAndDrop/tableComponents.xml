@@ -104,10 +104,6 @@
     If you want to drag multiple items, use an action to select the items you want to drag before using the drag action.
   </para>
   
-  <para role="tip">
-    This action is unsupported for the HTML toolkit.
-  </para>
-  
   <para><emphasis>Drag Cell from Column</emphasis></para>
   <para>
     <itemizedlist>
@@ -186,9 +182,6 @@
     If you want to drag multiple items, use an action to select the items you want to drag before using the drag action.
   </para>
   
-  <para role="tip">
-    This action is unsupported for the HTML toolkit.
-  </para>
   
   <para><emphasis>Drag Cell from Row</emphasis></para>
   <para>
@@ -266,10 +259,6 @@
   
   <para>
     If you want to drag multiple items, use an action to select the items you want to drag before using the drag action.
-  </para>
-  
-  <para role="tip">
-    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Drop on Cell</emphasis></para>
@@ -356,10 +345,6 @@
     </itemizedlist>
   </para>
   
-  <para role="tip">
-    This action is unsupported for the HTML toolkit.
-  </para>
-  
   <para><emphasis>Drop on Cell from Column</emphasis></para>
   <para>
     <itemizedlist>
@@ -427,9 +412,6 @@
         </para>
       </listitem>
     </itemizedlist>
-  </para>
-  <para role="tip">
-    This action is unsupported for the HTML toolkit.
   </para>
   
   <para><emphasis>Drop on Cell from Row</emphasis></para>
@@ -499,10 +481,6 @@
         </para>
       </listitem>
     </itemizedlist>
-  </para>
-  
-  <para role="tip">
-    This action is unsupported for the HTML toolkit.
   </para>
   
 </section>

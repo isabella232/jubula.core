@@ -68,10 +68,6 @@
     </itemizedlist>
   </para>
   
-  <para role="tip">
-    This action is unsupported for combo-boxes in the HTML toolkit
-  </para>
-  
   <para><emphasis>Input Text where focus is (on Application component)</emphasis></para>
   <para>
     <itemizedlist>
@@ -109,10 +105,6 @@
         </para>
       </listitem>
     </itemizedlist>
-  </para>
-  
-  <para role="tip">
-    In HTML AUT's , this action can only be used with alphanumeric characters. Also, if the focus is not currently on the browser, then this action will not be successful.
   </para>
   
   <para><emphasis>Replace Text</emphasis></para>
@@ -173,10 +165,6 @@
   </para>
   
   <para role="tip">
-    This action is unsupported for combo-boxes in the HTML toolkit
-  </para>
-  
-  <para role="tip">
     If you use this action on a table, then the text will be entered into the currently selected cell.
   </para>
   
@@ -216,9 +204,6 @@
   
   <para role="tip">
     Under Swing, this action only supports the American character set. Under SWT, you can use any character set under Windows, but there are some problems with non-American characters under Linux.
-  </para>
-  <para role="warning">
-    In HTML, on Firefox, the keys »F5« and »ESCAPE« cannot be used.
   </para>
   <para role="tip">
     Users working on Linux systems should increase the key repeat delay on their test system or remove it completely. Some Linux systems can otherwise tend to repeat key presses which can lead to undesired actions being produced during test execution.

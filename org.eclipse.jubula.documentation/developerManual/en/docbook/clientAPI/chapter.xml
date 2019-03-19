@@ -36,7 +36,7 @@
             <listitem>
                 <para>an API for all toolkits: the client API is available for all
                     toolkits supported by the ITE like JavaFX, AWT/Swing,
-                    SWT/RCP/GEF, HTML.
+                    SWT/RCP/GEF.
                 </para>
             </listitem>
             <listitem>

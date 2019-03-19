@@ -15,7 +15,6 @@
   
   <xi:include href="sectionUsingSwingSimpleAdder.xml"/>
   <xi:include href="sectionUsingSWTSimpleAdder.xml"/>
-  <xi:include href="sectionUsingHTMLSimpleAdder.xml"/>
   <xi:include href="sectionUsingJavaFXSimpleAdder.xml"/>
 
 </section>

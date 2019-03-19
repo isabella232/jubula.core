@@ -18,6 +18,5 @@
   <xi:include href="rcpAUT/content.xml"/>
   <xi:include href="gefTest/content.xml"/>
   <xi:include href="javaFX/content.xml"/>
-  <xi:include href="webAUT/content.xml"/>
   
 </chapter>

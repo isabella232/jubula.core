@@ -10,7 +10,7 @@
 <section xml:id="sample-4-using-the-javafx-simple-adder" version="5.0" xmlns="http://docbook.org/ns/docbook"
                                                                    xmlns:xi="http://www.w3.org/2001/XInclude"
                                                                    xmlns:xl="http://www.w3.org/1999/xlink" >
-  <title>Sample 4: using the JavaFX Simple Adder</title>
+  <title>Sample 3: using the JavaFX Simple Adder</title>
   <para>
     You can start the JavaFX SimpleAdder using the configurations
     for the <emphasis>SimpleAdderJavaFX</emphasis> AUT. The

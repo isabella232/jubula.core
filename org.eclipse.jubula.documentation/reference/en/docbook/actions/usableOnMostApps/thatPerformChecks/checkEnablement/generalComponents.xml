@@ -84,10 +84,6 @@
     </itemizedlist>
   </para>
   
-  <para role="tip">
-    This action is unsupported for the HTML toolkit
-  </para>
-  
   <para><emphasis>Check Enablement of Context Menu by Indexpath (Specify Position)</emphasis></para>
   <para>
     <itemizedlist>
@@ -172,10 +168,6 @@
     </itemizedlist>
   </para>
   
-  <para role="tip">
-    This action is unsupported for the HTML toolkit
-  </para>
-  
   <para><emphasis>Check Enablement of Context Menu by Textpath</emphasis></para>
   <para>
     <itemizedlist>
@@ -223,10 +215,6 @@
         </para>
       </listitem>
     </itemizedlist>
-  </para>
-  
-  <para role="tip">
-    This action is unsupported for the HTML toolkit
   </para>
   
   <para><emphasis>Check Enablement of Context Menu by Textpath (Specify Position)</emphasis></para>
@@ -311,10 +299,6 @@
         </para>
       </listitem>
     </itemizedlist>
-  </para>
-  
-  <para role="tip">
-    This action is unsupported for the HTML toolkit
   </para>
   
 </section>

@@ -65,10 +65,6 @@
     </itemizedlist>
   </para>
   
-  <para role="tip">
-    This action is unsupported for the HTML toolkit
-  </para>
-  
   <para><emphasis>Check Editability of Cell (Mouse Position)</emphasis></para>
   <para>
     <itemizedlist>
@@ -98,10 +94,6 @@
     </itemizedlist>
   </para>
   
-  <para role="tip">
-    This action is unsupported for the HTML toolkit
-  </para>
-  
   <para><emphasis>Check Editability of Selected Cell</emphasis></para>
   <para>
     <itemizedlist>
@@ -129,10 +121,6 @@
         </para>
       </listitem>
     </itemizedlist>
-  </para>
-  
-  <para role="tip">
-    This action is unsupported for the HTML toolkit
   </para>
   
 </section>

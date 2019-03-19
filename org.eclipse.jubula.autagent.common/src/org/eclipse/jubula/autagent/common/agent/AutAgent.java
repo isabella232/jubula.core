@@ -814,8 +814,6 @@ public class AutAgent {
                 return CommandConstants.RCP_TOOLKIT;
             } else if (StringUtils.containsIgnoreCase(startCommand, "javafx")) { //$NON-NLS-1$
                 return CommandConstants.JAVAFX_TOOLKIT;
-            } else if (StringUtils.containsIgnoreCase(startCommand, "html")) { //$NON-NLS-1$
-                return CommandConstants.HTML_TOOLKIT;
             }
         }
         return null;

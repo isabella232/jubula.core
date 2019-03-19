@@ -46,8 +46,6 @@
   <xi:include href="fqClassName/content.xml"/>
   <xi:include href="hasConnection/content.xml"/>
   <xi:include href="hasFocus/content.xml"/>
-  <xi:include href="identifier/content.xml"/>
-  <xi:include href="identifierType/content.xml"/>
   <xi:include href="index/content.xml"/>
   <xi:include href="indexpath/content.xml"/>
   <xi:include href="insertAfterPattern/content.xml"/>

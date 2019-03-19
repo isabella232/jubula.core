@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.AUT;
 import org.eclipse.jubula.client.AUTAgent;
 import org.eclipse.jubula.client.internal.impl.AUTImpl;
 import org.eclipse.jubula.toolkit.ToolkitInfo;
-import org.eclipse.jubula.toolkit.html.HtmlComponents;
 import org.eclipse.jubula.toolkit.javafx.JavafxComponents;
 import org.eclipse.jubula.toolkit.rcp.RcpComponents;
 import org.eclipse.jubula.toolkit.swing.SwingComponents;
@@ -73,9 +72,6 @@ public class EmbeddedDesktopIntegration extends DesktopIntegration {
                 }
                 if (toolkitid.equals(CommandConstants.RCP_TOOLKIT)) {
                     info = RcpComponents.getToolkitInformation();
-                }
-                if (toolkitid.equals(CommandConstants.HTML_TOOLKIT)) {
-                    info = HtmlComponents.getToolkitInformation();
                 }
                 if (info != null) {
                     aut = agent.getAUT(id, info);

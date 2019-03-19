@@ -732,16 +732,6 @@
     </command>
     <command
       categoryId="org.eclipse.jubula.client.ui.rcp.commands"
-      id="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
-      name="%ChooseAUTWindow">
-      <commandParameter
-        id="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow.parameter.openWindow"
-        name="Open Windows"
-        optional="false"
-        typeId="org.eclipse.jubula.client.ui.rcp.commands.parametertypes.WindowTitle" />
-    </command>
-    <command
-      categoryId="org.eclipse.jubula.client.ui.rcp.commands"
       id="org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand"
       name="%Connect">
         <commandParameter
@@ -1687,23 +1677,6 @@
                 value="true">
           </parameter>
         </command>
-        <command
-          commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow"
-          id="org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand"
-          style="pulldown"
-          icon="platform:/plugin/org.eclipse.jubula.client.ui/icons/selectWindow.png"
-          tooltip="%ChooseAUTWindow">
-          <visibleWhen checkEnabled="false">
-             <and>
-              <with variable="activeEditorId">
-                 <equals value="org.eclipse.jubula.client.ui.rcp.editors.ObjectMappingEditor" />
-               </with>        
-              <with variable="org.eclipse.jubula.client.ui.rcp.variable.isHtmlAut">
-                 <equals value="true" />
-              </with>
-            </and>
-          </visibleWhen>
-        </command>
       </toolbar>
       <toolbar id="org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar">
         <command
@@ -1910,12 +1883,6 @@
       <dynamic
         class="org.eclipse.jubula.client.ui.rcp.contributionitems.ConnectToAutAgentContributionItem"
         id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.AutAgentToolbar.ConnectToAUTAgentCommand.dropdown" />
-    </menuContribution>
-    <menuContribution
-      locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand">
-      <dynamic
-        class="org.eclipse.jubula.client.ui.rcp.contributionitems.ChooseHTMLWindowContributionItem"
-        id="menu:org.eclipse.jubula.client.ui.rcp.toolbar.ObjectMappingToolbar.ChooseHTMLWindowCommand.dropdown" />
     </menuContribution>
     <menuContribution
       locationURI="menu:org.eclipse.jubula.client.ui.rcp.toolbar.NavigationToolbar.GoForward">
@@ -2970,24 +2937,6 @@
      class="org.eclipse.jubula.client.ui.rcp.handlers.ShowInOMEHandler"
      commandId="org.eclipse.jubula.client.ui.rcp.commands.ShowInOME">
    </handler>
-   <handler
-      class="org.eclipse.jubula.client.ui.rcp.handlers.html.OMChooseWindow"
-      commandId="org.eclipse.jubula.client.ui.rcp.commands.html.ChooseAuTWindow">
-      <enabledWhen>
-              <and>
-        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isHtmlAut">
-            <equals value="true" />
-        </with>
-        <with variable="org.eclipse.jubula.client.ui.rcp.variable.isObjectMappingRunning">
-            <equals value="true" />
-        </with>
-        <with
-              variable="org.eclipse.jubula.client.ui.rcp.variable.html.windowCount">
-              <count value="2" />
-        </with>
-      </and>
-      </enabledWhen>
-    </handler>
     <handler
       class="org.eclipse.jubula.client.ui.rcp.handlers.project.ProjectPropertiesHandler"
       commandId="org.eclipse.jubula.client.ui.rcp.commands.ProjectProperties">
@@ -4620,15 +4569,6 @@
       provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.AutServerSourceProvider">
       <variable
         name="org.eclipse.jubula.client.ui.rcp.variable.autConnectionStatus"
-        priorityLevel="workbench" />
-    </sourceProvider>
-    <sourceProvider
-      provider="org.eclipse.jubula.client.ui.rcp.sourceprovider.HTMLAutSourceProvider">
-      <variable
-        name="org.eclipse.jubula.client.ui.rcp.variable.isHtmlAut"
-        priorityLevel="workbench" />
-      <variable
-        name="org.eclipse.jubula.client.ui.rcp.variable.html.windowCount"
         priorityLevel="workbench" />
     </sourceProvider>
   </extension>
