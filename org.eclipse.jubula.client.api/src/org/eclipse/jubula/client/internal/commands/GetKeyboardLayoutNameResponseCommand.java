@@ -11,7 +11,9 @@
 package org.eclipse.jubula.client.internal.commands;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.Properties;
 
 import org.eclipse.jubula.client.RCPKeyboardRegistry;
@@ -69,7 +71,7 @@ public class GetKeyboardLayoutNameResponseCommand implements APICommand {
         if (layoutName != null && layoutName.length() > 0) {
             Properties prop = RCPKeyboardRegistry.INSTANCE
                     .getPropertiesForLocalCode(layoutName);
-            InputStream stream = null;
+            InputStreamReader stream = null;
             try {
                 if (prop == null) {
                     String filename =
@@ -77,8 +79,15 @@ public class GetKeyboardLayoutNameResponseCommand implements APICommand {
                                     + layoutName
                                     + SwtToolkitConstants
                                     .KEYBOARD_MAPPING_FILE_POSTFIX;
-                    stream = getClass().getClassLoader()
-                            .getResourceAsStream(filename);
+                    URL resource =
+                            getClass().getClassLoader().getResource(filename);
+                    if (resource == null) {
+                        LOG.error("Mapping for '" + layoutName //$NON-NLS-1$
+                                + "' could not be found."); //$NON-NLS-1$
+                        return null;
+                    }
+                    stream = new InputStreamReader(resource.openStream(),
+                            Charset.forName("UTF-8")); //$NON-NLS-1$
                     if (stream != null) {
                         prop = new Properties();
                         prop.load(stream);
@@ -86,8 +95,6 @@ public class GetKeyboardLayoutNameResponseCommand implements APICommand {
                 }
                 if (prop != null) {
                     m_connection.send(new SetKeyboardLayoutMessage(prop));
-                } else {
-                    LOG.error("Mapping for '" + layoutName + "' could not be found."); //$NON-NLS-1$//$NON-NLS-2$
                 }
             } catch (IOException ioe) {
                 LOG.error("Error occurred while loading Keyboard Mapping.", ioe); //$NON-NLS-1$
