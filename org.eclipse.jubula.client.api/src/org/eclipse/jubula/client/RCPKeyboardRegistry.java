@@ -16,6 +16,7 @@ import java.util.Properties;
 
 /**
  * @author BREDEX GmbH
+ * @since 3.5
  *
  */
 public enum RCPKeyboardRegistry {
