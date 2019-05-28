@@ -57,6 +57,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
       <import feature="org.eclipse.mylyn_feature"/>
       <import feature="org.eclipse.mylyn.wikitext_feature"/>
       <import plugin="org.eclipse.mylyn.help.ui"/>
+      <import plugin="javax.xml.bind"/>
    </requires>
 
    <plugin
@@ -385,7 +386,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.dom4j"
          download-size="0"
          install-size="0"
-         version="1.6.1.v20170815-1500"
+         version="1.6.1.v20181004-1955"
          unpack="false"/>
 
    <plugin

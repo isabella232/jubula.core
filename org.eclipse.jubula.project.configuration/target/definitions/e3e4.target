@@ -18,7 +18,7 @@
 <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
 <unit id="org.slf4j.jcl" version="1.7.2.v20130115-1340"/>
 <unit id="org.slf4j.jul" version="1.7.2.v20121108-1250"/>
-<unit id="org.dom4j" version="1.6.1.v20170815-1500"/>
+<unit id="org.dom4j" version="1.6.1.v20181004-1955"/>
 <unit id="org.apache.poi" version="3.9.0.v201405241750"/>
 <unit id="org.apache.poi.ooxml.schemas" version="3.9.0.v201405241750"/>
 <unit id="org.apache.poi.ooxml" version="3.9.0.v201405241905"/>
@@ -30,7 +30,10 @@
 <unit id="com.fasterxml.jackson.core.jackson-annotations" version="2.9.2.v20180207-1730"/>
 <unit id="com.fasterxml.jackson.core.jackson-core" version="2.9.2.v20180207-1730"/>
 <unit id="com.fasterxml.jackson.core.jackson-databind" version="2.9.2.v20180207-1730"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180905201904/repository"/>
+<unit id="javax.transaction" version="1.1.1.v201105210645"/>
+<unit id="javax.xml.bind" version="2.2.0.v201105210648"/>
+<unit id="javax.activation" version="1.1.0.v201211130549"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20190226160451/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.platform.feature.group" version="0.0.0"/>
