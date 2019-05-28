@@ -3,7 +3,7 @@ Created-By: Eclipse Jubula
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Example AUT - Simple Adder - SWT
 Bundle-SymbolicName: org.eclipse.jubula.examples.aut.adder.swt
-Bundle-Version: 7.0.2.qualifier
+Bundle-Version: 7.0.3.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Localization: plugin

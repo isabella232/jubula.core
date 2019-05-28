@@ -6,7 +6,7 @@
 <feature
       id="org.eclipse.jubula.rc.rcp.feature"
       label="Jubula RCP Remote Control"
-      version="7.0.2.qualifier"
+      version="7.0.3.qualifier"
       provider-name="Eclipse Jubula">
 
    <description url="http://www.eclipse.org/jubula">

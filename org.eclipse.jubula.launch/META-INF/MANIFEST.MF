@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Launch Core
 Bundle-SymbolicName: org.eclipse.jubula.launch;singleton:=true
-Bundle-Version: 7.0.2.qualifier
+Bundle-Version: 7.0.3.qualifier
 Bundle-Activator: org.eclipse.jubula.launch.Activator
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin

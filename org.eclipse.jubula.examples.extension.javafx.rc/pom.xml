@@ -6,7 +6,7 @@
     <relativePath>../org.eclipse.jubula.examples.extension.releng</relativePath>
     <groupId>org.eclipse.jubula</groupId>
     <artifactId>org.eclipse.jubula.examples.extension.releng</artifactId>
-    <version>7.0.2-SNAPSHOT</version>
+    <version>7.0.3-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jubula.examples.extension.javafx.rc</artifactId>
