@@ -34,6 +34,11 @@ public class WorkaroundUtil {
      * ignore server-side timeouts that occur during test execution.
      */
     private static final String IGNORE_TIMEOUT_VAR = "TEST_RC_IGNORE_TIMEOUT"; //$NON-NLS-1$
+    /** 
+     * Name of the environment variable that defines whether the rc should
+     * disable the highlighting of supported components
+     */
+    private static final String DISABLE_HIGHLIGHTING_VAR = "TEST_RC_DISABLE_HIGHLIGHTING"; //$NON-NLS-1$
     
     /**
      * Private constructor
@@ -53,6 +58,20 @@ public class WorkaroundUtil {
     public static boolean isIgnoreTimeout() {
         String value = EnvironmentUtils
                 .getProcessOrSystemProperty(IGNORE_TIMEOUT_VAR);
+
+        return Boolean.valueOf(value).booleanValue();
+    }
+    
+    /**
+     * Allows to disable the highlighting of supported components. This might be
+     * necessary because it is using to much performance or behavior which
+     * leads to a non usable AUT.
+     * @return <code>true</code> if highlighting of supported components should
+     * be disabled. Otherwise <code>false</code>.
+     */
+    public static boolean isHighlightingDisabled() {
+        String value = EnvironmentUtils
+                .getProcessOrSystemProperty(DISABLE_HIGHLIGHTING_VAR);
 
         return Boolean.valueOf(value).booleanValue();
     }

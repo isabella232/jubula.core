@@ -24,6 +24,7 @@ import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.implclasses.table.Cell;
 import org.eclipse.jubula.rc.common.logger.AutServerLogger;
 import org.eclipse.jubula.rc.common.util.MatchUtil;
+import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.rc.swt.utils.SwtUtils;
 import org.eclipse.jubula.tools.internal.constants.StringConstants;
@@ -150,7 +151,9 @@ public class CheckListener extends AbstractAutSwtEventListener {
         Widget widget = SwtUtils.getWidgetAtCursorLocation();
         setCurrentComponent(widget);
         setCurrentWidget();
-        highlightComponent();
+        if (!WorkaroundUtil.isHighlightingDisabled()) {
+            highlightComponent();
+        }
     }
     
     /**

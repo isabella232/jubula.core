@@ -1,0 +1,42 @@
+<!-- 
+  Copyright (c) 2019 BREDEX GmbH.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+  
+  Contributors:
+      BREDEX GmbH - initial API and implementation and/or initial documentation
+-->
+<section xml:id="known-issues-and-other-information-8.8.0"
+ version="5.0" xmlns="http://docbook.org/ns/docbook"
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xl="http://www.w3.org/1999/xlink">
+ <title>Known issues and other information</title>
+
+ <para>
+  <emphasis role="strong">RCP/SWT added possibility to disable component
+   highlighting</emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    There is a possibility that in a Linux environment the Highlighting
+    of
+    supported components is leading to a big performance drop and is
+    even
+    not working correctly. We have added the possibility to
+    disable
+    this highlighting of supported components with the property
+    <emphasis>TEST_RC_DISABLE_HIGHLIGHTING</emphasis>
+    with the value
+    <emphasis>true</emphasis>
+    . After this no
+    supported component is highlighted but you can still
+    try to map
+    components and they will show up in the Object Mapping
+    editor.
+   </para>
+  </listitem>
+ </itemizedlist>
+</section>

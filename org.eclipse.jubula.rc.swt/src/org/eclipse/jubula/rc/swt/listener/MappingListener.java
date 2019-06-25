@@ -19,6 +19,7 @@ import org.eclipse.jubula.rc.common.AUTServer;
 import org.eclipse.jubula.rc.common.Constants;
 import org.eclipse.jubula.rc.common.exception.NoIdentifierForComponentException;
 import org.eclipse.jubula.rc.common.util.PropertyUtil;
+import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.swt.SwtAUTServer;
 import org.eclipse.jubula.tools.internal.exception.CommunicationException;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
@@ -87,7 +88,9 @@ public class MappingListener extends AbstractAutSwtEventListener {
                         case SWT.MouseDown:
                         case SWT.Arm:
                             setCurrentWidget();
-                            highlightComponent();
+                            if (!WorkaroundUtil.isHighlightingDisabled()) {
+                                highlightComponent();
+                            }
                             break;
                         case SWT.KeyDown:
                         case SWT.MouseUp:
