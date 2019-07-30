@@ -5,7 +5,14 @@
     at http://www.eclipse.org/legal/epl-v10.html -->
 <section xml:id="wizard-installation" xmlns="http://docbook.org/ns/docbook"
     xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
-    <title>Installation</title>
+       <title>Installation</title>
+    <para role="warning">
+     The Jubula Extension Wizard is not supposed to
+     be installed into the Jubula ITE or into Eclipse for Testers. There is
+     another update site needed. For further information
+     see
+     <xref linkend="wizard-requirements" />.
+    </para>
     <orderedlist>
         <listitem>
             <para>
@@ -80,11 +87,4 @@
             </para>
         </listitem>
     </orderedlist>
-
-    <para role="warning">
-        The Jubula Extension Wizard is not supposed to
-        be installed into the Jubula ITE or into Eclipse for Testers, 
-        see<xref linkend="wizard-requirements" />.
-    </para>
-
 </section>

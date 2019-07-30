@@ -23,6 +23,12 @@
         </listitem>
         <listitem>
             <para>
+                The update site from efxclipse in your available update sites:
+                https://download.eclipse.org/efxclipse/updates-released/3.6.0/site/
+            </para>
+        </listitem>
+        <listitem>
+            <para>
                 JDK 8.0
             </para>
         </listitem>
