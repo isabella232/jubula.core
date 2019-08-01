@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.documentation.orbit"
       label="Jubula Documentation feature for orbit"
-      version="7.0.3.qualifier"
+      version="8.0.0.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.documentation.orbit">
 

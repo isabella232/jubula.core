@@ -4,7 +4,7 @@
     Eclipse Public License v1.0 which accompanies this distribution, and is available 
     at http://www.eclipse.org/legal/epl-v10.html -->
 <site>
-   <feature url="features/org.eclipse.jubula.extensions.wizard.feature_7.0.3.qualifier.jar" id="org.eclipse.jubula.extensions.wizard.feature" version="7.0.3.qualifier">
+   <feature url="features/org.eclipse.jubula.extensions.wizard.feature_8.0.0.qualifier.jar" id="org.eclipse.jubula.extensions.wizard.feature" version="8.0.0.qualifier">
       <category name="org.eclipse.jubula.extensions.wizard.repo"/>
    </feature>
    <category-def name="org.eclipse.jubula.extensions.wizard.repo" label="Jubula Extension Development"/>

@@ -6,7 +6,7 @@
     <parent>
         <artifactId>org.eclipse.jubula.releng</artifactId>
         <groupId>org.eclipse.jubula</groupId>
-        <version>7.0.3-SNAPSHOT</version>
+        <version>8.0.0-SNAPSHOT</version>
         <relativePath>../org.eclipse.jubula.releng</relativePath>
     </parent>
     <artifactId>org.eclipse.jubula.tools.exec.tests.win</artifactId>

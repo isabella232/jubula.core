@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Start AUT Agent" uid="org.eclipse.jubula.product.autagent.start" id="org.eclipse.jubula.app.autagent.product" application="org.eclipse.jubula.app.autagent" version="7.0.3.qualifier" useFeatures="false" includeLaunchers="true">
+<product name="Start AUT Agent" uid="org.eclipse.jubula.product.autagent.start" id="org.eclipse.jubula.app.autagent.product" application="org.eclipse.jubula.app.autagent" version="8.0.0.qualifier" useFeatures="false" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
@@ -9,17 +9,23 @@
    <launcherArgs>
       <programArgs>-consolelog
 #PARGS_2INSERT
---launcher.suppressErrors</programArgs>
+--launcher.suppressErrors
+      </programArgs>
       <programArgsLin>-vm
-../jre/bin/java</programArgsLin>
-      <programArgsMac>--launcher.secondThread</programArgsMac>
+../jre/bin/java
+      </programArgsLin>
+      <programArgsMac>--launcher.secondThread
+      </programArgsMac>
       <programArgsWin>-vm
-../jre/bin/javaw.exe</programArgsWin>
+../jre/bin/javaw.exe
+      </programArgsWin>
       <vmArgs>-client
 -Xms128m
--Xmx1024m</vmArgs>
+-Xmx1024m
+      </vmArgs>
       <vmArgsMac>-XstartOnFirstThread
--Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
+-Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
    </launcherArgs>
 
    <windowImages/>
@@ -27,9 +33,9 @@
    <launcher name="autagent">
       <linux icon="icons/start_aut_agent.xpm"/>
       <macosx icon="icons/start_aut_agent.icns"/>
-      <solaris/>
       <win useIco="true">
          <ico path="icons/start_aut_agent.ico"/>
+         <bmp/>
       </win>
    </launcher>
 
