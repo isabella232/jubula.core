@@ -4,7 +4,7 @@ Bundle-Name: Jubula Toolkit - API Generator
 Bundle-SymbolicName: org.eclipse.jubula.toolkit.api.gen
 Bundle-Version: 4.0.0.qualifier
 Bundle-Vendor: Eclipse Jubula
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Require-Bundle: org.apache.commons.logging;bundle-version="[1.0.0,2.0.0)",
