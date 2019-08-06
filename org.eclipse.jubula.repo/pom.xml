@@ -45,22 +45,29 @@
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
                                             forceOverwrite="yes"
                                             algorithm="SHA-512" fileext=".sha512" />
-                                        <delete includeemptydirs="false" verbose="true">
-                                            <fileset dir="${targetDir}">
-                                                <include name="repo/**" />
-                                                <include name="${project.artifactId}-${project.version}.zip*" />
-                                            </fileset>
-                                        </delete>
-                                        <copy todir="${targetDir}" verbose="true" overwrite="true">
-                                            <fileset dir="${project.build.directory}">
-                                                <include name="${project.artifactId}-${project.version}.zip*" />
-                                            </fileset>
-                                        </copy>
-                                        <move includeemptydirs="false" todir="${targetDir}/repo" verbose="true">
-                                            <fileset dir="target/repository">
-                                                <include name="**" />
-                                            </fileset>
-                                        </move>
+                                        <echo>Created SHA files</echo>
+                                        <exec executable="ssh">
+                                          <arg value="genie.jubula@projects-storage.eclipse.org"/>
+                                          <arg value="rm"/>
+                                          <arg value="-r"/>
+                                          <arg value="${targetDir}/repo/"/>
+                                        </exec>
+                                        <exec executable="ssh">
+                                          <arg value="genie.jubula@projects-storage.eclipse.org"/>
+                                          <arg value="rm"/>
+                                          <arg value="${targetDir}/${project.artifactId}-*.zip"/>
+                                        </exec>
+                                        <echo>Removed files</echo>
+                                        <exec executable="scp">
+                                          <arg value="${project.build.directory}/${project.artifactId}-${project.version}.zip"/>
+                                          <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}"/>
+                                        </exec>
+                                        <exec executable="scp">
+                                          <arg value="-r"/>
+                                          <arg value="target/repository/"/>
+                                          <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}/repo/"/>
+                                        </exec>
+                                        <echo>Copied Files</echo>
                                     </tasks>
                                 </configuration>
                             </execution>

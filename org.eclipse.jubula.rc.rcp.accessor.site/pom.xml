@@ -45,7 +45,7 @@
                                     <goal>run</goal>
                                 </goals>
                                 <configuration>
-                                    <tasks>
+                                     <tasks>
                                         <property name="targetDir" value="/home/data/httpd/download.eclipse.org/jubula/nightly"/>
                                         <checksum
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
@@ -55,22 +55,26 @@
                                             file="${project.build.directory}/${project.artifactId}-${project.version}.zip"
                                             forceOverwrite="yes"
                                             algorithm="SHA-512" fileext=".sha512" />
-                                        <delete includeemptydirs="false">
-                                            <fileset dir="${targetDir}">
-                                                <include name="repo_accessor/**" />
-                                                <include name="${project.artifactId}-${project.version}.zip*" />
-                                            </fileset>
-                                        </delete>
-                                        <move todir="${targetDir}" overwrite="true">
-                                            <fileset dir="${project.build.directory}">
-                                                <include name="${project.artifactId}-${project.version}.zip*" />
-                                            </fileset>
-                                        </move>
-                                        <move includeemptydirs="false" todir="${targetDir}/repo_accessor" overwrite="true">
-                                            <fileset dir="target/repository">
-                                                <include name="**" />
-                                            </fileset>
-                                        </move>
+                                        <echo>Created SHA files</echo>
+                                        <exec executable="ssh">
+                                          <arg value="genie.jubula@projects-storage.eclipse.org"/>
+                                          <arg value="rm -r ${targetDir}/repo_accessor/"/>
+                                        </exec>
+                                        <exec executable="ssh">
+                                          <arg value="genie.jubula@projects-storage.eclipse.org"/>
+                                          <arg value="rm ${targetDir}/${project.artifactId}-*.zip"/>
+                                        </exec>
+                                        <echo>Removed files</echo>
+                                        <exec executable="scp">
+                                          <arg value="${project.build.directory}/${project.artifactId}-${project.version}.zip"/>
+                                          <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}"/>
+                                        </exec>
+                                        <exec executable="scp">
+                                          <arg value="-r"/>
+                                          <arg value="target/repository/"/>
+                                          <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}/repo_accessor/"/>
+                                        </exec>
+                                        <echo>Copied Files</echo>
                                     </tasks>
                                 </configuration>
                             </execution>
