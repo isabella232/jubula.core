@@ -18,19 +18,7 @@ import org.eclipse.jubula.tools.internal.objects.IMonitoringValue;
  * @author BREDEX GmbH
  * @created Jan 22, 2010
  */
-public interface ITestResultSummaryPO extends IArchivableTestResultSummary, 
-    IALMReportingProperties {
-    /** @author BREDEX GmbH */
-    public enum AlmReportStatus {
-        /** Do not change - persisted to database */
-        NOT_YET_REPORTED,
-        /** Do not change - persisted to database */
-        REPORTED,
-        /** Do not change - persisted to database */
-        NOT_CONFIGURED,
-        /** Do not change - persisted to database */
-        REPORT_DISCARDED
-    }
+public interface ITestResultSummaryPO extends IArchivableTestResultSummary {
     
     /**
      * <code>DEFAULT_NUMBER_OF_FAILED_TEST_STEPS</code>

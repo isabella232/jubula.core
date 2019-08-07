@@ -16,11 +16,6 @@ package org.eclipse.jubula.client.core.constants;
  * @author BREDEX GmbH
  */
 public final class Constants {
-    /** the dashboard summaryId parameter name*/
-    public static final String DASHBOARD_SUMMARY_PARAM = "summaryId"; //$NON-NLS-1$
-
-    /** the dashboard result node parameter name*/
-    public static final String DASHBOARD_RESULT_NODE_PARAM = "resultNode"; //$NON-NLS-1$
 
     /** exit code in case of invalid options */
     public static final int INVALID_VALUE = -2;

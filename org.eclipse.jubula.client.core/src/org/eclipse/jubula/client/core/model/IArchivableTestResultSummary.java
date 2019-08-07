@@ -12,8 +12,6 @@ package org.eclipse.jubula.client.core.model;
 
 import java.util.Date;
 
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
-
 /**
  * Interface for model object: Test Result Summary.
  * <br/><br/>
@@ -425,13 +423,4 @@ public interface IArchivableTestResultSummary {
      * @return Returns the significant value
      */
     public abstract String getMonitoringValue();
-    /**
-     * @param status 
-     */
-    public abstract void setAlmReportStatus(AlmReportStatus status);
-    
-    /**
-     * @return the ALM reported status
-     */
-    public abstract AlmReportStatus getAlmReportStatus();
 }

@@ -59,7 +59,6 @@ import org.eclipse.jubula.client.archive.dto.ParamDescriptionDTO;
 import org.eclipse.jubula.client.archive.dto.ProjectDTO;
 import org.eclipse.jubula.client.archive.dto.RefTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.RefTestSuiteDTO;
-import org.eclipse.jubula.client.archive.dto.ReportingRuleDTO;
 import org.eclipse.jubula.client.archive.dto.ReusedProjectDTO;
 import org.eclipse.jubula.client.archive.dto.TDManagerDTO;
 import org.eclipse.jubula.client.archive.dto.TechnicalNameDTO;
@@ -81,7 +80,6 @@ import org.eclipse.jubula.client.core.businessprocess.TestDataCubeBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP.ToolkitPluginError.ERROR;
-import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
@@ -130,7 +128,6 @@ import org.eclipse.jubula.client.core.persistence.Persistor;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
 import org.eclipse.jubula.client.core.progress.IProgressConsole;
 import org.eclipse.jubula.client.core.utils.ModelParamValueConverter;
-import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.client.core.utils.TrackingUnit;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
@@ -692,7 +689,6 @@ public class JsonImporter {
      */
     public void fillTestresultSummary(ITestResultSummaryPO po,
             TestresultSummaryDTO dto) {
-        po.setAlmReportStatus(dto.getAlmStatus());
         po.setAutAgentName(dto.getAutAgentName());
         po.setAutCmdParameter(dto.getAutCmdParameter());
         po.setAutConfigName(dto.getAutConfigName());
@@ -1377,10 +1373,6 @@ public class JsonImporter {
         proj.setIsReusable(dto.isReusable());
         proj.setIsProtected(dto.isProtected());
         IProjectPropertiesPO projProperties = proj.getProjectProperties();
-        projProperties.setALMRepositoryName(dto.getAlmRepositoryName());
-        projProperties.setIsReportOnSuccess(dto.isReportOnSuccess());
-        projProperties.setIsReportOnFailure(dto.isReportOnFailure());
-        projProperties.setDashboardURL(dto.getDashboardURL());
         projProperties.getCheckConfCont().setEnabled(
                 dto.isTeststyleEnabled());
         
@@ -1390,38 +1382,8 @@ public class JsonImporter {
             projProperties.setTrackChangesUnit(
                     TrackingUnit.valueOf(dto.getTrackingUnit()));
         }
-        projProperties.setTrackChangesSpan(dto.getTrackingSpan());
-        
-        List<IALMReportingRulePO> reportingRules = 
-                new ArrayList<IALMReportingRulePO>();
-        for (ReportingRuleDTO rule : dto.getReportingRules()) {
-            IALMReportingRulePO newReportingRule = createReportingRule(rule);
-            reportingRules.add(newReportingRule);
-        }
-        projProperties.setALMReportingRules(reportingRules);
-        
+        projProperties.setTrackChangesSpan(dto.getTrackingSpan());       
         return projProperties;
-    }
-
-    /**
-     * converts alm reporting rule from dto to po
-     * @param dto rule from ReportingRuleDTO
-     * @return the converted rule
-     */
-    private IALMReportingRulePO createReportingRule(ReportingRuleDTO dto) {
-        String name = dto.getName();
-        String fieldID = dto.getFieldID();
-        String value = dto.getValue();
-        String dtoType = dto.getType();
-        ReportRuleType type = null;
-        if (dtoType.equals(ReportRuleType.ONSUCCESS.toString())) {
-            type = ReportRuleType.ONSUCCESS;
-        } else if (dtoType.equals(ReportRuleType.ONFAILURE.toString())) {
-            type = ReportRuleType.ONFAILURE;
-        }
-        IALMReportingRulePO rule = PoMaker.createALMReportingRulePO(
-                name, fieldID, value, type);
-        return rule;
     }
     
     /**

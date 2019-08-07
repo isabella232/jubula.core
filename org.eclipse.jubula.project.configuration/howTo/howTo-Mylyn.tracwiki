@@ -10,21 +10,12 @@
    * all Mylyn dependencies from Jubula feature
    * + secure store (for mylyn credentials)
    * + JIRA
-   * + HP ALM (with no actual bundle / compile dependency) and ***not*** included 
   * Jubulas Mylyn integration is also relevant for "Eclipse for Testers" - the EPP Package
    * the product therefore also has a feature dependency for the ITE & EPL conform parts of Mylyn
   * the dependencies to mylyn exist in
    * the bundles itself
    * the feature (as required not included)
    * the products (ITEs, EPP) - at this point only due to the transitive dependency to the corresponding ITE features (c.b.guidancer.feature and c.b.jubula.feature)  
- * there are currently 3 Mylyn using bundles contained within the Jubula feature
-  * {{{org.eclipse.jubula.client.alm.mylyn.ui.bridge}}}
-    * holds the bridge for the Mylyn context support in tasks
-  * {{{org.eclipse.jubula.client.alm.mylyn.core}}}
-   * holds the actual logic to report to the ALM systems
-  * {{{org.eclipse.jubula.client.alm.mylyn.ui}}}
-   * contains handler for creating tasks from results
-   * ALM UI parts (e.g. decorator, commands, icons)
 
 = Known issues =
  * currently there is a strong UI dependency for all (also the core) bundles as Mylyn itself (TasksUI class) resides in a UI dependent context

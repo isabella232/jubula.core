@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.ui.views;
 
+import static org.eclipse.jubula.tools.internal.constants.StringConstants.EMPTY;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -51,7 +53,6 @@ import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultChan
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.ITestresultSummaryEventListener;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.TestresultState;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ProjectVersion;
 import org.eclipse.jubula.client.core.model.TestResultNode;
 import org.eclipse.jubula.client.core.persistence.TestResultSummaryPM;
@@ -72,9 +73,7 @@ import org.eclipse.jubula.client.ui.utils.JobUtils;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.tools.internal.constants.MonitoringConstants;
-import static org.eclipse.jubula.tools.internal.constants.StringConstants.EMPTY;
 import org.eclipse.jubula.tools.internal.exception.JBException;
-import org.eclipse.jubula.tools.internal.i18n.I18n;
 import org.eclipse.jubula.tools.internal.messagehandling.MessageIDs;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
@@ -280,12 +279,6 @@ public class TestresultSummaryView extends ViewPart implements
      */
     private static final String TESTRESULT_SUMMARY_TESTRUN_STATE = 
         Messages.TestresultSummaryTestrunState;
-
-    /**
-     * <code>TESTRESULT_ALM_REPORT_STATE</code>
-     */
-    private static final String TESTRESULT_ALM_REPORT_STATE = 
-        Messages.TestresultSummaryAlmReportState;
     
     /**
      * <code>TESTRESULT_SUMMARY_DATE</code>
@@ -432,7 +425,6 @@ public class TestresultSummaryView extends ViewPart implements
         addTestRelevantColumn(m_tableViewer);
         addTestJobStartTimeColumn(m_tableViewer);
         addTestJobColumn(m_tableViewer);
-        addAlmStatusDecoratorColumn(m_tableViewer);
         addTsStatusColumn(m_tableViewer);
         addProjectNameColumn(m_tableViewer);
         addProjectVersionColumn(m_tableViewer);
@@ -751,7 +743,6 @@ public class TestresultSummaryView extends ViewPart implements
             TESTRESULT_SUMMARY_DATE,
             TESTRESULT_SUMMARY_COMMENT_TITLE,
             TESTRESULT_SUMMARY_TESTRUN_STATE,
-            TESTRESULT_ALM_REPORT_STATE,
             TESTRESULT_SUMMARY_PROJECT_NAME,
             TESTRESULT_PROJECT_VERSION,
             TESTRESULT_SUMMARY_TESTSUITE,
@@ -965,8 +956,7 @@ public class TestresultSummaryView extends ViewPart implements
         List<TableColumn> columnsWithVariableWidth = new ArrayList<>();
         for (TableColumn column : columns) {
             String columnName = column.getText();
-            if (columnName.equals(TESTRESULT_ALM_REPORT_STATE)
-                    || columnName.equals(TESTRESULT_SUMMARY_DATE)
+            if (columnName.equals(TESTRESULT_SUMMARY_DATE)
                     || columnName.equals(TESTRESULT_SUMMARY_DETAILS_AVAILABLE)
                     || columnName.equals(TESTRESULT_PROJECT_VERSION)
                     || columnName.equals(TESTRESULT_SUMMARY_START_TIME)
@@ -1139,52 +1129,6 @@ public class TestresultSummaryView extends ViewPart implements
                         ((ITestResultSummaryPO)e2).getTestRunState());
             }
         };
-    }
-    
-    /**
-     * Adds a "Status decorator" column to the given viewer.
-     * @param tableViewer The viewer to which the column will be added.
-     */
-    private void addAlmStatusDecoratorColumn(
-        TableViewer tableViewer) {
-        TableViewerColumn column = new TableViewerColumn(tableViewer, SWT.NONE);
-        column.getColumn().setWidth(0);
-        column.getColumn().setText(TESTRESULT_ALM_REPORT_STATE);
-        column.getColumn().setMoveable(true);
-        column.setLabelProvider(new TestresultSummaryViewColumnLabelProvider() {
-            public String getText(Object element) {
-                ITestResultSummaryPO row = (ITestResultSummaryPO)element;
-                return getDescriptiveALMStatusDescription(row);
-            }
-            public Image getImage(Object element) {
-                return null;
-            }
-        });
-        createMenuItem(m_headerMenu, column.getColumn());
-        new ColumnViewerSorter(tableViewer, column) {
-            @Override
-            protected int doCompare(Viewer viewer, Object e1, Object e2) {
-                return getCommonsComparator().compare(
-                        ((ITestResultSummaryPO)e1).getAlmReportStatus(), 
-                        ((ITestResultSummaryPO)e2).getAlmReportStatus());
-            }
-        };
-    }
-    
-    /**
-     * @param summary
-     *            the summary
-     * @return an i18n value
-     */
-    private String getDescriptiveALMStatusDescription(
-        ITestResultSummaryPO summary) {
-        final AlmReportStatus almReportStatus = summary.getAlmReportStatus();
-        if (almReportStatus == AlmReportStatus.NOT_YET_REPORTED
-            && !summary.isTestsuiteRelevant()) {
-            return Messages.ALMStatusMarkedAsNonRelevant;
-        }
-        return I18n.getString("almReportStatus." //$NON-NLS-1$
-            + almReportStatus);
     }
     
     /**
@@ -2080,8 +2024,6 @@ public class TestresultSummaryView extends ViewPart implements
                 metaValue = m.getTestJobName();
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_TESTRUN_STATE)) {
                 metaValue = m.getTestRunState();
-            } else if (m_filterType.equals(TESTRESULT_ALM_REPORT_STATE)) {
-                metaValue = getDescriptiveALMStatusDescription(m);
             } else if (m_filterType.equals(TESTRESULT_SUMMARY_PROJECT_NAME)) {
                 metaValue = m.getProjectName();
             } else if (m_filterType.equals(TESTRESULT_PROJECT_VERSION)) {

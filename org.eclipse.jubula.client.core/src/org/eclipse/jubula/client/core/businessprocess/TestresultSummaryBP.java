@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.businessprocess;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -24,7 +22,6 @@ import org.eclipse.jubula.client.core.IClientTest;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher;
 import org.eclipse.jubula.client.core.events.DataEventDispatcher.DataState;
 import org.eclipse.jubula.client.core.i18n.Messages;
-import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.IAbstractContainerPO;
@@ -35,14 +32,11 @@ import org.eclipse.jubula.client.core.model.IDoWhilePO;
 import org.eclipse.jubula.client.core.model.IIteratePO;
 import org.eclipse.jubula.client.core.model.INodePO;
 import org.eclipse.jubula.client.core.model.IParameterDetailsPO;
-import org.eclipse.jubula.client.core.model.IProjectPO;
-import org.eclipse.jubula.client.core.model.IProjectPropertiesPO;
 import org.eclipse.jubula.client.core.model.ITestCasePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultAdditionPO;
 import org.eclipse.jubula.client.core.model.ITestResultPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IWhileDoPO;
 import org.eclipse.jubula.client.core.model.NodeMaker;
@@ -184,45 +178,7 @@ public class TestresultSummaryBP {
         summary.setInternalMonitoringId(
                 MonitoringConstants.EMPTY_MONITORING_ID);         
         summary.setReportWritten(false);
-        determineAlmRepositoryStatus(summary, result);
         summary.setMonitoringValueType(MonitoringConstants.EMPTY_TYPE); 
-    }
-    
-    /**
-     * @param summary
-     *            the summary to determine the status for
-     * @param result
-     *            the result
-     */
-    private void determineAlmRepositoryStatus(ITestResultSummaryPO summary,
-        TestResult result) {
-        IProjectPO project = result.getProject();
-        final IProjectPropertiesPO projectProperties = project
-            .getProjectProperties();
-        final boolean reportSuccess = projectProperties.getIsReportOnSuccess();
-        final boolean reportFailure = projectProperties.getIsReportOnFailure();
-        final List<IALMReportingRulePO> reportingRules =
-                projectProperties.getALMReportingRules();
-        final List<IALMReportingRulePO> reportingRulesCopy =
-                new ArrayList<IALMReportingRulePO>();
-        for (IALMReportingRulePO rule : reportingRules) {
-            reportingRulesCopy.add(rule.copy());
-        }
-        final String almRepositoryName = projectProperties
-            .getALMRepositoryName();
-        
-        AlmReportStatus status = AlmReportStatus.NOT_CONFIGURED;
-        if (StringUtils.isNotEmpty(almRepositoryName)
-            && (reportSuccess || reportFailure || !reportingRules.isEmpty())
-            && summary.isTestsuiteRelevant()) {
-            status = AlmReportStatus.NOT_YET_REPORTED;
-            summary.setALMRepositoryName(almRepositoryName);
-            summary.setIsReportOnSuccess(reportSuccess);
-            summary.setIsReportOnFailure(reportFailure);
-            summary.setALMReportingRules(reportingRulesCopy);
-            summary.setDashboardURL(projectProperties.getDashboardURL());
-        }
-        summary.setAlmReportStatus(status);
     }
 
     /**
@@ -489,38 +445,6 @@ public class TestresultSummaryBP {
             } catch (ProjectDeletedException e) {
                 throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
                         MessageIDs.E_PROJECT_NOT_FOUND);
-            } finally {
-                persistor.dropSession(sess);
-            }
-        }
-    }
-    
-    /**
-     * @param selectedSummary
-     *            summary
-     * @param reportStatus
-     *            reportStatus
-     */
-    public void setALMReportStatus(ITestResultSummaryPO selectedSummary,
-        AlmReportStatus reportStatus) {
-        if (selectedSummary != null) {
-            Persistor persistor = Persistor.instance();
-            final EntityManager sess = persistor.openSession();
-            try {
-                final EntityTransaction tx = persistor.getTransaction(sess);
-
-                ITestResultSummaryPO msummary = sess.merge(selectedSummary);
-
-                msummary.setAlmReportStatus(reportStatus);
-                persistor.commitTransaction(sess, tx);
-                DataEventDispatcher.getInstance().fireTestresultSummaryChanged(
-                    msummary, DataState.StructureModified);
-            } catch (PMException e) {
-                throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
-                    MessageIDs.E_DATABASE_GENERAL);
-            } catch (ProjectDeletedException e) {
-                throw new JBFatalException(Messages.StoringOfMetadataFailed, e,
-                    MessageIDs.E_PROJECT_NOT_FOUND);
             } finally {
                 persistor.dropSession(sess);
             }

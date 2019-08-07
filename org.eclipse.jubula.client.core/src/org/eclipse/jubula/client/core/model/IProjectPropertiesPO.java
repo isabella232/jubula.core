@@ -18,8 +18,7 @@ import org.eclipse.jubula.client.core.utils.TrackingUnit;
  * @author BREDEX GmbH
  * @created Jun 11, 2007
  */
-public interface IProjectPropertiesPO extends IPersistentObject, 
-    IALMReportingProperties {
+public interface IProjectPropertiesPO extends IPersistentObject {
     /**
      * @return <code>true</code> if this project is reusable. Otherwise
      *         <code>false</code>.

@@ -51,7 +51,6 @@ import org.eclipse.jubula.client.archive.dto.ParameterDTO;
 import org.eclipse.jubula.client.archive.dto.ProjectDTO;
 import org.eclipse.jubula.client.archive.dto.RefTestCaseDTO;
 import org.eclipse.jubula.client.archive.dto.RefTestSuiteDTO;
-import org.eclipse.jubula.client.archive.dto.ReportingRuleDTO;
 import org.eclipse.jubula.client.archive.dto.ReusedProjectDTO;
 import org.eclipse.jubula.client.archive.dto.TDManagerDTO;
 import org.eclipse.jubula.client.archive.dto.TechnicalNameDTO;
@@ -66,7 +65,6 @@ import org.eclipse.jubula.client.archive.dto.WhileDTO;
 import org.eclipse.jubula.client.archive.i18n.Messages;
 import org.eclipse.jubula.client.core.businessprocess.ProjectNameBP;
 import org.eclipse.jubula.client.core.businessprocess.UsedToolkitBP;
-import org.eclipse.jubula.client.core.model.IALMReportingRulePO;
 import org.eclipse.jubula.client.core.model.IAUTConfigPO;
 import org.eclipse.jubula.client.core.model.IAUTMainPO;
 import org.eclipse.jubula.client.core.model.ICapPO;
@@ -104,7 +102,6 @@ import org.eclipse.jubula.client.core.model.ITestDataCategoryPO;
 import org.eclipse.jubula.client.core.model.ITestDataCubePO;
 import org.eclipse.jubula.client.core.model.ITestJobPO;
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.model.ITestSuitePO;
 import org.eclipse.jubula.client.core.model.IUsedToolkitPO;
 import org.eclipse.jubula.client.core.model.IValueCommentPO;
@@ -181,12 +178,6 @@ public class JsonExporter {
                 projectProperties.getCheckConfCont().getEnabled());
         m_projectDTO.setTestResultDetailsCleanupInterval(
                 m_project.getTestResultCleanupInterval());
-        fillALM(projectProperties);
-        m_projectDTO.setReportOnSuccess(projectProperties
-                .getIsReportOnSuccess());
-        m_projectDTO.setReportOnFailure(projectProperties
-                .getIsReportOnFailure());
-        m_projectDTO.setDashboardURL(projectProperties.getDashboardURL());
         m_projectDTO.setMarkupLanguage(projectProperties.getMarkupLanguage());
         fillTrackingConfig(projectProperties);
         m_monitor.worked(1);
@@ -1105,10 +1096,7 @@ public class JsonExporter {
                 continue;
             }
             TestresultSummaryDTO trsDTO = new TestresultSummaryDTO(poSummary);
-            if (AlmReportStatus.NOT_YET_REPORTED.equals(poSummary
-                .getAlmReportStatus())) {
-                trsDTO.setAlmStatus(AlmReportStatus.REPORT_DISCARDED);
-            }
+
             Map<String, IMonitoringValue> 
                     tmpMap = poSummary.getMonitoringValues();
             Iterator<Map.Entry<String, IMonitoringValue>> it =
@@ -1147,38 +1135,6 @@ public class JsonExporter {
         }
         m_projectDTO.setProjectVersionQualifier(
                 m_project.getProjectVersionQualifier());
-    }
-    
-    /**
-     * fill project ALMs
-     * @param projectProperties project properties
-     * @throws OperationCanceledException 
-     */
-    private void fillALM(IProjectPropertiesPO projectProperties)
-            throws OperationCanceledException {
-        ImportExportUtil.checkCancel(m_monitor);
-        m_projectDTO.setAlmRepositoryName(
-                projectProperties.getALMRepositoryName());
-        
-        for (IALMReportingRulePO rule : projectProperties
-                .getALMReportingRules()) {
-            ReportingRuleDTO ruleDTO = new ReportingRuleDTO();
-            fillReportingRule(ruleDTO, rule);
-            m_projectDTO.addReportingRule(ruleDTO);
-        }
-    }
-
-    /**
-     * fill reporting rule dto
-     * @param ruleDTO will contained the reporting rules info
-     * @param po the original reporting rule object
-     */
-    private void fillReportingRule(ReportingRuleDTO ruleDTO,
-            IALMReportingRulePO po) {
-        ruleDTO.setName(po.getName());
-        ruleDTO.setFieldID(po.getAttributeID());
-        ruleDTO.setValue(po.getValue());
-        ruleDTO.setType(po.getType().toString());            
     }
 
     /**

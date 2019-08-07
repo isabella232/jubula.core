@@ -17,7 +17,6 @@ import org.eclipse.jubula.client.core.businessprocess.ComponentNamesBP.CompNameC
 import org.eclipse.jubula.client.core.businessprocess.IParamNameMapper;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.core.persistence.PersistenceUtil;
-import org.eclipse.jubula.client.core.utils.ReportRuleType;
 import org.eclipse.jubula.tools.internal.objects.IComponentIdentifier;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.Profile;
 import org.eclipse.jubula.tools.internal.xml.businessprocess.ProfileBuilder;
@@ -67,19 +66,6 @@ public abstract class PoMaker {
      */
     public static IAUTMainPO createAUTMainPO(String autName) {
         return new AUTMainPO(autName);
-    }
-
-    /**
-     * factory method to replace constructor
-     * @param name name
-     * @param fieldID fieldID
-     * @param value value
-     * @param type the type
-     * @return ALMReportingRulePO
-     */
-    public static IALMReportingRulePO createALMReportingRulePO(
-            String name, String fieldID, String value, ReportRuleType type) {
-        return new ALMReportingRulePO(name, fieldID, value, type);
     }
     
     /**

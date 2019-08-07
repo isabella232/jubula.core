@@ -81,7 +81,7 @@ public class Persistor {
     private static final String DEFAULT_PU_NAME = "org.eclipse.jubula"; //$NON-NLS-1$
     
     /** the database model version */
-    private static final Version MODEL_VERSION = new Version(75, 0, 0);
+    private static final Version MODEL_VERSION = new Version(80, 0, 0);
     
     /** shutdown hook to dispose the current Persistor */
     private static final Thread SHUTDOWN_HOOK = new IsAliveThread(

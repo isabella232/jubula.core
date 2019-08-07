@@ -21,7 +21,6 @@ import org.eclipse.jubula.client.core.model.IProjectPO;
 import org.eclipse.jubula.client.core.persistence.GeneralStorage;
 import org.eclipse.jubula.client.ui.constants.Constants;
 import org.eclipse.jubula.client.ui.widgets.DirectCombo;
-import org.eclipse.jubula.mylyn.utils.MylynAccess;
 import org.eclipse.jubula.toolkit.common.businessprocess.ToolkitSupportBP;
 import org.eclipse.jubula.toolkit.common.exception.ToolkitPluginException;
 import org.eclipse.jubula.toolkit.common.utils.ToolkitUtils;
@@ -30,7 +29,6 @@ import org.eclipse.jubula.tools.internal.constants.StringConstants;
 import org.eclipse.jubula.tools.internal.constants.ToolkitConstants;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.CompSystem;
 import org.eclipse.jubula.tools.internal.xml.businessmodell.ToolkitDescriptor;
-import org.eclipse.mylyn.tasks.core.TaskRepository;
 import org.eclipse.mylyn.wikitext.ui.WikiText;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -194,38 +192,6 @@ public class ControlFactory {
                 values, displayValues, false, true);
         combo.setSelectedObject(markupLang);
         return combo;
-    }
-    
-    /**
-     * Creates a Combo for available ALM repositories depending on the current
-     * Mylyn ALM repositories available in the workspace
-     * 
-     * @param parent
-     *            the parent of the Combo
-     * @param preConfiguredRepositoryName
-     *            the pre-configured repository name which does not necessarily
-     *            has to be locally available
-     * @return a Combo with available ALM repositories
-     */
-    public static DirectCombo<String> createALMRepositoryCombo(
-        Composite parent, String preConfiguredRepositoryName) {
-
-        final List<String> values = new ArrayList<String>();
-        final List<String> displayValues = new ArrayList<String>();
-        for (TaskRepository repo : MylynAccess.getAllRepositories()) {
-            String repositoryLabel = repo.getRepositoryLabel();
-            values.add(repositoryLabel);
-            displayValues.add(repositoryLabel);
-        }
-
-        if (StringUtils.isNotBlank(preConfiguredRepositoryName)
-                && !values.contains(preConfiguredRepositoryName)) {
-            values.add(preConfiguredRepositoryName);
-            displayValues.add(preConfiguredRepositoryName);
-        }
-        
-        return new DirectCombo<String>(parent, SWT.NONE, values,
-            displayValues, true, true);
     }
 
     /**

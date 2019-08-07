@@ -38,9 +38,6 @@ public class Messages extends NLS {
     public static String AddEventHandlerDialogNoEventTypeSel;
     public static String AddEventHandlerDialogNoReentryTypeSel;
     public static String AddEventHandlerDialogReentryType;
-    public static String ALMReportRuleField;
-    public static String ALMReportRuleDescription;
-    public static String ALMReportRuleValue;
     public static String AnErrorOccurredDuringMigration;
     public static String AnErrorOccurredWhileInitializingTheDestinationPath;
     public static String AutAgentPreferencePageButtonAdd;
@@ -618,14 +615,6 @@ public class Messages extends NLS {
     public static String ProblemCheckerProtectedProject;
     public static String Project;
     public static String ProjectGUIPropertySourceProjectName;
-    public static String ProjectPropertyPageALMLabel;
-    public static String ProjectPropertyPageALMRepositoryLabel;
-    public static String ProjectPropertyPageALMConnectionTest;
-    public static String ProjectPropertyPageALMReportRuleAdd;
-    public static String ProjectPropertyPageALMReportRuleRemove;
-    public static String ProjectPropertyPageALMReportingRuleAddDialog;
-    public static String ProjectPropertyPageALMReportingRuleAddDialogMessage;
-    public static String ProjectPropertyPageALMReportingRuleEditDialog;
     public static String ProjectPropertyPageReportOptionsLabel;
     public static String ProjectPropertyPageReportOnSuccessLabel;
     public static String ProjectPropertyPageReportOnFailureLabel;

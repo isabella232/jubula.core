@@ -225,10 +225,6 @@ public interface ContextHelpIds {
     public static final String PROJECT_PROPERTY_PAGE = PRAEFIX
         + "projectSettingsPageContextId"; //$NON-NLS-1$
     
-    /** ContextHelpId for ALM project settings page*/
-    public static final String PROJECT_ALM_PROPERTY_PAGE = PRAEFIX
-        + "projectAlmSettingsPageContextId"; //$NON-NLS-1$
-    
     /** ContextHelpId for aut configuration setting dialog */
     public static final String AUT_CONFIG_PROP_DIALOG = PRAEFIX
         + "autConfigPropDialogContextId"; //$NON-NLS-1$

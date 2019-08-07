@@ -163,17 +163,6 @@ public interface IProjectPO extends IParamNodePO {
      * @param isProtected Whether the project should be protected.
      */
     public void setIsProtected(boolean isProtected);
-    
-    /**
-     * @return the ALM reporting rules of this project
-     */
-    public List<IALMReportingRulePO> getALMReportingRules();
-
-    /**
-     * @param reportingRules the ALM reporting rules of this project
-     */
-    public void setALMReportingRules(
-            List<IALMReportingRulePO> reportingRules);
         
     /**
      * @return Whether changes to the project should be stored.

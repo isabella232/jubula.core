@@ -21,7 +21,6 @@ public class Messages extends NLS {
 
     private static final String BUNDLE_NAME = "org.eclipse.jubula.client.ui.i18n.messages"; //$NON-NLS-1$
     public static String AbstractGuiNodePropertySourceTaskId;
-    public static String ALMStatusMarkedAsNonRelevant;
     public static String CantLoadMetadataFromDatabase;
     public static String CapGUIPropertySourceAction;
     public static String CapGUIPropertySourceActionType;
@@ -96,7 +95,6 @@ public class Messages extends NLS {
     public static String TestResultNodePropertySourceTestResult;
     public static String TestResultNodePropertySourceTimeStamp;
     public static String TestresultSummaryAdditionalInfo;
-    public static String TestresultSummaryAlmReportState;
     public static String TestresultSummaryAutAgentHostname;
     public static String TestresultSummaryAutConf;
     public static String TestresultSummaryAutHostname;

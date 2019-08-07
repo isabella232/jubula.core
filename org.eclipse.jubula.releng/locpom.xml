@@ -114,7 +114,6 @@
          <module>../org.eclipse.jubula.tools.exec</module>
          <module>../org.eclipse.jubula.version</module>
          <module>../org.eclipse.jubula.client.archive</module>
-         <module>../org.eclipse.jubula.client.alm.mylyn.core</module>
          <module>../org.eclipse.jubula.toolkit.base.provider</module>
          <module>../org.eclipse.jubula.toolkit.common</module>
          <module>../org.eclipse.jubula.toolkit.html.api</module>

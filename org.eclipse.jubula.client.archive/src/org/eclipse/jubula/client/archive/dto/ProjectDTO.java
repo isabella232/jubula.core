@@ -447,6 +447,7 @@ public class ProjectDTO extends NodeDTO {
      * @return almRepositoryName
      */
     @JsonProperty("almRepositoryName")
+    @Deprecated
     public String getAlmRepositoryName() {
         return m_almRepositoryName;
     }
@@ -454,14 +455,15 @@ public class ProjectDTO extends NodeDTO {
     /**
      * @param almRepositoryName 
      */
+    @Deprecated
     public void setAlmRepositoryName(String almRepositoryName) {
-        this.m_almRepositoryName = almRepositoryName;
     }
 
     /**
      * @return dashboardURL
      */
     @JsonProperty("dashboardURL")
+    @Deprecated
     public String getDashboardURL() {
         return m_dashboardURL;
     }
@@ -469,8 +471,8 @@ public class ProjectDTO extends NodeDTO {
     /**
      * @param dashboardURL 
      */
+    @Deprecated
     public void setDashboardURL(String dashboardURL) {
-        this.m_dashboardURL = dashboardURL;
     }
 
     /**

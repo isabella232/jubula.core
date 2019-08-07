@@ -384,7 +384,7 @@
         </para>
         <para role="tip">
           The integration for writing to external repositories can be
-          used with Bugzilla 3.6+, JIRA 5.0+ and HP ALM 11+. Other
+          used with Bugzilla 3.6+ and JIRA 5.0+. Other
           repositories for which there are Mylyn connectors may also
           work, but these have not been tested.
         </para>
@@ -533,43 +533,5 @@
         </para>
       </listitem>
     </orderedlist>
-  </section>
-  <section xml:id="specific-information-for-hp-alm-users">
-    <title>Specific information for HP ALM users</title>
-    <itemizedlist>
-      <listitem>
-        <para>
-          To use the HP ALM integration, you must use a separate
-          connector for HP ALM which may incur license costs. Visit
-          the Tasktop website for more details
-          <link xl:href="http://www.tasktop.com">http://www.tasktop.com</link>.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          If you have changed the attribute IDs in your HP ALM installation for defects and / or requirements from their relative defaults (<emphasis>BG_DEV_COMMENTS</emphasis> and <emphasis>REQ_DEV_COMMENTS</emphasis>), or if you have changed the ID for the connector, then you must modify these properties in the <emphasis role="input">almAccess.properties</emphasis> file contained in the jar:
-        </para>
-        
-        <para>
-          <emphasis>org.eclipse.jubula.client.alm.mylyn.core</emphasis>
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Since tasks in HP ALM only have one comment field, the
-          result information is appended to the comment field
-          instead of being added as a new comment each time.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          To write to requirements in a default HP ALM installation,
-          you must use the prefix <emphasis>REQ</emphasis>, e.g.
-          REQ100. To write to defects in a default HP ALM
-          installation, you must use the prefix
-          <emphasis>DEF</emphasis>, e.g. DEF42.
-        </para>
-      </listitem>
-    </itemizedlist>
   </section>
 </section>

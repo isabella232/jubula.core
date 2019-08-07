@@ -11,7 +11,6 @@
 package org.eclipse.jubula.client.ui.propertytester;
 
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 import org.eclipse.jubula.client.core.propertytester.AbstractBooleanPropertyTester;
 
 /**
@@ -28,16 +27,12 @@ public class TestResultSummaryPropertyTester
     /** the id of the "hasTestResultDetails" property */
     public static final String HAS_TEST_RESULT_DETAILS_PROP = "hasTestResultDetails"; //$NON-NLS-1$
     
-    /** the id of the "hasPendingALMReport" property */
-    public static final String HAS_PENDING_ALM_REPORT_PROP = "hasPendingALMReport"; //$NON-NLS-1$
-    
     /**
      * <code>PROPERTIES</code>
      */
     private static final String[] PROPERTIES = new String[] { 
         HAS_MONITORING_DATA_PROP, 
-        HAS_TEST_RESULT_DETAILS_PROP, 
-        HAS_PENDING_ALM_REPORT_PROP };
+        HAS_TEST_RESULT_DETAILS_PROP};
 
     /** {@inheritDoc} */
     public boolean testImpl(Object receiver, String property, Object[] args) {
@@ -47,22 +42,8 @@ public class TestResultSummaryPropertyTester
         }
         if (property.equals(HAS_TEST_RESULT_DETAILS_PROP)) {
             return summary.hasTestResultDetails();
-        } else if (property.equals(HAS_PENDING_ALM_REPORT_PROP)) {
-            return hasPendingALMReport(summary);
         }
-
         return false;
-    }
-
-    /**
-     * @param summary
-     *            the summary to check
-     * @return the pending status
-     */
-    public static boolean hasPendingALMReport(ITestResultSummaryPO summary) {
-        return summary.isTestsuiteRelevant()
-            && summary.hasTestResultDetails()
-            && summary.getAlmReportStatus() == AlmReportStatus.NOT_YET_REPORTED;
     }
 
     /** {@inheritDoc} */

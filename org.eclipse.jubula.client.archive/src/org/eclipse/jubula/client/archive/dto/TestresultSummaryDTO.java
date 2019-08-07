@@ -15,7 +15,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.eclipse.jubula.client.core.model.ITestResultSummaryPO;
-import org.eclipse.jubula.client.core.model.ITestResultSummaryPO.AlmReportStatus;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,7 +27,7 @@ public class TestresultSummaryDTO {
             new ArrayList<MonitoringValuesDTO>();
 
     /** ALM reported flag */
-    private AlmReportStatus m_almStatus = AlmReportStatus.NOT_CONFIGURED;
+    private String m_almStatus;
     
     /** AUT server */
     private String m_autAgentName;
@@ -154,7 +153,6 @@ public class TestresultSummaryDTO {
      * @param trs 
      */
     public TestresultSummaryDTO(ITestResultSummaryPO trs) {
-        m_almStatus = trs.getAlmReportStatus();
         m_autAgentName = trs.getAutAgentName();
         m_autCmdParameter = trs.getAutCmdParameter();
         m_autConfigName = trs.getAutConfigName();
@@ -215,15 +213,16 @@ public class TestresultSummaryDTO {
      * @return almStatus
      */
     @JsonProperty("almStatus")
-    public AlmReportStatus getAlmStatus() {
+    public String getAlmStatus() {
         return m_almStatus;
     }
     
     /**
      * @param almStatus 
+     * 
      */
-    public void setAlmStatus(AlmReportStatus almStatus) {
-        this.m_almStatus = almStatus;
+    @Deprecated
+    public void setAlmStatus(String almStatus) {
     }
     
     /**

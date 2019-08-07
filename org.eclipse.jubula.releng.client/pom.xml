@@ -33,10 +33,6 @@
         <module>../org.eclipse.jubula.client.ui</module>
         <module>../org.eclipse.jubula.client.stats</module>
         <module>../org.eclipse.jubula.mylyn</module>
-        <module>../org.eclipse.jubula.client.alm.mylyn.core</module>
-        <module>../org.eclipse.jubula.client.alm.mylyn.ui</module>
-        <module>../org.eclipse.jubula.client.alm.mylyn.ui.bridge</module>
-        <module>../org.eclipse.jubula.client.alm.ui</module>
         <module>../org.eclipse.jubula.client.ui.rcp</module>
         <module>../org.eclipse.jubula.client.toolkit.ui</module>
         <module>../org.eclipse.jubula.client.qa.caa.gen.ui</module>

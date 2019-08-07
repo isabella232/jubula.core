@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.client.core.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Basic;
@@ -26,7 +24,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
@@ -116,22 +113,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     /** whether to report in case of a success */
     private boolean m_reportOnSuccess = false;
 
-    /**
-     * the connected ALM repository name
-     */
-    private String m_almRepositoryName = null;
-
-    /**
-     * the URL of the dashboard
-     */
-    private String m_dashboardURL = null;
-
-    /**
-     * list of ALM reporting rules
-     */
-    private List<IALMReportingRulePO> m_reportingRules =
-            new ArrayList<IALMReportingRulePO>();
-
     /** guid of the corresponding project*/
     private String m_guid;
     
@@ -217,9 +198,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
         }
         if (getCheckConfCont() != null) {
             getCheckConfCont().setParentProjectId(projectId);
-        }
-        for (IALMReportingRulePO rule : getALMReportingRules()) {
-            rule.setParentProjectId(projectId);
         }
     }
 
@@ -314,30 +292,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
     @Transient
     public String getToolkit() {
         return getHbmToolkit();
-    }
-    
-    /**
-     * only for Persistence (JPA / EclipseLink)
-     * 
-     * @return Returns the reporting rules set for success.
-     */
-    @OneToMany (
-        fetch = FetchType.EAGER,
-        cascade = CascadeType.ALL,
-        orphanRemoval = true,
-        targetEntity = ALMReportingRulePO.class)
-    @JoinColumn(name = "FK_PROJECT_PROP", nullable = true)
-    @OrderColumn(name = "IDX_PROJECT_PROP")
-    public List<IALMReportingRulePO> getALMReportingRules() {
-        return m_reportingRules;
-    }
-    
-    /**
-     * @param reportingRules The reporting rules to set.
-     */
-    public void setALMReportingRules(
-            List<IALMReportingRulePO> reportingRules) {
-        m_reportingRules = reportingRules;
     }
 
     /**
@@ -531,30 +485,6 @@ class ProjectPropertiesPO implements IProjectPropertiesPO {
      */
     public void setCheckConfCont(ICheckConfContPO checkConfCont) {
         m_checkConfCont = checkConfCont;
-    }
-    
-    /** {@inheritDoc} */
-    @Basic
-    @Column(name = "DASHBOARD_URL", length = MAX_STRING_LENGTH)
-    public String getDashboardURL() {
-        return m_dashboardURL;
-    }
-    
-    /** {@inheritDoc} */
-    public void setDashboardURL(String dashboardURL) {
-        m_dashboardURL = dashboardURL;
-    }
-    
-    /** {@inheritDoc} */
-    @Basic
-    @Column(name = "ALM_REPOSITORY_NAME", length = MAX_STRING_LENGTH)
-    public String getALMRepositoryName() {
-        return m_almRepositoryName;
-    }
-    
-    /** {@inheritDoc} */
-    public void setALMRepositoryName(String almRepositoryName) {
-        m_almRepositoryName = almRepositoryName;
     }
     
     /** {@inheritDoc} */
