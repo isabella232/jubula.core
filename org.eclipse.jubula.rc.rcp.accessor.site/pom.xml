@@ -70,6 +70,14 @@
                                           <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}"/>
                                         </exec>
                                         <exec executable="scp">
+                                          <arg value="${project.build.directory}/${project.artifactId}-${project.version}.zip.sha"/>
+                                          <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}"/>
+                                        </exec>
+                                        <exec executable="scp">
+                                          <arg value="${project.build.directory}/${project.artifactId}-${project.version}.zip.sha512"/>
+                                          <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}"/>
+                                        </exec>
+                                        <exec executable="scp">
                                           <arg value="-r"/>
                                           <arg value="target/repository/"/>
                                           <arg value="genie.jubula@projects-storage.eclipse.org:${targetDir}/repo_accessor/"/>
