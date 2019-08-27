@@ -49,13 +49,6 @@
         (<xref linkend="reuseproject"/>).
       </para>
     </listitem>
-    <listitem>
-      <para>
-        the connection to application lifecycle management (ALM)
-        repositories in this Project
-        (<xref linkend="configuring-a-task-repository"/>).
-      </para>
-    </listitem>
   </orderedlist>
   <section xml:id="editing-general-project-properties">
     <title>Editing general Project properties</title>

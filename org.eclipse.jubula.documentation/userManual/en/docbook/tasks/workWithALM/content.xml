@@ -18,6 +18,5 @@
   <xi:include href="sectionConfiguringTaskRepositories.xml"/>
   <xi:include href="sectionWorkingOnTasksInTheITEContexts.xml"/>
   <xi:include href="sectionCreatingTasksInExternalRepositories.xml"/>
-  <xi:include href="sectionAutomaticallyReporting.xml"/>
   
 </section>

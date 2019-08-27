@@ -52,17 +52,10 @@
         </listitem>
         <listitem>
         <para>
-        Enter a Task ID to link this Test Suite to a task in an external system 
-        (<xref linkend="adding-task-id-alm"/>).
-        </para>
-        </listitem>
-        <listitem>
-        <para>
         Set whether this Test Suite should be relevant or not. 
         If a Test Suite is marked as non-relevant, test results for this Test Suite are created but are not 
         exported with the Project, are not considered for any BIRT reports 
-        (<xref linkend="generating-birt-reports"/>)and do not save details to be reported to external ALM repositories 
-        (<xref linkend="automatically-reporting-to-external-repositories-after-test-runs"/>). 
+        (<xref linkend="generating-birt-reports"/>).
         </para>
         </listitem>
         <listitem>

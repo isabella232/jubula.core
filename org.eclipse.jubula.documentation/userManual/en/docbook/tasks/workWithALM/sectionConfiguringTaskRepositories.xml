@@ -99,8 +99,6 @@
   <para>
     You will now be able to see items in this repository, open them
     in the ITE, add queries for your workspace and work on tasks
-    from this repository. You will also be able to select this
-    repository in the Project properties as the repository for your
-    Project (<xref linkend="configuring-a-task-repository"/>).
+    from this repository.
   </para>
 </section>

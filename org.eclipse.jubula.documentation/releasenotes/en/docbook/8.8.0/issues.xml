@@ -39,4 +39,20 @@
    </para>
   </listitem>
  </itemizedlist>
+<para>
+  <emphasis role="strong">Removed Features</emphasis>
+ </para>
+ <itemizedlist>
+  <listitem>
+   <para>
+    The
+    <emphasis>HTML</emphasis> Toolkit has been removed. It is no longer possible to create and use HTML projects.
+   </para>
+  </listitem>
+    <listitem>
+   <para>
+    The support for reporting Test Results to ALM systems has been dropped. 
+   </para>
+  </listitem>
+ </itemizedlist>
 </section>
