@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.jubula.rc.javafx.components;
 
+import java.util.Objects;
+
 import org.eclipse.jubula.rc.common.components.AUTHierarchy;
 import org.eclipse.jubula.rc.javafx.listener.ComponentHandler;
 
@@ -34,7 +36,8 @@ public class UpdateHierachyChangeListener<T> implements ChangeListener<T> {
         if (observable instanceof ReadOnlyProperty) {
             @SuppressWarnings("rawtypes")
             Object bean = ((ReadOnlyProperty) observable).getBean();
-            if (bean instanceof EventTarget && !newValue.equals(oldValue)) {
+            if (bean instanceof EventTarget 
+                    && !Objects.equals(newValue, oldValue)) {
                 EventTarget eventTarget = (EventTarget) bean;
                 AUTJavaFXHierarchy hierarchy =
                         ComponentHandler.getAutHierarchy();
