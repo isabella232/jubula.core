@@ -358,7 +358,13 @@ public abstract class DesktopIntegration implements PropertyChangeListener {
      * remove the system Tray icon
      */
     public void removeSystemTray() {
-        SystemTray tray = SystemTray.getSystemTray();
-        tray.remove(m_trayIcon);
+        try {
+            if (SystemTray.isSupported()) {
+                SystemTray tray = SystemTray.getSystemTray();
+                tray.remove(m_trayIcon);
+            }
+        } catch (UnsupportedOperationException e) {
+            // Nothing to do
+        }
     }
 }
