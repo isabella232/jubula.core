@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Extension Example - RCP View
 Bundle-SymbolicName: org.eclipse.jubula.examples.extension.rcp.aut;singleton:=true
-Bundle-Version: 8.0.0.qualifier
+Bundle-Version: 8.0.1.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Activator: org.eclipse.jubula.examples.extension.rcp.aut.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

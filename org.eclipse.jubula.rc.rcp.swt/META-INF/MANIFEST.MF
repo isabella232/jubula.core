@@ -3,7 +3,7 @@ Eclipse-RegisterBuddy: org.eclipse.jubula.rc.rcp.common
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Remote Control - RCP SWT
 Bundle-SymbolicName: org.eclipse.jubula.rc.rcp.swt;singleton:=true
-Bundle-Version: 8.0.0.qualifier
+Bundle-Version: 8.0.1.qualifier
 Bundle-ClassPath: .,
  lib/org.eclipse.jubula.rc.swt.jar
 Bundle-Vendor: Eclipse Jubula

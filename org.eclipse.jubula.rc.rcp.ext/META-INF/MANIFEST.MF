@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Remote Control - RCP Accessor Extension
 Bundle-SymbolicName: org.eclipse.jubula.rc.rcp.ext
-Bundle-Version: 8.0.0.qualifier
+Bundle-Version: 8.0.1.qualifier
 Bundle-Vendor: Eclipse Jubula
 Fragment-Host: org.eclipse.jubula.rc.rcp
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

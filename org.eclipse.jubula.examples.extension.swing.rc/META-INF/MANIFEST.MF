@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.eclipse.jubula.examples.extension.swing.rc
 Bundle-SymbolicName: org.eclipse.jubula.examples.extension.swing.rc
-Bundle-Version: 8.0.0.qualifier
+Bundle-Version: 8.0.1.qualifier
 Fragment-Host: org.eclipse.jubula.rc.swing
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Eclipse Jubula
