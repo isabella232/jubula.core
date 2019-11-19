@@ -41,8 +41,10 @@ import javafx.util.Duration;
  *
  */
 public class CurrentStages {
-    /** environment variable */
+    /** environment variable for polling rate */
     public static final String JUBULA_FX_POLLING_RATE = "JUBULA_FX_POLLING_RATE"; //$NON-NLS-1$
+    /** environment variable for an initial wait */
+    public static final String JUBULA_FX_WAIT_BEFORE_INIT = "JUBULA_FX_WAIT_BEFORE_INIT"; //$NON-NLS-1$
 
     /** the logger */
     private static final Logger LOG = LoggerFactory
@@ -58,15 +60,32 @@ public class CurrentStages {
     }
 
     static {
-        String env = EnvironmentUtils
+        String pollingEnvString = EnvironmentUtils
                 .getProcessOrSystemProperty(JUBULA_FX_POLLING_RATE);
         double pollingRate = 5;
-        if (env != null) {
+        if (pollingEnvString != null) {
             try {
-                pollingRate = Double.parseDouble(env);
+                pollingRate = Double.parseDouble(pollingEnvString);
             } catch (NumberFormatException nf) {
                 LOG.info("Could not convert the value." //$NON-NLS-1$
-                        + "using standard polling rate 5ms"); //$NON-NLS-1$
+                        + "using standard polling rate " + pollingRate + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+        }
+        String waitEnvString = EnvironmentUtils
+                .getProcessOrSystemProperty(JUBULA_FX_WAIT_BEFORE_INIT);
+        if (waitEnvString != null) {
+            int waitTimeInMs = 2000;
+            try {
+                waitTimeInMs = Integer.parseInt(waitEnvString);
+            } catch (NumberFormatException nf) {
+                LOG.info("Could not convert the value." //$NON-NLS-1$
+                        + "using standard wait time " + waitTimeInMs + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+            try {
+                Thread.interrupted();
+                Thread.sleep(waitTimeInMs);
+            } catch (InterruptedException e1) {
+                // ignore
             }
         }
         Timeline checkWindowList = new Timeline(new KeyFrame(
