@@ -11,6 +11,7 @@
       label="Jubula Functional Testing - API Converter (experimental)"
       version="4.0.0.qualifier"
       provider-name="Eclipse Jubula"
+      plugin="org.eclipse.jubula.client.api.converter.ui"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 

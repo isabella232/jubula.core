@@ -8,6 +8,7 @@
       label="Jubula RCP Remote Control"
       version="8.0.1.qualifier"
       provider-name="Eclipse Jubula"
+      plugin="org.eclipse.jubula.rc.rcp"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 

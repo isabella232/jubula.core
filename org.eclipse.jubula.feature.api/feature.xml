@@ -11,6 +11,7 @@
       label="Jubula Functional Testing - API"
       version="4.0.0.qualifier"
       provider-name="Eclipse Jubula"
+      plugin="org.eclipse.jubula.client.api"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
@@ -43,9 +44,9 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="1.0.1.v201004272200"
          unpack="false"/>
-      
+
    <plugin
-         id="ch.qos.logback.slf4j" 
+         id="ch.qos.logback.slf4j"
          download-size="0"
          install-size="0"
          version="1.0.7.v201505121915"
@@ -64,7 +65,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="1.3.1.v201111240924"
          unpack="false"/>
-         
+
    <plugin
          id="org.slf4j.jcl"
          download-size="0"

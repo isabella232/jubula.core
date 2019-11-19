@@ -11,6 +11,7 @@
       label="Jubula Extension Wizard"
       version="8.0.1.qualifier"
       provider-name="Eclipse Jubula"
+      plugin="org.eclipse.jubula.extensions.wizard"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 

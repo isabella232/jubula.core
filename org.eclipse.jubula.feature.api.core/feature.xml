@@ -11,6 +11,7 @@
       label="Jubula Functional Testing - API Core"
       version="4.0.0.qualifier"
       provider-name="Eclipse Jubula"
+      plugin="org.eclipse.jubula.client.api"
       license-feature="org.eclipse.license"
       license-feature-version="0.0.0">
 
@@ -53,7 +54,6 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          install-size="0"
          version="1.7.2.v20121108-1250"
          unpack="false"/>
-
 
    <plugin
          id="org.eclipse.jubula.communication"
@@ -189,7 +189,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          version="0.0.0"
          unpack="false"/>
 
-    <plugin
+   <plugin
          id="org.eclipse.jubula.rc.swt"
          download-size="0"
          install-size="0"
