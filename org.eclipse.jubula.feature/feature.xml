@@ -546,21 +546,21 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="com.fasterxml.jackson.core.jackson-annotations"
          download-size="0"
          install-size="0"
-         version="2.9.2.v20180207-1730"
+         version="2.9.9.v20190906-1522"
          unpack="false"/>
 
    <plugin
          id="com.fasterxml.jackson.core.jackson-core"
          download-size="0"
          install-size="0"
-         version="2.9.2.v20180207-1730"
+         version="2.9.9.v20190906-1522"
          unpack="false"/>
 
    <plugin
          id="com.fasterxml.jackson.core.jackson-databind"
          download-size="0"
          install-size="0"
-         version="2.9.2.v20180207-1730"
+         version="2.9.93.v20190906-1522"
          unpack="false"/>
 
    <plugin
