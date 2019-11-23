@@ -266,7 +266,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.codec"
          download-size="0"
          install-size="0"
-         version="1.6.0.v201305230611"
+         version="1.10.0.v20180409-1845"
          unpack="false"/>
 
    <plugin
@@ -294,7 +294,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.io"
          download-size="0"
          install-size="0"
-         version="2.2.0.v201405211200"
+         version="2.6.0.v20190123-2029"
          unpack="false"/>
 
    <plugin
@@ -315,28 +315,28 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.logging"
          download-size="0"
          install-size="0"
-         version="1.1.1.v201101211721"
+         version="1.2.0.v20180409-1502"
          unpack="false"/>
 
    <plugin
          id="ch.qos.logback.classic"
          download-size="0"
          install-size="0"
-         version="1.0.7.v20121108-1250"
+         version="1.1.2.v20171220-1825"
          unpack="false"/>
 
    <plugin
          id="ch.qos.logback.core"
          download-size="0"
          install-size="0"
-         version="1.0.7.v20121108-1250"
+         version="1.1.2.v20160208-0839"
          unpack="false"/>
 
    <plugin
          id="ch.qos.logback.slf4j"
          download-size="0"
          install-size="0"
-         version="1.0.7.v201505121915"
+         version="1.1.2.v20160301-0943"
          fragment="true"
          unpack="false"/>
 
@@ -344,7 +344,7 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.slf4j.api"
          download-size="0"
          install-size="0"
-         version="1.7.2.v20121108-1250"
+         version="1.7.10.v20170428-1633"
          unpack="false"/>
 
    <plugin
