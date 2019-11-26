@@ -16,16 +16,15 @@
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="com.google.inject" version="3.0.0.v201605172100"/>
-<unit id="com.google.guava" version="15.0.0.v201403281430"/>
-<unit id="org.objectweb.asm" version="5.2.0.v20180228-1718"/>
-<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository"/>
+<unit id="com.google.guava" version="27.1.0.v20190517-1946"/>
+<unit id="org.objectweb.asm" version="5.0.1.v201404251740"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtend.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtend.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
-<unit id="org.eclipse.fx.ide.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.pde.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.equinox.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.feature.group" version="0.0.0"/>
@@ -35,8 +34,12 @@
 <unit id="org.eclipse.emf.ecore.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.emf.mwe2.runtime.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.xpand.sdk.feature.group" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/2019-09"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.fx.ide.feature.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.fx.ide.rrobot.feature.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/releases/photon"/>
+<repository location="http://download.eclipse.org/efxclipse/updates-nightly/site"/>
 </location>
 </locations>
 </target>
