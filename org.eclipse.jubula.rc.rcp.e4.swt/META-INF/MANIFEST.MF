@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Remote Control - RCP e4 SWT
 Bundle-SymbolicName: org.eclipse.jubula.rc.rcp.e4.swt; singleton:=true
-Bundle-Version: 8.0.1.qualifier
+Bundle-Version: 8.0.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin

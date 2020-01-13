@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.api.embedded"
       label="Jubula Functional Testing - API Embedded Agent"
-      version="8.0.1.qualifier"
+      version="8.0.2.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.autagent.api"
       license-feature="org.eclipse.license"

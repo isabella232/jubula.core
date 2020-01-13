@@ -6,7 +6,7 @@
   <groupId>org.eclipse.jubula.examples</groupId>
   <artifactId>aut.adder.rcp.releng</artifactId>
   <name>Eclipse Jubula - Examples</name>
-  <version>8.0.1-SNAPSHOT</version>
+  <version>8.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   
   <properties>

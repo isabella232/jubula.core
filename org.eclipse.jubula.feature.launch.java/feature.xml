@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.launch.java"
       label="Jubula Launch Support for Java / Swing"
-      version="8.0.1.qualifier"
+      version="8.0.2.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.launch"
       license-feature="org.eclipse.license"

@@ -10,7 +10,7 @@
     xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.eclipse.jubula</groupId>
-    <version>8.0.1-SNAPSHOT</version>
+    <version>8.0.2-SNAPSHOT</version>
     <artifactId>org.eclipse.jubula.documentation.validation</artifactId>
     <packaging>pom</packaging>
 
