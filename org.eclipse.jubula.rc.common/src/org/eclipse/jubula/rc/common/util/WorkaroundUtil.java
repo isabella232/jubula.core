@@ -41,6 +41,12 @@ public class WorkaroundUtil {
     private static final String DISABLE_HIGHLIGHTING_VAR = "TEST_RC_DISABLE_HIGHLIGHTING"; //$NON-NLS-1$
     
     /**
+     * Name of the environment variable that defines the value for the delay after a
+     * value was selected in the ComboBox
+     */
+    public static final String COMBOBOX_DELAY_AFTER_SELECTION = "TEST_COMBOBOX_DELAY_AFTER_SELECTION"; //$NON-NLS-1$
+    
+    /**
      * Private constructor
      */
     private WorkaroundUtil() {

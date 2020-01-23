@@ -20,6 +20,7 @@ import org.eclipse.jubula.rc.common.exception.StepExecutionException;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComboComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.IComponent;
 import org.eclipse.jubula.rc.common.tester.adapter.interfaces.ITextComponent;
+import org.eclipse.jubula.rc.common.util.WorkaroundUtil;
 import org.eclipse.jubula.rc.javafx.driver.EventThreadQueuerJavaFXImpl;
 import org.eclipse.jubula.rc.javafx.tester.util.NodeTraverseHelper;
 import org.eclipse.jubula.rc.javafx.tester.util.compatibility.ComboBoxUtils;
@@ -45,9 +46,6 @@ import javafx.scene.control.TextField;
 public class ComboBoxAdapter<T extends ComboBox<?>> extends
     JavaFXComponentAdapter<T> implements IComboComponent {
     
-    /** the name of the arrow button field of a combo box skin */
-    private static final String ARROW_BUTTON_FIELD_NAME = "arrowButton"; //$NON-NLS-1$
-
     /**
      * Creates an object with the adapted Label.
      *
@@ -132,6 +130,7 @@ public class ComboBoxAdapter<T extends ComboBox<?>> extends
                 new ListViewAdapter<ListView<?>>(lv);
             listViewAdapter.clickOnIndex(index, ClickOptions.create().
                     setClickCount(1).setMouseButton(1));
+            TimeUtil.delayDefaultOrExternalTime(100, WorkaroundUtil.COMBOBOX_DELAY_AFTER_SELECTION);
         } finally {
             setOpenedStatus(comboBox, false);
         }
