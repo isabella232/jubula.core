@@ -46,11 +46,9 @@ public class MouseMovementStrategy {
     /**
      * 
      * @param from The point from which the mouse pointer is being moved.
-     *             May not be <code>null</code>. Coordinates must be 
-     *             non-negative.
+     *             May not be <code>null</code>.
      * @param to The point to which the mouse pointer is being moved.
-     *           May not be <code>null</code>. Coordinates must be 
-     *           non-negative.
+     *           May not be <code>null</code>.
      * @param isMoveInSteps <code>true</code> if the movement strategy should 
      *                      be executed in steps. Otherwise, <code>false</code>.
      * @param firstHorizontal <code>true</code> if the movement strategy should
@@ -64,14 +62,10 @@ public class MouseMovementStrategy {
     public static Point [] getMovementPath(Point from, Point to, 
             boolean isMoveInSteps, boolean firstHorizontal) {
         Validate.notNull(to, "End point must not be null."); //$NON-NLS-1$
-        Validate.isTrue(to.x >= 0, "End x-coordinate must not be negative."); //$NON-NLS-1$
-        Validate.isTrue(to.y >= 0, "End y-coordinate must not be negative."); //$NON-NLS-1$
         if (isMouseMovementDisabled) {
             return new Point[] {to};
         }
         Validate.notNull(from, "Initial point must not be null."); //$NON-NLS-1$
-        Validate.isTrue(from.x >= 0, "Initial x-coordinate must not be negative."); //$NON-NLS-1$
-        Validate.isTrue(from.y >= 0, "Initial y-coordinate must not be negative."); //$NON-NLS-1$
         
         if (!isMoveInSteps) {
             // Adjacent point followed by target point
