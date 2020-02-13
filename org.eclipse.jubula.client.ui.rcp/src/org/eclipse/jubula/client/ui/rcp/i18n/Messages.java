@@ -60,6 +60,7 @@ public class Messages extends NLS {
     public static String AUTConfigComponentFileJar;
     public static String AUTConfigComponentFileNotFound;
     public static String AUTConfigComponentFileNotJar;
+	public static String AUTConfigComponentJava9;
     public static String AUTConfigComponentLabel;
     public static String AUTConfigComponentMessage;
     public static String AUTConfigComponentNoDir;

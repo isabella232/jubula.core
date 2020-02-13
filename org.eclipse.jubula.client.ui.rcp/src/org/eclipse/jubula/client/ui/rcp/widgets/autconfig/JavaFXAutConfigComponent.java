@@ -90,7 +90,9 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
     private WidgetSelectionListener m_selectionListener;
     /** GUI component */
     private Button m_errorHighlightButton;
-    
+    /** java 9 flag */
+    private Button m_java9Support;
+
     /**
      * @param parent
      *            the parent
@@ -141,6 +143,8 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_execButton.setText(Messages.AUTConfigComponentBrowse);
         m_execButton.setLayoutData(BUTTON_LAYOUT);
         m_execButton.setEnabled(Utils.isLocalhost());
+        m_java9Support = new Button(parent, SWT.CHECK);
+        m_java9Support.setText(Messages.AUTConfigComponentJava9);
     }
 
     
@@ -181,6 +185,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_execButton.addSelectionListener(selectionListener);
         m_errorHighlightButton.addSelectionListener(selectionListener);
         m_monitoringCombo.addSelectionListener(selectionListener);
+        m_java9Support.addSelectionListener(selectionListener);
     }
 
     /**
@@ -204,6 +209,7 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
         m_execButton.removeSelectionListener(selectionListener);
         m_errorHighlightButton.removeSelectionListener(selectionListener);
         m_monitoringCombo.removeSelectionListener(selectionListener);
+        m_java9Support.removeSelectionListener(selectionListener);
     }
     
     /**
@@ -354,6 +360,9 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
                         .get(AutConfigConstants.AUT_CONFIG_AUT_HOST_NAME))));
             m_execTextField.setText(StringUtils.defaultString(data
                 .get(AutConfigConstants.EXECUTABLE)));
+            m_java9Support.setSelection(
+                    Boolean.parseBoolean(
+                            data.get(AutConfigConstants.AUT_JAVA9_SUPPORT)));
         }
     }
 
@@ -645,6 +654,10 @@ public class JavaFXAutConfigComponent extends AutConfigComponent {
                 putConfigValue(AutConfigConstants.ERROR_HIGHLIGHT,   
                         Boolean.toString(
                                 m_errorHighlightButton.getSelection()));
+                return;
+            } else if (source.equals(m_java9Support)) {
+                putConfigValue(AutConfigConstants.AUT_JAVA9_SUPPORT, 
+                        Boolean.toString(m_java9Support.getSelection()));
                 return;
             }
 

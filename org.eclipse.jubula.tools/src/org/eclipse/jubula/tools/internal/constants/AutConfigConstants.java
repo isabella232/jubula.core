@@ -93,6 +93,11 @@ public class AutConfigConstants {
     public static final String BROWSER_SIZE = "BROWSER_SIZE"; //$NON-NLS-1$
     /** Path where monitoring data will be saved.*/
     public static final String EXTERNAL_MONITORING_REPORT_PATH = "EXTERNAL_MONITORING_REPORT_PATH"; //$NON-NLS-1$
+    /**
+     * Java 9 or higher is used so we need to add "add-opens" to support specific
+     * javafx rc code
+     **/
+    public static final String AUT_JAVA9_SUPPORT = "AUT_JAVA9_SUPPORT"; //$NON-NLS-1$
     
     /** to prevent instantiation */
     private AutConfigConstants() {

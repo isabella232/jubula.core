@@ -62,6 +62,10 @@ public class StartJavaFXAutServerCommand extends AbstractStartJavaAutServer {
             m_autServerClasspath = autServerClasspath.toString();
 
         }
+        if (Boolean.parseBoolean(parameters.get(AutConfigConstants.AUT_JAVA9_SUPPORT))) {
+            cmds.add("--illegal-access=permit"); //$NON-NLS-1$
+            cmds.add("--add-opens=javafx.controls/javafx.scene.control.skin=ALL-UNNAMED"); //$NON-NLS-1$
+        }
         cmds.addAll(createAutArguments(parameters));
         return cmds.toArray(new String[cmds.size()]);
     }

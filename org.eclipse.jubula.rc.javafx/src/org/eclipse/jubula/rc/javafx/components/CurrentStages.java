@@ -13,22 +13,20 @@ package org.eclipse.jubula.rc.javafx.components;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jubula.rc.javafx.tester.util.compatibility.WindowsUtil;
 import org.eclipse.jubula.tools.internal.utils.EnvironmentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.Duration;
 
 /**
  * Provides access to all instantiated windows, by accessing a private field in
@@ -62,10 +60,10 @@ public class CurrentStages {
     static {
         String pollingEnvString = EnvironmentUtils
                 .getProcessOrSystemProperty(JUBULA_FX_POLLING_RATE);
-        double pollingRate = 5;
+        long pollingRate = 50;
         if (pollingEnvString != null) {
             try {
-                pollingRate = Double.parseDouble(pollingEnvString);
+                pollingRate = Long.parseLong(pollingEnvString);
             } catch (NumberFormatException nf) {
                 LOG.info("Could not convert the value." //$NON-NLS-1$
                         + "using standard polling rate " + pollingRate + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -73,52 +71,48 @@ public class CurrentStages {
         }
         String waitEnvString = EnvironmentUtils
                 .getProcessOrSystemProperty(JUBULA_FX_WAIT_BEFORE_INIT);
+        long waitTimeInMs = 0;
         if (waitEnvString != null) {
-            int waitTimeInMs = 2000;
+            waitTimeInMs = 2000;
             try {
                 waitTimeInMs = Integer.parseInt(waitEnvString);
             } catch (NumberFormatException nf) {
                 LOG.info("Could not convert the value." //$NON-NLS-1$
                         + "using standard wait time " + waitTimeInMs + "ms"); //$NON-NLS-1$ //$NON-NLS-2$
             }
-            try {
-                Thread.interrupted();
-                Thread.sleep(waitTimeInMs);
-            } catch (InterruptedException e1) {
-                // ignore
-            }
         }
-        Timeline checkWindowList = new Timeline(new KeyFrame(
-                Duration.millis(pollingRate), new EventHandler<ActionEvent>() {
+        ScheduledExecutorService scheduler = 
+                Executors.newScheduledThreadPool(1);
+        Runnable windowCheck = new Runnable() {
 
-                    @Override
-                    public void handle(ActionEvent event) {
-                        // USE OF DEPRECATED API
-                        Iterator<Window> it = WindowsUtil.getWindowIterator();
-                        List<Window> tempWin = new ArrayList<>();
+            @Override
+            public void run() {
+                // USE OF DEPRECATED API
+                Iterator<Window> it = WindowsUtil.getWindowIterator();
+                List<Window> tempWin = new ArrayList<>();
 
-                        // "Convert" iterator to list for removing and add new
-                        // windows
-                        while (it.hasNext()) {
-                            Window w = it.next();
-                            tempWin.add(w);
-                            if (!windows.contains(w)) {
-                                windows.add(w);
-                            }
-                        }
-                        // Now iterate over the windows list and find windows
-                        // which can be removed
-                        it = windows.listIterator();
-                        while (it.hasNext()) {
-                            Window w = it.next();
-                            if (!tempWin.contains(w)) {
-                                it.remove();
-                            }
-                        }
+                // "Convert" iterator to list for removing and add new
+                // windows
+                while (it.hasNext()) {
+                    Window w = it.next();
+                    tempWin.add(w);
+                    if (!windows.contains(w)) {
+                        windows.add(w);
                     }
-                }));
-        checkWindowList.setCycleCount(Timeline.INDEFINITE);
-        checkWindowList.play();
+                }
+                // Now iterate over the windows list and find windows
+                // which can be removed
+                it = windows.listIterator();
+                while (it.hasNext()) {
+                    Window w = it.next();
+                    if (!tempWin.contains(w)) {
+                        it.remove();
+                    }
+                }
+            }
+        };
+        scheduler.scheduleAtFixedRate(windowCheck, waitTimeInMs, 
+                pollingRate, TimeUnit.MILLISECONDS);
     }
 
     /**
