@@ -45,14 +45,14 @@ BREDEX GmbH - initial API and implementation and/or initial documentation
          id="org.apache.commons.codec"
          download-size="0"
          install-size="0"
-         version="1.10.0.v20180409-1845"
+         version="1.13.0.v20200108-0001"
          unpack="false"/>
 
    <plugin
          id="org.slf4j.api"
          download-size="0"
          install-size="0"
-         version="1.7.10.v20170428-1633"
+         version="1.7.30.v20200204-2150"
          unpack="false"/>
 
    <plugin
