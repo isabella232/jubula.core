@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Remote Control - SWT
 Bundle-SymbolicName: org.eclipse.jubula.rc.swt
-Bundle-Version: 8.0.2.qualifier
+Bundle-Version: 8.0.3.qualifier
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin
 Require-Bundle: org.apache.commons.beanutils;bundle-version="[1.7.0,2.0.0)",

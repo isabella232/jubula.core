@@ -34,12 +34,12 @@
 == At this point in time a "ant dev-release-complete" should be successfully executable! ==
 == Continue with com.bredexsw.guidancer namespace ==
 * increase all bundle version numbers accordingly (in MANIFEST.MF)
- * replace {{{Bundle-Version: 8.0.2.qualifier}}} with {{{Bundle-Version: 8.1.0.qualifier}}}
+ * replace {{{Bundle-Version: 8.0.3.qualifier}}} with {{{Bundle-Version: 8.1.0.qualifier}}}
 * adjust fragment host version ranges e.g. {{{Fragment-Host: com.bredexsw.guidancer.rc.win;bundle-version="[8.0.0,8.1.0)"}}} with {{{Fragment-Host: com.bredexsw.guidancer.rc.win;bundle-version="[8.1.0,8.2.0)"}}}
 * adjust POM version numbers (pom.xml)
- * replace {{{<version>8.0.2-SNAPSHOT</version>}}} with e.g. {{{<version>8.1.0-SNAPSHOT</version>}}} 
+ * replace {{{<version>8.0.3-SNAPSHOT</version>}}} with e.g. {{{<version>8.1.0-SNAPSHOT</version>}}} 
 * adjust feature.xml versions
- * replace {{{version="8.0.2.qualifier"}}} with {{{version="8.1.0.qualifier"}}} 
+ * replace {{{version="8.0.3.qualifier"}}} with {{{version="8.1.0.qualifier"}}} 
  * and '''manually check''' feature 
   * dependencies
   * compatibility specifications

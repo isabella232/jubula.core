@@ -8,7 +8,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.jubula.version.Vn
-Bundle-Version: 8.0.2.qualifier
+Bundle-Version: 8.0.3.qualifier
 Export-Package: org.eclipse.jubula.version
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
  org.slf4j.api;bundle-version="[1.7.2,2.0.0)",

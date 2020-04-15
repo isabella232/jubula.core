@@ -10,7 +10,7 @@
     <parent>
         <artifactId>org.eclipse.jubula.examples.extension.releng</artifactId>
         <groupId>org.eclipse.jubula</groupId>
-        <version>8.0.2-SNAPSHOT</version>
+        <version>8.0.3-SNAPSHOT</version>
         <relativePath>../org.eclipse.jubula.examples.extension.releng</relativePath>
     </parent>
     <artifactId>org.eclipse.jubula.examples.extension.swing.api</artifactId>
