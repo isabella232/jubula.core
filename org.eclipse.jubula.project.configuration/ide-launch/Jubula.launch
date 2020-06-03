@@ -24,13 +24,17 @@
 <stringAttribute key="product" value="org.eclipse.jubula.app.product"/>
 <setAttribute key="selected_features">
 <setEntry value="com.bredexsw.jubula.client.core.driver.feature:default"/>
+<setEntry value="com.bredexsw.jubula.feature.api:default"/>
 <setEntry value="com.bredexsw.jubula.feature:default"/>
 <setEntry value="com.bredexsw.jubula.rc.feature:default"/>
 <setEntry value="org.eclipse.e4.rcp:default"/>
 <setEntry value="org.eclipse.emf.common:default"/>
 <setEntry value="org.eclipse.emf.ecore:default"/>
 <setEntry value="org.eclipse.help:default"/>
+<setEntry value="org.eclipse.jubula.feature.api:default"/>
+<setEntry value="org.eclipse.jubula.feature.rc:default"/>
 <setEntry value="org.eclipse.jubula.feature:default"/>
+<setEntry value="org.eclipse.jubula.rc.common.orbit:default"/>
 <setEntry value="org.eclipse.mylyn.bugzilla_feature:default"/>
 <setEntry value="org.eclipse.mylyn.commons.identity:default"/>
 <setEntry value="org.eclipse.mylyn.commons.notifications:default"/>
