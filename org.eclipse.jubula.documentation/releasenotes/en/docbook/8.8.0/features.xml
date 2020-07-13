@@ -13,12 +13,22 @@
     xmlns:xl="http://www.w3.org/1999/xlink">
     <title>New Features and Developments</title>
   <para>
-    <emphasis role="strong">-</emphasis>
+    <emphasis role="strong">Important Bugfixes</emphasis>
   </para>
   <itemizedlist>
   <listitem>
     <para>
-    -
+    Fixes JavaFX startup might fail and therefore no Object Mapping and test was possible
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+    Added a Checkbox for JavaFX which can be used to add the add-opens options
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+    Fixes for the extension Wizard
     </para>
   </listitem>
   </itemizedlist>
