@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula Toolkit UI
 Bundle-SymbolicName: org.eclipse.jubula.client.toolkit.ui;singleton:=true
-Bundle-Version: 8.0.3.qualifier
+Bundle-Version: 8.0.4.qualifier
 Bundle-Activator: org.eclipse.jubula.client.toolkit.ui.Activator
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin

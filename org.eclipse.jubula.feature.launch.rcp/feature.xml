@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.feature.launch.rcp"
       label="Jubula Launch Support for Eclipse RCP"
-      version="8.0.3.qualifier"
+      version="8.0.4.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.launch"
       license-feature="org.eclipse.license"
