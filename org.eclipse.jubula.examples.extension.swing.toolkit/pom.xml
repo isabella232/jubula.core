@@ -6,7 +6,7 @@
     <relativePath>../org.eclipse.jubula.examples.extension.releng</relativePath>
     <groupId>org.eclipse.jubula</groupId>
     <artifactId>org.eclipse.jubula.examples.extension.releng</artifactId>
-    <version>8.0.4-SNAPSHOT</version>
+    <version>8.0.5-SNAPSHOT</version>
   </parent>
 
   <artifactId>org.eclipse.jubula.examples.extension.swing.toolkit</artifactId>

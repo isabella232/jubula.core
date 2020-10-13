@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Jubula" uid="org.eclipse.jubula.performance.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="8.0.4.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="Jubula" uid="org.eclipse.jubula.performance.product" id="org.eclipse.jubula.app.product" application="org.eclipse.jubula.app.launcher" version="8.0.5.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="icons/about.png"/>
@@ -57,8 +57,8 @@
    </plugins>
 
    <features>
-      <feature id="com.bredexsw.jubula.feature" version="8.0.4.qualifier" installMode="root"/>
-      <feature id="com.bredexsw.jubula.performance.feature" version="8.0.4.qualifier"/>
+      <feature id="com.bredexsw.jubula.feature" version="8.0.5.qualifier" installMode="root"/>
+      <feature id="com.bredexsw.jubula.performance.feature" version="8.0.5.qualifier"/>
       <feature id="org.aspectj"/>
       <feature id="org.eclipse.equinox.weaving.sdk"/>
    </features>

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Jubula - QA - CaA Project Generator
 Bundle-SymbolicName: org.eclipse.jubula.client.qa.caa.gen.ui;singleton:=true
-Bundle-Version: 8.0.4.qualifier
+Bundle-Version: 8.0.5.qualifier
 Bundle-Activator: org.eclipse.jubula.client.qa.caa.gen.ui.Activator
 Bundle-Vendor: Eclipse Jubula
 Bundle-Localization: plugin

@@ -9,7 +9,7 @@
 <feature
       id="org.eclipse.jubula.extensions.wizard.feature"
       label="Jubula Extension Wizard"
-      version="8.0.4.qualifier"
+      version="8.0.5.qualifier"
       provider-name="Eclipse Jubula"
       plugin="org.eclipse.jubula.extensions.wizard"
       license-feature="org.eclipse.license"
